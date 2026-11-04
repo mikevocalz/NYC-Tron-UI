@@ -32,7 +32,7 @@ jobs:
       - name: Enable corepack
         run: corepack enable
       - name: Install local workspace
-        run: corepack pnpm install --no-frozen-lockfile
+        run: corepack pnpm install --frozen-lockfile
       - name: Compile independent package distributions in dependency order
         run: corepack pnpm build
       - name: Typecheck packages against built peer workspaces
