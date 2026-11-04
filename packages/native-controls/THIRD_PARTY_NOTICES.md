@@ -13,7 +13,7 @@
   code. Review the pinned upstream file histories before published release.
 
 The complete upstream license text is retained in
-licenses/AudioKit-Controls-MIT.txt at the repository root.
+licenses/AudioKit-Controls-MIT.txt inside this package.
 
 Expo Modules SDK 58 custom views use ExpoUIView. Expo Modules 2.0 @ExpoView
 and @ViewProps are not exposed by the current core; never claim this view is
