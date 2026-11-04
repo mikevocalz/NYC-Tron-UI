@@ -35,3 +35,12 @@ native AppKit/WinUI/Compose/SwiftUI behavior.
 - Nitro Forge Tally PR #39: Rust-backed viewport adapter; separate Rust
   integration workflow passed before this responsive update.
 - Details: [Responsive tables](RESPONSIVE_TABLES.md).
+
+## Adaptive navigation and pane host — PR #9
+
+- Built `@nyc-tron/panes` Master/Detail/Inspector controlled RN host, native `NavigationRail` fallback, and controlled LEFT `CollapsibleDrawer` with three pane modes.
+- Pure window-origin, multi-hinge, book/tabletop and RTL planner tests added.
+- Native Windows WinUI **NOT IMPLEMENTED**: tracked by issue #11; independent RNW v0.85 host required.
+- CI pure tests, TypeScript, emitted ESM/declarations and all npm pack checks **passed** at commit `38b814405b09430e91ef4e7fa2a08b78a3523ff5`.
+- Physical Surface Duo, WinUI build, Mac AppKit and XR native acceptance **NOT RUN**.
+- Agent role profiles at `.github/agents/` are committed but no external coding subagent session was launched.
