@@ -48,8 +48,12 @@ test("current keys, conflicts and missing values",()=>{
   };
   const vars=themeCssVariables(validateTheme(current));
   assert.deepEqual(new Set(Object.keys(vars)),documentedVars);
-  assert.throws(()=>validateTheme({...current,colors:{...current.colors,surface:"#000"}}),/conflicts/);
-  assert.doesNotThrow(()=>validateTheme({...current,colors:{...current.colors,surface:"#fff"}}));
+  // The current key wins over a stale alias, so spreading a validated theme
+  // and overriding one value works.
+  assert.equal(validateTheme({...current,colors:{...current.colors,surface:"#000"}}).colors.surfaceRaised,"#fff");
+  const spread=validateTheme({...validateTheme(current),colors:{...validateTheme(current).colors,text:"#111"}});
+  assert.equal(spread.colors.text,"#111");
+  assert.equal(spread.colors.foreground,"#111");
   const {text,...noText}=current.colors;
   assert.throws(()=>validateTheme({...current,colors:noText}),/text/);
   assert.throws(()=>validateTheme({...current,shape:{...current.shape,borderWidth:-1}}),/metric/);
