@@ -14,7 +14,7 @@ export interface NativeMenuItem {
   readonly title: string;
   readonly attributes?: { readonly disabled?: boolean; readonly destructive?: boolean };
   readonly state?: "on" | "off";
-  readonly subactions?: readonly NativeMenuItem[];
+  subactions?: NativeMenuItem[];
   readonly displayInline?: boolean;
 }
 const ID=/^[a-zA-Z0-9][a-zA-Z0-9._:-]*$/;
