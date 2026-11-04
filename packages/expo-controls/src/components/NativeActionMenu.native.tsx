@@ -1,7 +1,7 @@
 import { MenuView } from "@expo/ui/community/menu";
 import { View } from "react-native";
-import type { NativeActionMenuProps } from "./NativeActionMenu.types";
-import { findEnabledMenuAction, normalizeMenuActions } from "./menu-model";
+import type { NativeActionMenuProps } from "./NativeActionMenu.types.ts";
+import { findEnabledMenuAction, normalizeMenuActions } from "./menu-model.ts";
 /**
  * Real iOS SwiftUI Menu/ContextMenu and Android Compose DropdownMenu.
  * OS owns menu focus, placement, keyboard and outside-dismiss behavior.

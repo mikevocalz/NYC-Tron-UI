@@ -2,8 +2,8 @@ import { useRef, type ReactNode } from "react";
 import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
-import type { NativeActionMenuProps } from "./NativeActionMenu.types";
-import { findEnabledMenuAction, normalizeMenuActions, type TronMenuAction } from "./menu-model";
+import type { NativeActionMenuProps } from "./NativeActionMenu.types.ts";
+import { findEnabledMenuAction, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
 
 /**
  * Working RN web presentation. Expo's MenuView intentionally does nothing

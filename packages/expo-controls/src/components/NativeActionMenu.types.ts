@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { TronMenuAction } from "./menu-model";
+import type { TronMenuAction } from "./menu-model.ts";
 export interface NativeActionMenuProps {
   readonly trigger: ReactNode;
   readonly actions: readonly TronMenuAction[];
