@@ -1,0 +1,17 @@
+{
+  "name": "@nyc-tron/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./navigation": "./src/navigation.ts",
+    "./folds": "./src/folds.ts",
+    "./spatial": "./src/spatial.ts",
+    "./theme": "./src/theme.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
