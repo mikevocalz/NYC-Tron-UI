@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import {
-  Pressable, Text, View, type ViewProps, type ViewStyle,
+  BackHandler, Pressable, Text, View, type ViewProps, type ViewStyle,
 } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
@@ -95,14 +95,33 @@ export function AdaptivePaneHost({
   const masterVisible = Boolean(plan && plan.master.placement !== "hidden");
   const inspectorVisible = Boolean(plan && inspector && plan.inspector.placement !== "closed");
   const isMasterOverlay = plan?.master.placement === "overlay";
+  const isInspectorSheet = inspectorVisible && plan?.inspector.placement === "contained-sheet";
+  // A compact master overlay or a full-width inspector sheet covers the
+  // detail pane, so screen readers must not reach the content behind it.
+  const detailCovered = isMasterOverlay || isInspectorSheet;
+  const dismissTop = isInspectorSheet ? onDismissInspector :
+    isMasterOverlay ? onDismissMaster : undefined;
+  const dismissRef = useRef(dismissTop);
+  dismissRef.current = dismissTop;
+  const backActive = Boolean(dismissTop);
+  useEffect(() => {
+    if (!backActive) return;
+    const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
+      dismissRef.current?.();
+      return true;
+    });
+    return () => subscription.remove();
+  }, [backActive]);
   const dir = isRTL ? "rtl" : "ltr";
   const paneRoot: ViewStyle = { direction: dir, flex: 1 };
   const content = (child: ReactNode, label: string, classes: string | undefined,
-    position: ViewStyle, visible: boolean, rank: number) => (
+    position: ViewStyle, visible: boolean, rank: number,
+    a11yHidden = !visible, modal = false) => (
     <View
       accessibilityLabel={label}
-      accessibilityElementsHidden={!visible}
-      importantForAccessibility={visible ? "auto" : "no-hide-descendants"}
+      accessibilityViewIsModal={modal}
+      accessibilityElementsHidden={a11yHidden}
+      importantForAccessibility={a11yHidden ? "no-hide-descendants" : "auto"}
       pointerEvents={visible ? "auto" : "none"}
       {...{ className: css("overflow-hidden bg-surface-raised", classes) }}
       style={[position, { zIndex: rank, display: visible ? "flex" : "none" }, paneRoot]}
@@ -116,7 +135,7 @@ export function AdaptivePaneHost({
       style={[{ position: "relative", direction: "ltr", overflow: "hidden" }, style]}>
       {content(detail, "Detail pane", detailClassName,
         plan ? rectStyle(plan.detail.rect) : { position: "absolute", top: 0, bottom: 0, left: 0, right: 0 },
-        true, 1)}
+        true, 1, detailCovered)}
       {isMasterOverlay && plan ? (
         <Pressable
           accessibilityRole="button"
@@ -129,10 +148,10 @@ export function AdaptivePaneHost({
       ) : null}
       {content(master, "Master pane", masterClassName,
         plan ? rectStyle(plan.master.rect) : { display: "none" },
-        masterVisible, 3)}
+        masterVisible, 3, !masterVisible || isInspectorSheet, isMasterOverlay && !isInspectorSheet)}
       {inspector ? content(inspector, "Inspector pane", inspectorClassName,
         plan ? rectStyle(plan.inspector.rect) : { display: "none" },
-        inspectorVisible, 4) : null}
+        inspectorVisible, 4, !inspectorVisible, isInspectorSheet) : null}
       {inspectorVisible && onDismissInspector && plan ? (
         <Pressable accessibilityRole="button" accessibilityLabel="Close inspector"
           onPress={onDismissInspector}

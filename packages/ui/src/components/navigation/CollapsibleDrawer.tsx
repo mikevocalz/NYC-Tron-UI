@@ -115,6 +115,10 @@ export function CollapsibleDrawer({
       style={[{ flex: 1, direction: "ltr", position: "relative" }, style]}
     >
       <View {...{ className: joinClasses("flex-1", contentClassName) }}
+        // An open overlay pane is modal; keep screen readers out of the
+        // content it covers.
+        accessibilityElementsHidden={pane.overlay}
+        importantForAccessibility={pane.overlay ? "no-hide-descendants" : "auto"}
         style={{ marginLeft: pane.contentInsetLeft, minWidth: 0 }}>
         {children}
       </View>
@@ -129,6 +133,7 @@ export function CollapsibleDrawer({
       ) : null}
       <View
         pointerEvents={pane.showPane ? "auto" : "none"}
+        accessibilityViewIsModal={pane.overlay}
         accessibilityElementsHidden={!pane.showPane}
         importantForAccessibility={pane.showPane ? "auto" : "no-hide-descendants"}
         {...{ className: joinClasses(
