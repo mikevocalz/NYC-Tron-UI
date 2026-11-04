@@ -104,6 +104,16 @@
       "types": "./dist/components/forge/graph/PatchGraph.d.ts",
       "react-native": "./dist/components/forge/graph/PatchGraph",
       "default": "./dist/components/forge/graph/PatchGraph.js"
+    },
+    "./components/forge/graphics/crop": {
+      "types": "./dist/components/forge/graphics/crop.d.ts",
+      "react-native": "./dist/components/forge/graphics/crop",
+      "default": "./dist/components/forge/graphics/crop.js"
+    },
+    "./components/forge/graphics/ImageCropOverlay": {
+      "types": "./dist/components/forge/graphics/ImageCropOverlay.d.ts",
+      "react-native": "./dist/components/forge/graphics/ImageCropOverlay",
+      "default": "./dist/components/forge/graphics/ImageCropOverlay.js"
     }
   },
   "scripts": {
