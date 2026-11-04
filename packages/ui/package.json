@@ -1,0 +1,39 @@
+{
+  "name": "@nyc-tron/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/Button": "./src/components/Button.tsx",
+    "./components/Card": "./src/components/Card.tsx",
+    "./components/NavigationRail": "./src/components/NavigationRail.tsx",
+    "./components/forge/WaveformLane": "./src/components/forge/WaveformLane.tsx",
+    "./components/forge/NativeSeekBar": "./src/components/forge/NativeSeekBar.tsx",
+    "./components/forge/ColorChannels": "./src/components/forge/ColorChannels.tsx",
+    "./components/forge/waveform": "./src/components/forge/waveform.ts",
+    "./components/forge/timebase": "./src/components/forge/timebase.ts",
+    "./components/forge/color": "./src/components/forge/color.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0",
+    "@expo/ui": "^58.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@expo/ui": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "@types/react": "~19.3.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "@expo/ui": "58.0.20"
+  }
+}
