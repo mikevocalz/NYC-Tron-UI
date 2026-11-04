@@ -29,6 +29,11 @@
       "types": "./dist/theme.d.ts",
       "react-native": "./dist/theme",
       "default": "./dist/theme.js"
+    },
+    "./pane-plan": {
+      "types": "./dist/pane-plan.d.ts",
+      "react-native": "./dist/pane-plan",
+      "default": "./dist/pane-plan.js"
     }
   },
   "scripts": {
