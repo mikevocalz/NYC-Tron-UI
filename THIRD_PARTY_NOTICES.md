@@ -20,3 +20,17 @@ requirements.
 See each source repository's own LICENSE/THIRD_PARTY_NOTICES before importing
 more source or publishing NYC-Tron as a distributable library. No external
 fonts, icons, branding, binary SDKs or artwork are redistributed here.
+
+## License notice retained for source port lineage
+
+**NeonBlade UI** — https://github.com/vprix21/neonblade-ui
+MIT License — Copyright (c) 2026 NeuronRush. Original source license
+preserved verbatim in `licenses/NEONBLADE-MIT.txt`.
+
+**NYC-MON upstream license** — `mikevocalz/nyc-mon/LICENSE`
+MIT License — Copyright (c) 2025 Gursel Cakar. The source repository's
+license text is preserved verbatim in `licenses/NYC-MON-MIT.txt`.
+
+These notices do **not** license private NYC-Tron-specific additions for
+general redistribution. Complete a separate ownership, attribution and
+publishing review before removing `private: true` from package manifests.
