@@ -8,6 +8,7 @@ export interface ColorChannelsProps extends Omit<ViewProps,"children"> {
  readonly showAlpha?:boolean;
  readonly disabled?:boolean;
  className?:string;
+ unstyled?:boolean;
  previewClassName?:string;
 }
 /**
@@ -16,7 +17,7 @@ export interface ColorChannelsProps extends Omit<ViewProps,"children"> {
  */
 export function ColorChannels({
  value,onValueChange,showAlpha=true,disabled=false,
- className,previewClassName,style,...props
+ className,unstyled=false,previewClassName,style,...props
 }:ColorChannelsProps){
  assertRgba(value);
  const hex=rgbaToHex(value);
@@ -24,7 +25,7 @@ export function ColorChannels({
    if(!disabled)onValueChange({...value,[key]:Math.round(Math.max(0,Math.min(255,v)))});
  };
  return <View {...props}
-   {...{className:joinClasses("w-full gap-2 rounded-control bg-surface-raised p-3",className)}}
+   {...{className:joinClasses("w-full gap-2",!unstyled&&"rounded-control bg-surface-raised p-3",className)}}
    style={style}>
      <View
        accessibilityLabel={`Selected color ${hex}`}
