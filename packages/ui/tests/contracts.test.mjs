@@ -11,7 +11,9 @@ const root=dirname(fileURLToPath(pkgPath));
 const pkg=JSON.parse(readFileSync(pkgPath,"utf8"));
 test("all direct component export targets are actual independent files",()=>{
  for(const [subpath,target] of Object.entries(pkg.exports)){
-   assert.ok(existsSync(resolve(root,target)),`Missing ${subpath}: ${target}`);
+   const entry=typeof target==="string"?target:target.default;
+  assert.equal(typeof entry,"string",`Expected ESM export path for ${subpath}`);
+  assert.ok(existsSync(resolve(root,entry)),`Missing compiled ${subpath}: ${entry}`);
  }
  assert.ok(pkg.exports["./components/forge/WaveformLane"]);
  assert.ok(!readFileSync(resolve(root,"src/index.ts"),"utf8").includes("./components/forge"));
