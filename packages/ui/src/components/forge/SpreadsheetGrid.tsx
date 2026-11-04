@@ -3,8 +3,8 @@ import { ScrollView, Text, TextInput, Pressable, View, type ViewProps } from "re
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { flexRender, tableFeatures, useTable } from "@tanstack/react-table";
-import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics, reanchorSheetScroll } from "./sheet-window";
-import { joinClasses } from "../styles";
+import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics, reanchorSheetScroll } from "./sheet-window.ts";
+import { joinClasses } from "../styles.ts";
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
 export interface SpreadsheetCell {

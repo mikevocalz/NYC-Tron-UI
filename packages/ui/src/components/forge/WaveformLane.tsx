@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { View,type ViewProps } from "react-native";
-import { joinClasses } from "../styles";
-import { peaksToBars,resamplePeaks,type WaveformPeak } from "./waveform";
+import { joinClasses } from "../styles.ts";
+import { peaksToBars,resamplePeaks,type WaveformPeak } from "./waveform.ts";
 
 export interface WaveformLaneProps extends Omit<ViewProps,"children"> {
   /** Measured real source signal extrema; not synthetic waves. */

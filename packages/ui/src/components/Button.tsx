@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ActivityIndicator, Pressable, Text, View, type PressableProps } from "react-native";
-import { joinClasses } from "./styles";
+import { joinClasses } from "./styles.ts";
 
 /**
  * Brand-neutral accessible press control. Native Chrome/Fluent/SwiftUI

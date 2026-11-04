@@ -1,9 +1,9 @@
 import { Host,Column,Slider,Button,Text } from "@expo/ui";
 import { View,type ViewProps } from "react-native";
-import { joinClasses } from "../styles";
+import { joinClasses } from "../styles.ts";
 import {
   clampFrame,formatTimecode,frameToPosition,positionToFrame,type FrameRate
-} from "./timebase";
+} from "./timebase.ts";
 /** Requires @expo/ui universal native APIs on a verified Expo SDK 58 host.
  * Not a WinUI, Spark SDK 55, audio decoder or Forge engine adapter.
  */

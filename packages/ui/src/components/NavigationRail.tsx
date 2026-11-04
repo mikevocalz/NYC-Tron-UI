@@ -3,7 +3,7 @@ import {
   Pressable,Text,View,
   type ViewProps
 } from "react-native";
-import { joinClasses } from "./styles";
+import { joinClasses } from "./styles.ts";
 
 export interface NavigationItem {
   readonly id:string;

@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
-import { joinClasses } from "../styles";
-import { dataTableLayout, tableContentWidth, type DataTableLayout } from "./table-layout";
+import { joinClasses } from "../styles.ts";
+import { dataTableLayout, tableContentWidth, type DataTableLayout } from "./table-layout.ts";
 
 /** TanStack owns row/column logic; NYC-Tron owns actual RN rendering. */
 const features = tableFeatures({
