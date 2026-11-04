@@ -41,3 +41,8 @@ test("exports and original MIT source provenance are included",()=>{
  assert.match(read("THIRD_PARTY_NOTICES.md"),/717ce0d6d4e18f2849d484b578e0faf13bb38077/);
  assert.match(read("../../licenses/AudioKit-Controls-MIT.txt"),/Aurelius Prochazka/);
 });
+test("example app id never collides with the library Android namespace",()=>{
+ const app=JSON.parse(read("../../examples/native-instruments/app.json")).expo;
+ const ns=read("android/build.gradle").match(/namespace\s+"([^"]+)"/)[1];
+ assert.notEqual(app.android.package,ns);
+});

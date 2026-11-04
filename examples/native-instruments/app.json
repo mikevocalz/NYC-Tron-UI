@@ -7,10 +7,10 @@
     "orientation": "default",
     "newArchEnabled": true,
     "ios": {
-      "bundleIdentifier": "com.nyctron.instruments"
+      "bundleIdentifier": "com.nyctron.instruments.example"
     },
     "android": {
-      "package": "com.nyctron.instruments"
+      "package": "com.nyctron.instruments.example"
     },
     "platforms": [
       "ios",
