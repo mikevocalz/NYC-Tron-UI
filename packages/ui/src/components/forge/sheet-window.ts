@@ -57,3 +57,45 @@ export function cellAddress(row:number,column:number):string {
   if(!Number.isSafeInteger(row)||row<0)throw new RangeError("Row must be nonnegative");
   return columnName(column)+String(row+1);
 }
+
+/**
+ * Content-based sheet composition. This does NOT identify a phone or alter
+ * app navigation; a narrow foldable pane or resized desktop window receives
+ * the same compact *grid* treatment. Columns must never become fake record
+ * cards in a formula-bearing spreadsheet.
+ */
+export interface SheetResponsiveInput {
+  readonly width: number;
+  readonly rowHeight?: number;
+  readonly columnWidth?: number;
+  readonly compactBelow?: number;
+  readonly touchTarget?: number;
+}
+export interface SheetResponsiveMetrics {
+  readonly compact: boolean;
+  readonly rowHeight: number;
+  readonly columnWidth: number;
+  readonly rowHeaderWidth: number;
+  readonly columnHeaderHeight: number;
+  readonly formulaBarHeight: number;
+}
+export function responsiveSheetMetrics({
+  width, rowHeight = 32, columnWidth = 112, compactBelow = 540, touchTarget = 44,
+}: SheetResponsiveInput): SheetResponsiveMetrics {
+  if (![width, rowHeight, columnWidth, compactBelow, touchTarget].every(Number.isFinite) ||
+      width < 0 || rowHeight <= 0 || columnWidth <= 0 ||
+      compactBelow <= 0 || touchTarget < 24) {
+    throw new RangeError("Invalid responsive spreadsheet metrics");
+  }
+  const compact = width < compactBelow;
+  return {
+    compact,
+    // The height is a touch-target minimum in a narrow pane, not a
+    // duplicated row model. Rows and columns keep their stable identities.
+    rowHeight: compact ? Math.max(rowHeight, touchTarget) : rowHeight,
+    columnWidth: compact ? Math.max(columnWidth, 112) : columnWidth,
+    rowHeaderWidth: compact ? 48 : 52,
+    columnHeaderHeight: compact ? Math.max(38, touchTarget) : 38,
+    formulaBarHeight: compact ? 92 : 46,
+  };
+}
