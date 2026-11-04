@@ -35,3 +35,11 @@ native AppKit/WinUI/Compose/SwiftUI behavior.
 - Nitro Forge Tally PR #39: Rust-backed viewport adapter; separate Rust
   integration workflow passed before this responsive update.
 - Details: [Responsive tables](RESPONSIVE_TABLES.md).
+
+## Native SwiftUI/Compose dropdown and menus — PR #10
+
+- Isolated `@nyc-tron/expo-controls` package, `NativeDropdown` via Expo 58 universal Picker and real native action menu via `@expo/ui/community/menu`.
+- Working React Native web fallback for action menus because Expo's web native MenuView has no action callbacks.
+- Checks for unique menu IDs, disabled actions and nested groups; exact `browser` and `react-native` export files verified per Metro's package exports rules.
+- Source tests, TypeScript, emitted package builds and npm pack checks **passed** on commit `8a3482bb1207ca2dd128b66092fbf2e7db59a38c`.
+- Actual Compose/SwiftUI on-device menu placement, keyboard and screen-reader verification **NOT RUN**. No production/publish claim.
