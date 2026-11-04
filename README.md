@@ -68,7 +68,7 @@ imports its OWN theme CSS and tells Tailwind where the component source lives:
 @import "uniwind";
 @import "@acme/theme/theme-native.css"; /* example: Moyo's OWN brand */
 
-@source "../node_modules/@nyc-tron/ui/src/components";
+@source "../node_modules/@nyc-tron/ui/dist/components";
 ```
 
 Choose an actual path resolvable from the consuming workspace; with pnpm
@@ -93,7 +93,10 @@ corepack enable
 corepack pnpm install --no-frozen-lockfile
 corepack pnpm test
 corepack pnpm typecheck
+corepack pnpm packcheck
 ```
 
-These are source/unit gates. No native device build, signed distribution or
+TypeScript now emits ESM and declarations under each package's `dist/`, and
+`packcheck` verifies every subpath resolves before inspecting the npm tarballs.
+These are package/source/unit gates. No native device build, signed distribution or
 cross-repository migration has been completed by this scaffold.

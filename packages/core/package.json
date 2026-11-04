@@ -5,13 +5,41 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./navigation": "./src/navigation.ts",
-    "./folds": "./src/folds.ts",
-    "./spatial": "./src/spatial.ts",
-    "./theme": "./src/theme.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index",
+      "default": "./dist/index.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation.d.ts",
+      "react-native": "./dist/navigation",
+      "default": "./dist/navigation.js"
+    },
+    "./folds": {
+      "types": "./dist/folds.d.ts",
+      "react-native": "./dist/folds",
+      "default": "./dist/folds.js"
+    },
+    "./spatial": {
+      "types": "./dist/spatial.d.ts",
+      "react-native": "./dist/spatial",
+      "default": "./dist/spatial.js"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "react-native": "./dist/theme",
+      "default": "./dist/theme.js"
+    }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
-  }
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "prepack": "pnpm build"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }

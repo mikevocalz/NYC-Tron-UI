@@ -5,19 +5,61 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./components/Button": "./src/components/Button.tsx",
-    "./components/Card": "./src/components/Card.tsx",
-    "./components/NavigationRail": "./src/components/NavigationRail.tsx",
-    "./components/forge/WaveformLane": "./src/components/forge/WaveformLane.tsx",
-    "./components/forge/NativeSeekBar": "./src/components/forge/NativeSeekBar.tsx",
-    "./components/forge/ColorChannels": "./src/components/forge/ColorChannels.tsx",
-    "./components/forge/waveform": "./src/components/forge/waveform.ts",
-    "./components/forge/timebase": "./src/components/forge/timebase.ts",
-    "./components/forge/color": "./src/components/forge/color.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index",
+      "default": "./dist/index.js"
+    },
+    "./components/Button": {
+      "types": "./dist/components/Button.d.ts",
+      "react-native": "./dist/components/Button",
+      "default": "./dist/components/Button.js"
+    },
+    "./components/Card": {
+      "types": "./dist/components/Card.d.ts",
+      "react-native": "./dist/components/Card",
+      "default": "./dist/components/Card.js"
+    },
+    "./components/NavigationRail": {
+      "types": "./dist/components/NavigationRail.d.ts",
+      "react-native": "./dist/components/NavigationRail",
+      "default": "./dist/components/NavigationRail.js"
+    },
+    "./components/forge/WaveformLane": {
+      "types": "./dist/components/forge/WaveformLane.d.ts",
+      "react-native": "./dist/components/forge/WaveformLane",
+      "default": "./dist/components/forge/WaveformLane.js"
+    },
+    "./components/forge/NativeSeekBar": {
+      "types": "./dist/components/forge/NativeSeekBar.d.ts",
+      "react-native": "./dist/components/forge/NativeSeekBar",
+      "default": "./dist/components/forge/NativeSeekBar.js"
+    },
+    "./components/forge/ColorChannels": {
+      "types": "./dist/components/forge/ColorChannels.d.ts",
+      "react-native": "./dist/components/forge/ColorChannels",
+      "default": "./dist/components/forge/ColorChannels.js"
+    },
+    "./components/forge/waveform": {
+      "types": "./dist/components/forge/waveform.d.ts",
+      "react-native": "./dist/components/forge/waveform",
+      "default": "./dist/components/forge/waveform.js"
+    },
+    "./components/forge/timebase": {
+      "types": "./dist/components/forge/timebase.d.ts",
+      "react-native": "./dist/components/forge/timebase",
+      "default": "./dist/components/forge/timebase.js"
+    },
+    "./components/forge/color": {
+      "types": "./dist/components/forge/color.d.ts",
+      "react-native": "./dist/components/forge/color",
+      "default": "./dist/components/forge/color.js"
+    }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "prepack": "pnpm build"
   },
   "peerDependencies": {
     "react": ">=19.0.0",
@@ -35,5 +77,11 @@
     "react": "19.3.0",
     "react-native": "0.88.0",
     "@expo/ui": "58.0.20"
-  }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }

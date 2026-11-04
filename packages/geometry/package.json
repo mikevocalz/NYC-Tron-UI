@@ -5,10 +5,26 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./corner-cut": "./src/corner-cut.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index",
+      "default": "./dist/index.js"
+    },
+    "./corner-cut": {
+      "types": "./dist/corner-cut.d.ts",
+      "react-native": "./dist/corner-cut",
+      "default": "./dist/corner-cut.js"
+    }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
-  }
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "prepack": "pnpm build"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }
