@@ -114,7 +114,7 @@ export function DataTable<T extends RowData>({
                     rowClassName,
                   ) }}
                   style={{ minHeight: rowHeight }}>
-                  {row.getVisibleCells().map(cell => (
+                  {row.getAllCells().map(cell => (
                     <View key={cell.id}
                       {...{ className: joinClasses("flex-1 min-w-0 justify-center px-3", cellClassName) }}>
                       {asNativeNode(flexRender(cell.column.columnDef.cell, cell.getContext()))}
