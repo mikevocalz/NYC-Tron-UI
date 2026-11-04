@@ -64,3 +64,33 @@ jobs:
           cd examples/native-instruments/android
           chmod +x ./gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
+
+  ios:
+    name: iOS native SwiftUI simulator compile
+    runs-on: macos-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --no-frozen-lockfile
+      - name: Generate native iOS development app
+        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform ios --no-install --non-interactive
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
+      - name: Resolve native pods and SwiftUI bridge
+        working-directory: examples/native-instruments/ios
+        run: pod install
+      - name: Build iOS simulator without code signing
+        working-directory: examples/native-instruments/ios
+        run: |
+          workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
+          if [ -z "$workspace" ]; then echo "Missing iOS workspace"; exit 1; fi
+          scheme=$(basename "$workspace" .xcworkspace)
+          xcodebuild -workspace "$workspace" -scheme "$scheme" \
+            -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build
