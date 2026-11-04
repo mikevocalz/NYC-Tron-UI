@@ -94,6 +94,16 @@
       "types": "./dist/components/data/TreeGrid.d.ts",
       "react-native": "./dist/components/data/TreeGrid",
       "default": "./dist/components/data/TreeGrid.js"
+    },
+    "./components/forge/graph/model": {
+      "types": "./dist/components/forge/graph/model.d.ts",
+      "react-native": "./dist/components/forge/graph/model",
+      "default": "./dist/components/forge/graph/model.js"
+    },
+    "./components/forge/graph/PatchGraph": {
+      "types": "./dist/components/forge/graph/PatchGraph.d.ts",
+      "react-native": "./dist/components/forge/graph/PatchGraph",
+      "default": "./dist/components/forge/graph/PatchGraph.js"
     }
   },
   "scripts": {
