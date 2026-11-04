@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "NYC-Tron Instruments",
+    "slug": "nyc-tron-instruments",
+    "scheme": "nyctron-instruments",
+    "version": "0.1.0",
+    "orientation": "default",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.nyctron.instruments"
+    },
+    "android": {
+      "package": "com.nyctron.instruments"
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "userInterfaceStyle": "dark"
+  }
+}
