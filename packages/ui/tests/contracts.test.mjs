@@ -6,7 +6,7 @@ import { resolve,dirname } from "node:path";
 import { resamplePeaks,peaksToBars } from "../src/components/forge/waveform.ts";
 import { FRAME_RATES,formatTimecode,frameToPosition,positionToFrame } from "../src/components/forge/timebase.ts";
 import { rgbaToHex } from "../src/components/forge/color.ts";
-import { sheetWindow,cellAddress,columnName,responsiveSheetMetrics } from "../src/components/forge/sheet-window.ts";
+import { sheetWindow,cellAddress,columnName,responsiveSheetMetrics,reanchorSheetScroll } from "../src/components/forge/sheet-window.ts";
 import { dataTableLayout,tableContentWidth } from "../src/components/data/table-layout.ts";
 const pkgPath=new URL("../package.json",import.meta.url);
 const root=dirname(fileURLToPath(pkgPath));
@@ -120,4 +120,17 @@ test("responsive implementation measures host panes, not window screen dimension
   assert.ok(grid.includes("onWindowChangeRef"));
   assert.ok(!data.includes("useWindowDimensions"));
   assert.ok(!grid.includes("useWindowDimensions"));
+});
+
+test("portrait-landscape and foldable split resize retain selected sheet region",()=>{
+  const wide={rowHeight:32,columnWidth:112,rowHeaderWidth:52};
+  const compact={rowHeight:44,columnWidth:112,rowHeaderWidth:48};
+  const before={x:52+112*23.5,y:32*800.25};
+  const after=reanchorSheetScroll(before,wide,compact);
+  assert.equal(after.x,48+112*23.5);
+  assert.equal(after.y,44*800.25);
+  const back=reanchorSheetScroll(after,compact,wide);
+  assert.deepEqual(back,before);
+  assert.deepEqual(reanchorSheetScroll({x:0,y:0},wide,compact),{x:0,y:0});
+  assert.throws(()=>reanchorSheetScroll({x:0,y:0},{...wide,rowHeight:0},compact),/anchors/);
 });
