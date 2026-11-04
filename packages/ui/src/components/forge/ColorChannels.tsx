@@ -28,6 +28,8 @@ export function ColorChannels({
    {...{className:joinClasses("w-full gap-2",!unstyled&&"rounded-control bg-surface-raised p-3",className)}}
    style={style}>
      <View
+       accessible
+       accessibilityRole="image"
        accessibilityLabel={`Selected color ${hex}`}
        {...{className:joinClasses("h-8 w-full rounded-control",previewClassName)}}
        style={{backgroundColor:hex}}/>
