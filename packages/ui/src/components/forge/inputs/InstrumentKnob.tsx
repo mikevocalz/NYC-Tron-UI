@@ -64,6 +64,7 @@ export function InstrumentKnob({
     onPanResponderTerminationRequest:()=>true,
   });
   const enter=()=>{
+    if(!store.getState().editing)return;
     const next=Number(store.getState().draft.trim());
     if(Number.isFinite(next))commit(next);
     else store.setState({editing:false,preview:latest.current.value,draft:String(latest.current.value)});

@@ -57,7 +57,7 @@ export function TreeGrid({
     </ScrollView>}
     <FlatList data={rows} style={{maxHeight}} keyExtractor={r=>r.node.id}
       renderItem={({item})=><View style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",
-        borderBottomWidth:1,borderColor:"#343443",paddingVertical:4,paddingLeft:Math.min(item.depth*16,128)}}>
+        borderBottomWidth:unstyled?0:1,borderColor:unstyled?undefined:"#343443",paddingVertical:4,paddingLeft:Math.min(item.depth*16,128)}}>
         <View style={{flexDirection:"row",alignItems:"center",minHeight:40,minWidth:180,flex:1}}>
           <Pressable accessible accessibilityRole="button"
             accessibilityLabel={(expanded.has(item.node.id)?"Collapse ":"Expand ")+item.node.label}

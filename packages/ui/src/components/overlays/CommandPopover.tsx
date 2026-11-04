@@ -14,10 +14,16 @@ export interface CommandPopoverProps{
  maxHeight?:number;
  className?:string;
  unstyled?:boolean;
+ surfaceColor?:string;
+ borderColor?:string;
+ textColor?:string;
+ mutedTextColor?:string;
+ dangerColor?:string;
 }
 /** RN Modal-backed portable overlay. Genuine WinUI/AppKit/SwiftUI/Compose menu adapters are separate. */
 export function CommandPopover({visible,onDismiss,onSelect,anchor,usableRegions,items,width=268,maxHeight=420,
- className,unstyled=false}:CommandPopoverProps){
+ className,unstyled=false,surfaceColor="#242430",borderColor="#444457",
+ textColor="#F5F5F7",mutedTextColor="#ADADBE",dangerColor="#FB7185"}:CommandPopoverProps){
  const position=placePopover(anchor,usableRegions,width,Math.min(maxHeight,Math.max(56,items.length*60+16)));
  return <Modal visible={visible} transparent animationType="fade" onRequestClose={onDismiss}
     accessibilityViewIsModal>
@@ -26,16 +32,17 @@ export function CommandPopover({visible,onDismiss,onSelect,anchor,usableRegions,
         style={{position:"absolute",top:0,right:0,bottom:0,left:0,backgroundColor:"rgba(0,0,0,0.24)"}}/>
       <View {...{className:joinClasses(!unstyled&&"rounded-control border border-border bg-surface-raised",className)}}
         style={{position:"absolute",left:position.x,top:position.y,width:position.width,
-          maxHeight:position.height,overflow:"hidden",borderRadius:12,backgroundColor:"#242430",borderColor:"#444457",borderWidth:1}}>
+          maxHeight:position.height,overflow:"hidden",borderRadius:unstyled?0:12,
+          backgroundColor:unstyled?undefined:surfaceColor,borderColor:unstyled?undefined:borderColor,borderWidth:unstyled?0:1}}>
         <ScrollView keyboardShouldPersistTaps="handled">
           {items.map(item=><Pressable key={item.id} accessibilityRole="menuitem"
             accessibilityState={{disabled:item.disabled}}
             disabled={item.disabled}
             onPress={()=>{onSelect(item.id);onDismiss();}}
             style={{minHeight:56,paddingHorizontal:12,paddingVertical:7,justifyContent:"center",
-              opacity:item.disabled?0.4:1,borderBottomWidth:1,borderColor:"#383847"}}>
-            <Text style={{color:item.danger?"#FB7185":"#F5F5F7",fontWeight:"600"}}>{item.label}</Text>
-            {item.description?<Text numberOfLines={2} style={{color:"#ADADBE",fontSize:12}}>{item.description}</Text>:null}
+              opacity:item.disabled?0.4:1,borderBottomWidth:unstyled?0:1,borderColor:unstyled?undefined:borderColor}}>
+            <Text style={{color:unstyled?undefined:(item.danger?dangerColor:textColor),fontWeight:"600"}}>{item.label}</Text>
+            {item.description?<Text numberOfLines={2} style={{color:unstyled?undefined:mutedTextColor,fontSize:12}}>{item.description}</Text>:null}
           </Pressable>)}
         </ScrollView>
       </View>
