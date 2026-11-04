@@ -19,6 +19,8 @@ export interface ButtonProps extends Omit<PressableProps,"children"|"disabled"> 
   disabled?:boolean;
   loading?:boolean;
   className?:string;
+  /** Complete visual override: app supplies its own Tailwind recipe. */
+  unstyled?:boolean;
   labelClassName?:string;
   iconClassName?:string;
 }
@@ -35,7 +37,7 @@ const sizes:Record<ButtonSize,string>={
 };
 export function Button({
   title,icon,variant="primary",size="md",disabled=false,loading=false,
-  className,labelClassName,iconClassName,onPress,style,...rest
+  className,unstyled=false,labelClassName,iconClassName,onPress,style,...rest
 }:ButtonProps) {
   const off=disabled||loading;
   const selected=variants[variant];
@@ -43,9 +45,9 @@ export function Button({
     <Pressable
       {...rest}
       {...{className:joinClasses(
-        "flex-row items-center justify-center rounded-control border",
-        "active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus",
-        "motion-reduce:transition-none",sizes[size],selected.root,
+        "flex-row items-center justify-center",
+        !unstyled&&"rounded-control border active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none",
+        !unstyled&&sizes[size],!unstyled&&selected.root,
         off&&"opacity-50",className
       )}}
       style={style}
@@ -57,7 +59,7 @@ export function Button({
     >
       {loading ? <ActivityIndicator accessibilityLabel="Loading" /> : null}
       {icon ? <View {...{className:joinClasses("items-center justify-center",iconClassName)}}>{icon}</View> : null}
-      <Text {...{className:joinClasses("font-semibold",selected.label,labelClassName)}}>{title}</Text>
+      <Text {...{className:joinClasses(!unstyled&&"font-semibold",!unstyled&&selected.label,labelClassName)}}>{title}</Text>
     </Pressable>
   );
 }
