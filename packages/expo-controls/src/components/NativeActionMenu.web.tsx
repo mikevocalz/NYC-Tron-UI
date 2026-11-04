@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -25,7 +25,7 @@ export function NativeActionMenu({
     close();
     onAction(id);
   };
-  const render=(entries:readonly TronMenuAction[],depth:number):React.ReactNode =>
+  const render=(entries:readonly TronMenuAction[],depth:number):ReactNode =>
     entries.map(action=><View key={action.id}>
       {action.subactions?.length?<>
         <Text accessibilityRole="header" style={{paddingHorizontal:16,paddingTop:10,fontWeight:"700"}}>
@@ -38,8 +38,8 @@ export function NativeActionMenu({
         disabled={!!action.disabled}
         onPress={()=>run(action.id)}
         style={{minHeight:44,flexDirection:"row",alignItems:"center",paddingHorizontal:16,
-          paddingLeft:16+depth*8,opacity:action.disabled?.4:1,gap:12}}>
-        <Text style={{flex:1}}>{action.title}</Text>
+          paddingLeft:16+depth*8,opacity:action.disabled ? 0.4 : 1,gap:12}}>
+        <Text style={{flex:1}} {...{className: action.destructive ? "text-danger" : "text-text"}}>{action.title}</Text>
         {action.checked?<Text accessibilityElementsHidden>✓</Text>:null}
       </Pressable>}
     </View>);
@@ -57,8 +57,8 @@ export function NativeActionMenu({
         <Pressable accessibilityLabel="Close menu" accessibilityRole="button" onPress={close}
           style={{position:"absolute",left:0,right:0,top:0,bottom:0,
             backgroundColor:"rgba(0,0,0,0.32)"}}/>
-        <View style={{maxHeight:"75%",borderRadius:12,backgroundColor:"#fff",
-          overflow:"hidden",minWidth:220}}>
+        <View {...{className:"rounded-control bg-surface-raised border border-border"}}
+          style={{maxHeight:"75%",overflow:"hidden",minWidth:220}}>
           <ScrollView keyboardShouldPersistTaps="handled">
             {render(actions,0)}
           </ScrollView>
