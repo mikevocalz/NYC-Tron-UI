@@ -8,7 +8,9 @@
 | RN Button / Card / NavigationRail | Source only; native runtime not yet validated |
 | Professional WaveformLane | Source only; native runtime not yet validated |
 | Expo 58 native seek and RGBA sliders | Source only; build/device integration not yet validated |
-| Correct per-component package exports | Manifest written; export tests included |
+| TanStack v9 DataTable / Tally SpreadsheetGrid | Added with custom RN UI, two-axis virtual window and controlled formula bar; TypeScript/source/pack CI passed. Native interaction NOT RUN |
+| Forge Tally Rust viewport adapter | [Forge PR #39](https://github.com/mikevocalz/nitro-forge/pull/39): Ubuntu CI passed mock + live nf-cli Rust formula recalculation and undo. Native UI still NOT RUN |
+| Correct per-component package exports | ESM/dist and declarations built; independent package tarballs built in CI |
 | Moyo neubrutalist theme consumption | Example contract written, **not visually tested** |
 | NYC-MON neon/district theme consumption | Example contract written, **not visually tested** |
 | Forge suite real consumer and packaging | **NOT RUN** |
