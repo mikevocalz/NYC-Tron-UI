@@ -33,6 +33,9 @@ dependencies {
   // Expo SDK 58 links @expo/ui through its local Maven artifact, not
   // necessarily a :expo-ui Gradle project.
   implementation "expo.modules.ui:expo.modules.ui:${expoUiManifest.version}"
+  // ModifierList is Map<String, com.facebook.react.bridge.Dynamic>; the
+  // expo-ui AAR does not re-export React Native to consumers.
+  implementation 'com.facebook.react:react-android'
   implementation 'androidx.compose.foundation:foundation-android:1.12.1'
   implementation 'androidx.compose.ui:ui-android:1.12.1'
   implementation 'androidx.compose.material3:material3-android:1.5.0-beta01'
