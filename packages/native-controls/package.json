@@ -1,0 +1,54 @@
+{
+  "name": "@nyc-tron/native-controls",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Installable SwiftUI and Jetpack Compose instruments for NYC-Tron UI",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index",
+      "default": "./dist/index.js"
+    },
+    "./ArcKnob": {
+      "types": "./dist/ArcKnob.d.ts",
+      "react-native": "./dist/ArcKnob",
+      "default": "./dist/ArcKnob.js"
+    },
+    "./XYPad": {
+      "types": "./dist/XYPad.d.ts",
+      "react-native": "./dist/XYPad",
+      "default": "./dist/XYPad.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm build"
+  },
+  "peerDependencies": {
+    "@expo/ui": "^58.0.0",
+    "expo": ">=58.0.21",
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0"
+  },
+  "devDependencies": {
+    "@expo/ui": "58.0.27",
+    "expo": "58.0.24",
+    "react": "19.3.0",
+    "@types/react": "~19.3.0",
+    "react-native": "0.88.0",
+    "typescript": "~6.0.3"
+  },
+  "files": [
+    "dist",
+    "ios",
+    "android",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE"
+  ]
+}
