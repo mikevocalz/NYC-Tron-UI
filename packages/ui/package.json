@@ -69,6 +69,16 @@
       "types": "./dist/components/forge/sheet-window.d.ts",
       "react-native": "./dist/components/forge/sheet-window",
       "default": "./dist/components/forge/sheet-window.js"
+    },
+    "./components/navigation/CollapsibleDrawer": {
+      "types": "./dist/components/navigation/CollapsibleDrawer.d.ts",
+      "react-native": "./dist/components/navigation/CollapsibleDrawer",
+      "default": "./dist/components/navigation/CollapsibleDrawer.js"
+    },
+    "./components/navigation/drawer-model": {
+      "types": "./dist/components/navigation/drawer-model.d.ts",
+      "react-native": "./dist/components/navigation/drawer-model",
+      "default": "./dist/components/navigation/drawer-model.js"
     }
   },
   "scripts": {
