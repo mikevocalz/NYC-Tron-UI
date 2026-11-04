@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type ComponentRef } from "react";
 import { ScrollView, Text, TextInput, Pressable, View, type ViewProps } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -69,8 +69,8 @@ export function SpreadsheetGrid({
   });
   const rowHeight=metrics.rowHeight;
   const columnWidth=metrics.columnWidth;
-  const horizontalRef=useRef<ScrollView>(null);
-  const verticalRef=useRef<ScrollView>(null);
+  const horizontalRef=useRef<ComponentRef<typeof ScrollView>>(null);
+  const verticalRef=useRef<ComponentRef<typeof ScrollView>>(null);
   const previousCellMetrics=useRef({
     rowHeight,columnWidth,rowHeaderWidth:metrics.rowHeaderWidth,
   });
