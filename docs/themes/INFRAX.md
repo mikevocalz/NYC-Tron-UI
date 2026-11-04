@@ -14,11 +14,12 @@ Source: user-supplied `web-designer-pro.zip` design skill, November 2026. This p
 
 ## Tokens
 
-`infraxTokens(INFRAX_THEME)` and `infraxTokens(INFRAX_DARK_THEME)` return the
-13 CSS variables listed in [THEME_TOKENS.md](../THEME_TOKENS.md), so every
-NYC-Tron component recipe resolves. Spread them into the app's light and dark
-theme blocks. Pass `{ appearance }` when a customized theme object should map
-as dark, and `{ status }` to replace the danger and accent colors.
+`INFRAX_THEME` and `INFRAX_DARK_THEME` use the current `TronTheme` keys
+(`surfaceRaised`, `surfaceSunken`, `text`, `textMuted`, `danger`, `onDanger`,
+`accent`; see [THEME_TOKENS.md](../THEME_TOKENS.md)). `infraxTokens(theme)`
+returns the 13 CSS variables every NYC-Tron component recipe reads; spread them
+into the app's light and dark theme blocks. Pass `{ status }` to replace the
+danger and accent colors.
 
 Labels on the brand orange are navy (`#000d1a`, 6.67:1). White on `#f37021`
 is 2.94:1 and fails WCAG AA for button text. The light accent is the darker
