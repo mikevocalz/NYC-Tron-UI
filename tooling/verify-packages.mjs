@@ -10,7 +10,8 @@ for (const pkgName of packages) {
   if(!manifest.files.includes("dist"))throw new Error("Missing dist files declaration");
   for(const [key,value] of Object.entries(manifest.exports)) {
     if(!value || typeof value!=="object")throw new Error("Bad export "+pkgName+":"+key);
-    for(const condition of ["types","default"]){
+    for(const condition of ["types","default","react-native","browser"]){
+      if(!value[condition] && (condition==="react-native"||condition==="browser"))continue;
       if(!value[condition])throw new Error("Missing "+condition+" export "+key);
       if(!existsSync(join(dir,value[condition])))throw new Error("Missing compiled "+pkgName+":"+value[condition]);
     }
