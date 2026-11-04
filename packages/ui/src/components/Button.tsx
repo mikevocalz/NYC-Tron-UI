@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ActivityIndicator, Pressable, Text, View, type PressableProps } from "react-native";
-import { joinClasses } from "./styles";
+import { joinClasses } from "./styles.ts";
 
 /**
  * Brand-neutral accessible press control. Native Chrome/Fluent/SwiftUI
@@ -51,6 +51,8 @@ export function Button({
         off&&"opacity-50",className
       )}}
       style={style}
+      // sm draws at 40pt; slop brings the touch target to the 44pt minimum.
+      hitSlop={rest.hitSlop??(size==="sm"?2:undefined)}
       disabled={off}
       accessibilityRole="button"
       accessibilityLabel={rest.accessibilityLabel??title}
