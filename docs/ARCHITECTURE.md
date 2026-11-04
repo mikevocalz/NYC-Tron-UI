@@ -63,6 +63,14 @@ Every reusable component supplies accessibility semantics and supported slots:
 </Card>
 ```
 
+Default Tailwind utility classes and consumer utility classes have equal
+specificity: appending `className` does **not** guarantee that a new
+`rounded-none` overrides `rounded-control` in generated CSS. Components
+therefore expose **`unstyled`** for apps that want a completely different
+visual recipe; the app supplies full classes while the component retains
+event and accessibility behavior. Native OS controls still accept only
+the resources/properties supported by their adapters.
+
 Uniwind/native implementations resolve utilities through the application's
 registered theme. App-specific class variants override default presentation
 while event handlers/state semantics stay intact. Never use Tailwind class
