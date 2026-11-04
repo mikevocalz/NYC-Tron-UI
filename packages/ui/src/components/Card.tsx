@@ -7,6 +7,8 @@ export interface CardProps extends Omit<ViewProps,"children"> {
  surface?:CardSurface;
  padded?:boolean;
  className?:string;
+ /** No default visual classes: app provides full Tailwind styling. */
+ unstyled?:boolean;
 }
 const surfaces:Record<CardSurface,string>={
  raised:"bg-surface-raised border-border",
@@ -15,11 +17,11 @@ const surfaces:Record<CardSurface,string>={
 };
 /** Presentation only. Never imports an app theme or Forge document runtime. */
 export function Card({
- children,surface="raised",padded=true,className,style,...rest
+ children,surface="raised",padded=true,unstyled=false,className,style,...rest
 }:CardProps) {
  return (
    <View {...rest} {...{className:joinClasses(
-     "rounded-card border",surfaces[surface],padded&&"p-4",className
+     !unstyled&&"rounded-card border",!unstyled&&surfaces[surface],!unstyled&&padded&&"p-4",className
    )}} style={style}>{children}</View>
  );
 }
