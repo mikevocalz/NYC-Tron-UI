@@ -8,12 +8,12 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "react-native": "./dist/index",
+      "react-native": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./AdaptivePaneHost": {
       "types": "./dist/components/AdaptivePaneHost.d.ts",
-      "react-native": "./dist/components/AdaptivePaneHost",
+      "react-native": "./dist/components/AdaptivePaneHost.js",
       "default": "./dist/components/AdaptivePaneHost.js"
     }
   },
