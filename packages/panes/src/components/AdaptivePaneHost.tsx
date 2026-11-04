@@ -1,6 +1,6 @@
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import {
-  Pressable, View, type ViewProps, type ViewStyle,
+  Pressable, Text, View, type ViewProps, type ViewStyle,
 } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
@@ -75,15 +75,13 @@ export function AdaptivePaneHost({
     inspector: inspectorConfig ? { ...inspectorConfig, open: inspectorOpen } : undefined,
   }) : null;
 
-  const previousPlanKey = useRef<string | null>(null);
-  if (plan) {
-    const key = JSON.stringify(plan);
-    if (key !== previousPlanKey.current) {
-      previousPlanKey.current = key;
-      // No callback during render. Notify on layout or next layout callback
-      // from the owning host instead of mutating a caller's state in render.
-    }
-  }
+  const onPlanChangeRef = useRef(onPlanChange);
+  onPlanChangeRef.current = onPlanChange;
+  const planKey = plan ? JSON.stringify(plan) : "";
+  // Notify only after React commits geometry; never set parent state in render.
+  useEffect(() => {
+    if (plan) onPlanChangeRef.current?.(plan);
+  }, [planKey]);
   const measured = (event: Parameters<NonNullable<ViewProps["onLayout"]>>[0]) => {
     const next = event.nativeEvent.layout;
     if (Number.isFinite(next.width) && Number.isFinite(next.height) &&
@@ -125,7 +123,8 @@ export function AdaptivePaneHost({
           accessibilityLabel="Close master pane"
           onPress={onDismissMaster}
           disabled={!onDismissMaster}
-          style={{ position: "absolute", ...rectStyle(plan.detail.rect), zIndex: 2 }}
+          style={{ ...rectStyle(plan.detail.rect), zIndex: 2,
+            backgroundColor: "rgba(0,0,0,0.18)" }}
         />
       ) : null}
       {content(master, "Master pane", masterClassName,
@@ -145,8 +144,10 @@ export function AdaptivePaneHost({
               ? plan.inspector.rect.x + plan.inspector.rect.width - 48
               : plan.inspector.rect.x + 4,
             minWidth: 44, minHeight: 44,
+            alignItems: "center", justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.12)",
           }}
-        />
+        ><Text accessibilityElementsHidden importantForAccessibility="no-hide-descendants">×</Text></Pressable>
       ) : null}
     </View>
   );
