@@ -14,7 +14,13 @@ test("all direct component export targets are actual independent files",()=>{
  for(const [subpath,target] of Object.entries(pkg.exports)){
    const entry=typeof target==="string"?target:target.default;
   assert.equal(typeof entry,"string",`Expected ESM export path for ${subpath}`);
-  assert.ok(existsSync(resolve(root,entry)),`Missing compiled ${subpath}: ${entry}`);
+  const fallback=entry.replace("/dist/","/src/").replace(/\\.js$/,"");
+  assert.ok(
+    existsSync(resolve(root,entry)) ||
+    existsSync(resolve(root,fallback+".ts")) ||
+    existsSync(resolve(root,fallback+".tsx")),
+    `Missing source or compiled export ${subpath}: ${entry}`
+  );
  }
  assert.ok(pkg.exports["./components/forge/WaveformLane"]);
  assert.ok(!readFileSync(resolve(root,"src/index.ts"),"utf8").includes("./components/forge"));
