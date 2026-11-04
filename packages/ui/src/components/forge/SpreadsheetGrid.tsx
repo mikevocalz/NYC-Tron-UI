@@ -148,7 +148,7 @@ export function SpreadsheetGrid({
                 <Text>{realRow+1}</Text>
               </View>
               <View style={{width:leftGap}}/>
-              {row.getVisibleCells().map((cell,i)=>{
+              {row.getAllCells().map((cell,i)=>{
                 const col=window.columns.start+i;
                 const addr=cellAddress(realRow,col);
                 return <Pressable
