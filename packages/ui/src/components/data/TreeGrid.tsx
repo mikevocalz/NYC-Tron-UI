@@ -56,7 +56,6 @@ export function TreeGrid({
       </View>
     </ScrollView>}
     <FlatList data={rows} style={{maxHeight}} keyExtractor={r=>r.node.id}
-      getItemLayout={(_data,index)=>({length:compact?rowHeight+44:rowHeight,offset:index*(compact?rowHeight+44:rowHeight),index})}
       renderItem={({item})=><View style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",
         borderBottomWidth:1,borderColor:"#343443",paddingVertical:4,paddingLeft:Math.min(item.depth*16,128)}}>
         <View style={{flexDirection:"row",alignItems:"center",minHeight:40,minWidth:180,flex:1}}>

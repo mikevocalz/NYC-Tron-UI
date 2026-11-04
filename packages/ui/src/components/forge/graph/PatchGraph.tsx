@@ -1,4 +1,4 @@
-import {useMemo,useRef} from "react";
+import {useEffect,useMemo,useRef} from "react";
 import {PanResponder,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -30,6 +30,15 @@ export function PatchGraph({
  const store=local.current;
  const {positions,output}=useStore(store,s=>s);
  const rendered=useMemo(()=>nodes.map(n=>({...n,...positions[n.id]})),[nodes,positions]);
+ useEffect(()=>{
+   const pending=store.getState().positions;
+   const next={...pending};
+   let changed=false;
+   for(const node of nodes){
+     if(pending[node.id]?.x===node.x&&pending[node.id]?.y===node.y){delete next[node.id];changed=true;}
+   }
+   if(changed)store.setState({positions:next});
+ },[nodes,store]);
  validatePatchGraph(rendered,edges);
  const byId=new Map(rendered.map(n=>[n.id,n] as const));
  const selectOutput=(port:GraphSelection)=>store.setState({output:port});

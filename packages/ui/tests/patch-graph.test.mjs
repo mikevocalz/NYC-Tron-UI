@@ -8,8 +8,8 @@ const nodes=[
 test("graph validates real directional typed endpoints and port anchors",()=>{
  const e=[{id:"patch",from:{nodeId:"source",portId:"out"},to:{nodeId:"effect",portId:"in"}}];
  assert.doesNotThrow(()=>validatePatchGraph(nodes,e));
- assert.deepEqual(getPortAnchor(nodes[0],"out","output"),{x:200,y:114});
- assert.deepEqual(getPortAnchor(nodes[1],"in","input"),{x:320,y:114});
+ assert.deepEqual(getPortAnchor(nodes[0],"out","output"),{x:194,y:108});
+ assert.deepEqual(getPortAnchor(nodes[1],"in","input"),{x:326,y:108});
  assert.throws(()=>validatePatchGraph(nodes,[{...e[0],to:{nodeId:"effect",portId:"out"}}]),/Invalid/);
  assert.throws(()=>validatePatchGraph([...nodes,nodes[0]],e),/Invalid/);
  assert.equal(compatiblePorts({nodeId:"a",portId:"o",dataType:"audio"},{nodeId:"b",portId:"i",dataType:"audio"}),true);

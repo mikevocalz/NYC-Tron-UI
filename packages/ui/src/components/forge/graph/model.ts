@@ -32,7 +32,7 @@ export function getPortAnchor(node:GraphNode,portId:string,kind:"input"|"output"
  const ports=kind==="input"?node.inputs:node.outputs;
  const index=ports.findIndex(p=>p.id===portId);
  if(index<0)throw new RangeError("Unknown port: "+portId);
- return {x:node.x+(kind==="output"?(node.width??200):0),y:node.y+50+28*index+14};
+ return {x:node.x+(kind==="output"?(node.width??200)-6:6),y:node.y+44+28*index+14};
 }
 export function cubicGraphPoints(from:GraphPoint,to:GraphPoint,segments=16):GraphPoint[]{
  if(!Number.isInteger(segments)||segments<1||segments>64)throw new RangeError("Invalid curve segments");
