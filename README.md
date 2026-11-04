@@ -102,7 +102,7 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 
 ```bash
 corepack enable
-corepack pnpm install --no-frozen-lockfile
+corepack pnpm install --frozen-lockfile
 corepack pnpm test
 corepack pnpm typecheck
 corepack pnpm packcheck
