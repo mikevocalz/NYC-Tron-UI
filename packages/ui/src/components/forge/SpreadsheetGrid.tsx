@@ -131,6 +131,10 @@ export function SpreadsheetGrid({
       state.setState({error:err instanceof Error?err.message:"Could not update cell"});
     }finally{state.setState({pending:false});}
   };
+  // RN Text does not inherit color; every label needs the theme text token or
+  // it renders platform-default black on a dark surface.
+  const textClass=!unstyled?"text-text":undefined;
+  const mutedClass=!unstyled?"text-text-muted":undefined;
   const left=metrics.rowHeaderWidth;
   const headerHeight=metrics.columnHeaderHeight;
   const visibleColumns=table.getHeaderGroups().at(0)?.headers??[];
@@ -159,12 +163,13 @@ export function SpreadsheetGrid({
     }}>
       <View style={{flexDirection:"row",alignItems:"center",
         justifyContent:"space-between",minWidth:metrics.compact?0:60}}>
-        <Text accessibilityLabel={`Selected cell ${selected||"A1"}`}>{selected || "A1"}</Text>
-        {metrics.compact?<Text numberOfLines={1} style={{opacity:0.7,fontSize:11}}>
+        <Text {...{className:textClass}} accessibilityLabel={selected?`Selected cell ${selected}`:"No cell selected"}>{selected}</Text>
+        {metrics.compact?<Text numberOfLines={1} style={{fontSize:11}} {...{className:mutedClass}}>
           Swipe sideways for more columns
         </Text>:null}
       </View>
       <TextInput
+        {...{className:joinClasses(!unstyled&&"rounded-control border border-border bg-surface-sunken text-text focus:border-focus")}}
         style={{flex:metrics.compact?undefined:1,
           width:metrics.compact?"100%":undefined,minHeight:44,paddingHorizontal:10}}
         accessibilityLabel="Formula bar"
@@ -176,7 +181,8 @@ export function SpreadsheetGrid({
         returnKeyType="done"
       />
     </View>
-    {error?<Text accessibilityLiveRegion="polite">{error}</Text>:null}
+    {error?<Text accessibilityLiveRegion="polite" accessibilityRole="alert"
+      {...{className:joinClasses("px-2",!unstyled&&"text-danger")}}>{error}</Text>:null}
     <ScrollView ref={horizontalRef} horizontal scrollEventThrottle={32} keyboardShouldPersistTaps="handled"
       accessibilityLabel="Spreadsheet grid, scroll sideways for additional columns"
       onScroll={event=>{
@@ -184,14 +190,14 @@ export function SpreadsheetGrid({
         if(Math.abs(next-state.getState().x)>columnWidth/4)state.setState({x:next});
       }}>
       <View style={{width:window.totalWidth}}>
-        <View style={{flexDirection:"row",height:headerHeight,
-          borderBottomWidth:1,alignItems:"stretch"}}>
-          <View style={{width:left}}><Text> </Text></View>
+        <View {...{className:joinClasses(!unstyled&&"border-b border-border")}}
+          style={{flexDirection:"row",height:headerHeight,alignItems:"stretch"}}>
+          <View style={{width:left}}/>
           <View style={{width:leftGap}}/>
           {visibleColumns.map(h=><View key={h.id}
             {...{className:joinClasses(!unstyled&&"border-r border-border bg-surface-sunken",headerClassName)}}
             style={{width:columnWidth,justifyContent:"center",alignItems:"center"}}>
-            <Text>{String(flexRender(h.column.columnDef.header,h.getContext())??"")}</Text>
+            <Text {...{className:textClass}}>{String(flexRender(h.column.columnDef.header,h.getContext())??"")}</Text>
           </View>)}
           <View style={{width:rightGap}}/>
         </View>
@@ -206,7 +212,7 @@ export function SpreadsheetGrid({
             const realRow=window.rows.start+relativeIndex;
             return <View key={realRow} style={{height:rowHeight,flexDirection:"row"}}>
               <View style={{width:left,justifyContent:"center",alignItems:"center"}}>
-                <Text>{realRow+1}</Text>
+                <Text {...{className:mutedClass}}>{realRow+1}</Text>
               </View>
               <View style={{width:leftGap}}/>
               {row.getAllCells().map((cell,i)=>{
@@ -225,7 +231,7 @@ export function SpreadsheetGrid({
                   {...{className:joinClasses(!unstyled&&"border-r border-b border-border",cellClassName,
                     selected===addr&&!unstyled&&"bg-primary/10")}}
                   style={{width:columnWidth,justifyContent:"center",paddingHorizontal:8}}>
-                  <Text numberOfLines={1}>{display(cells[addr]?.computed)}</Text>
+                  <Text numberOfLines={1} {...{className:textClass}}>{display(cells[addr]?.computed)}</Text>
                 </Pressable>;
               })}
               <View style={{width:rightGap}}/>
