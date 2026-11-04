@@ -25,20 +25,22 @@ export function NativeActionMenu({
     close();
     onAction(id);
   };
-  const render=(entries:readonly TronMenuAction[],depth:number):ReactNode =>
+  // A disabled group disables everything under it, matching findEnabledMenuAction,
+  // so assistive tech never announces an item that cannot fire.
+  const render=(entries:readonly TronMenuAction[],depth:number,groupDisabled=false):ReactNode =>
     entries.map(action=><View key={action.id}>
       {action.subactions?.length?<>
         <Text accessibilityRole="header" style={{paddingHorizontal:16,paddingTop:10,fontWeight:"700"}}>
           {action.title}
         </Text>
-        {render(action.subactions,depth+1)}
+        {render(action.subactions,depth+1,groupDisabled||!!action.disabled)}
       </>:<Pressable accessibilityRole="menuitem"
         accessibilityLabel={action.title}
-        accessibilityState={{disabled:!!action.disabled,checked:action.checked}}
-        disabled={!!action.disabled}
+        accessibilityState={{disabled:groupDisabled||!!action.disabled,checked:action.checked}}
+        disabled={groupDisabled||!!action.disabled}
         onPress={()=>run(action.id)}
         style={{minHeight:44,flexDirection:"row",alignItems:"center",paddingHorizontal:16,
-          paddingLeft:16+depth*8,opacity:action.disabled ? 0.4 : 1,gap:12}}>
+          paddingLeft:16+depth*8,opacity:groupDisabled||action.disabled ? 0.4 : 1,gap:12}}>
         <Text style={{flex:1}} {...{className: action.destructive ? "text-danger" : "text-text"}}>{action.title}</Text>
         {action.checked?<Text accessibilityElementsHidden>✓</Text>:null}
       </Pressable>}
@@ -47,7 +49,9 @@ export function NativeActionMenu({
     <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel}
       accessibilityState={{disabled:!canOpen,expanded:open}}
       disabled={!canOpen}
-      onPress={!longPress?()=>store.setState({open:true}):undefined}
+      // Web keyboard and screen-reader activation only produce a press, so a
+      // long-press menu must also open on press or it is unreachable there.
+      onPress={()=>store.setState({open:true})}
       onLongPress={longPress?()=>store.setState({open:true}):undefined}>
       {trigger}
     </Pressable>
@@ -59,7 +63,8 @@ export function NativeActionMenu({
             backgroundColor:"rgba(0,0,0,0.32)"}}/>
         <View {...{className:"rounded-control bg-surface-raised border border-border"}}
           style={{maxHeight:"75%",overflow:"hidden",minWidth:220}}>
-          <ScrollView keyboardShouldPersistTaps="handled">
+          <ScrollView accessibilityRole="menu" accessibilityLabel={accessibilityLabel}
+            keyboardShouldPersistTaps="handled">
             {render(actions,0)}
           </ScrollView>
         </View>

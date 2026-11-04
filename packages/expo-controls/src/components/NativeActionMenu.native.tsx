@@ -10,7 +10,8 @@ export function NativeActionMenu({
   trigger,actions,onAction,longPress=false,disabled=false,accessibilityLabel,testID
 }:NativeActionMenuProps){
   const normalized=normalizeMenuActions(actions);
-  if(disabled||normalized.length===0)return <View accessibilityLabel={accessibilityLabel}
+  if(disabled||normalized.length===0)return <View accessible accessibilityRole="button"
+    accessibilityLabel={accessibilityLabel}
     accessibilityState={{disabled:true}} testID={testID}>{trigger}</View>;
   return <MenuView actions={normalized}
     shouldOpenOnLongPress={longPress}
@@ -18,6 +19,8 @@ export function NativeActionMenu({
       const id=event.nativeEvent.event;
       if(findEnabledMenuAction(actions,id))onAction(id);
     }}>
-    <View accessibilityLabel={accessibilityLabel} testID={testID}>{trigger}</View>
+    {/* Expose the trigger as one actionable element, not loose child text. */}
+    <View accessible accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+      testID={testID}>{trigger}</View>
   </MenuView>;
 }

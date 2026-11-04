@@ -12,6 +12,8 @@ ContextMenu and Compose DropdownMenu** on iOS/Android. On web uses an
 independent working React Native Modal (because Expo's native MenuView web
 implementation has no action callbacks); not an OS-native menu on web.
 Native `.native` file imported only by native bundlers.
+On web a `longPress` menu also opens on a plain press, because keyboard and
+screen-reader activation only send a press there.
 
 ```tsx
 import { NativeDropdown } from "@nyc-tron/expo-controls/NativeDropdown";
