@@ -39,8 +39,9 @@ no Tailwind class token. Native adapters map them to platform resources
 ### Deprecated `TronTheme` keys
 
 Still accepted by `validateTheme()` and still readable on the validated
-theme, so existing callers keep working. Passing both names with different
-values throws.
+theme, so existing callers keep working. When both names are present the
+current key wins, so spreading a validated theme and overriding `text`
+replaces the stale `foreground` it carries.
 
 | Deprecated | Use |
 | --- | --- |

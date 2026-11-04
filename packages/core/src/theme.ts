@@ -59,9 +59,10 @@ const COLOR_ALIASES=[["surfaceRaised","surface"],["text","foreground"],["textMut
 const REQUIRED_COLORS=["primary","onPrimary","surfaceRaised","surfaceSunken","border","text","textMuted","focus"] as const;
 const OPTIONAL_COLORS=["danger","onDanger","accent"] as const;
 
-function pick<T>(current:T|undefined,alias:T|undefined,name:string):T|undefined{
-  if(current!==undefined&&alias!==undefined&&current!==alias)
-    throw new TypeError(`Theme key ${name} conflicts with its deprecated alias`);
+// The current key wins over its alias. Validated themes expose both names,
+// so `{...theme.colors, text: "#111"}` still carries the old `foreground`;
+// treating that as a conflict would break the common spread-and-override.
+function pick<T>(current:T|undefined,alias:T|undefined):T|undefined{
   return current??alias;
 }
 const isColor=(c:unknown)=>typeof c==="string"&&c.trim().length>0;
@@ -69,7 +70,7 @@ const isColor=(c:unknown)=>typeof c==="string"&&c.trim().length>0;
 export function validateTheme(theme:TronThemeInput):TronTheme {
   const input=theme.colors as Record<string,string|undefined>;
   const resolved:Record<string,string|undefined>={...input};
-  for(const [current,alias] of COLOR_ALIASES)resolved[current]=pick(input[current],input[alias],current);
+  for(const [current,alias] of COLOR_ALIASES)resolved[current]=pick(input[current],input[alias]);
   for(const key of REQUIRED_COLORS)if(!isColor(resolved[key]))throw new TypeError("Invalid semantic color: "+key);
   for(const key of OPTIONAL_COLORS)if(resolved[key]!==undefined&&!isColor(resolved[key]))throw new TypeError("Invalid semantic color: "+key);
   const colors={
@@ -78,7 +79,7 @@ export function validateTheme(theme:TronThemeInput):TronTheme {
     surface:resolved.surfaceRaised,foreground:resolved.text,
     muted:resolved.textMuted,background:resolved.surfaceSunken,
   } as TronTheme["colors"];
-  const cardRadius=pick(theme.shape.cardRadius,theme.shape.surfaceRadius,"cardRadius");
+  const cardRadius=pick(theme.shape.cardRadius,theme.shape.surfaceRadius);
   const shape={controlRadius:theme.shape.controlRadius,cardRadius:cardRadius as number,
     borderWidth:theme.shape.borderWidth,surfaceRadius:cardRadius as number};
   if([shape.controlRadius,shape.cardRadius,shape.borderWidth,theme.motion.fastMs,theme.motion.standardMs]
