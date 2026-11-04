@@ -16,7 +16,8 @@
     },
     "./NativeActionMenu": {
       "types": "./dist/components/NativeActionMenu.types.d.ts",
-      "react-native": "./dist/components/NativeActionMenu",
+      "browser": "./dist/components/NativeActionMenu.web.js",
+      "react-native": "./dist/components/NativeActionMenu.native.js",
       "default": "./dist/components/NativeActionMenu.web.js"
     },
     "./menu-model": {
