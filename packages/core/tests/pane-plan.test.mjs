@@ -60,7 +60,8 @@ test("top/bottom are used for tabletop without remaking the navigation shell",()
 });
 test("multiple hinges never produce an overlapping master/detail/inspector",()=>{
  const p=resolvePanePlan({...base,features:[fold(330,12),fold(650,12)],
-  master:{present:true,minWidth:200,preferredWidth:260}});
+  master:{present:true,minWidth:200,preferredWidth:260},
+  detail:{minWidth:240}});
  assert.ok(p.regions.length>=3);
  assert.equal(p.arrangement,"book");
  const r1=p.master.rect,r2=p.detail.rect;
