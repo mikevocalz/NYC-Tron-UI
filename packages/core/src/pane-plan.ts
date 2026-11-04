@@ -153,11 +153,11 @@ export function resolvePanePlan(input: PanePlanInput): PanePlan {
   const edge = isRTL ? "left" : "right";
   const desired = inspector?.preferredWidth ?? 0;
   const inspectorPlacement: InspectorPlacement =
-    !inspector?.open || area(main) === 0 ? "closed" :
+    !inspector || !inspector.open || area(main) === 0 ? "closed" :
     main.width < inspector.minWidth ? "contained-sheet" : "overlay";
   const overlayWidth = inspectorPlacement === "closed" ? 0 :
     inspectorPlacement === "contained-sheet" ? main.width :
-    Math.min(main.width, Math.max(inspector.minWidth, desired));
+    Math.min(main.width, Math.max(inspector?.minWidth ?? 0, desired));
   const inspectorRect: Rect = {
     x: edge === "right" ? right(main) - overlayWidth : main.x,
     y: main.y,
