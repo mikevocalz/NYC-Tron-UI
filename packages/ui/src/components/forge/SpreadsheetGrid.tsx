@@ -3,7 +3,7 @@ import { ScrollView, Text, TextInput, Pressable, View, type ViewProps } from "re
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { flexRender, tableFeatures, useTable } from "@tanstack/react-table";
-import { cellAddress, columnName, sheetWindow } from "./sheet-window";
+import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics } from "./sheet-window";
 import { joinClasses } from "../styles";
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
@@ -17,8 +17,11 @@ export interface SpreadsheetGridProps extends Omit<ViewProps, "children"> {
   readonly rowCount: number;
   readonly columnCount: number;
   readonly cells: Readonly<Record<string, SpreadsheetCell>>;
-  readonly width: number;
-  readonly height: number;
+  /** Width and height may be provided by the host or measured via onLayout. */
+  readonly width?: number;
+  readonly height?: number;
+  /** Content breakpoint only: never changes foldable hardware navigation. */
+  readonly compactBelow?: number;
   readonly rowHeight?: number;
   readonly columnWidth?: number;
   readonly selectedCell?: string|null;
@@ -33,7 +36,7 @@ export interface SpreadsheetGridProps extends Omit<ViewProps, "children"> {
   readonly headerClassName?:string;
   readonly unstyled?:boolean;
 }
-type GridLocal = { x:number;y:number;draft:string;dirty:boolean;pending:boolean;error:string|null };
+type GridLocal = { x:number;y:number;draft:string;dirty:boolean;pending:boolean;error:string|null;measuredWidth:number;measuredHeight:number };
 const coreFeatures=tableFeatures({});
 
 function display(value:SpreadsheetCell["computed"]|undefined) {
@@ -41,13 +44,13 @@ function display(value:SpreadsheetCell["computed"]|undefined) {
   return String(value);
 }
 export function SpreadsheetGrid({
-  sheetId,rowCount,columnCount,cells,width,height,rowHeight=32,columnWidth=112,
+  sheetId,rowCount,columnCount,cells,width,height,rowHeight:preferredRowHeight=32,columnWidth:preferredColumnWidth=112,compactBelow=540,
   selectedCell=null,onSelectionChange,onCommitCell,onWindowChange,
-  className,headerClassName,cellClassName,unstyled=false,style,...props
+  className,headerClassName,cellClassName,unstyled=false,onLayout,style,...props
 }:SpreadsheetGridProps) {
   const stateRef=useRef<StoreApi<GridLocal>|null>(null);
   if(!stateRef.current)stateRef.current=createStore<GridLocal>(()=>({
-    x:0,y:0,draft:"",dirty:false,pending:false,error:null
+    x:0,y:0,draft:"",dirty:false,pending:false,error:null,measuredWidth:0,measuredHeight:0
   }));
   const state=stateRef.current;
   const x=useStore(state,s=>s.x);
@@ -56,8 +59,20 @@ export function SpreadsheetGrid({
   const dirty=useStore(state,s=>s.dirty);
   const pending=useStore(state,s=>s.pending);
   const error=useStore(state,s=>s.error);
+  const measuredWidth=useStore(state,s=>s.measuredWidth);
+  const measuredHeight=useStore(state,s=>s.measuredHeight);
+  const viewportWidth=width??measuredWidth;
+  const viewportHeight=height??measuredHeight;
+  const metrics=responsiveSheetMetrics({
+    width:viewportWidth,rowHeight:preferredRowHeight,
+    columnWidth:preferredColumnWidth,compactBelow
+  });
+  const rowHeight=metrics.rowHeight;
+  const columnWidth=metrics.columnWidth;
   const window=sheetWindow({rowCount,columnCount,scrollX:x,scrollY:y,
-    viewportWidth:width,viewportHeight:height,rowHeight,columnWidth});
+    viewportWidth,viewportHeight:Math.max(0,viewportHeight-metrics.formulaBarHeight),
+    rowHeight,columnWidth,rowHeaderWidth:metrics.rowHeaderWidth,
+    columnHeaderHeight:metrics.columnHeaderHeight});
   const rows=useMemo(()=>Array.from(
     {length:window.rows.end-window.rows.start},
     (_,i)=>({index:window.rows.start+i})
@@ -79,10 +94,14 @@ export function SpreadsheetGrid({
       state.setState({draft:selected?cells[selected]?.raw??"":"",dirty:false,error:null});
     }
   },[selected,cells,state]);
+  const onWindowChangeRef=useRef(onWindowChange);
+  onWindowChangeRef.current=onWindowChange;
   useEffect(()=>{
-    onWindowChange?.({startRow:window.rows.start,endRow:window.rows.end,
+    if(viewportWidth<=0||viewportHeight<=metrics.formulaBarHeight)return;
+    onWindowChangeRef.current?.({startRow:window.rows.start,endRow:window.rows.end,
       startColumn:window.columns.start,endColumn:window.columns.end});
-  },[onWindowChange,window.rows.start,window.rows.end,window.columns.start,window.columns.end]);
+  },[sheetId,window.rows.start,window.rows.end,window.columns.start,
+    window.columns.end,viewportWidth>0,viewportHeight>metrics.formulaBarHeight]);
   const commit=async()=>{
     if(!selected || !onCommitCell || pending || !dirty)return;
     state.setState({pending:true,error:null});
@@ -94,19 +113,42 @@ export function SpreadsheetGrid({
       state.setState({error:err instanceof Error?err.message:"Could not update cell"});
     }finally{state.setState({pending:false});}
   };
-  const left=52;
-  const headerHeight=38;
+  const left=metrics.rowHeaderWidth;
+  const headerHeight=metrics.columnHeaderHeight;
   const visibleColumns=table.getHeaderGroups().at(0)?.headers??[];
   const leftGap=window.columns.start*columnWidth;
   const rightGap=(columnCount-window.columns.end)*columnWidth;
   return <View {...props}
+    onLayout={event=>{
+      const {width:nextWidth,height:nextHeight}=event.nativeEvent.layout;
+      const current=state.getState();
+      if(Number.isFinite(nextWidth)&&Number.isFinite(nextHeight)&&
+        nextWidth>=0&&nextHeight>=0&&
+        (current.measuredWidth!==nextWidth||current.measuredHeight!==nextHeight)){
+        state.setState({measuredWidth:nextWidth,measuredHeight:nextHeight});
+      }
+      onLayout?.(event);
+    }}
     accessibilityLabel={props.accessibilityLabel??"Spreadsheet"}
     {...{className:joinClasses("overflow-hidden",!unstyled&&"border border-border bg-surface-raised",className)}}
-    style={[{width,height},style]}>
-    <View style={{minHeight:46,flexDirection:"row",alignItems:"center",gap:8,paddingHorizontal:8}}>
-      <Text style={{minWidth:60}}>{selected || "A1"}</Text>
+    style={[{width:width??"100%",height:height??"100%"},style]}>
+    <View style={{
+      height:metrics.formulaBarHeight,
+      flexDirection:metrics.compact?"column":"row",
+      alignItems:metrics.compact?"stretch":"center",
+      gap:metrics.compact?4:8,paddingHorizontal:8,
+      paddingVertical:metrics.compact?6:0,
+    }}>
+      <View style={{flexDirection:"row",alignItems:"center",
+        justifyContent:"space-between",minWidth:metrics.compact?0:60}}>
+        <Text accessibilityLabel={`Selected cell ${selected||"A1"}`}>{selected || "A1"}</Text>
+        {metrics.compact?<Text numberOfLines={1} style={{opacity:0.7,fontSize:11}}>
+          Swipe sideways for more columns
+        </Text>:null}
+      </View>
       <TextInput
-        style={{flex:1,minHeight:36,paddingHorizontal:10}}
+        style={{flex:metrics.compact?undefined:1,
+          width:metrics.compact?"100%":undefined,minHeight:44,paddingHorizontal:10}}
         accessibilityLabel="Formula bar"
         editable={Boolean(selected&&onCommitCell)&&!pending}
         value={dirty?draft:(selected?cells[selected]?.raw??"":"")}
@@ -117,7 +159,8 @@ export function SpreadsheetGrid({
       />
     </View>
     {error?<Text accessibilityLiveRegion="polite">{error}</Text>:null}
-    <ScrollView horizontal scrollEventThrottle={32}
+    <ScrollView horizontal scrollEventThrottle={32} keyboardShouldPersistTaps="handled"
+      accessibilityLabel="Spreadsheet grid, scroll sideways for additional columns"
       onScroll={event=>{
         const next=Math.max(0,event.nativeEvent.contentOffset.x);
         if(Math.abs(next-state.getState().x)>columnWidth/4)state.setState({x:next});
@@ -134,7 +177,7 @@ export function SpreadsheetGrid({
           </View>)}
           <View style={{width:rightGap}}/>
         </View>
-        <ScrollView style={{height:Math.max(0,height-46-headerHeight)}}
+        <ScrollView nestedScrollEnabled style={{height:Math.max(0,viewportHeight-metrics.formulaBarHeight-headerHeight)}}
           scrollEventThrottle={32}
           onScroll={event=>{
             const next=Math.max(0,event.nativeEvent.contentOffset.y);
@@ -155,6 +198,7 @@ export function SpreadsheetGrid({
                   key={addr}
                   accessibilityRole="button"
                   accessibilityLabel={`Cell ${addr}, ${display(cells[addr]?.computed)}`}
+                  accessibilityHint="Select the cell to edit its value in the formula bar"
                   accessibilityState={{selected:selected===addr}}
                   onPress={()=>{
                     onSelectionChange?.(addr);
