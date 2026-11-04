@@ -2,8 +2,8 @@ import {useRef} from "react";
 import {PanResponder,Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {clamp,scrubValue,snapValue,gestureToAngle,type RangeConfig} from "./precision";
-import {joinClasses} from "../../styles";
+import {clamp,scrubValue,snapValue,gestureToAngle,type RangeConfig} from "./precision.ts";
+import {joinClasses} from "../../styles.ts";
 
 type Local={preview:number;draft:string;editing:boolean;active:boolean};
 export interface InstrumentKnobProps extends Omit<ViewProps,"children">,RangeConfig {

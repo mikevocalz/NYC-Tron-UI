@@ -3,8 +3,8 @@ import {PanResponder,Pressable,ScrollView,Text,View,type ViewProps} from "react-
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {compatiblePorts,cubicGraphPoints,getPortAnchor,validatePatchGraph,
- type GraphNode,type GraphEdge,type GraphPoint,type GraphSelection} from "./model";
-import {joinClasses} from "../../styles";
+ type GraphNode,type GraphEdge,type GraphPoint,type GraphSelection} from "./model.ts";
+import {joinClasses} from "../../styles.ts";
 
 type Local={positions:Readonly<Record<string,GraphPoint>>;output:GraphSelection|null};
 export interface PatchGraphProps extends Omit<ViewProps,"children">{

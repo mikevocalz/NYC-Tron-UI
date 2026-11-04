@@ -32,12 +32,12 @@
     },
     "./spatial-interactions": {
       "types": "./dist/spatial-interactions.d.ts",
-      "react-native": "./dist/spatial-interactions",
+      "react-native": "./dist/spatial-interactions.js",
       "default": "./dist/spatial-interactions.js"
     },
     "./advanced-catalog": {
       "types": "./dist/advanced-catalog.d.ts",
-      "react-native": "./dist/advanced-catalog",
+      "react-native": "./dist/advanced-catalog.js",
       "default": "./dist/advanced-catalog.js"
     }
   },

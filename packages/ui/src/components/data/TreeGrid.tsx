@@ -2,8 +2,8 @@ import {useMemo,useRef,type ReactNode} from "react";
 import {FlatList,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {visibleTreeRows,type TreeGridNode} from "./tree-grid";
-import {joinClasses} from "../styles";
+import {visibleTreeRows,type TreeGridNode} from "./tree-grid.ts";
+import {joinClasses} from "../styles.ts";
 
 export interface TreeGridColumn {id:string;title:string;width?:number}
 type Local={expanded:ReadonlySet<string>;width:number};

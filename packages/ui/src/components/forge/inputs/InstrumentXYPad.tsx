@@ -2,8 +2,8 @@ import {useRef} from "react";
 import {PanResponder,Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {pointFromDrag,clamp,type Point2D} from "./precision";
-import {joinClasses} from "../../styles";
+import {pointFromDrag,clamp,type Point2D} from "./precision.ts";
+import {joinClasses} from "../../styles.ts";
 
 type Local={width:number;height:number;active:boolean;preview:Point2D};
 export interface InstrumentXYPadProps extends Omit<ViewProps,"children"> {

@@ -1,6 +1,6 @@
 import {Modal,Pressable,ScrollView,Text,View} from "react-native";
-import {placePopover,type Rect2D} from "./popover-position";
-import {joinClasses} from "../styles";
+import {placePopover,type Rect2D} from "./popover-position.ts";
+import {joinClasses} from "../styles.ts";
 export type CommandMenuItem=Readonly<{id:string;label:string;description?:string;disabled?:boolean;danger?:boolean}>;
 export interface CommandPopoverProps{
  visible:boolean;

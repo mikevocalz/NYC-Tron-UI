@@ -2,8 +2,8 @@ import {useRef,type ReactNode} from "react";
 import {PanResponder,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {moveCrop,resizeCrop,type CropRect,type CropCorner,validateCrop} from "./crop";
-import {joinClasses} from "../../styles";
+import {moveCrop,resizeCrop,type CropRect,type CropCorner,validateCrop} from "./crop.ts";
+import {joinClasses} from "../../styles.ts";
 
 export interface ImageCropOverlayProps extends Omit<ViewProps,"children">{
  rect:CropRect;
