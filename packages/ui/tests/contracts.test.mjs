@@ -170,3 +170,11 @@ test("components take colors from theme tokens, not hardcoded hex values",()=>{
     assert.equal(hex,null,`${file} hardcodes ${hex}`);
   }
 });
+test("every adjustable control can be adjusted by a screen reader",()=>{
+  for(const file of componentSources()){
+    const text=readFileSync(file,"utf8");
+    const adjustable=(text.match(/accessibilityRole=(?:"adjustable"|\{[^}]*"adjustable")/g)??[]).length;
+    const actions=(text.match(/accessibilityActions=/g)??[]).length;
+    assert.ok(actions>=adjustable,`${file}: ${adjustable} adjustable roles but ${actions} action sets`);
+  }
+});
