@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,6 +80,11 @@ fun FunctionalComposableScope.TronArcKnobContent(
   var start by remember { mutableFloatStateOf(current) }
   var dx by remember { mutableFloatStateOf(0f) }
   var dy by remember { mutableFloatStateOf(0f) }
+  // pointerInput only restarts on its keys; read the latest props and
+  // callbacks through these so a gesture never compares against a stale value.
+  val latestProps by rememberUpdatedState(props)
+  val latestPreview by rememberUpdatedState(onPreview)
+  val latestCommit by rememberUpdatedState(onCommit)
   LaunchedEffect(props.value,min,max,step) { if(!dragging)current=quantize(props.value,min,max,step) }
   val accent=instrumentColor(props.accentColor,Color(0xFF8B5CF6))
   val text=instrumentColor(props.textColor,Color(0xFFF5F5F7))
@@ -105,11 +111,11 @@ fun FunctionalComposableScope.TronArcKnobContent(
         onDragEnd={
           if(dragging){
             dragging=false
-            if(current!=quantize(props.value,min,max,step))onCommit(TronValuePayload(current))
+            if(current!=quantize(latestProps.value,min,max,step))latestCommit(TronValuePayload(current))
           }
         },
         onDragCancel={
-          dragging=false;current=quantize(props.value,min,max,step)
+          dragging=false;current=quantize(latestProps.value,min,max,step)
         }
       ){change,delta->
         if(!props.enabled||!valid||!dragging)return@detectDragGestures
@@ -117,7 +123,7 @@ fun FunctionalComposableScope.TronArcKnobContent(
         dx+=delta.x;dy+=delta.y
         val multiplier=if(dy < -28f) .1f else if(dy > 28f) 4f else 1f
         val next=quantize(start+dx/8f*step*multiplier,min,max,step)
-        if(next!=current){current=next;onPreview(TronValuePayload(next))}
+        if(next!=current){current=next;latestPreview(TronValuePayload(next))}
       }
     }) {
       val stroke=size.minDimension*.08f

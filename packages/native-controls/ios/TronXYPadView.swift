@@ -70,6 +70,18 @@ struct TronXYPadView: ExpoSwiftUI.View {
         let nextX = clamp(x + (direction == .increment ? 0.05 : -0.05))
         if nextX != x { props.onCommit(["x": nextX, "y": y]) }
       }
+      // The adjustable rotor moves X only; Y needs its own actions or
+      // VoiceOver users cannot reach half of the control.
+      .accessibilityAction(named: "Increase Y") {
+        guard props.enabled else { return }
+        let nextY = clamp(y + 0.05)
+        if nextY != y { props.onCommit(["x": x, "y": nextY]) }
+      }
+      .accessibilityAction(named: "Decrease Y") {
+        guard props.enabled else { return }
+        let nextY = clamp(y - 0.05)
+        if nextY != y { props.onCommit(["x": x, "y": nextY]) }
+      }
       .opacity(props.enabled ? 1 : 0.4)
       .onChange(of: props.x) { newX in
         if !active { previewX = clamp(newX) }
