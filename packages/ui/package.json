@@ -114,6 +114,16 @@
       "types": "./dist/components/forge/graphics/ImageCropOverlay.d.ts",
       "react-native": "./dist/components/forge/graphics/ImageCropOverlay",
       "default": "./dist/components/forge/graphics/ImageCropOverlay.js"
+    },
+    "./components/overlays/popover-position": {
+      "types": "./dist/components/overlays/popover-position.d.ts",
+      "react-native": "./dist/components/overlays/popover-position",
+      "default": "./dist/components/overlays/popover-position.js"
+    },
+    "./components/overlays/CommandPopover": {
+      "types": "./dist/components/overlays/CommandPopover.d.ts",
+      "react-native": "./dist/components/overlays/CommandPopover",
+      "default": "./dist/components/overlays/CommandPopover.js"
     }
   },
   "scripts": {

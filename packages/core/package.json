@@ -29,6 +29,11 @@
       "types": "./dist/theme.d.ts",
       "react-native": "./dist/theme",
       "default": "./dist/theme.js"
+    },
+    "./spatial-interactions": {
+      "types": "./dist/spatial-interactions.d.ts",
+      "react-native": "./dist/spatial-interactions",
+      "default": "./dist/spatial-interactions.js"
     }
   },
   "scripts": {
