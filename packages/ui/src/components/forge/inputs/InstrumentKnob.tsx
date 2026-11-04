@@ -17,12 +17,13 @@ export interface InstrumentKnobProps extends Omit<ViewProps,"children">,RangeCon
   onCommit:(value:number)=>void|Promise<unknown>;
   className?:string;
   unstyled?:boolean;
+  /** Optional override; defaults to the theme's accent token. */
   accentColor?:string;
 }
 /** Native responder-based parametric control. App owns Tailwind theme; engine owns the committed value. */
 export function InstrumentKnob({
   min,max,step,detents,value,label,unit,size=112,disabled=false,onPreview,onCommit,
-  className,unstyled=false,accentColor="#818CF8",...rest
+  className,unstyled=false,accentColor,...rest
 }:InstrumentKnobProps){
   const latest=useRef({min,max,step,detents,value,disabled,onPreview,onCommit});
   latest.current={min,max,step,detents,value,disabled,onPreview,onCommit};
@@ -72,6 +73,10 @@ export function InstrumentKnob({
   const nudge=(direction:-1|1)=>{
     if(!disabled)commit(clamp(value+direction*step,min,max));
   };
+  const styled=!unstyled;
+  const accentBorder=accentColor?{borderColor:accentColor}:null;
+  const accentFill=accentColor?{backgroundColor:accentColor}:null;
+  const text=joinClasses(styled&&"text-text");
   return <View {...rest} {...{className:joinClasses("items-center gap-2",!unstyled&&"rounded-control bg-surface-raised p-3",className)}}
     accessibilityLabel={label}>
     <Text {...{className:joinClasses(!unstyled&&"text-text font-semibold")}}>{label}</Text>
@@ -80,26 +85,29 @@ export function InstrumentKnob({
       accessibilityLabel={label}
       accessibilityValue={{min,max,now:current,text:String(current)+(unit?" "+unit:"")}}
       accessibilityState={{disabled}}
+      {...{className:joinClasses(styled&&!accentColor&&"border-accent")}}
       accessibilityActions={[{name:"increment"},{name:"decrement"}]}
       onAccessibilityAction={e=>{if(e.nativeEvent.actionName==="increment")nudge(1);if(e.nativeEvent.actionName==="decrement")nudge(-1);}}
-      style={{width:size,height:size,borderRadius:size/2,borderWidth:8,borderColor:accentColor,alignItems:"center",justifyContent:"center",opacity:disabled?0.45:1}}>
-      <View pointerEvents="none" style={{position:"absolute",width:3,height:size*0.28,backgroundColor:accentColor,
+      style={{width:size,height:size,borderRadius:size/2,borderWidth:8,...accentBorder,alignItems:"center",justifyContent:"center",opacity:disabled?0.45:1}}>
+      <View pointerEvents="none" {...{className:joinClasses(styled&&!accentColor&&"bg-accent")}}
+        style={{position:"absolute",width:3,height:size*0.28,...accentFill,
         borderRadius:3,transform:[{translateY:-size*0.2},{rotate:gestureToAngle(current,min,max)+"deg"}]}} />
       <Text {...{className:joinClasses(!unstyled&&"text-text font-semibold")}}>{String(current)}</Text>
     </View>
     <View style={{flexDirection:"row",alignItems:"center",gap:6}}>
       <Pressable accessibilityRole="button" accessibilityLabel={"Decrease "+label} disabled={disabled}
-        onPress={()=>nudge(-1)} style={{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center"}}><Text>−</Text></Pressable>
+        onPress={()=>nudge(-1)} style={{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center",opacity:disabled?0.45:1}}><Text {...{className:text}}>−</Text></Pressable>
       <TextInput accessibilityLabel={label+" numeric value"} keyboardType="decimal-pad" editable={!disabled}
-        style={{minWidth:64,minHeight:44,textAlign:"center",color:accentColor}}
+        {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken text-text")}}
+        style={{minWidth:64,minHeight:44,textAlign:"center"}}
         value={editing?draft:String(current)}
         onFocus={()=>store.setState({editing:true,draft:String(value),preview:value})}
         onChangeText={v=>store.setState({draft:v})}
         onSubmitEditing={enter}
         onBlur={enter}/>
       <Pressable accessibilityRole="button" accessibilityLabel={"Increase "+label} disabled={disabled}
-        onPress={()=>nudge(1)} style={{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center"}}><Text>+</Text></Pressable>
+        onPress={()=>nudge(1)} style={{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center",opacity:disabled?0.45:1}}><Text {...{className:text}}>+</Text></Pressable>
     </View>
-    {unit?<Text>{unit}</Text>:null}
+    {unit?<Text {...{className:joinClasses(styled&&"text-text-muted")}}>{unit}</Text>:null}
   </View>;
 }

@@ -15,13 +15,14 @@ export interface InstrumentXYPadProps extends Omit<ViewProps,"children"> {
   step?:number;
   onPreview?:(point:Point2D)=>void;
   onCommit:(point:Point2D)=>void|Promise<unknown>;
+  /** Optional override; defaults to the theme's accent token. */
   accentColor?:string;
   unstyled?:boolean;
   className?:string;
 }
 /** Multi-input pad with bounded normalized coordinates; no duplicate document state. */
 export function InstrumentXYPad({
-  x,y,label,disabled=false,size=180,step=0.05,onPreview,onCommit,accentColor="#818CF8",
+  x,y,label,disabled=false,size=180,step=0.05,onPreview,onCommit,accentColor,
   unstyled=false,className,onLayout,...rest
 }:InstrumentXYPadProps){
   const latest=useRef({x,y,disabled,onPreview,onCommit});
@@ -62,6 +63,13 @@ export function InstrumentXYPad({
     p[axis]=clamp(p[axis]+direction*step,0,1);
     commit(p);
   };
+  const styled=!unstyled;
+  const text=joinClasses(styled&&"text-text");
+  const accentBorder=accentColor?{borderColor:accentColor}:null;
+  const accentFill=accentColor?{backgroundColor:accentColor}:null;
+  const accentBorderClass=styled&&!accentColor&&"border-accent";
+  const accentFillClass=styled&&!accentColor&&"bg-accent";
+  const arrow={minHeight:44,minWidth:44,justifyContent:"center" as const,alignItems:"center" as const,opacity:disabled?0.45:1};
   return <View {...rest} {...{className:joinClasses("items-center gap-2",!unstyled&&"bg-surface-raised rounded-control p-3",className)}}>
     <Text {...{className:joinClasses(!unstyled&&"text-text font-semibold")}}>{label}</Text>
     <View {...responder.current.panHandlers}
@@ -74,24 +82,40 @@ export function InstrumentXYPad({
       accessible accessibilityLabel={label+" X and Y controller"}
       accessibilityValue={{text:"X "+Math.round(position.x*100)+"%, Y "+Math.round(position.y*100)+"%"}}
       accessibilityState={{disabled}}
-      style={{width:size,height:size,backgroundColor:"#15151C",borderWidth:1,borderColor:accentColor,opacity:disabled?0.45:1,overflow:"hidden"}}>
-      <View pointerEvents="none" style={{position:"absolute",top:"50%",left:0,right:0,height:1,backgroundColor:accentColor,opacity:0.35}}/>
-      <View pointerEvents="none" style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,backgroundColor:accentColor,opacity:0.35}}/>
-      <View pointerEvents="none" style={{position:"absolute",left:position.x*width-9,top:(1-position.y)*height-9,
-        width:18,height:18,borderRadius:9,borderWidth:2,borderColor:accentColor,backgroundColor:"#EEF2FF"}}/>
+      accessibilityHint="Swipe up or down to change X; use the actions menu to change Y"
+      accessibilityActions={[
+        {name:"increment",label:"Increase X"},{name:"decrement",label:"Decrease X"},
+        {name:"increaseY",label:"Increase Y"},{name:"decreaseY",label:"Decrease Y"},
+      ]}
+      onAccessibilityAction={e=>{
+        const a=e.nativeEvent.actionName;
+        if(a==="increment")nudge("x",1);
+        else if(a==="decrement")nudge("x",-1);
+        else if(a==="increaseY")nudge("y",1);
+        else if(a==="decreaseY")nudge("y",-1);
+      }}
+      {...{className:joinClasses(styled&&"bg-surface-sunken",accentBorderClass)}}
+      style={{width:size,height:size,borderWidth:1,...accentBorder,opacity:disabled?0.45:1,overflow:"hidden"}}>
+      <View pointerEvents="none" {...{className:joinClasses(accentFillClass)}}
+        style={{position:"absolute",top:"50%",left:0,right:0,height:1,...accentFill,opacity:0.35}}/>
+      <View pointerEvents="none" {...{className:joinClasses(accentFillClass)}}
+        style={{position:"absolute",left:"50%",top:0,bottom:0,width:1,...accentFill,opacity:0.35}}/>
+      <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-surface-raised",accentBorderClass)}}
+        style={{position:"absolute",left:position.x*width-9,top:(1-position.y)*height-9,
+        width:18,height:18,borderRadius:9,borderWidth:2,...accentBorder}}/>
     </View>
     <View style={{flexDirection:"row",gap:8,alignItems:"center"}}>
-      <Pressable accessibilityRole="button" accessibilityLabel={"Decrease "+label+" X"} onPress={()=>nudge("x",-1)}
-        style={{minHeight:44,minWidth:36,justifyContent:"center",alignItems:"center"}}><Text>←</Text></Pressable>
-      <Text>X {Math.round(position.x*100)}% · Y {Math.round(position.y*100)}%</Text>
-      <Pressable accessibilityRole="button" accessibilityLabel={"Increase "+label+" X"} onPress={()=>nudge("x",1)}
-        style={{minHeight:44,minWidth:36,justifyContent:"center",alignItems:"center"}}><Text>→</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel={"Decrease "+label+" X"} disabled={disabled} onPress={()=>nudge("x",-1)}
+        style={arrow}><Text {...{className:text}}>←</Text></Pressable>
+      <Text {...{className:text}}>X {Math.round(position.x*100)}% · Y {Math.round(position.y*100)}%</Text>
+      <Pressable accessibilityRole="button" accessibilityLabel={"Increase "+label+" X"} disabled={disabled} onPress={()=>nudge("x",1)}
+        style={arrow}><Text {...{className:text}}>→</Text></Pressable>
     </View>
     <View style={{flexDirection:"row",gap:16}}>
-      <Pressable accessibilityRole="button" accessibilityLabel={"Decrease "+label+" Y"} onPress={()=>nudge("y",-1)}
-        style={{minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center"}}><Text>↓</Text></Pressable>
-      <Pressable accessibilityRole="button" accessibilityLabel={"Increase "+label+" Y"} onPress={()=>nudge("y",1)}
-        style={{minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center"}}><Text>↑</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel={"Decrease "+label+" Y"} disabled={disabled} onPress={()=>nudge("y",-1)}
+        style={arrow}><Text {...{className:text}}>↓</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel={"Increase "+label+" Y"} disabled={disabled} onPress={()=>nudge("y",1)}
+        style={arrow}><Text {...{className:text}}>↑</Text></Pressable>
     </View>
   </View>;
 }
