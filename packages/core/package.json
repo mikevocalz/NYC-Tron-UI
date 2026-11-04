@@ -29,6 +29,11 @@
       "types": "./dist/theme.d.ts",
       "react-native": "./dist/theme",
       "default": "./dist/theme.js"
+    },
+    "./presets/infrax": {
+      "types": "./dist/presets/infrax.d.ts",
+      "react-native": "./dist/presets/infrax",
+      "default": "./dist/presets/infrax.js"
     }
   },
   "scripts": {
