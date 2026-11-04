@@ -18,6 +18,7 @@ export interface NavigationRailProps extends Omit<ViewProps,"children"> {
   /** Collapses LABELS only, never primary actions or hit targets. */
   collapsed?:boolean;
   className?:string;
+  unstyled?:boolean;
   itemClassName?:string;
   selectedItemClassName?:string;
   labelClassName?:string;
@@ -27,14 +28,15 @@ export interface NavigationRailProps extends Omit<ViewProps,"children"> {
 /** Shared semantic rail; never determines hardware identity from width. */
 export function NavigationRail({
   items,selectedId,onSelectionChange,collapsed=false,edge,
-  className,itemClassName,selectedItemClassName,labelClassName,style,...rest
+  className,unstyled=false,itemClassName,selectedItemClassName,labelClassName,style,...rest
 }:NavigationRailProps) {
   return (
     <View
       {...rest}
       {...{className:joinClasses(
-        "shrink-0 items-center gap-1 bg-surface-raised py-3",
-        collapsed?"w-16":"w-52",edge==="right"?"border-l border-border":"border-r border-border",
+        "shrink-0 items-center gap-1",collapsed?"w-16":"w-52",
+        !unstyled&&"bg-surface-raised py-3",
+        !unstyled&&(edge==="right"?"border-l border-border":"border-r border-border"),
         className
       )}}
       style={style}
@@ -50,8 +52,9 @@ export function NavigationRail({
           accessibilityLabel={item.label}
           accessibilityState={{selected,disabled:!!item.disabled}}
           {...{className:joinClasses(
-            "flex-row w-full min-h-11 items-center gap-2 rounded-control px-3",
-            selected?"bg-primary":"bg-transparent",
+            "flex-row w-full min-h-11 items-center gap-2",
+            !unstyled&&"rounded-control px-3",
+            !unstyled&&(selected?"bg-primary":"bg-transparent"),
             item.disabled&&"opacity-40",
             itemClassName,selected&&selectedItemClassName
           )}}
@@ -62,7 +65,8 @@ export function NavigationRail({
           {!collapsed ?
             <Text numberOfLines={1}
               {...{className:joinClasses(
-                "flex-1 text-sm",selected?"text-on-primary":"text-text",labelClassName
+                "flex-1",!unstyled&&"text-sm",
+                !unstyled&&(selected?"text-on-primary":"text-text"),labelClassName
               )}}
             >{item.label}</Text> : null}
         </Pressable>;
