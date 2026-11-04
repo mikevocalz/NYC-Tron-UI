@@ -9,6 +9,8 @@ complex editor screen composition and its cross-engine suite application.
 | Button | `@nyc-tron/ui/components/Button` | RN semantic foundation | NYC-MON Button, Moyo Button |
 | Card | `@nyc-tron/ui/components/Card` | RN semantic foundation | NYC-MON / Moyo Card |
 | NavigationRail / Shell | `@nyc-tron/ui/components/NavigationRail` | Controlled RN shell, NOT WinUI | NYC-MON / Moyo adaptive |
+| DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
+| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | TanStack Table v9 visible row/column model + custom two-axis viewport and formula bar; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
@@ -24,7 +26,7 @@ complex editor screen composition and its cross-engine suite application.
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
 | Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
-| Grid cells / formulas | `components/forge/spreadsheet/` planned | **NOT EXTRACTED** | Forge Tally |
+| Advanced grid cells/formula references, frozen panes and clipboard | `components/forge/spreadsheet/` planned | **NOT EXTRACTED** (base SpreadsheetGrid exists) | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
 | PDF annotations | `components/forge/pdf/` planned | **NOT EXTRACTED** | Forge Folio |
 | Slide/canvas transitions | `components/forge/slides/` planned | **NOT EXTRACTED** | Forge Pitch |
