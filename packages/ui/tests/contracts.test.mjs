@@ -14,7 +14,8 @@ test("all direct component export targets are actual independent files",()=>{
  for(const [subpath,target] of Object.entries(pkg.exports)){
    const entry=typeof target==="string"?target:target.default;
   assert.equal(typeof entry,"string",`Expected ESM export path for ${subpath}`);
-  const fallback=entry.replace("/dist/","/src/").replace(/\\.js$/,"");
+  const base=entry.replace("/dist/","/src/");
+  const fallback=base.endsWith(".js")?base.slice(0,-3):base;
   assert.ok(
     existsSync(resolve(root,entry)) ||
     existsSync(resolve(root,fallback+".ts")) ||
