@@ -19,12 +19,20 @@ android {
   }
   buildFeatures { compose true }
 }
+def expoUiPackage = new File(rootProject.projectDir, "../node_modules/@expo/ui")
+if (!expoUiPackage.isDirectory()) {
+  throw new GradleException("Install @expo/ui into the host application before building NYC-Tron instruments")
+}
+def expoUiManifest = new groovy.json.JsonSlurper().parse(new File(expoUiPackage, "package.json"))
+
+repositories {
+  maven { url uri(new File(expoUiPackage, "android/local-maven-repo")) }
+}
+
 dependencies {
-  if (findProject(':expo-ui') != null) {
-    implementation project(':expo-ui')
-  } else {
-    throw new GradleException('NYC-Tron native controls require @expo/ui in the host app')
-  }
+  // Expo SDK 58 links @expo/ui through its local Maven artifact, not
+  // necessarily a :expo-ui Gradle project.
+  implementation "expo.modules.ui:expo.modules.ui:${expoUiManifest.version}"
   implementation 'androidx.compose.foundation:foundation-android:1.12.1'
   implementation 'androidx.compose.ui:ui-android:1.12.1'
   implementation 'androidx.compose.material3:material3-android:1.5.0-beta01'
