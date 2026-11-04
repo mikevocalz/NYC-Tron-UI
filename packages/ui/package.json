@@ -69,6 +69,31 @@
       "types": "./dist/components/forge/sheet-window.d.ts",
       "react-native": "./dist/components/forge/sheet-window",
       "default": "./dist/components/forge/sheet-window.js"
+    },
+    "./components/forge/inputs/precision": {
+      "types": "./dist/components/forge/inputs/precision.d.ts",
+      "react-native": "./dist/components/forge/inputs/precision",
+      "default": "./dist/components/forge/inputs/precision.js"
+    },
+    "./components/forge/inputs/InstrumentKnob": {
+      "types": "./dist/components/forge/inputs/InstrumentKnob.d.ts",
+      "react-native": "./dist/components/forge/inputs/InstrumentKnob",
+      "default": "./dist/components/forge/inputs/InstrumentKnob.js"
+    },
+    "./components/forge/inputs/InstrumentXYPad": {
+      "types": "./dist/components/forge/inputs/InstrumentXYPad.d.ts",
+      "react-native": "./dist/components/forge/inputs/InstrumentXYPad",
+      "default": "./dist/components/forge/inputs/InstrumentXYPad.js"
+    },
+    "./components/data/tree-grid": {
+      "types": "./dist/components/data/tree-grid.d.ts",
+      "react-native": "./dist/components/data/tree-grid",
+      "default": "./dist/components/data/tree-grid.js"
+    },
+    "./components/data/TreeGrid": {
+      "types": "./dist/components/data/TreeGrid.d.ts",
+      "react-native": "./dist/components/data/TreeGrid",
+      "default": "./dist/components/data/TreeGrid.js"
     }
   },
   "scripts": {
