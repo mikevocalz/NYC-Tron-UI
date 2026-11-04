@@ -11,6 +11,7 @@ export interface WaveformLaneProps extends Omit<ViewProps,"children"> {
   readonly onSeekNormalized?:(position:number)=>void;
   className?:string;
   barClassName?:string;
+  unstyled?:boolean;
 }
 /**
  * Per-component import: no audio API, Forge engines, Skia or Nitro.
@@ -19,7 +20,7 @@ export interface WaveformLaneProps extends Omit<ViewProps,"children"> {
  */
 export function WaveformLane({
   peaks,columns=96,height=64,onSeekNormalized,
-  className,barClassName,style,...props
+  className,barClassName,unstyled=false,style,...props
 }:WaveformLaneProps){
   const width=useRef(0);
   if(!Number.isInteger(columns)||columns<1||columns>128)
@@ -27,7 +28,7 @@ export function WaveformLane({
   const bars=peaksToBars(resamplePeaks(peaks,columns),height);
   return <View
     {...props}
-    {...{className:joinClasses("w-full flex-row overflow-hidden bg-surface-sunken",className)}}
+    {...{className:joinClasses("w-full flex-row overflow-hidden",!unstyled&&"bg-surface-sunken",className)}}
     style={[{height},style]}
     accessible
     accessibilityRole={onSeekNormalized?"adjustable":"image"}
@@ -45,7 +46,7 @@ export function WaveformLane({
     }:undefined}
   >{bars.map((bar,i)=><View key={i} style={{flex:1,height}}>
     <View
-      {...{className:joinClasses("self-center w-3/4 bg-accent",barClassName)}}
+      {...{className:joinClasses("self-center w-3/4",!unstyled&&"bg-accent",barClassName)}}
       style={{marginTop:bar.top,height:bar.height}}
     />
   </View>)}</View>;
