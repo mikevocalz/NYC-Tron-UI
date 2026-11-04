@@ -163,3 +163,10 @@ test("interactive controls keep screen-reader semantics",()=>{
   assert.ok(!table.includes("accessibilityLabel={`Record "),"record cards must not hide field values");
   assert.ok(!table.includes("Open record"));
 });
+test("components take colors from theme tokens, not hardcoded hex values",()=>{
+  for(const file of componentSources()){
+    const text=readFileSync(file,"utf8");
+    const hex=text.match(/["'`]#[0-9A-Fa-f]{3,8}["'`]/g);
+    assert.equal(hex,null,`${file} hardcodes ${hex}`);
+  }
+});

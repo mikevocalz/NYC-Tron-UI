@@ -7,20 +7,22 @@ does not fail the build; the utility silently produces no style, so text can
 end up in the platform-default black on a dark surface.
 
 `packages/ui/tests/contracts.test.mjs` fails if a component uses a token that
-is not listed here.
+is not listed here, or hardcodes a hex color. Components that take an
+`accentColor` (or popover `surfaceColor`/`textColor`) prop use it only when
+the caller passes one; otherwise the token applies.
 
 | Variable | Utilities | Used by |
 | --- | --- | --- |
 | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected cell |
 | `--color-on-primary` | `text-on-primary` | Text on `primary` |
 | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls |
-| `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table headers, sort chips, formula input, waveform lane |
+| `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars |
 | `--color-border` | `border-border` | Every bordered surface |
 | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid |
 | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints |
 | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `--color-accent` | `bg-accent` | WaveformLane bars |
+| `--color-accent` | `bg-accent`, `border-accent` | WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |
 | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input |
 | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `--radius-card` | `rounded-card` | Card, record cards |
