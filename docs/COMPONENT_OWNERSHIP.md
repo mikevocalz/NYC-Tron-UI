@@ -43,6 +43,21 @@ visual style conflicts with the library's default recipe. This keeps Moyo's
 neubrutalist strokes/shadows distinct from NYC-MON's cut-corner look and from
 Forge's professional dark editor controls.
 
+### Responsive table split
+
+`@nyc-tron/ui/components/data/DataTable` is a TanStack Table v9 native
+record list: it renders mobile label/value cards inside narrow panes and
+full columns in wide ones.
+
+`@nyc-tron/ui/components/forge/SpreadsheetGrid` is a **true**
+editable coordinate sheet: on mobile it retains rows/column headers and
+horizontal scrolling, stacks the formula bar, and expands touch targets.
+It receives data from the separate Tally Rust engine, not from a fake
+TanStack document engine.
+
+Read [Responsive tables](RESPONSIVE_TABLES.md) for limitations and mobile
+acceptance gates.
+
 ## Forge package choices
 
 ```text

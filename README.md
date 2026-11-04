@@ -86,6 +86,15 @@ native accessibility, focus/hit geometry, and the OS's essential behaviors.
 See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_OWNERSHIP.md),
 [Source provenance](THIRD_PARTY_NOTICES.md), [Readiness](docs/ROSTER.md).
 
+## Responsive data and spreadsheet views
+
+- `@nyc-tron/ui/components/data/DataTable` turns narrow-pane rows into
+  labeled mobile record cards, with TanStack sorting still available.
+- `@nyc-tron/ui/components/forge/SpreadsheetGrid` remains a horizontally
+  scrollable, touch-sized spreadsheet with a mobile stacked formula bar.
+- Read [Responsive tables](docs/RESPONSIVE_TABLES.md) for full contracts,
+  optional measured dimensions, and physical-device validation gaps.
+
 ## Development
 
 ```bash

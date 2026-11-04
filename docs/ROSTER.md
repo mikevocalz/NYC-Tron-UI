@@ -24,3 +24,14 @@
 Maintain this table from evidence, not from intent. If a check does not run,
 it is not a pass. GitHub CI source/typecheck checks do not demonstrate
 native AppKit/WinUI/Compose/SwiftUI behavior.
+
+## Responsive table extraction (November 4, 2026)
+
+- `DataTable` auto cards/columns by **host pane width**, sorting chips and
+  labeled records: source and TypeScript checks passed; native visual tests pending.
+- `SpreadsheetGrid` compact stacked formula bar, touch-height rows,
+  noncollapsing spreadsheet columns and measured container: source, metrics
+  tests and TypeScript passed; device scrolling/IME acceptance pending.
+- Nitro Forge Tally PR #39: Rust-backed viewport adapter; separate Rust
+  integration workflow passed before this responsive update.
+- Details: [Responsive tables](RESPONSIVE_TABLES.md).
