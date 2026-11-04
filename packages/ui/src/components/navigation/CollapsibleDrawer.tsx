@@ -2,8 +2,8 @@ import { useEffect, type ReactNode } from "react";
 import {
   BackHandler, Pressable, ScrollView, Text, View, type ViewProps,
 } from "react-native";
-import { drawerGeometry, type DrawerMode } from "./drawer-model";
-import { joinClasses } from "../styles";
+import { drawerGeometry, type DrawerMode } from "./drawer-model.ts";
+import { joinClasses } from "../styles.ts";
 
 export interface DrawerDestination {
   readonly id: string;

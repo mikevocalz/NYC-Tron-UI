@@ -1,2 +1,2 @@
-export { AdaptivePaneHost } from "./components/AdaptivePaneHost";
-export type { AdaptivePaneHostProps } from "./components/AdaptivePaneHost";
+export { AdaptivePaneHost } from "./components/AdaptivePaneHost.tsx";
+export type { AdaptivePaneHostProps } from "./components/AdaptivePaneHost.tsx";
