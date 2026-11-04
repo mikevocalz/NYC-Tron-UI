@@ -16,10 +16,12 @@ export interface NativeSeekBarProps extends Omit<ViewProps,"children"> {
   readonly dropFrameTimecode?:boolean;
   readonly disabled?:boolean;
   className?:string;
+  /** Controls RN wrapper only; native Expo Slider keeps OS behavior. */
+  unstyled?:boolean;
 }
 export function NativeSeekBar({
  frame,durationFrames,frameRate,onSeek,stepFrames=1,
- dropFrameTimecode=false,disabled=false,className,style,...props
+ dropFrameTimecode=false,disabled=false,className,unstyled=false,style,...props
 }:NativeSeekBarProps){
  if(!Number.isSafeInteger(durationFrames)||durationFrames<0||
     !Number.isSafeInteger(stepFrames)||stepFrames<1)
@@ -28,7 +30,7 @@ export function NativeSeekBar({
  const off=disabled||durationFrames===0;
  const seek=(next:number)=>{if(!off)onSeek(clampFrame(next,durationFrames));};
  return <View {...props}
-   {...{className:joinClasses("w-full rounded-control bg-surface-raised p-3",className)}}
+   {...{className:joinClasses("w-full",!unstyled&&"rounded-control bg-surface-raised p-3",className)}}
    style={style}>
    <Host style={{width:"100%"}}>
      <Column>
