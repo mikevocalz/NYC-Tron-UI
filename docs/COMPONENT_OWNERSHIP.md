@@ -75,3 +75,7 @@ All editors:   the consumer installs the above packages; there is no new
 Some of these package names currently exist only on Nitro Forge draft PRs.
 Do not claim npm availability or cross-platform native completion until
 their respective distributions and PRs pass.
+
+## 2026-11-04 advanced controls
+
+PR #2 adds source-level prototype controls: InstrumentKnob/InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay and CommandPopover. All source resides in NYC-Tron (not Forge). See [the advanced native catalog](ADVANCED_NATIVE_COMPONENTS.md) and @nyc-tron/core/advanced-catalog for complete planned ports and review gates. Native OS adapters, device QA and source licenses are **not** completed by this extraction.
