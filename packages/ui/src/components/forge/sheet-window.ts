@@ -99,3 +99,34 @@ export function responsiveSheetMetrics({
     formulaBarHeight: compact ? 92 : 46,
   };
 }
+
+/** Keep the same logical cell at the top/leading edge after pane resizing. */
+export interface SheetScrollMetrics {
+  readonly rowHeight: number;
+  readonly columnWidth: number;
+  readonly rowHeaderWidth: number;
+}
+export interface SheetScrollPosition {
+  readonly x: number;
+  readonly y: number;
+}
+export function reanchorSheetScroll(
+  position: SheetScrollPosition,
+  before: SheetScrollMetrics,
+  after: SheetScrollMetrics,
+): SheetScrollPosition {
+  const metrics = [
+    before.rowHeight,before.columnWidth,before.rowHeaderWidth,
+    after.rowHeight,after.columnWidth,after.rowHeaderWidth,position.x,position.y,
+  ];
+  if (!metrics.every(Number.isFinite) ||
+      before.rowHeight<=0 || before.columnWidth<=0 || before.rowHeaderWidth<=0 ||
+      after.rowHeight<=0 || after.columnWidth<=0 || after.rowHeaderWidth<=0 ||
+      position.x<0 || position.y<0) {
+    throw new RangeError("Invalid spreadsheet resize anchors");
+  }
+  const x=position.x<before.rowHeaderWidth
+    ? position.x*after.rowHeaderWidth/before.rowHeaderWidth
+    : after.rowHeaderWidth+(position.x-before.rowHeaderWidth)*after.columnWidth/before.columnWidth;
+  return { x, y: position.y*after.rowHeight/before.rowHeight };
+}
