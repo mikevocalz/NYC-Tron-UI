@@ -3,7 +3,7 @@ import {
   Pressable,Text,View,
   type ViewProps
 } from "react-native";
-import { joinClasses } from "./styles";
+import { joinClasses } from "./styles.ts";
 
 export interface NavigationItem {
   readonly id:string;
@@ -40,7 +40,7 @@ export function NavigationRail({
         className
       )}}
       style={style}
-      accessibilityRole="menu"
+      accessibilityRole="tablist"
     >
       {items.map(item=> {
         const selected=item.id===selectedId;
@@ -48,12 +48,12 @@ export function NavigationRail({
           key={item.id}
           onPress={()=>onSelectionChange(item.id)}
           disabled={item.disabled}
-          accessibilityRole="button"
+          accessibilityRole="tab"
           accessibilityLabel={item.label}
           accessibilityState={{selected,disabled:!!item.disabled}}
           {...{className:joinClasses(
             "flex-row w-full min-h-11 items-center gap-2",
-            !unstyled&&"rounded-control px-3",
+            !unstyled&&"rounded-control px-3 focus-visible:ring-2 focus-visible:ring-focus",
             !unstyled&&(selected?"bg-primary":"bg-transparent"),
             item.disabled&&"opacity-40",
             itemClassName,selected&&selectedItemClassName

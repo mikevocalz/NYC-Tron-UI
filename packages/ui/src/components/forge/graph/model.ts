@@ -8,6 +8,10 @@ export type GraphNode=Readonly<{
 export type GraphEndpoint=Readonly<{nodeId:string;portId:string}>;
 export type GraphEdge=Readonly<{id:string;from:GraphEndpoint;to:GraphEndpoint}>;
 export type GraphSelection=Readonly<{nodeId:string;portId:string;dataType:string}>;
+/** Node title bar height. */
+export const GRAPH_HEADER_HEIGHT=44;
+/** Port rows are full 44pt touch targets; wire anchors use the same metric. */
+export const GRAPH_PORT_ROW_HEIGHT=44;
 
 export function validatePatchGraph(nodes:readonly GraphNode[],edges:readonly GraphEdge[]):void{
  if(nodes.length>100||edges.length>200)throw new RangeError("Graph is beyond bounded RN preview budget");
@@ -32,7 +36,7 @@ export function getPortAnchor(node:GraphNode,portId:string,kind:"input"|"output"
  const ports=kind==="input"?node.inputs:node.outputs;
  const index=ports.findIndex(p=>p.id===portId);
  if(index<0)throw new RangeError("Unknown port: "+portId);
- return {x:node.x+(kind==="output"?(node.width??200):0),y:node.y+50+28*index+14};
+ return {x:node.x+(kind==="output"?(node.width??200)-6:6),y:node.y+GRAPH_HEADER_HEIGHT+GRAPH_PORT_ROW_HEIGHT*index+GRAPH_PORT_ROW_HEIGHT/2};
 }
 export function cubicGraphPoints(from:GraphPoint,to:GraphPoint,segments=16):GraphPoint[]{
  if(!Number.isInteger(segments)||segments<1||segments>64)throw new RangeError("Invalid curve segments");

@@ -1,9 +1,9 @@
 import {useMemo,useRef,type ReactNode} from "react";
-import {FlatList,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
+import {FlatList,Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {visibleTreeRows,type TreeGridNode} from "./tree-grid";
-import {joinClasses} from "../styles";
+import {visibleTreeRows,type TreeGridNode} from "./tree-grid.ts";
+import {joinClasses} from "../styles.ts";
 
 export interface TreeGridColumn {id:string;title:string;width?:number}
 type Local={expanded:ReadonlySet<string>;width:number};
@@ -19,13 +19,14 @@ export interface TreeGridProps extends Omit<ViewProps,"children"> {
   compactBelow?:number;
   rowHeight?:number;
   maxHeight?:number;
+  emptyLabel?:string;
   className?:string;
   unstyled?:boolean;
 }
 /** Native RN + FlatList hierarchy; no WebView, no HTML table. */
 export function TreeGrid({
   nodes,columns,expandedIds,defaultExpandedIds=[],onExpandedChange,selectedId,onSelect,renderCell,
-  compactBelow=620,rowHeight=48,maxHeight=640,className,unstyled=false,onLayout,...rest
+  compactBelow=620,rowHeight=48,maxHeight=640,emptyLabel="No items",className,unstyled=false,onLayout,...rest
 }:TreeGridProps){
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({expanded:new Set(defaultExpandedIds),width:0}));
@@ -41,47 +42,56 @@ export function TreeGrid({
     if(expandedIds===undefined)store.setState({expanded:next});
     onExpandedChange?.([...next]);
   };
+  const styled=!unstyled;
+  const text=joinClasses(styled&&"text-text");
+  const muted=joinClasses(styled&&"text-text-muted");
   const cellValue=(n:TreeGridNode,c:TreeGridColumn):ReactNode=>
-    renderCell?.(n,c)??<Text>{String(n.values?.[c.id]??"")}</Text>;
+    renderCell?.(n,c)??<Text {...{className:text}}>{String(n.values?.[c.id]??"")}</Text>;
   return <View {...rest} {...{className:joinClasses("min-w-0",!unstyled&&"bg-surface-raised",className)}}
     onLayout={e=>{
       const w=e.nativeEvent.layout.width;
       if(Number.isFinite(w)&&w>=0&&store.getState().width!==w)store.setState({width:w});
       onLayout?.(e);
     }}>
-    {compact?null:<ScrollView horizontal style={{flexGrow:0}} contentContainerStyle={{minWidth:width}}>
-      <View style={{flexDirection:"row",height:44,alignItems:"center"}}>
-        <Text style={{minWidth:180,flex:1,fontWeight:"700"}}>Name</Text>
-        {columns.map(c=><Text key={c.id} style={{width:c.width??140,fontWeight:"700"}}>{c.title}</Text>)}
-      </View>
-    </ScrollView>}
+    {compact?null:<View accessibilityRole="header"
+      {...{className:joinClasses(styled&&"border-b border-border bg-surface-sunken")}}
+      style={{flexDirection:"row",height:44,alignItems:"center"}}>
+        <Text {...{className:text}} style={{minWidth:224,flex:1,paddingLeft:44,fontWeight:"700"}}>Name</Text>
+        {columns.map(c=><Text key={c.id} {...{className:text}} style={{width:c.width??140,fontWeight:"700"}}>{c.title}</Text>)}
+    </View>}
     <FlatList data={rows} style={{maxHeight}} keyExtractor={r=>r.node.id}
-      getItemLayout={(_data,index)=>({length:compact?rowHeight+44:rowHeight,offset:index*(compact?rowHeight+44:rowHeight),index})}
-      renderItem={({item})=><View style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",
-        borderBottomWidth:1,borderColor:"#343443",paddingVertical:4,paddingLeft:Math.min(item.depth*16,128)}}>
+      renderItem={({item})=><View {...{className:joinClasses(styled&&"border-b border-border")}}
+        style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",
+        paddingVertical:4,paddingLeft:Math.min(item.depth*16,128)}}>
         <View style={{flexDirection:"row",alignItems:"center",minHeight:40,minWidth:180,flex:1}}>
-          <Pressable accessible accessibilityRole="button"
+          {item.hasChildren?<Pressable accessibilityRole="button"
             accessibilityLabel={(expanded.has(item.node.id)?"Collapse ":"Expand ")+item.node.label}
-            accessibilityState={{expanded:expanded.has(item.node.id),disabled:!item.hasChildren}}
-            disabled={!item.hasChildren} onPress={()=>toggle(item.node.id)}
+            accessibilityState={{expanded:expanded.has(item.node.id)}}
+            onPress={()=>toggle(item.node.id)}
+            {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
             style={{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center"}}>
-            <Text>{item.hasChildren?(expanded.has(item.node.id)?"▾":"▸"):"·"}</Text>
+            <Text {...{className:text}}>{expanded.has(item.node.id)?"▾":"▸"}</Text>
           </Pressable>
+          // Leaves get a spacer, not a disabled "Expand" button screen readers would announce.
+          :<View importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
+            style={{minWidth:44,minHeight:44}}/>}
           <Pressable accessibilityRole="button" accessibilityLabel={item.node.label}
             accessibilityState={{selected:selectedId===item.node.id}} onPress={()=>onSelect?.(item.node.id)}
+            {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
+              styled&&selectedId===item.node.id&&"bg-primary/10")}}
             style={{flex:1,minHeight:44,justifyContent:"center"}}>
-            <Text style={{fontWeight:selectedId===item.node.id?"700":"400"}}>{item.node.label}</Text>
+            <Text {...{className:text}} style={{fontWeight:selectedId===item.node.id?"700":"400"}}>{item.node.label}</Text>
           </Pressable>
         </View>
         <View style={{flexDirection:compact?"column":"row",paddingLeft:compact?44:0}}>
           {columns.map(c=><View key={c.id} style={{width:compact?"100%":c.width??140,
             flexDirection:compact?"row":"column",gap:8,alignItems:compact?"center":"flex-start",justifyContent:"center",
             minHeight:compact?28:44}}>
-            {compact?<Text style={{width:"42%",fontWeight:"600"}}>{c.title}</Text>:null}
+            {compact?<Text {...{className:muted}} style={{width:"42%",fontWeight:"600"}}>{c.title}</Text>:null}
             <View style={{flex:1}}>{cellValue(item.node,c)}</View>
           </View>)}
         </View>
       </View>}
-      ListEmptyComponent={<Text>No items</Text>}/>
+      ListEmptyComponent={<Text {...{className:text}} style={{padding:12}}>{emptyLabel}</Text>}/>
   </View>;
 }

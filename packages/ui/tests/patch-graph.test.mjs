@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {validatePatchGraph,getPortAnchor,cubicGraphPoints,compatiblePorts} from "../src/components/forge/graph/model.ts";
+import {validatePatchGraph,getPortAnchor,cubicGraphPoints,compatiblePorts,GRAPH_PORT_ROW_HEIGHT} from "../src/components/forge/graph/model.ts";
 const nodes=[
  {id:"source",title:"Mic",x:0,y:50,inputs:[],outputs:[{id:"out",label:"PCM",dataType:"audio"}]},
  {id:"effect",title:"Filter",x:320,y:50,inputs:[{id:"in",label:"PCM",dataType:"audio"}],outputs:[{id:"out",label:"PCM",dataType:"audio"}]},
@@ -8,8 +8,9 @@ const nodes=[
 test("graph validates real directional typed endpoints and port anchors",()=>{
  const e=[{id:"patch",from:{nodeId:"source",portId:"out"},to:{nodeId:"effect",portId:"in"}}];
  assert.doesNotThrow(()=>validatePatchGraph(nodes,e));
- assert.deepEqual(getPortAnchor(nodes[0],"out","output"),{x:200,y:114});
- assert.deepEqual(getPortAnchor(nodes[1],"in","input"),{x:320,y:114});
+ assert.equal(GRAPH_PORT_ROW_HEIGHT,44,"ports must be 44pt touch targets");
+ assert.deepEqual(getPortAnchor(nodes[0],"out","output"),{x:194,y:116});
+ assert.deepEqual(getPortAnchor(nodes[1],"in","input"),{x:326,y:116});
  assert.throws(()=>validatePatchGraph(nodes,[{...e[0],to:{nodeId:"effect",portId:"out"}}]),/Invalid/);
  assert.throws(()=>validatePatchGraph([...nodes,nodes[0]],e),/Invalid/);
  assert.equal(compatiblePorts({nodeId:"a",portId:"o",dataType:"audio"},{nodeId:"b",portId:"i",dataType:"audio"}),true);

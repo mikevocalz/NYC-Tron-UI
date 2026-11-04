@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
-import { joinClasses } from "../styles";
-import { dataTableLayout, tableContentWidth, type DataTableLayout } from "./table-layout";
+import { joinClasses } from "../styles.ts";
+import { dataTableLayout, tableContentWidth, type DataTableLayout } from "./table-layout.ts";
 
 /** TanStack owns row/column logic; NYC-Tron owns actual RN rendering. */
 const features = tableFeatures({
@@ -42,10 +42,10 @@ export interface DataTableProps<T extends RowData> extends Omit<ViewProps, "chil
 }
 type PaneSize = { width: number | null };
 
-function asNativeNode(value: unknown): ReactNode {
+function asNativeNode(value: unknown, textClassName?: string): ReactNode {
   if (value === null || value === undefined || typeof value === "boolean") return null;
   return typeof value === "string" || typeof value === "number"
-    ? <Text>{value}</Text>
+    ? <Text {...{ className: textClassName }}>{value}</Text>
     : value as ReactNode;
 }
 export function DataTable<T extends RowData>({
@@ -79,10 +79,18 @@ export function DataTable<T extends RowData>({
     return typeof header === "string" && header.trim() ? header : id;
   };
 
+  // RN Text does not inherit color from its parent View; without a token class
+  // primitive values render in the platform default (black) on dark surfaces.
+  const textClass = !unstyled ? "text-text" : undefined;
+  const sortValue = (dir: false | "asc" | "desc") =>
+    dir === "asc" ? "sorted ascending" : dir === "desc" ? "sorted descending" : "not sorted";
+
   const cardRow = (row: (typeof rows)[number]) => {
     if (renderCard) return renderCard(row);
+    // Not `accessible`: grouping here would replace every field with one
+    // "Record <id>" label and hide the values from screen readers.
     return (
-      <View accessible accessibilityLabel={`Record ${row.id}`}
+      <View
         {...{ className: joinClasses(
           "gap-3 p-4", !unstyled && "rounded-card border border-border bg-surface-raised",
           rowClassName,
@@ -93,8 +101,8 @@ export function DataTable<T extends RowData>({
               {...{ className: !unstyled ? "text-text-muted" : undefined }}>
               {labelFor(cell.column.id)}
             </Text>
-            <View style={{ flex: 1, minWidth: 0 }} accessibilityLabel={labelFor(cell.column.id)}>
-              {asNativeNode(flexRender(cell.column.columnDef.cell, cell.getContext()))}
+            <View style={{ flex: 1, minWidth: 0 }}>
+              {asNativeNode(flexRender(cell.column.columnDef.cell, cell.getContext()), textClass)}
             </View>
           </View>
         ))}
@@ -133,14 +141,16 @@ export function DataTable<T extends RowData>({
                   <Pressable key={header.id}
                     accessibilityRole="button"
                     accessibilityLabel={`Sort by ${labelFor(header.column.id)}`}
+                    accessibilityValue={{ text: sortValue(current) }}
                     onPress={() => header.column.toggleSorting()}
                     {...{ className: joinClasses(
                       "min-h-11 flex-row items-center gap-2 px-3",
-                      !unstyled && "rounded-control border border-border bg-surface-sunken",
+                      !unstyled && "rounded-control border border-border bg-surface-sunken focus-visible:ring-2 focus-visible:ring-focus",
                       headerClassName,
                     ) }}>
-                    <Text>{labelFor(header.column.id)}</Text>
-                    {current ? <Text>{current === "asc" ? "↑" : "↓"}</Text> : null}
+                    <Text {...{ className: textClass }}>{labelFor(header.column.id)}</Text>
+                    {current ? <Text importantForAccessibility="no" accessibilityElementsHidden
+                      {...{ className: textClass }}>{current === "asc" ? "↑" : "↓"}</Text> : null}
                   </Pressable>
                 );
               })}
@@ -152,7 +162,7 @@ export function DataTable<T extends RowData>({
             renderItem={({ item: row }) => (
               <Pressable
                 accessibilityRole={onRowPress ? "button" : undefined}
-                accessibilityLabel={onRowPress ? `Open record ${row.id}` : undefined}
+                accessibilityHint={onRowPress ? "Opens this record" : undefined}
                 onPress={onRowPress ? () => onRowPress(row.original) : undefined}
                 disabled={!onRowPress}
               >
@@ -161,7 +171,7 @@ export function DataTable<T extends RowData>({
             )}
             ListEmptyComponent={
               <View style={{ minHeight: rowHeight, justifyContent: "center", paddingHorizontal: 12 }}>
-                <Text>{emptyLabel}</Text>
+                <Text {...{ className: textClass }}>{emptyLabel}</Text>
               </View>
             }
           />
@@ -177,15 +187,16 @@ export function DataTable<T extends RowData>({
                 {group.headers.map(header => {
                   const sorting = sortable && header.column.getCanSort();
                   return (
-                    <Pressable key={header.id} accessibilityRole="button"
-                      accessibilityLabel={`Column ${labelFor(header.column.id)}`}
-                      accessibilityState={{ disabled: !sorting }}
+                    <Pressable key={header.id} accessibilityRole={sorting ? "button" : "header"}
+                      accessibilityLabel={sorting ? `Sort by ${labelFor(header.column.id)}` : labelFor(header.column.id)}
+                      accessibilityValue={sorting ? { text: sortValue(header.column.getIsSorted()) } : undefined}
                       disabled={!sorting}
                       onPress={sorting ? () => header.column.toggleSorting() : undefined}
-                      {...{ className: joinClasses("flex-1 min-w-0 justify-center px-3", cellClassName) }}>
+                      {...{ className: joinClasses("flex-1 min-w-0 justify-center px-3", sorting && !unstyled && "focus-visible:ring-2 focus-visible:ring-focus", cellClassName) }}>
                       {header.isPlaceholder ? null
-                        : asNativeNode(flexRender(header.column.columnDef.header, header.getContext()))}
-                      {header.column.getIsSorted() ? <Text>
+                        : asNativeNode(flexRender(header.column.columnDef.header, header.getContext()), textClass)}
+                      {header.column.getIsSorted() ? <Text importantForAccessibility="no" accessibilityElementsHidden
+                        {...{ className: textClass }}>
                         {header.column.getIsSorted() === "asc" ? "↑" : "↓"}
                       </Text> : null}
                     </Pressable>
@@ -197,7 +208,7 @@ export function DataTable<T extends RowData>({
               style={{ maxHeight: Math.max(0, maxHeight - headerHeight) }}
               renderItem={({ item: row }) => (
                 <Pressable accessibilityRole={onRowPress ? "button" : undefined}
-                  accessibilityLabel={onRowPress ? `Open record ${row.id}` : undefined}
+                  accessibilityHint={onRowPress ? "Opens this record" : undefined}
                   onPress={onRowPress ? () => onRowPress(row.original) : undefined}
                   disabled={!onRowPress}
                   {...{ className: joinClasses(
@@ -207,14 +218,14 @@ export function DataTable<T extends RowData>({
                   {row.getAllCells().map(cell => (
                     <View key={cell.id}
                       {...{ className: joinClasses("flex-1 min-w-0 justify-center px-3", cellClassName) }}>
-                      {asNativeNode(flexRender(cell.column.columnDef.cell, cell.getContext()))}
+                      {asNativeNode(flexRender(cell.column.columnDef.cell, cell.getContext()), textClass)}
                     </View>
                   ))}
                 </Pressable>
               )}
               ListEmptyComponent={
                 <View style={{ minHeight: rowHeight, justifyContent: "center", paddingHorizontal: 12 }}>
-                  <Text>{emptyLabel}</Text>
+                  <Text {...{ className: textClass }}>{emptyLabel}</Text>
                 </View>
               }
             />

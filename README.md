@@ -60,7 +60,7 @@ one editor can install only that package and chosen controls. Avoid circular
 ## App-specific Tailwind v4 / Uniwind styling
 
 Components expose `className`, class slots (`labelClassName`,
-`trackClassName` etc.), normal native styles and semantic token names. A host
+`barClassName`, `cellClassName` etc.), normal native styles and semantic token names. A host
 imports its OWN theme CSS and tells Tailwind where the component source lives:
 
 ```css
@@ -82,6 +82,9 @@ Native platform controls *cannot* automatically accept every arbitrary CSS
 utility; a native adapter maps supported semantic theme values to OS resources,
 while RN-presentational controls are Tailwind/Uniwind customizable. Preserve
 native accessibility, focus/hit geometry, and the OS's essential behaviors.
+
+The default recipes need the semantic variables listed in
+[Theme tokens](docs/THEME_TOKENS.md), defined for light and dark.
 
 See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_OWNERSHIP.md),
 [Source provenance](THIRD_PARTY_NOTICES.md), [Readiness](docs/ROSTER.md).

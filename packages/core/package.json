@@ -7,32 +7,42 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "react-native": "./dist/index",
+      "react-native": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./navigation": {
       "types": "./dist/navigation.d.ts",
-      "react-native": "./dist/navigation",
+      "react-native": "./dist/navigation.js",
       "default": "./dist/navigation.js"
     },
     "./folds": {
       "types": "./dist/folds.d.ts",
-      "react-native": "./dist/folds",
+      "react-native": "./dist/folds.js",
       "default": "./dist/folds.js"
     },
     "./spatial": {
       "types": "./dist/spatial.d.ts",
-      "react-native": "./dist/spatial",
+      "react-native": "./dist/spatial.js",
       "default": "./dist/spatial.js"
     },
     "./theme": {
       "types": "./dist/theme.d.ts",
-      "react-native": "./dist/theme",
+      "react-native": "./dist/theme.js",
       "default": "./dist/theme.js"
+    },
+    "./spatial-interactions": {
+      "types": "./dist/spatial-interactions.d.ts",
+      "react-native": "./dist/spatial-interactions.js",
+      "default": "./dist/spatial-interactions.js"
+    },
+    "./advanced-catalog": {
+      "types": "./dist/advanced-catalog.d.ts",
+      "react-native": "./dist/advanced-catalog.js",
+      "default": "./dist/advanced-catalog.js"
     },
     "./presets/infrax": {
       "types": "./dist/presets/infrax.d.ts",
-      "react-native": "./dist/presets/infrax",
+      "react-native": "./dist/presets/infrax.js",
       "default": "./dist/presets/infrax.js"
     }
   },
