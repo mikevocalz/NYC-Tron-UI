@@ -17,6 +17,7 @@ import { Card } from '@nyc-tron/ui/components/Card';
 
 <Button
   title="Start tutoring"
+  unstyled
   className="rounded-control border-[3px] border-border-strong shadow-card bg-primary"
   labelClassName="font-display text-on-primary"
   onPress={startLesson}
@@ -42,6 +43,7 @@ import { Button } from '@nyc-tron/ui/components/Button';
 
 <Button
   title="Battle"
+  unstyled
   className="rounded-none bg-primary text-on-primary border-2 border-border-strong"
   labelClassName="font-display uppercase tracking-wider"
   onPress={launch}
