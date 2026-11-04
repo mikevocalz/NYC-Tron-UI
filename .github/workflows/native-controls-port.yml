@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: "24.19.0"
       - run: corepack enable
-      - run: corepack pnpm install --no-frozen-lockfile
+      - run: corepack pnpm install --frozen-lockfile
       - run: node --test packages/native-controls/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir examples/native-instruments typecheck
@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: "24.19.0"
       - run: corepack enable
-      - run: corepack pnpm install --no-frozen-lockfile
+      - run: corepack pnpm install --frozen-lockfile
       - name: Expo development app native generation
         run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform android --no-install --non-interactive
         env:
@@ -75,7 +75,7 @@ jobs:
         with:
           node-version: "24.19.0"
       - run: corepack enable
-      - run: corepack pnpm install --no-frozen-lockfile
+      - run: corepack pnpm install --frozen-lockfile
       - name: Generate native iOS development app
         run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform ios --no-install --non-interactive
         env:
