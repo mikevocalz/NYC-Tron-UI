@@ -6,6 +6,7 @@ import { resolve,dirname } from "node:path";
 import { resamplePeaks,peaksToBars } from "../src/components/forge/waveform.ts";
 import { FRAME_RATES,formatTimecode,frameToPosition,positionToFrame } from "../src/components/forge/timebase.ts";
 import { rgbaToHex } from "../src/components/forge/color.ts";
+import { sheetWindow,cellAddress,columnName } from "../src/components/forge/sheet-window.ts";
 const pkgPath=new URL("../package.json",import.meta.url);
 const root=dirname(fileURLToPath(pkgPath));
 const pkg=JSON.parse(readFileSync(pkgPath,"utf8"));
@@ -43,4 +44,18 @@ test("frame math returns whole bounded frames and SMPTE display",()=>{
 test("RGBA math is document-agnostic and validates channels",()=>{
  assert.equal(rgbaToHex({r:255,g:0,b:0,alpha:1}),"#FF0000FF");
  assert.throws(()=>rgbaToHex({r:300,g:0,b:0,alpha:1}),/RGB/);
+});
+
+test("Spreadsheet window virtualizes both rows and columns without allocating full sheet",()=>{
+  const viewport=sheetWindow({rowCount:1048576,columnCount:16384,
+    scrollX:0,scrollY:0,viewportWidth:1000,viewportHeight:600,rowHeight:32,columnWidth:112});
+  assert.ok(viewport.rows.end-viewport.rows.start<50);
+  assert.ok(viewport.columns.end-viewport.columns.start<20);
+  const moved=sheetWindow({rowCount:1048576,columnCount:16384,
+    scrollX:1200,scrollY:1280,viewportWidth:1000,viewportHeight:600,rowHeight:32,columnWidth:112});
+  assert.ok(moved.rows.start>0);
+  assert.ok(moved.columns.start>0);
+  assert.equal(columnName(26),"AA");
+  assert.equal(cellAddress(0,26),"AA1");
+  assert.equal(cellAddress(99,0),"A100");
 });

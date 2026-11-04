@@ -54,6 +54,21 @@
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color",
       "default": "./dist/components/forge/color.js"
+    },
+    "./components/data/DataTable": {
+      "types": "./dist/components/data/DataTable.d.ts",
+      "react-native": "./dist/components/data/DataTable",
+      "default": "./dist/components/data/DataTable.js"
+    },
+    "./components/forge/SpreadsheetGrid": {
+      "types": "./dist/components/forge/SpreadsheetGrid.d.ts",
+      "react-native": "./dist/components/forge/SpreadsheetGrid",
+      "default": "./dist/components/forge/SpreadsheetGrid.js"
+    },
+    "./components/forge/sheet-window": {
+      "types": "./dist/components/forge/sheet-window.d.ts",
+      "react-native": "./dist/components/forge/sheet-window",
+      "default": "./dist/components/forge/sheet-window.js"
     }
   },
   "scripts": {
@@ -64,10 +79,15 @@
   "peerDependencies": {
     "react": ">=19.0.0",
     "react-native": ">=0.88.0",
-    "@expo/ui": "^58.0.0"
+    "@expo/ui": "^58.0.0",
+    "@tanstack/react-table": "^9.0.0",
+    "zustand": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "@expo/ui": {
+      "optional": true
+    },
+    "@tanstack/react-table": {
       "optional": true
     }
   },
@@ -76,7 +96,9 @@
     "@types/react": "~19.3.0",
     "react": "19.3.0",
     "react-native": "0.88.0",
-    "@expo/ui": "58.0.20"
+    "@expo/ui": "58.0.20",
+    "@tanstack/react-table": "9.3.1",
+    "zustand": "5.0.16"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
