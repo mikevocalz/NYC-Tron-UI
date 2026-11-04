@@ -1,0 +1,39 @@
+name: NYC-Tron source, exports and types
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    name: pure contracts and dependency boundaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: node --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs
+
+  types:
+    name: workspace TypeScript
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install local workspace
+        run: corepack pnpm install --no-frozen-lockfile
+      - name: Typecheck packages
+        run: corepack pnpm typecheck
+      # No native targets are built on this Linux workflow. A typechecked
+      # @expo/ui source import is not a device validation.
