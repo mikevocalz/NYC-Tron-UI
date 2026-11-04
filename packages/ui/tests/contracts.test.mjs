@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync,existsSync } from "node:fs";
+import { readFileSync,existsSync,readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve,dirname } from "node:path";
 import { resamplePeaks,peaksToBars } from "../src/components/forge/waveform.ts";
@@ -133,4 +133,33 @@ test("portrait-landscape and foldable split resize retain selected sheet region"
   assert.deepEqual(back,before);
   assert.deepEqual(reanchorSheetScroll({x:0,y:0},wide,compact),{x:0,y:0});
   assert.throws(()=>reanchorSheetScroll({x:0,y:0},{...wide,rowHeight:0},compact),/anchors/);
+});
+
+const componentSources=(dir=resolve(root,"src/components"))=>
+  readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()
+    ? componentSources(resolve(dir,e.name))
+    : /\.tsx?$/.test(e.name)?[resolve(dir,e.name)]:[]);
+test("every semantic token a component uses is documented for consumers",()=>{
+  const doc=readFileSync(resolve(root,"../../docs/THEME_TOKENS.md"),"utf8");
+  const documented=new Set([...doc.matchAll(/--(?:color|radius)-([a-z-]+)/g)].map(m=>m[1]));
+  const tokenClass=/\b(?:bg|text|border|ring|rounded)-((?:on-)?(?:primary|danger)|surface-(?:raised|sunken)|text(?:-muted)?|accent|border|focus|control|card)\b/g;
+  const used=new Set();
+  for(const file of componentSources()){
+    for(const m of readFileSync(file,"utf8").matchAll(tokenClass))used.add(m[1]);
+  }
+  assert.ok(used.size>5);
+  for(const token of used)assert.ok(documented.has(token),`Undocumented token ${token}`);
+});
+test("interactive controls keep screen-reader semantics",()=>{
+  const read=p=>readFileSync(resolve(root,"src/components",p),"utf8");
+  const rail=read("NavigationRail.tsx");
+  assert.ok(rail.includes('accessibilityRole="tablist"'));
+  assert.ok(rail.includes('accessibilityRole="tab"'));
+  assert.ok(!rail.includes('accessibilityRole="menu"'));
+  const wave=read("forge/WaveformLane.tsx");
+  assert.ok(!/onSeekNormalized\((?:0|1)\)/.test(wave),"a11y steps must not jump to clip ends");
+  assert.ok(wave.includes("accessibilityStep"));
+  const table=read("data/DataTable.tsx");
+  assert.ok(!table.includes("accessibilityLabel={`Record "),"record cards must not hide field values");
+  assert.ok(!table.includes("Open record"));
 });

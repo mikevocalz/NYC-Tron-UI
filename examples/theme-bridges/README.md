@@ -7,7 +7,7 @@ Import Moyo's **existing generated** CSS:
 @import 'tailwindcss';
 @import 'uniwind';
 @import '@acme/theme/theme-native.css';
-@source '../node_modules/@nyc-tron/ui/src/components';
+@source '../node_modules/@nyc-tron/ui/dist/components';
 ```
 
 Use the Moyo semantic classes:
@@ -24,6 +24,10 @@ import { Card } from '@nyc-tron/ui/components/Card';
 />
 <Card className="border-2 border-border-strong shadow-card bg-surface-raised" />
 ```
+
+The package publishes only `dist/`, so `@source` must point there; a `src/`
+path finds no class names in an installed package. The token names every
+component expects are listed in [docs/THEME_TOKENS.md](../../docs/THEME_TOKENS.md).
 
 No Moyo colors or font names live inside NYC-Tron UI; they come from the
 consuming app's `@acme/theme` output. The consumer's own tailored Tailwind

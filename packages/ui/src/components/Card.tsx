@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { View, type ViewProps } from "react-native";
-import { joinClasses } from "./styles";
+import { joinClasses } from "./styles.ts";
 export type CardSurface="raised"|"sunken"|"transparent";
 export interface CardProps extends Omit<ViewProps,"children"> {
  children?:ReactNode;
