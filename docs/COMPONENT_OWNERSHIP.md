@@ -36,6 +36,11 @@ JS entry. Once package sizes are measurable, release separate optional packages
 per native capability if necessary. All components still have ONE source owner
 in NYC-Tron UI.
 
+Use `unstyled` with a complete app-authored Tailwind recipe when the desired
+visual style conflicts with the library's default recipe. This keeps Moyo's
+neubrutalist strokes/shadows distinct from NYC-MON's cut-corner look and from
+Forge's professional dark editor controls.
+
 ## Forge package choices
 
 ```text
