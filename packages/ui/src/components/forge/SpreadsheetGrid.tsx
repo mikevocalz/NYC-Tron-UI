@@ -3,7 +3,7 @@ import { ScrollView, Text, TextInput, Pressable, View, type ViewProps } from "re
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { flexRender, tableFeatures, useTable } from "@tanstack/react-table";
-import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics } from "./sheet-window";
+import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics, reanchorSheetScroll } from "./sheet-window";
 import { joinClasses } from "../styles";
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
@@ -69,6 +69,24 @@ export function SpreadsheetGrid({
   });
   const rowHeight=metrics.rowHeight;
   const columnWidth=metrics.columnWidth;
+  const horizontalRef=useRef<ScrollView>(null);
+  const verticalRef=useRef<ScrollView>(null);
+  const previousCellMetrics=useRef({
+    rowHeight,columnWidth,rowHeaderWidth:metrics.rowHeaderWidth,
+  });
+  useEffect(()=>{
+    const previous=previousCellMetrics.current;
+    const next={rowHeight,columnWidth,rowHeaderWidth:metrics.rowHeaderWidth};
+    if(previous.rowHeight!==rowHeight || previous.columnWidth!==columnWidth ||
+       previous.rowHeaderWidth!==metrics.rowHeaderWidth){
+      const current=state.getState();
+      const anchor=reanchorSheetScroll({x:current.x,y:current.y},previous,next);
+      state.setState({x:anchor.x,y:anchor.y});
+      horizontalRef.current?.scrollTo({x:anchor.x,animated:false});
+      verticalRef.current?.scrollTo({y:anchor.y,animated:false});
+    }
+    previousCellMetrics.current=next;
+  },[rowHeight,columnWidth,metrics.rowHeaderWidth,state]);
   const window=sheetWindow({rowCount,columnCount,scrollX:x,scrollY:y,
     viewportWidth,viewportHeight:Math.max(0,viewportHeight-metrics.formulaBarHeight),
     rowHeight,columnWidth,rowHeaderWidth:metrics.rowHeaderWidth,
@@ -159,7 +177,7 @@ export function SpreadsheetGrid({
       />
     </View>
     {error?<Text accessibilityLiveRegion="polite">{error}</Text>:null}
-    <ScrollView horizontal scrollEventThrottle={32} keyboardShouldPersistTaps="handled"
+    <ScrollView ref={horizontalRef} horizontal scrollEventThrottle={32} keyboardShouldPersistTaps="handled"
       accessibilityLabel="Spreadsheet grid, scroll sideways for additional columns"
       onScroll={event=>{
         const next=Math.max(0,event.nativeEvent.contentOffset.x);
@@ -177,7 +195,7 @@ export function SpreadsheetGrid({
           </View>)}
           <View style={{width:rightGap}}/>
         </View>
-        <ScrollView nestedScrollEnabled style={{height:Math.max(0,viewportHeight-metrics.formulaBarHeight-headerHeight)}}
+        <ScrollView ref={verticalRef} nestedScrollEnabled style={{height:Math.max(0,viewportHeight-metrics.formulaBarHeight-headerHeight)}}
           scrollEventThrottle={32}
           onScroll={event=>{
             const next=Math.max(0,event.nativeEvent.contentOffset.y);
