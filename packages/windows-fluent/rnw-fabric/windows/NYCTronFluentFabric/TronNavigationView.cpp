@@ -86,7 +86,7 @@ struct TronNavigationViewComponentView final
 
   static void AppendItems(
       winrt::Windows::Data::Json::JsonArray const& data,
-      winrt::Windows::Foundation::Collections::IObservableVector<winrt::IInspectable> const& target,
+      winrt::Windows::Foundation::Collections::IVector<winrt::IInspectable> const& target,
       std::unordered_set<std::wstring>& seen) {
     for (auto const& value : data) {
       if (value.ValueType() != winrt::Windows::Data::Json::JsonValueType::Object) continue;
