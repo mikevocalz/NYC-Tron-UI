@@ -1,0 +1,27 @@
+{
+  "name": "nyc-tron-windows-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "init:windows": "react-native init-windows --template cpp-app --name NYCTronWindowsExample --overwrite --no-telemetry",
+    "prepare:host": "node scripts/prepare-host.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "start": "react-native start",
+    "windows": "react-native run-windows"
+  },
+  "dependencies": {
+    "@nyc-tron/windows-fluent-fabric": "file:..",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
+    "react-native-windows": "0.85.0",
+    "zustand": "5.0.8"
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "20.0.0",
+    "@react-native/babel-preset": "0.85.3",
+    "@react-native/metro-config": "0.85.3",
+    "@types/react": "^19.2.0",
+    "typescript": "~5.9.3"
+  }
+}

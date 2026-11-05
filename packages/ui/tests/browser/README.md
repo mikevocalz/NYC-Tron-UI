@@ -16,8 +16,10 @@ npm test
 fine precision on upward travel inside a ScrollView, Escape cancel, arrow keys,
 buttons, text entry, disabled state, and handle reorder plus Escape cancel.
 `seekbar.spec.mjs` checks that `NativeSeekBar`'s step buttons and timecode sit
-on one row under the slider at 390px and 834px (#27) and that the buttons step
-the controlled frame. It renders the `@expo/ui` 58.0.20 universal web build;
+on one row under the slider at 390px and 834px (#27), that the buttons step
+the controlled frame, and that a mouse drag previews on each frame but commits
+once on release, as does one arrow-key press. It renders the web build
+(`NativeSeekBar.web.tsx`) over the `@expo/ui` 58.0.20 universal web build;
 `.npmrc` keeps npm from installing that package's `expo` and `react-native`
 peers, which the web build does not import.
 `layers.spec.mjs` covers LayerStack kind labels and thumbnails, removal by
@@ -81,7 +83,10 @@ PropertyRow, UnitInput, SliderField, RangeSlider, RotaryKnob; `?select=none|mult
 `fixtures/shell-commands.tsx` holds the ribbon, split buttons, a layer context
 menu, a preset gallery and the shortcut sheet inside `FocusAndA11yLayer`
 (`?dir=rtl`, `?apple=1`, `?hud=1`), driven by `shell-commands.spec.mjs` and captured
-by `shell-commands-shots.spec.mjs`. Set `UI_ACCEPTANCE_PORT` to run the lane beside another
+by `shell-commands-shots.spec.mjs`. The fixture also mounts `useHardwareKeyboard` from
+`@nyc-tron/hardware-keys` (web entry) over a `createKeyboardMap` of the same
+commands; `hardware-keys.spec.mjs` presses chords on the page and in the
+Layer name field, and rebinds through the sheet. Set `UI_ACCEPTANCE_PORT` to run the lane beside another
 server on 4179.
 
 `spreadsheet.spec.mjs` loads `/spreadsheet` (`spreadsheet.tsx`), the spreadsheet
@@ -119,6 +124,14 @@ filters, replies, resolves and deletes comments, and keeps a reply whose save
 failed (K-07); and steps pages and shows the no-voice state (K-18).
 `office-shots.spec.mjs` writes `shots/office-*` at 390 and 834 px in light and
 dark, RTL, search results and text editing.
+
+`fixtures/pairing.tsx` (`/pairing?state=idle|scanning|system-pairing|connecting|awaiting-input|connected`)
+renders `DevicePairingDialog` for a pen host that logs each callback.
+`pairing.spec.mjs` checks that Stop searching and Close reach different
+callbacks, that a linked dialog closes without stopping, the ordered
+system-pairing steps and Open Settings, the idle-only intro, 44 px targets and
+no horizontal scroll, and writes `shots/pairing-*` captures at 390 and 834 px in
+light and dark plus RTL.
 
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

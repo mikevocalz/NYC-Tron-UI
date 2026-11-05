@@ -200,3 +200,96 @@ test("phase changes are announced on iOS only, where live regions are ignored", 
     assert.deepEqual(h.announcements.map(a => a.text), expected, os);
   }
 });
+
+test("DevicePairingDialog splits stop from close and never closes a linked device through stop", () => {
+  const h = harness();
+  const { DevicePairingDialog } = h.load(resolve(src, "forge/devices/DevicePairingDialog.tsx"));
+  const calls = [];
+  const cb = name => () => calls.push(name);
+  const pen = { id: "p1", name: "Stylus" };
+  const base = { visible: true, onScan: cb("scan"), onSelect: cb("select"), onStopSearch: cb("stop"),
+    onClose: cb("close"), onRetry: cb("retry"), onDone: cb("done"), deviceNoun: "pen", testID: "pair" };
+  const at = (state, extra = {}) => h.render({ type: DevicePairingDialog, props: { ...base, ...extra, state } });
+  const modal = tree => h.all(tree, n => n.type === "Modal")[0];
+  const closeButton = tree => h.buttons(tree).find(b => b.props.testID === "pair-close");
+
+  let tree = at({ kind: "scanning" });
+  h.button(tree, "Stop searching").props.onPress();
+  assert.equal(closeButton(tree).props.accessibilityLabel, "Close");
+  closeButton(tree).props.onPress();
+  modal(tree).props.onRequestClose();
+  tree = at({ kind: "connecting", device: pen });
+  h.button(tree, "Cancel").props.onPress();
+  tree = at({ kind: "awaiting-input", device: pen });
+  assert.equal(h.button(tree, "Done"), undefined, "no Done before input is verified");
+  closeButton(tree).props.onPress();
+  tree = at({ kind: "connected", device: pen });
+  closeButton(tree).props.onPress();
+  assert.deepEqual(calls, ["stop", "close", "close", "stop", "close", "done"]);
+
+  // Legacy onCancel: still stops and closes unlinked dialogs, but a linked
+  // dialog closes through onDone so a cancel that disconnects is never hit.
+  calls.length = 0;
+  const legacy = { ...base, onStopSearch: undefined, onClose: undefined, onCancel: cb("cancel") };
+  const old = state => h.render({ type: DevicePairingDialog, props: { ...legacy, state } });
+  tree = old({ kind: "scanning" });
+  h.button(tree, "Stop searching").props.onPress();
+  assert.equal(closeButton(tree).props.accessibilityLabel, "Cancel and close");
+  closeButton(tree).props.onPress();
+  tree = old({ kind: "awaiting-input", device: pen });
+  assert.equal(closeButton(tree).props.accessibilityLabel, "Close");
+  closeButton(tree).props.onPress();
+  modal(tree).props.onRequestClose();
+  assert.deepEqual(calls, ["cancel", "cancel", "done", "done"]);
+
+  // With no stop callback at all the stop button is disabled, not dead.
+  tree = h.render({ type: DevicePairingDialog, props: { ...base, onStopSearch: undefined, state: { kind: "scanning" } } });
+  assert.equal(h.button(tree, "Stop searching").props.disabled, true);
+});
+
+test("DevicePairingDialog shows the intro only before a search and lists system-pairing steps", () => {
+  const h = harness();
+  const { DevicePairingDialog } = h.load(resolve(src, "forge/devices/DevicePairingDialog.tsx"));
+  const noop = () => {};
+  const intro = "Search asks for Bluetooth access so the app can find your pen.";
+  const props = { visible: true, onScan: noop, onSelect: noop, onStopSearch: noop, onClose: noop, onRetry: noop,
+    onDone: noop, intro, testID: "pair" };
+  const byId = (tree, id) => h.all(tree, n => n.props.testID === id)[0];
+  assert.equal(h.text(byId(h.render({ type: DevicePairingDialog, props: { ...props, state: { kind: "idle" } } }), "pair-intro")), intro);
+  assert.equal(byId(h.render({ type: DevicePairingDialog, props: { ...props, state: { kind: "scanning" } } }), "pair-intro"), undefined);
+
+  let opened = 0;
+  const steps = ["Open Settings, then Bluetooth.", "Select Stylus and tap Pair."];
+  const tree = h.render({ type: DevicePairingDialog, props: { ...props, onOpenSettings: () => opened++,
+    state: { kind: "system-pairing", steps } } });
+  const items = h.all(tree, n => typeof n.props.accessibilityLabel === "string" && n.props.accessibilityLabel.startsWith("Step "));
+  assert.deepEqual(items.map(n => n.props.accessibilityLabel), ["Step 1 of 2: " + steps[0], "Step 2 of 2: " + steps[1]]);
+  assert.equal(h.all(tree, n => n.type === "ActivityIndicator").length, 0, "no spinner while the OS owns pairing");
+  h.button(tree, "Open Settings").props.onPress();
+  assert.equal(opened, 1);
+  for (const b of h.buttons(tree)) assert.match(b.props.className, /min-h-(11|14)/);
+});
+
+test("new pairing states reach the live region and the iOS announcement", () => {
+  const h = harness({ os: "ios" });
+  const { DevicePairingDialog } = h.load(resolve(src, "forge/devices/DevicePairingDialog.tsx"));
+  const noop = () => {};
+  const pen = { id: "p1", name: "Stylus" };
+  const props = { visible: true, onScan: noop, onSelect: noop, onStopSearch: noop, onClose: noop, onRetry: noop, onDone: noop, deviceNoun: "pen" };
+  const live = tree => h.text(h.all(tree, n => n.props.accessibilityLiveRegion === "polite")[0]);
+  const phases = [];
+  const art = (phase, state) => { phases.push(phase + ":" + state.kind); return null; };
+  let tree = h.render({ type: DevicePairingDialog, props: { ...props, renderStatusArt: art, state: { kind: "connecting", device: pen } } });
+  tree = h.render({ type: DevicePairingDialog, props: { ...props, renderStatusArt: art, state: { kind: "system-pairing", steps: ["Pair in Settings."] } } });
+  assert.match(live(tree), /in Settings/);
+  tree = h.render({ type: DevicePairingDialog, props: { ...props, renderStatusArt: art, state: { kind: "awaiting-input", device: pen } } });
+  assert.match(live(tree), /Linked to Stylus/);
+  tree = h.render({ type: DevicePairingDialog, props: { ...props, renderStatusArt: art, state: { kind: "connected", device: pen } } });
+  const spoken = h.announcements.map(a => a.text);
+  assert.equal(spoken.length, 3);
+  assert.match(spoken[0], /in Settings/);
+  assert.match(spoken[1], /^Linked to Stylus/);
+  assert.equal(spoken[2], "Connected to Stylus.");
+  assert.deepEqual(phases, ["connecting:connecting", "connecting:system-pairing", "connecting:awaiting-input", "connected:connected"],
+    "art never shows connected before the link is verified");
+});
