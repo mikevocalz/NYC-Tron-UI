@@ -214,6 +214,46 @@
       "types": "./dist/components/gestures/GestureHandlerDrag.d.ts",
       "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
       "default": "./dist/components/gestures/GestureHandlerDrag.js"
+    },
+    "./components/Select": {
+      "types": "./dist/components/Select.d.ts",
+      "react-native": "./dist/components/Select.js",
+      "default": "./dist/components/Select.js"
+    },
+    "./components/SegmentedControl": {
+      "types": "./dist/components/SegmentedControl.d.ts",
+      "react-native": "./dist/components/SegmentedControl.js",
+      "default": "./dist/components/SegmentedControl.js"
+    },
+    "./components/TabBar": {
+      "types": "./dist/components/TabBar.d.ts",
+      "react-native": "./dist/components/TabBar.js",
+      "default": "./dist/components/TabBar.js"
+    },
+    "./components/Toolbar": {
+      "types": "./dist/components/Toolbar.d.ts",
+      "react-native": "./dist/components/Toolbar.js",
+      "default": "./dist/components/Toolbar.js"
+    },
+    "./components/List": {
+      "types": "./dist/components/List.d.ts",
+      "react-native": "./dist/components/List.js",
+      "default": "./dist/components/List.js"
+    },
+    "./components/IconButton": {
+      "types": "./dist/components/IconButton.d.ts",
+      "react-native": "./dist/components/IconButton.js",
+      "default": "./dist/components/IconButton.js"
+    },
+    "./components/FieldGroup": {
+      "types": "./dist/components/FieldGroup.d.ts",
+      "react-native": "./dist/components/FieldGroup.js",
+      "default": "./dist/components/FieldGroup.js"
+    },
+    "./components/forms/choice-keys": {
+      "types": "./dist/components/forms/choice-keys.d.ts",
+      "react-native": "./dist/components/forms/choice-keys.js",
+      "default": "./dist/components/forms/choice-keys.js"
     }
   },
   "scripts": {
