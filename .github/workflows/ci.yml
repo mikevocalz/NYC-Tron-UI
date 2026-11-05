@@ -39,6 +39,8 @@ jobs:
         run: corepack pnpm typecheck
       - name: Render adaptive pane component contracts with mocked native hosts
         run: node --test packages/panes/tests/*.test.mjs
+      - name: Render Forge control contracts with mocked native hosts
+        run: node --test packages/ui/tests/render/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
       - name: Pack every package and check release tarball contents
