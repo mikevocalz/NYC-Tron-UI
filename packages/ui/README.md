@@ -18,7 +18,9 @@ and only needed by the subpaths that import them:
 | --- | --- |
 | `@expo/ui` ^58 | `components/forge/NativeSeekBar`, `components/forge/ColorChannels` |
 | `@tanstack/react-table` ^9 | `components/data/DataTable`, `components/forge/SpreadsheetGrid` |
-| `zustand` ^5 | `components/data/DataTable`, `components/data/TreeGrid`, `components/forge/SpreadsheetGrid`, `components/forge/inputs/InstrumentKnob`, `components/forge/inputs/InstrumentXYPad`, `components/forge/graph/PatchGraph`, `components/forge/graphics/ImageCropOverlay` |
+| `zustand` ^5 | `components/data/DataTable`, `components/data/TreeGrid`, `components/forge/SpreadsheetGrid`, `components/forge/inputs/InstrumentKnob`, `components/forge/inputs/InstrumentXYPad`, `components/forge/graph/PatchGraph`, `components/forge/graphics/ImageCropOverlay`, `components/content/KeyValueList`, `components/files/DropZone` |
+| `uniwind` >=1.12.2 <2 | `components/theme/NightScope` |
+| `expo-drag-drop-content-view` >=0.9.2 <1 | `components/files/DropZone` on iOS and Android (needs a dev or production build) |
 
 `tooling/verify-packages.mjs` regenerates this mapping from the compiled
 import graph and fails if the package root reaches an optional peer.

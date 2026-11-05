@@ -16,8 +16,8 @@ Source: user-supplied `web-designer-pro.zip` design skill, November 2026. This p
 
 `INFRAX_THEME` and `INFRAX_DARK_THEME` use the current `TronTheme` keys
 (`surfaceRaised`, `surfaceSunken`, `text`, `textMuted`, `danger`, `onDanger`,
-`accent`; see [THEME_TOKENS.md](../THEME_TOKENS.md)). `infraxTokens(theme)`
-returns the 13 CSS variables every NYC-Tron component recipe reads; spread them
+`accent`, `info`, `success`; see [THEME_TOKENS.md](../THEME_TOKENS.md)). `infraxTokens(theme)`
+returns the 15 CSS variables every NYC-Tron component recipe reads; spread them
 into the app's light and dark theme blocks. Pass `{ status }` to replace the
 danger and accent colors.
 

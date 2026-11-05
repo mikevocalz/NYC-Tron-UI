@@ -1,4 +1,4 @@
-import { Host,Column,Slider,Button,Text } from "@expo/ui";
+import { Host,Column,Row,Spacer,Slider,Button,Text } from "@expo/ui";
 import { View,type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";
 import {
@@ -33,15 +33,24 @@ export function NativeSeekBar({
    {...{className:joinClasses("w-full",!unstyled&&"rounded-control bg-surface-raised p-3",className)}}
    style={style}>
    <Host style={{width:"100%"}}>
-     <Column>
+     <Column spacing={8}>
        <Slider
          min={0} max={1} value={frameToPosition(current,durationFrames)}
          disabled={off}
          onValueChange={p=>seek(positionToFrame(p,durationFrames))}
        />
-       <Button label={`−${stepFrames} frame`} disabled={off} onPress={()=>seek(current-stepFrames)} />
-       <Text>{`${formatTimecode(current,frameRate,{dropFrame:dropFrameTimecode})} / ${formatTimecode(durationFrames,frameRate,{dropFrame:dropFrameTimecode})}`}</Text>
-       <Button label={`+${stepFrames} frame`} disabled={off} onPress={()=>seek(current+stepFrames)} />
+       {/* Transport row under the slider, as in the Forge original (PR #25):
+           step back, timecode, step forward on one line (#27). Center
+           alignment because the universal Row defaults to top (Compose Row
+           does too, SwiftUI HStack centers); flexible spacers pin the buttons
+           to the edges so the timecode can wrap centered on a phone. */}
+       <Row alignment="center" spacing={8}>
+         <Button label={`−${stepFrames} frame`} disabled={off} onPress={()=>seek(current-stepFrames)} />
+         <Spacer flexible />
+         <Text textStyle={{textAlign:"center"}}>{`${formatTimecode(current,frameRate,{dropFrame:dropFrameTimecode})} / ${formatTimecode(durationFrames,frameRate,{dropFrame:dropFrameTimecode})}`}</Text>
+         <Spacer flexible />
+         <Button label={`+${stepFrames} frame`} disabled={off} onPress={()=>seek(current+stepFrames)} />
+       </Row>
      </Column>
    </Host>
  </View>;
