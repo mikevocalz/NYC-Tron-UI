@@ -149,6 +149,15 @@ test("every semantic token a component uses is documented for consumers",()=>{
   }
   assert.ok(used.size>5);
   for(const token of used)assert.ok(documented.has(token),`Undocumented token ${token}`);
+  // Names a theme might define but no component recipe documents. Only
+  // string literals are checked, so prose in comments cannot trip it.
+  const legacy=new Set(["text-foreground","bg-surface","text-muted","bg-background","border-surface"]);
+  for(const file of componentSources()){
+    const literals=readFileSync(file,"utf8").match(/"[^"\n]*"|'[^'\n]*'/g)??[];
+    for(const lit of literals)for(const cls of lit.slice(1,-1).split(/\s+/)){
+      assert.ok(!legacy.has(cls),`${file} uses undocumented token ${cls}`);
+    }
+  }
 });
 test("interactive controls keep screen-reader semantics",()=>{
   const read=p=>readFileSync(resolve(root,"src/components",p),"utf8");
@@ -162,4 +171,19 @@ test("interactive controls keep screen-reader semantics",()=>{
   const table=read("data/DataTable.tsx");
   assert.ok(!table.includes("accessibilityLabel={`Record "),"record cards must not hide field values");
   assert.ok(!table.includes("Open record"));
+});
+test("components take colors from theme tokens, not hardcoded hex values",()=>{
+  for(const file of componentSources()){
+    const text=readFileSync(file,"utf8");
+    const hex=text.match(/["'`]#[0-9A-Fa-f]{3,8}["'`]/g);
+    assert.equal(hex,null,`${file} hardcodes ${hex}`);
+  }
+});
+test("every adjustable control can be adjusted by a screen reader",()=>{
+  for(const file of componentSources()){
+    const text=readFileSync(file,"utf8");
+    const adjustable=(text.match(/accessibilityRole=(?:"adjustable"|\{[^}]*"adjustable")/g)??[]).length;
+    const actions=(text.match(/accessibilityActions=/g)??[]).length;
+    assert.ok(actions>=adjustable,`${file}: ${adjustable} adjustable roles but ${actions} action sets`);
+  }
 });
