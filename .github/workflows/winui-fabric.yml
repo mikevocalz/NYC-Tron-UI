@@ -70,11 +70,7 @@ jobs:
           if (-not $vs) { throw "Visual Studio 2026 required by RNW 0.85 is unavailable" }
           $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
           $sdkRoot = "${env:ProgramFiles(x86)}\Windows Kits\10\Include"
-          $installed = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -match '^10\\.0\\.[0-9]+\\.0      # C++ compilation proves the ComponentView builds but does not prove
-      # a launched React Native Windows app, route roundtrip, Narrator,
-      # high contrast or physical Windows keyboard/pointer interactions.
- } |
-            Sort-Object { [version]$_.Name } -Descending
+          $installed = @(Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending)
           if (-not $installed) { throw "No compatible Windows SDK installed on runner" }
           $sdkVersion = $installed[0].Name
           Write-Host "Using installed Windows SDK $sdkVersion instead of RNW's absent 10.0.22621.0"
