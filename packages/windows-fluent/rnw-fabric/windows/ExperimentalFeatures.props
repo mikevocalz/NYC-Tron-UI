@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RnwNewArch>true</RnwNewArch>
     <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
-    <UseExperimentalNuget>false</UseExperimentalNuget>
+    <UseExperimentalNuget>true</UseExperimentalNuget>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 </Project>
