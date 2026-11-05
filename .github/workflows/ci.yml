@@ -33,6 +33,12 @@ jobs:
         run: corepack enable
       - name: Install local workspace
         run: corepack pnpm install --no-frozen-lockfile # New SVG peers: regenerate committed lockfile before merge
+      - name: Export resolved lockfile for reproducible installs
+        uses: actions/upload-artifact@v4
+        with:
+          name: icons-resolved-lockfile
+          path: pnpm-lock.yaml
+          retention-days: 1
       - name: Typecheck packages
         run: corepack pnpm typecheck
       - name: Compile independent package distributions
