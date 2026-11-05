@@ -50,265 +50,10 @@
       "react-native": "./dist/components/forge/timebase.js",
       "default": "./dist/components/forge/timebase.js"
     },
-    "./components/forge/timeline/TimecodeDisplay": {
-      "types": "./dist/components/forge/timeline/TimecodeDisplay.d.ts",
-      "react-native": "./dist/components/forge/timeline/TimecodeDisplay.js",
-      "default": "./dist/components/forge/timeline/TimecodeDisplay.js"
-    },
-    "./components/forge/timeline/TransportControls": {
-      "types": "./dist/components/forge/timeline/TransportControls.d.ts",
-      "react-native": "./dist/components/forge/timeline/TransportControls.js",
-      "default": "./dist/components/forge/timeline/TransportControls.js"
-    },
-    "./components/forge/timeline/PlaybackRateMenu": {
-      "types": "./dist/components/forge/timeline/PlaybackRateMenu.d.ts",
-      "react-native": "./dist/components/forge/timeline/PlaybackRateMenu.js",
-      "default": "./dist/components/forge/timeline/PlaybackRateMenu.js"
-    },
-    "./components/forge/timeline/SeekBar": {
-      "types": "./dist/components/forge/timeline/SeekBar.d.ts",
-      "react-native": "./dist/components/forge/timeline/SeekBar.js",
-      "default": "./dist/components/forge/timeline/SeekBar.js"
-    },
-    "./components/forge/timeline/TimelineRuler": {
-      "types": "./dist/components/forge/timeline/TimelineRuler.d.ts",
-      "react-native": "./dist/components/forge/timeline/TimelineRuler.js",
-      "default": "./dist/components/forge/timeline/TimelineRuler.js"
-    },
-    "./components/forge/timeline/TimelinePlayhead": {
-      "types": "./dist/components/forge/timeline/TimelinePlayhead.d.ts",
-      "react-native": "./dist/components/forge/timeline/TimelinePlayhead.js",
-      "default": "./dist/components/forge/timeline/TimelinePlayhead.js"
-    },
-    "./components/forge/timeline/InOutRangeHandles": {
-      "types": "./dist/components/forge/timeline/InOutRangeHandles.d.ts",
-      "react-native": "./dist/components/forge/timeline/InOutRangeHandles.js",
-      "default": "./dist/components/forge/timeline/InOutRangeHandles.js"
-    },
-    "./components/forge/timeline/TimelineZoomAndScroll": {
-      "types": "./dist/components/forge/timeline/TimelineZoomAndScroll.d.ts",
-      "react-native": "./dist/components/forge/timeline/TimelineZoomAndScroll.js",
-      "default": "./dist/components/forge/timeline/TimelineZoomAndScroll.js"
-    },
-    "./components/forge/timeline/TimelineClipLane": {
-      "types": "./dist/components/forge/timeline/TimelineClipLane.d.ts",
-      "react-native": "./dist/components/forge/timeline/TimelineClipLane.js",
-      "default": "./dist/components/forge/timeline/TimelineClipLane.js"
-    },
-    "./components/forge/timeline/ClipTrimHandles": {
-      "types": "./dist/components/forge/timeline/ClipTrimHandles.d.ts",
-      "react-native": "./dist/components/forge/timeline/ClipTrimHandles.js",
-      "default": "./dist/components/forge/timeline/ClipTrimHandles.js"
-    },
-    "./components/forge/timeline/RazorSplitTool": {
-      "types": "./dist/components/forge/timeline/RazorSplitTool.d.ts",
-      "react-native": "./dist/components/forge/timeline/RazorSplitTool.js",
-      "default": "./dist/components/forge/timeline/RazorSplitTool.js"
-    },
-    "./components/forge/timeline/SafeAreaOverlay": {
-      "types": "./dist/components/forge/timeline/SafeAreaOverlay.d.ts",
-      "react-native": "./dist/components/forge/timeline/SafeAreaOverlay.js",
-      "default": "./dist/components/forge/timeline/SafeAreaOverlay.js"
-    },
-    "./components/forge/timeline/time": {
-      "types": "./dist/components/forge/timeline/time.d.ts",
-      "react-native": "./dist/components/forge/timeline/time.js",
-      "default": "./dist/components/forge/timeline/time.js"
-    },
-    "./components/forge/timeline/ruler": {
-      "types": "./dist/components/forge/timeline/ruler.d.ts",
-      "react-native": "./dist/components/forge/timeline/ruler.js",
-      "default": "./dist/components/forge/timeline/ruler.js"
-    },
-    "./components/forge/timeline/viewport": {
-      "types": "./dist/components/forge/timeline/viewport.d.ts",
-      "react-native": "./dist/components/forge/timeline/viewport.js",
-      "default": "./dist/components/forge/timeline/viewport.js"
-    },
-    "./components/forge/timeline/edits": {
-      "types": "./dist/components/forge/timeline/edits.d.ts",
-      "react-native": "./dist/components/forge/timeline/edits.js",
-      "default": "./dist/components/forge/timeline/edits.js"
-    },
-    "./components/forge/timeline/safe-area": {
-      "types": "./dist/components/forge/timeline/safe-area.d.ts",
-      "react-native": "./dist/components/forge/timeline/safe-area.js",
-      "default": "./dist/components/forge/timeline/safe-area.js"
-    },
-    "./components/forge/audio/level": {
-      "types": "./dist/components/forge/audio/level.d.ts",
-      "react-native": "./dist/components/forge/audio/level.js",
-      "default": "./dist/components/forge/audio/level.js"
-    },
-    "./components/forge/audio/LevelFader": {
-      "types": "./dist/components/forge/audio/LevelFader.d.ts",
-      "react-native": "./dist/components/forge/audio/LevelFader.js",
-      "default": "./dist/components/forge/audio/LevelFader.js"
-    },
-    "./components/forge/audio/pan": {
-      "types": "./dist/components/forge/audio/pan.d.ts",
-      "react-native": "./dist/components/forge/audio/pan.js",
-      "default": "./dist/components/forge/audio/pan.js"
-    },
-    "./components/forge/audio/PanControl": {
-      "types": "./dist/components/forge/audio/PanControl.d.ts",
-      "react-native": "./dist/components/forge/audio/PanControl.js",
-      "default": "./dist/components/forge/audio/PanControl.js"
-    },
-    "./components/forge/audio/SoloMuteButtons": {
-      "types": "./dist/components/forge/audio/SoloMuteButtons.d.ts",
-      "react-native": "./dist/components/forge/audio/SoloMuteButtons.js",
-      "default": "./dist/components/forge/audio/SoloMuteButtons.js"
-    },
-    "./components/forge/audio/mixer": {
-      "types": "./dist/components/forge/audio/mixer.d.ts",
-      "react-native": "./dist/components/forge/audio/mixer.js",
-      "default": "./dist/components/forge/audio/mixer.js"
-    },
-    "./components/forge/audio/ChannelStrip": {
-      "types": "./dist/components/forge/audio/ChannelStrip.d.ts",
-      "react-native": "./dist/components/forge/audio/ChannelStrip.js",
-      "default": "./dist/components/forge/audio/ChannelStrip.js"
-    },
-    "./components/forge/audio/MixingConsole": {
-      "types": "./dist/components/forge/audio/MixingConsole.d.ts",
-      "react-native": "./dist/components/forge/audio/MixingConsole.js",
-      "default": "./dist/components/forge/audio/MixingConsole.js"
-    },
-    "./components/forge/audio/tempo": {
-      "types": "./dist/components/forge/audio/tempo.d.ts",
-      "react-native": "./dist/components/forge/audio/tempo.js",
-      "default": "./dist/components/forge/audio/tempo.js"
-    },
-    "./components/forge/audio/TempoAndMetronome": {
-      "types": "./dist/components/forge/audio/TempoAndMetronome.d.ts",
-      "react-native": "./dist/components/forge/audio/TempoAndMetronome.js",
-      "default": "./dist/components/forge/audio/TempoAndMetronome.js"
-    },
-    "./components/forge/midi/note-grid": {
-      "types": "./dist/components/forge/midi/note-grid.d.ts",
-      "react-native": "./dist/components/forge/midi/note-grid.js",
-      "default": "./dist/components/forge/midi/note-grid.js"
-    },
-    "./components/forge/midi/MIDIPianoRoll": {
-      "types": "./dist/components/forge/midi/MIDIPianoRoll.d.ts",
-      "react-native": "./dist/components/forge/midi/MIDIPianoRoll.js",
-      "default": "./dist/components/forge/midi/MIDIPianoRoll.js"
-    },
-    "./components/forge/midi/MIDIVelocityLane": {
-      "types": "./dist/components/forge/midi/MIDIVelocityLane.d.ts",
-      "react-native": "./dist/components/forge/midi/MIDIVelocityLane.js",
-      "default": "./dist/components/forge/midi/MIDIVelocityLane.js"
-    },
-    "./components/forge/midi/StepSequencer": {
-      "types": "./dist/components/forge/midi/StepSequencer.d.ts",
-      "react-native": "./dist/components/forge/midi/StepSequencer.js",
-      "default": "./dist/components/forge/midi/StepSequencer.js"
-    },
     "./components/forge/color": {
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color.js",
       "default": "./dist/components/forge/color.js"
-    },
-    "./components/forge/color/HsvPicker": {
-      "types": "./dist/components/forge/color/HsvPicker.d.ts",
-      "react-native": "./dist/components/forge/color/HsvPicker.js",
-      "default": "./dist/components/forge/color/HsvPicker.js"
-    },
-    "./components/forge/color/fieldGeometry": {
-      "types": "./dist/components/forge/color/fieldGeometry.d.ts",
-      "react-native": "./dist/components/forge/color/fieldGeometry.js",
-      "default": "./dist/components/forge/color/fieldGeometry.js"
-    },
-    "./components/forge/color/fieldGesture": {
-      "types": "./dist/components/forge/color/fieldGesture.d.ts",
-      "react-native": "./dist/components/forge/color/fieldGesture.js",
-      "default": "./dist/components/forge/color/fieldGesture.js"
-    },
-    "./components/forge/color/AlphaSlider": {
-      "types": "./dist/components/forge/color/AlphaSlider.d.ts",
-      "react-native": "./dist/components/forge/color/AlphaSlider.js",
-      "default": "./dist/components/forge/color/AlphaSlider.js"
-    },
-    "./components/forge/color/ColorWheel": {
-      "types": "./dist/components/forge/color/ColorWheel.d.ts",
-      "react-native": "./dist/components/forge/color/ColorWheel.js",
-      "default": "./dist/components/forge/color/ColorWheel.js"
-    },
-    "./components/forge/color/ColorDiscPicker": {
-      "types": "./dist/components/forge/color/ColorDiscPicker.d.ts",
-      "react-native": "./dist/components/forge/color/ColorDiscPicker.js",
-      "default": "./dist/components/forge/color/ColorDiscPicker.js"
-    },
-    "./components/forge/color/ColorChannelFields": {
-      "types": "./dist/components/forge/color/ColorChannelFields.d.ts",
-      "react-native": "./dist/components/forge/color/ColorChannelFields.js",
-      "default": "./dist/components/forge/color/ColorChannelFields.js"
-    },
-    "./components/forge/color/ForegroundBackgroundChips": {
-      "types": "./dist/components/forge/color/ForegroundBackgroundChips.d.ts",
-      "react-native": "./dist/components/forge/color/ForegroundBackgroundChips.js",
-      "default": "./dist/components/forge/color/ForegroundBackgroundChips.js"
-    },
-    "./components/forge/color/SwatchGrid": {
-      "types": "./dist/components/forge/color/SwatchGrid.d.ts",
-      "react-native": "./dist/components/forge/color/SwatchGrid.js",
-      "default": "./dist/components/forge/color/SwatchGrid.js"
-    },
-    "./components/forge/color/ColorHarmonyAssistant": {
-      "types": "./dist/components/forge/color/ColorHarmonyAssistant.d.ts",
-      "react-native": "./dist/components/forge/color/ColorHarmonyAssistant.js",
-      "default": "./dist/components/forge/color/ColorHarmonyAssistant.js"
-    },
-    "./components/forge/color/FloatingColorPalette": {
-      "types": "./dist/components/forge/color/FloatingColorPalette.d.ts",
-      "react-native": "./dist/components/forge/color/FloatingColorPalette.js",
-      "default": "./dist/components/forge/color/FloatingColorPalette.js"
-    },
-    "./components/forge/color/FloatingPaletteUndockHandle": {
-      "types": "./dist/components/forge/color/FloatingPaletteUndockHandle.d.ts",
-      "react-native": "./dist/components/forge/color/FloatingPaletteUndockHandle.js",
-      "default": "./dist/components/forge/color/FloatingPaletteUndockHandle.js"
-    },
-    "./components/forge/color/hsl": {
-      "types": "./dist/components/forge/color/hsl.d.ts",
-      "react-native": "./dist/components/forge/color/hsl.js",
-      "default": "./dist/components/forge/color/hsl.js"
-    },
-    "./components/forge/color/contrast": {
-      "types": "./dist/components/forge/color/contrast.d.ts",
-      "react-native": "./dist/components/forge/color/contrast.js",
-      "default": "./dist/components/forge/color/contrast.js"
-    },
-    "./components/forge/color/harmony": {
-      "types": "./dist/components/forge/color/harmony.d.ts",
-      "react-native": "./dist/components/forge/color/harmony.js",
-      "default": "./dist/components/forge/color/harmony.js"
-    },
-    "./components/forge/color/wheel-geometry": {
-      "types": "./dist/components/forge/color/wheel-geometry.d.ts",
-      "react-native": "./dist/components/forge/color/wheel-geometry.js",
-      "default": "./dist/components/forge/color/wheel-geometry.js"
-    },
-    "./components/forge/color/floating-palette": {
-      "types": "./dist/components/forge/color/floating-palette.d.ts",
-      "react-native": "./dist/components/forge/color/floating-palette.js",
-      "default": "./dist/components/forge/color/floating-palette.js"
-    },
-    "./components/forge/color/swatches": {
-      "types": "./dist/components/forge/color/swatches.d.ts",
-      "react-native": "./dist/components/forge/color/swatches.js",
-      "default": "./dist/components/forge/color/swatches.js"
-    },
-    "./components/forge/color/color-pair": {
-      "types": "./dist/components/forge/color/color-pair.d.ts",
-      "react-native": "./dist/components/forge/color/color-pair.js",
-      "default": "./dist/components/forge/color/color-pair.js"
-    },
-    "./components/forge/color/channel-fields": {
-      "types": "./dist/components/forge/color/channel-fields.d.ts",
-      "react-native": "./dist/components/forge/color/channel-fields.js",
-      "default": "./dist/components/forge/color/channel-fields.js"
     },
     "./components/data/DataTable": {
       "types": "./dist/components/data/DataTable.d.ts",
@@ -469,6 +214,301 @@
       "types": "./dist/components/gestures/GestureHandlerDrag.d.ts",
       "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
       "default": "./dist/components/gestures/GestureHandlerDrag.js"
+    },
+    "./components/Select": {
+      "types": "./dist/components/Select.d.ts",
+      "react-native": "./dist/components/Select.js",
+      "default": "./dist/components/Select.js"
+    },
+    "./components/SegmentedControl": {
+      "types": "./dist/components/SegmentedControl.d.ts",
+      "react-native": "./dist/components/SegmentedControl.js",
+      "default": "./dist/components/SegmentedControl.js"
+    },
+    "./components/TabBar": {
+      "types": "./dist/components/TabBar.d.ts",
+      "react-native": "./dist/components/TabBar.js",
+      "default": "./dist/components/TabBar.js"
+    },
+    "./components/Toolbar": {
+      "types": "./dist/components/Toolbar.d.ts",
+      "react-native": "./dist/components/Toolbar.js",
+      "default": "./dist/components/Toolbar.js"
+    },
+    "./components/List": {
+      "types": "./dist/components/List.d.ts",
+      "react-native": "./dist/components/List.js",
+      "default": "./dist/components/List.js"
+    },
+    "./components/IconButton": {
+      "types": "./dist/components/IconButton.d.ts",
+      "react-native": "./dist/components/IconButton.js",
+      "default": "./dist/components/IconButton.js"
+    },
+    "./components/FieldGroup": {
+      "types": "./dist/components/FieldGroup.d.ts",
+      "react-native": "./dist/components/FieldGroup.js",
+      "default": "./dist/components/FieldGroup.js"
+    },
+    "./components/forms/choice-keys": {
+      "types": "./dist/components/forms/choice-keys.d.ts",
+      "react-native": "./dist/components/forms/choice-keys.js",
+      "default": "./dist/components/forms/choice-keys.js"
+    },
+    "./components/forge/timeline/TimecodeDisplay": {
+      "types": "./dist/components/forge/timeline/TimecodeDisplay.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimecodeDisplay.js",
+      "default": "./dist/components/forge/timeline/TimecodeDisplay.js"
+    },
+    "./components/forge/timeline/TransportControls": {
+      "types": "./dist/components/forge/timeline/TransportControls.d.ts",
+      "react-native": "./dist/components/forge/timeline/TransportControls.js",
+      "default": "./dist/components/forge/timeline/TransportControls.js"
+    },
+    "./components/forge/timeline/PlaybackRateMenu": {
+      "types": "./dist/components/forge/timeline/PlaybackRateMenu.d.ts",
+      "react-native": "./dist/components/forge/timeline/PlaybackRateMenu.js",
+      "default": "./dist/components/forge/timeline/PlaybackRateMenu.js"
+    },
+    "./components/forge/timeline/SeekBar": {
+      "types": "./dist/components/forge/timeline/SeekBar.d.ts",
+      "react-native": "./dist/components/forge/timeline/SeekBar.js",
+      "default": "./dist/components/forge/timeline/SeekBar.js"
+    },
+    "./components/forge/timeline/TimelineRuler": {
+      "types": "./dist/components/forge/timeline/TimelineRuler.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineRuler.js",
+      "default": "./dist/components/forge/timeline/TimelineRuler.js"
+    },
+    "./components/forge/timeline/TimelinePlayhead": {
+      "types": "./dist/components/forge/timeline/TimelinePlayhead.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelinePlayhead.js",
+      "default": "./dist/components/forge/timeline/TimelinePlayhead.js"
+    },
+    "./components/forge/timeline/InOutRangeHandles": {
+      "types": "./dist/components/forge/timeline/InOutRangeHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/InOutRangeHandles.js",
+      "default": "./dist/components/forge/timeline/InOutRangeHandles.js"
+    },
+    "./components/forge/timeline/TimelineZoomAndScroll": {
+      "types": "./dist/components/forge/timeline/TimelineZoomAndScroll.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineZoomAndScroll.js",
+      "default": "./dist/components/forge/timeline/TimelineZoomAndScroll.js"
+    },
+    "./components/forge/timeline/TimelineClipLane": {
+      "types": "./dist/components/forge/timeline/TimelineClipLane.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineClipLane.js",
+      "default": "./dist/components/forge/timeline/TimelineClipLane.js"
+    },
+    "./components/forge/timeline/ClipTrimHandles": {
+      "types": "./dist/components/forge/timeline/ClipTrimHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/ClipTrimHandles.js",
+      "default": "./dist/components/forge/timeline/ClipTrimHandles.js"
+    },
+    "./components/forge/timeline/RazorSplitTool": {
+      "types": "./dist/components/forge/timeline/RazorSplitTool.d.ts",
+      "react-native": "./dist/components/forge/timeline/RazorSplitTool.js",
+      "default": "./dist/components/forge/timeline/RazorSplitTool.js"
+    },
+    "./components/forge/timeline/SafeAreaOverlay": {
+      "types": "./dist/components/forge/timeline/SafeAreaOverlay.d.ts",
+      "react-native": "./dist/components/forge/timeline/SafeAreaOverlay.js",
+      "default": "./dist/components/forge/timeline/SafeAreaOverlay.js"
+    },
+    "./components/forge/timeline/time": {
+      "types": "./dist/components/forge/timeline/time.d.ts",
+      "react-native": "./dist/components/forge/timeline/time.js",
+      "default": "./dist/components/forge/timeline/time.js"
+    },
+    "./components/forge/timeline/ruler": {
+      "types": "./dist/components/forge/timeline/ruler.d.ts",
+      "react-native": "./dist/components/forge/timeline/ruler.js",
+      "default": "./dist/components/forge/timeline/ruler.js"
+    },
+    "./components/forge/timeline/viewport": {
+      "types": "./dist/components/forge/timeline/viewport.d.ts",
+      "react-native": "./dist/components/forge/timeline/viewport.js",
+      "default": "./dist/components/forge/timeline/viewport.js"
+    },
+    "./components/forge/timeline/edits": {
+      "types": "./dist/components/forge/timeline/edits.d.ts",
+      "react-native": "./dist/components/forge/timeline/edits.js",
+      "default": "./dist/components/forge/timeline/edits.js"
+    },
+    "./components/forge/timeline/safe-area": {
+      "types": "./dist/components/forge/timeline/safe-area.d.ts",
+      "react-native": "./dist/components/forge/timeline/safe-area.js",
+      "default": "./dist/components/forge/timeline/safe-area.js"
+    },
+    "./components/forge/audio/level": {
+      "types": "./dist/components/forge/audio/level.d.ts",
+      "react-native": "./dist/components/forge/audio/level.js",
+      "default": "./dist/components/forge/audio/level.js"
+    },
+    "./components/forge/audio/LevelFader": {
+      "types": "./dist/components/forge/audio/LevelFader.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelFader.js",
+      "default": "./dist/components/forge/audio/LevelFader.js"
+    },
+    "./components/forge/audio/pan": {
+      "types": "./dist/components/forge/audio/pan.d.ts",
+      "react-native": "./dist/components/forge/audio/pan.js",
+      "default": "./dist/components/forge/audio/pan.js"
+    },
+    "./components/forge/audio/PanControl": {
+      "types": "./dist/components/forge/audio/PanControl.d.ts",
+      "react-native": "./dist/components/forge/audio/PanControl.js",
+      "default": "./dist/components/forge/audio/PanControl.js"
+    },
+    "./components/forge/audio/SoloMuteButtons": {
+      "types": "./dist/components/forge/audio/SoloMuteButtons.d.ts",
+      "react-native": "./dist/components/forge/audio/SoloMuteButtons.js",
+      "default": "./dist/components/forge/audio/SoloMuteButtons.js"
+    },
+    "./components/forge/audio/mixer": {
+      "types": "./dist/components/forge/audio/mixer.d.ts",
+      "react-native": "./dist/components/forge/audio/mixer.js",
+      "default": "./dist/components/forge/audio/mixer.js"
+    },
+    "./components/forge/audio/ChannelStrip": {
+      "types": "./dist/components/forge/audio/ChannelStrip.d.ts",
+      "react-native": "./dist/components/forge/audio/ChannelStrip.js",
+      "default": "./dist/components/forge/audio/ChannelStrip.js"
+    },
+    "./components/forge/audio/MixingConsole": {
+      "types": "./dist/components/forge/audio/MixingConsole.d.ts",
+      "react-native": "./dist/components/forge/audio/MixingConsole.js",
+      "default": "./dist/components/forge/audio/MixingConsole.js"
+    },
+    "./components/forge/audio/tempo": {
+      "types": "./dist/components/forge/audio/tempo.d.ts",
+      "react-native": "./dist/components/forge/audio/tempo.js",
+      "default": "./dist/components/forge/audio/tempo.js"
+    },
+    "./components/forge/audio/TempoAndMetronome": {
+      "types": "./dist/components/forge/audio/TempoAndMetronome.d.ts",
+      "react-native": "./dist/components/forge/audio/TempoAndMetronome.js",
+      "default": "./dist/components/forge/audio/TempoAndMetronome.js"
+    },
+    "./components/forge/midi/note-grid": {
+      "types": "./dist/components/forge/midi/note-grid.d.ts",
+      "react-native": "./dist/components/forge/midi/note-grid.js",
+      "default": "./dist/components/forge/midi/note-grid.js"
+    },
+    "./components/forge/midi/MIDIPianoRoll": {
+      "types": "./dist/components/forge/midi/MIDIPianoRoll.d.ts",
+      "react-native": "./dist/components/forge/midi/MIDIPianoRoll.js",
+      "default": "./dist/components/forge/midi/MIDIPianoRoll.js"
+    },
+    "./components/forge/midi/MIDIVelocityLane": {
+      "types": "./dist/components/forge/midi/MIDIVelocityLane.d.ts",
+      "react-native": "./dist/components/forge/midi/MIDIVelocityLane.js",
+      "default": "./dist/components/forge/midi/MIDIVelocityLane.js"
+    },
+    "./components/forge/midi/StepSequencer": {
+      "types": "./dist/components/forge/midi/StepSequencer.d.ts",
+      "react-native": "./dist/components/forge/midi/StepSequencer.js",
+      "default": "./dist/components/forge/midi/StepSequencer.js"
+    },
+    "./components/forge/color/HsvPicker": {
+      "types": "./dist/components/forge/color/HsvPicker.d.ts",
+      "react-native": "./dist/components/forge/color/HsvPicker.js",
+      "default": "./dist/components/forge/color/HsvPicker.js"
+    },
+    "./components/forge/color/fieldGeometry": {
+      "types": "./dist/components/forge/color/fieldGeometry.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGeometry.js",
+      "default": "./dist/components/forge/color/fieldGeometry.js"
+    },
+    "./components/forge/color/fieldGesture": {
+      "types": "./dist/components/forge/color/fieldGesture.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGesture.js",
+      "default": "./dist/components/forge/color/fieldGesture.js"
+    },
+    "./components/forge/color/AlphaSlider": {
+      "types": "./dist/components/forge/color/AlphaSlider.d.ts",
+      "react-native": "./dist/components/forge/color/AlphaSlider.js",
+      "default": "./dist/components/forge/color/AlphaSlider.js"
+    },
+    "./components/forge/color/ColorWheel": {
+      "types": "./dist/components/forge/color/ColorWheel.d.ts",
+      "react-native": "./dist/components/forge/color/ColorWheel.js",
+      "default": "./dist/components/forge/color/ColorWheel.js"
+    },
+    "./components/forge/color/ColorDiscPicker": {
+      "types": "./dist/components/forge/color/ColorDiscPicker.d.ts",
+      "react-native": "./dist/components/forge/color/ColorDiscPicker.js",
+      "default": "./dist/components/forge/color/ColorDiscPicker.js"
+    },
+    "./components/forge/color/ColorChannelFields": {
+      "types": "./dist/components/forge/color/ColorChannelFields.d.ts",
+      "react-native": "./dist/components/forge/color/ColorChannelFields.js",
+      "default": "./dist/components/forge/color/ColorChannelFields.js"
+    },
+    "./components/forge/color/ForegroundBackgroundChips": {
+      "types": "./dist/components/forge/color/ForegroundBackgroundChips.d.ts",
+      "react-native": "./dist/components/forge/color/ForegroundBackgroundChips.js",
+      "default": "./dist/components/forge/color/ForegroundBackgroundChips.js"
+    },
+    "./components/forge/color/SwatchGrid": {
+      "types": "./dist/components/forge/color/SwatchGrid.d.ts",
+      "react-native": "./dist/components/forge/color/SwatchGrid.js",
+      "default": "./dist/components/forge/color/SwatchGrid.js"
+    },
+    "./components/forge/color/ColorHarmonyAssistant": {
+      "types": "./dist/components/forge/color/ColorHarmonyAssistant.d.ts",
+      "react-native": "./dist/components/forge/color/ColorHarmonyAssistant.js",
+      "default": "./dist/components/forge/color/ColorHarmonyAssistant.js"
+    },
+    "./components/forge/color/FloatingColorPalette": {
+      "types": "./dist/components/forge/color/FloatingColorPalette.d.ts",
+      "react-native": "./dist/components/forge/color/FloatingColorPalette.js",
+      "default": "./dist/components/forge/color/FloatingColorPalette.js"
+    },
+    "./components/forge/color/FloatingPaletteUndockHandle": {
+      "types": "./dist/components/forge/color/FloatingPaletteUndockHandle.d.ts",
+      "react-native": "./dist/components/forge/color/FloatingPaletteUndockHandle.js",
+      "default": "./dist/components/forge/color/FloatingPaletteUndockHandle.js"
+    },
+    "./components/forge/color/hsl": {
+      "types": "./dist/components/forge/color/hsl.d.ts",
+      "react-native": "./dist/components/forge/color/hsl.js",
+      "default": "./dist/components/forge/color/hsl.js"
+    },
+    "./components/forge/color/contrast": {
+      "types": "./dist/components/forge/color/contrast.d.ts",
+      "react-native": "./dist/components/forge/color/contrast.js",
+      "default": "./dist/components/forge/color/contrast.js"
+    },
+    "./components/forge/color/harmony": {
+      "types": "./dist/components/forge/color/harmony.d.ts",
+      "react-native": "./dist/components/forge/color/harmony.js",
+      "default": "./dist/components/forge/color/harmony.js"
+    },
+    "./components/forge/color/wheel-geometry": {
+      "types": "./dist/components/forge/color/wheel-geometry.d.ts",
+      "react-native": "./dist/components/forge/color/wheel-geometry.js",
+      "default": "./dist/components/forge/color/wheel-geometry.js"
+    },
+    "./components/forge/color/floating-palette": {
+      "types": "./dist/components/forge/color/floating-palette.d.ts",
+      "react-native": "./dist/components/forge/color/floating-palette.js",
+      "default": "./dist/components/forge/color/floating-palette.js"
+    },
+    "./components/forge/color/swatches": {
+      "types": "./dist/components/forge/color/swatches.d.ts",
+      "react-native": "./dist/components/forge/color/swatches.js",
+      "default": "./dist/components/forge/color/swatches.js"
+    },
+    "./components/forge/color/color-pair": {
+      "types": "./dist/components/forge/color/color-pair.d.ts",
+      "react-native": "./dist/components/forge/color/color-pair.js",
+      "default": "./dist/components/forge/color/color-pair.js"
+    },
+    "./components/forge/color/channel-fields": {
+      "types": "./dist/components/forge/color/channel-fields.d.ts",
+      "react-native": "./dist/components/forge/color/channel-fields.js",
+      "default": "./dist/components/forge/color/channel-fields.js"
     },
     "./components/feedback/Banner": {
       "types": "./dist/components/feedback/Banner.d.ts",

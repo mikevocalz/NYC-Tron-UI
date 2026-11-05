@@ -40,6 +40,12 @@
       "types": "./dist/components/menu-model.d.ts",
       "react-native": "./dist/components/menu-model.js",
       "default": "./dist/components/menu-model.js"
+    },
+    "./Select": {
+      "types": "./dist/components/Select.web.d.ts",
+      "browser": "./dist/components/Select.web.js",
+      "react-native": "./dist/components/Select.native.js",
+      "default": "./dist/components/Select.web.js"
     }
   },
   "main": "./dist/index.js",
