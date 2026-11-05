@@ -40,10 +40,13 @@ export function ColorChannelFields({
   const fields=channelFields(model);
   const hex=rgbaToHex(hsvToRgb(value),showAlpha);
   const commit=(next:HsvColor)=>{if(!disabled&&!same(next,value))onCommit(next);};
+  // Reads the store, not the render's draft: submit and blur can both fire
+  // before a re-render, and the second call must see the cleared draft.
   const apply=(key:string,parse:(text:string)=>HsvColor|string)=>{
-    if(!draft||draft.key!==key)return;
-    const result=parse(draft.text);
-    if(typeof result==="string"){store.set({...draft,error:result});return;}
+    const d=store.get();
+    if(!d||d.key!==key)return;
+    const result=parse(d.text);
+    if(typeof result==="string"){store.set({...d,error:result});return;}
     store.set(undefined);
     commit(result);
   };

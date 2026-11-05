@@ -17,9 +17,10 @@ test("disc drag previews, commits once, and the center keeps the hue",async({pag
   await expect(commits(page)).toHaveText("commits 0");
   await page.mouse.up();
   await expect(commits(page)).toHaveText("commits 1");
-  // Through the exact center: saturation 0 and the hue stays 0 instead of jumping.
+  // Up to hue 90, then through the exact center: saturation 0 keeps the
+  // in-drag hue 90 instead of jumping back to the committed 0.
   await drag(page,await at(disc,0.5,0.25),[await at(disc,0.5,0.5)]);
-  await expect(hsv(page)).toHaveText(/^hsv 0 0 /);
+  await expect(hsv(page)).toHaveText(/^hsv 90 0 /);
   await page.mouse.up();
   await expect(commits(page)).toHaveText("commits 2");
 });
@@ -172,4 +173,20 @@ test("palette undocks past the threshold, moves, avoids the hinge and docks",asy
   await expect(page.getByTestId("docked")).toHaveText(/^docked/);
   // The hue edited while floating is still the color after docking.
   await expect(hsv(page)).toHaveText("hsv 217 72 82 85");
+});
+
+test("a floating drag moves the palette exactly as far as the pointer",async({page})=>{
+  await page.setViewportSize({width:1000,height:900});
+  await page.goto("/color?float=1&mode=classic");
+  await expect(page.getByTestId("docked")).toHaveText("floating 24,24");
+  const handle=page.getByLabel("Move colors palette");
+  const b=await handle.boundingBox();
+  const c={x:b.x+b.width/2,y:b.y+b.height/2};
+  const before=await page.getByTestId("palette").boundingBox();
+  await drag(page,c,[{x:c.x+20,y:c.y+10},{x:c.x+60,y:c.y+30},{x:c.x+100,y:c.y+50}]);
+  const during=await page.getByTestId("palette").boundingBox();
+  expect(Math.round(during.x-before.x)).toBe(100);
+  expect(Math.round(during.y-before.y)).toBe(50);
+  await page.mouse.up();
+  await expect(page.getByTestId("docked")).toHaveText("floating 124,74");
 });

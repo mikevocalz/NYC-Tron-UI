@@ -49,24 +49,27 @@ export function ColorDiscPicker({
   if(!Number.isFinite(maxSize)||maxSize<120||maxSize>800)throw new RangeError("maxSize must be 120..800");
   const [state,store]=useLocalStore(()=>({width:0,preview:undefined as HsvColor|undefined}));
   const latest=useRef({value,onPreview,onCommit,disabled});
+  // The color under the finger during a drag: hue retention near the center
+  // keeps this hue, not the committed one.
+  const live=useRef<HsvColor|undefined>(undefined);
   latest.current={value,onPreview,onCommit,disabled};
   const gesture=useMemo(()=>createValueGesture<HsvColor>({
     disabled:()=>latest.current.disabled,
     equals:same,
-    preview:c=>{store.set(s=>({...s,preview:c}));latest.current.onPreview?.(c);},
+    preview:c=>{live.current=c;store.set(s=>({...s,preview:c}));latest.current.onPreview?.(c);},
     commit:c=>latest.current.onCommit(c),
   }),[store]);
   useEffect(()=>()=>gesture.cancel(),[gesture]);
   const size=Math.max(120,Math.min(maxSize,state.width||maxSize));
   const box={width:size,height:size};
   const at=(p:{x:number;y:number})=>{
-    const next=discPointToHsv(p,box,latest.current.value);
+    const next=discPointToHsv(p,box,live.current??latest.current.value);
     return {...next,h:Math.round(next.h*100)/100,s:r3(next.s)};
   };
-  const end=()=>store.set(s=>({...s,preview:undefined}));
+  const end=()=>{live.current=undefined;store.set(s=>({...s,preview:undefined}));};
   const handlers=useLocalPointer({
     disabled,
-    onBegin:p=>{gesture.begin(latest.current.value);gesture.update(at(p));},
+    onBegin:p=>{live.current=undefined;gesture.begin(latest.current.value);gesture.update(at(p));},
     onMove:p=>gesture.update(at(p)),
     onRelease:()=>{gesture.release();end();},
     onCancel:()=>{gesture.cancel();end();},

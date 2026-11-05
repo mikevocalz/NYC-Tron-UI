@@ -59,7 +59,7 @@ export function FloatingColorPalette({
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const floatingStyle=docked?null:{position:"absolute" as const,left:placed.position.x,top:placed.position.y,width:floatingWidth,zIndex:10};
   return <View {...rest} {...(testID?{testID}:{})}
-    accessibilityLabel={docked?title:`${title}, floating`}
+    role={docked?"region":"dialog"} accessibilityLabel={docked?title:`${title}, floating`}
     onLayout={e=>{const l=e.nativeEvent.layout;store.set(s=>({...s,x:docked?l.x:s.x,y:docked?l.y:s.y,width:l.width,height:l.height}));}}
     {...{className:joinClasses(styled&&"rounded-card border border-border bg-surface-raised",styled&&!docked&&"shadow-lg",className)}}
     style={[{paddingBottom:12,gap:8},floatingStyle,style]}>

@@ -36,10 +36,13 @@ export function AlphaSlider({
   const styled=!unstyled;
   const opaque={...value,alpha:1};
   const shown=draft.text??String(alphaPercent(value.alpha));
+  // Reads the store, not the render's draft: submit and blur can both fire
+  // before a re-render, and the second call must see the cleared draft.
   const apply=()=>{
-    if(draft.text===undefined)return;
-    const n=parseOpacityPercent(draft.text);
-    if(n===undefined){store.set({text:draft.text,error:true});return;}
+    const d=store.get();
+    if(d.text===undefined)return;
+    const n=parseOpacityPercent(d.text);
+    if(n===undefined){store.set({text:d.text,error:true});return;}
     store.set({text:undefined,error:false});
     const alpha=Math.round(n*100)/10000;
     if(alpha!==value.alpha)onCommit({...value,alpha});

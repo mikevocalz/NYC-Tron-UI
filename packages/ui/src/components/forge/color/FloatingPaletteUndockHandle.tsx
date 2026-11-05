@@ -1,7 +1,8 @@
 import {useRef} from "react";
 import {View,type ViewProps} from "react-native";
 import {DragGrabHandle} from "../../DragGrabHandle.tsx";
-import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
+import {keyboardKey,type DragPoint,type DragTransport,type DragTransportProps,type KeyEventLike} from "../../gestures/drag-transport.ts";
+import {PanResponderDrag} from "../../gestures/PanResponderDrag.tsx";
 import {joinClasses} from "../../styles.ts";
 import {nudgePalette,placeFloatingPalette,shouldUndock,type PalettePosition,type PaletteRect} from "./floating-palette.ts";
 
@@ -44,7 +45,17 @@ export function FloatingPaletteUndockHandle({
   docked,origin,size,bounds,obstacles=[],onPreview,onUndock,onMove,onDock,label="Color palette",
   disabled=false,unstyled=false,style,...rest
 }:FloatingPaletteUndockHandleProps){
-  const drag=useRef<{start?:{x:number;y:number};armed:boolean;at?:PalettePosition}>({armed:false});
+  // `origin` is snapshotted when the drag starts. While floating, the host
+  // redraws the palette at each preview, so a live `origin` would already
+  // include the travel and every move would add it again.
+  const drag=useRef<{start?:{x:number;y:number};origin:PalettePosition;armed:boolean;at?:PalettePosition}>({armed:false,origin});
+  // `DragGrabHandle` reports moves but not where the press began; this
+  // transport records the press point so the first few pixels count too.
+  const pressed=useRef<DragPoint|undefined>(undefined);
+  const transport=useRef<DragTransport|null>(null);
+  if(!transport.current)transport.current=function PressPointDrag(props:DragTransportProps){
+    return <PanResponderDrag {...props} onBegin={p=>{pressed.current=p;props.onBegin(p);}}/>;
+  };
   const place=(p:PalettePosition)=>placeFloatingPalette(p,size,bounds,obstacles).position;
   const undockHere=()=>onUndock(place({x:origin.x,y:origin.y+8}));
   const onKeyDown=(event:KeyEventLike)=>{
@@ -69,25 +80,26 @@ export function FloatingPaletteUndockHandle({
       disabled={disabled} unstyled={unstyled}
       accessibilityActions={docked?[{name:"activate",label:"Undock"}]:[{name:"activate",label:"Dock"}]}
       onAccessibilityAction={e=>{if(e.nativeEvent.actionName==="activate"){if(docked)undockHere();else onDock();}}}
-      onStart={()=>{drag.current={armed:!docked};}}
+      transport={transport.current}
+      onStart={()=>{drag.current={armed:!docked,origin,...(pressed.current?{start:pressed.current}:{})};}}
       onMove={p=>{
         const d=drag.current;
         if(!d.start){d.start=p;return;}
         const dx=p.x-d.start.x,dy=p.y-d.start.y;
         if(!d.armed&&shouldUndock(dx,dy))d.armed=true;
         if(!d.armed)return;
-        d.at=place({x:origin.x+dx,y:origin.y+dy});
+        d.at=place({x:d.origin.x+dx,y:d.origin.y+dy});
         onPreview(d.at);
       }}
       onCommit={()=>{
         const d=drag.current;
-        drag.current={armed:false};
+        drag.current={armed:false,origin};
         onPreview(undefined);
         if(!d.armed||!d.at)return;
         if(docked)onUndock(d.at);
-        else if(d.at.x!==origin.x||d.at.y!==origin.y)onMove(d.at);
+        else if(d.at.x!==d.origin.x||d.at.y!==d.origin.y)onMove(d.at);
       }}
-      onCancel={()=>{drag.current={armed:false};onPreview(undefined);}}
+      onCancel={()=>{drag.current={armed:false,origin};onPreview(undefined);}}
       style={{minWidth:88}}/>
   </View>;
 }
