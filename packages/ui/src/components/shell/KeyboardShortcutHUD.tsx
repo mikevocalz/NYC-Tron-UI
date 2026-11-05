@@ -65,9 +65,9 @@ export function KeyboardShortcutHUD({
   if(!local.current)local.current=createStore<Local>(()=>({query:"",capturing:undefined,pending:undefined,error:undefined}));
   const store=local.current;
   const {query,capturing,pending,error}=useStore(store,s=>s);
-  const recorder=useRef<ComponentRef<typeof View>>(null);
+  const recordField=useRef<ComponentRef<typeof View>>(null);
   // Move focus into the recorder once it has rendered, so the next keys reach it.
-  useEffect(()=>{if(capturing)(recorder.current as unknown as {focus?:()=>void}|null)?.focus?.();},[capturing]);
+  useEffect(()=>{if(capturing)(recordField.current as unknown as {focus?:()=>void}|null)?.focus?.();},[capturing]);
   useRestoreFocus(visible);
   const web=Platform.OS==="web";
   const canRebind=!!onRebind&&(web||!!recorder);
@@ -135,7 +135,7 @@ export function KeyboardShortcutHUD({
           {...{className:small}}><Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Reset</Text></Pressable>:null}
       </View>
       {active?<View style={{gap:6}}>
-        <View ref={recorder} accessible accessibilityLabel={"Recording a shortcut for "+c.label+". Press the keys, or Escape to cancel."}
+        <View ref={recordField} accessible accessibilityLabel={"Recording a shortcut for "+c.label+". Press the keys, or Escape to cancel."}
           {...{onKeyDown:record(c.id),focusable:true,className:joinClasses(styled&&"rounded-control border-2 border-focus bg-surface-sunken focus-visible:outline-none")}}
           style={{minHeight:44,justifyContent:"center",paddingHorizontal:10}}>
           {pending?keycaps(pending):<Text {...{className:joinClasses(styled&&"text-text text-sm")}}>
