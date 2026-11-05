@@ -13,12 +13,20 @@ test("SDK58 autolinking registers identical custom controls on Apple and Android
  const swift=read("ios/NYCTronInstrumentsModule.swift");
  const android=read("android/src/main/java/com/nyctron/instruments/NYCTronInstrumentsModule.kt");
  for(const name of ["TronArcKnobView","TronXYPadView"]){
-   assert.ok(swift.includes("ExpoUIView("+name+".self)"),name);
+   assert.ok(swift.includes("View("+name+".self)")&&!swift.includes("ExpoUIView("),name);
    assert.ok(android.includes('("'+name+'")'),name);
  }
  assert.match(swift,/Name\("NYCTronInstruments"\)/);
  assert.match(android,/Name\("NYCTronInstruments"\)/);
  assert.ok(existsSync(resolve(root,"ios/NYCTronInstruments.podspec")));
+});
+test("iOS sources and podspec do not depend on ExpoUI",()=>{
+ // Expo 58 SwiftPM cannot give a source module another source module's
+ // product, and @expo/ui ships no prebuilt XCFramework. Core covers the views.
+ for(const path of ["ios/NYCTronInstrumentsModule.swift","ios/TronArcKnobView.swift","ios/TronXYPadView.swift"]){
+   assert.doesNotMatch(read(path),/^import ExpoUI$|UIBaseViewProps|ExpoUIView\(/m,path);
+ }
+ assert.doesNotMatch(read("ios/NYCTronInstruments.podspec"),/dependency 'ExpoUI'/);
  assert.ok(existsSync(resolve(root,"android/build.gradle")));
 });
 test("all native views distinguish preview from final engine commit",()=>{

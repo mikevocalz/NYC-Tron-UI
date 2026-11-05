@@ -1,0 +1,128 @@
+import type {ReactNode} from "react";
+import {Pressable,Text,View,type ViewProps} from "react-native";
+import type {Rect2D} from "../overlays/popover-position.ts";
+import {joinClasses} from "../styles.ts";
+import {MenuButton} from "./MenuButton.tsx";
+import {
+  activityAnnouncement,formatElapsed,formatZoom,progressPercent,selectionSummary,stepZoom,
+  type SelectionNoun,type StatusActivity,
+} from "./status-model.ts";
+
+export type {SelectionNoun,StatusActivity} from "./status-model.ts";
+
+/** Zoom readout and controls for {@linkcode StatusBar}. */
+export interface StatusZoom {
+  /** Current zoom in percent. */
+  readonly value:number;
+  /** Menu choices and the stops the step buttons move between. @default [25,50,100,200,400] */
+  readonly presets?:readonly number[];
+  readonly onChange:(percent:number)=>void;
+  /** Adds a "Fit to window" choice. The app computes the fit. */
+  readonly onFit?:()=>void;
+}
+/** Measurement-unit picker for {@linkcode StatusBar}. */
+export interface StatusUnits {
+  readonly value:string;
+  readonly options:readonly {readonly value:string;readonly label:string}[];
+  readonly onChange:(value:string)=>void;
+}
+
+/** Props for {@linkcode StatusBar}. */
+export interface StatusBarProps extends Omit<ViewProps,"children"> {
+  zoom?:StatusZoom;
+  units?:StatusUnits;
+  /** Selected object count. Omit when the editor has no selection concept. */
+  selection?:{readonly count:number;readonly noun?:SelectionNoun};
+  /** @default {kind:"idle"} */
+  activity?:StatusActivity;
+  /** Extra app items before the built-in ones, e.g. a page number. */
+  children?:ReactNode;
+  /** Window-space regions the zoom and unit menus may use. @default the whole window */
+  usableRegions?:readonly Rect2D[];
+  className?:string;
+  unstyled?:boolean;
+}
+
+const DEFAULT_PRESETS=[25,50,100,200,400];
+
+/**
+ * Document status strip: selection count, render, save and recording state,
+ * measurement units and zoom. Activity changes are announced politely once;
+ * the recording clock and render percentage are not re-announced per tick.
+ * Items wrap onto a second row in narrow panes instead of clipping, and
+ * every control is at least 44pt.
+ */
+export function StatusBar({
+  zoom,units,selection,activity={kind:"idle"},children,usableRegions,className,unstyled=false,style,...rest
+}:StatusBarProps){
+  const styled=!unstyled;
+  const muted=joinClasses(styled&&"text-text-muted text-xs");
+  const text=joinClasses(styled&&"text-text text-xs");
+  const presets=zoom?.presets??DEFAULT_PRESETS;
+  const percent=activity.kind==="rendering"?progressPercent(activity.progress):undefined;
+  const announcement=activityAnnouncement(activity);
+  const unitLabel=units?.options.find(o=>o.value===units.value)?.label??units?.value;
+  const step=(direction:1|-1)=>{
+    if(!zoom)return;
+    const next=stepZoom(zoom.value,presets,direction);
+    if(next!==zoom.value)zoom.onChange(next);
+  };
+  const stepButton=(direction:1|-1)=>{
+    const blocked=!zoom||stepZoom(zoom.value,presets,direction)===zoom.value;
+    return <Pressable accessibilityRole="button" accessibilityLabel={direction>0?"Zoom in":"Zoom out"}
+      disabled={blocked} accessibilityState={{disabled:blocked}} onPress={()=>step(direction)}
+      {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-raised",blocked&&"opacity-40")}}>
+      <View pointerEvents="none" style={{width:12,height:12,alignItems:"center",justifyContent:"center"}}>
+        <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:12,height:0,borderTopWidth:1.5}}/>
+        {direction>0?<View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:0,height:12,borderLeftWidth:1.5}}/>:null}
+      </View>
+    </Pressable>;
+  };
+  return <View {...rest} accessibilityLabel="Status"
+    {...{className:joinClasses(styled&&"border-t border-border bg-surface-sunken px-2",className)}}
+    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center",columnGap:12,minHeight:44},style]}>
+    {children}
+    {selection?<Text {...{className:text}} style={{fontVariant:["tabular-nums"]}}
+      accessibilityLiveRegion="polite">{selectionSummary(selection.count,selection.noun)}</Text>:null}
+    <View style={{flexDirection:"row",alignItems:"center",gap:6,flexGrow:1,minWidth:0}}
+      accessibilityLiveRegion="polite">
+      {activity.kind==="recording"?<>
+        <View {...{className:joinClasses(styled&&"border-danger")}} style={{width:8,height:8,borderRadius:4,borderWidth:4}}/>
+        <Text {...{className:text}}>{announcement}</Text>
+        <Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}
+          accessibilityLabel={"Elapsed "+formatElapsed(activity.elapsedMs)}>{formatElapsed(activity.elapsedMs)}</Text>
+      </>:activity.kind==="rendering"?<>
+        <Text {...{className:text}}>{announcement}</Text>
+        <View accessibilityRole="progressbar" accessibilityLabel={announcement}
+          aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}
+          {...{className:joinClasses(styled&&"rounded-control border border-border")}} style={{width:96,height:6,overflow:"hidden"}}>
+          {/* The fill is a border so forced-colors mode still shows progress. */}
+          <View {...{className:joinClasses(styled&&"border-accent")}} style={{width:percent===undefined?"35%":`${percent}%`,height:0,borderTopWidth:4}}/>
+        </View>
+        {percent!==undefined?<Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{percent}%</Text>:null}
+      </>:activity.kind==="error"?<Text {...{className:joinClasses(styled&&"text-danger text-xs")}}
+        numberOfLines={2} style={{flexShrink:1}}>{announcement}</Text>
+      :announcement?<Text {...{className:muted}}>{announcement}</Text>:null}
+    </View>
+    {units?<MenuButton label={"Units: "+unitLabel} usableRegions={usableRegions}
+      items={units.options.map(o=>({id:o.value,label:o.label,description:o.value===units.value?"Current":undefined}))}
+      onSelect={value=>{if(value!==units.value)units.onChange(value);}}
+      {...{className:joinClasses(styled&&"px-2 hover:bg-surface-raised")}}>
+      <Text {...{className:text}}>{unitLabel}</Text>
+    </MenuButton>:null}
+    {zoom?<View style={{flexDirection:"row",alignItems:"center"}}>
+      {stepButton(-1)}
+      <MenuButton label={"Zoom "+formatZoom(zoom.value)} usableRegions={usableRegions} menuWidth={180}
+        items={[...(zoom.onFit?[{id:"fit",label:"Fit to window"}]:[]),
+          ...presets.map(p=>({id:String(p),label:formatZoom(p)}))]}
+        onSelect={id=>{
+          if(id==="fit")zoom.onFit?.();
+          else if(Number(id)!==zoom.value)zoom.onChange(Number(id));
+        }}
+        {...{className:joinClasses(styled&&"px-1 hover:bg-surface-raised")}}>
+        <Text {...{className:text}} style={{fontVariant:["tabular-nums"],minWidth:44,textAlign:"center"}}>{formatZoom(zoom.value)}</Text>
+      </MenuButton>
+      {stepButton(1)}
+    </View>:null}
+  </View>;
+}
