@@ -1,8 +1,8 @@
 import {findNativeModule} from "../native-module.ts";
+import {DOCUMENTS_MODULE_NAME} from "../module-names.ts";
 import {createDocuments,type Documents,type DocumentsNative} from "./documents.ts";
 
-/** Name both platforms register the documents module under. */
-export const DOCUMENTS_MODULE_NAME="NYCTronDocuments";
+export {DOCUMENTS_MODULE_NAME} from "../module-names.ts";
 
 /**
  * {@linkcode Documents} over UIDocumentPickerViewController and

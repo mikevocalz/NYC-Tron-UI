@@ -1,8 +1,8 @@
 import {findNativeModule} from "../native-module.ts";
+import {HAPTICS_MODULE_NAME} from "../module-names.ts";
 import {createHaptics,type Haptics,type HapticsNative,type HapticsOptions} from "./haptics.ts";
 
-/** Name both platforms register the haptics module under. */
-export const HAPTICS_MODULE_NAME="NYCTronHaptics";
+export {HAPTICS_MODULE_NAME} from "../module-names.ts";
 
 /**
  * {@linkcode Haptics} over the native module: UIFeedbackGenerator on iOS,

@@ -7,9 +7,7 @@ import assert from "node:assert/strict";
 import {readFileSync,readdirSync} from "node:fs";
 import {dirname,join,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
-import {HAPTICS_MODULE_NAME} from "../src/haptics/platform.native.ts";
-import {DOCUMENTS_MODULE_NAME} from "../src/documents/platform.native.ts";
-import {PLAYBACK_SESSION_MODULE_NAME} from "../src/playback/platform.native.ts";
+import {HAPTICS_MODULE_NAME,DOCUMENTS_MODULE_NAME,PLAYBACK_SESSION_MODULE_NAME} from "../src/module-names.ts";
 import {HAPTIC_KINDS} from "../src/haptics/kinds.ts";
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),"..");

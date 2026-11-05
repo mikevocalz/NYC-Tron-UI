@@ -1,8 +1,8 @@
 import {findNativeModule} from "../native-module.ts";
+import {PLAYBACK_SESSION_MODULE_NAME} from "../module-names.ts";
 import {createPlaybackSession,type PlaybackSession,type PlaybackSessionNative,type PlaybackSessionOptions} from "./session.ts";
 
-/** Name both platforms register the playback session module under. */
-export const PLAYBACK_SESSION_MODULE_NAME="NYCTronPlaybackSession";
+export {PLAYBACK_SESSION_MODULE_NAME} from "../module-names.ts";
 
 /**
  * {@linkcode PlaybackSession} over AVAudioSession on iOS and AudioManager

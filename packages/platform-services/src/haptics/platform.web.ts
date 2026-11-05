@@ -1,7 +1,6 @@
 import {createHaptics,type Haptics,type HapticsOptions} from "./haptics.ts";
 
-/** Name both native platforms register the haptics module under. */
-export const HAPTICS_MODULE_NAME="NYCTronHaptics";
+export {HAPTICS_MODULE_NAME} from "../module-names.ts";
 
 /**
  * Web has no haptics the kit relies on (`navigator.vibrate` is absent on iOS

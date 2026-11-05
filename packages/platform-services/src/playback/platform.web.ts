@@ -1,7 +1,6 @@
 import {createPlaybackSession,type PlaybackSession,type PlaybackSessionOptions} from "./session.ts";
 
-/** Name both native platforms register the playback session module under. */
-export const PLAYBACK_SESSION_MODULE_NAME="NYCTronPlaybackSession";
+export {PLAYBACK_SESSION_MODULE_NAME} from "../module-names.ts";
 
 /**
  * Browsers expose no interruption or output-loss events, so the web session

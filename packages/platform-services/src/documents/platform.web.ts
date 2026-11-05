@@ -1,7 +1,6 @@
 import {createDocuments,type Documents} from "./documents.ts";
 
-/** Name both native platforms register the documents module under. */
-export const DOCUMENTS_MODULE_NAME="NYCTronDocuments";
+export {DOCUMENTS_MODULE_NAME} from "../module-names.ts";
 
 type WebNavigator={share?(data:{title?:string;text?:string;url?:string}):Promise<void>;canShare?(data:object):boolean};
 
