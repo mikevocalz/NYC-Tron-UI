@@ -39,7 +39,8 @@ complex editor screen composition and its cross-engine suite application.
 | LevelFader + level math | `@nyc-tron/ui/components/forge/audio/LevelFader`, `.../forge/audio/level` | Controlled RN responder fader (value/onChange/onCommit), dB travel, unit + mocked-host render tests; native device QA pending | Forge PR #25 `NativeLevelSlider` |
 | Track/mixer / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
-| Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
+| LayerStack + layer model | `@nyc-tron/ui/components/forge/layers/LayerStack`, `.../forge/layers/layer-model` | Controlled RN list: visibility, opacity drag, reorder, rename, optional `kindLabel`, thumbnail and `onRemove`. Model tests, mocked-host render tests and Chromium/React Native Web remove and keyboard tests; no device or screen-reader QA yet | Forge Prism layer panel |
+| Brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | InkToolbar | `@nyc-tron/ui/components/forge/ink/InkToolbar` (state, shortcuts and validation in `/forge/ink/ink-model`) | Controlled RN toolbar, horizontal bar or vertical rail: tool radio group, adjustable size and opacity, host swatches plus an optional custom-color request, pressure switch shown only when the host reports measured pressure, undo/redo with disabled reasons. Shortcut resolver is a pure function; no global listener. Model tests plus Chromium/React Native Web interaction tests and light/dark/RTL captures at 390 and 834 px; no device or screen-reader QA yet | Forge board PRs #18, #19, #22 (`packages/board`, `apps/board-native-lab`) and pen PR #20 |
 | Board stroke engine, Skia renderer, BLE pen connection, pen controllers | Nitro Forge `packages/board`, `packages/pen-connect`, `packages/spatial-ink` | **STAYS IN FORGE** by design; InkToolbar only reports intent | Forge PRs #18–20, #22 |
@@ -258,6 +259,55 @@ vertical fader scrolled the mixer without a gain change, a vertical swipe
 on a horizontal fader scrolled the page, and Tab plus arrow keys stepped the
 level. Not verified: iOS/Android/Windows/macOS device gestures, native
 ScrollView arbitration, and VoiceOver/TalkBack/Narrator output.
+
+## 2026-11-05 LayerStack kind labels, thumbnails and remove
+
+Moving the Forge Prism editor onto `LayerStack` needed three additions. All
+are optional, so existing callers render as before.
+
+- `LayerRow.kindLabel` replaces the built-in kind label ("Shape", "Pixel")
+  under the name and in the spoken label, so Prism can show "Rectangle",
+  "Ellipse" or "Raster". A blank value throws. `layerDetail(row)` returns the
+  label the row will use.
+- `LayerRow.thumbnail` is either `{fill}`, a colour from the layer's content,
+  or `{node}`, an app-rendered preview clipped to a 28pt square. The row stays
+  44pt or taller. The thumbnail is always hidden from screen readers; its
+  optional `label` ("red fill") is read as part of the row label instead, so
+  VoiceOver and TalkBack do not stop on it separately. When any row has a
+  thumbnail, rows without one keep an empty slot so names stay in a column.
+- `onRemove(id)` adds a remove button at the end of each row, a "Remove"
+  screen-reader action, and Delete/Backspace on a focused row. Without the
+  prop none of these exist. Locked rows show the button disabled and have no
+  action or key. There is no confirmation dialog: removal is a host engine
+  operation that the host's undo restores. `removeLayer(layers, id)` applies
+  it to app state.
+
+Two RTL fixes came with this. The selection strip is anchored with `start`
+rather than `left`, and the opacity drag reads `dx` reversed when
+`I18nManager.isRTL`, since the fill grows from the right edge there. On
+narrow panes the opacity column shrinks to 88pt before the name drops below
+96pt.
+
+Verified: model tests, a mocked-host render test of the real component
+(including a red run against the previous source), and a React Native Web
+render in Chromium at 390 and 834 px in light and dark plus RTL. In that run,
+pointer, Enter on the focused remove button and Delete on a focused row each
+removed a layer, the fixture's undo restored it, and Backspace on a locked
+row did nothing. Not verified: iOS, Android or foldable device runs, native
+`onKeyDown` delivery, and VoiceOver/TalkBack reading of the custom action.
+
+## 2026-11-05 NativeSeekBar transport follows the app theme
+
+`@expo/ui` `Text` takes its colour from the OS scheme, so with a dark app
+theme on a light-mode device the seek bar drew black timecode on the dark
+surface. The `@expo/ui` host now carries only the slider, as in HsvPicker.
+The step buttons are the kit `Button` (secondary, small) and the timecode is
+an app-token RN `Text` in an RN row, so both follow the app theme. The
+timecode takes the width between the buttons and wraps centred at 390px.
+Verified by a Chromium check that the timecode uses the dark text token on a
+light OS scheme, a check that the forward button stays inside the card at
+390px, and dark/light captures at 390 and 834px. Not verified on iOS or
+Android devices.
 
 ## 2026-11-05 Ink toolbar and the Forge board
 

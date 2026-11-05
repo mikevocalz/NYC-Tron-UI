@@ -2,8 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {
- LAYER_TOUCH_TARGET,dragTargetIndex,formatOpacity,layerAccessibilityLabel,moveLayer,
- normalizeOpacity,opacityFromDrag,resolveRename,stepOpacity,validateLayers,
+ LAYER_THUMBNAIL_SIZE,LAYER_TOUCH_TARGET,dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerDetail,
+ layerKindLabel,moveLayer,normalizeOpacity,opacityFromDrag,removeLayer,resolveRename,stepOpacity,validateLayers,
 } from "../src/components/forge/layers/layer-model.ts";
 
 const layers=[
@@ -72,6 +72,44 @@ test("rows expose 44pt targets and screen-reader actions for every gesture",()=>
  assert.match(source,/onPanResponderTerminate:\(\)=>store\.setState\(\{drag:null\}\)/,"cancelled drag never reorders");
  assert.doesNotMatch(source,/#[0-9a-fA-F]{3,8}\b|rgba?\(/,"tokens only");
  assert.doesNotMatch(source,/from\s+["'](?:@nitro-forge\/|@acme\/|@reactvision\/)/);
+});
+test("kindLabel replaces the built-in kind label on screen and in the spoken label",()=>{
+ const rect={...layers[1],kindLabel:"Rectangle",locked:false};
+ assert.equal(layerDetail(rect),"Rectangle");
+ assert.equal(layerDetail({kind:"raster",kindLabel:" Raster "}),"Raster","trimmed");
+ assert.equal(layerDetail(layers[2]),layerKindLabel("raster"),"falls back to the kind");
+ assert.equal(layerDetail(layers[1]),"Shape");
+ assert.equal(layerAccessibilityLabel(rect,1,3),"Logo, Rectangle layer, 2 of 3, hidden, 40% opacity");
+ assert.throws(()=>validateLayers([{...layers[0],kindLabel:"  "}]),/kindLabel is blank/);
+ assert.doesNotThrow(()=>validateLayers([rect]));
+});
+test("thumbnails take a fill or a node, never both or neither, and speak only through the row",()=>{
+ assert.equal(LAYER_THUMBNAIL_SIZE,28);
+ assert.ok(LAYER_THUMBNAIL_SIZE<LAYER_TOUCH_TARGET,"thumbnail fits inside the 44pt row");
+ const node={type:"View",props:{}};
+ assert.doesNotThrow(()=>validateLayers([{...layers[0],thumbnail:{fill:"#e0402a"}}]));
+ assert.doesNotThrow(()=>validateLayers([{...layers[0],thumbnail:{node,label:"skyline photo"}}]));
+ assert.throws(()=>validateLayers([{...layers[0],thumbnail:{}}]),/exactly one/);
+ assert.throws(()=>validateLayers([{...layers[0],thumbnail:{fill:"  "}}]),/exactly one/);
+ assert.throws(()=>validateLayers([{...layers[0],thumbnail:{node:null}}]),/exactly one/);
+ assert.throws(()=>validateLayers([{...layers[0],thumbnail:{fill:"red",node}}]),/exactly one/);
+ assert.throws(()=>validateLayers([{...layers[0],thumbnail:{fill:"red",label:" "}}]),/label is blank/);
+ assert.equal(layerAccessibilityLabel({...layers[2],thumbnail:{fill:"red",label:"red fill"}},2,3),
+  "Photo, Pixel layer, red fill, 3 of 3, visible, 85% opacity");
+ assert.equal(layerAccessibilityLabel({...layers[2],thumbnail:{fill:"red"}},2,3),
+  "Photo, Pixel layer, 3 of 3, visible, 85% opacity","an unlabelled thumbnail is decorative");
+});
+test("removeLayer returns a new array without the row and rejects unknown ids",()=>{
+ assert.deepEqual(removeLayer(layers,"logo").map(l=>l.id),["title","photo"]);
+ assert.deepEqual(layers.map(l=>l.id),["title","logo","photo"],"input is not mutated");
+ assert.throws(()=>removeLayer(layers,"nope"),/Unknown/);
+});
+test("remove is optional, confirm-free, and reachable by pointer, keyboard and screen reader",()=>{
+ assert.match(source,/onRemove\?:\(id:string\)=>void\|Promise<unknown>/);
+ assert.match(source,/\{props\.onRemove\?<Pressable accessibilityRole="button" accessibilityLabel=\{"Remove "\+layer\.name\}/);
+ assert.match(source,/\.\.\.\(removable\?\[\{name:"remove",label:"Remove"\}\]:\[\]\)/);
+ assert.match(source,/key!=="Delete"&&key!=="Backspace"/);
+ assert.doesNotMatch(source,/Alert\.|Modal|confirm\(/,"no confirmation dialog");
 });
 test("layer subpaths ship explicit .js targets",()=>{
  for(const name of ["layers/LayerStack","layers/layer-model"]){

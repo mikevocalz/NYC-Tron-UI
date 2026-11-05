@@ -1,9 +1,10 @@
 # NYC-Tron native charts
 
 Line, column and area charts drawn by the platform: Swift Charts on iOS 16.4+
-and Vico 3.2.3 (Jetpack Compose) on Android. Both register as `TronChartView`
-through the Expo SDK 58 `ExpoUIView` bridge, the same path
-`@nyc-tron/native-controls` uses.
+and Vico 3.2.3 (Jetpack Compose) on Android. Both register as `TronChartView`,
+the same way `@nyc-tron/native-controls` does: Expo Modules Core's SwiftUI
+`View` DSL on iOS and `ExpoUIView` on Android. The iOS pod does not depend on
+ExpoUI, so it also builds under Expo 58's SwiftPM integration.
 
 ## Installation
 
