@@ -1,8 +1,8 @@
 # Rendered web instrument acceptance
 
-This fixture bundles the real `PrecisionScrubber`, `DragGrabHandle` and
-`NativeSeekBar` sources
-through React Native Web, styled by Tailwind v4 from the reference light and dark
+This fixture bundles the real `PrecisionScrubber`, `DragGrabHandle`,
+`NativeSeekBar` and `LayerStack` sources through React Native Web, styled by
+Tailwind v4 from the reference light and dark
 tokens in `docs/THEME_TOKENS.md`. `rn-shim.tsx` forwards `className` to React
 Native Web as precompiled classes, standing in for the consumer's Uniwind runtime.
 
@@ -20,9 +20,12 @@ on one row under the slider at 390px and 834px (#27) and that the buttons step
 the controlled frame. It renders the `@expo/ui` 58.0.20 universal web build;
 `.npmrc` keeps npm from installing that package's `expo` and `react-native`
 peers, which the web build does not import.
-`shots.spec.mjs` writes review captures to `shots/` (light and dark, 390px phone
-and 834px tablet, resting, focused and mid-drag, the seek bar, plus forced colors). They are
-uploaded as a CI artifact, not compared as pixel goldens.
+`layers.spec.mjs` covers LayerStack kind labels and thumbnails, removal by
+pointer, Enter and Delete, the fixture's undo, and locked rows refusing removal.
+`shots.spec.mjs` writes review captures to `shots/`: light and dark, 390px phone
+and 834px tablet, resting, focused and mid-drag, the seek bar, forced colors,
+and the layer stack at both widths with a focused remove button, plus RTL via
+`?dir=rtl`. They are uploaded as a CI artifact, not compared as pixel goldens.
 
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
 EmptyState, ErrorMessage, KeyValueList, NightScope, the web DropZone and

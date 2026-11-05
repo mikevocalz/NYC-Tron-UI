@@ -30,3 +30,19 @@ test("frame buttons step the controlled frame",async({page})=>{
   await seek.getByRole("button",{name:"−1 frame"}).click();
   await expect(page.getByTestId("frame")).toHaveText("frame 119");
 });
+
+// The timecode follows the app theme, not the OS scheme: dark app on a light OS.
+test("timecode uses the theme text token in dark mode on a light OS",async({page})=>{
+  await page.emulateMedia({colorScheme:"light"});
+  await page.goto("/?theme=dark");
+  const color=await page.getByTestId("seek").getByText("00:00:05:00 / 00:00:10:00").evaluate(e=>getComputedStyle(e).color);
+  expect(color).toBe("rgb(232, 235, 240)");
+});
+
+test("transport stays inside the card at 390px",async({page})=>{
+  await page.setViewportSize({width:390,height:900});
+  await page.goto("/");
+  const card=await page.getByTestId("seek").boundingBox();
+  const fwd=await page.getByTestId("seek").getByRole("button",{name:"+1 frame"}).boundingBox();
+  expect(fwd.x+fwd.width).toBeLessThanOrEqual(card.x+card.width);
+});
