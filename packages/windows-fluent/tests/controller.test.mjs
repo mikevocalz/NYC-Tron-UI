@@ -94,6 +94,41 @@ test("native shell is real WinUI NavigationView outside Fabric composition",()=>
  assert.doesNotMatch(implementation,/SelectsOnInvoked\s*=\s*false/);
  assert.match(implementation,/Navigation\.SelectionChanged \+= OnSelectionChanged/);
  assert.match(implementation,/SetSelectedIdCore\(_committedId\)/);
+ // The pane has the same contract: a user toggle is a request and the shell
+ // puts the pane back until the host commits it with SetPaneOpen.
+ assert.match(implementation,/_committedPaneOpen = isOpen;/);
+ assert.match(implementation,/if \(isOpen == _committedPaneOpen \|\| Navigation\.IsPaneOpen != isOpen\) return;/);
+ // An overlay pane (Compact/Minimal) that NavigationView closed is never forced open.
+ assert.match(implementation,/if \(isOpen \|\| Navigation\.DisplayMode == NavigationViewDisplayMode\.Expanded\)/);
+ assert.ok(implementation.indexOf("_paneRestorePending = DispatcherQueue.TryEnqueue(")<implementation.indexOf("PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(isOpen))"),
+  "restore is queued before the host handler runs");
+ assert.match(implementation,/Navigation\.IsPaneOpen = _committedPaneOpen;/);
+ assert.doesNotMatch(implementation,/if \(!_settingFromHost\) PaneOpenChanged/);
+ // The C# compiles only on the Windows job; catch an unbalanced edit here too.
+ assert.equal((implementation.match(/\{/g)??[]).length,(implementation.match(/\}/g)??[]).length);
  assert.match(implementation,/AutomationProperties\.SetName\(item, destination\.Label\)/);
  assert.doesNotMatch(implementation,/Windows\.UI\.Xaml/);
+});
+
+test("an unchanged app state reconciles a rejected native pane toggle",()=>{
+ for(const committed of [false,true]) {
+  const mock=createMockHost();
+  let actual=committed;
+  const setPaneOpen=mock.host.setPaneOpen;
+  mock.host.setPaneOpen=open=>{actual=open;setPaneOpen(open);};
+  const requests=[];
+  const state={...sample,paneOpen:committed};
+  const controller=createWindowsNavigationController(mock.host,state,{
+   onSelectionRequested:()=>{},onPaneOpenRequested:open=>requests.push(open),
+  });
+  actual=!committed;
+  mock.fire({type:"paneOpenChanged",open:actual});
+  controller.update(state);
+  assert.equal(actual,committed,"rejected native toggle must return to committed state");
+  assert.deepEqual(requests,[!committed]);
+  const count=mock.calls.length;
+  controller.update(state);
+  assert.equal(mock.calls.length,count,"reconciled state must not cause redundant writes");
+  controller.dispose();
+ }
 });
