@@ -18,6 +18,9 @@ on:
       - ".github/workflows/native-controls-port.yml"
       - "pnpm-workspace.yaml"
   workflow_dispatch:
+concurrency:
+  group: nyc-tron-native-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 
