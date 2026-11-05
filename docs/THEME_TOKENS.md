@@ -15,19 +15,21 @@ the caller passes one; otherwise the token applies.
 | --- | --- | --- | --- |
 | `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SegmentedControl/TabBar active item, Select chosen option, ListItem and IconButton selected tint, SpreadsheetGrid selected range, TreeGrid selected rows |
 | `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
-| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale |
-| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), Select trigger, SegmentedControl well, table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars |
+| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale; HsvPicker thumb inner ring; LevelFader card |
+| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), Select trigger, SegmentedControl well, table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars; HsvPicker steppers; LevelFader rail, thumb and step buttons |
 | `border` | `--color-border` | `border-border` | Every bordered surface |
-| `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid |
-| `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip |
+| `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid; HsvPicker thumb outer ring |
+| `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted`, `bg-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip; HsvPicker and ColorChannels labels and hex readout; LevelFader dB readout, `bg-text-muted` for the LevelFader unity mark |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge |
+| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border |
+| `info` | `--color-info` | `bg-info`, `border-info` | Banner (info) border and mark, Badge (info) dot |
+| `success` | `--color-success` | `bg-success`, `border-success` | Banner (success) border and mark, Badge (success) dot |
 | `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |
 
-`danger`, `onDanger` and `accent` are optional in `TronTheme`; a theme that
+`danger`, `onDanger`, `accent`, `info` and `success` are optional in `TronTheme`; a theme that
 omits them leaves those recipes without a color, so define them for any app
 that shows errors or the Forge controls. `themeCssVariables(theme)` from
 `@nyc-tron/core/theme` returns these variables for a validated theme.
@@ -74,6 +76,8 @@ with the app's design tokens; they are not an NYC-Tron brand.
   --color-danger: #b42318;
   --color-on-danger: #ffffff;
   --color-accent: #1f7a6d;
+  --color-info: #1d5fa8;
+  --color-success: #1e7a3c;
   --color-focus: #1f5fd1;
   --radius-control: 8px;
   --radius-card: 12px;
@@ -91,6 +95,8 @@ with the app's design tokens; they are not an NYC-Tron brand.
     --color-danger: #ff8a80;
     --color-on-danger: #2b0703;
     --color-accent: #5fd0bf;
+    --color-info: #8ab8ff;
+    --color-success: #6fd08c;
     --color-focus: #7aa7ff;
   }
 }
@@ -124,3 +130,12 @@ not yet on the CDN broke local installs while CI happened to pass. The
 lockfile is generated from the public registry (metro 0.87.3 resolves; no
 pin), committed on each stacked branch, and CI fails if `package.json` and
 the lockfile disagree.
+
+**2026-11-05: add optional `info` and `success` tones (BUILD).** Banner,
+Badge and the status marks ported from `@acme/ui` have info and success
+tones, and borrowing `primary` and `accent` for them would tie a notice's
+meaning to brand colors the app may change for other reasons. Both keys are
+optional like `danger`; a theme without them leaves those borders and marks
+uncolored. Reference values are 6.45:1 (info) and 5.38:1 (success) on
+`surface-raised` in light, 8.17:1 and 8.72:1 in dark, so they also pass as
+text colors, though the components only use them for borders and marks.

@@ -1,85 +1,118 @@
 import {AppRegistry,ScrollView,Text,View} from "react-native";
 import {create} from "zustand";
-import {Select} from "../../src/components/Select.tsx";
-import {SegmentedControl} from "../../src/components/SegmentedControl.tsx";
-import {TabBar} from "../../src/components/TabBar.tsx";
-import {Toolbar} from "../../src/components/Toolbar.tsx";
-import {List,ListItem} from "../../src/components/List.tsx";
-import {IconButton} from "../../src/components/IconButton.tsx";
-import {FieldGroup} from "../../src/components/FieldGroup.tsx";
+import {Banner} from "../../src/components/feedback/Banner.tsx";
+import {Badge} from "../../src/components/feedback/Badge.tsx";
+import {EmptyState} from "../../src/components/feedback/EmptyState.tsx";
+import {ErrorMessage} from "../../src/components/feedback/ErrorMessage.tsx";
+import {KeyValueList} from "../../src/components/content/KeyValueList.tsx";
+import {NightScope} from "../../src/components/theme/NightScope.tsx";
+import {DropZone} from "../../src/components/files/DropZone.web.tsx";
+import {FilePicker} from "../../src/components/files/FilePicker.web.tsx";
+import {Button} from "../../src/components/Button.tsx";
+import {Page,Main,Header,Footer,Section,Nav,Heading,Paragraph,Link,Text as SemanticText,Input} from "../../src/components/html/semantic.web.tsx";
 
-// Studio primitives in the slots nitro-forge's StudioUIProvider fills:
-// a docked panel (TabBar + Toolbar + List), the properties inspector
-// (FieldGroup + Select), and the dock-position SegmentedControl.
-type Demo={tab:string;dock:string;font:string;row:number;bold:boolean;closes:number};
-const useDemo=create<Demo>(()=>({tab:"outline",dock:"left",font:"inter",row:1,bold:false,closes:0}));
+type Demo={dropped:string[];picked:string[];dismissed:number;notice:boolean;retries:number;exits:number;entered:number};
+const useDemo=create<Demo>(()=>({dropped:[],picked:[],dismissed:0,notice:true,retries:0,exits:0,entered:0}));
+const params=new URLSearchParams(location.search);
+const theme=params.get("theme")??"light";
+const dir=params.get("dir")==="rtl"?"rtl":"ltr";
 
-// Drawn glyphs stand in for the app's icon system; the controls take any node.
-const Bar=({w,h,round,on}:{w:number;h:number;round?:boolean;on?:boolean})=>
-  <View {...{className:on?"bg-on-primary":"bg-text-muted"}} style={{width:w,height:h,borderRadius:round?h/2:1}}/>;
-const Glyph={
-  outline:(on=false)=><View style={{gap:3}}><Bar on={on} w={16} h={2}/><Bar on={on} w={11} h={2}/><Bar on={on} w={14} h={2}/></View>,
-  properties:(on=false)=><View style={{gap:4}}><Bar on={on} w={16} h={2}/><Bar on={on} w={16} h={2}/></View>,
-  history:(on=false)=><Bar on={on} w={14} h={14} round/>,
-  close:()=><View style={{width:14,height:14,alignItems:"center",justifyContent:"center"}}>
-    <View {...{className:"bg-text"}} style={{position:"absolute",width:16,height:2,transform:[{rotate:"45deg"}]}}/>
-    <View {...{className:"bg-text"}} style={{position:"absolute",width:16,height:2,transform:[{rotate:"-45deg"}]}}/></View>,
-  bold:()=><View {...{className:"border-2 border-text"}} style={{width:12,height:14,borderRadius:2}}/>,
-};
-const ROWS=[["Heading","Quarterly infrastructure review"],["Paragraph","Inspection backlog by borough"],["Table","12 rows, 4 columns"],["Paragraph",""]];
+const RECORD=[
+  {key:"kind",label:"Document",value:"Quill essay"},
+  {key:"size",label:"Size",value:"18,204 bytes"},
+  {key:"saved",label:"Last saved",value:"2 minutes ago"},
+  {key:"owner",label:"Owner",value:null},
+  {key:"engine",label:"Engine",value:"Rust 0.8.2",action:<Badge label="Local" tone="success" size="xs"/>},
+];
 
 function Fixture(){
   const s=useDemo();
-  const tabs=[["outline","Outline"],["properties","Properties"],["history","History"]].map(([key,label])=>({
-    key:key!,label:label!,active:s.tab===key,onPress:()=>useDemo.setState({tab:key}),
-    icon:({active}:{active:boolean})=>Glyph[key as "outline"](active),
-  }));
-  return <ScrollView contentContainerStyle={{padding:16,gap:20,maxWidth:720,width:"100%",alignSelf:"center"}}>
-    <View {...{className:"rounded-card border border-border bg-surface-raised"}} style={{overflow:"hidden"}}>
-      <View style={{padding:4}}><TabBar semantics="tabs" density="compact" aria-label="Left dock panels" tabs={tabs}/></View>
-      <Toolbar density="compact" title="Document outline"
-        actions={<>
-          <IconButton aria-label="Bold" size="sm" variant="ghost" selected={s.bold}
-            onPress={()=>useDemo.setState({bold:!s.bold})} icon={Glyph.bold()}/>
-          <IconButton aria-label="Hide outline" size="sm" variant="ghost" cornerRadius={4}
-            onPress={()=>useDemo.setState({closes:s.closes+1})} icon={Glyph.close()}/>
-        </>}/>
-      <View style={{padding:12}}>
-        <List aria-label="Document blocks">
-          {ROWS.map(([label,value],i)=><ListItem key={i} supportingText={value||"Empty paragraph"}
-            selected={s.row===i} onPress={()=>useDemo.setState({row:i})}>{label}</ListItem>)}
-        </List>
+  return <ScrollView contentContainerStyle={{padding:16,gap:24,maxWidth:760,width:"100%",alignSelf:"center"}}>
+    <Main dataSet={{theme}} dir={dir} className="gap-6">
+      <Nav className="flex-row items-center justify-between gap-3" aria-label="App navigation">
+        <Link className="text-base font-semibold text-text" href="#/">
+          <SemanticText className="text-text-muted" aria-hidden>N </SemanticText>NitroForge
+        </Link>
+        <Badge label="Open in this session" size="xs"/>
+      </Nav>
+      <Section className="gap-3" aria-labelledby="notices-heading">
+        <Header className="gap-1">
+          <Heading level={1} id="notices-heading" className="text-2xl font-semibold text-text">Notices</Heading>
+          <Paragraph className="text-sm text-text-muted">Every tone, with and without actions.</Paragraph>
+        </Header>
+        <Banner tone="info" title="Saved 18,204 bytes from the Rust engine"
+          description="Your document is stored in this browser session only."/>
+        {s.notice
+          ? <Banner tone="success" title="Word document exported" onDismiss={()=>useDemo.setState(d=>({notice:false,dismissed:d.dismissed+1}))}/>
+          : null}
+        <Banner tone="danger" live="alert" title="Couldn't open essay.docx"
+          description="The file is not a Word document. Choose a DOCX or NFD document."
+          action={<Button title="Try again" variant="secondary" size="sm" onPress={()=>useDemo.setState(d=>({retries:d.retries+1}))}/>}/>
+        <Banner tone="neutral" title="Read-only preview" description="Editing needs the desktop app."/>
+        <ErrorMessage message="Apply your text changes before opening another document."/>
+        <ErrorMessage/>
+      </Section>
+      <Section className="gap-3" aria-labelledby="badges-heading">
+        <Heading level={2} id="badges-heading" className="text-lg font-semibold text-text">Badges</Heading>
+        <View style={{flexDirection:"row",flexWrap:"wrap",gap:8}}>
+          <Badge label="3"/><Badge label="Draft" size="xs"/><Badge label="Synced" tone="success"/>
+          <Badge label="Beta" tone="info"/><Badge label="Conflict" tone="danger"/><Badge label="Live" tone="accent"/>
+        </View>
+      </Section>
+      <Section className="gap-3" aria-labelledby="record-heading">
+        <Heading level={2} id="record-heading" className="text-lg font-semibold text-text">Record</Heading>
+        <View testID="kv" {...{className:"rounded-card border border-border bg-surface-raised"}} style={{padding:16}}>
+          <KeyValueList items={RECORD}/>
+        </View>
+      </Section>
+      <Section className="gap-3" aria-labelledby="files-heading">
+        <Heading level={2} id="files-heading" className="text-lg font-semibold text-text">Files</Heading>
+        <DropZone testID="drop-default" accept=".docx,.nfd" disableObjectUrl
+          description="Word documents and NFD files."
+          onEnter={()=>useDemo.setState(d=>({entered:d.entered+1}))}
+          onDrop={({assets})=>useDemo.setState({dropped:assets.map(a=>a.fileName??a.type)})}/>
+        {/* Forge's studio-preview shape: an unstyled zone wrapping its own Open control. */}
+        <DropZone testID="drop-forge" unstyled accept=".nfd" disableObjectUrl
+          onDrop={({assets})=>useDemo.setState({dropped:assets.map(a=>a.fileName??a.type)})}>
+          <FilePicker label="Open" accept=".nfd" testID="open" onFiles={files=>useDemo.setState({picked:files.map(f=>f.name)})}/>
+        </DropZone>
+        <Input aria-label="Document title" placeholder="Untitled document"
+          {...{className:"rounded-control border border-border bg-surface-sunken px-3 text-base text-text"}}/>
+      </Section>
+      <Section className="gap-3" aria-labelledby="empty-heading">
+        <Heading level={2} id="empty-heading" className="text-lg font-semibold text-text">Empty</Heading>
+        <View {...{className:"rounded-card border border-border bg-surface-raised"}}>
+          <EmptyState title="No layers" tone="carolina"
+            description="Add a shape or raster layer to begin. Imports from other apps open in Prism on desktop."
+            exitAction={{title:"Add rectangle",onPress:()=>useDemo.setState(d=>({exits:d.exits+1}))}}/>
+        </View>
+      </Section>
+      <Section className="gap-3" aria-labelledby="night-heading">
+        <Heading level={2} id="night-heading" className="text-lg font-semibold text-text">Night scope</Heading>
+        <NightScope>
+          <View testID="night" {...{className:"rounded-card border border-border bg-surface-sunken"}} style={{padding:16,gap:12}}>
+            <Text testID="night-text" {...{className:"text-text"}}>Editor surface, dark on every page.</Text>
+            <KeyValueList columns={1} surface="night" items={RECORD.slice(0,3)}/>
+            <Banner tone="info" title="Layer preview is rendering"/>
+          </View>
+        </NightScope>
+      </Section>
+      <Page className="workspace-container" data-host-width="phone" hidden testID="hidden-page">
+        <Text>Hidden workspace</Text>
+      </Page>
+      <Footer className="gap-1">
+        <SemanticText className="text-sm text-text-muted">Your apps, separate workspaces.</SemanticText>
+        <Link className="text-sm text-primary underline" href="https://example.com/help" target="_blank">Help</Link>
+      </Footer>
+      <View style={{gap:4}}>
+        <Text testID="dropped" {...{className:"text-text-muted"}}>{"dropped "+s.dropped.join(",")}</Text>
+        <Text testID="picked" {...{className:"text-text-muted"}}>{"picked "+s.picked.join(",")}</Text>
+        <Text testID="counts" {...{className:"text-text-muted"}}>{`dismissed ${s.dismissed} retries ${s.retries} exits ${s.exits} entered ${s.entered}`}</Text>
       </View>
-    </View>
-    <FieldGroup>
-      <FieldGroup.Section title="Document details" footer="Applies to every page in this document.">
-        <Select label="Body font" value={s.font} onValueChange={font=>useDemo.setState({font})}
-          options={[{value:"inter",label:"Inter"},{value:"plex",label:"IBM Plex Sans"},
-            {value:"source",label:"Source Serif"},{value:"mono",label:"JetBrains Mono",disabled:true}]}/>
-        <Select label="Page size" value="" placeholder="Choose a size" onValueChange={()=>{}}
-          hint="Letter is the default for US documents." options={[{value:"letter",label:"Letter"},{value:"a4",label:"A4"}]}/>
-        <Select label="Locked template" value="memo" disabled onValueChange={()=>{}} options={[{value:"memo",label:"Memo"}]}/>
-      </FieldGroup.Section>
-      <FieldGroup.Section title="Panel position">
-        <SegmentedControl aria-label="Dock position for Outline" value={s.dock}
-          onChange={dock=>useDemo.setState({dock})}
-          options={[{value:"left",label:"Left"},{value:"right",label:"Right"},{value:"bottom",label:"Bottom"}]}/>
-      </FieldGroup.Section>
-    </FieldGroup>
-    <View style={{marginHorizontal:-16}}>
-      <TabBar semantics="navigation" aria-label="Studios" tabs={[
-        {key:"docs",label:"Docs",href:"#docs",active:true,icon:Glyph.outline(true)},
-        {key:"sheets",label:"Sheets",href:"#sheets",icon:Glyph.properties()},
-        {key:"slides",label:"Slides",href:"#slides",icon:Glyph.history()}]}/>
-    </View>
-    <View style={{gap:4}}>
-      <Text testID="state" {...{className:"text-text-muted"}}>{`tab ${s.tab} dock ${s.dock} font ${s.font} row ${s.row} bold ${s.bold} closes ${s.closes}`}</Text>
-    </View>
+    </Main>
   </ScrollView>;
 }
-const q=new URLSearchParams(location.search);
-document.documentElement.dataset.theme=q.get("theme")??"light";
-document.documentElement.dataset.brand="infrax";
-if(q.get("dir")==="rtl")document.documentElement.dir="rtl";
+document.documentElement.dataset.theme=theme;
+document.documentElement.dir=dir;
 AppRegistry.registerComponent("Primitives",()=>Fixture);
 AppRegistry.runApplication("Primitives",{rootTag:document.getElementById("root")});

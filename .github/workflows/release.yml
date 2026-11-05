@@ -62,6 +62,7 @@ jobs:
           node --test packages/panes/tests/*.test.mjs
           node --test packages/native-controls/tests/*.test.mjs
           node --test packages/expo-controls/tests/*.test.mjs
+          node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - name: Typecheck against built packages
         run: corepack pnpm typecheck
       - name: Verify exports, dist targets and optional-peer isolation
