@@ -13,7 +13,7 @@ the caller passes one; otherwise the token applies.
 
 | `TronTheme` key | Variable | Utilities | Used by |
 | --- | --- | --- | --- |
-| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range, TreeGrid selected rows |
+| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10`, `text-primary`, `border-primary` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range and fill handle, TreeGrid selected rows; reference tone 1 and 5; sparkline marks; spreadsheet panel checkboxes and selected chips |
 | `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
 | `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale; HsvPicker thumb inner ring; LevelFader card |
 | `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars; HsvPicker steppers; LevelFader rail, thumb and step buttons |
@@ -22,9 +22,9 @@ the caller passes one; otherwise the token applies.
 | `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted`, `bg-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip; HsvPicker and ColorChannels labels and hex readout; LevelFader dB readout, `bg-text-muted` for the LevelFader unity mark |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border |
-| `info` | `--color-info` | `bg-info`, `border-info` | Banner (info) border and mark, Badge (info) dot |
-| `success` | `--color-success` | `bg-success`, `border-success` | Banner (success) border and mark, Badge (success) dot |
+| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `text-accent`, `border-accent` | SpreadsheetGrid formula reference tones 2 and 6, sparkline low mark, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border |
+| `info` | `--color-info` | `bg-info`, `bg-info/10`, `text-info`, `border-info` | Banner (info) border and mark, Badge (info) dot, reference tones 4 and 8, SheetTabs tone |
+| `success` | `--color-success` | `bg-success`, `bg-success/10`, `text-success`, `border-success` | Banner (success) border and mark, Badge (success) dot, reference tones 3 and 7, sparkline high mark, SheetTabs tone |
 | `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |

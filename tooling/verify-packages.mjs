@@ -74,7 +74,10 @@ for (const pkgName of packages) {
      !manifest.exports["./components/forge/color/HsvPicker"])) {
     fail("Professional control subpaths must be addressable");
   }
-  if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs"]){
+  if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs",
+    "forge/spreadsheet/SheetTabs","forge/spreadsheet/ChartBuilder","forge/spreadsheet/Sparkline","forge/spreadsheet/SparklineEditor",
+    "forge/spreadsheet/FreezeSplitControls","forge/spreadsheet/SplitSpreadsheetView","forge/spreadsheet/SpreadsheetCardsView",
+    "forge/spreadsheet/FormulaReferenceText","forge/spreadsheet/fill-handle"]){
     if(!manifest.exports["./components/"+sub])fail("Missing data grid subpath "+sub);
   }
   const runtimeDeps={...manifest.dependencies,...manifest.optionalDependencies};

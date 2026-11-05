@@ -33,5 +33,15 @@ and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
 focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
 web `ScopedTheme` output (a `display: contents` element with the theme class).
 
+`spreadsheet.spec.mjs` loads `/spreadsheet` (`spreadsheet.tsx`), the spreadsheet
+cluster on a 1,048,576 × 16,384 sheet: bounded rendering while scrolled to row
+500,001 (I-01), fill-handle drag and Ctrl+D (I-02), reference outlines and
+colored formula text (I-06), SheetTabs select/add/rename/remove with name
+validation and a rejected engine call (I-08), ChartBuilder gallery, cell cap and
+summary (I-13), SparklineEditor validation and the in-cell sparkline (I-14),
+freeze commands and the split divider's keyboard value (I-17), and card
+open/step/edit with a rejected commit (I-20). It writes `shots/spreadsheet-*`
+captures (light and dark at 390 and 834 px, tabs open, split, card, RTL).
+
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

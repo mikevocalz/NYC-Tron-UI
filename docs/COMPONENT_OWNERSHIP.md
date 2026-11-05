@@ -10,7 +10,14 @@ complex editor screen composition and its cross-engine suite application.
 | Card | `@nyc-tron/ui/components/Card` | RN semantic foundation | NYC-MON / Moyo Card |
 | NavigationRail / Shell | `@nyc-tron/ui/components/NavigationRail` | Controlled RN shell, NOT WinUI | NYC-MON / Moyo adaptive |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
-| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
+| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy, per-reference tone outlines (I-06), fill handle plus Ctrl/Cmd+D/R through `onFillRange` (I-02), `renderCellContent` for in-cell sparklines and `showFormulaBar` for split panes; native QA pending | Forge Tally Rust adapter PR #39 |
+| SheetTabs (I-08) | `@nyc-tron/ui/components/forge/spreadsheet/SheetTabs` (rules in `/forge/spreadsheet/sheet-tabs-model`) | Controlled tab strip: select, add, rename (Excel name rules, engine errors shown), duplicate, move, remove with confirm, protect, token tone stripe. Each action renders only when its callback is passed. Chromium tests at 390 px; no device QA | GridCraft `Tabs.kt` (structure only, no code copied) |
+| ChartBuilder (I-13) | `@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder` (model `/forge/spreadsheet/chart-model`) | Controlled: line/column/area gallery (the kinds `@nyc-tron/native-charts` draws), A1 range with 4096-cell cap, series orientation, header and x-value options, title and axis titles, preview through `renderPreview`. Non-numeric cells are skipped and counted, never drawn as zero. Chromium tests | New |
+| Sparkline + SparklineEditor (I-14) | `@nyc-tron/ui/components/forge/spreadsheet/Sparkline`, `/SparklineEditor` (model `/sparkline-model`) | View-drawn line, column and win/loss sparklines with high/low/negative marks and gaps; editor validates a one-row/one-column range and a single target cell. Drawn in a grid cell through `SpreadsheetGrid.renderCellContent`. Chromium tests | New |
+| FreezeSplitControls + SplitSpreadsheetView (I-17) | `@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls`, `/SplitSpreadsheetView` (model `/freeze-split-model`) | Freeze top row / first column / at selection / unfreeze; stacked or side-by-side split of one sheet with a drag, arrow-key and screen-reader adjustable divider (136 pt minimum pane, Escape restores). View state only. Chromium tests | New |
+| SpreadsheetCardsView (I-20) | `@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView` (model `/cards-model`) | Table rows as cards: first column titles, three preview fields, full card with in-place field editing through `onCommitField`, previous/next, honest empty state, paged list. Chromium tests at 390 px; no device QA | **Ported** from GridCraft `Cards.kt` @ `72d5bfc` (MIT OR Apache-2.0, see THIRD_PARTY_NOTICES) |
+| FormulaReferenceText (I-06) | `@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText` (model `/reference-colors`) | Formula text with each reference in the tone the grid outlines it with; same reference, same tone. Chromium test | **Ported** color assignment from GridCraft `FormulaRefs.kt` @ `72d5bfc` |
+| Fill math (I-02) | `@nyc-tron/ui/components/forge/spreadsheet/fill-handle` | Pure: dominant-axis fill target, Ctrl+D/R source/target. Unit tests | New |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
@@ -42,7 +49,7 @@ complex editor screen composition and its cross-engine suite application.
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
-| Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
+| Paste into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange`. Fill has its UI (`onFillRange`); the engine operation behind it is the app's | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
 | PDF annotations | `components/forge/pdf/` planned | **NOT EXTRACTED** | Forge Folio |
 | Slide/canvas transitions | `components/forge/slides/` planned | **NOT EXTRACTED** | Forge Pitch |
@@ -255,3 +262,28 @@ vertical fader scrolled the mixer without a gain change, a vertical swipe
 on a horizontal fader scrolled the page, and Tab plus arrow keys stepped the
 level. Not verified: iOS/Android/Windows/macOS device gestures, native
 ScrollView arbitration, and VoiceOver/TalkBack/Narrator output.
+
+## 2026-11-05 spreadsheet cluster (I-01, I-02, I-06, I-08, I-13, I-14, I-17, I-20)
+
+Nitro Forge roster IDs and where they live. Every control is controlled: the
+app (for Forge, the Tally engine through `@nitro-forge/tally/grid-adapter`)
+owns the workbook, and each component reports the next state or the write it
+wants. No component persists anything.
+
+| ID | Component | Notes |
+| --- | --- | --- |
+| I-01 | `SpreadsheetGrid` | Chromium test scrolls a 1,048,576-row sheet to row 500,001 and checks the mounted cell count stays under 400. Native scroll performance on a device is not measured. |
+| I-02 | `SpreadsheetGrid` `onFillRange` + `forge/spreadsheet/fill-handle` | The handle is drawn only when `onFillRange` is passed, so an engine without a fill operation shows no dead handle. |
+| I-06 | `SpreadsheetGrid` outlines + `FormulaReferenceText` | Up to eight tones: four token colors (primary, accent, success, info), solid then dashed. `danger` is never used for a reference. |
+| I-08 | `SheetTabs` | Arrow keys follow reading direction; Ctrl/Cmd+PageUp/PageDown also switch sheets; F2 renames; Escape cancels. |
+| I-13 | `ChartBuilder` | NYC-Tron UI does not import `@nyc-tron/native-charts`; the app renders the preview with it. |
+| I-14 | `Sparkline`, `SparklineEditor` | Drawn with views, so it fits inside a grid cell on every platform without a canvas. |
+| I-17 | `FreezeSplitControls`, `SplitSpreadsheetView` | Pass `showFormulaBar={false}` to the second pane's grid so the panes share one formula bar. |
+| I-20 | `SpreadsheetCardsView` | GridCraft edits a field in an AlertDialog; this edits it in place, since the task needs no interruption. |
+
+Verified here: unit tests (`packages/ui/tests/spreadsheet-cluster.test.mjs`),
+TypeScript, package exports, and Chromium/React Native Web interaction tests
+plus light/dark captures at 390 and 834 px and an RTL capture
+(`packages/ui/tests/browser/spreadsheet.spec.mjs`). Not run: iOS or Android
+rendering, VoiceOver/TalkBack, a Surface Duo or other foldable, hardware
+keyboards on native, Safari and Firefox.

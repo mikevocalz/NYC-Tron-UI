@@ -27,6 +27,27 @@ fonts, icons, branding, binary SDKs or artwork are redistributed here.
 MIT License — Copyright (c) 2026 NeuronRush. Original source license
 preserved verbatim in `licenses/NEONBLADE-MIT.txt`.
 
+**GridCraft for Android** — https://github.com/artcraft-android/gridcraft-android
+Pinned commit `72d5bfc0729d0966e9bd966c2eabaa0312eea3ff`.
+Copyright (c) 2026 ArtCraft Team and the GridCraft contributors. Licensed under
+the MIT License or the Apache License, Version 2.0, at your option. Both texts
+are kept verbatim in `licenses/GridCraft-MIT.txt` and
+`licenses/GridCraft-Apache-2.0.txt`; the upstream `NOTICE` file is carried as
+`licenses/GridCraft-NOTICE.txt`.
+
+Ported files, each with a header naming the source file, the commit, the
+copyright line and a modification notice (Apache-2.0 section 4(b)):
+
+| NYC-Tron file | GridCraft source |
+| --- | --- |
+| `packages/ui/src/components/forge/spreadsheet/reference-colors.ts` | `apps/gridcraft-android/android/app/src/main/java/io/github/artcraftandroid/gridcraft/ui/editor/FormulaRefs.kt` (per-reference color assignment) |
+| `packages/ui/src/components/forge/spreadsheet/cards-model.ts` | `.../ui/editor/Cards.kt` (card title/preview-field model) |
+| `packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx` | `.../ui/editor/Cards.kt` (Cards View list, detail and field editing) |
+
+Only code was ported. No GridCraft icons (Lucide, ISC), fonts, brand files or
+other assets are copied; GridCraft's `ATTRIBUTION.md` lists those and none of
+them are used here. The ArtCraft name and marks are not used.
+
 **NYC-MON upstream license** — `mikevocalz/nyc-mon/LICENSE`
 MIT License — Copyright (c) 2025 Gursel Cakar. The source repository's
 license text is preserved verbatim in `licenses/NYC-MON-MIT.txt`.

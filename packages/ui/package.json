@@ -292,6 +292,81 @@
       "browser": "./dist/components/html/semantic.web.js",
       "react-native": "./dist/components/html/semantic.native.js",
       "default": "./dist/components/html/semantic.web.js"
+    },
+    "./components/forge/spreadsheet/SheetTabs": {
+      "types": "./dist/components/forge/spreadsheet/SheetTabs.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SheetTabs.js",
+      "default": "./dist/components/forge/spreadsheet/SheetTabs.js"
+    },
+    "./components/forge/spreadsheet/sheet-tabs-model": {
+      "types": "./dist/components/forge/spreadsheet/sheet-tabs-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/sheet-tabs-model.js",
+      "default": "./dist/components/forge/spreadsheet/sheet-tabs-model.js"
+    },
+    "./components/forge/spreadsheet/ChartBuilder": {
+      "types": "./dist/components/forge/spreadsheet/ChartBuilder.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/ChartBuilder.js",
+      "default": "./dist/components/forge/spreadsheet/ChartBuilder.js"
+    },
+    "./components/forge/spreadsheet/chart-model": {
+      "types": "./dist/components/forge/spreadsheet/chart-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/chart-model.js",
+      "default": "./dist/components/forge/spreadsheet/chart-model.js"
+    },
+    "./components/forge/spreadsheet/Sparkline": {
+      "types": "./dist/components/forge/spreadsheet/Sparkline.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/Sparkline.js",
+      "default": "./dist/components/forge/spreadsheet/Sparkline.js"
+    },
+    "./components/forge/spreadsheet/SparklineEditor": {
+      "types": "./dist/components/forge/spreadsheet/SparklineEditor.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SparklineEditor.js",
+      "default": "./dist/components/forge/spreadsheet/SparklineEditor.js"
+    },
+    "./components/forge/spreadsheet/sparkline-model": {
+      "types": "./dist/components/forge/spreadsheet/sparkline-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/sparkline-model.js",
+      "default": "./dist/components/forge/spreadsheet/sparkline-model.js"
+    },
+    "./components/forge/spreadsheet/FreezeSplitControls": {
+      "types": "./dist/components/forge/spreadsheet/FreezeSplitControls.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FreezeSplitControls.js",
+      "default": "./dist/components/forge/spreadsheet/FreezeSplitControls.js"
+    },
+    "./components/forge/spreadsheet/SplitSpreadsheetView": {
+      "types": "./dist/components/forge/spreadsheet/SplitSpreadsheetView.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SplitSpreadsheetView.js",
+      "default": "./dist/components/forge/spreadsheet/SplitSpreadsheetView.js"
+    },
+    "./components/forge/spreadsheet/freeze-split-model": {
+      "types": "./dist/components/forge/spreadsheet/freeze-split-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/freeze-split-model.js",
+      "default": "./dist/components/forge/spreadsheet/freeze-split-model.js"
+    },
+    "./components/forge/spreadsheet/SpreadsheetCardsView": {
+      "types": "./dist/components/forge/spreadsheet/SpreadsheetCardsView.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SpreadsheetCardsView.js",
+      "default": "./dist/components/forge/spreadsheet/SpreadsheetCardsView.js"
+    },
+    "./components/forge/spreadsheet/cards-model": {
+      "types": "./dist/components/forge/spreadsheet/cards-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/cards-model.js",
+      "default": "./dist/components/forge/spreadsheet/cards-model.js"
+    },
+    "./components/forge/spreadsheet/FormulaReferenceText": {
+      "types": "./dist/components/forge/spreadsheet/FormulaReferenceText.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FormulaReferenceText.js",
+      "default": "./dist/components/forge/spreadsheet/FormulaReferenceText.js"
+    },
+    "./components/forge/spreadsheet/reference-colors": {
+      "types": "./dist/components/forge/spreadsheet/reference-colors.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/reference-colors.js",
+      "default": "./dist/components/forge/spreadsheet/reference-colors.js"
+    },
+    "./components/forge/spreadsheet/fill-handle": {
+      "types": "./dist/components/forge/spreadsheet/fill-handle.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/fill-handle.js",
+      "default": "./dist/components/forge/spreadsheet/fill-handle.js"
     }
   },
   "scripts": {

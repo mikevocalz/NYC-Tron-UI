@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from "react";
-import { Animated, Text, TextInput, Pressable, View, type ViewProps } from "react-native";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
+import { Animated, I18nManager, Text, TextInput, Pressable, View, type ViewProps } from "react-native";
 import type { ScrollViewInstance } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -8,9 +8,12 @@ import {
   responsiveSheetMetrics, selectionRange, sheetPrefetchRange, type SheetRange, type SheetSelection,
 } from "./sheet-window.ts";
 import { rangeToTsv } from "./range-tsv.ts";
-import { referenceHighlights } from "./formula-refs.ts";
 import { commitCellEdit, selectCellAfterCommit } from "./cell-commit.ts";
 import { joinClasses } from "../styles.ts";
+import { colorReferences, referenceEdges, REFERENCE_TONE_CLASSES } from "./spreadsheet/reference-colors.ts";
+import { fillFromEdge, fillTarget, type FillPlan } from "./spreadsheet/fill-handle.ts";
+import type { DragPoint, DragTransport } from "../gestures/drag-transport.ts";
+import { PanResponderDrag } from "../gestures/PanResponderDrag.tsx";
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
 export interface SpreadsheetCell {
@@ -65,8 +68,35 @@ export interface SpreadsheetGridProps extends Omit<ViewProps, "children"> {
   readonly onCopyRange?: (range: SheetRange, tsv: string) => void;
   /** Largest selection {@linkcode SpreadsheetGridProps.onCopyRange} serializes. @default 1_000_000 */
   readonly maxCopyCells?: number;
-  /** Shade cells referenced by the formula in the formula bar. @default true */
+  /**
+   * Outline the cells each reference in the formula bar points at, one theme
+   * tone per distinct reference (the same reference keeps its tone).
+   * @default true
+   */
   readonly highlightReferences?: boolean;
+  /**
+   * Fill the selection's contents into a neighbouring range. Supplying it
+   * shows the fill handle on the selection's bottom-trailing corner and
+   * enables Ctrl/Cmd+D (fill down) and Ctrl/Cmd+R (fill right). The app (the
+   * engine) does the fill; reject to show its message. Omit it when the
+   * engine has no fill operation, and the handle is not drawn.
+   */
+  readonly onFillRange?: (plan: FillPlan) => Promise<unknown> | unknown;
+  /**
+   * Draw something other than the value in a cell, such as a
+   * `forge/spreadsheet/Sparkline`. Return `undefined` to show the value. The
+   * cell keeps its address and value as its accessibility label; pass
+   * `contentLabel` to add a description. `size` is the inner box in points.
+   */
+  readonly renderCellContent?: (address: string, size: { readonly width: number; readonly height: number }) =>
+    { readonly content: ReactNode; readonly contentLabel?: string } | undefined;
+  /**
+   * Draw the address and formula bar. Turn it off for the second pane of a
+   * split view so both panes share one bar. @default true
+   */
+  readonly showFormulaBar?: boolean;
+  /** Drag recognizer for the fill handle. @default PanResponderDrag */
+  readonly fillTransport?: DragTransport;
   /** Ask the host's TallyDocument for just this range. */
   readonly onWindowChange?: (range: SpreadsheetWindowRequest) => void;
   readonly className?:string;
@@ -77,6 +107,8 @@ export interface SpreadsheetGridProps extends Omit<ViewProps, "children"> {
 type GridLocal = {
   x:number;y:number;draft:string;dirty:boolean;pending:boolean;editVersion:number;error:string|null;
   measuredWidth:number;measuredHeight:number;selection:SheetSelection|null;
+  /** Fill-handle drag: where it began and the plan it would apply now. */
+  fillFrom:DragPoint|undefined;fillPlan:FillPlan|undefined;
 };
 
 function display(value:SpreadsheetCell["computed"]|undefined) {
@@ -93,12 +125,13 @@ export function SpreadsheetGrid({
   sheetId,sheetName,rowCount,columnCount,cells,width,height,rowHeight:preferredRowHeight=32,
   columnWidth:preferredColumnWidth=112,compactBelow=540,frozenRows=0,frozenColumns=0,
   selection:selectionProp,onSelectionChange,onCommitCell,onCopyRange,maxCopyCells=1_000_000,
-  highlightReferences=true,onWindowChange,
+  highlightReferences=true,onFillRange,renderCellContent,showFormulaBar=true,fillTransport:FillTransport=PanResponderDrag,onWindowChange,
   className,headerClassName,cellClassName,unstyled=false,onLayout,style,...props
 }:SpreadsheetGridProps) {
   const stateRef=useRef<StoreApi<GridLocal>|null>(null);
   if(!stateRef.current)stateRef.current=createStore<GridLocal>(()=>({
     x:0,y:0,draft:"",dirty:false,pending:false,editVersion:0,error:null,measuredWidth:0,measuredHeight:0,selection:null,
+    fillFrom:undefined,fillPlan:undefined,
   }));
   const state=stateRef.current;
   const x=useStore(state,s=>s.x);
@@ -106,6 +139,7 @@ export function SpreadsheetGrid({
   const draft=useStore(state,s=>s.draft);
   const dirty=useStore(state,s=>s.dirty);
   const pending=useStore(state,s=>s.pending);
+  const fillPlan=useStore(state,s=>s.fillPlan);
   const error=useStore(state,s=>s.error);
   const measuredWidth=useStore(state,s=>s.measuredWidth);
   const measuredHeight=useStore(state,s=>s.measuredHeight);
@@ -142,7 +176,8 @@ export function SpreadsheetGrid({
     }
     previousCellMetrics.current=next;
   },[rowHeight,columnWidth,metrics.rowHeaderWidth,state]);
-  const gridHeight=Math.max(0,viewportHeight-metrics.formulaBarHeight);
+  const formulaBarHeight=showFormulaBar?metrics.formulaBarHeight:0;
+  const gridHeight=Math.max(0,viewportHeight-formulaBarHeight);
   const frozen=frozenSheetWindow({rowCount,columnCount,scrollX:x,scrollY:y,
     viewportWidth,viewportHeight:gridHeight,rowHeight,columnWidth,
     rowHeaderWidth:left,columnHeaderHeight:headerHeight,frozenRows,frozenColumns});
@@ -165,7 +200,7 @@ export function SpreadsheetGrid({
   const prefetch=sheetPrefetchRange(body,{rowCount,columnCount});
   const onWindowChangeRef=useRef(onWindowChange);
   onWindowChangeRef.current=onWindowChange;
-  const ready=viewportWidth>0&&viewportHeight>metrics.formulaBarHeight;
+  const ready=viewportWidth>0&&viewportHeight>formulaBarHeight;
   useEffect(()=>{
     if(!ready)return;
     onWindowChangeRef.current?.({...prefetch,frozenRows:fr,frozenColumns:fc});
@@ -194,9 +229,23 @@ export function SpreadsheetGrid({
       state.setState({error:e instanceof Error?e.message:"Could not copy range"});
     }
   };
+  // Fill is an engine write: never optimistic, one at a time, errors shown.
+  const fill=async(plan:FillPlan)=>{
+    if(!onFillRange||state.getState().pending)return;
+    state.setState({pending:true,error:null});
+    try{await onFillRange(plan);}
+    catch(e){state.setState({error:e instanceof Error?e.message:"Could not fill the range"});}
+    finally{state.setState({pending:false});}
+  };
   const pageRows=Math.max(1,Math.floor(bodyHeight/rowHeight)-1);
   const onKey=(key:string,mods:{shiftKey:boolean;ctrlKey:boolean;metaKey:boolean})=>{
+    if(key==="Escape"&&state.getState().fillPlan){state.setState({fillFrom:undefined,fillPlan:undefined});return true;}
     if((mods.ctrlKey||mods.metaKey)&&(key==="c"||key==="C")){copy();return true;}
+    if(onFillRange&&range&&(mods.ctrlKey||mods.metaKey)&&(key==="d"||key==="D"||key==="r"||key==="R")){
+      const plan=fillFromEdge(range,key==="d"||key==="D"?"down":"right");
+      if(plan)void fill(plan);
+      return true;
+    }
     if(rowCount<1||columnCount<1)return false;
     const current=selection&&range?selection:{anchor:"A1",focus:"A1"};
     const next=moveSheetSelection(current,{key,...mods},{rowCount,columnCount,pageRows});
@@ -218,8 +267,9 @@ export function SpreadsheetGrid({
   };
 
   const formulaText=dirty?draft:(focus?cells[focus]?.raw??"":"");
-  const highlights=useMemo(()=>highlightReferences?referenceHighlights(formulaText,sheetName):[],
+  const highlights=useMemo(()=>highlightReferences?colorReferences(formulaText,sheetName).filter(r=>r.onSheet):[],
     [highlightReferences,formulaText,sheetName]);
+  const rtl=I18nManager.isRTL;
 
   // RN Text does not inherit color; every label needs the theme text token or
   // it renders platform-default black on a dark surface.
@@ -247,28 +297,63 @@ export function SpreadsheetGrid({
     {...{className:headerClass}} style={{width:left,height:rowHeight,justifyContent:"center",alignItems:"center"}}>
     <Text {...{className:mutedClass}}>{row+1}</Text>
   </View>;
+  const fillHandle=()=>range&&onFillRange&&!pending?<FillTransport
+      onBegin={point=>state.setState({fillFrom:point,fillPlan:undefined})}
+      onMove={(point,touches)=>{
+        const from=state.getState().fillFrom;
+        if(!from)return;
+        if(touches!==1){state.setState({fillFrom:undefined,fillPlan:undefined});return;}
+        const rows=Math.round((point.y-from.y)/rowHeight);
+        const columns=Math.round((rtl?from.x-point.x:point.x-from.x)/columnWidth);
+        state.setState({fillPlan:fillTarget(range,{rows,columns},{rowCount,columnCount})});
+      }}
+      onRelease={()=>{
+        const plan=state.getState().fillPlan;
+        state.setState({fillFrom:undefined,fillPlan:undefined});
+        if(plan)void fill(plan);
+      }}
+      onCancel={()=>state.setState({fillFrom:undefined,fillPlan:undefined})}>
+      {/* 12pt mark, 44pt grab area through hitSlop. */}
+      <View aria-hidden hitSlop={16}
+        {...{className:joinClasses(!unstyled&&"bg-primary border-2 border-surface-raised")}}
+        style={{position:"absolute",bottom:-1,end:-1,width:12,height:12}}/>
+    </FillTransport>:null;
   const cell=(row:number,col:number)=>{
     const addr=cellAddress(row,col);
     const inRange=range!==null&&rangeContains(range,row,col);
     const isFocus=addr===focus;
-    const referenced=highlights.some(h=>rangeContains(h.range,row,col));
+    const refs=highlights.filter(h=>rangeContains(h.range,row,col));
+    const referenced=refs.length>0;
+    const inFill=fillPlan!==undefined&&rangeContains(fillPlan.target,row,col)&&!inRange;
+    const isCorner=range!==null&&row===range.endRow&&col===range.endColumn;
     const value=display(cells[addr]?.computed);
+    const custom=renderCellContent?.(addr,{width:Math.max(0,columnWidth-16),height:Math.max(0,rowHeight-8)});
+    // Reference outlines sit on an overlay so they never fight the cell's own
+    // grid-line border classes. Each reference contributes its own edges.
+    const outline=!unstyled&&(referenced||inFill)?joinClasses(...refs.flatMap(ref=>{
+      const tone=REFERENCE_TONE_CLASSES[ref.tone]!;
+      const e=referenceEdges(ref.range,row,col);
+      return [e.top&&tone.top,e.bottom&&tone.bottom,e.start&&tone.start,e.end&&tone.end];
+    }),inFill&&"border border-dashed border-primary"):undefined;
     // `role` (not accessibilityRole): "cell" is absent from Android's
     // AccessibilityRole enum, where accessibilityRole would throw.
     return <Pressable
       key={addr}
       role="cell"
-      accessibilityLabel={`${addr}, ${value||"empty"}${referenced?", referenced by formula":""}`}
+      accessibilityLabel={`${addr}, ${value||"empty"}${custom?.contentLabel?`, ${custom.contentLabel}`:""}${referenced?`, referenced by ${refs.map(r=>r.text).join(" and ")}`:""}`}
       accessibilityHint="Select the cell to edit its value in the formula bar. Long press to extend the selection."
       aria-selected={inRange}
       onPress={()=>select({anchor:addr,focus:addr})}
       onLongPress={()=>select({anchor:selection&&range?selection.anchor:addr,focus:addr})}
       {...{className:joinClasses(!unstyled&&"border-r border-b border-border",cellClassName,
-        !unstyled&&referenced&&"bg-accent/10",
+        !unstyled&&referenced&&!inRange&&REFERENCE_TONE_CLASSES[refs[0]!.tone]!.fill,
         !unstyled&&inRange&&"bg-primary/10",
         !unstyled&&isFocus&&"border-2 border-focus")}}
       style={{width:columnWidth,height:rowHeight,justifyContent:"center",paddingHorizontal:8}}>
-      <Text numberOfLines={1} {...{className:textClass}}>{value}</Text>
+      {custom?custom.content:<Text numberOfLines={1} {...{className:textClass}}>{value}</Text>}
+      {outline?<View aria-hidden pointerEvents="none" {...{className:outline}}
+        style={{position:"absolute",top:0,bottom:0,start:0,end:0}}/>:null}
+      {isCorner?fillHandle():null}
     </Pressable>;
   };
   const cellRow=(row:number,cols:readonly number[],gaps:boolean)=><View key={row} role="row" style={{height:rowHeight,flexDirection:"row"}}>
@@ -291,7 +376,7 @@ export function SpreadsheetGrid({
     accessibilityLabel={props.accessibilityLabel??"Spreadsheet"}
     {...{className:joinClasses("overflow-hidden",!unstyled&&"border border-border bg-surface-raised",className)}}
     style={[{width:width??"100%",height:height??"100%"},style]}>
-    <View style={{
+    {showFormulaBar?<View style={{
       height:metrics.formulaBarHeight,
       flexDirection:metrics.compact?"column":"row",
       alignItems:metrics.compact?"stretch":"center",
@@ -320,14 +405,24 @@ export function SpreadsheetGrid({
         onBlur={()=>{if(dirty)void commit();}}
         returnKeyType="done"
       />
-    </View>
+    </View>:null}
     {error?<Text selectable accessibilityLiveRegion="polite" accessibilityRole="alert"
       {...{className:joinClasses("px-2",!unstyled&&"text-danger")}}>{error}</Text>:null}
     {/* Keys are handled here, not on the root, so arrows typed in the formula bar never move the selection. */}
     <View role="grid" focusable
       aria-label={`${sheetName??"Sheet"}, ${rowCount} rows by ${columnCount} columns`}
-      accessibilityActions={onCopyRange?[{name:"copy",label:"Copy selection"}]:undefined}
-      onAccessibilityAction={e=>{if(e.nativeEvent.actionName==="copy")copy();}}
+      accessibilityActions={[
+        ...(onCopyRange?[{name:"copy",label:"Copy selection"}]:[]),
+        ...(onFillRange&&range?[{name:"fillDown",label:"Fill down"},{name:"fillRight",label:"Fill right"}]:[]),
+      ]}
+      onAccessibilityAction={e=>{
+        const name=e.nativeEvent.actionName;
+        if(name==="copy")copy();
+        else if((name==="fillDown"||name==="fillRight")&&range){
+          const plan=fillFromEdge(range,name==="fillDown"?"down":"right");
+          if(plan)void fill(plan);
+        }
+      }}
       onKeyDown={e=>{
         const n=e.nativeEvent;
         if(onKey(n.key,{shiftKey:n.shiftKey,ctrlKey:n.ctrlKey,metaKey:n.metaKey}))e.preventDefault?.();
