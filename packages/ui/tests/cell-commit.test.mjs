@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { commitCellEdit } from "../src/components/forge/cell-commit.ts";
+import { commitCellEdit, selectCellAfterCommit } from "../src/components/forge/cell-commit.ts";
 
 function harness() {
   let state = {draft:"=SUM(A1:A3)", dirty:true, pending:false, editVersion:1, error:null};
@@ -11,6 +11,26 @@ function deferred() {
   const promise = new Promise((yes,no)=>{resolve=yes;reject=no;});
   return {promise,resolve,reject};
 }
+test("tapping another cell saves the dirty formula before changing selection", async()=>{
+  const h=harness(), task=deferred(); let selection="A1";
+  const next=selectCellAfterCommit(h.read,
+    ()=>commitCellEdit("A1",()=>task.promise,h.read,h.write),()=>{selection="B1";});
+  assert.equal(selection,"A1");
+  task.resolve(); assert.equal(await next,true);
+  assert.equal(selection,"B1");
+});
+test("failed save or newer edit prevents a cell tap from discarding the draft", async()=>{
+  for(const newer of [false,true]){
+    const h=harness(), task=deferred(); let selections=0;
+    const next=selectCellAfterCommit(h.read,
+      ()=>commitCellEdit("A1",()=>task.promise,h.read,h.write),()=>{selections++;});
+    if(newer){h.write({editVersion:2,draft:"newer"});task.resolve();}
+    else task.reject(new Error("Offline"));
+    assert.equal(await next,false);
+    assert.equal(selections,0);
+    assert.equal(h.read().dirty,true);
+  }
+});
 test("submit followed by blur sends exactly one commit before React rerenders", async()=>{
   const h=harness(), task=deferred();
   const calls=[];

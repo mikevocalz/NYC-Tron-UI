@@ -4,7 +4,7 @@ import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { flexRender, tableFeatures, useTable } from "@tanstack/react-table";
 import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics, reanchorSheetScroll } from "./sheet-window.ts";
-import { commitCellEdit } from "./cell-commit.ts";
+import { commitCellEdit, selectCellAfterCommit } from "./cell-commit.ts";
 import { joinClasses } from "../styles.ts";
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
@@ -216,8 +216,11 @@ export function SpreadsheetGrid({
                   accessibilityHint="Select the cell to edit its value in the formula bar"
                   accessibilityState={{selected:selected===addr}}
                   onPress={()=>{
-                    onSelectionChange?.(addr);
-                    state.setState(current=>({draft:cells[addr]?.raw??"",dirty:false,error:null,editVersion:current.editVersion+1}));
+                    if(!onSelectionChange || addr===selected)return;
+                    void selectCellAfterCommit(state.getState,commit,()=>{
+                      onSelectionChange(addr);
+                      state.setState(current=>({draft:cells[addr]?.raw??"",dirty:false,error:null,editVersion:current.editVersion+1}));
+                    });
                   }}
                   {...{className:joinClasses(!unstyled&&"border-r border-b border-border",cellClassName,
                     selected===addr&&!unstyled&&"bg-primary/10")}}

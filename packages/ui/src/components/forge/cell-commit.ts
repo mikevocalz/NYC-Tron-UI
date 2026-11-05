@@ -6,6 +6,21 @@ export interface CellEditSnapshot {
   editVersion: number;
 }
 
+/** A handled cell tap need not blur the formula input on React Native. */
+export async function selectCellAfterCommit(
+  read: () => CellEditSnapshot,
+  commit: () => Promise<void>,
+  select: () => void,
+): Promise<boolean> {
+  const edit = read();
+  if (edit.pending) return false;
+  await commit();
+  const current = read();
+  if (current.pending || current.dirty || current.editVersion !== edit.editVersion) return false;
+  select();
+  return true;
+}
+
 export async function commitCellEdit(
   address: string,
   commit: ((address: string, raw: string) => unknown | Promise<unknown>) | undefined,
