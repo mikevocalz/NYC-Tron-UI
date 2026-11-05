@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
-      - run: node --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/windows-fluent/tests/*.test.mjs
+      - run: node --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/expo-controls/tests/*.test.mjs packages/native-charts/tests/*.test.mjs packages/windows-fluent/tests/*.test.mjs
 
   types:
     name: workspace TypeScript
@@ -33,19 +33,20 @@ jobs:
         run: corepack enable
       - name: Install local workspace
         run: corepack pnpm install --frozen-lockfile
-      - name: Typecheck packages
-        run: corepack pnpm typecheck
-      - name: Compile independent package distributions
+      - name: Compile independent package distributions in dependency order
         run: corepack pnpm build
+      - name: Typecheck packages against built peer workspaces
+        run: corepack pnpm typecheck
+      - name: Render adaptive pane component contracts with mocked native hosts
+        run: node --test packages/panes/tests/*.test.mjs
+      # Uses the installed typescript to run the hooks under mocked RN/Expo.
+      - name: Reserved-regions native contracts and hook behavior
+        run: node --test packages/reserved-regions/tests/*.test.mjs
+      - name: Render Forge control contracts with mocked native hosts
+        run: node --test packages/ui/tests/render/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
-      - name: Inspect npm tarball contents
-        run: |
-          mkdir -p /tmp/nyc-tron-packs
-          corepack pnpm --dir packages/core pack --pack-destination /tmp/nyc-tron-packs
-          corepack pnpm --dir packages/geometry pack --pack-destination /tmp/nyc-tron-packs
-          corepack pnpm --dir packages/ui pack --pack-destination /tmp/nyc-tron-packs
-          corepack pnpm --dir packages/windows-fluent pack --pack-destination /tmp/nyc-tron-packs
-          ls -lh /tmp/nyc-tron-packs/*.tgz
+      - name: Pack every package and check release tarball contents
+        run: node tooling/pack-release.mjs /tmp/nyc-tron-packs
       # No native targets are built on this Linux workflow. A typechecked
       # @expo/ui source import is not a device validation.

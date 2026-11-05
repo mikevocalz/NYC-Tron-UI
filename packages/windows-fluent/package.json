@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/windows-fluent",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.2",
   "private": true,
   "type": "module",
   "sideEffects": false,
@@ -15,14 +15,17 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./controller": {
       "types": "./dist/controller.d.ts",
+      "react-native": "./dist/controller.js",
       "default": "./dist/controller.js"
     },
     "./types": {
       "types": "./dist/types.d.ts",
+      "react-native": "./dist/types.js",
       "default": "./dist/types.js"
     }
   },

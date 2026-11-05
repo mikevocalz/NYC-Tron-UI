@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/core",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.2",
   "private": true,
   "type": "module",
   "sideEffects": false,
@@ -29,6 +29,26 @@
       "types": "./dist/theme.d.ts",
       "react-native": "./dist/theme.js",
       "default": "./dist/theme.js"
+    },
+    "./spatial-interactions": {
+      "types": "./dist/spatial-interactions.d.ts",
+      "react-native": "./dist/spatial-interactions.js",
+      "default": "./dist/spatial-interactions.js"
+    },
+    "./advanced-catalog": {
+      "types": "./dist/advanced-catalog.d.ts",
+      "react-native": "./dist/advanced-catalog.js",
+      "default": "./dist/advanced-catalog.js"
+    },
+    "./presets/infrax": {
+      "types": "./dist/presets/infrax.d.ts",
+      "react-native": "./dist/presets/infrax.js",
+      "default": "./dist/presets/infrax.js"
+    },
+    "./pane-plan": {
+      "types": "./dist/pane-plan.d.ts",
+      "react-native": "./dist/pane-plan.js",
+      "default": "./dist/pane-plan.js"
     }
   },
   "scripts": {
@@ -40,6 +60,8 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
   ]
 }
