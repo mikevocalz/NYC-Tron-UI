@@ -7,10 +7,14 @@ independent layout work in NYC-MON, Moyo Learn, the universal spatial starter an
 Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavior
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
-> **Status: foundational extraction (not a published/native-certified release).**
-> CI can validate pure policies and
-> source boundaries, but WinUI/Fluent, AppKit, SwiftUI, Compose, Viro and device
-> behavior require separate native adapters and device validation.
+> **Status: alpha prerelease, not native-certified.** The first prerelease,
+> [v0.1.0-alpha.1](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.1)
+> (2026-11-05), ships one tarball per package plus `SHA256SUMS` as GitHub
+> Release assets; see [Installing from a release](#installing-from-a-release).
+> Nothing is published to npm. CI validates pure policies, source boundaries,
+> builds, types and tarball contents, but WinUI/Fluent, AppKit, SwiftUI,
+> Compose, Viro and device behavior still need separate native adapters and
+> device validation.
 
 ## Use only the parts you need
 
@@ -117,12 +121,14 @@ https://github.com/mikevocalz/NYC-Tron-UI/releases/download/<tag>/<file>.tgz
 | `@nyc-tron/native-controls` | `nyc-tron-native-controls-<version>.tgz` |
 | `@nyc-tron/expo-controls` | `nyc-tron-expo-controls-<version>.tgz` |
 
+For the current prerelease, `v0.1.0-alpha.1`:
+
 ```json
 {
   "dependencies": {
-    "@nyc-tron/core": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0/nyc-tron-core-0.1.0.tgz",
-    "@nyc-tron/ui": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0/nyc-tron-ui-0.1.0.tgz",
-    "@nyc-tron/panes": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0/nyc-tron-panes-0.1.0.tgz"
+    "@nyc-tron/core": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.1/nyc-tron-core-0.1.0-alpha.1.tgz",
+    "@nyc-tron/ui": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.1/nyc-tron-ui-0.1.0-alpha.1.tgz",
+    "@nyc-tron/panes": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.1/nyc-tron-panes-0.1.0-alpha.1.tgz"
   }
 }
 ```
@@ -141,8 +147,18 @@ In `ui`, `@expo/ui`, `@tanstack/react-table` and `zustand` are optional and
 only needed by the subpaths listed in [packages/ui/README.md](packages/ui/README.md);
 importing `Button` pulls none of them.
 
-Check downloads against the release's `SHA256SUMS` (`shasum -a 256 -c SHA256SUMS`).
-pnpm records the tarball's integrity hash in the lockfile on first install.
+To check the tarballs before pinning them, download them with the release's
+`SHA256SUMS` and verify:
+
+```sh
+gh release download v0.1.0-alpha.1 --repo mikevocalz/NYC-Tron-UI \
+  -p SHA256SUMS -p 'nyc-tron-core-*.tgz' -p 'nyc-tron-ui-*.tgz'
+shasum -a 256 -c SHA256SUMS --ignore-missing
+```
+
+`--ignore-missing` skips the packages you did not download. pnpm records each
+tarball's integrity hash in the lockfile on first install, so later installs
+fail if a release asset changes.
 
 **Licensing status.** Each tarball carries `THIRD_PARTY_NOTICES.md` and the
 upstream MIT texts in `licenses/` (NYC-MON, NeonBlade UI, AudioKit Controls).
