@@ -114,12 +114,26 @@ jobs:
           $exe = Get-ChildItem windows -Recurse -Filter NYCTronWindowsExample.exe | Select-Object -First 1
           if (-not $exe) { throw "Consumer executable was not produced" }
           Write-Host "Compiled Windows consumer: $($exe.FullName)"
-          "CONSUMER_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
-      - name: UI Automation smoke test of the consumer executable
+      - name: Deploy the packaged consumer the way run-windows does
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          # RNW apps run with package identity; the bare executable exits
+          # with 0xC0000409 on this runner. run-windows builds the .Package
+          # project, enables Developer Mode and registers the layout.
+          $sdkRoot = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Windows Kits\10\Include"
+          $sdk = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          npx react-native run-windows --release --arch x64 --no-launch --no-packager --no-autolink --logging --msbuildprops "WindowsTargetPlatformVersion=$($sdk.Name),UseExperimentalNuget=true,RunAutolinkCheck=false"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $package = Get-AppxPackage -Name NYCTronWindowsExample
+          if (-not $package) { throw "Packaged consumer was not registered" }
+          Write-Host "Registered $($package.PackageFullName)"
+          "CONSUMER_AUMID=$($package.PackageFamilyName)!App" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: UI Automation smoke test of the packaged consumer
         working-directory: packages/windows-fluent/rnw-fabric/example
         shell: powershell
         run: |
-          & .\scripts\uia-smoke.ps1 -Exe $env:CONSUMER_EXE -OutDir "$env:RUNNER_TEMP\uia-smoke"
+          & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
       - name: Upload UI Automation screenshots
         if: always()
         uses: actions/upload-artifact@v4

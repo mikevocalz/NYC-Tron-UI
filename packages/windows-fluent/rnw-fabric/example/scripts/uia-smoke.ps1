@@ -1,11 +1,15 @@
 # UI Automation smoke test for the compiled Windows consumer.
 # Runs under Windows PowerShell 5.1 (UIAutomationClient ships with .NET Framework).
-# Launches the Release executable, finds the native NavigationView items by
+# Launches the deployed (packaged) Release app by its AppUserModelId, finds the native NavigationView items by
 # their Narrator names, requests a route with the keyboard, rejects it, requests
 # it again, accepts it, and checks that the native selection indicator follows
 # only the committed route. Writes screenshots and a UIA tree dump to $OutDir.
+# RNW apps run packaged: run-windows deploys them through the .Package
+# project. The bare x64\Release executable exits with 0xC0000409 on
+# windows-2025 because it has no package identity.
 param(
-  [Parameter(Mandatory = $true)][string]$Exe,
+  [Parameter(Mandatory = $true)][string]$AppUserModelId,
+  [Parameter(Mandatory = $true)][string]$ProcessName,
   [Parameter(Mandatory = $true)][string]$OutDir
 )
 $ErrorActionPreference = "Stop"
@@ -88,38 +92,37 @@ function Request-Workspace($window, $homeItem) {
   Write-Host "Keyboard Down+Enter produced a pending Workspace request"
 }
 
-# Startup-crash evidence: installed Windows App Runtime packages, and the
-# native stack plus debug output from a second launch under cdb when the
-# SDK debuggers are installed on the runner.
-function Write-Diagnostics {
+# Startup-crash evidence: installed Windows App Runtime packages and the
+# Application event log entries written since launch.
+function Write-Diagnostics($since) {
   Write-Host "Installed Windows App Runtime packages:"
   Get-AppxPackage -Name "*WindowsAppRuntime*" -ErrorAction SilentlyContinue |
     ForEach-Object { Write-Host "  $($_.PackageFullName)" }
-  $cdb = Join-Path ${env:ProgramFiles(x86)} "Windows Kits\10\Debuggers\x64\cdb.exe"
-  if (-not (Test-Path $cdb)) { Write-Host "cdb.exe not installed; no native stack"; return }
-  $env:_NT_SYMBOL_PATH = "$(Split-Path $Exe);srv*$env:RUNNER_TEMP\symbols*https://msdl.microsoft.com/download/symbols"
-  $log = Join-Path $OutDir "cdb.txt"
-  $commands = 'sxe -c ".echo FIRST-CHANCE-CPP; kc 30; gn" eh; g; .echo FINAL-BREAK; .lastevent; .exr -1; kc 60; q'
-  & $cdb -o -lines -logo $log -c $commands $Exe | Out-Null
-  Write-Host "cdb log ($log):"
-  Get-Content $log -Tail 400 | Write-Host
+  Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = $since } -ErrorAction SilentlyContinue |
+    Select-Object -First 20 | Format-List TimeCreated, ProviderName, Id, Message | Out-String | Write-Host
 }
 
-$bundle = Join-Path (Split-Path $Exe) "Bundle\index.windows.bundle"
-Write-Host "Executable: $Exe"
-Write-Host "Bundle present next to executable: $(Test-Path $bundle)"
 $started = Get-Date
-$process = Start-Process -FilePath $Exe -WorkingDirectory (Split-Path $Exe) -PassThru
+Write-Host "Launching shell:AppsFolder\$AppUserModelId"
+Start-Process "shell:AppsFolder\$AppUserModelId"
+$process = $null
 $window = $null
 try {
+  $deadline = (Get-Date).AddSeconds(30)
+  while ((Get-Date) -lt $deadline -and $null -eq $process) {
+    $process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($null -eq $process) { Start-Sleep -Milliseconds 250 }
+  }
+  if ($null -eq $process) {
+    Write-Diagnostics $started
+    throw "Process '$ProcessName' did not start within 30 s"
+  }
   $processCondition = New-Object System.Windows.Automation.PropertyCondition($AE::ProcessIdProperty, $process.Id)
   $deadline = (Get-Date).AddSeconds(90)
   while ((Get-Date) -lt $deadline -and $null -eq $window) {
     if ($process.HasExited) {
-      Write-Host "Process exited with code $($process.ExitCode) before showing a window."
-      Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = $started } -ErrorAction SilentlyContinue |
-        Select-Object -First 20 | Format-List TimeCreated, ProviderName, Id, Message | Out-String | Write-Host
-      Write-Diagnostics
+      Write-Host "Process exited before showing a window."
+      Write-Diagnostics $started
       throw "Consumer process exited before creating a window"
     }
     $window = $AE::RootElement.FindFirst($Tree::Children, $processCondition)
@@ -158,5 +161,5 @@ try {
   }
   throw
 } finally {
-  if (-not $process.HasExited) { Stop-Process -Id $process.Id -Force }
+  if ($null -ne $process -and -not $process.HasExited) { Stop-Process -Id $process.Id -Force }
 }
