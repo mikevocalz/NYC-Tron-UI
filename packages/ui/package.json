@@ -139,6 +139,46 @@
       "types": "./dist/components/navigation/drawer-model.d.ts",
       "react-native": "./dist/components/navigation/drawer-model.js",
       "default": "./dist/components/navigation/drawer-model.js"
+    },
+    "./components/forge/audio/RecordingTrack": {
+      "types": "./dist/components/forge/audio/RecordingTrack.d.ts",
+      "react-native": "./dist/components/forge/audio/RecordingTrack.js",
+      "default": "./dist/components/forge/audio/RecordingTrack.js"
+    },
+    "./components/forge/audio/LevelMeter": {
+      "types": "./dist/components/forge/audio/LevelMeter.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelMeter.js",
+      "default": "./dist/components/forge/audio/LevelMeter.js"
+    },
+    "./components/forge/audio/AudioPreview": {
+      "types": "./dist/components/forge/audio/AudioPreview.d.ts",
+      "react-native": "./dist/components/forge/audio/AudioPreview.js",
+      "default": "./dist/components/forge/audio/AudioPreview.js"
+    },
+    "./components/forge/audio/level-meter": {
+      "types": "./dist/components/forge/audio/level-meter.d.ts",
+      "react-native": "./dist/components/forge/audio/level-meter.js",
+      "default": "./dist/components/forge/audio/level-meter.js"
+    },
+    "./components/forge/audio/recording-model": {
+      "types": "./dist/components/forge/audio/recording-model.d.ts",
+      "react-native": "./dist/components/forge/audio/recording-model.js",
+      "default": "./dist/components/forge/audio/recording-model.js"
+    },
+    "./components/forge/audio/preview-model": {
+      "types": "./dist/components/forge/audio/preview-model.d.ts",
+      "react-native": "./dist/components/forge/audio/preview-model.js",
+      "default": "./dist/components/forge/audio/preview-model.js"
+    },
+    "./components/forge/devices/DevicePairingDialog": {
+      "types": "./dist/components/forge/devices/DevicePairingDialog.d.ts",
+      "react-native": "./dist/components/forge/devices/DevicePairingDialog.js",
+      "default": "./dist/components/forge/devices/DevicePairingDialog.js"
+    },
+    "./components/forge/devices/pairing-model": {
+      "types": "./dist/components/forge/devices/pairing-model.d.ts",
+      "react-native": "./dist/components/forge/devices/pairing-model.js",
+      "default": "./dist/components/forge/devices/pairing-model.js"
     }
   },
   "scripts": {

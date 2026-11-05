@@ -21,7 +21,11 @@ complex editor screen composition and its cross-engine suite application.
 | Multi-hinge region planner | `@nyc-tron/core/folds` | Pure contract/tests | NYC-MON adaptive geometry |
 | Spatial panels | `@nyc-tron/core/spatial` | Pure specification, no renderer | Viro / spatial starter |
 | PrecisionScrubber / draggable fields | `components/forge/PrecisionScrubber` planned | **NOT EXTRACTED** | Forge PR #32 |
-| Track/mixer/fader / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
+| RecordingTrack | `@nyc-tron/ui/components/forge/audio/RecordingTrack` | Controlled RN view over `RecordingViewState`; lane is `forge/WaveformLane`; mocked-host render tests only, native QA pending | Forge PR #37 `NativeRecordingTrack`, `NativeSourceRecordingTrack` (view parts) |
+| LevelMeter | `@nyc-tron/ui/components/forge/audio/LevelMeter` | Controlled RN view; dBFS math and throttled band announcements tested; screen-reader output on device unverified | Forge PR #37 meter history |
+| AudioPreview | `@nyc-tron/ui/components/forge/audio/AudioPreview` | Controlled RN view over `PreviewViewState`; mocked-host render tests only | Forge PR #37 `NativeAudioPreview` (view parts) |
+| DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic; mocked-host render tests only | Forge PR #20 `PenConnectionDialog` |
+| Track/mixer/fader / EQ controls | `components/forge/audio/` planned (recording views above exist) | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
@@ -79,3 +83,30 @@ their respective distributions and PRs pass.
 ## 2026-11-04 advanced controls
 
 PR #2 adds source-level prototype controls: InstrumentKnob/InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay and CommandPopover. All source resides in NYC-Tron (not Forge). See [the advanced native catalog](ADVANCED_NATIVE_COMPONENTS.md) and @nyc-tron/core/advanced-catalog for complete planned ports and review gates. Native OS adapters, device QA and source licenses are **not** completed by this extraction.
+
+## 2026-11-05 recording views and device pairing
+
+Per Nitro Forge PR #38 the dependency runs one way: Forge imports these views,
+NYC-Tron never imports Forge. Microphone capture, PCM buffers, WAV writing,
+playback graphs, Bluetooth discovery and the recorder, player and pen
+controllers stay in Forge. NYC-Tron receives only controlled views and their
+pure state models:
+
+- `forge/audio/recording-model`, `forge/audio/preview-model`,
+  `forge/audio/level-meter` and `forge/devices/pairing-model` hold the state
+  unions and copy. Forge maps its controller phase onto them.
+- Every state has copy and a recovery action: microphone permission denied
+  (Settings when the app passes `onOpenSettings`, otherwise ask again), no
+  input device, interrupted take (save what was recorded), recorder error,
+  no pairing device found (search again), and each pairing error code
+  (`permission-denied`, `radio-off`, `connection-failed`, `unknown`) with retry.
+- `LevelMeter` is a `progressbar` whose value text is a band, not a number.
+  With `announce` it speaks band changes at low priority, at most once per
+  `announceIntervalMs` (2 s default); clipping is spoken at once. The bar is not
+  a live region. Status lines are polite live regions that change once per phase.
+- Closing a connected `DevicePairingDialog` calls `onDone`, never `onCancel`, so
+  dismissing the dialog does not disconnect the device.
+
+Evidence is Node tests of the state models plus mocked-host render tests that
+run the real components. No simulator, device, TalkBack or VoiceOver pass has
+been done for these views.
