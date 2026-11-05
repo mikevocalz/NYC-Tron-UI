@@ -386,6 +386,26 @@
       "react-native": "./dist/components/overlays/focus-restore.js",
       "default": "./dist/components/overlays/focus-restore.js"
     },
+    "./components/overlays/AnchoredPopover": {
+      "types": "./dist/components/overlays/AnchoredPopover.d.ts",
+      "react-native": "./dist/components/overlays/AnchoredPopover.js",
+      "default": "./dist/components/overlays/AnchoredPopover.js"
+    },
+    "./components/overlays/anchored-popover-types": {
+      "types": "./dist/components/overlays/anchored-popover-types.d.ts",
+      "react-native": "./dist/components/overlays/anchored-popover-types.js",
+      "default": "./dist/components/overlays/anchored-popover-types.js"
+    },
+    "./components/overlays/measure-anchor": {
+      "types": "./dist/components/overlays/measure-anchor.d.ts",
+      "react-native": "./dist/components/overlays/measure-anchor.js",
+      "default": "./dist/components/overlays/measure-anchor.js"
+    },
+    "./components/overlays/useTriggerAnchor": {
+      "types": "./dist/components/overlays/useTriggerAnchor.d.ts",
+      "react-native": "./dist/components/overlays/useTriggerAnchor.js",
+      "default": "./dist/components/overlays/useTriggerAnchor.js"
+    },
     "./components/TextField": {
       "types": "./dist/components/TextField.d.ts",
       "react-native": "./dist/components/TextField.js",
@@ -613,6 +633,11 @@
       "types": "./dist/components/forms/choice-keys.d.ts",
       "react-native": "./dist/components/forms/choice-keys.js",
       "default": "./dist/components/forms/choice-keys.js"
+    },
+    "./components/forms/option-groups": {
+      "types": "./dist/components/forms/option-groups.d.ts",
+      "react-native": "./dist/components/forms/option-groups.js",
+      "default": "./dist/components/forms/option-groups.js"
     },
     "./components/forge/timeline/TimecodeDisplay": {
       "types": "./dist/components/forge/timeline/TimecodeDisplay.d.ts",

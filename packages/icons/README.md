@@ -54,12 +54,16 @@ it shows whatever sits behind the icon. There is no surface color prop.
 
 ### Accessibility
 
-Icons are decorative by default: the wrapper sets `accessible={false}`,
-`accessibilityElementsHidden`, `importantForAccessibility="no-hide-descendants"`
-and `aria-hidden`, and the SVG is `aria-hidden`. Pass `accessibilityLabel`
-for a meaningful standalone icon; it is then exposed as one image
-(`accessibilityRole="image"`, `role="img"`). `TronIconButton` requires a
-`label`, names the button with it, and keeps its icon decorative.
+Icons are decorative by default. On iOS and Android the wrapper sets
+`accessible={false}`, `accessibilityElementsHidden` and
+`importantForAccessibility="no-hide-descendants"`. On web the wrapper and the
+SVG carry only `aria-hidden`, and the SVG gets the string attribute
+`focusable="false"`: react-native-svg's web build passes every prop to the
+DOM `<svg>`, so RN-only props such as `accessible` made React warn. Pass
+`accessibilityLabel` for a meaningful standalone icon; it is then exposed as
+one image (`accessibilityRole="image"` on native, `role="img"` with
+`aria-label` on web). `TronIconButton` requires a `label`, names the button
+with it, and keeps its icon decorative.
 
 ### Lookup
 

@@ -16,11 +16,12 @@ function harness({ rtl = false } = {}) {
   const responders = [];
   const element = (type, props) => ({ type, props });
   const mocks = {
-    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }) },
+    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {},
+      useMemo: f => f(), cloneElement: (el, props) => ({ ...el, props: { ...el.props, ...props } }) },
     "react/jsx-runtime": { jsx: element, jsxs: element },
     "react-native": {
-      View: "View", Text: "Text", Pressable: "Pressable", ScrollView: "ScrollView", TextInput: "TextInput",
-      I18nManager: { isRTL: rtl },
+      View: "View", Text: "Text", Pressable: "Pressable", ScrollView: "ScrollView", TextInput: "TextInput", Modal: "Modal",
+      I18nManager: { isRTL: rtl }, Platform: { OS: "ios" }, useWindowDimensions: () => ({ width: 390, height: 844 }),
       PanResponder: { create: config => { responders.push(config); return { panHandlers: {} }; } },
     },
     "zustand/vanilla": { createStore: init => {
@@ -168,4 +169,36 @@ test("existing rows without the new fields render as before", () => {
   assert.ok(texts(tree).includes("Shape"));
   assert.equal(findAll(tree, n => n.props?.["aria-hidden"] === true).length, 0);
   assert.equal(findAll(tree, n => String(n.props?.accessibilityLabel).startsWith("Remove ")).length, 0);
+});
+
+test("readout rows replace the slider with a labelled button that opens the scrubber", () => {
+  const h = harness();
+  const tree = h.render(props({ opacityControl: "readout", onRemove: noop }));
+  assert.equal(findAll(tree, n => n.props?.accessibilityRole === "adjustable").length, 0, "no inline slider");
+  const readout = byLabel(tree, "Photo opacity, 50%");
+  assert.equal(readout.type, "Pressable");
+  assert.equal(readout.props.accessibilityRole, "button");
+  assert.equal(readout.props["aria-expanded"], false);
+  assert.equal(readout.props["aria-haspopup"], "dialog");
+  assert.equal(readout.props.accessibilityHint, "Opens a scrubber to change opacity.");
+  assert.ok(readout.props.style.minWidth >= 44 && readout.props.style.height >= 44, "44pt target");
+  const locked = byLabel(tree, "Background opacity, 100%");
+  assert.equal(locked.props.disabled, true);
+  assert.equal(locked.props.accessibilityState.disabled, true);
+  // The name may shrink beside the readout, so the remove button never clips.
+  const nameCell = findAll(tree, n => n.type === "View" && n.props.style?.flex === 1 && n.props.style?.height === 44)[0];
+  assert.equal(nameCell.props.style.minWidth, 0);
+  assert.ok(byLabel(tree, "Remove Photo"), "remove stays in the row");
+  // Pressing opens the popover: the next render announces it expanded.
+  readout.props.onPress();
+  const reopened = byLabel(h.render(props({ opacityControl: "readout", onRemove: noop })), "Photo opacity, 50%");
+  assert.equal(reopened.props["aria-expanded"], true);
+});
+
+test("slider rows keep the 96pt name floor and the 120pt slider", () => {
+  const tree = harness().render(props({ opacityControl: "slider" }));
+  const slider = findAll(tree, n => n.props?.accessibilityRole === "adjustable")[0];
+  assert.equal(slider.props.style.width, 120);
+  const nameCell = findAll(tree, n => n.type === "View" && n.props.style?.flex === 1 && n.props.style?.height === 44)[0];
+  assert.equal(nameCell.props.style.minWidth, 96);
 });

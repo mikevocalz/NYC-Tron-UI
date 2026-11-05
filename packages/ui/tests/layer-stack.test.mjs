@@ -60,7 +60,7 @@ test("opacity drag previews live, commits once on release and restores on cancel
  assert.equal(LAYER_TOUCH_TARGET,44);
  assert.match(source,/onPanResponderTerminate:cancelOpacity/);
  assert.match(source,/cancelPreview\(p\.layer\.opacity,/);
- assert.match(source,/onPanResponderRelease:\(\)=>\{\s*const current=store\.getState\(\)\.opacity;\s*if\(current\?\.id===latest\.current\.layer\.id\)commitOpacity/);
+ assert.match(source,/onPanResponderRelease:\(\)=>\{\s*const current=store\.getState\(\)\.opacity;\s*if\(current\?\.id===latest\.current\.layer\.id\)void commitOpacity/);
  assert.equal(source.match(/onOpacityCommit\(/g)?.length,1,"one commit site");
  assert.match(source,/p\.onOpacityPreview\?\.\(p\.layer\.id,next\)/);
 });

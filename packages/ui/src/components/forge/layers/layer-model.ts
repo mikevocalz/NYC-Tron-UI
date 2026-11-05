@@ -71,6 +71,54 @@ export const LAYER_THUMBNAIL_SIZE=28;
 export const LAYER_OPACITY_STEP=0.05;
 /** Upper bound on rows; larger documents need a virtualized list. */
 export const LAYER_STACK_MAX_ROWS=500;
+/** Width the name column keeps before the opacity control gives anything up, in points. */
+export const LAYER_NAME_MIN_WIDTH=96;
+/**
+ * Width of the inline opacity slider column (track, gap and percent text), in
+ * points. Below it the track is too short to drag with any precision, so the
+ * row switches to the readout instead of squeezing the slider.
+ */
+export const LAYER_OPACITY_SLIDER_WIDTH=120;
+/** Width of the compact opacity readout button that replaces the slider, in points. */
+export const LAYER_OPACITY_READOUT_WIDTH=56;
+
+/**
+ * How a {@linkcode LayerStack} row shows opacity: `slider` draws the inline
+ * drag track, `readout` a percentage button that opens a scrubber popover.
+ * @see {@linkcode layerOpacityMode}
+ */
+export type LayerOpacityMode="slider"|"readout";
+
+/** Which fixed-width parts a row carries; see {@linkcode layerRowMinWidth}. */
+export type LayerRowParts=Readonly<{
+  /** Any row in the stack has a thumbnail, so every row keeps the slot. */
+  thumbnail:boolean;
+  /** The host passed `onRemove`, so every row has a remove button. */
+  removable:boolean;
+}>;
+
+/**
+ * Narrowest row, in points, that fits every part with the name at
+ * {@linkcode LAYER_NAME_MIN_WIDTH} and opacity shown as `mode`: drag handle,
+ * visibility switch, optional thumbnail slot, name, opacity, optional remove.
+ */
+export function layerRowMinWidth(parts:LayerRowParts,mode:LayerOpacityMode):number{
+  const opacity=mode==="slider"?LAYER_OPACITY_SLIDER_WIDTH:LAYER_OPACITY_READOUT_WIDTH;
+  return LAYER_TOUCH_TARGET*2+(parts.thumbnail?LAYER_THUMBNAIL_SIZE+4:0)+LAYER_NAME_MIN_WIDTH+opacity+
+    (parts.removable?LAYER_TOUCH_TARGET:0);
+}
+
+/**
+ * Opacity presentation for a stack `width` points wide. The inline slider is
+ * kept only while the whole row fits beside it; otherwise the readout takes
+ * its place so the name and the remove button always fit. An unmeasured
+ * stack (`width` undefined) keeps the slider, which is what it drew before
+ * the first layout.
+ */
+export function layerOpacityMode(width:number|undefined,parts:LayerRowParts):LayerOpacityMode{
+  if(width===undefined||!Number.isFinite(width))return "slider";
+  return width>=layerRowMinWidth(parts,"slider")?"slider":"readout";
+}
 
 const KIND_LABELS={
  raster:"Pixel",vector:"Shape",text:"Text",group:"Group",adjustment:"Adjustment",

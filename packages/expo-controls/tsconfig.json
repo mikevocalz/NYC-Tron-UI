@@ -6,7 +6,11 @@
     ],
     "paths": {
       "@nyc-tron/ui/components/overlays/*": [
-        "../ui/src/components/overlays/*.ts"
+        "../ui/src/components/overlays/*.ts",
+        "../ui/src/components/overlays/*.tsx"
+      ],
+      "@nyc-tron/ui/components/forms/*": [
+        "../ui/src/components/forms/*.ts"
       ],
       "@nyc-tron/ui/components/Select": [
         "../ui/src/components/Select.tsx"

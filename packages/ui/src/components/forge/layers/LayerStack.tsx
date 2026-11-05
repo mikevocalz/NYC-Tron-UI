@@ -1,18 +1,21 @@
-import {useRef} from "react";
+import {useEffect,useRef} from "react";
 import {I18nManager,PanResponder,Pressable,ScrollView,Text,TextInput,View,type PressableProps,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {cancelPreview} from "../cancel-preview.ts";
 import {joinClasses} from "../../styles.ts";
+import {AnchoredPopover} from "../../overlays/AnchoredPopover.tsx";
+import {PrecisionScrubber} from "../inputs/PrecisionScrubber.tsx";
 import {
- LAYER_THUMBNAIL_SIZE,LAYER_TOUCH_TARGET,dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerDetail,
- normalizeOpacity,opacityFromDrag,resolveRename,stepOpacity,validateLayers,type LayerRow,type LayerThumbnail,
+ LAYER_NAME_MIN_WIDTH,LAYER_OPACITY_READOUT_WIDTH,LAYER_OPACITY_SLIDER_WIDTH,LAYER_THUMBNAIL_SIZE,LAYER_TOUCH_TARGET,
+ dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerDetail,layerOpacityMode,normalizeOpacity,opacityFromDrag,
+ resolveRename,stepOpacity,validateLayers,type LayerOpacityMode,type LayerRow,type LayerThumbnail,
 } from "./layer-model.ts";
 
 type OpacityPreview={id:string;value:number};
 type Drag={id:string;from:number;to:number;dy:number};
 type Rename={id:string;draft:string};
-type Local={opacity:OpacityPreview|null;drag:Drag|null;rename:Rename|null};
+type Local={opacity:OpacityPreview|null;drag:Drag|null;rename:Rename|null;width:number|undefined;editing:string|null};
 type KeyEvent=Parameters<NonNullable<PressableProps["onKeyDown"]>>[0];
 
 /** Props for {@linkcode LayerStack}. Every layer value is controlled by the app. */
@@ -58,6 +61,15 @@ export interface LayerStackProps extends Omit<ViewProps,"children">{
  emptyLabel?:string;
  /** Optional override; defaults to the theme's accent token. */
  accentColor?:string;
+ /**
+  * How rows show opacity. `auto` measures the stack and keeps the inline
+  * slider only while a whole row fits beside it (`layerRowMinWidth` in
+  * `layer-model`); narrower stacks get a percentage readout
+  * that opens a {@linkcode PrecisionScrubber} popover, so the name and the
+  * remove button never clip. `slider` and `readout` force one presentation.
+  * @default "auto"
+  */
+ opacityControl?:"auto"|LayerOpacityMode;
  className?:string;
  unstyled?:boolean;
 }
@@ -68,25 +80,35 @@ export interface LayerStackProps extends Omit<ViewProps,"children">{
  */
 export function LayerStack({
  layers,selectedId,onSelect,onToggleVisible,onOpacityPreview,onOpacityCommit,onMove,onRename,onRemove,
- rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,className,unstyled=false,...rest
+ rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,opacityControl="auto",className,unstyled=false,
+ onLayout,...rest
 }:LayerStackProps){
  validateLayers(layers);
  const local=useRef<StoreApi<Local>|null>(null);
- if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null}));
+ if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null,width:undefined,editing:null}));
  const store=local.current;
  const drag=useStore(store,s=>s.drag);
+ const width=useStore(store,s=>s.width);
  const height=Math.max(LAYER_TOUCH_TARGET,rowHeight);
  const styled=!unstyled;
  // One row with a thumbnail gives every row the slot, so names and opacity tracks stay in columns.
  const thumbnailSlot=layers.some(l=>l.thumbnail!==undefined);
+ // The stack measures itself, not the window: a docked panel is narrow on any screen.
+ const mode=opacityControl==="auto"?layerOpacityMode(width,{thumbnail:thumbnailSlot,removable:onRemove!==undefined}):opacityControl;
+ // A widened stack or a removed layer drops an open readout popover, so it never reopens by itself later.
+ useEffect(()=>{
+  const editing=store.getState().editing;
+  if(editing!==null&&(mode!=="readout"||!layers.some(l=>l.id===editing)))store.setState({editing:null,opacity:null});
+ },[mode,layers,store]);
  return <View {...rest} accessibilityLabel={label}
+  onLayout={e=>{store.setState({width:e.nativeEvent.layout.width});onLayout?.(e);}}
    {...{className:joinClasses("min-w-0 overflow-hidden",styled&&"rounded-control bg-surface-sunken",className)}}>
   {/* Scrolling is paused while a row is dragged so the handle keeps the gesture. */}
   <ScrollView scrollEnabled={drag===null} nestedScrollEnabled>
    {layers.length===0
     ?<Text {...{className:joinClasses(styled&&"text-text-muted")}} style={{padding:12}}>{emptyLabel}</Text>
     :layers.map((layer,index)=><LayerStackRow key={layer.id} store={store} layer={layer} index={index}
-      count={layers.length} rowHeight={height} thumbnailSlot={thumbnailSlot} selected={layer.id===selectedId} styled={styled}
+      count={layers.length} rowHeight={height} thumbnailSlot={thumbnailSlot} mode={mode} selected={layer.id===selectedId} styled={styled}
       accentColor={accentColor} onSelect={onSelect} onToggleVisible={onToggleVisible}
       onOpacityPreview={onOpacityPreview} onOpacityCommit={onOpacityCommit} onMove={onMove} onRename={onRename}
       onRemove={onRemove}/>)}
@@ -95,7 +117,8 @@ export function LayerStack({
 }
 
 type RowProps={
- store:StoreApi<Local>;layer:LayerRow;index:number;count:number;rowHeight:number;thumbnailSlot:boolean;selected:boolean;
+ store:StoreApi<Local>;layer:LayerRow;index:number;count:number;rowHeight:number;thumbnailSlot:boolean;
+ mode:LayerOpacityMode;selected:boolean;
  styled:boolean;accentColor:string|undefined;
 }&Pick<LayerStackProps,"onSelect"|"onToggleVisible"|"onOpacityPreview"|"onOpacityCommit"|"onMove"|"onRename"|"onRemove">;
 
@@ -116,11 +139,12 @@ function LayerStackRow(props:RowProps){
   cancelPreview(p.layer.opacity,()=>store.setState({opacity:null}),
    value=>p.onOpacityPreview?.(p.layer.id,value));
  };
+ // The one commit path for drag, screen-reader steps and the readout's scrubber.
  const commitOpacity=(value:number)=>{
   const p=latest.current;
   store.setState({opacity:null});
   const next=normalizeOpacity(value);
-  if(next!==p.layer.opacity)void p.onOpacityCommit(p.layer.id,next);
+  return next!==p.layer.opacity?p.onOpacityCommit(p.layer.id,next):undefined;
  };
  const opacityPan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
  if(!opacityPan.current)opacityPan.current=PanResponder.create({
@@ -143,7 +167,7 @@ function LayerStackRow(props:RowProps){
   },
   onPanResponderRelease:()=>{
    const current=store.getState().opacity;
-   if(current?.id===latest.current.layer.id)commitOpacity(current.value);
+   if(current?.id===latest.current.layer.id)void commitOpacity(current.value);
   },
   onPanResponderTerminate:cancelOpacity,
   onPanResponderTerminationRequest:()=>false,
@@ -203,7 +227,7 @@ function LayerStackRow(props:RowProps){
  };
 
  const stepActions=(direction:-1|1)=>{
-  if(!locked)commitOpacity(stepOpacity(layer.opacity,direction));
+  if(!locked)void commitOpacity(stepOpacity(layer.opacity,direction));
  };
  const rowActions=[
   {name:"activate"},
@@ -238,8 +262,8 @@ function LayerStackRow(props:RowProps){
   </Pressable>
   {layer.thumbnail?<Thumbnail thumbnail={layer.thumbnail} styled={styled} dimmed={!layer.visible}/>
    :props.thumbnailSlot?<View pointerEvents="none" style={{width:LAYER_THUMBNAIL_SIZE,marginEnd:4}}/>:null}
-  {/* The name keeps 96pt; on narrow panes the opacity column gives up width first. */}
-  <View style={{flex:1,minWidth:96,height:LAYER_TOUCH_TARGET,justifyContent:"center"}}>
+  {/* The name keeps 96pt beside the slider. With the readout it may shrink as a last resort, so remove never clips. */}
+  <View style={{flex:1,minWidth:props.mode==="slider"?LAYER_NAME_MIN_WIDTH:0,height:LAYER_TOUCH_TARGET,justifyContent:"center"}}>
    {rename
     ?<TextInput autoFocus selectTextOnFocus accessibilityLabel={"Name for "+layer.name}
       value={rename.draft} returnKeyType="done"
@@ -269,6 +293,7 @@ function LayerStackRow(props:RowProps){
       </Text>
      </Pressable>}
   </View>
+  {props.mode==="readout"?<OpacityReadout {...props} opacity={opacity} dimmed={dimmed} commit={commitOpacity}/>:<>
   <View {...opacityPan.current.panHandlers}
    accessible accessibilityRole="adjustable" accessibilityLabel={layer.name+" opacity"}
    accessibilityValue={{min:0,max:100,now:percent,text:formatOpacity(opacity)}}
@@ -278,7 +303,7 @@ function LayerStackRow(props:RowProps){
     if(e.nativeEvent.actionName==="increment")stepActions(1);
     if(e.nativeEvent.actionName==="decrement")stepActions(-1);
    }}
-   style={{width:120,minWidth:88,flexShrink:1,height:LAYER_TOUCH_TARGET,flexDirection:"row",alignItems:"center",gap:8,
+   style={{width:LAYER_OPACITY_SLIDER_WIDTH,minWidth:88,flexShrink:1,height:LAYER_TOUCH_TARGET,flexDirection:"row",alignItems:"center",gap:8,
     paddingEnd:props.onRemove?4:12,...dimmed}}>
    <View onLayout={e=>{trackWidth.current=e.nativeEvent.layout.width;}}
     {...{className:joinClasses(styled&&"bg-surface-raised")}}
@@ -290,6 +315,7 @@ function LayerStackRow(props:RowProps){
     {formatOpacity(opacity)}
    </Text>
   </View>
+  </>}
   {/* Shown only when the host can delete layers. Locked rows keep the slot, disabled, so columns line up. */}
   {props.onRemove?<Pressable accessibilityRole="button" accessibilityLabel={"Remove "+layer.name}
    accessibilityState={{disabled:locked}} disabled={locked} onPress={remove}
@@ -297,6 +323,47 @@ function LayerStackRow(props:RowProps){
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",...dimmed}}>
    <RemoveGlyph styled={styled}/>
   </Pressable>:null}
+ </View>;
+}
+
+type ReadoutProps=RowProps&{opacity:number;dimmed:{opacity:number};commit:(value:number)=>unknown};
+
+/**
+ * Narrow-row opacity: a percentage button that opens a PrecisionScrubber in a
+ * popover anchored to it. The scrubber previews through `onOpacityPreview`,
+ * commits once through `onOpacityCommit`, and a cancelled drag (Escape, a
+ * second pointer, or closing the popover mid-drag) restores the committed value.
+ */
+function OpacityReadout({store,layer,styled,opacity,dimmed,onOpacityPreview,commit}:ReadoutProps){
+ const open=useStore(store,s=>s.editing===layer.id);
+ const locked=layer.locked===true;
+ // Closing drops any preview, so the readout shows the committed value again.
+ const setOpen=(next:boolean)=>store.setState(next?{editing:layer.id}:{editing:null,opacity:null});
+ return <View style={{width:LAYER_OPACITY_READOUT_WIDTH,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
+  <AnchoredPopover open={open&&!locked} onOpenChange={setOpen} accessibilityLabel={layer.name+" opacity"} width={300}
+   trigger={({toggle,triggerProps})=><Pressable {...triggerProps} accessibilityRole="button"
+    accessibilityLabel={layer.name+" opacity, "+formatOpacity(opacity)}
+    accessibilityHint={locked?undefined:"Opens a scrubber to change opacity."}
+    accessibilityState={{...triggerProps.accessibilityState,disabled:locked}} aria-disabled={locked||undefined}
+    disabled={locked} onPress={toggle}
+    {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
+      styled&&!locked&&"hover:bg-surface-raised")}}
+    style={{minWidth:LAYER_OPACITY_READOUT_WIDTH,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",
+     paddingHorizontal:4,...dimmed}}>
+    <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted")}}
+     style={{fontVariant:["tabular-nums"],fontSize:12}}>{formatOpacity(opacity)}</Text>
+   </Pressable>}>
+   <View style={{padding:12}}>
+    <PrecisionScrubber label={layer.name+" opacity"} value={Math.round(layer.opacity*100)} min={0} max={100} step={1}
+     unit="%" disabled={locked}
+     onPreview={value=>{
+      const next=normalizeOpacity(value/100);
+      store.setState({opacity:{id:layer.id,value:next}});
+      onOpacityPreview?.(layer.id,next);
+     }}
+     onCommit={value=>commit(value/100)}/>
+   </View>
+  </AnchoredPopover>
  </View>;
 }
 

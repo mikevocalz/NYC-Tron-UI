@@ -1,4 +1,5 @@
-import {clamp,formatStepValue,scrubModeFromOffset,scrubPrecision,type ScrubMode} from "./precision.ts";
+import {advancePrecisionGesture,beginPrecisionGesture,clamp,formatStepValue,scrubPrecision,snapTypedPrecision,
+  type PrecisionGesture,type ScrubMode} from "./precision.ts";
 import type {DragPoint} from "../../gestures/drag-transport.ts";
 import {cancelPreview} from "../cancel-preview.ts";
 
@@ -41,7 +42,7 @@ export function initialScrubberState(value:number,step:number):ScrubberState {
  * restores the controlled value and re-sends it through `onPreview`.
  */
 export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInputs){
-  let gesture:{point:DragPoint;value:number}|undefined;
+  let gesture:PrecisionGesture|undefined;
   const isBlocked=()=>!!inputs().disabled||store.getState().pending;
   const resting=()=>{
     const p=inputs();
@@ -65,16 +66,15 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
       store.setState({pending:false,...resting()});
     }
   };
+  // Advances the drag; a fine/coarse switch re-anchors there instead of rescaling the whole drag.
   const calculate=(point:DragPoint)=>{
     if(!gesture)return undefined;
     const p=inputs();
-    const mode=scrubModeFromOffset(point.y-gesture.point.y);
-    const next=scrubPrecision({
-      min:p.min,max:p.max,step:p.step,startValue:gesture.value,
-      deltaPixels:point.x-gesture.point.x,pixelsPerStep:SCRUB_PIXELS_PER_STEP,mode,
+    gesture=advancePrecisionGesture(gesture,point,{
+      min:p.min,max:p.max,step:p.step,pixelsPerStep:SCRUB_PIXELS_PER_STEP,
       ...(p.detents===undefined?{}:{detents:p.detents}),
     });
-    return {next,mode};
+    return {next:gesture.value,mode:gesture.mode};
   };
   const cancel=()=>{
     const wasActive=gesture!==undefined||store.getState().active;
@@ -85,7 +85,7 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
   return {
     begin(point:DragPoint){
       if(isBlocked())return;
-      gesture={point,value:inputs().value};
+      gesture=beginPrecisionGesture(point,inputs().value);
       store.setState({active:true,error:undefined,mode:"normal"});
     },
     move(point:DragPoint,touches:number){
@@ -125,7 +125,8 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
         store.setState({editing:false,...resting(),error:"Enter a valid number"});
         return undefined;
       }
-      return commit(entered);
+      const p=inputs();
+      return commit(snapTypedPrecision(entered,p));
     },
     /** Follow a new controlled value unless the user is mid-adjustment. */
     sync(){
