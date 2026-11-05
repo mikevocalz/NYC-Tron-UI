@@ -54,3 +54,14 @@ For a React Native row containing content followed by the rail, use
 `flexDirection: I18nManager.isRTL ? "row-reverse" : "row"` to keep the rail
 physically right while preserving RTL text. The host still supplies hinge-safe
 usable geometry; this component does not infer hardware or fold bounds.
+
+### Short usable regions and large text
+
+Both native adapters keep a bounded vertical scroll viewport. A short action
+group remains centered; when destinations exceed the usable height, every
+destination remains in the scroll content instead of being clipped outside
+the rail. SwiftUI expanded labels use scalable system subheadline typography.
+The app must still place the rail inside a hinge-safe usable segment.
+Compile checks do not prove scrolling, focus reveal, or physical hinge safety;
+exercise 20 destinations in a 160-unit-high host with large text and RTL during
+device acceptance.
