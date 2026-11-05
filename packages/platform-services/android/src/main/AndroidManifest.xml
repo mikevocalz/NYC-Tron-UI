@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application>
+    <!-- Shares files from the app's cache and files directories; the
+         authority is per app, so two apps using the kit never collide. -->
+    <provider
+      android:name="com.nyctron.platformservices.NYCTronFileProvider"
+      android:authorities="${applicationId}.nyctron.files"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/nyctron_file_paths" />
+    </provider>
+  </application>
+</manifest>

@@ -29,13 +29,15 @@ export function FilePicker({
     input.addEventListener("change",()=>{
       const files=Array.from(input.files??[]);
       done();
-      if(files.length)onFiles(files);
+      if(files.length)onFiles?.(files);
     },{once:true});
     input.addEventListener("cancel",done,{once:true});
     window.addEventListener("focus",onFocus,{once:true});
     document.body.appendChild(input);
     input.click();
   };
+  // No receiver for the files: no button, rather than one that picks into nothing.
+  if(!onFiles)return null;
   const styled=!unstyled;
   return (
     <Pressable onPress={open} disabled={disabled} testID={testID}

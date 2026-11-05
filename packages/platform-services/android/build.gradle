@@ -1,0 +1,35 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'com.nyctron'
+version = '0.1.0'
+
+/*
+ * Expo Modules 2, as @nyc-tron/reserved-regions. `v2 true` applies the
+ * io.github.expo.modules.v2 compiler plugin; the runtime comes through
+ * expo-modules-core 58's own api(...) dependency. The three module classes
+ * stay out of "android.modules" in expo-module.config.json; v2 modules link
+ * through ExpoModulesV2ModuleList.
+ */
+expoModule {
+  canBePublished false
+  v2 true
+}
+
+android {
+  namespace "com.nyctron.platformservices"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+}
+
+dependencies {
+  // ActivityResultRegistry for the document picker, FileProvider for sharing.
+  // Floors only: Gradle resolves the host app's newer copies, which React
+  // Native's AppCompat already brings.
+  implementation "androidx.activity:activity:1.8.2"
+  implementation "androidx.core:core:1.13.1"
+}

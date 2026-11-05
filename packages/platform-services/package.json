@@ -1,0 +1,70 @@
+{
+  "name": "@nyc-tron/platform-services",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Native platform services for NYC-Tron UI: haptics with user opt-out, document picking with open-in-place and sharing, and audio session lifecycle (interruptions, focus, headset loss)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.js",
+      "react-native": "./dist/index.native.js",
+      "default": "./dist/index.js"
+    },
+    "./haptics": {
+      "types": "./dist/haptics/index.d.ts",
+      "browser": "./dist/haptics/index.js",
+      "react-native": "./dist/haptics/index.native.js",
+      "default": "./dist/haptics/index.js"
+    },
+    "./documents": {
+      "types": "./dist/documents/index.d.ts",
+      "browser": "./dist/documents/index.js",
+      "react-native": "./dist/documents/index.native.js",
+      "default": "./dist/documents/index.js"
+    },
+    "./playback": {
+      "types": "./dist/playback/index.d.ts",
+      "browser": "./dist/playback/index.js",
+      "react-native": "./dist/playback/index.native.js",
+      "default": "./dist/playback/index.js"
+    },
+    "./playback-policy": {
+      "types": "./dist/playback/policy.d.ts",
+      "react-native": "./dist/playback/policy.js",
+      "default": "./dist/playback/policy.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm build",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+  },
+  "peerDependencies": {
+    "expo": "^58.0.0",
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "expo": "58.0.23",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "typescript": "~6.0.3",
+    "zustand": "5.0.16"
+  },
+  "files": [
+    "dist",
+    "ios",
+    "android/build.gradle",
+    "android/src",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE"
+  ]
+}

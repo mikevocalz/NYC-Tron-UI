@@ -44,6 +44,8 @@ jobs:
         run: node --test packages/reserved-regions/tests/*.test.mjs
       - name: Hardware-keys native contracts, key sources and hook behavior
         run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
+      - name: Platform-services native contracts and service behavior
+        run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
       - name: Render Forge control contracts with mocked native hosts
         run: node --test packages/ui/tests/render/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
