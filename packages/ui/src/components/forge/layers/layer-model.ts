@@ -3,9 +3,34 @@
  * layer document; {@linkcode LayerStack} only previews gestures and reports
  * committed intent through callbacks.
  */
+import type {ReactNode} from "react";
 
-/** What a {@linkcode LayerRow} contains. Shown as a short label next to the name. */
+/**
+ * What a {@linkcode LayerRow} contains. Its built-in label ({@linkcode layerKindLabel})
+ * is shown under the name unless the row sets {@linkcode LayerRow.kindLabel}.
+ */
 export type LayerKind="raster"|"vector"|"text"|"group"|"adjustment";
+
+/**
+ * Small preview drawn before a {@linkcode LayerRow}'s name. Either a solid
+ * `fill` colour taken from the layer's content, or a `node` the app renders
+ * (for example a scaled raster preview). The node is clipped to a 28pt square.
+ *
+ * The preview is never its own screen-reader element. When `label` is set it
+ * joins the row's spoken label; without it the preview is treated as decorative.
+ * @see {@linkcode LayerRow.thumbnail}
+ */
+export type LayerThumbnail=Readonly<{
+ /** Any colour string the host platform accepts, e.g. the layer's fill. */
+ fill:string;
+ /** Spoken description, e.g. "red fill". Omit when the preview is decorative. */
+ label?:string;
+}>|Readonly<{
+ /** App-rendered preview, clipped to the thumbnail square. */
+ node:ReactNode;
+ /** Spoken description, e.g. "photo of a skyline". Omit when the preview is decorative. */
+ label?:string;
+}>;
 
 /**
  * One row in a {@linkcode LayerStack}. Index 0 of the `layers` array is the
@@ -28,10 +53,20 @@ export type LayerRow=Readonly<{
  locked?:boolean;
  /** What the layer contains. */
  kind:LayerKind;
+ /**
+  * Text shown under the name and spoken as "<kindLabel> layer", replacing the
+  * built-in {@linkcode layerKindLabel} for `kind`, e.g. "Rectangle" for a
+  * vector layer. Must contain a non-space character when set.
+  */
+ kindLabel?:string;
+ /** Optional preview before the name; the row keeps its height. */
+ thumbnail?:LayerThumbnail;
 }>;
 
 /** Minimum touch target edge for every interactive part of a row, in points. */
 export const LAYER_TOUCH_TARGET=44;
+/** Edge of a {@linkcode LayerThumbnail} square, in points. Fits inside the 44pt row. */
+export const LAYER_THUMBNAIL_SIZE=28;
 /** Opacity change applied by one screen-reader increment or decrement. */
 export const LAYER_OPACITY_STEP=0.05;
 /** Upper bound on rows; larger documents need a virtualized list. */
@@ -46,10 +81,16 @@ export function layerKindLabel(kind:LayerKind):string{
  return KIND_LABELS[kind];
 }
 
+/** Label shown under a row's name: {@linkcode LayerRow.kindLabel} when set, else the kind's built-in label. */
+export function layerDetail(layer:Pick<LayerRow,"kind"|"kindLabel">):string{
+ return layer.kindLabel?.trim()||layerKindLabel(layer.kind);
+}
+
 /**
  * Throws a RangeError when the controlled `layers` prop cannot be rendered
- * honestly: duplicate or empty ids, blank names, unknown kinds, or opacity
- * outside 0..1.
+ * honestly: duplicate or empty ids, blank names, unknown kinds, opacity
+ * outside 0..1, a blank `kindLabel`, or a thumbnail with neither a non-blank
+ * `fill` nor a `node`, or with a blank `label`.
  */
 export function validateLayers(layers:readonly LayerRow[]):void{
  if(layers.length>LAYER_STACK_MAX_ROWS)throw new RangeError("Layer stack exceeds "+LAYER_STACK_MAX_ROWS+" rows");
@@ -61,7 +102,18 @@ export function validateLayers(layers:readonly LayerRow[]):void{
   if(!Number.isFinite(layer.opacity)||layer.opacity<0||layer.opacity>1)
    throw new RangeError("Layer opacity must be within 0..1: "+layer.id);
   if(!Object.hasOwn(KIND_LABELS,layer.kind))throw new RangeError("Unknown layer kind: "+String(layer.kind));
+  if(layer.kindLabel!==undefined&&!layer.kindLabel.trim())throw new RangeError("Layer kindLabel is blank: "+layer.id);
+  validateThumbnail(layer);
  }
+}
+
+function validateThumbnail(layer:LayerRow):void{
+ const thumb=layer.thumbnail;
+ if(thumb===undefined)return;
+ const hasFill="fill" in thumb&&typeof thumb.fill==="string"&&thumb.fill.trim()!=="";
+ const hasNode="node" in thumb&&thumb.node!==undefined&&thumb.node!==null&&thumb.node!==false;
+ if(hasFill===hasNode)throw new RangeError("Layer thumbnail needs exactly one of a fill colour or a node: "+layer.id);
+ if(thumb.label!==undefined&&!thumb.label.trim())throw new RangeError("Layer thumbnail label is blank: "+layer.id);
 }
 
 /** Clamp to 0..1 and round to whole percent so previews and commits agree. */
@@ -116,6 +168,18 @@ export function moveLayer<T extends Pick<LayerRow,"id">>(layers:readonly T[],id:
 }
 
 /**
+ * Returns a new array without layer `id`. Apps can use it to apply an
+ * `onRemove` callback to their own state; keep the removed row and its index
+ * in the undo record so the host can restore it.
+ * @throws RangeError when the id is unknown.
+ */
+export function removeLayer<T extends Pick<LayerRow,"id">>(layers:readonly T[],id:string):T[]{
+ const from=layers.findIndex(l=>l.id===id);
+ if(from<0)throw new RangeError("Unknown layer: "+id);
+ return layers.filter((_,i)=>i!==from);
+}
+
+/**
  * Trimmed name to commit, or `undefined` when the draft is blank or unchanged
  * and the rename should be dropped.
  */
@@ -124,9 +188,12 @@ export function resolveRename(current:string,draft:string):string|undefined{
  return next&&next!==current?next:undefined;
 }
 
-/** Screen-reader label for a row's main element. */
+/**
+ * Screen-reader label for a row's main element. The thumbnail's `label`, when
+ * set, follows the kind so the preview is described once, on the row.
+ */
 export function layerAccessibilityLabel(layer:LayerRow,index:number,count:number):string{
- return [layer.name,layerKindLabel(layer.kind)+" layer",(index+1)+" of "+count,
+ return [layer.name,layerDetail(layer)+" layer",layer.thumbnail?.label?.trim(),(index+1)+" of "+count,
   layer.visible?"visible":"hidden",formatOpacity(layer.opacity)+" opacity",
   layer.locked?"locked":undefined].filter(Boolean).join(", ");
 }
