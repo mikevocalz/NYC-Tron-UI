@@ -1,0 +1,33 @@
+name: WinUI 3 native host compile
+
+on:
+  pull_request:
+    paths:
+      - "packages/windows-fluent/**"
+      - ".github/workflows/winui-native.yml"
+  push:
+    branches:
+      - "feat/winui3-native-host-navigation-20261105"
+    paths:
+      - "packages/windows-fluent/**"
+      - ".github/workflows/winui-native.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  winui-native:
+    name: Windows App SDK 1.8 WinUI 3 XAML compile
+    runs-on: windows-2025
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Restore WinUI library
+        run: dotnet restore packages/windows-fluent/windows/NYCTron.Fluent.WinUI3/NYCTron.Fluent.WinUI3.csproj -p:Platform=x64
+      - name: Compile native WinUI XAML library
+        run: dotnet build packages/windows-fluent/windows/NYCTron.Fluent.WinUI3/NYCTron.Fluent.WinUI3.csproj --no-restore --configuration Release -p:Platform=x64
+      # This compiles real WinUI XAML, not RNW Fabric integration.
+      # Do not infer Narrator, live RNW app, or physical device success.
