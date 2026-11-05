@@ -73,6 +73,9 @@ struct TronNavigationViewComponentView
     auto item = winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem{};
     item.Tag(winrt::box_value(id));
     item.Content(winrt::box_value(label));
+    // Route approval belongs to JS. A rejected/async request must not move
+    // the native selection indicator away from the committed route.
+    item.SelectsOnInvoked(false);
     item.IsEnabled(!data.GetNamedBoolean(L"disabled", false));
     const auto glyph = data.GetNamedString(L"glyph", L"");
     if (!glyph.empty()) {
@@ -125,15 +128,23 @@ struct TronNavigationViewComponentView
   void ApplyProps(Codegen::TronNavigationViewProps const& props) noexcept {
     try {
       m_updatingFromJs = true;
-      auto menu = winrt::Windows::Data::Json::JsonArray::Parse(
-          winrt::to_hstring(props.itemsJson));
-      auto footer = winrt::Windows::Data::Json::JsonArray::Parse(
-          winrt::to_hstring(props.footerItemsJson.value_or("[]")));
-      m_navigation.MenuItems().Clear();
-      m_navigation.FooterMenuItems().Clear();
-      std::unordered_set<std::wstring> seen;
-      AppendItems(menu, m_navigation.MenuItems(), seen);
-      AppendItems(footer, m_navigation.FooterMenuItems(), seen);
+      const auto footerJson = props.footerItemsJson.value_or("[]");
+      // Preserve native item identity and keyboard focus for route, pane,
+      // title and layout updates. Rebuild only when destinations change.
+      if (!m_itemsInitialized || props.itemsJson != m_itemsJson || footerJson != m_footerItemsJson) {
+        auto menu = winrt::Windows::Data::Json::JsonArray::Parse(
+            winrt::to_hstring(props.itemsJson));
+        auto footer = winrt::Windows::Data::Json::JsonArray::Parse(
+            winrt::to_hstring(footerJson));
+        m_navigation.MenuItems().Clear();
+        m_navigation.FooterMenuItems().Clear();
+        std::unordered_set<std::wstring> seen;
+        AppendItems(menu, m_navigation.MenuItems(), seen);
+        AppendItems(footer, m_navigation.FooterMenuItems(), seen);
+        m_itemsJson = props.itemsJson;
+        m_footerItemsJson = footerJson;
+        m_itemsInitialized = true;
+      }
       const auto mode = props.paneMode.value_or("auto");
       using Mode = winrt::Microsoft::UI::Xaml::Controls::NavigationViewPaneDisplayMode;
       m_navigation.PaneDisplayMode(
@@ -142,6 +153,9 @@ struct TronNavigationViewComponentView
           mode == "minimal" ? Mode::LeftMinimal : Mode::Auto);
       m_navigation.PaneTitle(winrt::to_hstring(props.paneTitle.value_or("")));
       m_navigation.IsSettingsVisible(props.settingsVisible.value_or(false));
+      if (auto settings = m_navigation.SettingsItem().try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
+        settings.SelectsOnInvoked(false);
+      }
       m_selectedId = props.selectedId.value_or("");
       SetSelectedId(winrt::to_hstring(m_selectedId));
       m_navigation.IsPaneOpen(props.paneOpen.value_or(false));
@@ -191,6 +205,9 @@ struct TronNavigationViewComponentView
   winrt::event_token m_paneOpened{};
   winrt::event_token m_paneClosed{};
   std::string m_selectedId;
+  std::string m_itemsJson;
+  std::string m_footerItemsJson;
+  bool m_itemsInitialized{false};
   bool m_updatingFromJs{false};
 };
 
