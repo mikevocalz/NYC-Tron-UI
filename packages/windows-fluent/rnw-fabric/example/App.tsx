@@ -19,12 +19,14 @@ export function App(){
    onSelectionRequested={state.requestRoute}
    onPaneOpenRequested={state.setPaneOpen}
    onSettingsRequested={state.openSettings}
+   onNativeError={state.reportNativeError}
    style={{alignSelf:"stretch"}}
   />
   <View style={{flex:1,padding:24,gap:16}}>
    <Text accessibilityRole="header">Windows navigation acceptance</Text>
    <Text selectable accessibilityLiveRegion="polite">{state.status}</Text>
    <Text selectable>Committed route: {state.selectedId}</Text>
+   {state.nativeError!==null&&<Text selectable accessibilityLiveRegion="assertive">{state.nativeError}</Text>}
    <Text selectable>Choose Workspace, then accept or reject the request. Native selection should follow only the committed route.</Text>
    <Button title="Accept navigation" disabled={state.pendingId===null} onPress={state.acceptRoute}/>
    <Button title="Reject navigation" disabled={state.pendingId===null} onPress={state.rejectRoute}/>

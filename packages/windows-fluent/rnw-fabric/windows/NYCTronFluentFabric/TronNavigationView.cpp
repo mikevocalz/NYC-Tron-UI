@@ -294,6 +294,10 @@ void RegisterTronNavigationViewComponent(
       winrt::NYCTronFluentFabric::TronNavigationViewComponentView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder& builder) {
+        // Without this flag ReactNativeHost never creates RNW's XamlApplication
+        // (WindowsXamlManager plus XamlControlsResources), so the XamlIsland
+        // has no XAML framework behind it and the pane stays empty.
+        builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
         builder.SetContentIslandComponentViewInitializer(
             [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) noexcept {
               auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronNavigationViewComponentView>();

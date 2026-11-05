@@ -78,3 +78,6 @@ test("RTL layout follows I18nManager through the isRTL prop",()=>{
  assert.match(read("src/TronNavigationView.windows.tsx"),/isRTL=\{I18nManager\.isRTL\}/);
  assert.match(read("windows/NYCTronFluentFabric/TronNavigationView.cpp"),/FlowDirection::RightToLeft/);
 });
+test("registration asks RNW to create its XamlApplication for the island",()=>{
+ assert.match(read("windows/NYCTronFluentFabric/TronNavigationView.cpp"),/IReactViewComponentBuilder>\(\)\.XamlSupport\(true\)/);
+});
