@@ -2,15 +2,17 @@ import {AppRegistry,ScrollView,Text,View} from "react-native";
 import {create} from "zustand";
 import {PrecisionScrubber} from "../../src/components/forge/inputs/PrecisionScrubber.tsx";
 import {DragGrabHandle} from "../../src/components/DragGrabHandle.tsx";
+import {NativeSeekBar} from "../../src/components/forge/NativeSeekBar.tsx";
+import {FRAME_RATES} from "../../src/components/forge/timebase.ts";
 import {InkFixture} from "./ink-fixture.tsx";
 
 type Row={id:string;name:string};
 type Demo={
   opacity:number;preview:number;commits:number;
-  rows:Row[];dragging:string|undefined;dragY:number;handleCommits:number;handleCancels:number;
+  frame:number;rows:Row[];dragging:string|undefined;dragY:number;handleCommits:number;handleCancels:number;
 };
 const useDemo=create<Demo>(()=>({
-  opacity:40,preview:40,commits:0,
+  opacity:40,preview:40,commits:0,frame:120,
   rows:[{id:"a",name:"Background"},{id:"b",name:"Portrait"},{id:"c",name:"Title"}],
   dragging:undefined,dragY:0,handleCommits:0,handleCancels:0,
 }));
@@ -42,6 +44,12 @@ function Layers(){
   </View>;
 }
 
+function Seek(){
+  const frame=useDemo(s=>s.frame);
+  return <NativeSeekBar testID="seek" frame={frame} durationFrames={240} frameRate={FRAME_RATES.FILM_24}
+    onSeek={next=>useDemo.setState({frame:next})}/>;
+}
+
 function Fixture(){
   const opacity=useDemo(s=>s.opacity);
   const preview=useDemo(s=>s.preview);
@@ -49,6 +57,7 @@ function Fixture(){
   const rows=useDemo(s=>s.rows);
   const handleCommits=useDemo(s=>s.handleCommits);
   const handleCancels=useDemo(s=>s.handleCancels);
+  const frame=useDemo(s=>s.frame);
   return <ScrollView contentContainerStyle={{padding:16,gap:24,maxWidth:560,width:"100%",alignSelf:"center"}}>
     <View {...{className:"rounded-card border border-border bg-surface-raised"}} style={{padding:16,gap:16}}>
       <PrecisionScrubber label="Layer opacity" value={opacity} min={0} max={100} step={1} unit="%"
@@ -59,11 +68,13 @@ function Fixture(){
         disabled forcedColors={forcedColors} onCommit={()=>{}}/>
     </View>
     <Layers/>
+    <Seek/>
     <View style={{gap:4}}>
       <Text testID="value" {...{className:"text-text-muted"}}>{"value "+opacity}</Text>
       <Text testID="preview" {...{className:"text-text-muted"}}>{"preview "+preview}</Text>
       <Text testID="commits" {...{className:"text-text-muted"}}>{"commits "+commits}</Text>
       <Text testID="order" {...{className:"text-text-muted"}}>{"order "+rows.map(r=>r.id).join("")}</Text>
+      <Text testID="frame" {...{className:"text-text-muted"}}>{"frame "+frame}</Text>
       <Text testID="handle" {...{className:"text-text-muted"}}>{"handle "+handleCommits+"/"+handleCancels}</Text>
     </View>
   </ScrollView>;
