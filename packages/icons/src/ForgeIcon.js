@@ -60,13 +60,13 @@ export function ForgeIcon({
      duration:iconMotion.loadingMs,easing:Easing.linear,useNativeDriver:true}));
    motion.start();return()=>{motion.stop();rotation.setValue(0);};
  },[rotation,loading,reducedMotion,disabled]);
- if(!getGlyph(name,"outline"))return null;
  const rive=typeof renderRive==="function"?renderRive({
    name,selected,disabled,loading,pressed,hovered,status,
    color:view.color,size:view.size,reducedMotion,artboard:"ForgeIcon",
    stateMachine:"ForgeIconStates"
  }):null;
  if(rive!==null&&rive!==undefined)return rive;
+ if(!getGlyph(name,"outline"))return null;
  const invisible=progress.interpolate({inputRange:[0,1],outputRange:[1,0]});
  const spin=rotation.interpolate({inputRange:[0,1],outputRange:["0deg","360deg"]});
  const box={position:"absolute",left:0,top:0,width:view.size,height:view.size};
@@ -89,7 +89,7 @@ export function ForgeIconButton({name,label,onPress,selected=false,disabled=fals
  return React.createElement(Pressable,{
    testID,disabled:disabled||loading,onPress,
    accessibilityRole:"button",accessibilityLabel:label,
-   accessibilityState:{selected,disabled,busy:loading},hitSlop:4,
+   accessibilityState:{selected,disabled:disabled||loading,busy:loading},hitSlop:4,
    style:{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center"}
  },({pressed})=>React.createElement(ForgeIcon,{
    ...rest,name,selected,disabled,loading,size,pressed
