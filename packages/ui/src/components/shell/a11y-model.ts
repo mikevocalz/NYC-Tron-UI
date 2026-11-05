@@ -1,5 +1,3 @@
-import {createStore,type StoreApi} from "zustand/vanilla";
-
 /** How the person last moved focus: by keyboard or by pointer (mouse, touch, pen). */
 export type InputModality="keyboard"|"pointer"|"unknown";
 /** Live-region urgency. `assertive` interrupts; keep it for errors. */
@@ -29,14 +27,23 @@ export interface A11yState extends A11yPreferences {
   readonly announcement:Announcement|undefined;
 }
 
-/** A store with every preference off until the platform reports otherwise. */
-export function createA11yStore(initial:Partial<A11yPreferences>={}):StoreApi<A11yState>{
-  return createStore<A11yState>(()=>({reduceMotion:false,screenReader:false,highContrast:false,inputModality:"unknown",
-    announcement:undefined,...initial}));
+/** Every preference off until the platform reports otherwise. */
+export function initialA11yState(initial:Partial<A11yPreferences>={}):A11yState{
+  return {reduceMotion:false,screenReader:false,highContrast:false,inputModality:"unknown",announcement:undefined,...initial};
+}
+
+/**
+ * The store contract the layer writes announcements through. A zustand
+ * vanilla store satisfies it; this file has no runtime imports so the
+ * contract tests run without an install.
+ */
+export interface A11yStore {
+  getState():A11yState;
+  setState(patch:Partial<A11yState>):void;
 }
 
 /** Queue `text` for screen readers. Empty text is ignored. */
-export function queueAnnouncement(store:StoreApi<A11yState>,text:string,politeness:Politeness="polite"):void{
+export function queueAnnouncement(store:A11yStore,text:string,politeness:Politeness="polite"):void{
   const trimmed=text.trim();
   if(!trimmed)return;
   const seq=(store.getState().announcement?.seq??0)+1;

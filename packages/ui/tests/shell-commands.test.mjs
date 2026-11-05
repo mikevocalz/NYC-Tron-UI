@@ -6,7 +6,7 @@ import {fileURLToPath} from "node:url";
 import {validateRibbon,ribbonTabLabel,inlineGalleryItems} from "../src/components/shell/ribbon-model.ts";
 import {validatePresets,filterPresets,galleryColumns,gridFocusTarget} from "../src/components/shell/preset-model.ts";
 import {bindingFromChord,normalizeBinding,isAssignableBinding,findConflict,bindingKeycaps,bindingSpoken,commandForChord} from "../src/components/shell/shortcut-model.ts";
-import {createA11yStore,queueAnnouncement,motionDuration,modalityAfterKey} from "../src/components/shell/a11y-model.ts";
+import {initialA11yState,queueAnnouncement,motionDuration,modalityAfterKey} from "../src/components/shell/a11y-model.ts";
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),"..");
 
@@ -78,7 +78,8 @@ test("keycaps and spoken names follow the platform",()=>{
 });
 
 test("the a11y store queues repeat announcements and zeroes motion when reduced",()=>{
-  const store=createA11yStore();
+  let state=initialA11yState();
+  const store={getState:()=>state,setState:patch=>{state={...state,...patch};}};
   queueAnnouncement(store,"Saved");
   queueAnnouncement(store,"Saved");
   assert.deepEqual(store.getState().announcement,{text:"Saved",politeness:"polite",seq:2});

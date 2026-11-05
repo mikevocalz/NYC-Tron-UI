@@ -1,8 +1,8 @@
 import {createContext,use,useEffect,useMemo,useRef,type ReactNode} from "react";
 import {AccessibilityInfo,Platform,Text,View} from "react-native";
-import type {StoreApi} from "zustand/vanilla";
+import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {createA11yStore,modalityAfterKey,queueAnnouncement,type A11yPreferences,type A11yState,type Politeness} from "./a11y-model.ts";
+import {initialA11yState,modalityAfterKey,queueAnnouncement,type A11yPreferences,type A11yState,type Politeness} from "./a11y-model.ts";
 
 export type {A11yPreferences,InputModality,Politeness} from "./a11y-model.ts";
 export {motionDuration} from "./a11y-model.ts";
@@ -39,7 +39,7 @@ type WebDocument={documentElement:{dataset:Record<string,string|undefined>};addE
  */
 export function FocusAndA11yLayer({children,initial}:FocusAndA11yLayerProps){
   const ref=useRef<StoreApi<A11yState>|null>(null);
-  if(!ref.current)ref.current=createA11yStore(initial);
+  if(!ref.current)ref.current=createStore<A11yState>(()=>initialA11yState(initial));
   const store=ref.current;
   const announcement=useStore(store,s=>s.announcement);
 
