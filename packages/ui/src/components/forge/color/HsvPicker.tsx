@@ -122,7 +122,8 @@ export function HsvPicker({
     const input=host?.querySelector?.('input[type="range"]');
     input?.setAttribute("aria-label","Hue");
     input?.setAttribute("aria-valuetext",hue+" degrees");
-  },[hue]);
+    // `disabled` can remount the input, which drops the attributes.
+  },[hue,disabled]);
   const web=Platform.OS==="web";
   const sat=Math.round(value.s*100);
   const bri=Math.round(value.v*100);

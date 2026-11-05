@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useEffect,useRef} from "react";
 import {I18nManager,PanResponder,Pressable,ScrollView,Text,TextInput,View,type PressableProps,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -95,6 +95,11 @@ export function LayerStack({
  const thumbnailSlot=layers.some(l=>l.thumbnail!==undefined);
  // The stack measures itself, not the window: a docked panel is narrow on any screen.
  const mode=opacityControl==="auto"?layerOpacityMode(width,{thumbnail:thumbnailSlot,removable:onRemove!==undefined}):opacityControl;
+ // A widened stack or a removed layer drops an open readout popover, so it never reopens by itself later.
+ useEffect(()=>{
+  const editing=store.getState().editing;
+  if(editing!==null&&(mode!=="readout"||!layers.some(l=>l.id===editing)))store.setState({editing:null,opacity:null});
+ },[mode,layers,store]);
  return <View {...rest} accessibilityLabel={label}
   onLayout={e=>{store.setState({width:e.nativeEvent.layout.width});onLayout?.(e);}}
    {...{className:joinClasses("min-w-0 overflow-hidden",styled&&"rounded-control bg-surface-sunken",className)}}>
