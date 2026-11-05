@@ -14,7 +14,9 @@ const bundleOf=entry=>build({entryPoints:[resolve(here,entry)],bundle:true,write
     react:resolve(here,"node_modules/react"),"react-dom":resolve(here,"node_modules/react-dom"),
     zustand:resolve(here,"node_modules/zustand"),
     // Uniwind's web ScopedTheme, reproduced (see uniwind-shim.tsx).
-    uniwind:resolve(here,"uniwind-shim.tsx")},
+    uniwind:resolve(here,"uniwind-shim.tsx"),
+    // NativeSeekBar renders @expo/ui's universal web build (plain RN Views).
+    "@expo/ui":resolve(here,"node_modules/@expo/ui/build/universal/index.js")},
   nodePaths:[resolve(here,"node_modules")],
   define:{"process.env.NODE_ENV":'"development"'}});
 const [bundle,primitives]=await Promise.all([bundleOf("fixture.tsx"),bundleOf("primitives.tsx")]);

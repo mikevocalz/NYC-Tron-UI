@@ -81,3 +81,287 @@ export function resolveUsableRegions(input:UsableRegionsInput):UsableRect[] {
   }
   return regions.filter(positive).sort((a,b)=>a.y-b.y || a.x-b.x);
 }
+
+// ---------------------------------------------------------------------------
+// Reserved regions: the shape @nyc-tron/reserved-regions reports.
+//
+// Window-relative, in React Native layout units (points on iOS, dp on Android,
+// CSS px on web). iOS 27.1 contributes UIKit reserved regions (division and
+// occlusion). Android contributes Jetpack WindowManager FoldingFeatures as
+// "division" regions plus the posture metadata WindowManager exposes.
+// WindowManager has no continuous hinge angle; nothing here infers one.
+// Ported from NYC-MON packages/ui/reserved-regions.types.ts.
+// ---------------------------------------------------------------------------
+export type FoldOrientation = "vertical" | "horizontal";
+export type FoldState = "flat" | "halfOpened";
+export type FoldOcclusionType = "none" | "full";
+
+export interface ReservedRegion {
+  kind: "division" | "occlusion";
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  margins: { top: number; left: number; bottom: number; right: number };
+  active: boolean;
+  /** Android FoldingFeature orientation. Absent on UIKit regions. */
+  orientation?: FoldOrientation;
+  /** Android FoldingFeature state. Absent on UIKit regions. */
+  state?: FoldState;
+  /** Android FoldingFeature occlusion mode. Absent on UIKit regions. */
+  occlusionType?: FoldOcclusionType;
+  /**
+   * Whether the feature makes two logical display areas: true for a physical
+   * dual-screen hinge even while FLAT, and for HALF_OPENED folds.
+   */
+  separating?: boolean;
+}
+
+export type FoldPosture = "flat" | "book" | "tabletop";
+
+/** One division region, normalized and in a pane row's local x. */
+export interface FoldLayout {
+  orientation: FoldOrientation;
+  state: FoldState;
+  posture: FoldPosture;
+  occlusionType?: FoldOcclusionType | undefined;
+  separating: boolean;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+const regionOrientation = (r: ReservedRegion): FoldOrientation =>
+  r.orientation ?? (r.height >= r.width ? "vertical" : "horizontal");
+
+// UIKit division regions carry no `separating`; their `active` flag is the
+// equivalent signal, so an inactive zero-width Duo division never rearranges
+// panes. FULL occlusion always separates, whatever a vendor's isSeparating says.
+const regionSeparates = (r: ReservedRegion) =>
+  (r.separating ?? r.active) || r.occlusionType === "full";
+
+/**
+ * Division regions as fold layouts, x relative to a row that starts at
+ * `windowOriginX` in the window. Negative local x is kept: a fold wholly left
+ * of a nested row must not become a phantom hinge on its leading edge.
+ * UIKit regions lack orientation and state, so orientation is inferred from
+ * the rect and state defaults to flat. Android metadata wins when present.
+ */
+export function foldLayoutsFromRegions(
+  regions: readonly ReservedRegion[],
+  windowOriginX = 0,
+): FoldLayout[] {
+  return regions
+    .filter(r => r.kind === "division")
+    .map((r): FoldLayout => {
+      const orientation = regionOrientation(r);
+      const state: FoldState = r.state ?? "flat";
+      return {
+        orientation, state,
+        posture: state === "halfOpened" ? (orientation === "horizontal" ? "tabletop" : "book") : "flat",
+        occlusionType: r.occlusionType,
+        separating: regionSeparates(r),
+        x: r.x - windowOriginX,
+        y: r.y,
+        width: Math.max(0, r.width),
+        height: Math.max(0, r.height),
+      };
+    })
+    .sort((a, b) => a.orientation === b.orientation
+      ? (a.orientation === "vertical" ? a.x - b.x : a.y - b.y)
+      : (a.orientation === "vertical" ? -1 : 1));
+}
+
+/** The first fold only, for layouts that can place a single boundary. */
+export function foldLayoutFromRegions(
+  regions: readonly ReservedRegion[],
+  windowOriginX = 0,
+): FoldLayout | null {
+  return foldLayoutsFromRegions(regions, windowOriginX)[0] ?? null;
+}
+
+/**
+ * Reserved regions as the FoldFeature list resolveUsableRegions and
+ * resolvePanePlan take. Division regions only by default. Camera occlusion
+ * regions (iOS `occlusion` kind) are opt-in: subtracting a camera housing
+ * from the container fragments it, and the app's safe-area insets usually
+ * cover that space already.
+ */
+export function foldFeaturesFromRegions(
+  regions: readonly ReservedRegion[],
+  options: { includeOcclusions?: boolean } = {},
+): FoldFeature[] {
+  const out: FoldFeature[] = [];
+  for (const r of regions) {
+    const bounds = { x: r.x, y: r.y, width: Math.max(0, r.width), height: Math.max(0, r.height) };
+    if (r.kind === "division") {
+      out.push({ bounds, orientation: regionOrientation(r), separating: regionSeparates(r),
+        occlusion: r.occlusionType ?? "none" });
+    } else if (options.includeOcclusions && r.active) {
+      out.push({ bounds, orientation: regionOrientation(r), separating: false, occlusion: "full" });
+    }
+  }
+  return out;
+}
+
+/**
+ * Device posture from the separating folds: a half-opened horizontal fold is
+ * tabletop, a half-opened vertical one is book, anything else is flat.
+ */
+export function foldPostureFromRegions(regions: readonly ReservedRegion[]): FoldPosture {
+  const folded = foldLayoutsFromRegions(regions).find(f => f.separating && f.state === "halfOpened");
+  return folded?.posture ?? "flat";
+}
+
+/** Folds that touch a row of `rowWidth`; zero-width creases count when inside it. */
+export function foldLayoutsIntersectingRow(
+  folds: readonly FoldLayout[],
+  rowWidth: number | null,
+): FoldLayout[] {
+  if (rowWidth === null) return [];
+  return folds.filter(fold => {
+    const end = fold.x + Math.max(0, fold.width);
+    return fold.x < rowWidth && (fold.width === 0 ? fold.x > 0 : end > 0);
+  });
+}
+
+export interface VerticalFoldPanePlan {
+  splitAfter: "primary" | "supplementary";
+  primaryWidth: number;
+  supplementaryWidth: number;
+  gapWidth: number;
+}
+export interface VerticalFoldPanePlanInput {
+  fold: FoldLayout | null;
+  rowWidth: number | null;
+  primaryVisible: boolean;
+  supplementaryVisible: boolean;
+  detailVisible: boolean;
+  primaryWidth: number;
+  supplementaryWidth: number;
+  detailMinWidth: number;
+  paneMinWidth: number;
+}
+
+/**
+ * Snap a primary / supplementary / detail row to one separating vertical fold.
+ * First choice keeps primary and supplementary on the leading region with
+ * detail on the trailing one. Second choice puts primary alone on the leading
+ * region and fits supplementary and detail on the trailing one. Returns null
+ * when neither fits, so the caller keeps its width-class layout instead of
+ * hiding a pane.
+ */
+export function resolveVerticalFoldPanePlan(input: VerticalFoldPanePlanInput): VerticalFoldPanePlan | null {
+  const { fold, rowWidth, primaryVisible, supplementaryVisible, detailVisible,
+    primaryWidth, supplementaryWidth, detailMinWidth, paneMinWidth } = input;
+  if (!fold || !fold.separating || fold.orientation !== "vertical" || rowWidth === null || !detailVisible) return null;
+  const gapWidth = Math.min(fold.width, Math.max(0, rowWidth - fold.x));
+  const leadingWidth = Math.min(Math.max(0, fold.x), rowWidth);
+  const trailingWidth = Math.max(0, rowWidth - leadingWidth - gapWidth);
+  if (leadingWidth < paneMinWidth || trailingWidth < detailMinWidth) return null;
+
+  if (supplementaryVisible) {
+    const primaryOnLeading = primaryVisible ? primaryWidth : 0;
+    const supplementaryOnLeading = leadingWidth - primaryOnLeading;
+    if (supplementaryOnLeading >= paneMinWidth && (!primaryVisible || primaryOnLeading >= paneMinWidth)) {
+      return { splitAfter: "supplementary", primaryWidth, supplementaryWidth: supplementaryOnLeading, gapWidth };
+    }
+    if (primaryVisible && trailingWidth >= paneMinWidth + detailMinWidth) {
+      return {
+        splitAfter: "primary", primaryWidth: leadingWidth,
+        supplementaryWidth: Math.max(paneMinWidth, Math.min(supplementaryWidth, trailingWidth - detailMinWidth)),
+        gapWidth,
+      };
+    }
+    return null;
+  }
+  return primaryVisible ? { splitAfter: "primary", primaryWidth: leadingWidth, supplementaryWidth, gapWidth } : null;
+}
+
+export interface VerticalMultiFoldPanePlan {
+  primaryWidth: number;
+  supplementaryWidth: number;
+  gapAfterPrimary: number;
+  gapAfterSupplementary: number;
+}
+export interface VerticalMultiFoldPanePlanInput extends Omit<VerticalFoldPanePlanInput, "fold"> {
+  folds: readonly FoldLayout[];
+}
+
+/**
+ * Trifold planner: with three visible panes and at least two separating
+ * vertical folds inside the row, pick the fold pair that puts one pane in each
+ * physical region, closest to the authored primary and supplementary widths.
+ * Two-pane rows use resolveVerticalFoldPanePlan.
+ */
+export function resolveVerticalMultiFoldPanePlan(input: VerticalMultiFoldPanePlanInput): VerticalMultiFoldPanePlan | null {
+  const { folds, rowWidth, primaryVisible, supplementaryVisible, detailVisible,
+    primaryWidth, supplementaryWidth, detailMinWidth, paneMinWidth } = input;
+  if (rowWidth === null || !primaryVisible || !supplementaryVisible || !detailVisible) return null;
+  const vertical = folds
+    .filter(f => f.separating && f.orientation === "vertical" && f.x > 0 && f.x < rowWidth)
+    .sort((a, b) => a.x - b.x);
+  if (vertical.length < 2) return null;
+
+  let best: (VerticalMultiFoldPanePlan & { score: number }) | null = null;
+  for (let i = 0; i < vertical.length - 1; i += 1) {
+    for (let j = i + 1; j < vertical.length; j += 1) {
+      const first = vertical[i]!, second = vertical[j]!;
+      const firstStart = Math.max(0, Math.min(rowWidth, first.x));
+      const firstEnd = Math.max(firstStart, Math.min(rowWidth, first.x + first.width));
+      const secondStart = Math.max(firstEnd, Math.min(rowWidth, second.x));
+      const secondEnd = Math.max(secondStart, Math.min(rowWidth, second.x + second.width));
+      const a = firstStart, b = secondStart - firstEnd, c = rowWidth - secondEnd;
+      if (a < paneMinWidth || b < paneMinWidth || c < detailMinWidth) continue;
+      const score = Math.abs(a - primaryWidth) + Math.abs(b - supplementaryWidth);
+      if (!best || score < best.score) {
+        best = { primaryWidth: a, supplementaryWidth: b,
+          gapAfterPrimary: firstEnd - firstStart, gapAfterSupplementary: secondEnd - secondStart, score };
+      }
+    }
+  }
+  if (!best) return null;
+  const { score: _score, ...plan } = best;
+  return plan;
+}
+
+export interface TrailingInspectorLayout {
+  width: number;
+  edge: "left" | "right";
+  /** Translation that parks the inspector fully beyond its trailing edge. */
+  closedX: number;
+}
+export interface TrailingInspectorLayoutInput {
+  folds: readonly FoldLayout[];
+  rowWidth: number | null;
+  preferredWidth: number;
+  isRTL: boolean;
+}
+
+/**
+ * Width and edge for an inspector that overlays from the logical trailing
+ * edge. On a foldable its width is capped to the physical region on that side,
+ * so it never covers the hinge or spills onto the other display.
+ */
+export function resolveTrailingInspectorLayout(input: TrailingInspectorLayoutInput): TrailingInspectorLayout {
+  const { folds, rowWidth, preferredWidth, isRTL } = input;
+  const edge: "left" | "right" = isRTL ? "left" : "right";
+  let available = rowWidth ?? preferredWidth;
+  if (rowWidth !== null) {
+    const vertical = foldLayoutsIntersectingRow(folds, rowWidth)
+      .filter(f => f.separating && f.orientation === "vertical")
+      .sort((a, b) => a.x - b.x);
+    if (vertical.length > 0) {
+      if (isRTL) available = Math.min(Math.max(0, vertical[0]!.x), rowWidth);
+      else {
+        const last = vertical[vertical.length - 1]!;
+        available = Math.max(0, rowWidth - Math.min(rowWidth, Math.max(0, last.x + last.width)));
+      }
+    }
+  }
+  const width = Math.max(0, Math.min(preferredWidth, available));
+  // 20 units clear the edge shadow instead of leaving a sliver on screen.
+  const travel = width + 20;
+  return { width, edge, closedX: isRTL ? -travel : travel };
+}
