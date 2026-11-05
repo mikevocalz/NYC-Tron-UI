@@ -1,12 +1,16 @@
 import { ActivityIndicator, Text, View, type ViewProps } from "react-native";
 import { Button } from "../../Button.tsx";
 import { joinClasses } from "../../styles.ts";
+import { useStatusAnnouncement } from "../announce.ts";
 import { WaveformLane } from "../WaveformLane.tsx";
 import type { WaveformPeak } from "../waveform.ts";
 import { LevelMeter } from "./LevelMeter.tsx";
 import {
   formatElapsed, presentRecording, spokenElapsed, type RecordingAction, type RecordingViewState,
 } from "./recording-model.ts";
+
+/** Stopping or saving a live take stays available even when `disabled`. */
+const keepsTake = (kind: RecordingAction) => kind === "stop" || kind === "save-interrupted";
 
 /** Props for {@linkcode RecordingTrack}. */
 export interface RecordingTrackProps extends Omit<ViewProps, "children"> {
@@ -32,6 +36,11 @@ export interface RecordingTrackProps extends Omit<ViewProps, "children"> {
   readonly onSeekNormalized?: (position: number) => void;
   /** Playhead in [0, 1] for a saved take. */
   readonly position?: number;
+  /**
+   * Blocks starting, retrying and opening Settings. "Stop and save" and
+   * "Save what was recorded" stay enabled, so a take can never be trapped
+   * recording.
+   */
   readonly disabled?: boolean;
   /** @default 96 */
   readonly columns?: number;
@@ -52,6 +61,7 @@ export function RecordingTrack({
   className, unstyled = false, testID, ...props
 }: RecordingTrackProps) {
   const view = presentRecording(state, onOpenSettings !== undefined);
+  useStatusAnnouncement(view.status);
   const handlers: Record<RecordingAction, (() => void) | undefined> = {
     start: onStart,
     stop: onStop,
@@ -103,7 +113,7 @@ export function RecordingTrack({
     {view.action ? <Button
       title={view.action.label}
       variant={view.action.kind === "stop" ? "danger" : view.isProblem ? "secondary" : "primary"}
-      disabled={disabled || handlers[view.action.kind] === undefined}
+      disabled={(disabled && !keepsTake(view.action.kind)) || handlers[view.action.kind] === undefined}
       onPress={handlers[view.action.kind]}
       {...(testID ? { testID: testID + "-action" } : {})}
     /> : null}

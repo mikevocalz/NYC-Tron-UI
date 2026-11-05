@@ -758,18 +758,33 @@ pure state models:
 - `forge/audio/recording-model`, `forge/audio/preview-model`,
   `forge/audio/level-meter` and `forge/devices/pairing-model` hold the state
   unions and copy. Forge maps its controller phase onto them.
-- Every state has copy and a recovery action: microphone permission denied
+- Every state that needs the user has copy and a recovery action: microphone permission denied
   (Settings when the app passes `onOpenSettings`, otherwise ask again), no
   input device, interrupted take (save what was recorded), recorder error,
   no pairing device found (search again), and each pairing error code
   (`permission-denied`, `radio-off`, `connection-failed`, `unknown`) with retry.
+  The busy states (`requesting-permission`, `preparing`, `stopping`) show
+  progress and no action; the app must move them on or to `error`. Without
+  `onOpenSettings` a permission denial offers only "Ask again", which iOS
+  and Android ("Don't ask again") answer silently, so pass it.
+- `disabled` on `RecordingTrack` never blocks "Stop and save" or "Save what
+  was recorded".
 - `LevelMeter` is a `progressbar` whose value text is a band, not a number.
   With `announce` it speaks band changes at low priority, at most once per
   `announceIntervalMs` (2 s default); clipping is spoken at once. The bar is not
-  a live region. Status lines are polite live regions that change once per phase.
+  a live region. Status lines are polite live regions that change once per
+  phase; VoiceOver ignores live regions, so on iOS each phase change is also
+  announced. react-native-web has no `announceForAccessibilityWithOptions`;
+  the views fall back to the plain call there instead of throwing.
 - Closing a connected `DevicePairingDialog` calls `onDone`, never `onCancel`, so
   dismissing the dialog does not disconnect the device.
 
-Evidence is Node tests of the state models plus mocked-host render tests that
-run the real components. No simulator, device, TalkBack or VoiceOver pass has
-been done for these views.
+Evidence is Node tests of the state models, mocked-host render tests that
+run the real components, and a react-native-web render in Chromium of every
+recording, preview, meter and pairing state at phone and tablet widths in
+light and dark. That render found the web crash above (a recording track
+unmounted the whole screen) and the peak-hold marker vanishing at full
+scale; both are fixed. No simulator, device, TalkBack or VoiceOver pass has
+been done for these views. The dialog scrim is still a fixed
+`rgba(0,0,0,0.5)`: TronTheme has no scrim token yet (DEFER until one is
+added to `@nyc-tron/core/theme`).

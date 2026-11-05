@@ -71,7 +71,7 @@ export function presentPairing(state: PairingState, deviceNoun: string, canOpenS
     case "found":
       return state.devices.length
         ? { body: "Choose your " + deviceNoun + ".", secondary: { kind: "rescan", label: "Search again" }, isBusy: false, isProblem: false, devices: state.devices }
-        : { body: "No " + deviceNoun + " found. Check that it is on, charged and in pairing mode.", primary: { kind: "rescan", label: "Search again" }, isBusy: false, isProblem: true, devices: [] };
+        : { body: "No " + deviceNoun + " found. Check that it is on, charged and in pairing mode.", primary: { kind: "rescan", label: "Search again" }, isBusy: false, isProblem: false, devices: [] };
     case "connecting":
       return { body: "Connecting to " + state.device.name + "…", secondary: { kind: "cancel", label: "Cancel" }, isBusy: true, isProblem: false };
     case "connected":

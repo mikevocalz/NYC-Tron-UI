@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import { AccessibilityInfo, View, type ViewProps } from "react-native";
+import { View, type ViewProps } from "react-native";
+import { announce as speak } from "../announce.ts";
 import { joinClasses } from "../../styles.ts";
 import {
   createMeterAnnouncer, METER_BAND_LABELS, meterBand, meterFill, type MeterBand,
@@ -57,7 +58,7 @@ export function LevelMeter({
   useEffect(() => {
     if (!announce) return;
     const text = announcer.current?.(level, Date.now());
-    if (text) AccessibilityInfo.announceForAccessibilityWithOptions(text, { queue: true, priority: "low" });
+    if (text) speak(text);
   }, [announce, level]);
 
   const vertical = orientation === "vertical";
@@ -82,8 +83,11 @@ export function LevelMeter({
     {hold !== undefined && hold > 0 ? <View
       {...{ className: joinClasses(!unstyled && "bg-text") }}
       style={vertical
-        ? { position: "absolute", left: 0, right: 0, height: 2, bottom: extent(hold) }
-        : { position: "absolute", top: 0, bottom: 0, width: 2, left: extent(hold) }}
+        // Pull the 2 pt marker back by up to its own width so a held peak at
+        // full scale (clipping, the case that matters most) stays inside the
+        // clipped track instead of being drawn past its end.
+        ? { position: "absolute", left: 0, right: 0, height: 2, bottom: extent(hold), marginBottom: -2 * hold }
+        : { position: "absolute", top: 0, bottom: 0, width: 2, left: extent(hold), marginLeft: -2 * hold }}
     /> : null}
   </View>;
 }

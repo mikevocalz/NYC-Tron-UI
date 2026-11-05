@@ -91,7 +91,7 @@ test("pairing dialog covers all six states plus no-device and error recovery", (
   assert.equal(kinds.idle.primary.kind, "scan");
   assert.equal(kinds.scanning.secondary.kind, "cancel");
   assert.deepEqual(kinds.found.devices, [pen]);
-  assert.equal(kinds.none.isProblem, true);
+  assert.equal(kinds.none.isProblem, false, "nothing found is guidance, not an error");
   assert.equal(kinds.none.primary.kind, "rescan");
   assert.match(kinds.none.body, /No pen found/);
   assert.equal(kinds.connecting.secondary.kind, "cancel");

@@ -10,7 +10,7 @@ import ts from "typescript";
 // components into host elements. Proves wiring and a11y props, not native
 // reconciliation, layout or screen-reader output on a device.
 const src = resolve(dirname(fileURLToPath(import.meta.url)), "../../src/components");
-function harness() {
+function harness({ os = "ios", withOptions = true } = {}) {
   const announcements = [];
   let refs = [], cursor = 0;
   const element = (type, props, key) => ({ type, props: props ?? {}, key });
@@ -18,6 +18,7 @@ function harness() {
     react: {
       useRef: value => refs[cursor++] ?? (refs[cursor - 1] = { current: value }),
       useEffect: effect => { effect(); },
+      useState: value => [value, () => {}],
       // Read the real waveform's gesture-store snapshot. This harness tests
       // parent wiring; subscription/reconciliation is covered by browser tests.
       useSyncExternalStore: (_subscribe, getSnapshot) => getSnapshot(),
@@ -26,9 +27,12 @@ function harness() {
     "react-native": {
       View: "View", Text: "Text", Pressable: "Pressable", Modal: "Modal", ScrollView: "ScrollView",
       ActivityIndicator: "ActivityIndicator",
-      Platform: { OS: "ios" },
+      Platform: { OS: os },
       PanResponder: { create: () => ({ panHandlers: {} }) },
-      AccessibilityInfo: { announceForAccessibilityWithOptions: (text, options) => announcements.push({ text, options }) },
+      // react-native-web has only the plain announce; withOptions: false models it.
+      AccessibilityInfo: withOptions
+        ? { announceForAccessibilityWithOptions: (text, options) => announcements.push({ text, options }) }
+        : { announceForAccessibility: text => announcements.push({ text, options: { priority: "low" } }) },
     },
   };
   const cache = new Map();
@@ -74,8 +78,9 @@ test("DevicePairingDialog wires every state to the right callback", () => {
   assert.ok(h.all(tree, n => n.type === "ActivityIndicator").length, "scanning shows progress");
   h.button(tree, "Stop searching").props.onPress();
   tree = at({ kind: "found", devices: [pen] });
-  const row = h.button(tree, "Connect to Stylus");
-  assert.equal(row.props.accessibilityHint, "Model S · Fair signal");
+  const row = h.buttons(tree).find(b => b.props.accessibilityLabel.startsWith("Connect to Stylus"));
+  assert.equal(row.props.accessibilityLabel, "Connect to Stylus, Model S · Fair signal");
+  assert.equal(row.props.accessibilityHint, undefined, "detail is content, not a hint");
   row.props.onPress();
   tree = at({ kind: "found", devices: [] });
   assert.match(h.text(h.all(tree, n => n.props.accessibilityLiveRegion === "polite")[0]), /No pen found/);
@@ -149,4 +154,49 @@ test("AudioPreview maps play, stop and retry and reports position", () => {
   h.button(playing, "Stop").props.onPress();
   h.button(at({ kind: "error", message: "Codec" }), "Try again").props.onPress();
   assert.deepEqual(calls, ["play", "stop", "play"]);
+});
+
+test("LevelMeter announces on react-native-web, which lacks the options variant", () => {
+  const h = harness({ os: "web", withOptions: false });
+  const { LevelMeter } = h.load(resolve(src, "forge/audio/LevelMeter.tsx"));
+  assert.doesNotThrow(() => h.render({ type: LevelMeter, props: { level: 1, announce: true } }));
+  assert.deepEqual(h.announcements.map(a => a.text), ["Input clipping"]);
+});
+
+test("a peak held at full scale stays inside the clipped track", () => {
+  const h = harness();
+  const { LevelMeter } = h.load(resolve(src, "forge/audio/LevelMeter.tsx"));
+  const tree = h.render({ type: LevelMeter, props: { level: 1, peakHold: 1 } });
+  const marker = h.all(tree, n => n.props.style?.width === 2)[0];
+  assert.equal(marker.props.style.left, "100.0%");
+  assert.equal(marker.props.style.marginLeft, -2, "pulled back by its own width");
+});
+
+test("disabled never traps a live take", () => {
+  const h = harness();
+  const { RecordingTrack } = h.load(resolve(src, "forge/audio/RecordingTrack.tsx"));
+  const noop = () => {};
+  const at = state => { h.reset(); return h.render({ type: RecordingTrack, props: { peaks: [], disabled: true, onStart: noop, onStop: noop, state } }); };
+  assert.equal(h.button(at({ kind: "recording", durationMs: 1 }), "Stop and save").props.disabled, false);
+  assert.equal(h.button(at({ kind: "interrupted", durationMs: 1, message: "x" }), "Save what was recorded").props.disabled, false);
+  assert.equal(h.button(at({ kind: "idle" }), "Start recording").props.disabled, true);
+});
+
+test("AudioPreview tolerates a slightly negative playhead", () => {
+  const h = harness();
+  const { AudioPreview } = h.load(resolve(src, "forge/audio/AudioPreview.tsx"));
+  const noop = () => {};
+  assert.doesNotThrow(() => h.render({ type: AudioPreview,
+    props: { onPlay: noop, onStop: noop, state: { kind: "playing", durationMs: 5000, positionMs: -12 } } }));
+});
+
+test("phase changes are announced on iOS only, where live regions are ignored", () => {
+  for (const [os, expected] of [["ios", ["Recording"]], ["android", []], ["web", []]]) {
+    const h = harness({ os });
+    const { RecordingTrack } = h.load(resolve(src, "forge/audio/RecordingTrack.tsx"));
+    const props = { peaks: [], onStart: () => {}, onStop: () => {} };
+    h.render({ type: RecordingTrack, props: { ...props, state: { kind: "idle" } } });
+    h.render({ type: RecordingTrack, props: { ...props, state: { kind: "recording", durationMs: 0 } } });
+    assert.deepEqual(h.announcements.map(a => a.text), expected, os);
+  }
 });

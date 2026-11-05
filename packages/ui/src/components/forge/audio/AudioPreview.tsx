@@ -1,6 +1,7 @@
 import { ActivityIndicator, Text, View, type ViewProps } from "react-native";
 import { Button } from "../../Button.tsx";
 import { joinClasses } from "../../styles.ts";
+import { useStatusAnnouncement } from "../announce.ts";
 import { WaveformLane } from "../WaveformLane.tsx";
 import type { WaveformPeak } from "../waveform.ts";
 import { formatElapsed, spokenElapsed } from "./recording-model.ts";
@@ -34,10 +35,12 @@ export function AudioPreview({
   className, unstyled = false, testID, ...props
 }: AudioPreviewProps) {
   const view = presentPreview(state);
+  useStatusAnnouncement(view.status);
   const handlers: Record<PreviewAction, () => void> = { play: onPlay, stop: onStop, retry: onRetry ?? onPlay };
   const styled = !unstyled;
   const total = state.kind === "ready" || state.kind === "playing" ? state.durationMs : undefined;
-  const at = state.kind === "playing" ? state.positionMs : 0;
+  // Players can report a slightly negative position right after a seek.
+  const at = state.kind === "playing" ? Math.max(0, state.positionMs) : 0;
   return <View
     {...props}
     {...(testID ? { testID } : {})}

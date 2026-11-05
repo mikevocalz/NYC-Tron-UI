@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { ActivityIndicator, Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { Button } from "../../Button.tsx";
 import { joinClasses } from "../../styles.ts";
+import { useStatusAnnouncement } from "../announce.ts";
 import {
   presentPairing, signalLabel, type PairingAction, type PairingDevice, type PairingState,
 } from "./pairing-model.ts";
@@ -16,7 +17,10 @@ export interface DevicePairingDialogProps {
   readonly state: PairingState;
   /** Start (or restart) discovery. */
   readonly onScan: () => void;
-  /** The user picked a found device. */
+  /**
+   * The user picked a device. Rows are tappable while a scan is still
+   * running, so stop discovery before connecting.
+   */
   readonly onSelect: (deviceId: string) => void;
   /**
    * Stop scanning or connecting, or close before a connection exists. The
@@ -51,7 +55,7 @@ function artPhase(state: PairingState): PairingArtPhase {
   switch (state.kind) {
     case "idle": return "idle";
     case "scanning": return "searching";
-    case "found": return state.devices.length ? "idle" : "error";
+    case "found": return "idle";
     case "connecting": return "connecting";
     case "connected": return "connected";
     case "error": return "error";
@@ -65,8 +69,9 @@ function DeviceRow({ device, disabled, onPress, styled }: {
     .filter(Boolean).join(" · ");
   return <Pressable
     accessibilityRole="button"
-    accessibilityLabel={"Connect to " + device.name}
-    {...(secondary ? { accessibilityHint: secondary } : {})}
+    // Detail and signal are content, so they go in the label; hints can be
+    // turned off and are skipped by quick navigation.
+    accessibilityLabel={"Connect to " + device.name + (secondary ? ", " + secondary : "")}
     accessibilityState={{ disabled }}
     disabled={disabled}
     onPress={onPress}
@@ -92,6 +97,7 @@ export function DevicePairingDialog({
 }: DevicePairingDialogProps) {
   const styled = !unstyled;
   const view = presentPairing(state, deviceNoun, onOpenSettings !== undefined);
+  useStatusAnnouncement(view.body);
   const close = state.kind === "connected" ? onDone : onCancel;
   const handlers: Record<PairingAction, (() => void) | undefined> = {
     scan: onScan, rescan: onScan, cancel: onCancel, retry: onRetry, "open-settings": onOpenSettings, done: onDone,
