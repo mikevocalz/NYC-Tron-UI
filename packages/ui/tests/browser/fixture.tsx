@@ -5,16 +5,16 @@ import {DragGrabHandle} from "../../src/components/DragGrabHandle.tsx";
 import {Button} from "../../src/components/Button.tsx";
 import {LayerStack} from "../../src/components/forge/layers/LayerStack.tsx";
 import {moveLayer,removeLayer,type LayerRow} from "../../src/components/forge/layers/layer-model.ts";
-import {NativeSeekBar} from "../../src/components/forge/NativeSeekBar.tsx";
+import {NativeSeekBar} from "../../src/components/forge/NativeSeekBar.web.tsx";
 import {FRAME_RATES} from "../../src/components/forge/timebase.ts";
 
 type Row={id:string;name:string};
 type Demo={
   opacity:number;preview:number;commits:number;
-  frame:number;rows:Row[];dragging:string|undefined;dragY:number;handleCommits:number;handleCancels:number;
+  frame:number;seekPreviews:number;seekCommits:number;rows:Row[];dragging:string|undefined;dragY:number;handleCommits:number;handleCancels:number;
 };
 const useDemo=create<Demo>(()=>({
-  opacity:40,preview:40,commits:0,frame:120,
+  opacity:40,preview:40,commits:0,frame:120,seekPreviews:0,seekCommits:0,
   rows:[{id:"a",name:"Background"},{id:"b",name:"Portrait"},{id:"c",name:"Title"}],
   dragging:undefined,dragY:0,handleCommits:0,handleCancels:0,
 }));
@@ -94,7 +94,8 @@ function Layers(){
 function Seek(){
   const frame=useDemo(s=>s.frame);
   return <NativeSeekBar testID="seek" frame={frame} durationFrames={240} frameRate={FRAME_RATES.FILM_24}
-    onSeek={next=>useDemo.setState({frame:next})}/>;
+    onPreview={()=>useDemo.setState(s=>({seekPreviews:s.seekPreviews+1}))}
+    onCommit={next=>useDemo.setState(s=>({frame:next,seekCommits:s.seekCommits+1}))}/>;
 }
 
 function Fixture(){
@@ -105,6 +106,8 @@ function Fixture(){
   const handleCommits=useDemo(s=>s.handleCommits);
   const handleCancels=useDemo(s=>s.handleCancels);
   const frame=useDemo(s=>s.frame);
+  const seekPreviews=useDemo(s=>s.seekPreviews);
+  const seekCommits=useDemo(s=>s.seekCommits);
   return <ScrollView contentContainerStyle={{padding:16,gap:24,maxWidth:560,width:"100%",alignSelf:"center"}}>
     <View {...{className:"rounded-card border border-border bg-surface-raised"}} style={{padding:16,gap:16}}>
       <PrecisionScrubber label="Layer opacity" value={opacity} min={0} max={100} step={1} unit="%"
@@ -123,6 +126,7 @@ function Fixture(){
       <Text testID="commits" {...{className:"text-text-muted"}}>{"commits "+commits}</Text>
       <Text testID="order" {...{className:"text-text-muted"}}>{"order "+rows.map(r=>r.id).join("")}</Text>
       <Text testID="frame" {...{className:"text-text-muted"}}>{"frame "+frame}</Text>
+      <Text testID="seek-log" {...{className:"text-text-muted"}}>{"seek "+seekPreviews+"/"+seekCommits}</Text>
       <Text testID="handle" {...{className:"text-text-muted"}}>{"handle "+handleCommits+"/"+handleCancels}</Text>
     </View>
   </ScrollView>;

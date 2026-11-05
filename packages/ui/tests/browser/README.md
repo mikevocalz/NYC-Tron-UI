@@ -16,8 +16,10 @@ npm test
 fine precision on upward travel inside a ScrollView, Escape cancel, arrow keys,
 buttons, text entry, disabled state, and handle reorder plus Escape cancel.
 `seekbar.spec.mjs` checks that `NativeSeekBar`'s step buttons and timecode sit
-on one row under the slider at 390px and 834px (#27) and that the buttons step
-the controlled frame. It renders the `@expo/ui` 58.0.20 universal web build;
+on one row under the slider at 390px and 834px (#27), that the buttons step
+the controlled frame, and that a mouse drag previews on each frame but commits
+once on release, as does one arrow-key press. It renders the web build
+(`NativeSeekBar.web.tsx`) over the `@expo/ui` 58.0.20 universal web build;
 `.npmrc` keeps npm from installing that package's `expo` and `react-native`
 peers, which the web build does not import.
 `layers.spec.mjs` covers LayerStack kind labels and thumbnails, removal by

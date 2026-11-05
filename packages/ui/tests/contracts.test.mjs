@@ -29,7 +29,7 @@ test("all direct component export targets are actual independent files",()=>{
 });
 test("Forge controls never import engine packages or app-specific palettes",()=>{
  for(const file of [
-  "NativeSeekBar.tsx","WaveformLane.tsx","ColorChannels.tsx",
+  "NativeSeekBar.native.tsx","NativeSeekBar.web.tsx","NativeSeekBar.shared.tsx","NativeSeekBar.types.ts","WaveformLane.tsx","ColorChannels.tsx",
   "waveform.ts","color.ts","timebase.ts","audio/level.ts","audio/LevelFader.tsx",
   "color/HsvPicker.tsx","color/fieldGeometry.ts","color/fieldGesture.ts",
   "audio/pan.ts","audio/PanControl.tsx","audio/SoloMuteButtons.tsx","audio/mixer.ts","audio/ChannelStrip.tsx",

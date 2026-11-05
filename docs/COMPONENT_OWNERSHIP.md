@@ -46,7 +46,7 @@ complex editor screen composition and its cross-engine suite application.
 | FormulaReferenceText (I-06) | `@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText` (model `/reference-colors`) | Formula text with each reference in the tone the grid outlines it with; same reference, same tone. Chromium test | **Ported** color assignment from GridCraft `FormulaRefs.kt` @ `72d5bfc` |
 | Fill math (I-02) | `@nyc-tron/ui/components/forge/spreadsheet/fill-handle` | Pure: dominant-axis fill target, Ctrl+D/R source/target. Unit tests | New |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
-| NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
+| NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Expo 58 @expo/ui: SwiftUI slider on iOS, Material 3 on Android, range input on web. Drag previews through `onPreview`, release commits once through `onCommit` (`onSeek` is a deprecated alias). Mocked-host render tests and Chromium drag test; native build unverified | Forge PR #25 |
 | Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
 | Banner | `@nyc-tron/ui/components/feedback/Banner` | RN notice: info/success/danger/neutral tones, polite or assertive live region, optional 44pt dismiss and action slot. Chromium/React Native Web tests and captures; no device or screen-reader QA yet | NYC-MON `@acme/ui` Banner |
@@ -507,6 +507,35 @@ Verified by a Chromium check that the timecode uses the dark text token on a
 light OS scheme, a check that the forward button stays inside the card at
 390px, and dark/light captures at 390 and 834px. Not verified on iOS or
 Android devices.
+
+## 2026-11-05 NativeSeekBar commits once per drag
+
+`NativeSeekBar` passed the universal `@expo/ui` Slider's `onValueChange`
+straight to `onSeek`, so a drag sent the player a seek for every tick and
+nothing marked the release. The universal Slider has no end-of-drag event, so
+the component is now split by platform, like `NativeSliderField`:
+
+- `NativeSeekBar.native.tsx` renders the SwiftUI `Slider` on iOS and the
+  Material 3 `Slider` on Android. A drag ends on `onEditingChanged(false)` on
+  iOS and on `onValueChangeFinished` on Android. On iOS a value change outside
+  a drag (a VoiceOver increment) commits by itself.
+- `NativeSeekBar.web.tsx` keeps the universal slider, an `<input type="range">`,
+  and commits on the DOM `change` event, which the browser fires once on
+  release and once per arrow-key step.
+
+The API follows `LevelFader`: `onPreview` gets each new frame during a drag,
+`onCommit` gets one frame per release, step-button press or keyboard step, and
+nothing when the frame is unchanged. `onSeek` still works as a deprecated
+alias with the `onCommit` timing. When both are passed only `onCommit` runs.
+The thumb and timecode show the dragged frame until the release. The export
+map now picks `NativeSeekBar.native.js` under `react-native` and
+`NativeSeekBar.web.js` under `browser` and `default`.
+
+Verified: mocked-host render tests of both platform files (red against the
+previous source: two ticks sent `onSeek(121)` and `onSeek(122)`), and a
+Chromium drag and arrow-key test (red against the previous source: 15 seeks
+for one drag). Not verified: the order of SwiftUI and Compose events on a
+device, VoiceOver and TalkBack steps, and an iOS or Android build.
 
 ## 2026-11-05 Ink toolbar and the Forge board
 
