@@ -12,7 +12,9 @@
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Windows.Data.Json.h>
+#include <exception>
 #include <unordered_set>
+#include <vector>
 
 namespace winrt::NYCTronFluentFabric {
 
@@ -60,9 +62,20 @@ struct TronNavigationViewComponentView
           });
       if (m_props) ApplyProps(*m_props);
     } catch (...) {
-      // Initialization fails closed: do not display a fake substitute or
-      // dispatch an event for a view we could not initialize.
+      // Fail closed: no substitute UI. The error reaches JS through
+      // onNativeError once the event emitter is attached.
+      ReportNativeError("NavigationView initialization failed: " + DescribeCurrentException());
     }
+  }
+
+  void UpdateEventEmitter(
+      const std::shared_ptr<Codegen::TronNavigationViewEventEmitter>& eventEmitter) noexcept override {
+    Codegen::BaseTronNavigationView<TronNavigationViewComponentView>::UpdateEventEmitter(eventEmitter);
+    // Errors raised before React attached the emitter (initialization runs
+    // first) are delivered here instead of being dropped.
+    auto pending = std::move(m_pendingErrors);
+    m_pendingErrors.clear();
+    for (auto& message : pending) ReportNativeError(std::move(message));
   }
 
   void UpdateProps(
@@ -98,17 +111,50 @@ struct TronNavigationViewComponentView
     return item;
   }
 
-  static void AppendItems(
+  // Returns how many entries were skipped as non-objects, missing id/label
+  // or duplicate ids, so the caller can report them instead of hiding them.
+  static uint32_t AppendItems(
       winrt::Windows::Data::Json::JsonArray const& data,
       winrt::Windows::Foundation::Collections::IVector<winrt::IInspectable> const& target,
       std::unordered_set<std::wstring>& seen) {
+    uint32_t skipped = 0;
     for (auto const& value : data) {
-      if (value.ValueType() != winrt::Windows::Data::Json::JsonValueType::Object) continue;
+      if (value.ValueType() != winrt::Windows::Data::Json::JsonValueType::Object) {
+        ++skipped;
+        continue;
+      }
       auto object = value.GetObject();
       auto id = object.GetNamedString(L"id", L"");
       auto label = object.GetNamedString(L"label", L"");
-      if (id.empty() || label.empty() || !seen.insert(std::wstring(id.c_str())).second) continue;
+      if (id.empty() || label.empty() || !seen.insert(std::wstring(id.c_str())).second) {
+        ++skipped;
+        continue;
+      }
       target.Append(MakeItem(object));
+    }
+    return skipped;
+  }
+
+  // Must be called from inside a catch block.
+  static std::string DescribeCurrentException() noexcept {
+    try {
+      throw;
+    } catch (winrt::hresult_error const& error) {
+      return winrt::to_string(error.message());
+    } catch (std::exception const& error) {
+      return error.what();
+    } catch (...) {
+      return "unknown native exception";
+    }
+  }
+
+  void ReportNativeError(std::string message) noexcept {
+    if (auto emitter = EventEmitter()) {
+      Codegen::TronNavigationViewEventEmitter::OnNativeError payload;
+      payload.message = std::move(message);
+      emitter->onNativeError(std::move(payload));
+    } else {
+      m_pendingErrors.push_back(std::move(message));
     }
   }
 
@@ -157,8 +203,12 @@ struct TronNavigationViewComponentView
         m_navigation.MenuItems().Clear();
         m_navigation.FooterMenuItems().Clear();
         std::unordered_set<std::wstring> seen;
-        AppendItems(menu, m_navigation.MenuItems(), seen);
-        AppendItems(footer, m_navigation.FooterMenuItems(), seen);
+        const auto skipped = AppendItems(menu, m_navigation.MenuItems(), seen) +
+            AppendItems(footer, m_navigation.FooterMenuItems(), seen);
+        if (skipped > 0) {
+          ReportNativeError(std::to_string(skipped) +
+              " destination(s) skipped: each needs a unique nonempty id and a nonempty label");
+        }
         m_itemsJson = props.itemsJson;
         m_footerItemsJson = footerJson;
         m_itemsInitialized = true;
@@ -177,11 +227,15 @@ struct TronNavigationViewComponentView
       DisableSelectOnInvokeForSettings();
       m_selectedId = props.selectedId.value_or("");
       SetSelectedId(winrt::to_hstring(m_selectedId));
+      m_navigation.FlowDirection(props.isRTL.value_or(false)
+          ? winrt::Microsoft::UI::Xaml::FlowDirection::RightToLeft
+          : winrt::Microsoft::UI::Xaml::FlowDirection::LeftToRight);
       m_navigation.IsPaneOpen(props.paneOpen.value_or(false));
       m_updatingFromJs = false;
     } catch (...) {
       m_updatingFromJs = false;
-      // Invalid serialized items must not crash native. JS wrapper validates.
+      // Invalid serialized items must not crash native; report them instead.
+      ReportNativeError("NavigationView props update failed: " + DescribeCurrentException());
     }
   }
 
@@ -229,6 +283,7 @@ struct TronNavigationViewComponentView
   std::string m_footerItemsJson;
   bool m_itemsInitialized{false};
   bool m_updatingFromJs{false};
+  std::vector<std::string> m_pendingErrors;
 };
 
 } // namespace winrt::NYCTronFluentFabric

@@ -14,6 +14,7 @@ import type {
 type DestinationInvoked = Readonly<{id:string}>;
 type PaneOpenChanged = Readonly<{open:boolean}>;
 type SettingsInvoked = Readonly<{id:string}>;
+type NativeError = Readonly<{message:string}>;
 
 export interface NativeProps extends ViewProps {
   itemsJson: string;
@@ -23,9 +24,11 @@ export interface NativeProps extends ViewProps {
   paneOpen?: boolean;
   paneTitle?: string;
   settingsVisible?: boolean;
+  isRTL?: boolean;
   onDestinationInvoked?: DirectEventHandler<DestinationInvoked>;
   onPaneOpenChanged?: DirectEventHandler<PaneOpenChanged>;
   onSettingsInvoked?: DirectEventHandler<SettingsInvoked>;
+  onNativeError?: DirectEventHandler<NativeError>;
 }
 
 export default codegenNativeComponent<NativeProps>("TronNavigationView");

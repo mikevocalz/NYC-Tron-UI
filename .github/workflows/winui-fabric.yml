@@ -114,3 +114,16 @@ jobs:
           $exe = Get-ChildItem windows -Recurse -Filter NYCTronWindowsExample.exe | Select-Object -First 1
           if (-not $exe) { throw "Consumer executable was not produced" }
           Write-Host "Compiled Windows consumer: $($exe.FullName)"
+          "CONSUMER_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: UI Automation smoke test of the consumer executable
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: powershell
+        run: |
+          & .\scripts\uia-smoke.ps1 -Exe $env:CONSUMER_EXE -OutDir "$env:RUNNER_TEMP\uia-smoke"
+      - name: Upload UI Automation screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: winui-fabric-uia-smoke
+          path: ${{ runner.temp }}/uia-smoke
+          if-no-files-found: warn

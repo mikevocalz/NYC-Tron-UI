@@ -60,3 +60,21 @@ test("consumer solution registers the x64 library project for solution builds",(
  assert.match(host,/windows\/NYCTronWindowsExample\.sln/);
  assert.match(host,/\|x64\.Build\.0 = /);
 });
+
+test("native failures reach JS through onNativeError instead of being swallowed",()=>{
+ const spec=read("src/TronNavigationViewNativeComponent.ts");
+ assert.match(spec,/onNativeError\?: DirectEventHandler<NativeError>/);
+ const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
+ const catches=[...cpp.matchAll(/catch \(\.\.\.\) \{\n([^}]*)\}/g)].map(m=>m[1]);
+ const reporting=catches.filter(body=>body.includes("ReportNativeError("));
+ assert.ok(reporting.length>=2,"initialization and props catch blocks report");
+ assert.match(cpp,/m_pendingErrors/);
+ assert.match(cpp,/UpdateEventEmitter\(/);
+ const tsx=read("src/TronNavigationView.windows.tsx");
+ assert.match(tsx,/console\.error\(error\)/);
+});
+test("RTL layout follows I18nManager through the isRTL prop",()=>{
+ assert.match(read("src/TronNavigationViewNativeComponent.ts"),/isRTL\?: boolean/);
+ assert.match(read("src/TronNavigationView.windows.tsx"),/isRTL=\{I18nManager\.isRTL\}/);
+ assert.match(read("windows/NYCTronFluentFabric/TronNavigationView.cpp"),/FlowDirection::RightToLeft/);
+});

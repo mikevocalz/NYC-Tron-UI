@@ -1,3 +1,4 @@
+import {I18nManager} from "react-native";
 import type {StyleProp,ViewStyle} from "react-native";
 import TronNavigationViewNativeComponent from "./TronNavigationViewNativeComponent";
 
@@ -18,6 +19,11 @@ export interface TronNavigationViewProps {
   readonly onSelectionRequested:(id:string)=>void;
   readonly onPaneOpenRequested:(open:boolean)=>void;
   readonly onSettingsRequested?:()=>void;
+  /**
+   * Called when the native NavigationView fails to initialize or rejects
+   * a props update. Without a handler the error goes to console.error.
+   */
+  readonly onNativeError?:(error:Error)=>void;
   readonly style?:StyleProp<ViewStyle>;
 }
 export function validateDestinations(
@@ -45,7 +51,7 @@ const COMPACT_PANE_WIDTH=48;
 export function TronNavigationView({
   items,footerItems=[],selectedId,paneMode="auto",paneOpen,
   paneTitle="",settingsVisible=false,onSelectionRequested,
-  onPaneOpenRequested,onSettingsRequested,style
+  onPaneOpenRequested,onSettingsRequested,onNativeError,style
 }:TronNavigationViewProps){
   validateDestinations(items,footerItems,selectedId);
   return <TronNavigationViewNativeComponent
@@ -56,6 +62,7 @@ export function TronNavigationView({
     paneOpen={paneOpen}
     paneTitle={paneTitle}
     settingsVisible={settingsVisible}
+    isRTL={I18nManager.isRTL}
     onDestinationInvoked={e=>{
       const id=e.nativeEvent.id;
       if(id===selectedId)return;
@@ -67,6 +74,11 @@ export function TronNavigationView({
     }}
     onSettingsInvoked={e=>{
       if(e.nativeEvent.id==="settings"&&settingsVisible)onSettingsRequested?.();
+    }}
+    onNativeError={e=>{
+      const error=new Error("TronNavigationView native error: "+e.nativeEvent.message);
+      if(onNativeError)onNativeError(error);
+      else console.error(error);
     }}
     style={[{width:paneOpen?OPEN_PANE_WIDTH:COMPACT_PANE_WIDTH,height:"100%"},style]}
   />;
