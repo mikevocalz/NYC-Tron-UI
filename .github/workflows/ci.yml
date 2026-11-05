@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
-      - run: node --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/expo-controls/tests/*.test.mjs packages/native-charts/tests/*.test.mjs
+      - run: node --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/expo-controls/tests/*.test.mjs packages/native-charts/tests/*.test.mjs packages/icons/tests/*.test.js packages/windows-fluent/tests/*.test.mjs
 
   types:
     name: workspace TypeScript
