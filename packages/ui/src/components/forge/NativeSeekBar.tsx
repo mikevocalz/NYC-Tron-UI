@@ -1,5 +1,6 @@
-import { Host,Column,Slider,Button,Text } from "@expo/ui";
-import { View,type ViewProps } from "react-native";
+import { Host,Slider } from "@expo/ui";
+import { Text,View,type ViewProps } from "react-native";
+import { Button } from "../Button.tsx";
 import { joinClasses } from "../styles.ts";
 import {
   clampFrame,formatTimecode,frameToPosition,positionToFrame,type FrameRate
@@ -16,7 +17,7 @@ export interface NativeSeekBarProps extends Omit<ViewProps,"children"> {
   readonly dropFrameTimecode?:boolean;
   readonly disabled?:boolean;
   className?:string;
-  /** Controls RN wrapper only; native Expo Slider keeps OS behavior. */
+  /** Drops the library recipe from the wrapper and timecode; the native Expo Slider keeps OS behavior. */
   unstyled?:boolean;
 }
 export function NativeSeekBar({
@@ -32,17 +33,29 @@ export function NativeSeekBar({
  return <View {...props}
    {...{className:joinClasses("w-full",!unstyled&&"rounded-control bg-surface-raised p-3",className)}}
    style={style}>
+   {/* Only the slider is an @expo/ui host. The transport is app-token RN:
+       @expo/ui Text colours itself from the OS scheme, so a dark app theme
+       on a light-mode device drew black timecode on the dark surface (the
+       same fix HsvPicker uses for its labels). */}
    <Host style={{width:"100%"}}>
-     <Column>
-       <Slider
-         min={0} max={1} value={frameToPosition(current,durationFrames)}
-         disabled={off}
-         onValueChange={p=>seek(positionToFrame(p,durationFrames))}
-       />
-       <Button label={`−${stepFrames} frame`} disabled={off} onPress={()=>seek(current-stepFrames)} />
-       <Text>{`${formatTimecode(current,frameRate,{dropFrame:dropFrameTimecode})} / ${formatTimecode(durationFrames,frameRate,{dropFrame:dropFrameTimecode})}`}</Text>
-       <Button label={`+${stepFrames} frame`} disabled={off} onPress={()=>seek(current+stepFrames)} />
-     </Column>
+     <Slider
+       min={0} max={1} value={frameToPosition(current,durationFrames)}
+       disabled={off}
+       onValueChange={p=>seek(positionToFrame(p,durationFrames))}
+     />
    </Host>
+   {/* Transport row under the slider, as in the Forge original (PR #25):
+       step back, timecode, step forward on one line (#27). The timecode
+       takes the width between the buttons and wraps centered on a phone. */}
+   <View style={{flexDirection:"row",alignItems:"center",gap:8,marginTop:8}}>
+     <Button title={`−${stepFrames} frame`} variant="secondary" size="sm" disabled={off}
+       onPress={()=>seek(current-stepFrames)} />
+     <Text selectable {...{className:joinClasses(!unstyled&&"text-text")}}
+       style={{flex:1,minWidth:0,textAlign:"center",fontVariant:["tabular-nums"]}}>
+       {`${formatTimecode(current,frameRate,{dropFrame:dropFrameTimecode})} / ${formatTimecode(durationFrames,frameRate,{dropFrame:dropFrameTimecode})}`}
+     </Text>
+     <Button title={`+${stepFrames} frame`} variant="secondary" size="sm" disabled={off}
+       onPress={()=>seek(current+stepFrames)} />
+   </View>
  </View>;
 }

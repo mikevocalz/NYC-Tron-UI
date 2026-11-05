@@ -57,3 +57,120 @@ test("outside close button dismisses without invoking an action",async({page})=>
   await expect(page.getByRole("menu")).toHaveCount(0);
   await expect(page.getByTestId("selection")).toHaveText("none");
 });
+
+test("Tab and Shift+Tab stay inside the open action menu and Escape returns focus to the trigger",async({page})=>{
+  const trigger=page.getByRole("button",{name:"Document actions",exact:true});
+  await trigger.focus();await page.keyboard.press("Enter");
+  const edit=page.getByRole("menuitem",{name:"Edit",exact:true});
+  const share=page.getByRole("menuitem",{name:"Share",exact:true});
+  const pin=page.getByRole("menuitemcheckbox",{name:"Pin",exact:true});
+  await expect(edit).toBeFocused();
+  await page.keyboard.press("Tab");await expect(share).toBeFocused();
+  await page.keyboard.press("Tab");await expect(pin).toBeFocused();
+  await page.keyboard.press("Tab");await expect(edit).toBeFocused();
+  await page.keyboard.press("Shift+Tab");await expect(pin).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("menu")).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+test("selecting a menu item with the keyboard returns focus to the trigger",async({page})=>{
+  const trigger=page.getByRole("button",{name:"Document actions",exact:true});
+  await trigger.focus();await page.keyboard.press("Enter");
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("selection")).toHaveText("edit");
+  await expect(trigger).toBeFocused();
+});
+
+test("web NativePopover is placed below the anchor, cycles Tab and restores focus",async({page})=>{
+  const opener=page.getByRole("button",{name:"Open popover",exact:true});
+  await opener.focus();await page.keyboard.press("Enter");
+  const dialog=page.getByRole("dialog",{name:"Layer settings"});
+  await expect(dialog).toBeVisible();
+  const box=await dialog.boundingBox();
+  // anchor is y=160..204 with 8pt padding
+  expect(box.y).toBeGreaterThanOrEqual(204+8-1);
+  const first=page.getByRole("button",{name:"Popover first",exact:true});
+  const second=page.getByRole("button",{name:"Popover second",exact:true});
+  const done=page.getByRole("button",{name:"Done",exact:true});
+  await expect(first).toBeFocused();
+  await page.keyboard.press("Tab");await expect(second).toBeFocused();
+  await page.keyboard.press("Tab");await expect(done).toBeFocused();
+  await page.keyboard.press("Tab");await expect(first).toBeFocused();
+  await page.keyboard.press("Shift+Tab");await expect(done).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(opener).toBeFocused();
+});
+
+test("CommandPopover focuses the first enabled item, skips disabled on Tab and restores focus",async({page})=>{
+  const opener=page.getByRole("button",{name:"Open commands",exact:true});
+  await opener.focus();await page.keyboard.press("Enter");
+  const cut=page.getByRole("menuitem",{name:"Cut"});
+  const paste=page.getByRole("menuitem",{name:"Paste"});
+  await expect(cut).toBeFocused();
+  await page.keyboard.press("Tab");await expect(paste).toBeFocused();
+  await page.keyboard.press("Tab");await expect(cut).toBeFocused();
+  await page.keyboard.press("Shift+Tab");await expect(paste).toBeFocused();
+  await page.keyboard.press("ArrowDown");await expect(cut).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("menu",{name:"Clipboard"})).toHaveCount(0);
+  await expect(opener).toBeFocused();
+});
+
+test("CommandPalette filters, moves with arrows, runs with Enter and restores focus",async({page})=>{
+  const opener=page.getByRole("button",{name:"Open palette",exact:true});
+  await opener.focus();await page.keyboard.press("Enter");
+  const search=page.getByRole("combobox",{name:"Command palette"});
+  await expect(search).toBeFocused();
+  await expect(page.getByRole("option")).toHaveCount(4);
+  await page.keyboard.type("op");
+  await expect(page.getByRole("option")).toHaveCount(2);
+  const open=page.getByRole("option",{name:"File, Open file"});
+  const reopen=page.getByRole("option",{name:"View, Reopen closed tab"});
+  await expect(open).toHaveAttribute("aria-selected","true");
+  await page.keyboard.press("ArrowDown");
+  await expect(reopen).toHaveAttribute("aria-selected","true");
+  await expect(search).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("selection")).toHaveText("view.reopen");
+  await expect(page.getByRole("dialog",{name:"Command palette"})).toHaveCount(0);
+  await expect(opener).toBeFocused();
+});
+
+test("CommandPalette keeps Tab inside, never activates disabled commands and Escape closes",async({page})=>{
+  const opener=page.getByRole("button",{name:"Open palette",exact:true});
+  await opener.focus();await page.keyboard.press("Enter");
+  const search=page.getByRole("combobox",{name:"Command palette"});
+  await expect(search).toBeFocused();
+  await page.keyboard.type("delete");
+  const disabled=page.getByRole("option",{name:"Edit, Delete selection"});
+  await expect(disabled).toHaveAttribute("aria-disabled","true");
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("selection")).toHaveText("none");
+  await page.keyboard.press("Tab");await expect(search).toBeFocused();
+  await search.fill("");
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("option",{name:"File, Open file"})).toBeFocused();
+  await page.keyboard.press("Shift+Tab");await expect(search).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(page.getByRole("option",{name:"View, Reopen closed tab"})).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog",{name:"Command palette"})).toHaveCount(0);
+  await expect(opener).toBeFocused();
+  await expect(page.getByTestId("selection")).toHaveText("none");
+});
+
+test("tooltip appears after the focus delay, describes the control and hides on Escape and blur",async({page})=>{
+  const save=page.getByRole("button",{name:"Save",exact:true});
+  await save.focus();
+  const tip=page.getByRole("tooltip");
+  await expect(tip).toHaveText("Writes the document to disk");
+  await expect(save).toHaveAttribute("aria-describedby",await tip.getAttribute("id"));
+  await page.keyboard.press("Escape");
+  await expect(tip).toHaveCount(0);
+  await save.hover();
+  await expect(tip).toBeVisible();
+  await page.mouse.move(600,600);
+  await expect(tip).toHaveCount(0);
+});

@@ -3,12 +3,14 @@ import { Modal, Pressable, ScrollView, Text, View, type PressableProps } from "r
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import type { NativeActionMenuProps } from "./NativeActionMenu.types.ts";
-import { findEnabledMenuAction, menuFocusTarget, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
+import { cycleFocusTarget } from "@nyc-tron/ui/components/overlays/focus-cycle";
+import { useRestoreFocus } from "@nyc-tron/ui/components/overlays/focus-restore";
+import { enabledMenuLeaves, findEnabledMenuAction, menuFocusTarget, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
 
 type MenuKeyEvent = Parameters<NonNullable<PressableProps["onKeyDown"]>>[0];
 // This file runs on RN web: the native event is a browser KeyboardEvent.
 const keyData=(event:MenuKeyEvent)=>event.nativeEvent as {
-  key:string;altKey?:boolean;ctrlKey?:boolean;metaKey?:boolean
+  key:string;shiftKey?:boolean;altKey?:boolean;ctrlKey?:boolean;metaKey?:boolean
 };
 
 /**
@@ -23,6 +25,8 @@ export function NativeActionMenu({
   if(!local.current)local.current=createStore(()=>({open:false}));
   const store=local.current;
   const open=useStore(store,state=>state.open);
+  // Every close path (Escape, selection, backdrop) returns focus to the trigger.
+  useRestoreFocus(open);
   const itemRefs=useRef(new Map<string,ElementRef<typeof View>>());
   const initialKey=useRef("Home");
   const normalized=normalizeMenuActions(actions);
@@ -38,8 +42,15 @@ export function NativeActionMenu({
     store.setState({open:true});
   };
   const onMenuKey=(event:MenuKeyEvent,id:string)=>{
-    const {key,altKey,ctrlKey,metaKey}=keyData(event);
+    const {key,shiftKey,altKey,ctrlKey,metaKey}=keyData(event);
     if(altKey||ctrlKey||metaKey)return;
+    // Tab and Shift+Tab cycle through the enabled items and never leave the open menu.
+    if(key==="Tab"){
+      event.preventDefault();event.stopPropagation();
+      const next=cycleFocusTarget(enabledMenuLeaves(actions).map(action=>action.id),id,!!shiftKey);
+      if(next)itemRefs.current.get(next)?.focus();
+      return;
+    }
     if(key==="Escape"){
       event.preventDefault();event.stopPropagation();close();return;
     }
@@ -99,10 +110,15 @@ export function NativeActionMenu({
       onLongPress={longPress?()=>show():undefined}>
       {trigger}
     </Pressable>
-    <Modal transparent visible={open} animationType="fade"
+    <Modal transparent visible={open}
+      // A fading web Modal keeps its focus trap live while it fades and pulls
+      // the restored focus back in; close instantly.
+      animationType="none"
       accessibilityViewIsModal onRequestClose={close} onShow={()=>focus(initialKey.current)}>
       <View style={{flex:1,justifyContent:"center",padding:24}}>
         <Pressable accessibilityLabel="Close menu" accessibilityRole="button" onPress={close}
+          // Pointer-only: Escape closes from the keyboard, so Tab never lands here.
+          focusable={false}
           style={{position:"absolute",left:0,right:0,top:0,bottom:0,
             backgroundColor:"rgba(0,0,0,0.32)"}}/>
         <View {...{className:"rounded-control bg-surface-raised border border-border"}}

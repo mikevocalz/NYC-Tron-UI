@@ -1,0 +1,7 @@
+{
+  "name": "NYCTronReservedRegions",
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["NYCTronReservedRegionsModule"]
+  }
+}

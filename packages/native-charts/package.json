@@ -1,0 +1,58 @@
+{
+  "name": "@nyc-tron/native-charts",
+  "version": "0.1.0-alpha.2",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Native line, column and area charts for NYC-Tron UI: Vico on Android, Swift Charts on iOS",
+  "main": "./dist/index.native.js",
+  "types": "./dist/index.native.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.native.d.ts",
+      "browser": "./dist/index.web.js",
+      "react-native": "./dist/index.native.js",
+      "default": "./dist/index.web.js"
+    },
+    "./NativeChart": {
+      "types": "./dist/NativeChart.native.d.ts",
+      "browser": "./dist/NativeChart.web.js",
+      "react-native": "./dist/NativeChart.native.js",
+      "default": "./dist/NativeChart.web.js"
+    },
+    "./types": {
+      "types": "./dist/NativeChart.types.d.ts",
+      "react-native": "./dist/NativeChart.types.js",
+      "default": "./dist/NativeChart.types.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm build",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@expo/ui": "^58.0.0",
+    "expo": ">=58.0.21",
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0"
+  },
+  "devDependencies": {
+    "@expo/ui": "58.0.27",
+    "expo": "58.0.23",
+    "react": "19.3.0",
+    "@types/react": "~19.3.0",
+    "react-native": "0.88.1",
+    "typescript": "~6.0.3"
+  },
+  "files": [
+    "dist",
+    "ios",
+    "android",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ]
+}

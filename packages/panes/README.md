@@ -11,6 +11,20 @@ Do not pass the app's whole display bounds to a nested pane.
 Features are reported, never guessed. Multiple hinges and zero-width
 separating folds are handled by `@nyc-tron/core/folds`.
 
+**Regions from the device:** pass `regions` from `useReservedRegions()` in
+`@nyc-tron/reserved-regions` instead of `features`. Division regions become
+fold features, and a half-opened separating fold sets `posture` (tabletop or
+book) unless you pass `posture`. Camera occlusion regions stay out unless
+`includeOcclusions` is set. This package does not import the hook, so a pane
+host with no native fold module installs nothing native:
+
+```tsx
+import { useReservedRegions } from "@nyc-tron/reserved-regions";
+
+const regions = useReservedRegions();
+<AdaptivePaneHost {...panes} container={actualMeasuredPaneWindowRect} regions={regions} />
+```
+
 **Navigation:** this is a content-pane package, not a shell. An Android
 foldable/tablet/headset keeps its physical-right navigation rail even if
 this host renders only one content pane; Windows may use a left native

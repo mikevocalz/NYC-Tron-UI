@@ -35,3 +35,51 @@ export function peaksToBars(peaks:readonly WaveformPeak[],height:number):Wavefor
    return {top,height:Math.max(1,bottom-top)};
  });
 }
+
+/**
+ * Visible part of a clip, as normalized positions with
+ * `0 <= start < end <= 1`. {@linkcode WaveformLane} draws only this span.
+ */
+export interface WaveformRange { readonly start:number; readonly end:number }
+
+/** The whole clip. */
+export const FULL_RANGE:WaveformRange={start:0,end:1};
+
+/** @throws {RangeError} Unless `0 <= start < end <= 1`. */
+export function assertWaveformRange(r:WaveformRange):void{
+ if(!Number.isFinite(r.start)||!Number.isFinite(r.end)||r.start<0||r.end>1||r.start>=r.end)
+  throw new RangeError("Waveform range must satisfy 0 <= start < end <= 1");
+}
+
+/**
+ * The peaks covering `range`, without copying the rest. Work stays
+ * proportional to the visible span, so a long clip zoomed in draws only its
+ * window. Includes the partial peaks at both edges.
+ */
+export function slicePeaks(peaks:readonly WaveformPeak[],range:WaveformRange):readonly WaveformPeak[]{
+ assertWaveformRange(range);
+ if(range.start===0&&range.end===1)return peaks;
+ const from=Math.floor(range.start*peaks.length);
+ const to=Math.max(from+1,Math.ceil(range.end*peaks.length));
+ return peaks.slice(from,to);
+}
+
+/**
+ * Range after dragging the lane by `dxPx` across `widthPx` points. Dragging
+ * right shows earlier audio. The span keeps its length and stops at the
+ * clip edges.
+ */
+export function scrollRange(range:WaveformRange,dxPx:number,widthPx:number):WaveformRange{
+ assertWaveformRange(range);
+ if(!Number.isFinite(dxPx)||!Number.isFinite(widthPx)||widthPx<=0)throw new RangeError("Invalid waveform scroll");
+ const span=range.end-range.start;
+ const start=Math.min(1-span,Math.max(0,range.start-dxPx/widthPx*span));
+ return {start:Number(start.toFixed(9)),end:Number((start+span).toFixed(9))};
+}
+
+/** Clip position for a point `x` points into a lane `widthPx` wide showing `range`. */
+export function rangePosition(range:WaveformRange,x:number,widthPx:number):number{
+ assertWaveformRange(range);
+ if(!Number.isFinite(x)||!Number.isFinite(widthPx)||widthPx<=0)throw new RangeError("Invalid waveform point");
+ return Math.min(1,Math.max(0,range.start+Math.min(1,Math.max(0,x/widthPx))*(range.end-range.start)));
+}
