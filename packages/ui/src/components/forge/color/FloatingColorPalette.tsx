@@ -2,7 +2,7 @@ import type {ReactNode} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {FloatingPaletteUndockHandle} from "./FloatingPaletteUndockHandle.tsx";
 import {
   FLOATING_PALETTE_WIDTH,PALETTE_MODES,placeFloatingPalette,

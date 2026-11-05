@@ -1,6 +1,6 @@
 import {Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {alphaPercent,assertHsv,hsvToRgb,parseHexColor,rgbaEditToHsv,rgbaToHex,type HsvColor} from "../color.ts";
 import {CHANNEL_MODELS,channelFields,parseChannel,parseOpacityPercent,readChannels,writeChannel,type ChannelModel} from "./channel-fields.ts";
 
