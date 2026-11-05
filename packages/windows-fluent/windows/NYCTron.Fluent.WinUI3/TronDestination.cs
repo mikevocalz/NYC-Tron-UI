@@ -14,3 +14,9 @@ public sealed class TronDestinationInvokedEventArgs : EventArgs
     public TronDestinationInvokedEventArgs(string id) => Id = id;
     public string Id { get; }
 }
+
+public sealed class TronPaneOpenChangedEventArgs : EventArgs
+{
+    public TronPaneOpenChangedEventArgs(bool isOpen) => IsOpen = isOpen;
+    public bool IsOpen { get; }
+}
