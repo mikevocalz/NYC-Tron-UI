@@ -63,6 +63,8 @@ jobs:
           node --test packages/native-controls/tests/*.test.mjs
           node --test packages/expo-controls/tests/*.test.mjs
           node --test packages/windows-fluent/tests/*.test.mjs
+          node --test packages/icons/tests/*.test.js
+          node --test packages/native-navigation/tests/*.test.mjs
           node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - name: Typecheck against built packages
         run: corepack pnpm typecheck
