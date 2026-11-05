@@ -43,10 +43,11 @@ npx react-native codegen-windows
 msbuild windows/NYCTronFluentFabric/NYCTronFluentFabric.vcxproj /p:Configuration=Release /p:Platform=x64
 ```
 
-**State:** Native source is under active development; no claim of passing
-compilation or end-to-end interaction until Windows CI proves it. The XAML
-host-only .NET package from parent PR #12 is already compiled, but this
-Fabric component is a different integration requiring its own native build.
+**Build evidence (November 5, 2026):** Windows Fabric codegen and native
+C++/WinRT compilation passed at commit `607bcada` in
+[Actions run 41966875204](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/41966875204).
+This establishes the native library build, not a launched consumer app.
+Subsequent changes require their own green native compile.
 There are no custom Tailwind themes inside WinUI; future resource adapters
 must map supported consumer semantic tokens to WinUI XAML resources.
 
@@ -55,3 +56,20 @@ References and license:
 - https://github.com/microsoft/react-native-windows/blob/react-native-windows_v0.85.0/packages/sample-custom-component/windows/SampleCustomComponent/ComboBox.cpp
 - https://microsoft.github.io/react-native-windows/docs/native-platform-components/
 - MIT, Microsoft Corporation. See THIRD_PARTY_NOTICES.md.
+
+## Controlled route acceptance
+
+Destination and Settings items use WinUI `SelectsOnInvoked(false)`.
+Invoking an item requests navigation; the selection indicator changes only
+when the app commits a new `selectedId`. Rejected or pending navigation keeps
+the current route selected. Menu item instances survive pane/title/selection
+updates when the destination data is unchanged, preserving keyboard focus.
+
+Required Windows app checks remain:
+- Reject a route request, then accept another; inspect the selected indicator.
+- Update pane title/open/selected route with keyboard focus on a destination.
+- Invoke Settings while a destination is selected; close Settings and restore focus.
+- Change destination data and verify focus recovery, including removed items.
+- Narrator, high contrast, RTL, resize and pointer/keyboard interaction.
+
+Source guards and native compilation do not substitute for those app checks.
