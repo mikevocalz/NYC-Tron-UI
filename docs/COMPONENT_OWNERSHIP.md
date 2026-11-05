@@ -108,24 +108,11 @@ complex editor screen composition and its cross-engine suite application.
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | InkToolbar | `@nyc-tron/ui/components/forge/ink/InkToolbar` (state, shortcuts and validation in `/forge/ink/ink-model`) | Controlled RN toolbar, horizontal bar or vertical rail: tool radio group, adjustable size and opacity, host swatches plus an optional custom-color request, pressure switch shown only when the host reports measured pressure, undo/redo with disabled reasons. Shortcut resolver is a pure function; no global listener. Model tests plus Chromium/React Native Web interaction tests and light/dark/RTL captures at 390 and 834 px; no device or screen-reader QA yet | Forge board PRs #18, #19, #22 (`packages/board`, `apps/board-native-lab`) and pen PR #20 |
 | Board stroke engine, Skia renderer, BLE pen connection, pen controllers | Nitro Forge `packages/board`, `packages/pen-connect`, `packages/spatial-ink` | **STAYS IN FORGE** by design; InkToolbar only reports intent | Forge PRs #18–20, #22 |
-| Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
-
-
-| PrecisionScrubber / draggable fields | `components/forge/PrecisionScrubber` planned | **NOT EXTRACTED** | Forge PR #32 |
 | RecordingTrack | `@nyc-tron/ui/components/forge/audio/RecordingTrack` | Controlled RN view over `RecordingViewState`; lane is `forge/WaveformLane`; mocked-host render tests only, native QA pending | Forge PR #37 `NativeRecordingTrack`, `NativeSourceRecordingTrack` (view parts) |
 | LevelMeter | `@nyc-tron/ui/components/forge/audio/LevelMeter` | Controlled RN view; dBFS math and throttled band announcements tested; screen-reader output on device unverified | Forge PR #37 meter history |
 | AudioPreview | `@nyc-tron/ui/components/forge/audio/AudioPreview` | Controlled RN view over `PreviewViewState`; mocked-host render tests only | Forge PR #37 `NativeAudioPreview` (view parts) |
 | DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic; mocked-host render tests only | Forge PR #20 `PenConnectionDialog` |
-| Track/mixer/fader / EQ controls | `components/forge/audio/` planned (recording views above exist) | **NOT EXTRACTED** | Forge Cadence work |
-| Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
-| Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
-| Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
-| Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
 | Paste into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange`. Fill has its UI (`onFillRange`); the engine operation behind it is the app's | Forge Tally |
-| Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
-| PDF annotations | `components/forge/pdf/` planned | **NOT EXTRACTED** | Forge Folio |
-| Slide/canvas transitions | `components/forge/slides/` planned | **NOT EXTRACTED** | Forge Pitch |
-
 | RichTextRibbon (H-03) | `@nyc-tron/ui/components/forge/document/RichTextRibbon` (state in `/forge/document/ribbon-model`) | Controlled RN toolbar: paragraph style, font family and size, B/I/U/S with mixed state, text and highlight color, change case. Each group renders only with its callback. Model tests and Chromium tests and captures; no device or screen-reader QA yet | Original; Forge Quill `applyStyle`/`setBlockKind` |
 | BulletsNumberingEditor (H-07) | `@nyc-tron/ui/components/forge/document/BulletsNumberingEditor` (`/forge/document/list-model`) | List kind, indent/outdent under the nesting policy (one level deeper than the item above, nine levels), per-level format, numbered preview. Model and Chromium tests | Original |
 | NavigationOutline (H-15) | `@nyc-tron/ui/components/forge/document/NavigationOutline` (`/forge/document/outline-model`) | Heading outline with collapse and current section, page list (thumbnails through `renderPageThumbnail`), bookmarks. Model and Chromium tests | Original |
