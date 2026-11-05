@@ -111,7 +111,7 @@ complex editor screen composition and its cross-engine suite application.
 | RecordingTrack | `@nyc-tron/ui/components/forge/audio/RecordingTrack` | Controlled RN view over `RecordingViewState`; lane is `forge/WaveformLane`; mocked-host render tests only, native QA pending | Forge PR #37 `NativeRecordingTrack`, `NativeSourceRecordingTrack` (view parts) |
 | LevelMeter | `@nyc-tron/ui/components/forge/audio/LevelMeter` | Controlled RN view; dBFS math and throttled band announcements tested; screen-reader output on device unverified | Forge PR #37 meter history |
 | AudioPreview | `@nyc-tron/ui/components/forge/audio/AudioPreview` | Controlled RN view over `PreviewViewState`; mocked-host render tests only | Forge PR #37 `NativeAudioPreview` (view parts) |
-| DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic; mocked-host render tests only | Forge PR #20 `PenConnectionDialog` |
+| DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic. States include OS-owned `system-pairing` and linked-but-unverified `awaiting-input`; `intro` explains the search before it starts; `onStopSearch` and `onClose` replace the deprecated `onCancel`. Model tests, mocked-host render tests and Chromium tests with captures; no device or screen-reader pass | Forge PR #20 `PenConnectionDialog` |
 | Paste into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange`. Fill has its UI (`onFillRange`); the engine operation behind it is the app's | Forge Tally |
 | RichTextRibbon (H-03) | `@nyc-tron/ui/components/forge/document/RichTextRibbon` (state in `/forge/document/ribbon-model`) | Controlled RN toolbar: paragraph style, font family and size, B/I/U/S with mixed state, text and highlight color, change case. Each group renders only with its callback. Model tests and Chromium tests and captures; no device or screen-reader QA yet | Original; Forge Quill `applyStyle`/`setBlockKind` |
 | BulletsNumberingEditor (H-07) | `@nyc-tron/ui/components/forge/document/BulletsNumberingEditor` (`/forge/document/list-model`) | List kind, indent/outdent under the nesting policy (one level deeper than the item above, nine levels), per-level format, numbered preview. Model and Chromium tests | Original |
@@ -765,6 +765,43 @@ pure state models:
   the views fall back to the plain call there instead of throwing.
 - Closing a connected `DevicePairingDialog` calls `onDone`, never `onCancel`, so
   dismissing the dialog does not disconnect the device.
+
+### 2026-11-05 pairing dialog gaps from Nitro Forge #20
+
+Forge #20 renders `DevicePairingDialog` for its pen and found four gaps. They
+are closed in the library; the old API still compiles and behaves as before.
+
+- `intro` (string) shows above the guidance while `idle`, so the host can say
+  what the search does first: that it asks for Bluetooth access, or that this
+  platform pairs in system Settings.
+- `system-pairing` (`steps`, optional `message`) is for platforms where the OS
+  owns pairing, such as visionOS. The host's steps render as an ordered list
+  ("Step 2 of 3: ..." to screen readers) with Open Settings when
+  `onOpenSettings` is set. No spinner: the dialog can't see the OS's progress,
+  so the host moves the state on when the OS reports back.
+- `awaiting-input` (`device`, optional `message`) sits between `connecting`
+  and `connected`: the link is up but the app hasn't seen pen input yet. The
+  copy says "Linked to ...", never "Connected", there is no Done button, and
+  `renderStatusArt` gets the `connecting` phase. `renderStatusArt` now also
+  receives the full state as a second argument for hosts that draw these two
+  states differently.
+- `onStopSearch` (Stop searching, and Cancel while connecting) and `onClose`
+  (close button and back gesture) replace the single `onCancel`. `onCancel`
+  is deprecated and still used when the new callbacks are missing. A linked
+  dialog (`awaiting-input`, `connected`) never closes through `onCancel` or
+  `onStopSearch`: it calls `onClose`, or `onDone` when there is no
+  `onClose`, so closing cannot disconnect. With no stop callback at all the
+  stop button is disabled rather than dead. The close button is labelled
+  "Close" when the host passes `onClose` or the device is linked, and "Cancel
+  and close" only on the legacy path.
+
+Both new states put their copy in the `polite` live region and the iOS
+announcement, like the others. Evidence: model tests, mocked-host render
+tests (callback routing, legacy fallbacks, step labels, announcements and
+art phases), and `pairing.spec.mjs` in the Chromium lane, which drives the
+buttons and captures every state at 390 and 834 px in light and dark plus RTL
+(`shots/pairing-*`). No simulator, device, VoiceOver or TalkBack pass. The
+scrim is still the fixed `rgba(0,0,0,0.5)` noted above.
 
 Evidence is Node tests of the state models, mocked-host render tests that
 run the real components, and a react-native-web render in Chromium of every
