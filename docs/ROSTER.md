@@ -35,3 +35,39 @@ native AppKit/WinUI/Compose/SwiftUI behavior.
 - Nitro Forge Tally PR #39: Rust-backed viewport adapter; separate Rust
   integration workflow passed before this responsive update.
 - Details: [Responsive tables](RESPONSIVE_TABLES.md).
+
+## Advanced instrument extraction (PR #2, November 4, 2026)
+
+- ✅ Source/type/build/pack CI on commit `1c3e745b`: [GitHub Actions run 41902026128](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/41902026128).
+  That run passed while 13 new `react-native` export targets pointed at files that are never emitted, because the pack check at that commit skipped the `react-native` condition. Fixed in `6c87b8b`; the check now covers every condition.
+- ✅ Source-level RN InstrumentKnob, InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay, CommandPopover and pure spatial/hinge/math contracts. `@nyc-tron/core/advanced-catalog` distinguishes source prototypes from planned ports.
+- ❌ NOT RUN: native iOS/Android/Windows/macOS builds, physical-device stylus/foldable/XR input, audio/media/GPU decoder integration and real consumer visual acceptance.
+- ⚠️ Source-port candidates cataloged only; zero upstream code copied or licensed into these components. Real source ports remain separate issues and require file-level audit.
+
+## Adaptive navigation and pane host — PR #9
+
+- Built `@nyc-tron/panes` Master/Detail/Inspector controlled RN host, native `NavigationRail` fallback, and controlled LEFT `CollapsibleDrawer` with three pane modes.
+- Pure window-origin, multi-hinge, book/tabletop and RTL planner tests added.
+- Native Windows WinUI **NOT IMPLEMENTED**: tracked by issue #11; independent RNW v0.85 host required.
+- CI pure tests, TypeScript, emitted ESM/declarations and all npm pack checks **passed** at commit `38b814405b09430e91ef4e7fa2a08b78a3523ff5`.
+- Physical Surface Duo, WinUI build, Mac AppKit and XR native acceptance **NOT RUN**.
+- Agent role profiles at `.github/agents/` are committed but no external coding subagent session was launched.
+
+## Native SwiftUI/Compose dropdown and menus — PR #10
+
+- Isolated `@nyc-tron/expo-controls` package, `NativeDropdown` via Expo 58 universal Picker and real native action menu via `@expo/ui/community/menu`.
+- Working React Native web fallback for action menus because Expo's web native MenuView has no action callbacks.
+- Checks for unique menu IDs, disabled actions and nested groups; exact `browser` and `react-native` export files verified per Metro's package exports rules.
+- Source tests, TypeScript, emitted package builds and npm pack checks **passed** on commit `8a3482bb1207ca2dd128b66092fbf2e7db59a38c`.
+- Actual Compose/SwiftUI on-device menu placement, keyboard and screen-reader verification **NOT RUN**. No production/publish claim.
+
+
+
+## Native popover, tooltip, command palette and overlay focus (issue #4)
+
+- `@nyc-tron/expo-controls/NativePopover`: @expo/ui SwiftUI `Popover` on iOS, Compose `DropdownMenu` surface on Android, `placePopover` on web. Same `anchor` + `usableRegions` contract everywhere.
+- `@nyc-tron/expo-controls/Tooltip`: Compose `TooltipBox` on Android; `accessibilityHint` only on iOS (no touch tooltip exists); delayed hover/focus tooltip with Escape on web.
+- `@nyc-tron/ui/components/overlays/CommandPalette` with `command-filter`: controlled, searchable, arrows/Enter/Escape, placed by `placePopover`. The app owns the shortcut that opens it; a shortcut registry is deferred.
+- Web Tab/Shift+Tab stay inside `NativeActionMenu`, `CommandPopover`, `NativePopover` and `CommandPalette`; focus returns to the opener on close.
+- Chromium Playwright checks cover the web keyboard paths. `examples/native-instruments` renders them and the native-controls workflow compiles it for Android and iOS.
+- NOT RUN: any device or simulator session, screen-reader output, native popover placement on foldables.

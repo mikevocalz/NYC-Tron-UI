@@ -1,0 +1,21 @@
+{
+  "name": "NYCTronInstruments",
+  "platforms": [
+    "apple",
+    "android"
+  ],
+  "coreFeatures": [
+    "swiftui",
+    "compose"
+  ],
+  "apple": {
+    "modules": [
+      "NYCTronInstrumentsModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "com.nyctron.instruments.NYCTronInstrumentsModule"
+    ]
+  }
+}

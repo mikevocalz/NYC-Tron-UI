@@ -44,8 +44,8 @@ differ; NYC-Tron receives semantic classes at the consuming app boundary.
   dependencies. Runtime-specific native adapters must use verified version
   matrices. Expo 58/RN 0.88 is **not compatible by default** with Spark
   0.0.2's Expo 55/RN 0.83 native host.
-- Shipped UI sources should eventually emit `dist/` with declarations and
-  platform conditions. Current private workspace exports point to TS source.
+- Packages emit `dist/` with declarations and platform conditions; every
+  export targets `dist` (checked by `tooling/verify-packages.mjs`).
 
 ### Component API
 

@@ -33,6 +33,33 @@ export function positionToFrame(position:number,durationFrames:number):number{
    throw new RangeError("Seek position must be finite in [0, 1]");
  return clampFrame(Math.round(position*durationFrames),durationFrames);
 }
+/**
+ * Exact media time of a frame index: `frame * denominator / numerator`.
+ * @throws {RangeError} When the rate is invalid or `frame` is not a
+ * nonnegative safe integer.
+ */
+export function framesToSeconds(frame:number,rate:FrameRate):number{
+ assertFrameRate(rate);
+ if(!Number.isSafeInteger(frame)||frame<0)
+  throw new RangeError("Frame must be a nonnegative safe integer");
+ return frame*rate.denominator/rate.numerator;
+}
+/**
+ * Nearest whole frame for a media time. Round-trips with
+ * {@linkcode framesToSeconds} for every frame up to 2^48 (over 74,000 years
+ * at 120 fps). Above about 2^51 frames, float rounding can land one frame
+ * off on NTSC and PAL rates.
+ * @throws {RangeError} When the rate is invalid, `seconds` is negative or
+ * nonfinite, or the frame index exceeds `Number.MAX_SAFE_INTEGER`.
+ */
+export function secondsToFrame(seconds:number,rate:FrameRate):number{
+ assertFrameRate(rate);
+ if(!Number.isFinite(seconds)||seconds<0)
+  throw new RangeError("Seconds must be finite and nonnegative");
+ const rounded=Math.round(seconds*rate.numerator/rate.denominator);
+ if(!Number.isSafeInteger(rounded))throw new RangeError("Frame exceeds safe integer");
+ return rounded;
+}
 export function formatTimecode(
  frame:number,rate:FrameRate,opts:{dropFrame?:boolean}={}
 ):string{
