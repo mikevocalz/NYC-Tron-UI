@@ -25,5 +25,10 @@ PaneSplitter; `?hinge=1` adds a simulated hinge, `?dir=rtl` flips direction).
 `shell-layout-shots.spec.mjs` captures it at 390 and 834px in light, dark, RTL,
 forced colors and with the hinge.
 
+`fixtures/shell-inspector.tsx` is a layer inspector (InspectorPanel, sections,
+PropertyRow, UnitInput, SliderField, RangeSlider, RotaryKnob; `?select=none|multiple`,
+`?dir=rtl`), driven by `shell-inspector.spec.mjs` and captured by
+`shell-inspector-shots.spec.mjs`.
+
 Not covered: iOS/Android rendering, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

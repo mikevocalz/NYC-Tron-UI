@@ -85,6 +85,66 @@
       "react-native": "./dist/components/shell/shell-keys.js",
       "default": "./dist/components/shell/shell-keys.js"
     },
+    "./components/shell/InspectorPanel": {
+      "types": "./dist/components/shell/InspectorPanel.d.ts",
+      "react-native": "./dist/components/shell/InspectorPanel.js",
+      "default": "./dist/components/shell/InspectorPanel.js"
+    },
+    "./components/shell/InspectorSection": {
+      "types": "./dist/components/shell/InspectorSection.d.ts",
+      "react-native": "./dist/components/shell/InspectorSection.js",
+      "default": "./dist/components/shell/InspectorSection.js"
+    },
+    "./components/shell/PropertyRow": {
+      "types": "./dist/components/shell/PropertyRow.d.ts",
+      "react-native": "./dist/components/shell/PropertyRow.js",
+      "default": "./dist/components/shell/PropertyRow.js"
+    },
+    "./components/shell/InspectorSearch": {
+      "types": "./dist/components/shell/InspectorSearch.d.ts",
+      "react-native": "./dist/components/shell/InspectorSearch.js",
+      "default": "./dist/components/shell/InspectorSearch.js"
+    },
+    "./components/shell/inspector-model": {
+      "types": "./dist/components/shell/inspector-model.d.ts",
+      "react-native": "./dist/components/shell/inspector-model.js",
+      "default": "./dist/components/shell/inspector-model.js"
+    },
+    "./components/shell/inspector-context": {
+      "types": "./dist/components/shell/inspector-context.d.ts",
+      "react-native": "./dist/components/shell/inspector-context.js",
+      "default": "./dist/components/shell/inspector-context.js"
+    },
+    "./components/shell/UnitInput": {
+      "types": "./dist/components/shell/UnitInput.d.ts",
+      "react-native": "./dist/components/shell/UnitInput.js",
+      "default": "./dist/components/shell/UnitInput.js"
+    },
+    "./components/shell/unit-expression": {
+      "types": "./dist/components/shell/unit-expression.d.ts",
+      "react-native": "./dist/components/shell/unit-expression.js",
+      "default": "./dist/components/shell/unit-expression.js"
+    },
+    "./components/shell/SliderField": {
+      "types": "./dist/components/shell/SliderField.d.ts",
+      "react-native": "./dist/components/shell/SliderField.js",
+      "default": "./dist/components/shell/SliderField.js"
+    },
+    "./components/shell/RangeSlider": {
+      "types": "./dist/components/shell/RangeSlider.d.ts",
+      "react-native": "./dist/components/shell/RangeSlider.js",
+      "default": "./dist/components/shell/RangeSlider.js"
+    },
+    "./components/shell/RotaryKnob": {
+      "types": "./dist/components/shell/RotaryKnob.d.ts",
+      "react-native": "./dist/components/shell/RotaryKnob.js",
+      "default": "./dist/components/shell/RotaryKnob.js"
+    },
+    "./components/shell/slider-model": {
+      "types": "./dist/components/shell/slider-model.d.ts",
+      "react-native": "./dist/components/shell/slider-model.js",
+      "default": "./dist/components/shell/slider-model.js"
+    },
     "./components/forge/WaveformLane": {
       "types": "./dist/components/forge/WaveformLane.d.ts",
       "react-native": "./dist/components/forge/WaveformLane.js",

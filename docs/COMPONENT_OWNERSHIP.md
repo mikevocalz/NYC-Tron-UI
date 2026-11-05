@@ -15,6 +15,14 @@ complex editor screen composition and its cross-engine suite application.
 | ToolRail (A-06) | `@nyc-tron/ui/components/shell/ToolRail` (model in `/shell/tool-rail-model`) | Controlled 44pt toggle tools, variant flyouts on long press, outward arrow or a11y action; app owns shortcuts | Original; NavigationRail stays the app-section rail |
 | StatusBar (A-25) | `@nyc-tron/ui/components/shell/StatusBar` (text in `/shell/status-model`) | Controlled zoom steps and presets, unit menu, selection count, render/save/record/error state with polite announcements | Original |
 | MenuButton | `@nyc-tron/ui/components/shell/MenuButton` | Button that anchors a CommandPopover; shared by the shell controls | Original |
+| InspectorPanel (A-09) | `@nyc-tron/ui/components/shell/InspectorPanel` (model in `/shell/inspector-model`) | Controlled selection heading (none, single, multiple), empty state, search that hides non-matching rows and sections | Original |
+| InspectorSection (A-10) | `@nyc-tron/ui/components/shell/InspectorSection` | Controlled disclosure, nesting, enable switch that disables rows inside, Reset while modified | Original |
+| PropertyRow (A-11) | `@nyc-tron/ui/components/shell/PropertyRow` | Label + editor, Mixed marker, inherited/overridden state with Revert, stacks in narrow panes | Original |
+| InspectorSearch (A-21) | `@nyc-tron/ui/components/shell/InspectorSearch` (`matchesQuery` for app lists) | Search field with clear, Escape and a polite match count | Original |
+| UnitInput (A-13) | `@nyc-tron/ui/components/shell/UnitInput` (parser in `/shell/unit-expression`) | Bounded recursive-descent unit arithmetic (px, pt, mm, cm, in, %, s, ms, f, smp, dB, x); no eval; length/token/depth limits | Original; replaces the helper-only gap noted on forge #46 |
+| SliderField (A-14) | `@nyc-tron/ui/components/shell/SliderField`; OS slider in `@nyc-tron/expo-controls/NativeSliderField` | RN track with typed entry and Reset on every platform; the expo-controls variant renders SwiftUI/Compose `Slider` on iOS/Android and commits when the OS drag ends. Native build and device runs unverified | Original |
+| RangeSlider (A-15) | `@nyc-tron/ui/components/shell/RangeSlider` (math in `/shell/slider-model`) | Two ends that never cross, min gap, typed endpoints, per-end keyboard and a11y | Original |
+| RotaryKnob (A-16) | `@nyc-tron/ui/components/shell/RotaryKnob` | Relative drag with sideways fine mode, circular (stylus) input, keys, exact entry, Reset. InstrumentKnob and native ArcKnob are unchanged | Original |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
@@ -200,3 +208,52 @@ models; Chromium/React Native Web interaction tests for every control
 verified: iOS, Android, Surface Duo or other foldable devices, real hinge
 features from a device, VoiceOver/TalkBack/Narrator output, and the
 GestureHandlerDrag transport with these controls.
+
+## 2026-11-05 studio shell inspector and inputs (A-09, A-10, A-11, A-13, A-14, A-15, A-16, A-21)
+
+`UnitInput` parses with a recursive-descent parser over a fixed token set:
+numbers, the unit names in `UNITS`, `+ - * / ( )`. It never calls `eval` or
+`Function`, rejects any other word, and stops at 128 characters, 64 tokens
+or 8 levels of nesting. Values are stored in the dimension's base unit
+(pixels at 96 per inch, seconds, decibels, or a ratio), so changing the
+display unit never changes the value. Bare numbers in a sum take the
+display unit; `12mm * 2` doubles, `4 / 2mm` and `2mm * 3mm` are errors.
+Frames, samples and length percentages need `frameRate`, `sampleRate` and
+`percentOf` in the context and say so when they are missing. Enter commits
+and keeps focus, so a parse error stays next to the text; leaving the field
+with unparseable text restores the value and shows "Not applied".
+
+`SliderField`, `RangeSlider` and `RotaryKnob` take one `onCommit` per drag,
+key press, typed entry, screen-reader action or reset, and `onPreview` for
+live canvas updates. Typed entry in all three is a `UnitInput`. The knob's
+`input="circular"` is the stylus path: the value follows the pen's angle
+and holds at an end across the 90-degree gap at the bottom. The app chooses
+it, because React Native's responder events do not report the pointer type.
+
+**Native choice:** @expo/ui 58 has a SwiftUI and a Compose `Slider` (but no
+range slider or knob). `@nyc-tron/expo-controls/NativeSliderField` renders
+them with the SliderField label, entry and Reset around them and commits on
+`onEditingChanged(false)` / `onValueChangeFinished`. The universal
+`@expo/ui` Slider reports neither, so it is not used. Its web entry is the
+RN `SliderField`. The inspector section switch is React Native's `Switch`
+(the platform control on iOS and Android); on web it takes the theme
+tokens through `var()`.
+
+`InspectorPanel` filters through a small registry: each `PropertyRow`
+reports whether it matches the query, sections hide when nothing in them
+matches, and matching sections show open without changing their controlled
+`expanded` value. Mixed values are the app's call: the row shows "Mixed"
+and the editor gets `mixed` and an accessible name ending in "mixed values".
+
+Directional layout uses leading spacers and flex order, not
+`paddingStart`/`marginStart`: React Native Web resolves start/end from
+`I18nManager`, not from the CSS `direction` a web app sets, and the first
+RTL capture showed indents and the search glyph on the wrong side.
+
+Verified: parser, slider, range, knob and registry unit tests; Chromium/
+React Native Web interaction tests for every control
+(`packages/ui/tests/browser/shell-inspector.spec.mjs`) and captures at 390
+and 834px in light, dark, RTL, forced colors and the three selection states.
+Not verified: the SwiftUI/Compose `NativeSliderField` on a device (source
+and types only), iOS/Android rendering of the RN controls, stylus input on
+hardware, and screen-reader output.
