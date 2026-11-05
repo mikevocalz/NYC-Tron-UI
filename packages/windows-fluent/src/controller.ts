@@ -26,6 +26,9 @@ export function createWindowsNavigationController(
   callbacks: WindowsNavigationCallbacks,
 ): WindowsNavigationController {
   let current = validateWindowsNavigationState(initial);
+  // Native toggles can diverge from the app's committed state. Keep that
+  // observation even when the app rejects a request without changing props.
+  let nativePaneOpen = current.paneOpen;
   let disposed = false;
   // Apply the entire initial state exactly once, before subscribing to native events.
   function applyAll(next: WindowsNavigationState) {
@@ -48,6 +51,7 @@ export function createWindowsNavigationController(
         callbacks.onSelectionRequested(target.id);
       }
     } else if (event.type === "paneOpenChanged") {
+      nativePaneOpen = event.open;
       if (event.open !== current.paneOpen) callbacks.onPaneOpenRequested(event.open);
     } else if (event.type === "settingsInvoked") {
       if (current.settingsVisible) callbacks.onSettingsRequested?.();
@@ -70,7 +74,10 @@ export function createWindowsNavigationController(
       if (current.selectedId !== next.selectedId || itemsChanged) {
         transport.setSelectedId(next.selectedId);
       }
-      if (current.paneOpen !== next.paneOpen) transport.setPaneOpen(next.paneOpen);
+      if (current.paneOpen !== next.paneOpen || nativePaneOpen !== next.paneOpen) {
+        transport.setPaneOpen(next.paneOpen);
+        nativePaneOpen = next.paneOpen;
+      }
       current = next;
     },
     dispose() {

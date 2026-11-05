@@ -97,3 +97,26 @@ test("native shell is real WinUI NavigationView outside Fabric composition",()=>
  assert.match(implementation,/AutomationProperties\.SetName\(item, destination\.Label\)/);
  assert.doesNotMatch(implementation,/Windows\.UI\.Xaml/);
 });
+
+test("an unchanged app state reconciles a rejected native pane toggle",()=>{
+ for(const committed of [false,true]) {
+  const mock=createMockHost();
+  let actual=committed;
+  const setPaneOpen=mock.host.setPaneOpen;
+  mock.host.setPaneOpen=open=>{actual=open;setPaneOpen(open);};
+  const requests=[];
+  const state={...sample,paneOpen:committed};
+  const controller=createWindowsNavigationController(mock.host,state,{
+   onSelectionRequested:()=>{},onPaneOpenRequested:open=>requests.push(open),
+  });
+  actual=!committed;
+  mock.fire({type:"paneOpenChanged",open:actual});
+  controller.update(state);
+  assert.equal(actual,committed,"rejected native toggle must return to committed state");
+  assert.deepEqual(requests,[!committed]);
+  const count=mock.calls.length;
+  controller.update(state);
+  assert.equal(mock.calls.length,count,"reconciled state must not cause redundant writes");
+  controller.dispose();
+ }
+});
