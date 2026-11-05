@@ -14,6 +14,7 @@
     "@nyc-tron/core": "workspace:*",
     "@nyc-tron/expo-controls": "workspace:*",
     "@nyc-tron/native-controls": "workspace:*",
+    "@nyc-tron/platform-services": "workspace:*",
     "@nyc-tron/reserved-regions": "workspace:*",
     "@nyc-tron/ui": "workspace:*",
     "expo": "58.0.23",

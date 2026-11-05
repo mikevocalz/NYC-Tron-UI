@@ -35,6 +35,9 @@ importers:
       '@nyc-tron/native-navigation':
         specifier: workspace:*
         version: link:../../packages/native-navigation
+      '@nyc-tron/platform-services':
+        specifier: workspace:*
+        version: link:../../packages/platform-services
       '@nyc-tron/reserved-regions':
         specifier: workspace:*
         version: link:../../packages/reserved-regions
