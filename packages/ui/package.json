@@ -69,6 +69,76 @@
       "types": "./dist/components/forge/sheet-window.d.ts",
       "react-native": "./dist/components/forge/sheet-window.js",
       "default": "./dist/components/forge/sheet-window.js"
+    },
+    "./components/forge/inputs/precision": {
+      "types": "./dist/components/forge/inputs/precision.d.ts",
+      "react-native": "./dist/components/forge/inputs/precision.js",
+      "default": "./dist/components/forge/inputs/precision.js"
+    },
+    "./components/forge/inputs/InstrumentKnob": {
+      "types": "./dist/components/forge/inputs/InstrumentKnob.d.ts",
+      "react-native": "./dist/components/forge/inputs/InstrumentKnob.js",
+      "default": "./dist/components/forge/inputs/InstrumentKnob.js"
+    },
+    "./components/forge/inputs/InstrumentXYPad": {
+      "types": "./dist/components/forge/inputs/InstrumentXYPad.d.ts",
+      "react-native": "./dist/components/forge/inputs/InstrumentXYPad.js",
+      "default": "./dist/components/forge/inputs/InstrumentXYPad.js"
+    },
+    "./components/data/tree-grid": {
+      "types": "./dist/components/data/tree-grid.d.ts",
+      "react-native": "./dist/components/data/tree-grid.js",
+      "default": "./dist/components/data/tree-grid.js"
+    },
+    "./components/data/TreeGrid": {
+      "types": "./dist/components/data/TreeGrid.d.ts",
+      "react-native": "./dist/components/data/TreeGrid.js",
+      "default": "./dist/components/data/TreeGrid.js"
+    },
+    "./components/forge/graph/model": {
+      "types": "./dist/components/forge/graph/model.d.ts",
+      "react-native": "./dist/components/forge/graph/model.js",
+      "default": "./dist/components/forge/graph/model.js"
+    },
+    "./components/forge/graph/PatchGraph": {
+      "types": "./dist/components/forge/graph/PatchGraph.d.ts",
+      "react-native": "./dist/components/forge/graph/PatchGraph.js",
+      "default": "./dist/components/forge/graph/PatchGraph.js"
+    },
+    "./components/forge/graphics/crop": {
+      "types": "./dist/components/forge/graphics/crop.d.ts",
+      "react-native": "./dist/components/forge/graphics/crop.js",
+      "default": "./dist/components/forge/graphics/crop.js"
+    },
+    "./components/forge/graphics/ImageCropOverlay": {
+      "types": "./dist/components/forge/graphics/ImageCropOverlay.d.ts",
+      "react-native": "./dist/components/forge/graphics/ImageCropOverlay.js",
+      "default": "./dist/components/forge/graphics/ImageCropOverlay.js"
+    },
+    "./components/overlays/popover-position": {
+      "types": "./dist/components/overlays/popover-position.d.ts",
+      "react-native": "./dist/components/overlays/popover-position.js",
+      "default": "./dist/components/overlays/popover-position.js"
+    },
+    "./components/overlays/CommandPopover": {
+      "types": "./dist/components/overlays/CommandPopover.d.ts",
+      "react-native": "./dist/components/overlays/CommandPopover.js",
+      "default": "./dist/components/overlays/CommandPopover.js"
+    },
+    "./components/TextField": {
+      "types": "./dist/components/TextField.d.ts",
+      "react-native": "./dist/components/TextField.js",
+      "default": "./dist/components/TextField.js"
+    },
+    "./components/navigation/CollapsibleDrawer": {
+      "types": "./dist/components/navigation/CollapsibleDrawer.d.ts",
+      "react-native": "./dist/components/navigation/CollapsibleDrawer.js",
+      "default": "./dist/components/navigation/CollapsibleDrawer.js"
+    },
+    "./components/navigation/drawer-model": {
+      "types": "./dist/components/navigation/drawer-model.d.ts",
+      "react-native": "./dist/components/navigation/drawer-model.js",
+      "default": "./dist/components/navigation/drawer-model.js"
     }
   },
   "scripts": {
