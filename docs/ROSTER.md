@@ -52,3 +52,11 @@ native AppKit/WinUI/Compose/SwiftUI behavior.
 - CI pure tests, TypeScript, emitted ESM/declarations and all npm pack checks **passed** at commit `38b814405b09430e91ef4e7fa2a08b78a3523ff5`.
 - Physical Surface Duo, WinUI build, Mac AppKit and XR native acceptance **NOT RUN**.
 - Agent role profiles at `.github/agents/` are committed but no external coding subagent session was launched.
+
+## Native SwiftUI/Compose dropdown and menus — PR #10
+
+- Isolated `@nyc-tron/expo-controls` package, `NativeDropdown` via Expo 58 universal Picker and real native action menu via `@expo/ui/community/menu`.
+- Working React Native web fallback for action menus because Expo's web native MenuView has no action callbacks.
+- Checks for unique menu IDs, disabled actions and nested groups; exact `browser` and `react-native` export files verified per Metro's package exports rules.
+- Source tests, TypeScript, emitted package builds and npm pack checks **passed** on commit `8a3482bb1207ca2dd128b66092fbf2e7db59a38c`.
+- Actual Compose/SwiftUI on-device menu placement, keyboard and screen-reader verification **NOT RUN**. No production/publish claim.
