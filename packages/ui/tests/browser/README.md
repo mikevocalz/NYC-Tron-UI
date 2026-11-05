@@ -36,5 +36,15 @@ and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
 focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
 web `ScopedTheme` output (a `display: contents` element with the theme class).
 
+`mixer.spec.mjs` loads `/mixer` (`mixer.tsx`), with a zustand store standing
+in for the Cadence engine: fader and pan drags commit once, mute/solo with the
+silenced-by-solo description, pan arrows and Home, a piano-roll note drag
+that commits time and pitch together, Shift+arrow resize, Delete, audition,
+a velocity bar drag, step toggles and the A accent key, tap tempo committing
+once after the taps stop, time signature and metronome, and a waveform
+window scroll plus seek. It writes `shots/mixer-*` captures (light and dark at
+390 and 834 px, focus states, RTL) and asserts no horizontal page scroll and
+that musical time stays left to right in RTL.
+
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

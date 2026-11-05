@@ -19,7 +19,7 @@ const bundleOf=entry=>build({entryPoints:[resolve(here,entry)],bundle:true,write
     "@expo/ui":resolve(here,"node_modules/@expo/ui/build/universal/index.js")},
   nodePaths:[resolve(here,"node_modules")],
   define:{"process.env.NODE_ENV":'"development"'}});
-const [bundle,primitives]=await Promise.all([bundleOf("fixture.tsx"),bundleOf("primitives.tsx")]);
+const [bundle,primitives,mixer]=await Promise.all([bundleOf("fixture.tsx"),bundleOf("primitives.tsx"),bundleOf("mixer.tsx")]);
 // Only the test document bootstrap is HTML. The rendered UI is React Native components.
 const doc=script=>'<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UI acceptance</title><link rel="stylesheet" href="/theme.css"></head><body><div id="root" style="min-height:100vh;display:flex"></div><script src="'+script+'"></script></body></html>';
 createServer((req,res)=>{
@@ -27,6 +27,8 @@ createServer((req,res)=>{
   if(path==="/bundle.js"){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(bundle.outputFiles[0].contents);}
   else if(path==="/primitives.js"){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(primitives.outputFiles[0].contents);}
   else if(path==="/primitives"){res.writeHead(200,{"Content-Type":"text/html"});res.end(doc("/primitives.js"));}
+  else if(path==="/mixer.js"){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(mixer.outputFiles[0].contents);}
+  else if(path==="/mixer"){res.writeHead(200,{"Content-Type":"text/html"});res.end(doc("/mixer.js"));}
   else if(path==="/theme.css"){res.writeHead(200,{"Content-Type":"text/css"});res.end(css);}
   else if(path==="/"){res.writeHead(200,{"Content-Type":"text/html"});res.end(doc("/bundle.js"));}
   else{res.writeHead(404);res.end();}

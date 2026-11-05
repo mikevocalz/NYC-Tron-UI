@@ -1,0 +1,180 @@
+import { useRef } from "react";
+import {
+  PanResponder, Platform, Pressable, Text, View,
+  type GestureResponderEvent, type KeyDownEvent, type PanResponderGestureState, type ViewProps, type ViewStyle,
+} from "react-native";
+import { createStore, type StoreApi } from "zustand/vanilla";
+import { useStore } from "zustand";
+import { cancelPreview } from "../cancel-preview.ts";
+import { joinClasses } from "../../styles.ts";
+import { describePan, dragToPan, formatPan, panToPosition, quantizePan, stepPan } from "./pan.ts";
+
+/** Minimum hit size (iOS 44pt / Android 48dp floor). */
+const HIT = 44;
+const THUMB = 14;
+/** Horizontal movement, in points, before the control claims a touch. */
+const SLOP = 4;
+
+type Local = { preview: number; active: boolean };
+
+/** Props for {@linkcode PanControl}. */
+export interface PanControlProps extends Omit<ViewProps, "children"> {
+  /** Committed mono pan from the app or engine, -1 (left) .. 1 (right). */
+  readonly value: number;
+  /** Channel name; the accessible name is `"<label> pan"`. */
+  readonly label: string;
+  /** Live preview while dragging, and the restored value on cancel. */
+  readonly onChange?: (pan: number) => void;
+  /**
+   * Once per completed drag, step or centre reset. Not called when the pan
+   * is unchanged. The control keeps showing `value`, so a rejected promise
+   * leaves the old position on screen.
+   */
+  readonly onCommit: (pan: number) => void | Promise<unknown>;
+  /** One arrow-key or screen-reader step. @default 0.05 */
+  readonly step?: number;
+  /** Track width, points. @default 120 */
+  readonly width?: number;
+  /** Hide the visible channel name (strips already show it). @default false */
+  readonly hideLabel?: boolean;
+  /** @default false */
+  readonly disabled?: boolean;
+  className?: string;
+  unstyled?: boolean;
+}
+
+/**
+ * Controlled mono pan control. Drag horizontally, use Left/Right arrows,
+ * screen-reader increment/decrement, or press the readout to centre. Drags
+ * snap to centre within a small detent. One `onCommit` per gesture.
+ *
+ * The stereo field is physical, so the track never mirrors in right-to-left
+ * layouts: left is the left speaker and Right arrow pans right everywhere.
+ * Text around it follows the layout direction.
+ *
+ * Balance (independent left/right gain for a stereo source) and surround
+ * positioning are not offered: the Cadence engine stores one equal-power
+ * mono pan per track. Both are deferred until the engine has a channel
+ * layout per track.
+ */
+export function PanControl({
+  value, label, onChange, onCommit, step = 0.05, width = 120, hideLabel = false, disabled = false,
+  className, unstyled = false, ...rest
+}: PanControlProps) {
+  if (!Number.isFinite(width) || width <= THUMB * 2) throw new RangeError(`Pan width must be greater than ${THUMB * 2}`);
+  const committed = quantizePan(value);
+  const travel = width - THUMB;
+  const latest = useRef({ value: committed, step, disabled, onChange, onCommit, travel });
+  latest.current = { value: committed, step, disabled, onChange, onCommit, travel };
+  const local = useRef<StoreApi<Local> | null>(null);
+  if (!local.current) local.current = createStore<Local>(() => ({ preview: committed, active: false }));
+  const store = local.current;
+  const active = useStore(store, s => s.active);
+  const preview = useStore(store, s => s.preview);
+  const current = active ? preview : committed;
+  const start = useRef(0);
+
+  const cancel = () => cancelPreview(latest.current.value,
+    restored => store.setState({ active: false, preview: restored }), latest.current.onChange);
+  const commit = (next: number) => {
+    const p = latest.current;
+    store.setState({ active: false, preview: next });
+    if (next === p.value) return;
+    void p.onCommit(next);
+  };
+  const claims = (_e: GestureResponderEvent, g: PanResponderGestureState) =>
+    !latest.current.disabled && Math.abs(g.dx) >= SLOP && Math.abs(g.dx) > Math.abs(g.dy);
+  const responder = useRef<ReturnType<typeof PanResponder.create> | null>(null);
+  if (!responder.current) responder.current = PanResponder.create({
+    onStartShouldSetPanResponder: () => false,
+    onMoveShouldSetPanResponder: claims,
+    onMoveShouldSetPanResponderCapture: claims,
+    onPanResponderGrant: () => {
+      start.current = latest.current.value;
+      store.setState({ active: true, preview: start.current });
+    },
+    onPanResponderMove: (_e, g) => {
+      const p = latest.current;
+      if (p.disabled) return;
+      const next = dragToPan(start.current, g.dx, p.travel);
+      if (next !== store.getState().preview) {
+        store.setState({ preview: next });
+        p.onChange?.(next);
+      }
+    },
+    onPanResponderRelease: () => {
+      if (!store.getState().active) return;
+      if (latest.current.disabled) { cancel(); return; }
+      commit(store.getState().preview);
+    },
+    onPanResponderTerminate: cancel,
+    onPanResponderTerminationRequest: () => !store.getState().active,
+    onShouldBlockNativeResponder: () => true,
+  });
+  const nudge = (direction: -1 | 1) => {
+    const p = latest.current;
+    if (p.disabled || store.getState().active) return;
+    const next = stepPan(p.value, direction, p.step);
+    if (next === p.value) return;
+    p.onChange?.(next);
+    commit(next);
+  };
+  const centre = () => {
+    const p = latest.current;
+    if (p.disabled || store.getState().active || p.value === 0) return;
+    p.onChange?.(0);
+    commit(0);
+  };
+  const onKeyDown = (e: KeyDownEvent) => {
+    const key = e.nativeEvent.key;
+    if (key === "Escape" && store.getState().active) { e.preventDefault(); cancel(); return; }
+    if (key === "Home" || key === "c" || key === "C") { e.preventDefault(); centre(); return; }
+    if (key !== "ArrowLeft" && key !== "ArrowRight") return;
+    e.preventDefault();
+    nudge(key === "ArrowRight" ? 1 : -1);
+  };
+
+  const styled = !unstyled;
+  const x = panToPosition(current) * travel;
+  const centreX = travel / 2 + THUMB / 2;
+  const fillLeft = Math.min(x + THUMB / 2, centreX);
+  const fillWidth = Math.abs(x + THUMB / 2 - centreX);
+  const webTrack = Platform.OS === "web" ? { touchAction: "pan-y" } as unknown as ViewStyle : undefined;
+  const readout = formatPan(current);
+  const name = label + " pan";
+
+  return <View {...rest} {...{ className: joinClasses("items-center gap-1", className) }}>
+    {hideLabel ? null : <Text {...{ className: joinClasses(styled && "text-text-muted") }}>Pan</Text>}
+    <View {...responder.current.panHandlers}
+      accessible focusable={!disabled} accessibilityRole="adjustable" accessibilityLabel={name}
+      accessibilityValue={{ min: -100, max: 100, now: Math.round(current * 100), text: describePan(current) }}
+      accessibilityState={{ disabled }}
+      accessibilityActions={[{ name: "increment" }, { name: "decrement" }, { name: "centre", label: "Centre" }]}
+      onAccessibilityAction={e => {
+        const action = e.nativeEvent.actionName;
+        if (action === "increment") nudge(1);
+        if (action === "decrement") nudge(-1);
+        if (action === "centre") centre();
+      }}
+      onKeyDown={onKeyDown}
+      {...{ className: joinClasses(styled && "rounded-control focus-visible:ring-2 focus-visible:ring-focus") }}
+      // Physical stereo field: never mirrored by an RTL ancestor.
+      style={{ width, height: HIT, direction: "ltr", opacity: disabled ? 0.45 : 1, ...webTrack }}>
+      <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-surface-sunken border border-border") }}
+        style={{ position: "absolute", left: THUMB / 2, right: THUMB / 2, top: (HIT - 6) / 2, height: 6, borderRadius: 3 }} />
+      <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-accent") }}
+        style={{ position: "absolute", left: fillLeft, width: fillWidth, top: (HIT - 6) / 2, height: 6 }} />
+      <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-text-muted") }}
+        style={{ position: "absolute", left: centreX - 1, width: 2, top: (HIT - 16) / 2, height: 16 }} />
+      <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-surface-raised border-accent") }}
+        style={{ position: "absolute", left: x, width: THUMB, top: (HIT - 24) / 2, height: 24, borderRadius: 4, borderWidth: 2 }} />
+    </View>
+    <Pressable accessibilityRole="button" accessibilityLabel={"Centre " + name}
+      accessibilityHint={"Currently " + describePan(current)} disabled={disabled || current === 0}
+      onPress={centre}
+      {...{ className: joinClasses(styled && "rounded-control active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus") }}
+      style={{ minWidth: HIT, minHeight: HIT, paddingHorizontal: 6, justifyContent: "center", alignItems: "center" }}>
+      <Text {...{ className: joinClasses(styled && "text-text") }} style={{ fontVariant: ["tabular-nums"] }}>{readout}</Text>
+    </Pressable>
+  </View>;
+}

@@ -13,8 +13,8 @@ the caller passes one; otherwise the token applies.
 
 | `TronTheme` key | Variable | Utilities | Used by |
 | --- | --- | --- | --- |
-| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range, TreeGrid selected rows |
-| `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
+| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10`, `border-primary` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range, TreeGrid selected rows; mute on, selected/dragged MIDI note and velocity bar, accented step, chosen beat unit, tap tempo while tapping, downbeat dot |
+| `onPrimary` | `--color-on-primary` | `text-on-primary`, `bg-on-primary` | Text on `primary`; MIDI note end grip and accent dot on `primary` |
 | `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale; HsvPicker thumb inner ring; LevelFader card |
 | `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars; HsvPicker steppers; LevelFader rail, thumb and step buttons |
 | `border` | `--color-border` | `border-border` | Every bordered surface |
@@ -22,7 +22,7 @@ the caller passes one; otherwise the token applies.
 | `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted`, `bg-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip; HsvPicker and ColorChannels labels and hex readout; LevelFader dB readout, `bg-text-muted` for the LevelFader unity mark |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border |
+| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border; PanControl fill and thumb, solo on (with `text-surface-raised`), MIDI notes, velocity bars, active steps, beat dots |
 | `info` | `--color-info` | `bg-info`, `border-info` | Banner (info) border and mark, Badge (info) dot |
 | `success` | `--color-success` | `bg-success`, `border-success` | Banner (success) border and mark, Badge (success) dot |
 | `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field |

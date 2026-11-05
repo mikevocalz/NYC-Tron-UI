@@ -60,6 +60,66 @@
       "react-native": "./dist/components/forge/audio/LevelFader.js",
       "default": "./dist/components/forge/audio/LevelFader.js"
     },
+    "./components/forge/audio/pan": {
+      "types": "./dist/components/forge/audio/pan.d.ts",
+      "react-native": "./dist/components/forge/audio/pan.js",
+      "default": "./dist/components/forge/audio/pan.js"
+    },
+    "./components/forge/audio/PanControl": {
+      "types": "./dist/components/forge/audio/PanControl.d.ts",
+      "react-native": "./dist/components/forge/audio/PanControl.js",
+      "default": "./dist/components/forge/audio/PanControl.js"
+    },
+    "./components/forge/audio/SoloMuteButtons": {
+      "types": "./dist/components/forge/audio/SoloMuteButtons.d.ts",
+      "react-native": "./dist/components/forge/audio/SoloMuteButtons.js",
+      "default": "./dist/components/forge/audio/SoloMuteButtons.js"
+    },
+    "./components/forge/audio/mixer": {
+      "types": "./dist/components/forge/audio/mixer.d.ts",
+      "react-native": "./dist/components/forge/audio/mixer.js",
+      "default": "./dist/components/forge/audio/mixer.js"
+    },
+    "./components/forge/audio/ChannelStrip": {
+      "types": "./dist/components/forge/audio/ChannelStrip.d.ts",
+      "react-native": "./dist/components/forge/audio/ChannelStrip.js",
+      "default": "./dist/components/forge/audio/ChannelStrip.js"
+    },
+    "./components/forge/audio/MixingConsole": {
+      "types": "./dist/components/forge/audio/MixingConsole.d.ts",
+      "react-native": "./dist/components/forge/audio/MixingConsole.js",
+      "default": "./dist/components/forge/audio/MixingConsole.js"
+    },
+    "./components/forge/audio/tempo": {
+      "types": "./dist/components/forge/audio/tempo.d.ts",
+      "react-native": "./dist/components/forge/audio/tempo.js",
+      "default": "./dist/components/forge/audio/tempo.js"
+    },
+    "./components/forge/audio/TempoAndMetronome": {
+      "types": "./dist/components/forge/audio/TempoAndMetronome.d.ts",
+      "react-native": "./dist/components/forge/audio/TempoAndMetronome.js",
+      "default": "./dist/components/forge/audio/TempoAndMetronome.js"
+    },
+    "./components/forge/midi/note-grid": {
+      "types": "./dist/components/forge/midi/note-grid.d.ts",
+      "react-native": "./dist/components/forge/midi/note-grid.js",
+      "default": "./dist/components/forge/midi/note-grid.js"
+    },
+    "./components/forge/midi/MIDIPianoRoll": {
+      "types": "./dist/components/forge/midi/MIDIPianoRoll.d.ts",
+      "react-native": "./dist/components/forge/midi/MIDIPianoRoll.js",
+      "default": "./dist/components/forge/midi/MIDIPianoRoll.js"
+    },
+    "./components/forge/midi/MIDIVelocityLane": {
+      "types": "./dist/components/forge/midi/MIDIVelocityLane.d.ts",
+      "react-native": "./dist/components/forge/midi/MIDIVelocityLane.js",
+      "default": "./dist/components/forge/midi/MIDIVelocityLane.js"
+    },
+    "./components/forge/midi/StepSequencer": {
+      "types": "./dist/components/forge/midi/StepSequencer.d.ts",
+      "react-native": "./dist/components/forge/midi/StepSequencer.js",
+      "default": "./dist/components/forge/midi/StepSequencer.js"
+    },
     "./components/forge/color": {
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color.js",
