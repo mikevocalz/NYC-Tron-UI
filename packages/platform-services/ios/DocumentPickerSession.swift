@@ -21,12 +21,12 @@ final class DocumentPickerSession: NSObject, UIDocumentPickerDelegate {
     }
   }
 
-  nonisolated func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-    MainActor.assumeIsolated { finish(urls) }
+  func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    finish(urls)
   }
 
-  nonisolated func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-    MainActor.assumeIsolated { finish([]) }
+  func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+    finish([])
   }
 
   private func finish(_ urls: [URL]) {
