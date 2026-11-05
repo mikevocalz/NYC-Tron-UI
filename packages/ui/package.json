@@ -159,6 +159,41 @@
       "types": "./dist/components/forge/layers/LayerStack.d.ts",
       "react-native": "./dist/components/forge/layers/LayerStack.js",
       "default": "./dist/components/forge/layers/LayerStack.js"
+    },
+    "./components/forge/inputs/PrecisionScrubber": {
+      "types": "./dist/components/forge/inputs/PrecisionScrubber.d.ts",
+      "react-native": "./dist/components/forge/inputs/PrecisionScrubber.js",
+      "default": "./dist/components/forge/inputs/PrecisionScrubber.js"
+    },
+    "./components/forge/inputs/precision-scrubber-model": {
+      "types": "./dist/components/forge/inputs/precision-scrubber-model.d.ts",
+      "react-native": "./dist/components/forge/inputs/precision-scrubber-model.js",
+      "default": "./dist/components/forge/inputs/precision-scrubber-model.js"
+    },
+    "./components/DragGrabHandle": {
+      "types": "./dist/components/DragGrabHandle.d.ts",
+      "react-native": "./dist/components/DragGrabHandle.js",
+      "default": "./dist/components/DragGrabHandle.js"
+    },
+    "./components/gestures/drag-transport": {
+      "types": "./dist/components/gestures/drag-transport.d.ts",
+      "react-native": "./dist/components/gestures/drag-transport.js",
+      "default": "./dist/components/gestures/drag-transport.js"
+    },
+    "./components/gestures/drag-controller": {
+      "types": "./dist/components/gestures/drag-controller.d.ts",
+      "react-native": "./dist/components/gestures/drag-controller.js",
+      "default": "./dist/components/gestures/drag-controller.js"
+    },
+    "./components/gestures/PanResponderDrag": {
+      "types": "./dist/components/gestures/PanResponderDrag.d.ts",
+      "react-native": "./dist/components/gestures/PanResponderDrag.js",
+      "default": "./dist/components/gestures/PanResponderDrag.js"
+    },
+    "./components/gestures/GestureHandlerDrag": {
+      "types": "./dist/components/gestures/GestureHandlerDrag.d.ts",
+      "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
+      "default": "./dist/components/gestures/GestureHandlerDrag.js"
     }
   },
   "scripts": {
@@ -171,7 +206,8 @@
     "react-native": ">=0.88.0",
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.0",
+    "react-native-gesture-handler": ">=3.4.0 <4"
   },
   "peerDependenciesMeta": {
     "@expo/ui": {
@@ -182,6 +218,9 @@
     },
     "zustand": {
       "optional": true
+    },
+    "react-native-gesture-handler": {
+      "optional": true
     }
   },
   "devDependencies": {
@@ -191,7 +230,8 @@
     "react-native": "0.88.0",
     "@expo/ui": "58.0.20",
     "@tanstack/react-table": "9.3.1",
-    "zustand": "5.0.16"
+    "zustand": "5.0.16",
+    "react-native-gesture-handler": "3.4.0"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
