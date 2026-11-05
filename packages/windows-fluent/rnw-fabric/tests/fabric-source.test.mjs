@@ -44,6 +44,23 @@ test("route approval remains app-owned and unrelated updates retain native items
  assert.ok(conditional>=0 && clear>conditional && cache>clear && applySelection>cache);
 });
 
+test("pane approval remains app-owned: a rejected toggle is put back",()=>{
+ const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
+ const start=cpp.indexOf("void OnPaneChanged(bool open)");
+ const body=cpp.slice(start,cpp.indexOf("winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland",start));
+ assert.ok(start>=0);
+ assert.match(body,/if \(open == m_paneOpen \|\| m_navigation\.IsPaneOpen\(\) != open\) return;/);
+ // An overlay pane (Compact/Minimal) that NavigationView closed is never forced open.
+ assert.match(body,/if \(open \|\| m_navigation\.DisplayMode\(\) == DisplayMode::Expanded\)/);
+ assert.match(body,/m_paneRestorePending = m_navigation\.DispatcherQueue\(\)\.TryEnqueue/);
+ assert.match(body,/self->m_navigation\.IsPaneOpen\(self->m_paneOpen\)/);
+ // Queued writes cannot leave m_updatingFromJs set or throw out of the dispatcher.
+ assert.match(cpp,/m_restorePending = m_navigation\.DispatcherQueue\(\)\.TryEnqueue/);
+ assert.equal((cpp.match(/self->RunFromJs\(/g)??[]).length,2);
+ assert.match(cpp,/void RunFromJs\(Write&& write, char const\* failure\) noexcept/);
+ assert.match(cpp,/m_paneOpen = props\.paneOpen\.value_or\(false\);\s*m_navigation\.IsPaneOpen\(m_paneOpen\);/);
+});
+
 test("items and the NavigationView carry Narrator names",()=>{
  const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
  assert.match(cpp,/AutomationProperties::SetName\(item, label\)/);
