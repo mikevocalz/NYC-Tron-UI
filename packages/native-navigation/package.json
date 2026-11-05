@@ -13,7 +13,7 @@
       "default": "./dist/index.js"
     },
     "./NativeNavigationRail": {
-      "types": "./dist/NativeNavigationRail.types.d.ts",
+      "types": "./src/NativeNavigationRail.native.tsx",
       "react-native": "./dist/NativeNavigationRail.native.js",
       "browser": "./dist/NativeNavigationRail.web.js",
       "default": "./dist/NativeNavigationRail.web.js"
@@ -44,6 +44,7 @@
     "typescript": "~6.0.3"
   },
   "files": [
+    "src",
     "dist",
     "ios",
     "android",
