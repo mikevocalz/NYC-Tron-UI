@@ -27,7 +27,14 @@ and 834px tablet, resting, focused and mid-drag, the seek bar, forced colors,
 and the layer stack at both widths with a focused remove button, plus RTL via
 `?dir=rtl`. They are uploaded as a CI artifact, not compared as pixel goldens.
 
-`ink.spec.mjs` loads `?view=ink` (`ink-fixture.tsx`, which plays the Forge
+`fixtures/<name>.tsx` files are served at `/<name>`. `fixtures/color.tsx`
+renders the color cluster against one zustand color store; `color.spec.mjs`
+drags the disc, ring and tracks, cancels with Escape, types channel values,
+swaps chips, searches swatches and undocks the palette past a simulated hinge.
+`color-shots.spec.mjs` captures each palette mode at both widths in both themes,
+floating, and in RTL.
+
+`ink.spec.mjs` loads `/ink` (`fixtures/ink.tsx`, which plays the Forge
 board host) and checks `InkToolbar`: the tool radio group, disabled redo
 explaining itself, size, color and pressure intent, in-toolbar shortcuts and
 44 px targets. It writes `shots/ink-*` captures in light and dark at 390 px (top

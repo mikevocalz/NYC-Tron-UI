@@ -7,7 +7,6 @@ import {LayerStack} from "../../src/components/forge/layers/LayerStack.tsx";
 import {moveLayer,removeLayer,type LayerRow} from "../../src/components/forge/layers/layer-model.ts";
 import {NativeSeekBar} from "../../src/components/forge/NativeSeekBar.tsx";
 import {FRAME_RATES} from "../../src/components/forge/timebase.ts";
-import {InkFixture} from "./ink-fixture.tsx";
 
 type Row={id:string;name:string};
 type Demo={
@@ -134,7 +133,6 @@ document.documentElement.dir=query.get("dir")==="rtl"?"rtl":"ltr";
 // React Native Web resolves start/end styles from a `dir` on an ancestor View,
 // the way an RTL app sets it, not from the document's dir attribute.
 const dir=document.documentElement.dir as "rtl"|"ltr";
-const Screen=query.get("view")==="ink"?InkFixture:Fixture;
-function Root(){return <View {...{dir}} style={{flex:1}}><Screen/></View>;}
+function Root(){return <View {...{dir}} style={{flex:1}}><Fixture/></View>;}
 AppRegistry.registerComponent("UiAcceptance",()=>Root);
 AppRegistry.runApplication("UiAcceptance",{rootTag:document.getElementById("root")});

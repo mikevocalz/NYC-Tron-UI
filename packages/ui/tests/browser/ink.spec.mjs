@@ -3,7 +3,7 @@ const log=page=>page.getByTestId("ink-log");
 
 test("tools are a radio group; picking one reports it once",async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto("/?view=ink");
+  await page.goto("/ink");
   const group=page.getByRole("radiogroup",{name:"Tool"});
   await expect(group.getByRole("radio")).toHaveCount(3);
   await expect(group.getByRole("radio",{name:"Pen"})).toHaveAttribute("aria-checked","true");
@@ -13,7 +13,7 @@ test("tools are a radio group; picking one reports it once",async({page})=>{
 });
 test("disabled redo explains itself instead of doing nothing silently",async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto("/?view=ink");
+  await page.goto("/ink");
   await page.getByRole("button",{name:"Redo, unavailable"}).click();
   await expect(page.getByText("Nothing to redo")).toBeVisible();
   await expect(log(page)).toHaveText("log ");
@@ -23,7 +23,7 @@ test("disabled redo explains itself instead of doing nothing silently",async({pa
 });
 test("size steps, color picks and the pressure switch report host intent",async({page})=>{
   await page.setViewportSize({width:834,height:1194});
-  await page.goto("/?view=ink");
+  await page.goto("/ink");
   await page.getByRole("button",{name:"Increase size"}).click();
   await expect(page.getByRole("slider",{name:"Size"})).toHaveAttribute("aria-valuetext","Large");
   await page.getByRole("radiogroup",{name:"Color"}).getByRole("radio",{name:"Red"}).click();
@@ -33,7 +33,7 @@ test("size steps, color picks and the pressure switch report host intent",async(
 });
 test("keyboard shortcuts run while focus is inside the toolbar",async({page})=>{
   await page.setViewportSize({width:834,height:1194});
-  await page.goto("/?view=ink");
+  await page.goto("/ink");
   await page.getByRole("radio",{name:"Pen"}).focus();
   await page.keyboard.press("h");
   await page.keyboard.press("]");
@@ -45,7 +45,7 @@ test("keyboard shortcuts run while focus is inside the toolbar",async({page})=>{
 });
 test("every control keeps a 44pt target",async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto("/?view=ink");
+  await page.goto("/ink");
   const toolbar=page.getByRole("toolbar",{name:"Ink tools"});
   for(const role of ["radio","button","switch"]){
     for(const el of await toolbar.getByRole(role).all()){
@@ -60,7 +60,7 @@ const sizes=[["phone",{width:390,height:844}],["tablet",{width:834,height:1194}]
 for(const theme of ["light","dark"])for(const [name,size] of sizes){
   test(`capture ink ${theme} ${name}`,async({page})=>{
     await page.setViewportSize(size);
-    await page.goto("/?view=ink&theme="+theme);
+    await page.goto("/ink?theme="+theme);
     await page.getByRole("toolbar",{name:"Ink tools"}).waitFor();
     await page.screenshot({path:`shots/ink-${theme}-${name}.png`});
     await page.getByRole("button",{name:"Redo, unavailable"}).click();
@@ -71,7 +71,7 @@ for(const theme of ["light","dark"])for(const [name,size] of sizes){
 }
 test("capture ink rtl phone",async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto("/?view=ink&dir=rtl");
+  await page.goto("/ink?dir=rtl");
   await page.getByRole("toolbar",{name:"Ink tools"}).waitFor();
   await page.screenshot({path:"shots/ink-rtl-phone.png"});
 });

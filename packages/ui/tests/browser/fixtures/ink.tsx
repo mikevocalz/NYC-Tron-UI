@@ -1,7 +1,7 @@
-import {Text,View} from "react-native";
+import {AppRegistry,Text,View} from "react-native";
 import {create} from "zustand";
-import {InkToolbar} from "../../src/components/forge/ink/InkToolbar.tsx";
-import {INK_BOARD_TOOLS,type InkSize,type InkTool} from "../../src/components/forge/ink/ink-model.ts";
+import {InkToolbar} from "../../../src/components/forge/ink/InkToolbar.tsx";
+import {INK_BOARD_TOOLS,type InkSize,type InkTool} from "../../../src/components/forge/ink/ink-model.ts";
 
 // The host palette: QuickDraw light-theme stroke colors from Forge's board
 // scene compiler. NYC-Tron ships no palette; this fixture plays the host.
@@ -30,7 +30,7 @@ function Toolbar({vertical}:{vertical:boolean}){
     pressure={{enabled:s.pressure}} onPressureChange={pressure=>{useInk.setState({pressure});note("pressure "+pressure);}}/>;
 }
 
-export function InkFixture(){
+function InkFixture(){
   const log=useInk(s=>s.log);
   const wide=typeof innerWidth==="number"&&innerWidth>=700;
   return <View style={{flex:1,flexDirection:wide?"row":"column",minHeight:"100vh" as never}}>
@@ -42,3 +42,13 @@ export function InkFixture(){
     {wide?<Toolbar vertical/>:null}
   </View>;
 }
+
+const params=new URLSearchParams(location.search);
+document.documentElement.dataset.theme=params.get("theme")??"light";
+document.documentElement.dir=params.get("dir")==="rtl"?"rtl":"ltr";
+// React Native Web resolves row direction and start/end styles from a `dir`
+// on an ancestor View, the way an RTL app sets it.
+const dir=document.documentElement.dir as "rtl"|"ltr";
+function Root(){return <View {...{dir}} style={{flex:1}}><InkFixture/></View>;}
+AppRegistry.registerComponent("InkAcceptance",()=>Root);
+AppRegistry.runApplication("InkAcceptance",{rootTag:document.getElementById("root")});

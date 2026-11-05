@@ -26,6 +26,15 @@ complex editor screen composition and its cross-engine suite application.
 | Semantic html set | `@nyc-tron/ui/components/html` (Page, Main, Header, Footer, Section, Nav, Article, Aside, Text, Paragraph, Heading, Link, Input) | Web: real elements through React Native Web's element factory. Native: View/Text with ARIA `role`. Web tested in Chromium; native roles typechecked only | NYC-MON `@acme/ui/html` |
 | HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
 | Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
+| ColorWheel (C-03) | `@nyc-tron/ui/components/forge/color/ColorWheel` (geometry in `/forge/color/wheel-geometry`) | Controlled RN hue ring: jump on the ring, fine adjustment inside the hole, keys, adjustable a11y. Model tests plus Chromium drag/key tests | ProCraft `ColorPanel.kt` (ported, MIT OR Apache-2.0) |
+| AlphaSlider (C-05) | `@nyc-tron/ui/components/forge/color/AlphaSlider` | Controlled RN checkerboard opacity track with typed percent entry; one commit per release, key or entry | Original |
+| ColorChannelFields (C-06) | `@nyc-tron/ui/components/forge/color/ColorChannelFields` (math in `/forge/color/hsl`, `/forge/color/channel-fields`) | Typed RGB/HSL/HSV, hex and opacity fields; closes the HSL gap next to the `ColorChannels` sliders | Original |
+| ForegroundBackgroundChips (C-12) | `@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips` (`/forge/color/color-pair`) | Controlled chips with Swap and Reset | Original |
+| SwatchGrid (C-13) | `@nyc-tron/ui/components/forge/color/SwatchGrid` (`/forge/color/swatches`) | Recent/document/saved/named groups, name and hex search, honest empty states, arrow-key focus | Original |
+| ColorHarmonyAssistant (C-18) | `@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant` (`/forge/color/harmony`, `/forge/color/contrast`) | Five harmony rules and WCAG 2.2 contrast spelled out per color | Original |
+| FloatingColorPalette (C-26) | `@nyc-tron/ui/components/forge/color/FloatingColorPalette` (`/forge/color/floating-palette`) | Dock/undock palette with compact/classic/palettes modes; hinge-safe placement; holds no color | ProCraft `ColorPanel.kt` (ported) |
+| ColorDiscPicker (C-27) | `@nyc-tron/ui/components/forge/color/ColorDiscPicker` | Hue/saturation disc and brightness track; hue kept through gray; sRGB preview only | ProCraft `ColorPanel.kt` (ported geometry) |
+| FloatingPaletteUndockHandle (B-28) | `@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle` | `DragGrabHandle`-based grip: 30-unit undock threshold, move, dock, keyboard nudge | ProCraft `ColorPanel.kt` (ported) |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
 | WindowsNavigationView | Future native Windows adapter | **NOT IMPLEMENTED** | WinUI 3 NavigationView |
 | Native dropdown/menu/flyout | Future target-specific adapters | **NOT IMPLEMENTED** | Spark AppKit, WinUI, Expo UI |
@@ -259,6 +268,53 @@ vertical fader scrolled the mixer without a gain change, a vertical swipe
 on a horizontal fader scrolled the page, and Tab plus arrow keys stepped the
 level. Not verified: iOS/Android/Windows/macOS device gestures, native
 ScrollView arbitration, and VoiceOver/TalkBack/Narrator output.
+
+## 2026-11-05 color cluster
+
+C-03, C-05, C-06, C-12, C-13, C-18, C-26, C-27 and B-28 live in
+`packages/ui/src/components/forge/color/`, one subpath each, with their pure
+models on separate subpaths. Every control is controlled: the host passes the
+committed color and gets `onPreview` during a drag and one `onCommit` per
+release, key press, typed entry or button. Escape during a drag restores the
+start value without a commit. The floating palette and its grip hold no color;
+whatever picker the host renders in each mode edits the host's one color
+store, so docking, undocking and switching modes never change a color.
+
+None of these controls needs an optional peer. Tracks, the hue ring and the
+hue/saturation disc are drawn from solid views: `expo-linear-gradient` and
+Skia are not required by these subpaths, and React Native has no conic
+gradient. The color values in those segments are computed from the color
+model, not theme colors; every surface, border, ring and label uses the
+documented tokens.
+
+`wrapHue` now returns in-range hues unchanged. The modulo form turned 217.4
+into 217.39999999999998 and atan2's `-0` into `-0`, which made HSL edits
+drift the hue by float error.
+
+Decisions recorded here:
+
+- **Wide-gamut preview (part of C-27): DEFERRED.** The disc previews sRGB
+  only. Display P3 needs the owning engine's color management and a P3
+  rendering path; drawing P3 values through sRGB views would be wrong.
+- **`ColorChannels` keeps its `@expo/ui` RGB sliders.** HSL and HSV arrive as
+  typed fields in `ColorChannelFields` rather than more native sliders, so the
+  numeric path renders on web and needs no optional peer.
+- **Sliders mirror under RTL; the hue ring and disc do not.** Hue angles are a
+  color-model convention, not reading direction. On web, pass `rtl`;
+  `I18nManager.isRTL` is the native default.
+
+Verified: types, unit tests for every model (HSL/HSV round trips at a grid of
+values, WCAG reference contrasts, ring and disc geometry, fine-zone drag,
+hinge avoidance, swatch search and grid keys, single-commit gestures), package
+exports, and React Native Web in Chromium: drag, cancel, key and typed-entry
+tests (`tests/browser/color.spec.mjs`) plus captures at 390 and 834 px in light
+and dark, floating over a simulated hinge, and RTL. Not verified: iOS, Android
+or foldable device runs, VoiceOver/TalkBack output, and pinch or pen input.
+
+ProCraft source: `ColorPanel.kt` at commit
+`c2f7518d03141c746a365f90d8df05a44ddef002`, MIT OR Apache-2.0. The ported
+files carry the pin, the copyright line and a modification notice; both
+license texts and ProCraft's NOTICE are in `licenses/`.
 
 ## 2026-11-05 LayerStack kind labels, thumbnails and remove
 
