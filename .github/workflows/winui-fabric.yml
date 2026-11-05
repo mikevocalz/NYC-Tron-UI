@@ -1,0 +1,76 @@
+name: WinUI 3 NavigationView in RNW Fabric
+
+on:
+  pull_request:
+    paths:
+      - "packages/windows-fluent/rnw-fabric/**"
+      - ".github/workflows/winui-fabric.yml"
+  push:
+    branches:
+      - "feat/winui-fabric-xaml-navigation-20261105"
+    paths:
+      - "packages/windows-fluent/rnw-fabric/**"
+      - ".github/workflows/winui-fabric.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: winui-fabric-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    name: Fabric codegen and source gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Validate actual XAML Fabric native bridge sources
+        run: node --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs
+      - name: Install isolated RNW 0.85 dependencies
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm install --no-audit --no-fund
+      - name: Validate Windows-only TypeScript
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm run typecheck
+      - name: Generate Fabric C++ headers (official codegen)
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm run codegen
+      - name: Confirm NavigationView generated C++ contract
+        shell: bash
+        run: |
+          test -f packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h
+
+  native:
+    name: VS 2026 RNW 0.85 XAML Fabric native C++ compile
+    runs-on: windows-2025
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Install native-codegen dependencies
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm install --no-audit --no-fund
+      - name: Run official RNW Fabric codegen
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm run codegen
+      - name: Build native C++/WinRT Fabric XAML component
+        working-directory: packages/windows-fluent/rnw-fabric
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -version "[18.0,19.0)" -property installationPath
+          if (-not $vs) { throw "Visual Studio 2026 required by RNW 0.85 is unavailable" }
+          $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
+          & $msbuild "windows\NYCTronFluentFabric.sln" "/p:Configuration=Release" "/p:Platform=x64" "/m" "/v:minimal"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      # C++ compilation proves the ComponentView builds but does not prove
+      # a launched React Native Windows app, route roundtrip, Narrator,
+      # high contrast or physical Windows keyboard/pointer interactions.

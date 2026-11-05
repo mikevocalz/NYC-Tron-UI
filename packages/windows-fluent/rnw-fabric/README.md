@@ -27,7 +27,15 @@ import {TronNavigationView} from "@nyc-tron/windows-fluent-fabric";
 />
 ```
 
-### Build
+### Validation matrix
+
+CI separately validates: (1) typed JS/source contract, (2) generated
+C++ Fabric codegen headers, and (3) the VS2026 native C++/WinRT project.
+A successful native library build is **not** a launched RNW app. The
+actual app's package autolinking and React root, keyboard, Narrator,
+high contrast, RTL and real route events still need end-to-end proof.
+
+## Build
 
 ```powershell
 npm install
