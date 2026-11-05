@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { validateNavigationItems } from "./navigation-model.ts";
-import type { NativeRailProps } from "./NativeNavigationRail.types.ts";
+import { validateNavigationItems } from "./navigation-model";
+import type { NativeRailProps } from "./NativeNavigationRail.types";
 /** Functional RN web presentation; web app shell should use its normal header. */
 export function NativeNavigationRail({
  items,selectedId,onSelectionChange,expanded=false,enabled=true,
