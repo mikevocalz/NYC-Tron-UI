@@ -81,7 +81,10 @@ PropertyRow, UnitInput, SliderField, RangeSlider, RotaryKnob; `?select=none|mult
 `fixtures/shell-commands.tsx` holds the ribbon, split buttons, a layer context
 menu, a preset gallery and the shortcut sheet inside `FocusAndA11yLayer`
 (`?dir=rtl`, `?apple=1`, `?hud=1`), driven by `shell-commands.spec.mjs` and captured
-by `shell-commands-shots.spec.mjs`. Set `UI_ACCEPTANCE_PORT` to run the lane beside another
+by `shell-commands-shots.spec.mjs`. The fixture also mounts `useHardwareKeyboard` from
+`@nyc-tron/hardware-keys` (web entry) over a `createKeyboardMap` of the same
+commands; `hardware-keys.spec.mjs` presses chords on the page and in the
+Layer name field, and rebinds through the sheet. Set `UI_ACCEPTANCE_PORT` to run the lane beside another
 server on 4179.
 
 `spreadsheet.spec.mjs` loads `/spreadsheet` (`spreadsheet.tsx`), the spreadsheet
