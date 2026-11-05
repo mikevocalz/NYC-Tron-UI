@@ -14,6 +14,11 @@
       "types": "./dist/corner-cut.d.ts",
       "react-native": "./dist/corner-cut.js",
       "default": "./dist/corner-cut.js"
+    },
+    "./overlay-placement": {
+      "types": "./dist/overlay-placement.d.ts",
+      "react-native": "./dist/overlay-placement.js",
+      "default": "./dist/overlay-placement.js"
     }
   },
   "scripts": {
