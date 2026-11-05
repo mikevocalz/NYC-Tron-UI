@@ -15,6 +15,8 @@ complex editor screen composition and its cross-engine suite application.
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
+| HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
+| Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
 | WindowsNavigationView | Future native Windows adapter | **NOT IMPLEMENTED** | WinUI 3 NavigationView |
 | Native dropdown/menu/flyout | Future target-specific adapters | **NOT IMPLEMENTED** | Spark AppKit, WinUI, Expo UI |
@@ -28,7 +30,7 @@ complex editor screen composition and its cross-engine suite application.
 | Track/mixer / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
-| Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
+| Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
 | Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
@@ -112,6 +114,36 @@ them visible without a prop.
 The forced-colors flag is a prop (`forcedColors`), since detecting it is the app's
 job. The handle's default glyph is three bars drawn with views; pass `children` to
 use an app icon.
+
+## 2026-11-05 HSV picker
+
+`HsvPicker` moved from Nitro Forge PR #34 (`NativeHsvPicker`) into
+`packages/ui/src/components/forge/color/`. It is controlled: `value` and
+`onValueChange` carry one `HsvColor`, `onApply` and `onCancel` let the Forge
+host open and close its own undo transaction, and the picker keeps no color
+state. `parseHexColor`, `rgbToHsv`, `hsvToRgb`, `assertHsv` and `wrapHue`
+were added to the existing `/forge/color` module, which `ColorChannels` also
+imports; there is no second copy of the math.
+
+Screen readers adjust saturation with swipe up/down and reach brightness and
+hue through named actions. Saturation and brightness also have 44pt
+steppers. The picker has no animation. Consumers that import this subpath
+must install `@expo/ui` and `expo-linear-gradient`; other subpaths do not
+need them.
+
+Labels (hue, hex, RGBA channels) are app-token RN `Text`; the `@expo/ui`
+hosts carry only the sliders. `@expo/ui` Text follows the OS appearance, so
+with a dark app theme on a light-mode device it drew black labels on the
+dark surface. The universal `@expo/ui` Slider takes no accessible label, so
+the hue slider is unnamed; the field's named hue actions are the labeled
+path. An opacity-only channel edit keeps h/s/v exactly (`rgbaEditToHsv`).
+
+Verified: source, types, unit tests, package exports, and a
+react-native-web render in Chromium with the real `@expo/ui` and
+`expo-linear-gradient` web builds (phone and tablet widths, light and dark,
+and app theme opposite to the OS scheme). Synthesized touch drags on the
+field kept the page from scrolling. Not verified: iOS, Android or foldable
+device runs, and VoiceOver/TalkBack output.
 
 ## 2026-11-05 level fader and timebase helpers
 

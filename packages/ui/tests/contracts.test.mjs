@@ -30,7 +30,8 @@ test("all direct component export targets are actual independent files",()=>{
 test("Forge controls never import engine packages or app-specific palettes",()=>{
  for(const file of [
   "NativeSeekBar.tsx","WaveformLane.tsx","ColorChannels.tsx",
-  "waveform.ts","color.ts","timebase.ts","audio/level.ts","audio/LevelFader.tsx"
+  "waveform.ts","color.ts","timebase.ts","audio/level.ts","audio/LevelFader.tsx",
+  "color/HsvPicker.tsx","color/fieldGeometry.ts","color/fieldGesture.ts"
  ]){
   const text=readFileSync(resolve(root,"src/components/forge",file),"utf8");
   assert.ok(!/from\s+["'](?:@nitro-forge\/|@acme\/|@reactvision\/)/.test(text),file);

@@ -1,0 +1,21 @@
+{
+  "name": "NYCTronCharts",
+  "platforms": [
+    "apple",
+    "android"
+  ],
+  "coreFeatures": [
+    "swiftui",
+    "compose"
+  ],
+  "apple": {
+    "modules": [
+      "NYCTronChartsModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "com.nyctron.charts.NYCTronChartsModule"
+    ]
+  }
+}

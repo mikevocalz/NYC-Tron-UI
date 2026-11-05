@@ -70,7 +70,8 @@ for (const pkgName of packages) {
     (!manifest.exports["./components/forge/WaveformLane"]||
      !manifest.exports["./components/forge/NativeSeekBar"]||
      !manifest.exports["./components/forge/ColorChannels"]||
-     !manifest.exports["./components/forge/audio/LevelFader"])) {
+     !manifest.exports["./components/forge/audio/LevelFader"]||
+     !manifest.exports["./components/forge/color/HsvPicker"])) {
     fail("Professional control subpaths must be addressable");
   }
   if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs"]){
