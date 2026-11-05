@@ -1,0 +1,33 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'com.nyctron'
+version = '0.1.0'
+
+/*
+ * Expo Modules 2, as @nyc-tron/reserved-regions. `v2 true` applies the
+ * io.github.expo.modules.v2 compiler plugin; the runtime comes through
+ * expo-modules-core 58's own api(...) dependency. The class stays out of
+ * "android.modules" in expo-module.config.json: that list feeds the legacy
+ * ExpoModulesPackageList, and v2 modules are found through
+ * ExpoModulesV2ModuleList instead.
+ */
+expoModule {
+  canBePublished false
+  v2 true
+}
+
+android {
+  namespace "com.nyctron.hardwarekeys"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+}
+
+dependencies {
+  // LifecycleEventListener; Gradle resolves the host app's react-android.
+  implementation 'com.facebook.react:react-android'
+}

@@ -36,6 +36,8 @@ complex editor screen composition and its cross-engine suite application.
 | PresetGallery (A-23) | `@nyc-tron/ui/components/shell/PresetGallery` (model in `/shell/preset-model`) | Responsive grid, hover/focus live preview, selection, favorites and filter | Original |
 | KeyboardShortcutHUD (A-27) | `@nyc-tron/ui/components/shell/KeyboardShortcutHUD` (model in `/shell/shortcut-model`) | Searchable shortcut sheet, binding recorder with conflict prompt and reset, `commandForChord` for app dispatch | Original; key parsing replaces forge #5 `keyboard-event.ts` |
 | FocusAndA11yLayer (A-28) | `@nyc-tron/ui/components/shell/FocusAndA11yLayer` (`useA11yPreferences`, `useAnnounce`, `motionDuration`) | OS reduce motion, screen reader, contrast; web input modality on `<html data-input-modality>`; announcements | Extends overlays focus-cycle/focus-restore |
+| HardwareKeyboardMap (N-07) | `@nyc-tron/ui/components/shell/keyboard-map` (`createKeyboardMap`); native and web sources in `@nyc-tron/hardware-keys` (`useHardwareKeyboard`, `getHardwareKeyRecorder`) | Scoped registry over #39's chord model: innermost active scope wins, per-scope conflicts, OS-reserved chords, text-field guard. Expo Modules 2 module: iOS `UIKeyCommand`s on the root controller plus a `UIPress` capture view for recording; Android unhandled-key listeners on every window (API 28+). KeyboardShortcutHUD records on native through `recorder`. Unit, mocked-host render and Chromium dispatch tests; CI APK dex and iOS compile; no device run with a hardware keyboard yet | Original; closes #39's "recording on native" deferral |
+| VoiceOverTalkBackSupport (N-06) | `@nyc-tron/ui/components/shell/a11y-audit` (`auditAccessibility`), `/shell/screen-reader-focus` (`focusForScreenReader`) | Static screen-reader audit (names, adjustable value and actions, action handlers, custom action labels, 44pt targets, image labels) run over 13 rendered controls in CI; moves VoiceOver/TalkBack focus with `sendAccessibilityEvent`. No pass with VoiceOver or TalkBack on a device yet | Original; builds on FocusAndA11yLayer (A-28) |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy, per-reference tone outlines (I-06), fill handle plus Ctrl/Cmd+D/R through `onFillRange` (I-02), `renderCellContent` for in-cell sparklines and `showFormulaBar` for split panes; native QA pending | Forge Tally Rust adapter PR #39 |
 | SheetTabs (I-08) | `@nyc-tron/ui/components/forge/spreadsheet/SheetTabs` (rules in `/forge/spreadsheet/sheet-tabs-model`) | Controlled tab strip: select, add, rename (Excel name rules, engine errors shown), duplicate, move, remove with confirm, protect, token tone stripe. Each action renders only when its callback is passed. Chromium tests at 390 px; no device QA | GridCraft `Tabs.kt` (structure only, no code copied) |
@@ -46,7 +48,7 @@ complex editor screen composition and its cross-engine suite application.
 | FormulaReferenceText (I-06) | `@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText` (model `/reference-colors`) | Formula text with each reference in the tone the grid outlines it with; same reference, same tone. Chromium test | **Ported** color assignment from GridCraft `FormulaRefs.kt` @ `72d5bfc` |
 | Fill math (I-02) | `@nyc-tron/ui/components/forge/spreadsheet/fill-handle` | Pure: dominant-axis fill target, Ctrl+D/R source/target. Unit tests | New |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
-| NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
+| NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Expo 58 @expo/ui: SwiftUI slider on iOS, Material 3 on Android, range input on web. Drag previews through `onPreview`, release commits once through `onCommit` (`onSeek` is a deprecated alias). Mocked-host render tests and Chromium drag test; native build unverified | Forge PR #25 |
 | Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
 | Banner | `@nyc-tron/ui/components/feedback/Banner` | RN notice: info/success/danger/neutral tones, polite or assertive live region, optional 44pt dismiss and action slot. Chromium/React Native Web tests and captures; no device or screen-reader QA yet | NYC-MON `@acme/ui` Banner |
@@ -114,7 +116,7 @@ complex editor screen composition and its cross-engine suite application.
 | RecordingTrack | `@nyc-tron/ui/components/forge/audio/RecordingTrack` | Controlled RN view over `RecordingViewState`; lane is `forge/WaveformLane`; mocked-host render tests only, native QA pending | Forge PR #37 `NativeRecordingTrack`, `NativeSourceRecordingTrack` (view parts) |
 | LevelMeter | `@nyc-tron/ui/components/forge/audio/LevelMeter` | Controlled RN view; dBFS math and throttled band announcements tested; screen-reader output on device unverified | Forge PR #37 meter history |
 | AudioPreview | `@nyc-tron/ui/components/forge/audio/AudioPreview` | Controlled RN view over `PreviewViewState`; mocked-host render tests only | Forge PR #37 `NativeAudioPreview` (view parts) |
-| DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic; mocked-host render tests only | Forge PR #20 `PenConnectionDialog` |
+| DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic. States include OS-owned `system-pairing` and linked-but-unverified `awaiting-input`; `intro` explains the search before it starts; `onStopSearch` and `onClose` replace the deprecated `onCancel`. Model tests, mocked-host render tests and Chromium tests with captures; no device or screen-reader pass | Forge PR #20 `PenConnectionDialog` |
 | Paste into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange`. Fill has its UI (`onFillRange`); the engine operation behind it is the app's | Forge Tally |
 | RichTextRibbon (H-03) | `@nyc-tron/ui/components/forge/document/RichTextRibbon` (state in `/forge/document/ribbon-model`) | Controlled RN toolbar: paragraph style, font family and size, B/I/U/S with mixed state, text and highlight color, change case. Each group renders only with its callback. Model tests and Chromium tests and captures; no device or screen-reader QA yet | Original; Forge Quill `applyStyle`/`setBlockKind` |
 | BulletsNumberingEditor (H-07) | `@nyc-tron/ui/components/forge/document/BulletsNumberingEditor` (`/forge/document/list-model`) | List kind, indent/outdent under the nesting policy (one level deeper than the item above, nine levels), per-level format, numbered preview. Model and Chromium tests | Original |
@@ -511,6 +513,35 @@ light OS scheme, a check that the forward button stays inside the card at
 390px, and dark/light captures at 390 and 834px. Not verified on iOS or
 Android devices.
 
+## 2026-11-05 NativeSeekBar commits once per drag
+
+`NativeSeekBar` passed the universal `@expo/ui` Slider's `onValueChange`
+straight to `onSeek`, so a drag sent the player a seek for every tick and
+nothing marked the release. The universal Slider has no end-of-drag event, so
+the component is now split by platform, like `NativeSliderField`:
+
+- `NativeSeekBar.native.tsx` renders the SwiftUI `Slider` on iOS and the
+  Material 3 `Slider` on Android. A drag ends on `onEditingChanged(false)` on
+  iOS and on `onValueChangeFinished` on Android. On iOS a value change outside
+  a drag (a VoiceOver increment) commits by itself.
+- `NativeSeekBar.web.tsx` keeps the universal slider, an `<input type="range">`,
+  and commits on the DOM `change` event, which the browser fires once on
+  release and once per arrow-key step.
+
+The API follows `LevelFader`: `onPreview` gets each new frame during a drag,
+`onCommit` gets one frame per release, step-button press or keyboard step, and
+nothing when the frame is unchanged. `onSeek` still works as a deprecated
+alias with the `onCommit` timing. When both are passed only `onCommit` runs.
+The thumb and timecode show the dragged frame until the release. The export
+map now picks `NativeSeekBar.native.js` under `react-native` and
+`NativeSeekBar.web.js` under `browser` and `default`.
+
+Verified: mocked-host render tests of both platform files (red against the
+previous source: two ticks sent `onSeek(121)` and `onSeek(122)`), and a
+Chromium drag and arrow-key test (red against the previous source: 15 seeks
+for one drag). Not verified: the order of SwiftUI and Compose events on a
+device, VoiceOver and TalkBack steps, and an iOS or Android build.
+
 ## 2026-11-05 Ink toolbar and the Forge board
 
 `InkToolbar` mirrors the board's tool model as of 2026-11-05. The ink lab
@@ -768,6 +799,43 @@ pure state models:
   the views fall back to the plain call there instead of throwing.
 - Closing a connected `DevicePairingDialog` calls `onDone`, never `onCancel`, so
   dismissing the dialog does not disconnect the device.
+
+### 2026-11-05 pairing dialog gaps from Nitro Forge #20
+
+Forge #20 renders `DevicePairingDialog` for its pen and found four gaps. They
+are closed in the library; the old API still compiles and behaves as before.
+
+- `intro` (string) shows above the guidance while `idle`, so the host can say
+  what the search does first: that it asks for Bluetooth access, or that this
+  platform pairs in system Settings.
+- `system-pairing` (`steps`, optional `message`) is for platforms where the OS
+  owns pairing, such as visionOS. The host's steps render as an ordered list
+  ("Step 2 of 3: ..." to screen readers) with Open Settings when
+  `onOpenSettings` is set. No spinner: the dialog can't see the OS's progress,
+  so the host moves the state on when the OS reports back.
+- `awaiting-input` (`device`, optional `message`) sits between `connecting`
+  and `connected`: the link is up but the app hasn't seen pen input yet. The
+  copy says "Linked to ...", never "Connected", there is no Done button, and
+  `renderStatusArt` gets the `connecting` phase. `renderStatusArt` now also
+  receives the full state as a second argument for hosts that draw these two
+  states differently.
+- `onStopSearch` (Stop searching, and Cancel while connecting) and `onClose`
+  (close button and back gesture) replace the single `onCancel`. `onCancel`
+  is deprecated and still used when the new callbacks are missing. A linked
+  dialog (`awaiting-input`, `connected`) never closes through `onCancel` or
+  `onStopSearch`: it calls `onClose`, or `onDone` when there is no
+  `onClose`, so closing cannot disconnect. With no stop callback at all the
+  stop button is disabled rather than dead. The close button is labelled
+  "Close" when the host passes `onClose` or the device is linked, and "Cancel
+  and close" only on the legacy path.
+
+Both new states put their copy in the `polite` live region and the iOS
+announcement, like the others. Evidence: model tests, mocked-host render
+tests (callback routing, legacy fallbacks, step labels, announcements and
+art phases), and `pairing.spec.mjs` in the Chromium lane, which drives the
+buttons and captures every state at 390 and 834 px in light and dark plus RTL
+(`shots/pairing-*`). No simulator, device, VoiceOver or TalkBack pass. The
+scrim is still the fixed `rgba(0,0,0,0.5)` noted above.
 
 Evidence is Node tests of the state models, mocked-host render tests that
 run the real components, and a react-native-web render in Chromium of every

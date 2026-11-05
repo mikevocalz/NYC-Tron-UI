@@ -1,0 +1,159 @@
+name: WinUI 3 NavigationView in RNW Fabric
+
+on:
+  pull_request:
+    paths:
+      - "packages/windows-fluent/rnw-fabric/**"
+      - ".github/workflows/winui-fabric.yml"
+  push:
+    branches:
+      - "feat/winui-fabric-xaml-navigation-20261105"
+    paths:
+      - "packages/windows-fluent/rnw-fabric/**"
+      - ".github/workflows/winui-fabric.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: winui-fabric-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    name: Fabric codegen and source gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Validate actual XAML Fabric native bridge sources
+        run: node --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs
+      - name: Install isolated RNW 0.85 dependencies
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm install --no-audit --no-fund
+      - name: Validate Windows-only TypeScript
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm run typecheck
+      - name: Build dist and check the release tarball
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: |
+          npm run build
+          listing=$(npm pack --dry-run --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].files.map(f=>f.path).join("\n")))')
+          for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts windows/NYCTronFluentFabric/TronNavigationView.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
+            echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
+          done
+      # RNW 'codegen-windows' invokes dotnet.exe and Windows-only tools.
+      # Keep the Linux lane to TS/source checks; generate C++ on Windows.
+
+  native:
+    name: VS 2026 RNW 0.85 XAML Fabric native C++ compile
+    runs-on: windows-2025
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Install native-codegen dependencies
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm install --no-audit --no-fund
+      - name: Run official RNW Fabric codegen and verify generated component
+        working-directory: packages/windows-fluent/rnw-fabric
+        shell: pwsh
+        run: |
+          npm run codegen
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $header = "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
+          if (-not (Test-Path $header)) { throw "Missing generated XAML Fabric component header: $header" }
+      # The consumer links this package with file:.., and its exports point at dist.
+      - name: Build package dist for the consumer
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm run build
+      - name: Install isolated Windows consumer
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        run: npm install --no-audit --no-fund
+      - name: Generate official RNW application and connect native package
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          npm run init:windows
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run prepare:host
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run typecheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build native C++/WinRT Fabric XAML component
+        working-directory: packages/windows-fluent/rnw-fabric
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -version "[18.0,19.0)" -property installationPath
+          if (-not $vs) { throw "Visual Studio 2026 required by RNW 0.85 is unavailable" }
+          $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
+          $sdkRoot = "${env:ProgramFiles(x86)}\Windows Kits\10\Include"
+          $installed = @(Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending)
+          if (-not $installed) { throw "No compatible Windows SDK installed on runner" }
+          $sdkVersion = $installed[0].Name
+          Write-Host "Using installed Windows SDK $sdkVersion instead of RNW's absent 10.0.22621.0"
+          & $msbuild "windows\NYCTronFluentFabric.sln" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$sdkVersion" "/p:UseExperimentalNuget=true" "/restore" "/m" "/v:minimal"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      # The UIA smoke step below launches the packaged app and checks the
+      # route roundtrip with keyboard input. It does not cover Narrator
+      # speech, high contrast, pointer input or an RTL locale.
+
+      - name: Compile actual Windows consumer executable
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -version "[18.0,19.0)" -property installationPath
+          if (-not $vs) { throw "Visual Studio 2026 required" }
+          $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
+          $sdkRoot = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Windows Kits\10\Include"
+          $sdk = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          # RNW app projects refuse to build outside a solution
+          # (RequireSolution.targets needs SolutionPath/SolutionFileName).
+          # Build the app's project target through its generated solution;
+          # prepare:host has added the library project to that solution.
+          & $msbuild "windows\NYCTronWindowsExample.sln" "/t:NYCTronWindowsExample" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$($sdk.Name)" "/p:UseExperimentalNuget=true" "/p:RunAutolinkCheck=false" "/restore" "/m" "/v:minimal"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $exe = Get-ChildItem windows -Recurse -Filter NYCTronWindowsExample.exe | Select-Object -First 1
+          if (-not $exe) { throw "Consumer executable was not produced" }
+          Write-Host "Compiled Windows consumer: $($exe.FullName)"
+          $map = Get-ChildItem windows -Recurse -Filter index.windows.bundle.packager.map | Select-Object -First 1
+          if (-not $map) { throw "Release bundle source map was not produced" }
+          node scripts/check-bundle-singletons.mjs $map.FullName
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Deploy the packaged consumer the way run-windows does
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          # RNW apps run with package identity; the bare executable exits
+          # with 0xC0000409 on this runner. run-windows builds the .Package
+          # project, enables Developer Mode and registers the layout.
+          $sdkRoot = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Windows Kits\10\Include"
+          $sdk = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          npx react-native run-windows --release --arch x64 --no-launch --no-packager --no-autolink --logging --msbuildprops "WindowsTargetPlatformVersion=$($sdk.Name),UseExperimentalNuget=true,RunAutolinkCheck=false"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $package = Get-AppxPackage -Name NYCTronWindowsExample
+          if (-not $package) { throw "Packaged consumer was not registered" }
+          Write-Host "Registered $($package.PackageFullName)"
+          "CONSUMER_AUMID=$($package.PackageFamilyName)!App" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: UI Automation smoke test of the packaged consumer
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: powershell
+        run: |
+          & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+      - name: Upload UI Automation screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: winui-fabric-uia-smoke
+          path: ${{ runner.temp }}/uia-smoke
+          if-no-files-found: warn

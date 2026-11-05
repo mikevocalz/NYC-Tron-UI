@@ -71,7 +71,8 @@ import { FRAME_RATES } from '@nyc-tron/ui/components/forge/timebase';
   frame={playheadFrame}
   durationFrames={durationFrames}
   frameRate={FRAME_RATES.NTSC_2997}
-  onSeek={frame => player.seekFrame(frame)}
+  onPreview={frame => player.scrubFrame(frame)}
+  onCommit={frame => player.seekFrame(frame)}
   className="rounded-xl bg-surface-raised"
 />
 <WaveformLane peaks={actualPeaks} barClassName="bg-accent" />

@@ -107,6 +107,35 @@ test("pairing dialog covers all six states plus no-device and error recovery", (
   assert.equal(signalLabel(-90), "Weak signal");
 });
 
+test("system-pairing and awaiting-input states: host steps, Settings, never Connected", () => {
+  const pen = { id: "p1", name: "Stylus" };
+  const steps = ["Open Settings > Bluetooth.", "Select Stylus and tap Pair."];
+  const os = presentPairing({ kind: "system-pairing", steps }, "pen", true);
+  assert.deepEqual(os.steps, steps);
+  assert.equal(os.primary.kind, "open-settings");
+  assert.equal(os.isBusy, false, "the OS owns progress, so no spinner");
+  assert.equal(os.isLinked, false);
+  assert.match(os.body, /in Settings/);
+  const osNoSettings = presentPairing({ kind: "system-pairing", steps: [] }, "pen", false);
+  assert.equal(osNoSettings.primary, undefined, "no dead Open Settings button");
+  assert.equal(osNoSettings.steps, undefined, "an empty step list hides the list");
+  assert.equal(presentPairing({ kind: "system-pairing", steps, message: "Pair in visionOS Settings." }, "pen", true).body, "Pair in visionOS Settings.");
+
+  const waiting = presentPairing({ kind: "awaiting-input", device: pen }, "pen", false);
+  assert.equal(waiting.isLinked, true);
+  assert.equal(waiting.isBusy, true);
+  assert.doesNotMatch(waiting.body, /connected/i, "linked but unverified never reads as Connected");
+  assert.match(waiting.body, /Linked to Stylus/);
+  assert.equal(waiting.primary, undefined);
+  assert.notEqual(waiting.secondary?.kind, "done");
+  assert.equal(presentPairing({ kind: "awaiting-input", device: pen, message: "Tap the screen with your pen." }, "pen", false).body, "Tap the screen with your pen.");
+
+  assert.equal(presentPairing({ kind: "connected", device: pen }, "pen", false).isLinked, true);
+  for (const state of [{ kind: "idle" }, { kind: "scanning" }, { kind: "connecting", device: pen }, { kind: "error", code: "unknown" }]) {
+    assert.equal(presentPairing(state, "pen", false).isLinked, false, state.kind);
+  }
+});
+
 test("recording and pairing views stay presentational", () => {
   const files = [
     "forge/audio/RecordingTrack.tsx", "forge/audio/LevelMeter.tsx", "forge/audio/AudioPreview.tsx",

@@ -151,9 +151,10 @@
       "default": "./dist/components/forge/WaveformLane.js"
     },
     "./components/forge/NativeSeekBar": {
-      "types": "./dist/components/forge/NativeSeekBar.d.ts",
-      "react-native": "./dist/components/forge/NativeSeekBar.js",
-      "default": "./dist/components/forge/NativeSeekBar.js"
+      "types": "./dist/components/forge/NativeSeekBar.web.d.ts",
+      "browser": "./dist/components/forge/NativeSeekBar.web.js",
+      "react-native": "./dist/components/forge/NativeSeekBar.native.js",
+      "default": "./dist/components/forge/NativeSeekBar.web.js"
     },
     "./components/forge/ColorChannels": {
       "types": "./dist/components/forge/ColorChannels.d.ts",
@@ -430,6 +431,11 @@
       "react-native": "./dist/components/shell/shortcut-model.js",
       "default": "./dist/components/shell/shortcut-model.js"
     },
+    "./components/shell/keyboard-map": {
+      "types": "./dist/components/shell/keyboard-map.d.ts",
+      "react-native": "./dist/components/shell/keyboard-map.js",
+      "default": "./dist/components/shell/keyboard-map.js"
+    },
     "./components/shell/FocusAndA11yLayer": {
       "types": "./dist/components/shell/FocusAndA11yLayer.d.ts",
       "react-native": "./dist/components/shell/FocusAndA11yLayer.js",
@@ -439,6 +445,16 @@
       "types": "./dist/components/shell/a11y-model.d.ts",
       "react-native": "./dist/components/shell/a11y-model.js",
       "default": "./dist/components/shell/a11y-model.js"
+    },
+    "./components/shell/a11y-audit": {
+      "types": "./dist/components/shell/a11y-audit.d.ts",
+      "react-native": "./dist/components/shell/a11y-audit.js",
+      "default": "./dist/components/shell/a11y-audit.js"
+    },
+    "./components/shell/screen-reader-focus": {
+      "types": "./dist/components/shell/screen-reader-focus.d.ts",
+      "react-native": "./dist/components/shell/screen-reader-focus.js",
+      "default": "./dist/components/shell/screen-reader-focus.js"
     },
     "./components/navigation/CollapsibleDrawer": {
       "types": "./dist/components/navigation/CollapsibleDrawer.d.ts",
