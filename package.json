@@ -9,7 +9,7 @@
     "node": ">=24.19.0"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/expo-controls/tests/*.test.mjs packages/native-charts/tests/*.test.mjs packages/ui/tests/render/*.test.mjs packages/reserved-regions/tests/*.test.mjs packages/hardware-keys/tests/*.test.mjs packages/icons/tests/*.test.js",
+    "test": "node --experimental-strip-types --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/expo-controls/tests/*.test.mjs packages/native-charts/tests/*.test.mjs packages/ui/tests/render/*.test.mjs packages/reserved-regions/tests/*.test.mjs packages/icons/tests/*.test.js packages/windows-fluent/tests/*.test.mjs packages/hardware-keys/tests/*.test.mjs",
     "typecheck": "pnpm -r --if-present typecheck",
     "verify": "pnpm test && pnpm build && pnpm typecheck && node tooling/verify-packages.mjs && node tooling/pack-release.mjs release-packs",
     "build": "pnpm -r --if-present build",

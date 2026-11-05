@@ -62,6 +62,8 @@ jobs:
           node --test packages/panes/tests/*.test.mjs
           node --test packages/native-controls/tests/*.test.mjs
           node --test packages/expo-controls/tests/*.test.mjs
+          node --test packages/windows-fluent/tests/*.test.mjs
+          node --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs
           node --test packages/icons/tests/*.test.js
           node --test packages/native-navigation/tests/*.test.mjs
           node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
@@ -74,6 +76,27 @@ jobs:
       # dist/README/notices, ships src/, or keeps an export outside dist.
       - name: Pack and check every tarball
         run: node tooling/pack-release.mjs "$RUNNER_TEMP/release" --expect-version "${{ steps.version.outputs.version }}"
+
+      # @nyc-tron/windows-fluent-fabric is nested outside the pnpm workspace
+      # because it pins RN 0.85 + react-native-windows 0.85, so pack-release
+      # does not discover it. It ships src/ on purpose: RNW codegen reads the
+      # typed spec through codegenConfig.jsSrcsDir when the consumer builds.
+      - name: Pack the Windows Fabric NavigationView adapter
+        working-directory: packages/windows-fluent/rnw-fabric
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          node --test tests/*.test.mjs
+          actual=$(node -p 'require("./package.json").version')
+          if [ "$actual" != "$VERSION" ]; then echo "::error::windows-fluent-fabric version $actual does not match $VERSION"; exit 1; fi
+          npm install --no-audit --no-fund
+          npm run typecheck
+          npm run build
+          dir="$RUNNER_TEMP/release"
+          file=$(npm pack --pack-destination "$dir" --silent | tail -n1)
+          tar -tzf "$dir/$file" | grep -qx 'package/dist/index.js' || { echo "::error::dist missing from $file"; exit 1; }
+          (cd "$dir" && sha256sum "$file" >> SHA256SUMS)
+          cat "$dir/SHA256SUMS"
 
       - name: Create prerelease and upload tarballs
         env:
