@@ -26,6 +26,9 @@ importers:
       '@nyc-tron/expo-controls':
         specifier: workspace:*
         version: link:../../packages/expo-controls
+      '@nyc-tron/hardware-keys':
+        specifier: workspace:*
+        version: link:../../packages/hardware-keys
       '@nyc-tron/native-charts':
         specifier: workspace:*
         version: link:../../packages/native-charts

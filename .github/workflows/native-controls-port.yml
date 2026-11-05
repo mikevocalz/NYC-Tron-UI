@@ -4,6 +4,7 @@ on:
     paths:
       - "packages/native-controls/**"
       - "packages/reserved-regions/**"
+      - "packages/hardware-keys/**"
       - "packages/core/**"
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
@@ -18,6 +19,7 @@ on:
     paths:
       - "packages/native-controls/**"
       - "packages/reserved-regions/**"
+      - "packages/hardware-keys/**"
       - "packages/core/**"
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
@@ -43,6 +45,7 @@ jobs:
       - run: corepack pnpm install --frozen-lockfile
       - run: node --test packages/native-controls/tests/*.test.mjs
       - run: node --test packages/reserved-regions/tests/*.test.mjs
+      - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-charts typecheck
@@ -63,6 +66,18 @@ jobs:
           for f in package/ios/NYCTronReservedRegionsModule.swift package/ios/NYCTronReservedRegions.podspec \
                    package/android/build.gradle package/android/src/main/java/com/nyctron/reservedregions/NYCTronReservedRegionsModule.kt \
                    package/expo-module.config.json package/dist/index.native.js; do
+            echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
+          done
+          if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
+      - name: Hardware-keys tarball carries both native modules and no Gradle output
+        run: |
+          mkdir -p /tmp/nyc-tron-keys-pack
+          corepack pnpm --dir packages/hardware-keys pack --pack-destination /tmp/nyc-tron-keys-pack
+          entries=$(tar -tzf /tmp/nyc-tron-keys-pack/*.tgz)
+          for f in package/ios/NYCTronHardwareKeysModule.swift package/ios/NYCTronHardwareKeys.podspec \
+                   package/ios/Extensions/UIViewController+hardwareKeyCommand.swift \
+                   package/android/build.gradle package/android/src/main/java/com/nyctron/hardwarekeys/NYCTronHardwareKeysModule.kt \
+                   package/expo-module.config.json package/dist/index.native.js package/dist/index.js; do
             echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
           done
           if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
@@ -110,6 +125,14 @@ jobs:
           # grep -c over a single dex prints a bare count, so test the bytes directly.
           cat /tmp/regions-dex/classes*.dex | grep -aq 'com/nyctron/reservedregions/NYCTronReservedRegionsModule' \
             || { echo "NYCTronReservedRegionsModule not compiled into the APK"; exit 1; }
+      - name: Hardware-keys v2 module is in the APK
+        run: |
+          apk=$(find examples/native-instruments/android/app/build/outputs/apk/debug -name '*.apk' -print -quit)
+          unzip -o -q "$apk" 'classes*.dex' -d /tmp/keys-dex
+          for cls in NYCTronHardwareKeysModule UnhandledKeyAttacher; do
+            cat /tmp/keys-dex/classes*.dex | grep -aq "com/nyctron/hardwarekeys/$cls" \
+              || { echo "$cls not compiled into the APK"; exit 1; }
+          done
       - name: Vico resolved at the pinned version
         run: |
           cd examples/native-instruments/android
@@ -154,3 +177,10 @@ jobs:
         run: |
           grep -q 'NYCTronReservedRegions' Podfile.lock || { echo "NYCTronReservedRegions pod not installed"; exit 1; }
           grep -q 'NYCTronReservedRegionsModule.swift' /tmp/xcodebuild.log || { echo "module source not compiled"; exit 1; }
+      - name: Hardware-keys pod compiled with the macro plugin
+        working-directory: examples/native-instruments/ios
+        run: |
+          grep -q 'NYCTronHardwareKeys' Podfile.lock || { echo "NYCTronHardwareKeys pod not installed"; exit 1; }
+          for f in NYCTronHardwareKeysModule.swift HardwareKeyRouter.swift UIViewController+hardwareKeyCommand.swift; do
+            grep -q "$f" /tmp/xcodebuild.log || { echo "$f not compiled"; exit 1; }
+          done

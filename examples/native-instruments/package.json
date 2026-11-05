@@ -13,6 +13,7 @@
     "@expo/ui": "58.0.27",
     "@nyc-tron/core": "workspace:*",
     "@nyc-tron/expo-controls": "workspace:*",
+    "@nyc-tron/hardware-keys": "workspace:*",
     "@nyc-tron/native-controls": "workspace:*",
     "@nyc-tron/reserved-regions": "workspace:*",
     "@nyc-tron/ui": "workspace:*",
