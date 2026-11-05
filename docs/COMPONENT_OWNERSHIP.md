@@ -98,7 +98,15 @@ wrapping `@expo/ui` Slider, so it has no Expo host requirement.
 there is no second timebase file. WaveformLane's math works on signed sample
 extrema and has no dB conversion, so `audio/level.ts` shares nothing with it.
 
-Verified: unit tests and a mocked-host render test of the real component and
-PanResponder config. Not verified: iOS/Android/Windows/macOS device gestures,
-gesture arbitration inside a ScrollView, VoiceOver/TalkBack/Narrator output
-and web keyboard arrows (react-native-web adjustable support is untested).
+The fader claims a touch only after 4 pt of travel-axis movement and then
+keeps it, so cross-axis swipes scroll a parent ScrollView and a same-axis
+ScrollView cannot cancel a drag halfway. Arrow keys step a focused track.
+
+Verified: unit tests, a mocked-host render test of the real component and
+PanResponder config, and a react-native-web render in Chromium (phone and
+tablet widths, light and dark, RTL). In that browser run, synthesized touch
+drags moved vertical and horizontal faders, a horizontal swipe across a
+vertical fader scrolled the mixer without a gain change, a vertical swipe
+on a horizontal fader scrolled the page, and Tab plus arrow keys stepped the
+level. Not verified: iOS/Android/Windows/macOS device gestures, native
+ScrollView arbitration, and VoiceOver/TalkBack/Narrator output.
