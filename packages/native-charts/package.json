@@ -1,28 +1,28 @@
 {
   "name": "@nyc-tron/native-charts",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "type": "module",
   "sideEffects": false,
   "description": "Native line, column and area charts for NYC-Tron UI: Vico on Android, Swift Charts on iOS",
   "main": "./dist/index.native.js",
-  "types": "./src/index.native.ts",
+  "types": "./dist/index.native.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.native.ts",
+      "types": "./dist/index.native.d.ts",
       "browser": "./dist/index.web.js",
-      "react-native": "./src/index.native.ts",
+      "react-native": "./dist/index.native.js",
       "default": "./dist/index.web.js"
     },
     "./NativeChart": {
-      "types": "./src/NativeChart.native.tsx",
+      "types": "./dist/NativeChart.native.d.ts",
       "browser": "./dist/NativeChart.web.js",
-      "react-native": "./src/NativeChart.native.tsx",
+      "react-native": "./dist/NativeChart.native.js",
       "default": "./dist/NativeChart.web.js"
     },
     "./types": {
-      "types": "./src/NativeChart.types.ts",
-      "react-native": "./src/NativeChart.types.ts",
+      "types": "./dist/NativeChart.types.d.ts",
+      "react-native": "./dist/NativeChart.types.js",
       "default": "./dist/NativeChart.types.js"
     }
   },
@@ -47,7 +47,6 @@
     "typescript": "~6.0.3"
   },
   "files": [
-    "src",
     "dist",
     "ios",
     "android",

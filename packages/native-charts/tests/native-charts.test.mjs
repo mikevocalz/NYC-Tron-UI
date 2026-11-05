@@ -113,7 +113,7 @@ test("web renders an explicit unavailable notice, not a chart", () => {
   const pkg = JSON.parse(read("package.json"));
   for (const key of [".", "./NativeChart"]) {
     assert.match(pkg.exports[key].browser, /\.web\.js$/);
-    assert.match(pkg.exports[key]["react-native"], /\.native\.tsx?$/);
+    assert.match(pkg.exports[key]["react-native"], /^\.\/dist\/.*\.native\.js$/);
   }
 });
 

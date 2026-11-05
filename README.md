@@ -8,7 +8,7 @@ Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavi
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
 > **Status: foundational extraction (not a published/native-certified release).**
-> This private repo started with only a README. CI can validate pure policies and
+> CI can validate pure policies and
 > source boundaries, but WinUI/Fluent, AppKit, SwiftUI, Compose, Viro and device
 > behavior require separate native adapters and device validation.
 
@@ -98,6 +98,69 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 - Read [Responsive tables](docs/RESPONSIVE_TABLES.md) for full contracts,
   optional measured dimensions, and physical-device validation gaps.
 
+## Installing from a release
+
+The packages are not on npm. Each tagged release (`v*`) attaches one `.tgz` per
+package to a GitHub prerelease, plus a `SHA256SUMS` file. Pin the tarball URL
+in the consuming app's `package.json`:
+
+```text
+https://github.com/mikevocalz/NYC-Tron-UI/releases/download/<tag>/<file>.tgz
+```
+
+| Package | File for tag `v<version>` |
+| --- | --- |
+| `@nyc-tron/core` | `nyc-tron-core-<version>.tgz` |
+| `@nyc-tron/geometry` | `nyc-tron-geometry-<version>.tgz` |
+| `@nyc-tron/ui` | `nyc-tron-ui-<version>.tgz` |
+| `@nyc-tron/panes` | `nyc-tron-panes-<version>.tgz` |
+| `@nyc-tron/native-controls` | `nyc-tron-native-controls-<version>.tgz` |
+| `@nyc-tron/expo-controls` | `nyc-tron-expo-controls-<version>.tgz` |
+
+```json
+{
+  "dependencies": {
+    "@nyc-tron/core": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0/nyc-tron-core-0.1.0.tgz",
+    "@nyc-tron/ui": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0/nyc-tron-ui-0.1.0.tgz",
+    "@nyc-tron/panes": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0/nyc-tron-panes-0.1.0.tgz"
+  }
+}
+```
+
+Install only the packages you import. Sibling packages are peer dependencies,
+because a tarball cannot fetch `@nyc-tron/*` from a registry: `@nyc-tron/panes`
+needs `@nyc-tron/core` from the same release listed next to it. Every
+`exports` condition (`types`, `react-native`, `default`) points at compiled
+`dist/*.js` and `dist/*.d.ts`; no tarball ships `src/`.
+
+Peers: `react` and `react-native` are required by `ui`, `panes` and
+`native-controls`. `panes` also needs `zustand`. `native-controls` needs
+`expo` and `@expo/ui` (it is an Expo module with SwiftUI and Compose views).
+`expo-controls` needs `expo`, `@expo/ui` and `zustand`.
+In `ui`, `@expo/ui`, `@tanstack/react-table` and `zustand` are optional and
+only needed by the subpaths listed in [packages/ui/README.md](packages/ui/README.md);
+importing `Button` pulls none of them.
+
+Check downloads against the release's `SHA256SUMS` (`shasum -a 256 -c SHA256SUMS`).
+pnpm records the tarball's integrity hash in the lockfile on first install.
+
+**Licensing status.** Each tarball carries `THIRD_PARTY_NOTICES.md` and the
+upstream MIT texts in `licenses/` (NYC-MON, NeonBlade UI, AudioKit Controls).
+`@nyc-tron/native-controls` also ships its own MIT `LICENSE`. The other
+packages have no license of their own yet: per
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), the upstream notices do not
+license the NYC-Tron-specific additions for general redistribution, and the
+ownership and publishing review is still open. Release tarballs are for the
+maintainer's own consuming apps (Nitro Forge, Moyo, NYC-MON) until that review
+is done.
+
+Maintainers: `pnpm pack:release` builds and packs everything into
+`release-packs/` with the same checks the release workflow runs. To cut a
+release, set every package version, merge, then push tag `v<version>` (or run
+the "NYC-Tron release tarballs" workflow with that version). The workflow
+refuses a tag that does not match the package versions and never replaces an
+existing release.
+
 ## Development
 
 ```bash
@@ -109,6 +172,8 @@ corepack pnpm packcheck
 ```
 
 TypeScript now emits ESM and declarations under each package's `dist/`, and
-`packcheck` verifies every subpath resolves before inspecting the npm tarballs.
+`packcheck` verifies every subpath resolves to compiled output and that no
+package root imports an optional peer. `verify` also packs every package and
+checks the tarball contents.
 These are package/source/unit gates. No native device build, signed distribution or
 cross-repository migration has been completed by this scaffold.

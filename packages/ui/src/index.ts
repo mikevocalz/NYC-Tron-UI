@@ -6,3 +6,6 @@ export { Card } from "./components/Card.tsx";
 export type { CardProps } from "./components/Card.tsx";
 export { NavigationRail, NavigationShell } from "./components/NavigationRail.tsx";
 export type { NavigationRailProps, NavigationShellProps, NavigationItem } from "./components/NavigationRail.tsx";
+
+export { TextField } from "./components/TextField.tsx";
+export type { TextFieldProps } from "./components/TextField.tsx";

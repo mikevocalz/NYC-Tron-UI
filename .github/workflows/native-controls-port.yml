@@ -6,6 +6,8 @@ on:
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
       - ".github/workflows/native-controls-port.yml"
+      - "packages/expo-controls/**"
+      - "packages/ui/**"
       - "pnpm-workspace.yaml"
   push:
     branches:
@@ -16,6 +18,8 @@ on:
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
       - ".github/workflows/native-controls-port.yml"
+      - "packages/expo-controls/**"
+      - "packages/ui/**"
       - "pnpm-workspace.yaml"
   workflow_dispatch:
 permissions:
@@ -37,8 +41,11 @@ jobs:
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-charts typecheck
-      - run: corepack pnpm --dir examples/native-instruments typecheck
+      # Exports resolve to dist, and the example also renders @nyc-tron/expo-controls
+      # and @nyc-tron/ui, so build the whole workspace before typechecking it.
+      - run: corepack pnpm build
       - run: corepack pnpm --dir packages/native-controls build
+      - run: corepack pnpm --dir examples/native-instruments typecheck
       - run: |
           mkdir -p /tmp/nyc-tron-native-pack
           corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
@@ -51,7 +58,7 @@ jobs:
           listing=$(tar -tzf /tmp/nyc-tron-charts-pack/*.tgz)
           for f in package/ios/TronChartView.swift package/ios/NYCTronCharts.podspec \
                    package/android/build.gradle package/android/src/main/java/com/nyctron/charts/TronChartView.kt \
-                   package/dist/NativeChart.web.js package/src/NativeChart.native.tsx package/THIRD_PARTY_NOTICES.md; do
+                   package/dist/NativeChart.web.js package/dist/NativeChart.native.js package/THIRD_PARTY_NOTICES.md; do
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in native-charts pack"; exit 1; }
           done
 

@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/ui",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "type": "module",
   "sideEffects": false,
@@ -70,6 +70,16 @@
       "react-native": "./dist/components/forge/sheet-window.js",
       "default": "./dist/components/forge/sheet-window.js"
     },
+    "./components/forge/range-tsv": {
+      "types": "./dist/components/forge/range-tsv.d.ts",
+      "react-native": "./dist/components/forge/range-tsv.js",
+      "default": "./dist/components/forge/range-tsv.js"
+    },
+    "./components/forge/formula-refs": {
+      "types": "./dist/components/forge/formula-refs.d.ts",
+      "react-native": "./dist/components/forge/formula-refs.js",
+      "default": "./dist/components/forge/formula-refs.js"
+    },
     "./components/forge/inputs/precision": {
       "types": "./dist/components/forge/inputs/precision.d.ts",
       "react-native": "./dist/components/forge/inputs/precision.js",
@@ -124,6 +134,86 @@
       "types": "./dist/components/overlays/CommandPopover.d.ts",
       "react-native": "./dist/components/overlays/CommandPopover.js",
       "default": "./dist/components/overlays/CommandPopover.js"
+    },
+    "./components/overlays/CommandPalette": {
+      "types": "./dist/components/overlays/CommandPalette.d.ts",
+      "react-native": "./dist/components/overlays/CommandPalette.js",
+      "default": "./dist/components/overlays/CommandPalette.js"
+    },
+    "./components/overlays/command-filter": {
+      "types": "./dist/components/overlays/command-filter.d.ts",
+      "react-native": "./dist/components/overlays/command-filter.js",
+      "default": "./dist/components/overlays/command-filter.js"
+    },
+    "./components/overlays/focus-cycle": {
+      "types": "./dist/components/overlays/focus-cycle.d.ts",
+      "react-native": "./dist/components/overlays/focus-cycle.js",
+      "default": "./dist/components/overlays/focus-cycle.js"
+    },
+    "./components/overlays/focus-restore": {
+      "types": "./dist/components/overlays/focus-restore.d.ts",
+      "react-native": "./dist/components/overlays/focus-restore.js",
+      "default": "./dist/components/overlays/focus-restore.js"
+    },
+    "./components/TextField": {
+      "types": "./dist/components/TextField.d.ts",
+      "react-native": "./dist/components/TextField.js",
+      "default": "./dist/components/TextField.js"
+    },
+    "./components/navigation/CollapsibleDrawer": {
+      "types": "./dist/components/navigation/CollapsibleDrawer.d.ts",
+      "react-native": "./dist/components/navigation/CollapsibleDrawer.js",
+      "default": "./dist/components/navigation/CollapsibleDrawer.js"
+    },
+    "./components/navigation/drawer-model": {
+      "types": "./dist/components/navigation/drawer-model.d.ts",
+      "react-native": "./dist/components/navigation/drawer-model.js",
+      "default": "./dist/components/navigation/drawer-model.js"
+    },
+    "./components/forge/layers/layer-model": {
+      "types": "./dist/components/forge/layers/layer-model.d.ts",
+      "react-native": "./dist/components/forge/layers/layer-model.js",
+      "default": "./dist/components/forge/layers/layer-model.js"
+    },
+    "./components/forge/layers/LayerStack": {
+      "types": "./dist/components/forge/layers/LayerStack.d.ts",
+      "react-native": "./dist/components/forge/layers/LayerStack.js",
+      "default": "./dist/components/forge/layers/LayerStack.js"
+    },
+    "./components/forge/inputs/PrecisionScrubber": {
+      "types": "./dist/components/forge/inputs/PrecisionScrubber.d.ts",
+      "react-native": "./dist/components/forge/inputs/PrecisionScrubber.js",
+      "default": "./dist/components/forge/inputs/PrecisionScrubber.js"
+    },
+    "./components/forge/inputs/precision-scrubber-model": {
+      "types": "./dist/components/forge/inputs/precision-scrubber-model.d.ts",
+      "react-native": "./dist/components/forge/inputs/precision-scrubber-model.js",
+      "default": "./dist/components/forge/inputs/precision-scrubber-model.js"
+    },
+    "./components/DragGrabHandle": {
+      "types": "./dist/components/DragGrabHandle.d.ts",
+      "react-native": "./dist/components/DragGrabHandle.js",
+      "default": "./dist/components/DragGrabHandle.js"
+    },
+    "./components/gestures/drag-transport": {
+      "types": "./dist/components/gestures/drag-transport.d.ts",
+      "react-native": "./dist/components/gestures/drag-transport.js",
+      "default": "./dist/components/gestures/drag-transport.js"
+    },
+    "./components/gestures/drag-controller": {
+      "types": "./dist/components/gestures/drag-controller.d.ts",
+      "react-native": "./dist/components/gestures/drag-controller.js",
+      "default": "./dist/components/gestures/drag-controller.js"
+    },
+    "./components/gestures/PanResponderDrag": {
+      "types": "./dist/components/gestures/PanResponderDrag.d.ts",
+      "react-native": "./dist/components/gestures/PanResponderDrag.js",
+      "default": "./dist/components/gestures/PanResponderDrag.js"
+    },
+    "./components/gestures/GestureHandlerDrag": {
+      "types": "./dist/components/gestures/GestureHandlerDrag.d.ts",
+      "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
+      "default": "./dist/components/gestures/GestureHandlerDrag.js"
     }
   },
   "scripts": {
@@ -136,13 +226,20 @@
     "react-native": ">=0.88.0",
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.0",
+    "react-native-gesture-handler": ">=3.4.0 <4"
   },
   "peerDependenciesMeta": {
     "@expo/ui": {
       "optional": true
     },
     "@tanstack/react-table": {
+      "optional": true
+    },
+    "zustand": {
+      "optional": true
+    },
+    "react-native-gesture-handler": {
       "optional": true
     }
   },
@@ -153,12 +250,15 @@
     "react-native": "0.88.0",
     "@expo/ui": "58.0.20",
     "@tanstack/react-table": "9.3.1",
-    "zustand": "5.0.16"
+    "zustand": "5.0.16",
+    "react-native-gesture-handler": "3.4.0"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
   ]
 }

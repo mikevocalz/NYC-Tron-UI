@@ -1,7 +1,8 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, useWindowDimensions } from "react-native";
 import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 import { XYPad } from "@nyc-tron/native-controls/XYPad";
+import { OverlayControls, OverlayLayer } from "./OverlayDemo";
 import { NativeChart } from "@nyc-tron/native-charts/NativeChart";
 import { chartColorsFromTheme } from "@nyc-tron/native-charts/types";
 import type { NativeChartSeries } from "@nyc-tron/native-charts/types";
@@ -25,7 +26,9 @@ const useDemoStore=create<DemoState>(set=>({
 export default function App(){
  const gain=useDemoStore(s=>s.gain),pan=useDemoStore(s=>s.pan),xy=useDemoStore(s=>s.xy);
  const setGain=useDemoStore(s=>s.setGain),setPan=useDemoStore(s=>s.setPan),setXY=useDemoStore(s=>s.setXY);
- return <ScrollView style={{backgroundColor:"#101017",flex:1}} contentContainerStyle={{
+ const {width,height}=useWindowDimensions();
+ return <View style={{flex:1,backgroundColor:"#101017"}}>
+ <ScrollView style={{flex:1}} contentContainerStyle={{
     minHeight:"100%",gap:20,paddingHorizontal:20,paddingTop:80,paddingBottom:60
  }}>
    <Text style={{color:"#F6F6FD",fontWeight:"800",fontSize:30}}>NYC-Tron Instruments</Text>
@@ -44,5 +47,8 @@ export default function App(){
    <NativeChart kind="line" series={levelSeries} colors={chartColors}
      xAxisLabel="Bar" yAxisLabel="dBFS" height={220}/>
    <Text style={{color:"#AAAABB"}}>Gain: {gain.toFixed(2)} | Pan: {pan.toFixed(2)} | XY: {xy.x.toFixed(2)}, {xy.y.toFixed(2)}</Text>
- </ScrollView>;
+   <OverlayControls/>
+ </ScrollView>
+ <OverlayLayer width={width} height={height}/>
+ </View>;
 }
