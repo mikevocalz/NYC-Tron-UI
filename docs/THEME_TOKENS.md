@@ -20,12 +20,12 @@ the caller passes one; otherwise the token applies.
 | `border` | `--color-border` | `border-border` | Every bordered surface; InkToolbar dividers and swatch rings |
 | `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid; HsvPicker thumb outer ring; InkToolbar labels and size dot |
 | `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted`, `bg-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip; HsvPicker and ColorChannels labels and hex readout; LevelFader dB readout, `bg-text-muted` for the LevelFader unity mark; InkToolbar notice line |
-| `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
+| `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors, StatusBar recording dot and error text |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border |
+| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | Dragging PaneSplitter divider, DocumentTabBar unsaved marker, StatusBar render progress, SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge; LevelFader fill and thumb border |
 | `info` | `--color-info` | `bg-info`, `border-info` | Banner (info) border and mark, Badge (info) dot |
 | `success` | `--color-success` | `bg-success`, `border-success` | Banner (success) border and mark, Badge (success) dot |
-| `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field; InkToolbar controls |
+| `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused PaneSplitter divider, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field; InkToolbar controls |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips; InkToolbar controls |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |
 

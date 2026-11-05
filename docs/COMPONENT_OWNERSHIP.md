@@ -16,6 +16,12 @@ complex editor screen composition and its cross-engine suite application.
 | IconButton | `@nyc-tron/ui/components/IconButton` | Icon passed as a child node (no icon dependency); 44/48pt; `selected` exposes toggle state. Aligns with the icon package once #15 merges. Chromium tests | NYC-MON `IconButton` |
 | FieldGroup / FieldGroup.Section | `@nyc-tron/ui/components/FieldGroup` | Titled field block, `group` named by its heading, optional footer. Chromium render | NYC-MON `FieldGroup` |
 | NavigationRail / Shell | `@nyc-tron/ui/components/NavigationRail` | Controlled RN shell, NOT WinUI | NYC-MON / Moyo adaptive |
+| PaneSplitter (A-04) | `@nyc-tron/ui/components/shell/PaneSplitter` (math in `/shell/splitter-model`) | Controlled RN window splitter; minimums, hinge seating from `@nyc-tron/core/folds` features, keyboard, Escape cancel, native adjustable actions. Model tests plus Chromium drag, keyboard, hinge and RTL tests; no device QA | Original |
+| AdaptiveDock (A-03) | `@nyc-tron/ui/components/shell/AdaptiveDock` (model in `/shell/dock-model`) | Controlled left/right/bottom stacks and floating panels; move/float/close menu, drag-to-dock from a floating grip, one merged stack on compact widths, floating panels kept inside one usable region. Model tests plus Chromium menu-move, drag-to-dock and compact tests; no device QA | Original; extends AdaptivePaneHost's role, does not replace it |
+| DocumentTabBar (A-05) | `@nyc-tron/ui/components/shell/DocumentTabBar` (model in `/shell/document-tabs-model`) | Controlled tabs with unsaved marker, close button, keyboard and screen-reader reorder/close; pointer drag reorder deferred | Original |
+| ToolRail (A-06) | `@nyc-tron/ui/components/shell/ToolRail` (model in `/shell/tool-rail-model`) | Controlled 44pt toggle tools, variant flyouts on long press, outward arrow or a11y action; app owns shortcuts | Original; NavigationRail stays the app-section rail |
+| StatusBar (A-25) | `@nyc-tron/ui/components/shell/StatusBar` (text in `/shell/status-model`) | Controlled zoom steps and presets, unit menu, selection count, render/save/record/error state with polite announcements | Original |
+| MenuButton | `@nyc-tron/ui/components/shell/MenuButton` | Button that anchors a CommandPopover; shared by the shell controls | Original |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
@@ -508,3 +514,55 @@ here: color comes from the host theme tokens, and active state uses
 `primary`. Brand tones belong in the host's theme, not in component props.
 NYC-MON's district tones and corner-cut frames were left behind for the same
 reason.
+
+## 2026-11-05 studio shell layout (A-03, A-04, A-05, A-06, A-25)
+
+Five Nitro Forge roster controls live in `packages/ui/src/components/shell/`.
+Each is controlled: the app passes the size, layout, tab order, active tool
+or zoom and gets one proposal per completed change. None of them holds
+document state.
+
+`PaneSplitter` and `AdaptiveDock` read hinge geometry as `FoldFeature`
+values from `@nyc-tron/core/folds` (a type-only import; `@nyc-tron/core` is
+an optional peer of `@nyc-tron/ui`). A splitter given features measures its
+own window rect unless the app passes `container`. Its divider never rests
+on a hinge: within reach of one it seats on the hinge and spans it, so
+neither pane draws under the hinge, and when seating would break a minimum it
+moves to the side that keeps it. Split order is physical; `isRTL` puts the
+start pane on the right and flips the arrow keys.
+
+`AdaptiveDock` edges are physical. An app that wants left and right mirrored
+in RTL swaps them in its layout. Every dock move has a menu path (move to
+another edge, float, close); dragging a floating panel's grip onto an edge
+also docks it. Below `compactBelow` (600pt by default) every panel joins one
+stack under the workspace, and picking a tab there moves that panel into the
+bottom stack so the choice survives a return to the wide layout.
+
+`DocumentTabBar` reorders from the keyboard (Ctrl/Cmd+Shift+Arrow) and from
+screen-reader actions. **Deferred:** pointer drag reordering of tabs. A tab
+is a press target inside a horizontally scrolling strip, and the
+`PanResponderDrag` transport cannot share that view with the press without
+taking the strip's scroll gesture. It needs a long-press-then-pan composition
+on the gesture-handler transport, tested on devices.
+
+`ToolRail` tools are toggle buttons (`aria-pressed`) in a `toolbar`.
+Grouped tools open their variants in a `CommandPopover` on long press, on the
+arrow key pointing away from the rail's edge, or through the "More tools"
+screen-reader action. The rail shows the active variant, else the app's
+`groupSelection`, else the first variant.
+
+`StatusBar` announces activity changes once through a polite live region.
+The recording clock and the render percentage are left out of the
+announcement; the progress bar exposes the percentage.
+
+Glyphs these controls draw (splitter line, close crosses, menu dots, zoom
+signs, unsaved marker, progress fill) are borders, so forced-colors mode
+keeps them.
+
+Verified: unit tests for the split, dock, tab, status and roving-focus
+models; Chromium/React Native Web interaction tests for every control
+(`packages/ui/tests/browser/shell-layout.spec.mjs`) and captures at 390 and
+834px in light, dark, RTL, forced colors and with a simulated hinge. Not
+verified: iOS, Android, Surface Duo or other foldable devices, real hinge
+features from a device, VoiceOver/TalkBack/Narrator output, and the
+GestureHandlerDrag transport with these controls.

@@ -66,5 +66,12 @@ and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
 focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
 web `ScopedTheme` output (a `display: contents` element with the theme class).
 
+Each `fixtures/<name>.tsx` page is served at `/<name>`. `fixtures/shell-layout.tsx`
+is an image-editor shell (DocumentTabBar, ToolRail, AdaptiveDock, StatusBar and a
+PaneSplitter; `?hinge=1` adds a simulated hinge, `?dir=rtl` flips direction).
+`shell-layout.spec.mjs` drives it by keyboard and mouse, and
+`shell-layout-shots.spec.mjs` captures it at 390 and 834px in light, dark, RTL,
+forced colors and with the hinge.
+
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

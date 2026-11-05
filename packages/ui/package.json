@@ -25,6 +25,66 @@
       "react-native": "./dist/components/NavigationRail.js",
       "default": "./dist/components/NavigationRail.js"
     },
+    "./components/shell/PaneSplitter": {
+      "types": "./dist/components/shell/PaneSplitter.d.ts",
+      "react-native": "./dist/components/shell/PaneSplitter.js",
+      "default": "./dist/components/shell/PaneSplitter.js"
+    },
+    "./components/shell/splitter-model": {
+      "types": "./dist/components/shell/splitter-model.d.ts",
+      "react-native": "./dist/components/shell/splitter-model.js",
+      "default": "./dist/components/shell/splitter-model.js"
+    },
+    "./components/shell/AdaptiveDock": {
+      "types": "./dist/components/shell/AdaptiveDock.d.ts",
+      "react-native": "./dist/components/shell/AdaptiveDock.js",
+      "default": "./dist/components/shell/AdaptiveDock.js"
+    },
+    "./components/shell/dock-model": {
+      "types": "./dist/components/shell/dock-model.d.ts",
+      "react-native": "./dist/components/shell/dock-model.js",
+      "default": "./dist/components/shell/dock-model.js"
+    },
+    "./components/shell/DocumentTabBar": {
+      "types": "./dist/components/shell/DocumentTabBar.d.ts",
+      "react-native": "./dist/components/shell/DocumentTabBar.js",
+      "default": "./dist/components/shell/DocumentTabBar.js"
+    },
+    "./components/shell/document-tabs-model": {
+      "types": "./dist/components/shell/document-tabs-model.d.ts",
+      "react-native": "./dist/components/shell/document-tabs-model.js",
+      "default": "./dist/components/shell/document-tabs-model.js"
+    },
+    "./components/shell/ToolRail": {
+      "types": "./dist/components/shell/ToolRail.d.ts",
+      "react-native": "./dist/components/shell/ToolRail.js",
+      "default": "./dist/components/shell/ToolRail.js"
+    },
+    "./components/shell/tool-rail-model": {
+      "types": "./dist/components/shell/tool-rail-model.d.ts",
+      "react-native": "./dist/components/shell/tool-rail-model.js",
+      "default": "./dist/components/shell/tool-rail-model.js"
+    },
+    "./components/shell/StatusBar": {
+      "types": "./dist/components/shell/StatusBar.d.ts",
+      "react-native": "./dist/components/shell/StatusBar.js",
+      "default": "./dist/components/shell/StatusBar.js"
+    },
+    "./components/shell/status-model": {
+      "types": "./dist/components/shell/status-model.d.ts",
+      "react-native": "./dist/components/shell/status-model.js",
+      "default": "./dist/components/shell/status-model.js"
+    },
+    "./components/shell/MenuButton": {
+      "types": "./dist/components/shell/MenuButton.d.ts",
+      "react-native": "./dist/components/shell/MenuButton.js",
+      "default": "./dist/components/shell/MenuButton.js"
+    },
+    "./components/shell/shell-keys": {
+      "types": "./dist/components/shell/shell-keys.d.ts",
+      "react-native": "./dist/components/shell/shell-keys.js",
+      "default": "./dist/components/shell/shell-keys.js"
+    },
     "./components/forge/WaveformLane": {
       "types": "./dist/components/forge/WaveformLane.d.ts",
       "react-native": "./dist/components/forge/WaveformLane.js",
@@ -520,6 +580,7 @@
     "prepack": "pnpm build"
   },
   "peerDependencies": {
+    "@nyc-tron/core": "workspace:^",
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
     "expo-drag-drop-content-view": ">=0.9.2 <1",
@@ -531,6 +592,9 @@
     "zustand": "^5.0.0"
   },
   "peerDependenciesMeta": {
+    "@nyc-tron/core": {
+      "optional": true
+    },
     "@expo/ui": {
       "optional": true
     },
@@ -554,6 +618,7 @@
     }
   },
   "devDependencies": {
+    "@nyc-tron/core": "workspace:*",
     "@expo/ui": "58.0.20",
     "@tanstack/react-table": "9.3.1",
     "@types/react": "~19.3.0",
