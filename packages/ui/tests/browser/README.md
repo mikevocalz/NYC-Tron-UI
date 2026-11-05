@@ -43,5 +43,23 @@ and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
 focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
 web `ScopedTheme` output (a `display: contents` element with the theme class).
 
+`fixtures/office.tsx` (`/office?part=slides|document|pdf`) renders the office
+cluster against in-memory hosts. `office.spec.mjs` drags a slide object onto a
+neighbour's edge (snapping), nudges, rotates and deletes it, resizes by the
+corner, checks the canvas is not mirrored in RTL (J-05); reorders the filmstrip
+by key and by grip on a horizontal phone strip (J-01); range-selects and moves
+a block in the sorter and refuses to delete every slide (J-02); validates and
+adds animations, including an engine rejection that keeps the form (J-09);
+turns a mixed bold selection on and sets color and size (H-03); outdents under
+the nesting policy and renumbers (H-07); jumps, collapses and pages through the
+outline (H-15); plays, skips and changes speed by key (H-21); searches from
+page 2 with page-ordered hits and wrap (K-04); picks tools by letter (K-06);
+filters, replies, resolves and deletes comments, and keeps a reply whose save
+failed (K-07); and steps pages and shows the no-voice state (K-18).
+`office-shots.spec.mjs` writes `shots/office-*` at 390 and 834 px in light and
+dark, RTL, search results and text editing.
+
+`PORT=<n>` moves the server off 4179 when that port is taken.
+
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

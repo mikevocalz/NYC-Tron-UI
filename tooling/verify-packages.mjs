@@ -77,6 +77,12 @@ for (const pkgName of packages) {
   if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs"]){
     if(!manifest.exports["./components/"+sub])fail("Missing data grid subpath "+sub);
   }
+  // Office cluster (Forge J-01/J-02/J-05/J-09, H-03/H-07/H-15/H-21, K-04/K-06/K-07/K-18).
+  if(pkgName==="ui")for(const sub of ["slides/SlideFilmstrip","slides/SlideSorter","slides/SlideCanvas","slides/SlideAnimationPane",
+    "document/RichTextRibbon","document/BulletsNumberingEditor","document/NavigationOutline","document/DocumentReadAloudTransport",
+    "pdf/TextSearchResults","pdf/AnnotationToolbar","pdf/CommentsThreadPanel","pdf/PDFReadAloudTransport","office/read-aloud-model","pdf/search-model"]){
+    if(!manifest.exports["./components/forge/"+sub])fail("Missing office subpath forge/"+sub);
+  }
   const runtimeDeps={...manifest.dependencies,...manifest.optionalDependencies};
   for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence"]) {
     if(bad in runtimeDeps||bad in (manifest.peerDependencies??{}))fail(id+": forbidden UI dependency "+bad);

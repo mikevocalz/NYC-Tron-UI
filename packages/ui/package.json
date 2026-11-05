@@ -377,6 +377,131 @@
       "browser": "./dist/components/html/semantic.web.js",
       "react-native": "./dist/components/html/semantic.native.js",
       "default": "./dist/components/html/semantic.web.js"
+    },
+    "./components/forge/office/ReadAloudTransport": {
+      "types": "./dist/components/forge/office/ReadAloudTransport.d.ts",
+      "react-native": "./dist/components/forge/office/ReadAloudTransport.js",
+      "default": "./dist/components/forge/office/ReadAloudTransport.js"
+    },
+    "./components/forge/office/office-controls": {
+      "types": "./dist/components/forge/office/office-controls.d.ts",
+      "react-native": "./dist/components/forge/office/office-controls.js",
+      "default": "./dist/components/forge/office/office-controls.js"
+    },
+    "./components/forge/office/read-aloud-model": {
+      "types": "./dist/components/forge/office/read-aloud-model.d.ts",
+      "react-native": "./dist/components/forge/office/read-aloud-model.js",
+      "default": "./dist/components/forge/office/read-aloud-model.js"
+    },
+    "./components/forge/slides/SlideAnimationPane": {
+      "types": "./dist/components/forge/slides/SlideAnimationPane.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideAnimationPane.js",
+      "default": "./dist/components/forge/slides/SlideAnimationPane.js"
+    },
+    "./components/forge/slides/SlideCanvas": {
+      "types": "./dist/components/forge/slides/SlideCanvas.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideCanvas.js",
+      "default": "./dist/components/forge/slides/SlideCanvas.js"
+    },
+    "./components/forge/slides/SlideFilmstrip": {
+      "types": "./dist/components/forge/slides/SlideFilmstrip.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideFilmstrip.js",
+      "default": "./dist/components/forge/slides/SlideFilmstrip.js"
+    },
+    "./components/forge/slides/SlideSorter": {
+      "types": "./dist/components/forge/slides/SlideSorter.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideSorter.js",
+      "default": "./dist/components/forge/slides/SlideSorter.js"
+    },
+    "./components/forge/slides/SlideThumbnail": {
+      "types": "./dist/components/forge/slides/SlideThumbnail.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideThumbnail.js",
+      "default": "./dist/components/forge/slides/SlideThumbnail.js"
+    },
+    "./components/forge/slides/animation-model": {
+      "types": "./dist/components/forge/slides/animation-model.d.ts",
+      "react-native": "./dist/components/forge/slides/animation-model.js",
+      "default": "./dist/components/forge/slides/animation-model.js"
+    },
+    "./components/forge/slides/canvas-model": {
+      "types": "./dist/components/forge/slides/canvas-model.d.ts",
+      "react-native": "./dist/components/forge/slides/canvas-model.js",
+      "default": "./dist/components/forge/slides/canvas-model.js"
+    },
+    "./components/forge/slides/slide-model": {
+      "types": "./dist/components/forge/slides/slide-model.d.ts",
+      "react-native": "./dist/components/forge/slides/slide-model.js",
+      "default": "./dist/components/forge/slides/slide-model.js"
+    },
+    "./components/forge/document/BulletsNumberingEditor": {
+      "types": "./dist/components/forge/document/BulletsNumberingEditor.d.ts",
+      "react-native": "./dist/components/forge/document/BulletsNumberingEditor.js",
+      "default": "./dist/components/forge/document/BulletsNumberingEditor.js"
+    },
+    "./components/forge/document/DocumentReadAloudTransport": {
+      "types": "./dist/components/forge/document/DocumentReadAloudTransport.d.ts",
+      "react-native": "./dist/components/forge/document/DocumentReadAloudTransport.js",
+      "default": "./dist/components/forge/document/DocumentReadAloudTransport.js"
+    },
+    "./components/forge/document/NavigationOutline": {
+      "types": "./dist/components/forge/document/NavigationOutline.d.ts",
+      "react-native": "./dist/components/forge/document/NavigationOutline.js",
+      "default": "./dist/components/forge/document/NavigationOutline.js"
+    },
+    "./components/forge/document/RichTextRibbon": {
+      "types": "./dist/components/forge/document/RichTextRibbon.d.ts",
+      "react-native": "./dist/components/forge/document/RichTextRibbon.js",
+      "default": "./dist/components/forge/document/RichTextRibbon.js"
+    },
+    "./components/forge/document/list-model": {
+      "types": "./dist/components/forge/document/list-model.d.ts",
+      "react-native": "./dist/components/forge/document/list-model.js",
+      "default": "./dist/components/forge/document/list-model.js"
+    },
+    "./components/forge/document/outline-model": {
+      "types": "./dist/components/forge/document/outline-model.d.ts",
+      "react-native": "./dist/components/forge/document/outline-model.js",
+      "default": "./dist/components/forge/document/outline-model.js"
+    },
+    "./components/forge/document/ribbon-model": {
+      "types": "./dist/components/forge/document/ribbon-model.d.ts",
+      "react-native": "./dist/components/forge/document/ribbon-model.js",
+      "default": "./dist/components/forge/document/ribbon-model.js"
+    },
+    "./components/forge/pdf/AnnotationToolbar": {
+      "types": "./dist/components/forge/pdf/AnnotationToolbar.d.ts",
+      "react-native": "./dist/components/forge/pdf/AnnotationToolbar.js",
+      "default": "./dist/components/forge/pdf/AnnotationToolbar.js"
+    },
+    "./components/forge/pdf/CommentsThreadPanel": {
+      "types": "./dist/components/forge/pdf/CommentsThreadPanel.d.ts",
+      "react-native": "./dist/components/forge/pdf/CommentsThreadPanel.js",
+      "default": "./dist/components/forge/pdf/CommentsThreadPanel.js"
+    },
+    "./components/forge/pdf/PDFReadAloudTransport": {
+      "types": "./dist/components/forge/pdf/PDFReadAloudTransport.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFReadAloudTransport.js",
+      "default": "./dist/components/forge/pdf/PDFReadAloudTransport.js"
+    },
+    "./components/forge/pdf/TextSearchResults": {
+      "types": "./dist/components/forge/pdf/TextSearchResults.d.ts",
+      "react-native": "./dist/components/forge/pdf/TextSearchResults.js",
+      "default": "./dist/components/forge/pdf/TextSearchResults.js"
+    },
+    "./components/forge/pdf/annotation-model": {
+      "types": "./dist/components/forge/pdf/annotation-model.d.ts",
+      "react-native": "./dist/components/forge/pdf/annotation-model.js",
+      "default": "./dist/components/forge/pdf/annotation-model.js"
+    },
+    "./components/forge/pdf/comments-model": {
+      "types": "./dist/components/forge/pdf/comments-model.d.ts",
+      "react-native": "./dist/components/forge/pdf/comments-model.js",
+      "default": "./dist/components/forge/pdf/comments-model.js"
+    },
+    "./components/forge/pdf/search-model": {
+      "types": "./dist/components/forge/pdf/search-model.d.ts",
+      "react-native": "./dist/components/forge/pdf/search-model.js",
+      "default": "./dist/components/forge/pdf/search-model.js"
     }
   },
   "scripts": {
