@@ -22,7 +22,7 @@ public sealed partial class TronNavigationShell : UserControl
     }
 
     public event EventHandler<TronDestinationInvokedEventArgs>? DestinationInvoked;
-    public event EventHandler<bool>? PaneOpenChanged;
+    public event EventHandler<TronPaneOpenChangedEventArgs>? PaneOpenChanged;
     public event EventHandler? SettingsInvoked;
 
     public string? SelectedId =>
@@ -152,10 +152,10 @@ public sealed partial class TronNavigationShell : UserControl
 
     private void OnPaneOpened(NavigationView sender, object args)
     {
-        if (!_settingFromHost) PaneOpenChanged?.Invoke(this, true);
+        if (!_settingFromHost) PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(true));
     }
     private void OnPaneClosed(NavigationView sender, object args)
     {
-        if (!_settingFromHost) PaneOpenChanged?.Invoke(this, false);
+        if (!_settingFromHost) PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(false));
     }
 }
