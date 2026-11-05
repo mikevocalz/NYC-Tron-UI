@@ -13,13 +13,13 @@ the caller passes one; otherwise the token applies.
 
 | `TronTheme` key | Variable | Utilities | Used by |
 | --- | --- | --- | --- |
-| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10`, `border-primary` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range, TreeGrid selected rows, InkToolbar selected tool and pressure switch |
-| `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary`, InkToolbar selected tool label |
-| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale, InkToolbar |
-| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars, InkToolbar size and opacity steppers |
-| `border` | `--color-border` | `border-border` | Every bordered surface, InkToolbar dividers and swatch rings |
-| `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid, InkToolbar labels and size dot |
-| `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip, InkToolbar notice line |
+| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10`, `border-primary` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range, TreeGrid selected rows; InkToolbar selected tool and pressure switch |
+| `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary`; InkToolbar selected tool label |
+| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale; HsvPicker thumb inner ring; InkToolbar |
+| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars; HsvPicker steppers; InkToolbar size and opacity steppers |
+| `border` | `--color-border` | `border-border` | Every bordered surface; InkToolbar dividers and swatch rings |
+| `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid; HsvPicker thumb outer ring; InkToolbar labels and size dot |
+| `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip; HsvPicker and ColorChannels labels and hex readout; InkToolbar notice line |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
 | `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge |
