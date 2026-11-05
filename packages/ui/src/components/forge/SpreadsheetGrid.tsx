@@ -4,6 +4,7 @@ import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { flexRender, tableFeatures, useTable } from "@tanstack/react-table";
 import { cellAddress, columnName, sheetWindow, responsiveSheetMetrics, reanchorSheetScroll } from "./sheet-window.ts";
+import { commitCellEdit } from "./cell-commit.ts";
 import { joinClasses } from "../styles.ts";
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
@@ -36,7 +37,7 @@ export interface SpreadsheetGridProps extends Omit<ViewProps, "children"> {
   readonly headerClassName?:string;
   readonly unstyled?:boolean;
 }
-type GridLocal = { x:number;y:number;draft:string;dirty:boolean;pending:boolean;error:string|null;measuredWidth:number;measuredHeight:number };
+type GridLocal = { x:number;y:number;draft:string;dirty:boolean;pending:boolean;editVersion:number;error:string|null;measuredWidth:number;measuredHeight:number };
 const coreFeatures=tableFeatures({});
 
 function display(value:SpreadsheetCell["computed"]|undefined) {
@@ -50,7 +51,7 @@ export function SpreadsheetGrid({
 }:SpreadsheetGridProps) {
   const stateRef=useRef<StoreApi<GridLocal>|null>(null);
   if(!stateRef.current)stateRef.current=createStore<GridLocal>(()=>({
-    x:0,y:0,draft:"",dirty:false,pending:false,error:null,measuredWidth:0,measuredHeight:0
+    x:0,y:0,draft:"",dirty:false,pending:false,editVersion:0,error:null,measuredWidth:0,measuredHeight:0
   }));
   const state=stateRef.current;
   const x=useStore(state,s=>s.x);
@@ -105,13 +106,13 @@ export function SpreadsheetGrid({
   const table=useTable({key:`nyc-tron-sheet-${sheetId}`,
     features:coreFeatures,data:rows,columns});
   const selected=selectedCell??"";
-  const lastSelected=useRef(selected);
+  const lastSelected=useRef({sheetId,selected});
   useEffect(()=>{
-    if(selected!==lastSelected.current){
-      lastSelected.current=selected;
-      state.setState({draft:selected?cells[selected]?.raw??"":"",dirty:false,error:null});
+    if(selected!==lastSelected.current.selected || sheetId!==lastSelected.current.sheetId){
+      lastSelected.current={sheetId,selected};
+      state.setState({draft:selected?cells[selected]?.raw??"":"",dirty:false,error:null,editVersion:state.getState().editVersion+1});
     }
-  },[selected,cells,state]);
+  },[sheetId,selected,cells,state]);
   const onWindowChangeRef=useRef(onWindowChange);
   onWindowChangeRef.current=onWindowChange;
   useEffect(()=>{
@@ -120,17 +121,7 @@ export function SpreadsheetGrid({
       startColumn:window.columns.start,endColumn:window.columns.end});
   },[sheetId,window.rows.start,window.rows.end,window.columns.start,
     window.columns.end,viewportWidth>0,viewportHeight>metrics.formulaBarHeight]);
-  const commit=async()=>{
-    if(!selected || !onCommitCell || pending || !dirty)return;
-    state.setState({pending:true,error:null});
-    try{
-      await onCommitCell(selected,state.getState().draft);
-      // Parent must update its Rust-backed cells; local state isn't source data.
-      state.setState({dirty:false});
-    }catch(err){
-      state.setState({error:err instanceof Error?err.message:"Could not update cell"});
-    }finally{state.setState({pending:false});}
-  };
+  const commit=()=>commitCellEdit(selected,onCommitCell,state.getState,patch=>state.setState(patch));
   // RN Text does not inherit color; every label needs the theme text token or
   // it renders platform-default black on a dark surface.
   const textClass=!unstyled?"text-text":undefined;
@@ -175,7 +166,7 @@ export function SpreadsheetGrid({
         accessibilityLabel="Formula bar"
         editable={Boolean(selected&&onCommitCell)&&!pending}
         value={dirty?draft:(selected?cells[selected]?.raw??"":"")}
-        onChangeText={next=>state.setState({draft:next,dirty:true})}
+        onChangeText={next=>state.setState(current=>({draft:next,dirty:true,editVersion:current.editVersion+1}))}
         onSubmitEditing={()=>void commit()}
         onBlur={()=>{if(dirty)void commit();}}
         returnKeyType="done"
@@ -226,7 +217,7 @@ export function SpreadsheetGrid({
                   accessibilityState={{selected:selected===addr}}
                   onPress={()=>{
                     onSelectionChange?.(addr);
-                    state.setState({draft:cells[addr]?.raw??"",dirty:false,error:null});
+                    state.setState(current=>({draft:cells[addr]?.raw??"",dirty:false,error:null,editVersion:current.editVersion+1}));
                   }}
                   {...{className:joinClasses(!unstyled&&"border-r border-b border-border",cellClassName,
                     selected===addr&&!unstyled&&"bg-primary/10")}}
@@ -243,3 +234,4 @@ export function SpreadsheetGrid({
     </ScrollView>
   </View>;
 }
+
