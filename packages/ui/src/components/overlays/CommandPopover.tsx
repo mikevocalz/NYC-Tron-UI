@@ -81,7 +81,7 @@ export function CommandPopover({visible,onDismiss,onSelect,anchor,usableRegions,
             disabled={item.disabled}
             onPress={()=>{onSelect(item.id);onDismiss();}}
             {...{onKeyDown:(event:KeyEvent)=>onItemKey(event,item.id)}}
-            {...{className:joinClasses(styled&&"border-b border-border focus-visible:bg-surface-sunken")}}
+            {...{className:joinClasses(styled&&"border-b border-border focus-visible:bg-primary/10")}}
             style={{minHeight:56,paddingHorizontal:12,paddingVertical:7,justifyContent:"center",
               opacity:item.disabled?0.4:1,...(styled&&borderColor?{borderColor}:null)}}>
             <Text {...{className:joinClasses(styled&&(item.danger?"text-danger":"text-text"))}}

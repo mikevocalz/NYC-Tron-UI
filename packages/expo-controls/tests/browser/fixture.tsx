@@ -39,7 +39,7 @@ const regions=()=>[{x:0,y:0,width:window.innerWidth,height:window.innerHeight}];
 function Button({label,onPress}:{label:string;onPress:()=>void}){
   return <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress}
     style={{minHeight:44,minWidth:44,justifyContent:"center",paddingHorizontal:12}}>
-    <Text>{label}</Text>
+    <Text {...{className:"text-text"}}>{label}</Text>
   </Pressable>;
 }
 
@@ -52,24 +52,24 @@ function Fixture(){
   const close=()=>show("none");
   return <View style={{padding:24,gap:8}}>
     <NativeActionMenu accessibilityLabel="Document actions" actions={actions}
-      longPress onAction={select} trigger={<Text>Document actions</Text>}/>
-    <View style={{flexDirection:"row",gap:8}}>
+      longPress onAction={select} trigger={<Text {...{className:"text-text"}}>Document actions</Text>}/>
+    <View style={{flexDirection:"row",flexWrap:"wrap",gap:8}}>
       <Button label="Open popover" onPress={()=>show("popover")}/>
       <Button label="Open commands" onPress={()=>show("commands")}/>
       <Button label="Open palette" onPress={()=>show("palette")}/>
       <Tooltip label="Writes the document to disk" delayMs={150} testID="save-tooltip">
         <Pressable accessibilityRole="button" accessibilityLabel="Save" onPress={()=>select("save")}
           style={{minHeight:44,minWidth:44,justifyContent:"center",paddingHorizontal:12}}>
-          <Text>Save</Text>
+          <Text {...{className:"text-text"}}>Save</Text>
         </Pressable>
       </Tooltip>
     </View>
-    <Text testID="selection">{selected}</Text>
-    <Text testID="action-count">{count}</Text>
+    <Text testID="selection" {...{className:"text-text-muted"}}>{selected}</Text>
+    <Text testID="action-count" {...{className:"text-text-muted"}}>{count}</Text>
     <NativePopover open={overlay==="popover"} onOpenChange={next=>{if(!next)close();}}
       anchor={anchor} usableRegions={regions()} accessibilityLabel="Layer settings" testID="popover">
       <View style={{padding:12,gap:8}}>
-        <Text>Layer settings</Text>
+        <Text {...{className:"text-text font-semibold"}}>Layer settings</Text>
         <Button label="Popover first" onPress={()=>select("first")}/>
         <Button label="Popover second" onPress={()=>select("second")}/>
         <Button label="Done" onPress={close}/>

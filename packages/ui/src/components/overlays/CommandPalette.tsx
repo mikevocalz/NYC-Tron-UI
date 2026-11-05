@@ -129,7 +129,7 @@ export function CommandPalette({open,onOpenChange,onSelect,commands,anchor,usabl
           onHoverIn={()=>{if(!command.disabled)store.setState({activeId:command.id});}}
           {...{onKeyDown:(event:KeyEvent)=>onKey(event.nativeEvent as unknown as KeyData,command.id,
             ()=>{event.preventDefault();event.stopPropagation();})}}
-          {...{className:joinClasses("rounded-control",styled&&(active?"bg-surface-sunken":"focus-visible:bg-surface-sunken"))}}
+          {...{className:joinClasses("rounded-control",styled&&(active?"bg-primary/10":"focus-visible:bg-primary/10"))}}
           style={{minHeight:ROW_HEIGHT,paddingHorizontal:12,paddingVertical:7,justifyContent:"center",
             opacity:command.disabled?0.4:1}}>
           <Text {...{className:joinClasses(styled&&(command.danger?"text-danger":"text-text"))}}
