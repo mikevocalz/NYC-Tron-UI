@@ -15,6 +15,6 @@
 The complete upstream license text is retained in
 licenses/AudioKit-Controls-MIT.txt inside this package.
 
-Expo Modules SDK 58 custom views use ExpoUIView. Expo Modules 2.0 @ExpoView
+Expo Modules SDK 58 custom views use the view DSL (core View on iOS, ExpoUIView on Android). Expo Modules 2.0 @ExpoView
 and @ViewProps are not exposed by the current core; never claim this view is
 a native-view-v2 macro implementation without a successful build.
