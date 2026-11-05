@@ -10,7 +10,7 @@ import ts from "typescript";
 // config. This proves the preview/commit contract, not React reconciliation,
 // native gesture arbitration or screen-reader output on a device.
 const src = resolve(dirname(fileURLToPath(import.meta.url)), "../../src/components");
-function harness({ rtl = false } = {}) {
+function harness({ rtl = false, os = "ios" } = {}) {
   const refs = [];
   let cursor = 0;
   let responder;
@@ -21,6 +21,7 @@ function harness({ rtl = false } = {}) {
     "react-native": {
       View: "View", Text: "Text", Pressable: "Pressable",
       I18nManager: { isRTL: rtl },
+      Platform: { OS: os },
       PanResponder: { create: config => { responder = config; return { panHandlers: {} }; } },
     },
     "zustand/vanilla": { createStore: init => {
@@ -123,7 +124,7 @@ test("screen-reader actions step in dB and commit each step", () => {
 test("disabled fader refuses gestures and steps", () => {
   const h = harness(); const commits = [];
   const tree = h.render({ value: 0.5, label: "FX", disabled: true, onCommit: g => commits.push(g) });
-  assert.equal(h.gesture().onStartShouldSetPanResponder(), false);
+  assert.equal(h.gesture().onMoveShouldSetPanResponder({}, { dx: 0, dy: 30 }), false);
   track(tree).props.onAccessibilityAction({ nativeEvent: { actionName: "increment" } });
   assert.equal(track(tree).props.accessibilityState.disabled, true);
   assert.equal(commits.length, 0);
@@ -157,4 +158,52 @@ test("invalid values throw instead of rendering a fake level", () => {
   const h = harness();
   assert.throws(() => h.render({ value: NaN, label: "X", onCommit: () => {} }), { name: "RangeError" });
   assert.throws(() => h.render({ value: 1, label: "X", length: 20, onCommit: () => {} }), { name: "RangeError" });
+});
+
+test("claims only travel-axis drags and keeps them against a parent scroll", () => {
+  const h = harness();
+  h.render({ value: 0.5, label: "Vox", onCommit: () => {} });
+  const g = h.gesture();
+  assert.equal(g.onStartShouldSetPanResponder(), false, "a press alone never claims");
+  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 2, dy: 3 }), false, "inside slop");
+  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 40, dy: 6 }), false, "horizontal swipe scrolls the mixer");
+  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 3, dy: -12 }), true);
+  assert.equal(g.onMoveShouldSetPanResponderCapture({}, { dx: 3, dy: -12 }), true);
+  assert.equal(g.onPanResponderTerminationRequest(), true, "idle fader yields");
+  g.onPanResponderGrant();
+  assert.equal(g.onPanResponderTerminationRequest(), false, "an active drag is kept");
+  assert.equal(g.onShouldBlockNativeResponder(), true);
+  g.onPanResponderRelease();
+  assert.equal(g.onPanResponderTerminationRequest(), true);
+  const hz = harness();
+  hz.render({ value: 0.5, label: "Send", orientation: "horizontal", onCommit: () => {} });
+  assert.equal(hz.gesture().onMoveShouldSetPanResponder({}, { dx: 2, dy: 30 }), false);
+  assert.equal(hz.gesture().onMoveShouldSetPanResponder({}, { dx: 12, dy: 2 }), true);
+});
+test("arrow keys step the focused track", () => {
+  const h = harness({ os: "web" }); const commits = [];
+  const t = track(h.render({ value: h.level.dbToGain(-6), label: "Keys", onCommit: g => commits.push(g) }));
+  assert.equal(t.props.focusable, true);
+  assert.equal(t.props.style.touchAction, "pan-x");
+  let prevented = 0;
+  t.props.onKeyDown({ nativeEvent: { key: "ArrowUp" }, preventDefault: () => prevented++ });
+  t.props.onKeyDown({ nativeEvent: { key: "Tab" }, preventDefault: () => prevented++ });
+  assert.equal(prevented, 1);
+  assert.equal(Math.round(h.level.gainToDb(commits[0])), -5);
+  assert.equal(track(harness().render({ value: 0.5, label: "N", onCommit: () => {} })).props.style.touchAction, undefined);
+});
+test("a range with headroom marks unity", () => {
+  const h = harness();
+  const has = props => {
+    let found = false;
+    (function walk(n) { if (n?.props?.className === "bg-text-muted") found = true; kids(n).forEach(walk); })(h.render(props));
+    return found;
+  };
+  assert.equal(has({ value: 1, label: "U", onCommit: () => {} }), false);
+  assert.equal(has({ value: 1, label: "C", range: h.level.FADER_RANGES.CHANNEL, onCommit: () => {} }), true);
+});
+test("stepDb and negative gain are validated at render", () => {
+  const h = harness();
+  assert.throws(() => h.render({ value: 0.5, label: "X", stepDb: 0, onCommit: () => {} }), { name: "RangeError" });
+  assert.throws(() => h.render({ value: -0.1, label: "X", onCommit: () => {} }), { name: "RangeError" });
 });
