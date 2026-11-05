@@ -39,6 +39,11 @@
       "types": "./dist/advanced-catalog.d.ts",
       "react-native": "./dist/advanced-catalog.js",
       "default": "./dist/advanced-catalog.js"
+    },
+    "./presets/infrax": {
+      "types": "./dist/presets/infrax.d.ts",
+      "react-native": "./dist/presets/infrax.js",
+      "default": "./dist/presets/infrax.js"
     }
   },
   "scripts": {
