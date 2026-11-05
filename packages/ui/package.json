@@ -50,10 +50,35 @@
       "react-native": "./dist/components/forge/timebase.js",
       "default": "./dist/components/forge/timebase.js"
     },
+    "./components/forge/audio/level": {
+      "types": "./dist/components/forge/audio/level.d.ts",
+      "react-native": "./dist/components/forge/audio/level.js",
+      "default": "./dist/components/forge/audio/level.js"
+    },
+    "./components/forge/audio/LevelFader": {
+      "types": "./dist/components/forge/audio/LevelFader.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelFader.js",
+      "default": "./dist/components/forge/audio/LevelFader.js"
+    },
     "./components/forge/color": {
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color.js",
       "default": "./dist/components/forge/color.js"
+    },
+    "./components/forge/color/HsvPicker": {
+      "types": "./dist/components/forge/color/HsvPicker.d.ts",
+      "react-native": "./dist/components/forge/color/HsvPicker.js",
+      "default": "./dist/components/forge/color/HsvPicker.js"
+    },
+    "./components/forge/color/fieldGeometry": {
+      "types": "./dist/components/forge/color/fieldGeometry.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGeometry.js",
+      "default": "./dist/components/forge/color/fieldGeometry.js"
+    },
+    "./components/forge/color/fieldGesture": {
+      "types": "./dist/components/forge/color/fieldGesture.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGesture.js",
+      "default": "./dist/components/forge/color/fieldGesture.js"
     },
     "./components/data/DataTable": {
       "types": "./dist/components/data/DataTable.d.ts",
@@ -278,6 +303,7 @@
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
     "expo-drag-drop-content-view": ">=0.9.2 <1",
+    "expo-linear-gradient": "^58.0.0",
     "react": ">=19.0.0",
     "react-native": ">=0.88.0",
     "react-native-gesture-handler": ">=3.4.0 <4",
@@ -297,6 +323,9 @@
     "react-native-gesture-handler": {
       "optional": true
     },
+    "expo-linear-gradient": {
+      "optional": true
+    },
     "expo-drag-drop-content-view": {
       "optional": true
     },
@@ -310,6 +339,7 @@
     "@types/react": "~19.3.0",
     "expo": "58.0.14",
     "expo-drag-drop-content-view": "0.9.2",
+    "expo-linear-gradient": "58.0.3",
     "react": "19.3.0",
     "react-native": "0.88.0",
     "react-native-gesture-handler": "3.4.0",

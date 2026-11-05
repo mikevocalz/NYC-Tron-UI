@@ -13,6 +13,7 @@ complex editor screen composition and its cross-engine suite application.
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
+| Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
 | Banner | `@nyc-tron/ui/components/feedback/Banner` | RN notice: info/success/danger/neutral tones, polite or assertive live region, optional 44pt dismiss and action slot. Chromium/React Native Web tests and captures; no device or screen-reader QA yet | NYC-MON `@acme/ui` Banner |
 | Badge | `@nyc-tron/ui/components/feedback/Badge` | Static RN status chip, neutral/info/success/danger/accent. Chromium captures only | NYC-MON `@acme/ui` Badge (neutral tone path) |
@@ -23,6 +24,8 @@ complex editor screen composition and its cross-engine suite application.
 | DropZone | `@nyc-tron/ui/components/files/DropZone` | Web: DOM drag listeners on the view's node, `accept` filtering, built-in FilePicker. Native: expo-drag-drop-content-view 0.9.2 (optional peer). Web drop tested in Chromium; **native drop not run on a device** | NYC-MON `@acme/ui` DropZone (.web/.native) |
 | FilePicker | `@nyc-tron/ui/components/files/FilePicker` | Web: button that opens the system chooser. Native: renders nothing (**DEFERRED**, see below) | NYC-MON `@acme/ui/html` FilePickerBase |
 | Semantic html set | `@nyc-tron/ui/components/html` (Page, Main, Header, Footer, Section, Nav, Article, Aside, Text, Paragraph, Heading, Link, Input) | Web: real elements through React Native Web's element factory. Native: View/Text with ARIA `role`. Web tested in Chromium; native roles typechecked only | NYC-MON `@acme/ui/html` |
+| HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
+| Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
 | WindowsNavigationView | Future native Windows adapter | **NOT IMPLEMENTED** | WinUI 3 NavigationView |
 | Native dropdown/menu/flyout | Future target-specific adapters | **NOT IMPLEMENTED** | Spark AppKit, WinUI, Expo UI |
@@ -32,10 +35,11 @@ complex editor screen composition and its cross-engine suite application.
 | PrecisionScrubber | `@nyc-tron/ui/components/forge/inputs/PrecisionScrubber` (math in `/forge/inputs/precision`, logic in `/forge/inputs/precision-scrubber-model`) | Controlled RN control; fine/normal/coarse, detents, one commit, cancel restores, forced colors, adjustable a11y. Model tests plus Chromium/React Native Web drag tests and light/dark/forced-colors captures (`packages/ui/tests/browser`); no device or screen-reader QA yet | Forge `studio-workspace/precision-scrubber.tsx` (PR #32) |
 | DragGrabHandle | `@nyc-tron/ui/components/DragGrabHandle` | Controlled RN handle; start/move/commit/cancel, Escape and second-pointer cancel. Transport tests plus Chromium reorder/cancel test; no device QA yet | Forge `studio-workspace/drag-grab-handle.tsx` |
 | Drag transports | `@nyc-tron/ui/components/gestures/PanResponderDrag` (default) and `/gestures/GestureHandlerDrag` (optional `react-native-gesture-handler` >=3.4 <4 peer) | Callback logic tested with mocked RN/RNGH; native recognition unverified on device | Forge `studio-gesture.tsx` / `studio-gesture.native.tsx` |
-| Track/mixer/fader / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
+| LevelFader + level math | `@nyc-tron/ui/components/forge/audio/LevelFader`, `.../forge/audio/level` | Controlled RN responder fader (value/onChange/onCommit), dB travel, unit + mocked-host render tests; native device QA pending | Forge PR #25 `NativeLevelSlider` |
+| Track/mixer / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
-| Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
+| Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
 | Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
@@ -73,7 +77,7 @@ acceptance gates.
 
 ```text
 Image:         @nitro-forge/prism     + /forge/* graphics controls you need
-Audio:         @nitro-forge/cadence   + /forge/WaveformLane etc.
+Audio:         @nitro-forge/cadence   + /forge/WaveformLane, /forge/audio/LevelFader etc.
 Video:         @nitro-forge/splice    + /forge/NativeSeekBar etc.
 Documents:     @nitro-forge/quill     + /forge/document/* controls
 Spreadsheets:  @nitro-forge/tally     + /forge/spreadsheet/* controls
@@ -192,3 +196,61 @@ file chooser path, NightScope colors on a light page, KeyValueList columns at
 390 and 834 px, RTL, plus light/dark, focus, drag-over and forced-colors
 captures. Not run: iOS/Android rendering, expo-drag-drop-content-view drops on
 a device, Uniwind's native ScopedTheme, screen readers, Safari and Firefox.
+## 2026-11-05 HSV picker
+
+`HsvPicker` moved from Nitro Forge PR #34 (`NativeHsvPicker`) into
+`packages/ui/src/components/forge/color/`. It is controlled: `value` and
+`onValueChange` carry one `HsvColor`, `onApply` and `onCancel` let the Forge
+host open and close its own undo transaction, and the picker keeps no color
+state. `parseHexColor`, `rgbToHsv`, `hsvToRgb`, `assertHsv` and `wrapHue`
+were added to the existing `/forge/color` module, which `ColorChannels` also
+imports; there is no second copy of the math.
+
+Screen readers adjust saturation with swipe up/down and reach brightness and
+hue through named actions. Saturation and brightness also have 44pt
+steppers. The picker has no animation. Consumers that import this subpath
+must install `@expo/ui` and `expo-linear-gradient`; other subpaths do not
+need them.
+
+Labels (hue, hex, RGBA channels) are app-token RN `Text`; the `@expo/ui`
+hosts carry only the sliders. `@expo/ui` Text follows the OS appearance, so
+with a dark app theme on a light-mode device it drew black labels on the
+dark surface. The universal `@expo/ui` Slider takes no accessible label, so
+the hue slider is unnamed; the field's named hue actions are the labeled
+path. An opacity-only channel edit keeps h/s/v exactly (`rgbaEditToHsv`).
+
+Verified: source, types, unit tests, package exports, and a
+react-native-web render in Chromium with the real `@expo/ui` and
+`expo-linear-gradient` web builds (phone and tablet widths, light and dark,
+and app theme opposite to the OS scheme). Synthesized touch drags on the
+field kept the page from scrolling. Not verified: iOS, Android or foldable
+device runs, and VoiceOver/TalkBack output.
+
+## 2026-11-05 level fader and timebase helpers
+
+Forge PR #25 `NativeLevelSlider` moves here as
+`components/forge/audio/LevelFader`, per Nitro Forge PR #38 (Forge imports
+NYC-Tron UI; NYC-Tron never imports Forge). The source fired its callback on
+every slider move. LevelFader keeps the same linear-gain `value` but splits
+the callback: `onChange` previews during a drag, `onCommit` fires once on
+release or once per button/screen-reader step, and a cancelled drag restores
+`value` without committing. Travel is linear in dB between `range.minDb` and
+`range.maxDb`, with silence at the bottom. It draws its own track instead of
+wrapping `@expo/ui` Slider, so it has no Expo host requirement.
+
+`framesToSeconds`/`secondsToFrame` join the existing `forge/timebase` module;
+there is no second timebase file. WaveformLane's math works on signed sample
+extrema and has no dB conversion, so `audio/level.ts` shares nothing with it.
+
+The fader claims a touch only after 4 pt of travel-axis movement and then
+keeps it, so cross-axis swipes scroll a parent ScrollView and a same-axis
+ScrollView cannot cancel a drag halfway. Arrow keys step a focused track.
+
+Verified: unit tests, a mocked-host render test of the real component and
+PanResponder config, and a react-native-web render in Chromium (phone and
+tablet widths, light and dark, RTL). In that browser run, synthesized touch
+drags moved vertical and horizontal faders, a horizontal swipe across a
+vertical fader scrolled the mixer without a gain change, a vertical swipe
+on a horizontal fader scrolled the page, and Tab plus arrow keys stepped the
+level. Not verified: iOS/Android/Windows/macOS device gestures, native
+ScrollView arbitration, and VoiceOver/TalkBack/Narrator output.
