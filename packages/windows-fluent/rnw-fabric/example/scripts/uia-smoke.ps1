@@ -88,6 +88,23 @@ function Request-Workspace($window, $homeItem) {
   Write-Host "Keyboard Down+Enter produced a pending Workspace request"
 }
 
+# Startup-crash evidence: installed Windows App Runtime packages, and the
+# native stack plus debug output from a second launch under cdb when the
+# SDK debuggers are installed on the runner.
+function Write-Diagnostics {
+  Write-Host "Installed Windows App Runtime packages:"
+  Get-AppxPackage -Name "*WindowsAppRuntime*" -ErrorAction SilentlyContinue |
+    ForEach-Object { Write-Host "  $($_.PackageFullName)" }
+  $cdb = Join-Path ${env:ProgramFiles(x86)} "Windows Kits\10\Debuggers\x64\cdb.exe"
+  if (-not (Test-Path $cdb)) { Write-Host "cdb.exe not installed; no native stack"; return }
+  $env:_NT_SYMBOL_PATH = "$(Split-Path $Exe);srv*$env:RUNNER_TEMP\symbols*https://msdl.microsoft.com/download/symbols"
+  $log = Join-Path $OutDir "cdb.txt"
+  $commands = 'sxe -c ".echo FIRST-CHANCE-CPP; kc 30; gn" eh; g; .echo FINAL-BREAK; .lastevent; .exr -1; kc 60; q'
+  & $cdb -o -lines -logo $log -c $commands $Exe | Out-Null
+  Write-Host "cdb log ($log):"
+  Get-Content $log -Tail 400 | Write-Host
+}
+
 $bundle = Join-Path (Split-Path $Exe) "Bundle\index.windows.bundle"
 Write-Host "Executable: $Exe"
 Write-Host "Bundle present next to executable: $(Test-Path $bundle)"
@@ -102,6 +119,7 @@ try {
       Write-Host "Process exited with code $($process.ExitCode) before showing a window."
       Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = $started } -ErrorAction SilentlyContinue |
         Select-Object -First 20 | Format-List TimeCreated, ProviderName, Id, Message | Out-String | Write-Host
+      Write-Diagnostics
       throw "Consumer process exited before creating a window"
     }
     $window = $AE::RootElement.FindFirst($Tree::Children, $processCondition)
