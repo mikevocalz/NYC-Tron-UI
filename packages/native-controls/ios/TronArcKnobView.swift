@@ -1,11 +1,10 @@
 import SwiftUI
 import ExpoModulesCore
-import ExpoUI
 
 /// Native adaptation of AudioKit Controls' ArcKnob interaction idiom.
 /// Upstream: https://github.com/AudioKit/Controls @ 717ce0d6d4e18f2849d484b578e0faf13bb38077
 /// MIT, (c) 2022 Aurelius Prochazka. See LICENSE and THIRD_PARTY_NOTICES.md.
-final class TronArcKnobProps: UIBaseViewProps {
+final class TronArcKnobProps: ExpoSwiftUI.ViewProps {
   @Field var label: String = "Parameter"
   @Field var value: Double = 0
   @Field var minimum: Double = 0
@@ -109,5 +108,6 @@ struct TronArcKnobView: ExpoSwiftUI.View {
         if !active { draft = quantize(next) }
       }
     }
+    .zeroContentOrigin(props.shadowNodeProxy)
   }
 }

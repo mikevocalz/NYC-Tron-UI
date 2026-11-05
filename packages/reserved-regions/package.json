@@ -1,0 +1,59 @@
+{
+  "name": "@nyc-tron/reserved-regions",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Fold and hinge geometry for NYC-Tron UI: Jetpack WindowManager FoldingFeature on Android, UIKit reserved regions on iOS 27.1+, Viewport Segments on web",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.js",
+      "react-native": "./dist/index.native.js",
+      "default": "./dist/index.js"
+    },
+    "./ReservedRegionsOverride": {
+      "types": "./dist/ReservedRegionsOverride.d.ts",
+      "react-native": "./dist/ReservedRegionsOverride.js",
+      "default": "./dist/ReservedRegionsOverride.js"
+    },
+    "./payload": {
+      "types": "./dist/payload.d.ts",
+      "react-native": "./dist/payload.js",
+      "default": "./dist/payload.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm build",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@nyc-tron/core": "workspace:^",
+    "expo": "^58.0.0",
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@nyc-tron/core": "workspace:*",
+    "@types/react": "~19.3.0",
+    "expo": "58.0.23",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "typescript": "~6.0.3",
+    "zustand": "5.0.16"
+  },
+  "files": [
+    "dist",
+    "ios",
+    "android/build.gradle",
+    "android/src",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 import { XYPad } from "@nyc-tron/native-controls/XYPad";
 import { OverlayControls, OverlayLayer } from "./OverlayDemo";
+import { FoldRegionsDemo } from "./FoldRegionsDemo";
 import { NativeChart } from "@nyc-tron/native-charts/NativeChart";
 import { chartColorsFromTheme } from "@nyc-tron/native-charts/types";
 import type { NativeChartSeries } from "@nyc-tron/native-charts/types";
@@ -48,6 +49,7 @@ export default function App(){
      xAxisLabel="Bar" yAxisLabel="dBFS" height={220}/>
    <Text style={{color:"#AAAABB"}}>Gain: {gain.toFixed(2)} | Pan: {pan.toFixed(2)} | XY: {xy.x.toFixed(2)}, {xy.y.toFixed(2)}</Text>
    <OverlayControls/>
+   <FoldRegionsDemo/>
  </ScrollView>
  <OverlayLayer width={width} height={height}/>
  </View>;

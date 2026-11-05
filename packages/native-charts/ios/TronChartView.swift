@@ -1,7 +1,6 @@
 import SwiftUI
 import Charts
 import ExpoModulesCore
-import ExpoUI
 
 /// Swift Charts rendering of NativeChart. Every series is drawn with the
 /// same mark family; colors come from the caller's theme tokens.
@@ -42,6 +41,7 @@ struct TronChartView: ExpoSwiftUI.View {
       .accessibilityLabel(TronChartSummary.describe(
         kind: props.kind, xAxisLabel: props.xAxisLabel,
         yAxisLabel: props.yAxisLabel, series: props.series))
+      .zeroContentOrigin(props.shadowNodeProxy)
   }
 
   @ViewBuilder

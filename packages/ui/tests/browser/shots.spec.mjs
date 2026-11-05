@@ -15,6 +15,13 @@ for(const theme of ["light","dark"])for(const [name,size] of sizes){
     await page.screenshot({path:`shots/${theme}-${name}-drag.png`});
     await page.mouse.up();
   });
+  test(`capture seek bar ${theme} ${name}`,async({page})=>{
+    // @expo/ui Text follows the OS scheme, so match it to the app theme.
+    await page.emulateMedia({colorScheme:theme});
+    await page.setViewportSize(size);
+    await page.goto("/?theme="+theme);
+    await page.getByTestId("seek").screenshot({path:`shots/${theme}-${name}-seek.png`});
+  });
 }
 test("capture forced colors",async({page})=>{
   await page.emulateMedia({forcedColors:"active"});
