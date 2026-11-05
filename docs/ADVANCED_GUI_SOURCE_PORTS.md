@@ -1,14 +1,15 @@
 # Advanced GUI source ports — 2026-11-05
 
-This PR opens source-backed port workstreams and implements only the small Floating UI
+This change opens source-backed port workstreams and implements only the small Floating UI
 placement algorithm. It does not implement native Expo v2 overlays or certify any platform.
 The original 341 IDs remain stable. Extend existing owners instead of creating duplicate UI.
 
 ## Source evidence
 
-See advanced-gui-sources.json for exact fetched source and license Git blob hashes.
-These are blob hashes, not commit SHAs; URLs track the fetched branch unless already pinned.
-Re-resolve and pin the complete dependency closure to a commit before further source imports.
+advanced-gui-sources.json records each source file and license blob hash and the commit at
+which both blobs were re-checked on 2026-11-05 (`verifiedAtCommit`; URLs are pinned to it).
+Only the listed file and root license were reviewed. Pin and review the dependency closure
+before any further source import.
 
 | Source | License reviewed | Capability | Port boundary |
 | --- | --- | --- | --- |
@@ -27,7 +28,7 @@ Re-resolve and pin the complete dependency closure to a commit before further so
 | --- | --- | --- |
 | Multiwindow | A-01/A-03/A-05 | FlexLayout model + Tao native references; existing pane session owner |
 | External display | A-01/J-12/N-09 | Tao monitor/window APIs; Apple scenes and Android Presentation adapters |
-| Unified commands/native menus | A-18/A-19/A-27 | Superlist native menus/hotkeys; original shared command registry |
+| Unified commands/native menus | A-18/A-19/A-27/N-07 | Superlist native menus/hotkeys; original shared command registry |
 | Rich clipboard and drag/drop | B-07/I-07/N-12 | Superlist platform services; typed engine clipboard serialization |
 | IME | H-01/H-02/H-04 | Existing RN input composition; native marked text/range integration |
 | Fonts | H-04 | Fontations variation metadata; Forge source follow-up and OS discovery |
@@ -39,7 +40,7 @@ Re-resolve and pin the complete dependency closure to a commit before further so
 | Resource relink | A-22/D-29/N-14 | Native file access patterns + Forge asset identity; no complete source admitted |
 | Recovery/conflicts | A-24/N-10/N-11 | Forge Automerge evaluation; original recovery dialog and NFD1 authority |
 | Overlay coordinator | A-19/A-20/N-08/N-09 | Floating UI coordinates; native portals/focus/hinge clipping pending |
-| Toolbar shortcuts | A-06/A-07/A-27 | Superlist keyboard layout; shared registry and customization UI |
+| Toolbar shortcuts | A-06/A-07/A-27/N-07 | Superlist keyboard layout; shared registry and customization UI |
 | Pen calibration | B-17/N-03/N-04 | google/ink input model; existing Muse SDK integration |
 | HDR diagnostics | C-08/C-09/C-25 | OpenColorIO processor; native display capabilities and authored UI |
 | Job monitor | A-26/D-29/G-15/N-13 | p-queue policy; Forge native scheduling/persistence |
@@ -47,7 +48,8 @@ Re-resolve and pin the complete dependency closure to a commit before further so
 ## Expo Modules v2 integration contract
 
 Use the existing Expo 58 host and module package; pin its installed API and codegen.
-Official expo-module skill distinguishes the established view DSL from v2 macro migration.
+The Expo Modules API docs (https://docs.expo.dev/modules/overview/) separate the established
+view DSL from any v2 macro migration.
 Do not label a DSL wrapper as a macro migration or invent v2 custom-view APIs.
 Swift/Kotlin OS services use Expo v2 where supported. Rust/C++ cores use the existing
 reviewed native FFI/Nitro v1 boundary; putting Rust under an Expo wrapper does not remove
@@ -58,7 +60,7 @@ Required adapters: iOS/iPadOS, Android/tablet/Duo, web, macOS, Windows, visionOS
 Meta Quest and PICO. Each has an explicit build + interaction + accessibility + lifecycle
 gate. Browser permission denial and unavailable device hardware must be truthful; required
 editing workflows cannot disappear. Watch and QNX/Linux surfaces need separately scoped APIs.
-Keep Spark SDK55 separate from the Expo58 host.
+Keep Spark (Expo SDK 55 / RN 0.83, per Forge PR #38) separate from the Expo58 host.
 
 For Superlist replace irondash/Flutter engine and message-channel dependencies, implement
 owned native handles, main-thread dispatch, cancellation and teardown. Do not embed Flutter.
@@ -70,9 +72,12 @@ Keep Zustand/refs, existing foldable geometry and app-supplied styling.
 - @nyc-tron/geometry/overlay-placement: Floating UI-derived coordinate calculation,
   standalone types, finite/nonnegative bounds validation, RTL alignment and overflow rejection.
 - MIT copyright/license retained under packages/geometry/licenses.
-- Four Node tests passed locally: all 12 placements, RTL physical edges, oversized/zero-width
-  anchors and invalid/overflow input.
-- No package build/typecheck or native consumer/device tests run.
+- Four Node tests cover all 12 placements, RTL physical edges, oversized/zero-width anchors
+  and invalid/overflow input. `pnpm verify` (156 tests, build, typecheck, verify-packages,
+  pack-release) passed locally on Node 26.13.0; the geometry tarball ships
+  `dist/overlay-placement.*`, `THIRD_PARTY_NOTICES.md` and `licenses/floating-ui-MIT.txt`.
+- No native consumer, browser overlay or device tests run. The function has no UI, so
+  accessibility and theme tokens belong to the overlay host that consumes it.
 - This function does not flip/shift into safe regions or manage focus. The caller must select
   a valid hinge-safe region and a real overlay host before this is a usable popover.
 
@@ -80,6 +85,6 @@ Keep Zustand/refs, existing foldable geometry and app-supplied styling.
 
 Dockview Enterprise is commercial; its MIT core is separate.
 Current STTextView is GPL/commercial, despite older downstream descriptions saying BSD.
-KeyboardKit currently describes itself as closed-source.
+KeyboardKit's README badges it as commercially licensed (KeyboardKit Pro needs a license key).
 No code/assets from these packages are copied here. Kando assets have separate licenses.
 Root license review never substitutes for dependency/file notices.

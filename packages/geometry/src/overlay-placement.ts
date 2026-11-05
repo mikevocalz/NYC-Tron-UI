@@ -1,6 +1,7 @@
 // Adapted from Floating UI computeCoordsFromPlacement (MIT).
 // Copyright (c) 2021 Floating UI contributors.
-// Source blob: 43f6767bdcce4f791057e7a8bcb28f3207cd442c
+// Source: floating-ui/floating-ui packages/core/src/computeCoordsFromPlacement.ts
+// blob 43f6767bdcce4f791057e7a8bcb28f3207cd442c at commit e1e9f88993c19426563decfcc991feb706f1ac66
 // Modifications: standalone types, inlined axis helpers and input validation.
 export type Placement = `${'top' | 'bottom' | 'left' | 'right'}${'' | '-start' | '-end'}`;
 export interface Rect { x: number; y: number; width: number; height: number }

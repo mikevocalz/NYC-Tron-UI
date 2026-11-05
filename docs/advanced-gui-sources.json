@@ -3,7 +3,7 @@
     "repository": "superlistapp/super_native_extensions",
     "sourcePath": "super_native_extensions/rust/src/lib.rs",
     "sourceBlobSha": "15bd790942befc5b19e0556d0c47e2bb7fdd4577",
-    "sourceUrl": "https://github.com/superlistapp/super_native_extensions/blob/main/super_native_extensions/rust/src/lib.rs",
+    "sourceUrl": "https://github.com/superlistapp/super_native_extensions/blob/7670ae92d78776089291709896a753882cdb62f6/super_native_extensions/rust/src/lib.rs",
     "licensePath": "LICENSE",
     "licenseBlobSha": "f67d89b1317a61eaca836c206470b144eb2bcfe8",
     "license": "MIT",
@@ -11,13 +11,15 @@
     "approach": "Extract platform services; replace Flutter/irondash ownership and message channels with Expo v2 lifecycle on compatible hosts; use dedicated Win32/AppKit adapters. Web clipboard/drag APIs and XR integration are separate.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "7670ae92d78776089291709896a753882cdb62f6",
+    "licenseUrl": "https://github.com/superlistapp/super_native_extensions/blob/7670ae92d78776089291709896a753882cdb62f6/LICENSE"
   },
   {
     "repository": "caplin/FlexLayout",
     "sourcePath": "src/model/Model.ts",
     "sourceBlobSha": "488f1e246fe83144bd834e75d796b42f43e6eab7",
-    "sourceUrl": "https://github.com/caplin/FlexLayout/blob/master/src/model/Model.ts",
+    "sourceUrl": "https://github.com/caplin/FlexLayout/blob/0ae1a6c965eb8e56d174c3102c5261d4bdd2ef6c/src/model/Model.ts",
     "licensePath": "LICENSE",
     "licenseBlobSha": "74b35979e776815834e02eaccfd26db04cd3639a",
     "license": "MIT",
@@ -25,13 +27,15 @@
     "approach": "Reuse model algorithms selectively in existing pane owner; do not embed React DOM renderer or create a second layout engine.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "0ae1a6c965eb8e56d174c3102c5261d4bdd2ef6c",
+    "licenseUrl": "https://github.com/caplin/FlexLayout/blob/0ae1a6c965eb8e56d174c3102c5261d4bdd2ef6c/LICENSE"
   },
   {
     "repository": "tauri-apps/tao",
     "sourcePath": "src/window.rs",
     "sourceBlobSha": "6973f3a5969ef0edc6e0f100c0abdd18979e7e2a",
-    "sourceUrl": "https://github.com/tauri-apps/tao/blob/dev/src/window.rs",
+    "sourceUrl": "https://github.com/tauri-apps/tao/blob/d12848aabf0263b1ed5436fd8dcead054c2ba5d9/src/window.rs",
     "licensePath": "LICENSE",
     "licenseBlobSha": "ad410e11302107da9aa47ce3d46bd5ad011c4c43",
     "license": "Apache-2.0",
@@ -39,13 +43,15 @@
     "approach": "Study/port native window and monitor operations; never introduce a competing Tao event loop into RN. Mobile scenes/displays and XR compositor windows need their own adapters.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "d12848aabf0263b1ed5436fd8dcead054c2ba5d9",
+    "licenseUrl": "https://github.com/tauri-apps/tao/blob/d12848aabf0263b1ed5436fd8dcead054c2ba5d9/LICENSE"
   },
   {
     "repository": "floating-ui/floating-ui",
     "sourcePath": "packages/core/src/computeCoordsFromPlacement.ts",
     "sourceBlobSha": "43f6767bdcce4f791057e7a8bcb28f3207cd442c",
-    "sourceUrl": "https://github.com/floating-ui/floating-ui/blob/master/packages/core/src/computeCoordsFromPlacement.ts",
+    "sourceUrl": "https://github.com/floating-ui/floating-ui/blob/e1e9f88993c19426563decfcc991feb706f1ac66/packages/core/src/computeCoordsFromPlacement.ts",
     "licensePath": "LICENSE",
     "licenseBlobSha": "5665118418c729036a5252c88ba99d3d33cf22d6",
     "license": "MIT",
@@ -53,13 +59,15 @@
     "approach": "Small coordinate port implemented here; focus, safe clipping, hinge selection and native overlay hosts still pending.",
     "status": "partial-coordinate-port",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "e1e9f88993c19426563decfcc991feb706f1ac66",
+    "licenseUrl": "https://github.com/floating-ui/floating-ui/blob/e1e9f88993c19426563decfcc991feb706f1ac66/LICENSE"
   },
   {
     "repository": "TanStack/virtual",
     "sourcePath": "packages/virtual-core/src/index.ts",
     "sourceBlobSha": "ecaaddf7f49f3026ac7d832893d19c3db784a65f",
-    "sourceUrl": "https://github.com/TanStack/virtual/blob/main/packages/virtual-core/src/index.ts",
+    "sourceUrl": "https://github.com/TanStack/virtual/blob/11b48e4ab8b08d483c8fe29a31ef11261ffbda04/packages/virtual-core/src/index.ts",
     "licensePath": "LICENSE",
     "licenseBlobSha": "1869e21fc3c80b3010c3e60c5ab6dda077ce1f22",
     "license": "MIT",
@@ -67,13 +75,15 @@
     "approach": "Reuse range/measurement concepts with native scroll measurements; audit DOM globals and retain existing list ownership. Tree semantics and accessibility require authored integration.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "11b48e4ab8b08d483c8fe29a31ef11261ffbda04",
+    "licenseUrl": "https://github.com/TanStack/virtual/blob/11b48e4ab8b08d483c8fe29a31ef11261ffbda04/LICENSE"
   },
   {
     "repository": "xyflow/xyflow",
     "sourcePath": "packages/system/src/utils/graph.ts",
     "sourceBlobSha": "e99fdda278cf760ea0e27e2c8267623a68f1e354",
-    "sourceUrl": "https://github.com/xyflow/xyflow/blob/main/packages/system/src/utils/graph.ts",
+    "sourceUrl": "https://github.com/xyflow/xyflow/blob/1bc405cd113618c17fd181b931a9fe573bec9fee/packages/system/src/utils/graph.ts",
     "licensePath": "LICENSE",
     "licenseBlobSha": "072ff46d7c23dd8e18ccba11aa6563f14e524312",
     "license": "MIT",
@@ -81,7 +91,9 @@
     "approach": "Reuse selected geometry/topology logic only; keep RN/Skia presentation and engine-authoritative edits. Do not import the DOM React Flow shell.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "1bc405cd113618c17fd181b931a9fe573bec9fee",
+    "licenseUrl": "https://github.com/xyflow/xyflow/blob/1bc405cd113618c17fd181b931a9fe573bec9fee/LICENSE"
   },
   {
     "repository": "kando-menu/kando",
@@ -95,13 +107,15 @@
     "approach": "Reuse angle/wedge math; exclude Electron shell, global input injection and differently licensed art. Add native input and keyboard-equivalent actions.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "f29d62eac3a98ff3c83fd07087fc98f04b16a8d0",
+    "licenseUrl": "https://github.com/kando-menu/kando/blob/f29d62eac3a98ff3c83fd07087fc98f04b16a8d0/LICENSE.md"
   },
   {
     "repository": "react/react-native",
     "sourcePath": "packages/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt",
     "sourceBlobSha": "807740e806db6a00f1e3f739db540c8756a4d65e",
-    "sourceUrl": "https://github.com/react/react-native/blob/main/packages/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt",
+    "sourceUrl": "https://github.com/react/react-native/blob/fe398e511d7b4cfa22baf5b449e256ff9b7d66c4/packages/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt",
     "licensePath": "LICENSE",
     "licenseBlobSha": "b93be90515ccd0b9daedaa589e42bf5929693f1f",
     "license": "MIT",
@@ -109,6 +123,8 @@
     "approach": "Extend existing RN text input behavior; avoid transplanting a second RN input manager. Apple TextKit, Windows text services and browser composition remain separate.",
     "status": "source-reviewed-not-ported",
     "platformVerification": "NOT RUN",
-    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying."
+    "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
+    "verifiedAtCommit": "fe398e511d7b4cfa22baf5b449e256ff9b7d66c4",
+    "licenseUrl": "https://github.com/react/react-native/blob/fe398e511d7b4cfa22baf5b449e256ff9b7d66c4/LICENSE"
   }
 ]
