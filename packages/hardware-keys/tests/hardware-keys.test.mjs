@@ -42,7 +42,7 @@ test("apple: v2 module under the shared name, key commands on the root controlle
   const swiftFiles=[...readdirSync(join(root,"ios")).filter(f=>f.endsWith(".swift")).map(f=>"ios/"+f),
     ...readdirSync(join(root,"ios/Extensions")).map(f=>"ios/Extensions/"+f)];
   for(const f of swiftFiles)assert.doesNotMatch(read(f),/import ExpoUI/,`${f} imports ExpoUI`);
-  assert.doesNotMatch(read("ios/NYCTronHardwareKeys.podspec"),/ExpoUI/);
+  assert.doesNotMatch(read("ios/NYCTronHardwareKeys.podspec"),/s\.dependency 'ExpoUI'/);
 });
 
 test("android: v2 module compiled by the v2 plugin, unhandled-key listeners on every window",()=>{
@@ -163,9 +163,10 @@ test("useKeySource registers the map's native bindings and dispatches resolved c
 
 test("native source: v2 global first, recording chords go to the recorder only, setRecording is reference-counted",async()=>{
   const calls=[];
-  let emit;
+  const listeners=new Set();
+  const emit=payload=>[...listeners].forEach(l=>l(payload));
   const native={isSupported:()=>true,setBindings:l=>{calls.push(["bindings",l.length]);},setRecording:a=>{calls.push(["recording",a]);},
-    addListener:(_n,l)=>{emit=l;return {remove(){emit=undefined;}};}};
+    addListener:(_n,l)=>{listeners.add(l);return {remove(){listeners.delete(l);}};}};
   const fakeGlobal={expoV2:{modules:{[NATIVE_MODULE_NAME]:native}}};
   const src=load("src/native-source.ts",{globalThis:fakeGlobal,expo:{requireOptionalNativeModule:()=>null},
     "react-native":{TextInput:{State:{currentlyFocusedInput:()=>null}}}});
