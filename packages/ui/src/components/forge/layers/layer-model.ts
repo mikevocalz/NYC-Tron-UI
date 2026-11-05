@@ -61,6 +61,12 @@ export type LayerRow=Readonly<{
  kindLabel?:string;
  /** Optional preview before the name; the row keeps its height. */
  thumbnail?:LayerThumbnail;
+ /**
+  * Name of the base layer this one clips to. The row is indented with a clip
+  * glyph and its spoken label says "clipped to <name>". `resolveClipping` in
+  * `clipping-model` computes it from the layers' `clipped` flags.
+  */
+ clippedTo?:string;
 }>;
 
 /** Minimum touch target edge for every interactive part of a row, in points. */
@@ -151,6 +157,7 @@ export function validateLayers(layers:readonly LayerRow[]):void{
    throw new RangeError("Layer opacity must be within 0..1: "+layer.id);
   if(!Object.hasOwn(KIND_LABELS,layer.kind))throw new RangeError("Unknown layer kind: "+String(layer.kind));
   if(layer.kindLabel!==undefined&&!layer.kindLabel.trim())throw new RangeError("Layer kindLabel is blank: "+layer.id);
+  if(layer.clippedTo!==undefined&&!layer.clippedTo.trim())throw new RangeError("Layer clippedTo is blank: "+layer.id);
   validateThumbnail(layer);
  }
 }
@@ -241,7 +248,8 @@ export function resolveRename(current:string,draft:string):string|undefined{
  * set, follows the kind so the preview is described once, on the row.
  */
 export function layerAccessibilityLabel(layer:LayerRow,index:number,count:number):string{
- return [layer.name,layerDetail(layer)+" layer",layer.thumbnail?.label?.trim(),(index+1)+" of "+count,
+ return [layer.name,layerDetail(layer)+" layer",layer.clippedTo?"clipped to "+layer.clippedTo.trim():undefined,
+  layer.thumbnail?.label?.trim(),(index+1)+" of "+count,
   layer.visible?"visible":"hidden",formatOpacity(layer.opacity)+" opacity",
   layer.locked?"locked":undefined].filter(Boolean).join(", ");
 }
