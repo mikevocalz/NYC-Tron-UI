@@ -1023,6 +1023,106 @@
       "types": "./dist/components/forge/devices/pairing-model.d.ts",
       "react-native": "./dist/components/forge/devices/pairing-model.js",
       "default": "./dist/components/forge/devices/pairing-model.js"
+    },
+    "./components/forge/timeline/JKLShuttleController": {
+      "types": "./dist/components/forge/timeline/JKLShuttleController.d.ts",
+      "react-native": "./dist/components/forge/timeline/JKLShuttleController.js",
+      "default": "./dist/components/forge/timeline/JKLShuttleController.js"
+    },
+    "./components/forge/timeline/LoopRangeBar": {
+      "types": "./dist/components/forge/timeline/LoopRangeBar.d.ts",
+      "react-native": "./dist/components/forge/timeline/LoopRangeBar.js",
+      "default": "./dist/components/forge/timeline/LoopRangeBar.js"
+    },
+    "./components/forge/timeline/TrackHeaders": {
+      "types": "./dist/components/forge/timeline/TrackHeaders.d.ts",
+      "react-native": "./dist/components/forge/timeline/TrackHeaders.js",
+      "default": "./dist/components/forge/timeline/TrackHeaders.js"
+    },
+    "./components/forge/timeline/RollSlipSlideControls": {
+      "types": "./dist/components/forge/timeline/RollSlipSlideControls.d.ts",
+      "react-native": "./dist/components/forge/timeline/RollSlipSlideControls.js",
+      "default": "./dist/components/forge/timeline/RollSlipSlideControls.js"
+    },
+    "./components/forge/timeline/DragReorderAndRipple": {
+      "types": "./dist/components/forge/timeline/DragReorderAndRipple.d.ts",
+      "react-native": "./dist/components/forge/timeline/DragReorderAndRipple.js",
+      "default": "./dist/components/forge/timeline/DragReorderAndRipple.js"
+    },
+    "./components/forge/timeline/TransitionHandles": {
+      "types": "./dist/components/forge/timeline/TransitionHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/TransitionHandles.js",
+      "default": "./dist/components/forge/timeline/TransitionHandles.js"
+    },
+    "./components/forge/timeline/TimelineMarkers": {
+      "types": "./dist/components/forge/timeline/TimelineMarkers.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineMarkers.js",
+      "default": "./dist/components/forge/timeline/TimelineMarkers.js"
+    },
+    "./components/forge/timeline/OverlayAndEffectsTrackStack": {
+      "types": "./dist/components/forge/timeline/OverlayAndEffectsTrackStack.d.ts",
+      "react-native": "./dist/components/forge/timeline/OverlayAndEffectsTrackStack.js",
+      "default": "./dist/components/forge/timeline/OverlayAndEffectsTrackStack.js"
+    },
+    "./components/forge/timeline/TransitionPresetBrowser": {
+      "types": "./dist/components/forge/timeline/TransitionPresetBrowser.d.ts",
+      "react-native": "./dist/components/forge/timeline/TransitionPresetBrowser.js",
+      "default": "./dist/components/forge/timeline/TransitionPresetBrowser.js"
+    },
+    "./components/forge/timeline/BatchEditPanel": {
+      "types": "./dist/components/forge/timeline/BatchEditPanel.d.ts",
+      "react-native": "./dist/components/forge/timeline/BatchEditPanel.js",
+      "default": "./dist/components/forge/timeline/BatchEditPanel.js"
+    },
+    "./components/forge/timeline/ModeEdgeHandles": {
+      "types": "./dist/components/forge/timeline/ModeEdgeHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/ModeEdgeHandles.js",
+      "default": "./dist/components/forge/timeline/ModeEdgeHandles.js"
+    },
+    "./components/forge/timeline/trim-modes": {
+      "types": "./dist/components/forge/timeline/trim-modes.d.ts",
+      "react-native": "./dist/components/forge/timeline/trim-modes.js",
+      "default": "./dist/components/forge/timeline/trim-modes.js"
+    },
+    "./components/forge/timeline/placement": {
+      "types": "./dist/components/forge/timeline/placement.d.ts",
+      "react-native": "./dist/components/forge/timeline/placement.js",
+      "default": "./dist/components/forge/timeline/placement.js"
+    },
+    "./components/forge/timeline/transitions": {
+      "types": "./dist/components/forge/timeline/transitions.d.ts",
+      "react-native": "./dist/components/forge/timeline/transitions.js",
+      "default": "./dist/components/forge/timeline/transitions.js"
+    },
+    "./components/forge/timeline/markers": {
+      "types": "./dist/components/forge/timeline/markers.d.ts",
+      "react-native": "./dist/components/forge/timeline/markers.js",
+      "default": "./dist/components/forge/timeline/markers.js"
+    },
+    "./components/forge/timeline/loop-range": {
+      "types": "./dist/components/forge/timeline/loop-range.d.ts",
+      "react-native": "./dist/components/forge/timeline/loop-range.js",
+      "default": "./dist/components/forge/timeline/loop-range.js"
+    },
+    "./components/forge/timeline/shuttle": {
+      "types": "./dist/components/forge/timeline/shuttle.d.ts",
+      "react-native": "./dist/components/forge/timeline/shuttle.js",
+      "default": "./dist/components/forge/timeline/shuttle.js"
+    },
+    "./components/forge/timeline/batch": {
+      "types": "./dist/components/forge/timeline/batch.d.ts",
+      "react-native": "./dist/components/forge/timeline/batch.js",
+      "default": "./dist/components/forge/timeline/batch.js"
+    },
+    "./components/forge/timeline/transition-presets": {
+      "types": "./dist/components/forge/timeline/transition-presets.d.ts",
+      "react-native": "./dist/components/forge/timeline/transition-presets.js",
+      "default": "./dist/components/forge/timeline/transition-presets.js"
+    },
+    "./components/forge/timeline/track-stack": {
+      "types": "./dist/components/forge/timeline/track-stack.d.ts",
+      "react-native": "./dist/components/forge/timeline/track-stack.js",
+      "default": "./dist/components/forge/timeline/track-stack.js"
     }
   },
   "scripts": {
