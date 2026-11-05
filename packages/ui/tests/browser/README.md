@@ -18,5 +18,14 @@ buttons, text entry, disabled state, and handle reorder plus Escape cancel.
 and 834px tablet, resting, focused and mid-drag, plus forced colors). They are
 uploaded as a CI artifact, not compared as pixel goldens.
 
-Not covered: iOS/Android rendering, the GestureHandlerDrag transport, screen
+`primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
+EmptyState, ErrorMessage, KeyValueList, NightScope, the web DropZone and
+FilePicker, and the semantic html set. It checks the rendered elements and
+roles, the 44pt dismiss, accept filtering on a dispatched drop, the file
+chooser, NightScope's dark colors on a light page, KeyValueList columns at 390
+and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
+focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
+web `ScopedTheme` output (a `display: contents` element with the theme class).
+
+Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.
