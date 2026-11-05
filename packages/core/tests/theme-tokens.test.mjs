@@ -43,7 +43,7 @@ test("current keys, conflicts and missing values",()=>{
   const current={
     colors:{primary:"#1f5fd1",onPrimary:"#fff",surfaceRaised:"#fff",surfaceSunken:"#f1f3f6",
       border:"#c9ced6",text:"#15181d",textMuted:"#5a626e",danger:"#b42318",onDanger:"#fff",
-      accent:"#1f7a6d",focus:"#1f5fd1"},
+      accent:"#1f7a6d",info:"#1d5fa8",success:"#1e7a3c",focus:"#1f5fd1"},
     shape:{controlRadius:8,cardRadius:12,borderWidth:1},density:"touch",motion:{fastMs:120,standardMs:240},
   };
   const vars=themeCssVariables(validateTheme(current));

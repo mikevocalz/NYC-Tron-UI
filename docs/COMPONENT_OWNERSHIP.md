@@ -15,6 +15,15 @@ complex editor screen composition and its cross-engine suite application.
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
+| Banner | `@nyc-tron/ui/components/feedback/Banner` | RN notice: info/success/danger/neutral tones, polite or assertive live region, optional 44pt dismiss and action slot. Chromium/React Native Web tests and captures; no device or screen-reader QA yet | NYC-MON `@acme/ui` Banner |
+| Badge | `@nyc-tron/ui/components/feedback/Badge` | Static RN status chip, neutral/info/success/danger/accent. Chromium captures only | NYC-MON `@acme/ui` Badge (neutral tone path) |
+| EmptyState | `@nyc-tron/ui/components/feedback/EmptyState` | RN empty state: heading title, honest description slot, `action` or `exitAction` exit. Chromium tests | NYC-MON `@acme/ui` EmptyState |
+| ErrorMessage | `@nyc-tron/ui/components/feedback/ErrorMessage` | RN inline alert with a drawn mark; renders nothing without a message. Chromium tests | NYC-MON `@acme/ui` ErrorMessage |
+| KeyValueList | `@nyc-tron/ui/components/content/KeyValueList` | RN record fields; two columns from 600pt of its own measured width. Chromium tests at 390 and 834 px | NYC-MON `@acme/ui` KeyValueList |
+| NightScope | `@nyc-tron/ui/components/theme/NightScope` | Delegates to Uniwind `ScopedTheme` (optional peer). Chromium test uses a shim of Uniwind's web output; native Uniwind scoping not run here | NYC-MON `@acme/ui` NightScope |
+| DropZone | `@nyc-tron/ui/components/files/DropZone` | Web: DOM drag listeners on the view's node, `accept` filtering, built-in FilePicker. Native: expo-drag-drop-content-view 0.9.2 (optional peer). Web drop tested in Chromium; **native drop not run on a device** | NYC-MON `@acme/ui` DropZone (.web/.native) |
+| FilePicker | `@nyc-tron/ui/components/files/FilePicker` | Web: button that opens the system chooser. Native: renders nothing (**DEFERRED**, see below) | NYC-MON `@acme/ui/html` FilePickerBase |
+| Semantic html set | `@nyc-tron/ui/components/html` (Page, Main, Header, Footer, Section, Nav, Article, Aside, Text, Paragraph, Heading, Link, Input) | Web: real elements through React Native Web's element factory. Native: View/Text with ARIA `role`. Web tested in Chromium; native roles typechecked only | NYC-MON `@acme/ui/html` |
 | HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
 | Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
@@ -117,6 +126,78 @@ The forced-colors flag is a prop (`forcedColors`), since detecting it is the app
 job. The handle's default glyph is three bars drawn with views; pass `children` to
 use an app icon.
 
+## 2026-11-05 studio content and feedback primitives (part B)
+
+Nitro Forge's studio host took these from NYC-MON's `@acme/ui`. They are now
+NYC-Tron components; part A (Select, SegmentedControl, TabBar, Toolbar, List,
+IconButton, FieldGroup) is a separate change.
+
+### Forge slot map
+
+| Forge slot or import | NYC-Tron import |
+| --- | --- |
+| `StudioUIComponents.Banner` | `Banner` from `@nyc-tron/ui/components/feedback/Banner` |
+| `StudioUIComponents.Badge` | `Badge` from `@nyc-tron/ui/components/feedback/Badge` |
+| `StudioUIComponents.EmptyState` | `EmptyState` from `@nyc-tron/ui/components/feedback/EmptyState` |
+| `StudioUIComponents.ErrorMessage` | `ErrorMessage` from `@nyc-tron/ui/components/feedback/ErrorMessage` |
+| `StudioUIComponents.KeyValueList` | `KeyValueList` from `@nyc-tron/ui/components/content/KeyValueList` |
+| `StudioUIComponents.NightScope` | `NightScope` from `@nyc-tron/ui/components/theme/NightScope` |
+| `StudioUIComponents.DropZone` | `DropZone` from `@nyc-tron/ui/components/files/DropZone` |
+| `@acme/ui/studio-controls/web` `FilePicker` | `FilePicker` from `@nyc-tron/ui/components/files/FilePicker` |
+| `@acme/ui/html` `Page`, `Main`, `Header`, `Footer`, `Section`, `Nav`, `Text`, `Heading`, `Paragraph`, `Link`, `Input` | same names from `@nyc-tron/ui/components/html` |
+
+`packages/ui/tests/forge-slots.typecheck.tsx` copies Forge's slot prop types
+and assigns each component to its slot, so `pnpm typecheck` fails if a
+component stops accepting what Forge passes.
+
+Props Forge passes that no longer pick colors: `EmptyState` `tone`
+(`royal`/`carolina`) and `KeyValueList`/`ErrorMessage` `surface`. They are
+accepted so call sites compile; colors come from the app's tokens and the
+nearest `NightScope`. Forge's studio preview clears the DropZone well with
+`className="border-0 p-0 ..."`; pass `unstyled` instead, since two
+conflicting utilities resolve by stylesheet order, not by their order in the
+string.
+
+### Decisions
+
+- **Semantic set on web (BUILD).** React Native Web's `unstable_createElement`
+  emits `<main>`, `<header>`, `<section>`, `<h2>`, `<a>` with RN style and aria
+  handling. A View with `role` reaches most of these elements too but always
+  writes the role attribute, so a header nested in a section would announce a
+  second page banner. The elements get RN View's flex-column defaults;
+  text elements default to `dir="auto"` like RNW Text and inherit the page font.
+- **Native semantic set (BUILD).** View/Text with the ARIA `role` prop, never
+  `accessibilityRole`, whose Android enum throws on landmark roles. Landmarks
+  are silent to VoiceOver and TalkBack. A native `Link` opens only absolute
+  `http(s):`, `mailto:` and `tel:` hrefs; an app-router path needs `onPress`,
+  and without it the link renders as plain text, not a link that does nothing.
+- **FilePicker on native (DEFER).** The contract hands the app `File`
+  objects, which React Native does not have, and the kit has no
+  document-picker peer. A native adapter returning URIs would be a different
+  contract and lands as its own subpath. Until then native FilePicker renders
+  nothing, and native apps take files through DropZone or their own picker.
+- **DropZone web without expo-drag-drop-content-view (BUILD).** Its 0.9.2 web
+  bundle ships JSX in a `.js` file that Vite/Rolldown parse as JavaScript. The
+  web fork attaches `dragenter`/`dragover`/`dragleave`/`drop` listeners to the
+  view's DOM node and keeps the package's `DropAsset` shape.
+- **NightScope (BUILD).** Delegates to Uniwind's `ScopedTheme`, which on web
+  renders a `display: contents` element with the theme class and on native
+  resolves the theme's variables. The app's theme CSS must scope that class.
+- **Status tones (BUILD).** `info` and `success` join `TronTheme` as optional
+  tokens; see THEME_TOKENS.md.
+- **Marks drawn with views.** Banner, ErrorMessage and Badge marks are views
+  with borders, so forced colors keeps them; pass `icon` to Banner for the
+  app's icon set.
+
+### Verified, and not
+
+Chromium through React Native Web (`packages/ui/tests/browser`,
+`primitives.spec.mjs`): semantic elements and attributes, live regions, 44pt
+dismiss, keyboard dismiss, accept filtering on drop, one enter per drag, the
+file chooser path, NightScope colors on a light page, KeyValueList columns at
+390 and 834 px, RTL, plus light/dark, focus, drag-over and forced-colors
+captures. Not run: iOS/Android rendering, expo-drag-drop-content-view drops on
+a device, Uniwind's native ScopedTheme, screen readers, Safari and Firefox.
 ## 2026-11-05 HSV picker
 
 `HsvPicker` moved from Nitro Forge PR #34 (`NativeHsvPicker`) into
@@ -211,3 +292,16 @@ pointer, Enter on the focused remove button and Delete on a focused row each
 removed a layer, the fixture's undo restored it, and Backspace on a locked
 row did nothing. Not verified: iOS, Android or foldable device runs, native
 `onKeyDown` delivery, and VoiceOver/TalkBack reading of the custom action.
+
+## 2026-11-05 NativeSeekBar transport follows the app theme
+
+`@expo/ui` `Text` takes its colour from the OS scheme, so with a dark app
+theme on a light-mode device the seek bar drew black timecode on the dark
+surface. The `@expo/ui` host now carries only the slider, as in HsvPicker.
+The step buttons are the kit `Button` (secondary, small) and the timecode is
+an app-token RN `Text` in an RN row, so both follow the app theme. The
+timecode takes the width between the buttons and wraps centred at 390px.
+Verified by a Chromium check that the timecode uses the dark text token on a
+light OS scheme, a check that the forward button stays inside the card at
+390px, and dark/light captures at 390 and 834px. Not verified on iOS or
+Android devices.
