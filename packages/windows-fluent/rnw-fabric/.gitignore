@@ -3,3 +3,4 @@ build/
 windows/**/codegen/
 windows/**/Generated Files/
 *.log
+dist/

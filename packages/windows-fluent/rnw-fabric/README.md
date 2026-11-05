@@ -62,9 +62,14 @@ pointer input, Settings focus return, and `onNativeError` delivery.
 
 ```powershell
 npm install
+npm run build
 npx react-native codegen-windows
 msbuild windows/NYCTronFluentFabric.sln /restore /p:Configuration=Release /p:Platform=x64
 ```
+
+`npm run build` compiles `src` to `dist`, which the package exports point
+at. The release tarball also carries `src`, because codegen reads the typed
+spec from `codegenConfig.jsSrcsDir` when the consumer builds.
 
 RNW project files expect a solution context (`SolutionDir` locates
 `ExperimentalFeatures.props`), so build the `.sln`, not the `.vcxproj`.

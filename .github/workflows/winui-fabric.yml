@@ -38,6 +38,14 @@ jobs:
       - name: Validate Windows-only TypeScript
         working-directory: packages/windows-fluent/rnw-fabric
         run: npm run typecheck
+      - name: Build dist and check the release tarball
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: |
+          npm run build
+          listing=$(npm pack --dry-run --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].files.map(f=>f.path).join("\n")))')
+          for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts windows/NYCTronFluentFabric/TronNavigationView.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
+            echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
+          done
       # RNW 'codegen-windows' invokes dotnet.exe and Windows-only tools.
       # Keep the Linux lane to TS/source checks; generate C++ on Windows.
 
@@ -61,6 +69,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $header = "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
           if (-not (Test-Path $header)) { throw "Missing generated XAML Fabric component header: $header" }
+      # The consumer links this package with file:.., and its exports point at dist.
+      - name: Build package dist for the consumer
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm run build
       - name: Install isolated Windows consumer
         working-directory: packages/windows-fluent/rnw-fabric/example
         run: npm install --no-audit --no-fund
