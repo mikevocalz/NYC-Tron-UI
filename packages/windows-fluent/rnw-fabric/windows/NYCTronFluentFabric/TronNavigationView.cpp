@@ -8,6 +8,7 @@
 #include "codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
@@ -51,14 +52,9 @@ struct TronNavigationViewComponentView
           [weak = get_weak()](auto const&, auto const&) {
             if (auto self = weak.get()) self->OnPaneChanged(false);
           });
-      // SettingsItem is created when the NavigationView template applies,
-      // which happens after the first ApplyProps. Configure it on Loaded.
-      m_loaded = m_navigation.Loaded(
+      m_selectionChanged = m_navigation.SelectionChanged(
           [weak = get_weak()](auto const&, auto const&) {
-            if (auto self = weak.get()) {
-              self->DisableSelectOnInvokeForSettings();
-              self->SetSelectedId(winrt::to_hstring(self->m_selectedId));
-            }
+            if (auto self = weak.get()) self->OnSelectionChanged();
           });
       if (m_props) ApplyProps(*m_props);
     } catch (...) {
@@ -97,9 +93,6 @@ struct TronNavigationViewComponentView
     item.Tag(winrt::box_value(id));
     item.Content(winrt::box_value(label));
     winrt::Microsoft::UI::Xaml::Automation::AutomationProperties::SetName(item, label);
-    // Route approval belongs to JS. A rejected/async request must not move
-    // the native selection indicator away from the committed route.
-    item.SelectsOnInvoked(false);
     item.IsEnabled(!data.GetNamedBoolean(L"disabled", false));
     const auto glyph = data.GetNamedString(L"glyph", L"");
     if (!glyph.empty()) {
@@ -158,35 +151,41 @@ struct TronNavigationViewComponentView
     }
   }
 
-  void SetSelectedId(winrt::hstring const& id) {
-    if (id.empty()) {
-      m_navigation.SelectedItem(nullptr);
-      return;
-    }
-    for (auto const& entry : m_navigation.MenuItems()) {
-      if (auto item = entry.try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
-        if (winrt::unbox_value<winrt::hstring>(item.Tag()) == id) {
-          m_navigation.SelectedItem(item);
-          return;
+  winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem FindItem(winrt::hstring const& id) const {
+    if (id.empty()) return nullptr;
+    for (auto const& items : {m_navigation.MenuItems(), m_navigation.FooterMenuItems()}) {
+      for (auto const& entry : items) {
+        if (auto item = entry.try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
+          if (winrt::unbox_value<winrt::hstring>(item.Tag()) == id) return item;
         }
       }
     }
-    for (auto const& entry : m_navigation.FooterMenuItems()) {
-      if (auto item = entry.try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
-        if (winrt::unbox_value<winrt::hstring>(item.Tag()) == id) {
-          m_navigation.SelectedItem(item);
-          return;
-        }
-      }
-    }
-    m_navigation.SelectedItem(nullptr);
+    return nullptr;
   }
 
-  void DisableSelectOnInvokeForSettings() {
-    if (!m_navigation) return;
-    if (auto settings = m_navigation.SettingsItem().try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
-      settings.SelectsOnInvoked(false);
-    }
+  void SetSelectedId(winrt::hstring const& id) {
+    m_navigation.SelectedItem(FindItem(id));
+  }
+
+  // Route approval belongs to JS. NavigationView moves its selection as soon
+  // as an item is invoked, so a user selection is put back on the committed
+  // route; the indicator moves only when JS commits a new selectedId. Items
+  // keep the default SelectsOnInvoked: NavigationView undoes a programmatic
+  // SelectedItem that points at an item which does not select on invoke.
+  // The restore is queued so NavigationView's selection change is not
+  // re-entered from its own SelectionChanged event.
+  void OnSelectionChanged() {
+    if (m_updatingFromJs || m_restorePending) return;
+    if (m_navigation.SelectedItem() == FindItem(winrt::to_hstring(m_selectedId))) return;
+    m_restorePending = true;
+    m_navigation.DispatcherQueue().TryEnqueue([weak = get_weak()]() {
+      if (auto self = weak.get()) {
+        self->m_restorePending = false;
+        self->m_updatingFromJs = true;
+        self->SetSelectedId(winrt::to_hstring(self->m_selectedId));
+        self->m_updatingFromJs = false;
+      }
+    });
   }
 
   void ApplyProps(Codegen::TronNavigationViewProps const& props) noexcept {
@@ -224,7 +223,6 @@ struct TronNavigationViewComponentView
       // Narrator names the navigation landmark after the pane title.
       winrt::Microsoft::UI::Xaml::Automation::AutomationProperties::SetName(m_navigation, title);
       m_navigation.IsSettingsVisible(props.settingsVisible.value_or(false));
-      DisableSelectOnInvokeForSettings();
       m_selectedId = props.selectedId.value_or("");
       SetSelectedId(winrt::to_hstring(m_selectedId));
       m_navigation.FlowDirection(props.isRTL.value_or(false)
@@ -277,12 +275,13 @@ struct TronNavigationViewComponentView
   winrt::event_token m_itemInvoked{};
   winrt::event_token m_paneOpened{};
   winrt::event_token m_paneClosed{};
-  winrt::event_token m_loaded{};
+  winrt::event_token m_selectionChanged{};
   std::string m_selectedId;
   std::string m_itemsJson;
   std::string m_footerItemsJson;
   bool m_itemsInitialized{false};
   bool m_updatingFromJs{false};
+  bool m_restorePending{false};
   std::vector<std::string> m_pendingErrors;
 };
 

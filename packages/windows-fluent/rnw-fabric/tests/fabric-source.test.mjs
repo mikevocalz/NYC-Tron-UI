@@ -32,8 +32,11 @@ test("the Windows Fabric peer lane cannot be silently installed into Expo58",()=
 
 test("route approval remains app-owned and unrelated updates retain native items",()=>{
  const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
- assert.ok(cpp.includes("item.SelectsOnInvoked(false)"));
- assert.ok(cpp.includes("settings.SelectsOnInvoked(false)"));
+ // NavigationView undoes programmatic selection of items that do not select
+ // on invoke, so the component restores the committed route instead.
+ assert.doesNotMatch(cpp,/SelectsOnInvoked\(false\)/);
+ assert.match(cpp,/m_navigation\.SelectionChanged\(/);
+ assert.match(cpp,/DispatcherQueue\(\)\.TryEnqueue/);
  const conditional=cpp.indexOf("if (!m_itemsInitialized || props.itemsJson != m_itemsJson || footerJson != m_footerItemsJson)");
  const clear=cpp.indexOf("m_navigation.MenuItems().Clear()");
  const cache=cpp.indexOf("m_itemsInitialized = true",clear);
@@ -41,10 +44,8 @@ test("route approval remains app-owned and unrelated updates retain native items
  assert.ok(conditional>=0 && clear>conditional && cache>clear && applySelection>cache);
 });
 
-test("Settings stays non-selecting after template load and items carry Narrator names",()=>{
+test("items and the NavigationView carry Narrator names",()=>{
  const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
- const loaded=cpp.indexOf("m_navigation.Loaded(");
- assert.ok(loaded>=0 && cpp.indexOf("DisableSelectOnInvokeForSettings()",loaded)>loaded);
  assert.match(cpp,/AutomationProperties::SetName\(item, label\)/);
  assert.match(cpp,/AutomationProperties::SetName\(m_navigation, title\)/);
 });

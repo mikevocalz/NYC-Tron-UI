@@ -73,9 +73,11 @@ References and license:
 
 ## Controlled route acceptance
 
-Destination and Settings items use WinUI `SelectsOnInvoked(false)`.
-Invoking an item requests navigation; the selection indicator changes only
-when the app commits a new `selectedId`. Rejected or pending navigation keeps
+Invoking a destination or Settings requests navigation. NavigationView
+moves its selection on invoke, so the component puts it back on the committed
+route; the indicator changes only when the app commits a new `selectedId`.
+`SelectsOnInvoked(false)` is not used: NavigationView undoes programmatic
+selection of such items, which left the committed route unselected. Rejected or pending navigation keeps
 the current route selected. Menu item instances survive pane/title/selection
 updates when the destination data is unchanged, preserving keyboard focus.
 
