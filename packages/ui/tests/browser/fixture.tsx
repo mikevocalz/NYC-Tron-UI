@@ -2,6 +2,7 @@ import {AppRegistry,ScrollView,Text,View} from "react-native";
 import {create} from "zustand";
 import {PrecisionScrubber} from "../../src/components/forge/inputs/PrecisionScrubber.tsx";
 import {DragGrabHandle} from "../../src/components/DragGrabHandle.tsx";
+import {InkFixture} from "./ink-fixture.tsx";
 
 type Row={id:string;name:string};
 type Demo={
@@ -68,5 +69,7 @@ function Fixture(){
   </ScrollView>;
 }
 document.documentElement.dataset.theme=new URLSearchParams(location.search).get("theme")??"light";
-AppRegistry.registerComponent("UiAcceptance",()=>Fixture);
+const params=new URLSearchParams(location.search);
+if(params.get("dir")==="rtl")document.documentElement.dir="rtl";
+AppRegistry.registerComponent("UiAcceptance",()=>params.get("view")==="ink"?InkFixture:Fixture);
 AppRegistry.runApplication("UiAcceptance",{rootTag:document.getElementById("root")});

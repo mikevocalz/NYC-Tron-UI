@@ -4,6 +4,7 @@
 @import "tailwindcss" important;
 @source "../../src/components";
 @source "./fixture.tsx";
+@source "./ink-fixture.tsx";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 /* Reference values from docs/THEME_TOKENS.md. */
 @theme {

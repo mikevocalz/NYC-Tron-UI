@@ -18,5 +18,11 @@ buttons, text entry, disabled state, and handle reorder plus Escape cancel.
 and 834px tablet, resting, focused and mid-drag, plus forced colors). They are
 uploaded as a CI artifact, not compared as pixel goldens.
 
+`ink.spec.mjs` loads `?view=ink` (`ink-fixture.tsx`, which plays the Forge
+board host) and checks `InkToolbar`: the tool radio group, disabled redo
+explaining itself, size, color and pressure intent, in-toolbar shortcuts and
+44 px targets. It writes `shots/ink-*` captures in light and dark at 390 px (top
+bar) and 834 px (right rail), with keyboard focus and the notice line, plus RTL.
+
 Not covered: iOS/Android rendering, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

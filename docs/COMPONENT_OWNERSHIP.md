@@ -27,7 +27,8 @@ complex editor screen composition and its cross-engine suite application.
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
-| Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
+| InkToolbar | `@nyc-tron/ui/components/forge/ink/InkToolbar` (state, shortcuts and validation in `/forge/ink/ink-model`) | Controlled RN toolbar, horizontal bar or vertical rail: tool radio group, adjustable size and opacity, host swatches plus an optional custom-color request, pressure switch shown only when the host reports measured pressure, undo/redo with disabled reasons. Shortcut resolver is a pure function; no global listener. Model tests plus Chromium/React Native Web interaction tests and light/dark/RTL captures at 390 and 834 px; no device or screen-reader QA yet | Forge board PRs #18, #19, #22 (`packages/board`, `apps/board-native-lab`) and pen PR #20 |
+| Board stroke engine, Skia renderer, BLE pen connection, pen controllers | Nitro Forge `packages/board`, `packages/pen-connect`, `packages/spatial-ink` | **STAYS IN FORGE** by design; InkToolbar only reports intent | Forge PRs #18–20, #22 |
 | Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
 | PDF annotations | `components/forge/pdf/` planned | **NOT EXTRACTED** | Forge Folio |
@@ -110,3 +111,37 @@ them visible without a prop.
 The forced-colors flag is a prop (`forcedColors`), since detecting it is the app's
 job. The handle's default glyph is three bars drawn with views; pass `children` to
 use an app icon.
+
+### Ink toolbar and the Forge board
+
+`InkToolbar` mirrors the board's tool model as of 2026-11-05. The ink lab
+session (`apps/board-native-lab/InkLabSession.ts`) has three tools, `pen`,
+`highlighter` and a stroke `eraser`, and counts undo and redo steps. The
+QuickDraw scene compiler (`packages/board/src/skia/scene.ts`) uses the sizes
+`s`/`m`/`l`/`xl` (2.5, 4, 6.5 and 10 points) and draws highlighter strokes 4.5
+times wider. `INK_BOARD_TOOLS` and `INK_SIZE_POINTS` copy those values.
+
+Decisions, recorded so the next change does not redo them:
+
+- **BUILD** `marker` and `lasso` exist in the `InkTool` union but not in
+  `INK_BOARD_TOOLS`. The board implements neither, so Forge must not list them
+  until it does.
+- **STRIKE** a tilt toggle. No branch reads tilt, altitude or azimuth, and
+  `spatial-ink` reports pressure only. It returns when a board consumes tilt.
+- **DEFER** a palm-rejection picker. The board's pointer router already has
+  `palmRejection: "off" | "during-pen" | "after-pen"`; it needs a product call on
+  whether users choose it or the host fixes it per device.
+- **Pressure** renders only when the host passes `pressure`. Forge passes it
+  when its pointer router has seen a measured pressure sample or pen-connect
+  reaches `ready`; a `linked` Bluetooth pen is not enough.
+- **Color** swatches come from the host (QuickDraw's named colors). NYC-Tron
+  ships no palette. No HSV picker exists here yet, so `onRequestCustomColor`
+  asks the host to open its own picker, such as `ColorChannels` in a popover.
+- **Icons** are a host slot (`icons`); text labels show until the planned
+  `components/icons/` glyphs land.
+- **Disabled controls** stay pressable and put their reason in a polite live
+  line. React Native Web's `Pressable` overwrites `aria-disabled` and blocks the
+  press, so the accessible name also carries ", unavailable".
+- **Placement** is the host's call: pass `orientation="vertical"` and
+  `edge="right"` for the physical-right rail on foldables and tablets (also in
+  RTL), and a horizontal bar on phones.

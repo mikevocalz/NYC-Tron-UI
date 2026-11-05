@@ -214,6 +214,16 @@
       "types": "./dist/components/gestures/GestureHandlerDrag.d.ts",
       "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
       "default": "./dist/components/gestures/GestureHandlerDrag.js"
+    },
+    "./components/forge/ink/ink-model": {
+      "types": "./dist/components/forge/ink/ink-model.d.ts",
+      "react-native": "./dist/components/forge/ink/ink-model.js",
+      "default": "./dist/components/forge/ink/ink-model.js"
+    },
+    "./components/forge/ink/InkToolbar": {
+      "types": "./dist/components/forge/ink/InkToolbar.d.ts",
+      "react-native": "./dist/components/forge/ink/InkToolbar.js",
+      "default": "./dist/components/forge/ink/InkToolbar.js"
     }
   },
   "scripts": {
