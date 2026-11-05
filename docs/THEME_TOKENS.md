@@ -7,20 +7,22 @@ does not fail the build; the utility silently produces no style, so text can
 end up in the platform-default black on a dark surface.
 
 `packages/ui/tests/contracts.test.mjs` fails if a component uses a token that
-is not listed here.
+is not listed here, or hardcodes a hex color. Components that take an
+`accentColor` (or popover `surfaceColor`/`textColor`) prop use it only when
+the caller passes one; otherwise the token applies.
 
 | `TronTheme` key | Variable | Utilities | Used by |
 | --- | --- | --- | --- |
 | `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected cell |
 | `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
 | `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls |
-| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table headers, sort chips, formula input, waveform lane |
+| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars |
 | `border` | `--color-border` | `border-border` | Every bordered surface |
 | `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid |
 | `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent` | WaveformLane bars |
+| `accent` | `--color-accent` | `bg-accent`, `border-accent` | WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |
 | `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |
