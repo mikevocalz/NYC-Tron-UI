@@ -1,7 +1,7 @@
 /**
  * Forge original 24x24 bold glyph paths. Each tuple is [SVG path, paint mode].
  * paint=stroke draws a rounded line, paint=fill draws a filled silhouette,
- * paint=knockout cuts detail using the supplied surface color.
+ * paint=knockout cuts detail out of the glyph through an SVG mask.
  * This is a curated artwork set, NOT a placeholder for all catalog IDs.
  */
 const S=(...d)=>d.map(p=>[p,"stroke"]);
@@ -151,13 +151,12 @@ timeline:both(S("M3 5h18v14H3z","M3 10h18","M8 10v9","M14 10v9","M6 14h3","M12 1
 "color-wheel":both(S("M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z","M12 3v9l8 4","M12 12l-8 4"),
  F("M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22z")),
 });
-export const glyphIds=Object.freeze(Object.keys(glyphs));
 /**
- * Namespaced catalog IDs whose slug has authored artwork. Kept here instead of
- * importing the 1,463-ID catalog so a renderer only ships glyph data; a test
- * keeps it equal to `iconIds` filtered by `glyphIds`.
+ * Catalog IDs whose slug is an artwork key (`navigation/home` draws `home`).
+ * Listed here instead of importing the 1,463-ID catalog so a renderer only
+ * ships glyph data; a test keeps this list in step with `iconIds`.
  */
-export const glyphCatalogIds=Object.freeze(`
+const slugCatalogIds=`
 navigation/home navigation/dashboard navigation/menu navigation/sidebar-left navigation/sidebar-right navigation/layers
 navigation/search navigation/settings navigation/split-view navigation/grid-view navigation/list-view navigation/more-horizontal
 navigation/more-vertical navigation/chevron-left navigation/chevron-right navigation/chevron-up navigation/chevron-down navigation/arrow-left
@@ -170,15 +169,42 @@ paint/eraser paint/color-wheel color/color-wheel typography/text layout/folding-
 image/image charts/chart video/video video/timeline video/play video/pause
 video/stop video/slide audio/audio audio/microphone collaboration/comment spatial/bluetooth
 devices/device-phone devices/device-tablet devices/device-desktop devices/device-foldable devices/device-duo devices/device-watch
-`.trim().split(/\s+/));
-const glyphCatalogIdSet=new Set(glyphCatalogIds);
+`.trim().split(/\s+/);
+/** Artwork keys that are not catalog slugs, mapped to the IDs they draw. */
+const artworkAliases=Object.freeze({
+ brush:["paint/paintbrush"],
+ scissors:["edit/cut"],
+ table:["spreadsheet/sheet"],
+ pdf:["file/document-pdf"],
+ music:["audio/note"],
+ sparkles:["ai/ai-sparkle"],
+});
+const artworkById=new Map();
+for(const id of slugCatalogIds){
+ const slug=id.slice(id.indexOf("/")+1);
+ if(!Object.hasOwn(glyphs,slug))throw new Error("Glyph catalog ID "+id+" has no artwork key "+slug);
+ artworkById.set(id,glyphs[slug]);
+}
+for(const [key,ids] of Object.entries(artworkAliases)){
+ if(!Object.hasOwn(glyphs,key))throw new Error("Glyph alias names missing artwork "+key);
+ for(const id of ids){
+  if(artworkById.has(id))throw new Error("Glyph alias "+key+" collides with "+id);
+  artworkById.set(id,glyphs[key]);
+ }
+}
+const drawn=new Set(artworkById.values());
+for(const key of Object.keys(glyphs)){
+ if(!drawn.has(glyphs[key]))throw new Error("Glyph artwork "+key+" is not reachable from any catalog ID");
+}
+/** Catalog IDs (`category/slug`) that have finished outline and filled artwork. */
+export const glyphIds=Object.freeze([...artworkById.keys()]);
 /**
- * Artwork for a bare glyph slug (`"home"`) or a registered catalog ID
- * (`"navigation/home"`). Unregistered namespaced IDs such as `"status/home"`
- * return `undefined`: never render misleading artwork for an unknown ID.
+ * Paths for a catalog ID such as `vector/pen`, or `undefined` when the ID is
+ * unknown or has no finished artwork. Bare slugs (`"pen"`) and IDs in the
+ * wrong category (`"bogus/home"`) are rejected so a backlog name never
+ * borrows another glyph.
  */
 export function getGlyph(id,variant="outline"){
- if(typeof id!=="string")return undefined;
- if(id.includes("/")&&!glyphCatalogIdSet.has(id))return undefined;
- return glyphs[id.split("/").at(-1)]?.[variant];
+ if(variant!=="outline"&&variant!=="filled")return undefined;
+ return typeof id==="string"?artworkById.get(id)?.[variant]:undefined;
 }

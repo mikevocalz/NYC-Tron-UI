@@ -20,10 +20,10 @@ export function hasIconId(id:string):boolean;
 export function getIconMetadata(id:string):Readonly<{id:string;category:string;slug:string;label:string}>|undefined;
 export function iconsInCategory(category:string):string[];
 export function searchIcons(query:string):string[];
+/** Catalog IDs (`category/slug`) that have finished outline and filled artwork. */
 export const glyphIds:readonly string[];
-/** Namespaced catalog IDs that `getGlyph` resolves to artwork. */
-export const glyphCatalogIds:readonly string[];
 export const glyphs:Readonly<Record<string,{outline:readonly (readonly string[])[];filled:readonly (readonly string[])[]}>>;
+/** Artwork for a catalog ID; `undefined` for bare slugs, unknown IDs or missing artwork. */
 export function getGlyph(id:string,variant?:ForgeIconVariant):readonly (readonly string[])[]|undefined;
 /** Icon color option -> `@nyc-tron/core` theme color key. */
 export const iconColorTokens:Readonly<{color:"text";selectedColor:"primary";disabledColor:"textMuted";successColor:"accent";errorColor:"danger"}>;

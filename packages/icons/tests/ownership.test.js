@@ -8,7 +8,7 @@ test("NYC-Tron icons own real authored geometry, not a copied full editor engine
  assert.equal(manifest.private,true);
  assert.equal(manifest.name,"@nyc-tron/icons");
  assert.ok(manifest.exports["./native"]);
- for(const id of ["home","save","brush","timeline","table","audio","bluetooth"]){
+ for(const id of ["navigation/home","file/save","paint/paintbrush","video/timeline","spreadsheet/sheet","audio/audio","spatial/bluetooth"]){
    assert.ok(glyphIds.includes(id),id);
    assert.ok(getGlyph(id,"outline")?.length>0,id);
    assert.ok(getGlyph(id,"filled")?.length>0,id);

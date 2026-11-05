@@ -31,9 +31,9 @@ import { iconColorsFromTheme } from "@nyc-tron/icons/tokens";
 
 const iconColors = iconColorsFromTheme(theme.colors);
 
-<TronIcon name="home" selected={active} reducedMotion={reducedMotion} {...iconColors} />
+<TronIcon name="navigation/home" selected={active} reducedMotion={reducedMotion} {...iconColors} />
 <TronIcon name="edit/lock" accessibilityLabel="Locked" {...iconColors} />
-<TronIconButton name="save" label="Save document"
+<TronIconButton name="file/save" label="Save document"
   onPress={save} selected={saved} {...iconColors}
 />
 ```
@@ -49,8 +49,8 @@ The package has no palette. `iconColorsFromTheme(colors)` maps
 `selectedColor`, `textMuted` → `disabledColor`, `accent` → `successColor`,
 `danger` → `errorColor`). Any role left unset falls back to `color`, then to
 `currentColor`. Knockout detail in filled glyphs is an SVG mask cutout, so
-it shows whatever sits behind the icon; `surfaceColor` is deprecated and
-ignored. `appearance` is deprecated and has no effect.
+it shows whatever sits behind the icon. There is no surface color prop.
+`appearance` is deprecated and has no effect.
 
 ### Accessibility
 
@@ -63,10 +63,13 @@ for a meaningful standalone icon; it is then exposed as one image
 
 ### Lookup
 
-`getGlyph` accepts a bare glyph slug (`"home"`) or a registered catalog ID
-(`"navigation/home"`, listed in `glyphCatalogIds`). An unregistered
-namespaced ID such as `"status/home"` returns `undefined` instead of
-borrowing artwork from another category.
+`getGlyph` and the `name` prop take catalog IDs only (`"navigation/home"`,
+listed in `glyphIds`). A bare slug such as `"home"` or an ID in the wrong
+category such as `"bogus/home"` returns `undefined` instead of borrowing
+artwork. Six glyphs are drawn under a different key than their catalog slug:
+`paint/paintbrush`, `edit/cut`, `spreadsheet/sheet`, `file/document-pdf`,
+`audio/note` and `ai/ai-sparkle`. The module checks those mappings when it
+loads.
 
 The optional `renderRive` function accepts a consumer-owned Rive artboard
 adapter with named states; **no compiled `.riv` assets or Rive runtime**

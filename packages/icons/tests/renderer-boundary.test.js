@@ -31,13 +31,13 @@ test("host Rive renderer can supply artboards beyond authored SVG subset",()=>{
 test("missing SVG without host artboard remains absent",()=>{
  assert.equal(ForgeIcon({name:"charts/chart-funnel"}),null);
  assert.equal(ForgeIcon({name:"charts/chart-funnel",renderRive:()=>null}),null);
- assert.ok(ForgeIcon({name:"home",renderRive:()=>null}));
+ assert.ok(ForgeIcon({name:"navigation/home",renderRive:()=>null}));
 });
 test("loading icon button advertises the same disabled state it enforces",()=>{
- const button=ForgeIconButton({name:"save",label:"Save",loading:true,onPress(){}});
+ const button=ForgeIconButton({name:"file/save",label:"Save",loading:true,onPress(){}});
  assert.equal(button.props.disabled,true);
  assert.deepEqual(button.props.accessibilityState,{selected:false,disabled:true,busy:true});
- assert.throws(()=>ForgeIconButton({name:"save",label:" ",onPress(){}}),TypeError);
+ assert.throws(()=>ForgeIconButton({name:"file/save",label:" ",onPress(){}}),TypeError);
 });
 
 // Walk the element tree, invoking function components so the SVG layer is inspected.
@@ -53,23 +53,23 @@ function find(node,predicate,out=[]){
  return out;
 }
 test("decorative icons hide from assistive technology; labelled icons are one image",()=>{
- const decorative=render(ForgeIcon({name:"home"}));
+ const decorative=render(ForgeIcon({name:"navigation/home"}));
  assert.equal(decorative.props.accessible,false);
  assert.equal(decorative.props.accessibilityElementsHidden,true);
  assert.equal(decorative.props.importantForAccessibility,"no-hide-descendants");
  assert.equal(decorative.props["aria-hidden"],true);
  for(const svg of find(decorative,n=>n.type==="Svg"))assert.equal(svg.props["aria-hidden"],true);
- const labelled=render(ForgeIcon({name:"home",accessibilityLabel:"Home"}));
+ const labelled=render(ForgeIcon({name:"navigation/home",accessibilityLabel:"Home"}));
  assert.equal(labelled.props.accessible,true);
  assert.equal(labelled.props.accessibilityRole,"image");
  assert.equal(labelled.props.role,"img");
  assert.equal(labelled.props.accessibilityLabel,"Home");
  assert.equal(labelled.props["aria-hidden"],undefined);
- const blank=render(ForgeIcon({name:"home",accessibilityLabel:"  "}));
+ const blank=render(ForgeIcon({name:"navigation/home",accessibilityLabel:"  "}));
  assert.equal(blank.props["aria-hidden"],true);
 });
 test("knockout detail is a mask cutout, not a painted surface color",()=>{
- const tree=render(ForgeIcon({name:"settings",selected:true,reducedMotion:true}));
+ const tree=render(ForgeIcon({name:"navigation/settings",selected:true,reducedMotion:true}));
  const masks=find(tree,n=>n.type==="Mask");
  assert.equal(masks.length,1,"only the filled settings variant uses knockouts");
  const group=find(tree,n=>n.type==="G")[0];
@@ -79,7 +79,7 @@ test("knockout detail is a mask cutout, not a painted surface color",()=>{
  assert.ok(!JSON.stringify(tree).match(/#[0-9a-f]{6}/i),"no hardcoded hex in rendered icon");
 });
 test("icon button keeps its inner icon decorative",()=>{
- const button=ForgeIconButton({name:"save",label:"Save",accessibilityLabel:"Ignored",onPress(){}});
+ const button=ForgeIconButton({name:"file/save",label:"Save",accessibilityLabel:"Ignored",onPress(){}});
  const inner=render(button.children[0]({pressed:false}));
  assert.equal(inner.props["aria-hidden"],true);
 });

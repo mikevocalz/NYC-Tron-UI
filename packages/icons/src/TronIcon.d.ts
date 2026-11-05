@@ -8,11 +8,6 @@ export interface TronIconProps extends ForgeIconOptions {
   pressed?: boolean;
   hovered?: boolean;
   /**
-   * @deprecated Ignored. Knockout detail is now a masked cutout, so it shows
-   * whatever is behind the icon.
-   */
-  surfaceColor?: string;
-  /**
    * Label for a meaningful standalone icon; exposes it as one image. Omit for
    * decorative icons, which are hidden from assistive technology. Ignored by
    * `TronIconButton`, whose `label` names the button.

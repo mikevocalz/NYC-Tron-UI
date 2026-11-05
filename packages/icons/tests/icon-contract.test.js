@@ -47,14 +47,35 @@ test("inactive always outline, selected always filled; reduced motion still fill
 test("every authored glyph has a distinct selected variant",()=>{
  for(const id of glyphIds)assert.notDeepEqual(getGlyph(id,"outline"),getGlyph(id,"filled"),id);
 });
-test("namespaced lookups resolve only registered catalog IDs",async()=>{
- const {glyphCatalogIds}=await import("../src/glyphs.js");
- const expected=iconIds.filter(id=>glyphIds.includes(id.split("/").at(-1)));
- assert.deepEqual([...glyphCatalogIds],expected);
+test("artwork resolves only through catalog IDs, never by bare or borrowed slug",async()=>{
+ const {glyphs}=await import("../src/glyphs.js");
+ for(const id of glyphIds)assert.equal(iconIds.includes(id),true,id);
+ // Every catalog ID whose slug is an artwork key must be drawable.
+ const bySlug=iconIds.filter(id=>Object.hasOwn(glyphs,id.slice(id.indexOf("/")+1)));
+ for(const id of bySlug)assert.ok(glyphIds.includes(id),id);
  assert.ok(getGlyph("navigation/home"));
- assert.ok(getGlyph("home"));
+ assert.ok(getGlyph("vector/pen"));
+ assert.equal(getGlyph("home"),undefined);
+ assert.equal(getGlyph("pen"),undefined);
+ assert.equal(getGlyph("bogus/home"),undefined);
  assert.equal(getGlyph("status/home"),undefined);
  assert.equal(getGlyph("anything/lock"),undefined);
+ assert.equal(getGlyph("navigation/home","bogus"),undefined);
+ assert.equal(getGlyph(undefined),undefined);
+});
+test("the six orphan glyphs draw their catalog IDs",async()=>{
+ const {glyphs}=await import("../src/glyphs.js");
+ const aliases={"paint/paintbrush":"brush","edit/cut":"scissors","spreadsheet/sheet":"table",
+   "file/document-pdf":"pdf","audio/note":"music","ai/ai-sparkle":"sparkles"};
+ for(const [id,key] of Object.entries(aliases)){
+   assert.equal(iconIds.includes(id),true,id);
+   assert.equal(getGlyph(id,"filled"),glyphs[key].filled,id);
+   assert.equal(getGlyph(id,"outline"),glyphs[key].outline,id);
+   assert.equal(getGlyph(key),undefined,key);
+ }
+ // Every artwork key is reachable from at least one catalog ID.
+ const reachable=new Set(glyphIds.map(id=>getGlyph(id,"outline")));
+ for(const key of Object.keys(glyphs))assert.ok(reachable.has(glyphs[key].outline),key);
 });
 test("no built-in color palette; theme keys map to icon roles",async()=>{
  const tokens=await import("../src/tokens.js");
