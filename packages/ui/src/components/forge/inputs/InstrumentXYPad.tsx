@@ -1,3 +1,4 @@
+import {cancelPreview} from "../cancel-preview.ts";
 import {useRef} from "react";
 import {PanResponder,Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
@@ -33,8 +34,10 @@ export function InstrumentXYPad({
   const {width,height,active,preview}=useStore(store,s=>s);
   const position=active?preview:{x,y};
   const start=useRef<Point2D>({x,y});
+  const cancel=()=>cancelPreview({x:latest.current.x,y:latest.current.y},preview=>store.setState({active:false,preview}),latest.current.onPreview);
   const commit=(next:Point2D)=>{
     const p=latest.current;
+    if(p.disabled){cancel();return;}
     store.setState({preview:next,active:false});
     if(!p.disabled&&(next.x!==p.x||next.y!==p.y))void p.onCommit(next);
   };
@@ -54,8 +57,8 @@ export function InstrumentXYPad({
       store.setState({preview:next});
       p.onPreview?.(next);
     },
-    onPanResponderRelease:()=>commit(store.getState().preview),
-    onPanResponderTerminate:()=>store.setState({active:false,preview:{x:latest.current.x,y:latest.current.y}}),
+    onPanResponderRelease:()=>{if(store.getState().active)commit(store.getState().preview);},
+    onPanResponderTerminate:cancel,
   });
   const nudge=(axis:"x"|"y",direction:-1|1)=>{
     if(disabled)return;
