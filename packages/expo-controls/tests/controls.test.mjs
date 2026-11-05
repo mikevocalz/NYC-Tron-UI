@@ -2,7 +2,23 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { normalizeMenuActions,findEnabledMenuAction } from "../src/components/menu-model.ts";
+import { normalizeMenuActions,findEnabledMenuAction,enabledMenuLeaves,menuFocusTarget } from "../src/components/menu-model.ts";
+test("keyboard traversal skips disabled sections and wraps through enabled leaves",()=>{
+ const actions=[{id:"first",title:"First"},{id:"blocked",title:"Blocked",disabled:true},
+  {id:"section",title:"Section",subactions:[{id:"last",title:"Last",checked:false}]},
+  {id:"hidden",title:"Disabled group",disabled:true,subactions:[{id:"child",title:"Child"}]}];
+ assert.deepEqual(enabledMenuLeaves(actions).map(item=>item.id),["first","last"]);
+ assert.equal(menuFocusTarget(actions,undefined,"Home"),"first");
+ assert.equal(menuFocusTarget(actions,undefined,"End"),"last");
+ assert.equal(menuFocusTarget(actions,"first","ArrowDown"),"last");
+ assert.equal(menuFocusTarget(actions,"last","ArrowDown"),"first");
+ assert.equal(menuFocusTarget(actions,"first","ArrowUp"),"last");
+ assert.equal(menuFocusTarget(actions,"removed","ArrowDown"),"first");
+ assert.equal(menuFocusTarget(actions,"removed","ArrowUp"),"last");
+ assert.equal(menuFocusTarget(actions,"first","Enter"),undefined);
+ assert.equal(menuFocusTarget([],undefined,"Home"),undefined);
+ assert.equal(menuFocusTarget([{id:"x",title:"X",disabled:true}],undefined,"End"),undefined);
+});
 test("native menu tree retains disabled, destructive and checked states",()=>{
  const actions=[{id:"edit",title:"Edit"},{id:"remove",title:"Remove",destructive:true,disabled:true},
  {id:"pin",title:"Pin",checked:true},{id:"share",title:"Share",
@@ -49,3 +65,4 @@ test("dropdown caption names the picker for screen readers on every platform",()
  assert.equal(pkg.exports["./NativeDropdown"]["react-native"],"./dist/components/NativeDropdown.native.js");
  assert.equal(pkg.exports["."]["react-native"],"./dist/index.native.js");
 });
+

@@ -54,3 +54,24 @@ export function findEnabledMenuAction(
   }
   return undefined;
 }
+
+/** The web presentation flattens sections; headings and disabled branches are not focus targets. */
+export function enabledMenuLeaves(actions: readonly TronMenuAction[]): TronMenuAction[] {
+  return actions.flatMap(action => action.disabled ? [] : action.subactions?.length
+    ? enabledMenuLeaves(action.subactions) : [action]);
+}
+
+/** Resolve an arrow/Home/End target without retaining stale indices after an action update. */
+export function menuFocusTarget(
+  actions: readonly TronMenuAction[], currentId: string | undefined, key: string
+): string | undefined {
+  const items = enabledMenuLeaves(actions);
+  if (!items.length) return undefined;
+  if (key === "Home") return items[0]!.id;
+  if (key === "End") return items[items.length - 1]!.id;
+  if (key !== "ArrowDown" && key !== "ArrowUp") return undefined;
+  const index = items.findIndex(item => item.id === currentId);
+  if (index < 0) return items[key === "ArrowUp" ? items.length - 1 : 0]!.id;
+  return items[(index + (key === "ArrowDown" ? 1 : -1) + items.length) % items.length]!.id;
+}
+

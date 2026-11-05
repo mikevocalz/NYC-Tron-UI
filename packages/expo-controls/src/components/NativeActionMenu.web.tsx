@@ -3,7 +3,10 @@ import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import type { NativeActionMenuProps } from "./NativeActionMenu.types.ts";
-import { findEnabledMenuAction, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
+import { findEnabledMenuAction, menuFocusTarget, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
+
+type MenuKeyEvent = {key:string; altKey:boolean; ctrlKey:boolean; metaKey:boolean;
+  preventDefault():void; stopPropagation():void};
 
 /**
  * Working RN web presentation. Expo's MenuView intentionally does nothing
@@ -17,9 +20,29 @@ export function NativeActionMenu({
   if(!local.current)local.current=createStore(()=>({open:false}));
   const store=local.current;
   const open=useStore(store,state=>state.open);
+  const itemRefs=useRef(new Map<string,View>());
+  const initialKey=useRef("Home");
   const normalized=normalizeMenuActions(actions);
   const canOpen=!disabled&&normalized.length>0;
   const close=()=>store.setState({open:false});
+  const focus=(key:string,currentId?:string)=>{
+    const id=menuFocusTarget(actions,currentId,key);
+    if(id)itemRefs.current.get(id)?.focus();
+  };
+  const show=(key="Home")=>{
+    if(!canOpen)return;
+    initialKey.current=key;
+    store.setState({open:true});
+  };
+  const onMenuKey=(event:MenuKeyEvent,id:string)=>{
+    if(event.altKey||event.ctrlKey||event.metaKey)return;
+    if(event.key==="Escape"){
+      event.preventDefault();event.stopPropagation();close();return;
+    }
+    if(menuFocusTarget(actions,id,event.key)){
+      event.preventDefault();event.stopPropagation();focus(event.key,id);
+    }
+  };
   const run=(id:string)=>{
     if(!findEnabledMenuAction(actions,id))return;
     close();
@@ -35,6 +58,9 @@ export function NativeActionMenu({
         </Text>
         {render(action.subactions,depth+1,groupDisabled||!!action.disabled)}
       </>:<Pressable accessibilityRole="menuitem"
+        ref={node=>{if(node)itemRefs.current.set(action.id,node);else itemRefs.current.delete(action.id);}}
+        {...{role:action.checked===undefined?"menuitem" as const:"menuitemcheckbox" as const,
+          onKeyDown:(event:MenuKeyEvent)=>onMenuKey(event,action.id)}}
         accessibilityLabel={action.title}
         accessibilityState={{disabled:groupDisabled||!!action.disabled,checked:action.checked}}
         disabled={groupDisabled||!!action.disabled}
@@ -47,16 +73,22 @@ export function NativeActionMenu({
     </View>);
   return <View testID={testID}>
     <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+      {...{"aria-haspopup":"menu" as const,onKeyDown:(event:MenuKeyEvent)=>{
+        if(!canOpen||event.altKey||event.ctrlKey||event.metaKey)return;
+        if(event.key==="ArrowDown"||event.key==="ArrowUp"){
+          event.preventDefault();show(event.key==="ArrowUp"?"End":"Home");
+        }
+      }}}
       accessibilityState={{disabled:!canOpen,expanded:open}}
       disabled={!canOpen}
       // Web keyboard and screen-reader activation only produce a press, so a
       // long-press menu must also open on press or it is unreachable there.
-      onPress={()=>store.setState({open:true})}
-      onLongPress={longPress?()=>store.setState({open:true}):undefined}>
+      onPress={()=>show()}
+      onLongPress={longPress?()=>show():undefined}>
       {trigger}
     </Pressable>
     <Modal transparent visible={open} animationType="fade"
-      accessibilityViewIsModal onRequestClose={close}>
+      accessibilityViewIsModal onRequestClose={close} onShow={()=>focus(initialKey.current)}>
       <View style={{flex:1,justifyContent:"center",padding:24}}>
         <Pressable accessibilityLabel="Close menu" accessibilityRole="button" onPress={close}
           style={{position:"absolute",left:0,right:0,top:0,bottom:0,
@@ -72,3 +104,4 @@ export function NativeActionMenu({
     </Modal>
   </View>;
 }
+
