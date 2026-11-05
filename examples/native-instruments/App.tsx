@@ -2,15 +2,17 @@ import { ScrollView, Text, View } from "react-native";
 import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 import { XYPad } from "@nyc-tron/native-controls/XYPad";
+import { NativeNavigationRail } from "@nyc-tron/native-navigation/NativeNavigationRail";
 
-type DemoState={gain:number;pan:number;xy:{x:number;y:number};setGain:(v:number)=>void;setPan:(v:number)=>void;setXY:(x:number,y:number)=>void};
+type DemoState={gain:number;pan:number;xy:{x:number;y:number};setGain:(v:number)=>void;setPan:(v:number)=>void;setXY:(x:number,y:number)=>void;destination:string;setDestination:(id:string)=>void};
 const useDemoStore=create<DemoState>(set=>({
- gain:.75,pan:0,xy:{x:.5,y:.5},
+ gain:.75,pan:0,xy:{x:.5,y:.5},destination:'home',setDestination:destination=>set({destination}),
  setGain:gain=>set({gain}),setPan:pan=>set({pan}),
  setXY:(x,y)=>set({xy:{x,y}})
 }));
 export default function App(){
  const gain=useDemoStore(s=>s.gain),pan=useDemoStore(s=>s.pan),xy=useDemoStore(s=>s.xy);
+ const destination=useDemoStore(s=>s.destination),setDestination=useDemoStore(s=>s.setDestination);
  const setGain=useDemoStore(s=>s.setGain),setPan=useDemoStore(s=>s.setPan),setXY=useDemoStore(s=>s.setXY);
  return <ScrollView style={{backgroundColor:"#101017",flex:1}} contentContainerStyle={{
     minHeight:"100%",gap:20,paddingHorizontal:20,paddingTop:80,paddingBottom:60
@@ -27,6 +29,27 @@ export default function App(){
    <XYPad label="Filter X/Y" x={xy.x} y={xy.y} size={220}
      accentColor="#B2A7FF" backgroundColor="#20202C"
      onCommit={p=>setXY(p.x,p.y)}/>
+   <Text style={{color:"#F6F6FD",fontWeight:"600",fontSize:20}}>Native right navigation rail</Text>
+   <View style={{flexDirection:"row",height:320,alignItems:"stretch",justifyContent:"flex-end"}}>
+     <View style={{flex:1,justifyContent:"center",padding:16}}>
+       <Text style={{color:"#F6F6FD",fontSize:18,fontWeight:"600"}}>Selected: {destination}</Text>
+       <Text style={{color:"#AAAABB"}}>The app owns route selection. The rail is on the physical right.</Text>
+     </View>
+     <NativeNavigationRail
+       items={[
+         {id:"home",label:"Home",glyph:"⌂"},
+         {id:"lessons",label:"Lessons",glyph:"▤"},
+         {id:"tutors",label:"Tutors",glyph:"♙"},
+         {id:"settings",label:"Settings",glyph:"⚙"}
+       ]}
+       selectedId={destination}
+       onSelectionChange={setDestination}
+       width={80} height={320}
+       activeColor="#B2A7FF"
+       foregroundColor="#FFFFFF"
+       backgroundColor="#20202C"
+     />
+   </View>
    <Text style={{color:"#AAAABB"}}>Gain: {gain.toFixed(2)} | Pan: {pan.toFixed(2)} | XY: {xy.x.toFixed(2)}, {xy.y.toFixed(2)}</Text>
  </ScrollView>;
 }
