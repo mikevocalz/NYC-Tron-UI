@@ -38,6 +38,7 @@
     },
     "./menu-model": {
       "types": "./dist/components/menu-model.d.ts",
+      "react-native": "./dist/components/menu-model.js",
       "default": "./dist/components/menu-model.js"
     }
   },
@@ -45,17 +46,17 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "prepack": "pnpm build"
   },
-  "dependencies": {
-    "@nyc-tron/ui": "workspace:*"
-  },
   "peerDependencies": {
+    "@nyc-tron/ui": "workspace:^",
     "react": ">=19.0.0",
     "react-native": ">=0.88.0",
     "@expo/ui": "^58.0.0",
@@ -63,6 +64,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@nyc-tron/ui": "workspace:*",
     "react": "19.3.0",
     "react-native": "0.88.0",
     "@types/react": "~19.3.0",

@@ -52,14 +52,13 @@ importers:
   packages/core: {}
 
   packages/expo-controls:
-    dependencies:
-      '@nyc-tron/ui':
-        specifier: workspace:*
-        version: link:../ui
     devDependencies:
       '@expo/ui':
         specifier: 58.0.27
         version: 58.0.27(@babel/core@7.29.13)(expo@58.0.14)(react-dom@19.3.1(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+      '@nyc-tron/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@types/react':
         specifier: ~19.3.0
         version: 19.3.0
@@ -103,11 +102,10 @@ importers:
         version: 6.0.3
 
   packages/panes:
-    dependencies:
+    devDependencies:
       '@nyc-tron/core':
         specifier: workspace:*
         version: link:../core
-    devDependencies:
       '@types/react':
         specifier: ~19.3.0
         version: 19.3.0

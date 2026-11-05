@@ -124,7 +124,8 @@ test("new subpaths resolve to emitted native and web files",()=>{
   assert.equal(pkg.exports["./"+name].default,"./dist/components/"+name+".web.js");
   assert.equal(pkg.exports["./"+name].types,"./dist/components/"+name+".web.d.ts");
  }
- assert.equal(pkg.dependencies["@nyc-tron/ui"],"workspace:*");
+ // Release tarballs cannot resolve siblings from npm, so the kit is a peer.
+ assert.equal(pkg.peerDependencies["@nyc-tron/ui"],"workspace:^");
 });
 test("every component subpath's types file declares the component, not only its props",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));

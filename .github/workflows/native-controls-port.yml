@@ -36,10 +36,11 @@ jobs:
       - run: corepack pnpm install --frozen-lockfile
       - run: node --test packages/native-controls/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
-      # The example also renders @nyc-tron/expo-controls, whose types resolve to dist.
+      # Exports resolve to dist, and the example also renders @nyc-tron/expo-controls
+      # and @nyc-tron/ui, so build the whole workspace before typechecking it.
       - run: corepack pnpm build
-      - run: corepack pnpm --dir examples/native-instruments typecheck
       - run: corepack pnpm --dir packages/native-controls build
+      - run: corepack pnpm --dir examples/native-instruments typecheck
       - run: |
           mkdir -p /tmp/nyc-tron-native-pack
           corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
