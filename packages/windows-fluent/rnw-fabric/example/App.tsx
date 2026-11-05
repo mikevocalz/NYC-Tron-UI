@@ -19,7 +19,7 @@ export function App(){
    onSelectionRequested={state.requestRoute}
    onPaneOpenRequested={state.setPaneOpen}
    onSettingsRequested={state.openSettings}
-   style={{width:280,alignSelf:"stretch"}}
+   style={{alignSelf:"stretch"}}
   />
   <View style={{flex:1,padding:24,gap:16}}>
    <Text accessibilityRole="header">Windows navigation acceptance</Text>

@@ -31,6 +31,13 @@ export function validateDestinations(
   }
   if(selectedId!==null&&!ids.has(selectedId))throw new RangeError("Selected destination is not in this navigation");
 }
+// WinUI NavigationView defaults: OpenPaneLength 320, CompactPaneLength 48.
+// The island is the NavigationView's whole layout box, so a narrower island
+// clips the open pane and a wider one leaves an empty content area beside it.
+// "auto" adapts to the island width, not the window; in a sidebar-sized
+// island it resolves to the minimal layout.
+const OPEN_PANE_WIDTH=320;
+const COMPACT_PANE_WIDTH=48;
 /**
  * Controlled, Windows-only native WinUI 3 Fabric XAML island.
  * The app still owns routing, theme and nav state.
@@ -61,6 +68,6 @@ export function TronNavigationView({
     onSettingsInvoked={e=>{
       if(e.nativeEvent.id==="settings"&&settingsVisible)onSettingsRequested?.();
     }}
-    style={[{width:paneMode==="expanded"?280:280,height:"100%"},style]}
+    style={[{width:paneOpen?OPEN_PANE_WIDTH:COMPACT_PANE_WIDTH,height:"100%"},style]}
   />;
 }

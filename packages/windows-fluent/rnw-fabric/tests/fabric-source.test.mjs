@@ -40,3 +40,23 @@ test("route approval remains app-owned and unrelated updates retain native items
  const applySelection=cpp.indexOf("SetSelectedId(winrt::to_hstring(m_selectedId))");
  assert.ok(conditional>=0 && clear>conditional && cache>clear && applySelection>cache);
 });
+
+test("Settings stays non-selecting after template load and items carry Narrator names",()=>{
+ const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
+ const loaded=cpp.indexOf("m_navigation.Loaded(");
+ assert.ok(loaded>=0 && cpp.indexOf("DisableSelectOnInvokeForSettings()",loaded)>loaded);
+ assert.match(cpp,/AutomationProperties::SetName\(item, label\)/);
+ assert.match(cpp,/AutomationProperties::SetName\(m_navigation, title\)/);
+});
+test("library and consumer build against the same stable Windows App SDK",()=>{
+ assert.doesNotMatch(read("windows/ExperimentalFeatures.props"),/UseExperimentalWinUI3/);
+});
+test("island width follows the committed pane state instead of a fixed width",()=>{
+ const tsx=read("src/TronNavigationView.windows.tsx");
+ assert.match(tsx,/width:paneOpen\?OPEN_PANE_WIDTH:COMPACT_PANE_WIDTH/);
+});
+test("consumer solution registers the x64 library project for solution builds",()=>{
+ const host=read("example/scripts/prepare-host.mjs");
+ assert.match(host,/windows\/NYCTronWindowsExample\.sln/);
+ assert.match(host,/\|x64\.Build\.0 = /);
+});

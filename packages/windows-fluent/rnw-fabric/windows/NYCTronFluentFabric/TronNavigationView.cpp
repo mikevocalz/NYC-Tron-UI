@@ -8,6 +8,7 @@
 #include "codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Windows.Data.Json.h>
@@ -48,6 +49,15 @@ struct TronNavigationViewComponentView
           [weak = get_weak()](auto const&, auto const&) {
             if (auto self = weak.get()) self->OnPaneChanged(false);
           });
+      // SettingsItem is created when the NavigationView template applies,
+      // which happens after the first ApplyProps. Configure it on Loaded.
+      m_loaded = m_navigation.Loaded(
+          [weak = get_weak()](auto const&, auto const&) {
+            if (auto self = weak.get()) {
+              self->DisableSelectOnInvokeForSettings();
+              self->SetSelectedId(winrt::to_hstring(self->m_selectedId));
+            }
+          });
       if (m_props) ApplyProps(*m_props);
     } catch (...) {
       // Initialization fails closed: do not display a fake substitute or
@@ -73,6 +83,7 @@ struct TronNavigationViewComponentView
     auto item = winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem{};
     item.Tag(winrt::box_value(id));
     item.Content(winrt::box_value(label));
+    winrt::Microsoft::UI::Xaml::Automation::AutomationProperties::SetName(item, label);
     // Route approval belongs to JS. A rejected/async request must not move
     // the native selection indicator away from the committed route.
     item.SelectsOnInvoked(false);
@@ -125,6 +136,13 @@ struct TronNavigationViewComponentView
     m_navigation.SelectedItem(nullptr);
   }
 
+  void DisableSelectOnInvokeForSettings() {
+    if (!m_navigation) return;
+    if (auto settings = m_navigation.SettingsItem().try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
+      settings.SelectsOnInvoked(false);
+    }
+  }
+
   void ApplyProps(Codegen::TronNavigationViewProps const& props) noexcept {
     try {
       m_updatingFromJs = true;
@@ -151,11 +169,12 @@ struct TronNavigationViewComponentView
           mode == "expanded" ? Mode::Left :
           mode == "compact" ? Mode::LeftCompact :
           mode == "minimal" ? Mode::LeftMinimal : Mode::Auto);
-      m_navigation.PaneTitle(winrt::to_hstring(props.paneTitle.value_or("")));
+      const auto title = winrt::to_hstring(props.paneTitle.value_or(""));
+      m_navigation.PaneTitle(title);
+      // Narrator names the navigation landmark after the pane title.
+      winrt::Microsoft::UI::Xaml::Automation::AutomationProperties::SetName(m_navigation, title);
       m_navigation.IsSettingsVisible(props.settingsVisible.value_or(false));
-      if (auto settings = m_navigation.SettingsItem().try_as<winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem>()) {
-        settings.SelectsOnInvoked(false);
-      }
+      DisableSelectOnInvokeForSettings();
       m_selectedId = props.selectedId.value_or("");
       SetSelectedId(winrt::to_hstring(m_selectedId));
       m_navigation.IsPaneOpen(props.paneOpen.value_or(false));
@@ -204,6 +223,7 @@ struct TronNavigationViewComponentView
   winrt::event_token m_itemInvoked{};
   winrt::event_token m_paneOpened{};
   winrt::event_token m_paneClosed{};
+  winrt::event_token m_loaded{};
   std::string m_selectedId;
   std::string m_itemsJson;
   std::string m_footerItemsJson;

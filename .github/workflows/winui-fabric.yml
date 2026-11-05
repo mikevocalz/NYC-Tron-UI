@@ -105,8 +105,11 @@ jobs:
           $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
           $sdkRoot = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Windows Kits\10\Include"
           $sdk = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
-          $solution = (Resolve-Path windows).Path + "\"
-          & $msbuild "windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj" "/p:SolutionDir=$solution" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$($sdk.Name)" "/p:UseExperimentalNuget=true" "/p:RunAutolinkCheck=false" "/restore" "/m" "/v:minimal"
+          # RNW app projects refuse to build outside a solution
+          # (RequireSolution.targets needs SolutionPath/SolutionFileName).
+          # Build the app's project target through its generated solution;
+          # prepare:host has added the library project to that solution.
+          & $msbuild "windows\NYCTronWindowsExample.sln" "/t:NYCTronWindowsExample" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$($sdk.Name)" "/p:UseExperimentalNuget=true" "/p:RunAutolinkCheck=false" "/restore" "/m" "/v:minimal"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $exe = Get-ChildItem windows -Recurse -Filter NYCTronWindowsExample.exe | Select-Object -First 1
           if (-not $exe) { throw "Consumer executable was not produced" }

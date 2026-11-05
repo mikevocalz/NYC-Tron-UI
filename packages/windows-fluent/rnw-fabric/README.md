@@ -11,9 +11,20 @@ The Windows lane pins RNW 0.85.0 + RN 0.85.3 and is tested separately.
 
 The UI is a real XAML island in the React Native Fabric component tree,
 not the older UWP Paper renderer or a React Native `View` pretending
-to be Fluent. The native component expects a bounded width/height
+to be Fluent. The native component expects a bounded height
 and should be placed on the physical LEFT inside the Windows desktop shell.
 Its app-owned route, keyboard focus and theme are outside the component.
+
+The island is the NavigationView's whole layout box. The wrapper sizes it
+from the committed `paneOpen`: 320 px open and 48 px closed, which are
+WinUI's default `OpenPaneLength` and `CompactPaneLength`. `paneMode="auto"`
+adapts to the island width, not the window, so inside a sidebar-sized
+island it resolves to the minimal layout. Use `expanded`, `compact` or
+`minimal` when the layout must not change.
+
+The library builds against the stable Windows App SDK that RNW 0.85
+selects (1.8.260508005), the same version the generated consumer app
+uses. It is x64 only.
 
 ```tsx
 import {TronNavigationView} from "@nyc-tron/windows-fluent-fabric";
@@ -40,8 +51,11 @@ high contrast, RTL and real route events still need end-to-end proof.
 ```powershell
 npm install
 npx react-native codegen-windows
-msbuild windows/NYCTronFluentFabric/NYCTronFluentFabric.vcxproj /p:Configuration=Release /p:Platform=x64
+msbuild windows/NYCTronFluentFabric.sln /restore /p:Configuration=Release /p:Platform=x64
 ```
+
+RNW project files expect a solution context (`SolutionDir` locates
+`ExperimentalFeatures.props`), so build the `.sln`, not the `.vcxproj`.
 
 **Build evidence (November 5, 2026):** Windows Fabric codegen and native
 C++/WinRT compilation passed at commit `607bcada` in
