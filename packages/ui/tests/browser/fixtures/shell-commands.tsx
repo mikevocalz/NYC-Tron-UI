@@ -1,4 +1,5 @@
-import {AppRegistry,Pressable,ScrollView,Text,View} from "react-native";
+import {useMemo} from "react";
+import {AppRegistry,Pressable,ScrollView,Text,TextInput,View} from "react-native";
 import {create} from "zustand";
 import {RibbonTabs,type RibbonTab} from "../../../src/components/shell/RibbonTabs.tsx";
 import {SplitButton} from "../../../src/components/shell/SplitButton.tsx";
@@ -6,6 +7,9 @@ import {ContextMenu} from "../../../src/components/shell/ContextMenu.tsx";
 import {PresetGallery,type Preset,type PresetFilter} from "../../../src/components/shell/PresetGallery.tsx";
 import {KeyboardShortcutHUD,type ShortcutCommand} from "../../../src/components/shell/KeyboardShortcutHUD.tsx";
 import {FocusAndA11yLayer,useA11yPreferences,useAnnounce} from "../../../src/components/shell/FocusAndA11yLayer.tsx";
+import {createKeyboardMap} from "../../../src/components/shell/keyboard-map.ts";
+// The web entry of @nyc-tron/hardware-keys: document keydown through the keyboard map.
+import {useHardwareKeyboard} from "../../../../hardware-keys/src/platform.web.ts";
 
 // A document editor's command surfaces: ribbon, export split button, layer
 // context menu, color-grade presets and the shortcut sheet. `?dir=rtl`
@@ -17,12 +21,12 @@ const apple=params.get("apple")==="1";
 type Demo={
   tab:string;collapsed:boolean;bold:boolean;style:string;last:string;
   preset:string;preview:string;favorites:Record<string,boolean>;filter:PresetFilter;
-  hud:boolean;bindings:Record<string,string|undefined>;
+  hud:boolean;bindings:Record<string,string|undefined>;layerName:string;
 };
-const DEFAULTS:Record<string,string>={save:"Mod+S",export:"Mod+Shift+E",bold:"Mod+B",palette:"Mod+K",zoomIn:"Mod+=",brush:"Alt+B"};
+const DEFAULTS:Record<string,string>={save:"Mod+S",export:"Mod+Shift+E",bold:"Mod+B",palette:"Mod+K",zoomIn:"Mod+=",brush:"Alt+B",hand:"H"};
 const useDemo=create<Demo>(()=>({
   tab:"home",collapsed:false,bold:false,style:"body",last:"none",
-  preset:"warm",preview:"none",favorites:{warm:true},filter:"all",hud:params.get("hud")==="1",bindings:{...DEFAULTS},
+  preset:"warm",preview:"none",favorites:{warm:true},filter:"all",hud:params.get("hud")==="1",bindings:{...DEFAULTS},layerName:"Harbor photo",
 }));
 
 const swatch=(cls:string)=><View {...{className:cls}} style={{flex:1}}/>;
@@ -57,8 +61,15 @@ function Fixture(){
   const commands:ShortcutCommand[]=[
     {id:"save",label:"Save",group:"File"},{id:"export",label:"Export",group:"File"},
     {id:"bold",label:"Bold",group:"Format",keywords:["strong"]},{id:"palette",label:"Command palette",group:"Navigation"},
-    {id:"zoomIn",label:"Zoom in",group:"View"},{id:"brush",label:"Brush tool",group:"Tools"},
+    {id:"zoomIn",label:"Zoom in",group:"View"},{id:"hand",label:"Hand tool",group:"Tools"},
+    {id:"brush",label:"Brush tool",group:"Tools"},
   ].map(c=>({...c,binding:s.bindings[c.id],defaultBinding:DEFAULTS[c.id]}));
+  // One map feeds the sheet and the dispatcher; the sheet owns the keyboard while it is open.
+  const map=useMemo(()=>createKeyboardMap(commands,apple),[s.bindings]);
+  useHardwareKeyboard({map,enabled:!s.hud,onCommand:entry=>{
+    if(entry.id==="bold")set(st=>({bold:!st.bold}));
+    set({last:"key:"+entry.id});
+  }});
   return <ScrollView style={{flex:1,direction:rtl?"rtl":"ltr"}} {...{className:"bg-surface-sunken"}} contentContainerStyle={{gap:16,paddingBottom:24}}>
     <RibbonTabs tabs={tabs} activeTabId={s.tab} onTabChange={tab=>set({tab})}
       collapsed={s.collapsed} onCollapsedChange={collapsed=>set({collapsed})}
@@ -93,6 +104,9 @@ function Fixture(){
           onFavoriteChange={(id,fav)=>set({favorites:{...s.favorites,[id]:fav}})}/>
       </View>
       <View style={{gap:4}}>
+        <Text nativeID="layer-name-label" {...{className:"text-text text-sm"}}>Layer name</Text>
+        <TextInput value={s.layerName} onChangeText={layerName=>set({layerName})} accessibilityLabel="Layer name"
+          {...{className:"min-h-11 rounded-control border border-border bg-surface-raised px-3 text-text text-sm focus-visible:ring-2 focus-visible:ring-focus"}}/>
         <Text testID="last" {...{className:"text-text-muted text-xs"}}>{`last ${s.last}`}</Text>
         <Text testID="preset" {...{className:"text-text-muted text-xs"}}>{`preset ${s.preset} preview ${s.preview} favorites ${Object.keys(s.favorites).filter(k=>s.favorites[k]).join("+")||"-"}`}</Text>
         <Text testID="bindings" {...{className:"text-text-muted text-xs"}}>{`bindings ${commands.map(c=>c.id+"="+(c.binding??"-")).join(" ")}`}</Text>
