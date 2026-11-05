@@ -1,10 +1,9 @@
 import SwiftUI
 import ExpoModulesCore
-import ExpoUI
 
 /// Native, unsnapped two-parameter controller adapted from the interaction
 /// pattern of AudioKit/Controls XYPad, MIT © 2022 Aurelius Prochazka.
-final class TronXYPadProps: UIBaseViewProps {
+final class TronXYPadProps: ExpoSwiftUI.ViewProps {
   @Field var label: String = "XY Pad"
   @Field var x: Double = 0.5
   @Field var y: Double = 0.5
@@ -90,5 +89,6 @@ struct TronXYPadView: ExpoSwiftUI.View {
         if !active { previewY = clamp(newY) }
       }
     }
+    .zeroContentOrigin(props.shadowNodeProxy)
   }
 }

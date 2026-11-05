@@ -48,7 +48,11 @@ test("autolinking registers the same module and view on Apple and Android", () =
   const android = read(kt + "NYCTronChartsModule.kt");
   assert.match(swift, /Name\("NYCTronCharts"\)/);
   assert.match(android, /Name\("NYCTronCharts"\)/);
-  assert.match(swift, /ExpoUIView\(TronChartView\.self\)/);
+  assert.match(swift, /\bView\(TronChartView\.self\)/);
+  for (const path of ["ios/NYCTronChartsModule.swift", "ios/TronChartProps.swift", "ios/TronChartView.swift"]) {
+    assert.doesNotMatch(read(path), /^import ExpoUI$|UIBaseViewProps|ExpoUIView\(/m, path);
+  }
+  assert.doesNotMatch(read("ios/NYCTronCharts.podspec"), /dependency 'ExpoUI'/);
   assert.match(android, /ExpoUIView<TronChartProps>\("TronChartView"\)/);
   assert.match(read("src/NativeChart.native.tsx"), /requireNativeView<NativeChartWireProps>\("NYCTronCharts", "TronChartView"\)/);
   assert.ok(existsSync(resolve(root, "ios/NYCTronCharts.podspec")));

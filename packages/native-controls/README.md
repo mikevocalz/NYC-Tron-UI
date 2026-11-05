@@ -6,7 +6,7 @@ Real SwiftUI (Apple) and Jetpack Compose (Android) native controls adapted from 
 
 Install @nyc-tron/native-controls and @expo/ui 58 into an Expo SDK 58 development build, then run Expo prebuild and compile native projects. This package does not run in Expo Go without a custom development client.
 
-Native leaf imports: @nyc-tron/native-controls/ArcKnob and @nyc-tron/native-controls/XYPad. Both view trees use @expo/ui Host and ExpoUIView.
+Native leaf imports: @nyc-tron/native-controls/ArcKnob and @nyc-tron/native-controls/XYPad. Both view trees render inside an @expo/ui Host. iOS registers them with Expo Modules Core's SwiftUI View DSL and does not depend on ExpoUI, so the pod also builds under Expo 58's SwiftPM integration; Android registers them with ExpoUIView.
 
 ## Component API
 
@@ -17,7 +17,7 @@ Native local preview is ephemeral. onCommit fires on completed gesture or access
 
 ## Native-view API compatibility
 
-SDK 58 supports @ExpoModule and @JS 2.0 macros, but @ExpoView and @ViewProps are not available in core. This package uses the supported ExpoUIView (view DSL) registration until v2 views land. This is not claimed v2 native-view macro support.
+SDK 58 supports @ExpoModule and @JS 2.0 macros, but @ExpoView and @ViewProps are not available in core. This package uses the supported view DSL registration (core View on iOS, ExpoUIView on Android) until v2 views land. This is not claimed v2 native-view macro support.
 
 iOS SwiftUI and Android Compose source is implemented; Xcode/Gradle compilation and hardware tests are not yet verified. Web/Windows/macOS/XR keep the existing NYC-Tron RN instrument controls.
 
