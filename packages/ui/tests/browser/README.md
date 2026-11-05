@@ -122,5 +122,13 @@ failed (K-07); and steps pages and shows the no-voice state (K-18).
 `office-shots.spec.mjs` writes `shots/office-*` at 390 and 834 px in light and
 dark, RTL, search results and text editing.
 
+`fixtures/pairing.tsx` (`/pairing?state=idle|scanning|system-pairing|connecting|awaiting-input|connected`)
+renders `DevicePairingDialog` for a pen host that logs each callback.
+`pairing.spec.mjs` checks that Stop searching and Close reach different
+callbacks, that a linked dialog closes without stopping, the ordered
+system-pairing steps and Open Settings, the idle-only intro, 44 px targets and
+no horizontal scroll, and writes `shots/pairing-*` captures at 390 and 834 px in
+light and dark plus RTL.
+
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.
