@@ -127,3 +127,33 @@ test("pane child slots and detail frame stay stable across inspector toggles", (
   }
   assert.deepEqual(find(closed,"Detail pane").props.style[0],find(open,"Detail pane").props.style[0]);
 });
+const margins = { top:0, left:0, bottom:0, right:0 };
+const duoHinge = { kind:"division", x:570, y:50, width:24, height:700, margins, active:true,
+  orientation:"vertical", state:"flat", occlusionType:"full", separating:true };
+test("regions from useReservedRegions place master and detail on opposite sides of the hinge", () => {
+  const h = harness(); let plan;
+  h.render({...base, container:{...base.container,width:1100}, regions:[duoHinge], onPlanChange:p=>{plan=p;}});
+  assert.equal(plan.arrangement, "book");
+  // Container starts at x=30, so the window hinge at 570 is local 540..564.
+  assert.deepEqual({...plan.master.rect}, { x:0, y:0, width:540, height:700 });
+  assert.deepEqual({...plan.detail.rect}, { x:564, y:0, width:536, height:700 });
+  assert.ok(plan.master.rect.x + plan.master.rect.width <= 540, "master never crosses the hinge");
+});
+test("a half-opened horizontal fold in regions sets tabletop posture", () => {
+  const h = harness(); let plan;
+  const tabletop = { ...duoHinge, x:30, y:400, width:1000, height:0, orientation:"horizontal", state:"halfOpened" };
+  h.render({...base, container:{...base.container,width:1000}, regions:[tabletop],
+    masterConfig:{...base.masterConfig, minHeight:200}, detailConfig:{...base.detailConfig, minHeight:200},
+    onPlanChange:p=>{plan=p;}});
+  assert.equal(plan.arrangement, "tabletop");
+});
+test("explicit features and posture win over regions; regions still need a container", () => {
+  const h = harness(); let plan;
+  h.render({...base, container:{...base.container,width:1000}, regions:[duoHinge], features:[], onPlanChange:p=>{plan=p;}});
+  assert.equal(plan.arrangement, "side-by-side");
+  const { container: _c, ...noContainer } = base;
+  assert.throws(() => h.render({...noContainer, regions:[duoHinge]}), /window-space container/);
+  // An inactive UIKit division (flat Duo) is not separating and needs nothing.
+  assert.doesNotThrow(() => h.render({...noContainer, regions:[{ ...duoHinge, active:false,
+    orientation:undefined, state:undefined, occlusionType:undefined, separating:undefined }]}));
+});

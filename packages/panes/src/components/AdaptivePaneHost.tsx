@@ -5,7 +5,10 @@ import {
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { resolvePanePlan, type PanePlanInput, type PanePlan } from "@nyc-tron/core/pane-plan";
-import type { FoldFeature, Rect } from "@nyc-tron/core/folds";
+import {
+  foldFeaturesFromRegions, foldPostureFromRegions,
+  type FoldFeature, type Rect, type ReservedRegion,
+} from "@nyc-tron/core/folds";
 
 type Size = { width: number; height: number };
 type Master = PanePlanInput["master"];
@@ -33,6 +36,16 @@ export interface AdaptivePaneHostProps extends Omit<ViewProps, "children"> {
    */
   readonly container?: Rect;
   readonly features?: readonly FoldFeature[];
+  /**
+   * Reserved regions straight from `useReservedRegions()` in
+   * `@nyc-tron/reserved-regions` (or a ReservedRegionsOverride). Used when
+   * `features` is not passed: divisions become fold features, and a
+   * half-opened separating fold sets the posture unless `posture` is passed.
+   * Window-space, like `container`, so a nonempty list needs `container` too.
+   */
+  readonly regions?: readonly ReservedRegion[];
+  /** Also treat active camera occlusion regions as unusable area. Default false. */
+  readonly includeOcclusions?: boolean;
   readonly className?: string;
   readonly masterClassName?: string;
   readonly detailClassName?: string;
@@ -53,8 +66,9 @@ function rectStyle(rect: Rect): ViewStyle {
 export function AdaptivePaneHost({
   master, detail, inspector, masterConfig, detailConfig,
   inspectorConfig, masterOpenOnCompact = false, inspectorOpen = false,
-  onDismissMaster, onDismissInspector, posture = "flat", isRTL = false,
-  container, features = [], className, masterClassName, detailClassName,
+  onDismissMaster, onDismissInspector, posture: postureProp, isRTL = false,
+  container, features: featuresProp, regions, includeOcclusions = false,
+  className, masterClassName, detailClassName,
   inspectorClassName, onPlanChange, onLayout, style, ...rest
 }: AdaptivePaneHostProps) {
   const sizeStore = useRef<StoreApi<Size> | null>(null);
@@ -63,7 +77,12 @@ export function AdaptivePaneHost({
   const width = useStore(store, state => state.width);
   const height = useStore(store, state => state.height);
 
-  if (features.length > 0 && !container) {
+  const features = featuresProp ??
+    (regions ? foldFeaturesFromRegions(regions, { includeOcclusions }) : []);
+  const posture = postureProp ?? (regions ? foldPostureFromRegions(regions) : "flat");
+  // A flat, non-separating crease changes no region (resolveUsableRegions
+  // skips it), so only features that cut or occlude need window coordinates.
+  if (features.some(f => f.separating || f.occlusion === "full") && !container) {
     throw new Error("AdaptivePaneHost requires window-space container coordinates with fold features");
   }
   const bounds = container ?? { x: 0, y: 0, width, height };
