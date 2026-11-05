@@ -5,7 +5,7 @@ import {resolve,dirname} from "node:path";
 import {fileURLToPath} from "node:url";
 import {parseUnitExpression,formatUnitValue,unitScale,convertFromBase,UNIT_EXPRESSION_LIMITS} from "../src/components/shell/unit-expression.ts";
 import {valueAtOffset,fractionOf,sliderKeyAction,applySliderKey,normalizeRange,moveRangeThumb,nearestThumb,knobAngle,angleAround,valueFromAngle,valueFromDrag} from "../src/components/shell/slider-model.ts";
-import {selectionHeading,matchesQuery,matchSummary,createInspectorRegistry,registerRow,matchingRowCount} from "../src/components/shell/inspector-model.ts";
+import {selectionHeading,matchesQuery,matchSummary,registerRow,matchingRowCount} from "../src/components/shell/inspector-model.ts";
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),"..");
 const mm={dimension:"length",unit:"mm",percentOf:800};
@@ -137,7 +137,8 @@ test("inspector headings, search matching and summaries",()=>{
 });
 
 test("the row registry counts matches per section, nested sections included",()=>{
-  const reg=createInspectorRegistry();
+  let state={rows:{}};
+  const reg={getState:()=>state,setState:update=>{state=update(state);}};
   const off1=registerRow(reg,"a",{sections:["layer","blend"],match:true});
   registerRow(reg,"b",{sections:["layer"],match:false});
   registerRow(reg,"c",{sections:["effects"],match:true});

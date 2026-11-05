@@ -1,10 +1,11 @@
 import {createContext} from "react";
-import type {InspectorRegistry} from "./inspector-model.ts";
+import type {StoreApi} from "zustand/vanilla";
+import type {InspectorRegistryState} from "./inspector-model.ts";
 
 /** Provided by {@linkcode InspectorPanel} to its sections and rows. */
 export interface InspectorPanelContextValue {
   readonly query:string;
-  readonly registry:InspectorRegistry;
+  readonly registry:StoreApi<InspectorRegistryState>;
 }
 /** Provided by {@linkcode InspectorSection} to nested sections and rows. */
 export interface InspectorSectionContextValue {

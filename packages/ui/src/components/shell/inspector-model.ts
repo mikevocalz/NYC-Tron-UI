@@ -1,4 +1,3 @@
-import {createStore,type StoreApi} from "zustand/vanilla";
 import {normalizeSearchText} from "../overlays/command-filter.ts";
 
 /**
@@ -51,13 +50,16 @@ export interface InspectorRowEntry {
 export interface InspectorRegistryState {
   readonly rows:Readonly<Record<string,InspectorRowEntry>>;
 }
-/** Store rows register into so sections can hide when nothing in them matches. */
-export type InspectorRegistry=StoreApi<InspectorRegistryState>;
-
-/** A fresh, empty row registry. */
-export function createInspectorRegistry():InspectorRegistry{
-  return createStore<InspectorRegistryState>(()=>({rows:{}}));
+/**
+ * Store rows register into so sections can hide when nothing in them
+ * matches. A zustand vanilla store satisfies it; this file stays free of
+ * runtime imports so the contract tests run without an install.
+ */
+export interface InspectorRegistry {
+  getState():InspectorRegistryState;
+  setState(update:(state:InspectorRegistryState)=>InspectorRegistryState):void;
 }
+
 /** Add or update a row. Returns the cleanup that removes it. */
 export function registerRow(registry:InspectorRegistry,id:string,entry:InspectorRowEntry):()=>void{
   const current=registry.getState().rows[id];
