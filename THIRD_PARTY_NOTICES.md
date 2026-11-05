@@ -51,6 +51,57 @@ section 4(b)). License texts and FilmCraft's NOTICE are preserved verbatim in
 and `licenses/FilmCraft-NOTICE.txt`. No FilmCraft fonts, icons, models or
 other assets are copied. No CapCraft (AGPL-3.0) source is used.
 
+**GridCraft for Android** — https://github.com/artcraft-android/gridcraft-android
+Pinned commit `72d5bfc0729d0966e9bd966c2eabaa0312eea3ff`.
+Copyright (c) 2026 ArtCraft Team and the GridCraft contributors. Licensed under
+the MIT License or the Apache License, Version 2.0, at your option. Both texts
+are kept verbatim in `licenses/GridCraft-MIT.txt` and
+`licenses/GridCraft-Apache-2.0.txt`; the upstream `NOTICE` file is carried as
+`licenses/GridCraft-NOTICE.txt`.
+
+Ported files, each with a header naming the source file, the commit, the
+copyright line and a modification notice (Apache-2.0 section 4(b)):
+
+| NYC-Tron file | GridCraft source |
+| --- | --- |
+| `packages/ui/src/components/forge/spreadsheet/reference-colors.ts` | `apps/gridcraft-android/android/app/src/main/java/io/github/artcraftandroid/gridcraft/ui/editor/FormulaRefs.kt` (per-reference color assignment) |
+| `packages/ui/src/components/forge/spreadsheet/cards-model.ts` | `.../ui/editor/Cards.kt` (card title/preview-field model) |
+| `packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx` | `.../ui/editor/Cards.kt` (Cards View list, detail and field editing) |
+
+Only code was ported. No GridCraft icons (Lucide, ISC), fonts, brand files or
+other assets are copied; GridCraft's `ATTRIBUTION.md` lists those and none of
+them are used here. The ArtCraft name and marks are not used.
+
+**WordCraft for Android** — https://github.com/artcraft-android/wordcraft-android
+Pinned commit `b2b7cf913c6f61604062e2db30962f32ec921b11`.
+Copyright (c) 2026 ArtCraft Team and the WordCraft contributors. Licensed under
+the MIT License or the Apache License, Version 2.0, at your option. Both texts
+are kept verbatim in `licenses/WordCraft-MIT.txt` and
+`licenses/WordCraft-Apache-2.0.txt`; the upstream `NOTICE` file is carried as
+`licenses/WordCraft-NOTICE.txt`.
+
+| NYC-Tron file | WordCraft source |
+| --- | --- |
+| `packages/ui/src/components/forge/office/read-aloud-model.ts` | `crates/engine/src/speech.rs` (sentence splitting, abbreviation and initial rules, spoken-text tidying, word spans, speed limits) |
+
+**PdfCraft for Android** — https://github.com/artcraft-android/pdfcraft-android
+Pinned commit `c643244e0e00c1f0b746ceaff4661a91921e907e`.
+Copyright (c) 2026 ArtCraft Team and the PdfCraft contributors. Licensed under
+the MIT License or the Apache License, Version 2.0, at your option. Both texts
+are kept verbatim in `licenses/PdfCraft-MIT.txt` and
+`licenses/PdfCraft-Apache-2.0.txt`; the upstream `NOTICE` file is carried as
+`licenses/PdfCraft-NOTICE.txt`.
+
+| NYC-Tron file | PdfCraft source |
+| --- | --- |
+| `packages/ui/src/components/forge/pdf/search-model.ts` | `apps/pdfcraft-android/android/app/src/main/java/io/github/artcraftandroid/pdfcraft/ui/viewer/Search.kt` (search from the current page with wrap-round, page-ordered hit insertion, wrapping next/previous) |
+
+Each ported file starts with a header naming the source file, the commit, the
+copyright line, both licenses and a dated modification notice (Apache-2.0
+section 4(b)). Only code was ported. No WordCraft or PdfCraft icons (Lucide,
+ISC), fonts, CMaps, hyphenation data, brand files or other assets are copied,
+and the ArtCraft names and marks are not used in the UI.
+
 **NYC-MON upstream license** — `mikevocalz/nyc-mon/LICENSE`
 MIT License — Copyright (c) 2025 Gursel Cakar. The source repository's
 license text is preserved verbatim in `licenses/NYC-MON-MIT.txt`.

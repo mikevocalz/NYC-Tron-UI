@@ -66,5 +66,59 @@ and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
 focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
 web `ScopedTheme` output (a `display: contents` element with the theme class).
 
+Each `fixtures/<name>.tsx` page is served at `/<name>`. `fixtures/shell-layout.tsx`
+is an image-editor shell (DocumentTabBar, ToolRail, AdaptiveDock, StatusBar and a
+PaneSplitter; `?hinge=1` adds a simulated hinge, `?dir=rtl` flips direction).
+`shell-layout.spec.mjs` drives it by keyboard and mouse, and
+`shell-layout-shots.spec.mjs` captures it at 390 and 834px in light, dark, RTL,
+forced colors and with the hinge.
+
+`fixtures/shell-inspector.tsx` is a layer inspector (InspectorPanel, sections,
+PropertyRow, UnitInput, SliderField, RangeSlider, RotaryKnob; `?select=none|multiple`,
+`?dir=rtl`), driven by `shell-inspector.spec.mjs` and captured by
+`shell-inspector-shots.spec.mjs`.
+
+`fixtures/shell-commands.tsx` holds the ribbon, split buttons, a layer context
+menu, a preset gallery and the shortcut sheet inside `FocusAndA11yLayer`
+(`?dir=rtl`, `?apple=1`, `?hud=1`), driven by `shell-commands.spec.mjs` and captured
+by `shell-commands-shots.spec.mjs`. Set `UI_ACCEPTANCE_PORT` to run the lane beside another
+server on 4179.
+
+`spreadsheet.spec.mjs` loads `/spreadsheet` (`spreadsheet.tsx`), the spreadsheet
+cluster on a 1,048,576 × 16,384 sheet: bounded rendering while scrolled to row
+500,001 (I-01), fill-handle drag and Ctrl+D (I-02), reference outlines and
+colored formula text (I-06), SheetTabs select/add/rename/remove with name
+validation and a rejected engine call (I-08), ChartBuilder gallery, cell cap and
+summary (I-13), SparklineEditor validation and the in-cell sparkline (I-14),
+freeze commands and the split divider's keyboard value (I-17), and card
+open/step/edit with a rejected commit (I-20). It writes `shots/spreadsheet-*`
+captures (light and dark at 390 and 834 px, tabs open, split, card, RTL).
+
+`mixer.spec.mjs` loads `/mixer` (`fixtures/mixer.tsx`), with a zustand store standing
+in for the Cadence engine: fader and pan drags commit once, mute/solo with the
+silenced-by-solo description, pan arrows and Home, a piano-roll note drag
+that commits time and pitch together, Shift+arrow resize, Delete, audition,
+a velocity bar drag, step toggles and the A accent key, tap tempo committing
+once after the taps stop, time signature and metronome, and a waveform
+window scroll plus seek. It writes `shots/mixer-*` captures (light and dark at
+390 and 834 px, focus states, RTL) and asserts no horizontal page scroll and
+that musical time stays left to right in RTL.
+
+`fixtures/office.tsx` (`/office?part=slides|document|pdf`) renders the office
+cluster against in-memory hosts. `office.spec.mjs` drags a slide object onto a
+neighbour's edge (snapping), nudges, rotates and deletes it, resizes by the
+corner, checks the canvas is not mirrored in RTL (J-05); reorders the filmstrip
+by key and by grip on a horizontal phone strip (J-01); range-selects and moves
+a block in the sorter and refuses to delete every slide (J-02); validates and
+adds animations, including an engine rejection that keeps the form (J-09);
+turns a mixed bold selection on and sets color and size (H-03); outdents under
+the nesting policy and renumbers (H-07); jumps, collapses and pages through the
+outline (H-15); plays, skips and changes speed by key (H-21); searches from
+page 2 with page-ordered hits and wrap (K-04); picks tools by letter (K-06);
+filters, replies, resolves and deletes comments, and keeps a reply whose save
+failed (K-07); and steps pages and shows the no-voice state (K-18).
+`office-shots.spec.mjs` writes `shots/office-*` at 390 and 834 px in light and
+dark, RTL, search results and text editing.
+
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

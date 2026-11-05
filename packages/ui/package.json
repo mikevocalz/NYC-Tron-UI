@@ -25,6 +25,126 @@
       "react-native": "./dist/components/NavigationRail.js",
       "default": "./dist/components/NavigationRail.js"
     },
+    "./components/shell/PaneSplitter": {
+      "types": "./dist/components/shell/PaneSplitter.d.ts",
+      "react-native": "./dist/components/shell/PaneSplitter.js",
+      "default": "./dist/components/shell/PaneSplitter.js"
+    },
+    "./components/shell/splitter-model": {
+      "types": "./dist/components/shell/splitter-model.d.ts",
+      "react-native": "./dist/components/shell/splitter-model.js",
+      "default": "./dist/components/shell/splitter-model.js"
+    },
+    "./components/shell/AdaptiveDock": {
+      "types": "./dist/components/shell/AdaptiveDock.d.ts",
+      "react-native": "./dist/components/shell/AdaptiveDock.js",
+      "default": "./dist/components/shell/AdaptiveDock.js"
+    },
+    "./components/shell/dock-model": {
+      "types": "./dist/components/shell/dock-model.d.ts",
+      "react-native": "./dist/components/shell/dock-model.js",
+      "default": "./dist/components/shell/dock-model.js"
+    },
+    "./components/shell/DocumentTabBar": {
+      "types": "./dist/components/shell/DocumentTabBar.d.ts",
+      "react-native": "./dist/components/shell/DocumentTabBar.js",
+      "default": "./dist/components/shell/DocumentTabBar.js"
+    },
+    "./components/shell/document-tabs-model": {
+      "types": "./dist/components/shell/document-tabs-model.d.ts",
+      "react-native": "./dist/components/shell/document-tabs-model.js",
+      "default": "./dist/components/shell/document-tabs-model.js"
+    },
+    "./components/shell/ToolRail": {
+      "types": "./dist/components/shell/ToolRail.d.ts",
+      "react-native": "./dist/components/shell/ToolRail.js",
+      "default": "./dist/components/shell/ToolRail.js"
+    },
+    "./components/shell/tool-rail-model": {
+      "types": "./dist/components/shell/tool-rail-model.d.ts",
+      "react-native": "./dist/components/shell/tool-rail-model.js",
+      "default": "./dist/components/shell/tool-rail-model.js"
+    },
+    "./components/shell/StatusBar": {
+      "types": "./dist/components/shell/StatusBar.d.ts",
+      "react-native": "./dist/components/shell/StatusBar.js",
+      "default": "./dist/components/shell/StatusBar.js"
+    },
+    "./components/shell/status-model": {
+      "types": "./dist/components/shell/status-model.d.ts",
+      "react-native": "./dist/components/shell/status-model.js",
+      "default": "./dist/components/shell/status-model.js"
+    },
+    "./components/shell/MenuButton": {
+      "types": "./dist/components/shell/MenuButton.d.ts",
+      "react-native": "./dist/components/shell/MenuButton.js",
+      "default": "./dist/components/shell/MenuButton.js"
+    },
+    "./components/shell/shell-keys": {
+      "types": "./dist/components/shell/shell-keys.d.ts",
+      "react-native": "./dist/components/shell/shell-keys.js",
+      "default": "./dist/components/shell/shell-keys.js"
+    },
+    "./components/shell/InspectorPanel": {
+      "types": "./dist/components/shell/InspectorPanel.d.ts",
+      "react-native": "./dist/components/shell/InspectorPanel.js",
+      "default": "./dist/components/shell/InspectorPanel.js"
+    },
+    "./components/shell/InspectorSection": {
+      "types": "./dist/components/shell/InspectorSection.d.ts",
+      "react-native": "./dist/components/shell/InspectorSection.js",
+      "default": "./dist/components/shell/InspectorSection.js"
+    },
+    "./components/shell/PropertyRow": {
+      "types": "./dist/components/shell/PropertyRow.d.ts",
+      "react-native": "./dist/components/shell/PropertyRow.js",
+      "default": "./dist/components/shell/PropertyRow.js"
+    },
+    "./components/shell/InspectorSearch": {
+      "types": "./dist/components/shell/InspectorSearch.d.ts",
+      "react-native": "./dist/components/shell/InspectorSearch.js",
+      "default": "./dist/components/shell/InspectorSearch.js"
+    },
+    "./components/shell/inspector-model": {
+      "types": "./dist/components/shell/inspector-model.d.ts",
+      "react-native": "./dist/components/shell/inspector-model.js",
+      "default": "./dist/components/shell/inspector-model.js"
+    },
+    "./components/shell/inspector-context": {
+      "types": "./dist/components/shell/inspector-context.d.ts",
+      "react-native": "./dist/components/shell/inspector-context.js",
+      "default": "./dist/components/shell/inspector-context.js"
+    },
+    "./components/shell/UnitInput": {
+      "types": "./dist/components/shell/UnitInput.d.ts",
+      "react-native": "./dist/components/shell/UnitInput.js",
+      "default": "./dist/components/shell/UnitInput.js"
+    },
+    "./components/shell/unit-expression": {
+      "types": "./dist/components/shell/unit-expression.d.ts",
+      "react-native": "./dist/components/shell/unit-expression.js",
+      "default": "./dist/components/shell/unit-expression.js"
+    },
+    "./components/shell/SliderField": {
+      "types": "./dist/components/shell/SliderField.d.ts",
+      "react-native": "./dist/components/shell/SliderField.js",
+      "default": "./dist/components/shell/SliderField.js"
+    },
+    "./components/shell/RangeSlider": {
+      "types": "./dist/components/shell/RangeSlider.d.ts",
+      "react-native": "./dist/components/shell/RangeSlider.js",
+      "default": "./dist/components/shell/RangeSlider.js"
+    },
+    "./components/shell/RotaryKnob": {
+      "types": "./dist/components/shell/RotaryKnob.d.ts",
+      "react-native": "./dist/components/shell/RotaryKnob.js",
+      "default": "./dist/components/shell/RotaryKnob.js"
+    },
+    "./components/shell/slider-model": {
+      "types": "./dist/components/shell/slider-model.d.ts",
+      "react-native": "./dist/components/shell/slider-model.js",
+      "default": "./dist/components/shell/slider-model.js"
+    },
     "./components/forge/WaveformLane": {
       "types": "./dist/components/forge/WaveformLane.d.ts",
       "react-native": "./dist/components/forge/WaveformLane.js",
@@ -270,6 +390,56 @@
       "react-native": "./dist/components/TextField.js",
       "default": "./dist/components/TextField.js"
     },
+    "./components/shell/SplitButton": {
+      "types": "./dist/components/shell/SplitButton.d.ts",
+      "react-native": "./dist/components/shell/SplitButton.js",
+      "default": "./dist/components/shell/SplitButton.js"
+    },
+    "./components/shell/RibbonTabs": {
+      "types": "./dist/components/shell/RibbonTabs.d.ts",
+      "react-native": "./dist/components/shell/RibbonTabs.js",
+      "default": "./dist/components/shell/RibbonTabs.js"
+    },
+    "./components/shell/ribbon-model": {
+      "types": "./dist/components/shell/ribbon-model.d.ts",
+      "react-native": "./dist/components/shell/ribbon-model.js",
+      "default": "./dist/components/shell/ribbon-model.js"
+    },
+    "./components/shell/ContextMenu": {
+      "types": "./dist/components/shell/ContextMenu.d.ts",
+      "react-native": "./dist/components/shell/ContextMenu.js",
+      "default": "./dist/components/shell/ContextMenu.js"
+    },
+    "./components/shell/PresetGallery": {
+      "types": "./dist/components/shell/PresetGallery.d.ts",
+      "react-native": "./dist/components/shell/PresetGallery.js",
+      "default": "./dist/components/shell/PresetGallery.js"
+    },
+    "./components/shell/preset-model": {
+      "types": "./dist/components/shell/preset-model.d.ts",
+      "react-native": "./dist/components/shell/preset-model.js",
+      "default": "./dist/components/shell/preset-model.js"
+    },
+    "./components/shell/KeyboardShortcutHUD": {
+      "types": "./dist/components/shell/KeyboardShortcutHUD.d.ts",
+      "react-native": "./dist/components/shell/KeyboardShortcutHUD.js",
+      "default": "./dist/components/shell/KeyboardShortcutHUD.js"
+    },
+    "./components/shell/shortcut-model": {
+      "types": "./dist/components/shell/shortcut-model.d.ts",
+      "react-native": "./dist/components/shell/shortcut-model.js",
+      "default": "./dist/components/shell/shortcut-model.js"
+    },
+    "./components/shell/FocusAndA11yLayer": {
+      "types": "./dist/components/shell/FocusAndA11yLayer.d.ts",
+      "react-native": "./dist/components/shell/FocusAndA11yLayer.js",
+      "default": "./dist/components/shell/FocusAndA11yLayer.js"
+    },
+    "./components/shell/a11y-model": {
+      "types": "./dist/components/shell/a11y-model.d.ts",
+      "react-native": "./dist/components/shell/a11y-model.js",
+      "default": "./dist/components/shell/a11y-model.js"
+    },
     "./components/navigation/CollapsibleDrawer": {
       "types": "./dist/components/navigation/CollapsibleDrawer.d.ts",
       "react-native": "./dist/components/navigation/CollapsibleDrawer.js",
@@ -512,6 +682,306 @@
       "types": "./dist/components/forge/timeline/safe-area.d.ts",
       "react-native": "./dist/components/forge/timeline/safe-area.js",
       "default": "./dist/components/forge/timeline/safe-area.js"
+    },
+    "./components/forge/spreadsheet/SheetTabs": {
+      "types": "./dist/components/forge/spreadsheet/SheetTabs.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SheetTabs.js",
+      "default": "./dist/components/forge/spreadsheet/SheetTabs.js"
+    },
+    "./components/forge/spreadsheet/sheet-tabs-model": {
+      "types": "./dist/components/forge/spreadsheet/sheet-tabs-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/sheet-tabs-model.js",
+      "default": "./dist/components/forge/spreadsheet/sheet-tabs-model.js"
+    },
+    "./components/forge/spreadsheet/ChartBuilder": {
+      "types": "./dist/components/forge/spreadsheet/ChartBuilder.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/ChartBuilder.js",
+      "default": "./dist/components/forge/spreadsheet/ChartBuilder.js"
+    },
+    "./components/forge/spreadsheet/chart-model": {
+      "types": "./dist/components/forge/spreadsheet/chart-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/chart-model.js",
+      "default": "./dist/components/forge/spreadsheet/chart-model.js"
+    },
+    "./components/forge/spreadsheet/Sparkline": {
+      "types": "./dist/components/forge/spreadsheet/Sparkline.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/Sparkline.js",
+      "default": "./dist/components/forge/spreadsheet/Sparkline.js"
+    },
+    "./components/forge/spreadsheet/SparklineEditor": {
+      "types": "./dist/components/forge/spreadsheet/SparklineEditor.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SparklineEditor.js",
+      "default": "./dist/components/forge/spreadsheet/SparklineEditor.js"
+    },
+    "./components/forge/spreadsheet/sparkline-model": {
+      "types": "./dist/components/forge/spreadsheet/sparkline-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/sparkline-model.js",
+      "default": "./dist/components/forge/spreadsheet/sparkline-model.js"
+    },
+    "./components/forge/spreadsheet/FreezeSplitControls": {
+      "types": "./dist/components/forge/spreadsheet/FreezeSplitControls.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FreezeSplitControls.js",
+      "default": "./dist/components/forge/spreadsheet/FreezeSplitControls.js"
+    },
+    "./components/forge/spreadsheet/SplitSpreadsheetView": {
+      "types": "./dist/components/forge/spreadsheet/SplitSpreadsheetView.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SplitSpreadsheetView.js",
+      "default": "./dist/components/forge/spreadsheet/SplitSpreadsheetView.js"
+    },
+    "./components/forge/spreadsheet/freeze-split-model": {
+      "types": "./dist/components/forge/spreadsheet/freeze-split-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/freeze-split-model.js",
+      "default": "./dist/components/forge/spreadsheet/freeze-split-model.js"
+    },
+    "./components/forge/spreadsheet/SpreadsheetCardsView": {
+      "types": "./dist/components/forge/spreadsheet/SpreadsheetCardsView.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SpreadsheetCardsView.js",
+      "default": "./dist/components/forge/spreadsheet/SpreadsheetCardsView.js"
+    },
+    "./components/forge/spreadsheet/cards-model": {
+      "types": "./dist/components/forge/spreadsheet/cards-model.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/cards-model.js",
+      "default": "./dist/components/forge/spreadsheet/cards-model.js"
+    },
+    "./components/forge/spreadsheet/FormulaReferenceText": {
+      "types": "./dist/components/forge/spreadsheet/FormulaReferenceText.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FormulaReferenceText.js",
+      "default": "./dist/components/forge/spreadsheet/FormulaReferenceText.js"
+    },
+    "./components/forge/spreadsheet/reference-colors": {
+      "types": "./dist/components/forge/spreadsheet/reference-colors.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/reference-colors.js",
+      "default": "./dist/components/forge/spreadsheet/reference-colors.js"
+    },
+    "./components/forge/spreadsheet/fill-handle": {
+      "types": "./dist/components/forge/spreadsheet/fill-handle.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/fill-handle.js",
+      "default": "./dist/components/forge/spreadsheet/fill-handle.js"
+    },
+    "./components/forge/audio/pan": {
+      "types": "./dist/components/forge/audio/pan.d.ts",
+      "react-native": "./dist/components/forge/audio/pan.js",
+      "default": "./dist/components/forge/audio/pan.js"
+    },
+    "./components/forge/audio/PanControl": {
+      "types": "./dist/components/forge/audio/PanControl.d.ts",
+      "react-native": "./dist/components/forge/audio/PanControl.js",
+      "default": "./dist/components/forge/audio/PanControl.js"
+    },
+    "./components/forge/audio/SoloMuteButtons": {
+      "types": "./dist/components/forge/audio/SoloMuteButtons.d.ts",
+      "react-native": "./dist/components/forge/audio/SoloMuteButtons.js",
+      "default": "./dist/components/forge/audio/SoloMuteButtons.js"
+    },
+    "./components/forge/audio/mixer": {
+      "types": "./dist/components/forge/audio/mixer.d.ts",
+      "react-native": "./dist/components/forge/audio/mixer.js",
+      "default": "./dist/components/forge/audio/mixer.js"
+    },
+    "./components/forge/audio/ChannelStrip": {
+      "types": "./dist/components/forge/audio/ChannelStrip.d.ts",
+      "react-native": "./dist/components/forge/audio/ChannelStrip.js",
+      "default": "./dist/components/forge/audio/ChannelStrip.js"
+    },
+    "./components/forge/audio/MixingConsole": {
+      "types": "./dist/components/forge/audio/MixingConsole.d.ts",
+      "react-native": "./dist/components/forge/audio/MixingConsole.js",
+      "default": "./dist/components/forge/audio/MixingConsole.js"
+    },
+    "./components/forge/audio/tempo": {
+      "types": "./dist/components/forge/audio/tempo.d.ts",
+      "react-native": "./dist/components/forge/audio/tempo.js",
+      "default": "./dist/components/forge/audio/tempo.js"
+    },
+    "./components/forge/audio/TempoAndMetronome": {
+      "types": "./dist/components/forge/audio/TempoAndMetronome.d.ts",
+      "react-native": "./dist/components/forge/audio/TempoAndMetronome.js",
+      "default": "./dist/components/forge/audio/TempoAndMetronome.js"
+    },
+    "./components/forge/midi/note-grid": {
+      "types": "./dist/components/forge/midi/note-grid.d.ts",
+      "react-native": "./dist/components/forge/midi/note-grid.js",
+      "default": "./dist/components/forge/midi/note-grid.js"
+    },
+    "./components/forge/midi/MIDIPianoRoll": {
+      "types": "./dist/components/forge/midi/MIDIPianoRoll.d.ts",
+      "react-native": "./dist/components/forge/midi/MIDIPianoRoll.js",
+      "default": "./dist/components/forge/midi/MIDIPianoRoll.js"
+    },
+    "./components/forge/midi/MIDIVelocityLane": {
+      "types": "./dist/components/forge/midi/MIDIVelocityLane.d.ts",
+      "react-native": "./dist/components/forge/midi/MIDIVelocityLane.js",
+      "default": "./dist/components/forge/midi/MIDIVelocityLane.js"
+    },
+    "./components/forge/midi/StepSequencer": {
+      "types": "./dist/components/forge/midi/StepSequencer.d.ts",
+      "react-native": "./dist/components/forge/midi/StepSequencer.js",
+      "default": "./dist/components/forge/midi/StepSequencer.js"
+    },
+    "./components/forge/office/ReadAloudTransport": {
+      "types": "./dist/components/forge/office/ReadAloudTransport.d.ts",
+      "react-native": "./dist/components/forge/office/ReadAloudTransport.js",
+      "default": "./dist/components/forge/office/ReadAloudTransport.js"
+    },
+    "./components/forge/office/office-controls": {
+      "types": "./dist/components/forge/office/office-controls.d.ts",
+      "react-native": "./dist/components/forge/office/office-controls.js",
+      "default": "./dist/components/forge/office/office-controls.js"
+    },
+    "./components/forge/office/read-aloud-model": {
+      "types": "./dist/components/forge/office/read-aloud-model.d.ts",
+      "react-native": "./dist/components/forge/office/read-aloud-model.js",
+      "default": "./dist/components/forge/office/read-aloud-model.js"
+    },
+    "./components/forge/slides/SlideAnimationPane": {
+      "types": "./dist/components/forge/slides/SlideAnimationPane.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideAnimationPane.js",
+      "default": "./dist/components/forge/slides/SlideAnimationPane.js"
+    },
+    "./components/forge/slides/SlideCanvas": {
+      "types": "./dist/components/forge/slides/SlideCanvas.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideCanvas.js",
+      "default": "./dist/components/forge/slides/SlideCanvas.js"
+    },
+    "./components/forge/slides/SlideFilmstrip": {
+      "types": "./dist/components/forge/slides/SlideFilmstrip.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideFilmstrip.js",
+      "default": "./dist/components/forge/slides/SlideFilmstrip.js"
+    },
+    "./components/forge/slides/SlideSorter": {
+      "types": "./dist/components/forge/slides/SlideSorter.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideSorter.js",
+      "default": "./dist/components/forge/slides/SlideSorter.js"
+    },
+    "./components/forge/slides/SlideThumbnail": {
+      "types": "./dist/components/forge/slides/SlideThumbnail.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideThumbnail.js",
+      "default": "./dist/components/forge/slides/SlideThumbnail.js"
+    },
+    "./components/forge/slides/animation-model": {
+      "types": "./dist/components/forge/slides/animation-model.d.ts",
+      "react-native": "./dist/components/forge/slides/animation-model.js",
+      "default": "./dist/components/forge/slides/animation-model.js"
+    },
+    "./components/forge/slides/canvas-model": {
+      "types": "./dist/components/forge/slides/canvas-model.d.ts",
+      "react-native": "./dist/components/forge/slides/canvas-model.js",
+      "default": "./dist/components/forge/slides/canvas-model.js"
+    },
+    "./components/forge/slides/slide-model": {
+      "types": "./dist/components/forge/slides/slide-model.d.ts",
+      "react-native": "./dist/components/forge/slides/slide-model.js",
+      "default": "./dist/components/forge/slides/slide-model.js"
+    },
+    "./components/forge/document/BulletsNumberingEditor": {
+      "types": "./dist/components/forge/document/BulletsNumberingEditor.d.ts",
+      "react-native": "./dist/components/forge/document/BulletsNumberingEditor.js",
+      "default": "./dist/components/forge/document/BulletsNumberingEditor.js"
+    },
+    "./components/forge/document/DocumentReadAloudTransport": {
+      "types": "./dist/components/forge/document/DocumentReadAloudTransport.d.ts",
+      "react-native": "./dist/components/forge/document/DocumentReadAloudTransport.js",
+      "default": "./dist/components/forge/document/DocumentReadAloudTransport.js"
+    },
+    "./components/forge/document/NavigationOutline": {
+      "types": "./dist/components/forge/document/NavigationOutline.d.ts",
+      "react-native": "./dist/components/forge/document/NavigationOutline.js",
+      "default": "./dist/components/forge/document/NavigationOutline.js"
+    },
+    "./components/forge/document/RichTextRibbon": {
+      "types": "./dist/components/forge/document/RichTextRibbon.d.ts",
+      "react-native": "./dist/components/forge/document/RichTextRibbon.js",
+      "default": "./dist/components/forge/document/RichTextRibbon.js"
+    },
+    "./components/forge/document/list-model": {
+      "types": "./dist/components/forge/document/list-model.d.ts",
+      "react-native": "./dist/components/forge/document/list-model.js",
+      "default": "./dist/components/forge/document/list-model.js"
+    },
+    "./components/forge/document/outline-model": {
+      "types": "./dist/components/forge/document/outline-model.d.ts",
+      "react-native": "./dist/components/forge/document/outline-model.js",
+      "default": "./dist/components/forge/document/outline-model.js"
+    },
+    "./components/forge/document/ribbon-model": {
+      "types": "./dist/components/forge/document/ribbon-model.d.ts",
+      "react-native": "./dist/components/forge/document/ribbon-model.js",
+      "default": "./dist/components/forge/document/ribbon-model.js"
+    },
+    "./components/forge/pdf/AnnotationToolbar": {
+      "types": "./dist/components/forge/pdf/AnnotationToolbar.d.ts",
+      "react-native": "./dist/components/forge/pdf/AnnotationToolbar.js",
+      "default": "./dist/components/forge/pdf/AnnotationToolbar.js"
+    },
+    "./components/forge/pdf/CommentsThreadPanel": {
+      "types": "./dist/components/forge/pdf/CommentsThreadPanel.d.ts",
+      "react-native": "./dist/components/forge/pdf/CommentsThreadPanel.js",
+      "default": "./dist/components/forge/pdf/CommentsThreadPanel.js"
+    },
+    "./components/forge/pdf/PDFReadAloudTransport": {
+      "types": "./dist/components/forge/pdf/PDFReadAloudTransport.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFReadAloudTransport.js",
+      "default": "./dist/components/forge/pdf/PDFReadAloudTransport.js"
+    },
+    "./components/forge/pdf/TextSearchResults": {
+      "types": "./dist/components/forge/pdf/TextSearchResults.d.ts",
+      "react-native": "./dist/components/forge/pdf/TextSearchResults.js",
+      "default": "./dist/components/forge/pdf/TextSearchResults.js"
+    },
+    "./components/forge/pdf/annotation-model": {
+      "types": "./dist/components/forge/pdf/annotation-model.d.ts",
+      "react-native": "./dist/components/forge/pdf/annotation-model.js",
+      "default": "./dist/components/forge/pdf/annotation-model.js"
+    },
+    "./components/forge/pdf/comments-model": {
+      "types": "./dist/components/forge/pdf/comments-model.d.ts",
+      "react-native": "./dist/components/forge/pdf/comments-model.js",
+      "default": "./dist/components/forge/pdf/comments-model.js"
+    },
+    "./components/forge/pdf/search-model": {
+      "types": "./dist/components/forge/pdf/search-model.d.ts",
+      "react-native": "./dist/components/forge/pdf/search-model.js",
+      "default": "./dist/components/forge/pdf/search-model.js"
+    },
+    "./components/forge/audio/RecordingTrack": {
+      "types": "./dist/components/forge/audio/RecordingTrack.d.ts",
+      "react-native": "./dist/components/forge/audio/RecordingTrack.js",
+      "default": "./dist/components/forge/audio/RecordingTrack.js"
+    },
+    "./components/forge/audio/LevelMeter": {
+      "types": "./dist/components/forge/audio/LevelMeter.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelMeter.js",
+      "default": "./dist/components/forge/audio/LevelMeter.js"
+    },
+    "./components/forge/audio/AudioPreview": {
+      "types": "./dist/components/forge/audio/AudioPreview.d.ts",
+      "react-native": "./dist/components/forge/audio/AudioPreview.js",
+      "default": "./dist/components/forge/audio/AudioPreview.js"
+    },
+    "./components/forge/audio/level-meter": {
+      "types": "./dist/components/forge/audio/level-meter.d.ts",
+      "react-native": "./dist/components/forge/audio/level-meter.js",
+      "default": "./dist/components/forge/audio/level-meter.js"
+    },
+    "./components/forge/audio/recording-model": {
+      "types": "./dist/components/forge/audio/recording-model.d.ts",
+      "react-native": "./dist/components/forge/audio/recording-model.js",
+      "default": "./dist/components/forge/audio/recording-model.js"
+    },
+    "./components/forge/audio/preview-model": {
+      "types": "./dist/components/forge/audio/preview-model.d.ts",
+      "react-native": "./dist/components/forge/audio/preview-model.js",
+      "default": "./dist/components/forge/audio/preview-model.js"
+    },
+    "./components/forge/devices/DevicePairingDialog": {
+      "types": "./dist/components/forge/devices/DevicePairingDialog.d.ts",
+      "react-native": "./dist/components/forge/devices/DevicePairingDialog.js",
+      "default": "./dist/components/forge/devices/DevicePairingDialog.js"
+    },
+    "./components/forge/devices/pairing-model": {
+      "types": "./dist/components/forge/devices/pairing-model.d.ts",
+      "react-native": "./dist/components/forge/devices/pairing-model.js",
+      "default": "./dist/components/forge/devices/pairing-model.js"
     }
   },
   "scripts": {
@@ -520,6 +990,7 @@
     "prepack": "pnpm build"
   },
   "peerDependencies": {
+    "@nyc-tron/core": "workspace:^",
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
     "expo-drag-drop-content-view": ">=0.9.2 <1",
@@ -531,6 +1002,9 @@
     "zustand": "^5.0.0"
   },
   "peerDependenciesMeta": {
+    "@nyc-tron/core": {
+      "optional": true
+    },
     "@expo/ui": {
       "optional": true
     },
@@ -554,6 +1028,7 @@
     }
   },
   "devDependencies": {
+    "@nyc-tron/core": "workspace:*",
     "@expo/ui": "58.0.20",
     "@tanstack/react-table": "9.3.1",
     "@types/react": "~19.3.0",

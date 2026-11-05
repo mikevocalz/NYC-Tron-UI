@@ -6,6 +6,8 @@
 @source "./fixture.tsx";
 @source "./primitives.tsx";
 @source "./fixtures";
+
+@source "./spreadsheet.tsx";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 /* Reference values from docs/THEME_TOKENS.md. */
 @theme {
