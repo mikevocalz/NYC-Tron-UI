@@ -178,3 +178,34 @@ test("every adjustable control can be adjusted by a screen reader",()=>{
     assert.ok(actions>=adjustable,`${file}: ${adjustable} adjustable roles but ${actions} action sets`);
   }
 });
+// RN 0.88 ReactAccessibilityDelegate.AccessibilityRole.fromValue throws
+// IllegalArgumentException for anything outside this list; ARIA-only roles
+// such as row/cell/columnheader must go through the `role` prop instead.
+const ANDROID_ACCESSIBILITY_ROLES=new Set(["none","button","dropdownlist","togglebutton","link","search","image",
+  "imagebutton","keyboardkey","text","adjustable","summary","header","alert","checkbox","combobox","menu","menubar",
+  "menuitem","progressbar","radio","radiogroup","scrollbar","spinbutton","switch","tab","tabbar","tablist","timer",
+  "list","grid","pager","scrollview","horizontalscrollview","viewgroup","webview","drawerlayout","slidingdrawer",
+  "iconmenu","toolbar"]);
+test("accessibilityRole only uses values Android's enum accepts",()=>{
+  let checked=0;
+  for(const file of componentSources()){
+    const text=readFileSync(file,"utf8");
+    for(const m of text.matchAll(/accessibilityRole=(\{[^}]*\}|"[^"]*")/g)){
+      for(const role of m[1].matchAll(/"([a-z]+)"/g)){
+        assert.ok(ANDROID_ACCESSIBILITY_ROLES.has(role[1]),`${file}: accessibilityRole "${role[1]}" crashes Android; use role=`);
+        checked++;
+      }
+    }
+  }
+  assert.ok(checked>20);
+});
+test("data grids expose grid semantics instead of per-cell buttons",()=>{
+  const sheet=readFileSync(resolve(root,"src/components/forge/SpreadsheetGrid.tsx"),"utf8");
+  for(const role of ["grid","row","columnheader","rowheader","cell"])assert.ok(sheet.includes(`role="${role}"`),role);
+  assert.ok(!sheet.includes('accessibilityRole="button"'),"spreadsheet cells are not buttons");
+  assert.ok(!sheet.includes("navigator.clipboard")&&!sheet.includes("Clipboard."),"the app writes the clipboard");
+  const tree=readFileSync(resolve(root,"src/components/data/TreeGrid.tsx"),"utf8");
+  for(const role of ["treegrid","row","columnheader","cell"])assert.ok(tree.includes(`role="${role}"`),role);
+  assert.ok(tree.includes("treeRowAccessibilityLabel(item)"));
+  assert.ok(tree.includes("minHeight:44"));
+});

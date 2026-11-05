@@ -70,6 +70,16 @@
       "react-native": "./dist/components/forge/sheet-window.js",
       "default": "./dist/components/forge/sheet-window.js"
     },
+    "./components/forge/range-tsv": {
+      "types": "./dist/components/forge/range-tsv.d.ts",
+      "react-native": "./dist/components/forge/range-tsv.js",
+      "default": "./dist/components/forge/range-tsv.js"
+    },
+    "./components/forge/formula-refs": {
+      "types": "./dist/components/forge/formula-refs.d.ts",
+      "react-native": "./dist/components/forge/formula-refs.js",
+      "default": "./dist/components/forge/formula-refs.js"
+    },
     "./components/forge/inputs/precision": {
       "types": "./dist/components/forge/inputs/precision.d.ts",
       "react-native": "./dist/components/forge/inputs/precision.js",
