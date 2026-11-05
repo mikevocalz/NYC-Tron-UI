@@ -177,15 +177,30 @@ struct TronNavigationViewComponentView
   void OnSelectionChanged() {
     if (m_updatingFromJs || m_restorePending) return;
     if (m_navigation.SelectedItem() == FindItem(winrt::to_hstring(m_selectedId))) return;
-    m_restorePending = true;
-    m_navigation.DispatcherQueue().TryEnqueue([weak = get_weak()]() {
+    // TryEnqueue fails only while the queue shuts down; then nothing is
+    // pending and later selection changes must still be handled.
+    m_restorePending = m_navigation.DispatcherQueue().TryEnqueue([weak = get_weak()]() noexcept {
       if (auto self = weak.get()) {
         self->m_restorePending = false;
-        self->m_updatingFromJs = true;
-        self->SetSelectedId(winrt::to_hstring(self->m_selectedId));
-        self->m_updatingFromJs = false;
+        self->RunFromJs([&] { self->SetSelectedId(winrt::to_hstring(self->m_selectedId)); },
+            "Restoring the committed selection failed: ");
       }
     });
+  }
+
+  // Runs a native write with events from it suppressed. A WinRT error (for
+  // example during island teardown) is reported instead of escaping a
+  // dispatcher callback, and never leaves m_updatingFromJs set, which would
+  // silence every later selection and pane event.
+  template <typename Write>
+  void RunFromJs(Write&& write, char const* failure) noexcept {
+    m_updatingFromJs = true;
+    try {
+      write();
+    } catch (...) {
+      ReportNativeError(failure + DescribeCurrentException());
+    }
+    m_updatingFromJs = false;
   }
 
   void ApplyProps(Codegen::TronNavigationViewProps const& props) noexcept {
@@ -261,33 +276,43 @@ struct TronNavigationViewComponentView
     }
   }
 
-  // Pane approval belongs to JS, like route approval. NavigationView opens
-  // or closes its pane itself (toggle button, light dismiss, display-mode
-  // changes), so a user change is sent as a request and the pane is put back
-  // on the committed paneOpen; it moves only when JS commits a new value.
-  // Without this a rejected toggle stayed on screen, since nothing re-renders
-  // the component, and the island stayed sized for the committed state.
-  // PaneOpened/PaneClosed can arrive after ApplyProps has returned, so they
-  // are compared with the committed value rather than trusting
-  // m_updatingFromJs alone. The restore is queued, like the selection one.
+  // Pane approval belongs to JS, like route approval. A user change is sent
+  // as a request and the pane is put back on the committed paneOpen; it
+  // moves only when JS commits a new value. Without this a rejected toggle
+  // stayed on screen, since nothing re-renders the component, and the island
+  // stayed sized for the committed state.
+  // - PaneOpened/PaneClosed can arrive after the write that caused them, so
+  //   they are compared with the committed value and the control's current
+  //   state rather than trusting m_updatingFromJs alone.
+  // - A close is put back only in the Expanded display mode. In Compact and
+  //   Minimal the open pane is an overlay that NavigationView closes itself
+  //   (light dismiss, item invoke, a narrower island in auto); reopening it
+  //   over the content with no user action would be worse than waiting for
+  //   the next paneOpen.
+  // - The restore is queued like the selection one, so it does not re-enter
+  //   NavigationView's own pane change. A toggle while it is queued is
+  //   dropped; the restore still runs.
   void OnPaneChanged(bool open) {
     if (m_updatingFromJs || m_paneRestorePending) return;
-    if (open == m_paneOpen) return;
+    if (open == m_paneOpen || m_navigation.IsPaneOpen() != open) return;
+    using DisplayMode = winrt::Microsoft::UI::Xaml::Controls::NavigationViewDisplayMode;
+    if (open || m_navigation.DisplayMode() == DisplayMode::Expanded) {
+      m_paneRestorePending = m_navigation.DispatcherQueue().TryEnqueue([weak = get_weak()]() noexcept {
+        if (auto self = weak.get()) {
+          self->m_paneRestorePending = false;
+          self->RunFromJs([&] {
+            if (self->m_navigation.IsPaneOpen() != self->m_paneOpen) {
+              self->m_navigation.IsPaneOpen(self->m_paneOpen);
+            }
+          }, "Restoring the committed pane state failed: ");
+        }
+      });
+    }
     if (auto emitter = EventEmitter()) {
       Codegen::TronNavigationViewEventEmitter::OnPaneOpenChanged payload;
       payload.open = open;
       emitter->onPaneOpenChanged(std::move(payload));
     }
-    m_paneRestorePending = true;
-    m_navigation.DispatcherQueue().TryEnqueue([weak = get_weak()]() {
-      if (auto self = weak.get()) {
-        self->m_paneRestorePending = false;
-        if (self->m_navigation.IsPaneOpen() == self->m_paneOpen) return;
-        self->m_updatingFromJs = true;
-        self->m_navigation.IsPaneOpen(self->m_paneOpen);
-        self->m_updatingFromJs = false;
-      }
-    });
   }
 
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};

@@ -106,13 +106,16 @@ selection of such items, which left the committed route unselected. Rejected or 
 the current route selected. Menu item instances survive pane/title/selection
 updates when the destination data is unchanged, preserving keyboard focus.
 
-The pane follows the same rule. When the user opens or closes it (toggle
-button, light dismiss, or a display-mode change), the component sends
-`onPaneOpenRequested` and puts the pane back on the committed `paneOpen`; it
-moves when the app passes the new value. JS commits arrive after the restore,
-so an accepted toggle shows the pane return and then move, as the selection
-indicator does. With `auto` or `minimal`, NavigationView closes an overlay pane
-on light dismiss and on item invoke: accept `false` requests or it reopens.
+The pane follows the same rule. When it opens or closes without a new
+`paneOpen`, the component sends `onPaneOpenRequested`. A rejected open is
+closed again, and a rejected close is reopened when the pane is inline
+(`Expanded` display mode); the pane then moves when the app passes the new
+value. JS commits arrive after the restore, so an accepted toggle shows the
+pane return and then move, as the selection indicator does. In the compact
+and minimal display modes the open pane is an overlay that NavigationView
+closes on light dismiss, item invoke or a narrower island; the component does
+not force it open again, so accept those `false` requests to keep `paneOpen`
+and the island width in step.
 
 Required Windows app checks remain:
 - Reject a route request, then accept another; inspect the selected indicator.
