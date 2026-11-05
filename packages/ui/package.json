@@ -169,6 +169,9 @@
     },
     "@tanstack/react-table": {
       "optional": true
+    },
+    "zustand": {
+      "optional": true
     }
   },
   "devDependencies": {
@@ -184,6 +187,8 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
   ]
 }
