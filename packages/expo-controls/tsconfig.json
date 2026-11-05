@@ -7,6 +7,9 @@
     "paths": {
       "@nyc-tron/ui/components/overlays/*": [
         "../ui/src/components/overlays/*.ts"
+      ],
+      "@nyc-tron/ui/components/Select": [
+        "../ui/src/components/Select.tsx"
       ]
     }
   },

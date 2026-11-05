@@ -134,3 +134,15 @@ test("every component subpath's types file declares the component, not only its 
   assert.match(readFileSync(resolve(src),"utf8"),new RegExp("export function "+name+"\\("),name);
  }
 });
+test("Select resolves to the platform picker on native and the token combobox on web",()=>{
+  const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
+  const entry=pkg.exports["./Select"];
+  assert.equal(entry["react-native"],"./dist/components/Select.native.js");
+  assert.equal(entry.browser,"./dist/components/Select.web.js");
+  const native=readFileSync(new URL("../src/components/Select.native.tsx",import.meta.url),"utf8");
+  assert.match(native,/<NativeDropdown /);
+  // Placeholder and per-row disabled states keep the token combobox.
+  assert.match(native,/if\(!declared\|\|lockedRow\)return <TokenSelect/);
+  const web=readFileSync(new URL("../src/components/Select.web.tsx",import.meta.url),"utf8");
+  assert.match(web,/from "@nyc-tron\/ui\/components\/Select"/);
+});

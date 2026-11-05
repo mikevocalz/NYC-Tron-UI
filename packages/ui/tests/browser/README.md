@@ -41,6 +41,14 @@ moves, trims, splits, seeks, marks, zooms and pans with a real mouse and
 keyboard; `timeline-shots.spec.mjs` captures both widths in both themes, NTSC
 drop-frame with a scope matte, and RTL.
 
+`fixtures/forms.tsx` renders the studio form and navigation primitives at
+`/forms`, themed with the InFraX preset values. `forms.spec.mjs` drives
+SegmentedControl arrows (including RTL), pane TabBar arrows, navigation TabBar
+links, Select keyboard and pointer use, ListItem presses, IconButton toggle
+state, Toolbar arrow focus, and a 44px minimum for every control at 390px and
+834px. `forms-shots.spec.mjs` captures the same page light and dark at 390px
+and 834px (resting, Select open, focused), RTL, and forced colors.
+
 Set `UI_ACCEPTANCE_PORT` to run the lane on a port other than 4179.
 
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,

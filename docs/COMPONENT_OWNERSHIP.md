@@ -8,6 +8,13 @@ complex editor screen composition and its cross-engine suite application.
 | --- | --- | --- | --- |
 | Button | `@nyc-tron/ui/components/Button` | RN semantic foundation | NYC-MON Button, Moyo Button |
 | Card | `@nyc-tron/ui/components/Card` | RN semantic foundation | NYC-MON / Moyo Card |
+| Select | `@nyc-tron/ui/components/Select`; platform picker via `@nyc-tron/expo-controls/Select` | Token-styled select-only combobox (APG): activedescendant, arrows, Home/End, typeahead, Escape; in-flow list on native. The expo-controls entry renders NativeDropdown (SwiftUI Picker / Material exposed dropdown) on iOS/Android and keeps the combobox for a placeholder value or a disabled row. Chromium tests; native picker build unverified on device | NYC-MON `Select` |
+| SegmentedControl | `@nyc-tron/ui/components/SegmentedControl` | Radio group, roving tabindex, arrows flipped in RTL, disabled segments skipped, 44pt segments that wrap. Chromium tests | NYC-MON `SegmentedControl` |
+| TabBar | `@nyc-tron/ui/components/TabBar` | `tabs` (tablist, selection follows arrows) or `navigation` (links, `aria-current="page"`); `compact` pane density. Chromium tests | NYC-MON `TabBar` |
+| Toolbar | `@nyc-tron/ui/components/Toolbar` | Leading slot, title as heading, trailing `role="toolbar"` group with web arrow-key focus. Chromium tests | NYC-MON `Toolbar` |
+| List / ListItem | `@nyc-tron/ui/components/List` | Short grouped rows (`list`/`listitem`); pressable rows speak title plus supporting text. Not a virtualized list. Chromium tests | NYC-MON `List` web fork |
+| IconButton | `@nyc-tron/ui/components/IconButton` | Icon passed as a child node (no icon dependency); 44/48pt; `selected` exposes toggle state. Aligns with the icon package once #15 merges. Chromium tests | NYC-MON `IconButton` |
+| FieldGroup / FieldGroup.Section | `@nyc-tron/ui/components/FieldGroup` | Titled field block, `group` named by its heading, optional footer. Chromium render | NYC-MON `FieldGroup` |
 | NavigationRail / Shell | `@nyc-tron/ui/components/NavigationRail` | Controlled RN shell, NOT WinUI | NYC-MON / Moyo adaptive |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
@@ -451,3 +458,16 @@ Verified by a Chromium check that the timecode uses the dark text token on a
 light OS scheme, a check that the forward button stays inside the card at
 390px, and dark/light captures at 390 and 834px. Not verified on iOS or
 Android devices.
+
+## 2026-11-05 studio form and navigation primitives (part A)
+
+Select, SegmentedControl, TabBar, Toolbar, List, IconButton and FieldGroup.
+
+### Studio host slots
+
+Nitro Forge's `StudioUIProvider` takes these primitives directly. Forge's
+`tone` props (`royal`, `carolina`) are accepted by its slot types and ignored
+here: color comes from the host theme tokens, and active state uses
+`primary`. Brand tones belong in the host's theme, not in component props.
+NYC-MON's district tones and corner-cut frames were left behind for the same
+reason.
