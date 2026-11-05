@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ComponentRef, ReactNode, Ref } from 'react';
 import { TextInput, Text, View, type TextInputProps } from 'react-native';
 import { joinClasses } from './styles.ts';
 /** NYC-Tron semantic native text input. App colors/radii are theme-owned. */
@@ -13,6 +13,8 @@ export interface TextFieldProps extends TextInputProps {
   labelClassName?: string;
   /** No default visual classes: the app supplies the full recipe. */
   unstyled?: boolean;
+  /** Forwarded to the TextInput (React 19 ref-as-prop), for focus management. */
+  ref?: Ref<ComponentRef<typeof TextInput>>;
 }
 export function TextField({
  id,label,helperText,errorText,startAdornment,className,inputClassName,
