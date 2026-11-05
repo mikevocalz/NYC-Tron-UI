@@ -21,7 +21,7 @@ test("C++ registers a native WinUI XAML island, not a fabricated React View",()=
  assert.match(cpp,/SetContentIslandComponentViewInitializer/);
  assert.match(cpp,/m_xamlIsland\.Content\(m_navigation\)/);
  assert.match(cpp,/islandView\.Connect\(m_xamlIsland\.ContentIsland\(\)\)/);
- assert.match(cpp,/NavigationViewPaneDisplayMode::LeftCompact/);
+ assert.match(cpp,/mode == "compact" \? Mode::LeftCompact/);
  assert.match(cpp,/onDestinationInvoked/);
 });
 test("the Windows Fabric peer lane cannot be silently installed into Expo58",()=>{
