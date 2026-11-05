@@ -2,7 +2,7 @@ import { Host } from "@expo/ui";
 import { requireNativeView } from "expo";
 import type { NativeSyntheticEvent } from "react-native";
 import type { NativeRailProps } from "./NativeNavigationRail.types.js";
-import { validateNavigationItems } from "./navigation-model.js";
+import { resolveRailDimensions, validateNavigationItems } from "./navigation-model.js";
 
 type SelectEvent=NativeSyntheticEvent<{id:string}>;
 type NativeProps={
@@ -17,11 +17,8 @@ export function NativeNavigationRail({
   width,height,activeColor,foregroundColor,backgroundColor,
 }:NativeRailProps){
   validateNavigationItems(items,selectedId);
-  if(width!==undefined&&(!Number.isFinite(width)||width<64))
-    throw new RangeError("Rail width must be >=64");
-  if(height!==undefined&&(!Number.isFinite(height)||height<44))
-    throw new RangeError("Rail height must be >=44");
-  return <Host style={{width:width??(expanded?208:80),height:height??"100%"}}>
+  const dimensions=resolveRailDimensions(expanded,width,height);
+  return <Host style={dimensions}>
     <NativeView
       destinationIds={items.map(i=>i.id)}
       destinationLabels={items.map(i=>i.label)}

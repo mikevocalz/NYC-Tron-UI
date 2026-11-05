@@ -52,7 +52,7 @@ struct TronNavigationRailView: ExpoSwiftUI.View {
         .buttonStyle(.plain)
         .disabled(disabled)
         .accessibilityLabel(label)
-        .accessibilityValue(selected ? "Selected" : "")
+        .accessibilityAddTraits(selected ? .isSelected : [])
       }
       Spacer(minLength: 0)
     }

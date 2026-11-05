@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { validateNavigationItems } from "./navigation-model.js";
+import { resolveRailDimensions, validateNavigationItems } from "./navigation-model.js";
 import type { NativeRailProps } from "./NativeNavigationRail.types.js";
 /** Functional RN web presentation; web app shell should use its normal header. */
 export function NativeNavigationRail({
@@ -7,7 +7,8 @@ export function NativeNavigationRail({
  width,height,foregroundColor,backgroundColor,activeColor
 }:NativeRailProps){
  validateNavigationItems(items,selectedId);
- return <View style={{width:width??(expanded?208:80),height:height??"100%",
+ const dimensions=resolveRailDimensions(expanded,width,height);
+ return <View style={{...dimensions,
     backgroundColor,alignItems:"stretch"}}>
   <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:"center",gap:6,padding:8}}>
    {items.map(item=>{

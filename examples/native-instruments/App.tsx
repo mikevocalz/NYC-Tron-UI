@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { I18nManager, ScrollView, Text, View } from "react-native";
 import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 import { XYPad } from "@nyc-tron/native-controls/XYPad";
@@ -30,7 +30,7 @@ export default function App(){
      accentColor="#B2A7FF" backgroundColor="#20202C"
      onCommit={p=>setXY(p.x,p.y)}/>
    <Text style={{color:"#F6F6FD",fontWeight:"600",fontSize:20}}>Native right navigation rail</Text>
-   <View style={{flexDirection:"row",height:320,alignItems:"stretch",justifyContent:"flex-end"}}>
+   <View style={{flexDirection:I18nManager.isRTL?"row-reverse":"row",height:320,alignItems:"stretch",justifyContent:"flex-end"}}>
      <View style={{flex:1,justifyContent:"center",padding:16}}>
        <Text style={{color:"#F6F6FD",fontSize:18,fontWeight:"600"}}>Selected: {destination}</Text>
        <Text style={{color:"#AAAABB"}}>The app owns route selection. The rail is on the physical right.</Text>

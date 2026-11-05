@@ -41,3 +41,16 @@ not be claimed here. System contrast and screen reader tests are pending.
 Validation: source/TS tests, actual Gradle Compose and Xcode SwiftUI builds
 run in the stacked draft branch CI. Surface Duo and headset hardware
 testing is a separate physical acceptance gate.
+
+### Host sizing and accessibility
+
+Native and web renderers use the same finite dimension validation: width >=64
+and height >=44 logical units. Defaults remain 80 compact / 208 expanded and
+100% host height. Android fills the measured host width rather than forcing
+the default width, and its glyphs inherit Material disabled colors.
+iOS exposes the native selected trait so VoiceOver can localize selection.
+
+For a React Native row containing content followed by the rail, use
+`flexDirection: I18nManager.isRTL ? "row-reverse" : "row"` to keep the rail
+physically right while preserving RTL text. The host still supplies hinge-safe
+usable geometry; this component does not infer hardware or fold bounds.

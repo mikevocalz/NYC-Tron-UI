@@ -2,7 +2,7 @@ package com.nyctron.navigation
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
@@ -59,7 +58,7 @@ fun FunctionalComposableScope.TronRailContent(
   NavigationRail(
     modifier = ModifierRegistry.applyModifiers(
       props.modifiers, appContext, composableScope, globalEventDispatcher
-    ).fillMaxHeight().width((if (props.expanded) 208 else 80).dp),
+    ).fillMaxHeight().fillMaxWidth(),
     containerColor = container,
     contentColor = foreground
   ) {
@@ -82,8 +81,8 @@ fun FunctionalComposableScope.TronRailContent(
             modifier = Modifier.clearAndSetSemantics {
               if (!props.expanded) contentDescription = label
             },
-            fontSize = 20.sp,
-            color = if (selected) accent else foreground
+            // Inherit Material item color so disabled destinations stay dimmed.
+            fontSize = 20.sp
           )
         },
         label = { if (props.expanded) Text(label, maxLines = 1) },

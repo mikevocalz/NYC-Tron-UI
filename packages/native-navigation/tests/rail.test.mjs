@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { validateNavigationItems } from "../src/navigation-model.ts";
+import { resolveRailDimensions, validateNavigationItems } from "../src/navigation-model.ts";
 
 test("stable native rail selection contract rejects invalid and duplicate destinations",()=>{
  const items=[{id:"home",label:"Home"},{id:"lessons",label:"Lessons",disabled:true}];
@@ -32,4 +32,15 @@ test("native import is isolated from web fallback and Tally/Forge engines",()=>{
  assert.ok(!pkg.dependencies?.["@nitro-forge/ignition"]);
  const web=readFileSync("packages/native-navigation/src/NativeNavigationRail.web.tsx","utf8");
  assert.doesNotMatch(web,/requireNativeView|from "@expo\/ui"/);
+});
+
+test("rail host dimensions preserve custom measurements and reject invalid geometry",()=>{
+ assert.deepEqual(resolveRailDimensions(false),{width:80,height:"100%"});
+ assert.deepEqual(resolveRailDimensions(true),{width:208,height:"100%"});
+ assert.deepEqual(resolveRailDimensions(true,96,240),{width:96,height:240});
+ assert.deepEqual(resolveRailDimensions(false,64,44),{width:64,height:44});
+ for(const width of [NaN,Infinity,-Infinity,-1,0,63.99])
+   assert.throws(()=>resolveRailDimensions(false,width,240),/width/);
+ for(const height of [NaN,Infinity,-Infinity,-1,0,43.99])
+   assert.throws(()=>resolveRailDimensions(true,208,height),/height/);
 });
