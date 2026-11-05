@@ -5,9 +5,11 @@ import { registerHooks } from "node:module";
 // Exercise the component boundary without claiming a native renderer/device test.
 const mocks = {
   react: `export const useEffect=()=>{}; export const useId=()=>":r1:"; export const useRef=value=>({current:value}); export default {createElement:(type,props,...children)=>({type,props,children})};`,
-  "react-native": `class Value { constructor(value){this.value=value;} interpolate(config){return config;} } export const Animated={Value,View:"Animated.View"}; export const Easing={}; export const Pressable="Pressable"; export const View="View";`,
+  "react-native": `class Value { constructor(value){this.value=value;} interpolate(config){return config;} } export const Animated={Value,View:"Animated.View"}; export const Easing={}; export const Platform=globalThis.__iconTestPlatform; export const Pressable="Pressable"; export const View="View";`,
   "react-native-svg": `export default "Svg"; export const Path="Path"; export const Defs="Defs"; export const G="G"; export const Mask="Mask"; export const Rect="Rect";`
 };
+// Mutable so one module instance can render as native and as web.
+globalThis.__iconTestPlatform={OS:"ios"};
 registerHooks({
   resolve(specifier,context,nextResolve) {
     return Object.hasOwn(mocks,specifier) ? {url:"icon-test:"+specifier,shortCircuit:true} : nextResolve(specifier,context);
@@ -82,4 +84,29 @@ test("icon button keeps its inner icon decorative",()=>{
  const button=ForgeIconButton({name:"file/save",label:"Save",accessibilityLabel:"Ignored",onPress(){}});
  const inner=render(button.children[0]({pressed:false}));
  assert.equal(inner.props["aria-hidden"],true);
+});
+
+// react-native-svg's web build spreads props onto the DOM <svg>; React warns
+// for RN-only props there ("Received `false` for a non-boolean attribute
+// `accessible`"). Web must carry only DOM/ARIA attributes.
+const RN_ONLY=["accessible","accessibilityElementsHidden","importantForAccessibility","accessibilityRole","accessibilityLabel"];
+test("web icons pass only ARIA attributes to the DOM, never RN-only props",()=>{
+ globalThis.__iconTestPlatform.OS="web";
+ try{
+  for(const props of [{name:"navigation/home"},{name:"navigation/settings",selected:true,reducedMotion:true},
+    {name:"navigation/home",accessibilityLabel:"Home"}]){
+   const tree=render(ForgeIcon(props));
+   for(const node of [tree,...find(tree,n=>n.type==="Svg")])
+    for(const key of RN_ONLY)assert.equal(node.props[key],undefined,key+" reached "+node.type+" on web");
+   for(const svg of find(tree,n=>n.type==="Svg")){
+    assert.equal(svg.props["aria-hidden"],true);
+    assert.notEqual(typeof svg.props.focusable,"boolean","focusable must be the SVG string attribute on web");
+   }
+  }
+  assert.equal(render(ForgeIcon({name:"navigation/home"})).props["aria-hidden"],true);
+  const labelled=render(ForgeIcon({name:"navigation/home",accessibilityLabel:"Home"}));
+  assert.equal(labelled.props.role,"img");
+  assert.equal(labelled.props["aria-label"],"Home");
+  assert.equal(labelled.props["aria-hidden"],undefined);
+ }finally{globalThis.__iconTestPlatform.OS="ios";}
 });

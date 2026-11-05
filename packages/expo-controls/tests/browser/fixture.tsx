@@ -6,7 +6,7 @@ import { Tooltip } from "../../src/components/Tooltip.web.tsx";
 import { CommandPopover } from "@nyc-tron/ui/components/overlays/CommandPopover";
 import { CommandPalette } from "@nyc-tron/ui/components/overlays/CommandPalette";
 
-type Overlay="none"|"popover"|"commands"|"palette";
+type Overlay="none"|"popover"|"commands"|"palette"|"trigger";
 const useFixture = create<{
   selected:string;count:number;overlay:Overlay;
   select:(id:string)=>void;show:(overlay:Overlay)=>void;
@@ -57,6 +57,20 @@ function Fixture(){
       <Button label="Open popover" onPress={()=>show("popover")}/>
       <Button label="Open commands" onPress={()=>show("commands")}/>
       <Button label="Open palette" onPress={()=>show("palette")}/>
+      {/* Trigger form: the popover renders and measures its own trigger. */}
+      <NativePopover open={overlay==="trigger"} onOpenChange={next=>show(next?"trigger":"none")}
+        accessibilityLabel="Stroke width" width={260} testID="trigger-popover"
+        trigger={({toggle,triggerProps})=><Pressable {...triggerProps} accessibilityRole="button"
+          accessibilityLabel="Stroke width" onPress={toggle} testID="stroke-trigger"
+          style={{minHeight:44,minWidth:44,justifyContent:"center",paddingHorizontal:12}}>
+          <Text {...{className:"text-text"}}>Stroke width</Text>
+        </Pressable>}>
+        <View style={{padding:12,gap:8}}>
+          <Text {...{className:"text-text font-semibold"}}>Stroke width</Text>
+          <Button label="Thin" onPress={()=>{select("thin");close();}}/>
+          <Button label="Thick" onPress={()=>{select("thick");close();}}/>
+        </View>
+      </NativePopover>
       <Tooltip label="Writes the document to disk" delayMs={150} testID="save-tooltip">
         <Pressable accessibilityRole="button" accessibilityLabel="Save" onPress={()=>select("save")}
           style={{minHeight:44,minWidth:44,justifyContent:"center",paddingHorizontal:12}}>

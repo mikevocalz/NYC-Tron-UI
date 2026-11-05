@@ -1,7 +1,7 @@
-import {useRef} from "react";
+import {useEffect,useRef,type ComponentRef} from "react";
 import {LinearGradient} from "expo-linear-gradient";
 import {Host,Slider} from "@expo/ui";
-import {PanResponder,Pressable,Text,View,type GestureResponderEvent,type ViewProps} from "react-native";
+import {PanResponder,Platform,Pressable,Text,View,type GestureResponderEvent,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {ColorChannels} from "../ColorChannels.tsx";
@@ -55,9 +55,13 @@ const round3=(n:number)=>Math.round(n*1000)/1000;
  * the sliders, because `@expo/ui` text follows the OS appearance and turns
  * black on a dark app theme when the device is in light mode.
  *
- * The hue slider has no accessible name of its own (the universal `@expo/ui`
- * Slider takes no label). The field's named actions also step hue, so screen
- * reader users have a labeled path to every channel.
+ * The universal `@expo/ui` Slider takes no label, so the hue slider is named
+ * here: on iOS and Android an accessible adjustable wrapper reads "Hue, N
+ * degrees" and steps by `hueStep`, with the native slider inside hidden from
+ * VoiceOver and TalkBack so it is not a second, unnamed stop. On web the
+ * range input stays the control (arrow keys keep working) and gets
+ * `aria-label` and `aria-valuetext` directly. The field's named actions also
+ * step hue.
  *
  * Requires the optional peers `@expo/ui` and `expo-linear-gradient`. Nothing
  * animates: the thumb tracks the finger 1:1 and steppers jump directly, so
@@ -110,6 +114,16 @@ export function HsvPicker({
   };
   // 359.6 rounds to 360; show and slide it as 0 so label and thumb agree.
   const hue=Math.round(wrapHue(value.h))%360;
+  const hueHost=useRef<ComponentRef<typeof View>>(null);
+  // Web: name the @expo/ui range input itself; it renders no aria props of its own.
+  useEffect(()=>{
+    if(Platform.OS!=="web")return;
+    const host=hueHost.current as unknown as {querySelector?:(selector:string)=>{setAttribute:(name:string,value:string)=>void}|null}|null;
+    const input=host?.querySelector?.('input[type="range"]');
+    input?.setAttribute("aria-label","Hue");
+    input?.setAttribute("aria-valuetext",hue+" degrees");
+  },[hue]);
+  const web=Platform.OS==="web";
   const sat=Math.round(value.s*100);
   const bri=Math.round(value.v*100);
   const rgb=hsvToRgb(value);
@@ -190,10 +204,24 @@ export function HsvPicker({
       <Text {...{className:muted}}>Hue {hue}°</Text>
       <LinearGradient pointerEvents="none" colors={SPECTRUM}
         start={{x:0,y:0}} end={{x:1,y:0}} style={{height:12,borderRadius:6,opacity:disabled?0.45:1}}/>
-      <Host style={{width:"100%"}}>
-        <Slider value={hue} min={0} max={359} step={1} disabled={disabled}
-          onValueChange={h=>{if(!disabled)onValueChange({...value,h:wrapHue(h)});}}/>
-      </Host>
+      <View ref={hueHost} {...(web?{}:{
+          accessible:true,accessibilityRole:"adjustable" as const,accessibilityLabel:"Hue",
+          accessibilityValue:{min:0,max:359,now:hue,text:hue+" degrees"},
+          accessibilityState:{disabled},
+          accessibilityActions:[{name:"increment" as const},{name:"decrement" as const}],
+          onAccessibilityAction:(event:{nativeEvent:{actionName:string}})=>{
+            if(event.nativeEvent.actionName==="increment")nudgeHue(1);
+            if(event.nativeEvent.actionName==="decrement")nudgeHue(-1);
+          },
+        })}>
+        {/* The native slider stays draggable but is not its own unnamed screen-reader stop. */}
+        <View {...(web?{}:{importantForAccessibility:"no-hide-descendants" as const,accessibilityElementsHidden:true})}>
+          <Host style={{width:"100%"}}>
+            <Slider value={hue} min={0} max={359} step={1} disabled={disabled}
+              onValueChange={h=>{if(!disabled)onValueChange({...value,h:wrapHue(h)});}}/>
+          </Host>
+        </View>
+      </View>
     </View>
     {showChannels?<ColorChannels value={rgb} showAlpha={showAlpha} disabled={disabled} unstyled labelClassName={muted} {...id("channels")}
       onValueChange={rgba=>onValueChange(rgbaEditToHsv(rgba,value))}/>

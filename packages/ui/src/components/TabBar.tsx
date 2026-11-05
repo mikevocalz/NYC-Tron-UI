@@ -24,7 +24,12 @@ export interface TabBarProps extends Omit<ViewProps,"children"|"role"> {
    * tab roles, because going to a section is not switching a tab panel.
    */
   semantics?:"tabs"|"navigation";
-  /** `navigation`: phone bottom bar, icon over label. `compact`: pane tabs, icon beside label. */
+  /**
+   * `navigation`: phone bottom bar, icon over label, tabs share the full width.
+   * `compact`: pane tabs, icon beside label. A compact bar is as wide as its
+   * tabs, so it can sit in a header row beside actions or a title; it shrinks
+   * only when the row runs out of room, and labels truncate only then.
+   */
   density?:"navigation"|"compact";
   "aria-label"?:string;
   className?:string;
@@ -58,8 +63,11 @@ export function TabBar({
     (refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();
     tabs[next]?.onPress?.();
   };
+  // Compact bars size to their tabs instead of claiming the whole row: a
+  // full-width bar beside a header action pushed the action out of the pane
+  // and left the tab no room to keep its label (Forge Design Studio, 2026-11-05).
   return <View {...rest} role={nav?"navigation":"tablist"} aria-label={ariaLabel}
-    {...{className:joinClasses("w-full min-w-0 flex-row items-stretch",
+    {...{className:joinClasses(compact?"min-w-0 shrink flex-row items-stretch":"w-full min-w-0 flex-row items-stretch",
       styled&&(compact?"gap-0.5":"border-t border-border bg-surface-raised px-1 py-1"),className)}}>
     {tabs.map((tab,i)=>{
       const active=!!tab.active;
@@ -79,11 +87,12 @@ export function TabBar({
           ...(nav?{}:{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}),
         }:{})}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",
-          compact?"min-w-0 shrink flex-row gap-1.5 px-2":"flex-1 gap-1 px-1 py-1.5 min-h-14",
+          // A compact tab keeps its content width (grow 0, basis auto) and shrinks only once the bar is full; the icon never shrinks.
+          compact?"min-w-0 shrink grow-0 basis-auto flex-row gap-1.5 px-2":"flex-1 gap-1 px-1 py-1.5 min-h-14",
           styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none",
           styled&&(active?"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]":"bg-transparent hover:bg-surface-sunken"),
           tab.disabled&&"opacity-50",tabClassName)}}>
-        {tab.icon?<View aria-hidden {...{className:"items-center justify-center"}}>{renderIcon(tab.icon,{active})}</View>:null}
+        {tab.icon?<View aria-hidden {...{className:"shrink-0 items-center justify-center"}}>{renderIcon(tab.icon,{active})}</View>:null}
         <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm font-medium",
           compact&&"min-w-0 shrink",
           styled&&(active?"text-on-primary":"text-text-muted"),labelClassName)}}>{tab.label}</Text>

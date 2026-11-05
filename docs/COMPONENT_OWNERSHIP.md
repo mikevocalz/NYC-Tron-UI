@@ -8,9 +8,9 @@ complex editor screen composition and its cross-engine suite application.
 | --- | --- | --- | --- |
 | Button | `@nyc-tron/ui/components/Button` | RN semantic foundation | NYC-MON Button, Moyo Button |
 | Card | `@nyc-tron/ui/components/Card` | RN semantic foundation | NYC-MON / Moyo Card |
-| Select | `@nyc-tron/ui/components/Select`; platform picker via `@nyc-tron/expo-controls/Select` | Token-styled select-only combobox (APG): activedescendant, arrows, Home/End, typeahead, Escape; in-flow list on native. The expo-controls entry renders NativeDropdown (SwiftUI Picker / Material exposed dropdown) on iOS/Android and keeps the combobox for a placeholder value or a disabled row. Chromium tests; native picker build unverified on device | NYC-MON `Select` |
+| Select | `@nyc-tron/ui/components/Select`; platform picker via `@nyc-tron/expo-controls/Select` | Token-styled select-only combobox (APG): activedescendant, arrows, Home/End, typeahead, Escape; in-flow list on native; `groups` adds headed sections (grouped listbox on web). The expo-controls entry renders NativeDropdown (SwiftUI Picker / Material exposed dropdown) on iOS/Android and keeps the combobox for a placeholder value or a disabled row. Chromium tests; native picker build unverified on device | NYC-MON `Select` |
 | SegmentedControl | `@nyc-tron/ui/components/SegmentedControl` | Radio group, roving tabindex, arrows flipped in RTL, disabled segments skipped, 44pt segments that wrap. Chromium tests | NYC-MON `SegmentedControl` |
-| TabBar | `@nyc-tron/ui/components/TabBar` | `tabs` (tablist, selection follows arrows) or `navigation` (links, `aria-current="page"`); `compact` pane density. Chromium tests | NYC-MON `TabBar` |
+| TabBar | `@nyc-tron/ui/components/TabBar` | `tabs` (tablist, selection follows arrows) or `navigation` (links, `aria-current="page"`); `compact` pane density, sized to its tabs so it fits a header row. Chromium tests | NYC-MON `TabBar` |
 | Toolbar | `@nyc-tron/ui/components/Toolbar` | Leading slot, title as heading, trailing `role="toolbar"` group with web arrow-key focus. Chromium tests | NYC-MON `Toolbar` |
 | List / ListItem | `@nyc-tron/ui/components/List` | Short grouped rows (`list`/`listitem`); pressable rows speak title plus supporting text. Not a virtualized list. Chromium tests | NYC-MON `List` web fork |
 | IconButton | `@nyc-tron/ui/components/IconButton` | Icon passed as a child node (no icon dependency); 44/48pt; `selected` exposes toggle state. Aligns with the icon package once #15 merges. Chromium tests | NYC-MON `IconButton` |
@@ -22,6 +22,7 @@ complex editor screen composition and its cross-engine suite application.
 | ToolRail (A-06) | `@nyc-tron/ui/components/shell/ToolRail` (model in `/shell/tool-rail-model`) | Controlled 44pt toggle tools, variant flyouts on long press, outward arrow or a11y action; app owns shortcuts | Original; NavigationRail stays the app-section rail |
 | StatusBar (A-25) | `@nyc-tron/ui/components/shell/StatusBar` (text in `/shell/status-model`) | Controlled zoom steps and presets, unit menu, selection count, render/save/record/error state with polite announcements | Original |
 | MenuButton | `@nyc-tron/ui/components/shell/MenuButton` | Button that anchors a CommandPopover; shared by the shell controls | Original |
+| AnchoredPopover | `@nyc-tron/ui/components/overlays/AnchoredPopover` (types in `/overlays/anchored-popover-types`, `/overlays/useTriggerAnchor`, `/overlays/measure-anchor`) | Portable RN `Modal` popover placed by `placePopover`, from an `anchor` rect or a `trigger` it measures on open; web Tab cycling, Escape, focus return. It is the web presentation of `@nyc-tron/expo-controls/NativePopover`. Chromium tests | Moved from `NativePopover.web` |
 | InspectorPanel (A-09) | `@nyc-tron/ui/components/shell/InspectorPanel` (model in `/shell/inspector-model`) | Controlled selection heading (none, single, multiple), empty state, search that hides non-matching rows and sections | Original |
 | InspectorSection (A-10) | `@nyc-tron/ui/components/shell/InspectorSection` | Controlled disclosure, nesting, enable switch that disables rows inside, Reset while modified | Original |
 | PropertyRow (A-11) | `@nyc-tron/ui/components/shell/PropertyRow` | Label + editor, Mixed marker, inherited/overridden state with Revert, stacks in narrow panes | Original |
@@ -103,7 +104,7 @@ complex editor screen composition and its cross-engine suite application.
 | RazorSplitTool (D-20) | `@nyc-tron/ui/components/forge/timeline/RazorSplitTool` | Razor toggle and split at playhead; ripple deferred | Original |
 | SafeAreaOverlay (D-25) | `@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay` (`/forge/timeline/safe-area`) | SMPTE/legacy safe areas, aspect mattes, thirds, center | Original |
 | Track headers (D-18) | `components/forge/timeline/` | **DEFERRED**: Splice tracks have no lock/hide/mute flags yet (add/remove only) | Forge Splice |
-| LayerStack + layer model | `@nyc-tron/ui/components/forge/layers/LayerStack`, `.../forge/layers/layer-model` | Controlled RN list: visibility, opacity drag, reorder, rename, optional `kindLabel`, thumbnail and `onRemove`. Model tests, mocked-host render tests and Chromium/React Native Web remove and keyboard tests; no device or screen-reader QA yet | Forge Prism layer panel |
+| LayerStack + layer model | `@nyc-tron/ui/components/forge/layers/LayerStack`, `.../forge/layers/layer-model` | Controlled RN list: visibility, opacity drag, reorder, rename, optional `kindLabel`, thumbnail and `onRemove`; below its measured row floor the opacity slider becomes a readout that opens a PrecisionScrubber popover (`opacityControl`). Model tests, mocked-host render tests and Chromium/React Native Web remove and keyboard tests; no device or screen-reader QA yet | Forge Prism layer panel |
 | Brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | InkToolbar | `@nyc-tron/ui/components/forge/ink/InkToolbar` (state, shortcuts and validation in `/forge/ink/ink-model`) | Controlled RN toolbar, horizontal bar or vertical rail: tool radio group, adjustable size and opacity, host swatches plus an optional custom-color request, pressure switch shown only when the host reports measured pressure, undo/redo with disabled reasons. Shortcut resolver is a pure function; no global listener. Model tests plus Chromium/React Native Web interaction tests and light/dark/RTL captures at 390 and 834 px; no device or screen-reader QA yet | Forge board PRs #18, #19, #22 (`packages/board`, `apps/board-native-lab`) and pen PR #20 |
@@ -785,3 +786,73 @@ the icon package directly rather than importing a Forge engine. Nitro
 Forge keeps its own copy until it re-exports this package.
 Native OS icon adapters and compiled Rive binaries still require validation.
 See docs/ICON_MIGRATION.md.
+
+## 2026-11-05 Design Studio gaps (Nitro Forge #36)
+
+Moving Nitro Forge's Design Studio onto v0.1.0-alpha.2 turned up seven gaps.
+Forge carries workarounds for them today; these changes remove the need. Every
+API change is additive, so existing callers render as before.
+
+- **LayerStack row floor.** A row with a thumbnail and a remove button needs
+  380pt to keep a 96pt name beside a 120pt opacity slider
+  (`layerRowMinWidth`). The stack now measures its own width with `onLayout`
+  (never the window) and, below that floor, swaps the slider for a 56pt
+  percentage readout (`layerOpacityMode`). The readout is a button that opens
+  a `PrecisionScrubber` in an `AnchoredPopover`; it previews through
+  `onOpacityPreview`, commits once through the same path as a drag, and a
+  cancel restores the committed value. Beside the readout the name may shrink
+  as a last resort, so the remove button never clips. `opacityControl`
+  (`"auto"`, `"slider"`, `"readout"`) forces either presentation. Product
+  call: a popover scrubber rather than an inline expansion, so rows keep a
+  fixed height and drag-to-reorder math still holds. Checked in Chromium at
+  320, 360 and 390pt, light, dark and RTL.
+- **TabBar.** A compact TabBar claimed the full width of its row (`w-full`),
+  so beside a header action it pushed the action out of the pane. Compact bars
+  now size to their tabs and shrink only when the row runs out of room; tabs
+  keep their content width (`grow-0 basis-auto`) and the icon never shrinks,
+  so a label truncates only when the tabs do not fit. The single-tab
+  "Docum..." case did not reproduce in Chromium or in a Yoga 3 layout of the
+  same tree; the header-row case did, and that is what changed.
+  `navigation` density is unchanged.
+- **NativePopover trigger form.** `trigger` (a node or
+  `({open,toggle,triggerProps})=>node`) replaces `anchor`: the popover
+  renders the trigger, measures it on open and anchors to it. On native the
+  invisible SwiftUI/Compose anchor sits over the trigger in its own
+  coordinates; the window measurement only picks the preferred side.
+  `usableRegions` is optional in this form and defaults to the window. The
+  rect form is unchanged. The web presentation moved into the kit as
+  `AnchoredPopover`, so `LayerStack` and `NativePopover` share one web popover.
+- **NativeDropdown groups.** `groups: {heading, options}[]` in place of
+  `options`: SwiftUI `Section`s inside the Picker on iOS, a `labelLarge`
+  heading row and dividers in the Material menu on Android, and on web the
+  kit `Select`'s grouped listbox, because the universal `<select>` has no
+  `<optgroup>`. `Select` (and `@nyc-tron/expo-controls/Select`) takes the same
+  `groups`. Helpers live in `/forms/option-groups`.
+- **Icons on web.** react-native-svg's web build spreads props onto the DOM
+  `<svg>`, so `accessible={false}` reached the DOM and React warned
+  ("Received `false` for a non-boolean attribute `accessible`"). On web the
+  icon now passes only `aria-hidden` and the string `focusable="false"`;
+  native keeps the RN props.
+- **PrecisionScrubber.** Ported from Forge's `advancePrecisionGesture`
+  (nitro-forge #32): crossing the 28px fine/coarse threshold re-anchors the
+  drag on the current value instead of rescaling the whole drag, so the value
+  no longer jumps. Detents catch within `detentPixels` of travel (default 6)
+  in normal and coarse mode; the old half-step window equalled rounding, so a
+  detent never changed the result. Fine mode never catches. Typed entry snaps
+  to a tenth of `step` and clamps (`snapTypedPrecision`).
+- **HsvPicker hue slider name.** The universal `@expo/ui` Slider takes no
+  label, and its iOS and Android hosts expose only modifiers (the Compose
+  host has no state description for "degrees"). On iOS and Android the slider
+  now sits in an adjustable wrapper named "Hue" whose value reads "N degrees"
+  and whose increment/decrement step by `hueStep`; the native slider inside
+  is hidden from VoiceOver and TalkBack so it is not a second, unnamed stop.
+  On web the range input keeps keyboard control and gets `aria-label` and
+  `aria-valuetext` set on it directly.
+
+Evidence: Node model tests (red on the old code for the scrubber, icon and
+hue changes), mocked-host render tests for LayerStack readout rows and the
+hue slider, and Chromium/React Native Web tests and captures for LayerStack
+at 320/360/390pt, TabBar header rows, grouped Select and the trigger-form
+popover. The Android and iOS compile lanes build the native example, which
+now renders a grouped NativeDropdown and a trigger-form NativePopover. No
+simulator, device, VoiceOver or TalkBack pass has been done for any of these.

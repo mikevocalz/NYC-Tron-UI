@@ -10,15 +10,21 @@ const colors={surface:"#20202C",text:"#F6F6FD",muted:"#AAAABB",accent:"#B2A7FF",
 
 type OverlayState={
   quality:string;lastAction:string;popoverOpen:boolean;anchor:LayoutRectangle|null;
+  font:string;strokeOpen:boolean;
   setQuality:(value:string)=>void;setAction:(id:string)=>void;
   setPopover:(open:boolean)=>void;setAnchor:(rect:LayoutRectangle)=>void;
 };
 const useOverlays=create<OverlayState>(set=>({
-  quality:"high",lastAction:"none",popoverOpen:false,anchor:null,
+  quality:"high",lastAction:"none",popoverOpen:false,anchor:null,font:"inter",strokeOpen:false,
   setQuality:quality=>set({quality}),setAction:lastAction=>set({lastAction}),
   setPopover:popoverOpen=>set({popoverOpen}),setAnchor:anchor=>set({anchor}),
 }));
 const qualities=[{value:"low",label:"Low"},{value:"medium",label:"Medium"},{value:"high",label:"High"}];
+// Headed groups: SwiftUI Sections on iOS, heading rows between dividers in the Material menu.
+const typefaces=[
+  {heading:"Sans serif",options:[{value:"inter",label:"Inter"},{value:"plex",label:"IBM Plex Sans"}]},
+  {heading:"Serif",options:[{value:"source",label:"Source Serif"}]},
+];
 const actions=[
   {id:"duplicate",title:"Duplicate"},
   {id:"pin",title:"Pin",checked:false},
@@ -33,6 +39,18 @@ export function OverlayControls(){
   return <View style={{gap:16}}>
     <Text style={{color:colors.text,fontWeight:"600",fontSize:20}}>Overlays</Text>
     <NativeDropdown label="Render quality" value={quality} options={qualities} onValueChange={setQuality}/>
+    <NativeDropdown label="Typeface" value={useOverlays(s=>s.font)} groups={typefaces}
+      onValueChange={font=>useOverlays.setState({font})}/>
+    {/* Trigger form: the popover measures this button and anchors to it. */}
+    <NativePopover open={useOverlays(s=>s.strokeOpen)} onOpenChange={strokeOpen=>useOverlays.setState({strokeOpen})}
+      accessibilityLabel="Stroke width" width={240}
+      trigger={({toggle,triggerProps})=><Pressable {...triggerProps} accessibilityRole="button"
+        accessibilityLabel="Stroke width" onPress={toggle}
+        style={{minHeight:44,justifyContent:"center",paddingHorizontal:16,borderRadius:12,backgroundColor:colors.surface}}>
+        <Text style={{color:colors.text}}>Stroke width</Text>
+      </Pressable>}>
+      <View style={{padding:16}}><Text style={{color:colors.text}}>2 pt</Text></View>
+    </NativePopover>
     <NativeActionMenu accessibilityLabel="Layer actions" actions={actions} onAction={setAction}
       trigger={<View style={{minHeight:44,justifyContent:"center",paddingHorizontal:16,
         borderRadius:12,backgroundColor:colors.surface}}><Text style={{color:colors.text}}>Layer actions</Text></View>}/>

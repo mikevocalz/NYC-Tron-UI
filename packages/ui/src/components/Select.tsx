@@ -4,6 +4,7 @@ import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { joinClasses } from "./styles.ts";
 import { isModified, nextChoiceIndex, typeaheadIndex, webKey } from "./forms/choice-keys.ts";
+import { flattenOptionGroups, validateOptionGroups, type OptionGroup } from "./forms/option-groups.ts";
 
 export interface SelectOption {
   readonly value:string;
@@ -11,11 +12,24 @@ export interface SelectOption {
   readonly label?:string;
   readonly disabled?:boolean;
 }
-export interface SelectProps extends Omit<ViewProps,"children"|"role"> {
+/** Options under a heading in a {@linkcode Select} list. @see {@linkcode SelectGroupsChoice.groups} */
+export type SelectGroup=OptionGroup<SelectOption>;
+/** A flat list of choices. */
+export interface SelectOptionsChoice {
+  options:readonly SelectOption[];
+  groups?:undefined;
+}
+/** Choices under headings; the list shows each heading above its options. */
+export interface SelectGroupsChoice {
+  /** Headed groups in display order. Keyboard order runs through every group's options in turn. */
+  groups:readonly SelectGroup[];
+  options?:undefined;
+}
+/** Props shared by both choice shapes of {@linkcode Select}. */
+export interface SelectBaseProps extends Omit<ViewProps,"children"|"role"> {
   /** Visible caption and the accessible name of the field. */
   label:string;
   value:string;
-  options:readonly SelectOption[];
   onValueChange:(value:string)=>void;
   disabled?:boolean;
   /** Text shown when `value` matches no option. */
@@ -25,6 +39,17 @@ export interface SelectProps extends Omit<ViewProps,"children"|"role"> {
   className?:string;
   triggerClassName?:string;
   unstyled?:boolean;
+}
+/** {@linkcode Select} props: either flat `options` or headed `groups`, never both. */
+export type SelectProps=SelectBaseProps&(SelectOptionsChoice|SelectGroupsChoice);
+/** Every option a {@linkcode Select} offers, in keyboard order, whichever choice shape it was given. */
+export function selectOptions(props:SelectOptionsChoice|SelectGroupsChoice):readonly SelectOption[]{
+  if(props.groups!==undefined){
+    if(props.options!==undefined)throw new TypeError("Select takes `options` or `groups`, not both");
+    validateOptionGroups(props.groups);
+    return flattenOptionGroups(props.groups);
+  }
+  return props.options;
 }
 type OpenState={open:boolean;active:number};
 const optionLabel=(o:SelectOption)=>o.label??o.value;
@@ -43,10 +68,12 @@ const optionLabel=(o:SelectOption)=>o.label??o.value;
  * the platform SwiftUI/Compose picker use `@nyc-tron/expo-controls/Select`,
  * which takes these same props.
  */
-export function Select({
-  label,value,options,onValueChange,disabled=false,placeholder="Choose…",hint,errorText,
-  className,triggerClassName,unstyled=false,testID,...rest
-}:SelectProps){
+export function Select(props:SelectProps){
+  const {
+    label,value,onValueChange,disabled=false,placeholder="Choose…",hint,errorText,
+    className,triggerClassName,unstyled=false,testID,options:_options,groups,...rest
+  }=props;
+  const options=selectOptions(props);
   const styled=!unstyled,web=Platform.OS==="web";
   const id=useId().replace(/:/g,"");
   const local=useRef<StoreApi<OpenState>|null>(null);
@@ -103,26 +130,37 @@ export function Select({
     "aria-invalid":errorText?true:undefined,
     "aria-describedby":message?id+"-msg":undefined,
   }:{};
+  const renderOption=(o:SelectOption,i:number)=>{
+    const isSelected=i===selectedIndex,isActive=i===active;
+    return <Pressable key={o.value+":"+i} role="option" nativeID={optionId(i)}
+      aria-selected={isSelected} aria-disabled={o.disabled||undefined} disabled={o.disabled}
+      accessibilityState={{selected:isSelected,disabled:!!o.disabled}}
+      onPress={()=>pick(i)}
+      // Keep focus on the trigger so its blur fires only when focus really leaves.
+      {...(web?{tabIndex:-1,onMouseDown:(e:{preventDefault:()=>void})=>e.preventDefault()}:{})}
+      {...{className:joinClasses("min-h-11 w-full justify-center",
+        styled&&"px-3 py-2",
+        styled&&(isSelected?"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]":isActive?"bg-surface-sunken":"bg-transparent hover:bg-surface-sunken"),
+        o.disabled&&"opacity-50")}}>
+      <Text numberOfLines={2} {...{className:joinClasses(styled&&"text-base",
+        styled&&(isSelected?"text-on-primary font-semibold":"text-text"))}}>{optionLabel(o)}</Text>
+    </Pressable>;
+  };
   const list=<View role={"listbox" as never} nativeID={listId} aria-label={label}
     {...{className:joinClasses("w-full",
       web?"absolute left-0 right-0 top-full z-50 mt-1":"mt-1",
       styled&&"overflow-hidden rounded-control border border-border bg-surface-raised shadow-md")}}>
     <ScrollView style={{maxHeight:320}} nestedScrollEnabled keyboardShouldPersistTaps="handled">
-      {options.map((o,i)=>{
-        const isSelected=i===selectedIndex,isActive=i===active;
-        return <Pressable key={o.value+":"+i} role="option" nativeID={optionId(i)}
-          aria-selected={isSelected} aria-disabled={o.disabled||undefined} disabled={o.disabled}
-          accessibilityState={{selected:isSelected,disabled:!!o.disabled}}
-          onPress={()=>pick(i)}
-          // Keep focus on the trigger so its blur fires only when focus really leaves.
-          {...(web?{tabIndex:-1,onMouseDown:(e:{preventDefault:()=>void})=>e.preventDefault()}:{})}
-          {...{className:joinClasses("min-h-11 w-full justify-center",
-            styled&&"px-3 py-2",
-            styled&&(isSelected?"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]":isActive?"bg-surface-sunken":"bg-transparent hover:bg-surface-sunken"),
-            o.disabled&&"opacity-50")}}>
-          <Text numberOfLines={2} {...{className:joinClasses(styled&&"text-base",
-            styled&&(isSelected?"text-on-primary font-semibold":"text-text"))}}>{optionLabel(o)}</Text>
-        </Pressable>;
+      {groups===undefined?options.map((o,i)=>renderOption(o,i)):groups.map((group,g)=>{
+        // Keyboard order runs through the flattened list, so each group starts at its offset.
+        const start=groups.slice(0,g).reduce((n,x)=>n+x.options.length,0);
+        const headingId=id+"-group-"+g;
+        return <View key={"group:"+g} role={"group" as never} aria-labelledby={headingId}>
+          {/* APG grouped listbox: on web the group takes its name from this presentational heading. */}
+          <Text nativeID={headingId} role={(web?"presentation":"heading") as never}
+            {...{className:joinClasses(styled&&"px-3 pt-3 pb-1 text-xs font-semibold text-text-muted")}}>{group.heading}</Text>
+          {group.options.map((o,j)=>renderOption(o,start+j))}
+        </View>;
       })}
     </ScrollView>
   </View>;

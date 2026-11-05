@@ -1,12 +1,17 @@
 import React,{useEffect,useId,useRef} from "react";
-import {Animated,Easing,Pressable,View} from "react-native";
+import {Animated,Easing,Platform,Pressable,View} from "react-native";
 import Svg,{Defs,G,Mask,Path,Rect} from "react-native-svg";
 import {getGlyph} from "./glyphs.js";
 import {resolveIconState} from "./state.js";
 import {iconStroke,iconMotion} from "./tokens.js";
 
+// react-native-svg's web build spreads every prop onto the DOM <svg>, so the
+// RN-only `accessible` reached the DOM there and React warned about it. Web
+// hides the drawing with aria-hidden and keeps it out of the Tab order with
+// the SVG `focusable` attribute; native keeps the RN accessibility props.
+const web=()=>Platform.OS==="web";
 /** Decorative SVG is hidden from VoiceOver, TalkBack and web screen readers. */
-const hiddenSvg={accessible:false,focusable:false,"aria-hidden":true};
+const hiddenSvg=()=>web()?{"aria-hidden":true,focusable:"false"}:{accessible:false,focusable:false,"aria-hidden":true};
 function pathProps(d,mode,ink){
  const solid=mode==="fill"||(mode==="knockout"&&/[zZ]\s*$/.test(d));
  return {d,stroke:solid?"none":ink,fill:solid?ink:"none",
@@ -21,10 +26,10 @@ function IconPaths({name,variant,color,size}){
  const knockouts=paths.filter(([,mode])=>mode==="knockout");
  const drawn=ink.map(([d,mode],index)=>React.createElement(Path,{key:index,...pathProps(d,mode,color)}));
  if(knockouts.length===0)
-   return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",...hiddenSvg},drawn);
+   return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",...hiddenSvg()},drawn);
  // Knockout detail is a real cutout through a mask, so filled glyphs stay
  // correct on gradients, images and any theme surface; no surface color needed.
- return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",...hiddenSvg},
+ return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",...hiddenSvg()},
    React.createElement(Defs,null,
      React.createElement(Mask,{id:maskId,maskUnits:"userSpaceOnUse",x:0,y:0,width:24,height:24},
        React.createElement(Rect,{x:0,y:0,width:24,height:24,fill:"white"}),
@@ -84,7 +89,9 @@ export function ForgeIcon({
  const invisible=progress.interpolate({inputRange:[0,1],outputRange:[1,0]});
  const spin=rotation.interpolate({inputRange:[0,1],outputRange:["0deg","360deg"]});
  const box={position:"absolute",left:0,top:0,width:view.size,height:view.size};
- const a11y=label?{accessible:true,accessibilityRole:"image",role:"img",
+ // Web takes the ARIA form only; react-native-web maps role and aria-* itself.
+ const a11y=web()?(label?{role:"img","aria-label":label}:{"aria-hidden":true}):
+  label?{accessible:true,accessibilityRole:"image",role:"img",
    accessibilityLabel:label,"aria-label":label}:
    {accessible:false,accessibilityElementsHidden:true,
     importantForAccessibility:"no-hide-descendants","aria-hidden":true};
