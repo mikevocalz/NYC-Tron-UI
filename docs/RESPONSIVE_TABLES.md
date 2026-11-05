@@ -62,15 +62,39 @@ import { DataTable } from "@nyc-tron/ui/components/data/DataTable";
   the fixed formula bar above the scroll region always displays the selected
   address. An on-screen hint explains that more columns are reachable by
   swiping sideways.
-- `sheetWindow` fetches only **visible** row/column ranges with overscan.
-  The callback `onWindowChange` is stabilized against host inline callback
-  recreation so it does not make repeated Rust queries on every paint.
+- `frozenSheetWindow` computes only the **visible** body range with overscan,
+  and `sheetPrefetchRange` snaps it to 64-row by 16-column blocks with one
+  block of lookahead. `onWindowChange` therefore fires only when the viewport
+  crosses a block edge, and it is stabilized against host inline callback
+  recreation. The request carries `frozenRows`/`frozenColumns`; the host also
+  loads rows `0..frozenRows` and columns `0..frozenColumns`.
+- `frozenRows`/`frozenColumns` render as strips outside the body scroll views
+  (corner, frozen headers, frozen cells) and follow the body through
+  native-driver transforms.
+- Selection is a range: `selection={{anchor,focus}}`. Tap selects one cell,
+  long press extends from the anchor. With a hardware keyboard the grid
+  handles arrows, Tab, Enter, Home/End, PageUp/PageDown and Ctrl/Cmd jumps;
+  Shift extends. Keys typed in the formula bar never move the selection.
+- Ctrl/Cmd+C (or the screen-reader "Copy selection" action) calls
+  `onCopyRange(range, tsv)`. The kit builds tab-separated text with
+  `range-tsv` and never writes the clipboard; the app does. Ranges over
+  `maxCopyCells` (1,000,000 by default) show an error instead of copying.
+- Cells referenced by the formula in the formula bar are shaded
+  (`formula-refs` tokenizes A1 refs, ranges and `$` markers; references to
+  other sheets are not highlighted). Pass `sheetName` so `'This Sheet'!A1`
+  still highlights.
+- Semantics use the `role` prop: `grid`, `row`, `columnheader`, `rowheader`
+  and `cell`. Only `grid` is in Android's `AccessibilityRole` enum; passing
+  the others to `accessibilityRole` throws `Invalid accessibility role value`
+  on Android, while `role` maps unknown ARIA roles to no role.
 - `@nitro-forge/tally/grid-adapter` from Nitro Forge PR #39 converts visible
   ranges into bounded batched `TallyDocument.getRange` requests; committing
   changes calls the real `TallyDocument.setCell` and waits for the engine.
   No fake local formula calculation or shadow workbook is maintained.
-- Existing keyboard selection, frozen row/column headers, clipboard editing,
-  multi-selection and high-volume viewport performance remain explicit work.
+- Paste and fill are DEFERRED: Tally has no batch `setRange`, and one
+  `setCell` round trip per pasted cell would leave a half-applied paste on
+  failure. Device validation of the frozen strips and hardware keyboard is
+  NOT RUN; the checks above are unit and source tests.
 
 ```tsx
 import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";
@@ -80,8 +104,12 @@ import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";
   rowCount={rowCount}
   columnCount={columnCount}
   cells={visibleCells}
-  selectedCell={selectedCell}
-  onSelectionChange={setSelectedCell}
+  sheetName={activeSheetName}
+  frozenRows={1}
+  frozenColumns={1}
+  selection={selection}
+  onSelectionChange={setSelection}
+  onCopyRange={(range, tsv) => Clipboard.setStringAsync(tsv)}
   onWindowChange={loadVisibleRange}
   onCommitCell={commitCell}
 />

@@ -70,6 +70,16 @@
       "react-native": "./dist/components/forge/sheet-window.js",
       "default": "./dist/components/forge/sheet-window.js"
     },
+    "./components/forge/range-tsv": {
+      "types": "./dist/components/forge/range-tsv.d.ts",
+      "react-native": "./dist/components/forge/range-tsv.js",
+      "default": "./dist/components/forge/range-tsv.js"
+    },
+    "./components/forge/formula-refs": {
+      "types": "./dist/components/forge/formula-refs.d.ts",
+      "react-native": "./dist/components/forge/formula-refs.js",
+      "default": "./dist/components/forge/formula-refs.js"
+    },
     "./components/forge/inputs/precision": {
       "types": "./dist/components/forge/inputs/precision.d.ts",
       "react-native": "./dist/components/forge/inputs/precision.js",
@@ -140,6 +150,16 @@
       "react-native": "./dist/components/navigation/drawer-model.js",
       "default": "./dist/components/navigation/drawer-model.js"
     },
+    "./components/forge/layers/layer-model": {
+      "types": "./dist/components/forge/layers/layer-model.d.ts",
+      "react-native": "./dist/components/forge/layers/layer-model.js",
+      "default": "./dist/components/forge/layers/layer-model.js"
+    },
+    "./components/forge/layers/LayerStack": {
+      "types": "./dist/components/forge/layers/LayerStack.d.ts",
+      "react-native": "./dist/components/forge/layers/LayerStack.js",
+      "default": "./dist/components/forge/layers/LayerStack.js"
+    },
     "./components/forge/inputs/PrecisionScrubber": {
       "types": "./dist/components/forge/inputs/PrecisionScrubber.d.ts",
       "react-native": "./dist/components/forge/inputs/PrecisionScrubber.js",
@@ -196,6 +216,9 @@
     "@tanstack/react-table": {
       "optional": true
     },
+    "zustand": {
+      "optional": true
+    },
     "react-native-gesture-handler": {
       "optional": true
     }
@@ -214,6 +237,8 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
   ]
 }

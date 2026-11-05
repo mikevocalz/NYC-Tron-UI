@@ -1,5 +1,5 @@
 // Leaf subpath imports are preferred to avoid loading unrelated native editors.
-export { ArcKnob } from "./ArcKnob";
-export type { ArcKnobProps } from "./ArcKnob";
-export { XYPad } from "./XYPad";
-export type { XYPoint, XYPadProps } from "./XYPad";
+export { ArcKnob } from "./ArcKnob.tsx";
+export type { ArcKnobProps } from "./ArcKnob.tsx";
+export { XYPad } from "./XYPad.tsx";
+export type { XYPoint, XYPadProps } from "./XYPad.tsx";
