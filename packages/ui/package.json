@@ -50,6 +50,16 @@
       "react-native": "./dist/components/forge/timebase.js",
       "default": "./dist/components/forge/timebase.js"
     },
+    "./components/forge/audio/level": {
+      "types": "./dist/components/forge/audio/level.d.ts",
+      "react-native": "./dist/components/forge/audio/level.js",
+      "default": "./dist/components/forge/audio/level.js"
+    },
+    "./components/forge/audio/LevelFader": {
+      "types": "./dist/components/forge/audio/LevelFader.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelFader.js",
+      "default": "./dist/components/forge/audio/LevelFader.js"
+    },
     "./components/forge/color": {
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color.js",
@@ -314,21 +324,76 @@
       "types": "./dist/components/gestures/GestureHandlerDrag.d.ts",
       "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
       "default": "./dist/components/gestures/GestureHandlerDrag.js"
+    },
+    "./components/feedback/Banner": {
+      "types": "./dist/components/feedback/Banner.d.ts",
+      "react-native": "./dist/components/feedback/Banner.js",
+      "default": "./dist/components/feedback/Banner.js"
+    },
+    "./components/feedback/Badge": {
+      "types": "./dist/components/feedback/Badge.d.ts",
+      "react-native": "./dist/components/feedback/Badge.js",
+      "default": "./dist/components/feedback/Badge.js"
+    },
+    "./components/feedback/EmptyState": {
+      "types": "./dist/components/feedback/EmptyState.d.ts",
+      "react-native": "./dist/components/feedback/EmptyState.js",
+      "default": "./dist/components/feedback/EmptyState.js"
+    },
+    "./components/feedback/ErrorMessage": {
+      "types": "./dist/components/feedback/ErrorMessage.d.ts",
+      "react-native": "./dist/components/feedback/ErrorMessage.js",
+      "default": "./dist/components/feedback/ErrorMessage.js"
+    },
+    "./components/content/KeyValueList": {
+      "types": "./dist/components/content/KeyValueList.d.ts",
+      "react-native": "./dist/components/content/KeyValueList.js",
+      "default": "./dist/components/content/KeyValueList.js"
+    },
+    "./components/theme/NightScope": {
+      "types": "./dist/components/theme/NightScope.d.ts",
+      "react-native": "./dist/components/theme/NightScope.js",
+      "default": "./dist/components/theme/NightScope.js"
+    },
+    "./components/files/DropZone": {
+      "types": "./dist/components/files/DropZone.web.d.ts",
+      "browser": "./dist/components/files/DropZone.web.js",
+      "react-native": "./dist/components/files/DropZone.native.js",
+      "default": "./dist/components/files/DropZone.web.js"
+    },
+    "./components/files/FilePicker": {
+      "types": "./dist/components/files/FilePicker.web.d.ts",
+      "browser": "./dist/components/files/FilePicker.web.js",
+      "react-native": "./dist/components/files/FilePicker.native.js",
+      "default": "./dist/components/files/FilePicker.web.js"
+    },
+    "./components/files/drop-model": {
+      "types": "./dist/components/files/drop-model.d.ts",
+      "react-native": "./dist/components/files/drop-model.js",
+      "default": "./dist/components/files/drop-model.js"
+    },
+    "./components/html": {
+      "types": "./dist/components/html/semantic.web.d.ts",
+      "browser": "./dist/components/html/semantic.web.js",
+      "react-native": "./dist/components/html/semantic.native.js",
+      "default": "./dist/components/html/semantic.web.js"
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tests/tsconfig.slots.json",
     "build": "tsc --project tsconfig.build.json",
     "prepack": "pnpm build"
   },
   "peerDependencies": {
-    "react": ">=19.0.0",
-    "react-native": ">=0.88.0",
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
-    "zustand": "^5.0.0",
+    "expo-drag-drop-content-view": ">=0.9.2 <1",
+    "expo-linear-gradient": "^58.0.0",
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0",
     "react-native-gesture-handler": ">=3.4.0 <4",
-    "expo-linear-gradient": "^58.0.0"
+    "uniwind": ">=1.12.2 <2",
+    "zustand": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "@expo/ui": {
@@ -345,18 +410,27 @@
     },
     "expo-linear-gradient": {
       "optional": true
+    },
+    "expo-drag-drop-content-view": {
+      "optional": true
+    },
+    "uniwind": {
+      "optional": true
     }
   },
   "devDependencies": {
-    "typescript": "~6.0.3",
-    "@types/react": "~19.3.0",
-    "react": "19.3.0",
-    "react-native": "0.88.0",
     "@expo/ui": "58.0.20",
     "@tanstack/react-table": "9.3.1",
-    "zustand": "5.0.16",
+    "@types/react": "~19.3.0",
+    "expo": "58.0.14",
+    "expo-drag-drop-content-view": "0.9.2",
+    "expo-linear-gradient": "58.0.3",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
     "react-native-gesture-handler": "3.4.0",
-    "expo-linear-gradient": "58.0.3"
+    "typescript": "~6.0.3",
+    "uniwind": "1.13.2",
+    "zustand": "5.0.16"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
