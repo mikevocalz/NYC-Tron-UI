@@ -135,6 +135,26 @@
       "react-native": "./dist/components/overlays/CommandPopover.js",
       "default": "./dist/components/overlays/CommandPopover.js"
     },
+    "./components/overlays/CommandPalette": {
+      "types": "./dist/components/overlays/CommandPalette.d.ts",
+      "react-native": "./dist/components/overlays/CommandPalette.js",
+      "default": "./dist/components/overlays/CommandPalette.js"
+    },
+    "./components/overlays/command-filter": {
+      "types": "./dist/components/overlays/command-filter.d.ts",
+      "react-native": "./dist/components/overlays/command-filter.js",
+      "default": "./dist/components/overlays/command-filter.js"
+    },
+    "./components/overlays/focus-cycle": {
+      "types": "./dist/components/overlays/focus-cycle.d.ts",
+      "react-native": "./dist/components/overlays/focus-cycle.js",
+      "default": "./dist/components/overlays/focus-cycle.js"
+    },
+    "./components/overlays/focus-restore": {
+      "types": "./dist/components/overlays/focus-restore.d.ts",
+      "react-native": "./dist/components/overlays/focus-restore.js",
+      "default": "./dist/components/overlays/focus-restore.js"
+    },
     "./components/TextField": {
       "types": "./dist/components/TextField.d.ts",
       "react-native": "./dist/components/TextField.js",

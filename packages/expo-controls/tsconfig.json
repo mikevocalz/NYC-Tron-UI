@@ -3,7 +3,12 @@
   "compilerOptions": {
     "types": [
       "react"
-    ]
+    ],
+    "paths": {
+      "@nyc-tron/ui/components/overlays/*": [
+        "../ui/src/components/overlays/*.ts"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",
