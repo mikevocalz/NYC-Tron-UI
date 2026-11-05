@@ -17,11 +17,21 @@ component yet; it deliberately lives at the Windows app host boundary.
   route, so the indicator only moves when the host calls `SetSelectedId`.
   `SelectsOnInvoked = false` is not used: NavigationView undoes programmatic
   selection of such items.
+- The pane works the same way. When the user opens or closes it (toggle
+  button, light dismiss, or a display-mode change in `Auto`, `LeftCompact`
+  or `LeftMinimal`), the shell raises `PaneOpenChanged` and puts the pane back
+  to the last `SetPaneOpen` value; the pane moves when the host calls
+  `SetPaneOpen`. A host that accepts asynchronously sees the pane return and
+  then move, as the selection indicator does. Hosts using overlay modes must
+  accept `false` requests or the pane reopens after a light dismiss.
 - Each item's Narrator name is its label; the NavigationView's name is the
   pane title.
 - `src/controller.ts` provides strict controlled reconciliation: no
-  changing the app's selected route without the app confirming it; blocks
-  disabled/stale selection, deduplicates updates and supports unsubscribe.
+  changing the app's selected route or pane without the app confirming it;
+  blocks disabled/stale selection, deduplicates updates and supports
+  unsubscribe. It also tracks the last native pane observation, so with a
+  transport that does not restore the pane itself, the next `update()` puts
+  a rejected pane back even when the app state is unchanged.
 - The native shell can embed a **XAML UIElement** from an app that supplies one.
 
 ## Explicitly not connected yet

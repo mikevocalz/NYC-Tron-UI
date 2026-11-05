@@ -7,6 +7,12 @@ import {
 export interface WindowsNavigationCallbacks {
   /** Route selection is committed by the app, not this native shell. */
   onSelectionRequested: (id: string) => void;
+  /**
+   * The user opened or closed the pane. Pane state is committed by the app:
+   * accept by passing the new `paneOpen` to `update()`. The WinUI shell puts
+   * a rejected pane back itself; for other transports the next `update()`
+   * does.
+   */
   onPaneOpenRequested: (open: boolean) => void;
   onSettingsRequested?: () => void;
 }

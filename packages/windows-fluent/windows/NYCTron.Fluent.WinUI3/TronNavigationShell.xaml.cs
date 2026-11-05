@@ -18,10 +18,15 @@ public sealed partial class TronNavigationShell : UserControl
     private bool _settingFromHost;
     private bool _restorePending;
     private string? _committedId;
+    private bool _committedPaneOpen;
+    private bool _paneRestorePending;
 
     public TronNavigationShell()
     {
         InitializeComponent();
+        // Until the host calls SetPaneOpen, the control's own state counts as
+        // committed, so a pane the host never set is not forced shut.
+        _committedPaneOpen = Navigation.IsPaneOpen;
         Navigation.SelectionChanged += OnSelectionChanged;
     }
 
@@ -147,6 +152,7 @@ public sealed partial class TronNavigationShell : UserControl
 
     public void SetPaneOpen(bool isOpen)
     {
+        _committedPaneOpen = isOpen;
         _settingFromHost = true;
         try { Navigation.IsPaneOpen = isOpen; }
         finally { _settingFromHost = false; }
@@ -187,12 +193,33 @@ public sealed partial class TronNavigationShell : UserControl
         }
     }
 
-    private void OnPaneOpened(NavigationView sender, object args)
+    private void OnPaneOpened(NavigationView sender, object args) => OnPaneChanged(true);
+    private void OnPaneClosed(NavigationView sender, object args) => OnPaneChanged(false);
+
+    // The pane follows the same contract as selection: the host commits it.
+    // NavigationView opens or closes the pane itself (toggle button, light
+    // dismiss, display-mode changes), so a user change is raised as a request
+    // and the pane is put back to the committed state; it moves when the host
+    // calls SetPaneOpen. Without this a rejected toggle left the pane in the
+    // rejected state until some later SetPaneOpen. PaneOpened/PaneClosed can
+    // arrive after SetPaneOpen returns, so they are compared with the
+    // committed value instead of relying on _settingFromHost alone. The
+    // restore is queued so it does not re-enter NavigationView's pane change.
+    private void OnPaneChanged(bool isOpen)
     {
-        if (!_settingFromHost) PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(true));
-    }
-    private void OnPaneClosed(NavigationView sender, object args)
-    {
-        if (!_settingFromHost) PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(false));
+        if (_settingFromHost || _paneRestorePending) return;
+        if (isOpen == _committedPaneOpen) return;
+        PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(isOpen));
+        _paneRestorePending = true;
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            _paneRestorePending = false;
+            // A host that accepted synchronously inside the event already
+            // moved the pane; nothing to restore.
+            if (Navigation.IsPaneOpen == _committedPaneOpen) return;
+            _settingFromHost = true;
+            try { Navigation.IsPaneOpen = _committedPaneOpen; }
+            finally { _settingFromHost = false; }
+        });
     }
 }

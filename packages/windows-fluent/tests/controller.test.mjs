@@ -94,6 +94,12 @@ test("native shell is real WinUI NavigationView outside Fabric composition",()=>
  assert.doesNotMatch(implementation,/SelectsOnInvoked\s*=\s*false/);
  assert.match(implementation,/Navigation\.SelectionChanged \+= OnSelectionChanged/);
  assert.match(implementation,/SetSelectedIdCore\(_committedId\)/);
+ // The pane has the same contract: a user toggle is a request and the shell
+ // puts the pane back until the host commits it with SetPaneOpen.
+ assert.match(implementation,/_committedPaneOpen = isOpen;/);
+ assert.match(implementation,/if \(isOpen == _committedPaneOpen\) return;/);
+ assert.match(implementation,/Navigation\.IsPaneOpen = _committedPaneOpen;/);
+ assert.doesNotMatch(implementation,/if \(!_settingFromHost\) PaneOpenChanged/);
  assert.match(implementation,/AutomationProperties\.SetName\(item, destination\.Label\)/);
  assert.doesNotMatch(implementation,/Windows\.UI\.Xaml/);
 });
