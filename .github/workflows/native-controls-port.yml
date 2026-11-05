@@ -47,7 +47,7 @@ jobs:
           corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
           corepack pnpm --dir packages/native-navigation pack --pack-destination /tmp/nyc-tron-native-pack
           tar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'
-          tar -tzf /tmp/nyc-tron-native-pack/*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
+          tar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-controls-*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
 
   android:
     name: Android native Compose compile
