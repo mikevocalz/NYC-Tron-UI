@@ -15,14 +15,14 @@ the caller passes one; otherwise the token applies.
 | --- | --- | --- | --- |
 | `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected cell |
 | `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
-| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls |
-| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars |
+| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls (incl. LevelFader) |
+| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, LevelFader rail and thumb, XY pad, graph canvas and node title bars |
 | `border` | `--color-border` | `border-border` | Every bordered surface |
 | `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid |
-| `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints |
+| `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints, LevelFader dB readout |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `border-accent` | WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |
+| `accent` | `--color-accent` | `bg-accent`, `border-accent` | WaveformLane bars, LevelFader fill and thumb border, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |
 | `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |

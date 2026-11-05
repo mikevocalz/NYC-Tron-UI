@@ -20,7 +20,8 @@ for (const pkgName of packages) {
   if(pkgName==="ui" &&
     (!manifest.exports["./components/forge/WaveformLane"] ||
      !manifest.exports["./components/forge/NativeSeekBar"] ||
-     !manifest.exports["./components/forge/ColorChannels"])) {
+     !manifest.exports["./components/forge/ColorChannels"] ||
+     !manifest.exports["./components/forge/audio/LevelFader"])) {
     throw new Error("Professional control subpaths must be addressable");
   }
   const dependencies={...manifest.dependencies,...manifest.optionalDependencies};

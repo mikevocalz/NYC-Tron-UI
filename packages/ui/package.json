@@ -50,6 +50,16 @@
       "react-native": "./dist/components/forge/timebase.js",
       "default": "./dist/components/forge/timebase.js"
     },
+    "./components/forge/audio/level": {
+      "types": "./dist/components/forge/audio/level.d.ts",
+      "react-native": "./dist/components/forge/audio/level.js",
+      "default": "./dist/components/forge/audio/level.js"
+    },
+    "./components/forge/audio/LevelFader": {
+      "types": "./dist/components/forge/audio/LevelFader.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelFader.js",
+      "default": "./dist/components/forge/audio/LevelFader.js"
+    },
     "./components/forge/color": {
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color.js",

@@ -13,6 +13,7 @@ complex editor screen composition and its cross-engine suite application.
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | TanStack Table v9 visible row/column model + custom two-axis viewport and formula bar; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
+| Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
 | WindowsNavigationView | Future native Windows adapter | **NOT IMPLEMENTED** | WinUI 3 NavigationView |
@@ -21,7 +22,8 @@ complex editor screen composition and its cross-engine suite application.
 | Multi-hinge region planner | `@nyc-tron/core/folds` | Pure contract/tests | NYC-MON adaptive geometry |
 | Spatial panels | `@nyc-tron/core/spatial` | Pure specification, no renderer | Viro / spatial starter |
 | PrecisionScrubber / draggable fields | `components/forge/PrecisionScrubber` planned | **NOT EXTRACTED** | Forge PR #32 |
-| Track/mixer/fader / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
+| LevelFader + level math | `@nyc-tron/ui/components/forge/audio/LevelFader`, `.../forge/audio/level` | Controlled RN responder fader (value/onChange/onCommit), dB travel, unit + mocked-host render tests; native device QA pending | Forge PR #25 `NativeLevelSlider` |
+| Track/mixer / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
@@ -62,7 +64,7 @@ acceptance gates.
 
 ```text
 Image:         @nitro-forge/prism     + /forge/* graphics controls you need
-Audio:         @nitro-forge/cadence   + /forge/WaveformLane etc.
+Audio:         @nitro-forge/cadence   + /forge/WaveformLane, /forge/audio/LevelFader etc.
 Video:         @nitro-forge/splice    + /forge/NativeSeekBar etc.
 Documents:     @nitro-forge/quill     + /forge/document/* controls
 Spreadsheets:  @nitro-forge/tally     + /forge/spreadsheet/* controls
@@ -79,3 +81,24 @@ their respective distributions and PRs pass.
 ## 2026-11-04 advanced controls
 
 PR #2 adds source-level prototype controls: InstrumentKnob/InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay and CommandPopover. All source resides in NYC-Tron (not Forge). See [the advanced native catalog](ADVANCED_NATIVE_COMPONENTS.md) and @nyc-tron/core/advanced-catalog for complete planned ports and review gates. Native OS adapters, device QA and source licenses are **not** completed by this extraction.
+
+## 2026-11-05 level fader and timebase helpers
+
+Forge PR #25 `NativeLevelSlider` moves here as
+`components/forge/audio/LevelFader`, per Nitro Forge PR #38 (Forge imports
+NYC-Tron UI; NYC-Tron never imports Forge). The source fired its callback on
+every slider move. LevelFader keeps the same linear-gain `value` but splits
+the callback: `onChange` previews during a drag, `onCommit` fires once on
+release or once per button/screen-reader step, and a cancelled drag restores
+`value` without committing. Travel is linear in dB between `range.minDb` and
+`range.maxDb`, with silence at the bottom. It draws its own track instead of
+wrapping `@expo/ui` Slider, so it has no Expo host requirement.
+
+`framesToSeconds`/`secondsToFrame` join the existing `forge/timebase` module;
+there is no second timebase file. WaveformLane's math works on signed sample
+extrema and has no dB conversion, so `audio/level.ts` shares nothing with it.
+
+Verified: unit tests and a mocked-host render test of the real component and
+PanResponder config. Not verified: iOS/Android/Windows/macOS device gestures,
+gesture arbitration inside a ScrollView, VoiceOver/TalkBack/Narrator output
+and web keyboard arrows (react-native-web adjustable support is untested).
