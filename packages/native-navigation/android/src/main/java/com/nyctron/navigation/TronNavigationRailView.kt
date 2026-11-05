@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import expo.modules.kotlin.records.Field
@@ -74,6 +76,12 @@ fun FunctionalComposableScope.TronRailContent(
         icon = {
           Text(
             text = if (glyph.isBlank()) label.take(1).uppercase() else glyph,
+            // Replace decorative glyph speech with the destination name when
+            // collapsed. Expanded rails already expose the visible label.
+            // Keep the parent Material item selection/click/disabled semantics.
+            modifier = Modifier.clearAndSetSemantics {
+              if (!props.expanded) contentDescription = label
+            },
             fontSize = 20.sp,
             color = if (selected) accent else foreground
           )
