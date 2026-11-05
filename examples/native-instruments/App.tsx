@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 import { XYPad } from "@nyc-tron/native-controls/XYPad";
 import { OverlayControls, OverlayLayer } from "./OverlayDemo";
+import { FoldRegionsDemo } from "./FoldRegionsDemo";
 
 type DemoState={gain:number;pan:number;xy:{x:number;y:number};setGain:(v:number)=>void;setPan:(v:number)=>void;setXY:(x:number,y:number)=>void};
 const useDemoStore=create<DemoState>(set=>({
@@ -32,6 +33,7 @@ export default function App(){
      onCommit={p=>setXY(p.x,p.y)}/>
    <Text style={{color:"#AAAABB"}}>Gain: {gain.toFixed(2)} | Pan: {pan.toFixed(2)} | XY: {xy.x.toFixed(2)}, {xy.y.toFixed(2)}</Text>
    <OverlayControls/>
+   <FoldRegionsDemo/>
  </ScrollView>
  <OverlayLayer width={width} height={height}/>
  </View>;

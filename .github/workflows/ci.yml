@@ -39,6 +39,9 @@ jobs:
         run: corepack pnpm typecheck
       - name: Render adaptive pane component contracts with mocked native hosts
         run: node --test packages/panes/tests/*.test.mjs
+      # Uses the installed typescript to run the hooks under mocked RN/Expo.
+      - name: Reserved-regions native contracts and hook behavior
+        run: node --test packages/reserved-regions/tests/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
       - name: Pack every package and check release tarball contents
