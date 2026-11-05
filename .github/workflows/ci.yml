@@ -39,6 +39,8 @@ jobs:
         run: corepack pnpm build
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
+      - name: Typecheck the native overlay example against the emitted packages
+        run: corepack pnpm --dir examples/native-overlays check
       - name: Inspect npm tarball contents
         run: |
           mkdir -p /tmp/nyc-tron-packs

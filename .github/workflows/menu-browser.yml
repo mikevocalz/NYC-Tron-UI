@@ -1,4 +1,4 @@
-name: NYC-Tron rendered web menu acceptance
+name: NYC-Tron rendered web overlay acceptance
 
 on:
   pull_request:
@@ -24,7 +24,7 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Chromium
         run: npx --no-install playwright install --with-deps chromium
-      - name: Exercise the rendered RN web menu
+      - name: Exercise the rendered RN web menu, popover, command palette and tooltip
         run: npm test
       - uses: actions/upload-artifact@v4
         if: failure()

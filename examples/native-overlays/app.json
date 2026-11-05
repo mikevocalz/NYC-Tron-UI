@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "NYC-Tron Overlays Demo",
+    "slug": "nyc-tron-overlays",
+    "scheme": "nyctron-overlays",
+    "version": "0.1.0",
+    "orientation": "default",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.nyctron.overlays.example",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.nyctron.overlays.example"
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "userInterfaceStyle": "automatic"
+  }
+}

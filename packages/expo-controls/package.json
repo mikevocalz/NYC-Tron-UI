@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "description": "Optional Expo 58 SwiftUI/Compose picker and native action menus for NYC-Tron UI",
+  "description": "Optional Expo 58 SwiftUI/Compose picker, action menus, popovers and tooltips for NYC-Tron UI",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,16 +13,28 @@
       "default": "./dist/index.js"
     },
     "./NativeDropdown": {
-      "types": "./dist/components/NativeDropdown.types.d.ts",
+      "types": "./dist/components/NativeDropdown.d.ts",
       "browser": "./dist/components/NativeDropdown.js",
       "react-native": "./dist/components/NativeDropdown.native.js",
       "default": "./dist/components/NativeDropdown.js"
     },
     "./NativeActionMenu": {
-      "types": "./dist/components/NativeActionMenu.types.d.ts",
+      "types": "./dist/components/NativeActionMenu.web.d.ts",
       "browser": "./dist/components/NativeActionMenu.web.js",
       "react-native": "./dist/components/NativeActionMenu.native.js",
       "default": "./dist/components/NativeActionMenu.web.js"
+    },
+    "./NativePopover": {
+      "types": "./dist/components/NativePopover.web.d.ts",
+      "browser": "./dist/components/NativePopover.web.js",
+      "react-native": "./dist/components/NativePopover.native.js",
+      "default": "./dist/components/NativePopover.web.js"
+    },
+    "./Tooltip": {
+      "types": "./dist/components/Tooltip.web.d.ts",
+      "browser": "./dist/components/Tooltip.web.js",
+      "react-native": "./dist/components/Tooltip.native.js",
+      "default": "./dist/components/Tooltip.web.js"
     },
     "./menu-model": {
       "types": "./dist/components/menu-model.d.ts",
@@ -39,6 +51,9 @@
     "build": "tsc --project tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "@nyc-tron/ui": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=19.0.0",
