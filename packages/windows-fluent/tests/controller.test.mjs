@@ -88,5 +88,10 @@ test("native shell is real WinUI NavigationView outside Fabric composition",()=>
    assert.ok(implementation.includes(token),token);
  }
  assert.match(implementation,/SetHostedContent\(UIElement\?/);
+ // Invoking a destination or Settings requests a route; only the host commits it.
+ assert.match(implementation,/SelectsOnInvoked = false/);
+ assert.match(implementation,/settings\.SelectsOnInvoked = false/);
+ assert.match(implementation,/Navigation\.Loaded \+=/);
+ assert.match(implementation,/AutomationProperties\.SetName\(item, destination\.Label\)/);
  assert.doesNotMatch(implementation,/Windows\.UI\.Xaml/);
 });

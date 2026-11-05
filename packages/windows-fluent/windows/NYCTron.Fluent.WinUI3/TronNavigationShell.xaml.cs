@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 
@@ -19,6 +20,8 @@ public sealed partial class TronNavigationShell : UserControl
     public TronNavigationShell()
     {
         InitializeComponent();
+        // SettingsItem exists only after the NavigationView template applies.
+        Navigation.Loaded += (_, _) => DisableSelectOnInvokeForSettings();
     }
 
     public event EventHandler<TronDestinationInvokedEventArgs>? DestinationInvoked;
@@ -68,8 +71,12 @@ public sealed partial class TronNavigationShell : UserControl
         {
             Content = destination.Label,
             Tag = destination.Id,
-            IsEnabled = !destination.Disabled
+            IsEnabled = !destination.Disabled,
+            // The host app commits routes. Invoking an item only requests
+            // navigation; the indicator moves when SetSelectedId is called.
+            SelectsOnInvoked = false
         };
+        AutomationProperties.SetName(item, destination.Label);
         if (!string.IsNullOrEmpty(destination.Glyph))
         {
             item.Icon = new FontIcon
@@ -121,8 +128,24 @@ public sealed partial class TronNavigationShell : UserControl
         finally { _settingFromHost = false; }
     }
 
-    public void SetPaneTitle(string title) => Navigation.PaneTitle = title ?? "";
-    public void SetSettingsVisible(bool visible) => Navigation.IsSettingsVisible = visible;
+    public void SetPaneTitle(string title)
+    {
+        Navigation.PaneTitle = title ?? "";
+        // Narrator names the navigation landmark after the pane title.
+        AutomationProperties.SetName(Navigation, Navigation.PaneTitle);
+    }
+
+    public void SetSettingsVisible(bool visible)
+    {
+        Navigation.IsSettingsVisible = visible;
+        DisableSelectOnInvokeForSettings();
+    }
+
+    private void DisableSelectOnInvokeForSettings()
+    {
+        if (Navigation.SettingsItem is NavigationViewItem settings)
+            settings.SelectsOnInvoked = false;
+    }
 
     /// <summary>
     /// Host-only XAML content slot. RNW Fabric's Composition root does not

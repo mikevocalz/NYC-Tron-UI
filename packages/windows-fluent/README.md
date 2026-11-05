@@ -12,6 +12,11 @@ component yet; it deliberately lives at the Windows app host boundary.
 - Native menu/footer destinations with optional Segoe Fluent glyphs,
   selected item, pane title and settings visibility.
 - Native `ItemInvoked`, `PaneOpened`, `PaneClosed`, settings callbacks.
+- Destinations and the Settings item use `SelectsOnInvoked = false`, so an
+  invoke only raises `DestinationInvoked`; the selection indicator moves when
+  the host calls `SetSelectedId`.
+- Each item's Narrator name is its label; the NavigationView's name is the
+  pane title.
 - `src/controller.ts` provides strict controlled reconciliation: no
   changing the app's selected route without the app confirming it; blocks
   disabled/stale selection, deduplicates updates and supports unsubscribe.
