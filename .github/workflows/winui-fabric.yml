@@ -79,3 +79,35 @@ jobs:
       # C++ compilation proves the ComponentView builds but does not prove
       # a launched React Native Windows app, route roundtrip, Narrator,
       # high contrast or physical Windows keyboard/pointer interactions.
+
+      - name: Install isolated Windows consumer
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        run: npm install --no-audit --no-fund
+      - name: Generate official RNW application and connect native package
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          npm run init:windows
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run prepare:host
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run typecheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Compile actual Windows consumer executable
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -version "[18.0,19.0)" -property installationPath
+          if (-not $vs) { throw "Visual Studio 2026 required" }
+          $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
+          $sdkRoot = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Windows Kits\10\Include"
+          $sdk = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          $solution = (Resolve-Path windows).Path + "\"
+          & $msbuild "windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj" "/p:SolutionDir=$solution" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$($sdk.Name)" "/p:UseExperimentalNuget=true" "/p:RunAutolinkCheck=false" "/restore" "/m" "/v:minimal"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $exe = Get-ChildItem windows -Recurse -Filter NYCTronWindowsExample.exe | Select-Object -First 1
+          if (-not $exe) { throw "Consumer executable was not produced" }
+          Write-Host "Compiled Windows consumer: $($exe.FullName)"
