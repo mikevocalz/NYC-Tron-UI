@@ -14,6 +14,8 @@ complex editor screen composition and its cross-engine suite application.
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
+| HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
+| Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
 | WindowsNavigationView | Future native Windows adapter | **NOT IMPLEMENTED** | WinUI 3 NavigationView |
 | Native dropdown/menu/flyout | Future target-specific adapters | **NOT IMPLEMENTED** | Spark AppKit, WinUI, Expo UI |
@@ -24,7 +26,7 @@ complex editor screen composition and its cross-engine suite application.
 | Track/mixer/fader / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
-| Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
+| Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
 | Advanced grid cells/formula references, frozen panes and clipboard | `components/forge/spreadsheet/` planned | **NOT EXTRACTED** (base SpreadsheetGrid exists) | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
@@ -79,3 +81,22 @@ their respective distributions and PRs pass.
 ## 2026-11-04 advanced controls
 
 PR #2 adds source-level prototype controls: InstrumentKnob/InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay and CommandPopover. All source resides in NYC-Tron (not Forge). See [the advanced native catalog](ADVANCED_NATIVE_COMPONENTS.md) and @nyc-tron/core/advanced-catalog for complete planned ports and review gates. Native OS adapters, device QA and source licenses are **not** completed by this extraction.
+
+## 2026-11-05 HSV picker
+
+`HsvPicker` moved from Nitro Forge PR #34 (`NativeHsvPicker`) into
+`packages/ui/src/components/forge/color/`. It is controlled: `value` and
+`onValueChange` carry one `HsvColor`, `onApply` and `onCancel` let the Forge
+host open and close its own undo transaction, and the picker keeps no color
+state. `parseHexColor`, `rgbToHsv`, `hsvToRgb`, `assertHsv` and `wrapHue`
+were added to the existing `/forge/color` module, which `ColorChannels` also
+imports; there is no second copy of the math.
+
+Screen readers adjust saturation with swipe up/down and reach brightness and
+hue through named actions. Saturation and brightness also have 44pt
+steppers. The picker has no animation. Consumers that import this subpath
+must install `@expo/ui` and `expo-linear-gradient`; other subpaths do not
+need them.
+
+Only source, types, unit tests and package exports are verified. No iOS,
+Android, web or foldable device run has been done for this control.

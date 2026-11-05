@@ -55,6 +55,21 @@
       "react-native": "./dist/components/forge/color.js",
       "default": "./dist/components/forge/color.js"
     },
+    "./components/forge/color/HsvPicker": {
+      "types": "./dist/components/forge/color/HsvPicker.d.ts",
+      "react-native": "./dist/components/forge/color/HsvPicker.js",
+      "default": "./dist/components/forge/color/HsvPicker.js"
+    },
+    "./components/forge/color/fieldGeometry": {
+      "types": "./dist/components/forge/color/fieldGeometry.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGeometry.js",
+      "default": "./dist/components/forge/color/fieldGeometry.js"
+    },
+    "./components/forge/color/fieldGesture": {
+      "types": "./dist/components/forge/color/fieldGesture.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGesture.js",
+      "default": "./dist/components/forge/color/fieldGesture.js"
+    },
     "./components/data/DataTable": {
       "types": "./dist/components/data/DataTable.d.ts",
       "react-native": "./dist/components/data/DataTable.js",
@@ -151,13 +166,17 @@
     "react-native": ">=0.88.0",
     "@expo/ui": "^58.0.0",
     "@tanstack/react-table": "^9.0.0",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.0",
+    "expo-linear-gradient": "^58.0.0"
   },
   "peerDependenciesMeta": {
     "@expo/ui": {
       "optional": true
     },
     "@tanstack/react-table": {
+      "optional": true
+    },
+    "expo-linear-gradient": {
       "optional": true
     }
   },
@@ -168,7 +187,8 @@
     "react-native": "0.88.0",
     "@expo/ui": "58.0.20",
     "@tanstack/react-table": "9.3.1",
-    "zustand": "5.0.16"
+    "zustand": "5.0.16",
+    "expo-linear-gradient": "58.0.3"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

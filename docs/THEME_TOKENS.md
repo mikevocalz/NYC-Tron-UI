@@ -15,10 +15,10 @@ the caller passes one; otherwise the token applies.
 | --- | --- | --- | --- |
 | `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected cell |
 | `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
-| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls |
-| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars |
+| `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, HsvPicker thumb inner ring |
+| `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars, HsvPicker steppers |
 | `border` | `--color-border` | `border-border` | Every bordered surface |
-| `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid |
+| `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid; HsvPicker thumb outer ring |
 | `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
