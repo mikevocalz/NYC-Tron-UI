@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/native-navigation",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "type": "module",
   "sideEffects": false,
@@ -10,16 +10,18 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./NativeNavigationRail": {
-      "types": "./src/NativeNavigationRail.native.tsx",
+      "types": "./dist/NativeNavigationRail.native.d.ts",
       "react-native": "./dist/NativeNavigationRail.native.js",
       "browser": "./dist/NativeNavigationRail.web.js",
       "default": "./dist/NativeNavigationRail.web.js"
     },
     "./navigation-model": {
       "types": "./dist/navigation-model.d.ts",
+      "react-native": "./dist/navigation-model.js",
       "default": "./dist/navigation-model.js"
     }
   },
@@ -44,7 +46,6 @@
     "typescript": "~6.0.3"
   },
   "files": [
-    "src",
     "dist",
     "ios",
     "android",
