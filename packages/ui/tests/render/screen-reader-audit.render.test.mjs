@@ -25,7 +25,7 @@ function loader(os="ios"){
       useRef:v=>{const i=cursor++;return slots[i]??(slots[i]={current:v});},
       useEffect:()=>{cursor++;},useLayoutEffect:()=>{cursor++;},
       useMemo:fn=>{cursor++;return fn();},useCallback:fn=>{cursor++;return fn;},
-      useId:()=>"id",use:ctx=>ctx?._value,useContext:ctx=>ctx?._value,
+      useSyncExternalStore:(_sub,get)=>{cursor++;return get();},useId:()=>"id",use:ctx=>ctx?._value,useContext:ctx=>ctx?._value,
       useState:v=>{const i=cursor++;slots[i]??=[typeof v==="function"?v():v,()=>{}];return slots[i];},
       createContext:v=>({_value:v,Provider:"Provider"}),
     },
@@ -58,7 +58,7 @@ const controls=[
   ["forge/inputs/InstrumentKnob.tsx","InstrumentKnob",{label:"Cutoff",value:0.5,min:0,max:1,step:0.01,onPreview:noop,onCommit:noop}],
   ["forge/inputs/InstrumentXYPad.tsx","InstrumentXYPad",{label:"Filter",x:0.5,y:0.5,onPreview:noop,onCommit:noop}],
   ["forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",{label:"Exposure",value:0,min:-5,max:5,step:0.1,onPreview:noop,onCommit:noop}],
-  ["forge/WaveformLane.tsx","WaveformLane",{peaks:[0.1,0.5,0.9,0.4],progress:0.25,onSeekNormalized:noop}],
+  ["forge/WaveformLane.tsx","WaveformLane",{peaks:[{min:-0.1,max:0.1},{min:-0.5,max:0.5},{min:-0.9,max:0.9}],position:0.25,onSeekNormalized:noop}],
 ];
 
 for(const [file,name,props] of controls){
@@ -76,6 +76,8 @@ test("the audit catches each rule on a broken tree",()=>{
     el("View",{accessibilityRole:"adjustable",accessibilityLabel:"Gain"}),
     el("View",{accessibilityLabel:"Card",accessibilityActions:[{name:"pin"}]}),
     el("View",{accessibilityRole:"image"}),
+    el("View",{accessibilityRole:"adjustable",accessibilityLabel:"Pan","aria-valuenow":0,
+      accessibilityActions:[{name:"increment"},{name:"decrement"}],onAccessibilityAction:noop}),
     el("View",{accessibilityElementsHidden:true,children:el("Pressable",{onPress:noop})}),
     el("Pressable",{onPress:noop,style:{minHeight:24},hitSlop:10,children:el("Text",{children:"Undo"})}),
   ]});

@@ -111,8 +111,10 @@ export function auditAccessibility(tree:unknown,options:A11yAuditOptions={}):A11
         report("small-target",path,label,`Touch target is under ${minTarget}pt and has no hitSlop.`);
     }
     if(role==="adjustable"){
+      // React Native maps aria-valuenow/aria-valuetext onto the same value as accessibilityValue.
       const value=props.accessibilityValue as {now?:number;text?:string}|undefined;
-      if(!value||(value.now===undefined&&!value.text))report("adjustable-without-value",path,label,"Adjustable control has no accessibilityValue to read.");
+      const hasValue=value?.now!==undefined||!!value?.text||props["aria-valuenow"]!==undefined||!!props["aria-valuetext"];
+      if(!hasValue)report("adjustable-without-value",path,label,"Adjustable control has no accessibilityValue to read.");
       const names=new Set(((props.accessibilityActions??[]) as {name:string}[]).map(a=>a.name));
       if(!names.has("increment")||!names.has("decrement"))
         report("adjustable-without-actions",path,label,"Adjustable control needs increment and decrement actions for swipe up/down.");
