@@ -33,10 +33,12 @@ jobs:
         run: corepack enable
       - name: Install local workspace
         run: corepack pnpm install --frozen-lockfile
-      - name: Typecheck packages
-        run: corepack pnpm typecheck
-      - name: Compile independent package distributions
+      - name: Compile independent package distributions in dependency order
         run: corepack pnpm build
+      - name: Typecheck packages against built peer workspaces
+        run: corepack pnpm typecheck
+      - name: Render adaptive pane component contracts with mocked native hosts
+        run: node --test packages/panes/tests/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
       - name: Inspect npm tarball contents
@@ -45,6 +47,7 @@ jobs:
           corepack pnpm --dir packages/core pack --pack-destination /tmp/nyc-tron-packs
           corepack pnpm --dir packages/geometry pack --pack-destination /tmp/nyc-tron-packs
           corepack pnpm --dir packages/ui pack --pack-destination /tmp/nyc-tron-packs
+          corepack pnpm --dir packages/panes pack --pack-destination /tmp/nyc-tron-packs
           ls -lh /tmp/nyc-tron-packs/*.tgz
       # No native targets are built on this Linux workflow. A typechecked
       # @expo/ui source import is not a device validation.
