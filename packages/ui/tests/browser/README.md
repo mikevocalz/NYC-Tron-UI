@@ -1,7 +1,7 @@
 # Rendered web instrument acceptance
 
-This fixture bundles the real `PrecisionScrubber` and `DragGrabHandle` sources
-through React Native Web, styled by Tailwind v4 from the reference light and dark
+This fixture bundles the real `PrecisionScrubber`, `DragGrabHandle` and
+`LayerStack` sources through React Native Web, styled by Tailwind v4 from the reference light and dark
 tokens in `docs/THEME_TOKENS.md`. `rn-shim.tsx` forwards `className` to React
 Native Web as precompiled classes, standing in for the consumer's Uniwind runtime.
 
@@ -14,9 +14,12 @@ npm test
 `scrubber.spec.mjs` drags with a real mouse in Chromium: one commit per release,
 fine precision on upward travel inside a ScrollView, Escape cancel, arrow keys,
 buttons, text entry, disabled state, and handle reorder plus Escape cancel.
-`shots.spec.mjs` writes review captures to `shots/` (light and dark, 390px phone
-and 834px tablet, resting, focused and mid-drag, plus forced colors). They are
-uploaded as a CI artifact, not compared as pixel goldens.
+`layers.spec.mjs` covers LayerStack kind labels and thumbnails, removal by
+pointer, Enter and Delete, the fixture's undo, and locked rows refusing removal.
+`shots.spec.mjs` writes review captures to `shots/`: light and dark, 390px phone
+and 834px tablet, resting, focused and mid-drag, forced colors, and the layer
+stack at both widths with a focused remove button, plus RTL via `?dir=rtl`. They
+are uploaded as a CI artifact, not compared as pixel goldens.
 
 Not covered: iOS/Android rendering, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

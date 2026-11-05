@@ -16,6 +16,24 @@ for(const theme of ["light","dark"])for(const [name,size] of sizes){
     await page.mouse.up();
   });
 }
+for(const theme of ["light","dark"])for(const [name,size] of sizes){
+  test(`capture layers ${theme} ${name}`,async({page})=>{
+    await page.setViewportSize(size);
+    await page.goto("/?theme="+theme);
+    const stack=page.getByLabel("Layers",{exact:true});
+    await stack.scrollIntoViewIfNeeded();
+    await stack.screenshot({path:`shots/layers-${theme}-${name}.png`});
+    await page.getByRole("button",{name:"Remove Badge"}).focus();
+    await stack.screenshot({path:`shots/layers-${theme}-${name}-remove-focus.png`});
+  });
+}
+test("capture layers rtl phone",async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto("/?dir=rtl");
+  const stack=page.getByLabel("Layers",{exact:true});
+  await stack.scrollIntoViewIfNeeded();
+  await stack.screenshot({path:"shots/layers-light-phone-rtl.png"});
+});
 test("capture forced colors",async({page})=>{
   await page.emulateMedia({forcedColors:"active"});
   await page.setViewportSize({width:390,height:844});
