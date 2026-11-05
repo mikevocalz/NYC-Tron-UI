@@ -28,8 +28,10 @@ const postureOf = () => typeof navigator === "undefined" ? undefined
 /**
  * Segments -> division regions. The gap between consecutive segments is the
  * hinge. Side-by-side segments give a vertical hinge (book when folded),
- * stacked segments a horizontal one (tabletop). A flat fold is one continuous
- * surface: the division is reported but does not separate.
+ * stacked segments a horizontal one (tabletop). A gap between segments is a
+ * physical hinge and separates even while flat, as a dual-screen device's
+ * FoldingFeature does. A zero-size seam separates only when folded; flat, it is
+ * one continuous surface.
  */
 export function regionsFromSegments(
   segments: readonly ViewportSegmentRect[] | null | undefined,
@@ -44,15 +46,19 @@ export function regionsFromSegments(
     if (a.bottom <= b.top || b.bottom <= a.top) {
       const [upper, lower] = a.top <= b.top ? [a, b] : [b, a];
       const left = Math.min(a.left, b.left);
+      const gap = Math.max(0, lower.top - upper.bottom);
+      const separating = folded || gap > 0;
       out.push({ kind: "division", x: left, y: upper.bottom,
-        width: Math.max(a.right, b.right) - left, height: Math.max(0, lower.top - upper.bottom),
-        margins, active: folded, orientation: "horizontal", state, separating: folded });
+        width: Math.max(a.right, b.right) - left, height: gap,
+        margins, active: separating, orientation: "horizontal", state, separating });
     } else {
       const [first, second] = a.left <= b.left ? [a, b] : [b, a];
       const top = Math.min(a.top, b.top);
+      const gap = Math.max(0, second.left - first.right);
+      const separating = folded || gap > 0;
       out.push({ kind: "division", x: first.right, y: top,
-        width: Math.max(0, second.left - first.right), height: Math.max(a.bottom, b.bottom) - top,
-        margins, active: folded, orientation: "vertical", state, separating: folded });
+        width: gap, height: Math.max(a.bottom, b.bottom) - top,
+        margins, active: separating, orientation: "vertical", state, separating });
     }
   }
   return out;

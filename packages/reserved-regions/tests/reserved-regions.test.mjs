@@ -197,13 +197,22 @@ test("web: side-by-side segments give a vertical hinge; folded posture separates
     active: true, orientation: "vertical", state: "halfOpened", separating: true });
 });
 
-test("web: stacked segments give a horizontal hinge; flat posture does not separate", () => {
+test("web: stacked segments give a horizontal hinge; a flat physical gap still separates", () => {
   const web = webHarness({ segments: [seg(0, 410, 800, 390), seg(0, 0, 800, 400)] }, { type: "continuous" });
   const [region] = web.useReservedRegions();
   assert.equal(region.orientation, "horizontal");
   assert.equal(region.y, 400);
   assert.equal(region.height, 10);
+  assert.equal(region.state, "flat");
+  assert.equal(region.separating, true);
+});
+
+test("web: a flat zero-size seam is one continuous surface", () => {
+  const web = webHarness({ segments: [seg(0, 0, 400, 800), seg(400, 0, 400, 800)] }, { type: "continuous" });
+  const [region] = web.useReservedRegions();
+  assert.equal(region.width, 0);
   assert.equal(region.separating, false);
+  assert.equal(region.active, false);
 });
 
 test("web: the snapshot is stable between reads and empty when hinge-blind", () => {
