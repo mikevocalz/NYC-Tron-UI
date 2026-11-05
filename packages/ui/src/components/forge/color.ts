@@ -40,6 +40,8 @@ export function assertHsv(c:HsvColor):void{
 /** Wraps any finite angle into 0..360 (360 itself becomes 0). */
 export function wrapHue(h:number):number{
  if(!Number.isFinite(h))throw new RangeError("Hue must be finite");
+ // In-range hues return unchanged: (h%360+360)%360 adds float error (217.4 -> 217.39999999999998).
+ if(h>=0&&h<360)return h+0; // +0 turns -0 (from atan2) into 0
  return ((h%360)+360)%360;
 }
 export function rgbaToHex(c:RgbaColor,includeAlpha=true):string{
