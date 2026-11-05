@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/windows-fluent-fabric",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "private": true,
   "description": "RNW 0.85 Windows XAML Fabric NavigationView island",
   "main": "./dist/index.js",
