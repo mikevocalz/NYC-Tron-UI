@@ -39,6 +39,18 @@ section 4(b)). License texts and ProCraft's NOTICE are preserved verbatim in
 `licenses/ProCraft-NOTICE.txt`. No ProCraft fonts, icons, HDR environments or
 other assets are copied.
 
+**FilmCraft for Android** — https://github.com/artcraft-android/filmcraft-android
+MIT License or Apache License 2.0, at your option. Copyright (c) 2026 ArtCraft
+Team and the FilmCraft contributors. Ported from
+`apps/filmcraft-android/android/app/src/main/java/io/github/artcraftandroid/filmcraft/ui/editor/TimelineMath.kt`
+and `Timeline.kt` at commit `c41b58467edd28d098336286528159b24c5203b5` into
+`packages/ui/src/components/forge/timeline/ruler.ts` and
+`ClipTrimHandles.tsx`; both files carry a modification notice (Apache-2.0
+section 4(b)). License texts and FilmCraft's NOTICE are preserved verbatim in
+`licenses/FilmCraft-LICENSE-MIT.txt`, `licenses/FilmCraft-LICENSE-APACHE.txt`
+and `licenses/FilmCraft-NOTICE.txt`. No FilmCraft fonts, icons, models or
+other assets are copied. No CapCraft (AGPL-3.0) source is used.
+
 **WordCraft for Android** — https://github.com/artcraft-android/wordcraft-android
 Pinned commit `b2b7cf913c6f61604062e2db30962f32ec921b11`.
 Copyright (c) 2026 ArtCraft Team and the WordCraft contributors. Licensed under

@@ -8,6 +8,13 @@ complex editor screen composition and its cross-engine suite application.
 | --- | --- | --- | --- |
 | Button | `@nyc-tron/ui/components/Button` | RN semantic foundation | NYC-MON Button, Moyo Button |
 | Card | `@nyc-tron/ui/components/Card` | RN semantic foundation | NYC-MON / Moyo Card |
+| Select | `@nyc-tron/ui/components/Select`; platform picker via `@nyc-tron/expo-controls/Select` | Token-styled select-only combobox (APG): activedescendant, arrows, Home/End, typeahead, Escape; in-flow list on native. The expo-controls entry renders NativeDropdown (SwiftUI Picker / Material exposed dropdown) on iOS/Android and keeps the combobox for a placeholder value or a disabled row. Chromium tests; native picker build unverified on device | NYC-MON `Select` |
+| SegmentedControl | `@nyc-tron/ui/components/SegmentedControl` | Radio group, roving tabindex, arrows flipped in RTL, disabled segments skipped, 44pt segments that wrap. Chromium tests | NYC-MON `SegmentedControl` |
+| TabBar | `@nyc-tron/ui/components/TabBar` | `tabs` (tablist, selection follows arrows) or `navigation` (links, `aria-current="page"`); `compact` pane density. Chromium tests | NYC-MON `TabBar` |
+| Toolbar | `@nyc-tron/ui/components/Toolbar` | Leading slot, title as heading, trailing `role="toolbar"` group with web arrow-key focus. Chromium tests | NYC-MON `Toolbar` |
+| List / ListItem | `@nyc-tron/ui/components/List` | Short grouped rows (`list`/`listitem`); pressable rows speak title plus supporting text. Not a virtualized list. Chromium tests | NYC-MON `List` web fork |
+| IconButton | `@nyc-tron/ui/components/IconButton` | Icon passed as a child node (no icon dependency); 44/48pt; `selected` exposes toggle state. Aligns with the icon package once #15 merges. Chromium tests | NYC-MON `IconButton` |
+| FieldGroup / FieldGroup.Section | `@nyc-tron/ui/components/FieldGroup` | Titled field block, `group` named by its heading, optional footer. Chromium render | NYC-MON `FieldGroup` |
 | NavigationRail / Shell | `@nyc-tron/ui/components/NavigationRail` | Controlled RN shell, NOT WinUI | NYC-MON / Moyo adaptive |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
@@ -47,7 +54,20 @@ complex editor screen composition and its cross-engine suite application.
 | Drag transports | `@nyc-tron/ui/components/gestures/PanResponderDrag` (default) and `/gestures/GestureHandlerDrag` (optional `react-native-gesture-handler` >=3.4 <4 peer) | Callback logic tested with mocked RN/RNGH; native recognition unverified on device | Forge `studio-gesture.tsx` / `studio-gesture.native.tsx` |
 | LevelFader + level math | `@nyc-tron/ui/components/forge/audio/LevelFader`, `.../forge/audio/level` | Controlled RN responder fader (value/onChange/onCommit), dB travel, unit + mocked-host render tests; native device QA pending | Forge PR #25 `NativeLevelSlider` |
 | Track/mixer / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
-| Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
+| Rational time model (frames, samples, timecode) | `@nyc-tron/ui/components/forge/timeline/time` (reuses `/forge/timebase`) | Pure, tested: BigInt frame/sample conversion, drop-frame parse, typed-time parse | Original |
+| SeekBar (D-04) | `@nyc-tron/ui/components/forge/timeline/SeekBar` | RN seek track with played and buffered ranges and a drag-end commit; `NativeSeekBar` stays the `@expo/ui` variant | Original |
+| TransportControls (D-06) | `@nyc-tron/ui/components/forge/timeline/TransportControls` | Play/pause, stop, jumps, frame steps, keyboard; not mirrored in RTL | Original |
+| PlaybackRateMenu (D-07) | `@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu` | Rates, optional reverse, optional preserve-pitch switch | `speedLabel` ported from FilmCraft `TimelineMath.kt` |
+| TimecodeDisplay (D-08) | `@nyc-tron/ui/components/forge/timeline/TimecodeDisplay` | Timecode (drop-frame), frames, seconds, sample clock; editable | Original |
+| TimelineRuler (D-10) | `@nyc-tron/ui/components/forge/timeline/TimelineRuler` (`/forge/timeline/ruler`) | Frame/second/minute steps, marks, drag-to-seek | FilmCraft `TimelineMath.kt` (ported, MIT OR Apache-2.0) |
+| TimelinePlayhead (D-11) | `@nyc-tron/ui/components/forge/timeline/TimelinePlayhead` (`followPlayhead` in `/forge/timeline/viewport`) | Line across lanes, 44pt adjustable head, pinned at the edge when off screen | Original |
+| InOutRangeHandles (D-12) | `@nyc-tron/ui/components/forge/timeline/InOutRangeHandles` (`setMark` in `/forge/timeline/edits`) | Set in/out at playhead, draggable adjustable marks | Original |
+| TimelineZoomAndScroll (D-14) | `@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll` (`/forge/timeline/viewport`) | Zoom about the playhead, fit selection/all, mini-map; pinch and Ctrl/Cmd-wheel in the clip lane | Zoom limits ported from FilmCraft |
+| TimelineClipLane (D-15) | `@nyc-tron/ui/components/forge/timeline/TimelineClipLane` (`/forge/timeline/edits`) | Multi-track lanes, visible-only mounting, select, move with snapping and overlap refusal, pan, pinch, `renderClipContent` for thumbnails | Original |
+| ClipTrimHandles (D-19) | `@nyc-tron/ui/components/forge/timeline/ClipTrimHandles` | Head/tail trims, speed-aware, media and neighbour limits, apply order for Splice | FilmCraft `Timeline.kt` trim drag (ported) |
+| RazorSplitTool (D-20) | `@nyc-tron/ui/components/forge/timeline/RazorSplitTool` | Razor toggle and split at playhead; ripple deferred | Original |
+| SafeAreaOverlay (D-25) | `@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay` (`/forge/timeline/safe-area`) | SMPTE/legacy safe areas, aspect mattes, thirds, center | Original |
+| Track headers (D-18) | `components/forge/timeline/` | **DEFERRED**: Splice tracks have no lock/hide/mute flags yet (add/remove only) | Forge Splice |
 | LayerStack + layer model | `@nyc-tron/ui/components/forge/layers/LayerStack`, `.../forge/layers/layer-model` | Controlled RN list: visibility, opacity drag, reorder, rename, optional `kindLabel`, thumbnail and `onRemove`. Model tests, mocked-host render tests and Chromium/React Native Web remove and keyboard tests; no device or screen-reader QA yet | Forge Prism layer panel |
 | Brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
@@ -322,6 +342,83 @@ ProCraft source: `ColorPanel.kt` at commit
 files carry the pin, the copyright line and a modification notice; both
 license texts and ProCraft's NOTICE are in `licenses/`.
 
+## 2026-11-05 timeline core
+
+D-04, D-06, D-07, D-08, D-10, D-11, D-12, D-14, D-15, D-19, D-20 and D-25 live
+in `packages/ui/src/components/forge/timeline/`, one subpath each, with the
+pure models on `/time`, `/ruler`, `/viewport`, `/edits` and `/safe-area`.
+
+**Time model.** Timeline positions are whole frames at a rational
+`FrameRate` (`/forge/timebase`); audio positions are whole samples at an
+integer rate. Frame/sample conversion uses BigInt, so 29.97 fps at 192 kHz
+stays exact over a day. `framesToSamples` returns the first sample at or after
+a frame's start (ceiling), so the round trip back to frames is exact. Seconds
+appear only at the engine boundary: whole frames through `framesToSeconds` and
+`secondsToFrame` from `forge/timebase` (re-exported by `/time`, not copied),
+fractional media positions through `positionToSeconds`.
+
+**Engine contract.** The lane, trim handles, razor and split button emit one
+`TimelineEdit` per finished gesture (release, key press, screen-reader step or
+button), never per move. Each edit carries frames for the UI and seconds for
+an engine that stores seconds. A Forge adapter maps them onto Splice:
+
+| Edit | Splice ops |
+| --- | --- |
+| `move` | `moveClip(id, startSeconds)` |
+| `trim`, `order: "trim-only"` (tail) | `trimClip(id, inSeconds, outSeconds)` |
+| `trim`, `order: "trim-then-move"` (head later) | `trimClip`, then `moveClip` |
+| `trim`, `order: "move-then-trim"` (head earlier) | `moveClip`, then `trimClip` |
+| `split` | `splitClip(id, atSeconds)` |
+
+Splice's `trimClip` keeps a clip's start fixed, so a head trim is two ops; the
+`order` field names the sequence that never overlaps a neighbour midway, and
+the adapter applies both inside one undo group. Splice's `timeline` read maps
+to `TimelineTrack[]` (`start_s`, `in_s`, `out_s`, `speed` to frames at the
+sequence rate). `addClip` and `setSpeed` have no UI here; see below. The
+browser fixture applies every edit to a seconds-based stand-in with Splice's
+overlap rule, so the mapping above is exercised, not only typed.
+
+Previews never cross the boundary: a move or trim that would overlap a
+neighbour is drawn with a danger border and the text "Overlaps another clip",
+and release commits nothing.
+
+**Rendering.** `@shopify/react-native-skia` is not an optional peer of
+`@nyc-tron/ui`, so dense lanes are React Native views with visible-range
+mounting (`visibleClips`) rather than a Skia canvas. Time runs left to right
+in RTL layouts, and transport controls are not mirrored, following Material
+and Apple guidance for media controls; button rows and labels around them do
+mirror.
+
+Decisions recorded here:
+
+- **D-18 TrackHeaders: DEFERRED** until Splice tracks carry lock/hide/mute/solo
+  flags. Lanes show the track label meanwhile.
+- **Ripple (part of D-20): DEFERRED.** Splice has no ripple op; emulating it
+  as N `moveClip`s would not be one undo step.
+- **`setSpeed` and `addClip` UI: DEFERRED** to D-22 (drag from the bin) and the
+  speed-curve work. `PlaybackRateMenu` is player rate, not clip speed.
+- **Mini-map thumbnails and filmstrips (D-16) and waveforms in clips (D-17)**
+  are out of scope; `renderClipContent` is where a host draws them.
+
+Verified: types, unit tests (drop-frame parse round trip for every frame of 20
+minutes at 29.97 and 59.94, sample math at 44.1/48/192 kHz, ruler steps from
+FilmCraft's own test values, zoom about an anchor, follow-playhead, move/trim
+previews with snapping, overlap, media limits and speed, apply order, splits,
+in/out marks, safe areas), package exports, and React Native Web in Chromium:
+`tests/browser/timeline.spec.mjs` (13 tests: move, overlap refusal, trims in
+each order, split and razor, ruler and playhead seeking, seek-bar Escape,
+transport, timecode entry and formats, playback rate, in/out marks, zoom, fit,
+pan, Ctrl/Shift wheel, clip keys, NTSC drop-frame entry) plus captures at 390
+and 834 px in light and dark, NTSC with a scope matte, and RTL. Not verified:
+iOS, Android or foldable devices, VoiceOver/TalkBack, real touch pinch, pen
+input, and a real Splice engine (the fixture's stand-in follows its rules).
+
+FilmCraft source: `TimelineMath.kt` and `Timeline.kt` at commit
+`c41b58467edd28d098336286528159b24c5203b5`, MIT OR Apache-2.0. `ruler.ts` and
+`ClipTrimHandles.tsx` carry the pin, the copyright line and a modification
+notice; both license texts and FilmCraft's NOTICE are in `licenses/`. Nothing
+from CapCraft (AGPL) was read into or copied to this code.
+
 ## 2026-11-05 LayerStack kind labels, thumbnails and remove
 
 Moving the Forge Prism editor onto `LayerStack` needed three additions. All
@@ -370,3 +467,16 @@ Verified by a Chromium check that the timecode uses the dark text token on a
 light OS scheme, a check that the forward button stays inside the card at
 390px, and dark/light captures at 390 and 834px. Not verified on iOS or
 Android devices.
+
+## 2026-11-05 studio form and navigation primitives (part A)
+
+Select, SegmentedControl, TabBar, Toolbar, List, IconButton and FieldGroup.
+
+### Studio host slots
+
+Nitro Forge's `StudioUIProvider` takes these primitives directly. Forge's
+`tone` props (`royal`, `carolina`) are accepted by its slot types and ignored
+here: color comes from the host theme tokens, and active state uses
+`primary`. Brand tones belong in the host's theme, not in component props.
+NYC-MON's district tones and corner-cut frames were left behind for the same
+reason.

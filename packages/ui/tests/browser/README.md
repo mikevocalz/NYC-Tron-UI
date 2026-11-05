@@ -34,6 +34,23 @@ swaps chips, searches swatches and undocks the palette past a simulated hinge.
 `color-shots.spec.mjs` captures each palette mode at both widths in both themes,
 floating, and in RTL.
 
+`fixtures/timeline.tsx` renders the timeline core over a seconds-based
+stand-in for Splice that applies each `TimelineEdit` as `moveClip`,
+`trimClip` and `splitClip` in the order the edit names. `timeline.spec.mjs`
+moves, trims, splits, seeks, marks, zooms and pans with a real mouse and
+keyboard; `timeline-shots.spec.mjs` captures both widths in both themes, NTSC
+drop-frame with a scope matte, and RTL.
+
+`fixtures/forms.tsx` renders the studio form and navigation primitives at
+`/forms`, themed with the InFraX preset values. `forms.spec.mjs` drives
+SegmentedControl arrows (including RTL), pane TabBar arrows, navigation TabBar
+links, Select keyboard and pointer use, ListItem presses, IconButton toggle
+state, Toolbar arrow focus, and a 44px minimum for every control at 390px and
+834px. `forms-shots.spec.mjs` captures the same page light and dark at 390px
+and 834px (resting, Select open, focused), RTL, and forced colors.
+
+Set `UI_ACCEPTANCE_PORT` to run the lane on a port other than 4179.
+
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
 EmptyState, ErrorMessage, KeyValueList, NightScope, the web DropZone and
 FilePicker, and the semantic html set. It checks the rendered elements and
@@ -59,7 +76,7 @@ failed (K-07); and steps pages and shows the no-voice state (K-18).
 `office-shots.spec.mjs` writes `shots/office-*` at 390 and 834 px in light and
 dark, RTL, search results and text editing.
 
-`PORT=<n>` moves the server off 4179 when that port is taken.
+`UI_ACCEPTANCE_PORT=<n>` moves the server off 4179 when that port is taken.
 
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.
