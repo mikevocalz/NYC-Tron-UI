@@ -1,0 +1,112 @@
+name: NYC-Tron release tarballs
+
+# Builds every package, packs it, and attaches the .tgz files plus SHA256SUMS
+# to a GitHub prerelease. Consumers install them by release URL. Nothing is
+# published to npm: every package.json stays "private": true.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Package version to release, without the v (tag v<version> is created at the selected ref)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: build, test, pack and upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Resolve release version and tag
+        id: version
+        env:
+          EVENT: ${{ github.event_name }}
+          INPUT_VERSION: ${{ inputs.version }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            version="$INPUT_VERSION"
+          else
+            version="${REF_NAME#v}"
+          fi
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "::error::'$version' is not a semver version"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Install workspace (frozen lockfile)
+        run: corepack pnpm install --frozen-lockfile
+      - name: Build every package
+        run: corepack pnpm -r build
+      - name: Unit and contract tests
+        run: |
+          corepack pnpm test
+          node --test packages/panes/tests/*.test.mjs
+          node --test packages/native-controls/tests/*.test.mjs
+          node --test packages/expo-controls/tests/*.test.mjs
+      - name: Typecheck against built packages
+        run: corepack pnpm typecheck
+      - name: Verify exports, dist targets and optional-peer isolation
+        run: node tooling/verify-packages.mjs
+
+      # Fails if any package version differs from the tag, a tarball lacks
+      # dist/README/notices, ships src/, or keeps an export outside dist.
+      - name: Pack and check every tarball
+        run: node tooling/pack-release.mjs "$RUNNER_TEMP/release" --expect-version "${{ steps.version.outputs.version }}"
+
+      - name: Create prerelease and upload tarballs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          dir="$RUNNER_TEMP/release"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::Release $TAG already exists; bump the package versions instead of replacing assets"
+            exit 1
+          fi
+          {
+            echo "Install by URL, for example:"
+            echo
+            echo '```json'
+            echo "\"@nyc-tron/ui\": \"https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/nyc-tron-ui-${TAG#v}.tgz\""
+            echo '```'
+            echo
+            echo "Tarballs and SHA-256:"
+            echo
+            echo '```'
+            cat "$dir/SHA256SUMS"
+            echo '```'
+            echo
+            echo "Not published to npm. Licensing status: see THIRD_PARTY_NOTICES.md in the repository and in each tarball."
+          } > "$dir/NOTES.md"
+          target=()
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            target=(--target "$GITHUB_SHA")
+          else
+            target=(--verify-tag)
+          fi
+          gh release create "$TAG" "${target[@]}" \
+            --prerelease \
+            --title "NYC-Tron UI $TAG" \
+            --notes-file "$dir/NOTES.md" \
+            "$dir"/*.tgz "$dir/SHA256SUMS"
+          gh release view "$TAG" --json assets --jq '.assets[].name'

@@ -13,7 +13,7 @@ the caller passes one; otherwise the token applies.
 
 | `TronTheme` key | Variable | Utilities | Used by |
 | --- | --- | --- | --- |
-| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected cell |
+| `primary` | `--color-primary` | `bg-primary`, `bg-primary/10` | Button (primary), NavigationRail selected item, SpreadsheetGrid selected range, TreeGrid selected rows |
 | `onPrimary` | `--color-on-primary` | `text-on-primary` | Text on `primary` |
 | `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, HsvPicker thumb inner ring |
 | `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars, HsvPicker steppers |
@@ -22,8 +22,8 @@ the caller passes one; otherwise the token applies.
 | `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints, HsvPicker and ColorChannels labels and hex readout |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `border-accent` | WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |
-| `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input |
+| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |
+| `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |
 
