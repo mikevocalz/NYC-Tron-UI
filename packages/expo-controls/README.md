@@ -3,9 +3,13 @@
 Optional native-control leaf package. It is not installed when an app imports
 `@nyc-tron/ui/components/Button`. It is not linked to Nitro Forge engines.
 
-`NativeDropdown`: backed by the Expo 58 universal `@expo/ui` `Picker`
-(SwiftUI menu on iOS, Compose on Android, web input on web). Controlled
-single-select; values and labels must be unique.
+`NativeDropdown`: a SwiftUI `Picker` on iOS, a Material 3 exposed dropdown
+in Compose on Android, and Expo's universal `Picker` (a `<select>`) on web.
+Controlled single-select; values and labels must be unique. The `label` is
+what screen readers announce: on iOS it is the SwiftUI picker label, on
+Android the anchor field's content description, and on web the name of the
+group around the `<select>`. The visible caption is hidden from assistive
+tech on native so it is not read twice.
 
 `NativeActionMenu`: `@expo/ui/community/menu` for **real SwiftUI Menu or
 ContextMenu and Compose DropdownMenu** on iOS/Android. On web uses an

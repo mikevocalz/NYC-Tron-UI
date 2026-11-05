@@ -8,10 +8,14 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "browser": "./dist/index.js",
+      "react-native": "./dist/index.native.js",
       "default": "./dist/index.js"
     },
     "./NativeDropdown": {
-      "types": "./dist/components/NativeDropdown.d.ts",
+      "types": "./dist/components/NativeDropdown.types.d.ts",
+      "browser": "./dist/components/NativeDropdown.js",
+      "react-native": "./dist/components/NativeDropdown.native.js",
       "default": "./dist/components/NativeDropdown.js"
     },
     "./NativeActionMenu": {

@@ -33,3 +33,19 @@ test("native menu is iOS/Android Expo component and web has active fallback",()=
  assert.match(web,/onPress=\{\(\)=>run\(action.id\)\}/);
  assert.doesNotMatch(web,/@expo\/ui\/community\/menu/);
 });
+test("dropdown caption names the picker for screen readers on every platform",()=>{
+ const base=resolve("packages/expo-controls/src/components");
+ const native=readFileSync(resolve(base,"NativeDropdown.native.tsx"),"utf8");
+ const web=readFileSync(resolve(base,"NativeDropdown.tsx"),"utf8");
+ // iOS: SwiftUI Picker carries the label.
+ assert.match(native,/<SwiftUIPicker label=\{label\}/);
+ // Android: the exposed-dropdown anchor field carries it as contentDescription.
+ assert.match(native,/semantics\(\{contentDescription:label\}\)/);
+ // The visible caption is not announced a second time on native.
+ assert.match(native,/<Text accessibilityElementsHidden importantForAccessibility="no"/);
+ // Web: the caption names the group around the <select>.
+ assert.match(web,/role="group" aria-label=\{label\}/);
+ const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
+ assert.equal(pkg.exports["./NativeDropdown"]["react-native"],"./dist/components/NativeDropdown.native.js");
+ assert.equal(pkg.exports["."]["react-native"],"./dist/index.native.js");
+});
