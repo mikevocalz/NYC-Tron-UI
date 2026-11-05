@@ -2,6 +2,7 @@ package com.nyctron.instruments
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
@@ -65,6 +67,19 @@ fun FunctionalComposableScope.TronXYPadContent(
     currentX=nx;currentY=ny;latestCommit(TronXYValuePayload(nx,ny))
     return true
   }
+  // Same mapping as the SwiftUI pad: x grows rightward, y grows upward.
+  fun pointAt(position:Offset,bounds:IntSize)=TronXYValuePayload(
+    (position.x/bounds.width.coerceAtLeast(1)).coerceIn(0f,1f),
+    (1f-position.y/bounds.height.coerceAtLeast(1)).coerceIn(0f,1f)
+  )
+  fun previewAt(point:TronXYValuePayload){
+    if(point.x!=currentX||point.y!=currentY){
+      currentX=point.x;currentY=point.y;latestPreview(point)
+    }
+  }
+  fun commitIfChanged(){
+    if(currentX!=latestProps.x||currentY!=latestProps.y)latestCommit(TronXYValuePayload(currentX,currentY))
+  }
   val accent=instrumentColor(props.accentColor,Color(0xFF8B5CF6))
   val background=instrumentColor(props.backgroundColor,Color(0xFF13131A))
   Canvas(modifier=ModifierRegistry.applyModifiers(props.modifiers,appContext,composableScope,globalEventDispatcher)
@@ -79,13 +94,29 @@ fun FunctionalComposableScope.TronXYPadContent(
         CustomAccessibilityAction("Decrease Y"){nudge(0f,-.05f)}
       )
     }
+    // A single tap moves the point and commits, matching iOS, where the
+    // zero-distance DragGesture previews on touch-down and commits on lift.
+    // The drag detector below consumes moves past touch slop, which cancels
+    // this tap, so a drag never commits twice.
+    .pointerInput(props.enabled) {
+      detectTapGestures(onTap={ position ->
+        if(!latestProps.enabled||dragging)return@detectTapGestures
+        previewAt(pointAt(position,size))
+        commitIfChanged()
+      })
+    }
     .pointerInput(props.enabled) {
       detectDragGestures(
-        onDragStart={ if(props.enabled)dragging=true },
+        onDragStart={ position ->
+          if(latestProps.enabled){
+            dragging=true
+            previewAt(pointAt(position,size))
+          }
+        },
         onDragEnd={
           if(dragging){
             dragging=false
-            if(currentX!=latestProps.x||currentY!=latestProps.y)latestCommit(TronXYValuePayload(currentX,currentY))
+            commitIfChanged()
           }
         },
         onDragCancel={
@@ -95,11 +126,7 @@ fun FunctionalComposableScope.TronXYPadContent(
       ){change,_->
         if(!dragging||!latestProps.enabled)return@detectDragGestures
         change.consume()
-        val newX=(change.position.x/size.width.coerceAtLeast(1)).coerceIn(0f,1f)
-        val newY=(1f-change.position.y/size.height.coerceAtLeast(1)).coerceIn(0f,1f)
-        if(newX!=currentX||newY!=currentY){
-          currentX=newX;currentY=newY;latestPreview(TronXYValuePayload(newX,newY))
-        }
+        previewAt(pointAt(change.position,size))
       }
     }) {
     drawRect(background)

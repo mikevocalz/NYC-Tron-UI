@@ -52,3 +52,16 @@ test("example iOS target module never shadows the library pod module",()=>{
  const pod=read("ios/NYCTronInstruments.podspec").match(/s\.name\s*=\s*'([^']+)'/)[1];
  assert.notEqual(target,pod);
 });
+test("XY pad moves on a single tap on both platforms and commits through live props",()=>{
+ const kt=read("android/src/main/java/com/nyctron/instruments/TronXYPadView.kt");
+ const swift=read("ios/TronXYPadView.swift");
+ // iOS: a zero-distance drag fires on touch-down, so a tap previews and commits.
+ assert.match(swift,/DragGesture\(minimumDistance: 0\)/);
+ // Android: a tap detector alongside the drag, committing via the shared path.
+ assert.match(kt,/detectTapGestures\(onTap=\{ position ->/);
+ const tap=kt.slice(kt.indexOf("detectTapGestures(onTap"),kt.indexOf("detectDragGestures("));
+ assert.match(tap,/previewAt\(pointAt\(position,size\)\)/);
+ assert.match(tap,/commitIfChanged\(\)/);
+ assert.match(kt,/fun commitIfChanged\(\)\{\s*if\(currentX!=latestProps\.x\|\|currentY!=latestProps\.y\)latestCommit\(/);
+ assert.match(kt,/val latestCommit by rememberUpdatedState\(onCommit\)/);
+});
