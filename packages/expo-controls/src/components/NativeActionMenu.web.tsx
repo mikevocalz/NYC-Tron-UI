@@ -63,7 +63,8 @@ export function NativeActionMenu({
         {render(action.subactions,depth+1,groupDisabled||!!action.disabled)}
       </>:<Pressable accessibilityRole="menuitem"
         ref={node=>{if(node)itemRefs.current.set(action.id,node);else itemRefs.current.delete(action.id);}}
-        {...{role:action.checked===undefined?"menuitem" as const:"menuitemcheckbox" as const,
+        // RN web forwards the ARIA role; core RN's Role union omits menuitemcheckbox.
+        {...{role:(action.checked===undefined?"menuitem":"menuitemcheckbox") as PressableProps["role"],
           onKeyDown:(event:MenuKeyEvent)=>onMenuKey(event,action.id)}}
         accessibilityLabel={action.title}
         accessibilityState={{disabled:groupDisabled||!!action.disabled,checked:action.checked}}
