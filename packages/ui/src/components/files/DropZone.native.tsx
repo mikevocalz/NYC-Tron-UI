@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { DragDropContentView } from "expo-drag-drop-content-view";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -21,17 +21,23 @@ type DropState={active:boolean};
  */
 export function DropZone({
   children,onDrop,onEnter,onExit,accept,allowedMimeTypes,includeBase64=false,
-  disableObjectUrl:_disableObjectUrl,browseLabel:_browseLabel,disabled=false,
+  disableObjectUrl:_disableObjectUrl,browseLabel:_browseLabel,onError:_onError,multiple:_multiple,disabled=false,
   title="Drop a file here",description,className,unstyled=false,style,...rest
 }:DropZoneProps) {
   const storeRef=useRef<StoreApi<DropState>|null>(null);
   if(!storeRef.current)storeRef.current=createStore<DropState>(()=>({active:false}));
   const store=storeRef.current;
   const active=useStore(store,s=>s.active);
+  // Unmounting the drop view on disable skips its onExit; end the drag here.
+  useEffect(()=>{
+    if(disabled&&store.getState().active){store.setState({active:false});onExit?.();}
+  },[disabled,store,onExit]);
   const content=children??<DropZoneCopy title={title} description={description} unstyled={unstyled}/>;
   return (
-    <View {...rest} style={style} accessibilityLabel={rest.accessibilityLabel??title}
-      accessibilityState={{disabled}}
+    // No label on the container: iOS ignores it on a non-accessible view, and
+    // making the view accessible would hide the content from VoiceOver. The
+    // visible title is read in place.
+    <View {...rest} style={style}
       {...{className:dropZoneClasses({active,disabled,unstyled,className})}}>
       {disabled ? content : (
         <DragDropContentView

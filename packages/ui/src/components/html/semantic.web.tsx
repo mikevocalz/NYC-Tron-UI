@@ -32,7 +32,10 @@ if(typeof createElement!=="function"){
 const base=StyleSheet.create({
   block:{display:"flex",flexDirection:"column",alignItems:"stretch",flexBasis:"auto",flexShrink:0,
     minHeight:0,minWidth:0,position:"relative"},
-  text:{},
+  // UA margins, and link color/underline, are reset like RNW Text does; the
+  // app's classes restyle them.
+  text:{margin:0},
+  link:{margin:0,color:"inherit",textDecorationLine:"none"},
 });
 
 function render(tag:string,{className,style,hidden,dataSet,children,...rest}:SemanticBaseProps&{style?:StyleProp<object>},
@@ -66,7 +69,7 @@ export function Heading({level=1,numberOfLines:_n,selectable:_s,...props}:Headin
   return render("h"+level,auto(props),base.text);
 }
 export function Link({href,target,rel,onPress,numberOfLines:_n,selectable:_s,...props}:LinkProps) {
-  return render("a",auto(props),base.text,{
+  return render("a",auto(props),base.link,{
     href,target,
     rel:target==="_blank"?joinRel(rel,"noopener noreferrer"):rel,
     onClick:onPress,

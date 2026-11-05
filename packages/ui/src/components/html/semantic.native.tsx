@@ -53,6 +53,8 @@ export function Text({style,hidden,...props}:SemanticTextProps) {
 export function Paragraph(props:SemanticTextProps) {
   return <Text {...props}/>;
 }
+// RN Text has no heading level on iOS or Android; `aria-level` is carried for
+// parity and only React Native Web announces it.
 export function Heading({level=1,style,hidden,...props}:HeadingProps) {
   return <RNText {...nativeProps({hidden,...props})} role="heading"
     {...{"aria-level":level}} style={hidden?[style,{display:"none"}]:style}/>;
@@ -61,7 +63,7 @@ export function Heading({level=1,style,hidden,...props}:HeadingProps) {
 const EXTERNAL=/^(?:https?:|mailto:|tel:)/i;
 export function Link({href,target:_target,rel:_rel,onPress,style,hidden,...props}:LinkProps) {
   const external=href!==undefined&&EXTERNAL.test(href);
-  const press=onPress??(external?(_event:GestureResponderEvent)=>{void Linking.openURL(href!);}:undefined);
+  const press=onPress??(external?(_event:GestureResponderEvent)=>{Linking.openURL(href!).catch(()=>{});}:undefined);
   // A link that cannot go anywhere is plain text, never a dead control.
   return <RNText {...nativeProps({hidden,...props})} role={press?"link":undefined} onPress={press}
     style={hidden?[style,{display:"none"}]:style}/>;

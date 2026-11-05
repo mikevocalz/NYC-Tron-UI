@@ -21,13 +21,18 @@ export function FilePicker({
     input.multiple=multiple;
     // Attached while open: Safari ignores click() on a detached file input.
     input.style.display="none";
-    const done=()=>input.remove();
+    // Safari before 16.4 fires no `cancel`, so the window regaining focus
+    // after the chooser closes also removes the input. `change` can land
+    // just after that focus, hence the delay.
+    const done=()=>{input.remove();window.removeEventListener("focus",onFocus);};
+    const onFocus=()=>setTimeout(()=>{if(!input.files?.length)done();},1000);
     input.addEventListener("change",()=>{
       const files=Array.from(input.files??[]);
       done();
       if(files.length)onFiles(files);
     },{once:true});
     input.addEventListener("cancel",done,{once:true});
+    window.addEventListener("focus",onFocus,{once:true});
     document.body.appendChild(input);
     input.click();
   };

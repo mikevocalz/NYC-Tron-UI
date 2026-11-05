@@ -32,6 +32,10 @@ export interface DropZoneProps extends Omit<ViewProps,"children"> {
   onEnter?:()=>void;
   /** The drag left, was dropped or was cancelled. */
   onExit?:()=>void;
+  /** Web: a dropped or picked file could not be read (base64). The others still arrive through `onDrop`. */
+  onError?:(error:Error,file:File)=>void;
+  /** Web: lets the built-in browse control pick several files. Drops always accept several. @default false */
+  multiple?:boolean;
   /** HTML input syntax, e.g. ".docx,.nfd" or "image/*". Applied to drops and picks. */
   accept?:string;
   /** Exact strings or RegExps, as in expo-drag-drop-content-view. */

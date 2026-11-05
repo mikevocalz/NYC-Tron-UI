@@ -27,7 +27,7 @@ export interface EmptyStateProps extends Omit<ViewProps,"children"> {
   icon?:ReactNode;
   /** Art above the title; the caller owns its accessible name or aria-hidden. */
   illustration?:ReactNode;
-  /** Heading level announced for the title. @default 2 */
+  /** Heading level of the title on web. iOS and Android announce a heading without a level. @default 2 */
   titleLevel?:1|2|3|4|5|6;
   /**
    * Accepted so Forge's brand tones (`royal`, `carolina`) compile unchanged.
@@ -58,7 +58,7 @@ export function EmptyState({
   return (
     <View {...rest} {...{className:joinClasses("w-full items-center justify-center",styled&&"gap-2 px-6 py-8",className)}}>
       {art ? <View {...{className:joinClasses("items-center",styled&&"mb-2")}}>{art}</View> : null}
-      <Text role="heading" aria-level={titleLevel}
+      <Text role="heading" {...{"aria-level":titleLevel}}
         {...{className:joinClasses("text-center",styled&&"text-base font-semibold leading-6 text-text",titleClassName)}}>{title}</Text>
       {description ? (
         <Text {...{className:joinClasses("text-center",styled&&"max-w-sm text-sm leading-5 text-text-muted",descriptionClassName)}}>{description}</Text>

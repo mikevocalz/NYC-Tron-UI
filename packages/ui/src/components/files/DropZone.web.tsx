@@ -38,7 +38,7 @@ type DropState={active:boolean};
  * ships JSX in a .js file, which Vite/Rolldown parse as plain JavaScript.
  */
 export function DropZone({
-  children,onDrop,onEnter,onExit,accept,allowedMimeTypes,includeBase64=false,
+  children,onDrop,onEnter,onExit,onError,multiple=false,accept,allowedMimeTypes,includeBase64=false,
   disableObjectUrl=false,disabled=false,title="Drop a file here",description,
   browseLabel="Choose a file",className,unstyled=false,...rest
 }:DropZoneProps) {
@@ -48,39 +48,51 @@ export function DropZone({
   const store=storeRef.current;
   const active=useStore(store,s=>s.active);
   // Latest props for listeners that are attached once.
-  const latest=useRef({onDrop,onEnter,onExit,accept,allowedMimeTypes,includeBase64,disableObjectUrl,disabled});
-  latest.current={onDrop,onEnter,onExit,accept,allowedMimeTypes,includeBase64,disableObjectUrl,disabled};
+  const latest=useRef({onDrop,onEnter,onExit,onError,accept,allowedMimeTypes,includeBase64,disableObjectUrl,disabled});
+  latest.current={onDrop,onEnter,onExit,onError,accept,allowedMimeTypes,includeBase64,disableObjectUrl,disabled};
 
+  // A file that cannot be read is reported and skipped; the rest still arrive.
   const deliver=async(files:File[],text?:string)=>{
     const p=latest.current;
     const kept=files.filter(file=>acceptsFile({fileName:file.name,type:file.type},p.accept,p.allowedMimeTypes));
-    const assets=await Promise.all(kept.map(file=>toAsset(file,p.includeBase64,p.disableObjectUrl)));
+    const settled=await Promise.allSettled(kept.map(file=>toAsset(file,p.includeBase64,p.disableObjectUrl)));
+    const assets:DropAsset[]=[];
+    settled.forEach((result,i)=>{
+      if(result.status==="fulfilled")assets.push(result.value);
+      else p.onError?.(result.reason instanceof Error?result.reason:new Error("Could not read "+kept[i]!.name),kept[i]!);
+    });
     if(!assets.length&&!files.length&&text&&!p.accept&&acceptsFile({type:"text"},undefined,p.allowedMimeTypes)){
       assets.push({type:"text",text});
     }
     p.onDrop?.({assets});
   };
 
+  // Becoming disabled mid-drag ends the drag: the next one must report its own enter.
+  const depthRef=useRef(0);
+  useEffect(()=>{
+    if(disabled&&store.getState().active){depthRef.current=0;store.setState({active:false});latest.current.onExit?.();}
+  },[disabled,store]);
+
   useEffect(()=>{
     const node=host.current as unknown as HTMLElement|null;
     if(!node||typeof node.addEventListener!=="function")return;
-    let depth=0;
     const edge=(next:{depth:number;edge:"enter"|"exit"|null})=>{
-      depth=next.depth;
+      depthRef.current=next.depth;
       if(next.edge==="enter"){store.setState({active:true});latest.current.onEnter?.();}
       if(next.edge==="exit"){store.setState({active:false});latest.current.onExit?.();}
     };
-    const enter=(e:DragEvent)=>{if(latest.current.disabled)return;e.preventDefault();edge(dragDepth(depth,"enter"));};
+    // dragover and drop are always cancelled: a disabled zone must still stop
+    // the browser from opening the dropped file in place of the app.
+    const enter=(e:DragEvent)=>{if(latest.current.disabled)return;e.preventDefault();edge(dragDepth(depthRef.current,"enter"));};
     const over=(e:DragEvent)=>{
-      if(latest.current.disabled)return;
       e.preventDefault();
-      if(e.dataTransfer)e.dataTransfer.dropEffect="copy";
+      if(e.dataTransfer)e.dataTransfer.dropEffect=latest.current.disabled?"none":"copy";
     };
-    const leave=(e:DragEvent)=>{if(latest.current.disabled)return;e.preventDefault();edge(dragDepth(depth,"leave"));};
+    const leave=(e:DragEvent)=>{if(latest.current.disabled)return;e.preventDefault();edge(dragDepth(depthRef.current,"leave"));};
     const drop=(e:DragEvent)=>{
-      if(latest.current.disabled)return;
       e.preventDefault();
-      edge(dragDepth(depth,"drop"));
+      if(latest.current.disabled)return;
+      edge(dragDepth(depthRef.current,"drop"));
       const files=Array.from(e.dataTransfer?.files??[]);
       void deliver(files,e.dataTransfer?.getData("text/plain"));
     };
@@ -101,7 +113,7 @@ export function DropZone({
       aria-disabled={disabled||undefined}
       {...{className:dropZoneClasses({active,disabled,unstyled,className})}}>
       {children ?? <DropZoneCopy title={title} description={description} unstyled={unstyled}
-        browse={<FilePicker label={browseLabel} accept={accept} disabled={disabled}
+        browse={<FilePicker label={browseLabel} accept={accept} multiple={multiple} disabled={disabled}
           onFiles={files=>void deliver(files)}/>}/>}
     </View>
   );
