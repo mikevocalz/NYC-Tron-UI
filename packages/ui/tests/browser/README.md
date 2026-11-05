@@ -76,7 +76,5 @@ failed (K-07); and steps pages and shows the no-voice state (K-18).
 `office-shots.spec.mjs` writes `shots/office-*` at 390 and 834 px in light and
 dark, RTL, search results and text editing.
 
-`UI_ACCEPTANCE_PORT=<n>` moves the server off 4179 when that port is taken.
-
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

@@ -14,7 +14,7 @@ export interface SlideFilmstripProps extends Omit<ViewProps,"children"> {
   readonly onSelect:(id:string)=>void;
   /** Moves a slide to `toIndex` (0-based). Drag, Alt+Up/Down and screen-reader actions call it once per move. */
   readonly onMove?:(id:string,toIndex:number)=>void|Promise<unknown>;
-  /** Adds a slide after the selected one (or at the end). */
+  /** Adds a slide. Where it goes is the host engine's call (Pitch appends). */
   readonly onAdd?:()=>void|Promise<unknown>;
   /** Removes a slide. Not offered when only one slide is left. */
   readonly onRemove?:(id:string)=>void|Promise<unknown>;
