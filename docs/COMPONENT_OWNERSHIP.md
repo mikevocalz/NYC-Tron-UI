@@ -23,6 +23,12 @@ complex editor screen composition and its cross-engine suite application.
 | SliderField (A-14) | `@nyc-tron/ui/components/shell/SliderField`; OS slider in `@nyc-tron/expo-controls/NativeSliderField` | RN track with typed entry and Reset on every platform; the expo-controls variant renders SwiftUI/Compose `Slider` on iOS/Android and commits when the OS drag ends. Native build and device runs unverified | Original |
 | RangeSlider (A-15) | `@nyc-tron/ui/components/shell/RangeSlider` (math in `/shell/slider-model`) | Two ends that never cross, min gap, typed endpoints, per-end keyboard and a11y | Original |
 | RotaryKnob (A-16) | `@nyc-tron/ui/components/shell/RotaryKnob` | Relative drag with sideways fine mode, circular (stylus) input, keys, exact entry, Reset. InstrumentKnob and native ArcKnob are unchanged | Original |
+| SplitButton (A-17) | `@nyc-tron/ui/components/shell/SplitButton`; OS control in `@nyc-tron/expo-controls/NativeSplitButton` | Primary action and flyout as two 44pt targets. Native: Compose `SplitButtonLayout` + `DropdownMenu`; SwiftUI `Button` + icon-only `Menu`. Native build and device runs unverified | Original |
+| RibbonTabs (A-08) | `@nyc-tron/ui/components/shell/RibbonTabs` (model in `/shell/ribbon-model`) | Tabs, contextual tabs, labelled groups, toggles, split buttons, inline galleries with More, collapse | Original |
+| ContextMenu (A-19) | `@nyc-tron/ui/components/shell/ContextMenu`; `@nyc-tron/expo-controls/ContextMenu` (OS menu on native) | Right-click and stylus barrel click, long press, Shift+F10, Menu key, screen-reader action | Extends NativeActionMenu (#10) with the keyboard and pointer paths |
+| PresetGallery (A-23) | `@nyc-tron/ui/components/shell/PresetGallery` (model in `/shell/preset-model`) | Responsive grid, hover/focus live preview, selection, favorites and filter | Original |
+| KeyboardShortcutHUD (A-27) | `@nyc-tron/ui/components/shell/KeyboardShortcutHUD` (model in `/shell/shortcut-model`) | Searchable shortcut sheet, binding recorder with conflict prompt and reset, `commandForChord` for app dispatch | Original; key parsing replaces forge #5 `keyboard-event.ts` |
+| FocusAndA11yLayer (A-28) | `@nyc-tron/ui/components/shell/FocusAndA11yLayer` (`useA11yPreferences`, `useAnnounce`, `motionDuration`) | OS reduce motion, screen reader, contrast; web input modality on `<html data-input-modality>`; announcements | Extends overlays focus-cycle/focus-restore |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
 | SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
@@ -257,3 +263,54 @@ and 834px in light, dark, RTL, forced colors and the three selection states.
 Not verified: the SwiftUI/Compose `NativeSliderField` on a device (source
 and types only), iOS/Android rendering of the RN controls, stylus input on
 hardware, and screen-reader output.
+
+## 2026-11-05 studio shell commands and overlays (A-08, A-17, A-19, A-23, A-27, A-28)
+
+`SplitButton` keeps the primary action and the flyout as two buttons with
+separate 44pt targets. `@nyc-tron/expo-controls/NativeSplitButton` uses the
+OS controls: Material 3 `SplitButtonLayout` with a `DropdownMenu` on
+Android, and a bordered SwiftUI `Button` beside an icon-only `Menu` on iOS.
+SwiftUI's `Menu(primaryAction:)` was not used because it puts both actions
+on one target. The Compose trailing button reads "More" because @expo/ui's
+Compose `Icon` needs a bundled asset.
+
+`RibbonTabs` validates ids up front. Contextual tabs carry their group name
+in the accessible label and an accent rule. Narrow panes scroll the panel
+sideways instead of dropping commands. Galleries keep the selected item
+inline and list the rest under "More".
+
+`ContextMenu` in `@nyc-tron/ui` covers web and RN-rendered targets: a
+`contextmenu` event (mouse right-click, stylus barrel button), long press,
+Shift+F10, the Menu key, and a "Show actions" (`longpress`) accessibility
+action. `@nyc-tron/expo-controls/ContextMenu` uses `NativeActionMenu` on iOS
+and Android, so the OS menu appears there.
+
+`KeyboardShortcutHUD` records bindings from web key events. React Native
+delivers hardware key events only on web, so on iOS and Android the list is
+read-only. A binding needs Ctrl, Alt or Command (function keys excepted),
+since bare letters would fire while typing. A binding already in use asks
+before taking it, and Replace clears the other command. Escape while
+recording cancels the recording and leaves the sheet open. Bindings are
+portable strings (`Mod` is Command on Apple, Control elsewhere);
+`commandForChord` lets the app dispatch with the same rules.
+
+`FocusAndA11yLayer` reads reduce motion and screen-reader state from
+`AccessibilityInfo`. It reads contrast from darker system colors on iOS,
+high text contrast on Android, and `forced-colors` on web. On web it writes
+the input modality to `<html data-input-modality>` so app CSS can scope
+focus rings. Announcements go to `announceForAccessibility` on native and to
+a visually hidden live region on web. An off-screen offset would have
+widened the page in RTL, which the first RTL capture showed at 10,390px.
+
+Forced colors paints transparent borders, so unselected ribbon tabs, gallery
+items and preset tiles draw no border at all and keep their size with
+padding.
+
+Verified: ribbon, preset, shortcut and a11y-store unit tests, and
+Chromium/React Native Web interaction tests
+(`packages/ui/tests/browser/shell-commands.spec.mjs`) with captures at 390
+and 834px in light, dark, RTL, forced colors, and with Apple keycaps. Not
+verified: `NativeSplitButton` and the native `ContextMenu` on devices
+(source and types only), stylus barrel clicks on real hardware (the web path
+is the same `contextmenu` event Chromium sends for a right-click), and
+screen-reader output.

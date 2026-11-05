@@ -118,7 +118,7 @@ test("web overlays cycle Tab inside and restore focus to the opener",()=>{
 });
 test("new subpaths resolve to emitted native and web files",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
- for(const name of ["NativePopover","Tooltip","NativeSliderField"]){
+ for(const name of ["NativePopover","Tooltip","NativeSliderField","NativeSplitButton","ContextMenu"]){
   assert.equal(pkg.exports["./"+name]["react-native"],"./dist/components/"+name+".native.js");
   assert.equal(pkg.exports["./"+name].browser,"./dist/components/"+name+".web.js");
   assert.equal(pkg.exports["./"+name].default,"./dist/components/"+name+".web.js");
@@ -129,7 +129,7 @@ test("new subpaths resolve to emitted native and web files",()=>{
 });
 test("every component subpath's types file declares the component, not only its props",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
- for(const name of ["NativeDropdown","NativeActionMenu","NativePopover","Tooltip","NativeSliderField"]){
+ for(const name of ["NativeDropdown","NativeActionMenu","NativePopover","Tooltip","NativeSliderField","NativeSplitButton","ContextMenu"]){
   const src=pkg.exports["./"+name].types.replace("./dist/","packages/expo-controls/src/").replace(/\.d\.ts$/,".tsx");
   assert.match(readFileSync(resolve(src),"utf8"),new RegExp("export function "+name+"\\("),name);
  }

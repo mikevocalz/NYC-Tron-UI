@@ -295,6 +295,56 @@
       "react-native": "./dist/components/TextField.js",
       "default": "./dist/components/TextField.js"
     },
+    "./components/shell/SplitButton": {
+      "types": "./dist/components/shell/SplitButton.d.ts",
+      "react-native": "./dist/components/shell/SplitButton.js",
+      "default": "./dist/components/shell/SplitButton.js"
+    },
+    "./components/shell/RibbonTabs": {
+      "types": "./dist/components/shell/RibbonTabs.d.ts",
+      "react-native": "./dist/components/shell/RibbonTabs.js",
+      "default": "./dist/components/shell/RibbonTabs.js"
+    },
+    "./components/shell/ribbon-model": {
+      "types": "./dist/components/shell/ribbon-model.d.ts",
+      "react-native": "./dist/components/shell/ribbon-model.js",
+      "default": "./dist/components/shell/ribbon-model.js"
+    },
+    "./components/shell/ContextMenu": {
+      "types": "./dist/components/shell/ContextMenu.d.ts",
+      "react-native": "./dist/components/shell/ContextMenu.js",
+      "default": "./dist/components/shell/ContextMenu.js"
+    },
+    "./components/shell/PresetGallery": {
+      "types": "./dist/components/shell/PresetGallery.d.ts",
+      "react-native": "./dist/components/shell/PresetGallery.js",
+      "default": "./dist/components/shell/PresetGallery.js"
+    },
+    "./components/shell/preset-model": {
+      "types": "./dist/components/shell/preset-model.d.ts",
+      "react-native": "./dist/components/shell/preset-model.js",
+      "default": "./dist/components/shell/preset-model.js"
+    },
+    "./components/shell/KeyboardShortcutHUD": {
+      "types": "./dist/components/shell/KeyboardShortcutHUD.d.ts",
+      "react-native": "./dist/components/shell/KeyboardShortcutHUD.js",
+      "default": "./dist/components/shell/KeyboardShortcutHUD.js"
+    },
+    "./components/shell/shortcut-model": {
+      "types": "./dist/components/shell/shortcut-model.d.ts",
+      "react-native": "./dist/components/shell/shortcut-model.js",
+      "default": "./dist/components/shell/shortcut-model.js"
+    },
+    "./components/shell/FocusAndA11yLayer": {
+      "types": "./dist/components/shell/FocusAndA11yLayer.d.ts",
+      "react-native": "./dist/components/shell/FocusAndA11yLayer.js",
+      "default": "./dist/components/shell/FocusAndA11yLayer.js"
+    },
+    "./components/shell/a11y-model": {
+      "types": "./dist/components/shell/a11y-model.d.ts",
+      "react-native": "./dist/components/shell/a11y-model.js",
+      "default": "./dist/components/shell/a11y-model.js"
+    },
     "./components/navigation/CollapsibleDrawer": {
       "types": "./dist/components/navigation/CollapsibleDrawer.d.ts",
       "react-native": "./dist/components/navigation/CollapsibleDrawer.js",

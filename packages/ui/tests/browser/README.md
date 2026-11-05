@@ -30,5 +30,11 @@ PropertyRow, UnitInput, SliderField, RangeSlider, RotaryKnob; `?select=none|mult
 `?dir=rtl`), driven by `shell-inspector.spec.mjs` and captured by
 `shell-inspector-shots.spec.mjs`.
 
+`fixtures/shell-commands.tsx` holds the ribbon, split buttons, a layer context
+menu, a preset gallery and the shortcut sheet inside `FocusAndA11yLayer`
+(`?dir=rtl`, `?apple=1`, `?hud=1`), driven by `shell-commands.spec.mjs` and captured
+by `shell-commands-shots.spec.mjs`. Set `PORT` to run the lane beside another
+server on 4179.
+
 Not covered: iOS/Android rendering, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.
