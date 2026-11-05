@@ -80,3 +80,42 @@ test("invalid and missing device geometry does not invent regions",()=>{
  assert.equal(p.master.placement,"hidden");
  assert.deepEqual(p.detail.rect,{x:0,y:0,width:1000,height:700});
 });
+
+test("book layout honors each pane's minimum height", () => {
+ for (const role of ["master", "detail"]) {
+  const p = resolvePanePlan({...base, features:[fold(490,18)],
+   [role]: {...base[role], minHeight: 701}});
+  assert.equal(p.arrangement, "single", role);
+  assert.equal(p.master.placement, "hidden", role);
+ }
+});
+test("flat side-by-side requires both panes to fit vertically", () => {
+ for (const role of ["master", "detail"]) {
+  const p = resolvePanePlan({...base, [role]: {...base[role], minHeight: 701}});
+  assert.equal(p.arrangement, "single", role);
+ }
+ const exact = resolvePanePlan({...base,
+  master: {...base.master, minHeight:700}, detail: {...base.detail, minHeight:700}});
+ assert.equal(exact.arrangement, "side-by-side");
+});
+test("tabletop requires both minimum widths in the actual usable segments", () => {
+ const features = [{bounds:{x:30,y:438,width:1000,height:12},
+  orientation:"horizontal", separating:true, occlusion:"full"}];
+ for (const role of ["master", "detail"]) {
+  const p = resolvePanePlan({...base, container:{...host,height:800},
+   posture:"tabletop", features, [role]: {...base[role], minWidth:1001}});
+  assert.equal(p.arrangement,"single",role);
+ }
+ const exact = resolvePanePlan({...base, container:{...host,height:800},
+  posture:"tabletop", features,
+  master:{...base.master,minWidth:1000}, detail:{...base.detail,minWidth:1000}});
+ assert.equal(exact.arrangement,"tabletop");
+});
+test("minimum-size changes do not move detail when opening the inspector", () => {
+ const constrained = {...base, master:{...base.master,minHeight:701},
+  features:[fold(490,18)]};
+ const closed = resolvePanePlan({...constrained,inspector:{...base.inspector,open:false}});
+ const open = resolvePanePlan(constrained);
+ assert.deepEqual(open.detail.rect,closed.detail.rect);
+ assert.deepEqual(open.master,closed.master);
+});

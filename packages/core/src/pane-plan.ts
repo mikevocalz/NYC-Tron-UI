@@ -56,10 +56,17 @@ function wholeRegionMaster(region: Rect, preferred: number, min: number): Rect {
     width: Math.min(region.width, Math.max(min, preferred)), height: region.height,
   };
 }
-function findSidePair(regions: readonly Rect[], minMaster: number, minDetail: number, rtl: boolean) {
+function fits(region: Rect, minWidth: number, minHeight: number) {
+  return region.width >= minWidth && region.height >= minHeight;
+}
+function findSidePair(
+  regions: readonly Rect[], masterSize: PanePlanInput["master"],
+  detailSize: PanePlanInput["detail"], rtl: boolean,
+) {
   let found: { master: Rect; detail: Rect; score: number } | null = null;
   for (const master of regions) for (const detail of regions) {
-    if (master === detail || master.width < minMaster || detail.width < minDetail ||
+    if (master === detail || !fits(master, masterSize.minWidth, masterSize.minHeight ?? 1) ||
+        !fits(detail, detailSize.minWidth, detailSize.minHeight ?? 1) ||
         !overlapsY(master, detail)) continue;
     if (rtl ? left(master) < right(detail) : right(master) > left(detail)) continue;
     const score = Math.min(master.height, detail.height) * (master.width + detail.width);
@@ -68,12 +75,14 @@ function findSidePair(regions: readonly Rect[], minMaster: number, minDetail: nu
   return found;
 }
 function findTabletopPair(
-  regions: readonly Rect[], minMasterHeight: number, minDetailHeight: number,
+  regions: readonly Rect[], masterSize: PanePlanInput["master"],
+  detailSize: PanePlanInput["detail"],
 ) {
   let found: { master: Rect; detail: Rect; score: number } | null = null;
   for (const detail of regions) for (const master of regions) {
-    if (detail === master || detail.height < minDetailHeight ||
-        master.height < minMasterHeight || bottom(detail) > master.y ||
+    if (detail === master || !fits(detail, detailSize.minWidth, detailSize.minHeight ?? 44) ||
+        !fits(master, masterSize.minWidth, masterSize.minHeight ?? 44) ||
+        bottom(detail) > master.y ||
         Math.min(right(detail),right(master)) <= Math.max(left(detail),left(master))) continue;
     const score = Math.min(detail.width,master.width) * (detail.height+master.height);
     if (!found || score > found.score) found = { master, detail, score };
@@ -104,7 +113,7 @@ export function resolvePanePlan(input: PanePlanInput): PanePlan {
 
   if (master.present && input.posture === "tabletop") {
     const pair = findTabletopPair(
-      regions, master.minHeight ?? 44, detail.minHeight ?? 44,
+      regions, master, detail,
     );
     if (pair) {
       main = pair.detail;
@@ -115,14 +124,14 @@ export function resolvePanePlan(input: PanePlanInput): PanePlan {
   }
 
   if (master.present && arrangement === "single") {
-    const pair = findSidePair(regions, master.minWidth, detail.minWidth, isRTL);
+    const pair = findSidePair(regions, master, detail, isRTL);
     if (pair) {
       main = pair.detail;
       masterRect = pair.master;
       placement = "tiled";
       arrangement = "book";
     } else if (largest.width >= master.minWidth + detail.minWidth &&
-               largest.height >= (detail.minHeight ?? 1)) {
+               largest.height >= Math.max(master.minHeight ?? 1, detail.minHeight ?? 1)) {
       const masterWidth = Math.min(
         largest.width - detail.minWidth,
         Math.max(master.minWidth, master.preferredWidth),
