@@ -14,6 +14,12 @@ Migration order:
 4. Port the selected/filled native OS and Rive adapters separately.
 
 Missing icons in the semantic inventory have no authored vector paths.
-Never invent that the whole catalog is complete. Rive .riv binary assets
+Never invent that the whole catalog is complete.
+
+Until step 3 lands, Nitro Forge's `packages/icons` is a parallel copy, not a
+consumer. This package already differs from it: 30 more glyph pairs, a
+distinct filled `menu`, a redrawn `move` outline, masked knockouts, no
+built-in palette and strict namespaced lookup. Forge's local copy hides
+decorative icons from assistive technology; that behavior is now here too. Rive .riv binary assets
 and on-device animation are not included. Preserve user-supplied brand colors
 rather than forcing any static Forge purple onto other applications.

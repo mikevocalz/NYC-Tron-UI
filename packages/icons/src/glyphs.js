@@ -68,7 +68,7 @@ home:both(S("M3 11.2 12 3.5l9 7.7v9.1a1 1 0 0 1-1 1h-5.2v-6.7H9.2v6.7H4a1 1 0 0 
   [...F("M2.6 10.6 11.2 3a1.2 1.2 0 0 1 1.6 0l8.6 7.6c.3.3.5.7.5 1.1v8.7c0 .8-.6 1.4-1.4 1.4h-5.8v-7.2H9.3v7.2H3.4c-.8 0-1.4-.6-1.4-1.4v-8.7c0-.4.2-.8.6-1.1z")]),
 dashboard:both(S("M3.5 3.5h7v7h-7z","M13.5 3.5h7v4h-7z","M13.5 10.5h7v10h-7z","M3.5 13.5h7v7h-7z"),
   F("M2.5 2.5h9v9h-9z","M12.5 2.5h9v6h-9z","M12.5 9.5h9v12h-9z","M2.5 12.5h9v9h-9z")),
-menu:both(S("M3 6h18","M3 12h18","M3 18h18"),S("M3 6h18","M3 12h18","M3 18h18")),
+menu:both(S("M3 6h18","M3 12h18","M3 18h18"),F("M2 4.4h20v3.2H2z","M2 10.4h20v3.2H2z","M2 16.4h20v3.2H2z")),
 search:both(S("M10.7 18a7.3 7.3 0 1 0 0-14.6 7.3 7.3 0 0 0 0 14.6z","m16 16 5 5"),
   [...F("M10.5 2a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17z"),...K("M10.5 5.5a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"),...S("m16.6 16.6 4.8 4.8")]),
 save:both(S("M4 3h13l4 4v14H3V4a1 1 0 0 1 1-1z","M7 3v7h10V3","M7 21v-7h10v7"),
@@ -94,7 +94,7 @@ highlighter:both(S("m3 16 9-9 5 5-9 9H3z","m12 7 3-3 5 5-3 3","M2 22h20"),
   [...F("m2 16 10-10 6 6-10 10H2z","m12 6 2.8-2.8a2 2 0 0 1 2.9 0l3.1 3.1a2 2 0 0 1 0 2.9L18 12z"),...S("M2 22h20")]),
 hand:both(S("M8 13V5a1.4 1.4 0 0 1 2.8 0v6V3.7a1.4 1.4 0 0 1 2.8 0V11 5a1.4 1.4 0 0 1 2.8 0v7.5-4.1a1.4 1.4 0 0 1 2.8 0V16c0 3.4-2.5 6-6 6H10c-2.1 0-3.8-.9-4.8-2.5L2 14.7a1.6 1.6 0 0 1 2.5-2z"),
  F("M7 11V5a2 2 0 0 1 4 0v6-7a2 2 0 0 1 4 0v7-5a2 2 0 0 1 4 0v6-2a2 2 0 0 1 4 0v6a8 8 0 0 1-8 8h-4a8 8 0 0 1-6.3-3.1l-3.3-4.3a2.1 2.1 0 0 1 3.2-2.7z")),
-move:both(S("M12 2v20","M2 12h20","m9 5 3-3 3 3","m9 19 3 3 3-3","m5 9-3 3 3 3","m19 9 3 3-3 3"),
+move:both(S("M12 3v18","M3 12h18","M9.5 5.5 12 3l2.5 2.5","M9.5 18.5 12 21l2.5-2.5","M5.5 9.5 3 12l2.5 2.5","M18.5 9.5 21 12l-2.5 2.5"),
  F("M12 1 7 7h3v3H7V7l-6 5 6 5v-3h3v3H7l5 6 5-6h-3v-3h3v3l6-5-6-5v3h-3V7h3z")),
 pointer:both(S("M4.5 2 20 12l-7 1-3.2 7.5z"),
  F("M3.3 1.8a1.1 1.1 0 0 1 1.2.1l16.8 10.6a1 1 0 0 1-.3 1.8l-7 1-3.4 6.1a1 1 0 0 1-1.9-.2z")),
@@ -152,8 +152,33 @@ timeline:both(S("M3 5h18v14H3z","M3 10h18","M8 10v9","M14 10v9","M6 14h3","M12 1
  F("M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22z")),
 });
 export const glyphIds=Object.freeze(Object.keys(glyphs));
-/** Never render misleading generic artwork for an unimplemented semantic ID. */
+/**
+ * Namespaced catalog IDs whose slug has authored artwork. Kept here instead of
+ * importing the 1,463-ID catalog so a renderer only ships glyph data; a test
+ * keeps it equal to `iconIds` filtered by `glyphIds`.
+ */
+export const glyphCatalogIds=Object.freeze(`
+navigation/home navigation/dashboard navigation/menu navigation/sidebar-left navigation/sidebar-right navigation/layers
+navigation/search navigation/settings navigation/split-view navigation/grid-view navigation/list-view navigation/more-horizontal
+navigation/more-vertical navigation/chevron-left navigation/chevron-right navigation/chevron-up navigation/chevron-down navigation/arrow-left
+navigation/arrow-right navigation/arrow-up navigation/arrow-down navigation/external-link navigation/close navigation/check
+navigation/plus navigation/minus navigation/pin navigation/unpin file/save file/file
+file/folder file/download file/upload file/export file/share edit/undo
+edit/redo edit/lock edit/unlock selection/pointer selection/move selection/hand
+selection/lasso vector/pen vector/pencil vector/rectangle vector/ellipse paint/highlighter
+paint/eraser paint/color-wheel color/color-wheel typography/text layout/folding-book layout/folding-tabletop
+image/image charts/chart video/video video/timeline video/play video/pause
+video/stop video/slide audio/audio audio/microphone collaboration/comment spatial/bluetooth
+devices/device-phone devices/device-tablet devices/device-desktop devices/device-foldable devices/device-duo devices/device-watch
+`.trim().split(/\s+/));
+const glyphCatalogIdSet=new Set(glyphCatalogIds);
+/**
+ * Artwork for a bare glyph slug (`"home"`) or a registered catalog ID
+ * (`"navigation/home"`). Unregistered namespaced IDs such as `"status/home"`
+ * return `undefined`: never render misleading artwork for an unknown ID.
+ */
 export function getGlyph(id,variant="outline"){
- const slug=typeof id==="string"?id.split("/").at(-1):"";
- return glyphs[slug]?.[variant];
+ if(typeof id!=="string")return undefined;
+ if(id.includes("/")&&!glyphCatalogIdSet.has(id))return undefined;
+ return glyphs[id.split("/").at(-1)]?.[variant];
 }

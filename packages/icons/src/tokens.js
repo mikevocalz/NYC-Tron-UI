@@ -1,9 +1,20 @@
-/** Forge icon tokens; all colors are overridable by the consuming app theme. */
-export const iconColors=Object.freeze({
-  ink:"#18202D", inkInverse:"#F8FAFC", muted:"#737F91",
-  accent:"#6859E8", accentBright:"#8E83FF", cyan:"#00B6C7",
-  positive:"#139E75", warning:"#C68B27", negative:"#D94462",
+/**
+ * Icon color roles mapped to `@nyc-tron/core` theme color keys. The package
+ * ships no palette: unset roles fall back to `currentColor`, so icons inherit
+ * the host text color on web and the Svg `color` on native.
+ */
+export const iconColorTokens=Object.freeze({
+  color:"text", selectedColor:"primary", disabledColor:"textMuted",
+  successColor:"accent", errorColor:"danger",
 });
+/** Resolve icon color options from a validated theme's `colors`. Missing optional keys stay unset. */
+export function iconColorsFromTheme(colors){
+  const out={};
+  for(const [role,key] of Object.entries(iconColorTokens)){
+    if(typeof colors?.[key]==="string"&&colors[key].trim())out[role]=colors[key];
+  }
+  return Object.freeze(out);
+}
 export const iconSizes=Object.freeze({xs:12,sm:16,toolbar:20,default:24,touch:28,feature:32,hero:48});
 export const iconStroke=Object.freeze({size:24,width:2.35,cap:"round",join:"round"});
 export const iconMotion=Object.freeze({

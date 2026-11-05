@@ -7,8 +7,17 @@ export interface TronIconProps extends ForgeIconOptions {
   loading?: boolean;
   pressed?: boolean;
   hovered?: boolean;
-  /** The host supplies both ink and knockout surface; no fixed NYC-MON palette. */
+  /**
+   * @deprecated Ignored. Knockout detail is now a masked cutout, so it shows
+   * whatever is behind the icon.
+   */
   surfaceColor?: string;
+  /**
+   * Label for a meaningful standalone icon; exposes it as one image. Omit for
+   * decorative icons, which are hidden from assistive technology. Ignored by
+   * `TronIconButton`, whose `label` names the button.
+   */
+  accessibilityLabel?: string;
   testID?: string;
   renderRive?: (inputs: {
     name: string;

@@ -1,39 +1,53 @@
-import React,{useEffect,useRef} from "react";
+import React,{useEffect,useId,useRef} from "react";
 import {Animated,Easing,Pressable,View} from "react-native";
-import Svg,{Path} from "react-native-svg";
+import Svg,{Defs,G,Mask,Path,Rect} from "react-native-svg";
 import {getGlyph} from "./glyphs.js";
 import {resolveIconState} from "./state.js";
 import {iconStroke,iconMotion} from "./tokens.js";
 
-function IconPaths({name,variant,color,surfaceColor,size}){
+/** Decorative SVG is hidden from VoiceOver, TalkBack and web screen readers. */
+const hiddenSvg={accessible:false,focusable:false,"aria-hidden":true};
+function pathProps(d,mode,ink){
+ const solid=mode==="fill"||(mode==="knockout"&&/[zZ]\s*$/.test(d));
+ return {d,stroke:solid?"none":ink,fill:solid?ink:"none",
+   strokeWidth:iconStroke.width,strokeLinecap:"round",
+   strokeLinejoin:"round",fillRule:"evenodd"};
+}
+function IconPaths({name,variant,color,size}){
+ const maskId="tron-icon-knockout-"+useId().replace(/[^A-Za-z0-9_-]/g,"");
  const paths=getGlyph(name,variant);
  if(!paths)return null;
- return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",accessible:false,focusable:false},
-   paths.map(([d,mode],index)=>{
-     const knockout=mode==="knockout";
-     const solid=mode==="fill"||(knockout&&/[zZ]\s*$/.test(d));
-     const ink=knockout?surfaceColor:color;
-     return React.createElement(Path,{key:index,d,
-       stroke:solid?"none":ink,fill:solid?ink:"none",
-       strokeWidth:iconStroke.width,strokeLinecap:"round",
-       strokeLinejoin:"round",fillRule:"evenodd"});
-   }));
+ const ink=paths.filter(([,mode])=>mode!=="knockout");
+ const knockouts=paths.filter(([,mode])=>mode==="knockout");
+ const drawn=ink.map(([d,mode],index)=>React.createElement(Path,{key:index,...pathProps(d,mode,color)}));
+ if(knockouts.length===0)
+   return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",...hiddenSvg},drawn);
+ // Knockout detail is a real cutout through a mask, so filled glyphs stay
+ // correct on gradients, images and any theme surface; no surface color needed.
+ return React.createElement(Svg,{width:size,height:size,viewBox:"0 0 24 24",...hiddenSvg},
+   React.createElement(Defs,null,
+     React.createElement(Mask,{id:maskId,maskUnits:"userSpaceOnUse",x:0,y:0,width:24,height:24},
+       React.createElement(Rect,{x:0,y:0,width:24,height:24,fill:"white"}),
+       knockouts.map(([d,mode],index)=>React.createElement(Path,{key:index,...pathProps(d,mode,"black")})))),
+   React.createElement(G,{mask:"url(#"+maskId+")"},drawn));
 }
 /**
  * Shared native/web icon. Selected=filled, idle=outline.
  * Can render a real host-supplied Rive artboard, otherwise an Animated
  * outline-to-filled crossfade. Never invents operation success.
+ * Decorative by default; pass accessibilityLabel for a meaningful standalone
+ * icon, which is then exposed as one labelled image.
  */
 export function ForgeIcon({
  name,selected=false,disabled=false,loading=false,pressed=false,hovered=false,
  status="idle",size="default",appearance="light",color,selectedColor,disabledColor,
- successColor,errorColor,surfaceColor,reducedMotion=false,renderRive,testID
+ successColor,errorColor,reducedMotion=false,renderRive,testID,accessibilityLabel
 }){
  const input={selected,disabled,loading,pressed,hovered,status,
    size,appearance,color,selectedColor,disabledColor,successColor,
    errorColor,reducedMotion};
+ const label=typeof accessibilityLabel==="string"&&accessibilityLabel.trim()?accessibilityLabel:undefined;
  const view=resolveIconState(input);
- const surface=surfaceColor??(appearance==="dark"?"#11131B":"#FFFFFF");
  const progress=useRef(new Animated.Value(selected?1:0)).current;
  const scale=useRef(new Animated.Value(1)).current;
  const rotation=useRef(new Animated.Value(0)).current;
@@ -70,16 +84,20 @@ export function ForgeIcon({
  const invisible=progress.interpolate({inputRange:[0,1],outputRange:[1,0]});
  const spin=rotation.interpolate({inputRange:[0,1],outputRange:["0deg","360deg"]});
  const box={position:"absolute",left:0,top:0,width:view.size,height:view.size};
- return React.createElement(Animated.View,{testID,accessible:false,
+ const a11y=label?{accessible:true,accessibilityRole:"image",role:"img",
+   accessibilityLabel:label,"aria-label":label}:
+   {accessible:false,accessibilityElementsHidden:true,
+    importantForAccessibility:"no-hide-descendants","aria-hidden":true};
+ return React.createElement(Animated.View,{testID,...a11y,
    style:{width:view.size,height:view.size,opacity:view.opacity,
      transform:[{scale},{rotate:spin}]}},
    React.createElement(View,{style:{width:view.size,height:view.size}},
      React.createElement(Animated.View,{style:{...box,opacity:invisible}},
        React.createElement(IconPaths,{name,variant:"outline",color:view.color,
-         surfaceColor:surface,size:view.size})),
+         size:view.size})),
      React.createElement(Animated.View,{style:{...box,opacity:progress}},
        React.createElement(IconPaths,{name,variant:"filled",color:view.color,
-         surfaceColor:surface,size:view.size}))));
+         size:view.size}))));
 }
 /** Accessible min-44pt hit target. Host owns selection via Zustand/other store. */
 export function ForgeIconButton({name,label,onPress,selected=false,disabled=false,
@@ -92,6 +110,6 @@ export function ForgeIconButton({name,label,onPress,selected=false,disabled=fals
    accessibilityState:{selected,disabled:disabled||loading,busy:loading},hitSlop:4,
    style:{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center"}
  },({pressed})=>React.createElement(ForgeIcon,{
-   ...rest,name,selected,disabled,loading,size,pressed
+   ...rest,accessibilityLabel:undefined,name,selected,disabled,loading,size,pressed
  }));
 }

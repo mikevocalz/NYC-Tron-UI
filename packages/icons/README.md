@@ -27,30 +27,55 @@ substitute a misleading generic icon.
 
 ```tsx
 import { TronIcon, TronIconButton } from "@nyc-tron/icons/native";
+import { iconColorsFromTheme } from "@nyc-tron/icons/tokens";
 
-<TronIcon
-  name="home"
-  selected={active}
-  color={theme.colors.foreground}
-  selectedColor={theme.colors.primary}
-  surfaceColor={theme.colors.surface}
-  reducedMotion={reducedMotion}
-/>
+const iconColors = iconColorsFromTheme(theme.colors);
+
+<TronIcon name="home" selected={active} reducedMotion={reducedMotion} {...iconColors} />
+<TronIcon name="edit/lock" accessibilityLabel="Locked" {...iconColors} />
 <TronIconButton name="save" label="Save document"
-  onPress={save} selected={saved}
-  color={theme.colors.foreground}
+  onPress={save} selected={saved} {...iconColors}
 />
 ```
 
-Idle outline; selected filled. The renderer uses SVG paths, RN native
-Animated crossfade/scale and app-supplied semantic colors; hit targets are
-at least 44 logical pixels. Reduced-motion stops authored transitions.
+Idle outline; selected filled. The renderer uses SVG paths and an RN
+native-driver Animated crossfade and scale; reduced motion stops authored
+transitions. `TronIconButton` hit targets are at least 44 logical pixels.
+
+### Color
+
+The package has no palette. `iconColorsFromTheme(colors)` maps
+`@nyc-tron/core` theme keys to icon roles (`text` → `color`, `primary` →
+`selectedColor`, `textMuted` → `disabledColor`, `accent` → `successColor`,
+`danger` → `errorColor`). Any role left unset falls back to `color`, then to
+`currentColor`. Knockout detail in filled glyphs is an SVG mask cutout, so
+it shows whatever sits behind the icon; `surfaceColor` is deprecated and
+ignored. `appearance` is deprecated and has no effect.
+
+### Accessibility
+
+Icons are decorative by default: the wrapper sets `accessible={false}`,
+`accessibilityElementsHidden`, `importantForAccessibility="no-hide-descendants"`
+and `aria-hidden`, and the SVG is `aria-hidden`. Pass `accessibilityLabel`
+for a meaningful standalone icon; it is then exposed as one image
+(`accessibilityRole="image"`, `role="img"`). `TronIconButton` requires a
+`label`, names the button with it, and keeps its icon decorative.
+
+### Lookup
+
+`getGlyph` accepts a bare glyph slug (`"home"`) or a registered catalog ID
+(`"navigation/home"`, listed in `glyphCatalogIds`). An unregistered
+namespaced ID such as `"status/home"` returns `undefined` instead of
+borrowing artwork from another category.
+
 The optional `renderRive` function accepts a consumer-owned Rive artboard
 adapter with named states; **no compiled `.riv` assets or Rive runtime**
 are included yet. No unconditional Rive dependency in basic components.
 
-The shared `TronIcon` aliases the existing ForgeIcon implementation for
-migration. There is no second icon visual system.
+`TronIcon` aliases the extracted `ForgeIcon` implementation. Nitro Forge
+still ships its own `@nitro-forge/icons` copy until it becomes the re-export
+shim described in `docs/ICON_MIGRATION.md`; until then the two catalogs can
+diverge, and this package is the one to change.
 
 Native OS-specific `WinUI` Segoe Fluent glyphs, Android Compose native
 icons, Apple SF Symbols and animated Rive integrations require explicit
@@ -66,6 +91,11 @@ right-rail placement for supported foldables.
   `src/tokens.js`, `src/ForgeIcon.js`, tests and types were extracted
   from that branch. Subsequent renderer, declaration, test and artwork
   changes are authored in NYC-Tron; Git history records the boundary.
+- The `selection/move` outline was redrawn on November 5, 2026: the
+  extracted version repeated path segments from Lucide's ISC-licensed
+  `move` icon without attribution. A comparison of all 402 paths against
+  Lucide found no other whole-segment matches beyond generic one-line
+  strokes; Feather, Material and Heroicons were not compared.
 - The status of the original author's source license must be independently
   confirmed before any public npm release. No fonts or binary assets copied.
 
@@ -90,5 +120,6 @@ percentage. Use `glyphIds` and `getGlyph` to check actual availability.
 
 The batch was inspected as a rendered SVG contact sheet. Source tests verify
 semantic registration, distinct outline/filled pairs, SVG command argument
-counts and arc flags. This is source/raster inspection, not physical-device,
+counts and arc flags. Every glyph, not only this batch, must have a filled
+variant that differs from its outline. This is source/raster inspection, not physical-device,
 OS-native glyph or compiled Rive verification.

@@ -48,6 +48,10 @@ jobs:
           corepack pnpm --dir packages/icons pack --pack-destination /tmp/nyc-tron-packs
           tar -tzf /tmp/nyc-tron-packs/nyc-tron-icons-*.tgz | grep 'package/src/glyphs.js'
           tar -tzf /tmp/nyc-tron-packs/nyc-tron-icons-*.tgz | grep 'package/src/TronIcon.js'
+          tar -tzf /tmp/nyc-tron-packs/nyc-tron-icons-*.tgz > /tmp/nyc-tron-icons-files.txt
+          for f in src/TronIcon.d.ts src/index.d.ts src/glyphs.d.ts src/tokens.d.ts THIRD_PARTY_NOTICES.md README.md; do
+            grep -qx "package/$f" /tmp/nyc-tron-icons-files.txt || { echo "missing $f"; exit 1; }
+          done
           ls -lh /tmp/nyc-tron-packs/*.tgz
       # No native targets are built on this Linux workflow. A typechecked
       # @expo/ui source import is not a device validation.
