@@ -1,3 +1,4 @@
+import {cancelPreview} from "../cancel-preview.ts";
 import {useRef} from "react";
 import {PanResponder,Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
@@ -36,9 +37,10 @@ export function InstrumentKnob({
   const preview=useStore(store,s=>s.preview);
   const current=active||editing?preview:value;
   const start=useRef(value);
+  const cancel=()=>cancelPreview(latest.current.value,value=>store.setState({active:false,editing:false,preview:value,draft:String(value)}),latest.current.onPreview);
   const commit=(next:number)=>{
     const p=latest.current;
-    if(p.disabled)return;
+    if(p.disabled){cancel();return;}
     const rounded=snapValue(next,p);
     store.setState({active:false,editing:false,preview:rounded,draft:String(rounded)});
     if(rounded!==p.value)void p.onCommit(rounded);
@@ -60,8 +62,8 @@ export function InstrumentKnob({
         p.onPreview?.(next);
       }
     },
-    onPanResponderRelease:()=>commit(store.getState().preview),
-    onPanResponderTerminate:()=>store.setState({active:false,preview:latest.current.value,draft:String(latest.current.value)}),
+    onPanResponderRelease:()=>{if(store.getState().active)commit(store.getState().preview);},
+    onPanResponderTerminate:cancel,
     onPanResponderTerminationRequest:()=>true,
   });
   const enter=()=>{

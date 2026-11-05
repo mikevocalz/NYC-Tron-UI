@@ -33,8 +33,9 @@ native changes. Preserve the existing Moyo and NYC-MON product contracts.
    avoid useState for new app state. No duplicate pane/Inspector implementations.
 8. **Accessibility:** keyboard, VoiceOver/TalkBack/Narrator, pointer, text
    scaling, high contrast, RTL, reduced motion and drag cancellation are gates.
-9. **Provenance:** preserve original source and third-party licenses. Current
-   repository is private; don't publish until licensing, native support and
-   consumer acceptance are documented.
+9. **Provenance:** preserve original source and third-party licenses. The
+   repository is public. Packages ship only as GitHub Release tarballs (see
+   README); don't publish to npm until licensing, native support and consumer
+   acceptance are documented.
 10. **Honesty:** report unit/source checks separately from actual simulator,
     Surface Duo, headset, Windows or macOS native validation.

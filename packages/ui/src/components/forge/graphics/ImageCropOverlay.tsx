@@ -1,3 +1,4 @@
+import {cancelPreview} from "../cancel-preview.ts";
 import {useRef,type ReactNode} from "react";
 import {PanResponder,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
@@ -43,6 +44,8 @@ export function ImageCropOverlay({
   store.setState({preview:next,active:false});
   if(JSON.stringify(next)!==JSON.stringify(latest.current.rect))void latest.current.onCommit(next);
  };
+ const cancel=()=>cancelPreview(latest.current.rect,preview=>store.setState({active:false,preview}),latest.current.onPreview);
+ const release=()=>{if(store.getState().active)commit(store.getState().preview);};
  const begin=()=>{gestureStart.current=latest.current.rect;store.setState({active:true,preview:gestureStart.current});};
  const drag=(dx:number,dy:number)=>announce(moveCrop(gestureStart.current,dx/latest.current.width,dy/latest.current.height));
  const pan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
@@ -50,8 +53,8 @@ export function ImageCropOverlay({
    onStartShouldSetPanResponder:()=>true,onMoveShouldSetPanResponder:()=>true,
    onPanResponderGrant:begin,
    onPanResponderMove:(_e,g)=>drag(g.dx,g.dy),
-   onPanResponderRelease:()=>commit(store.getState().preview),
-   onPanResponderTerminate:()=>store.setState({active:false,preview:latest.current.rect}),
+   onPanResponderRelease:release,
+   onPanResponderTerminate:cancel,
  });
  const styled=!unstyled;
  const accentBorder=accentColor?{borderColor:accentColor}:null;
@@ -98,8 +101,8 @@ export function ImageCropOverlay({
    {(["nw","ne","sw","se"] as const).map(corner=><CropHandle key={corner} corner={corner} rect={displayed}
      width={width} height={height} accentColor={accentColor} styled={styled} onBegin={begin}
      onDrag={(dx,dy)=>announce(resizeCrop(gestureStart.current,corner,dx/width,dy/height))}
-     onCommit={()=>commit(store.getState().preview)}
-     onCancel={()=>store.setState({active:false,preview:latest.current.rect})}/>)}
+     onCommit={release}
+     onCancel={cancel}/>)}
    {styled?<Text {...{className:accentColor?undefined:"text-text"}}
      style={{position:"absolute",bottom:4,left:4,fontSize:11,...(accentColor?{color:accentColor}:null)}}>
      {Math.round(displayed.width*100)}% × {Math.round(displayed.height*100)}%

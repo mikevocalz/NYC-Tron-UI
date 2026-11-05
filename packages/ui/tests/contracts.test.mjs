@@ -149,6 +149,15 @@ test("every semantic token a component uses is documented for consumers",()=>{
   }
   assert.ok(used.size>5);
   for(const token of used)assert.ok(documented.has(token),`Undocumented token ${token}`);
+  // Names a theme might define but no component recipe documents. Only
+  // string literals are checked, so prose in comments cannot trip it.
+  const legacy=new Set(["text-foreground","bg-surface","text-muted","bg-background","border-surface"]);
+  for(const file of componentSources()){
+    const literals=readFileSync(file,"utf8").match(/"[^"\n]*"|'[^'\n]*'/g)??[];
+    for(const lit of literals)for(const cls of lit.slice(1,-1).split(/\s+/)){
+      assert.ok(!legacy.has(cls),`${file} uses undocumented token ${cls}`);
+    }
+  }
 });
 test("interactive controls keep screen-reader semantics",()=>{
   const read=p=>readFileSync(resolve(root,"src/components",p),"utf8");
@@ -177,4 +186,35 @@ test("every adjustable control can be adjusted by a screen reader",()=>{
     const actions=(text.match(/accessibilityActions=/g)??[]).length;
     assert.ok(actions>=adjustable,`${file}: ${adjustable} adjustable roles but ${actions} action sets`);
   }
+});
+// RN 0.88 ReactAccessibilityDelegate.AccessibilityRole.fromValue throws
+// IllegalArgumentException for anything outside this list; ARIA-only roles
+// such as row/cell/columnheader must go through the `role` prop instead.
+const ANDROID_ACCESSIBILITY_ROLES=new Set(["none","button","dropdownlist","togglebutton","link","search","image",
+  "imagebutton","keyboardkey","text","adjustable","summary","header","alert","checkbox","combobox","menu","menubar",
+  "menuitem","progressbar","radio","radiogroup","scrollbar","spinbutton","switch","tab","tabbar","tablist","timer",
+  "list","grid","pager","scrollview","horizontalscrollview","viewgroup","webview","drawerlayout","slidingdrawer",
+  "iconmenu","toolbar"]);
+test("accessibilityRole only uses values Android's enum accepts",()=>{
+  let checked=0;
+  for(const file of componentSources()){
+    const text=readFileSync(file,"utf8");
+    for(const m of text.matchAll(/accessibilityRole=(\{[^}]*\}|"[^"]*")/g)){
+      for(const role of m[1].matchAll(/"([a-z]+)"/g)){
+        assert.ok(ANDROID_ACCESSIBILITY_ROLES.has(role[1]),`${file}: accessibilityRole "${role[1]}" crashes Android; use role=`);
+        checked++;
+      }
+    }
+  }
+  assert.ok(checked>20);
+});
+test("data grids expose grid semantics instead of per-cell buttons",()=>{
+  const sheet=readFileSync(resolve(root,"src/components/forge/SpreadsheetGrid.tsx"),"utf8");
+  for(const role of ["grid","row","columnheader","rowheader","cell"])assert.ok(sheet.includes(`role="${role}"`),role);
+  assert.ok(!sheet.includes('accessibilityRole="button"'),"spreadsheet cells are not buttons");
+  assert.ok(!sheet.includes("navigator.clipboard")&&!sheet.includes("Clipboard."),"the app writes the clipboard");
+  const tree=readFileSync(resolve(root,"src/components/data/TreeGrid.tsx"),"utf8");
+  for(const role of ["treegrid","row","columnheader","cell"])assert.ok(tree.includes(`role="${role}"`),role);
+  assert.ok(tree.includes("treeRowAccessibilityLabel(item)"));
+  assert.ok(tree.includes("minHeight:44"));
 });

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {rayPlaneHit,nearestSpatialHit,updatePinch,validateModelHandoff} from "../src/spatial-interactions.ts";
+import {rayPlaneHit,nearestSpatialHit,updatePinch,validateModelHandoff,toModelHandoffParams,parseModelHandoffParams} from "../src/spatial-interactions.ts";
 test("spatial rays return real meter coordinates and reject targets behind the controller",()=>{
  const ray={origin:{x:0,y:0,z:0},direction:{x:0,y:0,z:-1}};
  assert.deepEqual(rayPlaneHit(ray,{point:{x:0,y:0,z:-2},normal:{x:0,y:0,z:1}}),{x:0,y:0,z:-2});
@@ -21,4 +21,26 @@ test("spatial pinch gestures have native hysteresis to prevent jitter",()=>{
 test("watch model inspection always deep-links into the app 3D viewer",()=>{
  assert.deepEqual(validateModelHandoff({modelId:"chair-42",destination:"app-3d-viewer",source:"watch",intent:"inspect"}).modelId,"chair-42");
  assert.throws(()=>validateModelHandoff({modelId:"",destination:"app-3d-viewer",source:"watch",intent:"inspect"}),/handoff/);
+});
+test("model handoff round-trips through URLSearchParams with an app-owned scheme",()=>{
+ const handoff={modelId:"chair 42/oak",variantId:"walnut&matte",destination:"app-3d-viewer",source:"watch",intent:"inspect"};
+ const params=toModelHandoffParams(handoff);
+ assert.deepEqual(params,{modelId:"chair 42/oak",variantId:"walnut&matte",source:"watch",destination:"app-3d-viewer",intent:"inspect"});
+ const url=new URL("myapp://viewer?"+new URLSearchParams(params));
+ assert.deepEqual(parseModelHandoffParams(Object.fromEntries(url.searchParams)),handoff);
+ const bare=toModelHandoffParams({modelId:"lamp",destination:"app-3d-viewer",source:"widget",intent:"inspect"});
+ assert.equal("variantId" in bare,false);
+ assert.equal(new URLSearchParams(bare).toString(),"modelId=lamp&source=widget&destination=app-3d-viewer&intent=inspect");
+ assert.equal("variantId" in parseModelHandoffParams(bare),false);
+});
+test("model handoff parsing ignores app routing keys and rejects invalid input with RangeError",()=>{
+ const base={modelId:"m",source:"phone",destination:"app-3d-viewer",intent:"inspect"};
+ assert.equal(parseModelHandoffParams({...base,screen:"viewer"}).modelId,"m");
+ for(const bad of [
+  {},{...base,modelId:undefined},{...base,modelId:"  "},{...base,variantId:""},
+  {...base,source:"tv"},{...base,destination:"web"},{...base,intent:"edit"},
+  {...base,modelId:["a","b"]},
+ ])assert.throws(()=>parseModelHandoffParams(bad),RangeError,JSON.stringify(bad));
+ assert.throws(()=>toModelHandoffParams({...base,source:"tv"}),RangeError);
+ assert.throws(()=>toModelHandoffParams({...base,variantId:" "}),RangeError);
 });
