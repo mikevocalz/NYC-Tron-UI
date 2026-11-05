@@ -128,8 +128,9 @@ public sealed partial class TronNavigationShell : UserControl
         NavigationViewItem? committed = null;
         if (_committedId is not null) _destinations.TryGetValue(_committedId, out committed);
         if (ReferenceEquals(Navigation.SelectedItem, committed)) return;
-        _restorePending = true;
-        DispatcherQueue.TryEnqueue(() =>
+        // TryEnqueue fails only while the queue shuts down; then nothing is
+        // pending and later selection changes must still be handled.
+        _restorePending = DispatcherQueue.TryEnqueue(() =>
         {
             _restorePending = false;
             _settingFromHost = true;
@@ -197,29 +198,38 @@ public sealed partial class TronNavigationShell : UserControl
     private void OnPaneClosed(NavigationView sender, object args) => OnPaneChanged(false);
 
     // The pane follows the same contract as selection: the host commits it.
-    // NavigationView opens or closes the pane itself (toggle button, light
-    // dismiss, display-mode changes), so a user change is raised as a request
-    // and the pane is put back to the committed state; it moves when the host
-    // calls SetPaneOpen. Without this a rejected toggle left the pane in the
-    // rejected state until some later SetPaneOpen. PaneOpened/PaneClosed can
-    // arrive after SetPaneOpen returns, so they are compared with the
-    // committed value instead of relying on _settingFromHost alone. The
-    // restore is queued so it does not re-enter NavigationView's pane change.
+    // A user change is raised as PaneOpenChanged and the pane is put back on
+    // the committed state until the host calls SetPaneOpen. Without this a
+    // rejected toggle stayed on screen until some later SetPaneOpen.
+    // - PaneOpened/PaneClosed can arrive after the write that caused them, so
+    //   they are compared with the committed value and the control's current
+    //   state rather than trusting _settingFromHost alone.
+    // - A close is put back only in the Expanded display mode. In Compact and
+    //   Minimal the open pane is an overlay that NavigationView closes itself
+    //   (light dismiss, item invoke, a narrower window in Auto); reopening it
+    //   over the content with no user action would be worse than waiting for
+    //   the host's next SetPaneOpen.
+    // - The restore is queued before the event is raised, so a throwing
+    //   handler cannot skip it, and it does not re-enter NavigationView's own
+    //   pane change. A toggle while a restore is queued is dropped; the
+    //   restore still runs.
     private void OnPaneChanged(bool isOpen)
     {
         if (_settingFromHost || _paneRestorePending) return;
-        if (isOpen == _committedPaneOpen) return;
-        PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(isOpen));
-        _paneRestorePending = true;
-        DispatcherQueue.TryEnqueue(() =>
+        if (isOpen == _committedPaneOpen || Navigation.IsPaneOpen != isOpen) return;
+        if (isOpen || Navigation.DisplayMode == NavigationViewDisplayMode.Expanded)
         {
-            _paneRestorePending = false;
-            // A host that accepted synchronously inside the event already
-            // moved the pane; nothing to restore.
-            if (Navigation.IsPaneOpen == _committedPaneOpen) return;
-            _settingFromHost = true;
-            try { Navigation.IsPaneOpen = _committedPaneOpen; }
-            finally { _settingFromHost = false; }
-        });
+            _paneRestorePending = DispatcherQueue.TryEnqueue(() =>
+            {
+                _paneRestorePending = false;
+                // A host that accepted synchronously inside the event already
+                // moved the pane; nothing to restore.
+                if (Navigation.IsPaneOpen == _committedPaneOpen) return;
+                _settingFromHost = true;
+                try { Navigation.IsPaneOpen = _committedPaneOpen; }
+                finally { _settingFromHost = false; }
+            });
+        }
+        PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(isOpen));
     }
-}
+}}

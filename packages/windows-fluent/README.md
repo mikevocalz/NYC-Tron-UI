@@ -17,13 +17,15 @@ component yet; it deliberately lives at the Windows app host boundary.
   route, so the indicator only moves when the host calls `SetSelectedId`.
   `SelectsOnInvoked = false` is not used: NavigationView undoes programmatic
   selection of such items.
-- The pane works the same way. When the user opens or closes it (toggle
-  button, light dismiss, or a display-mode change in `Auto`, `LeftCompact`
-  or `LeftMinimal`), the shell raises `PaneOpenChanged` and puts the pane back
-  to the last `SetPaneOpen` value; the pane moves when the host calls
+- The pane works the same way. When the pane opens or closes without
+  `SetPaneOpen`, the shell raises `PaneOpenChanged`. A rejected open is
+  closed again, and a rejected close is reopened when the pane is inline
+  (`Expanded` display mode); the pane then moves when the host calls
   `SetPaneOpen`. A host that accepts asynchronously sees the pane return and
-  then move, as the selection indicator does. Hosts using overlay modes must
-  accept `false` requests or the pane reopens after a light dismiss.
+  then move, as the selection indicator does. In the `Compact` and `Minimal`
+  display modes the open pane is an overlay that NavigationView closes on
+  light dismiss, item invoke or a narrower window; the shell does not force
+  it open again, so accept those `false` requests to keep the host in step.
 - Each item's Narrator name is its label; the NavigationView's name is the
   pane title.
 - `src/controller.ts` provides strict controlled reconciliation: no
