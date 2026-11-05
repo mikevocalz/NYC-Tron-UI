@@ -9,10 +9,10 @@ import {matchesQuery} from "./inspector-model.ts";
 import {shellKey} from "./shell-keys.ts";
 import {
   bindingFromChord,bindingKeycaps,bindingSpoken,findConflict,isAssignableBinding,normalizeBinding,
-  type Binding,type ShortcutCommand,
+  type Binding,type ChordRecorder,type KeyChord,type ShortcutCommand,
 } from "./shortcut-model.ts";
 
-export type {Binding,KeyChord,ShortcutCommand} from "./shortcut-model.ts";
+export type {Binding,ChordRecorder,KeyChord,ShortcutCommand} from "./shortcut-model.ts";
 export {bindingFromChord,commandForChord} from "./shortcut-model.ts";
 
 /** Props for {@linkcode KeyboardShortcutHUD}. */
@@ -25,6 +25,12 @@ export interface KeyboardShortcutHUDProps {
    * command's shortcut. Without it the list is read-only.
    */
   onRebind?:(id:string,binding:Binding|undefined)=>void;
+  /**
+   * Hardware key source for recording on iOS and Android, where React
+   * Native delivers no key events. Without it, native platforms list the
+   * shortcuts read-only. Web records from the browser and ignores it.
+   */
+  recorder?:ChordRecorder;
   /** Apple keycaps (⌘ ⌥ ⇧). @default detected from the platform */
   apple?:boolean;
   /** @default "Keyboard shortcuts" */
@@ -47,11 +53,12 @@ export function isApplePlatform():boolean{
  * With `onRebind` each row can record a new binding: press "Change", then
  * the keys. A binding needs Ctrl, Alt or Command (function keys excepted);
  * one already in use asks before replacing it; Escape cancels recording.
- * Recording reads hardware key events, which React Native delivers on web
- * only, so native platforms show the list read-only.
+ * Recording reads hardware key events. React Native delivers them on web
+ * only, so iOS and Android record through `recorder` and show the list
+ * read-only without one.
  */
 export function KeyboardShortcutHUD({
-  visible,onDismiss,commands,onRebind,apple=isApplePlatform(),title="Keyboard shortcuts",className,unstyled=false,
+  visible,onDismiss,commands,onRebind,recorder,apple=isApplePlatform(),title="Keyboard shortcuts",className,unstyled=false,
 }:KeyboardShortcutHUDProps){
   const styled=!unstyled;
   const local=useRef<StoreApi<Local>|null>(null);
@@ -62,7 +69,8 @@ export function KeyboardShortcutHUD({
   // Move focus into the recorder once it has rendered, so the next keys reach it.
   useEffect(()=>{if(capturing)(recorder.current as unknown as {focus?:()=>void}|null)?.focus?.();},[capturing]);
   useRestoreFocus(visible);
-  const canRebind=!!onRebind&&Platform.OS==="web";
+  const web=Platform.OS==="web";
+  const canRebind=!!onRebind&&(web||!!recorder);
   const shown=commands.filter(c=>matchesQuery(query,c.label,[...(c.keywords??[]),c.group??"",
     ...(c.binding?[bindingSpoken(c.binding,apple),...bindingKeycaps(c.binding,apple)]:[])]));
   const groups=[...new Set(shown.map(c=>c.group??""))];
@@ -73,13 +81,9 @@ export function KeyboardShortcutHUD({
     onRebind?.(id,binding);
     stop();
   };
-  const record=(id:string)=>(event:unknown)=>{
-    const k=shellKey(event);
-    k.preventDefault();k.stopPropagation();
-    // Plain Escape cancels recording through the Modal's onRequestClose, which React Native
-    // Web fires on keyup; stopping here would let that keyup close the whole sheet.
-    if(k.key==="Escape"&&!k.ctrlKey&&!k.metaKey&&!k.altKey&&!k.shiftKey)return;
-    const binding=bindingFromChord({key:k.key,ctrlKey:k.ctrlKey,metaKey:k.metaKey,altKey:k.altKey,shiftKey:k.shiftKey},apple);
+  // One path for both key sources: the browser keydown on web, `recorder` on native.
+  const take=(id:string,chord:KeyChord)=>{
+    const binding=bindingFromChord(chord,apple);
     if(!binding)return;
     if(!isAssignableBinding(binding)){
       store.setState({pending:undefined,error:`Add ${apple?"Command, Control or Option":"Ctrl or Alt"} so it does not fire while typing.`});
@@ -88,6 +92,27 @@ export function KeyboardShortcutHUD({
     if(findConflict(commands,id,binding)){store.setState({pending:binding,error:undefined});return;}
     assign(id,binding);
   };
+  const record=(id:string)=>(event:unknown)=>{
+    const k=shellKey(event);
+    k.preventDefault();k.stopPropagation();
+    // Plain Escape cancels recording through the Modal's onRequestClose, which React Native
+    // Web fires on keyup; stopping here would let that keyup close the whole sheet.
+    if(k.key==="Escape"&&!k.ctrlKey&&!k.metaKey&&!k.altKey&&!k.shiftKey)return;
+    take(id,{key:k.key,ctrlKey:k.ctrlKey,metaKey:k.metaKey,altKey:k.altKey,shiftKey:k.shiftKey});
+  };
+  // Native recording: the hardware source owns the keys while a row records. A plain
+  // Escape arrives here too (no Modal keyup on native) and cancels.
+  useEffect(()=>{
+    if(web||!recorder||!capturing)return;
+    const id=capturing;
+    const sub=recorder.startRecording(chord=>{
+      if(chord.key==="Escape"&&!chord.ctrlKey&&!chord.metaKey&&!chord.altKey&&!chord.shiftKey){stop();return;}
+      take(id,chord);
+    });
+    return ()=>sub.remove();
+  // take/stop read the store and props at call time; restart only when the recording row changes.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[web,recorder,capturing]);
   const keycaps=(binding:Binding)=><View style={{flexDirection:"row",gap:3}} accessibilityLabel={bindingSpoken(binding,apple)}>
     {bindingKeycaps(binding,apple).map((cap,i)=><Text key={i} accessibilityElementsHidden importantForAccessibility="no"
       {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken text-text text-xs")}}
@@ -113,7 +138,8 @@ export function KeyboardShortcutHUD({
         <View ref={recorder} accessible accessibilityLabel={"Recording a shortcut for "+c.label+". Press the keys, or Escape to cancel."}
           {...{onKeyDown:record(c.id),focusable:true,className:joinClasses(styled&&"rounded-control border-2 border-focus bg-surface-sunken focus-visible:outline-none")}}
           style={{minHeight:44,justifyContent:"center",paddingHorizontal:10}}>
-          {pending?keycaps(pending):<Text {...{className:joinClasses(styled&&"text-text text-sm")}}>Press the new shortcut, or Esc to cancel</Text>}
+          {pending?keycaps(pending):<Text {...{className:joinClasses(styled&&"text-text text-sm")}}>
+            {web?"Press the new shortcut, or Esc to cancel":"Press the new shortcut on the hardware keyboard, or Esc to cancel"}</Text>}
         </View>
         {error?<Text accessibilityLiveRegion="assertive" {...{className:joinClasses(styled&&"text-danger text-xs")}}>{error}</Text>:null}
         {conflict?<View style={{gap:4}}>

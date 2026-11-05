@@ -32,6 +32,19 @@ export interface KeyChord {
   readonly shiftKey?:boolean;
 }
 
+/**
+ * A source of hardware key chords for recording a binding where React
+ * Native has no key events (iOS and Android). `@nyc-tron/hardware-keys`
+ * provides one; pass it to KeyboardShortcutHUD as `recorder`.
+ */
+export interface ChordRecorder {
+  /**
+   * Start delivering every keydown to `onChord` until the returned
+   * subscription is removed. The source consumes the keys while recording.
+   */
+  startRecording(onChord:(chord:KeyChord)=>void):{remove():void};
+}
+
 function canonicalKey(key:string):string|undefined{
   if(key===" "||key==="Spacebar")return "Space";
   if(key==="Esc")return "Escape";
