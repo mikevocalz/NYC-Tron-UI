@@ -19,7 +19,7 @@ the caller passes one; otherwise the token applies.
 | `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars, HsvPicker steppers |
 | `border` | `--color-border` | `border-border` | Every bordered surface |
 | `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid; HsvPicker thumb outer ring |
-| `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints |
+| `textMuted` | `--color-text-muted` | `text-text-muted` | Card field labels, row numbers, hints, HsvPicker and ColorChannels labels and hex readout |
 | `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
 | `accent` | `--color-accent` | `bg-accent`, `border-accent` | WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame |

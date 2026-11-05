@@ -98,5 +98,16 @@ steppers. The picker has no animation. Consumers that import this subpath
 must install `@expo/ui` and `expo-linear-gradient`; other subpaths do not
 need them.
 
-Only source, types, unit tests and package exports are verified. No iOS,
-Android, web or foldable device run has been done for this control.
+Labels (hue, hex, RGBA channels) are app-token RN `Text`; the `@expo/ui`
+hosts carry only the sliders. `@expo/ui` Text follows the OS appearance, so
+with a dark app theme on a light-mode device it drew black labels on the
+dark surface. The universal `@expo/ui` Slider takes no accessible label, so
+the hue slider is unnamed; the field's named hue actions are the labeled
+path. An opacity-only channel edit keeps h/s/v exactly (`rgbaEditToHsv`).
+
+Verified: source, types, unit tests, package exports, and a
+react-native-web render in Chromium with the real `@expo/ui` and
+`expo-linear-gradient` web builds (phone and tablet widths, light and dark,
+and app theme opposite to the OS scheme). Synthesized touch drags on the
+field kept the page from scrolling. Not verified: iOS, Android or foldable
+device runs, and VoiceOver/TalkBack output.

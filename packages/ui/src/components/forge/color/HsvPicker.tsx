@@ -1,11 +1,11 @@
 import {useRef} from "react";
 import {LinearGradient} from "expo-linear-gradient";
-import {Column,Host,Slider,Text as NativeText} from "@expo/ui";
+import {Host,Slider} from "@expo/ui";
 import {PanResponder,Pressable,Text,View,type GestureResponderEvent,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {ColorChannels} from "../ColorChannels.tsx";
-import {assertHsv,hsvToRgb,rgbToHsv,rgbaToHex,wrapHue,type HsvColor} from "../color.ts";
+import {assertHsv,hsvToRgb,rgbaEditToHsv,rgbaToHex,wrapHue,type HsvColor} from "../color.ts";
 import {clamp} from "../inputs/precision.ts";
 import {createFieldGesture} from "./fieldGesture.ts";
 
@@ -50,6 +50,14 @@ const round3=(n:number)=>Math.round(n*1000)/1000;
  * `@expo/ui` hue slider, 44pt saturation/brightness steppers and optional RGBA
  * channels. It holds no color state; the only refs are the measured field
  * size and the latest props for the responder.
+ *
+ * Every visible label is an app-token RN `Text`; `@expo/ui` hosts carry only
+ * the sliders, because `@expo/ui` text follows the OS appearance and turns
+ * black on a dark app theme when the device is in light mode.
+ *
+ * The hue slider has no accessible name of its own (the universal `@expo/ui`
+ * Slider takes no label). The field's named actions also step hue, so screen
+ * reader users have a labeled path to every channel.
  *
  * Requires the optional peers `@expo/ui` and `expo-linear-gradient`. Nothing
  * animates: the thumb tracks the finger 1:1 and steppers jump directly, so
@@ -100,11 +108,13 @@ export function HsvPicker({
   const nudgeHue=(direction:-1|1)=>{
     if(!disabled)onValueChange({...value,h:wrapHue(value.h+direction*hueStep)});
   };
-  const hue=Math.round(wrapHue(value.h));
+  // 359.6 rounds to 360; show and slide it as 0 so label and thumb agree.
+  const hue=Math.round(wrapHue(value.h))%360;
   const sat=Math.round(value.s*100);
   const bri=Math.round(value.v*100);
   const rgb=hsvToRgb(value);
   const hex=rgbaToHex(rgb);
+  const opaque=rgbaToHex(rgb,false);
   const styled=!unstyled;
   const text=joinClasses(styled&&"text-text");
   const muted=joinClasses(styled&&"text-text-muted");
@@ -138,7 +148,7 @@ export function HsvPicker({
       accessible
       accessibilityRole="adjustable"
       accessibilityLabel="Saturation and brightness"
-      accessibilityValue={{text:`Saturation ${sat} percent, brightness ${bri} percent, hue ${hue} degrees, ${rgbaToHex(rgb,false)}`}}
+      accessibilityValue={{min:0,max:100,now:sat,text:`Saturation ${sat} percent, brightness ${bri} percent, hue ${hue} degrees, ${opaque}`}}
       accessibilityState={{disabled}}
       accessibilityHint="Swipe up or down to change saturation; use the actions menu for brightness and hue"
       accessibilityActions={[
@@ -155,35 +165,39 @@ export function HsvPicker({
         else if(a==="increaseHue")nudgeHue(1);
         else if(a==="decreaseHue")nudgeHue(-1);
       }}
-      {...{className:joinClasses(styled&&"rounded-control border-border")}}
-      style={{width:"100%",height:fieldHeight,borderWidth:1,overflow:"hidden",opacity:disabled?0.45:1}}>
-      <LinearGradient pointerEvents="none" colors={[WHITE,pure(value.h)]}
-        start={{x:0,y:0}} end={{x:1,y:0}} style={{position:"absolute",width:"100%",height:"100%"}}/>
-      <LinearGradient pointerEvents="none" colors={[CLEAR_BLACK,BLACK]}
-        start={{x:0,y:0}} end={{x:0,y:1}} style={{position:"absolute",width:"100%",height:"100%"}}/>
+      style={{width:"100%",height:fieldHeight,opacity:disabled?0.45:1}}>
+      {/* Only the gradients are clipped, so the thumb stays whole at the
+          field's corners and edges instead of being cut to a quarter. */}
+      <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control border border-border")}}
+        style={{position:"absolute",top:0,left:0,right:0,bottom:0,overflow:"hidden"}}>
+        <LinearGradient pointerEvents="none" colors={[WHITE,pure(value.h)]}
+          start={{x:0,y:0}} end={{x:1,y:0}} style={{position:"absolute",width:"100%",height:"100%"}}/>
+        <LinearGradient pointerEvents="none" colors={[CLEAR_BLACK,BLACK]}
+          start={{x:0,y:0}} end={{x:0,y:1}} style={{position:"absolute",width:"100%",height:"100%"}}/>
+      </View>
       {/* Two token rings keep the thumb visible on light and dark field areas. */}
       <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text")}}
         style={{position:"absolute",left:`${value.s*100}%`,top:`${(1-value.v)*100}%`,
           width:28,height:28,borderRadius:14,borderWidth:2,
           transform:[{translateX:-14},{translateY:-14}],alignItems:"center",justifyContent:"center"}}>
         <View {...{className:joinClasses(styled&&"border-surface-raised")}}
-          style={{width:24,height:24,borderRadius:12,borderWidth:2,backgroundColor:hex}}/>
+          style={{width:24,height:24,borderRadius:12,borderWidth:2,backgroundColor:opaque}}/>
       </View>
     </View>
     {stepper("s","Saturation",sat)}
     {stepper("v","Brightness",bri)}
-    <LinearGradient pointerEvents="none" colors={SPECTRUM}
-      start={{x:0,y:0}} end={{x:1,y:0}} style={{height:12,borderRadius:6}}/>
-    <Host style={{width:"100%"}}>
-      <Column>
-        <NativeText>{`Hue ${hue}°`}</NativeText>
-        <Slider value={hue===360?0:hue} min={0} max={359} step={1} disabled={disabled}
+    <View style={{gap:6}}>
+      <Text {...{className:muted}}>Hue {hue}°</Text>
+      <LinearGradient pointerEvents="none" colors={SPECTRUM}
+        start={{x:0,y:0}} end={{x:1,y:0}} style={{height:12,borderRadius:6,opacity:disabled?0.45:1}}/>
+      <Host style={{width:"100%"}}>
+        <Slider value={hue} min={0} max={359} step={1} disabled={disabled}
           onValueChange={h=>{if(!disabled)onValueChange({...value,h:wrapHue(h)});}}/>
-        <NativeText>{`Hex ${hex}`}</NativeText>
-      </Column>
-    </Host>
-    {showChannels?<ColorChannels value={rgb} showAlpha={showAlpha} disabled={disabled} unstyled {...id("channels")}
-      onValueChange={rgba=>onValueChange(rgbToHsv(rgba,value.h))}/>:null}
+      </Host>
+    </View>
+    {showChannels?<ColorChannels value={rgb} showAlpha={showAlpha} disabled={disabled} unstyled labelClassName={muted} {...id("channels")}
+      onValueChange={rgba=>onValueChange(rgbaEditToHsv(rgba,value))}/>
+      :<Text selectable {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{hex}</Text>}
     {onApply||onCancel?<View style={{flexDirection:"row",gap:8,justifyContent:"flex-end"}}>
       {onCancel?<Button title="Cancel" variant="secondary" disabled={disabled} onPress={onCancel} {...id("cancel")}/>:null}
       {onApply?<Button title="Apply color" disabled={disabled} onPress={()=>onApply(value)} {...id("apply")}/>:null}

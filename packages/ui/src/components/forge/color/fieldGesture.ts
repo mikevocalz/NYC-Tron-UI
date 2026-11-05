@@ -40,7 +40,12 @@ export function createFieldGesture(options:FieldGestureOptions):FieldGesture{
  const apply=(point:FieldPoint)=>{
   if(!active||!measured())return;
   if(!Number.isFinite(point.x)||!Number.isFinite(point.y))return;
-  options.onChange(pointToHsv(point,options.getSize(),options.getValue()));
+  const current=options.getValue();
+  const next=pointToHsv(point,options.getSize(),current);
+  // Moves inside one point of the field repeat the same color; skip them so
+  // the host does not re-render the picker for nothing.
+  if(next.s===current.s&&next.v===current.v&&next.h===current.h)return;
+  options.onChange(next);
  };
  return {
   shouldStart:()=>!options.getDisabled()&&measured(),

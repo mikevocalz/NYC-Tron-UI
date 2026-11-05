@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {
-  alphaPercent,assertHsv,assertRgba,hsvToRgb,parseHexColor,rgbToHsv,rgbaToHex,wrapHue,
+  alphaPercent,assertHsv,assertRgba,hsvToRgb,parseHexColor,rgbToHsv,rgbaEditToHsv,rgbaToHex,wrapHue,
 } from "../src/components/forge/color.ts";
 import {hsvToPoint,pointToHsv} from "../src/components/forge/color/fieldGeometry.ts";
 import {createFieldGesture} from "../src/components/forge/color/fieldGesture.ts";
@@ -144,4 +144,28 @@ test("HsvPicker contract: shared math, controlled, accessible, motion-free",()=>
   assert.ok(!/Animated|LayoutAnimation|react-native-reanimated|withTiming|withSpring/.test(picker),
     "picker introduces no animation");
   assert.ok(!/onPanResponderRelease:[^,]*onApply/.test(picker),"apply is explicit, never on release");
+});
+
+test("an opacity-only channel edit keeps hue, saturation and brightness exactly",()=>{
+  for(const c of [{h:200.4,s:0.123,v:0.5,alpha:1},{h:120,s:0.8,v:0,alpha:1},{h:359.9,s:0.5,v:0.5,alpha:1}]){
+    const next=rgbaEditToHsv({...hsvToRgb(c),alpha:0.25},c);
+    assert.deepEqual(next,{...c,alpha:0.25});
+  }
+  const red=rgbaEditToHsv({r:255,g:0,b:0,alpha:1},{h:90,s:0.1,v:0.1,alpha:1});
+  assert.equal(red.h,0);
+  assert.equal(red.s,1);
+});
+test("rgbToHsv always reports hue in [0, 360)",()=>{
+  for(let r=0;r<256;r+=15)for(let g=0;g<256;g+=15)for(let b=0;b<256;b+=15){
+    const {h}=rgbToHsv({r,g,b,alpha:1});
+    assert.ok(h>=0&&h<360,`${r},${g},${b} -> ${h}`);
+  }
+});
+test("moves that land on the same color are not re-emitted",()=>{
+  const t=setup(200,100);
+  t.gesture.grant({x:100,y:50});
+  t.gesture.move({x:100,y:50});
+  t.gesture.move({x:100,y:50});
+  t.gesture.move({x:150,y:50});
+  assert.equal(t.changes.length,2);
 });

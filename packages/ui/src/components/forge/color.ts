@@ -84,7 +84,7 @@ export function rgbToHsv(c:RgbaColor,retainedHue=0):HsvColor{
   if(max===r)h=60*(((g-b)/delta)%6);
   else if(max===g)h=60*((b-r)/delta+2);
   else h=60*((r-g)/delta+4);
-  if(h<0)h+=360;
+  h=wrapHue(h);
  }
  return {h,s:max===0?0:delta/max,v:max,alpha:c.alpha};
 }
@@ -99,4 +99,16 @@ export function hsvToRgb(c:HsvColor):RgbaColor{
   :hue<240?[0,x,chroma]:hue<300?[x,0,chroma]:[chroma,0,x];
  const byte=(n:number)=>Math.round((n+m)*255);
  return {r:byte(r),g:byte(g),b:byte(b),alpha:c.alpha};
+}
+/**
+ * HSV for an RGBA edit made from `current`. When only alpha changed, `current`
+ * keeps its exact h/s/v; re-deriving them from 8-bit RGB would drift all three
+ * (and drop saturation at zero brightness). Otherwise converts with
+ * {@linkcode rgbToHsv}, retaining `current.h` through gray.
+ */
+export function rgbaEditToHsv(next:RgbaColor,current:HsvColor):HsvColor{
+ const rgb=hsvToRgb(current);
+ assertRgba(next);
+ if(next.r===rgb.r&&next.g===rgb.g&&next.b===rgb.b)return {...current,alpha:next.alpha};
+ return rgbToHsv(next,current.h);
 }
