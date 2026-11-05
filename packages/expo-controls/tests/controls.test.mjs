@@ -118,7 +118,7 @@ test("web overlays cycle Tab inside and restore focus to the opener",()=>{
 });
 test("new subpaths resolve to emitted native and web files",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
- for(const name of ["NativePopover","Tooltip"]){
+ for(const name of ["NativePopover","Tooltip","NativeSliderField","NativeSplitButton","ContextMenu"]){
   assert.equal(pkg.exports["./"+name]["react-native"],"./dist/components/"+name+".native.js");
   assert.equal(pkg.exports["./"+name].browser,"./dist/components/"+name+".web.js");
   assert.equal(pkg.exports["./"+name].default,"./dist/components/"+name+".web.js");
@@ -129,7 +129,7 @@ test("new subpaths resolve to emitted native and web files",()=>{
 });
 test("every component subpath's types file declares the component, not only its props",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
- for(const name of ["NativeDropdown","NativeActionMenu","NativePopover","Tooltip"]){
+ for(const name of ["NativeDropdown","NativeActionMenu","NativePopover","Tooltip","NativeSliderField","NativeSplitButton","ContextMenu"]){
   const src=pkg.exports["./"+name].types.replace("./dist/","packages/expo-controls/src/").replace(/\.d\.ts$/,".tsx");
   assert.match(readFileSync(resolve(src),"utf8"),new RegExp("export function "+name+"\\("),name);
  }
@@ -145,4 +145,17 @@ test("Select resolves to the platform picker on native and the token combobox on
   assert.match(native,/if\(!declared\|\|lockedRow\)return <TokenSelect/);
   const web=readFileSync(new URL("../src/components/Select.web.tsx",import.meta.url),"utf8");
   assert.match(web,/from "@nyc-tron\/ui\/components\/Select"/);
+});
+test("NativeSliderField commits when the OS reports the drag ended and steps map to Compose stops",async()=>{
+ const {composeSteps}=await import("../src/components/NativeSliderField.types.ts");
+ assert.equal(composeSteps(0,100,1),99);
+ assert.equal(composeSteps(0,1,0.25),3);
+ assert.equal(composeSteps(0,1,0.3),0);
+ assert.equal(composeSteps(0,100000,1),0);
+ assert.throws(()=>composeSteps(1,0,1),RangeError);
+ const native=readFileSync(resolve("packages/expo-controls/src/components/NativeSliderField.native.tsx"),"utf8");
+ assert.match(native,/onEditingChanged=\{editing=>\{if\(!editing\)finish\(\);\}\}/);
+ assert.match(native,/onValueChangeFinished=\{finish\}/);
+ assert.match(native,/semantics\(\{contentDescription:label\}\)/);
+ assert.match(native,/label=\{label\}/);
 });

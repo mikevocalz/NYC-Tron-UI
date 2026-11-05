@@ -22,8 +22,29 @@ complex editor screen composition and its cross-engine suite application.
 | ToolRail (A-06) | `@nyc-tron/ui/components/shell/ToolRail` (model in `/shell/tool-rail-model`) | Controlled 44pt toggle tools, variant flyouts on long press, outward arrow or a11y action; app owns shortcuts | Original; NavigationRail stays the app-section rail |
 | StatusBar (A-25) | `@nyc-tron/ui/components/shell/StatusBar` (text in `/shell/status-model`) | Controlled zoom steps and presets, unit menu, selection count, render/save/record/error state with polite announcements | Original |
 | MenuButton | `@nyc-tron/ui/components/shell/MenuButton` | Button that anchors a CommandPopover; shared by the shell controls | Original |
+| InspectorPanel (A-09) | `@nyc-tron/ui/components/shell/InspectorPanel` (model in `/shell/inspector-model`) | Controlled selection heading (none, single, multiple), empty state, search that hides non-matching rows and sections | Original |
+| InspectorSection (A-10) | `@nyc-tron/ui/components/shell/InspectorSection` | Controlled disclosure, nesting, enable switch that disables rows inside, Reset while modified | Original |
+| PropertyRow (A-11) | `@nyc-tron/ui/components/shell/PropertyRow` | Label + editor, Mixed marker, inherited/overridden state with Revert, stacks in narrow panes | Original |
+| InspectorSearch (A-21) | `@nyc-tron/ui/components/shell/InspectorSearch` (`matchesQuery` for app lists) | Search field with clear, Escape and a polite match count | Original |
+| UnitInput (A-13) | `@nyc-tron/ui/components/shell/UnitInput` (parser in `/shell/unit-expression`) | Bounded recursive-descent unit arithmetic (px, pt, mm, cm, in, %, s, ms, f, smp, dB, x); no eval; length/token/depth limits | Original; replaces the helper-only gap noted on forge #46 |
+| SliderField (A-14) | `@nyc-tron/ui/components/shell/SliderField`; OS slider in `@nyc-tron/expo-controls/NativeSliderField` | RN track with typed entry and Reset on every platform; the expo-controls variant renders SwiftUI/Compose `Slider` on iOS/Android and commits when the OS drag ends. Native build and device runs unverified | Original |
+| RangeSlider (A-15) | `@nyc-tron/ui/components/shell/RangeSlider` (math in `/shell/slider-model`) | Two ends that never cross, min gap, typed endpoints, per-end keyboard and a11y | Original |
+| RotaryKnob (A-16) | `@nyc-tron/ui/components/shell/RotaryKnob` | Relative drag with sideways fine mode, circular (stylus) input, keys, exact entry, Reset. InstrumentKnob and native ArcKnob are unchanged | Original |
+| SplitButton (A-17) | `@nyc-tron/ui/components/shell/SplitButton`; OS control in `@nyc-tron/expo-controls/NativeSplitButton` | Primary action and flyout as two 44pt targets. Native: Compose `SplitButtonLayout` + `DropdownMenu`; SwiftUI `Button` + icon-only `Menu`. Native build and device runs unverified | Original |
+| RibbonTabs (A-08) | `@nyc-tron/ui/components/shell/RibbonTabs` (model in `/shell/ribbon-model`) | Tabs, contextual tabs, labelled groups, toggles, split buttons, inline galleries with More, collapse | Original |
+| ContextMenu (A-19) | `@nyc-tron/ui/components/shell/ContextMenu`; `@nyc-tron/expo-controls/ContextMenu` (OS menu on native) | Right-click and stylus barrel click, long press, Shift+F10, Menu key, screen-reader action | Extends NativeActionMenu (#10) with the keyboard and pointer paths |
+| PresetGallery (A-23) | `@nyc-tron/ui/components/shell/PresetGallery` (model in `/shell/preset-model`) | Responsive grid, hover/focus live preview, selection, favorites and filter | Original |
+| KeyboardShortcutHUD (A-27) | `@nyc-tron/ui/components/shell/KeyboardShortcutHUD` (model in `/shell/shortcut-model`) | Searchable shortcut sheet, binding recorder with conflict prompt and reset, `commandForChord` for app dispatch | Original; key parsing replaces forge #5 `keyboard-event.ts` |
+| FocusAndA11yLayer (A-28) | `@nyc-tron/ui/components/shell/FocusAndA11yLayer` (`useA11yPreferences`, `useAnnounce`, `motionDuration`) | OS reduce motion, screen reader, contrast; web input modality on `<html data-input-modality>`; announcements | Extends overlays focus-cycle/focus-restore |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
-| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
+| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy, per-reference tone outlines (I-06), fill handle plus Ctrl/Cmd+D/R through `onFillRange` (I-02), `renderCellContent` for in-cell sparklines and `showFormulaBar` for split panes; native QA pending | Forge Tally Rust adapter PR #39 |
+| SheetTabs (I-08) | `@nyc-tron/ui/components/forge/spreadsheet/SheetTabs` (rules in `/forge/spreadsheet/sheet-tabs-model`) | Controlled tab strip: select, add, rename (Excel name rules, engine errors shown), duplicate, move, remove with confirm, protect, token tone stripe. Each action renders only when its callback is passed. Chromium tests at 390 px; no device QA | GridCraft `Tabs.kt` (structure only, no code copied) |
+| ChartBuilder (I-13) | `@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder` (model `/forge/spreadsheet/chart-model`) | Controlled: line/column/area gallery (the kinds `@nyc-tron/native-charts` draws), A1 range with 4096-cell cap, series orientation, header and x-value options, title and axis titles, preview through `renderPreview`. Non-numeric cells are skipped and counted, never drawn as zero. Chromium tests | New |
+| Sparkline + SparklineEditor (I-14) | `@nyc-tron/ui/components/forge/spreadsheet/Sparkline`, `/SparklineEditor` (model `/sparkline-model`) | View-drawn line, column and win/loss sparklines with high/low/negative marks and gaps; editor validates a one-row/one-column range and a single target cell. Drawn in a grid cell through `SpreadsheetGrid.renderCellContent`. Chromium tests | New |
+| FreezeSplitControls + SplitSpreadsheetView (I-17) | `@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls`, `/SplitSpreadsheetView` (model `/freeze-split-model`) | Freeze top row / first column / at selection / unfreeze; stacked or side-by-side split of one sheet with a drag, arrow-key and screen-reader adjustable divider (136 pt minimum pane, Escape restores). View state only. Chromium tests | New |
+| SpreadsheetCardsView (I-20) | `@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView` (model `/cards-model`) | Table rows as cards: first column titles, three preview fields, full card with in-place field editing through `onCommitField`, previous/next, honest empty state, paged list. Chromium tests at 390 px; no device QA | **Ported** from GridCraft `Cards.kt` @ `72d5bfc` (MIT OR Apache-2.0, see THIRD_PARTY_NOTICES) |
+| FormulaReferenceText (I-06) | `@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText` (model `/reference-colors`) | Formula text with each reference in the tone the grid outlines it with; same reference, same tone. Chromium test | **Ported** color assignment from GridCraft `FormulaRefs.kt` @ `72d5bfc` |
+| Fill math (I-02) | `@nyc-tron/ui/components/forge/spreadsheet/fill-handle` | Pure: dominant-axis fill target, Ctrl+D/R source/target. Unit tests | New |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | Timebase math | `@nyc-tron/ui/components/forge/timebase` | Pure: frame clamp/position, `framesToSeconds`/`secondsToFrame`, SMPTE timecode; ported PR #25 tests | Forge PR #25 |
@@ -59,7 +80,15 @@ complex editor screen composition and its cross-engine suite application.
 | DragGrabHandle | `@nyc-tron/ui/components/DragGrabHandle` | Controlled RN handle; start/move/commit/cancel, Escape and second-pointer cancel. Transport tests plus Chromium reorder/cancel test; no device QA yet | Forge `studio-workspace/drag-grab-handle.tsx` |
 | Drag transports | `@nyc-tron/ui/components/gestures/PanResponderDrag` (default) and `/gestures/GestureHandlerDrag` (optional `react-native-gesture-handler` >=3.4 <4 peer) | Callback logic tested with mocked RN/RNGH; native recognition unverified on device | Forge `studio-gesture.tsx` / `studio-gesture.native.tsx` |
 | LevelFader + level math | `@nyc-tron/ui/components/forge/audio/LevelFader`, `.../forge/audio/level` | Controlled RN responder fader (value/onChange/onCommit), dB travel, unit + mocked-host render tests; native device QA pending | Forge PR #25 `NativeLevelSlider` |
-| Track/mixer / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
+| MixingConsole + ChannelStrip (E-13) | `@nyc-tron/ui/components/forge/audio/MixingConsole`, `.../forge/audio/ChannelStrip`, state helpers in `.../forge/audio/mixer` | Controlled RN console: LevelFader, PanControl, SoloMuteButtons per strip, horizontal scroll, solo-over-mute audibility matching the Cadence render, honest empty state. Model and mocked-host render tests, Chromium/React Native Web drags and captures at 390/834 px light/dark and RTL; no device or screen-reader QA yet. **Deferred:** meters (E-16, no engine meter stream), FX slots and routing (E-19/E-20), channel groups (no engine group model) | Original; structure refs Facebook volume sheet, Opal sound mix (Mobbin) |
+| PanControl + pan math (E-15) | `@nyc-tron/ui/components/forge/audio/PanControl`, `.../forge/audio/pan` | Controlled mono pan, centre detent, Home/C to centre, adjustable a11y with a "Centre" action; never mirrored in RTL (physical stereo field). Same test coverage as above. **Deferred:** stereo balance and surround (engine stores one mono pan per track) | Original; structure ref Waymo balance/fade (Mobbin) |
+| SoloMuteButtons (E-18) | `@nyc-tron/ui/components/forge/audio/SoloMuteButtons` | Controlled M/S toggles (`togglebutton` native, `button` + `aria-pressed` web), dashed "silenced by another solo" state with hint. Same test coverage. **Deferred:** group solo and solo-safe (no engine fields) | Original |
+| TempoAndMetronome + tempo math (E-27) | `@nyc-tron/ui/components/forge/audio/TempoAndMetronome`, `.../forge/audio/tempo` | PrecisionScrubber BPM (20..400, the engine's range), tap tempo that commits once when tapping stops, time-signature stepper and unit radios, optional metronome switch and beat dots. The switch is not drawn without a `metronome` binding: the click sound belongs to an audio layer that does not exist yet (E-01) | Original |
+| MIDIPianoRoll + note geometry (E-24) | `@nyc-tron/ui/components/forge/midi/MIDIPianoRoll`, `.../forge/midi/note-grid` | Controlled note editor: body drag moves time and pitch in one commit, end grip resizes, tap adds, Delete removes, arrows/Shift+arrows and screen-reader actions as the non-drag path, optional audition callback. Musical time never mirrors in RTL. Notes are plain views (hundreds per clip); a dense arrangement renderer waits on verified Skia | Original; addresses notes by index like Cadence `moveNote`/`resizeNote` |
+| MIDIVelocityLane (E-25) | `@nyc-tron/ui/components/forge/midi/MIDIVelocityLane` | Per-note velocity bars, vertical drag or Up/Down/PageUp/PageDown, one commit per gesture; follows the roll's `onScrollX`. **Deferred:** line-draw across bars (needs a batch velocity op; sequential ops would split one gesture into many undo steps) and MIDI channel (notes carry none) | Original |
+| StepSequencer (E-26) | `@nyc-tron/ui/components/forge/midi/StepSequencer` | Lanes × steps over one clip's notes; press toggles, long press/A/screen-reader action accents, playhead column. 44pt cells, horizontal scroll | Original |
+| WaveformLane viewport (E-02) | `@nyc-tron/ui/components/forge/WaveformLane` (`visibleRange`, `onVisibleRangeCommit`), `.../forge/waveform` (`slicePeaks`, `scrollRange`, `rangePosition`) | Draws only the visible window (work proportional to the span), sideways drag scrolls and commits once, taps seek inside the window, time axis fixed LTR. **Deferred:** Skia GPU lane (backend unverified on devices) | Forge PR #25 / #35 |
+| EQ / dynamics graphs | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Rational time model (frames, samples, timecode) | `@nyc-tron/ui/components/forge/timeline/time` (reuses `/forge/timebase`) | Pure, tested: BigInt frame/sample conversion, drop-frame parse, typed-time parse | Original |
 | SeekBar (D-04) | `@nyc-tron/ui/components/forge/timeline/SeekBar` | RN seek track with played and buffered ranges and a drag-end commit; `NativeSeekBar` stays the `@expo/ui` variant | Original |
 | TransportControls (D-06) | `@nyc-tron/ui/components/forge/timeline/TransportControls` | Play/pause, stop, jumps, frame steps, keyboard; not mirrored in RTL | Original |
@@ -79,10 +108,23 @@ complex editor screen composition and its cross-engine suite application.
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
 | InkToolbar | `@nyc-tron/ui/components/forge/ink/InkToolbar` (state, shortcuts and validation in `/forge/ink/ink-model`) | Controlled RN toolbar, horizontal bar or vertical rail: tool radio group, adjustable size and opacity, host swatches plus an optional custom-color request, pressure switch shown only when the host reports measured pressure, undo/redo with disabled reasons. Shortcut resolver is a pure function; no global listener. Model tests plus Chromium/React Native Web interaction tests and light/dark/RTL captures at 390 and 834 px; no device or screen-reader QA yet | Forge board PRs #18, #19, #22 (`packages/board`, `apps/board-native-lab`) and pen PR #20 |
 | Board stroke engine, Skia renderer, BLE pen connection, pen controllers | Nitro Forge `packages/board`, `packages/pen-connect`, `packages/spatial-ink` | **STAYS IN FORGE** by design; InkToolbar only reports intent | Forge PRs #18–20, #22 |
-| Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
-| Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
-| PDF annotations | `components/forge/pdf/` planned | **NOT EXTRACTED** | Forge Folio |
-| Slide/canvas transitions | `components/forge/slides/` planned | **NOT EXTRACTED** | Forge Pitch |
+| RecordingTrack | `@nyc-tron/ui/components/forge/audio/RecordingTrack` | Controlled RN view over `RecordingViewState`; lane is `forge/WaveformLane`; mocked-host render tests only, native QA pending | Forge PR #37 `NativeRecordingTrack`, `NativeSourceRecordingTrack` (view parts) |
+| LevelMeter | `@nyc-tron/ui/components/forge/audio/LevelMeter` | Controlled RN view; dBFS math and throttled band announcements tested; screen-reader output on device unverified | Forge PR #37 meter history |
+| AudioPreview | `@nyc-tron/ui/components/forge/audio/AudioPreview` | Controlled RN view over `PreviewViewState`; mocked-host render tests only | Forge PR #37 `NativeAudioPreview` (view parts) |
+| DevicePairingDialog | `@nyc-tron/ui/components/forge/devices/DevicePairingDialog` | Controlled RN Modal over `PairingState`; transport-agnostic; mocked-host render tests only | Forge PR #20 `PenConnectionDialog` |
+| Paste into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange`. Fill has its UI (`onFillRange`); the engine operation behind it is the app's | Forge Tally |
+| RichTextRibbon (H-03) | `@nyc-tron/ui/components/forge/document/RichTextRibbon` (state in `/forge/document/ribbon-model`) | Controlled RN toolbar: paragraph style, font family and size, B/I/U/S with mixed state, text and highlight color, change case. Each group renders only with its callback. Model tests and Chromium tests and captures; no device or screen-reader QA yet | Original; Forge Quill `applyStyle`/`setBlockKind` |
+| BulletsNumberingEditor (H-07) | `@nyc-tron/ui/components/forge/document/BulletsNumberingEditor` (`/forge/document/list-model`) | List kind, indent/outdent under the nesting policy (one level deeper than the item above, nine levels), per-level format, numbered preview. Model and Chromium tests | Original |
+| NavigationOutline (H-15) | `@nyc-tron/ui/components/forge/document/NavigationOutline` (`/forge/document/outline-model`) | Heading outline with collapse and current section, page list (thumbnails through `renderPageThumbnail`), bookmarks. Model and Chromium tests | Original |
+| DocumentReadAloudTransport (H-21) | `@nyc-tron/ui/components/forge/document/DocumentReadAloudTransport` over `/forge/office/ReadAloudTransport` | Controlled transport; the app owns the voice. Sentence queue from `/forge/office/read-aloud-model` | WordCraft `crates/engine/src/speech.rs` (ported, MIT OR Apache-2.0) |
+| TextSearchResults (K-04) | `@nyc-tron/ui/components/forge/pdf/TextSearchResults` (`/forge/pdf/search-model`) | Query, case and whole-word toggles, results grouped by page with the match in context, wrap-round next/previous, hit cap, read error distinct from no matches. On-page highlight needs the host's renderer | PdfCraft `ui/viewer/Search.kt` (ported, MIT OR Apache-2.0) |
+| AnnotationToolbar (K-06) | `@nyc-tron/ui/components/forge/pdf/AnnotationToolbar` (`/forge/pdf/annotation-model`) | Only the tools the host lists (engine-storable subtypes), letter shortcuts, undo/redo. Placing marks on the page is the host's page view | Original |
+| CommentsThreadPanel (K-07) | `@nyc-tron/ui/components/forge/pdf/CommentsThreadPanel` (`/forge/pdf/comments-model`) | Threads by page; reply (draft kept on failure), resolve/reopen and delete only with callbacks; open/resolved/all filter | Original |
+| PDFReadAloudTransport (K-18) | `@nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport` | Shared transport plus page context and page steps | WordCraft `speech.rs` (ported model) |
+| SlideFilmstrip (J-01) | `@nyc-tron/ui/components/forge/slides/SlideFilmstrip` | Vertical or horizontal; thumbnails drawn from slide objects (`SlideThumbnail`), select, grip/Alt+arrow/action reorder, add, remove. Chromium tests incl. a horizontal grip drag | Original; Forge Pitch |
+| SlideSorter (J-02) | `@nyc-tron/ui/components/forge/slides/SlideSorter` (`/forge/slides/slide-model`) | Fitted grid, multiselect (Shift range, Cmd/Ctrl toggle, touch Select mode), block moves, delete guarded against emptying the deck; `planMoves` turns an order into single engine moves | Original |
+| SlideCanvas (J-05) | `@nyc-tron/ui/components/forge/slides/SlideCanvas` (`/forge/slides/canvas-model`) | Select, drag with edge/center snapping guides, corner resize, nudge, rotate, delete, inline text edit; one commit per gesture; not mirrored in RTL | Original |
+| SlideAnimationPane (J-09) | `@nyc-tron/ui/components/forge/slides/SlideAnimationPane` (`/forge/slides/animation-model`) | Play-order list, add (effects the host lists, grouped entrance/emphasis/exit; validated seconds), remove, preview | Original |
 | Unified icon glyphs/Rive | `components/icons/` planned | **NOT EXTRACTED** | Forge PR #21 |
 
 **Important:** An npm import subpath chooses one entry point, not an independent
@@ -566,3 +608,170 @@ models; Chromium/React Native Web interaction tests for every control
 verified: iOS, Android, Surface Duo or other foldable devices, real hinge
 features from a device, VoiceOver/TalkBack/Narrator output, and the
 GestureHandlerDrag transport with these controls.
+
+## 2026-11-05 studio shell inspector and inputs (A-09, A-10, A-11, A-13, A-14, A-15, A-16, A-21)
+
+`UnitInput` parses with a recursive-descent parser over a fixed token set:
+numbers, the unit names in `UNITS`, `+ - * / ( )`. It never calls `eval` or
+`Function`, rejects any other word, and stops at 128 characters, 64 tokens
+or 8 levels of nesting. Values are stored in the dimension's base unit
+(pixels at 96 per inch, seconds, decibels, or a ratio), so changing the
+display unit never changes the value. Bare numbers in a sum take the
+display unit; `12mm * 2` doubles, `4 / 2mm` and `2mm * 3mm` are errors.
+Frames, samples and length percentages need `frameRate`, `sampleRate` and
+`percentOf` in the context and say so when they are missing. Enter commits
+and keeps focus, so a parse error stays next to the text; leaving the field
+with unparseable text restores the value and shows "Not applied".
+
+`SliderField`, `RangeSlider` and `RotaryKnob` take one `onCommit` per drag,
+key press, typed entry, screen-reader action or reset, and `onPreview` for
+live canvas updates. Typed entry in all three is a `UnitInput`. The knob's
+`input="circular"` is the stylus path: the value follows the pen's angle
+and holds at an end across the 90-degree gap at the bottom. The app chooses
+it, because React Native's responder events do not report the pointer type.
+
+**Native choice:** @expo/ui 58 has a SwiftUI and a Compose `Slider` (but no
+range slider or knob). `@nyc-tron/expo-controls/NativeSliderField` renders
+them with the SliderField label, entry and Reset around them and commits on
+`onEditingChanged(false)` / `onValueChangeFinished`. The universal
+`@expo/ui` Slider reports neither, so it is not used. Its web entry is the
+RN `SliderField`. The inspector section switch is React Native's `Switch`
+(the platform control on iOS and Android); on web it takes the theme
+tokens through `var()`.
+
+`InspectorPanel` filters through a small registry: each `PropertyRow`
+reports whether it matches the query, sections hide when nothing in them
+matches, and matching sections show open without changing their controlled
+`expanded` value. Mixed values are the app's call: the row shows "Mixed"
+and the editor gets `mixed` and an accessible name ending in "mixed values".
+
+Directional layout uses leading spacers and flex order, not
+`paddingStart`/`marginStart`: React Native Web resolves start/end from
+`I18nManager`, not from the CSS `direction` a web app sets, and the first
+RTL capture showed indents and the search glyph on the wrong side.
+
+Verified: parser, slider, range, knob and registry unit tests; Chromium/
+React Native Web interaction tests for every control
+(`packages/ui/tests/browser/shell-inspector.spec.mjs`) and captures at 390
+and 834px in light, dark, RTL, forced colors and the three selection states.
+Not verified: the SwiftUI/Compose `NativeSliderField` on a device (source
+and types only), iOS/Android rendering of the RN controls, stylus input on
+hardware, and screen-reader output.
+
+## 2026-11-05 studio shell commands and overlays (A-08, A-17, A-19, A-23, A-27, A-28)
+
+`SplitButton` keeps the primary action and the flyout as two buttons with
+separate 44pt targets. `@nyc-tron/expo-controls/NativeSplitButton` uses the
+OS controls: Material 3 `SplitButtonLayout` with a `DropdownMenu` on
+Android, and a bordered SwiftUI `Button` beside an icon-only `Menu` on iOS.
+SwiftUI's `Menu(primaryAction:)` was not used because it puts both actions
+on one target. The Compose trailing button reads "More" because @expo/ui's
+Compose `Icon` needs a bundled asset.
+
+`RibbonTabs` validates ids up front. Contextual tabs carry their group name
+in the accessible label and an accent rule. Narrow panes scroll the panel
+sideways instead of dropping commands. Galleries keep the selected item
+inline and list the rest under "More".
+
+`ContextMenu` in `@nyc-tron/ui` covers web and RN-rendered targets: a
+`contextmenu` event (mouse right-click, stylus barrel button), long press,
+Shift+F10, the Menu key, and a "Show actions" (`longpress`) accessibility
+action. `@nyc-tron/expo-controls/ContextMenu` uses `NativeActionMenu` on iOS
+and Android, so the OS menu appears there.
+
+`KeyboardShortcutHUD` records bindings from web key events. React Native
+delivers hardware key events only on web, so on iOS and Android the list is
+read-only. A binding needs Ctrl, Alt or Command (function keys excepted),
+since bare letters would fire while typing. A binding already in use asks
+before taking it, and Replace clears the other command. Escape while
+recording cancels the recording and leaves the sheet open. Bindings are
+portable strings (`Mod` is Command on Apple, Control elsewhere);
+`commandForChord` lets the app dispatch with the same rules.
+
+`FocusAndA11yLayer` reads reduce motion and screen-reader state from
+`AccessibilityInfo`. It reads contrast from darker system colors on iOS,
+high text contrast on Android, and `forced-colors` on web. On web it writes
+the input modality to `<html data-input-modality>` so app CSS can scope
+focus rings. Announcements go to `announceForAccessibility` on native and to
+a visually hidden live region on web. An off-screen offset would have
+widened the page in RTL, which the first RTL capture showed at 10,390px.
+
+Forced colors paints transparent borders, so unselected ribbon tabs, gallery
+items and preset tiles draw no border at all and keep their size with
+padding.
+
+Verified: ribbon, preset, shortcut and a11y-store unit tests, and
+Chromium/React Native Web interaction tests
+(`packages/ui/tests/browser/shell-commands.spec.mjs`) with captures at 390
+and 834px in light, dark, RTL, forced colors, and with Apple keycaps. Not
+verified: `NativeSplitButton` and the native `ContextMenu` on devices
+(source and types only), stylus barrel clicks on real hardware (the web path
+is the same `contextmenu` event Chromium sends for a right-click), and
+screen-reader output.
+
+## 2026-11-05 spreadsheet cluster (I-01, I-02, I-06, I-08, I-13, I-14, I-17, I-20)
+
+Nitro Forge roster IDs and where they live. Every control is controlled: the
+app (for Forge, the Tally engine through `@nitro-forge/tally/grid-adapter`)
+owns the workbook, and each component reports the next state or the write it
+wants. No component persists anything.
+
+| ID | Component | Notes |
+| --- | --- | --- |
+| I-01 | `SpreadsheetGrid` | Chromium test scrolls a 1,048,576-row sheet to row 500,001 and checks the mounted cell count stays under 400. Native scroll performance on a device is not measured. |
+| I-02 | `SpreadsheetGrid` `onFillRange` + `forge/spreadsheet/fill-handle` | The handle is drawn only when `onFillRange` is passed, so an engine without a fill operation shows no dead handle. |
+| I-06 | `SpreadsheetGrid` outlines + `FormulaReferenceText` | Up to eight tones: four token colors (primary, accent, success, info), solid then dashed. `danger` is never used for a reference. |
+| I-08 | `SheetTabs` | Arrow keys follow reading direction; Ctrl/Cmd+PageUp/PageDown also switch sheets; F2 renames; Escape cancels. |
+| I-13 | `ChartBuilder` | NYC-Tron UI does not import `@nyc-tron/native-charts`; the app renders the preview with it. |
+| I-14 | `Sparkline`, `SparklineEditor` | Drawn with views, so it fits inside a grid cell on every platform without a canvas. |
+| I-17 | `FreezeSplitControls`, `SplitSpreadsheetView` | Pass `showFormulaBar={false}` to the second pane's grid so the panes share one formula bar. |
+| I-20 | `SpreadsheetCardsView` | GridCraft edits a field in an AlertDialog; this edits it in place, since the task needs no interruption. |
+
+Verified here: unit tests (`packages/ui/tests/spreadsheet-cluster.test.mjs`),
+TypeScript, package exports, and Chromium/React Native Web interaction tests
+plus light/dark captures at 390 and 834 px and an RTL capture
+(`packages/ui/tests/browser/spreadsheet.spec.mjs`). Not run: iOS or Android
+rendering, VoiceOver/TalkBack, a Surface Duo or other foldable, hardware
+keyboards on native, Safari and Firefox.
+
+## 2026-11-05 recording views and device pairing
+
+Per Nitro Forge PR #38 the dependency runs one way: Forge imports these views,
+NYC-Tron never imports Forge. Microphone capture, PCM buffers, WAV writing,
+playback graphs, Bluetooth discovery and the recorder, player and pen
+controllers stay in Forge. NYC-Tron receives only controlled views and their
+pure state models:
+
+- `forge/audio/recording-model`, `forge/audio/preview-model`,
+  `forge/audio/level-meter` and `forge/devices/pairing-model` hold the state
+  unions and copy. Forge maps its controller phase onto them.
+- Every state that needs the user has copy and a recovery action: microphone permission denied
+  (Settings when the app passes `onOpenSettings`, otherwise ask again), no
+  input device, interrupted take (save what was recorded), recorder error,
+  no pairing device found (search again), and each pairing error code
+  (`permission-denied`, `radio-off`, `connection-failed`, `unknown`) with retry.
+  The busy states (`requesting-permission`, `preparing`, `stopping`) show
+  progress and no action; the app must move them on or to `error`. Without
+  `onOpenSettings` a permission denial offers only "Ask again", which iOS
+  and Android ("Don't ask again") answer silently, so pass it.
+- `disabled` on `RecordingTrack` never blocks "Stop and save" or "Save what
+  was recorded".
+- `LevelMeter` is a `progressbar` whose value text is a band, not a number.
+  With `announce` it speaks band changes at low priority, at most once per
+  `announceIntervalMs` (2 s default); clipping is spoken at once. The bar is not
+  a live region. Status lines are polite live regions that change once per
+  phase; VoiceOver ignores live regions, so on iOS each phase change is also
+  announced. react-native-web has no `announceForAccessibilityWithOptions`;
+  the views fall back to the plain call there instead of throwing.
+- Closing a connected `DevicePairingDialog` calls `onDone`, never `onCancel`, so
+  dismissing the dialog does not disconnect the device.
+
+Evidence is Node tests of the state models, mocked-host render tests that
+run the real components, and a react-native-web render in Chromium of every
+recording, preview, meter and pairing state at phone and tablet widths in
+light and dark. That render found the web crash above (a recording track
+unmounted the whole screen) and the peak-hold marker vanishing at full
+scale; both are fixed. No simulator, device, TalkBack or VoiceOver pass has
+been done for these views. The dialog scrim is still a fixed
+`rgba(0,0,0,0.5)`: TronTheme has no scrim token yet (DEFER until one is
+added to `@nyc-tron/core/theme`).

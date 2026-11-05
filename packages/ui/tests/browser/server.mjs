@@ -9,7 +9,7 @@ const here=dirname(fileURLToPath(import.meta.url));
 const css=execFileSync(resolve(here,"node_modules/.bin/tailwindcss"),["-i",resolve(here,"theme.css")],{cwd:here,encoding:"utf8"});
 // One bundle per fixture: fixture.tsx at "/", primitives.tsx at "/primitives",
 // and each fixtures/<name>.tsx at "/<name>".
-const fixtures=[["",resolve(here,"fixture.tsx")],["primitives",resolve(here,"primitives.tsx")],
+const fixtures=[["spreadsheet",resolve(here,"spreadsheet.tsx")],["",resolve(here,"fixture.tsx")],["primitives",resolve(here,"primitives.tsx")],
   ...readdirSync(resolve(here,"fixtures")).filter(f=>f.endsWith(".tsx")).map(f=>[f.slice(0,-4),resolve(here,"fixtures",f)])];
 const bundleOf=entry=>build({entryPoints:[entry],bundle:true,write:false,
   format:"iife",jsx:"automatic",platform:"browser",
