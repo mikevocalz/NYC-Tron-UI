@@ -47,10 +47,29 @@ edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
  return source.replace('#include "pch.h"','#include "pch.h"\n#include <winrt/NYCTronFluentFabric.h>')
   .replace(marker,marker+"\n  settings.PackageProviders().Append(winrt::NYCTronFluentFabric::ReactPackageProvider());");
 });
+// The linked library keeps its own node_modules because its native build
+// needs react-native-windows there. Without this resolver Metro follows the
+// symlink and bundles a second React and react-native-windows from the
+// library's node_modules; the window then opens with nothing rendered.
+const singletonResolver=[
+ "    resolveRequest: (context, moduleName, platform) => {",
+ "      const singleton = ['react', 'react-native', 'react-native-windows'].some(",
+ "        name => moduleName === name || moduleName.startsWith(name + '/'));",
+ "      return context.resolveRequest(",
+ "        singleton ? {...context, originModulePath: path.join(__dirname, 'index.js')} : context,",
+ "        moduleName,",
+ "        platform,",
+ "      );",
+ "    },",
+].join("\n");
 edit("metro.config.js",source=>{
  const marker="const config = {";
- if(!source.includes(marker))throw new Error("Official Metro template changed");
- if(source.includes("watchFolders: [path.resolve(__dirname, '..')]"))return source;
- return source.replace(marker,marker+"\n  watchFolders: [path.resolve(__dirname, '..')],");
+ const resolverMarker="  resolver: {";
+ if(!source.includes(marker)||!source.includes(resolverMarker))throw new Error("Official Metro template changed");
+ if(!source.includes("watchFolders: [path.resolve(__dirname, '..')]"))
+  source=source.replace(marker,marker+"\n  watchFolders: [path.resolve(__dirname, '..')],");
+ if(!source.includes("const singleton = "))
+  source=source.replace(resolverMarker,resolverMarker+"\n"+singletonResolver);
+ return source;
 });
 console.log("Prepared Windows consumer solution entry, ProjectReference and native package registration.");

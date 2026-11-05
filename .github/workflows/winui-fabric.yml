@@ -114,6 +114,10 @@ jobs:
           $exe = Get-ChildItem windows -Recurse -Filter NYCTronWindowsExample.exe | Select-Object -First 1
           if (-not $exe) { throw "Consumer executable was not produced" }
           Write-Host "Compiled Windows consumer: $($exe.FullName)"
+          $map = Get-ChildItem windows -Recurse -Filter index.windows.bundle.packager.map | Select-Object -First 1
+          if (-not $map) { throw "Release bundle source map was not produced" }
+          node scripts/check-bundle-singletons.mjs $map.FullName
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Deploy the packaged consumer the way run-windows does
         working-directory: packages/windows-fluent/rnw-fabric/example
         shell: pwsh
