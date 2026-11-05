@@ -70,6 +70,91 @@
       "react-native": "./dist/components/forge/color/fieldGesture.js",
       "default": "./dist/components/forge/color/fieldGesture.js"
     },
+    "./components/forge/color/AlphaSlider": {
+      "types": "./dist/components/forge/color/AlphaSlider.d.ts",
+      "react-native": "./dist/components/forge/color/AlphaSlider.js",
+      "default": "./dist/components/forge/color/AlphaSlider.js"
+    },
+    "./components/forge/color/ColorWheel": {
+      "types": "./dist/components/forge/color/ColorWheel.d.ts",
+      "react-native": "./dist/components/forge/color/ColorWheel.js",
+      "default": "./dist/components/forge/color/ColorWheel.js"
+    },
+    "./components/forge/color/ColorDiscPicker": {
+      "types": "./dist/components/forge/color/ColorDiscPicker.d.ts",
+      "react-native": "./dist/components/forge/color/ColorDiscPicker.js",
+      "default": "./dist/components/forge/color/ColorDiscPicker.js"
+    },
+    "./components/forge/color/ColorChannelFields": {
+      "types": "./dist/components/forge/color/ColorChannelFields.d.ts",
+      "react-native": "./dist/components/forge/color/ColorChannelFields.js",
+      "default": "./dist/components/forge/color/ColorChannelFields.js"
+    },
+    "./components/forge/color/ForegroundBackgroundChips": {
+      "types": "./dist/components/forge/color/ForegroundBackgroundChips.d.ts",
+      "react-native": "./dist/components/forge/color/ForegroundBackgroundChips.js",
+      "default": "./dist/components/forge/color/ForegroundBackgroundChips.js"
+    },
+    "./components/forge/color/SwatchGrid": {
+      "types": "./dist/components/forge/color/SwatchGrid.d.ts",
+      "react-native": "./dist/components/forge/color/SwatchGrid.js",
+      "default": "./dist/components/forge/color/SwatchGrid.js"
+    },
+    "./components/forge/color/ColorHarmonyAssistant": {
+      "types": "./dist/components/forge/color/ColorHarmonyAssistant.d.ts",
+      "react-native": "./dist/components/forge/color/ColorHarmonyAssistant.js",
+      "default": "./dist/components/forge/color/ColorHarmonyAssistant.js"
+    },
+    "./components/forge/color/FloatingColorPalette": {
+      "types": "./dist/components/forge/color/FloatingColorPalette.d.ts",
+      "react-native": "./dist/components/forge/color/FloatingColorPalette.js",
+      "default": "./dist/components/forge/color/FloatingColorPalette.js"
+    },
+    "./components/forge/color/FloatingPaletteUndockHandle": {
+      "types": "./dist/components/forge/color/FloatingPaletteUndockHandle.d.ts",
+      "react-native": "./dist/components/forge/color/FloatingPaletteUndockHandle.js",
+      "default": "./dist/components/forge/color/FloatingPaletteUndockHandle.js"
+    },
+    "./components/forge/color/hsl": {
+      "types": "./dist/components/forge/color/hsl.d.ts",
+      "react-native": "./dist/components/forge/color/hsl.js",
+      "default": "./dist/components/forge/color/hsl.js"
+    },
+    "./components/forge/color/contrast": {
+      "types": "./dist/components/forge/color/contrast.d.ts",
+      "react-native": "./dist/components/forge/color/contrast.js",
+      "default": "./dist/components/forge/color/contrast.js"
+    },
+    "./components/forge/color/harmony": {
+      "types": "./dist/components/forge/color/harmony.d.ts",
+      "react-native": "./dist/components/forge/color/harmony.js",
+      "default": "./dist/components/forge/color/harmony.js"
+    },
+    "./components/forge/color/wheel-geometry": {
+      "types": "./dist/components/forge/color/wheel-geometry.d.ts",
+      "react-native": "./dist/components/forge/color/wheel-geometry.js",
+      "default": "./dist/components/forge/color/wheel-geometry.js"
+    },
+    "./components/forge/color/floating-palette": {
+      "types": "./dist/components/forge/color/floating-palette.d.ts",
+      "react-native": "./dist/components/forge/color/floating-palette.js",
+      "default": "./dist/components/forge/color/floating-palette.js"
+    },
+    "./components/forge/color/swatches": {
+      "types": "./dist/components/forge/color/swatches.d.ts",
+      "react-native": "./dist/components/forge/color/swatches.js",
+      "default": "./dist/components/forge/color/swatches.js"
+    },
+    "./components/forge/color/color-pair": {
+      "types": "./dist/components/forge/color/color-pair.d.ts",
+      "react-native": "./dist/components/forge/color/color-pair.js",
+      "default": "./dist/components/forge/color/color-pair.js"
+    },
+    "./components/forge/color/channel-fields": {
+      "types": "./dist/components/forge/color/channel-fields.d.ts",
+      "react-native": "./dist/components/forge/color/channel-fields.js",
+      "default": "./dist/components/forge/color/channel-fields.js"
+    },
     "./components/data/DataTable": {
       "types": "./dist/components/data/DataTable.d.ts",
       "react-native": "./dist/components/data/DataTable.js",
