@@ -82,13 +82,16 @@ test("RTL layout follows I18nManager through the isRTL prop",()=>{
 test("registration asks RNW to create its XamlApplication for the island",()=>{
  assert.match(read("windows/NYCTronFluentFabric/TronNavigationView.cpp"),/IReactViewComponentBuilder>\(\)\.XamlSupport\(true\)/);
 });
-test("the package ships compiled dist with a react-native condition and the codegen source",()=>{
+test("Metro resolves the typed codegen source; types and default resolve to dist",()=>{
  const p=JSON.parse(read("package.json"));
  assert.equal(p.main,"./dist/index.js");
  assert.equal(p.types,"./dist/index.d.ts");
  const root=p.exports["."];
  assert.equal(root.types,"./dist/index.d.ts");
- assert.equal(root["react-native"],"./dist/index.js");
+ // Metro must see the typed codegen spec: @react-native/babel-preset builds the
+ // static view config from NativeProps and throws on compiled JS.
+ assert.equal(root["react-native"],"./src/index.ts");
+ assert.match(read("src/TronNavigationViewNativeComponent.ts"),/interface NativeProps/);
  assert.equal(root.default,"./dist/index.js");
  // RNW codegen reads the typed spec from src at consumer build time.
  assert.equal(p.codegenConfig.jsSrcsDir,"src");
