@@ -1,8 +1,8 @@
 import { Host } from "@expo/ui";
 import { requireNativeView } from "expo";
 import type { NativeSyntheticEvent } from "react-native";
-import type { NativeRailProps } from "./NativeNavigationRail.types";
-import { validateNavigationItems } from "./navigation-model";
+import type { NativeRailProps } from "./NativeNavigationRail.types.js";
+import { validateNavigationItems } from "./navigation-model.js";
 
 type SelectEvent=NativeSyntheticEvent<{id:string}>;
 type NativeProps={

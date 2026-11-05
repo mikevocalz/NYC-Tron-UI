@@ -1,5 +1,5 @@
-import type { NativeNavigationItem } from "./navigation-model";
-export type { NativeNavigationItem } from "./navigation-model";
+import type { NativeNavigationItem } from "./navigation-model.js";
+export type { NativeNavigationItem } from "./navigation-model.js";
 /** Host owns physical edge, route and selection state. */
 export interface NativeRailProps {
   readonly items: readonly NativeNavigationItem[];
