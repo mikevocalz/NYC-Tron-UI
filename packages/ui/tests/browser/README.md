@@ -27,6 +27,22 @@ and 834px tablet, resting, focused and mid-drag, the seek bar, forced colors,
 and the layer stack at both widths with a focused remove button, plus RTL via
 `?dir=rtl`. They are uploaded as a CI artifact, not compared as pixel goldens.
 
+`fixtures/<name>.tsx` files are served at `/<name>`. `fixtures/color.tsx`
+renders the color cluster against one zustand color store; `color.spec.mjs`
+drags the disc, ring and tracks, cancels with Escape, types channel values,
+swaps chips, searches swatches and undocks the palette past a simulated hinge.
+`color-shots.spec.mjs` captures each palette mode at both widths in both themes,
+floating, and in RTL.
+
+`fixtures/timeline.tsx` renders the timeline core over a seconds-based
+stand-in for Splice that applies each `TimelineEdit` as `moveClip`,
+`trimClip` and `splitClip` in the order the edit names. `timeline.spec.mjs`
+moves, trims, splits, seeks, marks, zooms and pans with a real mouse and
+keyboard; `timeline-shots.spec.mjs` captures both widths in both themes, NTSC
+drop-frame with a scope matte, and RTL.
+
+Set `UI_ACCEPTANCE_PORT` to run the lane on a port other than 4179.
+
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
 EmptyState, ErrorMessage, KeyValueList, NightScope, the web DropZone and
 FilePicker, and the semantic html set. It checks the rendered elements and
@@ -36,7 +52,7 @@ and 834px and RTL, and writes `shots/primitives-*` captures (light, dark,
 focus, drag-over, RTL, forced colors). `uniwind-shim.tsx` reproduces Uniwind's
 web `ScopedTheme` output (a `display: contents` element with the theme class).
 
-`mixer.spec.mjs` loads `/mixer` (`mixer.tsx`), with a zustand store standing
+`mixer.spec.mjs` loads `/mixer` (`fixtures/mixer.tsx`), with a zustand store standing
 in for the Cadence engine: fader and pan drags commit once, mute/solo with the
 silenced-by-solo description, pan arrows and Home, a piano-roll note drag
 that commits time and pitch together, Shift+arrow resize, Delete, audition,

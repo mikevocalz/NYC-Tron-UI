@@ -26,6 +26,15 @@ complex editor screen composition and its cross-engine suite application.
 | Semantic html set | `@nyc-tron/ui/components/html` (Page, Main, Header, Footer, Section, Nav, Article, Aside, Text, Paragraph, Heading, Link, Input) | Web: real elements through React Native Web's element factory. Native: View/Text with ARIA `role`. Web tested in Chromium; native roles typechecked only | NYC-MON `@acme/ui/html` |
 | HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
 | Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
+| ColorWheel (C-03) | `@nyc-tron/ui/components/forge/color/ColorWheel` (geometry in `/forge/color/wheel-geometry`) | Controlled RN hue ring: jump on the ring, fine adjustment inside the hole, keys, adjustable a11y. Model tests plus Chromium drag/key tests | ProCraft `ColorPanel.kt` (ported, MIT OR Apache-2.0) |
+| AlphaSlider (C-05) | `@nyc-tron/ui/components/forge/color/AlphaSlider` | Controlled RN checkerboard opacity track with typed percent entry; one commit per release, key or entry | Original |
+| ColorChannelFields (C-06) | `@nyc-tron/ui/components/forge/color/ColorChannelFields` (math in `/forge/color/hsl`, `/forge/color/channel-fields`) | Typed RGB/HSL/HSV, hex and opacity fields; closes the HSL gap next to the `ColorChannels` sliders | Original |
+| ForegroundBackgroundChips (C-12) | `@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips` (`/forge/color/color-pair`) | Controlled chips with Swap and Reset | Original |
+| SwatchGrid (C-13) | `@nyc-tron/ui/components/forge/color/SwatchGrid` (`/forge/color/swatches`) | Recent/document/saved/named groups, name and hex search, honest empty states, arrow-key focus | Original |
+| ColorHarmonyAssistant (C-18) | `@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant` (`/forge/color/harmony`, `/forge/color/contrast`) | Five harmony rules and WCAG 2.2 contrast spelled out per color | Original |
+| FloatingColorPalette (C-26) | `@nyc-tron/ui/components/forge/color/FloatingColorPalette` (`/forge/color/floating-palette`) | Dock/undock palette with compact/classic/palettes modes; hinge-safe placement; holds no color | ProCraft `ColorPanel.kt` (ported) |
+| ColorDiscPicker (C-27) | `@nyc-tron/ui/components/forge/color/ColorDiscPicker` | Hue/saturation disc and brightness track; hue kept through gray; sRGB preview only | ProCraft `ColorPanel.kt` (ported geometry) |
+| FloatingPaletteUndockHandle (B-28) | `@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle` | `DragGrabHandle`-based grip: 30-unit undock threshold, move, dock, keyboard nudge | ProCraft `ColorPanel.kt` (ported) |
 | Corner-cut geometry | `@nyc-tron/geometry/corner-cut` | Pure geometry tests | NYC-MON NeonBlade port |
 | WindowsNavigationView | Future native Windows adapter | **NOT IMPLEMENTED** | WinUI 3 NavigationView |
 | Native dropdown/menu/flyout | Future target-specific adapters | **NOT IMPLEMENTED** | Spark AppKit, WinUI, Expo UI |
@@ -46,7 +55,20 @@ complex editor screen composition and its cross-engine suite application.
 | StepSequencer (E-26) | `@nyc-tron/ui/components/forge/midi/StepSequencer` | Lanes × steps over one clip's notes; press toggles, long press/A/screen-reader action accents, playhead column. 44pt cells, horizontal scroll | Original |
 | WaveformLane viewport (E-02) | `@nyc-tron/ui/components/forge/WaveformLane` (`visibleRange`, `onVisibleRangeCommit`), `.../forge/waveform` (`slicePeaks`, `scrollRange`, `rangePosition`) | Draws only the visible window (work proportional to the span), sideways drag scrolls and commits once, taps seek inside the window, time axis fixed LTR. **Deferred:** Skia GPU lane (backend unverified on devices) | Forge PR #25 / #35 |
 | EQ / dynamics graphs | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
-| Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
+| Rational time model (frames, samples, timecode) | `@nyc-tron/ui/components/forge/timeline/time` (reuses `/forge/timebase`) | Pure, tested: BigInt frame/sample conversion, drop-frame parse, typed-time parse | Original |
+| SeekBar (D-04) | `@nyc-tron/ui/components/forge/timeline/SeekBar` | RN seek track with played and buffered ranges and a drag-end commit; `NativeSeekBar` stays the `@expo/ui` variant | Original |
+| TransportControls (D-06) | `@nyc-tron/ui/components/forge/timeline/TransportControls` | Play/pause, stop, jumps, frame steps, keyboard; not mirrored in RTL | Original |
+| PlaybackRateMenu (D-07) | `@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu` | Rates, optional reverse, optional preserve-pitch switch | `speedLabel` ported from FilmCraft `TimelineMath.kt` |
+| TimecodeDisplay (D-08) | `@nyc-tron/ui/components/forge/timeline/TimecodeDisplay` | Timecode (drop-frame), frames, seconds, sample clock; editable | Original |
+| TimelineRuler (D-10) | `@nyc-tron/ui/components/forge/timeline/TimelineRuler` (`/forge/timeline/ruler`) | Frame/second/minute steps, marks, drag-to-seek | FilmCraft `TimelineMath.kt` (ported, MIT OR Apache-2.0) |
+| TimelinePlayhead (D-11) | `@nyc-tron/ui/components/forge/timeline/TimelinePlayhead` (`followPlayhead` in `/forge/timeline/viewport`) | Line across lanes, 44pt adjustable head, pinned at the edge when off screen | Original |
+| InOutRangeHandles (D-12) | `@nyc-tron/ui/components/forge/timeline/InOutRangeHandles` (`setMark` in `/forge/timeline/edits`) | Set in/out at playhead, draggable adjustable marks | Original |
+| TimelineZoomAndScroll (D-14) | `@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll` (`/forge/timeline/viewport`) | Zoom about the playhead, fit selection/all, mini-map; pinch and Ctrl/Cmd-wheel in the clip lane | Zoom limits ported from FilmCraft |
+| TimelineClipLane (D-15) | `@nyc-tron/ui/components/forge/timeline/TimelineClipLane` (`/forge/timeline/edits`) | Multi-track lanes, visible-only mounting, select, move with snapping and overlap refusal, pan, pinch, `renderClipContent` for thumbnails | Original |
+| ClipTrimHandles (D-19) | `@nyc-tron/ui/components/forge/timeline/ClipTrimHandles` | Head/tail trims, speed-aware, media and neighbour limits, apply order for Splice | FilmCraft `Timeline.kt` trim drag (ported) |
+| RazorSplitTool (D-20) | `@nyc-tron/ui/components/forge/timeline/RazorSplitTool` | Razor toggle and split at playhead; ripple deferred | Original |
+| SafeAreaOverlay (D-25) | `@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay` (`/forge/timeline/safe-area`) | SMPTE/legacy safe areas, aspect mattes, thirds, center | Original |
+| Track headers (D-18) | `components/forge/timeline/` | **DEFERRED**: Splice tracks have no lock/hide/mute flags yet (add/remove only) | Forge Splice |
 | LayerStack + layer model | `@nyc-tron/ui/components/forge/layers/LayerStack`, `.../forge/layers/layer-model` | Controlled RN list: visibility, opacity drag, reorder, rename, optional `kindLabel`, thumbnail and `onRemove`. Model tests, mocked-host render tests and Chromium/React Native Web remove and keyboard tests; no device or screen-reader QA yet | Forge Prism layer panel |
 | Brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
@@ -264,6 +286,130 @@ vertical fader scrolled the mixer without a gain change, a vertical swipe
 on a horizontal fader scrolled the page, and Tab plus arrow keys stepped the
 level. Not verified: iOS/Android/Windows/macOS device gestures, native
 ScrollView arbitration, and VoiceOver/TalkBack/Narrator output.
+
+## 2026-11-05 color cluster
+
+C-03, C-05, C-06, C-12, C-13, C-18, C-26, C-27 and B-28 live in
+`packages/ui/src/components/forge/color/`, one subpath each, with their pure
+models on separate subpaths. Every control is controlled: the host passes the
+committed color and gets `onPreview` during a drag and one `onCommit` per
+release, key press, typed entry or button. Escape during a drag restores the
+start value without a commit. The floating palette and its grip hold no color;
+whatever picker the host renders in each mode edits the host's one color
+store, so docking, undocking and switching modes never change a color.
+
+None of these controls needs an optional peer. Tracks, the hue ring and the
+hue/saturation disc are drawn from solid views: `expo-linear-gradient` and
+Skia are not required by these subpaths, and React Native has no conic
+gradient. The color values in those segments are computed from the color
+model, not theme colors; every surface, border, ring and label uses the
+documented tokens.
+
+`wrapHue` now returns in-range hues unchanged. The modulo form turned 217.4
+into 217.39999999999998 and atan2's `-0` into `-0`, which made HSL edits
+drift the hue by float error.
+
+Decisions recorded here:
+
+- **Wide-gamut preview (part of C-27): DEFERRED.** The disc previews sRGB
+  only. Display P3 needs the owning engine's color management and a P3
+  rendering path; drawing P3 values through sRGB views would be wrong.
+- **`ColorChannels` keeps its `@expo/ui` RGB sliders.** HSL and HSV arrive as
+  typed fields in `ColorChannelFields` rather than more native sliders, so the
+  numeric path renders on web and needs no optional peer.
+- **Sliders mirror under RTL; the hue ring and disc do not.** Hue angles are a
+  color-model convention, not reading direction. On web, pass `rtl`;
+  `I18nManager.isRTL` is the native default.
+
+Verified: types, unit tests for every model (HSL/HSV round trips at a grid of
+values, WCAG reference contrasts, ring and disc geometry, fine-zone drag,
+hinge avoidance, swatch search and grid keys, single-commit gestures), package
+exports, and React Native Web in Chromium: drag, cancel, key and typed-entry
+tests (`tests/browser/color.spec.mjs`) plus captures at 390 and 834 px in light
+and dark, floating over a simulated hinge, and RTL. Not verified: iOS, Android
+or foldable device runs, VoiceOver/TalkBack output, and pinch or pen input.
+
+ProCraft source: `ColorPanel.kt` at commit
+`c2f7518d03141c746a365f90d8df05a44ddef002`, MIT OR Apache-2.0. The ported
+files carry the pin, the copyright line and a modification notice; both
+license texts and ProCraft's NOTICE are in `licenses/`.
+
+## 2026-11-05 timeline core
+
+D-04, D-06, D-07, D-08, D-10, D-11, D-12, D-14, D-15, D-19, D-20 and D-25 live
+in `packages/ui/src/components/forge/timeline/`, one subpath each, with the
+pure models on `/time`, `/ruler`, `/viewport`, `/edits` and `/safe-area`.
+
+**Time model.** Timeline positions are whole frames at a rational
+`FrameRate` (`/forge/timebase`); audio positions are whole samples at an
+integer rate. Frame/sample conversion uses BigInt, so 29.97 fps at 192 kHz
+stays exact over a day. `framesToSamples` returns the first sample at or after
+a frame's start (ceiling), so the round trip back to frames is exact. Seconds
+appear only at the engine boundary: whole frames through `framesToSeconds` and
+`secondsToFrame` from `forge/timebase` (re-exported by `/time`, not copied),
+fractional media positions through `positionToSeconds`.
+
+**Engine contract.** The lane, trim handles, razor and split button emit one
+`TimelineEdit` per finished gesture (release, key press, screen-reader step or
+button), never per move. Each edit carries frames for the UI and seconds for
+an engine that stores seconds. A Forge adapter maps them onto Splice:
+
+| Edit | Splice ops |
+| --- | --- |
+| `move` | `moveClip(id, startSeconds)` |
+| `trim`, `order: "trim-only"` (tail) | `trimClip(id, inSeconds, outSeconds)` |
+| `trim`, `order: "trim-then-move"` (head later) | `trimClip`, then `moveClip` |
+| `trim`, `order: "move-then-trim"` (head earlier) | `moveClip`, then `trimClip` |
+| `split` | `splitClip(id, atSeconds)` |
+
+Splice's `trimClip` keeps a clip's start fixed, so a head trim is two ops; the
+`order` field names the sequence that never overlaps a neighbour midway, and
+the adapter applies both inside one undo group. Splice's `timeline` read maps
+to `TimelineTrack[]` (`start_s`, `in_s`, `out_s`, `speed` to frames at the
+sequence rate). `addClip` and `setSpeed` have no UI here; see below. The
+browser fixture applies every edit to a seconds-based stand-in with Splice's
+overlap rule, so the mapping above is exercised, not only typed.
+
+Previews never cross the boundary: a move or trim that would overlap a
+neighbour is drawn with a danger border and the text "Overlaps another clip",
+and release commits nothing.
+
+**Rendering.** `@shopify/react-native-skia` is not an optional peer of
+`@nyc-tron/ui`, so dense lanes are React Native views with visible-range
+mounting (`visibleClips`) rather than a Skia canvas. Time runs left to right
+in RTL layouts, and transport controls are not mirrored, following Material
+and Apple guidance for media controls; button rows and labels around them do
+mirror.
+
+Decisions recorded here:
+
+- **D-18 TrackHeaders: DEFERRED** until Splice tracks carry lock/hide/mute/solo
+  flags. Lanes show the track label meanwhile.
+- **Ripple (part of D-20): DEFERRED.** Splice has no ripple op; emulating it
+  as N `moveClip`s would not be one undo step.
+- **`setSpeed` and `addClip` UI: DEFERRED** to D-22 (drag from the bin) and the
+  speed-curve work. `PlaybackRateMenu` is player rate, not clip speed.
+- **Mini-map thumbnails and filmstrips (D-16) and waveforms in clips (D-17)**
+  are out of scope; `renderClipContent` is where a host draws them.
+
+Verified: types, unit tests (drop-frame parse round trip for every frame of 20
+minutes at 29.97 and 59.94, sample math at 44.1/48/192 kHz, ruler steps from
+FilmCraft's own test values, zoom about an anchor, follow-playhead, move/trim
+previews with snapping, overlap, media limits and speed, apply order, splits,
+in/out marks, safe areas), package exports, and React Native Web in Chromium:
+`tests/browser/timeline.spec.mjs` (13 tests: move, overlap refusal, trims in
+each order, split and razor, ruler and playhead seeking, seek-bar Escape,
+transport, timecode entry and formats, playback rate, in/out marks, zoom, fit,
+pan, Ctrl/Shift wheel, clip keys, NTSC drop-frame entry) plus captures at 390
+and 834 px in light and dark, NTSC with a scope matte, and RTL. Not verified:
+iOS, Android or foldable devices, VoiceOver/TalkBack, real touch pinch, pen
+input, and a real Splice engine (the fixture's stand-in follows its rules).
+
+FilmCraft source: `TimelineMath.kt` and `Timeline.kt` at commit
+`c41b58467edd28d098336286528159b24c5203b5`, MIT OR Apache-2.0. `ruler.ts` and
+`ClipTrimHandles.tsx` carry the pin, the copyright line and a modification
+notice; both license texts and FilmCraft's NOTICE are in `licenses/`. Nothing
+from CapCraft (AGPL) was read into or copied to this code.
 
 ## 2026-11-05 LayerStack kind labels, thumbnails and remove
 

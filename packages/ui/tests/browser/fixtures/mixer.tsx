@@ -1,15 +1,15 @@
 import {AppRegistry,ScrollView,Text,View} from "react-native";
 import {create} from "zustand";
-import {MixingConsole} from "../../src/components/forge/audio/MixingConsole.tsx";
-import {TempoAndMetronome} from "../../src/components/forge/audio/TempoAndMetronome.tsx";
-import type {MixerChannel} from "../../src/components/forge/audio/mixer.ts";
-import type {TimeSignature} from "../../src/components/forge/audio/tempo.ts";
-import {MIDIPianoRoll,PIANO_ROLL_KEY_COLUMN} from "../../src/components/forge/midi/MIDIPianoRoll.tsx";
-import {MIDIVelocityLane} from "../../src/components/forge/midi/MIDIVelocityLane.tsx";
-import {StepSequencer} from "../../src/components/forge/midi/StepSequencer.tsx";
-import type {MidiNote} from "../../src/components/forge/midi/note-grid.ts";
-import {WaveformLane} from "../../src/components/forge/WaveformLane.tsx";
-import type {WaveformRange} from "../../src/components/forge/waveform.ts";
+import {MixingConsole} from "../../../src/components/forge/audio/MixingConsole.tsx";
+import {TempoAndMetronome} from "../../../src/components/forge/audio/TempoAndMetronome.tsx";
+import type {MixerChannel} from "../../../src/components/forge/audio/mixer.ts";
+import type {TimeSignature} from "../../../src/components/forge/audio/tempo.ts";
+import {MIDIPianoRoll,PIANO_ROLL_KEY_COLUMN} from "../../../src/components/forge/midi/MIDIPianoRoll.tsx";
+import {MIDIVelocityLane} from "../../../src/components/forge/midi/MIDIVelocityLane.tsx";
+import {StepSequencer} from "../../../src/components/forge/midi/StepSequencer.tsx";
+import type {MidiNote} from "../../../src/components/forge/midi/note-grid.ts";
+import {WaveformLane} from "../../../src/components/forge/WaveformLane.tsx";
+import type {WaveformRange} from "../../../src/components/forge/waveform.ts";
 
 // Stands in for the engine: commits replace committed state and count, the
 // way a Cadence describe() round trip would.
