@@ -777,3 +777,13 @@ scale; both are fixed. No simulator, device, TalkBack or VoiceOver pass has
 been done for these views. The dialog scrim is still a fixed
 `rgba(0,0,0,0.5)`: TronTheme has no scrim token yet (DEFER until one is
 added to `@nyc-tron/core/theme`).
+
+## Shared icon ownership
+
+NYC-Tron @nyc-tron/icons now owns the original
+Forge authored icon catalog, outline/filled geometry and Rive-ready
+state contract, extracted from Nitro Forge PR #21. Consumer apps use
+the icon package directly rather than importing a Forge engine. Nitro
+Forge keeps its own copy until it re-exports this package.
+Native OS icon adapters and compiled Rive binaries still require validation.
+See docs/ICON_MIGRATION.md.

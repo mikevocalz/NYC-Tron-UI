@@ -21,7 +21,8 @@
     "react": "19.3.0",
     "react-native": "0.88.1",
     "zustand": "5.0.16",
-    "@nyc-tron/native-charts": "workspace:*"
+    "@nyc-tron/native-charts": "workspace:*",
+    "@nyc-tron/native-navigation": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "~19.3.0",

@@ -87,7 +87,7 @@ for (const pkgName of packages) {
     if(!manifest.exports["./components/forge/"+sub])fail("Missing office subpath forge/"+sub);
   }
   const runtimeDeps={...manifest.dependencies,...manifest.optionalDependencies};
-  for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence"]) {
+  for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence","@nitro-forge/icons"]) {
     if(bad in runtimeDeps||bad in (manifest.peerDependencies??{}))fail(id+": forbidden UI dependency "+bad);
   }
   // A tarball installed by URL cannot resolve a sibling from the registry

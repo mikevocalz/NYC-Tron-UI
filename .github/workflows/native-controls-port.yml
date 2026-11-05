@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "packages/native-controls/**"
+      - "packages/native-navigation/**"
       - "packages/reserved-regions/**"
       - "packages/hardware-keys/**"
       - "packages/core/**"
@@ -16,8 +17,10 @@ on:
     branches:
       - "feat/audiokit-native-instruments-2026-11-04"
       - "feat/native-charts-20261105"
+      - "feat/native-expo-navigation-rail-20261105"
     paths:
       - "packages/native-controls/**"
+      - "packages/native-navigation/**"
       - "packages/reserved-regions/**"
       - "packages/hardware-keys/**"
       - "packages/core/**"
@@ -28,6 +31,9 @@ on:
       - "packages/ui/**"
       - "pnpm-workspace.yaml"
   workflow_dispatch:
+concurrency:
+  group: nyc-tron-native-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 
@@ -43,21 +49,25 @@ jobs:
           node-version: "24.19.0"
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
-      - run: node --test packages/native-controls/tests/*.test.mjs
+      - run: node --test packages/native-controls/tests/*.test.mjs packages/native-navigation/tests/*.test.mjs
       - run: node --test packages/reserved-regions/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
+      - run: corepack pnpm --dir packages/native-navigation typecheck
       - run: corepack pnpm --dir packages/native-charts typecheck
       # Exports resolve to dist, and the example also renders @nyc-tron/expo-controls
       # and @nyc-tron/ui, so build the whole workspace before typechecking it.
       - run: corepack pnpm build
       - run: corepack pnpm --dir packages/native-controls build
+      - run: corepack pnpm --dir packages/native-navigation build
       - run: corepack pnpm --dir examples/native-instruments typecheck
       - run: |
           mkdir -p /tmp/nyc-tron-native-pack
           corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
-          tar -tzf /tmp/nyc-tron-native-pack/*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
+          corepack pnpm --dir packages/native-navigation pack --pack-destination /tmp/nyc-tron-native-pack
+          tar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'
+          tar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-controls-*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
       - name: Reserved-regions tarball carries both native modules and no Gradle output
         run: |
           mkdir -p /tmp/nyc-tron-regions-pack
