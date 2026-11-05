@@ -46,3 +46,9 @@ test("example app id never collides with the library Android namespace",()=>{
  const ns=read("android/build.gradle").match(/namespace\s+"([^"]+)"/)[1];
  assert.notEqual(app.android.package,ns);
 });
+test("example iOS target module never shadows the library pod module",()=>{
+ const app=JSON.parse(read("../../examples/native-instruments/app.json")).expo;
+ const target=app.name.replace(/[^A-Za-z0-9]/g,"");
+ const pod=read("ios/NYCTronInstruments.podspec").match(/s\.name\s*=\s*'([^']+)'/)[1];
+ assert.notEqual(target,pod);
+});
