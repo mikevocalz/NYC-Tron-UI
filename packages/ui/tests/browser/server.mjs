@@ -12,7 +12,9 @@ const bundle=await build({entryPoints:[resolve(here,"fixture.tsx")],bundle:true,
   // whose own node_modules (after a workspace install) would otherwise win.
   alias:{"react-native":resolve(here,"rn-shim.tsx"),
     react:resolve(here,"node_modules/react"),"react-dom":resolve(here,"node_modules/react-dom"),
-    zustand:resolve(here,"node_modules/zustand")},
+    zustand:resolve(here,"node_modules/zustand"),
+    // NativeSeekBar renders @expo/ui's universal web build (plain RN Views).
+    "@expo/ui":resolve(here,"node_modules/@expo/ui/build/universal/index.js")},
   nodePaths:[resolve(here,"node_modules")],
   define:{"process.env.NODE_ENV":'"development"'}});
 // Only the test document bootstrap is HTML. The rendered UI is React Native components.
