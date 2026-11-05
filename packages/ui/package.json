@@ -1,0 +1,109 @@
+{
+  "name": "@nyc-tron/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./components/Button": {
+      "types": "./dist/components/Button.d.ts",
+      "react-native": "./dist/components/Button.js",
+      "default": "./dist/components/Button.js"
+    },
+    "./components/Card": {
+      "types": "./dist/components/Card.d.ts",
+      "react-native": "./dist/components/Card.js",
+      "default": "./dist/components/Card.js"
+    },
+    "./components/NavigationRail": {
+      "types": "./dist/components/NavigationRail.d.ts",
+      "react-native": "./dist/components/NavigationRail.js",
+      "default": "./dist/components/NavigationRail.js"
+    },
+    "./components/forge/WaveformLane": {
+      "types": "./dist/components/forge/WaveformLane.d.ts",
+      "react-native": "./dist/components/forge/WaveformLane.js",
+      "default": "./dist/components/forge/WaveformLane.js"
+    },
+    "./components/forge/NativeSeekBar": {
+      "types": "./dist/components/forge/NativeSeekBar.d.ts",
+      "react-native": "./dist/components/forge/NativeSeekBar.js",
+      "default": "./dist/components/forge/NativeSeekBar.js"
+    },
+    "./components/forge/ColorChannels": {
+      "types": "./dist/components/forge/ColorChannels.d.ts",
+      "react-native": "./dist/components/forge/ColorChannels.js",
+      "default": "./dist/components/forge/ColorChannels.js"
+    },
+    "./components/forge/waveform": {
+      "types": "./dist/components/forge/waveform.d.ts",
+      "react-native": "./dist/components/forge/waveform.js",
+      "default": "./dist/components/forge/waveform.js"
+    },
+    "./components/forge/timebase": {
+      "types": "./dist/components/forge/timebase.d.ts",
+      "react-native": "./dist/components/forge/timebase.js",
+      "default": "./dist/components/forge/timebase.js"
+    },
+    "./components/forge/color": {
+      "types": "./dist/components/forge/color.d.ts",
+      "react-native": "./dist/components/forge/color.js",
+      "default": "./dist/components/forge/color.js"
+    },
+    "./components/data/DataTable": {
+      "types": "./dist/components/data/DataTable.d.ts",
+      "react-native": "./dist/components/data/DataTable.js",
+      "default": "./dist/components/data/DataTable.js"
+    },
+    "./components/forge/SpreadsheetGrid": {
+      "types": "./dist/components/forge/SpreadsheetGrid.d.ts",
+      "react-native": "./dist/components/forge/SpreadsheetGrid.js",
+      "default": "./dist/components/forge/SpreadsheetGrid.js"
+    },
+    "./components/forge/sheet-window": {
+      "types": "./dist/components/forge/sheet-window.d.ts",
+      "react-native": "./dist/components/forge/sheet-window.js",
+      "default": "./dist/components/forge/sheet-window.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "prepack": "pnpm build"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0",
+    "@expo/ui": "^58.0.0",
+    "@tanstack/react-table": "^9.0.0",
+    "zustand": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@expo/ui": {
+      "optional": true
+    },
+    "@tanstack/react-table": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "@types/react": "~19.3.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "@expo/ui": "58.0.20",
+    "@tanstack/react-table": "9.3.1",
+    "zustand": "5.0.16"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
