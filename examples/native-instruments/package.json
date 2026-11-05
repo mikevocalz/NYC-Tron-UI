@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/ui": "58.0.27",
+    "@nyc-tron/native-charts": "workspace:*",
     "@nyc-tron/native-controls": "workspace:*",
     "expo": "58.0.23",
     "react": "19.3.0",

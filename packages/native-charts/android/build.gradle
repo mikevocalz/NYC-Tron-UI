@@ -1,0 +1,44 @@
+buildscript {
+  repositories { mavenCentral() }
+  dependencies {
+    classpath("org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:$kotlinVersion")
+  }
+}
+apply plugin: 'com.android.library'
+apply plugin: 'expo-module-gradle-plugin'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+
+group = 'com.nyctron'
+version = '0.1.0'
+
+android {
+  namespace "com.nyctron.charts"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  buildFeatures { compose true }
+}
+def expoUiPackage = new File(rootProject.projectDir, "../node_modules/@expo/ui")
+if (!expoUiPackage.isDirectory()) {
+  throw new GradleException("Install @expo/ui into the host application before building NYC-Tron charts")
+}
+def expoUiManifest = new groovy.json.JsonSlurper().parse(new File(expoUiPackage, "package.json"))
+
+repositories {
+  mavenCentral()
+  maven { url uri(new File(expoUiPackage, "android/local-maven-repo")) }
+}
+
+dependencies {
+  implementation "expo.modules.ui:expo.modules.ui:${expoUiManifest.version}"
+  implementation 'com.facebook.react:react-android'
+  implementation 'androidx.compose.foundation:foundation-android:1.12.1'
+  implementation 'androidx.compose.ui:ui-android:1.12.1'
+  implementation 'androidx.compose.material3:material3-android:1.5.0-beta01'
+  // Vico, Apache-2.0 (https://github.com/patrykandpatrick/vico). Resolved from
+  // Maven Central, not vendored. 3.2.3 is the newest release whose Kotlin
+  // metadata (2.3.21) the Expo SDK 58 compiler (Kotlin 2.2.10) can read;
+  // 3.3.x is built with Kotlin 2.4 and is not.
+  implementation 'com.patrykandpatrick.vico:compose-m3:3.2.3'
+}

@@ -9,7 +9,7 @@
     "node": ">=24.19.0"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs",
+    "test": "node --experimental-strip-types --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/native-charts/tests/*.test.mjs",
     "typecheck": "pnpm -r --if-present typecheck",
     "verify": "pnpm test && pnpm typecheck && pnpm packcheck",
     "build": "pnpm -r --if-present build",

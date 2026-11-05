@@ -3,14 +3,17 @@ on:
   pull_request:
     paths:
       - "packages/native-controls/**"
+      - "packages/native-charts/**"
       - "examples/native-instruments/**"
       - ".github/workflows/native-controls-port.yml"
       - "pnpm-workspace.yaml"
   push:
     branches:
       - "feat/audiokit-native-instruments-2026-11-04"
+      - "feat/native-charts-20261105"
     paths:
       - "packages/native-controls/**"
+      - "packages/native-charts/**"
       - "examples/native-instruments/**"
       - ".github/workflows/native-controls-port.yml"
       - "pnpm-workspace.yaml"
@@ -31,13 +34,26 @@ jobs:
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
       - run: node --test packages/native-controls/tests/*.test.mjs
+      - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
+      - run: corepack pnpm --dir packages/native-charts typecheck
       - run: corepack pnpm --dir examples/native-instruments typecheck
       - run: corepack pnpm --dir packages/native-controls build
       - run: |
           mkdir -p /tmp/nyc-tron-native-pack
           corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
           tar -tzf /tmp/nyc-tron-native-pack/*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
+      - run: corepack pnpm --dir packages/native-charts build
+      - name: Native charts pack contents
+        run: |
+          mkdir -p /tmp/nyc-tron-charts-pack
+          corepack pnpm --dir packages/native-charts pack --pack-destination /tmp/nyc-tron-charts-pack
+          listing=$(tar -tzf /tmp/nyc-tron-charts-pack/*.tgz)
+          for f in package/ios/TronChartView.swift package/ios/NYCTronCharts.podspec \
+                   package/android/build.gradle package/android/src/main/java/com/nyctron/charts/TronChartView.kt \
+                   package/dist/NativeChart.web.js package/src/NativeChart.native.tsx package/THIRD_PARTY_NOTICES.md; do
+            echo "$listing" | grep -qx "$f" || { echo "Missing $f in native-charts pack"; exit 1; }
+          done
 
   android:
     name: Android native Compose compile
@@ -59,11 +75,17 @@ jobs:
         env:
           EXPO_NO_TELEMETRY: "1"
           CI: "1"
-      - name: Native Kotlin / Compose debug build
+      - name: Native Kotlin / Compose debug build (instruments + Vico charts)
         run: |
           cd examples/native-instruments/android
           chmod +x ./gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Vico resolved at the pinned version
+        run: |
+          cd examples/native-instruments/android
+          ./gradlew :nyc-tron-native-charts:dependencies --configuration debugRuntimeClasspath --no-daemon \
+            | tee /tmp/charts-deps.txt
+          grep -q 'com.patrykandpatrick.vico:compose-m3:3.2.3' /tmp/charts-deps.txt
 
   ios:
     name: iOS native SwiftUI simulator compile
@@ -83,7 +105,9 @@ jobs:
           CI: "1"
       - name: Resolve native pods and SwiftUI bridge
         working-directory: examples/native-instruments/ios
-        run: pod install
+        run: |
+          pod install
+          grep -q "NYCTronCharts" Podfile.lock || { echo "NYCTronCharts pod not linked"; exit 1; }
       - name: Build iOS simulator without code signing
         working-directory: examples/native-instruments/ios
         run: |
