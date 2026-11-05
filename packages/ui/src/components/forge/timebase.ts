@@ -46,7 +46,9 @@ export function framesToSeconds(frame:number,rate:FrameRate):number{
 }
 /**
  * Nearest whole frame for a media time. Round-trips with
- * {@linkcode framesToSeconds} for every frame below `Number.MAX_SAFE_INTEGER`.
+ * {@linkcode framesToSeconds} for every frame up to 2^48 (over 74,000 years
+ * at 120 fps). Above about 2^51 frames, float rounding can land one frame
+ * off on NTSC and PAL rates.
  * @throws {RangeError} When the rate is invalid, `seconds` is negative or
  * nonfinite, or the frame index exceeds `Number.MAX_SAFE_INTEGER`.
  */

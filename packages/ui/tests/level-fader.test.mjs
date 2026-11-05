@@ -64,3 +64,14 @@ test("readout uses signed dB and an infinity sign for silence", () => {
   assert.equal(formatDb(0), "-∞ dB");
   assert.equal(formatDb(dbToGain(-0.04)), "0.0 dB");
 });
+
+test("steps leave the bottom stop of a deep range in both directions", () => {
+  // Below about -100 dB, dbToGain then gainToDb lands under the 0.1 dB grid.
+  for (let tenths = -1440; tenths <= -10; tenths++) {
+    const range = { minDb: tenths / 10, maxDb: 0 };
+    const floor = dbToGain(range.minDb);
+    assert.ok(stepGain(floor, 1, 1, range) > floor, `up from minDb ${range.minDb}`);
+    const above = dbToGain(range.minDb + 1);
+    assert.ok(stepGain(above, -1, 1, range) > 0, `down to minDb ${range.minDb}`);
+  }
+});

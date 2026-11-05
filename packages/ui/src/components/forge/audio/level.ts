@@ -1,5 +1,5 @@
 /**
- * Level math for {@linkcode LevelFader}. Values are linear amplitude gain
+ * Level math for `LevelFader`. Values are linear amplitude gain
  * (0 = silence, 1 = unity / 0 dB), matching the Nitro Forge PR #25
  * NativeLevelSlider contract. No React, platform or audio engine imports.
  *
@@ -7,9 +7,8 @@
  * [-1, 1] and has no decibel conversion, so nothing is shared with it beyond
  * the linear-amplitude unit.
  */
-import type { LevelFader } from "./LevelFader.tsx";
 
-/** Decibel window a {@linkcode LevelFader} travels across. */
+/** Decibel window a `LevelFader` travels across. */
 export interface FaderRange {
   /** Level at the lowest position above silence, in dB. Must be below `maxDb`. */
   readonly minDb: number;
@@ -128,7 +127,9 @@ export function stepGain(
   if (!Number.isFinite(stepDb) || stepDb <= 0) {
     throw new RangeError("stepDb must be finite and positive");
   }
-  const db = gainToDb(clampGain(gain, range));
+  // Round first: below about -100 dB the gain/dB round trip drifts under the
+  // 0.1 dB grid, and an unrounded start could step back onto itself.
+  const db = Math.round(gainToDb(clampGain(gain, range)) * 10) / 10;
   if (direction === 1) {
     const next = db < range.minDb ? range.minDb : Math.min(range.maxDb, db + stepDb);
     return dbToGain(Math.round(next * 10) / 10);
