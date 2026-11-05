@@ -50,10 +50,120 @@
       "react-native": "./dist/components/forge/timebase.js",
       "default": "./dist/components/forge/timebase.js"
     },
+    "./components/forge/audio/level": {
+      "types": "./dist/components/forge/audio/level.d.ts",
+      "react-native": "./dist/components/forge/audio/level.js",
+      "default": "./dist/components/forge/audio/level.js"
+    },
+    "./components/forge/audio/LevelFader": {
+      "types": "./dist/components/forge/audio/LevelFader.d.ts",
+      "react-native": "./dist/components/forge/audio/LevelFader.js",
+      "default": "./dist/components/forge/audio/LevelFader.js"
+    },
     "./components/forge/color": {
       "types": "./dist/components/forge/color.d.ts",
       "react-native": "./dist/components/forge/color.js",
       "default": "./dist/components/forge/color.js"
+    },
+    "./components/forge/color/HsvPicker": {
+      "types": "./dist/components/forge/color/HsvPicker.d.ts",
+      "react-native": "./dist/components/forge/color/HsvPicker.js",
+      "default": "./dist/components/forge/color/HsvPicker.js"
+    },
+    "./components/forge/color/fieldGeometry": {
+      "types": "./dist/components/forge/color/fieldGeometry.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGeometry.js",
+      "default": "./dist/components/forge/color/fieldGeometry.js"
+    },
+    "./components/forge/color/fieldGesture": {
+      "types": "./dist/components/forge/color/fieldGesture.d.ts",
+      "react-native": "./dist/components/forge/color/fieldGesture.js",
+      "default": "./dist/components/forge/color/fieldGesture.js"
+    },
+    "./components/forge/color/AlphaSlider": {
+      "types": "./dist/components/forge/color/AlphaSlider.d.ts",
+      "react-native": "./dist/components/forge/color/AlphaSlider.js",
+      "default": "./dist/components/forge/color/AlphaSlider.js"
+    },
+    "./components/forge/color/ColorWheel": {
+      "types": "./dist/components/forge/color/ColorWheel.d.ts",
+      "react-native": "./dist/components/forge/color/ColorWheel.js",
+      "default": "./dist/components/forge/color/ColorWheel.js"
+    },
+    "./components/forge/color/ColorDiscPicker": {
+      "types": "./dist/components/forge/color/ColorDiscPicker.d.ts",
+      "react-native": "./dist/components/forge/color/ColorDiscPicker.js",
+      "default": "./dist/components/forge/color/ColorDiscPicker.js"
+    },
+    "./components/forge/color/ColorChannelFields": {
+      "types": "./dist/components/forge/color/ColorChannelFields.d.ts",
+      "react-native": "./dist/components/forge/color/ColorChannelFields.js",
+      "default": "./dist/components/forge/color/ColorChannelFields.js"
+    },
+    "./components/forge/color/ForegroundBackgroundChips": {
+      "types": "./dist/components/forge/color/ForegroundBackgroundChips.d.ts",
+      "react-native": "./dist/components/forge/color/ForegroundBackgroundChips.js",
+      "default": "./dist/components/forge/color/ForegroundBackgroundChips.js"
+    },
+    "./components/forge/color/SwatchGrid": {
+      "types": "./dist/components/forge/color/SwatchGrid.d.ts",
+      "react-native": "./dist/components/forge/color/SwatchGrid.js",
+      "default": "./dist/components/forge/color/SwatchGrid.js"
+    },
+    "./components/forge/color/ColorHarmonyAssistant": {
+      "types": "./dist/components/forge/color/ColorHarmonyAssistant.d.ts",
+      "react-native": "./dist/components/forge/color/ColorHarmonyAssistant.js",
+      "default": "./dist/components/forge/color/ColorHarmonyAssistant.js"
+    },
+    "./components/forge/color/FloatingColorPalette": {
+      "types": "./dist/components/forge/color/FloatingColorPalette.d.ts",
+      "react-native": "./dist/components/forge/color/FloatingColorPalette.js",
+      "default": "./dist/components/forge/color/FloatingColorPalette.js"
+    },
+    "./components/forge/color/FloatingPaletteUndockHandle": {
+      "types": "./dist/components/forge/color/FloatingPaletteUndockHandle.d.ts",
+      "react-native": "./dist/components/forge/color/FloatingPaletteUndockHandle.js",
+      "default": "./dist/components/forge/color/FloatingPaletteUndockHandle.js"
+    },
+    "./components/forge/color/hsl": {
+      "types": "./dist/components/forge/color/hsl.d.ts",
+      "react-native": "./dist/components/forge/color/hsl.js",
+      "default": "./dist/components/forge/color/hsl.js"
+    },
+    "./components/forge/color/contrast": {
+      "types": "./dist/components/forge/color/contrast.d.ts",
+      "react-native": "./dist/components/forge/color/contrast.js",
+      "default": "./dist/components/forge/color/contrast.js"
+    },
+    "./components/forge/color/harmony": {
+      "types": "./dist/components/forge/color/harmony.d.ts",
+      "react-native": "./dist/components/forge/color/harmony.js",
+      "default": "./dist/components/forge/color/harmony.js"
+    },
+    "./components/forge/color/wheel-geometry": {
+      "types": "./dist/components/forge/color/wheel-geometry.d.ts",
+      "react-native": "./dist/components/forge/color/wheel-geometry.js",
+      "default": "./dist/components/forge/color/wheel-geometry.js"
+    },
+    "./components/forge/color/floating-palette": {
+      "types": "./dist/components/forge/color/floating-palette.d.ts",
+      "react-native": "./dist/components/forge/color/floating-palette.js",
+      "default": "./dist/components/forge/color/floating-palette.js"
+    },
+    "./components/forge/color/swatches": {
+      "types": "./dist/components/forge/color/swatches.d.ts",
+      "react-native": "./dist/components/forge/color/swatches.js",
+      "default": "./dist/components/forge/color/swatches.js"
+    },
+    "./components/forge/color/color-pair": {
+      "types": "./dist/components/forge/color/color-pair.d.ts",
+      "react-native": "./dist/components/forge/color/color-pair.js",
+      "default": "./dist/components/forge/color/color-pair.js"
+    },
+    "./components/forge/color/channel-fields": {
+      "types": "./dist/components/forge/color/channel-fields.d.ts",
+      "react-native": "./dist/components/forge/color/channel-fields.js",
+      "default": "./dist/components/forge/color/channel-fields.js"
     },
     "./components/data/DataTable": {
       "types": "./dist/components/data/DataTable.d.ts",
@@ -215,6 +325,69 @@
       "react-native": "./dist/components/gestures/GestureHandlerDrag.js",
       "default": "./dist/components/gestures/GestureHandlerDrag.js"
     },
+    "./components/forge/ink/ink-model": {
+      "types": "./dist/components/forge/ink/ink-model.d.ts",
+      "react-native": "./dist/components/forge/ink/ink-model.js",
+      "default": "./dist/components/forge/ink/ink-model.js"
+    },
+    "./components/forge/ink/InkToolbar": {
+      "types": "./dist/components/forge/ink/InkToolbar.d.ts",
+      "react-native": "./dist/components/forge/ink/InkToolbar.js",
+      "default": "./dist/components/forge/ink/InkToolbar.js"
+    },
+    "./components/feedback/Banner": {
+      "types": "./dist/components/feedback/Banner.d.ts",
+      "react-native": "./dist/components/feedback/Banner.js",
+      "default": "./dist/components/feedback/Banner.js"
+    },
+    "./components/feedback/Badge": {
+      "types": "./dist/components/feedback/Badge.d.ts",
+      "react-native": "./dist/components/feedback/Badge.js",
+      "default": "./dist/components/feedback/Badge.js"
+    },
+    "./components/feedback/EmptyState": {
+      "types": "./dist/components/feedback/EmptyState.d.ts",
+      "react-native": "./dist/components/feedback/EmptyState.js",
+      "default": "./dist/components/feedback/EmptyState.js"
+    },
+    "./components/feedback/ErrorMessage": {
+      "types": "./dist/components/feedback/ErrorMessage.d.ts",
+      "react-native": "./dist/components/feedback/ErrorMessage.js",
+      "default": "./dist/components/feedback/ErrorMessage.js"
+    },
+    "./components/content/KeyValueList": {
+      "types": "./dist/components/content/KeyValueList.d.ts",
+      "react-native": "./dist/components/content/KeyValueList.js",
+      "default": "./dist/components/content/KeyValueList.js"
+    },
+    "./components/theme/NightScope": {
+      "types": "./dist/components/theme/NightScope.d.ts",
+      "react-native": "./dist/components/theme/NightScope.js",
+      "default": "./dist/components/theme/NightScope.js"
+    },
+    "./components/files/DropZone": {
+      "types": "./dist/components/files/DropZone.web.d.ts",
+      "browser": "./dist/components/files/DropZone.web.js",
+      "react-native": "./dist/components/files/DropZone.native.js",
+      "default": "./dist/components/files/DropZone.web.js"
+    },
+    "./components/files/FilePicker": {
+      "types": "./dist/components/files/FilePicker.web.d.ts",
+      "browser": "./dist/components/files/FilePicker.web.js",
+      "react-native": "./dist/components/files/FilePicker.native.js",
+      "default": "./dist/components/files/FilePicker.web.js"
+    },
+    "./components/files/drop-model": {
+      "types": "./dist/components/files/drop-model.d.ts",
+      "react-native": "./dist/components/files/drop-model.js",
+      "default": "./dist/components/files/drop-model.js"
+    },
+    "./components/html": {
+      "types": "./dist/components/html/semantic.web.d.ts",
+      "browser": "./dist/components/html/semantic.web.js",
+      "react-native": "./dist/components/html/semantic.native.js",
+      "default": "./dist/components/html/semantic.web.js"
+    },
     "./components/Select": {
       "types": "./dist/components/Select.d.ts",
       "react-native": "./dist/components/Select.js",
@@ -339,169 +512,6 @@
       "types": "./dist/components/forge/timeline/safe-area.d.ts",
       "react-native": "./dist/components/forge/timeline/safe-area.js",
       "default": "./dist/components/forge/timeline/safe-area.js"
-    },
-    "./components/forge/audio/level": {
-      "types": "./dist/components/forge/audio/level.d.ts",
-      "react-native": "./dist/components/forge/audio/level.js",
-      "default": "./dist/components/forge/audio/level.js"
-    },
-    "./components/forge/audio/LevelFader": {
-      "types": "./dist/components/forge/audio/LevelFader.d.ts",
-      "react-native": "./dist/components/forge/audio/LevelFader.js",
-      "default": "./dist/components/forge/audio/LevelFader.js"
-    },
-    "./components/forge/color/HsvPicker": {
-      "types": "./dist/components/forge/color/HsvPicker.d.ts",
-      "react-native": "./dist/components/forge/color/HsvPicker.js",
-      "default": "./dist/components/forge/color/HsvPicker.js"
-    },
-    "./components/forge/color/fieldGeometry": {
-      "types": "./dist/components/forge/color/fieldGeometry.d.ts",
-      "react-native": "./dist/components/forge/color/fieldGeometry.js",
-      "default": "./dist/components/forge/color/fieldGeometry.js"
-    },
-    "./components/forge/color/fieldGesture": {
-      "types": "./dist/components/forge/color/fieldGesture.d.ts",
-      "react-native": "./dist/components/forge/color/fieldGesture.js",
-      "default": "./dist/components/forge/color/fieldGesture.js"
-    },
-    "./components/forge/color/AlphaSlider": {
-      "types": "./dist/components/forge/color/AlphaSlider.d.ts",
-      "react-native": "./dist/components/forge/color/AlphaSlider.js",
-      "default": "./dist/components/forge/color/AlphaSlider.js"
-    },
-    "./components/forge/color/ColorWheel": {
-      "types": "./dist/components/forge/color/ColorWheel.d.ts",
-      "react-native": "./dist/components/forge/color/ColorWheel.js",
-      "default": "./dist/components/forge/color/ColorWheel.js"
-    },
-    "./components/forge/color/ColorDiscPicker": {
-      "types": "./dist/components/forge/color/ColorDiscPicker.d.ts",
-      "react-native": "./dist/components/forge/color/ColorDiscPicker.js",
-      "default": "./dist/components/forge/color/ColorDiscPicker.js"
-    },
-    "./components/forge/color/ColorChannelFields": {
-      "types": "./dist/components/forge/color/ColorChannelFields.d.ts",
-      "react-native": "./dist/components/forge/color/ColorChannelFields.js",
-      "default": "./dist/components/forge/color/ColorChannelFields.js"
-    },
-    "./components/forge/color/ForegroundBackgroundChips": {
-      "types": "./dist/components/forge/color/ForegroundBackgroundChips.d.ts",
-      "react-native": "./dist/components/forge/color/ForegroundBackgroundChips.js",
-      "default": "./dist/components/forge/color/ForegroundBackgroundChips.js"
-    },
-    "./components/forge/color/SwatchGrid": {
-      "types": "./dist/components/forge/color/SwatchGrid.d.ts",
-      "react-native": "./dist/components/forge/color/SwatchGrid.js",
-      "default": "./dist/components/forge/color/SwatchGrid.js"
-    },
-    "./components/forge/color/ColorHarmonyAssistant": {
-      "types": "./dist/components/forge/color/ColorHarmonyAssistant.d.ts",
-      "react-native": "./dist/components/forge/color/ColorHarmonyAssistant.js",
-      "default": "./dist/components/forge/color/ColorHarmonyAssistant.js"
-    },
-    "./components/forge/color/FloatingColorPalette": {
-      "types": "./dist/components/forge/color/FloatingColorPalette.d.ts",
-      "react-native": "./dist/components/forge/color/FloatingColorPalette.js",
-      "default": "./dist/components/forge/color/FloatingColorPalette.js"
-    },
-    "./components/forge/color/FloatingPaletteUndockHandle": {
-      "types": "./dist/components/forge/color/FloatingPaletteUndockHandle.d.ts",
-      "react-native": "./dist/components/forge/color/FloatingPaletteUndockHandle.js",
-      "default": "./dist/components/forge/color/FloatingPaletteUndockHandle.js"
-    },
-    "./components/forge/color/hsl": {
-      "types": "./dist/components/forge/color/hsl.d.ts",
-      "react-native": "./dist/components/forge/color/hsl.js",
-      "default": "./dist/components/forge/color/hsl.js"
-    },
-    "./components/forge/color/contrast": {
-      "types": "./dist/components/forge/color/contrast.d.ts",
-      "react-native": "./dist/components/forge/color/contrast.js",
-      "default": "./dist/components/forge/color/contrast.js"
-    },
-    "./components/forge/color/harmony": {
-      "types": "./dist/components/forge/color/harmony.d.ts",
-      "react-native": "./dist/components/forge/color/harmony.js",
-      "default": "./dist/components/forge/color/harmony.js"
-    },
-    "./components/forge/color/wheel-geometry": {
-      "types": "./dist/components/forge/color/wheel-geometry.d.ts",
-      "react-native": "./dist/components/forge/color/wheel-geometry.js",
-      "default": "./dist/components/forge/color/wheel-geometry.js"
-    },
-    "./components/forge/color/floating-palette": {
-      "types": "./dist/components/forge/color/floating-palette.d.ts",
-      "react-native": "./dist/components/forge/color/floating-palette.js",
-      "default": "./dist/components/forge/color/floating-palette.js"
-    },
-    "./components/forge/color/swatches": {
-      "types": "./dist/components/forge/color/swatches.d.ts",
-      "react-native": "./dist/components/forge/color/swatches.js",
-      "default": "./dist/components/forge/color/swatches.js"
-    },
-    "./components/forge/color/color-pair": {
-      "types": "./dist/components/forge/color/color-pair.d.ts",
-      "react-native": "./dist/components/forge/color/color-pair.js",
-      "default": "./dist/components/forge/color/color-pair.js"
-    },
-    "./components/forge/color/channel-fields": {
-      "types": "./dist/components/forge/color/channel-fields.d.ts",
-      "react-native": "./dist/components/forge/color/channel-fields.js",
-      "default": "./dist/components/forge/color/channel-fields.js"
-    },
-    "./components/feedback/Banner": {
-      "types": "./dist/components/feedback/Banner.d.ts",
-      "react-native": "./dist/components/feedback/Banner.js",
-      "default": "./dist/components/feedback/Banner.js"
-    },
-    "./components/feedback/Badge": {
-      "types": "./dist/components/feedback/Badge.d.ts",
-      "react-native": "./dist/components/feedback/Badge.js",
-      "default": "./dist/components/feedback/Badge.js"
-    },
-    "./components/feedback/EmptyState": {
-      "types": "./dist/components/feedback/EmptyState.d.ts",
-      "react-native": "./dist/components/feedback/EmptyState.js",
-      "default": "./dist/components/feedback/EmptyState.js"
-    },
-    "./components/feedback/ErrorMessage": {
-      "types": "./dist/components/feedback/ErrorMessage.d.ts",
-      "react-native": "./dist/components/feedback/ErrorMessage.js",
-      "default": "./dist/components/feedback/ErrorMessage.js"
-    },
-    "./components/content/KeyValueList": {
-      "types": "./dist/components/content/KeyValueList.d.ts",
-      "react-native": "./dist/components/content/KeyValueList.js",
-      "default": "./dist/components/content/KeyValueList.js"
-    },
-    "./components/theme/NightScope": {
-      "types": "./dist/components/theme/NightScope.d.ts",
-      "react-native": "./dist/components/theme/NightScope.js",
-      "default": "./dist/components/theme/NightScope.js"
-    },
-    "./components/files/DropZone": {
-      "types": "./dist/components/files/DropZone.web.d.ts",
-      "browser": "./dist/components/files/DropZone.web.js",
-      "react-native": "./dist/components/files/DropZone.native.js",
-      "default": "./dist/components/files/DropZone.web.js"
-    },
-    "./components/files/FilePicker": {
-      "types": "./dist/components/files/FilePicker.web.d.ts",
-      "browser": "./dist/components/files/FilePicker.web.js",
-      "react-native": "./dist/components/files/FilePicker.native.js",
-      "default": "./dist/components/files/FilePicker.web.js"
-    },
-    "./components/files/drop-model": {
-      "types": "./dist/components/files/drop-model.d.ts",
-      "react-native": "./dist/components/files/drop-model.js",
-      "default": "./dist/components/files/drop-model.js"
-    },
-    "./components/html": {
-      "types": "./dist/components/html/semantic.web.d.ts",
-      "browser": "./dist/components/html/semantic.web.js",
-      "react-native": "./dist/components/html/semantic.native.js",
-      "default": "./dist/components/html/semantic.web.js"
     }
   },
   "scripts": {

@@ -49,6 +49,12 @@ state, Toolbar arrow focus, and a 44px minimum for every control at 390px and
 834px. `forms-shots.spec.mjs` captures the same page light and dark at 390px
 and 834px (resting, Select open, focused), RTL, and forced colors.
 
+`ink.spec.mjs` loads `/ink` (`fixtures/ink.tsx`, which plays the Forge
+board host) and checks `InkToolbar`: the tool radio group, disabled redo
+explaining itself, size, color and pressure intent, in-toolbar shortcuts and
+44 px targets. It writes `shots/ink-*` captures in light and dark at 390 px (top
+bar) and 834 px (right rail), with keyboard focus and the notice line, plus RTL.
+
 Set `UI_ACCEPTANCE_PORT` to run the lane on a port other than 4179.
 
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
