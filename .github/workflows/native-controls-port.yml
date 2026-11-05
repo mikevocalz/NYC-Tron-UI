@@ -32,8 +32,9 @@ jobs:
       - run: corepack pnpm install --frozen-lockfile
       - run: node --test packages/native-controls/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
-      - run: corepack pnpm --dir examples/native-instruments typecheck
+      # Exports resolve to dist, so the example typechecks against the build.
       - run: corepack pnpm --dir packages/native-controls build
+      - run: corepack pnpm --dir examples/native-instruments typecheck
       - run: |
           mkdir -p /tmp/nyc-tron-native-pack
           corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
