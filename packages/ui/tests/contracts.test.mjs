@@ -143,7 +143,7 @@ const componentSources=(dir=resolve(root,"src/components"))=>
 test("every semantic token a component uses is documented for consumers",()=>{
   const doc=readFileSync(resolve(root,"../../docs/THEME_TOKENS.md"),"utf8");
   const documented=new Set([...doc.matchAll(/--(?:color|radius)-([a-z-]+)/g)].map(m=>m[1]));
-  const tokenClass=/\b(?:bg|text|border|ring|rounded)-((?:on-)?(?:primary|danger)|surface-(?:raised|sunken)|text(?:-muted)?|accent|border|focus|control|card)\b/g;
+  const tokenClass=/\b(?:bg|text|border|ring|rounded)-((?:on-)?(?:primary|danger)|info|success|surface-(?:raised|sunken)|text(?:-muted)?|accent|border|focus|control|card)\b/g;
   const used=new Set();
   for(const file of componentSources()){
     for(const m of readFileSync(file,"utf8").matchAll(tokenClass))used.add(m[1]);
