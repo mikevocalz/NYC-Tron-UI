@@ -8,7 +8,7 @@ Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavi
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
 > **Status: foundational extraction (not a published/native-certified release).**
-> This private repo started with only a README. CI can validate pure policies and
+> CI can validate pure policies and
 > source boundaries, but WinUI/Fluent, AppKit, SwiftUI, Compose, Viro and device
 > behavior require separate native adapters and device validation.
 
