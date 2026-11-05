@@ -72,6 +72,9 @@ for (const pkgName of packages) {
      !manifest.exports["./components/forge/ColorChannels"])) {
     fail("Professional control subpaths must be addressable");
   }
+  if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs"]){
+    if(!manifest.exports["./components/"+sub])fail("Missing data grid subpath "+sub);
+  }
   const runtimeDeps={...manifest.dependencies,...manifest.optionalDependencies};
   for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence"]) {
     if(bad in runtimeDeps||bad in (manifest.peerDependencies??{}))fail(id+": forbidden UI dependency "+bad);
