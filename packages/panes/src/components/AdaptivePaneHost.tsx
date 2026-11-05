@@ -96,10 +96,11 @@ export function AdaptivePaneHost({
   const inspectorVisible = Boolean(plan && inspector && plan.inspector.placement !== "closed");
   const isMasterOverlay = plan?.master.placement === "overlay";
   const isInspectorSheet = inspectorVisible && plan?.inspector.placement === "contained-sheet";
+  const isInspectorModal = inspectorVisible && (isInspectorSheet || isMasterOverlay);
   // A compact master overlay or a full-width inspector sheet covers the
   // detail pane, so screen readers must not reach the content behind it.
   const detailCovered = isMasterOverlay || isInspectorSheet;
-  const dismissTop = isInspectorSheet ? onDismissInspector :
+  const dismissTop = inspectorVisible ? onDismissInspector :
     isMasterOverlay ? onDismissMaster : undefined;
   const dismissRef = useRef(dismissTop);
   dismissRef.current = dismissTop;
@@ -116,16 +117,32 @@ export function AdaptivePaneHost({
   const paneRoot: ViewStyle = { direction: dir, flex: 1 };
   const content = (child: ReactNode, label: string, classes: string | undefined,
     position: ViewStyle, visible: boolean, rank: number,
-    a11yHidden = !visible, modal = false) => (
+    a11yHidden = !visible, modal = false, dismiss?: () => void,
+    closeLabel?: string, closeEdge: "left" | "right" = "right") => (
     <View
       accessibilityLabel={label}
       accessibilityViewIsModal={modal}
+      onAccessibilityEscape={visible && !a11yHidden ? dismiss : undefined}
       accessibilityElementsHidden={a11yHidden}
       importantForAccessibility={a11yHidden ? "no-hide-descendants" : "auto"}
       pointerEvents={visible ? "auto" : "none"}
       {...{ className: css("overflow-hidden bg-surface-raised", classes) }}
       style={[position, { zIndex: rank, display: visible ? "flex" : "none" }, paneRoot]}
-    >{child}</View>
+    >
+      {child}
+      {visible && !a11yHidden && dismiss && closeLabel ? (
+        <Pressable accessibilityRole="button" accessibilityLabel={closeLabel}
+          onPress={dismiss}
+          // Dismissal must be inside the modal accessibility subtree.
+          style={{
+            position: "absolute", zIndex: 1, top: 4,
+            [closeEdge]: 4, minWidth: 44, minHeight: 44,
+            alignItems: "center", justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.12)",
+          }}
+        ><Text accessibilityElementsHidden importantForAccessibility="no-hide-descendants">×</Text></Pressable>
+      ) : null}
+    </View>
   );
 
   return (
@@ -140,6 +157,9 @@ export function AdaptivePaneHost({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Close master pane"
+          accessible={false}
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
           onPress={onDismissMaster}
           disabled={!onDismissMaster}
           style={{ ...rectStyle(plan.detail.rect), zIndex: 2,
@@ -148,26 +168,12 @@ export function AdaptivePaneHost({
       ) : null}
       {content(master, "Master pane", masterClassName,
         plan ? rectStyle(plan.master.rect) : { display: "none" },
-        masterVisible, 3, !masterVisible || isInspectorSheet, isMasterOverlay && !isInspectorSheet)}
+        masterVisible, 3, !masterVisible || isInspectorModal, isMasterOverlay && !isInspectorModal,
+        isMasterOverlay ? onDismissMaster : undefined, "Close master pane", isRTL ? "left" : "right")}
       {inspector ? content(inspector, "Inspector pane", inspectorClassName,
         plan ? rectStyle(plan.inspector.rect) : { display: "none" },
-        inspectorVisible, 4, !inspectorVisible, isInspectorSheet) : null}
-      {inspectorVisible && onDismissInspector && plan ? (
-        <Pressable accessibilityRole="button" accessibilityLabel="Close inspector"
-          onPress={onDismissInspector}
-          // A small contained close affordance; do not capture the whole inspector.
-          style={{
-            position: "absolute", zIndex: 5,
-            top: plan.inspector.rect.y + 4,
-            left: plan.inspector.edge === "right"
-              ? plan.inspector.rect.x + plan.inspector.rect.width - 48
-              : plan.inspector.rect.x + 4,
-            minWidth: 44, minHeight: 44,
-            alignItems: "center", justifyContent: "center",
-            backgroundColor: "rgba(0,0,0,0.12)",
-          }}
-        ><Text accessibilityElementsHidden importantForAccessibility="no-hide-descendants">×</Text></Pressable>
-      ) : null}
+        inspectorVisible, 4, !inspectorVisible, isInspectorModal,
+        onDismissInspector, "Close inspector", plan?.inspector.edge) : null}
     </View>
   );
 }

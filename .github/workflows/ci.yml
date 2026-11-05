@@ -37,6 +37,8 @@ jobs:
         run: corepack pnpm build
       - name: Typecheck packages against built peer workspaces
         run: corepack pnpm typecheck
+      - name: Render adaptive pane component contracts with mocked native hosts
+        run: node --test packages/panes/tests/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
       - name: Inspect npm tarball contents
