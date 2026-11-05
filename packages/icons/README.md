@@ -62,12 +62,33 @@ right-rail placement for supported foldables.
 
 - User's `mikevocalz/nitro-forge`, draft PR #21,
   branch `feat/forge-icons-rive-universal-suite-2026-11-02`.
-- Authored `src/catalog.js`, `src/glyphs.js`, `src/state.js`,
-  `src/tokens.js`, `src/ForgeIcon.js`, tests and types are copied
-  as-is for provenance; public package and aliases are NYC-Tron changes.
+- The initial `src/catalog.js`, `src/glyphs.js`, `src/state.js`,
+  `src/tokens.js`, `src/ForgeIcon.js`, tests and types were extracted
+  from that branch. Subsequent renderer, declaration, test and artwork
+  changes are authored in NYC-Tron; Git history records the boundary.
 - The status of the original author's source license must be independently
   confirmed before any public npm release. No fonts or binary assets copied.
 
 Once consumers import NYC-Tron, Nitro Forge can change its old icon entry
 into a compatibility shim that re-exports `@nyc-tron/icons`, but it must
 not remove original files until all editor imports and native/web tests pass.
+
+## Navigation and adaptive-device artwork (November 5, 2026)
+
+Thirty additional glyph pairs cover direction arrows/chevrons, overflow,
+physical-left/right sidebars, split/grid/list views, external links,
+pinning, locks, transfer actions, phone/tablet/desktop/watch, foldable/Duo,
+and book/tabletop postures. Each has independently authored outline and
+filled geometry. Side and hardware identities remain distinct; this artwork
+does not select the app's navigation policy or infer device capabilities.
+
+At this revision there are **77 authored glyph slugs**, compared with
+**1,463 proposed semantic IDs**. Because the catalog is namespaced and some
+legacy artwork uses standalone slugs, **72 catalog IDs resolve to artwork**.
+Those numbers describe different inventories; they are not a completion
+percentage. Use `glyphIds` and `getGlyph` to check actual availability.
+
+The batch was inspected as a rendered SVG contact sheet. Source tests verify
+semantic registration, distinct outline/filled pairs, SVG command argument
+counts and arc flags. This is source/raster inspection, not physical-device,
+OS-native glyph or compiled Rive verification.
