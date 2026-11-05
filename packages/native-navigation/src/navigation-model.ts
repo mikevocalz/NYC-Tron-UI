@@ -29,3 +29,46 @@ export function resolveRailDimensions(
     throw new RangeError("Rail height must be >=44");
   return { width: width ?? (expanded ? 208 : 80), height: height ?? "100%" };
 }
+
+/** Window-space logical rect, structurally compatible with `@nyc-tron/core/folds`. */
+export interface RailRegion {
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+}
+
+/**
+ * Pick the usable region that hosts a physical-right rail.
+ *
+ * Pass the hinge-free regions from `resolveUsableRegions` (or any host fold
+ * adapter). The rail goes in the region whose right edge is the window's
+ * physical right edge; a vertical hinge (Surface Duo double portrait) therefore
+ * puts it on the right screen. When a horizontal fold splits that right column,
+ * the taller segment wins and the top one breaks ties, so the rail never
+ * straddles the fold. Text direction is deliberately not an input.
+ *
+ * @throws RangeError when no positive, finite region is supplied.
+ */
+export function resolvePhysicalRightRailRegion(regions: readonly RailRegion[]): RailRegion {
+  const usable = regions.filter(r =>
+    [r.x, r.y, r.width, r.height].every(Number.isFinite) && r.width > 0 && r.height > 0);
+  if (usable.length === 0) throw new RangeError("Rail needs at least one usable region");
+  const rightEdge = Math.max(...usable.map(r => r.x + r.width));
+  const column = usable.filter(r => Math.abs(r.x + r.width - rightEdge) < 0.5);
+  let best = column[0]!;
+  for (const r of column) {
+    if (r.height > best.height || (r.height === best.height && r.y < best.y)) best = r;
+  }
+  return best;
+}
+
+/**
+ * Default selected-pill fill: the active color at 15% alpha when it is a
+ * `#RRGGBB` token, otherwise `undefined` so the platform default applies.
+ */
+export function defaultIndicatorColor(activeColor?: string): string | undefined {
+  return activeColor !== undefined && /^#[0-9a-f]{6}$/i.test(activeColor)
+    ? activeColor + "26"
+    : undefined;
+}

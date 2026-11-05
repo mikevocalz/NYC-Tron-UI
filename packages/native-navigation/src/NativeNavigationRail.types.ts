@@ -12,4 +12,9 @@ export interface NativeRailProps {
   readonly activeColor?: string;
   readonly foregroundColor?: string;
   readonly backgroundColor?: string;
+  /**
+   * Fill of the fully rounded selected pill, from the app's theme token.
+   * Defaults to `activeColor` at 15% alpha (via `defaultIndicatorColor`).
+   */
+  readonly indicatorColor?: string;
 }

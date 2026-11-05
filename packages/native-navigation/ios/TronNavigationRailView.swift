@@ -13,12 +13,17 @@ final class TronNavigationRailProps: UIBaseViewProps {
   @Field var activeColor: Color = .accentColor
   @Field var foregroundColor: Color = .primary
   @Field var backgroundColor: Color = .clear
+  /// Selected pill fill from the app theme; nil falls back to activeColor at 15%.
+  @Field var indicatorColor: Color?
   var onSelect = EventDispatcher()
 }
 
 /// The host determines physical edge: RIGHT on native foldables/tablets/headsets.
 struct TronNavigationRailView: ExpoSwiftUI.View {
   @ObservedObject public var props: TronNavigationRailProps
+  /// Glyph size and box follow Dynamic Type, matching the scalable labels.
+  @ScaledMetric(relativeTo: .title3) private var glyphSize: CGFloat = 20
+  @ScaledMetric(relativeTo: .title3) private var glyphBox: CGFloat = 28
 
   var body: some View {
     GeometryReader { geometry in
@@ -35,8 +40,9 @@ struct TronNavigationRailView: ExpoSwiftUI.View {
             } label: {
               HStack(spacing: 8) {
                 Text(glyph.isEmpty ? String(label.prefix(1)) : glyph)
-                  .font(.system(size: 20, weight: selected ? .bold : .medium))
-                  .frame(width: 28, height: 28)
+                  .font(.system(size: glyphSize, weight: selected ? .bold : .medium))
+                  .frame(width: glyphBox, height: glyphBox)
+                  .accessibilityHidden(true)
                 if props.expanded {
                   Text(label)
                     .font(.subheadline.weight(selected ? .semibold : .regular))
@@ -47,8 +53,12 @@ struct TronNavigationRailView: ExpoSwiftUI.View {
               .foregroundStyle(selected ? props.activeColor : props.foregroundColor)
               .frame(minWidth: 44, minHeight: 44)
               .padding(.horizontal, props.expanded ? 12 : 4)
-              .background(selected ? props.activeColor.opacity(0.15) : Color.clear)
-              .clipShape(RoundedRectangle(cornerRadius: 12))
+              // Fully rounded selected pill; contentShape keeps the whole
+              // 44pt target tappable even where the unselected fill is clear.
+              .background(
+                Capsule().fill(selected ? (props.indicatorColor ?? props.activeColor.opacity(0.15)) : Color.clear)
+              )
+              .contentShape(Capsule())
             }
             .buttonStyle(.plain)
             .disabled(disabled)

@@ -42,6 +42,7 @@ data class TronRailProps(
   val activeColor: String = "",
   val foregroundColor: String = "",
   val backgroundColor: String = "",
+  val indicatorColor: String = "",
   val modifiers: ModifierList = emptyList()
 ) : ComposeProps
 
@@ -62,6 +63,9 @@ fun FunctionalComposableScope.TronRailContent(
   val container = themedColor(props.backgroundColor, colors.surface)
   val foreground = themedColor(props.foregroundColor, colors.onSurface)
   val accent = themedColor(props.activeColor, colors.primary)
+  // Material 3 draws the rail indicator with ShapeKeyTokens.CornerFull (a pill);
+  // only its fill comes from the app theme token.
+  val indicator = themedColor(props.indicatorColor, accent.copy(alpha = .15f))
   NavigationRail(
     modifier = ModifierRegistry.applyModifiers(
       props.modifiers, appContext, composableScope, globalEventDispatcher
@@ -107,7 +111,7 @@ fun FunctionalComposableScope.TronRailContent(
             colors = NavigationRailItemDefaults.colors(
               selectedIconColor = accent, selectedTextColor = accent,
               unselectedIconColor = foreground, unselectedTextColor = foreground,
-              indicatorColor = accent.copy(alpha = .15f)
+              indicatorColor = indicator
             )
           )
         }
