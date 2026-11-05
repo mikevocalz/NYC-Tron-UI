@@ -125,7 +125,7 @@ export function AdaptivePaneHost({
       onAccessibilityEscape={visible && !a11yHidden ? dismiss : undefined}
       accessibilityElementsHidden={a11yHidden}
       importantForAccessibility={a11yHidden ? "no-hide-descendants" : "auto"}
-      pointerEvents={visible ? "auto" : "none"}
+      pointerEvents={visible && !a11yHidden ? "auto" : "none"}
       {...{ className: css("overflow-hidden bg-surface-raised", classes) }}
       style={[position, { zIndex: rank, display: visible ? "flex" : "none" }, paneRoot]}
     >

@@ -100,6 +100,7 @@ test("top inspector is the sole modal when layered above a compact master", () =
   assert.equal(find(tree, "Inspector pane").props.accessibilityViewIsModal, true);
   assert.equal(find(tree, "Master pane").props.accessibilityViewIsModal, false);
   assert.equal(find(tree, "Master pane").props.accessibilityElementsHidden, true);
+  assert.equal(find(tree, "Master pane").props.pointerEvents, "none");
   assert.equal(h.back(), true);
   assert.equal(inspectorCloses, 1);
   assert.equal(masterCloses, 0);
