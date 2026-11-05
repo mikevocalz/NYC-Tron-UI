@@ -40,11 +40,23 @@ import {TronNavigationView} from "@nyc-tron/windows-fluent-fabric";
 
 ### Validation matrix
 
-CI separately validates: (1) typed JS/source contract, (2) generated
-C++ Fabric codegen headers, and (3) the VS2026 native C++/WinRT project.
-A successful native library build is **not** a launched RNW app. The
-actual app's package autolinking and React root, keyboard, Narrator,
-high contrast, RTL and real route events still need end-to-end proof.
+CI validates, on `windows-2025` with Visual Studio 2026:
+
+1. The typed JS/source contract and Windows-only TypeScript (Linux job).
+2. RNW Fabric codegen and the native C++/WinRT library build.
+3. The generated `cpp-app` consumer, built through its solution, with a
+   Release bundle that contains one React, one react-native-windows and
+   no core react-native files.
+4. A UI Automation smoke test of the packaged consumer deployed with
+   `run-windows`: the native items are found by their Narrator names,
+   Home is selected at launch, Down+Enter on Workspace raises a pending
+   request while Home stays selected, Reject keeps Home, and Accept moves
+   the native selection to Workspace. Screenshots are uploaded as the
+   `winui-fabric-uia-smoke` artifact.
+
+Not covered by CI: Narrator speech output, high contrast, an RTL locale
+(the `isRTL` prop is compiled and wired but not exercised), resizing,
+pointer input, Settings focus return, and `onNativeError` delivery.
 
 ## Build
 
@@ -57,11 +69,19 @@ msbuild windows/NYCTronFluentFabric.sln /restore /p:Configuration=Release /p:Pla
 RNW project files expect a solution context (`SolutionDir` locates
 `ExperimentalFeatures.props`), so build the `.sln`, not the `.vcxproj`.
 
-**Build evidence (November 5, 2026):** Windows Fabric codegen and native
-C++/WinRT compilation passed at commit `607bcada` in
-[Actions run 41966875204](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/41966875204).
-This establishes the native library build, not a launched consumer app.
-Subsequent changes require their own green native compile.
+**Evidence (November 5, 2026):** all four lanes above passed at commit
+`7ce5473` in
+[Actions run 42053160714](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42053160714).
+Subsequent changes require their own green run.
+
+Hosting requirements found by that run:
+- The registration sets `XamlSupport(true)` on the component builder.
+  Without it RNW never creates its `XamlApplication`, and the island
+  renders empty.
+- The consumer must run packaged (`run-windows`). The bare
+  `x64\Release` executable exits with `0xC0000409` on startup.
+- React Native `Button` exposes no Narrator name or `InvokePattern` on
+  RNW 0.85; the acceptance app sets `accessibilityLabel` on each Button.
 There are no custom Tailwind themes inside WinUI; future resource adapters
 must map supported consumer semantic tokens to WinUI XAML resources.
 

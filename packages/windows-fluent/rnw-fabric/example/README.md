@@ -26,7 +26,12 @@ The app owns its Zustand store. Selecting Workspace creates a pending request;
 Accept commits it, Reject keeps Home selected. Settings and pane toggles retain
 the committed route. Disabled and unknown destinations cannot navigate.
 
-CI generates the native host and compiles its executable and library reference.
-This is build evidence only. A Windows session must still launch the app and
-exercise native events, rejected requests, Settings focus return, Narrator,
-high contrast, keyboard/pointer, RTL and resizing. No interactive pass is implied.
+CI generates the native host, builds it through its solution, deploys the
+packaged app with `run-windows`, and runs `scripts/uia-smoke.ps1`: launch,
+Down+Enter on Workspace, Reject, then Accept, checking the native selection
+after each step. `prepare:host` adds the library project to the generated
+solution and a Metro resolver so the bundle carries one React and one
+react-native-windows; `scripts/check-bundle-singletons.mjs` enforces it.
+
+Still manual: Settings focus return, Narrator speech, high contrast, pointer
+input, an RTL locale and resizing.

@@ -91,9 +91,9 @@ jobs:
           Write-Host "Using installed Windows SDK $sdkVersion instead of RNW's absent 10.0.22621.0"
           & $msbuild "windows\NYCTronFluentFabric.sln" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$sdkVersion" "/p:UseExperimentalNuget=true" "/restore" "/m" "/v:minimal"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      # C++ compilation proves the ComponentView builds but does not prove
-      # a launched React Native Windows app, route roundtrip, Narrator,
-      # high contrast or physical Windows keyboard/pointer interactions.
+      # The UIA smoke step below launches the packaged app and checks the
+      # route roundtrip with keyboard input. It does not cover Narrator
+      # speech, high contrast, pointer input or an RTL locale.
 
       - name: Compile actual Windows consumer executable
         working-directory: packages/windows-fluent/rnw-fabric/example
