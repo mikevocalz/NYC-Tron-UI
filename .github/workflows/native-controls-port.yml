@@ -1,0 +1,127 @@
+name: NYC-Tron native controls
+on:
+  pull_request:
+    paths:
+      - "packages/native-controls/**"
+      - "packages/native-charts/**"
+      - "examples/native-instruments/**"
+      - ".github/workflows/native-controls-port.yml"
+      - "packages/expo-controls/**"
+      - "packages/ui/**"
+      - "pnpm-workspace.yaml"
+  push:
+    branches:
+      - "feat/audiokit-native-instruments-2026-11-04"
+      - "feat/native-charts-20261105"
+    paths:
+      - "packages/native-controls/**"
+      - "packages/native-charts/**"
+      - "examples/native-instruments/**"
+      - ".github/workflows/native-controls-port.yml"
+      - "packages/expo-controls/**"
+      - "packages/ui/**"
+      - "pnpm-workspace.yaml"
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  source:
+    name: TypeScript / source contracts / independent pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: node --test packages/native-controls/tests/*.test.mjs
+      - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
+      - run: corepack pnpm --dir packages/native-controls typecheck
+      - run: corepack pnpm --dir packages/native-charts typecheck
+      # Exports resolve to dist, and the example also renders @nyc-tron/expo-controls
+      # and @nyc-tron/ui, so build the whole workspace before typechecking it.
+      - run: corepack pnpm build
+      - run: corepack pnpm --dir packages/native-controls build
+      - run: corepack pnpm --dir examples/native-instruments typecheck
+      - run: |
+          mkdir -p /tmp/nyc-tron-native-pack
+          corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
+          tar -tzf /tmp/nyc-tron-native-pack/*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
+      - run: corepack pnpm --dir packages/native-charts build
+      - name: Native charts pack contents
+        run: |
+          mkdir -p /tmp/nyc-tron-charts-pack
+          corepack pnpm --dir packages/native-charts pack --pack-destination /tmp/nyc-tron-charts-pack
+          listing=$(tar -tzf /tmp/nyc-tron-charts-pack/*.tgz)
+          for f in package/ios/TronChartView.swift package/ios/NYCTronCharts.podspec \
+                   package/android/build.gradle package/android/src/main/java/com/nyctron/charts/TronChartView.kt \
+                   package/dist/NativeChart.web.js package/dist/NativeChart.native.js package/THIRD_PARTY_NOTICES.md; do
+            echo "$listing" | grep -qx "$f" || { echo "Missing $f in native-charts pack"; exit 1; }
+          done
+
+  android:
+    name: Android native Compose compile
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - name: Expo development app native generation
+        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform android --no-install --non-interactive
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
+      - name: Native Kotlin / Compose debug build (instruments + Vico charts)
+        run: |
+          cd examples/native-instruments/android
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Vico resolved at the pinned version
+        run: |
+          cd examples/native-instruments/android
+          ./gradlew :nyc-tron-native-charts:dependencies --configuration debugRuntimeClasspath --no-daemon \
+            | tee /tmp/charts-deps.txt
+          grep -q 'com.patrykandpatrick.vico:compose-m3:3.2.3' /tmp/charts-deps.txt
+
+  ios:
+    name: iOS native SwiftUI simulator compile
+    runs-on: macos-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - name: Generate native iOS development app
+        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform ios --no-install --non-interactive
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
+      - name: Resolve native pods and SwiftUI bridge
+        working-directory: examples/native-instruments/ios
+        run: |
+          pod install
+          grep -q "NYCTronCharts" Podfile.lock || { echo "NYCTronCharts pod not linked"; exit 1; }
+      - name: Build iOS simulator without code signing
+        working-directory: examples/native-instruments/ios
+        run: |
+          workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
+          if [ -z "$workspace" ]; then echo "Missing iOS workspace"; exit 1; fi
+          scheme=$(basename "$workspace" .xcworkspace)
+          xcodebuild -workspace "$workspace" -scheme "$scheme" \
+            -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build

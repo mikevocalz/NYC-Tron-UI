@@ -1,52 +1,58 @@
 {
   "name": "@nyc-tron/icons",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "type": "module",
   "sideEffects": false,
   "description": "Original cross-platform outline/filled and Rive-ready editor icon system extracted from Nitro Forge",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./native": {
-      "types": "./src/TronIcon.d.ts",
-      "react-native": "./src/TronIcon.js",
-      "default": "./src/TronIcon.js"
+      "types": "./dist/TronIcon.d.ts",
+      "react-native": "./dist/TronIcon.js",
+      "default": "./dist/TronIcon.js"
     },
     "./web": {
-      "types": "./src/TronIcon.d.ts",
-      "default": "./src/TronIcon.js"
+      "types": "./dist/TronIcon.d.ts",
+      "react-native": "./dist/TronIcon.js",
+      "default": "./dist/TronIcon.js"
     },
     "./catalog": {
-      "types": "./src/catalog.d.ts",
-      "default": "./src/catalog.js"
+      "types": "./dist/catalog.d.ts",
+      "react-native": "./dist/catalog.js",
+      "default": "./dist/catalog.js"
     },
     "./glyphs": {
-      "types": "./src/glyphs.d.ts",
-      "default": "./src/glyphs.js"
+      "types": "./dist/glyphs.d.ts",
+      "react-native": "./dist/glyphs.js",
+      "default": "./dist/glyphs.js"
     },
     "./state": {
-      "types": "./src/state.d.ts",
-      "default": "./src/state.js"
+      "types": "./dist/state.d.ts",
+      "react-native": "./dist/state.js",
+      "default": "./dist/state.js"
     },
     "./tokens": {
-      "types": "./src/tokens.d.ts",
-      "default": "./src/tokens.js"
+      "types": "./dist/tokens.d.ts",
+      "react-native": "./dist/tokens.js",
+      "default": "./dist/tokens.js"
     }
   },
   "files": [
-    "src",
+    "dist",
     "README.md",
     "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
     "typecheck": "node --check src/ForgeIcon.js && node --check src/TronIcon.js && node --check src/catalog.js && node --check src/glyphs.js && node --check src/state.js && node --check src/tokens.js && node --check src/index.js && tsc --project tsconfig.json",
     "test": "node --test tests/*.test.js",
-    "build": "npm run typecheck"
+    "build": "node -e \"const f=require('node:fs');f.rmSync('dist',{recursive:true,force:true});f.cpSync('src','dist',{recursive:true})\""
   },
   "peerDependencies": {
     "react": ">=19.0.0",

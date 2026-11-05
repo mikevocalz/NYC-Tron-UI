@@ -21,3 +21,14 @@ export function placePopover(anchor:Rect2D,regions:readonly Rect2D[],desiredWidt
    above>=region.y+padding?above:bound(below,region.y+padding,region.y+region.height-h-padding);
  return {x:left,y:top,width:w,height:h,region};
 }
+
+/**
+ * Which side of the anchor a placement landed on. Native adapters (SwiftUI
+ * popover, Compose menu) position themselves, so they take this preference
+ * from the same usable-region computation instead of guessing from width.
+ */
+export function placementSide(anchor:Rect2D,position:PopupPosition):"below"|"above"|"overlap"{
+ if(position.y>=anchor.y+anchor.height)return "below";
+ if(position.y+position.height<=anchor.y)return "above";
+ return "overlap";
+}

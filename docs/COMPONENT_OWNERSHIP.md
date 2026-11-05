@@ -10,7 +10,7 @@ complex editor screen composition and its cross-engine suite application.
 | Card | `@nyc-tron/ui/components/Card` | RN semantic foundation | NYC-MON / Moyo Card |
 | NavigationRail / Shell | `@nyc-tron/ui/components/NavigationRail` | Controlled RN shell, NOT WinUI | NYC-MON / Moyo adaptive |
 | DataTable | `@nyc-tron/ui/components/data/DataTable` | TanStack Table v9 headless + custom RN renderer; source/typecheck | Moyo / NYC-MON headless table patterns |
-| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | TanStack Table v9 visible row/column model + custom two-axis viewport and formula bar; native QA pending | Forge Tally Rust adapter PR #39 |
+| SpreadsheetGrid | `@nyc-tron/ui/components/forge/SpreadsheetGrid` | Custom two-axis viewport, frozen panes, range selection, keyboard, TSV copy and formula reference highlights; native QA pending | Forge Tally Rust adapter PR #39 |
 | WaveformLane | `@nyc-tron/ui/components/forge/WaveformLane` | Source extracted, RN UI | Forge PR #25 / #35 |
 | NativeSeekBar | `@nyc-tron/ui/components/forge/NativeSeekBar` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #25 |
 | ColorChannels | `@nyc-tron/ui/components/forge/ColorChannels` | Source extracted, Expo 58 @expo/ui; native build unverified | Forge PR #26 / #34 |
@@ -20,13 +20,15 @@ complex editor screen composition and its cross-engine suite application.
 | AdaptivePanes/Inspector | Existing consumer implementation; extraction pending | **NOT EXTRACTED** | NYC-MON / Moyo |
 | Multi-hinge region planner | `@nyc-tron/core/folds` | Pure contract/tests | NYC-MON adaptive geometry |
 | Spatial panels | `@nyc-tron/core/spatial` | Pure specification, no renderer | Viro / spatial starter |
-| PrecisionScrubber / draggable fields | `components/forge/PrecisionScrubber` planned | **NOT EXTRACTED** | Forge PR #32 |
+| PrecisionScrubber | `@nyc-tron/ui/components/forge/inputs/PrecisionScrubber` (math in `/forge/inputs/precision`, logic in `/forge/inputs/precision-scrubber-model`) | Controlled RN control; fine/normal/coarse, detents, one commit, cancel restores, forced colors, adjustable a11y. Model tests plus Chromium/React Native Web drag tests and light/dark/forced-colors captures (`packages/ui/tests/browser`); no device or screen-reader QA yet | Forge `studio-workspace/precision-scrubber.tsx` (PR #32) |
+| DragGrabHandle | `@nyc-tron/ui/components/DragGrabHandle` | Controlled RN handle; start/move/commit/cancel, Escape and second-pointer cancel. Transport tests plus Chromium reorder/cancel test; no device QA yet | Forge `studio-workspace/drag-grab-handle.tsx` |
+| Drag transports | `@nyc-tron/ui/components/gestures/PanResponderDrag` (default) and `/gestures/GestureHandlerDrag` (optional `react-native-gesture-handler` >=3.4 <4 peer) | Callback logic tested with mocked RN/RNGH; native recognition unverified on device | Forge `studio-gesture.tsx` / `studio-gesture.native.tsx` |
 | Track/mixer/fader / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
 | Layers, brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Color-wheel/HSV and eyedropper | `components/forge/color/` planned | **NOT EXTRACTED** | Forge PR #34 |
 | Native whiteboard/ink / Muse tools | `components/forge/ink/` planned | **NOT EXTRACTED** | Forge PRs #18–20 |
-| Advanced grid cells/formula references, frozen panes and clipboard | `components/forge/spreadsheet/` planned | **NOT EXTRACTED** (base SpreadsheetGrid exists) | Forge Tally |
+| Paste/fill into a range | SpreadsheetGrid | **DEFERRED** until Tally exposes a batch `setRange` (copy, frozen panes and formula highlights are in SpreadsheetGrid) | Forge Tally |
 | Text editor/typography | `components/forge/document/` planned | **NOT EXTRACTED** | Forge Quill |
 | PDF annotations | `components/forge/pdf/` planned | **NOT EXTRACTED** | Forge Folio |
 | Slide/canvas transitions | `components/forge/slides/` planned | **NOT EXTRACTED** | Forge Pitch |
@@ -79,6 +81,35 @@ their respective distributions and PRs pass.
 ## 2026-11-04 advanced controls
 
 PR #2 adds source-level prototype controls: InstrumentKnob/InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay and CommandPopover. All source resides in NYC-Tron (not Forge). See [the advanced native catalog](ADVANCED_NATIVE_COMPONENTS.md) and @nyc-tron/core/advanced-catalog for complete planned ports and review gates. Native OS adapters, device QA and source licenses are **not** completed by this extraction.
+
+## 2026-11-05 PrecisionScrubber and DragGrabHandle
+
+Both controls are controlled: the app passes the committed value (scrubber) or owns
+the dragged item's position (handle), and each completed gesture produces one
+`onCommit`. Neither control holds engine or document state.
+
+Gesture recognition is injected through the `transport` prop. The default,
+`PanResponderDrag`, needs no extra dependency. Native apps that mount
+`GestureHandlerRootView` can pass `GestureHandlerDrag` instead. It is a separate
+subpath, so `react-native-gesture-handler` stays an optional peer and is never
+loaded by the scrubber or handle entry points. It uses the RNGH 3 `Gesture`
+builder, which RNGH 3 marks deprecated in favour of `usePanGesture` /
+`useTapGesture`; it matches the Forge source this was extracted from and should
+move to the hook API together with Forge.
+
+`PanResponderDrag` refuses responder termination requests once a drag is
+granted. The Forge source allowed them, and in the browser run a parent
+`ScrollView` then took the responder on vertical travel, so the fine/coarse
+gesture never registered. The OS can still terminate the drag, which cancels it.
+
+On web the forced-colors scale uses `var(--nyc-tron-canvas-text, CanvasText)`
+and `var(--nyc-tron-highlight, Highlight)`: React Native Web drops bare system
+color keywords. The handle's grip bars are top borders so forced colors keeps
+them visible without a prop.
+
+The forced-colors flag is a prop (`forcedColors`), since detecting it is the app's
+job. The handle's default glyph is three bars drawn with views; pass `children` to
+use an app icon.
 
 ## Shared icon ownership
 
