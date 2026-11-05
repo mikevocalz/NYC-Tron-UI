@@ -28,12 +28,12 @@ export function App(){
    <Text selectable>Committed route: {state.selectedId}</Text>
    {state.nativeError!==null&&<Text selectable accessibilityLiveRegion="assertive">{state.nativeError}</Text>}
    <Text selectable>Choose Workspace, then accept or reject the request. Native selection should follow only the committed route.</Text>
-   <Button title="Accept navigation" disabled={state.pendingId===null} onPress={state.acceptRoute}/>
-   <Button title="Reject navigation" disabled={state.pendingId===null} onPress={state.rejectRoute}/>
-   <Button title={state.paneOpen?"Close pane":"Open pane"} onPress={()=>state.setPaneOpen(!state.paneOpen)}/>
+   <Button title="Accept navigation" accessibilityLabel="Accept navigation" disabled={state.pendingId===null} onPress={state.acceptRoute}/>
+   <Button title="Reject navigation" accessibilityLabel="Reject navigation" disabled={state.pendingId===null} onPress={state.rejectRoute}/>
+   <Button title={state.paneOpen?"Close pane":"Open pane"} accessibilityLabel={state.paneOpen?"Close pane":"Open pane"} onPress={()=>state.setPaneOpen(!state.paneOpen)}/>
    {state.settingsOpen&&<View accessibilityRole="summary">
     <Text selectable>Settings opened without changing the committed route.</Text>
-    <Button title="Close settings" onPress={state.closeSettings}/>
+    <Button title="Close settings" accessibilityLabel="Close settings" onPress={state.closeSettings}/>
    </View>}
   </View>
  </View>;

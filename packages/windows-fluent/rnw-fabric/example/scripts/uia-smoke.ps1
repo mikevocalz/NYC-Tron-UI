@@ -75,9 +75,23 @@ function Assert-Selection($homeItem, $workspace, [string]$expected, [string]$sta
 }
 
 function Invoke-Button($root, [string]$name) {
-  $button = Find-ByName $root $name
-  $button.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
-  Write-Host "Invoked '$name'"
+  # Match the Button itself: RN draws the title as a child Text with the same name.
+  $condition = New-Object System.Windows.Automation.AndCondition(
+    (New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, $name)),
+    (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button)))
+  $button = $root.FindFirst($Tree::Descendants, $condition)
+  if ($null -eq $button) { throw "No Button named '$name' (Narrator would announce it unnamed)" }
+  $invoke = $null
+  if ($button.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$invoke)) {
+    $invoke.Invoke()
+    Write-Host "Invoked '$name' through InvokePattern"
+  } else {
+    [NativeWindow]::SetForegroundWindow([IntPtr]$root.Current.NativeWindowHandle) | Out-Null
+    $button.SetFocus()
+    Start-Sleep -Milliseconds 300
+    [System.Windows.Forms.SendKeys]::SendWait(" ")
+    Write-Host "Pressed '$name' with the keyboard (no InvokePattern)"
+  }
 }
 
 function Request-Workspace($window, $homeItem) {
