@@ -101,8 +101,7 @@ test("semantic set: real elements on web, roles (never accessibilityRole) on nat
 
 test("FilePicker never renders a dead control on native",()=>{
   const native=src("files/FilePicker.native.tsx");
-  assert.ok(native.includes("return null"));
-  assert.ok(native.includes("DEFER (2026-11-05)"));
+  assert.ok(native.includes("if(!documentSource||!onDocuments)return null"),"no source or receiver: no button");
   const web=src("files/FilePicker.web.tsx");
   assert.ok(web.includes('accessibilityRole="button"'));
   assert.ok(web.includes("input.remove()"),"the transient input is cleaned up");
