@@ -50,6 +50,91 @@
       "react-native": "./dist/components/forge/timebase.js",
       "default": "./dist/components/forge/timebase.js"
     },
+    "./components/forge/timeline/TimecodeDisplay": {
+      "types": "./dist/components/forge/timeline/TimecodeDisplay.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimecodeDisplay.js",
+      "default": "./dist/components/forge/timeline/TimecodeDisplay.js"
+    },
+    "./components/forge/timeline/TransportControls": {
+      "types": "./dist/components/forge/timeline/TransportControls.d.ts",
+      "react-native": "./dist/components/forge/timeline/TransportControls.js",
+      "default": "./dist/components/forge/timeline/TransportControls.js"
+    },
+    "./components/forge/timeline/PlaybackRateMenu": {
+      "types": "./dist/components/forge/timeline/PlaybackRateMenu.d.ts",
+      "react-native": "./dist/components/forge/timeline/PlaybackRateMenu.js",
+      "default": "./dist/components/forge/timeline/PlaybackRateMenu.js"
+    },
+    "./components/forge/timeline/SeekBar": {
+      "types": "./dist/components/forge/timeline/SeekBar.d.ts",
+      "react-native": "./dist/components/forge/timeline/SeekBar.js",
+      "default": "./dist/components/forge/timeline/SeekBar.js"
+    },
+    "./components/forge/timeline/TimelineRuler": {
+      "types": "./dist/components/forge/timeline/TimelineRuler.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineRuler.js",
+      "default": "./dist/components/forge/timeline/TimelineRuler.js"
+    },
+    "./components/forge/timeline/TimelinePlayhead": {
+      "types": "./dist/components/forge/timeline/TimelinePlayhead.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelinePlayhead.js",
+      "default": "./dist/components/forge/timeline/TimelinePlayhead.js"
+    },
+    "./components/forge/timeline/InOutRangeHandles": {
+      "types": "./dist/components/forge/timeline/InOutRangeHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/InOutRangeHandles.js",
+      "default": "./dist/components/forge/timeline/InOutRangeHandles.js"
+    },
+    "./components/forge/timeline/TimelineZoomAndScroll": {
+      "types": "./dist/components/forge/timeline/TimelineZoomAndScroll.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineZoomAndScroll.js",
+      "default": "./dist/components/forge/timeline/TimelineZoomAndScroll.js"
+    },
+    "./components/forge/timeline/TimelineClipLane": {
+      "types": "./dist/components/forge/timeline/TimelineClipLane.d.ts",
+      "react-native": "./dist/components/forge/timeline/TimelineClipLane.js",
+      "default": "./dist/components/forge/timeline/TimelineClipLane.js"
+    },
+    "./components/forge/timeline/ClipTrimHandles": {
+      "types": "./dist/components/forge/timeline/ClipTrimHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/ClipTrimHandles.js",
+      "default": "./dist/components/forge/timeline/ClipTrimHandles.js"
+    },
+    "./components/forge/timeline/RazorSplitTool": {
+      "types": "./dist/components/forge/timeline/RazorSplitTool.d.ts",
+      "react-native": "./dist/components/forge/timeline/RazorSplitTool.js",
+      "default": "./dist/components/forge/timeline/RazorSplitTool.js"
+    },
+    "./components/forge/timeline/SafeAreaOverlay": {
+      "types": "./dist/components/forge/timeline/SafeAreaOverlay.d.ts",
+      "react-native": "./dist/components/forge/timeline/SafeAreaOverlay.js",
+      "default": "./dist/components/forge/timeline/SafeAreaOverlay.js"
+    },
+    "./components/forge/timeline/time": {
+      "types": "./dist/components/forge/timeline/time.d.ts",
+      "react-native": "./dist/components/forge/timeline/time.js",
+      "default": "./dist/components/forge/timeline/time.js"
+    },
+    "./components/forge/timeline/ruler": {
+      "types": "./dist/components/forge/timeline/ruler.d.ts",
+      "react-native": "./dist/components/forge/timeline/ruler.js",
+      "default": "./dist/components/forge/timeline/ruler.js"
+    },
+    "./components/forge/timeline/viewport": {
+      "types": "./dist/components/forge/timeline/viewport.d.ts",
+      "react-native": "./dist/components/forge/timeline/viewport.js",
+      "default": "./dist/components/forge/timeline/viewport.js"
+    },
+    "./components/forge/timeline/edits": {
+      "types": "./dist/components/forge/timeline/edits.d.ts",
+      "react-native": "./dist/components/forge/timeline/edits.js",
+      "default": "./dist/components/forge/timeline/edits.js"
+    },
+    "./components/forge/timeline/safe-area": {
+      "types": "./dist/components/forge/timeline/safe-area.d.ts",
+      "react-native": "./dist/components/forge/timeline/safe-area.js",
+      "default": "./dist/components/forge/timeline/safe-area.js"
+    },
     "./components/forge/audio/level": {
       "types": "./dist/components/forge/audio/level.d.ts",
       "react-native": "./dist/components/forge/audio/level.js",

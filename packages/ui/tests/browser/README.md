@@ -34,6 +34,15 @@ swaps chips, searches swatches and undocks the palette past a simulated hinge.
 `color-shots.spec.mjs` captures each palette mode at both widths in both themes,
 floating, and in RTL.
 
+`fixtures/timeline.tsx` renders the timeline core over a seconds-based
+stand-in for Splice that applies each `TimelineEdit` as `moveClip`,
+`trimClip` and `splitClip` in the order the edit names. `timeline.spec.mjs`
+moves, trims, splits, seeks, marks, zooms and pans with a real mouse and
+keyboard; `timeline-shots.spec.mjs` captures both widths in both themes, NTSC
+drop-frame with a scope matte, and RTL.
+
+Set `UI_ACCEPTANCE_PORT` to run the lane on a port other than 4179.
+
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
 EmptyState, ErrorMessage, KeyValueList, NightScope, the web DropZone and
 FilePicker, and the semantic html set. It checks the rendered elements and
