@@ -28,6 +28,7 @@ function loader(os="ios"){
       useSyncExternalStore:(_sub,get)=>{cursor++;return get();},useId:()=>"id",use:ctx=>ctx?._value,useContext:ctx=>ctx?._value,
       useState:v=>{const i=cursor++;slots[i]??=[typeof v==="function"?v():v,()=>{}];return slots[i];},
       createContext:v=>({_value:v,Provider:"Provider"}),
+      cloneElement:(el,extra)=>({...el,props:{...el.props,...extra}}),Children:{only:c=>Array.isArray(c)?c[0]:c,toArray:c=>[c].flat()},isValidElement:e=>!!e&&typeof e==="object"&&"props" in e,
     },
     "react/jsx-runtime":{jsx:element,jsxs:element,Fragment:"Fragment"},
     "react-native":{View:"View",Text:"Text",Pressable:"Pressable",TextInput:"TextInput",ScrollView:"ScrollView",Modal:"Modal",
@@ -47,10 +48,26 @@ function loader(os="ios"){
     runInNewContext(code,{exports,globalThis,require:name=>mocks[name]??load(resolve(dirname(path),name))},{filename:path});
     return exports;
   }
-  return (file,name,props)=>{cursor=0;return load(resolve(src,file))[name](props);};
+  // Function components render in place so the audit sees the hosts they produce.
+  const expand=(node,depth=0)=>{
+    if(Array.isArray(node))return node.map(n=>expand(n,depth));
+    if(!node||typeof node!=="object"||!node.props)return node;
+    if(typeof node.type==="function"&&depth<40)return expand(node.type(node.props),depth+1);
+    return {...node,props:{...node.props,children:expand(node.props.children,depth)}};
+  };
+  return (file,name,props)=>{cursor=0;return expand(load(resolve(src,file))[name](props));};
 }
 
 const noop=()=>{};
+// Interactive elements with a name, to keep a passing audit from being vacuous.
+function countNamedInteractive(node){
+  if(Array.isArray(node))return node.reduce((n,c)=>n+countNamedInteractive(c),0);
+  if(!node||typeof node!=="object"||!node.props)return 0;
+  const p=node.props;
+  const self=(typeof p.onPress==="function"||p.accessibilityRole==="adjustable"||p.accessibilityRole==="button"||p.accessibilityRole==="tab")
+    &&!!(p.accessibilityLabel||p["aria-label"]||p.title)?1:0;
+  return self+countNamedInteractive(p.children);
+}
 const controls=[
   ["shell/SliderField.tsx","SliderField",{label:"Opacity",value:40,min:0,max:100,step:1,onPreview:noop,onCommit:noop,defaultValue:100}],
   ["shell/RangeSlider.tsx","RangeSlider",{label:"Frequency band",value:[200,2000],min:20,max:20000,step:1,onPreview:noop,onCommit:noop}],
@@ -58,13 +75,25 @@ const controls=[
   ["forge/inputs/InstrumentKnob.tsx","InstrumentKnob",{label:"Cutoff",value:0.5,min:0,max:1,step:0.01,onPreview:noop,onCommit:noop}],
   ["forge/inputs/InstrumentXYPad.tsx","InstrumentXYPad",{label:"Filter",x:0.5,y:0.5,onPreview:noop,onCommit:noop}],
   ["forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",{label:"Exposure",value:0,min:-5,max:5,step:0.1,onPreview:noop,onCommit:noop}],
+  ["shell/PaneSplitter.tsx","PaneSplitter",{axis:"horizontal",start:"A",end:"B",size:300,onPreview:noop,onCommit:noop,label:"Resize panels",container:{x:0,y:0,width:800,height:600}},
+    // Panes render once the host has measured itself.
+    tree=>tree.props.onLayout({nativeEvent:{layout:{x:0,y:0,width:800,height:600}}})],
+  ["forge/audio/LevelFader.tsx","LevelFader",{label:"Track 1 volume",value:0,onChange:noop,onCommit:noop}],
+  ["forge/graphics/ImageCropOverlay.tsx","ImageCropOverlay",{rect:{x:0.1,y:0.1,width:0.5,height:0.5},width:320,height:240,onPreview:noop,onCommit:noop}],
+  ["forge/layers/LayerStack.tsx","LayerStack",{layers:[{id:"a",name:"Background",visible:true,opacity:1,kind:"raster"},{id:"b",name:"Ink",visible:false,opacity:0.5,kind:"vector"}],
+    selectedId:"a",onSelect:noop,onToggleVisible:noop,onOpacityPreview:noop,onOpacityCommit:noop,onMove:noop,onRemove:noop}],
+  ["shell/DocumentTabBar.tsx","DocumentTabBar",{documents:[{id:"a",title:"Poster.nfd",dirty:true},{id:"b",title:"Logo.nfd"}],activeId:"a",onActivate:noop,onClose:noop,onReorder:noop}],
+  ["Button.tsx","Button",{title:"Export",onPress:noop}],
   ["forge/WaveformLane.tsx","WaveformLane",{peaks:[{min:-0.1,max:0.1},{min:-0.5,max:0.5},{min:-0.9,max:0.9}],position:0.25,onSeekNormalized:noop}],
 ];
 
-for(const [file,name,props] of controls){
+for(const [file,name,props,prime] of controls){
   test(`${name} passes the screen-reader audit`,()=>{
     const render=loader("ios");
-    const issues=auditAccessibility(render(file,name,props));
+    if(prime)prime(render(file,name,props));
+    const tree=render(file,name,props);
+    const issues=auditAccessibility(tree);
+    assert.ok(countNamedInteractive(tree)>0,`${name} rendered nothing interactive, so the audit proved nothing`);
     assert.deepEqual(issues,[],issues.map(i=>`${i.rule} at ${i.path}: ${i.message}`).join("\n"));
   });
 }
