@@ -1,5 +1,5 @@
 {
-  "name": "@nyc-tron/native-overlays-example",
+  "name": "@nyc-tron/native-instruments-example",
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
@@ -7,11 +7,12 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@expo/ui": "58.0.27",
     "@nyc-tron/expo-controls": "workspace:*",
+    "@nyc-tron/native-controls": "workspace:*",
     "@nyc-tron/ui": "workspace:*",
     "expo": "58.0.23",
     "react": "19.3.0",

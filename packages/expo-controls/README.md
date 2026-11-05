@@ -68,10 +68,10 @@ import { Tooltip } from "@nyc-tron/expo-controls/Tooltip";
 </Tooltip>
 ```
 
-`examples/native-overlays` renders all four components. The `NYC-Tron native
-overlays` workflow runs `expo prebuild` on it and compiles the Android app
-with Gradle and the iOS app with Xcode, which proves the @expo/ui views link.
-It does not run the app.
+`examples/native-instruments` renders all four components (`OverlayDemo.tsx`).
+The `NYC-Tron native controls` workflow runs `expo prebuild` on it and compiles
+the Android app with Gradle and the iOS app with Xcode, which proves the
+@expo/ui views link. It does not run the app.
 
 These require Expo SDK 58/React Native 0.88 on an actual Expo host. Never
 install this into the isolated Legend Spark SDK 55/RN0.83 macOS build or RNW

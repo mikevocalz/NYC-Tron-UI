@@ -44,6 +44,11 @@
       "types": "./dist/presets/infrax.d.ts",
       "react-native": "./dist/presets/infrax.js",
       "default": "./dist/presets/infrax.js"
+    },
+    "./pane-plan": {
+      "types": "./dist/pane-plan.d.ts",
+      "react-native": "./dist/pane-plan.js",
+      "default": "./dist/pane-plan.js"
     }
   },
   "scripts": {
