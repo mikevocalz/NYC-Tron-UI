@@ -44,6 +44,17 @@ test("route approval remains app-owned and unrelated updates retain native items
  assert.ok(conditional>=0 && clear>conditional && cache>clear && applySelection>cache);
 });
 
+test("pane approval remains app-owned: a rejected toggle is put back",()=>{
+ const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
+ const start=cpp.indexOf("void OnPaneChanged(bool open)");
+ const body=cpp.slice(start,cpp.indexOf("winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland",start));
+ assert.ok(start>=0);
+ assert.match(body,/if \(open == m_paneOpen\) return;/);
+ assert.match(body,/DispatcherQueue\(\)\.TryEnqueue/);
+ assert.match(body,/self->m_navigation\.IsPaneOpen\(self->m_paneOpen\)/);
+ assert.match(cpp,/m_paneOpen = props\.paneOpen\.value_or\(false\);\s*m_navigation\.IsPaneOpen\(m_paneOpen\);/);
+});
+
 test("items and the NavigationView carry Narrator names",()=>{
  const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
  assert.match(cpp,/AutomationProperties::SetName\(item, label\)/);

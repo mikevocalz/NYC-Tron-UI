@@ -228,7 +228,8 @@ struct TronNavigationViewComponentView
       m_navigation.FlowDirection(props.isRTL.value_or(false)
           ? winrt::Microsoft::UI::Xaml::FlowDirection::RightToLeft
           : winrt::Microsoft::UI::Xaml::FlowDirection::LeftToRight);
-      m_navigation.IsPaneOpen(props.paneOpen.value_or(false));
+      m_paneOpen = props.paneOpen.value_or(false);
+      m_navigation.IsPaneOpen(m_paneOpen);
       m_updatingFromJs = false;
     } catch (...) {
       m_updatingFromJs = false;
@@ -260,13 +261,33 @@ struct TronNavigationViewComponentView
     }
   }
 
+  // Pane approval belongs to JS, like route approval. NavigationView opens
+  // or closes its pane itself (toggle button, light dismiss, display-mode
+  // changes), so a user change is sent as a request and the pane is put back
+  // on the committed paneOpen; it moves only when JS commits a new value.
+  // Without this a rejected toggle stayed on screen, since nothing re-renders
+  // the component, and the island stayed sized for the committed state.
+  // PaneOpened/PaneClosed can arrive after ApplyProps has returned, so they
+  // are compared with the committed value rather than trusting
+  // m_updatingFromJs alone. The restore is queued, like the selection one.
   void OnPaneChanged(bool open) {
-    if (m_updatingFromJs) return;
+    if (m_updatingFromJs || m_paneRestorePending) return;
+    if (open == m_paneOpen) return;
     if (auto emitter = EventEmitter()) {
       Codegen::TronNavigationViewEventEmitter::OnPaneOpenChanged payload;
       payload.open = open;
       emitter->onPaneOpenChanged(std::move(payload));
     }
+    m_paneRestorePending = true;
+    m_navigation.DispatcherQueue().TryEnqueue([weak = get_weak()]() {
+      if (auto self = weak.get()) {
+        self->m_paneRestorePending = false;
+        if (self->m_navigation.IsPaneOpen() == self->m_paneOpen) return;
+        self->m_updatingFromJs = true;
+        self->m_navigation.IsPaneOpen(self->m_paneOpen);
+        self->m_updatingFromJs = false;
+      }
+    });
   }
 
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
@@ -282,6 +303,10 @@ struct TronNavigationViewComponentView
   bool m_itemsInitialized{false};
   bool m_updatingFromJs{false};
   bool m_restorePending{false};
+  // Committed by JS through the paneOpen prop. Matches the initial
+  // IsPaneOpen(false) set in InitializeContentIsland.
+  bool m_paneOpen{false};
+  bool m_paneRestorePending{false};
   std::vector<std::string> m_pendingErrors;
 };
 
