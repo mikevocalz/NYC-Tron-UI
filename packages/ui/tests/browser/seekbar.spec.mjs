@@ -46,3 +46,28 @@ test("transport stays inside the card at 390px",async({page})=>{
   const fwd=await page.getByTestId("seek").getByRole("button",{name:"+1 frame"}).boundingBox();
   expect(fwd.x+fwd.width).toBeLessThanOrEqual(card.x+card.width);
 });
+
+// A mouse drag previews on every frame it crosses and seeks once on release.
+test("dragging the slider previews and commits once on release",async({page})=>{
+  await page.goto("/");
+  const box=await page.getByTestId("seek").getByRole("slider").boundingBox();
+  const y=box.y+box.height/2;
+  await page.mouse.move(box.x+box.width*0.5,y);
+  await page.mouse.down();
+  for(const f of [0.55,0.6,0.65,0.7,0.75])await page.mouse.move(box.x+box.width*f,y,{steps:3});
+  const mid=await page.getByTestId("seek-log").textContent();
+  expect(mid).toMatch(/^seek [1-9]\d*\/0$/);
+  await page.mouse.up();
+  await expect(page.getByTestId("seek-log")).toHaveText(/^seek [1-9]\d*\/1$/);
+  const frame=Number((await page.getByTestId("frame").textContent()).split(" ")[1]);
+  expect(frame).toBeGreaterThan(160);
+});
+
+test("an arrow key on the focused slider commits once",async({page})=>{
+  await page.goto("/");
+  await page.getByTestId("seek").getByRole("slider").focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.getByTestId("seek-log")).toHaveText(/\/1$/);
+  const frame=Number((await page.getByTestId("frame").textContent()).split(" ")[1]);
+  expect(frame).toBeGreaterThan(120);
+});
