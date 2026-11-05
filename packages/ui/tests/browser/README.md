@@ -27,6 +27,13 @@ and 834px tablet, resting, focused and mid-drag, the seek bar, forced colors,
 and the layer stack at both widths with a focused remove button, plus RTL via
 `?dir=rtl`. They are uploaded as a CI artifact, not compared as pixel goldens.
 
+`fixtures/<name>.tsx` files are served at `/<name>`. `fixtures/color.tsx`
+renders the color cluster against one zustand color store; `color.spec.mjs`
+drags the disc, ring and tracks, cancels with Escape, types channel values,
+swaps chips, searches swatches and undocks the palette past a simulated hinge.
+`color-shots.spec.mjs` captures each palette mode at both widths in both themes,
+floating, and in RTL.
+
 `primitives.spec.mjs` loads `/primitives` (`primitives.tsx`): Banner, Badge,
 EmptyState, ErrorMessage, KeyValueList, NightScope, the web DropZone and
 FilePicker, and the semantic html set. It checks the rendered elements and
