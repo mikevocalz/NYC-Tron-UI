@@ -3,7 +3,8 @@ import {ScrollView,Text,View,type ViewProps} from "react-native";
 import {useStore} from "zustand";
 import {joinClasses} from "../styles.ts";
 import {InspectorPanelContext} from "./inspector-context.ts";
-import {createInspectorRegistry,matchingRowCount,matchSummary,selectionHeading,type InspectorRegistry,type InspectorSelection} from "./inspector-model.ts";
+import {createStore,type StoreApi} from "zustand/vanilla";
+import {matchingRowCount,matchSummary,selectionHeading,type InspectorRegistryState,type InspectorSelection} from "./inspector-model.ts";
 import {InspectorSearch} from "./InspectorSearch.tsx";
 
 export type {InspectorSelection} from "./inspector-model.ts";
@@ -36,8 +37,8 @@ export function InspectorPanel({
   className,unstyled=false,style,...rest
 }:InspectorPanelProps){
   const styled=!unstyled;
-  const registry=useRef<InspectorRegistry|null>(null);
-  if(!registry.current)registry.current=createInspectorRegistry();
+  const registry=useRef<StoreApi<InspectorRegistryState>|null>(null);
+  if(!registry.current)registry.current=createStore<InspectorRegistryState>(()=>({rows:{}}));
   const matches=useStore(registry.current,s=>matchingRowCount(s));
   const context=useMemo(()=>({query,registry:registry.current!}),[query]);
   const searching=!!query.trim();
