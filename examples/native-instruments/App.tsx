@@ -1,7 +1,8 @@
-import { ScrollView, Text, View, useWindowDimensions } from "react-native";
+import { I18nManager, ScrollView, Text, View, useWindowDimensions } from "react-native";
 import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 import { XYPad } from "@nyc-tron/native-controls/XYPad";
+import { NativeNavigationRail } from "@nyc-tron/native-navigation/NativeNavigationRail";
 import { OverlayControls, OverlayLayer } from "./OverlayDemo";
 import { FoldRegionsDemo } from "./FoldRegionsDemo";
 import { NativeChart } from "@nyc-tron/native-charts/NativeChart";
@@ -18,14 +19,15 @@ const levelSeries:readonly NativeChartSeries[]=[
  {id:"output",label:"Output",points:[{x:0,y:-20},{x:1,y:-15},{x:2,y:-12},{x:3,y:-16},{x:4,y:-10},{x:5,y:-11}]}
 ];
 
-type DemoState={gain:number;pan:number;xy:{x:number;y:number};setGain:(v:number)=>void;setPan:(v:number)=>void;setXY:(x:number,y:number)=>void};
+type DemoState={gain:number;pan:number;xy:{x:number;y:number};setGain:(v:number)=>void;setPan:(v:number)=>void;setXY:(x:number,y:number)=>void;destination:string;setDestination:(id:string)=>void};
 const useDemoStore=create<DemoState>(set=>({
- gain:.75,pan:0,xy:{x:.5,y:.5},
+ gain:.75,pan:0,xy:{x:.5,y:.5},destination:'home',setDestination:destination=>set({destination}),
  setGain:gain=>set({gain}),setPan:pan=>set({pan}),
  setXY:(x,y)=>set({xy:{x,y}})
 }));
 export default function App(){
  const gain=useDemoStore(s=>s.gain),pan=useDemoStore(s=>s.pan),xy=useDemoStore(s=>s.xy);
+ const destination=useDemoStore(s=>s.destination),setDestination=useDemoStore(s=>s.setDestination);
  const setGain=useDemoStore(s=>s.setGain),setPan=useDemoStore(s=>s.setPan),setXY=useDemoStore(s=>s.setXY);
  const {width,height}=useWindowDimensions();
  return <View style={{flex:1,backgroundColor:"#101017"}}>
@@ -47,6 +49,27 @@ export default function App(){
    <Text style={{color:"#F6F6FD",fontWeight:"600",fontSize:20}}>Levels</Text>
    <NativeChart kind="line" series={levelSeries} colors={chartColors}
      xAxisLabel="Bar" yAxisLabel="dBFS" height={220}/>
+   <Text style={{color:"#F6F6FD",fontWeight:"600",fontSize:20}}>Native right navigation rail</Text>
+   <View style={{flexDirection:I18nManager.isRTL?"row-reverse":"row",height:320,alignItems:"stretch",justifyContent:"flex-end"}}>
+     <View style={{flex:1,justifyContent:"center",padding:16}}>
+       <Text style={{color:"#F6F6FD",fontSize:18,fontWeight:"600"}}>Selected: {destination}</Text>
+       <Text style={{color:"#AAAABB"}}>The app owns route selection. The rail is on the physical right.</Text>
+     </View>
+     <NativeNavigationRail
+       items={[
+         {id:"home",label:"Home",glyph:"⌂"},
+         {id:"lessons",label:"Lessons",glyph:"▤"},
+         {id:"tutors",label:"Tutors",glyph:"♙"},
+         {id:"settings",label:"Settings",glyph:"⚙"}
+       ]}
+       selectedId={destination}
+       onSelectionChange={setDestination}
+       width={80} height={320}
+       activeColor="#B2A7FF"
+       foregroundColor="#FFFFFF"
+       backgroundColor="#20202C"
+     />
+   </View>
    <Text style={{color:"#AAAABB"}}>Gain: {gain.toFixed(2)} | Pan: {pan.toFixed(2)} | XY: {xy.x.toFixed(2)}, {xy.y.toFixed(2)}</Text>
    <OverlayControls/>
    <FoldRegionsDemo/>
