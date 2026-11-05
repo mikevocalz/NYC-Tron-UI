@@ -46,6 +46,14 @@ differ; NYC-Tron receives semantic classes at the consuming app boundary.
   0.0.2's Expo 55/RN 0.83 native host.
 - Packages emit `dist/` with declarations and platform conditions; every
   export targets `dist` (checked by `tooling/verify-packages.mjs`).
+  One exception: a package that ships a Fabric codegen spec (it has a
+  `codegenConfig` field) points its `react-native` condition at typed
+  `src`, because `@react-native/babel-preset` builds the static view config
+  from the spec's `NativeProps` and fails on compiled JS. Its `types` and
+  `default` conditions still target `dist`. The only such package today is
+  `@nyc-tron/windows-fluent-fabric`, nested at
+  `packages/windows-fluent/rnw-fabric` outside the tooling's
+  `packages/*` scan; release.yml packs and checks it separately.
 
 ### Component API
 

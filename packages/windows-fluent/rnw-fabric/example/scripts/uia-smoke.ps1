@@ -1,0 +1,179 @@
+# UI Automation smoke test for the compiled Windows consumer.
+# Runs under Windows PowerShell 5.1 (UIAutomationClient ships with .NET Framework).
+# Launches the deployed (packaged) Release app by its AppUserModelId, finds the native NavigationView items by
+# their Narrator names, requests a route with the keyboard, rejects it, requests
+# it again, accepts it, and checks that the native selection indicator follows
+# only the committed route. Writes screenshots and a UIA tree dump to $OutDir.
+# RNW apps run packaged: run-windows deploys them through the .Package
+# project. The bare x64\Release executable exits with 0xC0000409 on
+# windows-2025 because it has no package identity.
+param(
+  [Parameter(Mandatory = $true)][string]$AppUserModelId,
+  [Parameter(Mandatory = $true)][string]$ProcessName,
+  [Parameter(Mandatory = $true)][string]$OutDir
+)
+$ErrorActionPreference = "Stop"
+Add-Type -AssemblyName UIAutomationClient, UIAutomationTypes, System.Windows.Forms, System.Drawing
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public static class NativeWindow {
+  [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
+}
+"@
+New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
+$AE = [System.Windows.Automation.AutomationElement]
+$Tree = [System.Windows.Automation.TreeScope]
+
+function Save-Screenshot([string]$name, $rect) {
+  if ($null -eq $rect -or $rect.Width -le 0) { $rect = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds }
+  $bitmap = New-Object System.Drawing.Bitmap ([int]$rect.Width), ([int]$rect.Height)
+  $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+  $graphics.CopyFromScreen([int]$rect.X, [int]$rect.Y, 0, 0, $bitmap.Size)
+  $path = Join-Path $OutDir "$name.png"
+  $bitmap.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
+  $graphics.Dispose(); $bitmap.Dispose()
+  Write-Host "Saved screenshot $path"
+}
+
+function Save-Tree($root) {
+  $lines = foreach ($element in $root.FindAll($Tree::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
+    $c = $element.Current
+    "{0} | name='{1}' | id='{2}' | class='{3}'" -f $c.ControlType.ProgrammaticName, $c.Name, $c.AutomationId, $c.ClassName
+  }
+  $path = Join-Path $OutDir "uia-tree.txt"
+  $lines | Set-Content -Path $path -Encoding UTF8
+  Write-Host "Saved UIA tree ($($lines.Count) elements) to $path"
+}
+
+function Find-ByName($root, [string]$name, [int]$timeoutSec = 30) {
+  $condition = New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, $name)
+  $deadline = (Get-Date).AddSeconds($timeoutSec)
+  while ((Get-Date) -lt $deadline) {
+    $found = $root.FindFirst($Tree::Descendants, $condition)
+    if ($null -ne $found) { return $found }
+    Start-Sleep -Milliseconds 250
+  }
+  throw "UIA element named '$name' did not appear within $timeoutSec s"
+}
+
+function Test-Selected($element) {
+  $pattern = $null
+  if (-not $element.TryGetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern, [ref]$pattern)) {
+    throw "'$($element.Current.Name)' exposes no SelectionItemPattern"
+  }
+  return $pattern.Current.IsSelected
+}
+
+function Assert-Selection($homeItem, $workspace, [string]$expected, [string]$stage) {
+  $homeSelected = Test-Selected $homeItem
+  $workspaceSelected = Test-Selected $workspace
+  Write-Host "[$stage] Home selected=$homeSelected, Workspace selected=$workspaceSelected"
+  if (($expected -eq "home") -ne $homeSelected -or ($expected -eq "workspace") -ne $workspaceSelected) {
+    throw "[$stage] native selection does not match committed route '$expected'"
+  }
+}
+
+function Invoke-Button($root, [string]$name) {
+  # Match the Button itself: RN draws the title as a child Text with the same name.
+  $condition = New-Object System.Windows.Automation.AndCondition(
+    (New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, $name)),
+    (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button)))
+  $button = $root.FindFirst($Tree::Descendants, $condition)
+  if ($null -eq $button) { throw "No Button named '$name' (Narrator would announce it unnamed)" }
+  $invoke = $null
+  if ($button.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$invoke)) {
+    $invoke.Invoke()
+    Write-Host "Invoked '$name' through InvokePattern"
+  } else {
+    [NativeWindow]::SetForegroundWindow([IntPtr]$root.Current.NativeWindowHandle) | Out-Null
+    $button.SetFocus()
+    Start-Sleep -Milliseconds 300
+    [System.Windows.Forms.SendKeys]::SendWait(" ")
+    Write-Host "Pressed '$name' with the keyboard (no InvokePattern)"
+  }
+}
+
+function Request-Workspace($window, $homeItem) {
+  # Keyboard path: focus the committed item, move down one item, press Enter.
+  [NativeWindow]::SetForegroundWindow([IntPtr]$window.Current.NativeWindowHandle) | Out-Null
+  $homeItem.SetFocus()
+  Start-Sleep -Milliseconds 300
+  [System.Windows.Forms.SendKeys]::SendWait("{DOWN}")
+  Start-Sleep -Milliseconds 300
+  [System.Windows.Forms.SendKeys]::SendWait("{ENTER}")
+  Find-ByName $window "Awaiting app approval: Workspace" 15 | Out-Null
+  Write-Host "Keyboard Down+Enter produced a pending Workspace request"
+}
+
+# Startup-crash evidence: installed Windows App Runtime packages and the
+# Application event log entries written since launch.
+function Write-Diagnostics($since) {
+  Write-Host "Installed Windows App Runtime packages:"
+  Get-AppxPackage -Name "*WindowsAppRuntime*" -ErrorAction SilentlyContinue |
+    ForEach-Object { Write-Host "  $($_.PackageFullName)" }
+  Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = $since } -ErrorAction SilentlyContinue |
+    Select-Object -First 20 | Format-List TimeCreated, ProviderName, Id, Message | Out-String | Write-Host
+}
+
+$started = Get-Date
+Write-Host "Launching shell:AppsFolder\$AppUserModelId"
+Start-Process "shell:AppsFolder\$AppUserModelId"
+$process = $null
+$window = $null
+try {
+  $deadline = (Get-Date).AddSeconds(30)
+  while ((Get-Date) -lt $deadline -and $null -eq $process) {
+    $process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($null -eq $process) { Start-Sleep -Milliseconds 250 }
+  }
+  if ($null -eq $process) {
+    Write-Diagnostics $started
+    throw "Process '$ProcessName' did not start within 30 s"
+  }
+  $processCondition = New-Object System.Windows.Automation.PropertyCondition($AE::ProcessIdProperty, $process.Id)
+  $deadline = (Get-Date).AddSeconds(90)
+  while ((Get-Date) -lt $deadline -and $null -eq $window) {
+    if ($process.HasExited) {
+      Write-Host "Process exited before showing a window."
+      Write-Diagnostics $started
+      throw "Consumer process exited before creating a window"
+    }
+    $window = $AE::RootElement.FindFirst($Tree::Children, $processCondition)
+    if ($null -eq $window) { Start-Sleep -Milliseconds 500 }
+  }
+  if ($null -eq $window) { throw "No top-level window for process $($process.Id) within 90 s" }
+  Write-Host "Window '$($window.Current.Name)' class '$($window.Current.ClassName)'"
+
+  $homeItem = Find-ByName $window "Home" 60
+  $workspace = Find-ByName $window "Workspace"
+  Find-ByName $window "NYC-Tron" | Out-Null
+  Write-Host "Native NavigationView items found by Narrator name"
+  Save-Screenshot "01-launched" $window.Current.BoundingRectangle
+  Assert-Selection $homeItem $workspace "home" "initial"
+
+  Request-Workspace $window $homeItem
+  Assert-Selection $homeItem $workspace "home" "pending"
+  Invoke-Button $window "Reject navigation"
+  Find-ByName $window "Navigation rejected; current route retained" | Out-Null
+  Assert-Selection $homeItem $workspace "home" "rejected"
+  Save-Screenshot "02-rejected" $window.Current.BoundingRectangle
+
+  Request-Workspace $window $homeItem
+  Invoke-Button $window "Accept navigation"
+  Find-ByName $window "Committed route: workspace" | Out-Null
+  Assert-Selection $homeItem $workspace "workspace" "accepted"
+  Save-Screenshot "03-accepted" $window.Current.BoundingRectangle
+  Write-Host "UIA smoke passed: native selection followed only the committed route"
+} catch {
+  Write-Host "UIA smoke failed: $($_.Exception.Message)"
+  if ($null -ne $window) {
+    Save-Tree $window
+    Save-Screenshot "failure" $window.Current.BoundingRectangle
+  } else {
+    Save-Screenshot "failure-desktop" $null
+  }
+  throw
+} finally {
+  if ($null -ne $process -and -not $process.HasExited) { Stop-Process -Id $process.Id -Force }
+}
