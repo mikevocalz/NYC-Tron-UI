@@ -1,0 +1,67 @@
+{
+  "name": "@nyc-tron/icons",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Original cross-platform outline/filled and Rive-ready editor icon system extracted from Nitro Forge",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./native": {
+      "types": "./src/TronIcon.d.ts",
+      "react-native": "./src/TronIcon.js",
+      "default": "./src/TronIcon.js"
+    },
+    "./web": {
+      "types": "./src/TronIcon.d.ts",
+      "default": "./src/TronIcon.js"
+    },
+    "./catalog": {
+      "types": "./src/index.d.ts",
+      "default": "./src/catalog.js"
+    },
+    "./glyphs": {
+      "types": "./src/index.d.ts",
+      "default": "./src/glyphs.js"
+    },
+    "./state": {
+      "types": "./src/index.d.ts",
+      "default": "./src/state.js"
+    },
+    "./tokens": {
+      "types": "./src/index.d.ts",
+      "default": "./src/tokens.js"
+    }
+  },
+  "files": [
+    "src",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "typecheck": "node --check src/ForgeIcon.js && node --check src/catalog.js && node --check src/glyphs.js && node --check src/state.js && node --check src/index.js",
+    "test": "node --test tests/*.test.js",
+    "build": "npm run typecheck"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.85.0",
+    "react-native-svg": ">=15.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
+  }
+}
