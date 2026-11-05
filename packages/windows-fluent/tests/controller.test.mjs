@@ -89,9 +89,11 @@ test("native shell is real WinUI NavigationView outside Fabric composition",()=>
  }
  assert.match(implementation,/SetHostedContent\(UIElement\?/);
  // Invoking a destination or Settings requests a route; only the host commits it.
- assert.match(implementation,/SelectsOnInvoked = false/);
- assert.match(implementation,/settings\.SelectsOnInvoked = false/);
- assert.match(implementation,/Navigation\.Loaded \+=/);
+ // NavigationView undoes programmatic selection of SelectsOnInvoked=false items,
+ // so the shell restores the committed route after a user selection instead.
+ assert.doesNotMatch(implementation,/SelectsOnInvoked\s*=\s*false/);
+ assert.match(implementation,/Navigation\.SelectionChanged \+= OnSelectionChanged/);
+ assert.match(implementation,/SetSelectedIdCore\(_committedId\)/);
  assert.match(implementation,/AutomationProperties\.SetName\(item, destination\.Label\)/);
  assert.doesNotMatch(implementation,/Windows\.UI\.Xaml/);
 });

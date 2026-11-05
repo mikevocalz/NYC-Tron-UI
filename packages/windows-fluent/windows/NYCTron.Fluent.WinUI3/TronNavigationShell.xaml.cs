@@ -16,12 +16,13 @@ public sealed partial class TronNavigationShell : UserControl
 {
     private readonly Dictionary<string, NavigationViewItem> _destinations = new(StringComparer.Ordinal);
     private bool _settingFromHost;
+    private bool _restorePending;
+    private string? _committedId;
 
     public TronNavigationShell()
     {
         InitializeComponent();
-        // SettingsItem exists only after the NavigationView template applies.
-        Navigation.Loaded += (_, _) => DisableSelectOnInvokeForSettings();
+        Navigation.SelectionChanged += OnSelectionChanged;
     }
 
     public event EventHandler<TronDestinationInvokedEventArgs>? DestinationInvoked;
@@ -36,7 +37,6 @@ public sealed partial class TronNavigationShell : UserControl
         IEnumerable<TronDestination>? footerItems = null)
     {
         ArgumentNullException.ThrowIfNull(items);
-        var previousId = SelectedId;
         _settingFromHost = true;
         try
         {
@@ -50,7 +50,9 @@ public sealed partial class TronNavigationShell : UserControl
                 foreach (var item in footerItems)
                     Navigation.FooterMenuItems.Add(CreateItem(item));
             }
-            SetSelectedIdCore(previousId);
+            if (_committedId is not null && !_destinations.ContainsKey(_committedId))
+                _committedId = null;
+            SetSelectedIdCore(_committedId);
         }
         finally
         {
@@ -71,10 +73,7 @@ public sealed partial class TronNavigationShell : UserControl
         {
             Content = destination.Label,
             Tag = destination.Id,
-            IsEnabled = !destination.Disabled,
-            // The host app commits routes. Invoking an item only requests
-            // navigation; the indicator moves when SetSelectedId is called.
-            SelectsOnInvoked = false
+            IsEnabled = !destination.Disabled
         };
         AutomationProperties.SetName(item, destination.Label);
         if (!string.IsNullOrEmpty(destination.Glyph))
@@ -104,9 +103,34 @@ public sealed partial class TronNavigationShell : UserControl
     {
         if (id is not null && !_destinations.ContainsKey(id))
             throw new ArgumentOutOfRangeException(nameof(id), "Unknown destination");
+        _committedId = id;
         _settingFromHost = true;
         try { SetSelectedIdCore(id); }
         finally { _settingFromHost = false; }
+    }
+
+    // The host commits routes. NavigationView moves its selection as soon as
+    // an item is invoked, so a user selection is put back to the committed
+    // route; the indicator moves when the host calls SetSelectedId. Items keep
+    // the default SelectsOnInvoked because NavigationView undoes any programmatic
+    // SelectedItem that points at an item which does not select on invoke. The restore
+    // is queued so it does not re-enter NavigationView's selection change.
+    private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (_settingFromHost || _restorePending) return;
+        // Compare items, not ids: the Settings item has no id, so an id
+        // comparison would accept Settings when no route is committed.
+        NavigationViewItem? committed = null;
+        if (_committedId is not null) _destinations.TryGetValue(_committedId, out committed);
+        if (ReferenceEquals(Navigation.SelectedItem, committed)) return;
+        _restorePending = true;
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            _restorePending = false;
+            _settingFromHost = true;
+            try { SetSelectedIdCore(_committedId); }
+            finally { _settingFromHost = false; }
+        });
     }
 
     public void SetPaneMode(TronPaneMode mode)
@@ -135,17 +159,7 @@ public sealed partial class TronNavigationShell : UserControl
         AutomationProperties.SetName(Navigation, Navigation.PaneTitle);
     }
 
-    public void SetSettingsVisible(bool visible)
-    {
-        Navigation.IsSettingsVisible = visible;
-        DisableSelectOnInvokeForSettings();
-    }
-
-    private void DisableSelectOnInvokeForSettings()
-    {
-        if (Navigation.SettingsItem is NavigationViewItem settings)
-            settings.SelectsOnInvoked = false;
-    }
+    public void SetSettingsVisible(bool visible) => Navigation.IsSettingsVisible = visible;
 
     /// <summary>
     /// Host-only XAML content slot. RNW Fabric's Composition root does not
