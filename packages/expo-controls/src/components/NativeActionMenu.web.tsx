@@ -1,12 +1,15 @@
-import { useRef, type ReactNode } from "react";
-import { Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { useRef, type ReactNode, type ElementRef } from "react";
+import { Modal, Pressable, ScrollView, Text, View, type PressableProps } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import type { NativeActionMenuProps } from "./NativeActionMenu.types.ts";
 import { findEnabledMenuAction, menuFocusTarget, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
 
-type MenuKeyEvent = {key:string; altKey:boolean; ctrlKey:boolean; metaKey:boolean;
-  preventDefault():void; stopPropagation():void};
+type MenuKeyEvent = Parameters<NonNullable<PressableProps["onKeyDown"]>>[0];
+// This file runs on RN web: the native event is a browser KeyboardEvent.
+const keyData=(event:MenuKeyEvent)=>event.nativeEvent as {
+  key:string;altKey?:boolean;ctrlKey?:boolean;metaKey?:boolean
+};
 
 /**
  * Working RN web presentation. Expo's MenuView intentionally does nothing
@@ -20,7 +23,7 @@ export function NativeActionMenu({
   if(!local.current)local.current=createStore(()=>({open:false}));
   const store=local.current;
   const open=useStore(store,state=>state.open);
-  const itemRefs=useRef(new Map<string,View>());
+  const itemRefs=useRef(new Map<string,ElementRef<typeof View>>());
   const initialKey=useRef("Home");
   const normalized=normalizeMenuActions(actions);
   const canOpen=!disabled&&normalized.length>0;
@@ -35,12 +38,13 @@ export function NativeActionMenu({
     store.setState({open:true});
   };
   const onMenuKey=(event:MenuKeyEvent,id:string)=>{
-    if(event.altKey||event.ctrlKey||event.metaKey)return;
-    if(event.key==="Escape"){
+    const {key,altKey,ctrlKey,metaKey}=keyData(event);
+    if(altKey||ctrlKey||metaKey)return;
+    if(key==="Escape"){
       event.preventDefault();event.stopPropagation();close();return;
     }
-    if(menuFocusTarget(actions,id,event.key)){
-      event.preventDefault();event.stopPropagation();focus(event.key,id);
+    if(menuFocusTarget(actions,id,key)){
+      event.preventDefault();event.stopPropagation();focus(key,id);
     }
   };
   const run=(id:string)=>{
@@ -74,9 +78,10 @@ export function NativeActionMenu({
   return <View testID={testID}>
     <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel}
       {...{"aria-haspopup":"menu" as const,onKeyDown:(event:MenuKeyEvent)=>{
-        if(!canOpen||event.altKey||event.ctrlKey||event.metaKey)return;
-        if(event.key==="ArrowDown"||event.key==="ArrowUp"){
-          event.preventDefault();show(event.key==="ArrowUp"?"End":"Home");
+        const {key,altKey,ctrlKey,metaKey}=keyData(event);
+        if(!canOpen||altKey||ctrlKey||metaKey)return;
+        if(key==="ArrowDown"||key==="ArrowUp"){
+          event.preventDefault();show(key==="ArrowUp"?"End":"Home");
         }
       }}}
       accessibilityState={{disabled:!canOpen,expanded:open}}
