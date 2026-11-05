@@ -38,6 +38,9 @@ importers:
       '@nyc-tron/native-navigation':
         specifier: workspace:*
         version: link:../../packages/native-navigation
+      '@nyc-tron/platform-services':
+        specifier: workspace:*
+        version: link:../../packages/platform-services
       '@nyc-tron/reserved-regions':
         specifier: workspace:*
         version: link:../../packages/reserved-regions
@@ -205,6 +208,27 @@ importers:
       react-native:
         specifier: 0.88.0
         version: 0.88.0(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0)
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      zustand:
+        specifier: 5.0.16
+        version: 5.0.16(@types/react@19.3.0)(react@19.3.0)(use-sync-external-store@1.7.0(react@19.3.0))
+
+  packages/platform-services:
+    devDependencies:
+      '@types/react':
+        specifier: ~19.3.0
+        version: 19.3.0
+      expo:
+        specifier: 58.0.23
+        version: 58.0.23(@babel/core@7.29.13)(@expo/dom-webview@58.0.2)(react-dom@19.3.1(react@19.3.0))(react-native@0.88.1(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      react:
+        specifier: 19.3.0
+        version: 19.3.0
+      react-native:
+        specifier: 0.88.1
+        version: 0.88.1(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0)
       typescript:
         specifier: ~6.0.3
         version: 6.0.3

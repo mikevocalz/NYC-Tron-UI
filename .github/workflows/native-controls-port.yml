@@ -6,6 +6,7 @@ on:
       - "packages/native-navigation/**"
       - "packages/reserved-regions/**"
       - "packages/hardware-keys/**"
+      - "packages/platform-services/**"
       - "packages/core/**"
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
@@ -23,6 +24,7 @@ on:
       - "packages/native-navigation/**"
       - "packages/reserved-regions/**"
       - "packages/hardware-keys/**"
+      - "packages/platform-services/**"
       - "packages/core/**"
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
@@ -52,6 +54,7 @@ jobs:
       - run: node --test packages/native-controls/tests/*.test.mjs packages/native-navigation/tests/*.test.mjs
       - run: node --test packages/reserved-regions/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
+      - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-navigation typecheck
@@ -88,6 +91,20 @@ jobs:
                    package/ios/Extensions/UIViewController+hardwareKeyCommand.swift \
                    package/android/build.gradle package/android/src/main/java/com/nyctron/hardwarekeys/NYCTronHardwareKeysModule.kt \
                    package/expo-module.config.json package/dist/index.native.js package/dist/index.js; do
+            echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
+          done
+          if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
+      - name: Platform-services tarball carries all three native modules, the FileProvider and no Gradle output
+        run: |
+          mkdir -p /tmp/nyc-tron-services-pack
+          corepack pnpm --dir packages/platform-services pack --pack-destination /tmp/nyc-tron-services-pack
+          entries=$(tar -tzf /tmp/nyc-tron-services-pack/*.tgz)
+          for f in package/ios/NYCTronHapticsModule.swift package/ios/NYCTronDocumentsModule.swift \
+                   package/ios/NYCTronPlaybackSessionModule.swift package/ios/NYCTronPlatformServices.podspec \
+                   package/android/build.gradle package/android/src/main/AndroidManifest.xml \
+                   package/android/src/main/res/xml/nyctron_file_paths.xml \
+                   package/android/src/main/java/com/nyctron/platformservices/NYCTronDocumentsModule.kt \
+                   package/expo-module.config.json package/dist/index.native.js package/dist/haptics/index.native.js; do
             echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
           done
           if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
@@ -143,6 +160,17 @@ jobs:
             cat /tmp/keys-dex/classes*.dex | grep -aq "com/nyctron/hardwarekeys/$cls" \
               || { echo "$cls not compiled into the APK"; exit 1; }
           done
+      - name: Platform-services v2 modules and FileProvider are in the APK
+        run: |
+          apk=$(find examples/native-instruments/android/app/build/outputs/apk/debug -name '*.apk' -print -quit)
+          unzip -o -q "$apk" 'classes*.dex' AndroidManifest.xml -d /tmp/services-apk
+          for cls in NYCTronHapticsModule NYCTronDocumentsModule NYCTronPlaybackSessionModule NYCTronFileProvider; do
+            cat /tmp/services-apk/classes*.dex | grep -aq "com/nyctron/platformservices/$cls" \
+              || { echo "$cls not compiled into the APK"; exit 1; }
+          done
+          # The binary manifest stores strings as UTF-16LE; strip the zero bytes to read them.
+          tr -d '\000' < /tmp/services-apk/AndroidManifest.xml | grep -aq 'nyctron.files' \
+            || { echo "NYCTronFileProvider authority not merged into the app manifest"; exit 1; }
       - name: Vico resolved at the pinned version
         run: |
           cd examples/native-instruments/android
@@ -192,5 +220,12 @@ jobs:
         run: |
           grep -q 'NYCTronHardwareKeys' Podfile.lock || { echo "NYCTronHardwareKeys pod not installed"; exit 1; }
           for f in NYCTronHardwareKeysModule.swift HardwareKeyRouter.swift UIViewController+hardwareKeyCommand.swift; do
+            grep -q "$f" /tmp/xcodebuild.log || { echo "$f not compiled"; exit 1; }
+          done
+      - name: Platform-services pod compiled with the macro plugin
+        working-directory: examples/native-instruments/ios
+        run: |
+          grep -q 'NYCTronPlatformServices' Podfile.lock || { echo "NYCTronPlatformServices pod not installed"; exit 1; }
+          for f in NYCTronHapticsModule.swift NYCTronDocumentsModule.swift NYCTronPlaybackSessionModule.swift DocumentPickerSession.swift; do
             grep -q "$f" /tmp/xcodebuild.log || { echo "$f not compiled"; exit 1; }
           done
