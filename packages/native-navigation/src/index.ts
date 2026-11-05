@@ -1,2 +1,2 @@
-export { validateNavigationItems } from "./navigation-model.ts";
-export type { NativeNavigationItem, NativeRailProps } from "./NativeNavigationRail.types.ts";
+export { validateNavigationItems } from "./navigation-model";
+export type { NativeNavigationItem, NativeRailProps } from "./NativeNavigationRail.types";
