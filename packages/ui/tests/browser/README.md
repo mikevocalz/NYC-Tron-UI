@@ -18,5 +18,12 @@ buttons, text entry, disabled state, and handle reorder plus Escape cancel.
 and 834px tablet, resting, focused and mid-drag, plus forced colors). They are
 uploaded as a CI artifact, not compared as pixel goldens.
 
+Each `fixtures/<name>.tsx` page is served at `/<name>`. `fixtures/shell-layout.tsx`
+is an image-editor shell (DocumentTabBar, ToolRail, AdaptiveDock, StatusBar and a
+PaneSplitter; `?hinge=1` adds a simulated hinge, `?dir=rtl` flips direction).
+`shell-layout.spec.mjs` drives it by keyboard and mouse, and
+`shell-layout-shots.spec.mjs` captures it at 390 and 834px in light, dark, RTL,
+forced colors and with the hinge.
+
 Not covered: iOS/Android rendering, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.

@@ -151,6 +151,9 @@ importers:
       '@expo/ui':
         specifier: 58.0.20
         version: 58.0.20(@babel/core@7.29.13)(expo@58.0.23)(react-dom@19.3.1(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+      '@nyc-tron/core':
+        specifier: workspace:*
+        version: link:../core
       '@tanstack/react-table':
         specifier: 9.3.1
         version: 9.3.1(react-dom@19.3.1(react@19.3.0))(react@19.3.0)

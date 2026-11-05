@@ -20,10 +20,10 @@ the caller passes one; otherwise the token applies.
 | `border` | `--color-border` | `border-border` | Every bordered surface |
 | `text` | `--color-text` | `text-text` | Body text in Button, rail, DataTable, SpreadsheetGrid; HsvPicker thumb outer ring |
 | `textMuted` | `--color-text-muted` | `text-text-muted`, `border-text-muted` | Card field labels, row numbers, hints; PrecisionScrubber hover edge; DragGrabHandle grip; HsvPicker and ColorChannels labels and hex readout |
-| `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors |
+| `danger` | `--color-danger` | `bg-danger`, `border-danger`, `text-danger` | Button (danger), cell commit errors, StatusBar recording dot and error text |
 | `onDanger` | `--color-on-danger` | `text-on-danger` | Text on `danger` |
-| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge |
-| `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field |
+| `accent` | `--color-accent` | `bg-accent`, `bg-accent/10`, `border-accent` | Dragging PaneSplitter divider, DocumentTabBar unsaved marker, StatusBar render progress, SpreadsheetGrid formula reference highlights, WaveformLane bars, InstrumentKnob ring, InstrumentXYPad, PatchGraph wires and ports, ImageCropOverlay frame, PrecisionScrubber ticks, track and active edge |
+| `focus` | `--color-focus` | `ring-focus`, `border-focus` | Keyboard focus rings, focused PaneSplitter divider, focused formula input, SpreadsheetGrid active cell, TreeGrid focused row, focused PrecisionScrubber scale and value field |
 | `controlRadius` | `--radius-control` | `rounded-control` | Buttons, rail items, inputs, chips |
 | `cardRadius` | `--radius-card` | `rounded-card` | Card, record cards |
 
