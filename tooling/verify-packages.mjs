@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-const packages=["core","geometry","ui","panes"];
+const packages=["core","geometry","ui","panes","expo-controls"];
 let verified=0;
 for (const pkgName of packages) {
   const dir=resolve("packages",pkgName);
