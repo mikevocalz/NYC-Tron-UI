@@ -67,13 +67,15 @@ export function ClipIndicator({unstyled=false,style,...rest}:ClipIndicatorProps)
   </View>;
 }
 
-/** A down-pointing hooked arrow: a stem from the top, bending toward the base below. */
+/**
+ * A short down arrow: the layer hangs onto the one below it. Symmetric, so it
+ * reads the same in left-to-right and right-to-left rows.
+ */
 function ClipGlyph({styled}:{styled:boolean}){
   const ink=joinClasses(styled&&"bg-text-muted");
-  return <View pointerEvents="none" style={{width:12,height:16}}>
-    <View {...{className:ink}} style={{position:"absolute",start:2,top:0,width:1.5,height:10,borderRadius:1}}/>
-    <View {...{className:ink}} style={{position:"absolute",start:2,top:8.5,width:8,height:1.5,borderRadius:1}}/>
-    <View {...{className:ink}} style={{position:"absolute",start:6.5,top:12,width:5,height:1.5,borderRadius:1,transform:[{rotate:"-45deg"}]}}/>
-    <View {...{className:ink}} style={{position:"absolute",start:6.5,top:6,width:5,height:1.5,borderRadius:1,transform:[{rotate:"45deg"}]}}/>
+  return <View pointerEvents="none" style={{width:12,height:16,alignItems:"center"}}>
+    <View {...{className:ink}} style={{position:"absolute",top:1,width:1.5,height:13,borderRadius:1}}/>
+    <View {...{className:ink}} style={{position:"absolute",top:10,left:1.6,width:6,height:1.5,borderRadius:1,transform:[{rotate:"45deg"}]}}/>
+    <View {...{className:ink}} style={{position:"absolute",top:10,right:1.6,width:6,height:1.5,borderRadius:1,transform:[{rotate:"-45deg"}]}}/>
   </View>;
 }

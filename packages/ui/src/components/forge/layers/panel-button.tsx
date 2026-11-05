@@ -25,7 +25,7 @@ export function PanelButton({label,onPress,reason,role="button",checked,tone="se
     onPress={()=>{if(!off)onPress();}}
     {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",styled&&fill)}}
     style={{minHeight:44,minWidth:44,paddingHorizontal:12,flexDirection:"row",alignItems:"center",justifyContent:"center",
-      gap:8,opacity:off?0.45:1,...(grow?{flexGrow:1,flexBasis:0}:null)}}>
+      gap:8,opacity:off?0.45:1,...(grow?{flexGrow:1}:null)}}>
     {icon??null}
     <Text numberOfLines={1} {...{className:joinClasses(styled&&ink,styled&&"text-sm font-medium")}}>{label}</Text>
     {role==="switch"?<View pointerEvents="none"

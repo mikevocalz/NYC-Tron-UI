@@ -93,7 +93,7 @@ export function LayerThumbnail({
     {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border",
       styled&&(image||variant==="mask"?"bg-surface-raised":"bg-surface-sunken"),className)}}
     style={[{width,height,alignItems:"center",justifyContent:"center"},style]}>
-    {variant==="content"&&image?<Checker width={width} height={height} styled={styled}/>:null}
+    {variant==="content"&&image?<Checker box={fitContain(image.width,image.height,width,height)} styled={styled}/>:null}
     {image&&!image.empty?<Picture image={image} width={width} height={height}/>:null}
     {!image&&shown.status==="loading"?<Skeleton width={width} height={height} styled={styled}/>:null}
     {shown.status==="error"&&!image?<Failure width={width} height={height} styled={styled} onRetry={retry}/>:null}
@@ -107,9 +107,10 @@ function Picture({image,width,height}:{image:ThumbnailImage;width:number;height:
     style={{position:"absolute",left:fit.x,top:fit.y,width:fit.width,height:fit.height}}/>;
 }
 
-function Checker({width,height,styled}:{width:number;height:number;styled:boolean}){
-  const {cell,cells}=checkerCells(width,height);
-  return <View pointerEvents="none" style={{position:"absolute",left:0,top:0,width,height}}>
+/** Drawn only under the fitted image, so letterbox bars read as the frame, not as transparent pixels. */
+function Checker({box,styled}:{box:{x:number;y:number;width:number;height:number};styled:boolean}){
+  const {cell,cells}=checkerCells(box.width,box.height);
+  return <View pointerEvents="none" style={{position:"absolute",left:box.x,top:box.y,width:box.width,height:box.height,overflow:"hidden"}}>
     {cells.map(c=><View key={c.x+","+c.y} {...{className:joinClasses(styled&&"bg-border")}}
       style={{position:"absolute",left:c.x,top:c.y,width:cell,height:cell,opacity:0.6}}/>)}
   </View>;

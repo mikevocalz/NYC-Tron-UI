@@ -276,9 +276,11 @@ type Entry={state:ThumbnailState;bytes:number;inFlight:boolean};
 /**
  * Creates a {@linkcode ThumbnailCache}. Eviction is least-recently-read once
  * there are more than `capacity` entries or `maxBytes` of data URIs; loads in
- * flight are never evicted.
+ * flight are never evicted. Keep `capacity` above the number of thumbnails on
+ * screen at once, or visible previews evict each other and reload. The
+ * default 512 covers a full `LayerStack` (500 rows) or `ArtboardNavigator` (300).
  */
-export function createThumbnailCache({capacity=96,maxBytes=8*1024*1024}:{capacity?:number;maxBytes?:number}={}):ThumbnailCache{
+export function createThumbnailCache({capacity=512,maxBytes=32*1024*1024}:{capacity?:number;maxBytes?:number}={}):ThumbnailCache{
   if(!Number.isSafeInteger(capacity)||capacity<1||!(maxBytes>0))throw new RangeError("Invalid thumbnail cache limits");
   const entries=new Map<string,Entry>();
   const latest=new Map<string,{revision:number;image:ThumbnailImage}>();

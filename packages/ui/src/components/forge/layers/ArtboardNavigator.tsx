@@ -82,7 +82,7 @@ export function ArtboardNavigator({
   const styled=!unstyled;
   const columns=layout==="grid"?artboardColumns(width,GAP):1;
   const tileWidth=layout==="grid"&&width>0?(width-GAP*(columns-1))/columns:0;
-  const thumbHeight=Math.round(tileWidth*0.62);
+  const thumbHeight=Math.round(Math.max(44,tileWidth-12)*0.62);
   const cellHeight=layout==="grid"?thumbHeight+56+GAP:LIST_ROW+4;
   const rtl=()=>I18nManager.isRTL||domIsRTL(host.current);
   const roving=focusId!==null&&artboards.some(a=>a.id===focusId)?focusId:(selectedId??artboards[0]?.id);
@@ -162,7 +162,8 @@ export function ArtboardNavigator({
     const target=drag!==null&&!dragging&&drag.to===index;
     const editing=rename?.id===a.id?rename:null;
     const grid=layout==="grid";
-    const thumb=<LayerThumbnail width={grid?tileWidth:64} height={grid?thumbHeight:48} unstyled={unstyled}
+    // Grid tiles have 4pt padding inside a 2pt border.
+    const thumb=<LayerThumbnail width={grid?Math.max(44,tileWidth-12):64} height={grid?thumbHeight:48} unstyled={unstyled}
       source={{kind:"loader",id:artboardThumbnailId(a.id),revision:a.revision??0,load:(_id,max)=>loadThumbnail(a.id,max)}}
       {...(cache?{cache}:{})}/>;
     const name=editing
@@ -232,7 +233,6 @@ export function ArtboardNavigator({
   const add=<PanelButton label="Add artboard" tone="secondary" styled={styled} icon={<Plus styled={styled}/>}
     onPress={()=>onAddArtboard(newArtboardOp(latest.current.artboards,selectedId))}/>;
   return <View {...rest} ref={host} accessibilityLabel={label}
-    onLayout={e=>{const w=e.nativeEvent.layout.width;if(w!==store.getState().width)store.setState({width:w});}}
     {...{className:joinClasses("min-w-0 gap-2",styled&&"rounded-control bg-surface-sunken p-2",className)}}>
     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",gap:8,paddingStart:4}}>
       <Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>
@@ -245,6 +245,7 @@ export function ArtboardNavigator({
         No artboards yet. Add one for each page or screen size you design.
       </Text>
       :<ScrollView scrollEnabled={drag===null} nestedScrollEnabled
+        onLayout={e=>{const w=e.nativeEvent.layout.width;if(w!==store.getState().width)store.setState({width:w});}}
         contentContainerStyle={layout==="grid"?{flexDirection:"row",flexWrap:"wrap",columnGap:GAP}:undefined}>
         {width>0||layout==="list"?artboards.map(tile):null}
       </ScrollView>}
