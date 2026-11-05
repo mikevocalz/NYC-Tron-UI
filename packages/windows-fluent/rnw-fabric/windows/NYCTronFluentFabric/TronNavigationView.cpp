@@ -15,7 +15,7 @@
 
 namespace winrt::NYCTronFluentFabric {
 
-struct TronNavigationViewComponentView final
+struct TronNavigationViewComponentView
     : winrt::implements<TronNavigationViewComponentView, winrt::IInspectable>,
       Codegen::BaseTronNavigationView<TronNavigationViewComponentView> {
 
