@@ -17,6 +17,30 @@ const conditionExtension={types:".d.ts","react-native":".js",default:".js"};
 const bareName=spec=>spec.startsWith("@")?spec.split("/").slice(0,2).join("/"):spec.split("/")[0];
 const importSpecifiers=text=>[...text.matchAll(/(?:^|[\s;])(?:import|export)\s*(?:[^"';]*?\sfrom\s*)?["']([^"']+)["']/g)].map(m=>m[1]);
 
+// Names exported by a compiled .js or .d.ts file, following `export * from`.
+// Relative .ts/.tsx specifiers in declarations map to the sibling .d.ts.
+function exportedNames(file,seen=new Set()){
+  const names=new Set();
+  if(seen.has(file)||!existsSync(file))return names;
+  seen.add(file);
+  const text=readFileSync(file,"utf8");
+  for(const m of text.matchAll(/^export\s+(?:declare\s+)?(?:async\s+)?(?:function\*?|const|let|var|class|interface|type|enum|abstract\s+class)\s+([A-Za-z_$][\w$]*)/gm))names.add(m[1]);
+  for(const m of text.matchAll(/^export\s+(?:type\s+)?\{([^}]*)\}/gm)){
+    for(const part of m[1].split(",")){
+      const name=part.trim().replace(/^type\s+/,"").split(/\s+as\s+/).pop()?.trim();
+      if(name)names.add(name);
+    }
+  }
+  for(const m of text.matchAll(/^export\s+\*\s+from\s+["'](\.[^"']+)["']/gm)){
+    const base=resolve(dirname(file),m[1]);
+    const candidates=file.endsWith(".d.ts")
+      ?[base.replace(/\.(tsx?|jsx?)$/,".d.ts"),base+".d.ts"]
+      :[base];
+    for(const c of candidates)exportedNames(c,seen).forEach(n=>names.add(n));
+  }
+  return names;
+}
+
 let verified=0;
 let scanned=0;
 const peerReport=[];
@@ -104,6 +128,14 @@ for (const pkgName of packages) {
     // an optional peer; importing that subpath is how the app opts in.
     if(key==="."&&needs.length)fail(id+": root export statically imports optional peer(s) "+needs.join(", "));
     if(needs.length)peerReport.push(id+(key==="."?"":key.slice(1))+" -> "+needs.join(", "));
+    // The types condition must declare every value the runtime exports;
+    // otherwise `import { X } from "<subpath>"` fails to typecheck.
+    for(const condition of ["default","react-native"]){
+      if(!value.types||!value[condition])continue;
+      const declared=exportedNames(join(dir,value.types));
+      const missing=[...exportedNames(join(dir,value[condition]))].filter(n=>!declared.has(n));
+      if(missing.length)fail(id+": export "+key+" types ("+value.types+") does not declare "+missing.join(", ")+" exported by "+condition);
+    }
   }
 }
 if(failures.length){

@@ -115,6 +115,7 @@ https://github.com/mikevocalz/NYC-Tron-UI/releases/download/<tag>/<file>.tgz
 | `@nyc-tron/ui` | `nyc-tron-ui-<version>.tgz` |
 | `@nyc-tron/panes` | `nyc-tron-panes-<version>.tgz` |
 | `@nyc-tron/native-controls` | `nyc-tron-native-controls-<version>.tgz` |
+| `@nyc-tron/expo-controls` | `nyc-tron-expo-controls-<version>.tgz` |
 
 ```json
 {
@@ -135,6 +136,7 @@ needs `@nyc-tron/core` from the same release listed next to it. Every
 Peers: `react` and `react-native` are required by `ui`, `panes` and
 `native-controls`. `panes` also needs `zustand`. `native-controls` needs
 `expo` and `@expo/ui` (it is an Expo module with SwiftUI and Compose views).
+`expo-controls` needs `expo`, `@expo/ui` and `zustand`.
 In `ui`, `@expo/ui`, `@tanstack/react-table` and `zustand` are optional and
 only needed by the subpaths listed in [packages/ui/README.md](packages/ui/README.md);
 importing `Button` pulls none of them.
