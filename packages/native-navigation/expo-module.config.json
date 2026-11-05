@@ -1,0 +1,21 @@
+{
+  "name": "NYCTronNavigation",
+  "platforms": [
+    "apple",
+    "android"
+  ],
+  "coreFeatures": [
+    "swiftui",
+    "compose"
+  ],
+  "apple": {
+    "modules": [
+      "NYCTronNavigationModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "com.nyctron.navigation.NYCTronNavigationModule"
+    ]
+  }
+}
