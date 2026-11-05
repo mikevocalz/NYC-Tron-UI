@@ -104,6 +104,8 @@ test("native shell is real WinUI NavigationView outside Fabric composition",()=>
   "restore is queued before the host handler runs");
  assert.match(implementation,/Navigation\.IsPaneOpen = _committedPaneOpen;/);
  assert.doesNotMatch(implementation,/if \(!_settingFromHost\) PaneOpenChanged/);
+ // The C# compiles only on the Windows job; catch an unbalanced edit here too.
+ assert.equal((implementation.match(/\{/g)??[]).length,(implementation.match(/\}/g)??[]).length);
  assert.match(implementation,/AutomationProperties\.SetName\(item, destination\.Label\)/);
  assert.doesNotMatch(implementation,/Windows\.UI\.Xaml/);
 });

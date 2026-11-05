@@ -232,4 +232,4 @@ public sealed partial class TronNavigationShell : UserControl
         }
         PaneOpenChanged?.Invoke(this, new TronPaneOpenChangedEventArgs(isOpen));
     }
-}}
+}
