@@ -1,0 +1,18 @@
+<UserControl
+    x:Class="NYCTron.Fluent.WinUI3.TronNavigationShell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Native WinUI 3 XAML at the Windows app HOST layer. Not a Fabric View. -->
+    <NavigationView x:Name="Navigation"
+                    PaneDisplayMode="Auto"
+                    IsBackButtonVisible="Collapsed"
+                    IsSettingsVisible="False"
+                    IsPaneToggleButtonVisible="True"
+                    ItemInvoked="OnItemInvoked"
+                    PaneOpened="OnPaneOpened"
+                    PaneClosed="OnPaneClosed">
+        <NavigationView.Content>
+            <Grid x:Name="HostedContentSlot" />
+        </NavigationView.Content>
+    </NavigationView>
+</UserControl>

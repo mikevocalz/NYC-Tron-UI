@@ -1,0 +1,38 @@
+{
+  "name": "@nyc-tron/windows-fluent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Typed native WinUI 3 NavigationView shell contract for a standalone React Native Windows host",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "windows",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./controller": {
+      "types": "./dist/controller.d.ts",
+      "default": "./dist/controller.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3"
+  }
+}
