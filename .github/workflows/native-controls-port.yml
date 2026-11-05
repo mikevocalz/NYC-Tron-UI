@@ -1,0 +1,97 @@
+name: NYC-Tron native controls
+on:
+  pull_request:
+    paths:
+      - "packages/native-controls/**"
+      - "examples/native-instruments/**"
+      - ".github/workflows/native-controls-port.yml"
+      - "pnpm-workspace.yaml"
+  push:
+    branches:
+      - "feat/audiokit-native-instruments-2026-11-04"
+    paths:
+      - "packages/native-controls/**"
+      - "examples/native-instruments/**"
+      - ".github/workflows/native-controls-port.yml"
+      - "pnpm-workspace.yaml"
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  source:
+    name: TypeScript / source contracts / independent pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: node --test packages/native-controls/tests/*.test.mjs
+      - run: corepack pnpm --dir packages/native-controls typecheck
+      # Exports resolve to dist, so the example typechecks against the build.
+      - run: corepack pnpm --dir packages/native-controls build
+      - run: corepack pnpm --dir examples/native-instruments typecheck
+      - run: |
+          mkdir -p /tmp/nyc-tron-native-pack
+          corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
+          tar -tzf /tmp/nyc-tron-native-pack/*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
+
+  android:
+    name: Android native Compose compile
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - name: Expo development app native generation
+        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform android --no-install --non-interactive
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
+      - name: Native Kotlin / Compose debug build
+        run: |
+          cd examples/native-instruments/android
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+  ios:
+    name: iOS native SwiftUI simulator compile
+    runs-on: macos-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - name: Generate native iOS development app
+        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform ios --no-install --non-interactive
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
+      - name: Resolve native pods and SwiftUI bridge
+        working-directory: examples/native-instruments/ios
+        run: pod install
+      - name: Build iOS simulator without code signing
+        working-directory: examples/native-instruments/ios
+        run: |
+          workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
+          if [ -z "$workspace" ]; then echo "Missing iOS workspace"; exit 1; fi
+          scheme=$(basename "$workspace" .xcworkspace)
+          xcodebuild -workspace "$workspace" -scheme "$scheme" \
+            -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build

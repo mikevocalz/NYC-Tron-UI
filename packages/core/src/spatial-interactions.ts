@@ -52,7 +52,51 @@ export interface SpatialModelHandoff{
  readonly source:"watch"|"widget"|"phone";
  readonly intent:"inspect";
 }
+const HANDOFF_SOURCES:readonly string[]=["watch","widget","phone"] satisfies readonly SpatialModelHandoff["source"][];
+const nonBlank=(v:unknown):v is string=>typeof v==="string"&&v.trim().length>0;
 export function validateModelHandoff(v:SpatialModelHandoff):SpatialModelHandoff{
- if(!v.modelId.trim()||v.destination!=="app-3d-viewer"||v.intent!=="inspect")throw new RangeError("Invalid spatial model handoff");
+ if(!nonBlank(v.modelId)||v.variantId!==undefined&&!nonBlank(v.variantId)||
+   v.destination!=="app-3d-viewer"||v.intent!=="inspect"||!HANDOFF_SOURCES.includes(v.source))
+  throw new RangeError("Invalid spatial model handoff");
  return v;
+}
+/**
+ * Query parameters for a {@linkcode SpatialModelHandoff}, ready for
+ * `new URLSearchParams(params)`. The app supplies the URL scheme and path.
+ */
+export type ModelHandoffParams=Readonly<{
+ modelId:string;variantId?:string;source:SpatialModelHandoff["source"];
+ destination:SpatialModelHandoff["destination"];intent:SpatialModelHandoff["intent"];
+}>;
+/**
+ * Serializes a handoff into query parameters.
+ * @throws RangeError when {@linkcode validateModelHandoff} rejects the handoff.
+ */
+export function toModelHandoffParams(handoff:SpatialModelHandoff):ModelHandoffParams{
+ const v=validateModelHandoff(handoff);
+ return {modelId:v.modelId,...(v.variantId===undefined?{}:{variantId:v.variantId}),
+  source:v.source,destination:v.destination,intent:v.intent};
+}
+/**
+ * Reads a handoff back from query parameters, such as
+ * `Object.fromEntries(url.searchParams)` or router search params. Keys other
+ * than the handoff fields are ignored so app routing params can sit alongside.
+ * @throws RangeError when a field is missing, repeated, blank, or not an
+ * accepted value.
+ */
+export function parseModelHandoffParams(params:Readonly<Record<string,string|readonly string[]|undefined>>):SpatialModelHandoff{
+ const read=(key:keyof ModelHandoffParams):string|undefined=>{
+  const value=params[key];
+  if(value===undefined)return undefined;
+  if(typeof value!=="string")throw new RangeError("Repeated spatial model handoff parameter: "+key);
+  return value;
+ };
+ const variantId=read("variantId");
+ return validateModelHandoff({
+  modelId:read("modelId") as string,
+  ...(variantId===undefined?{}:{variantId}),
+  source:read("source") as SpatialModelHandoff["source"],
+  destination:read("destination") as SpatialModelHandoff["destination"],
+  intent:read("intent") as SpatialModelHandoff["intent"],
+ });
 }

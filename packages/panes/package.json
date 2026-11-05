@@ -1,0 +1,47 @@
+{
+  "name": "@nyc-tron/panes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Adaptive Master Detail Inspector React Native layout independently installable from NYC-Tron",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./AdaptivePaneHost": {
+      "types": "./dist/components/AdaptivePaneHost.d.ts",
+      "react-native": "./dist/components/AdaptivePaneHost.js",
+      "default": "./dist/components/AdaptivePaneHost.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "prepack": "pnpm build"
+  },
+  "peerDependencies": {
+    "@nyc-tron/core": "workspace:^",
+    "react": ">=19.0.0",
+    "react-native": ">=0.85.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@nyc-tron/core": "workspace:*",
+    "typescript": "~6.0.3",
+    "@types/react": "~19.3.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "zustand": "5.0.16"
+  }
+}

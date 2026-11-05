@@ -39,6 +39,16 @@
       "types": "./dist/advanced-catalog.d.ts",
       "react-native": "./dist/advanced-catalog.js",
       "default": "./dist/advanced-catalog.js"
+    },
+    "./presets/infrax": {
+      "types": "./dist/presets/infrax.d.ts",
+      "react-native": "./dist/presets/infrax.js",
+      "default": "./dist/presets/infrax.js"
+    },
+    "./pane-plan": {
+      "types": "./dist/pane-plan.d.ts",
+      "react-native": "./dist/pane-plan.js",
+      "default": "./dist/pane-plan.js"
     }
   },
   "scripts": {
@@ -50,6 +60,8 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
   ]
 }
