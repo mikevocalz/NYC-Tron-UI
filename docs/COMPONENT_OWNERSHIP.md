@@ -75,3 +75,12 @@ All editors:   the consumer installs the above packages; there is no new
 Some of these package names currently exist only on Nitro Forge draft PRs.
 Do not claim npm availability or cross-platform native completion until
 their respective distributions and PRs pass.
+
+## Shared icon ownership
+
+NYC-Tron @nyc-tron/icons now owns the original
+Forge authored icon catalog, outline/filled geometry and Rive-ready
+state contract, extracted from Nitro Forge PR #21. Consumer apps use
+the icon package directly rather than importing a Forge engine.
+Native OS icon adapters and compiled Rive binaries still require validation.
+See docs/ICON_MIGRATION.md.
