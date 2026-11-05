@@ -19,13 +19,18 @@ component yet; it deliberately lives at the Windows app host boundary.
 
 ## Explicitly not connected yet
 
-**React Native Windows 0.85 uses Composition/Fabric.** Its official
-architecture documentation says embedding WinUI XAML inside a Fabric
-`ComponentView` is not production ready. The WinUI source in this package
-is native, but the `WindowsNativeNavigationTransport` interface is not yet
-connected to a real RNW TurboModule and React Native Fabric root cannot
-be directly put in the XAML `SetHostedContent` slot. Do NOT claim that this
-source is already an end-to-end React Native Windows navigation component.
+**React Native Windows 0.85 uses Composition/Fabric.** RNW v0.82
+introduced XAML hosting for native Fabric community controls. The official
+RNW v0.85 `sample-custom-component` package includes working
+`ContentIslandComponentView` examples for native XAML ComboBox and
+CalendarView. This means a native WinUI NavigationView Fabric adapter is
+possible, though still not implemented in this host-shell package.
+
+The WinUI source here is native, but `WindowsNativeNavigationTransport`
+is not yet connected to a live RNW host. A Fabric Composition root still
+cannot simply be passed to the XAML `SetHostedContent` slot. Do not claim
+end-to-end React Native navigation until the native view bridge compiles,
+events roundtrip and layout/focus pass on a Windows host.
 
 A host integration follow-up must either embed a verified compatible
 WinUI 3 root around the RNW Composition island or use a validated
