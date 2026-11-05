@@ -51,13 +51,20 @@ edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
 // needs react-native-windows there. Without this resolver Metro follows the
 // symlink and bundles a second React and react-native-windows from the
 // library's node_modules; the window then opens with nothing rendered.
+// A project resolveRequest replaces the CLI's out-of-tree platform resolver
+// (framework defaults are merged under the project config), so this one
+// also performs its react-native -> react-native-windows redirect.
 const singletonResolver=[
  "    resolveRequest: (context, moduleName, platform) => {",
- "      const singleton = ['react', 'react-native', 'react-native-windows'].some(",
- "        name => moduleName === name || moduleName.startsWith(name + '/'));",
+ "      let name = moduleName;",
+ "      if (platform === 'windows' && (name === 'react-native' || name.startsWith('react-native/'))) {",
+ "        name = 'react-native-windows' + name.slice('react-native'.length);",
+ "      }",
+ "      const singleton = ['react', 'react-native-windows'].some(",
+ "        root => name === root || name.startsWith(root + '/'));",
  "      return context.resolveRequest(",
  "        singleton ? {...context, originModulePath: path.join(__dirname, 'index.js')} : context,",
- "        moduleName,",
+ "        name,",
  "        platform,",
  "      );",
  "    },",
