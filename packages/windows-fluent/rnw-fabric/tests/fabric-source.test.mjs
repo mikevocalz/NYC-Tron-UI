@@ -32,8 +32,8 @@ test("the Windows Fabric peer lane cannot be silently installed into Expo58",()=
 
 test("route approval remains app-owned and unrelated updates retain native items",()=>{
  const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
- assert.match(cpp,/item\.SelectsOnInvoked\(false\)/);
- assert.match(cpp,/settings\.SelectsOnInvoked\(false\)/);
+ assert.ok(cpp.includes("item.SelectsOnInvoked(false)"));
+ assert.ok(cpp.includes("settings.SelectsOnInvoked(false)"));
  const conditional=cpp.indexOf("if (!m_itemsInitialized || props.itemsJson != m_itemsJson || footerJson != m_footerItemsJson)");
  const clear=cpp.indexOf("m_navigation.MenuItems().Clear()");
  const cache=cpp.indexOf("m_itemsInitialized = true",clear);
