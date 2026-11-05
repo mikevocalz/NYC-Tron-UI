@@ -1,6 +1,6 @@
 import {Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {rgbaToHex} from "../color.ts";
 import {guideRect,safeAreas,type OverlayRect,type SafeAreaSpec} from "./safe-area.ts";
 

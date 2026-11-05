@@ -1,6 +1,6 @@
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {formatTimecode,type FrameRate} from "../timebase.ts";
 import type {FrameRange} from "./viewport.ts";

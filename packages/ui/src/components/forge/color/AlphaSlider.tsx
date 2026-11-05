@@ -1,6 +1,6 @@
 import {Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {alphaPercent,assertRgba,rgbaToHex,type RgbaColor} from "../color.ts";
 import {ChannelTrack} from "./ChannelTrack.tsx";
 import {parseOpacityPercent} from "./channel-fields.ts";

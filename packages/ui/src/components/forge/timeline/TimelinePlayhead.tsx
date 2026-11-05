@@ -41,8 +41,9 @@ export function TimelinePlayhead({
   const committed=clamp(frame);
   const rawX=frameToX(viewport,committed);
   const headLeft=Math.min(Math.max(rawX,0),viewport.widthPx)-HIT/2;
+  // Grab mode: pressing the head does not move it; dragging moves it by the travel.
   const scrub=useFrameScrub({frame:committed,disabled,onScrub,onCommit:onSeek,
-    frameAt:p=>clamp(xToFrame(viewport,headLeft+p.x))});
+    frameAt:p=>clamp(xToFrame(viewport,headLeft+p.x)),grabPxPerFrame:viewport.pxPerFrame,durationFrames});
   const x=frameToX(viewport,scrub.shown);
   const inView=x>=0&&x<=viewport.widthPx;
   const shownHead=Math.min(Math.max(x,0),viewport.widthPx)-HIT/2;

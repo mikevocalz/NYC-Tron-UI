@@ -37,7 +37,8 @@ function MarkHandle({mark,frame,range,viewport,durationFrames,rate,onPreview,onC
   const commit=(f:number)=>onCommit(setMark(range,mark,f,durationFrames));
   const scrub=useFrameScrub({frame,disabled,
     onScrub:f=>onPreview?.(setMark(range,mark,f,durationFrames)),onCommit:commit,
-    frameAt:p=>Math.min(durationFrames,Math.max(0,Math.round(xToFrame(viewport,left+p.x))))});
+    frameAt:p=>Math.min(durationFrames,Math.max(0,Math.round(xToFrame(viewport,left+p.x)))),
+    grabPxPerFrame:viewport.pxPerFrame,durationFrames});
   const shownX=frameToX(viewport,scrub.shown);
   const label=mark==="in"?"In point":"Out point";
   const onKeyDown=(event:KeyEventLike)=>{

@@ -114,11 +114,19 @@ test("transport, timecode entry, format switch and playback rate",async({page})=
   await page.goto("/timeline?frame=30");
   await page.getByRole("button",{name:"Next frame"}).click();
   await expect(page.getByTestId("frame")).toHaveText("frame 31");
-  await page.getByRole("button",{name:"Play",exact:true}).click();
-  await expect(page.getByRole("button",{name:"Pause",exact:true})).toBeVisible();
+  // Play/pause keeps keyboard focus across the toggle.
+  await page.getByRole("button",{name:"Play",exact:true}).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("button",{name:"Pause",exact:true})).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("button",{name:"Play",exact:true})).toBeFocused();
   const tc=page.getByTestId("tc-input");
+  const before=Number((await text(page,"commits")).split(" ")[1]);
   await tc.fill("00:00:02:00");await tc.press("Enter");
   await expect(page.getByTestId("frame")).toHaveText("frame 48");
+  // Enter then blur is still one commit.
+  await tc.blur();
+  await expect(page.getByTestId("commits")).toHaveText("commits "+(before+1));
   await tc.fill("00:00:02:30");await tc.press("Enter");
   await expect(page.getByText("Enter HH:MM:SS:FF.")).toBeVisible();
   await page.getByTestId("tc-format").click();
@@ -143,6 +151,12 @@ test("in and out marks set at the playhead and adjust by key",async({page})=>{
   await out.focus();
   await page.keyboard.press("PageUp");
   await expect(page.getByText("In 00:00:01:00, out 00:00:02:01")).toBeVisible();
+  // Pressing a mark off its centre (no drag) leaves it where it is.
+  const ob=await out.boundingBox();
+  const commits=await text(page,"commits");
+  await page.mouse.click(ob.x+ob.width-4,ob.y+ob.height/2);
+  await expect(page.getByText("In 00:00:01:00, out 00:00:02:01")).toBeVisible();
+  await expect(page.getByTestId("commits")).toHaveText(commits);
   await page.getByTestId("inout-clear").click();
   await expect(page.getByText("No range marked")).toBeVisible();
 });

@@ -27,7 +27,7 @@ test('InFraX emits exactly the variables NYC-Tron components read',()=>{
  const documented=new Set([...table.matchAll(/`(--(?:color|radius)-[a-z-]+)`/g)].map(m=>m[1]));
  for(const appearance of ['light','dark']){
   const vars=infraxTokens(appearance==='dark'?INFRAX_DARK_THEME:INFRAX_THEME);
-  assert.equal(Object.keys(vars).length,13,appearance);
+  assert.equal(Object.keys(vars).length,15,appearance);
   assert.deepEqual(new Set(Object.keys(vars)),documented,appearance);
  }
 });
@@ -41,7 +41,7 @@ test('InFraX text pairs meet WCAG AA in light and dark',()=>{
    ['--color-danger','--color-surface-raised'],['--color-danger','--color-surface-sunken'],
   ];
   for(const [fg,bg] of pairs)assert.ok(contrast(v[fg],v[bg])>=4.5,`${fg} on ${bg}: ${contrast(v[fg],v[bg]).toFixed(2)}`);
-  for(const ui of ['--color-accent','--color-focus'])
+  for(const ui of ['--color-accent','--color-focus','--color-info','--color-success'])
    assert.ok(contrast(v[ui],v['--color-surface-sunken'])>=3,`${ui} on sunken: ${contrast(v[ui],v['--color-surface-sunken']).toFixed(2)}`);
  }
 });

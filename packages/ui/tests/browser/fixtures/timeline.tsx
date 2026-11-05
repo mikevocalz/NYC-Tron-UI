@@ -13,7 +13,7 @@ import {TimelineClipLane,type TimelineTool} from "../../../src/components/forge/
 import {RazorSplitTool} from "../../../src/components/forge/timeline/RazorSplitTool.tsx";
 import {SafeAreaOverlay} from "../../../src/components/forge/timeline/SafeAreaOverlay.tsx";
 import {FRAME_GUIDES} from "../../../src/components/forge/timeline/safe-area.ts";
-import {secondsToFrames,type TimeFormat} from "../../../src/components/forge/timeline/time.ts";
+import {secondsToFrame,type TimeFormat} from "../../../src/components/forge/timeline/time.ts";
 import {defaultPxPerFrame} from "../../../src/components/forge/timeline/ruler.ts";
 import {
   clipEnd,markedRange,timelineDuration,type InOutRange,type TimelineEdit,type TimelineTrack,
@@ -64,7 +64,7 @@ const engine={
 const read=():TimelineTrack[]=>engine.tracks.map(t=>({id:String(t.id),kind:t.kind,label:t.name,
   clips:engine.clips.filter(c=>c.track===t.id).sort((a,b)=>a.start_s-b.start_s).map(c=>({
     id:String(c.id),label:c.name,speed:c.speed,
-    startFrame:secondsToFrames(c.start_s,rate),
+    startFrame:secondsToFrame(c.start_s,rate),
     sourceIn:c.in_s*fps,sourceOut:c.out_s*fps,sourceDuration:c.source_s*fps,
   }))}));
 function apply(edit:TimelineEdit){

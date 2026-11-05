@@ -22,7 +22,7 @@ export interface TransportControlsProps extends Omit<ViewProps,"children"> {
 
 /**
  * Play/pause, stop, jump to start/end and previous/next frame (D-06), each a
- * 44pt button. With focus inside, Space or K toggles playback, Left/Right step
+ * 44pt button. With focus inside, K toggles playback, Left/Right step
  * a frame and Home/End jump. Frame steps stop at the timeline's ends. Playback
  * itself (decoding, the clock) belongs to the host's player.
  */
@@ -35,7 +35,7 @@ export function TransportControls({
   const f=Math.min(durationFrames,Math.max(0,Math.round(frame)));
   const seek=(n:number)=>{const t=Math.min(durationFrames,Math.max(0,n));if(!off&&t!==f)onSeek(t);};
   const button=(glyph:TransportGlyph,label:string,onPress:()=>void,disabled=false,primary=false)=>
-    <Pressable key={glyph} accessibilityRole="button" accessibilityLabel={label}
+    <Pressable key={primary?"play-pause":glyph} accessibilityRole="button" accessibilityLabel={label}
       accessibilityState={{disabled:off||disabled}} disabled={off||disabled} onPress={onPress}
       {...(testID?{testID:testID+"-"+glyph}:{})}
       {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
@@ -46,7 +46,8 @@ export function TransportControls({
   const onKeyDown=(event:KeyEventLike)=>{
     if(off)return;
     const key=keyboardKey(event);
-    const act=key===" "||key==="k"||key==="K"?onPlayPause
+    // Space is left to the focused button; K toggles playback from anywhere in the bar.
+    const act=key==="k"||key==="K"?onPlayPause
       :key==="ArrowLeft"?()=>seek(f-1):key==="ArrowRight"?()=>seek(f+1)
       :key==="Home"?()=>seek(0):key==="End"?()=>seek(durationFrames):undefined;
     if(!act)return;

@@ -1,4 +1,4 @@
-import {assertFrameRate,formatTimecode,type FrameRate} from "../timebase.ts";
+import {assertFrameRate,formatTimecode,framesToSeconds,secondsToFrame,type FrameRate} from "../timebase.ts";
 
 /*
  * Rational frame and sample time. Timeline positions are whole frames at the
@@ -9,6 +9,7 @@ import {assertFrameRate,formatTimecode,type FrameRate} from "../timebase.ts";
  */
 
 export type {FrameRate} from "../timebase.ts";
+export {framesToSeconds,secondsToFrame} from "../timebase.ts";
 
 /** Lowest and highest sample rates accepted, in Hz. */
 export const SAMPLE_RATE_RANGE={min:8000,max:768000} as const;
@@ -26,30 +27,14 @@ const floorDiv=(a:bigint,b:bigint)=>a/b;
 export const fps=(rate:FrameRate)=>{assertFrameRate(rate);return rate.numerator/rate.denominator;};
 
 /**
- * Seconds at the start of `frame`: `frame * denominator / numerator`. Use this at
- * the engine boundary; positions inside the UI stay in frames.
+ * Seconds at a fractional frame position, e.g. a media in-point at a speed
+ * other than 1x. Whole frames use `framesToSeconds` from `forge/timebase`
+ * (re-exported here), which rejects fractions.
  */
-export function framesToSeconds(frame:number,rate:FrameRate):number{
+export function positionToSeconds(position:number,rate:FrameRate):number{
   assertFrameRate(rate);
-  if(!Number.isFinite(frame))throw new RangeError("Frame must be finite");
-  return frame*rate.denominator/rate.numerator;
-}
-
-/** How a time between two frames resolves to one. */
-export type FrameRounding="floor"|"round"|"ceil";
-
-/**
- * The frame at `seconds`. A tolerance of a millionth of a frame absorbs float
- * error from engines that store seconds, so 1001/30000 s maps back to frame 1,
- * not frame 0.
- */
-export function secondsToFrames(seconds:number,rate:FrameRate,rounding:FrameRounding="round"):number{
-  assertFrameRate(rate);
-  if(!Number.isFinite(seconds))throw new RangeError("Seconds must be finite");
-  const exact=seconds*rate.numerator/rate.denominator;
-  const near=Math.round(exact);
-  if(Math.abs(exact-near)<1e-6)return near;
-  return rounding==="floor"?Math.floor(exact):rounding==="ceil"?Math.ceil(exact):near;
+  if(!Number.isFinite(position)||position<0)throw new RangeError("Frame position must be finite and nonnegative");
+  return position*rate.denominator/rate.numerator;
 }
 
 /**
@@ -133,7 +118,7 @@ export function parseTime(text:string,rate:FrameRate,format:TimeFormat,opts:{dro
   if(format==="frames"){const m=/^(\d+)\s*f?$/i.exec(t);return m?Number(m[1]):undefined;}
   if(format==="seconds"){
     const m=/^(\d+(?:\.\d+)?)\s*s?$/i.exec(t);
-    return m?secondsToFrames(Number(m[1]),rate,"round"):undefined;
+    return m?secondsToFrame(Number(m[1]),rate):undefined;
   }
   const m=/^(\d{1,3}):(\d{2}):(\d{2})\.(\d{3})$/.exec(t);
   if(!m||opts.sampleRate===undefined)return undefined;

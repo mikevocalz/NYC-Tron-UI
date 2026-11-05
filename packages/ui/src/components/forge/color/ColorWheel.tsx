@@ -1,7 +1,7 @@
 import {useEffect,useMemo,useRef} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {adjustKey} from "../../gestures/adjust-keys.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";

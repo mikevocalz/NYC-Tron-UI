@@ -93,7 +93,7 @@ function Handle({edge,...p}:ClipTrimHandlesProps&{edge:"head"|"tail"}){
     if(key==="Escape"){gesture.cancel();onPreview(edge,undefined);return;}
     const d=key==="ArrowRight"?1:key==="ArrowLeft"?-1:0;
     if(!d)return;
-    // The handle sits inside the clip, whose own arrow keys move the clip.
+    // Arrow keys here trim; keep them from reaching any ancestor that moves clips.
     const e=event as {preventDefault?:()=>void;stopPropagation?:()=>void};
     e.preventDefault?.();e.stopPropagation?.();
     nudge(d);

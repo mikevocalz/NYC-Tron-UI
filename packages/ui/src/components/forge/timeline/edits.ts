@@ -1,5 +1,5 @@
 import type {FrameRate} from "../timebase.ts";
-import {framesToSeconds} from "./time.ts";
+import {framesToSeconds,positionToSeconds} from "./time.ts";
 import type {FrameRange} from "./viewport.ts";
 
 /**
@@ -160,7 +160,10 @@ export function trimPreview(track:TimelineTrack,clip:TimelineClip,edge:"head"|"t
   const end=clipEnd(clip);
   const snappedTo=snap.target===undefined?{}:{snappedTo:snap.target};
   if(edge==="tail"){
-    let out=clip.sourceIn+(Math.max(edgeFrame,clip.startFrame+1)-clip.startFrame)*clip.speed;
+    const tail=Math.max(edgeFrame,clip.startFrame+1);
+    // An edge left where it was keeps the stored out-point exactly; recomputing
+    // it through the speed can differ by an ulp and read as an edit.
+    let out=Math.abs(tail-end)<EPS?clip.sourceOut:clip.sourceIn+(tail-clip.startFrame)*clip.speed;
     if(clip.sourceDuration!==undefined)out=Math.min(out,clip.sourceDuration);
     const len=(out-clip.sourceIn)/clip.speed;
     return {startFrame:clip.startFrame,sourceIn:clip.sourceIn,sourceOut:out,
@@ -169,7 +172,7 @@ export function trimPreview(track:TimelineTrack,clip:TimelineClip,edge:"head"|"t
   // Head: latest start keeps one frame; earliest is frame 0 or the media's first frame.
   const earliest=Math.max(0,Math.ceil(end-clip.sourceOut/clip.speed-EPS));
   const start=Math.min(Math.max(edgeFrame,earliest),Math.floor(end-1+EPS));
-  const sourceIn=Math.max(0,clip.sourceOut-(end-start)*clip.speed);
+  const sourceIn=start===clip.startFrame?clip.sourceIn:Math.max(0,clip.sourceOut-(end-start)*clip.speed);
   return {startFrame:start,sourceIn,sourceOut:clip.sourceOut,
     valid:start>=0&&fitsOnTrack(track,start,end-start,clip.id),...snappedTo};
 }
@@ -183,10 +186,11 @@ export function moveEdit(clip:TimelineClip,trackId:string,p:EditPreview,rate:Fra
 /** The `trim` edit for a valid preview, or `undefined` when nothing changed. */
 export function trimEdit(clip:TimelineClip,trackId:string,edge:"head"|"tail",p:EditPreview,rate:FrameRate):TimelineEdit|undefined{
   if(!p.valid)return undefined;
-  if(p.startFrame===clip.startFrame&&p.sourceIn===clip.sourceIn&&p.sourceOut===clip.sourceOut)return undefined;
+  const near=(a:number,b:number)=>Math.abs(a-b)<EPS;
+  if(p.startFrame===clip.startFrame&&near(p.sourceIn,clip.sourceIn)&&near(p.sourceOut,clip.sourceOut))return undefined;
   const order=edge==="tail"?"trim-only":p.startFrame>clip.startFrame?"trim-then-move":"move-then-trim";
   return {kind:"trim",clipId:clip.id,trackId,edge,startFrame:p.startFrame,startSeconds:framesToSeconds(p.startFrame,rate),
-    sourceIn:p.sourceIn,sourceOut:p.sourceOut,inSeconds:framesToSeconds(p.sourceIn,rate),outSeconds:framesToSeconds(p.sourceOut,rate),order};
+    sourceIn:p.sourceIn,sourceOut:p.sourceOut,inSeconds:positionToSeconds(p.sourceIn,rate),outSeconds:positionToSeconds(p.sourceOut,rate),order};
 }
 
 /**

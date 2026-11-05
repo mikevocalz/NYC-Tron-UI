@@ -2,7 +2,7 @@ import {useRef} from "react";
 import {Platform,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import type {FrameRate} from "../timebase.ts";

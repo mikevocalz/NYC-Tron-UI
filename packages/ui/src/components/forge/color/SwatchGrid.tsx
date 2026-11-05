@@ -2,7 +2,7 @@ import {useRef} from "react";
 import {I18nManager,Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {rgbaToHex} from "../color.ts";
 import {filterSwatchGroups,swatchColumns,swatchGridMove,swatchKey,type Swatch,type SwatchGroup,type SwatchGroupKind} from "./swatches.ts";

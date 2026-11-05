@@ -1,6 +1,6 @@
 import {Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import type {FrameRate} from "../timebase.ts";
 import {formatTime,parseTime,supportsDropFrame,type TimeFormat} from "./time.ts";
 
@@ -47,11 +47,14 @@ export function TimecodeDisplay({
   const current=formats.includes(format)?format:"timecode";
   const opts={dropFrame,...(sampleRate===undefined?{}:{sampleRate})};
   const shown=formatTime(Math.max(0,Math.round(frame)),rate,current,opts);
+  // Reads the store, not the render's draft: Enter blurs the field, and the
+  // blur's apply runs before a re-render, so it must see the cleared draft.
   const apply=()=>{
-    if(!draft||!onCommit)return;
-    const f=parseTime(draft.text,rate,current,opts);
+    const d=store.get();
+    if(!d||!onCommit)return;
+    const f=parseTime(d.text,rate,current,opts);
     if(f===undefined||(durationFrames!==undefined&&f>durationFrames)){
-      store.set({...draft,error:f===undefined?HINT[current]+".":`Enter a time up to ${formatTime(durationFrames!,rate,current,opts)}.`});
+      store.set({...d,error:f===undefined?HINT[current]+".":`Enter a time up to ${formatTime(durationFrames!,rate,current,opts)}.`});
       return;
     }
     store.set(undefined);

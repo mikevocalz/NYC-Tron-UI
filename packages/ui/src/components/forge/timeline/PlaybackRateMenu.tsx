@@ -1,6 +1,6 @@
 import {Pressable,Switch,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
 import {speedLabel} from "./ruler.ts";
 
 /** Props for {@linkcode PlaybackRateMenu}. */

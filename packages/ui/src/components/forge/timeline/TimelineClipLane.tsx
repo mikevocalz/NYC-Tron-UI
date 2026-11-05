@@ -1,7 +1,8 @@
 import {useEffect,useRef,type ReactNode} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {useLocalStore,type LocalStore} from "../../local-store.ts";
+import {useLocalStore} from "../../useLocalStore.ts";
+import type {LocalStore} from "../../local-store.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {formatTimecode,type FrameRate} from "../timebase.ts";
@@ -10,7 +11,7 @@ import {
   clipLength,moveEdit,movePreview,snapTargets,splitEdit,visibleClips,
   type EditPreview,type TimelineClip,type TimelineEdit,type TimelineTrack,
 } from "./edits.ts";
-import {framesToSeconds} from "./time.ts";
+import {positionToSeconds} from "./time.ts";
 import {frameToX,scrollBy,visibleRange,zoomAt,type TimelineViewport} from "./viewport.ts";
 
 /** What a press on a clip does. `razor` splits at the pressed frame (D-20). */
@@ -82,6 +83,7 @@ function ClipView(p:ClipViewProps){
     onMove:pt=>{
       const s=session.current;
       if(!s)return;
+      if(latest.current.disabled){session.current=undefined;clear();return;}
       const dx=pt.x-s.x0;
       if(Math.abs(dx)>TAP_PX)s.moved=true;
       if(!s.moved)return;
@@ -93,6 +95,7 @@ function ClipView(p:ClipViewProps){
       const s=session.current;
       session.current=undefined;
       const c=latest.current;
+      if(c.disabled){clear();return;}
       if(s&&!s.moved){
         clear();
         if(c.tool==="razor"){
@@ -130,7 +133,7 @@ function ClipView(p:ClipViewProps){
     (event as {preventDefault?:()=>void}).preventDefault?.();
   };
   const tc=(f:number)=>formatTimecode(Math.max(0,Math.round(f)),rate,{dropFrame});
-  const seconds=framesToSeconds(clipLength(geometry),rate);
+  const seconds=positionToSeconds(clipLength(geometry),rate);
   const name=clip.label??"Clip";
   const height=laneHeight-8;
   return <>
@@ -164,11 +167,15 @@ function ClipView(p:ClipViewProps){
         {invalid?<Text {...{className:joinClasses(styled&&"text-danger text-xs")}} numberOfLines={1}>Overlaps another clip</Text>
           :p.renderClipContent?.(clip,track,{width,height:height-24})??null}
       </View>
-      {selected&&tool==="select"?<ClipTrimHandles clip={clip} track={track} rate={rate} pxPerFrame={viewport.pxPerFrame} height={height}
+    </View>
+    {/* A sibling, not a child: an accessible clip hides its children from
+        VoiceOver and TalkBack, so the adjustable edges sit beside it. */}
+    {selected&&tool==="select"?<View pointerEvents="box-none" style={{position:"absolute",left,top:4,width,height,zIndex:3}}>
+      <ClipTrimHandles clip={clip} track={track} rate={rate} pxPerFrame={viewport.pxPerFrame} height={height}
         snapTargets={snapping?snapTargets(p.tracks,clip.id,[playheadFrame]):[]} snapThreshold={threshold}
         dropFrame={dropFrame} disabled={disabled} unstyled={!styled}
-        onPreview={(_,preview)=>drag.set(preview?{clipId:clip.id,preview}:undefined)} onEdit={p.onEdit}/>:null}
-    </View>
+        onPreview={(_,preview)=>drag.set(preview?{clipId:clip.id,preview}:undefined)} onEdit={p.onEdit}/>
+    </View>:null}
   </>;
 }
 
@@ -223,7 +230,8 @@ export function TimelineClipLane({
         l.onViewportChange(zoomAt(l.viewport,x,Math.exp(-e.deltaY/300),l.durationFrames,l.rate));
       }else if(e.shiftKey||Math.abs(e.deltaX)>Math.abs(e.deltaY)){
         e.preventDefault();
-        l.onViewportChange(scrollBy(l.viewport,e.shiftKey?e.deltaY:e.deltaX,l.durationFrames));
+        // Chrome on macOS reports Shift+wheel as deltaX; Firefox as deltaY.
+        l.onViewportChange(scrollBy(l.viewport,Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY,l.durationFrames));
       }
     };
     el.addEventListener("wheel",onWheel,{passive:false});

@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import {readFileSync,readdirSync} from "node:fs";
 import {FRAME_RATES,formatTimecode} from "../src/components/forge/timebase.ts";
 import {
-  formatSampleClock,formatTime,framesToSamples,framesToSeconds,parseTime,parseTimecode,samplesToFrames,
-  secondsToFrames,supportsDropFrame,
+  formatSampleClock,formatTime,framesToSamples,framesToSeconds,parseTime,parseTimecode,positionToSeconds,samplesToFrames,
+  secondsToFrame,supportsDropFrame,
 } from "../src/components/forge/timeline/time.ts";
 import {clockLabel,defaultPxPerFrame,rulerStep,rulerTicks,speedLabel,zoomLimits} from "../src/components/forge/timeline/ruler.ts";
 import {
@@ -21,15 +21,16 @@ const R30=FRAME_RATES.VIDEO_30,R24=FRAME_RATES.FILM_24,NTSC=FRAME_RATES.NTSC_299
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,`${a} != ${b}`);
 
 test("frames, seconds and samples convert exactly at rational rates",()=>{
+  // Whole frames go through forge/timebase, re-exported here.
   close(framesToSeconds(1,NTSC),1001/30000);
-  assert.equal(secondsToFrames(1001/30000,NTSC),1);
-  assert.equal(secondsToFrames(framesToSeconds(107892,NTSC),NTSC),107892);
+  assert.equal(secondsToFrame(1001/30000,NTSC),1);
   for(const rate of [R24,PAL,R30,NTSC,NTSC60])for(const f of [0,1,29,30,1799,108000,2589408]){
-    assert.equal(secondsToFrames(framesToSeconds(f,rate),rate),f,`${rate.numerator}/${rate.denominator} ${f}`);
+    assert.equal(secondsToFrame(framesToSeconds(f,rate),rate),f,`${rate.numerator}/${rate.denominator} ${f}`);
   }
-  assert.equal(secondsToFrames(0.5,R30,"floor"),15);
-  assert.equal(secondsToFrames(0.51,R30,"floor"),15);
-  assert.equal(secondsToFrames(0.51,R30,"ceil"),16);
+  // Fractional media positions (speed other than 1x) use positionToSeconds.
+  close(positionToSeconds(13.5,R30),0.45);
+  close(positionToSeconds(1.5,NTSC),1.5*1001/30000);
+  assert.throws(()=>positionToSeconds(-1,R30),/nonnegative/);
   // Frame 1 at 29.97 starts at sample 1601.6 at 48 kHz: its first whole sample is 1602.
   assert.equal(framesToSamples(1,NTSC,48000),1602);
   assert.equal(samplesToFrames(1601,NTSC,48000),0);
@@ -44,7 +45,7 @@ test("frames, seconds and samples convert exactly at rational rates",()=>{
   for(const f of [0,1,2,999,30000])assert.equal(samplesToFrames(framesToSamples(f,NTSC,44100),NTSC,44100),f);
   assert.throws(()=>framesToSamples(1,NTSC,7999),/Sample rate/);
   assert.throws(()=>framesToSamples(-1,NTSC,48000),/nonnegative/);
-  assert.throws(()=>framesToSeconds(Number.NaN,R30),/finite/);
+  assert.throws(()=>framesToSeconds(1.5,R30),/safe integer/);
 });
 
 test("drop-frame timecode parses back to every frame for twenty minutes at 29.97 and 59.94",()=>{
@@ -262,6 +263,12 @@ test("head trims move start and in-point together, speed-aware, with the right a
   assert.deepEqual(edit,{kind:"trim",clipId:"b",trackId:"v1",edge:"head",startFrame:100,startSeconds:100/30,
     sourceIn:110,sourceOut:160,inSeconds:110/30,outSeconds:160/30,order:"trim-then-move"});
   assert.equal(trimEdit(b,"v1","head",trimPreview(track,b,"head",90),rate),undefined);
+  // A non-dyadic speed: returning an edge to where it was is not an edit, even
+  // though recomputing the media point through the speed adds float error.
+  const odd=clip("odd",37,3.3,47.3,{speed:1.1});
+  const oddTrack={...track,clips:[odd]};
+  assert.equal(trimEdit(odd,"v1","head",trimPreview(oddTrack,odd,"head",37),rate),undefined);
+  assert.equal(trimEdit(odd,"v1","tail",trimPreview(oddTrack,odd,"tail",clipEnd(odd)),rate),undefined);
   // Snapping an edge to a target.
   assert.equal(trimPreview(track,b,"head",63,{targets:[60],threshold:4}).startFrame,60);
 });
