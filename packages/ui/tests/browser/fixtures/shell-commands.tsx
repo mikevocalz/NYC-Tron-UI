@@ -61,8 +61,8 @@ function Fixture(){
   const commands:ShortcutCommand[]=[
     {id:"save",label:"Save",group:"File"},{id:"export",label:"Export",group:"File"},
     {id:"bold",label:"Bold",group:"Format",keywords:["strong"]},{id:"palette",label:"Command palette",group:"Navigation"},
-    {id:"zoomIn",label:"Zoom in",group:"View"},{id:"brush",label:"Brush tool",group:"Tools"},
-    {id:"hand",label:"Hand tool",group:"Tools"},
+    {id:"zoomIn",label:"Zoom in",group:"View"},{id:"hand",label:"Hand tool",group:"Tools"},
+    {id:"brush",label:"Brush tool",group:"Tools"},
   ].map(c=>({...c,binding:s.bindings[c.id],defaultBinding:DEFAULTS[c.id]}));
   // One map feeds the sheet and the dispatcher; the sheet owns the keyboard while it is open.
   const map=useMemo(()=>createKeyboardMap(commands,apple),[s.bindings]);

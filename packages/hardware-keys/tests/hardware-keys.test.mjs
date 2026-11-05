@@ -98,9 +98,10 @@ test("the registry pushes the union of every hook's bindings, first title wins, 
 
 function fakeDocument(active){
   const listeners=new Set();
-  return {activeElement:active,addEventListener:(_t,l)=>listeners.add(l),removeEventListener:(_t,l)=>listeners.delete(l),
+  const doc={activeElement:active,capture:undefined,addEventListener:(_t,l,c)=>{doc.capture=c;listeners.add(l);},removeEventListener:(_t,l)=>listeners.delete(l),
     fire(init){const e={ctrlKey:false,metaKey:false,altKey:false,shiftKey:false,repeat:false,defaultPrevented:false,prevented:false,
       preventDefault(){this.prevented=true;},...init};for(const l of [...listeners])l(e);return e;},listeners};
+  return doc;
 }
 
 test("web source: handled keys prevent default, already-handled and IME keys are skipped",()=>{
@@ -113,7 +114,9 @@ test("web source: handled keys prevent default, already-handled and IME keys are
     assert.equal(doc.fire({key:"x"}).prevented,false);
     doc.fire({key:"y",defaultPrevented:true});
     doc.fire({key:"z",isComposing:true});
-    assert.deepEqual(seen,["s","x"]);
+    doc.fire({key:"m",target:{closest:sel=>sel==='[aria-modal="true"]'?{}:null}});
+    assert.deepEqual(seen,["s","x"],"handled, composing and modal-dialog keys are skipped");
+    assert.equal(doc.capture,true,"listens in the capture phase");
     sub.remove();
     assert.equal(doc.listeners.size,0);
   }finally{delete globalThis.document;}

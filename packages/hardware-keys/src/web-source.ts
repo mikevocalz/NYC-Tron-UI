@@ -2,11 +2,12 @@
 // key to the page, so there is nothing to register.
 import type {KeySource,Subscription} from "./key-source.ts";
 
+type DomTarget={closest?(selector:string):unknown};
 type DomKeyEvent={key:string;ctrlKey:boolean;metaKey:boolean;altKey:boolean;shiftKey:boolean;repeat:boolean;
-  isComposing?:boolean;defaultPrevented:boolean;preventDefault():void};
+  isComposing?:boolean;defaultPrevented:boolean;preventDefault():void;target?:DomTarget|null};
 type DomDocument={
-  addEventListener(type:"keydown",listener:(e:DomKeyEvent)=>void):void;
-  removeEventListener(type:"keydown",listener:(e:DomKeyEvent)=>void):void;
+  addEventListener(type:"keydown",listener:(e:DomKeyEvent)=>void,capture?:boolean):void;
+  removeEventListener(type:"keydown",listener:(e:DomKeyEvent)=>void,capture?:boolean):void;
   activeElement?:{tagName?:string;isContentEditable?:boolean;getAttribute?(name:string):string|null}|null;
 };
 
@@ -32,14 +33,18 @@ export const webKeySource:KeySource={
   addChordListener(listener){
     const doc=documentOrUndefined();
     if(!doc)return NO_OP;
-    // A control that already handled the key (the shortcut recorder, a grid
-    // cell) prevents default; IME composition keys belong to the field.
+    // Capture phase: React Native Web's TextInput stops every keydown from
+    // bubbling, so a bubble listener would never see Mod+S typed in a field.
+    // Capturing runs before page handlers, so a modal dialog (the shortcut
+    // sheet recording a binding, an alert) keeps its own keys, and IME
+    // composition keys stay with the field.
     const onKey=(e:DomKeyEvent)=>{
       if(e.defaultPrevented||e.isComposing)return;
+      if(e.target?.closest?.('[aria-modal="true"]'))return;
       if(listener({key:e.key,ctrlKey:e.ctrlKey,metaKey:e.metaKey,altKey:e.altKey,shiftKey:e.shiftKey}))e.preventDefault();
     };
-    doc.addEventListener("keydown",onKey);
-    return {remove:()=>doc.removeEventListener("keydown",onKey)};
+    doc.addEventListener("keydown",onKey,true);
+    return {remove:()=>doc.removeEventListener("keydown",onKey,true)};
   },
   registerBindings:()=>NO_OP,
   isTextInputFocused:()=>isEditableElement(documentOrUndefined()?.activeElement),

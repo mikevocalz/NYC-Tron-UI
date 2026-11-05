@@ -45,5 +45,5 @@ test("rebinding in the sheet changes what the key does; the sheet owns keys whil
   await page.keyboard.press("Control+B");
   await expect(last(page)).toHaveText("last key:bold");
   await page.keyboard.press("Alt+B");
-  await expect(last(page)).toHaveText("last key:bold","the old binding no longer runs Brush");
+  await expect(last(page)).toHaveText("last key:bold");
 });
