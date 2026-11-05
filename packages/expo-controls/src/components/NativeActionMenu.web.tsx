@@ -43,12 +43,16 @@ export function NativeActionMenu({
     if(key==="Escape"){
       event.preventDefault();event.stopPropagation();close();return;
     }
+    // RN web's Pressable only synthesizes Space for button roles, not menu items.
+    if(key===" "||key==="Spacebar"){
+      event.preventDefault();event.stopPropagation();run(id);return;
+    }
     if(menuFocusTarget(actions,id,key)){
       event.preventDefault();event.stopPropagation();focus(key,id);
     }
   };
   const run=(id:string)=>{
-    if(!findEnabledMenuAction(actions,id))return;
+    if(!store.getState().open||!findEnabledMenuAction(actions,id))return;
     close();
     onAction(id);
   };
@@ -66,6 +70,7 @@ export function NativeActionMenu({
         // RN web forwards the ARIA role; core RN's Role union omits menuitemcheckbox.
         {...{role:(action.checked===undefined?"menuitem":"menuitemcheckbox") as PressableProps["role"],
           onKeyDown:(event:MenuKeyEvent)=>onMenuKey(event,action.id)}}
+        aria-checked={action.checked}
         accessibilityLabel={action.title}
         accessibilityState={{disabled:groupDisabled||!!action.disabled,checked:action.checked}}
         disabled={groupDisabled||!!action.disabled}
@@ -78,6 +83,7 @@ export function NativeActionMenu({
     </View>);
   return <View testID={testID}>
     <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+      aria-expanded={open}
       {...{"aria-haspopup":"menu" as const,onKeyDown:(event:MenuKeyEvent)=>{
         const {key,altKey,ctrlKey,metaKey}=keyData(event);
         if(!canOpen||altKey||ctrlKey||metaKey)return;
