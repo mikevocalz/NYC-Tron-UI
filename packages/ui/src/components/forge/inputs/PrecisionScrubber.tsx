@@ -36,6 +36,13 @@ export interface PrecisionScrubberProps extends Omit<ViewProps,"children">,Range
 
 type Pointer={hovered:boolean;focused:boolean};
 const SYSTEM_INK={forcedColorAdjust:"none"} as object;
+// Web only: without it a drag selects the label and value text. Not a ViewStyle key in RN.
+const NO_SELECT=(Platform.OS==="web"?{userSelect:"none"}:{}) as object;
+// React Native Web drops color keywords it cannot parse (CanvasText, Highlight),
+// but passes var() through; the fallback is the system color itself.
+const CANVAS_TEXT="var(--nyc-tron-canvas-text, CanvasText)";
+const HIGHLIGHT="var(--nyc-tron-highlight, Highlight)";
+const MODE_LABEL={fine:"Fine precision",normal:"Normal precision",coarse:"Coarse precision"} as const;
 
 /**
  * Controlled numeric instrument: drag horizontally to adjust, move up for fine
@@ -66,10 +73,10 @@ export function PrecisionScrubber({
   const reached=normalize(state.preview,min,max);
   const forced=forcedColors&&Platform.OS==="web";
   const styled=!unstyled;
-  const ink=forced?{line:{backgroundColor:"CanvasText",...SYSTEM_INK},accent:{backgroundColor:"Highlight",...SYSTEM_INK}}:undefined;
+  const ink=forced?{line:{backgroundColor:CANVAS_TEXT,...SYSTEM_INK},accent:{backgroundColor:HIGHLIGHT,...SYSTEM_INK}}:undefined;
   const lineClass=joinClasses(styled&&!forced&&"bg-border");
   const accentClass=joinClasses(styled&&!forced&&"bg-accent");
-  const highlighted=state.active||focused;
+  const scaleBorder=state.active?"border-accent":focused?"border-focus":hovered?"border-text-muted":"border-border";
   const onKeyDown=(event:KeyEventLike)=>{
     const key=keyboardKey(event);
     if(key==="Escape"&&model.dragging)model.cancel();
@@ -78,16 +85,17 @@ export function PrecisionScrubber({
   };
   const stepButton=(direction:-1|1)=><Pressable accessibilityRole="button"
     accessibilityLabel={(direction<0?"Decrease ":"Increase ")+label}
-    accessibilityState={{disabled:blocked}} disabled={blocked} onPress={()=>void model.nudge(direction)}
+    aria-disabled={blocked} disabled={blocked} onPress={()=>void model.nudge(direction)}
     {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised")}}
     style={{minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center"}}>
     <Text {...{className:joinClasses(styled&&"text-text text-xl")}}>{direction<0?"−":"+"}</Text>
   </Pressable>;
 
-  return <View {...rest} {...{className:joinClasses("gap-2",className)}} style={[{opacity:disabled?0.5:1},style]}>
+  return <View {...rest} {...{className:joinClasses("gap-2",className)}}
+    style={[{opacity:disabled?0.5:1},state.active?NO_SELECT:null,style]}>
     <View style={{flexDirection:"row",alignItems:"center",minHeight:44,justifyContent:"space-between",gap:10}}>
       <Text {...{className:joinClasses(styled&&"text-text text-xs font-semibold")}} style={{flex:1}}>{label}</Text>
-      <View {...{className:joinClasses(styled&&"rounded-control border bg-surface-sunken",styled&&(state.editing||state.active?"border-accent":"border-border"))}}
+      <View {...{className:joinClasses(styled&&"rounded-control border bg-surface-sunken",styled&&(state.editing?"border-focus":state.active?"border-accent":"border-border"))}}
         style={{flexDirection:"row",alignItems:"center",paddingHorizontal:10,minHeight:44}}>
         <TextInput selectTextOnFocus keyboardType="decimal-pad" returnKeyType="done" editable={!blocked}
           accessibilityLabel={label+" value"}
@@ -97,7 +105,7 @@ export function PrecisionScrubber({
           onSubmitEditing={()=>void model.applyDraft()}
           onBlur={()=>void model.applyDraft()}
           {...{className:joinClasses(styled&&"text-text font-semibold")}}
-          style={{minWidth:58,textAlign:"right",fontVariant:["tabular-nums"],paddingVertical:6}}/>
+          style={{width:64,textAlign:"right",fontVariant:["tabular-nums"],paddingVertical:6}}/>
         {unit?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{paddingLeft:2}}>{unit}</Text>:null}
       </View>
     </View>
@@ -114,20 +122,23 @@ export function PrecisionScrubber({
               onPointerEnter:()=>{if(!blocked)hover.setState({hovered:true});},
               onPointerLeave:()=>hover.setState({hovered:false}),
               className:joinClasses(styled&&"rounded-control border",
-                styled&&(highlighted?"border-accent":hovered?"border-text-muted":"border-border"),
+                styled&&scaleBorder,
                 styled&&(state.active?"bg-surface-raised":"bg-surface-sunken"))}}
             onFocus={()=>hover.setState({focused:true})}
             onBlur={()=>hover.setState({focused:false})}
             accessible accessibilityRole="adjustable" accessibilityLabel={label}
             accessibilityHint="Drag horizontally to adjust. Move upward for fine precision or downward for coarse. Use arrow keys or the increase and decrease buttons."
-            accessibilityValue={{min,max,now:state.preview,text:display+(unit??"")}}
-            accessibilityState={{disabled:blocked}}
+            // aria-* rather than accessibilityValue/State: React Native Web 0.21
+            // drops the latter, and React Native maps both forms the same way.
+            aria-valuemin={min} aria-valuemax={max} aria-valuenow={state.preview}
+            aria-valuetext={display+(unit??"")}
+            aria-disabled={blocked}
             accessibilityActions={[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
             onAccessibilityAction={event=>{
               if(event.nativeEvent.actionName==="increment")void model.nudge(1);
               if(event.nativeEvent.actionName==="decrement")void model.nudge(-1);
             }}
-            style={{minHeight:44,paddingHorizontal:11,justifyContent:"center",overflow:"hidden"}}>
+            style={{minHeight:44,paddingHorizontal:11,justifyContent:"center",overflow:"hidden",...NO_SELECT}}>
             <View pointerEvents="none" style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",minHeight:20}}>
               {scaleTicks(state.preview,min,max).map((tick,i)=><View key={i}
                 {...{className:tick.reached?accentClass:lineClass}}
@@ -144,8 +155,8 @@ export function PrecisionScrubber({
       {stepButton(1)}
     </View>
     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-      <Text {...{className:joinClasses(styled&&"text-xs",styled&&(highlighted?"text-accent":"text-text-muted"))}}>
-        {state.active?state.mode.toUpperCase()+" PRECISION":"DRAG · FINE ↑ · COARSE ↓"}
+      <Text {...{className:joinClasses(styled&&"text-xs",styled&&(state.active?"text-text":"text-text-muted"))}}>
+        {state.active?MODE_LABEL[state.mode]:"Drag: up for fine, down for coarse"}
       </Text>
       <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"]}}>
         {formatStepValue(min,step)} – {formatStepValue(max,step)}{unit??""}

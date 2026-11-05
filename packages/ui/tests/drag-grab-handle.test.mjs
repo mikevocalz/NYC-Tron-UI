@@ -47,11 +47,11 @@ test("responder transport delivers page coordinates for one pointer",()=>{
  f.h.onPanResponderRelease(f.event(0));
  assert.deepEqual(f.calls,[["begin",{x:30,y:40}],["move",{x:30,y:40},1],["release",{x:30,y:40}]]);
 });
-test("responder transport rejects disabled/multitouch starts and cancels interruption",()=>{
+test("responder transport keeps its drag, rejects disabled/multitouch starts and cancels interruption",()=>{
  const f=responderFixture();
  assert.equal(f.h.onStartShouldSetPanResponder(f.event(2)),false);
  f.h.onPanResponderStart(f.event(2));
- assert.equal(f.h.onPanResponderTerminationRequest(),true);
+ assert.equal(f.h.onPanResponderTerminationRequest(),false);
  f.h.onPanResponderTerminate();
  assert.deepEqual(f.calls,[["cancel"],["cancel"]]);
  f.latest.current={...f.latest.current,disabled:true};

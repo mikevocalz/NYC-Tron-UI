@@ -15,7 +15,10 @@ export function panResponderDragConfig(latest:Latest):PanResponderCallbacks {
     onPanResponderStart:event=>{if(event.nativeEvent.touches.length!==1)latest.current.onCancel();},
     onPanResponderMove:(event,state:PanResponderGestureState)=>latest.current.onMove(point(event),state.numberActiveTouches),
     onPanResponderRelease:event=>latest.current.onRelease(point(event)),
-    onPanResponderTerminationRequest:()=>true,
+    // Keep the drag once granted. Allowing it let a parent ScrollView take the
+    // responder on vertical travel, which is exactly the fine/coarse gesture.
+    // The OS can still terminate, which reaches onCancel below.
+    onPanResponderTerminationRequest:()=>false,
     onPanResponderTerminate:()=>latest.current.onCancel(),
   };
 }

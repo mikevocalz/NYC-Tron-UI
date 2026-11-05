@@ -1,9 +1,12 @@
 import {useEffect,useRef,type ReactNode} from "react";
-import {View,type ViewProps} from "react-native";
+import {Platform,View,type ViewProps} from "react-native";
 import {createDragController,type DragController} from "./gestures/drag-controller.ts";
 import {keyboardKey,type DragPoint,type DragTransport,type KeyEventLike} from "./gestures/drag-transport.ts";
 import {PanResponderDrag} from "./gestures/PanResponderDrag.tsx";
 import {joinClasses} from "./styles.ts";
+
+// Web only: a drag otherwise selects nearby text. Not a ViewStyle key in RN.
+const NO_SELECT=(Platform.OS==="web"?{userSelect:"none"}:{}) as object;
 
 export type {DragPoint} from "./gestures/drag-transport.ts";
 
@@ -52,10 +55,12 @@ export function DragGrabHandle({
   const controller=controllerRef.current;
   useEffect(()=>()=>controller.cancel(),[controller]);
   const onKeyDown=(event:KeyEventLike)=>{if(keyboardKey(event)==="Escape")controller.cancel();};
-  const bar=color?{backgroundColor:color}:null;
+  // Bars are drawn as top borders: forced-colors mode repaints backgrounds to
+  // Canvas but keeps borders visible in CanvasText.
+  const bar=color?{borderColor:color}:null;
   const grip=children ?? <View pointerEvents="none" style={{gap:3}}>
-    {[0,1,2].map(i=><View key={i} {...{className:joinClasses(!unstyled&&!color&&"bg-text-muted")}}
-      style={{width:16,height:2,borderRadius:1,...bar}}/>)}
+    {[0,1,2].map(i=><View key={i} {...{className:joinClasses(!unstyled&&!color&&"border-text-muted")}}
+      style={{width:16,height:0,borderTopWidth:2,...bar}}/>)}
   </View>;
   return <Transport disabled={disabled}
     onBegin={()=>controller.begin()}
@@ -66,8 +71,11 @@ export function DragGrabHandle({
       {...{onKeyDown,className:joinClasses(!unstyled&&"rounded-control",className)}}
       accessible accessibilityLabel={label}
       accessibilityHint="Drag to move. Press Escape to cancel."
-      accessibilityState={{disabled}}
-      style={[{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center",opacity:disabled?0.4:1},style]}>
+      aria-disabled={disabled}
+      // Not a tab stop (there is no keyboard move), but pressing it focuses it,
+      // so Escape reaches onKeyDown while the pointer is down on web.
+      focusable={false}
+      style={[{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center",opacity:disabled?0.4:1,...NO_SELECT},style]}>
       {grip}
     </View>
   </Transport>;

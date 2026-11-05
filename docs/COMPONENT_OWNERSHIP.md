@@ -20,8 +20,8 @@ complex editor screen composition and its cross-engine suite application.
 | AdaptivePanes/Inspector | Existing consumer implementation; extraction pending | **NOT EXTRACTED** | NYC-MON / Moyo |
 | Multi-hinge region planner | `@nyc-tron/core/folds` | Pure contract/tests | NYC-MON adaptive geometry |
 | Spatial panels | `@nyc-tron/core/spatial` | Pure specification, no renderer | Viro / spatial starter |
-| PrecisionScrubber | `@nyc-tron/ui/components/forge/inputs/PrecisionScrubber` (math in `/forge/inputs/precision`, logic in `/forge/inputs/precision-scrubber-model`) | Controlled RN control; fine/normal/coarse, detents, one commit, cancel restores, forced colors, adjustable a11y. Model tests only; no device or screen-reader QA yet | Forge `studio-workspace/precision-scrubber.tsx` (PR #32) |
-| DragGrabHandle | `@nyc-tron/ui/components/DragGrabHandle` | Controlled RN handle; start/move/commit/cancel, Escape and second-pointer cancel. Transport tests only; no device QA yet | Forge `studio-workspace/drag-grab-handle.tsx` |
+| PrecisionScrubber | `@nyc-tron/ui/components/forge/inputs/PrecisionScrubber` (math in `/forge/inputs/precision`, logic in `/forge/inputs/precision-scrubber-model`) | Controlled RN control; fine/normal/coarse, detents, one commit, cancel restores, forced colors, adjustable a11y. Model tests plus Chromium/React Native Web drag tests and light/dark/forced-colors captures (`packages/ui/tests/browser`); no device or screen-reader QA yet | Forge `studio-workspace/precision-scrubber.tsx` (PR #32) |
+| DragGrabHandle | `@nyc-tron/ui/components/DragGrabHandle` | Controlled RN handle; start/move/commit/cancel, Escape and second-pointer cancel. Transport tests plus Chromium reorder/cancel test; no device QA yet | Forge `studio-workspace/drag-grab-handle.tsx` |
 | Drag transports | `@nyc-tron/ui/components/gestures/PanResponderDrag` (default) and `/gestures/GestureHandlerDrag` (optional `react-native-gesture-handler` >=3.4 <4 peer) | Callback logic tested with mocked RN/RNGH; native recognition unverified on device | Forge `studio-gesture.tsx` / `studio-gesture.native.tsx` |
 | Track/mixer/fader / EQ controls | `components/forge/audio/` planned | **NOT EXTRACTED** | Forge Cadence work |
 | Timeline/tracks/edit handles | `components/forge/timeline/` planned | **NOT EXTRACTED** | Forge Splice work |
@@ -96,6 +96,16 @@ loaded by the scrubber or handle entry points. It uses the RNGH 3 `Gesture`
 builder, which RNGH 3 marks deprecated in favour of `usePanGesture` /
 `useTapGesture`; it matches the Forge source this was extracted from and should
 move to the hook API together with Forge.
+
+`PanResponderDrag` refuses responder termination requests once a drag is
+granted. The Forge source allowed them, and in the browser run a parent
+`ScrollView` then took the responder on vertical travel, so the fine/coarse
+gesture never registered. The OS can still terminate the drag, which cancels it.
+
+On web the forced-colors scale uses `var(--nyc-tron-canvas-text, CanvasText)`
+and `var(--nyc-tron-highlight, Highlight)`: React Native Web drops bare system
+color keywords. The handle's grip bars are top borders so forced colors keeps
+them visible without a prop.
 
 The forced-colors flag is a prop (`forcedColors`), since detecting it is the app's
 job. The handle's default glyph is three bars drawn with views; pass `children` to
