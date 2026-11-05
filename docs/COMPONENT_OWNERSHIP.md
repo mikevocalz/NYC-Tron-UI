@@ -56,7 +56,10 @@ complex editor screen composition and its cross-engine suite application.
 | KeyValueList | `@nyc-tron/ui/components/content/KeyValueList` | RN record fields; two columns from 600pt of its own measured width. Chromium tests at 390 and 834 px | NYC-MON `@acme/ui` KeyValueList |
 | NightScope | `@nyc-tron/ui/components/theme/NightScope` | Delegates to Uniwind `ScopedTheme` (optional peer). Chromium test uses a shim of Uniwind's web output; native Uniwind scoping not run here | NYC-MON `@acme/ui` NightScope |
 | DropZone | `@nyc-tron/ui/components/files/DropZone` | Web: DOM drag listeners on the view's node, `accept` filtering, built-in FilePicker. Native: expo-drag-drop-content-view 0.9.2 (optional peer). Web drop tested in Chromium; **native drop not run on a device** | NYC-MON `@acme/ui` DropZone (.web/.native) |
-| FilePicker | `@nyc-tron/ui/components/files/FilePicker` | Web: button that opens the system chooser. Native: renders nothing (**DEFERRED**, see below) | NYC-MON `@acme/ui/html` FilePickerBase |
+| FilePicker | `@nyc-tron/ui/components/files/FilePicker` | Web: button that opens the system chooser and hands `File`s to `onFiles`. Native: button that opens the OS document picker through `documentSource` and hands URIs to `onDocuments`; renders nothing without both. Mocked-host render test; not run on a device | NYC-MON `@acme/ui/html` FilePickerBase |
+| HapticsAndFeedback (N-05) | `@nyc-tron/platform-services/haptics` (`createPlatformHaptics`, `useHapticsEnabled`) | Expo Modules 2: `UIFeedbackGenerator` on iOS, `performHapticFeedback` on Android (no permission). Semantic kinds, persisted user opt-out, per-kind rate limit; web unavailable. JS tests and CI native compiles; not felt on a device | Original |
+| NativeFileAndShareAdapter (N-12) | `@nyc-tron/platform-services/documents` (`createPlatformDocuments`, `documentPickerSource`) | Expo Modules 2: iOS document picker (import, open-in-place with security scope and bookmarks) and share sheet; Android `ACTION_OPEN_DOCUMENT` with persisted grants and a share chooser through the kit's FileProvider; web share through the Web Share API. JS tests and CI native compiles; no device pick or share yet | Original |
+| NativePlaybackLifecycle (N-17) | `@nyc-tron/platform-services/playback` (`createPlatformPlaybackSession`; policy at `/playback-policy`) | Expo Modules 2: `AVAudioSession` interruptions, route loss and resets on iOS; audio focus and output-device loss on Android. Pure pause/resume/duck policy with tests; background audio left to the app. No device interruption run yet | Original; not ported from FilmCraft `Voiceover.kt` |
 | Semantic html set | `@nyc-tron/ui/components/html` (Page, Main, Header, Footer, Section, Nav, Article, Aside, Text, Paragraph, Heading, Link, Input) | Web: real elements through React Native Web's element factory. Native: View/Text with ARIA `role`. Web tested in Chromium; native roles typechecked only | NYC-MON `@acme/ui/html` |
 | HsvPicker | `@nyc-tron/ui/components/forge/color/HsvPicker` | Source extracted with unit-tested field geometry/gesture (`/forge/color/fieldGeometry`, `/forge/color/fieldGesture`); optional peers `@expo/ui` + `expo-linear-gradient`; native build and device QA unverified | Forge PR #34 |
 | Display color math (hex, RGBA, HSV) | `@nyc-tron/ui/components/forge/color` | Pure, tested; the one copy shared by ColorChannels and HsvPicker | Forge PR #26 / #34 |
@@ -249,11 +252,11 @@ string.
   are silent to VoiceOver and TalkBack. A native `Link` opens only absolute
   `http(s):`, `mailto:` and `tel:` hrefs; an app-router path needs `onPress`,
   and without it the link renders as plain text, not a link that does nothing.
-- **FilePicker on native (DEFER).** The contract hands the app `File`
-  objects, which React Native does not have, and the kit has no
-  document-picker peer. A native adapter returning URIs would be a different
-  contract and lands as its own subpath. Until then native FilePicker renders
-  nothing, and native apps take files through DropZone or their own picker.
+- **FilePicker on native (BUILD, 2026-11-05).** React Native has no `File`,
+  so native takes a separate contract: `documentSource` opens the OS picker
+  and `onDocuments` receives URIs. The kit takes no picker dependency;
+  `@nyc-tron/platform-services/documents` supplies the source. Without both
+  props native renders nothing, so there is never a button that opens nothing.
 - **DropZone web without expo-drag-drop-content-view (BUILD).** Its 0.9.2 web
   bundle ships JSX in a `.js` file that Vite/Rolldown parse as JavaScript. The
   web fork attaches `dragenter`/`dragover`/`dragleave`/`drop` listeners to the
