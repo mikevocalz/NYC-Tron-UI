@@ -61,6 +61,21 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $header = "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
           if (-not (Test-Path $header)) { throw "Missing generated XAML Fabric component header: $header" }
+      - name: Install isolated Windows consumer
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        run: npm install --no-audit --no-fund
+      - name: Generate official RNW application and connect native package
+        working-directory: packages/windows-fluent/rnw-fabric/example
+        shell: pwsh
+        run: |
+          npm run init:windows
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run prepare:host
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run typecheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Build native C++/WinRT Fabric XAML component
         working-directory: packages/windows-fluent/rnw-fabric
         shell: pwsh
@@ -80,21 +95,6 @@ jobs:
       # a launched React Native Windows app, route roundtrip, Narrator,
       # high contrast or physical Windows keyboard/pointer interactions.
 
-      - name: Install isolated Windows consumer
-        working-directory: packages/windows-fluent/rnw-fabric/example
-        run: npm install --no-audit --no-fund
-      - name: Generate official RNW application and connect native package
-        working-directory: packages/windows-fluent/rnw-fabric/example
-        shell: pwsh
-        run: |
-          npm run init:windows
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          npm run prepare:host
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          npm run typecheck
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          npm test
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Compile actual Windows consumer executable
         working-directory: packages/windows-fluent/rnw-fabric/example
         shell: pwsh
