@@ -514,7 +514,8 @@
       "evidence": [
         "P05-gpu-viewport.md",
         "P05-native-canvas.md",
-        "P05-native-canvas-proof.json"
+        "P05-native-canvas-proof.json",
+        "P05-android-merged-manifest-proof.json"
       ]
     },
     {
@@ -635,9 +636,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/layers/LayerThumbnail.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Async cached raster/vector preview."
+      "requirement": "Async cached raster/vector preview.",
+      "evidence": [
+        "P05-thumbnail-resources.md"
+      ]
     },
     {
       "id": "B-11",

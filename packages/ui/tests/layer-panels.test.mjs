@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {inflateSync} from "node:zlib";
 import {
   CHECKER_MAX_CELLS,checkerCells,createThumbnailCache,decodeBase64,encodeBase64,encodePng,fitContain,isRasterEmpty,
-  rasterFromBase64,rasterToImage,thumbnailAccessibilityLabel,thumbnailRequestMax,upscaleNearest,validateRaster,
+  rasterFromBase64,rasterToImage,thumbnailCacheId,thumbnailAccessibilityLabel,thumbnailRequestMax,upscaleNearest,validateRaster,
 } from "../src/components/forge/layers/layer-thumbnail-model.ts";
 import {
   MASK_FILLS,maskFillReason,maskStateLabel,maskStatusText,maskThumbnailId,normalizeRefine,refineOp,refineReason,
@@ -274,3 +274,15 @@ test("source contracts: controlled, token-only, engine-free, ported files carry 
   const button=read("panel-button.tsx");
   assert.ok(button.includes('", unavailable"')&&button.includes("accessibilityHint={reason}"),"disabled controls say why");
 });
+
+test('malformed successful thumbnail loads become retryable failures',async()=>{const cache=createThumbnailCache();cache.request('invalid',1,28,async()=>({width:2,height:2,pixels:new Uint8Array(1)}));await tick();assert.equal(cache.get('invalid',1,28).status,'error');assert.match(cache.get('invalid',1,28).message,/RGBA/);cache.retry('invalid',1,28);cache.request('invalid',1,28,async()=>rgba(1,1,255));await tick();assert.equal(cache.get('invalid',1,28).status,'ready');});
+test('clear aborts cooperative loaders and late completion cannot resurrect an old document',async()=>{const cache=createThumbnailCache();let complete,signal;cache.request('same',1,28,(_,__,s)=>{signal=s;return new Promise(resolve=>{complete=resolve;});});await tick();cache.clear();assert.equal(signal.aborted,true);cache.request('same',1,28,async()=>rgba(1,1,0));await tick();const fresh=cache.get('same',1,28);assert.equal(fresh.status,'ready');assert.equal(fresh.image.empty,true);complete(rgba(1,1,255));await tick();assert.equal(cache.get('same',1,28),fresh);});
+test('pending work has an admission budget and clear before its microtask prevents loading',async()=>{const cache=createThumbnailCache({capacity:4,maxPending:1});let finish,calls=0;cache.request('held',1,28,()=>new Promise(resolve=>{finish=resolve;}));cache.request('busy',1,28,async()=>{calls++;return rgba(1,1,255);});await tick();assert.equal(calls,0);assert.match(cache.get('busy',1,28).message,/capacity/);finish(rgba(1,1,255));await tick();cache.retry('busy',1,28);cache.request('busy',1,28,async()=>{calls++;return rgba(1,1,255);});await tick();assert.equal(calls,1);cache.request('cancel-before-start',1,28,async()=>{assert.fail('cancelled loader must not start');});cache.clear();await tick();assert.equal(cache.byteSize,0);});
+test('document cache namespaces separate reused layer IDs and oversized output has an honest error',async()=>{assert.notEqual(thumbnailCacheId('layer','a'),thumbnailCacheId('layer','b'));assert.notEqual(thumbnailCacheId('a:b','c'),thumbnailCacheId('a','b:c'));const cache=createThumbnailCache({maxBytes:20});cache.request('too-large',1,28,async()=>rgba(1,1,255));await tick();assert.equal(cache.get('too-large',1,28).status,'error');assert.match(cache.get('too-large',1,28).message,/byte budget/);assert.equal(cache.byteSize,0);});
+test('thumbnail encoding bounds large input rasters before creating PNG data URIs',()=>{const image=rasterToImage(rgba(1200,1,255),28);assert.equal(image.width,1200);const png=decodeBase64(image.uri.split(',')[1]),header=new DataView(png.buffer,png.byteOffset,png.byteLength);assert.equal(header.getUint32(16),28);assert.equal(header.getUint32(20),1);assert.throws(()=>validateRaster({width:4097,height:1,pixels:new Uint8Array(4097*4)}),/budget/);});
+
+test('evicted preview images cannot survive in an unbounded stale-image side cache',async()=>{const cache=createThumbnailCache({capacity:1});for(const id of ['a','b']){cache.request(id,1,1,async()=>rgba(1,1,255));await tick();}assert.deepEqual(cache.get('a',2,1),{status:'loading'});cache.clear();assert.equal(cache.byteSize,0);});
+test('miss snapshots stay stable while every admitted slot is pending',async()=>{const cache=createThumbnailCache({capacity:1,maxPending:1});cache.request('held',1,1,()=>new Promise(()=>{}));assert.equal(cache.get('other',1,1),cache.get('other',1,1));cache.clear();});
+test('base64 raster metadata is checked before decoding its payload',()=>{assert.throws(()=>rasterFromBase64({width:5000,height:1,pixels_b64:'!'}),/budget/);assert.throws(()=>rasterFromBase64({width:1,height:1,pixels_b64:'A'.repeat(2000)}),/4 RGBA bytes/);});
+
+test('clearing a pending preview changes its snapshot so an active subscriber can request again',()=>{const cache=createThumbnailCache();const before=cache.get('a',1,28);cache.request('a',1,28,()=>new Promise(()=>{}));cache.clear();assert.notEqual(cache.get('a',1,28),before);});

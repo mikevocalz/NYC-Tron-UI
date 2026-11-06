@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {readFileSync} from 'node:fs';
+const require=createRequire(import.meta.url),{ensureGraphiteMinSdk}=require('../../../examples/native-instruments/plugins/with-graphite-android.cjs');
+test('Graphite native config raises API 24 to 26 and preserves unrelated native properties',()=>{const others=[{type:'comment',value:'App-owned native metadata'},{type:'property',key:'expo.modules.updates.ENABLED',value:'false'},{type:'property',key:'custom.layout',value:'fold-cover'}],input=[...others,{type:'property',key:'android.minSdkVersion',value:'24'}];const output=ensureGraphiteMinSdk(input);assert.deepEqual(output.slice(0,-1),others);assert.deepEqual(output.at(-1),{type:'property',key:'android.minSdkVersion',value:'26'});assert.equal(input.at(-1).value,'24');assert.deepEqual(ensureGraphiteMinSdk(output),output);});
+test('Graphite config retains a higher platform minimum and resolves duplicate entries safely',()=>{const output=ensureGraphiteMinSdk([{type:'property',key:'android.minSdkVersion',value:'28'},{type:'property',key:'android.minSdkVersion',value:'26'}]);assert.deepEqual(output,[{type:'property',key:'android.minSdkVersion',value:'28'}]);assert.throws(()=>ensureGraphiteMinSdk([{type:'property',key:'android.minSdkVersion',value:'unknown'}]),/integer/);});
+test('native example keeps default orientation and opts into the persistent Graphite configuration',()=>{const app=JSON.parse(readFileSync(new URL('../../../examples/native-instruments/app.json',import.meta.url),'utf8')).expo;assert.equal(app.orientation,'default');assert.ok(app.plugins.includes('./plugins/with-graphite-android.cjs'));});

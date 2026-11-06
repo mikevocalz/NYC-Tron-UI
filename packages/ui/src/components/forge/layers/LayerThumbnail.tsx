@@ -15,11 +15,12 @@
  * Native component; colors come from theme tokens, and loading, empty,
  * couldn't-render and stale-while-revalidate states were added.
  */
-import {useEffect,useMemo,useSyncExternalStore} from "react";
-import {Image,PixelRatio,Pressable,Text,View,type ViewProps} from "react-native";
+import {useEffect,useLayoutEffect,useMemo,useRef,useSyncExternalStore} from "react";
+import {Image,PixelRatio,Platform,Pressable,Text,View,type ViewProps} from "react-native";
+import {webKey,isModified} from "../../forms/choice-keys.ts";
 import {joinClasses} from "../../styles.ts";
 import {
-  checkerCells,fitContain,rasterToImage,sharedThumbnailCache,thumbnailAccessibilityLabel,thumbnailRequestMax,
+  checkerCells,fitContain,rasterToImage,sharedThumbnailCache,thumbnailAccessibilityLabel,thumbnailRequestMax,thumbnailCacheId,
   type ThumbnailCache,type ThumbnailImage,type ThumbnailSource,type ThumbnailState,
 } from "./layer-thumbnail-model.ts";
 
@@ -27,6 +28,8 @@ import {
 export interface LayerThumbnailProps extends Omit<ViewProps,"children"> {
   /** Pixels in hand, or a loader keyed by id and revision. */
   source:ThumbnailSource;
+  /** Document/workspace cache namespace, combined with an optional loader source namespace. */
+  scope?:string;
   /**
    * Box size in points; the preview is fitted inside it.
    * @default 28
@@ -66,27 +69,33 @@ const noop=()=>()=>{};
  * Pixels render through an `Image` with a PNG data URI built in the model.
  */
 export function LayerThumbnail({
-  source,width=28,height=28,variant="content",label,cache=sharedThumbnailCache,pixelRatio,
+  source,scope="",width=28,height=28,variant="content",label,cache=sharedThumbnailCache,pixelRatio,
   className,unstyled=false,style,...rest
 }:LayerThumbnailProps){
   const ratio=pixelRatio??PixelRatio.get();
   const max=thumbnailRequestMax(width,height,ratio);
   const loader=source.kind==="loader"?source:undefined;
+  const cacheId=loader?thumbnailCacheId(loader.id,JSON.stringify([scope,loader.scope??''])):'';
+  const mounted=useRef(false),committed=useRef({cacheId,revision:loader?.revision,max,cache});
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
+  useLayoutEffect(()=>{committed.current={cacheId,revision:loader?.revision,max,cache};});
   const state=useSyncExternalStore(loader?cache.subscribe:noop,
-    ()=>loader?cache.get(loader.id,loader.revision,max):SETTLED,
-    ()=>loader?cache.get(loader.id,loader.revision,max):SETTLED);
-  useEffect(()=>{if(loader)cache.request(loader.id,loader.revision,max,loader.load);},
-    [cache,loader?.id,loader?.revision,max,loader?.load,state]);
+    ()=>loader?cache.get(cacheId,loader.revision,max):SETTLED,
+    ()=>loader?cache.get(cacheId,loader.revision,max):SETTLED);
+  useEffect(()=>{if(loader)cache.request(cacheId,loader.revision,max,(_,edge,signal)=>loader.load(loader.id,edge,signal));},
+    [cache,cacheId,loader?.revision,max,loader?.load,state]);
   const raster=source.kind==="pixels"?source.raster:undefined;
   const direct=useMemo(()=>raster?rasterToImage(raster,max):undefined,[raster,max]);
   const shown:ThumbnailState=direct?{status:"ready",image:direct}:state;
   const image=shown.status==="ready"?shown.image:shown.stale;
   const styled=!unstyled;
-  const retry=loader&&shown.status==="error"?()=>cache.retry(loader.id,loader.revision,max):undefined;
+  const retry=loader&&shown.status==="error"?()=>{const p=committed.current;if(mounted.current&&p.cache===cache&&p.cacheId===cacheId&&p.revision===loader.revision&&p.max===max)cache.retry(cacheId,loader.revision,max);}:undefined;
   const a11y=label===undefined
     ?{importantForAccessibility:"no-hide-descendants" as const,accessibilityElementsHidden:true,"aria-hidden":true}
     :{accessible:true,accessibilityRole:"image" as const,accessibilityLabel:thumbnailAccessibilityLabel(label,shown),
       "aria-busy":shown.status==="loading",
+      accessibilityHint:retry?'Activate to retry this preview':undefined,
+      ...(Platform.OS==='web'&&retry?{tabIndex:0 as const,onKeyDown:(event:unknown)=>{const raw=event as {target?:unknown;currentTarget?:unknown};if(raw.target!==raw.currentTarget)return;const key=webKey(event);if(!isModified(key)&&(key.key==='Enter'||key.key===' ')){key.preventDefault();retry();}}}:{}),
       accessibilityActions:retry?[{name:"activate",label:"Retry preview"}]:[],
       onAccessibilityAction:()=>retry?.()};
   return <View {...rest} {...a11y}
@@ -96,7 +105,7 @@ export function LayerThumbnail({
     {variant==="content"&&image?<Checker box={fitContain(image.width,image.height,width,height)} styled={styled}/>:null}
     {image&&!image.empty?<Picture image={image} width={width} height={height}/>:null}
     {!image&&shown.status==="loading"?<Skeleton width={width} height={height} styled={styled}/>:null}
-    {shown.status==="error"&&!image?<Failure width={width} height={height} styled={styled} onRetry={retry}/>:null}
+    {shown.status==="error"&&!image?<Failure width={width} height={height} styled={styled} onRetry={label===undefined?undefined:retry}/>:null}
     {shown.status==="error"&&image?<StaleMark styled={styled}/>:null}
   </View>;
 }
@@ -127,7 +136,7 @@ function Skeleton({width,height,styled}:{width:number;height:number;styled:boole
 
 /** An exclamation mark in the danger token; large boxes also say so in words and offer a retry. */
 function Failure({width,height,styled,onRetry}:{width:number;height:number;styled:boolean;onRetry:(()=>void)|undefined}){
-  const roomy=width>=96&&height>=72;
+  const roomy=width>=96&&height>=84;
   const mark=<View pointerEvents="none" {...{className:joinClasses(styled&&"border-danger")}}
     style={{width:16,height:16,borderRadius:8,borderWidth:1.5,alignItems:"center",justifyContent:"center",gap:1.5}}>
     <View {...{className:joinClasses(styled&&"bg-danger")}} style={{width:2,height:6,borderRadius:1}}/>

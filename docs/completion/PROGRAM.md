@@ -58,3 +58,5 @@ P05 GPU checkpoint: B-01 exposes a real Skia 3 Graphite surface with host-owned 
 P05 snapping/pivot checkpoint: B-04, B-05 and B-08 have reviewed bounded feedback, settings and scoped pivot interactions. [Review report](P05-snapping-and-pivot.md) records 823 source tests and targeted interaction checks, including the shared numeric scope/async guard fix. Review count is 96 of 341.
 
 P05 native canvas checkpoint: the 39-step pinch/Metal canvas/error recovery scenario passes twice unchanged on iOS. [Native canvas report](P05-native-canvas.md) records the recognizer-start and accessible-error fixes, replay output and simulator limits. Review count remains 96 of 341; remaining P05 implementation and platform gates stay open.
+
+P05 thumbnail checkpoint: B-10 now isolates document cache identities, bounds pending/stale resources and recovers from malformed provider output. [Resource report](P05-thumbnail-resources.md) records 835 source tests, 15 browser checks and the persistent Android API 26/manifest verification. Review count is 97 of 341; Android runtime and remaining P05 work stay open.

@@ -1,0 +1,59 @@
+{
+  "minSdkVersion": 26,
+  "vulkan": {
+    "{http://schemas.android.com/apk/res/android}name": "android.hardware.vulkan.version",
+    "{http://schemas.android.com/apk/res/android}required": "true",
+    "{http://schemas.android.com/apk/res/android}version": "0x401000"
+  },
+  "preservedApplicationMetadata": [
+    {
+      "{http://schemas.android.com/apk/res/android}name": "expo.modules.updates.ENABLED",
+      "{http://schemas.android.com/apk/res/android}value": "false"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "expo.modules.updates.ENABLE_BSDIFF_PATCH_SUPPORT",
+      "{http://schemas.android.com/apk/res/android}value": "true"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH",
+      "{http://schemas.android.com/apk/res/android}value": "ALWAYS"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS",
+      "{http://schemas.android.com/apk/res/android}value": "0"
+    }
+  ],
+  "preservedActivityLayout": {
+    "screenOrientation": "unspecified",
+    "configChanges": "keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths",
+    "windowSoftInputMode": "adjustResize",
+    "launchMode": "singleTask"
+  },
+  "preservedPermissions": [
+    {
+      "{http://schemas.android.com/apk/res/android}name": "android.permission.INTERNET"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "android.permission.READ_EXTERNAL_STORAGE",
+      "{http://schemas.android.com/apk/res/android}maxSdkVersion": "32",
+      "{http://schemas.android.com/tools}replace": "android:maxSdkVersion"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "android.permission.SYSTEM_ALERT_WINDOW"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "android.permission.VIBRATE"
+    },
+    {
+      "{http://schemas.android.com/apk/res/android}name": "android.permission.WRITE_EXTERNAL_STORAGE",
+      "{http://schemas.android.com/apk/res/android}maxSdkVersion": "32",
+      "{http://schemas.android.com/tools}replace": "android:maxSdkVersion"
+    }
+  ],
+  "sourceManifestExactAfterPrebuild": true,
+  "nativeAutolink": [
+    "com.swmansion.gesturehandler.RNGestureHandlerPackage",
+    "com.reactnative.skia.RNSkiaPackage"
+  ],
+  "variant": "debug, arm64-v8a, RN 0.88.1, Skia 3.9.1, RNGH 3.4.0"
+}
