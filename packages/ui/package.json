@@ -1889,6 +1889,16 @@
       "types": "./dist/components/forge/motion/motion-path.d.ts",
       "react-native": "./dist/components/forge/motion/motion-path.js",
       "default": "./dist/components/forge/motion/motion-path.js"
+    },
+    "./components/forge/motion/EffectStackAndInspector": {
+      "types": "./dist/components/forge/motion/EffectStackAndInspector.d.ts",
+      "react-native": "./dist/components/forge/motion/EffectStackAndInspector.js",
+      "default": "./dist/components/forge/motion/EffectStackAndInspector.js"
+    },
+    "./components/forge/motion/motion-effects": {
+      "types": "./dist/components/forge/motion/motion-effects.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-effects.js",
+      "default": "./dist/components/forge/motion/motion-effects.js"
     }
   },
   "scripts": {

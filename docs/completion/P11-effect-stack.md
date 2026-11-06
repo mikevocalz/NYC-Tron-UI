@@ -1,0 +1,7 @@
+# Effect stack checkpoint
+
+G-10 EffectStackAndInspector provides ordered effect selection, add/remove/reorder, bypass, favorites/filtering, reset and per-effect preset selection. Its inspector renders bounded host-defined numeric, boolean, choice and text schemas. Numeric edits retain full committed precision; text edits use an explicit draft/apply action. Stable unknown preset/choice identities remain visible as unavailable rather than silently selecting another option.
+
+Every mutation carries explicit effect/parameter/type identities through a cancellable asynchronous host callback scoped to document and revision. Pending writes lock further mutations; rejection preserves authoritative host state, and cancellation/document replacement prevents late writes when the provider honors its signal before commit. Stack, inspector and library use separate bounded lists/scrollers. Effect order and values are never processed or persisted by this UI; GPU/CPU evaluation and preset storage belong to the host.
+
+Three model tests cover reorder identity/immutability, typed parameter values and malformed metadata. Five browser checks cover all stack actions, full precision numeric edits, text drafts, reset, preset/add, provider rejection, cancellation and document replacement. The standalone consumer's provider changes fixture metadata only; no effect engine is claimed. Native runtime and platform acceptance remain unverified.

@@ -2555,10 +2555,15 @@
       "name": "EffectStackAndInspector",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/EffectStackAndInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Reorder, bypass, reset, favorites and presets."
+      "requirement": "Reorder, bypass, reset, favorites and presets.",
+      "evidence": [
+        "P11-effect-stack.md"
+      ]
     },
     {
       "id": "G-11",
