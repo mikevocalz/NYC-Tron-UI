@@ -135,3 +135,11 @@ light and dark plus RTL.
 
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.
+
+`fixtures/timeline2.tsx` renders the second timeline cluster with controlled
+Zustand state and a seconds-based engine stand-in. `timeline2.spec.mjs` covers
+rename commit-once with a delayed response, marker drafts and Escape, slip and
+locked-track refusal, loop drag/cancel, transition application, marker creation,
+batch transactions and compact LTR/RTL track settings. `timeline2-shots.spec.mjs`
+writes 13 light/dark phone/tablet and RTL review captures. Actual Rust handoff
+is checked in Forge's Splice tests, not by this browser stand-in.

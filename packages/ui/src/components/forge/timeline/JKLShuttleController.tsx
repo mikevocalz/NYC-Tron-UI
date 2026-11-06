@@ -61,7 +61,7 @@ export function JKLShuttleController({
       style={{minWidth:52,minHeight:44,alignItems:"center",justifyContent:"center",opacity:off||disabled?0.4:1}}>
       <Text {...{className:joinClasses(styled&&(on?"text-text font-semibold":"text-text"))}}>{k.toUpperCase()}</Text>
     </Pressable>;
-  return <View {...rest} {...(testID?{testID}:{})} {...{onKeyDown,onKeyUp}}
+  return <View {...rest} {...(testID?{testID}:{})} {...{onKeyDown,onKeyUp,onBlur:()=>{kHeld.current=false;}}}
     accessibilityRole="toolbar" accessibilityLabel="Shuttle"
     {...{className:joinClasses("gap-2",className)}}
     style={[{flexDirection:"row",alignItems:"center",flexWrap:"wrap",direction:"ltr"},style]}>

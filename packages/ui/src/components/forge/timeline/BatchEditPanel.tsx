@@ -70,10 +70,12 @@ export function BatchEditPanel({
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-end",gap:8}}>
       <TextField id={(testID??"batch")+"-shift"} label="Shift by frames" value={form.shift} keyboardType="number-pad" editable={!disabled}
         onChangeText={shift=>store.set(f=>({...f,shift}))} style={{width:88}} errorText={Number.isNaN(shiftFrames)?"Whole frames":undefined}/>
+      <View style={{flexDirection:"row",gap:8,direction:"ltr"}}>
       <Button title="Earlier" variant="secondary" size="sm" disabled={disabled||!earlier.valid} {...id("earlier")}
         accessibilityHint={why(earlier)??"Move every selected clip earlier"} onPress={()=>run(earlier)}/>
       <Button title="Later" variant="secondary" size="sm" disabled={disabled||!later.valid} {...id("later")}
         accessibilityHint={why(later)??"Move every selected clip later"} onPress={()=>run(later)}/>
+      </View>
     </View>
     {n&&!earlier.valid&&!later.valid?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{why(later)}.</Text>
       :n&&(!earlier.valid||!later.valid)?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>

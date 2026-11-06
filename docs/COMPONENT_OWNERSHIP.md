@@ -108,7 +108,7 @@ complex editor screen composition and its cross-engine suite application.
 | ClipTrimHandles (D-19) | `@nyc-tron/ui/components/forge/timeline/ClipTrimHandles` | Head/tail trims, speed-aware, media and neighbour limits, apply order for Splice | FilmCraft `Timeline.kt` trim drag (ported) |
 | RazorSplitTool (D-20) | `@nyc-tron/ui/components/forge/timeline/RazorSplitTool` | Razor toggle and split at playhead; ripple deferred | Original |
 | SafeAreaOverlay (D-25) | `@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay` (`/forge/timeline/safe-area`) | SMPTE/legacy safe areas, aspect mattes, thirds, center | Original |
-| Track headers (D-18) | `components/forge/timeline/` | **DEFERRED**: Splice tracks have no lock/hide/mute flags yet (add/remove only) | Forge Splice |
+| Track headers (D-18) | `components/forge/timeline/TrackHeaders` | Lock/hide/mute/solo, rename, grouped reorder and compact track settings | Original |
 | LayerStack + layer model | `@nyc-tron/ui/components/forge/layers/LayerStack`, `.../forge/layers/layer-model` | Controlled RN list: visibility, opacity drag, reorder, rename, optional `kindLabel`, thumbnail and `onRemove`; below its measured row floor the opacity slider becomes a readout that opens a PrecisionScrubber popover (`opacityControl`). Model tests, mocked-host render tests and Chromium/React Native Web remove and keyboard tests; no device or screen-reader QA yet | Forge Prism layer panel |
 | Brushes, paint controls | `components/forge/graphics/` planned | **NOT EXTRACTED** | Forge Prism work |
 | Eyedropper / canvas sampling | `components/forge/color/` planned | **NOT EXTRACTED** (needs a Board pixel-sampling API; HSV picker is extracted above) | Forge PR #34 |
@@ -437,12 +437,9 @@ mirror.
 
 Decisions recorded here:
 
-- **D-18 TrackHeaders: DEFERRED** until Splice tracks carry lock/hide/mute/solo
-  flags. Lanes show the track label meanwhile.
-- **Ripple (part of D-20): DEFERRED.** Splice has no ripple op; emulating it
-  as N `moveClip`s would not be one undo step.
-- **`setSpeed` and `addClip` UI: DEFERRED** to D-22 (drag from the bin) and the
-  speed-curve work. `PlaybackRateMenu` is player rate, not clip speed.
+- **D-18 TrackHeaders is implemented in the local second cluster.** Splice stores lock/hide/mute/solo flags; the host supplies its callbacks.
+- **Ripple is implemented in the local second cluster.** The host maps each finished edit to Splice ripple operations, and batch actions use one engine transaction.
+- **Constant clip speed is exposed by BatchEditPanel.** Media-bin insertion and keyframed speed remain deferred; `PlaybackRateMenu` remains player rate.
 - **Mini-map thumbnails and filmstrips (D-16) and waveforms in clips (D-17)**
   are out of scope; `renderClipContent` is where a host draws them.
 
@@ -927,3 +924,24 @@ at 320/360/390pt, TabBar header rows, grouped Select and the trigger-form
 popover. The Android and iOS compile lanes build the native example, which
 now renders a grouped NativeDropdown and a trigger-form NativePopover. No
 simulator, device, VoiceOver or TalkBack pass has been done for any of these.
+
+
+## Timeline cluster 2 — local phase 2
+
+All controls below are original implementations; no third-party source was copied for this cluster. Existing timeline-core source notices remain intact. Every name has an independent `@nyc-tron/ui/components/forge/timeline/<Name>` export. No Forge engine is imported by this repository.
+
+| Control | Roster | Controlled callback / responsibility |
+| --- | --- | --- |
+| JKLShuttleController | D-09 | Host player rate and frame-step intent; reverse is opt-in, no decoder provided |
+| LoopRangeBar | D-13 | One stored range commit; actual player looping remains host state |
+| TrackHeaders | D-18 | Flags, rename and reorder; compact headers open full settings below lanes |
+| RollSlipSlideControls | D-21 | Slip/slide/roll/ripple edit intent; selected clip and media bounds required |
+| DragReorderAndRipple | D-22 | Insert/overwrite policy and ripple delete; no media-bin decoder |
+| TransitionHandles | D-23 | Cut selection and one duration commit per completed gesture |
+| TimelineMarkers | D-24 | Add, move, range, name/note and remove; Enter followed by blur commits once |
+| OverlayAndEffectsTrackStack | D-31 | Overlay/video/audio groups; effects tracks remain deferred on a compositor |
+| TransitionPresetBrowser | D-37 | Static diagrams and preset intent; no rendered video preview |
+| BatchEditPanel | D-41 | Shift, speed, remove and ripple-delete lists for one engine transaction |
+| ModeEdgeHandles | D-19/D-21 | Internal/shared edge gesture presentation for the selected trim mode |
+
+Phase 2 includes pure model/source tests and Chromium interaction tests with a Zustand stand-in. Forge separately verifies the callback shapes against this checkout's built declarations and runs the bound callbacks against real Rust. Browser captures cover light/dark phone/tablet and RTL. These are local source/browser/protocol checks, not a publication or native/device acceptance claim.

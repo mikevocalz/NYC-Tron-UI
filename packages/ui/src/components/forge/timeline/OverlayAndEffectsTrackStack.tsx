@@ -7,7 +7,8 @@
  * track would hold clips nothing can render. No button adds one. The stack
  * gains that kind when Splice gets an effect track and a renderer for it.
  */
-import {Pressable,Text,View,type ViewProps} from "react-native";
+import type {ReactNode} from "react";
+import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -26,8 +27,19 @@ export interface OverlayAndEffectsTrackStackProps extends Omit<TimelineClipLaneP
   readonly onMoveTrack:(trackId:string,toIndex:number)=>void;
   /** Splice `addTrack`. */
   readonly onAddTrack:(kind:TrackKind)=>void;
-  /** Header column width; the lanes take `viewport.widthPx`. @default 216 */
+  /** Header column width; the lanes take `viewport.widthPx`. @default 232, or 56 when `compactHeaders` */
   readonly headerWidth?:number;
+  /**
+   * Phone layout: headers shrink to track codes, and the opened track's full
+   * row (name, switches, reorder) shows under the lanes.
+   */
+  readonly compactHeaders?:boolean;
+  /**
+   * Drawn over the lanes, in their coordinates, with the tracks in stack
+   * order: `TransitionHandles`, `TimelinePlayhead`. Pass the same stack
+   * order to them (`stackOrder(tracks)`).
+   */
+  readonly laneOverlay?:ReactNode;
 }
 
 /**
@@ -39,7 +51,7 @@ export interface OverlayAndEffectsTrackStackProps extends Omit<TimelineClipLaneP
  * passes through to `TimelineClipLane`.
  */
 export function OverlayAndEffectsTrackStack({
-  tracks,onSetFlag,onRename,onMoveTrack,onAddTrack,headerWidth=216,laneHeight=56,disabled=false,unstyled=false,testID,
+  tracks,onSetFlag,onRename,onMoveTrack,onAddTrack,compactHeaders=false,headerWidth=compactHeaders?56:232,laneOverlay,laneHeight=56,disabled=false,unstyled=false,testID,
   style,className,...lane
 }:OverlayAndEffectsTrackStackProps){
   const styled=!unstyled;
@@ -48,6 +60,10 @@ export function OverlayAndEffectsTrackStack({
   // Reorder mode is view state for this stack only.
   const [reorder,reorderStore]=useLocalStore(()=>false);
   const setReorder=(v:boolean)=>reorderStore.set(v);
+  const [openId,openStore]=useLocalStore(()=>undefined as string|undefined);
+  const opened=compactHeaders?shown.find(t=>t.id===openId):undefined;
+  const headerProps={laneHeight,onSetFlag,onRename,onMove:onMoveTrack,moveTarget:(trackId:string,d:-1|1)=>stackMoveTarget(tracks,trackId,d),
+    reorder,disabled,unstyled};
   return <View {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Button title="Add video track" variant="secondary" size="sm" disabled={disabled} onPress={()=>onAddTrack("video")} {...id("add-video")}/>
@@ -63,13 +79,20 @@ export function OverlayAndEffectsTrackStack({
     </View>
     {/* Headers stay at the start of time, left, in RTL too: the lanes never mirror. */}
     {shown.length?<View style={{flexDirection:"row",direction:"ltr"}}>
-      <TrackHeaders tracks={shown} laneHeight={laneHeight} width={headerWidth} onSetFlag={onSetFlag} onRename={onRename}
-        onMove={onMoveTrack} moveTarget={(trackId,d)=>stackMoveTarget(tracks,trackId,d)} reorder={reorder}
-        disabled={disabled} unstyled={unstyled} {...id("headers")}
+      <TrackHeaders tracks={shown} {...headerProps} width={headerWidth} compact={compactHeaders}
+        openTrackId={opened?.id} onOpenTrack={t=>openStore.set(t)} {...id("headers")}
         {...{className:joinClasses(styled&&"border-e border-border")}}/>
-      <TimelineClipLane {...lane} tracks={shown} laneHeight={laneHeight} disabled={disabled} unstyled={unstyled} {...id("lanes")}/>
+      <View>
+        <TimelineClipLane {...lane} tracks={shown} laneHeight={laneHeight} disabled={disabled} unstyled={unstyled} {...id("lanes")}/>
+        {laneOverlay??null}
+      </View>
     </View>:<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:12}}>
       No tracks yet. Add a video or audio track to start.</Text>}
+    {opened?<View {...{className:joinClasses(styled&&"rounded-control border border-border")}} style={{overflow:"hidden"}}>
+      {/* The full row for the opened track; moves still follow the stack order. */}
+      <TrackHeaders tracks={[opened]} allTracks={tracks} {...headerProps} width="100%" moveTarget={(trackId,d)=>stackMoveTarget(tracks,trackId,d)}
+        {...id("track-settings")}/>
+    </View>:null}
   </View>;
 }
 

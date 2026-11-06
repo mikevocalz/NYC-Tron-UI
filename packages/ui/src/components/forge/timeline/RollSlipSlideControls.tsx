@@ -85,6 +85,8 @@ export function RollSlipSlideControls({
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       {tool==="roll"||tool==="ripple"?<SegmentedControl aria-label="Edge" value={edge} onChange={v=>edgeStore.set(v)}
         options={[{value:"head",label:"Start"},{value:"tail",label:"End"}]} disabled={disabled} unstyled={unstyled} {...id("edge")}/>:null}
+      {/* Earlier to later, left to right in every layout direction: these step through time. */}
+      <View style={{flexDirection:"row",gap:8,direction:"ltr"}}>
       {steps.map((d,i)=>{
         const r=results[i]!;
         return <Button key={d} title={(d>0?"+":"−")+Math.abs(d)} variant="secondary" size="sm" {...id("nudge"+d)}
@@ -92,6 +94,7 @@ export function RollSlipSlideControls({
           accessibilityHint={r.preview&&!r.preview.valid&&r.preview.problem?TRIM_MODE_PROBLEM_TEXT[r.preview.problem]:undefined}
           onPress={()=>{if(r.edit)onEdit(r.edit);}} style={{minWidth:52}}/>;
       })}
+      </View>
     </View>
     {reason&&!disabled?<Text {...id("reason")} {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{reason}.</Text>:null}
   </View>;

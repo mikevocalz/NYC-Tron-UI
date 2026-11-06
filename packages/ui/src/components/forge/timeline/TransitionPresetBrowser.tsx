@@ -95,7 +95,7 @@ export function TransitionPresetBrowser({
   const tc=(f:number)=>formatTimecode(f,rate,{dropFrame});
   const presets=presetsSeconds.map(s=>({value:String(Math.max(1,Math.round(s*fps))),label:s+" s"}));
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-3",className)}} style={style}>
-    <TextField id={(testID??"transitions")+"-search"} label="Search transitions" value={state.query} placeholder="Dissolve, wipe, push"
+    <TextField id={(testID??"transitions")+"-search"} label="Search transitions" value={state.query}
       onChangeText={query=>store.set(s=>({...s,query}))} editable={!disabled} autoCorrect={false}/>
     <View accessibilityRole="radiogroup" accessibilityLabel="Transition" style={{gap:4}}>
       {shown.length?shown.map(k=>{
@@ -118,10 +118,12 @@ export function TransitionPresetBrowser({
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <SegmentedControl aria-label="Transition length" options={presets} value={String(frames)} disabled={disabled}
         onChange={v=>store.set(s=>({...s,frames:Number(v)}))} unstyled={unstyled} {...id("length")}/>
+      <View style={{flexDirection:"row",gap:8,direction:"ltr"}}>
       <Button title="−1" variant="secondary" size="sm" accessibilityLabel="One frame shorter" disabled={disabled||frames<=1}
         onPress={()=>store.set(s=>({...s,frames:Math.max(1,frames-1)}))} style={{minWidth:44}} {...id("shorter")}/>
       <Button title="+1" variant="secondary" size="sm" accessibilityLabel="One frame longer" disabled={disabled||(max>0&&frames>=max)}
         onPress={()=>store.set(s=>({...s,frames:frames+1}))} style={{minWidth:44}} {...id("longer")}/>
+      </View>
       <Text {...id("length-tc")} {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
         {tc(frames)}{max>0?` of up to ${tc(max)}`:""}</Text>
     </View>

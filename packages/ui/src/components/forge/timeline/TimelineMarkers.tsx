@@ -133,11 +133,13 @@ export function TimelineMarkers({
   const prev=adjacentMarker(markers,playheadFrame,-1),next=adjacentMarker(markers,playheadFrame,1);
   const go=(m:TimelineMarker|undefined)=>{if(m){onSelect(m.id);onSeek(m.frame);}};
   const second=Math.max(1,Math.round(rate.numerator/rate.denominator));
+  const dirty=useRef({name:false,note:false});
   const [draft,store]=useLocalStore(()=>({id:"",name:"",note:""}));
   // The fields edit a draft of the selected marker; switching markers reloads it.
-  useEffect(()=>{store.set({id:selected?.id??"",name:selected?.name??"",note:selected?.note??""});},[selected?.id,selected?.name,selected?.note,store]);
+  useEffect(()=>{dirty.current={name:false,note:false};store.set({id:selected?.id??"",name:selected?.name??"",note:selected?.note??""});},[selected?.id,selected?.name,selected?.note,store]);
   const commitText=(field:"name"|"note")=>{
-    if(!selected||disabled)return;
+    if(!selected||disabled||!dirty.current[field])return;
+    dirty.current[field]=false;
     const value=store.get()[field].trim();
     if(field==="name"&&!value){store.set(d=>({...d,name:selected.name}));return;}
     if(value===(selected[field]??""))return;
@@ -166,9 +168,11 @@ export function TimelineMarkers({
       style={{padding:12,gap:10}}>
       <View style={{flexDirection:"row",flexWrap:"wrap",gap:12}}>
         <TextField id={"marker-name-"+selected.id} label="Marker name" value={draft.name} editable={!disabled} style={{minWidth:160}}
-          className="grow" onChangeText={name=>store.set(d=>({...d,name}))} onBlur={()=>commitText("name")} onSubmitEditing={()=>commitText("name")}/>
+          className="grow" onChangeText={name=>{dirty.current.name=true;store.set(d=>({...d,name}));}} onBlur={()=>commitText("name")} onSubmitEditing={()=>commitText("name")}
+          onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){dirty.current.name=false;store.set(d=>({...d,name:selected.name}));}}}/>
         <TextField id={"marker-note-"+selected.id} label="Note" value={draft.note} editable={!disabled} style={{minWidth:160}}
-          className="grow" onChangeText={note=>store.set(d=>({...d,note}))} onBlur={()=>commitText("note")} onSubmitEditing={()=>commitText("note")}/>
+          className="grow" onChangeText={note=>{dirty.current.note=true;store.set(d=>({...d,note}));}} onBlur={()=>commitText("note")} onSubmitEditing={()=>commitText("note")}
+          onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){dirty.current.note=false;store.set(d=>({...d,note:selected.note??""}));}}}/>
       </View>
       <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
         <Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
