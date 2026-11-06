@@ -217,3 +217,13 @@ test("every control keeps a 44pt target",async({page})=>{
     }
   }
 });
+
+test("reference short radio labels retain a 44pt touch target",async({page})=>{
+  await open(page,"view=reference",{width:390,height:844});
+  for(const radio of await page.getByRole("radio").all()){
+    const box=await radio.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+});

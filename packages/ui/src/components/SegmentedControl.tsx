@@ -67,7 +67,7 @@ export function SegmentedControl<T extends string=string>({
         accessibilityState={{checked:active,disabled:off[i]}}
         onPress={()=>select(i)}
         {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}:{})}
-        {...{className:joinClasses("min-h-11 grow items-center justify-center",
+        {...{className:joinClasses("min-h-11 min-w-11 shrink-0 grow items-center justify-center",
           styled&&"rounded-control px-3 py-1.5 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none",
           styled&&(active?"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]":"bg-transparent hover:bg-surface-raised"),
           off[i]&&"opacity-50",segmentClassName)}}>
