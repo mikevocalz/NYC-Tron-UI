@@ -2,7 +2,8 @@ import {useRef} from 'react';
 import {View} from 'react-native';
 import {createStore} from 'zustand/vanilla';
 import {useStore} from 'zustand';
-import {TabBar} from '@nyc-tron/ui/components/TabBar';
+import {Select} from '@nyc-tron/ui/components/Select';
+import {MotionExpressionDemo} from './MotionExpressionDemo';
 import {MotionEffectsDemo} from './MotionEffectsDemo';
 import {MotionPathDemo} from './MotionPathDemo';
 import {CompositionTreeDemo} from './CompositionTreeDemo';
@@ -10,5 +11,6 @@ import {MotionSettingsDemo} from './MotionSettingsDemo';
 import {MotionTimelineDemo} from './MotionTimelineDemo';
 import {MotionCurvesDemo} from './MotionCurvesDemo';
 import {MotionQueueDemo} from './MotionQueueDemo';
-const makeStore=()=>createStore(()=>({section:'Scene' as 'Scene'|'Queue'|'Curves'|'Timeline'|'Layers'|'Path'|'Effects'}));
-export function MotionWorkbenchDemo(){const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,section=useStore(store,s=>s.section);return <View style={{flex:1,gap:8}}><TabBar tabs={(['Scene','Queue','Curves','Timeline','Layers','Path','Effects'] as const).map(key=>({key,label:key,active:section===key,onPress:()=>store.setState({section:key})}))}/>{section==='Scene'?<MotionSettingsDemo/>:section==='Queue'?<MotionQueueDemo/>:section==='Curves'?<MotionCurvesDemo/>:section==='Timeline'?<MotionTimelineDemo/>:section==='Layers'?<CompositionTreeDemo/>:section==='Path'?<MotionPathDemo/>:<MotionEffectsDemo/>}</View>;}
+const sections=['Scene','Queue','Curves','Timeline','Layers','Path','Effects','Expression'] as const;
+const makeStore=()=>createStore(()=>({section:'Scene' as typeof sections[number]}));
+export function MotionWorkbenchDemo(){const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,section=useStore(store,s=>s.section);return <View style={{flex:1,gap:8}}><Select label="Motion component" value={section} options={sections.map(value=>({value,label:value}))} onValueChange={section=>{if(sections.includes(section as typeof sections[number]))store.setState({section:section as typeof sections[number]});}}/>{section==='Scene'?<MotionSettingsDemo/>:section==='Queue'?<MotionQueueDemo/>:section==='Curves'?<MotionCurvesDemo/>:section==='Timeline'?<MotionTimelineDemo/>:section==='Layers'?<CompositionTreeDemo/>:section==='Path'?<MotionPathDemo/>:section==='Effects'?<MotionEffectsDemo/>:<MotionExpressionDemo/>}</View>;}

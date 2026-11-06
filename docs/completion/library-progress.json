@@ -2570,10 +2570,15 @@
       "name": "ExpressionEditor",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/ExpressionEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Code completion, references, validation and errors."
+      "requirement": "Code completion, references, validation and errors.",
+      "evidence": [
+        "P11-expression-editor.md"
+      ]
     },
     {
       "id": "G-12",

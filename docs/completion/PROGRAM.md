@@ -32,3 +32,5 @@ Composition hierarchy checkpoint: G-01 is implemented with independent exports, 
 Motion path checkpoint: G-06 reuses the native vector editor with point/tangent snapping and document/revision cancellation. See [motion path](P11-motion-path.md).
 
 Effect stack checkpoint: G-10 provides ordered effects and schema-driven inspection through owned host mutations. See [effect stack](P11-effect-stack.md).
+
+Expression editor checkpoint: G-11 provides native text input with completion, reference and diagnostic host services. See [expression editor](P11-expression-editor.md).

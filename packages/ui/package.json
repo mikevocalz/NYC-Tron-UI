@@ -1899,6 +1899,16 @@
       "types": "./dist/components/forge/motion/motion-effects.d.ts",
       "react-native": "./dist/components/forge/motion/motion-effects.js",
       "default": "./dist/components/forge/motion/motion-effects.js"
+    },
+    "./components/forge/motion/ExpressionEditor": {
+      "types": "./dist/components/forge/motion/ExpressionEditor.d.ts",
+      "react-native": "./dist/components/forge/motion/ExpressionEditor.js",
+      "default": "./dist/components/forge/motion/ExpressionEditor.js"
+    },
+    "./components/forge/motion/motion-expression": {
+      "types": "./dist/components/forge/motion/motion-expression.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-expression.js",
+      "default": "./dist/components/forge/motion/motion-expression.js"
     }
   },
   "scripts": {
