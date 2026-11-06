@@ -109,3 +109,7 @@ license text is preserved verbatim in `licenses/NYC-MON-MIT.txt`.
 These notices do **not** license private NYC-Tron-specific additions for
 general redistribution. Complete a separate ownership, attribution and
 publishing review before removing `private: true` from package manifests.
+
+## Floating UI coordinate placement (geometry subpath)
+
+`packages/geometry/src/overlay-placement.ts` adapts the MIT-licensed Floating UI coordinate calculation and inlines its pure axis/alignment helpers at commit `e1e9f88993c19426563decfcc991feb706f1ac66`. Copyright (c) 2021 Floating UI contributors. The exact source/helper/license blobs and modification boundary are recorded in `packages/geometry/THIRD_PARTY_NOTICES.md`; the complete license is `packages/geometry/licenses/floating-ui-MIT.txt`. This port does not include a DOM renderer, native overlay host or the other candidate libraries listed in the source-admission document.
