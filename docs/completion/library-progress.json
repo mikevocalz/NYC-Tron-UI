@@ -1,0 +1,3371 @@
+{
+  "schemaVersion": 1,
+  "scope": "All 341 canonical IDs. Source candidates are filename matches, not functional acceptance. Engine-only rows remain visible but outside library implementation. Reviewed UI checkpoints do not imply device or production engine acceptance.",
+  "canonicalPlan": "https://github.com/mikevocalz/nitro-forge/blob/codex/complete-all-components/docs/completion/PLAN.md",
+  "baselineSha256": "a1fd6593a84f899dc2946e6337fde7c59897607701516b6d64732d51d44b75db",
+  "requiredPlatforms": [
+    "ios",
+    "android",
+    "web",
+    "macos",
+    "windows",
+    "visionos",
+    "quest",
+    "pico"
+  ],
+  "components": [
+    {
+      "id": "A-01",
+      "name": "WorkspaceHost",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/WorkspaceHost.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-02",
+      "name": "WorkspacePresetSwitcher",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/WorkspacePresetSwitcher.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-03",
+      "name": "AdaptiveDock",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/AdaptiveDock.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-04",
+      "name": "PaneSplitter",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/PaneSplitter.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-05",
+      "name": "DocumentTabBar",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/DocumentTabBar.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-06",
+      "name": "ToolRail",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/ToolRail.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-07",
+      "name": "ContextualToolbar",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/ContextualToolbar.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-08",
+      "name": "RibbonTabs",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/RibbonTabs.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-09",
+      "name": "InspectorPanel",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/InspectorPanel.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-10",
+      "name": "InspectorSection",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/InspectorSection.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-11",
+      "name": "PropertyRow",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/PropertyRow.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-12",
+      "name": "NumericScrubField",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-13",
+      "name": "UnitInput",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/UnitInput.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-14",
+      "name": "SliderField",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/SliderField.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-15",
+      "name": "RangeSlider",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/RangeSlider.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-16",
+      "name": "RotaryKnob",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/RotaryKnob.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-17",
+      "name": "SplitButton",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/SplitButton.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-18",
+      "name": "CommandPalette",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/overlays/CommandPalette.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-19",
+      "name": "ContextMenu",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/ContextMenu.tsx",
+        "packages/expo-controls/src/components/ContextMenu.native.tsx",
+        "packages/expo-controls/src/components/ContextMenu.web.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-20",
+      "name": "NativePopover",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/expo-controls/src/components/NativePopover.native.tsx",
+        "packages/expo-controls/src/components/NativePopover.web.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-21",
+      "name": "InspectorSearch",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/InspectorSearch.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-22",
+      "name": "AssetBrowser",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/AssetBrowser.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    {
+      "id": "A-23",
+      "name": "PresetGallery",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/PresetGallery.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-24",
+      "name": "HistoryPanel",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/HistoryPanel.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    {
+      "id": "A-25",
+      "name": "StatusBar",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/StatusBar.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-26",
+      "name": "ToastAndProgress",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/ToastAndProgress.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    {
+      "id": "A-27",
+      "name": "KeyboardShortcutHUD",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/KeyboardShortcutHUD.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-28",
+      "name": "FocusAndA11yLayer",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/FocusAndA11yLayer.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "A-29",
+      "name": "FindReplacePopover",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/FindReplacePopover.tsx",
+        "packages/expo-controls/src/components/FindReplacePopover.native.tsx",
+        "packages/expo-controls/src/components/FindReplacePopover.web.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    {
+      "id": "A-30",
+      "name": "FileImportExportSheet",
+      "phase": "P04",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/files/FileImportExportSheet.native.tsx",
+        "packages/ui/src/components/files/FileImportExportSheet.web.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-01",
+      "name": "GPUCanvasViewport",
+      "phase": "P05",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-02",
+      "name": "CanvasPanZoom",
+      "phase": "P05",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-03",
+      "name": "CanvasRuler",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/CanvasRuler.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-04",
+      "name": "SnapGridOverlay",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/SnapGridOverlay.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-05",
+      "name": "SmartGuides",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/SmartGuides.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-06",
+      "name": "SelectionBounds",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-07",
+      "name": "MultiSelectionControls",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-08",
+      "name": "TransformOriginHandle",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/TransformOriginHandle.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-09",
+      "name": "LayerStack",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/LayerStack.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-10",
+      "name": "LayerThumbnail",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/LayerThumbnail.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-11",
+      "name": "LayerBlendAndOpacity",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-12",
+      "name": "MaskThumbnailAndEditor",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/MaskThumbnailAndEditor.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-13",
+      "name": "ClippingMaskControls",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/ClippingMaskControls.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-14",
+      "name": "ArtboardNavigator",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/ArtboardNavigator.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-15",
+      "name": "BrushPresetBrowser",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-16",
+      "name": "BrushDynamicsInspector",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-17",
+      "name": "InkStrokePreview",
+      "phase": "P06",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-18",
+      "name": "EraserModePicker",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-19",
+      "name": "SelectionMarquee",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/selection/SelectionMarquee.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-20",
+      "name": "MagicSelectionControls",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/selection/MagicSelectionControls.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-21",
+      "name": "PenNodeEditor",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/vector/PenNodeEditor.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-22",
+      "name": "ShapeBuilder",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/vector/ShapeBuilder.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-23",
+      "name": "FillStrokeInspector",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/vector/FillStrokeInspector.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-24",
+      "name": "GradientOnCanvasHandles",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/vector/GradientOnCanvasHandles.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-25",
+      "name": "AlignDistributePanel",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-26",
+      "name": "GuidedCropAndStraighten",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-27",
+      "name": "CanvasCompareView",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/CanvasCompareView.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-28",
+      "name": "FloatingPaletteUndockHandle",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/FloatingPaletteUndockHandle.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-29",
+      "name": "BrushTaperControl",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-30",
+      "name": "ColorDropCanvasTarget",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-31",
+      "name": "ReferenceImageBoard",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-32",
+      "name": "TimelapsePlaybackExporter",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-33",
+      "name": "BrushStabilizationPreview",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "B-34",
+      "name": "GestureCustomizationPanel",
+      "phase": "P05",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas-tools/GestureCustomizationPanel.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-01",
+      "name": "ColorPickerDialog",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ColorPickerDialog.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-02",
+      "name": "SVColorField",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-03",
+      "name": "ColorWheel",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ColorWheel.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-04",
+      "name": "HueSlider",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-05",
+      "name": "AlphaSlider",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/AlphaSlider.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-06",
+      "name": "ColorChannels",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ColorChannels.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-07",
+      "name": "PrintColorChannels",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/PrintColorChannels.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-08",
+      "name": "WideGamutChannels",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/WideGamutChannels.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-09",
+      "name": "ColorSpaceChooser",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ColorSpaceChooser.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-10",
+      "name": "GamutWarning",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/GamutWarning.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-11",
+      "name": "EyedropperTool",
+      "phase": "P07",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-12",
+      "name": "ForegroundBackgroundChips",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ForegroundBackgroundChips.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-13",
+      "name": "SwatchGrid",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/SwatchGrid.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-14",
+      "name": "ThemeColorReferences",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ThemeColorReferences.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-15",
+      "name": "SpotAndGlobalColorEditor",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/SpotAndGlobalColorEditor.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-16",
+      "name": "GradientStopEditor",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-17",
+      "name": "GradientMeshEditor",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-18",
+      "name": "ColorHarmonyAssistant",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-19",
+      "name": "LiveHistogram",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-20",
+      "name": "LevelsEditor",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-21",
+      "name": "CurvesEditor",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-22",
+      "name": "ColorGradingWheels",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-23",
+      "name": "HSLSecondaryEditor",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-24",
+      "name": "VideoScopesPanel",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-25",
+      "name": "SoftProofControls",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/SoftProofControls.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    {
+      "id": "C-26",
+      "name": "FloatingColorPalette",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/FloatingColorPalette.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "C-27",
+      "name": "ColorDiscPicker",
+      "phase": "P07",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ColorDiscPicker.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-01",
+      "name": "NativeVideoPlayer",
+      "phase": "P03",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-02",
+      "name": "SourceMonitor",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-03",
+      "name": "ProgramMonitor",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-04",
+      "name": "NativeSeekBar",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/NativeSeekBar.native.tsx",
+        "packages/ui/src/components/forge/NativeSeekBar.web.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-05",
+      "name": "FrameAccurateScrubber",
+      "phase": "P03",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-06",
+      "name": "TransportControls",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TransportControls.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-07",
+      "name": "PlaybackRateMenu",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/PlaybackRateMenu.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-08",
+      "name": "TimecodeDisplay",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TimecodeDisplay.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-09",
+      "name": "JKLShuttleController",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/JKLShuttleController.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-10",
+      "name": "TimelineRuler",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TimelineRuler.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-11",
+      "name": "TimelinePlayhead",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TimelinePlayhead.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-12",
+      "name": "InOutRangeHandles",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/InOutRangeHandles.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-13",
+      "name": "LoopRangeBar",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/LoopRangeBar.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-14",
+      "name": "TimelineZoomAndScroll",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TimelineZoomAndScroll.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-15",
+      "name": "TimelineClipLane",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TimelineClipLane.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-16",
+      "name": "VideoFilmstrip",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-17",
+      "name": "AudioClipWaveform",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-18",
+      "name": "TrackHeaders",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TrackHeaders.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-19",
+      "name": "ClipTrimHandles",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/ClipTrimHandles.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-20",
+      "name": "RazorSplitTool",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/RazorSplitTool.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-21",
+      "name": "RollSlipSlideControls",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/RollSlipSlideControls.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-22",
+      "name": "DragReorderAndRipple",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/DragReorderAndRipple.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-23",
+      "name": "TransitionHandles",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TransitionHandles.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-24",
+      "name": "TimelineMarkers",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TimelineMarkers.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-25",
+      "name": "SafeAreaOverlay",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/SafeAreaOverlay.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-26",
+      "name": "ScopesDock",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-27",
+      "name": "MulticamAngleViewer",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-28",
+      "name": "RenderCacheIndicator",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-29",
+      "name": "ExportMonitor",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-30",
+      "name": "PictureInPictureControls",
+      "phase": "P08",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-31",
+      "name": "OverlayAndEffectsTrackStack",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/OverlayAndEffectsTrackStack.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-32",
+      "name": "VideoSpeedRampCurve",
+      "phase": "P08",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-33",
+      "name": "AutoCaptionTranscriptTimeline",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-34",
+      "name": "CaptionWordTimingHandles",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-35",
+      "name": "AutoReframeGuides",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-36",
+      "name": "VideoStabilizationInspector",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-37",
+      "name": "TransitionPresetBrowser",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-38",
+      "name": "VideoEffectsBrowser",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-39",
+      "name": "MotionTrackingOverlay",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-40",
+      "name": "CoverFramePicker",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-41",
+      "name": "BatchEditPanel",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/BatchEditPanel.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-42",
+      "name": "VideoQualityInspector",
+      "phase": "P08",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "D-43",
+      "name": "StickerMotionLane",
+      "phase": "P08",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-01",
+      "name": "NativeAudioTransport",
+      "phase": "P09",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-02",
+      "name": "WaveformLane",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/WaveformLane.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-03",
+      "name": "StereoMultichannelWaveform",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-04",
+      "name": "LiveRecordingWaveform",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-05",
+      "name": "SpectrogramView",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/SpectrogramView.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-06",
+      "name": "RecordingArmButton",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-07",
+      "name": "InputMonitorToggle",
+      "phase": "P09",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-08",
+      "name": "DeviceAndChannelPicker",
+      "phase": "P09",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-09",
+      "name": "AudioClipTrimAndFade",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-10",
+      "name": "ClipGainEnvelope",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-11",
+      "name": "AutomationLane",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AutomationLane.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-12",
+      "name": "AutomationModePicker",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AutomationModePicker.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-13",
+      "name": "MixingConsole",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/MixingConsole.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-14",
+      "name": "VerticalFader",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-15",
+      "name": "PanAndBalanceControl",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-16",
+      "name": "RealtimePeakMeter",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-17",
+      "name": "LoudnessMeter",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/LoudnessMeter.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-18",
+      "name": "SoloMuteButtons",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/SoloMuteButtons.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-19",
+      "name": "BusAndRoutingMatrix",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-20",
+      "name": "InsertEffectRack",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/InsertEffectRack.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-21",
+      "name": "EQFrequencyGraph",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/EQFrequencyGraph.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-22",
+      "name": "DynamicsTransferGraph",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-23",
+      "name": "PluginPresetBrowser",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-24",
+      "name": "MIDIPianoRoll",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/midi/MIDIPianoRoll.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-25",
+      "name": "MIDIVelocityLane",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-26",
+      "name": "StepSequencer",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/midi/StepSequencer.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-27",
+      "name": "TempoAndMetronome",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/TempoAndMetronome.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-28",
+      "name": "TakePlaylistAndComping",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-29",
+      "name": "LoopPunchRecording",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-30",
+      "name": "SampleEditor",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-31",
+      "name": "AudioVideoSync",
+      "phase": "P09",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-32",
+      "name": "LatencyCalibrationPanel",
+      "phase": "P09",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-33",
+      "name": "SurroundPanView",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-34",
+      "name": "VoiceIsolationPanel",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-35",
+      "name": "BeatDetectionMarkerLane",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-36",
+      "name": "SoundEffectsLibrary",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-37",
+      "name": "SpeechTranscriptTakeReview",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-38",
+      "name": "VoiceoverCountdownAndTakeBin",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-39",
+      "name": "AudioEffectsPresetPanel",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-40",
+      "name": "NoiseReductionMonitor",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "E-41",
+      "name": "AutoDuckEnvelopePanel",
+      "phase": "P09",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-01",
+      "name": "PhotoLibraryGrid",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-02",
+      "name": "CatalogFilterBar",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-03",
+      "name": "RatingAndFlagControl",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-04",
+      "name": "RAWDevelopPanel",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-05",
+      "name": "ExposureAndWhiteBalance",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-06",
+      "name": "ToneAndPresence",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-07",
+      "name": "EightBandColorMixer",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-08",
+      "name": "LensCorrectionPanel",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-09",
+      "name": "LocalMaskBrush",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-10",
+      "name": "LinearRadialGradientMask",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-11",
+      "name": "LuminanceColorRangeMask",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-12",
+      "name": "BeforeAfterCompare",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-13",
+      "name": "PresetFilmstrip",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-14",
+      "name": "BatchExportPanel",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-15",
+      "name": "PhotoVersionHistoryBrowser",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-16",
+      "name": "CleanupAndRetouchPanel",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-17",
+      "name": "PresetManager",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "F-18",
+      "name": "PhotoMetadataInspector",
+      "phase": "P10",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-01",
+      "name": "CompositionLayerTree",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-02",
+      "name": "MotionKeyframeTimeline",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-03",
+      "name": "KeyframeValueGraph",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-04",
+      "name": "KeyframeSpeedGraph",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-05",
+      "name": "EasingPresetGallery",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-06",
+      "name": "MotionPathEditor",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-07",
+      "name": "Transform3DInspector",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-08",
+      "name": "CameraAndLightControls",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-09",
+      "name": "MatteAndMaskPanel",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-10",
+      "name": "EffectStackAndInspector",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-11",
+      "name": "ExpressionEditor",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-12",
+      "name": "ParticleEmitterControls",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-13",
+      "name": "TimeRemapCurve",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-14",
+      "name": "NodeGraphEditor",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "G-15",
+      "name": "RenderQueuePanel",
+      "phase": "P11",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-01",
+      "name": "PaginatedTextCanvas",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-02",
+      "name": "TextSelectionAndCaret",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-03",
+      "name": "RichTextRibbon",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/RichTextRibbon.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-04",
+      "name": "TypographyInspector",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-05",
+      "name": "ParagraphStylesGallery",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-06",
+      "name": "ParagraphRuler",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-07",
+      "name": "BulletsNumberingEditor",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/BulletsNumberingEditor.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-08",
+      "name": "InsertTableGrid",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-09",
+      "name": "TableLayoutInspector",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-10",
+      "name": "HeadersFootersEditor",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-11",
+      "name": "PageSetupPanel",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-12",
+      "name": "TextWrapAndFrames",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-13",
+      "name": "CommentsAndReviewRail",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-14",
+      "name": "TrackChangesView",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-15",
+      "name": "NavigationOutline",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/NavigationOutline.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-16",
+      "name": "TableOfContentsEditor",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-17",
+      "name": "FootnoteCitationEditor",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-18",
+      "name": "SpellGrammarPopover",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-19",
+      "name": "MailMergeFieldPicker",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-20",
+      "name": "LayoutSpreadNavigator",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-21",
+      "name": "DocumentReadAloudTransport",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/DocumentReadAloudTransport.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "H-22",
+      "name": "DictationSessionPanel",
+      "phase": "P12",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-01",
+      "name": "VirtualSpreadsheetGrid",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-02",
+      "name": "CellSelectionOverlay",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-03",
+      "name": "FormulaBar",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-04",
+      "name": "NameBox",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-05",
+      "name": "FormulaAutocomplete",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-06",
+      "name": "ReferenceColorizer",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-07",
+      "name": "FillHandleAndAutoFill",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-08",
+      "name": "SheetTabs",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/SheetTabs.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-09",
+      "name": "CellFormatInspector",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-10",
+      "name": "ConditionalFormatRules",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-11",
+      "name": "ValidationDropdown",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-12",
+      "name": "SortFilterHeader",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-13",
+      "name": "ChartBuilder",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/ChartBuilder.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-14",
+      "name": "SparklineEditor",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/SparklineEditor.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-15",
+      "name": "PivotFieldList",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-16",
+      "name": "TableStyleGallery",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-17",
+      "name": "FreezeSplitControls",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/FreezeSplitControls.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-18",
+      "name": "RangeComments",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-19",
+      "name": "DataImportWizard",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-20",
+      "name": "SpreadsheetCardsView",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "I-21",
+      "name": "SavedSheetViewManager",
+      "phase": "P13",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-01",
+      "name": "SlideFilmstrip",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/SlideFilmstrip.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-02",
+      "name": "SlideSorter",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/SlideSorter.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-03",
+      "name": "MasterLayoutEditor",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-04",
+      "name": "ThemeAndTemplateGallery",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-05",
+      "name": "SlideCanvas",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/SlideCanvas.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-06",
+      "name": "ShapePresetGallery",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-07",
+      "name": "ConnectorAndDiagramTools",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-08",
+      "name": "TransitionPicker",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-09",
+      "name": "SlideAnimationPane",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/SlideAnimationPane.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-10",
+      "name": "MorphPreview",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-11",
+      "name": "SlideNotesEditor",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-12",
+      "name": "PresenterView",
+      "phase": "P14",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-13",
+      "name": "RehearsalTimers",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-14",
+      "name": "InkAndLaserPointer",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-15",
+      "name": "MediaInsertInspector",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "J-16",
+      "name": "ChartAndTableEditor",
+      "phase": "P14",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-01",
+      "name": "VirtualPDFPageViewer",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-02",
+      "name": "PDFThumbnailSidebar",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-03",
+      "name": "PDFPageLayoutSelector",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-04",
+      "name": "TextSearchResults",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/TextSearchResults.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-05",
+      "name": "PDFTextSelection",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-06",
+      "name": "AnnotationToolbar",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/AnnotationToolbar.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-07",
+      "name": "CommentsThreadPanel",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/CommentsThreadPanel.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-08",
+      "name": "SignatureStampTool",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-09",
+      "name": "PDFFormFieldEditor",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-10",
+      "name": "PageReorderOrganizer",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-11",
+      "name": "ExtractMergeSplitDialog",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-12",
+      "name": "BookmarkOutline",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-13",
+      "name": "HyperlinkInspector",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-14",
+      "name": "RedactionReviewTool",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-15",
+      "name": "EncryptPermissionsPanel",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-16",
+      "name": "PDFCompareOverlay",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-17",
+      "name": "PrintAndExportPreview",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-18",
+      "name": "PDFReadAloudTransport",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFReadAloudTransport.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-19",
+      "name": "PDFVoiceNoteAttachment",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-20",
+      "name": "PDFScanSession",
+      "phase": "P15",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "K-21",
+      "name": "PDFInlineTextEdit",
+      "phase": "P15",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-01",
+      "name": "FrameAndComponentTree",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-02",
+      "name": "AutoLayoutInspector",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-03",
+      "name": "HugFillFixedSizeControls",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-04",
+      "name": "ConstraintsPanel",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-05",
+      "name": "ComponentVariantPicker",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-06",
+      "name": "ReusableStylesPanel",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-07",
+      "name": "VariablesAndModes",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-08",
+      "name": "PrototypeConnectionTool",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-09",
+      "name": "InteractionTriggerEditor",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-10",
+      "name": "PrototypePreviewPlayer",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-11",
+      "name": "FlowOverview",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-12",
+      "name": "DevHandoffInspector",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-13",
+      "name": "CollaborationPresence",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-14",
+      "name": "CommentPins",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "L-15",
+      "name": "MultiExportSlices",
+      "phase": "P16",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-01",
+      "name": "Native3DViewport",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-02",
+      "name": "ViewCubeAndAxisGizmo",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-03",
+      "name": "TransformGizmo3D",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-04",
+      "name": "UVEditor",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-05",
+      "name": "TextureSetPanel",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-06",
+      "name": "PBRMaterialInspector",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-07",
+      "name": "TextureBrush3D",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-08",
+      "name": "TextureMaskAndGenerator",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-09",
+      "name": "BakingMapPanel",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-10",
+      "name": "NodeGraphCanvas",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-11",
+      "name": "NodeLibrarySearch",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-12",
+      "name": "LiveNodeThumbnail",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-13",
+      "name": "DraftingCommandLine",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-14",
+      "name": "ObjectSnapsAndOrtho",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-15",
+      "name": "DimensionsAndHatching",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-16",
+      "name": "PaperSpaceLayout",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "M-17",
+      "name": "ParametricConstraintEditor",
+      "phase": "P17",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-01",
+      "name": "NativePointerRouter",
+      "phase": "P06",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-02",
+      "name": "PenPairingDialog",
+      "phase": "P06",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-03",
+      "name": "LogitechMuseSpatialInk",
+      "phase": "P06",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-04",
+      "name": "PalmRejectionAndPrediction",
+      "phase": "P06",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-05",
+      "name": "HapticsAndFeedback",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-06",
+      "name": "VoiceOverTalkBackSupport",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-07",
+      "name": "HardwareKeyboardMap",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-08",
+      "name": "SafeAreaFoldableLayout",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-09",
+      "name": "XRPresentationAdapter",
+      "phase": "P18",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-10",
+      "name": "OfflineCheckpointAndAutosave",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-11",
+      "name": "CollaborationAdapter",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-12",
+      "name": "NativeFileAndShareAdapter",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-13",
+      "name": "LongTaskScheduler",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-14",
+      "name": "MediaCache",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-15",
+      "name": "UndoTransactionCoordinator",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-16",
+      "name": "NativeBinaryTransport",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-17",
+      "name": "NativePlaybackLifecycle",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-18",
+      "name": "TestAndTelemetryAdapter",
+      "phase": "P02",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-19",
+      "name": "NativeMediaDecoderSurface",
+      "phase": "P03",
+      "libraryScope": false,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-20",
+      "name": "AudioInterruptionRecoveryDialog",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AudioInterruptionRecoveryDialog.tsx"
+      ],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    },
+    {
+      "id": "N-21",
+      "name": "AccessiblePrecisionScrubControl",
+      "phase": "P02",
+      "libraryScope": true,
+      "sourceCandidates": [],
+      "implementationReview": "pending",
+      "acceptance": "unverified"
+    }
+  ]
+}

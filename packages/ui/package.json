@@ -1559,6 +1559,46 @@
       "types": "./dist/components/shell/progress-model.d.ts",
       "react-native": "./dist/components/shell/progress-model.js",
       "default": "./dist/components/shell/progress-model.js"
+    },
+    "./components/forge/color/PrintColorChannels": {
+      "types": "./dist/components/forge/color/PrintColorChannels.d.ts",
+      "react-native": "./dist/components/forge/color/PrintColorChannels.js",
+      "default": "./dist/components/forge/color/PrintColorChannels.js"
+    },
+    "./components/forge/color/WideGamutChannels": {
+      "types": "./dist/components/forge/color/WideGamutChannels.d.ts",
+      "react-native": "./dist/components/forge/color/WideGamutChannels.js",
+      "default": "./dist/components/forge/color/WideGamutChannels.js"
+    },
+    "./components/forge/color/ColorSpaceChooser": {
+      "types": "./dist/components/forge/color/ColorSpaceChooser.d.ts",
+      "react-native": "./dist/components/forge/color/ColorSpaceChooser.js",
+      "default": "./dist/components/forge/color/ColorSpaceChooser.js"
+    },
+    "./components/forge/color/GamutWarning": {
+      "types": "./dist/components/forge/color/GamutWarning.d.ts",
+      "react-native": "./dist/components/forge/color/GamutWarning.js",
+      "default": "./dist/components/forge/color/GamutWarning.js"
+    },
+    "./components/forge/color/ThemeColorReferences": {
+      "types": "./dist/components/forge/color/ThemeColorReferences.d.ts",
+      "react-native": "./dist/components/forge/color/ThemeColorReferences.js",
+      "default": "./dist/components/forge/color/ThemeColorReferences.js"
+    },
+    "./components/forge/color/SpotAndGlobalColorEditor": {
+      "types": "./dist/components/forge/color/SpotAndGlobalColorEditor.d.ts",
+      "react-native": "./dist/components/forge/color/SpotAndGlobalColorEditor.js",
+      "default": "./dist/components/forge/color/SpotAndGlobalColorEditor.js"
+    },
+    "./components/forge/color/SoftProofControls": {
+      "types": "./dist/components/forge/color/SoftProofControls.d.ts",
+      "react-native": "./dist/components/forge/color/SoftProofControls.js",
+      "default": "./dist/components/forge/color/SoftProofControls.js"
+    },
+    "./components/forge/color/color-management": {
+      "types": "./dist/components/forge/color/color-management.d.ts",
+      "react-native": "./dist/components/forge/color/color-management.js",
+      "default": "./dist/components/forge/color/color-management.js"
     }
   },
   "scripts": {
