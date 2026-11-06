@@ -140,9 +140,15 @@
       "name": "NumericScrubField",
       "phase": "P04",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/NumericScrubField.tsx",
+        "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P04-state-and-public-api.md"
+      ]
     },
     {
       "id": "A-13",
@@ -283,7 +289,16 @@
       "acceptance": "unverified",
       "evidence": [
         "P04-shell-library.md"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P19-native-library-contract.md",
+            "P19-native-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-25",
@@ -346,7 +361,16 @@
       "acceptance": "unverified",
       "evidence": [
         "P04-shell-library.md"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P19-native-library-contract.md",
+            "P19-native-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-30",
@@ -840,7 +864,7 @@
       "id": "C-11",
       "name": "EyedropperTool",
       "phase": "P07",
-      "libraryScope": false,
+      "libraryScope": true,
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/EyedropperTool.tsx"
       ],

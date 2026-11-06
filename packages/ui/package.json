@@ -1664,6 +1664,11 @@
       "types": "./dist/components/forge/color/EyedropperTool.d.ts",
       "react-native": "./dist/components/forge/color/EyedropperTool.js",
       "default": "./dist/components/forge/color/EyedropperTool.js"
+    },
+    "./components/shell/NumericScrubField": {
+      "types": "./dist/components/shell/NumericScrubField.d.ts",
+      "react-native": "./dist/components/shell/NumericScrubField.js",
+      "default": "./dist/components/shell/NumericScrubField.js"
     }
   },
   "scripts": {

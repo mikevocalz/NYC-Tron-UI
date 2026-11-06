@@ -52,6 +52,8 @@ jobs:
         run: node --test packages/ui/tests/render/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
+      - name: Verify the complete component ledger and reviewed public exports
+        run: node tooling/verify-component-program.mjs
       - name: Pack every package and check release tarball contents
         run: node tooling/pack-release.mjs /tmp/nyc-tron-packs
       # No native targets are built on this Linux workflow. A typechecked
