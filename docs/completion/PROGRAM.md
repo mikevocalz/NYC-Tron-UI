@@ -26,3 +26,5 @@ Implementation checkpoints are committed and pushed separately; the canonical le
 | P11 | Scene settings, easing/render queue and value/speed/retiming graphs; remaining motion controls open | [Settings](P11-motion-settings.md), [queue/easing](P11-render-and-easing.md), [curves](P11-motion-curves.md), [timeline](P11-keyframe-timeline.md) |
 
 This table records implementation checkpoints, not complete acceptance across the eight required platforms. Every other canonical component remains in library-progress.json for implementation or source review. Forge integration resumes after NYC-Tron completion.
+
+Composition hierarchy checkpoint: G-01 is implemented with independent exports, controlled visibility and nesting validation. See [P11 composition tree](P11-composition-tree.md). Native/platform acceptance remains open.

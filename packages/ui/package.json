@@ -1869,6 +1869,16 @@
       "types": "./dist/components/forge/motion/motion-timeline.d.ts",
       "react-native": "./dist/components/forge/motion/motion-timeline.js",
       "default": "./dist/components/forge/motion/motion-timeline.js"
+    },
+    "./components/forge/motion/CompositionLayerTree": {
+      "types": "./dist/components/forge/motion/CompositionLayerTree.d.ts",
+      "react-native": "./dist/components/forge/motion/CompositionLayerTree.js",
+      "default": "./dist/components/forge/motion/CompositionLayerTree.js"
+    },
+    "./components/forge/motion/composition-tree": {
+      "types": "./dist/components/forge/motion/composition-tree.d.ts",
+      "react-native": "./dist/components/forge/motion/composition-tree.js",
+      "default": "./dist/components/forge/motion/composition-tree.js"
     }
   },
   "scripts": {

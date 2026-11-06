@@ -2420,10 +2420,15 @@
       "name": "CompositionLayerTree",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/CompositionLayerTree.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Nested comps, shape/text/footage/adjustment layers."
+      "requirement": "Nested comps, shape/text/footage/adjustment layers.",
+      "evidence": [
+        "P11-composition-tree.md"
+      ]
     },
     {
       "id": "G-02",
