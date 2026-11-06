@@ -303,7 +303,9 @@
       "acceptance": "unverified",
       "requirement": "Touch long-press, stylus click, mouse and keyboard access.",
       "evidence": [
-        "P04-overlays-and-transfer.md"
+        "P04-overlays-and-transfer.md",
+        "P04-native-overlays.md",
+        "P04-native-overlays-proof.json"
       ]
     },
     {
@@ -319,7 +321,9 @@
       "acceptance": "unverified",
       "requirement": "Anchoring, pointer avoidance, safe-area and focus.",
       "evidence": [
-        "P04-overlays-and-transfer.md"
+        "P04-overlays-and-transfer.md",
+        "P04-native-overlays.md",
+        "P04-native-overlays-proof.json"
       ]
     },
     {
@@ -448,7 +452,9 @@
       "acceptance": "unverified",
       "requirement": "Focus visibility, screen reader labels and reduced motion.",
       "evidence": [
-        "P04-overlays-and-transfer.md"
+        "P04-overlays-and-transfer.md",
+        "P04-native-overlays.md",
+        "P04-native-overlays-proof.json"
       ]
     },
     {

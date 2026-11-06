@@ -46,3 +46,5 @@ P04 command checkpoint: document tabs, tool rails, contextual overflow, ribbon g
 P04 inspector checkpoint: selection-aware nested inspector/search/property rows and precision slider/range/rotary controls now have reviewed exports and scope-safe input. [Inspector report](P04-inspector-precision.md) records exact-step and ownership regressions. Review count is 82 of 341; remaining P04 rows and eight-platform acceptance stay open.
 
 P04 implementation phase complete: all 30 A-series shell components have reviewed independent library exports. [Overlay/status/transfer report](P04-overlays-and-transfer.md) records the final controls, 810 source tests, 568 browser tests and native acceptance limits. Review count is 90 of 341. This is library implementation completion for P04, not eight-platform acceptance or full-program completion.
+
+P04 native overlay checkpoint: the same 28-step native menu/popover scenario passed twice on iOS and Android. [Native overlay evidence](P04-native-overlays.md) records actual platform surfaces, exact callback/close checks and warning limits. Full platform acceptance remains open; work continues with P05 canvas/layers.
