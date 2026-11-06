@@ -7,10 +7,10 @@
  */
 
 /** Why a decode failed. Each platform maps its own errors onto these. */
-export type MediaDecodeErrorCode="not-found"|"unsupported-format"|"decode-failed"|"out-of-range"|"permission";
+export type MediaDecodeErrorCode="not-found"|"unsupported-format"|"decode-failed"|"out-of-range"|"permission"|"cancelled";
 
 export const MEDIA_DECODE_ERROR_CODES:readonly MediaDecodeErrorCode[]=
-  ["not-found","unsupported-format","decode-failed","out-of-range","permission"];
+  ["not-found","unsupported-format","decode-failed","out-of-range","permission","cancelled"];
 
 /** The error every decoder call rejects with. */
 export class MediaDecodeError extends Error {
@@ -54,6 +54,8 @@ export interface MediaProbe {
 
 /** Options for {@linkcode MediaDecoder.decodeFrame}. */
 export interface DecodeFrameOptions {
+  /** Detaches this request on abort. Codec work already submitted may drain on its native owner. */
+  readonly signal?:AbortSignal;
   /** Media time of the wanted frame, integer microseconds from the start. */
   readonly timeUs:number;
   /** The frame is scaled down (never up) to fit this box. @default 1920 */
@@ -249,7 +251,7 @@ export function createMediaDecoder(native:MediaDecoderNative|null):MediaDecoder{
     probe:uri=>call(()=>native.probe(uri),toMediaProbe),
     async decodeFrame(uri,options){
       const request=normalizeFrameOptions(options);
-      return call(()=>native.decodeFrame(uri,request),toDecodedFrame);
+      return withDecodeCancellation(options.signal,()=>call(()=>native.decodeFrame(uri,request),toDecodedFrame));
     },
     async decodeAudio(uri,options){
       const request=normalizeAudioOptions(options);
@@ -259,4 +261,23 @@ export function createMediaDecoder(native:MediaDecoderNative|null):MediaDecoder{
       try{await native.clearCache();}catch(error){throw toMediaDecodeError(error);}
     },
   };
+}
+
+/** Abort the consumer without sending an imperative AbortSignal through the native bridge. */
+export function withDecodeCancellation<T>(signal: AbortSignal | undefined, run: () => Promise<T>): Promise<T> {
+  if (signal?.aborted) return Promise.reject(new MediaDecodeError("cancelled", "Media decoding was cancelled."));
+  if (!signal) return run();
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const cleanup = () => signal.removeEventListener("abort", abort);
+    const abort = () => {
+      if (settled) return;
+      settled = true; cleanup(); reject(new MediaDecodeError("cancelled", "Media decoding was cancelled."));
+    };
+    signal.addEventListener("abort", abort, { once: true });
+    if (signal.aborted) { abort(); return; }
+    Promise.resolve().then(() => signal.aborted ? Promise.reject(new MediaDecodeError("cancelled", "Media decoding was cancelled.")) : run()).then(value => {
+      if (!settled) { settled = true; cleanup(); resolve(value); }
+    }, error => { if (!settled) { settled = true; cleanup(); reject(error); } });
+  });
 }
