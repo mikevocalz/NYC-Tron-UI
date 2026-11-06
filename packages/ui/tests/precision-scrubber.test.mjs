@@ -17,6 +17,13 @@ test("precision scrub normal/fine/coarse are absolute, deterministic and mode aw
 });
 test("precision scrub accepts semantic detents and validates broken controls",()=>{
  assert.equal(scrubPrecision({min:0,max:100,step:1,startValue:40,deltaPixels:78,pixelsPerStep:8,detents:[50]}),50);
+ // Within 6px of travel (0.75 of a step here) the detent catches; beyond it rounding wins.
+ assert.equal(scrubPrecision({min:0,max:100,step:1,startValue:40,deltaPixels:75.2,pixelsPerStep:8,detents:[50]}),50);
+ assert.equal(scrubPrecision({min:0,max:100,step:1,startValue:40,deltaPixels:72,pixelsPerStep:8,detents:[50]}),49);
+ assert.equal(scrubPrecision({min:0,max:100,step:1,startValue:40,deltaPixels:75.2,pixelsPerStep:8,detents:[50],detentPixels:2}),49);
+ // Fine mode never catches, so values beside a detent stay reachable.
+ assert.equal(scrubPrecision({min:0,max:100,step:1,startValue:49.5,deltaPixels:32,pixelsPerStep:8,detents:[50],mode:"fine"}),49.9);
+ assert.throws(()=>scrubPrecision({min:0,max:10,step:1,startValue:2,deltaPixels:4,detentPixels:-1}),RangeError);
  assert.throws(()=>scrubPrecision({min:5,max:1,step:1,startValue:2,deltaPixels:4}),RangeError);
  assert.throws(()=>scrubPrecision({min:0,max:10,step:0,startValue:2,deltaPixels:4}),RangeError);
  assert.throws(()=>scrubPrecision({min:0,max:10,step:1,startValue:2,deltaPixels:Number.NaN}),RangeError);
@@ -72,10 +79,30 @@ test("vertical travel switches to fine and coarse during the drag",()=>{
  f.model.begin({x:0,y:0});
  f.model.move({x:8,y:-40},1);
  assert.equal(f.state().mode,"fine");
+ // Fine starts where the switch happened, then moves in tenths.
+ f.model.move({x:16,y:-40},1);
  assert.equal(f.state().preview,10.1);
- f.model.move({x:8,y:40},1);
+ f.model.move({x:16,y:40},1);
  assert.equal(f.state().mode,"coarse");
+ f.model.move({x:24,y:40},1);
+ // Coarse moves ten steps per 8px from 10.1 and snaps to the step grid.
  assert.equal(f.state().preview,20);
+});
+test("crossing the fine/coarse threshold mid-drag continues from the current value",()=>{
+ // 80px of normal travel reaches 20. Pulling up into fine must not rescale
+ // those 80px to a tenth (the old jump back to 11).
+ const f=fixture();
+ f.model.begin({x:0,y:0});
+ f.model.move({x:80,y:0},1);
+ assert.equal(f.state().preview,20);
+ f.model.move({x:80,y:-40},1);
+ assert.equal(f.state().mode,"fine");
+ assert.equal(f.state().preview,20,"no jump when the mode changes");
+ f.model.move({x:88,y:-40},1);
+ assert.equal(f.state().preview,20.1);
+ // Back to normal re-anchors again on 20.1, so the value never leaps to 21.
+ f.model.move({x:88,y:0},1);
+ assert.equal(f.state().preview,20.1);
 });
 test("detents capture a drag that passes close to them",async()=>{
  const f=fixture({value:40,detents:[50]});
@@ -84,6 +111,20 @@ test("detents capture a drag that passes close to them",async()=>{
  assert.equal(f.state().preview,50);
  await f.model.release({x:78,y:0});
  assert.deepEqual(f.commits,[50]);
+});
+test("a detent catches a drag that stops within detentPixels of it",async()=>{
+ // 75.2px from 40 is raw 49.4: rounding alone lands on 49. The detent at 50
+ // is 4.8px of travel away, inside the 6px default, so it must win.
+ const f=fixture({value:40,detents:[50]});
+ f.model.begin({x:0,y:0});
+ f.model.move({x:75.2,y:0},1);
+ assert.equal(f.state().preview,50);
+ await f.model.release({x:75.2,y:0});
+ assert.deepEqual(f.commits,[50]);
+ const g=fixture({value:40});
+ g.model.begin({x:0,y:0});
+ g.model.move({x:75.2,y:0},1);
+ assert.equal(g.state().preview,49,"without the detent the same drag rounds to 49");
 });
 test("cancel and a second pointer restore the controlled value without committing",async()=>{
  for(const interrupt of ["cancel","multitouch"]){
@@ -118,6 +159,15 @@ test("nudges and text entry commit once; an unchanged value commits nothing",asy
  assert.equal(f.state().error,"Enter a valid number");
  assert.equal(f.state().editing,false);
  assert.deepEqual(f.commits,[11,9,42.5]);
+});
+test("typed entry snaps to a tenth of the step and clamps to the range",async()=>{
+ const f=fixture();
+ f.model.startEditing(); f.model.changeDraft("42.537"); await f.model.applyDraft();
+ f.model.startEditing(); f.model.changeDraft("250"); await f.model.applyDraft();
+ assert.deepEqual(f.commits,[42.5,100]);
+ const g=fixture({value:0.5,step:0.1,min:0,max:1});
+ g.model.startEditing(); g.model.changeDraft("0.123"); await g.model.applyDraft();
+ assert.deepEqual(g.commits,[0.12]);
 });
 test("a pending commit blocks new input and a rejection shows its message",async()=>{
  let resolve;

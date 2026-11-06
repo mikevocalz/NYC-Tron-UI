@@ -1,0 +1,59 @@
+{
+  "name": "@nyc-tron/windows-fluent-fabric",
+  "version": "0.1.0-alpha.4",
+  "private": true,
+  "description": "RNW 0.85 Windows XAML Fabric NavigationView island",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "windows",
+    "react-native.config.js",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "reactNativeConfig": {
+    "windows": "windows"
+  },
+  "codegenConfig": {
+    "name": "NYCTronFluentFabric",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "windows": {
+      "generators": [
+        "componentsWindows"
+      ],
+      "namespace": "winrt::NYCTronFluentFabric::Codegen",
+      "outputDirectory": "windows/NYCTronFluentFabric/codegen"
+    }
+  },
+  "scripts": {
+    "codegen": "react-native codegen-windows",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test tests/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "react-native": "0.85.3",
+    "react-native-windows": "0.85.0",
+    "react": ">=19.2.0"
+  },
+  "devDependencies": {
+    "react-native": "0.85.3",
+    "react-native-windows": "0.85.0",
+    "react": "19.2.3",
+    "@types/react": "^19.2.0",
+    "@react-native-community/cli": "20.0.0",
+    "typescript": "~5.9.3"
+  }
+}

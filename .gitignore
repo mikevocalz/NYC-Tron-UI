@@ -2,3 +2,9 @@ node_modules/
 dist/
 *.tgz
 release-packs/
+# Expo prebuild output and native build dirs
+examples/*/android/
+examples/*/ios/
+packages/*/android/build/
+packages/*/android/.gradle/
+.gradle/

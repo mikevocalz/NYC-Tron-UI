@@ -1,18 +1,23 @@
-import {useRef} from "react";
-import {PanResponder,Pressable,ScrollView,Text,TextInput,View,type ViewProps} from "react-native";
+import {useEffect,useRef} from "react";
+import {I18nManager,PanResponder,Pressable,ScrollView,Text,TextInput,View,type PressableProps,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {cancelPreview} from "../cancel-preview.ts";
 import {joinClasses} from "../../styles.ts";
+import {AnchoredPopover} from "../../overlays/AnchoredPopover.tsx";
+import {PrecisionScrubber} from "../inputs/PrecisionScrubber.tsx";
+import {ClipIndicator} from "./ClippingMaskControls.tsx";
 import {
- LAYER_TOUCH_TARGET,dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerKindLabel,
- normalizeOpacity,opacityFromDrag,resolveRename,stepOpacity,validateLayers,type LayerRow,
+ LAYER_NAME_MIN_WIDTH,LAYER_OPACITY_READOUT_WIDTH,LAYER_OPACITY_SLIDER_WIDTH,LAYER_THUMBNAIL_SIZE,LAYER_TOUCH_TARGET,
+ dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerDetail,layerOpacityMode,normalizeOpacity,opacityFromDrag,
+ resolveRename,stepOpacity,validateLayers,type LayerOpacityMode,type LayerRow,type LayerThumbnail,
 } from "./layer-model.ts";
 
 type OpacityPreview={id:string;value:number};
 type Drag={id:string;from:number;to:number;dy:number};
 type Rename={id:string;draft:string};
-type Local={opacity:OpacityPreview|null;drag:Drag|null;rename:Rename|null};
+type Local={opacity:OpacityPreview|null;drag:Drag|null;rename:Rename|null;width:number|undefined;editing:string|null};
+type KeyEvent=Parameters<NonNullable<PressableProps["onKeyDown"]>>[0];
 
 /** Props for {@linkcode LayerStack}. Every layer value is controlled by the app. */
 export interface LayerStackProps extends Omit<ViewProps,"children">{
@@ -36,6 +41,14 @@ export interface LayerStackProps extends Omit<ViewProps,"children">{
  /** Called with the trimmed name when a rename is submitted. Blank or unchanged names are dropped. */
  onRename:(id:string,name:string)=>void|Promise<unknown>;
  /**
+  * Called when a row's remove button, its "Remove" screen-reader action, or
+  * Delete/Backspace on the focused row asks to delete an unlocked layer. There
+  * is no confirmation step: the host applies removal as an engine operation
+  * that its undo restores (`removeLayer` in `layer-model` applies it). The remove control
+  * renders only when this is passed.
+  */
+ onRemove?:(id:string)=>void|Promise<unknown>;
+ /**
   * Fixed row height in points. Values below 44 are raised to 44.
   * @default 56
   */
@@ -49,6 +62,15 @@ export interface LayerStackProps extends Omit<ViewProps,"children">{
  emptyLabel?:string;
  /** Optional override; defaults to the theme's accent token. */
  accentColor?:string;
+ /**
+  * How rows show opacity. `auto` measures the stack and keeps the inline
+  * slider only while a whole row fits beside it (`layerRowMinWidth` in
+  * `layer-model`); narrower stacks get a percentage readout
+  * that opens a {@linkcode PrecisionScrubber} popover, so the name and the
+  * remove button never clip. `slider` and `readout` force one presentation.
+  * @default "auto"
+  */
+ opacityControl?:"auto"|LayerOpacityMode;
  className?:string;
  unstyled?:boolean;
 }
@@ -58,34 +80,48 @@ export interface LayerStackProps extends Omit<ViewProps,"children">{
  * selection all live in the app; the component holds only gesture previews.
  */
 export function LayerStack({
- layers,selectedId,onSelect,onToggleVisible,onOpacityPreview,onOpacityCommit,onMove,onRename,
- rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,className,unstyled=false,...rest
+ layers,selectedId,onSelect,onToggleVisible,onOpacityPreview,onOpacityCommit,onMove,onRename,onRemove,
+ rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,opacityControl="auto",className,unstyled=false,
+ onLayout,...rest
 }:LayerStackProps){
  validateLayers(layers);
  const local=useRef<StoreApi<Local>|null>(null);
- if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null}));
+ if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null,width:undefined,editing:null}));
  const store=local.current;
  const drag=useStore(store,s=>s.drag);
+ const width=useStore(store,s=>s.width);
  const height=Math.max(LAYER_TOUCH_TARGET,rowHeight);
  const styled=!unstyled;
+ // One row with a thumbnail gives every row the slot, so names and opacity tracks stay in columns.
+ const thumbnailSlot=layers.some(l=>l.thumbnail!==undefined);
+ // The stack measures itself, not the window: a docked panel is narrow on any screen.
+ const mode=opacityControl==="auto"?layerOpacityMode(width,{thumbnail:thumbnailSlot,removable:onRemove!==undefined}):opacityControl;
+ // A widened stack or a removed layer drops an open readout popover, so it never reopens by itself later.
+ useEffect(()=>{
+  const editing=store.getState().editing;
+  if(editing!==null&&(mode!=="readout"||!layers.some(l=>l.id===editing)))store.setState({editing:null,opacity:null});
+ },[mode,layers,store]);
  return <View {...rest} accessibilityLabel={label}
+  onLayout={e=>{store.setState({width:e.nativeEvent.layout.width});onLayout?.(e);}}
    {...{className:joinClasses("min-w-0 overflow-hidden",styled&&"rounded-control bg-surface-sunken",className)}}>
   {/* Scrolling is paused while a row is dragged so the handle keeps the gesture. */}
   <ScrollView scrollEnabled={drag===null} nestedScrollEnabled>
    {layers.length===0
     ?<Text {...{className:joinClasses(styled&&"text-text-muted")}} style={{padding:12}}>{emptyLabel}</Text>
     :layers.map((layer,index)=><LayerStackRow key={layer.id} store={store} layer={layer} index={index}
-      count={layers.length} rowHeight={height} selected={layer.id===selectedId} styled={styled}
+      count={layers.length} rowHeight={height} thumbnailSlot={thumbnailSlot} mode={mode} selected={layer.id===selectedId} styled={styled}
       accentColor={accentColor} onSelect={onSelect} onToggleVisible={onToggleVisible}
-      onOpacityPreview={onOpacityPreview} onOpacityCommit={onOpacityCommit} onMove={onMove} onRename={onRename}/>)}
+      onOpacityPreview={onOpacityPreview} onOpacityCommit={onOpacityCommit} onMove={onMove} onRename={onRename}
+      onRemove={onRemove}/>)}
   </ScrollView>
  </View>;
 }
 
 type RowProps={
- store:StoreApi<Local>;layer:LayerRow;index:number;count:number;rowHeight:number;selected:boolean;
+ store:StoreApi<Local>;layer:LayerRow;index:number;count:number;rowHeight:number;thumbnailSlot:boolean;
+ mode:LayerOpacityMode;selected:boolean;
  styled:boolean;accentColor:string|undefined;
-}&Pick<LayerStackProps,"onSelect"|"onToggleVisible"|"onOpacityPreview"|"onOpacityCommit"|"onMove"|"onRename">;
+}&Pick<LayerStackProps,"onSelect"|"onToggleVisible"|"onOpacityPreview"|"onOpacityCommit"|"onMove"|"onRename"|"onRemove">;
 
 function LayerStackRow(props:RowProps){
  const {store,layer,index,count,rowHeight,selected,styled,accentColor}=props;
@@ -104,11 +140,12 @@ function LayerStackRow(props:RowProps){
   cancelPreview(p.layer.opacity,()=>store.setState({opacity:null}),
    value=>p.onOpacityPreview?.(p.layer.id,value));
  };
+ // The one commit path for drag, screen-reader steps and the readout's scrubber.
  const commitOpacity=(value:number)=>{
   const p=latest.current;
   store.setState({opacity:null});
   const next=normalizeOpacity(value);
-  if(next!==p.layer.opacity)void p.onOpacityCommit(p.layer.id,next);
+  return next!==p.layer.opacity?p.onOpacityCommit(p.layer.id,next):undefined;
  };
  const opacityPan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
  if(!opacityPan.current)opacityPan.current=PanResponder.create({
@@ -121,7 +158,8 @@ function LayerStackRow(props:RowProps){
   },
   onPanResponderMove:(_e,g)=>{
    const p=latest.current;
-   const next=opacityFromDrag(opacityStart.current,g.dx,trackWidth.current);
+   // The fill grows from the start edge, which is the right edge in RTL.
+   const next=opacityFromDrag(opacityStart.current,I18nManager.isRTL?-g.dx:g.dx,trackWidth.current);
    const current=store.getState().opacity;
    if(current?.id===p.layer.id&&current.value!==next){
     store.setState({opacity:{id:p.layer.id,value:next}});
@@ -130,7 +168,7 @@ function LayerStackRow(props:RowProps){
   },
   onPanResponderRelease:()=>{
    const current=store.getState().opacity;
-   if(current?.id===latest.current.layer.id)commitOpacity(current.value);
+   if(current?.id===latest.current.layer.id)void commitOpacity(current.value);
   },
   onPanResponderTerminate:cancelOpacity,
   onPanResponderTerminationRequest:()=>false,
@@ -176,14 +214,28 @@ function LayerStackRow(props:RowProps){
   if(next!==undefined)void latest.current.onRename(layer.id,next);
  };
 
+ const removable=props.onRemove!==undefined&&!locked;
+ const remove=()=>{
+  const p=latest.current;
+  if(p.onRemove&&p.layer.locked!==true)void p.onRemove(p.layer.id);
+ };
+ const onRowKey=(e:KeyEvent)=>{
+  const key=e.nativeEvent.key;
+  if(key!=="Delete"&&key!=="Backspace")return;
+  if(!removable)return;
+  e.preventDefault();
+  remove();
+ };
+
  const stepActions=(direction:-1|1)=>{
-  if(!locked)commitOpacity(stepOpacity(layer.opacity,direction));
+  if(!locked)void commitOpacity(stepOpacity(layer.opacity,direction));
  };
  const rowActions=[
   {name:"activate"},
   ...(!locked&&index>0?[{name:"moveUp",label:"Move up"}]:[]),
   ...(!locked&&index<count-1?[{name:"moveDown",label:"Move down"}]:[]),
   ...(!locked?[{name:"rename",label:"Rename"}]:[]),
+  ...(removable?[{name:"remove",label:"Remove"}]:[]),
  ];
  const accent=accentColor?{backgroundColor:accentColor}:null;
  const text=joinClasses(styled&&(layer.visible?"text-text":"text-text-muted"));
@@ -196,7 +248,7 @@ function LayerStackRow(props:RowProps){
    style={{height:rowHeight,flexDirection:"row",alignItems:"center",
     zIndex:drag?1:0,transform:drag?[{translateY:drag.dy}]:undefined}}>
   <View pointerEvents="none" {...{className:joinClasses(styled&&selected&&!accentColor&&"bg-accent")}}
-   style={{position:"absolute",left:0,top:0,bottom:0,width:3,...(selected?accent:null)}}/>
+   style={{position:"absolute",start:0,top:0,bottom:0,width:3,...(selected?accent:null)}}/>
   {/* Screen readers reorder through the row's move actions instead of this handle. */}
   <View {...dragPan.current.panHandlers} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",gap:3,...dimmed}}>
@@ -209,7 +261,11 @@ function LayerStackRow(props:RowProps){
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
    <VisibilityGlyph visible={layer.visible} styled={styled}/>
   </Pressable>
-  <View style={{flex:1,minWidth:0,height:LAYER_TOUCH_TARGET,justifyContent:"center"}}>
+  {layer.clippedTo?<ClipIndicator unstyled={!styled}/>:null}
+  {layer.thumbnail?<Thumbnail thumbnail={layer.thumbnail} styled={styled} dimmed={!layer.visible}/>
+   :props.thumbnailSlot?<View pointerEvents="none" style={{width:LAYER_THUMBNAIL_SIZE,marginEnd:4}}/>:null}
+  {/* The name keeps 96pt beside the slider. With the readout it may shrink as a last resort, so remove never clips. */}
+  <View style={{flex:1,minWidth:props.mode==="slider"?LAYER_NAME_MIN_WIDTH:0,height:LAYER_TOUCH_TARGET,justifyContent:"center"}}>
    {rename
     ?<TextInput autoFocus selectTextOnFocus accessibilityLabel={"Name for "+layer.name}
       value={rename.draft} returnKeyType="done"
@@ -227,16 +283,19 @@ function LayerStackRow(props:RowProps){
        else if(action==="moveUp")move(index-1);
        else if(action==="moveDown")move(index+1);
        else if(action==="rename")startRename();
+       else if(action==="remove")remove();
       }}
       onPress={()=>latest.current.onSelect(layer.id)} onLongPress={startRename}
+      {...{onKeyDown:onRowKey}}
       {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
       style={{minHeight:LAYER_TOUCH_TARGET,justifyContent:"center",paddingHorizontal:4}}>
       <Text numberOfLines={1} {...{className:text}} style={{fontWeight:selected?"700":"500"}}>{layer.name}</Text>
       <Text numberOfLines={1} {...{className:muted}} style={{fontSize:12}}>
-       {layerKindLabel(layer.kind)+(locked?", locked":"")}
+       {layerDetail(layer)+(locked?", locked":"")}
       </Text>
      </Pressable>}
   </View>
+  {props.mode==="readout"?<OpacityReadout {...props} opacity={opacity} dimmed={dimmed} commit={commitOpacity}/>:<>
   <View {...opacityPan.current.panHandlers}
    accessible accessibilityRole="adjustable" accessibilityLabel={layer.name+" opacity"}
    accessibilityValue={{min:0,max:100,now:percent,text:formatOpacity(opacity)}}
@@ -246,7 +305,8 @@ function LayerStackRow(props:RowProps){
     if(e.nativeEvent.actionName==="increment")stepActions(1);
     if(e.nativeEvent.actionName==="decrement")stepActions(-1);
    }}
-   style={{width:120,height:LAYER_TOUCH_TARGET,flexDirection:"row",alignItems:"center",gap:8,paddingRight:12,...dimmed}}>
+   style={{width:LAYER_OPACITY_SLIDER_WIDTH,minWidth:88,flexShrink:1,height:LAYER_TOUCH_TARGET,flexDirection:"row",alignItems:"center",gap:8,
+    paddingEnd:props.onRemove?4:12,...dimmed}}>
    <View onLayout={e=>{trackWidth.current=e.nativeEvent.layout.width;}}
     {...{className:joinClasses(styled&&"bg-surface-raised")}}
     style={{flex:1,height:4,borderRadius:2,overflow:"hidden"}}>
@@ -257,6 +317,78 @@ function LayerStackRow(props:RowProps){
     {formatOpacity(opacity)}
    </Text>
   </View>
+  </>}
+  {/* Shown only when the host can delete layers. Locked rows keep the slot, disabled, so columns line up. */}
+  {props.onRemove?<Pressable accessibilityRole="button" accessibilityLabel={"Remove "+layer.name}
+   accessibilityState={{disabled:locked}} disabled={locked} onPress={remove}
+   {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
+   style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",...dimmed}}>
+   <RemoveGlyph styled={styled}/>
+  </Pressable>:null}
+ </View>;
+}
+
+type ReadoutProps=RowProps&{opacity:number;dimmed:{opacity:number};commit:(value:number)=>unknown};
+
+/**
+ * Narrow-row opacity: a percentage button that opens a PrecisionScrubber in a
+ * popover anchored to it. The scrubber previews through `onOpacityPreview`,
+ * commits once through `onOpacityCommit`, and a cancelled drag (Escape, a
+ * second pointer, or closing the popover mid-drag) restores the committed value.
+ */
+function OpacityReadout({store,layer,styled,opacity,dimmed,onOpacityPreview,commit}:ReadoutProps){
+ const open=useStore(store,s=>s.editing===layer.id);
+ const locked=layer.locked===true;
+ // Closing drops any preview, so the readout shows the committed value again.
+ const setOpen=(next:boolean)=>store.setState(next?{editing:layer.id}:{editing:null,opacity:null});
+ return <View style={{width:LAYER_OPACITY_READOUT_WIDTH,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
+  <AnchoredPopover open={open&&!locked} onOpenChange={setOpen} accessibilityLabel={layer.name+" opacity"} width={300}
+   trigger={({toggle,triggerProps})=><Pressable {...triggerProps} accessibilityRole="button"
+    accessibilityLabel={layer.name+" opacity, "+formatOpacity(opacity)}
+    accessibilityHint={locked?undefined:"Opens a scrubber to change opacity."}
+    accessibilityState={{...triggerProps.accessibilityState,disabled:locked}} aria-disabled={locked||undefined}
+    disabled={locked} onPress={toggle}
+    {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
+      styled&&!locked&&"hover:bg-surface-raised")}}
+    style={{minWidth:LAYER_OPACITY_READOUT_WIDTH,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",
+     paddingHorizontal:4,...dimmed}}>
+    <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted")}}
+     style={{fontVariant:["tabular-nums"],fontSize:12}}>{formatOpacity(opacity)}</Text>
+   </Pressable>}>
+   <View style={{padding:12}}>
+    <PrecisionScrubber label={layer.name+" opacity"} value={Math.round(layer.opacity*100)} min={0} max={100} step={1}
+     unit="%" disabled={locked}
+     onPreview={value=>{
+      const next=normalizeOpacity(value/100);
+      store.setState({opacity:{id:layer.id,value:next}});
+      onOpacityPreview?.(layer.id,next);
+     }}
+     onCommit={value=>commit(value/100)}/>
+   </View>
+  </AnchoredPopover>
+ </View>;
+}
+
+/**
+ * Hidden from screen readers in every case: a labelled preview is spoken as
+ * part of the row label, so it is never a separate stop.
+ */
+function Thumbnail({thumbnail,styled,dimmed}:{thumbnail:LayerThumbnail;styled:boolean;dimmed:boolean}){
+ const fill="fill" in thumbnail?{backgroundColor:thumbnail.fill}:null;
+ return <View pointerEvents="none" importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
+  {...{"aria-hidden":true,className:joinClasses(styled&&"rounded-control border border-border",styled&&!fill&&"bg-surface-sunken")}}
+  style={{width:LAYER_THUMBNAIL_SIZE,height:LAYER_THUMBNAIL_SIZE,marginEnd:4,overflow:"hidden",
+   alignItems:"center",justifyContent:"center",opacity:dimmed?0.45:1,...fill}}>
+  {"node" in thumbnail?thumbnail.node:null}
+ </View>;
+}
+
+/** Two crossed bars drawn with views in the muted text token, matching the row's other glyphs. */
+function RemoveGlyph({styled}:{styled:boolean}){
+ const bar=joinClasses(styled&&"bg-text-muted");
+ return <View pointerEvents="none" style={{width:14,height:14,alignItems:"center",justifyContent:"center"}}>
+  <View {...{className:bar}} style={{position:"absolute",width:16,height:1.5,borderRadius:1,transform:[{rotate:"45deg"}]}}/>
+  <View {...{className:bar}} style={{position:"absolute",width:16,height:1.5,borderRadius:1,transform:[{rotate:"-45deg"}]}}/>
  </View>;
 }
 

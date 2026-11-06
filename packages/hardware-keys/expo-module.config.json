@@ -1,0 +1,7 @@
+{
+  "name": "NYCTronHardwareKeys",
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["NYCTronHardwareKeysModule"]
+  }
+}

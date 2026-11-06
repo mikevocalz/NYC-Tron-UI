@@ -3,21 +3,24 @@ import { Platform, Text, View } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { Host } from "@expo/ui";
-import { Picker as SwiftUIPicker, Text as SwiftUIText } from "@expo/ui/swift-ui";
+import { Picker as SwiftUIPicker, Section as SwiftUISection, Text as SwiftUIText } from "@expo/ui/swift-ui";
 import { disabled as swiftUIDisabled, pickerStyle, tag } from "@expo/ui/swift-ui/modifiers";
 import {
-  DropdownMenuItem, ExposedDropdownMenu, ExposedDropdownMenuBox,
+  DropdownMenuItem, ExposedDropdownMenu, ExposedDropdownMenuBox, HorizontalDivider,
   Text as ComposeText, TextField, type TextFieldRef,
 } from "@expo/ui/jetpack-compose";
 import {
-  menuAnchor, onVisibilityChanged, semantics, testID as composeTestID,
+  menuAnchor, onVisibilityChanged, padding, semantics, testID as composeTestID,
 } from "@expo/ui/jetpack-compose/modifiers";
 import {
-  joinDropdownClasses, selectedOptionLabel, validateDropdownOptions,
-  type NativeDropdownOption, type NativeDropdownProps,
+  dropdownOptions, joinDropdownClasses, selectedOptionLabel, validateDropdownOptions,
+  type NativeDropdownGroup, type NativeDropdownOption, type NativeDropdownProps,
 } from "./NativeDropdown.types.ts";
-export type { NativeDropdownProps, NativeDropdownOption } from "./NativeDropdown.types.ts";
-export { validateDropdownOptions } from "./NativeDropdown.types.ts";
+export type {
+  NativeDropdownProps, NativeDropdownOption, NativeDropdownGroup,
+  NativeDropdownBaseProps, NativeDropdownOptionsChoice, NativeDropdownGroupsChoice,
+} from "./NativeDropdown.types.ts";
+export { validateDropdownOptions, dropdownOptions } from "./NativeDropdown.types.ts";
 
 /*
  * Accessibility decision: the label goes into the platform picker itself,
@@ -39,15 +42,24 @@ export { validateDropdownOptions } from "./NativeDropdown.types.ts";
  * The visible RN caption is hidden from assistive tech so it is not
  * announced twice.
  *
+ * Headed `groups`: on iOS each group is a SwiftUI `Section` inside the
+ * Picker, which the menu style draws as a section header (the wheel style
+ * lists the options without headers). On Android each group gets a heading
+ * row in the Material menu, with a divider between groups; the heading is
+ * plain text, not a menu item, so TalkBack reads it and never offers to
+ * select it.
+ *
  * Both platform trees are imported here. Expo resolves a native view config
  * lazily, on first render (NativeComponentRegistry.get in expo-modules-core
  * 58), so importing the SwiftUI views on Android, or the Compose views on
  * iOS, registers nothing and logs nothing.
  */
-export function NativeDropdown({
-  label,value,options,onValueChange,disabled=false,appearance="menu",
-  className,labelClassName,testID,style,...rest
-}:NativeDropdownProps){
+export function NativeDropdown(props:NativeDropdownProps){
+  const {
+    label,value,onValueChange,disabled=false,appearance="menu",
+    className,labelClassName,testID,style,options:_options,groups,...rest
+  }=props;
+  const options=dropdownOptions(props);
   validateDropdownOptions(value,options);
   const enabled=!disabled && options.length>0;
   const choose=(next:string)=>{if(enabled && next!==value)onValueChange(next);};
@@ -57,31 +69,38 @@ export function NativeDropdown({
       {...{className:joinDropdownClasses("text-sm text-text",labelClassName)}}>{label}</Text>
     <Host matchContents={{vertical:true}} style={{width:"100%"}}>
       {Platform.OS==="android"
-        ? <ComposeDropdown label={label} value={value} options={options}
+        ? <ComposeDropdown label={label} value={value} options={options} groups={groups}
             enabled={enabled} onChoose={choose} testID={testID}/>
         : <SwiftUIPicker label={label} selection={value} testID={testID}
             onSelectionChange={next=>{if(typeof next==="string")choose(next);}}
             modifiers={enabled
               ? [pickerStyle(appearance)]
               : [pickerStyle(appearance),swiftUIDisabled(true)]}>
-            {options.map(option=>
-              <SwiftUIText key={option.value} modifiers={[tag(option.value)]}>{option.label}</SwiftUIText>)}
+            {groups===undefined
+              ? options.map(swiftUIOption)
+              : groups.map((group,index)=><SwiftUISection key={"group:"+index} title={group.heading}>
+                  {group.options.map(swiftUIOption)}
+                </SwiftUISection>)}
           </SwiftUIPicker>}
     </Host>
   </View>;
 }
 
+const swiftUIOption=(option:NativeDropdownOption)=>
+  <SwiftUIText key={option.value} modifiers={[tag(option.value)]}>{option.label}</SwiftUIText>;
+
 interface ComposeDropdownProps {
   readonly label:string;
   readonly value:string;
   readonly options:readonly NativeDropdownOption[];
+  readonly groups:readonly NativeDropdownGroup[]|undefined;
   readonly enabled:boolean;
   readonly onChoose:(value:string)=>void;
   readonly testID?:string;
 }
 type ComposeMenuState={expanded:boolean;visible:boolean};
 /** Material 3 exposed dropdown. `appearance` does not apply: Material has no wheel. */
-function ComposeDropdown({label,value,options,enabled,onChoose,testID}:ComposeDropdownProps){
+function ComposeDropdown({label,value,options,groups,enabled,onChoose,testID}:ComposeDropdownProps){
   const local=useRef<StoreApi<ComposeMenuState>|null>(null);
   if(!local.current)local.current=createStore<ComposeMenuState>(()=>({expanded:false,visible:false}));
   const store=local.current;
@@ -94,6 +113,10 @@ function ComposeDropdown({label,value,options,enabled,onChoose,testID}:ComposeDr
     if(visible)void field.current?.setText(selectedLabel);
   },[selectedLabel,visible]);
   const setExpanded=(next:boolean)=>store.setState({expanded:next});
+  const item=(option:NativeDropdownOption)=><DropdownMenuItem key={option.value}
+    onClick={enabled?()=>{onChoose(option.value);setExpanded(false);}:undefined}>
+    <DropdownMenuItem.Text><ComposeText>{option.label}</ComposeText></DropdownMenuItem.Text>
+  </DropdownMenuItem>;
   return <ExposedDropdownMenuBox expanded={expanded}
     onExpandedChange={enabled?setExpanded:undefined}>
     <TextField ref={field} readOnly enabled={enabled}
@@ -104,11 +127,15 @@ function ComposeDropdown({label,value,options,enabled,onChoose,testID}:ComposeDr
         ...(testID?[composeTestID(testID)]:[]),
       ]}/>
     <ExposedDropdownMenu expanded={expanded} onDismissRequest={()=>setExpanded(false)}>
-      {options.map(option=>
-        <DropdownMenuItem key={option.value}
-          onClick={enabled?()=>{onChoose(option.value);setExpanded(false);}:undefined}>
-          <DropdownMenuItem.Text><ComposeText>{option.label}</ComposeText></DropdownMenuItem.Text>
-        </DropdownMenuItem>)}
+      {groups===undefined
+        ? options.map(item)
+        : groups.flatMap((group,index)=>[
+            ...(index>0?[<HorizontalDivider key={"divider:"+index}/>]:[]),
+            // Material 3 menu section label: labelLarge text, inset like the items, never clickable.
+            <ComposeText key={"heading:"+index} style={{typography:"labelLarge"}}
+              modifiers={[padding(16,12,16,4)]}>{group.heading}</ComposeText>,
+            ...group.options.map(item),
+          ])}
     </ExposedDropdownMenu>
   </ExposedDropdownMenuBox>;
 }

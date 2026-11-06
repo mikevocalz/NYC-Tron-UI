@@ -12,6 +12,8 @@ export interface TronThemeColors {
   readonly focus:string;
   /** Optional: added after the first release; recipes using it stay unstyled without it. */
   readonly danger?:string; readonly onDanger?:string; readonly accent?:string;
+  /** Optional status tones for Banner, Badge and ErrorMessage marks (2026-11-05). */
+  readonly info?:string; readonly success?:string;
 }
 /** Pre-alignment names, still accepted and still readable on validated themes. */
 export interface TronThemeColorAliases {
@@ -45,6 +47,7 @@ export const TRON_THEME_TOKENS={
     surfaceRaised:"--color-surface-raised",surfaceSunken:"--color-surface-sunken",
     border:"--color-border",text:"--color-text",textMuted:"--color-text-muted",
     danger:"--color-danger",onDanger:"--color-on-danger",accent:"--color-accent",
+    info:"--color-info",success:"--color-success",
     focus:"--color-focus",
   },
   shape:{controlRadius:"--radius-control",cardRadius:"--radius-card"},
@@ -57,7 +60,7 @@ export const TRON_NATIVE_METRICS=["shape.borderWidth","density","motion.fastMs",
 
 const COLOR_ALIASES=[["surfaceRaised","surface"],["text","foreground"],["textMuted","muted"],["surfaceSunken","background"]] as const;
 const REQUIRED_COLORS=["primary","onPrimary","surfaceRaised","surfaceSunken","border","text","textMuted","focus"] as const;
-const OPTIONAL_COLORS=["danger","onDanger","accent"] as const;
+const OPTIONAL_COLORS=["danger","onDanger","accent","info","success"] as const;
 
 // The current key wins over its alias. Validated themes expose both names,
 // so `{...theme.colors, text: "#111"}` still carries the old `foreground`;

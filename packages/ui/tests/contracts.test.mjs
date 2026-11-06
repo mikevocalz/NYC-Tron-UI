@@ -29,8 +29,12 @@ test("all direct component export targets are actual independent files",()=>{
 });
 test("Forge controls never import engine packages or app-specific palettes",()=>{
  for(const file of [
-  "NativeSeekBar.tsx","WaveformLane.tsx","ColorChannels.tsx",
-  "waveform.ts","color.ts","timebase.ts"
+  "NativeSeekBar.native.tsx","NativeSeekBar.web.tsx","NativeSeekBar.shared.tsx","NativeSeekBar.types.ts","WaveformLane.tsx","ColorChannels.tsx",
+  "waveform.ts","color.ts","timebase.ts","audio/level.ts","audio/LevelFader.tsx",
+  "color/HsvPicker.tsx","color/fieldGeometry.ts","color/fieldGesture.ts",
+  "audio/pan.ts","audio/PanControl.tsx","audio/SoloMuteButtons.tsx","audio/mixer.ts","audio/ChannelStrip.tsx",
+  "audio/MixingConsole.tsx","audio/tempo.ts","audio/TempoAndMetronome.tsx","toggle-a11y.ts",
+  "midi/note-grid.ts","midi/MIDIPianoRoll.tsx","midi/MIDIVelocityLane.tsx","midi/StepSequencer.tsx"
  ]){
   const text=readFileSync(resolve(root,"src/components/forge",file),"utf8");
   assert.ok(!/from\s+["'](?:@nitro-forge\/|@acme\/|@reactvision\/)/.test(text),file);
@@ -142,7 +146,7 @@ const componentSources=(dir=resolve(root,"src/components"))=>
 test("every semantic token a component uses is documented for consumers",()=>{
   const doc=readFileSync(resolve(root,"../../docs/THEME_TOKENS.md"),"utf8");
   const documented=new Set([...doc.matchAll(/--(?:color|radius)-([a-z-]+)/g)].map(m=>m[1]));
-  const tokenClass=/\b(?:bg|text|border|ring|rounded)-((?:on-)?(?:primary|danger)|surface-(?:raised|sunken)|text(?:-muted)?|accent|border|focus|control|card)\b/g;
+  const tokenClass=/\b(?:bg|text|border|ring|rounded)-((?:on-)?(?:primary|danger)|info|success|surface-(?:raised|sunken)|text(?:-muted)?|accent|border|focus|control|card)\b/g;
   const used=new Set();
   for(const file of componentSources()){
     for(const m of readFileSync(file,"utf8").matchAll(tokenClass))used.add(m[1]);

@@ -1,3 +1,4 @@
+import {importSpecifiers} from "./import-specifiers.mjs";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
@@ -15,7 +16,7 @@ const fail=message=>failures.push(message);
 const conditionExtension={types:".d.ts","react-native":".js",default:".js"};
 
 const bareName=spec=>spec.startsWith("@")?spec.split("/").slice(0,2).join("/"):spec.split("/")[0];
-const importSpecifiers=text=>[...text.matchAll(/(?:^|[\s;])(?:import|export)\s*(?:[^"';]*?\sfrom\s*)?["']([^"']+)["']/g)].map(m=>m[1]);
+
 
 // Names exported by a compiled .js or .d.ts file, following `export * from`.
 // Relative .ts/.tsx specifiers in declarations map to the sibling .d.ts.
@@ -69,14 +70,25 @@ for (const pkgName of packages) {
   if(pkgName==="ui"&&
     (!manifest.exports["./components/forge/WaveformLane"]||
      !manifest.exports["./components/forge/NativeSeekBar"]||
-     !manifest.exports["./components/forge/ColorChannels"])) {
+     !manifest.exports["./components/forge/ColorChannels"]||
+     !manifest.exports["./components/forge/audio/LevelFader"]||
+     !manifest.exports["./components/forge/color/HsvPicker"])) {
     fail("Professional control subpaths must be addressable");
   }
-  if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs"]){
+  if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs",
+    "forge/spreadsheet/SheetTabs","forge/spreadsheet/ChartBuilder","forge/spreadsheet/Sparkline","forge/spreadsheet/SparklineEditor",
+    "forge/spreadsheet/FreezeSplitControls","forge/spreadsheet/SplitSpreadsheetView","forge/spreadsheet/SpreadsheetCardsView",
+    "forge/spreadsheet/FormulaReferenceText","forge/spreadsheet/fill-handle"]){
     if(!manifest.exports["./components/"+sub])fail("Missing data grid subpath "+sub);
   }
+  // Office cluster (Forge J-01/J-02/J-05/J-09, H-03/H-07/H-15/H-21, K-04/K-06/K-07/K-18).
+  if(pkgName==="ui")for(const sub of ["slides/SlideFilmstrip","slides/SlideSorter","slides/SlideCanvas","slides/SlideAnimationPane",
+    "document/RichTextRibbon","document/BulletsNumberingEditor","document/NavigationOutline","document/DocumentReadAloudTransport",
+    "pdf/TextSearchResults","pdf/AnnotationToolbar","pdf/CommentsThreadPanel","pdf/PDFReadAloudTransport","office/read-aloud-model","pdf/search-model"]){
+    if(!manifest.exports["./components/forge/"+sub])fail("Missing office subpath forge/"+sub);
+  }
   const runtimeDeps={...manifest.dependencies,...manifest.optionalDependencies};
-  for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence"]) {
+  for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence","@nitro-forge/icons"]) {
     if(bad in runtimeDeps||bad in (manifest.peerDependencies??{}))fail(id+": forbidden UI dependency "+bad);
   }
   // A tarball installed by URL cannot resolve a sibling from the registry

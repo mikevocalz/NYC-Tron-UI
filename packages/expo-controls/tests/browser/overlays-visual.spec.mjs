@@ -11,6 +11,7 @@ const overlays=[
   {name:"palette",open:"Open palette",surface:page=>page.getByRole("dialog",{name:"Command palette"}),
     after:async page=>{await page.keyboard.type("op");}},
   {name:"tooltip",open:"Save",surface:page=>page.getByRole("tooltip"),focusOnly:true},
+  {name:"trigger-popover",open:"Stroke width",surface:page=>page.getByRole("dialog",{name:"Stroke width"})},
 ];
 
 for(const size of sizes)for(const theme of themes)for(const overlay of overlays){

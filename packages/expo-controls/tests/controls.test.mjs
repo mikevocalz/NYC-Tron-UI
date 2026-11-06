@@ -57,6 +57,12 @@ test("dropdown caption names the picker for screen readers on every platform",()
  assert.match(native,/<SwiftUIPicker label=\{label\}/);
  // Android: the exposed-dropdown anchor field carries it as contentDescription.
  assert.match(native,/semantics\(\{contentDescription:label\}\)/);
+ // Headed groups: SwiftUI Section on iOS, heading rows and dividers in the Material menu.
+ assert.match(native,/<SwiftUISection key=\{"group:"\+index\} title=\{group\.heading\}>/);
+ assert.match(native,/<HorizontalDivider key=\{"divider:"\+index\}\/>/);
+ assert.match(native,/style=\{\{typography:"labelLarge"\}\}/);
+ // Web: grouped choices fall back to the kit's grouped listbox.
+ assert.match(web,/if\(groups!==undefined\)return <Select /);
  // The visible caption is not announced a second time on native.
  assert.match(native,/<Text accessibilityElementsHidden importantForAccessibility="no"/);
  // Web: the caption names the group around the <select>.
@@ -83,12 +89,20 @@ test("popover renders real SwiftUI/Compose surfaces natively and placePopover on
  assert.match(native,/import \{ Box, DropdownMenu, RNHostView as ComposeHostView \} from "@expo\/ui\/jetpack-compose"/);
  assert.match(native,/<DropdownMenu expanded=\{open\} onDismissRequest=\{\(\)=>onOpenChange\(false\)\}>/);
  assert.match(native,/placePopover\(anchor,usableRegions,width,maxHeight\)/);
- assert.match(web,/placePopover\(anchor,usableRegions,width,maxHeight\)/);
+ // Trigger form: the native anchor sits over the measured trigger.
+ assert.match(native,/useTriggerAnchor\(open\)/);
+ assert.match(native,/renderPopoverTrigger\(trigger,popoverTriggerState\(open,onOpenChange\)\)/);
+ // Web is the kit's AnchoredPopover, which places itself with placePopover.
+ assert.match(web,/from "@nyc-tron\/ui\/components\/overlays\/AnchoredPopover"/);
  assert.doesNotMatch(web,/@expo\/ui/);
+ const anchored=readFileSync(resolve("packages/ui/src/components/overlays/AnchoredPopover.tsx"),"utf8");
+ assert.match(anchored,/placePopover\(anchor,usableRegions,width,maxHeight\)/);
  // One cross-platform contract: no per-platform option bags.
- assert.doesNotMatch(types,/\b(ios|android)\??:/);
- assert.match(types,/readonly anchor: Rect2D;/);
- assert.match(types,/readonly usableRegions: readonly Rect2D\[\];/);
+ const shared=readFileSync(resolve("packages/ui/src/components/overlays/anchored-popover-types.ts"),"utf8");
+ for(const source of [types,shared])assert.doesNotMatch(source,/\b(ios|android)\??:/);
+ assert.match(shared,/readonly anchor:Rect2D;/);
+ assert.match(shared,/readonly usableRegions:readonly Rect2D\[\];/);
+ assert.match(shared,/readonly trigger:ReactNode\|\(\(state:PopoverTriggerState\)=>ReactNode\);/);
 });
 test("tooltip: Compose TooltipBox on Android, accessibilityHint only on iOS, delayed hover/focus on web",async()=>{
  const base=resolve("packages/expo-controls/src/components");
@@ -118,7 +132,7 @@ test("web overlays cycle Tab inside and restore focus to the opener",()=>{
 });
 test("new subpaths resolve to emitted native and web files",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
- for(const name of ["NativePopover","Tooltip"]){
+ for(const name of ["NativePopover","Tooltip","NativeSliderField","NativeSplitButton","ContextMenu"]){
   assert.equal(pkg.exports["./"+name]["react-native"],"./dist/components/"+name+".native.js");
   assert.equal(pkg.exports["./"+name].browser,"./dist/components/"+name+".web.js");
   assert.equal(pkg.exports["./"+name].default,"./dist/components/"+name+".web.js");
@@ -129,8 +143,33 @@ test("new subpaths resolve to emitted native and web files",()=>{
 });
 test("every component subpath's types file declares the component, not only its props",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));
- for(const name of ["NativeDropdown","NativeActionMenu","NativePopover","Tooltip"]){
+ for(const name of ["NativeDropdown","NativeActionMenu","NativePopover","Tooltip","NativeSliderField","NativeSplitButton","ContextMenu"]){
   const src=pkg.exports["./"+name].types.replace("./dist/","packages/expo-controls/src/").replace(/\.d\.ts$/,".tsx");
   assert.match(readFileSync(resolve(src),"utf8"),new RegExp("export function "+name+"\\("),name);
  }
+});
+test("Select resolves to the platform picker on native and the token combobox on web",()=>{
+  const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
+  const entry=pkg.exports["./Select"];
+  assert.equal(entry["react-native"],"./dist/components/Select.native.js");
+  assert.equal(entry.browser,"./dist/components/Select.web.js");
+  const native=readFileSync(new URL("../src/components/Select.native.tsx",import.meta.url),"utf8");
+  assert.match(native,/<NativeDropdown /);
+  // Placeholder and per-row disabled states keep the token combobox.
+  assert.match(native,/if\(!declared\|\|lockedRow\)return <TokenSelect/);
+  const web=readFileSync(new URL("../src/components/Select.web.tsx",import.meta.url),"utf8");
+  assert.match(web,/from "@nyc-tron\/ui\/components\/Select"/);
+});
+test("NativeSliderField commits when the OS reports the drag ended and steps map to Compose stops",async()=>{
+ const {composeSteps}=await import("../src/components/NativeSliderField.types.ts");
+ assert.equal(composeSteps(0,100,1),99);
+ assert.equal(composeSteps(0,1,0.25),3);
+ assert.equal(composeSteps(0,1,0.3),0);
+ assert.equal(composeSteps(0,100000,1),0);
+ assert.throws(()=>composeSteps(1,0,1),RangeError);
+ const native=readFileSync(resolve("packages/expo-controls/src/components/NativeSliderField.native.tsx"),"utf8");
+ assert.match(native,/onEditingChanged=\{editing=>\{if\(!editing\)finish\(\);\}\}/);
+ assert.match(native,/onValueChangeFinished=\{finish\}/);
+ assert.match(native,/semantics\(\{contentDescription:label\}\)/);
+ assert.match(native,/label=\{label\}/);
 });

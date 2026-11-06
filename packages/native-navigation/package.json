@@ -1,0 +1,56 @@
+{
+  "name": "@nyc-tron/native-navigation",
+  "version": "0.1.0-alpha.4",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "description": "Optional Expo SDK58 native SwiftUI/Compose navigation rail",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./NativeNavigationRail": {
+      "types": "./dist/NativeNavigationRail.native.d.ts",
+      "react-native": "./dist/NativeNavigationRail.native.js",
+      "browser": "./dist/NativeNavigationRail.web.js",
+      "default": "./dist/NativeNavigationRail.web.js"
+    },
+    "./navigation-model": {
+      "types": "./dist/navigation-model.d.ts",
+      "react-native": "./dist/navigation-model.js",
+      "default": "./dist/navigation-model.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --project tsconfig.build.json",
+    "prepack": "pnpm build",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@expo/ui": "^58.0.0",
+    "expo": ">=58.0.21",
+    "react": ">=19.0.0",
+    "react-native": ">=0.88.0"
+  },
+  "devDependencies": {
+    "@expo/ui": "58.0.27",
+    "expo": "58.0.23",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3"
+  },
+  "files": [
+    "dist",
+    "ios",
+    "android",
+    "expo-module.config.json",
+    "README.md",
+    "LICENSE"
+  ]
+}

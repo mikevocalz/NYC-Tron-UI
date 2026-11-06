@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/expo-controls",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.4",
   "private": true,
   "type": "module",
   "sideEffects": false,
@@ -36,10 +36,34 @@
       "react-native": "./dist/components/Tooltip.native.js",
       "default": "./dist/components/Tooltip.web.js"
     },
+    "./NativeSliderField": {
+      "types": "./dist/components/NativeSliderField.web.d.ts",
+      "browser": "./dist/components/NativeSliderField.web.js",
+      "react-native": "./dist/components/NativeSliderField.native.js",
+      "default": "./dist/components/NativeSliderField.web.js"
+    },
+    "./NativeSplitButton": {
+      "types": "./dist/components/NativeSplitButton.web.d.ts",
+      "browser": "./dist/components/NativeSplitButton.web.js",
+      "react-native": "./dist/components/NativeSplitButton.native.js",
+      "default": "./dist/components/NativeSplitButton.web.js"
+    },
+    "./ContextMenu": {
+      "types": "./dist/components/ContextMenu.web.d.ts",
+      "browser": "./dist/components/ContextMenu.web.js",
+      "react-native": "./dist/components/ContextMenu.native.js",
+      "default": "./dist/components/ContextMenu.web.js"
+    },
     "./menu-model": {
       "types": "./dist/components/menu-model.d.ts",
       "react-native": "./dist/components/menu-model.js",
       "default": "./dist/components/menu-model.js"
+    },
+    "./Select": {
+      "types": "./dist/components/Select.web.d.ts",
+      "browser": "./dist/components/Select.web.js",
+      "react-native": "./dist/components/Select.native.js",
+      "default": "./dist/components/Select.web.js"
     }
   },
   "main": "./dist/index.js",

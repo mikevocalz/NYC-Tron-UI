@@ -11,6 +11,17 @@ Android the anchor field's content description, and on web the name of the
 group around the `<select>`. The visible caption is hidden from assistive
 tech on native so it is not read twice.
 
+Pass `groups` instead of `options` to put choices under headings:
+`groups={[{heading:"Sans serif",options:[...]},...]}`. On iOS each group is a
+SwiftUI `Section` inside the picker; the `menu` style shows the headers, the
+`wheel` rotor lists the options without them. On Android each group starts
+with a heading row (Material `labelLarge`, not selectable) and groups are
+split by dividers. On web the universal `<select>` cannot render
+`<optgroup>`, so grouped dropdowns use the kit's `Select`, whose list is a
+grouped listbox with each group named by its heading. Headings must not be
+blank, every group needs an option, and values stay unique across groups.
+`options` and `groups` together throw.
+
 `NativeActionMenu`: `@expo/ui/community/menu` for **real SwiftUI Menu or
 ContextMenu and Compose DropdownMenu** on iOS/Android. On web uses an
 independent working React Native Modal (because Expo's native MenuView web
@@ -21,12 +32,24 @@ screen-reader activation only send a press there.
 
 `NativePopover`: a SwiftUI `.popover` on iOS (through @expo/ui `Popover`) and a
 Material 3 `DropdownMenu` surface on Android, both holding your React Native
-content. It takes the same `anchor` rect and `usableRegions` as `placePopover`
-in `@nyc-tron/ui`. Mount it in the view whose coordinates those rects use,
-normally the screen root. On native an invisible anchor sits over the rect and
-the OS places and dismisses the surface; `placePopover` only picks which side
-of the anchor has room in the usable region. On web the surface is placed by
-`placePopover` directly. Controlled with `open` and `onOpenChange`.
+content. Controlled with `open` and `onOpenChange`. It has two forms:
+
+- **Rect form**: the same `anchor` rect and `usableRegions` as `placePopover`
+  in `@nyc-tron/ui`. Mount it in the view whose coordinates those rects use,
+  normally the screen root.
+- **Trigger form**: pass `trigger` (a node, or a function that receives
+  `{open, toggle, triggerProps}`) and no `anchor`. The popover renders the
+  trigger, measures it in window coordinates each time it opens and anchors
+  to it, so the app never measures anything. Mount it where the trigger
+  belongs. `usableRegions` is optional and defaults to the whole window; on
+  a foldable pass the layout owner's window-space regions. Spread
+  `triggerProps` on your pressable so screen readers hear that it opens a
+  dialog and whether it is open.
+
+On native an invisible anchor sits over the rect or the trigger and the OS
+places and dismisses the surface; `placePopover` only picks which side of the
+anchor has room in the usable region. On web the surface is the kit's
+`AnchoredPopover`, placed by `placePopover` directly.
 
 `Tooltip`: a Material 3 plain tooltip (Compose `TooltipBox`) on Android. iOS has
 no touch tooltip, so on iOS nothing is drawn and the text goes into the
@@ -57,10 +80,26 @@ import { Tooltip } from "@nyc-tron/expo-controls/Tooltip";
   ]}
   onAction={action => executeLessonAction(action)} />
 
+<NativeDropdown label="Typeface" value={font} onValueChange={setFont}
+  groups={[
+    {heading:"Sans serif",options:[{value:"inter",label:"Inter"}]},
+    {heading:"Serif",options:[{value:"source",label:"Source Serif"}]},
+  ]} />
+
 <NativePopover open={open} onOpenChange={setOpen}
   anchor={triggerRect} usableRegions={layout.usableRegions}
   accessibilityLabel="Layer settings">
   <LayerSettings />
+</NativePopover>
+
+<NativePopover open={strokeOpen} onOpenChange={setStrokeOpen}
+  accessibilityLabel="Stroke width"
+  trigger={({toggle,triggerProps}) =>
+    <Pressable {...triggerProps} accessibilityRole="button"
+      accessibilityLabel="Stroke width" onPress={toggle}>
+      <Text>Stroke width</Text>
+    </Pressable>}>
+  <StrokeWidthPicker />
 </NativePopover>
 
 <Tooltip label="Writes the lesson to disk">

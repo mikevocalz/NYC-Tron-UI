@@ -174,3 +174,27 @@ test("tooltip appears after the focus delay, describes the control and hides on 
   await page.mouse.move(600,600);
   await expect(tip).toHaveCount(0);
 });
+
+test("trigger-form popover anchors to its measured trigger and hands focus back",async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto("/");
+  const trigger=page.getByRole("button",{name:"Stroke width",exact:true});
+  await expect(trigger).toHaveAttribute("aria-expanded","false");
+  await expect(trigger).toHaveAttribute("aria-haspopup","dialog");
+  await trigger.focus();
+  await page.keyboard.press("Enter");
+  const dialog=page.getByRole("dialog",{name:"Stroke width"});
+  await expect(dialog).toBeVisible();
+  await expect(trigger).toHaveAttribute("aria-expanded","true");
+  const t=await trigger.boundingBox(),d=await dialog.boundingBox();
+  // Below the trigger, starting at its leading edge (clamped into the window).
+  expect(d.y).toBeGreaterThanOrEqual(t.y+t.height);
+  expect(Math.abs(d.x-Math.max(8,Math.min(t.x,390-8-d.width)))).toBeLessThan(1);
+  await expect(dialog.getByRole("button",{name:"Thin"})).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await dialog.getByRole("button",{name:"Thick"}).click();
+  await expect(page.getByTestId("selection")).toHaveText("thick");
+});

@@ -1,34 +1,30 @@
-import type { ReactNode } from "react";
-import type { Rect2D } from "@nyc-tron/ui/components/overlays/popover-position";
+import type {
+  PopoverAnchorProps, PopoverProps, PopoverTriggerProps, PopoverTriggerState,
+} from "@nyc-tron/ui/components/overlays/anchored-popover-types";
 export type { Rect2D } from "@nyc-tron/ui/components/overlays/popover-position";
 
 /**
- * One contract on every platform, the same one placePopover takes.
+ * One contract on every platform, in two forms:
  *
- * `anchor` and `usableRegions` are in the coordinate space of the view that
- * contains the NativePopover (normally the screen root): mount it there, not
- * inside the trigger. Pass the nonoccluded regions from the foldable layout
- * owner; never infer a hinge from width.
+ * - **Rect form** (`anchor` + `usableRegions`): the original API. Both are in
+ *   the coordinate space of the view that contains the NativePopover
+ *   (normally the screen root): mount it there, not inside the trigger.
+ * - **Trigger form** (`trigger`): the popover renders the trigger, measures
+ *   it when it opens and anchors itself to it, so the app never measures.
+ *   Mount it where the trigger belongs. `usableRegions` is optional here and
+ *   defaults to the whole window; on a foldable pass the layout owner's
+ *   window-space regions.
+ *
+ * Pass the nonoccluded regions from the foldable layout owner; never infer a
+ * hinge from width.
  */
-export interface NativePopoverProps {
-  /** Controlled visibility. */
-  readonly open: boolean;
-  /** Called with `false` when the OS or the user dismisses the popover. */
-  readonly onOpenChange: (open: boolean) => void;
-  readonly anchor: Rect2D;
-  readonly usableRegions: readonly Rect2D[];
-  /** Accessible name of the popover surface. */
-  readonly accessibilityLabel: string;
-  /** React Native content. Hosted inside the native popover on iOS and Android. */
-  readonly children: ReactNode;
-  /** Preferred width in points; clamped to the usable region. */
-  readonly width?: number;
-  /** Preferred maximum height in points; clamped to the usable region. */
-  readonly maxHeight?: number;
-  /** Web only: classes for the surface. Native surfaces are drawn by the OS. */
-  readonly className?: string;
-  readonly testID?: string;
-}
+export type NativePopoverProps=PopoverProps;
+/** The rect form of {@linkcode NativePopoverProps}. */
+export type NativePopoverAnchorProps=PopoverAnchorProps;
+/** The trigger form of {@linkcode NativePopoverProps}. */
+export type NativePopoverTriggerProps=PopoverTriggerProps;
+/** What a {@linkcode NativePopoverTriggerProps.trigger} render function receives. */
+export type NativePopoverTriggerState=PopoverTriggerState;
 
 /** Native side preference derived from placePopover's result. */
 export function swiftUIPopoverEdges(side: "below" | "above" | "overlap"): {
