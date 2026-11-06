@@ -36,6 +36,12 @@
       "types": "./dist/playback/policy.d.ts",
       "react-native": "./dist/playback/policy.js",
       "default": "./dist/playback/policy.js"
+    },
+    "./media": {
+      "types": "./dist/media/index.d.ts",
+      "browser": "./dist/media/index.js",
+      "react-native": "./dist/media/index.native.js",
+      "default": "./dist/media/index.js"
     }
   },
   "scripts": {
