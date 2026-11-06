@@ -150,7 +150,7 @@ test("playback disposal drains activation, ignores stale callbacks and releases 
   const activation=session.activate({category:"playback"});
   await Promise.resolve();
   session.setIntent("playing");
-  const disposal=session.dispose();
+  const disposal=session.dispose({releaseFocus:true});
   assert.equal(session.dispose(),disposal);
   listener({type:"interruption-began"});
   session.setIntent("playing");
@@ -167,4 +167,12 @@ test("haptics: synchronous native failures are harmless and invalid intervals re
   assert.equal(haptics.play("light"),false);
   assert.doesNotThrow(()=>haptics.prepare("light"));
   for(const minIntervalMs of [-1,NaN,Infinity])assert.throws(()=>createHaptics(null,{minIntervalMs}),RangeError);
+});
+
+test("playback listener disposal leaves process-wide focus to the shared owner",async()=>{
+ let released=0;
+ const session=createPlaybackSession({activate:()=>true,deactivate:()=>{released++;},addListener:()=>({remove(){}})},{onAction(){}});
+ await session.activate({category:"playback"});
+ await session.dispose();
+ assert.equal(released,0);
 });

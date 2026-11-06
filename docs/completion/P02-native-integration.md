@@ -47,7 +47,8 @@ restored 1 and 0.99. This is simulator keyboard evidence, not physical-keyboard 
 screen-reader acceptance.
 
 Playback session disposal now stops listeners immediately, suppresses late
-callbacks, drains accepted native operations and releases OS focus once. Await
+callbacks, drains accepted native operations and optionally releases OS focus once when the sole app owner requests it.
+Shared preview/capture owners keep their existing focus arbitration. Await
 its returned promise when teardown must finish before another owner starts.
 Synchronous haptic bridge failures are treated as missed feedback, like rejected
 promises; invalid throttle intervals reject. Regression tests exercise these

@@ -46,8 +46,12 @@ export interface PlaybackSession {
   setIntent(intent:"playing"|"paused"):void;
   /** Feeds one event through the policy, as the native listener does. Returns the action taken. */
   dispatch(event:AudioSessionEvent):PlaybackAction;
-  /** Stops listening immediately, drains accepted operations and releases OS audio focus. Idempotent. */
-  dispose():Promise<void>;
+  /**
+   * Stops listening immediately and drains accepted operations. Idempotent.
+   * releaseFocus is opt-in: only the app's sole session owner may release the
+   * process-wide OS session; preview/capture coordinators arbitrate it themselves.
+   */
+  dispose(options?:{releaseFocus?:boolean}):Promise<void>;
 }
 
 /** Options for {@linkcode createPlaybackSession}. */
@@ -96,12 +100,12 @@ export function createPlaybackSession(native:PlaybackSessionNative|null,options:
       store.setState(setPlaybackIntent(store.getState(),intent),true);
     },
     dispatch,
-    dispose(){
+    dispose({releaseFocus=false}={}){
       if(disposal)return disposal;
       closed=true;
       sub?.remove();
       store.setState(IDLE_PLAYBACK,true);
-      disposal=tail.then(async()=>{if(native)await native.deactivate();});
+      disposal=tail.then(async()=>{if(native&&releaseFocus)await native.deactivate();});
       return disposal;
     },
   };
