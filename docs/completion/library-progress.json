@@ -534,9 +534,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas/CanvasRuler.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Document units, ticks, origin and guide interactions."
+      "requirement": "Document units, ticks, origin and guide interactions.",
+      "evidence": [
+        "P05-rulers.md"
+      ]
     },
     {
       "id": "B-04",

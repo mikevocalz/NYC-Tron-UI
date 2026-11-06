@@ -50,3 +50,5 @@ P04 implementation phase complete: all 30 A-series shell components have reviewe
 P04 native overlay checkpoint: the same 28-step native menu/popover scenario passed twice on iOS and Android. [Native overlay evidence](P04-native-overlays.md) records actual platform surfaces, exact callback/close checks and warning limits. Full platform acceptance remains open; work continues with P05 canvas/layers.
 
 P05 canvas navigation checkpoint: B-02 now has scoped native pan/pinch, wheel and keyboard/accessibility navigation with independent exports. [Navigation report](P05-canvas-navigation.md) records five model and nine browser tests. Review count is 91 of 341; P05 and native/platform acceptance remain open.
+
+P05 ruler checkpoint: B-03 now guards guide/origin edits across document, geometry and permission changes and fixes guide hit-area dimensions. [Ruler report](P05-rulers.md) records source/model and browser checks. Review count is 92 of 341.

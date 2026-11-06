@@ -46,3 +46,6 @@ test('align emits once; locked selections report why without editing',async({pag
   await expect(page.getByTestId('log')).toHaveText('log ');
   await expect(page.getByText(/Unlock Footer/).first()).toBeVisible();
 });
+
+for(const action of ['Replace ruler document','Disable ruler'])test(action+' cancels the held guide without committing',async({page})=>{await open(page);const box=await page.getByRole('button',{name:'Horizontal ruler',exact:true}).boundingBox(),x=box.x+box.width/2,y=box.y+8;await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x,y+100,{steps:5});await expect(page.getByTestId('preview')).not.toHaveText('preview ');await page.getByRole('button',{name:action,exact:true}).evaluate(el=>el.click());await page.mouse.move(x,y+150);await page.mouse.up();await expect(page.getByTestId('log')).toHaveText('log ');await expect(page.getByTestId('preview')).toHaveText('preview ');});
+test('guide hit bands span the correct canvas dimension',async({page})=>{await open(page);const canvas=await page.getByTestId('canvas').boundingBox(),horizontal=await page.getByLabel('Horizontal guide at 200 px',{exact:true}).boundingBox(),vertical=await page.getByLabel('Vertical guide at 300 px',{exact:true}).boundingBox();expect(horizontal.width).toBeCloseTo(canvas.width);expect(vertical.height).toBeCloseTo(canvas.height);});
