@@ -22,6 +22,10 @@ export interface CurvesEditorProps extends Omit<ViewProps,"children">{
  readonly onCommit:(value:ColorCurve,selectedId:string)=>void;
  /** Stable IDs are allocated by the host, not inferred from point coordinates. */
  readonly createPointId:()=>string;
+ /** Application-specific curve presets; an identity reset is always available. */
+ readonly presets?:readonly {readonly id:string;readonly label:string;readonly curve:ColorCurve}[];
+ /** Optional multi-channel selector; all three fields are required together. */
+ readonly channelSelection?:{readonly channels:readonly {readonly id:string;readonly label:string}[];readonly value:string;readonly onChange:(id:string)=>void};
  readonly height?:number;readonly disabled?:boolean;readonly unstyled?:boolean;
  /** Native consumers with GestureHandlerRootView can supply GestureHandlerDrag. */
  readonly transport?:DragTransport;
@@ -29,8 +33,11 @@ export interface CurvesEditorProps extends Omit<ViewProps,"children">{
 type Geometry={x:number;y:number;width:number;height:number};
 type Local={width:number;preview:ColorCurve|null};
 /** Editable normalized transfer curve with pointer preview, single release commit and keyboard/numeric alternatives. */
-export function CurvesEditor({scope,value,selectedId,onSelect,onPreview,onCommit,createPointId,height=200,disabled=false,unstyled=false,transport:Transport=PanResponderDrag,...props}:CurvesEditorProps){
- validateCurve(value);bounded(height,88,600,'Curve height');
+export function CurvesEditor({scope,value,selectedId,onSelect,onPreview,onCommit,createPointId,presets=[],channelSelection,height=200,disabled=false,unstyled=false,transport:Transport=PanResponderDrag,...props}:CurvesEditorProps){
+ validateCurve(value);
+ if(presets.length>128||new Set(presets.map(p=>p.id)).size!==presets.length||presets.some(p=>!p.id||!p.label))throw new TypeError('Curve presets require at most 128 distinct labeled IDs');presets.forEach(p=>validateCurve(p.curve));
+ if(channelSelection&&(!channelSelection.channels.some(c=>c.id===channelSelection.value)||new Set(channelSelection.channels.map(c=>c.id)).size!==channelSelection.channels.length||channelSelection.channels.length>16))throw new TypeError('Choose a distinct available curve channel');
+ bounded(height,88,600,'Curve height');
  const selected=value.points.find(p=>p.id===selectedId);if(!selected)throw new TypeError('Selected curve point is unavailable');
  const local=useRef<StoreApi<Local>|null>(null);local.current??=createStore<Local>(()=>({width:0,preview:null}));const store=local.current,state=useStore(store,s=>s);
  const root=useRef<ComponentRef<typeof View>|null>(null),geometry=useRef<Geometry|null>(null);
@@ -64,6 +71,9 @@ export function CurvesEditor({scope,value,selectedId,onSelect,onPreview,onCommit
  const samples=Array.from({length:129},(_,i)=>({x:22+i/128*w,y:22+(1-evaluateCurve(shown,i/128))*h}));
  const index=value.points.indexOf(selected),canRemove=index>0&&index<value.points.length-1;
  return <View {...props} style={[{gap:8},props.style]}>
+  {channelSelection?<Select label="Curve channel" value={channelSelection.value} options={channelSelection.channels.map(c=>({value:c.id,label:c.label}))} disabled={disabled} unstyled={unstyled} onValueChange={channelSelection.onChange}/>:null}
+  {presets.length?<Select label="Curve preset" value="" placeholder="Apply a curve preset" options={presets.map(p=>({value:p.id,label:p.label}))} disabled={disabled} unstyled={unstyled} onValueChange={id=>{const preset=presets.find(p=>p.id===id);if(!disabled&&preset)onCommit(preset.curve,preset.curve.points[0]!.id);}}/>:null}
+  <Button title="Reset curve to identity" disabled={disabled} unstyled={unstyled} onPress={()=>{if(!disabled){const points=[{...value.points[0]!,x:0,y:0},{...value.points.at(-1)!,x:1,y:1}];onCommit({...value,points},points[0]!.id);}}}/>
   <Select label="Curve interpolation" value={value.interpolation} options={[{value:'linear',label:'Linear'},{value:'monotone',label:'Monotone cubic'}]} disabled={disabled} unstyled={unstyled} onValueChange={interpolation=>{if(!disabled)onCommit({...value,interpolation:interpolation as ColorCurve['interpolation']},selectedId);}}/>
   <Select label="Curve control point" value={selectedId} options={value.points.map((p,i)=>({value:p.id,label:`Point ${i+1}: input ${p.x.toFixed(3)}, output ${p.y.toFixed(3)}`}))} disabled={disabled} unstyled={unstyled} onValueChange={onSelect}/>
   <Transport disabled={disabled} onBegin={begin} onMove={(point,touches)=>{if(touches!==1){cancel();return;}if(pending.current)pending.current.latest=point;else adjust(point);}} onCancel={cancel} onRelease={point=>{

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validateProfiles,validateColorChannels,validateGamutReport,validateNamedColor,validateSoftProof} from '../src/components/forge/color/color-management.ts';
+import {validateProfiles,validateColorChannels,validateGamutReport,validateNamedColor,validateSoftProof,validatePrintColor} from '../src/components/forge/color/color-management.ts';
 const profiles=[{id:'icc:press',label:'Press',model:'cmyk'},{id:'icc:p3',label:'Display P3',model:'rgb'}];
 test('profiles preserve identity and reject ambiguous or unbounded choices',()=>{
  validateProfiles(profiles);assert.throws(()=>validateProfiles([...profiles,profiles[0]]),/distinct/);assert.throws(()=>validateProfiles([{...profiles[0],model:'guess'}]),/known/);
@@ -27,4 +27,13 @@ test('proof settings require an available profile before enabling; every intent 
  assert.throws(()=>validateSoftProof({...proof,profileId:'missing'},profiles),/Unknown/);
  assert.throws(()=>validateSoftProof({...proof,intent:'guess'},profiles),/intent/);
  validateSoftProof({...proof,enabled:true,profileId:'icc:press'},profiles);
+});
+
+test('Lab entry retains signed profile channels and explicit chroma bounds',()=>{
+ const lab={model:'lab',profileId:'icc:lab',channels:[50,-45,80],alpha:.5};validatePrintColor(lab);assert.throws(()=>validatePrintColor({...lab,channels:[101,0,0]}),RangeError);assert.throws(()=>validatePrintColor({...lab,channels:[50,-129,0]}),RangeError);validatePrintColor({...lab,channels:[50,-150,150]},[-160,160]);
+});
+test('gamut comparison keeps original HDR values distinct from mapped display preview',()=>{
+ const color={profileId:'p3',channels:[-.2,2,.5],alpha:1,preview:{r:0,g:255,b:128,alpha:1}};
+ validateGamutReport({sourceProfileId:'p3',destinationProfileId:'press',outside:1,total:1,comparison:{original:color,mapped:{...color,profileId:'press',channels:[0,1,.5]}}});
+ assert.throws(()=>validateGamutReport({sourceProfileId:'p3',destinationProfileId:'press',outside:1,total:1,comparison:{original:color,mapped:color}}),/profiles/);
 });

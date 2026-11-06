@@ -34,3 +34,21 @@ test('eyedropper samples document coordinates and applies original profile chann
 for(const dir of ['ltr','rtl'])test(`adjustments fit narrow ${dir} panes`,async({page})=>{
  await page.setViewportSize({width:320,height:1000});await page.goto(`/color-adjustments?dir=${dir}&theme=dark`);for(const name of ['curves','levels','gradient','mesh','grade','secondary','scopes','field','sample']){await tab(page,name);expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(321);}
 });
+test('gradient midpoint, interpolation, type and angle are actual controlled edits',async({page})=>{
+ await page.goto('/color-adjustments');await tab(page,'gradient');const midpoint=page.getByRole('textbox',{name:'Gradient midpoint percent',exact:true});await midpoint.fill('25');await midpoint.press('Enter');expect((await doc(page)).gradientOptions.midpoints).toEqual([.25]);
+ await page.getByRole('combobox',{name:'Gradient interpolation',exact:true}).click();await page.getByRole('option',{name:'Linear-light RGB',exact:true}).click();expect((await doc(page)).gradientOptions.interpolation).toBe('linear-rgb');
+ const angle=page.getByRole('textbox',{name:'Gradient angle degrees',exact:true});await angle.fill('90');await angle.press('Enter');expect((await doc(page)).paint.y1).toBe(100);
+ await page.getByRole('combobox',{name:'Gradient type',exact:true}).click();await page.getByRole('option',{name:'Radial',exact:true}).click();expect((await doc(page)).paint.type).toBe('radial');
+});
+test('curve presets target the selected RGB/Luma channel and identity reset commits exact endpoints',async({page})=>{
+ await page.goto('/color-adjustments');await page.getByRole('combobox',{name:'Curve channel',exact:true}).click();await page.getByRole('option',{name:'Luma',exact:true}).click();await page.getByRole('combobox',{name:'Curve preset',exact:true}).click();await page.getByRole('option',{name:'Contrast',exact:true}).click();let s=await doc(page);expect(s.lumaCurve.points[1].y).toBe(.8);expect(s.curve.points[1].y).toBe(.7);
+ await page.getByRole('button',{name:'Reset curve to identity',exact:true}).click();expect((await doc(page)).lumaCurve.points.map(p=>[p.x,p.y])).toEqual([[0,0],[1,1]]);
+});
+test('lift gamma gain and RGB parade retain their control values and measured data',async({page})=>{
+ await page.goto('/color-adjustments');await tab(page,'grade');await page.getByRole('radio',{name:'Lift / gamma / gain',exact:true}).click();const gamma=page.getByRole('textbox',{name:'Gamma level value',exact:true});await gamma.fill('1.5');await gamma.press('Enter');expect((await doc(page)).grade.liftGammaGain.gamma).toBe(1.5);
+ await tab(page,'scopes');await expect(page.getByText('Clipped low 1, high 2',{exact:true})).toBeVisible();await page.getByRole('radio',{name:'RGB parade',exact:true}).click();for(const color of ['red','green','blue'])await expect(page.getByLabel(`${color} parade, 1 decoded samples`,{exact:true})).toBeVisible();
+});
+test('mesh default surface renders real interpolated multicolor pixels',async({page})=>{
+ await page.goto('/color-adjustments');await tab(page,'mesh');const image=page.getByTestId('mesh-editor').locator('img');await expect(image).toHaveJSProperty('naturalWidth',48);
+ const pixels=await image.evaluate(image=>{const c=document.createElement('canvas');c.width=c.height=48;const context=c.getContext('2d');context.drawImage(image,0,0);const at=(x,y)=>[...context.getImageData(x,y,1,1).data];return {top:at(0,0),bottom:at(0,47),center:at(24,24)};});expect(pixels.top).toEqual([255,0,0,255]);expect(pixels.bottom).toEqual([0,0,255,255]);expect(Math.min(...pixels.center.slice(0,3))).toBeGreaterThan(100);expect(Math.max(...pixels.center.slice(0,3))).toBeLessThan(160);
+});

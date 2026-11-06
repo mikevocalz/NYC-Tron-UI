@@ -7,7 +7,11 @@ export interface ColorLevels { readonly inputBlack: number; readonly inputWhite:
 /** HSV-style grading tint plus exposure adjustment used by ColorGradingWheels. */
 export interface GradingBand { readonly hue: number; readonly saturation: number; readonly exposureEv: number }
 /** Three grading ranges and their application-supplied tonal mix. */
-export interface ColorGrade { readonly shadows: GradingBand; readonly midtones: GradingBand; readonly highlights: GradingBand; readonly balance: number; readonly blend: number }
+export interface ColorGrade {
+  /** Tonal ranges or an explicit lift/gamma/gain correction model. @default tonal */
+  readonly model?:"tonal"|"lift-gamma-gain";
+  readonly liftGammaGain?:{readonly lift:number;readonly gamma:number;readonly gain:number};
+  readonly shadows: GradingBand; readonly midtones: GradingBand; readonly highlights: GradingBand; readonly balance: number; readonly blend: number }
 /** A hue selection may wrap across zero. Other ranges are ordered, normalized bounds. */
 export interface HSLSecondary {
   readonly enabled: boolean;
@@ -19,7 +23,11 @@ export interface HSLSecondary {
   readonly showMask: boolean; readonly invert: boolean;
 }
 /** Engine-supplied histogram bins on an explicit input domain; no image sampling in the UI. */
-export interface HistogramChannel { readonly id: string; readonly label: string; readonly bins: readonly number[] }
+export interface HistogramChannel {
+ readonly id:string;readonly label:string;readonly bins:readonly number[];
+ /** Actual engine-measured counts; absence means clipping has not been measured. */
+ readonly clipping?:{readonly low:number;readonly high:number};
+}
 /** Decoded frame scope sample; normalized x/y with an engine-produced intensity. */
 export interface ScopeSample { readonly x: number; readonly y: number; readonly intensity: number }
 /** Rejects nonfinite/out-of-range inputs instead of silently rewriting document state. */
@@ -91,11 +99,15 @@ export function poolScope(samples: readonly ScopeSample[], size = 32): number[] 
 }
 /** Validates grading ranges. The consuming engine defines its tonal weighting. */
 export function validateGrade(value: ColorGrade): void {
+  if(value.model!==undefined&&!['tonal','lift-gamma-gain'].includes(value.model))throw new TypeError('Unknown grading model');
+  if(value.model==='lift-gamma-gain'&&!value.liftGammaGain)throw new TypeError('Lift/gamma/gain requires explicit levels');
+  if(value.liftGammaGain){bounded(value.liftGammaGain.lift,-1,1,'Lift');bounded(value.liftGammaGain.gamma,.1,10,'Gamma');bounded(value.liftGammaGain.gain,0,8,'Gain');}
   for (const key of ["shadows","midtones","highlights"] as const) { bounded(value[key].hue,0,360,"Grading hue"); bounded(value[key].saturation,0,1,"Grading saturation"); bounded(value[key].exposureEv,-10,10,"Grading exposure"); }
   bounded(value.balance,-1,1,"Grading balance"); bounded(value.blend,0,1,"Grading blend");
 }
 /** Checks HSL selection, wrapping hue bounds and correction ranges. */
 export function validateHSLSecondary(value: HSLSecondary): void {
+  for(const key of ["enabled","showMask","invert"] as const)if(typeof value[key]!=="boolean")throw new TypeError(`Secondary ${key} must be boolean`);
   bounded(value.hueStart,0,360,"Hue start");bounded(value.hueEnd,0,360,"Hue end");bounded(value.hueFeather,0,180,"Hue feather");
   for(const key of ["saturationMin","saturationMax","luminanceMin","luminanceMax","softness","denoise"] as const)bounded(value[key],0,1,key);
   if(value.saturationMin>value.saturationMax||value.luminanceMin>value.luminanceMax)throw new RangeError("Secondary selection bounds must be ordered");

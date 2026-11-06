@@ -1,6 +1,7 @@
 import { Text, View, type ViewProps } from "react-native";
 import { Button } from "../../Button.tsx";
 import { joinClasses } from "../../styles.ts";
+import {rgbaToHex} from "../color.ts";
 import { validateGamutReport, type GamutReport } from "./color-management.ts";
 export type { GamutReport } from "./color-management.ts";
 /** Measured gamut information and optional host inspection action. */
@@ -15,6 +16,9 @@ export function GamutWarning({ report, onInspect, unstyled = false, ...props }: 
   if (report) validateGamutReport(report);
   return <View {...props} style={[{ gap: 8 }, props.style]}>
     <Text accessibilityLiveRegion="polite" {...{ className: joinClasses(!unstyled && "text-text") }}>{!report ? "Gamut not measured" : report.total === 0 ? "No color samples" : `${report.outside} of ${report.total} samples outside ${report.destinationProfileId}${report.maximumDeltaE !== undefined ? `; maximum delta E ${report.maximumDeltaE}` : ""}`}</Text>
+    {report?.comparison ? <View style={{flexDirection:'row',flexWrap:'wrap',gap:12}}>{(['original','mapped'] as const).map(key=>{
+      const color=report.comparison![key];return <View key={key} style={{flex:1,minWidth:100,gap:4}}><View accessibilityLabel={`${key} display preview`} style={{height:44,backgroundColor:rgbaToHex(color.preview,true)}}/><Text selectable {...{className:joinClasses(!unstyled&&"text-text")}}>{key}: {color.profileId}; channels {color.channels.join(', ')}; alpha {color.alpha}</Text></View>;
+    })}</View> : null}
     {onInspect ? <Button title="Inspect out-of-gamut colors" disabled={!report || report.outside === 0} onPress={onInspect} unstyled={unstyled}/> : null}
   </View>;
 }

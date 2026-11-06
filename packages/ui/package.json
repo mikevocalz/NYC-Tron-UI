@@ -1669,6 +1669,11 @@
       "types": "./dist/components/shell/NumericScrubField.d.ts",
       "react-native": "./dist/components/shell/NumericScrubField.js",
       "default": "./dist/components/shell/NumericScrubField.js"
+    },
+    "./components/forge/color/gradient-options": {
+      "types": "./dist/components/forge/color/gradient-options.d.ts",
+      "react-native": "./dist/components/forge/color/gradient-options.js",
+      "default": "./dist/components/forge/color/gradient-options.js"
     }
   },
   "scripts": {

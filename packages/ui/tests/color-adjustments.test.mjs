@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {validateCurve,moveCurvePoint,evaluateCurve,validateLevels,poolHistogram,poolScope,validateGrade,validateHSLSecondary} from '../src/components/forge/color/color-adjustments.ts';
-import {validateMesh,editMeshPoint} from '../src/components/forge/color/gradient-mesh.ts';
+import {validateMesh,editMeshPoint,rasterizeMesh} from '../src/components/forge/color/gradient-mesh.ts';
 const curve={interpolation:'monotone',points:[{id:'black',x:0,y:0},{id:'mid',x:.5,y:.7},{id:'white',x:1,y:1}]};
 test('curves preserve endpoint inputs, point identities and ordered neighbors',()=>{
  validateCurve(curve);const next=moveCurvePoint(curve,'mid',1,.8);assert.ok(next.points[1].x<1);assert.equal(next.points[1].y,.8);assert.equal(curve.points[1].y,.7);
@@ -32,4 +32,9 @@ test('secondary hue wraps across zero while saturation/luma remain ordered',()=>
 const color={r:20,g:100,b:200,alpha:1};const mesh={rows:2,columns:2,points:[{id:'a',x:0,y:0,color},{id:'b',x:1,y:0,color},{id:'c',x:0,y:1,color},{id:'d',x:1,y:1,color}]};
 test('mesh edits preserve grid identity and reject folded or singular cells',()=>{
  validateMesh(mesh);const next=editMeshPoint(mesh,'a',{x:.1,y:.1});assert.equal(next.points[0].x,.1);assert.equal(mesh.points[0].x,0);assert.throws(()=>editMeshPoint(mesh,'a',{x:1,y:1}),/fold|collapse/);assert.throws(()=>validateMesh({...mesh,rows:3}),/grid/);assert.throws(()=>editMeshPoint(mesh,'missing',{x:.2}),/Unknown/);
+});
+
+test('bilinear mesh display preview preserves corner colors, smooth intermediate values and premultiplied alpha',()=>{
+ const colors=[{r:255,g:0,b:0,alpha:1},{r:0,g:255,b:0,alpha:1},{r:0,g:0,b:255,alpha:1},{r:255,g:255,b:255,alpha:0}];const m={...mesh,points:mesh.points.map((p,i)=>({...p,color:colors[i]}))};const raster=rasterizeMesh(m,9),pixel=(x,y)=>[...raster.pixels.slice((y*9+x)*4,(y*9+x)*4+4)];
+ assert.deepEqual(pixel(0,0),[255,0,0,255]);assert.deepEqual(pixel(8,0),[0,255,0,255]);assert.deepEqual(pixel(4,4),[85,85,85,191]);assert.deepEqual(pixel(8,8),[0,0,0,0]);assert.throws(()=>rasterizeMesh(m,1024),RangeError);
 });

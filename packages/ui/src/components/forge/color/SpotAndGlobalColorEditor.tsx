@@ -7,6 +7,7 @@ import { ErrorMessage } from "../../feedback/ErrorMessage.tsx";
 import type { ChannelModel } from "./channel-fields.ts";
 import { Button } from "../../Button.tsx";
 import { SegmentedControl } from "../../SegmentedControl.tsx";
+import { SettingSwitch } from "../canvas/SettingSwitch.tsx";
 import { UnitInput } from "../../shell/UnitInput.tsx";
 import { joinClasses } from "../../styles.ts";
 import { validateNamedColor, type NamedColor } from "./color-management.ts";
@@ -37,6 +38,7 @@ export function SpotAndGlobalColorEditor({ value, onChange, onSave, disabled = f
     <Text {...{ className: joinClasses(!unstyled && "text-text") }}>Color name</Text>
     <TextInput accessibilityLabel="Color name" value={value.name} editable={!locked} maxLength={256} onChangeText={name => { if (!locked) onChange({ ...value, name }); }} style={{ minHeight: 44, padding: 8 }} {...{ className: joinClasses(!unstyled && "border border-border rounded-control bg-surface-sunken text-text") }}/>
     <SegmentedControl aria-label="Named color kind" value={value.kind} options={[{ value: "spot", label: "Spot ink" }, { value: "global", label: "Global color" }]} disabled={locked} unstyled={unstyled} onChange={kind => { if (!locked) onChange({ ...value, kind }); }}/>
+    <SettingSwitch label="Overprint named color" on={value.overprint??false} onChange={overprint=>{if(!locked)onChange({...value,overprint});}} disabled={locked} styled={!unstyled}/>
     <UnitInput label="Ink tint percent" value={value.tint} min={0} max={100} disabled={locked} unstyled={unstyled} onCommit={tint => { if (!locked) onChange({ ...value, tint }); }}/>
     <ColorChannelFields value={rgbToHsv(value.alternate)} model={model} onModelChange={model => modelStore.setState({ model })} disabled={locked} unstyled={unstyled} onCommit={color => { if (!locked) onChange({ ...value, alternate: hsvToRgb(color) }); }}/>
     <Text {...{ className: joinClasses(!unstyled && "text-text-muted") }}>Alternate preview is sRGB. The host retains ink separation and output profiles.</Text>

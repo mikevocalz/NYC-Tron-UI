@@ -20,3 +20,12 @@ test('proof cannot enable until a profile is chosen and retains rendering intent
 for(const dir of ['ltr','rtl'])test(`color management fits a narrow ${dir} host`,async({page})=>{
  await page.setViewportSize({width:320,height:1000});await page.goto(`/color-management?dir=${dir}&theme=dark`);for(const name of ['print','wide','profiles','references','ink','proof']){await page.getByRole('tab',{name,exact:true}).click();expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(321);}
 });
+test('Lab channels and conversion policy stay explicit and profile-preserving',async({page})=>{
+ await page.goto('/color-management');await page.getByRole('tab',{name:'lab',exact:true}).click();const a=page.getByRole('textbox',{name:'Lab a*',exact:true});await a.fill('-70');await a.press('Enter');await expect(state(page)).toContainText('"model":"lab","profileId":"icc:lab","channels":[50,-70,80]');
+ await page.getByRole('combobox',{name:'Print conversion policy',exact:true}).click();await page.getByRole('option',{name:'Preserve color appearance',exact:true}).click();await expect(state(page)).toContainText('"policy":"preserve-appearance"');
+});
+test('gamut mapping never overwrites original channels and named ink retains overprint',async({page})=>{
+ await page.goto('/color-management');await page.getByRole('tab',{name:'profiles',exact:true}).click();await expect(page.getByText('original: p3; channels -0.2, 2, 0.5; alpha 1',{exact:true})).toBeVisible();await expect(page.getByText('mapped: press; channels 0, 75, 25, 10; alpha 1',{exact:true})).toBeVisible();
+ await page.getByRole('tab',{name:'ink',exact:true}).click();await page.getByRole('switch',{name:'Overprint named color',exact:true}).click();await expect(state(page)).toContainText('"overprint":true');
+ await page.getByRole('tab',{name:'proof',exact:true}).click();await page.getByRole('switch',{name:'Show proof gamut clipping',exact:true}).click();await expect(state(page)).toContainText('"showGamutClipping":true');
+});

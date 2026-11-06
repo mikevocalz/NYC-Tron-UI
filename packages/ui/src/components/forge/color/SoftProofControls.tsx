@@ -19,6 +19,7 @@ export function SoftProofControls({ value, profiles, onCommit, disabled = false,
     <Select label="Proof output profile" value={value.profileId ?? ""} placeholder="Choose a proof profile" options={profiles.map(profile => ({ value: profile.id, label: profile.label }))} disabled={disabled} unstyled={unstyled} onValueChange={profileId => set({ profileId })}/>
     <SettingSwitch label="Enable soft proof" on={value.enabled} onChange={enabled => set({ enabled })} disabled={disabled || value.profileId === null} styled={!unstyled}/>
     <Select label="Rendering intent" value={value.intent} options={(["perceptual", "relative-colorimetric", "saturation", "absolute-colorimetric"] as const).map(value => ({ value, label: value.replaceAll("-", " ") }))} disabled={disabled} unstyled={unstyled} onValueChange={intent => set({ intent: intent as SoftProofSettings["intent"] })}/>
+    <SettingSwitch label="Show proof gamut clipping" on={value.showGamutClipping??false} onChange={showGamutClipping=>set({showGamutClipping})} disabled={disabled} styled={!unstyled}/>
     {([['blackPointCompensation', 'Black point compensation'], ['simulatePaper', 'Simulate paper color'], ['simulateBlackInk', 'Simulate black ink']] as const).map(([key, label]) => <SettingSwitch key={key} label={label} on={value[key]} onChange={on => set({ [key]: on })} disabled={disabled} styled={!unstyled}/>)}
   </View>;
 }
