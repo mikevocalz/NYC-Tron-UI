@@ -17,6 +17,15 @@ const config=JSON.parse(read("expo-module.config.json"));
 const modules=[[HAPTICS_MODULE_NAME,"NYCTronHapticsModule"],[DOCUMENTS_MODULE_NAME,"NYCTronDocumentsModule"],
   [PLAYBACK_SESSION_MODULE_NAME,"NYCTronPlaybackSessionModule"]];
 
+test("SwiftPM preserves CocoaPods framework linkage and the established iOS floor",()=>{
+  const pod=read("ios/NYCTronPlatformServices.podspec"),spm=read("Package.swift");
+  const frameworks=pod.match(/s\.frameworks\s*=([^\n]+)/)[1].match(/'([^']+)'/g).map(s=>s.slice(1,-1));
+  for(const framework of frameworks)assert.ok(spm.includes(`.linkedFramework("${framework}")`),framework);
+  assert.match(spm,/\.iOS\("16\.4"\)/);
+  assert.match(spm,/path: "ios"/);
+  assert.ok(JSON.parse(read("package.json")).files.includes("Package.swift"),"release tarball must preserve the manifest");
+});
+
 test("expo-module.config.json autolinks both platforms; android stays off the legacy list",()=>{
   assert.deepEqual(config.platforms,["apple","android"]);
   assert.deepEqual(config.apple.modules,[...modules.map(m=>m[1]),"NYCTronMediaDecoderModule"]);
