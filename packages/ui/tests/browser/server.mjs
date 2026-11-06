@@ -13,6 +13,8 @@ const fixtures=[["spreadsheet",resolve(here,"spreadsheet.tsx")],["",resolve(here
   ...readdirSync(resolve(here,"fixtures")).filter(f=>f.endsWith(".tsx")).map(f=>[f.slice(0,-4),resolve(here,"fixtures",f)])];
 const bundleOf=entry=>build({entryPoints:[entry],bundle:true,write:false,
   format:"iife",jsx:"automatic",platform:"browser",
+  // Match web-aware consumers when a package ships platform file siblings.
+  resolveExtensions:[".web.tsx",".web.ts",".web.jsx",".web.js",".tsx",".ts",".jsx",".js",".json"],
   // Pin one React and one zustand: the component sources sit in packages/ui,
   // whose own node_modules (after a workspace install) would otherwise win.
   alias:{"react-native":resolve(here,"rn-shim.tsx"),

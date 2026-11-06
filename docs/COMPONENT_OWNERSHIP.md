@@ -953,3 +953,7 @@ The local canvas, layers, selection, canvas-tools and vector controls are integr
 ## 2026-11-05 audio cluster 2 recovery
 
 The local audio automation/routing/inserts/analysis and MIDI extensions are integrated with independent exports. See [AUDIO_CLUSTER_2.md](AUDIO_CLUSTER_2.md) for ownership, input/accessibility fixes, control mappings and platform/backend limits. NYC-Tron owns generic UI; Forge owns Cadence DSP/document operations and its mixer adapter. These controls are unpublished and are not attributed to the alpha.3 release.
+
+## 2026-11-05 workspace, color and transfer recovery
+
+See [WORKSPACE_COLOR_TRANSFER.md](WORKSPACE_COLOR_TRANSFER.md) for the integrated WorkspaceHost/presets, ContextualToolbar, FileImportExportSheet, ColorPickerDialog and presenter ink controls. NYC-Tron owns generic UI and normalized session overlay geometry. Forge owns document/session persistence, engine color writes and real byte formats. These additions remain unpublished and carry separate native/device gates.

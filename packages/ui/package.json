@@ -1433,6 +1433,77 @@
       "types": "./dist/components/forge/midi/velocity-line.d.ts",
       "react-native": "./dist/components/forge/midi/velocity-line.js",
       "default": "./dist/components/forge/midi/velocity-line.js"
+    },
+    "./components/files/file-transfer-model": {
+      "types": "./dist/components/files/file-transfer-model.d.ts",
+      "react-native": "./dist/components/files/file-transfer-model.js",
+      "default": "./dist/components/files/file-transfer-model.js"
+    },
+    "./components/forge/color/ColorPickerDialog": {
+      "types": "./dist/components/forge/color/ColorPickerDialog.d.ts",
+      "react-native": "./dist/components/forge/color/ColorPickerDialog.js",
+      "default": "./dist/components/forge/color/ColorPickerDialog.js"
+    },
+    "./components/forge/color/color-picker-dialog-model": {
+      "types": "./dist/components/forge/color/color-picker-dialog-model.d.ts",
+      "react-native": "./dist/components/forge/color/color-picker-dialog-model.js",
+      "default": "./dist/components/forge/color/color-picker-dialog-model.js"
+    },
+    "./components/forge/frame-throttle": {
+      "types": "./dist/components/forge/frame-throttle.d.ts",
+      "react-native": "./dist/components/forge/frame-throttle.js",
+      "default": "./dist/components/forge/frame-throttle.js"
+    },
+    "./components/forge/slides/PresenterInkOverlay": {
+      "types": "./dist/components/forge/slides/PresenterInkOverlay.d.ts",
+      "react-native": "./dist/components/forge/slides/PresenterInkOverlay.js",
+      "default": "./dist/components/forge/slides/PresenterInkOverlay.js"
+    },
+    "./components/forge/slides/PresenterInkStrip": {
+      "types": "./dist/components/forge/slides/PresenterInkStrip.d.ts",
+      "react-native": "./dist/components/forge/slides/PresenterInkStrip.js",
+      "default": "./dist/components/forge/slides/PresenterInkStrip.js"
+    },
+    "./components/forge/slides/presenter-ink-model": {
+      "types": "./dist/components/forge/slides/presenter-ink-model.d.ts",
+      "react-native": "./dist/components/forge/slides/presenter-ink-model.js",
+      "default": "./dist/components/forge/slides/presenter-ink-model.js"
+    },
+    "./components/shell/ContextualToolbar": {
+      "types": "./dist/components/shell/ContextualToolbar.d.ts",
+      "react-native": "./dist/components/shell/ContextualToolbar.js",
+      "default": "./dist/components/shell/ContextualToolbar.js"
+    },
+    "./components/shell/WorkspaceHost": {
+      "types": "./dist/components/shell/WorkspaceHost.d.ts",
+      "react-native": "./dist/components/shell/WorkspaceHost.js",
+      "default": "./dist/components/shell/WorkspaceHost.js"
+    },
+    "./components/shell/WorkspacePresetSwitcher": {
+      "types": "./dist/components/shell/WorkspacePresetSwitcher.d.ts",
+      "react-native": "./dist/components/shell/WorkspacePresetSwitcher.js",
+      "default": "./dist/components/shell/WorkspacePresetSwitcher.js"
+    },
+    "./components/shell/contextual-toolbar-model": {
+      "types": "./dist/components/shell/contextual-toolbar-model.d.ts",
+      "react-native": "./dist/components/shell/contextual-toolbar-model.js",
+      "default": "./dist/components/shell/contextual-toolbar-model.js"
+    },
+    "./components/shell/workspace-model": {
+      "types": "./dist/components/shell/workspace-model.d.ts",
+      "react-native": "./dist/components/shell/workspace-model.js",
+      "default": "./dist/components/shell/workspace-model.js"
+    },
+    "./components/shell/workspace-preset-model": {
+      "types": "./dist/components/shell/workspace-preset-model.d.ts",
+      "react-native": "./dist/components/shell/workspace-preset-model.js",
+      "default": "./dist/components/shell/workspace-preset-model.js"
+    },
+    "./components/files/FileImportExportSheet": {
+      "types": "./dist/components/files/FileImportExportSheet.web.d.ts",
+      "browser": "./dist/components/files/FileImportExportSheet.web.js",
+      "react-native": "./dist/components/files/FileImportExportSheet.native.js",
+      "default": "./dist/components/files/FileImportExportSheet.web.js"
     }
   },
   "scripts": {

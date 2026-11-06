@@ -1,4 +1,4 @@
-import {useRef,type ComponentRef,type ReactNode} from "react";
+import {useRef,type ComponentRef,type ReactNode,type Ref} from "react";
 import {Pressable,useWindowDimensions,type PressableProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -27,6 +27,8 @@ export interface MenuButtonProps extends Omit<PressableProps,"children"|"onPress
   disabled?:boolean;
   className?:string;
   unstyled?:boolean;
+  /** The trigger, for moving focus to it (roving toolbars, closing a follow-up dialog). */
+  ref?:Ref<ComponentRef<typeof Pressable>>;
 }
 
 /**
@@ -35,7 +37,7 @@ export interface MenuButtonProps extends Omit<PressableProps,"children"|"onPress
  * button when it closes.
  */
 export function MenuButton({
-  label,items,onSelect,children,usableRegions,menuWidth=240,disabled=false,className,unstyled=false,style,...rest
+  label,items,onSelect,children,usableRegions,menuWidth=240,disabled=false,className,unstyled=false,style,ref:forwarded,...rest
 }:MenuButtonProps){
   const window=useWindowDimensions();
   const local=useRef<StoreApi<{anchor:Rect2D|undefined}>|null>(null);
@@ -52,7 +54,10 @@ export function MenuButton({
   };
   const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
   return <>
-    <Pressable {...rest} ref={ref} accessibilityRole="button" accessibilityLabel={label}
+    <Pressable {...rest} ref={node=>{
+      ref.current=node;
+      if(typeof forwarded==="function")forwarded(node);else if(forwarded)forwarded.current=node;
+    }} accessibilityRole="button" accessibilityLabel={label}
       aria-haspopup="menu" aria-expanded={anchor!==undefined}
       accessibilityState={{disabled:off,expanded:anchor!==undefined}}
       disabled={off} onPress={open}

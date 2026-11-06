@@ -143,3 +143,5 @@ locked-track refusal, loop drag/cancel, transition application, marker creation,
 batch transactions and compact LTR/RTL track settings. `timeline2-shots.spec.mjs`
 writes 13 light/dark phone/tablet and RTL review captures. Actual Rust handoff
 is checked in Forge's Splice tests, not by this browser stand-in.
+
+`workspace5` covers workspace canvas identity, mode/preset changes, contextual overflow, file transfer settings/picking, color dialog preview/commit and presenter ink gestures. Its stand-in Zustand host is separate from Forge's real-engine tests. The server resolves `.web` siblings before generic files so Expo's gradient implementation is the actual web renderer. Captures wait for modal fades to settle.

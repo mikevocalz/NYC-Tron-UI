@@ -29,6 +29,11 @@ export interface HsvPickerProps extends Omit<ViewProps,"children"> {
   readonly showChannels?:boolean;
   /** Shows the opacity slider inside the channel sliders. @default true */
   readonly showAlpha?:boolean;
+  /**
+   * With `showChannels` off, shows the hex value under the hue slider. Turn it
+   * off when the host already shows the value, as `ColorPickerDialog` does. @default true
+   */
+  readonly showHexReadout?:boolean;
   readonly disabled?:boolean;
   className?:string;
   /** Drops the default token recipe; the app supplies every class. */
@@ -69,7 +74,7 @@ const round3=(n:number)=>Math.round(n*1000)/1000;
  */
 export function HsvPicker({
   value,onValueChange,onApply,onCancel,fieldHeight=210,step=0.05,hueStep=5,
-  showChannels=true,showAlpha=true,disabled=false,className,unstyled=false,testID,...rest
+  showChannels=true,showAlpha=true,showHexReadout=true,disabled=false,className,unstyled=false,testID,...rest
 }:HsvPickerProps){
   assertHsv(value);
   if(!Number.isFinite(fieldHeight)||fieldHeight<80||fieldHeight>1000)
@@ -226,7 +231,7 @@ export function HsvPicker({
     </View>
     {showChannels?<ColorChannels value={rgb} showAlpha={showAlpha} disabled={disabled} unstyled labelClassName={muted} {...id("channels")}
       onValueChange={rgba=>onValueChange(rgbaEditToHsv(rgba,value))}/>
-      :<Text selectable {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{hex}</Text>}
+      :showHexReadout?<Text selectable {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{hex}</Text>:null}
     {onApply||onCancel?<View style={{flexDirection:"row",gap:8,justifyContent:"flex-end"}}>
       {onCancel?<Button title="Cancel" variant="secondary" disabled={disabled} onPress={onCancel} {...id("cancel")}/>:null}
       {onApply?<Button title="Apply color" disabled={disabled} onPress={()=>onApply(value)} {...id("apply")}/>:null}

@@ -139,3 +139,5 @@ optional like `danger`; a theme without them leaves those borders and marks
 uncolored. Reference values are 6.45:1 (info) and 5.38:1 (success) on
 `surface-raised` in light, 8.17:1 and 8.72:1 in dark, so they also pass as
 text colors, though the components only use them for borders and marks.
+
+Recovery phase 5 consumers: WorkspaceHost, WorkspacePresetSwitcher, ContextualToolbar, FileImportExportSheet, ColorPickerDialog and presenter ink chrome use the existing surface/text/primary/accent/border/danger/focus tokens. Presenter stroke colors are document/session values supplied by the app; they are not theme defaults. No new global tokens were added.
