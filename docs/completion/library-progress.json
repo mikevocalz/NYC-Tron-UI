@@ -86,9 +86,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/DocumentTabBar.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Dirty markers, reorder, close, and multi-document focus."
+      "requirement": "Dirty markers, reorder, close, and multi-document focus.",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
     },
     {
       "id": "A-06",
@@ -98,9 +101,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/ToolRail.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Compact professional tools; expanded flyouts and active states."
+      "requirement": "Compact professional tools; expanded flyouts and active states.",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
     },
     {
       "id": "A-07",
@@ -110,9 +116,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/ContextualToolbar.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Selection-specific controls and narrow-width overflow."
+      "requirement": "Selection-specific controls and narrow-width overflow.",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
     },
     {
       "id": "A-08",
@@ -122,9 +131,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/RibbonTabs.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Command groups, contextual tabs, gallery and split buttons."
+      "requirement": "Command groups, contextual tabs, gallery and split buttons.",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
     },
     {
       "id": "A-09",
@@ -237,9 +249,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/SplitButton.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Separate primary action and flyout hit targets."
+      "requirement": "Separate primary action and flyout hit targets.",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
     },
     {
       "id": "A-18",
