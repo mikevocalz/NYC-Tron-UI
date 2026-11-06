@@ -1,8 +1,8 @@
-import {useEffect,useRef,type ComponentRef} from "react";
+import {useLayoutEffect,useRef,type ComponentRef} from "react";
 import {Platform,Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {formatStepValue,type RangeConfig} from "../forge/inputs/precision.ts";
+import {assertRange,formatStepValue,stepDecimalPlaces,type RangeConfig} from "../forge/inputs/precision.ts";
 import {createDragController,type DragController} from "../gestures/drag-controller.ts";
 import type {DragPoint,DragTransport} from "../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../gestures/PanResponderDrag.tsx";
@@ -21,6 +21,8 @@ export type KnobInput="relative"|"circular";
 
 /** Props for {@linkcode RotaryKnob}. */
 export interface RotaryKnobProps extends Omit<ViewProps,"children">,RangeConfig {
+  /** Document/parameter identity and host revision invalidate unfinished input. */
+  scope?:string;revision?:string|number;
   label:string;
   value:number;
   onPreview?:(value:number)=>void;
@@ -55,11 +57,17 @@ const FINE_HOLD_PX=28;
  * field accepts unit arithmetic.
  */
 export function RotaryKnob({
-  label,value,min,max,step,detents,onPreview,onCommit,input="relative",defaultValue,unit,context,size=72,disabled=false,hideLabel=false,
+  scope="RotaryKnob",revision=0,label,value,min,max,step,detents,onPreview,onCommit,input="relative",defaultValue,unit,context,size=72,disabled=false,hideLabel=false,
   transport:Transport=PanResponderDrag,className,unstyled=false,style,...rest
 }:RotaryKnobProps){
   const styled=!unstyled;
+  if(!Number.isFinite(size)||size<=0||size>4096||!["relative","circular"].includes(input))throw new RangeError("Invalid knob geometry/input");
   const range={min,max,step,detents};
+  assertRange(range);
+  if(!Number.isFinite(value)||defaultValue!==undefined&&(!Number.isFinite(defaultValue)||defaultValue<min||defaultValue>max))throw new RangeError("Invalid slider value/default");
+  if(!label.trim()||!scope.trim()||scope.length>512)throw new RangeError("Invalid control identity");
+  const boundary=JSON.stringify([scope,revision,disabled,min,max,step,detents,value,context,unit,input,size]);
+  const mounted=useRef(false),gestureScope=useRef<string|null>(null);
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({preview:undefined,fine:false,focused:false,center:undefined}));
   const store=local.current;
@@ -67,11 +75,13 @@ export function RotaryKnob({
   const fine=useStore(store,s=>s.fine);
   const focused=useStore(store,s=>s.focused);
   const dial=useRef<ComponentRef<typeof View>>(null);
-  const latest=useRef({value,range,input,disabled,onPreview,onCommit});
-  latest.current={value,range,input,disabled,onPreview,onCommit};
+  const latest=useRef({boundary,value,range,input,disabled,onPreview,onCommit});
+  useLayoutEffect(()=>{latest.current={boundary,value,range,input,disabled,onPreview,onCommit};});
+  const allowed=()=>mounted.current&&!disabled&&latest.current.boundary===boundary;
+  const validDrag=()=>mounted.current&&!latest.current.disabled&&gestureScope.current===latest.current.boundary;
   const gesture=useRef<{origin:DragPoint|undefined;from:number}>({origin:undefined,from:value});
   const measure=()=>dial.current?.measureInWindow?.((x,y,w,h)=>{
-    if([x,y,w,h].every(Number.isFinite))store.setState({center:{x:x+w/2,y:y+h/2}});
+    if(mounted.current&&latest.current.boundary===boundary&&[x,y,w,h].every(Number.isFinite)&&w>0&&h>0){const center={x:x+w/2,y:y+h/2},before=store.getState().center;if(before&&(before.x!==center.x||before.y!==center.y))controller.current?.cancel();store.setState({center});}
   });
   const show=(next:number,isFine:boolean)=>{
     if(next===store.getState().preview&&isFine===store.getState().fine)return;
@@ -80,9 +90,10 @@ export function RotaryKnob({
   };
   const controller=useRef<DragController|null>(null);
   if(!controller.current)controller.current=createDragController({
-    disabled:()=>!!latest.current.disabled,
-    start:()=>{gesture.current.from=latest.current.value;store.setState({preview:latest.current.value,fine:false});},
+    disabled:()=>!mounted.current||!!latest.current.disabled,
+    start:()=>{gestureScope.current=latest.current.boundary;gesture.current.from=latest.current.value;store.setState({preview:latest.current.value,fine:false});},
     move:point=>{
+      if(!validDrag())return;
       const g=gesture.current,p=latest.current;
       if(!g.origin){g.origin=point;return;}
       if(p.input==="circular"){
@@ -95,22 +106,26 @@ export function RotaryKnob({
       show(valueFromDrag(g.from,0,point.y-g.origin.y,p.range,{fine:isFine}),isFine);
     },
     commit:()=>{
+      const valid=validDrag();gestureScope.current=null;
       const next=store.getState().preview,p=latest.current;
       store.setState({preview:undefined,fine:false});
-      if(next!==undefined&&next!==p.value)p.onCommit(next);
-      else p.onPreview?.(p.value);
+      if(valid&&next!==undefined&&next!==p.value)p.onCommit(next);
+      else if(valid)p.onPreview?.(p.value);
     },
     cancel:()=>{
+      const valid=validDrag();gestureScope.current=null;
       store.setState({preview:undefined,fine:false});
-      latest.current.onPreview?.(latest.current.value);
+      if(valid)latest.current.onPreview?.(latest.current.value);
     },
   });
   const drag=controller.current;
-  useEffect(()=>()=>drag.cancel(),[drag]);
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;gestureScope.current=null;drag.cancel();};},[drag]);
+  useLayoutEffect(()=>{drag.cancel();measure();},[boundary,drag]);
 
   const shown=preview??value;
-  const commit=(next:number)=>{if(!disabled&&next!==value)onCommit(next);};
+  const commit=(next:number)=>{if(allowed()&&next!==latest.current.value)latest.current.onCommit(next);};
   const onKeyDown=(event:unknown)=>{
+    if(!allowed())return;
     const k=shellKey(event);
     if(k.key==="Escape"){drag.cancel();return;}
     if(k.ctrlKey||k.metaKey)return;
@@ -126,7 +141,7 @@ export function RotaryKnob({
   return <View {...rest} {...{className:joinClasses("items-center gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text text-sm")}} numberOfLines={1}>{label}</Text>:null}
     <Transport disabled={disabled}
-      onBegin={point=>{gesture.current.origin=point;measure();drag.begin();}}
+      onBegin={point=>{if(!allowed())return;gesture.current.origin=point;measure();drag.begin();}}
       onMove={(point,touches)=>{if(touches===1)drag.move(point);else drag.cancel();}}
       onRelease={()=>drag.release()}
       onCancel={()=>drag.cancel()}>
@@ -135,7 +150,7 @@ export function RotaryKnob({
         accessibilityHint={input==="circular"?"Turn around the knob to set the value.":"Drag up to raise the value. Move sideways while dragging for fine control."}
         aria-valuemin={min} aria-valuemax={max} aria-valuenow={shown}
         aria-valuetext={formatStepValue(shown,step)+(unit??"")} aria-disabled={disabled}
-        accessibilityActions={[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
+        accessibilityState={{disabled}} accessibilityActions={disabled?[]:[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
         onAccessibilityAction={event=>{
           if(event.nativeEvent.actionName==="increment")commit(applySliderKey(value,{kind:"step",steps:1},range));
           if(event.nativeEvent.actionName==="decrement")commit(applySliderKey(value,{kind:"step",steps:-1},range));
@@ -153,8 +168,8 @@ export function RotaryKnob({
     </Transport>
     {fine?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Fine adjustment</Text>:null}
     <View style={{flexDirection:"row",alignItems:"center",gap:4}}>
-      <UnitInput label={label+" value"} hideLabel value={shown} context={context} min={min} max={max} step={step}
-        precision={Math.max(0,-Math.floor(Math.log10(step)))} disabled={disabled} unstyled={unstyled}
+      <UnitInput scope={boundary} label={label+" value"} hideLabel value={shown} context={context} min={min} max={max} step={step}
+        precision={Math.min(100,stepDecimalPlaces(step)+1)} disabled={disabled} unstyled={unstyled}
         onCommit={next=>commit(applySliderKey(next,{kind:"step",steps:0},range))} style={{width:context?104:72}}/>
       {unit&&!context?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{unit}</Text>:null}
       {canReset?<Pressable accessibilityRole="button" accessibilityLabel={"Reset "+label} disabled={disabled}

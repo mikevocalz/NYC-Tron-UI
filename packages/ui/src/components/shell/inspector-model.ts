@@ -14,9 +14,11 @@ export type InspectorSelection=
 export function selectionHeading(selection:InspectorSelection):string{
   switch(selection.kind){
     case "none":return "No selection";
-    case "single":return selection.title;
+    case "single":
+      if(typeof selection.title!=="string"||!selection.title.trim()||selection.title.length>512||selection.detail!==undefined&&(typeof selection.detail!=="string"||selection.detail.length>2048))throw new TypeError("Invalid inspector selection title/detail");
+      return selection.title;
     case "multiple":
-      if(!Number.isInteger(selection.count)||selection.count<2)throw new RangeError("A multiple selection has at least two objects");
+      if(!Number.isSafeInteger(selection.count)||selection.count<2||!selection.noun.one.trim()||!selection.noun.other.trim()||selection.noun.one.length>256||selection.noun.other.length>256)throw new RangeError("A multiple selection has at least two objects");
       return `${selection.count} ${selection.noun.other}`;
   }
 }

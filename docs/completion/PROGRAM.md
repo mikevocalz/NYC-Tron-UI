@@ -42,3 +42,5 @@ P11 native checkpoint: typed graph and expression scenarios pass twice on iOS an
 P04 workspace checkpoint: A-01 through A-04 now have reviewed document/revision ownership, preset workflows, fold-aware docking and accessible resizing. [Workspace report](P04-workspace-shell.md) records 803 source and 548 browser checks plus two iOS replays. Review count is 70 of 341; P04 and all-platform acceptance remain open.
 
 P04 command checkpoint: document tabs, tool rails, contextual overflow, ribbon groups/galleries and split buttons now have reviewed ownership and independent exports. [Command report](P04-command-controls.md) records the scope, disable and keyboard regressions. Review count is 75 of 341; remaining P04 rows and native acceptance stay open.
+
+P04 inspector checkpoint: selection-aware nested inspector/search/property rows and precision slider/range/rotary controls now have reviewed exports and scope-safe input. [Inspector report](P04-inspector-precision.md) records exact-step and ownership regressions. Review count is 82 of 341; remaining P04 rows and eight-platform acceptance stay open.

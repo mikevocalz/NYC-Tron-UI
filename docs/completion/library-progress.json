@@ -146,9 +146,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/InspectorPanel.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Selection-aware, collapsible properties."
+      "requirement": "Selection-aware, collapsible properties.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-10",
@@ -158,9 +161,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/InspectorSection.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Nested groups, enable/disable and reset behavior."
+      "requirement": "Nested groups, enable/disable and reset behavior.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-11",
@@ -170,9 +176,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/PropertyRow.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Label, editor, mixed-value indicator and override state."
+      "requirement": "Label, editor, mixed-value indicator and override state.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-12",
@@ -213,9 +222,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/SliderField.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Precision slider with value entry, reset and bounded range."
+      "requirement": "Precision slider with value entry, reset and bounded range.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-15",
@@ -225,9 +237,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/RangeSlider.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Two-handle range with editable endpoints."
+      "requirement": "Two-handle range with editable endpoints.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-16",
@@ -237,9 +252,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/RotaryKnob.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Keyboard/touch/stylus adjustments and exact entry."
+      "requirement": "Keyboard/touch/stylus adjustments and exact entry.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-17",
@@ -303,9 +321,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/InspectorSearch.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Filter controls, properties and assets."
+      "requirement": "Filter controls, properties and assets.",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
     },
     {
       "id": "A-22",

@@ -1,8 +1,8 @@
-import {useEffect,useRef,type ComponentRef} from "react";
+import {useLayoutEffect,useRef,type ComponentRef} from "react";
 import {I18nManager,Platform,Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {formatStepValue,type RangeConfig} from "../forge/inputs/precision.ts";
+import {assertRange,formatStepValue,stepDecimalPlaces,type RangeConfig} from "../forge/inputs/precision.ts";
 import {createDragController,type DragController} from "../gestures/drag-controller.ts";
 import type {DragPoint,DragTransport} from "../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../gestures/PanResponderDrag.tsx";
@@ -14,6 +14,8 @@ import type {UnitContext} from "./unit-expression.ts";
 
 /** Props for {@linkcode SliderField}. */
 export interface SliderFieldProps extends Omit<ViewProps,"children">,RangeConfig {
+  /** Document/parameter identity and host revision invalidate unfinished input. */
+  scope?:string;revision?:string|number;
   label:string;
   /** Committed value. The field keeps only a drag preview of its own. */
   value:number;
@@ -47,11 +49,16 @@ type Local={preview:number|undefined;track:{x:number;width:number}|undefined;foc
  * 44pt tall and fills from the reading-direction start.
  */
 export function SliderField({
-  label,value,min,max,step,detents,onPreview,onCommit,defaultValue,unit,context,disabled=false,hideLabel=false,
+  scope="SliderField",revision=0,label,value,min,max,step,detents,onPreview,onCommit,defaultValue,unit,context,disabled=false,hideLabel=false,
   transport:Transport=PanResponderDrag,className,unstyled=false,style,...rest
 }:SliderFieldProps){
   const styled=!unstyled;
   const range={min,max,step,detents};
+  assertRange(range);
+  if(!Number.isFinite(value)||defaultValue!==undefined&&(!Number.isFinite(defaultValue)||defaultValue<min||defaultValue>max))throw new RangeError("Invalid slider value/default");
+  if(!label.trim()||!scope.trim()||scope.length>512)throw new RangeError("Invalid control identity");
+  const boundary=JSON.stringify([scope,revision,disabled,min,max,step,detents,value,context,unit,defaultValue]);
+  const mounted=useRef(false),gestureScope=useRef<string|null>(null);
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({preview:undefined,track:undefined,focused:false}));
   const store=local.current;
@@ -59,10 +66,12 @@ export function SliderField({
   const focused=useStore(store,s=>s.focused);
   const track=useRef<ComponentRef<typeof View>>(null);
   const rtl=useRef(I18nManager.isRTL);
-  const latest=useRef({value,range,disabled,onPreview,onCommit});
-  latest.current={value,range,disabled,onPreview,onCommit};
+  const latest=useRef({boundary,value,range,disabled,onPreview,onCommit});
+  useLayoutEffect(()=>{latest.current={boundary,value,range,disabled,onPreview,onCommit};});
+  const allowed=()=>mounted.current&&!disabled&&latest.current.boundary===boundary;
+  const validDrag=()=>mounted.current&&!latest.current.disabled&&gestureScope.current===latest.current.boundary;
   const measure=()=>track.current?.measureInWindow?.((x,_y,width)=>{
-    if(Number.isFinite(x)&&width>0)store.setState({track:{x,width}});
+    if(mounted.current&&latest.current.boundary===boundary&&Number.isFinite(x)&&Number.isFinite(width)&&width>0){const before=store.getState().track;if(before&&(before.x!==x||before.width!==width))controller.current?.cancel();store.setState({track:{x,width}});}
     rtl.current=nodeIsRTL(track.current)||I18nManager.isRTL;
   });
   const at=(point:DragPoint)=>{
@@ -72,36 +81,41 @@ export function SliderField({
   const pending=useRef<DragPoint|undefined>(undefined);
   const controller=useRef<DragController|null>(null);
   if(!controller.current)controller.current=createDragController({
-    disabled:()=>!!latest.current.disabled,
-    start:()=>{
+    disabled:()=>!mounted.current||!!latest.current.disabled,
+    start:()=>{gestureScope.current=latest.current.boundary;
       const next=pending.current?at(pending.current):latest.current.value;
       store.setState({preview:next});
       latest.current.onPreview?.(next);
     },
     move:point=>{
+      if(!validDrag())return;
       const next=at(point);
       if(next===store.getState().preview)return;
       store.setState({preview:next});
       latest.current.onPreview?.(next);
     },
     commit:()=>{
+      const valid=validDrag();gestureScope.current=null;
       const next=store.getState().preview;
       store.setState({preview:undefined});
-      if(next!==undefined&&next!==latest.current.value)latest.current.onCommit(next);
-      else latest.current.onPreview?.(latest.current.value);
+      if(valid&&next!==undefined&&next!==latest.current.value)latest.current.onCommit(next);
+      else if(valid)latest.current.onPreview?.(latest.current.value);
     },
     cancel:()=>{
+      const valid=validDrag();gestureScope.current=null;
       store.setState({preview:undefined});
-      latest.current.onPreview?.(latest.current.value);
+      if(valid)latest.current.onPreview?.(latest.current.value);
     },
   });
   const drag=controller.current;
-  useEffect(()=>()=>drag.cancel(),[drag]);
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;gestureScope.current=null;drag.cancel();};},[drag]);
+  useLayoutEffect(()=>{drag.cancel();measure();},[boundary,drag]);
 
   const shown=preview??value;
   const fraction=fractionOf(shown,range);
-  const commit=(next:number)=>{if(!disabled&&next!==value)onCommit(next);};
+  const commit=(next:number)=>{if(allowed()&&next!==latest.current.value)latest.current.onCommit(next);};
   const onKeyDown=(event:unknown)=>{
+    if(!allowed())return;
     const k=shellKey(event);
     if(k.key==="Escape"){drag.cancel();return;}
     if(k.ctrlKey||k.metaKey)return;
@@ -120,14 +134,14 @@ export function SliderField({
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control px-2 focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-sunken")}}>
         <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Reset</Text>
       </Pressable>:null}
-      <UnitInput label={label+" value"} hideLabel value={shown} context={context} min={min} max={max} step={step}
-        precision={Math.max(0,-Math.floor(Math.log10(step)))} disabled={disabled}
+      <UnitInput scope={boundary} label={label+" value"} hideLabel value={shown} context={context} min={min} max={max} step={step}
+        precision={Math.min(100,stepDecimalPlaces(step)+1)} disabled={disabled}
         onCommit={next=>commit(applySliderKey(next,{kind:"step",steps:0},range))}
         style={{width:context?104:80}} unstyled={unstyled}/>
       {unit&&!context?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{unit}</Text>:null}
     </View>
     <Transport disabled={disabled}
-      onBegin={point=>{pending.current=point;drag.begin();}}
+      onBegin={point=>{if(!allowed())return;pending.current=point;drag.begin();}}
       onMove={(point,touches)=>{if(touches===1)drag.move(point);else drag.cancel();}}
       onRelease={()=>drag.release()}
       onCancel={()=>drag.cancel()}>
@@ -135,7 +149,7 @@ export function SliderField({
         accessible accessibilityRole="adjustable" accessibilityLabel={label}
         aria-valuemin={min} aria-valuemax={max} aria-valuenow={shown} aria-valuetext={text}
         aria-disabled={disabled}
-        accessibilityActions={[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
+        accessibilityState={{disabled}} accessibilityActions={disabled?[]:[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
         onAccessibilityAction={event=>{
           if(event.nativeEvent.actionName==="increment")commit(applySliderKey(value,{kind:"step",steps:1},range));
           if(event.nativeEvent.actionName==="decrement")commit(applySliderKey(value,{kind:"step",steps:-1},range));
