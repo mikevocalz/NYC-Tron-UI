@@ -2615,10 +2615,15 @@
       "name": "NodeGraphEditor",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/NodeGraphEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pin/port connections, typed links and graph interaction."
+      "requirement": "Pin/port connections, typed links and graph interaction.",
+      "evidence": [
+        "P11-node-graph.md"
+      ]
     },
     {
       "id": "G-15",

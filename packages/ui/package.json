@@ -1909,6 +1909,16 @@
       "types": "./dist/components/forge/motion/motion-expression.d.ts",
       "react-native": "./dist/components/forge/motion/motion-expression.js",
       "default": "./dist/components/forge/motion/motion-expression.js"
+    },
+    "./components/forge/motion/NodeGraphEditor": {
+      "types": "./dist/components/forge/motion/NodeGraphEditor.d.ts",
+      "react-native": "./dist/components/forge/motion/NodeGraphEditor.js",
+      "default": "./dist/components/forge/motion/NodeGraphEditor.js"
+    },
+    "./components/forge/motion/motion-node-graph": {
+      "types": "./dist/components/forge/motion/motion-node-graph.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-node-graph.js",
+      "default": "./dist/components/forge/motion/motion-node-graph.js"
     }
   },
   "scripts": {

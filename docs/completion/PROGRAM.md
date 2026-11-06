@@ -34,3 +34,5 @@ Motion path checkpoint: G-06 reuses the native vector editor with point/tangent 
 Effect stack checkpoint: G-10 provides ordered effects and schema-driven inspection through owned host mutations. See [effect stack](P11-effect-stack.md).
 
 Expression editor checkpoint: G-11 provides native text input with completion, reference and diagnostic host services. See [expression editor](P11-expression-editor.md).
+
+P11 implementation checkpoint: all 15 G-series motion controls now have reviewed independent library exports. See [typed node graph](P11-node-graph.md). Native and eight-platform acceptance gates remain open; the full program is not complete.
