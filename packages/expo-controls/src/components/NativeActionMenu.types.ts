@@ -5,6 +5,7 @@ export interface NativeActionMenuProps {
   readonly actions: readonly TronMenuAction[];
   readonly onAction: (id: string) => void;
   readonly longPress?: boolean;
+  readonly scope?:string;
   readonly disabled?: boolean;
   readonly accessibilityLabel: string;
   readonly testID?: string;

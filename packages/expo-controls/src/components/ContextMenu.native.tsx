@@ -8,7 +8,7 @@ export type { ContextMenuProps } from "./ContextMenu.types.ts";
  * and a hardware-keyboard or pointer secondary click reach the same OS menu
  * where the platform routes them to the long-press interaction.
  */
-export function ContextMenu({accessibilityLabel,actions,onAction,children,disabled,testID}:ContextMenuProps){
-  return <NativeActionMenu longPress trigger={children} actions={actions} onAction={onAction}
+export function ContextMenu({scope,accessibilityLabel,actions,onAction,children,disabled,testID}:ContextMenuProps){
+  return <NativeActionMenu scope={scope} longPress trigger={children} actions={actions} onAction={onAction}
     disabled={disabled} accessibilityLabel={accessibilityLabel} testID={testID}/>;
 }

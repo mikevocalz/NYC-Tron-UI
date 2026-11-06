@@ -20,6 +20,8 @@ export interface PopoverTriggerState{
 
 /** Props every popover form shares. */
 export interface PopoverBaseProps{
+  /** Document/target identity; replacement discards queued native events and anchor measurements. */
+  readonly scope?:string;
   /** Controlled visibility. */
   readonly open:boolean;
   /** Called with `false` when the OS or the user dismisses the popover, and by `toggle` in the trigger form. */

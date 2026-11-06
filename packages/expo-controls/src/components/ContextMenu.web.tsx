@@ -8,9 +8,9 @@ export type { ContextMenuProps } from "./ContextMenu.types.ts";
  * Shift+F10 and the Menu key, through the `@nyc-tron/ui` shell ContextMenu.
  * Sections are flattened; disabled branches are left out.
  */
-export function ContextMenu({accessibilityLabel,actions,onAction,children,disabled,testID}:ContextMenuProps){
+export function ContextMenu({scope,accessibilityLabel,actions,onAction,children,disabled,testID}:ContextMenuProps){
   normalizeMenuActions(actions);
   const items=enabledMenuLeaves(actions).map(a=>({id:a.id,label:a.title,danger:a.destructive}));
-  return <ShellContextMenu label={accessibilityLabel} items={items} onSelect={onAction} disabled={disabled}
+  return <ShellContextMenu scope={scope} label={accessibilityLabel} items={items} onSelect={onAction} disabled={disabled}
     accessibilityLabel={accessibilityLabel} testID={testID}>{children}</ShellContextMenu>;
 }

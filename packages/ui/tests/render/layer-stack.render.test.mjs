@@ -16,7 +16,7 @@ function harness({ rtl = false } = {}) {
   const responders = [];
   const element = (type, props) => ({ type, props });
   const mocks = {
-    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {},
+    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: () => {},
       useMemo: f => f(), cloneElement: (el, props) => ({ ...el, props: { ...el.props, ...props } }) },
     "react/jsx-runtime": { jsx: element, jsxs: element },
     "react-native": {

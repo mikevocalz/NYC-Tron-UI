@@ -1,5 +1,5 @@
-import {useEffect,useRef,type ComponentRef,type RefObject} from "react";
-import type {View} from "react-native";
+import {useLayoutEffect,useRef,type ComponentRef,type RefObject} from "react";
+import {useWindowDimensions,type View} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {measureAnchor} from "./measure-anchor.ts";
@@ -24,20 +24,24 @@ type AnchorState={anchor:Rect2D|undefined;measured:boolean};
  * never ask the app for a rect. A moved or resized trigger is measured again
  * on the next open.
  */
-export function useTriggerAnchor(open:boolean):TriggerAnchor{
+export function useTriggerAnchor(open:boolean,scope?:string,layoutRevision?:string):TriggerAnchor{
+  const window=useWindowDimensions();
   const ref=useRef<ComponentRef<typeof View>|null>(null);
   const local=useRef<StoreApi<AnchorState>|null>(null);
   if(!local.current)local.current=createStore<AnchorState>(()=>({anchor:undefined,measured:false}));
   const store=local.current;
   const anchor=useStore(store,s=>s.anchor);
   const measured=useStore(store,s=>s.measured);
-  useEffect(()=>{
+  const session=useRef<{open:boolean;scope:string|undefined}>({open:false,scope});
+  useLayoutEffect(()=>{
+    const fresh=!session.current.open||session.current.scope!==scope;session.current={open,scope};
     if(!open){store.setState({measured:false});return;}
+    if(fresh)store.setState({measured:false});
     let live=true;
     void measureAnchor(ref.current).then(next=>{
       if(live&&next)store.setState({anchor:next,measured:true});
     });
     return ()=>{live=false;};
-  },[open,store]);
+  },[open,scope,window.width,window.height,layoutRevision,store]);
   return {ref,anchor,measured};
 }

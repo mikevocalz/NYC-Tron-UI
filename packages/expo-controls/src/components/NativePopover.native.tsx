@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useRef, useMemo, useLayoutEffect, type ReactNode } from "react";
 import { Platform, View, useWindowDimensions } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -7,7 +7,7 @@ import { Popover, RNHostView as SwiftUIHostView, Spacer } from "@expo/ui/swift-u
 import { frame } from "@expo/ui/swift-ui/modifiers";
 import { Box, DropdownMenu, RNHostView as ComposeHostView } from "@expo/ui/jetpack-compose";
 import { size } from "@expo/ui/jetpack-compose/modifiers";
-import { placePopover, placementSide, type Rect2D } from "@nyc-tron/ui/components/overlays/popover-position";
+import { placePopover, placementSide, hasUsableRegion, type Rect2D } from "@nyc-tron/ui/components/overlays/popover-position";
 import { windowRegions } from "@nyc-tron/ui/components/overlays/measure-anchor";
 import { useTriggerAnchor } from "@nyc-tron/ui/components/overlays/useTriggerAnchor";
 import {
@@ -38,6 +38,7 @@ export type {
 export function NativePopover(props:NativePopoverProps){
   if(isTriggerPopover(props))return <TriggeredNativePopover {...props}/>;
   const {anchor,usableRegions,width=320,maxHeight=420}=props;
+  if(!hasUsableRegion(usableRegions))return null;
   const position=placePopover(anchor,usableRegions,width,maxHeight);
   return <NativeSurface {...props} frame={anchor} side={placementSide(anchor,position)}
     contentWidth={position.width} contentHeight={position.height}/>;
@@ -53,27 +54,28 @@ type TriggerLayout={width:number;height:number};
 function TriggeredNativePopover(props:NativePopoverTriggerProps){
   const {open,onOpenChange,trigger,usableRegions,width=320,maxHeight=420}=props;
   const screen=useWindowDimensions();
-  const {ref,anchor,measured}=useTriggerAnchor(open);
+  const {ref,anchor,measured}=useTriggerAnchor(open,props.scope,JSON.stringify(usableRegions??null));
   const local=useRef<StoreApi<TriggerLayout>|null>(null);
   if(!local.current)local.current=createStore<TriggerLayout>(()=>({width:1,height:1}));
   const store=local.current;
   const layout=useStore(store,s=>s);
   const regions=usableRegions??windowRegions(screen.width,screen.height);
   const windowAnchor:Rect2D=measured&&anchor?anchor:{x:0,y:0,width:layout.width,height:layout.height};
-  const position=placePopover(windowAnchor,regions,width,maxHeight);
+  const position=hasUsableRegion(regions)?placePopover(windowAnchor,regions,width,maxHeight):undefined;
   return <View ref={ref} collapsable={false}
     onLayout={event=>{
       const {width:w,height:h}=event.nativeEvent.layout;
       store.setState({width:Math.max(1,w),height:Math.max(1,h)});
     }}>
     {renderPopoverTrigger(trigger,popoverTriggerState(open,onOpenChange))}
-    <NativeSurface {...props} frame={{x:0,y:0,width:layout.width,height:layout.height}}
+    {position?<NativeSurface {...props} open={open&&measured} frame={{x:0,y:0,width:layout.width,height:layout.height}}
       side={measured?placementSide(windowAnchor,position):"below"}
-      contentWidth={position.width} contentHeight={position.height}/>
+      contentWidth={position.width} contentHeight={position.height}/>:null}
   </View>;
 }
 
 type SurfaceProps={
+  readonly scope?:string;
   readonly open:boolean;
   readonly onOpenChange:(open:boolean)=>void;
   readonly accessibilityLabel:string;
@@ -86,24 +88,29 @@ type SurfaceProps={
   readonly contentHeight:number;
 };
 function NativeSurface({
-  open,onOpenChange,accessibilityLabel,children,testID,frame:anchor,side,contentWidth,contentHeight,
+  scope="native-popover",open,onOpenChange,accessibilityLabel,children,testID,frame:anchor,side,contentWidth,contentHeight,
 }:SurfaceProps){
+  const token=useMemo(()=>({}),[scope,open]);
+  const committed=useRef<{token:object;onOpenChange:typeof onOpenChange}|null>(null);
+  useLayoutEffect(()=>{committed.current={token,onOpenChange};});
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const change=(next:boolean)=>{if(next!==open&&committed.current?.token===token)committed.current.onOpenChange(next);};
   const anchorWidth=Math.max(1,anchor.width),anchorHeight=Math.max(1,anchor.height);
   const content=<View accessibilityLabel={accessibilityLabel} accessibilityViewIsModal
     role="dialog" testID={testID}
     style={{width:contentWidth,maxHeight:contentHeight}}>{children}</View>;
   return <View pointerEvents="none" style={{position:"absolute",left:anchor.x,top:anchor.y,
       width:anchorWidth,height:anchorHeight}}>
-    <Host style={{width:anchorWidth,height:anchorHeight}}>
+    <Host key={`${scope}:${open}`} style={{width:anchorWidth,height:anchorHeight}}>
       {Platform.OS==="android"
-        ? <DropdownMenu expanded={open} onDismissRequest={()=>onOpenChange(false)}>
+        ? <DropdownMenu expanded={open} onDismissRequest={()=>change(false)}>
             <DropdownMenu.Trigger><Box modifiers={[size(anchorWidth,anchorHeight)]}/></DropdownMenu.Trigger>
             <DropdownMenu.Items>
               <ComposeHostView matchContents>{content}</ComposeHostView>
             </DropdownMenu.Items>
           </DropdownMenu>
         : <Popover isPresented={open}
-            onIsPresentedChange={next=>{if(next!==open)onOpenChange(next);}}
+            onIsPresentedChange={change}
             {...swiftUIPopoverEdges(side)}>
             <Popover.Trigger>
               <Spacer modifiers={[frame({width:anchorWidth,height:anchorHeight})]}/>

@@ -32,3 +32,8 @@ export function placementSide(anchor:Rect2D,position:PopupPosition):"below"|"abo
  if(position.y+position.height<=anchor.y)return "above";
  return "overlap";
 }
+
+/** Whether a layout currently exposes any finite, nonoccluded positive-area pane. */
+export function hasUsableRegion(regions:readonly Rect2D[]):boolean {
+ return regions.some(r=>[r.x,r.y,r.width,r.height].every(Number.isFinite)&&r.width>0&&r.height>0);
+}

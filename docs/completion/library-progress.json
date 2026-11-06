@@ -282,9 +282,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/overlays/CommandPalette.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Search commands, shortcuts, tools and assets."
+      "requirement": "Search commands, shortcuts, tools and assets.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-19",
@@ -296,9 +299,12 @@
         "packages/expo-controls/src/components/ContextMenu.native.tsx",
         "packages/expo-controls/src/components/ContextMenu.web.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Touch long-press, stylus click, mouse and keyboard access."
+      "requirement": "Touch long-press, stylus click, mouse and keyboard access.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-20",
@@ -309,9 +315,12 @@
         "packages/expo-controls/src/components/NativePopover.native.tsx",
         "packages/expo-controls/src/components/NativePopover.web.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Anchoring, pointer avoidance, safe-area and focus."
+      "requirement": "Anchoring, pointer avoidance, safe-area and focus.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-21",
@@ -351,9 +360,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/PresetGallery.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Live preview, selection and favorite presets."
+      "requirement": "Live preview, selection and favorite presets.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-24",
@@ -387,9 +399,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/StatusBar.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Zoom, units, selection count, rendering/recording state."
+      "requirement": "Zoom, units, selection count, rendering/recording state.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-26",
@@ -414,9 +429,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/KeyboardShortcutHUD.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Discover commands and customizable bindings."
+      "requirement": "Discover commands and customizable bindings.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-28",
@@ -426,9 +444,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/FocusAndA11yLayer.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Focus visibility, screen reader labels and reduced motion."
+      "requirement": "Focus visibility, screen reader labels and reduced motion.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "A-29",
@@ -465,9 +486,12 @@
         "packages/ui/src/components/files/FileImportExportSheet.native.tsx",
         "packages/ui/src/components/files/FileImportExportSheet.web.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Format, quality, metadata and destination settings."
+      "requirement": "Format, quality, metadata and destination settings.",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
     },
     {
       "id": "B-01",

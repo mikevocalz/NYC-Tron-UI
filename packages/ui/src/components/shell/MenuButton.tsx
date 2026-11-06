@@ -3,7 +3,7 @@ import {Pressable,useWindowDimensions,type PressableProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
-import type {Rect2D} from "../overlays/popover-position.ts";
+import {hasUsableRegion,type Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {shellKey} from "./shell-keys.ts";
 
@@ -49,7 +49,8 @@ export function MenuButton({
   if(!local.current)local.current=createStore<Local>(()=>({anchor:undefined,request:0}));
   const store=local.current,anchor=useStore(store,s=>s.anchor);
   const ref=useRef<ComponentRef<typeof Pressable>>(null);
-  const off=disabled||!items.some(item=>!item.disabled);
+  const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
+  const off=disabled||!items.some(item=>!item.disabled)||!hasUsableRegion(regions);
   const committed=useRef<{scope:string;off:boolean;items:readonly CommandMenuItem[];onSelect:typeof onSelect}|null>(null);
   useLayoutEffect(()=>{committed.current={scope:editScope,off,items,onSelect};});
   useLayoutEffect(()=>{store.setState(s=>({anchor:undefined,request:s.request+1}));},[editScope,off,store]);
@@ -66,7 +67,6 @@ export function MenuButton({
       if(owns(next)&&[x,y,width,height].every(Number.isFinite)&&width>0&&height>0)store.setState({anchor:next});
     });
   };
-  const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
   const shown=anchor?.scope===editScope&&!off?anchor:undefined;
   return <>
     <Pressable {...rest} ref={node=>{
@@ -86,7 +86,7 @@ export function MenuButton({
       style={style}>
       {children}
     </Pressable>
-    {shown?<CommandPopover key={shown.request} visible accessibilityLabel={label} anchor={shown.rect} usableRegions={regions}
+    {shown?<CommandPopover scope={editScope} key={shown.request} visible accessibilityLabel={label} anchor={shown.rect} usableRegions={regions}
       items={items} width={menuWidth} onSelect={id=>{const p=committed.current;if(owns(shown)&&p?.items.some(item=>item.id===id&&!item.disabled))p.onSelect(id);}}
       onDismiss={()=>{if(owns(shown))store.setState({anchor:undefined});}}/>:null}
   </>;

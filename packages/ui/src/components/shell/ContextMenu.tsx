@@ -1,9 +1,9 @@
-import {useRef,type ComponentRef,type ReactNode} from "react";
+import {useRef,useLayoutEffect,type ComponentRef,type ReactNode} from "react";
 import {Pressable,useWindowDimensions,type GestureResponderEvent,type PressableProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
-import type {Rect2D} from "../overlays/popover-position.ts";
+import {hasUsableRegion,type Rect2D} from "../overlays/popover-position.ts";
 import {shellKey} from "./shell-keys.ts";
 
 export type {CommandMenuItem} from "../overlays/CommandPopover.tsx";
@@ -14,6 +14,7 @@ export type ContextMenuSource="pointer"|"long-press"|"keyboard"|"assistive";
 /** Props for {@linkcode ContextMenu}. */
 export interface ContextMenuProps extends Omit<PressableProps,"children"|"onLongPress"|"onContextMenu"> {
   /** Name of the target, e.g. "Harbor photo layer". The menu is named "Actions for" it. */
+  scope?:string;revision?:string|number;
   label:string;
   items:readonly CommandMenuItem[];
   onSelect:(id:string)=>void;
@@ -46,7 +47,7 @@ export function isContextMenuKey(key:string,shift:boolean):boolean{
  * native choice in `@nyc-tron/expo-controls/ContextMenu`.
  */
 export function ContextMenu({
-  label,items,onSelect,children,onOpen,disabled=false,usableRegions,style,onKeyDown,accessibilityActions,onAccessibilityAction,...rest
+  scope="context-menu",revision=0,label,items,onSelect,children,onOpen,disabled=false,usableRegions,style,onKeyDown,accessibilityActions,onAccessibilityAction,...rest
 }:ContextMenuProps){
   const window=useWindowDimensions();
   const local=useRef<StoreApi<{anchor:Rect2D|undefined}>|null>(null);
@@ -54,18 +55,25 @@ export function ContextMenu({
   const store=local.current;
   const anchor=useStore(store,s=>s.anchor);
   const target=useRef<ComponentRef<typeof Pressable>>(null);
-  const usable=!disabled&&items.some(i=>!i.disabled);
+  const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
+  const usable=!disabled&&items.some(i=>!i.disabled)&&hasUsableRegion(regions);
+  const boundary=JSON.stringify([scope,revision,disabled]);
+  const committed=useRef<{boundary:string;items:typeof items;onSelect:typeof onSelect;onOpen:typeof onOpen}|null>(null),request=useRef(0);
+  useLayoutEffect(()=>{committed.current={boundary,items,onSelect,onOpen};});
+  useLayoutEffect(()=>{request.current++;store.setState({anchor:undefined});},[boundary,usable,store]);
+  useLayoutEffect(()=>()=>{committed.current=null;request.current++;},[]);
+  const current=()=>usable&&committed.current?.boundary===boundary?committed.current:null;
+  const select=(id:string)=>{const p=current();if(p?.items.some(i=>i.id===id&&!i.disabled))p.onSelect(id);};
   const openAt=(rect:Rect2D,source:ContextMenuSource)=>{
-    if(!usable)return;
+    const p=current();if(!p)return;
     store.setState({anchor:rect});
-    onOpen?.(source);
+    p.onOpen?.(source);
   };
   const openBeside=(source:ContextMenuSource)=>{
     const node=target.current as unknown as {measureInWindow?:(cb:(x:number,y:number,w:number,h:number)=>void)=>void}|null;
-    if(node?.measureInWindow)node.measureInWindow((x,y,w,h)=>openAt({x,y,width:w,height:h},source));
-    else openAt(pointAnchor(window.width/2,window.height/2),source);
+    const ticket=++request.current;
+    node?.measureInWindow?.((x,y,w,h)=>{if(ticket===request.current&&current()&&[x,y,w,h].every(Number.isFinite)&&w>0&&h>0)openAt({x,y,width:w,height:h},source);});
   };
-  const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
   return <>
     <Pressable {...rest} ref={target} disabled={disabled}
       aria-haspopup="menu"
@@ -88,10 +96,10 @@ export function ContextMenu({
         if(isContextMenuKey(k.key,k.shiftKey)){k.preventDefault();openBeside("keyboard");return;}
         onKeyDown?.(event);
       }}
-      style={style}>
+      style={state=>[{minWidth:44,minHeight:44},typeof style==="function"?style(state):style]}>
       {children}
     </Pressable>
-    {anchor?<CommandPopover visible accessibilityLabel={"Actions for "+label} anchor={anchor} usableRegions={regions}
-      items={items} onSelect={onSelect} onDismiss={()=>store.setState({anchor:undefined})}/>:null}
+    {anchor&&usable?<CommandPopover visible accessibilityLabel={"Actions for "+label} anchor={anchor} usableRegions={regions}
+      items={items} onSelect={select} onDismiss={()=>store.setState({anchor:undefined})}/>:null}
   </>;
 }

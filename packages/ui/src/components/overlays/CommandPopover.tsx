@@ -1,11 +1,12 @@
-import {useRef,type ComponentRef} from "react";
+import {useRef,useMemo,useLayoutEffect,type ComponentRef} from "react";
 import {Modal,Platform,Pressable,ScrollView,Text,View,type PressableProps} from "react-native";
-import {placePopover,type Rect2D} from "./popover-position.ts";
+import {placePopover,hasUsableRegion,type Rect2D} from "./popover-position.ts";
 import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {joinClasses} from "../styles.ts";
 export type CommandMenuItem=Readonly<{id:string;label:string;description?:string;disabled?:boolean;danger?:boolean}>;
 export interface CommandPopoverProps{
+ scope?:string;
  visible:boolean;
  onDismiss:()=>void;
  onSelect:(id:string)=>void;
@@ -37,16 +38,25 @@ const keyOf=(event:KeyEvent)=>event.nativeEvent as unknown as {
  * Tab and Shift+Tab cycle inside the menu, Escape closes, and focus returns to
  * whatever opened it.
  */
-export function CommandPopover({visible,onDismiss,onSelect,anchor,usableRegions,items,width=268,maxHeight=420,
+export function CommandPopover({scope="commands",visible,onDismiss,onSelect,anchor,usableRegions,items,width=268,maxHeight=420,
  className,unstyled=false,surfaceColor,borderColor,textColor,mutedTextColor,dangerColor,
  accessibilityLabel="Commands"}:CommandPopoverProps){
  const styled=!unstyled;
  const refs=useRef(new Map<string,ComponentRef<typeof View>>());
- useRestoreFocus(visible);
- const position=placePopover(anchor,usableRegions,width,Math.min(maxHeight,Math.max(56,items.length*60+16)));
+ const available=hasUsableRegion(usableRegions);
+ useRestoreFocus(visible&&available);
+ const position=available?placePopover(anchor,usableRegions,width,Math.min(maxHeight,Math.max(56,items.length*60+16))):undefined;
+ const token=useMemo(()=>({}),[scope,visible]);
+ const committed=useRef<{token:object;available:boolean;items:typeof items;onSelect:typeof onSelect;onDismiss:typeof onDismiss}|null>(null);
+ useLayoutEffect(()=>{committed.current={token,available,items,onSelect,onDismiss};});
+ useLayoutEffect(()=>()=>{committed.current=null;},[]);
+ const current=()=>visible&&committed.current?.token===token&&committed.current.available?committed.current:null;
+ const dismiss=()=>current()?.onDismiss();
+ const select=(id:string)=>{const p=current();if(p?.items.some(i=>i.id===id&&!i.disabled)){p.onSelect(id);p.onDismiss();}};
  const enabledIds=items.filter(item=>!item.disabled).map(item=>item.id);
  const focusItem=(id:string|undefined)=>{if(id)refs.current.get(id)?.focus();};
  const onItemKey=(event:KeyEvent,id:string)=>{
+  if(!current())return;
   const {key,shiftKey,altKey,ctrlKey,metaKey}=keyOf(event);
   if(altKey||ctrlKey||metaKey)return;
   let target:string|undefined;
@@ -57,17 +67,18 @@ export function CommandPopover({visible,onDismiss,onSelect,anchor,usableRegions,
   else return;
   event.preventDefault();event.stopPropagation();focusItem(target);
  };
+ if(!position)return null;
  return <Modal visible={visible} transparent
     // A fading web Modal keeps its focus trap live while it fades and pulls
     // the restored focus back in; close instantly there.
-    animationType={Platform.OS==="web"?"none":"fade"} onRequestClose={onDismiss}
-    onShow={()=>{if(Platform.OS==="web")focusItem(enabledIds[0]);}}
+    animationType={Platform.OS==="web"?"none":"fade"} onRequestClose={dismiss}
+    onShow={()=>{if(current()&&Platform.OS==="web")focusItem(enabledIds[0]);}}
     accessibilityViewIsModal>
     <View style={{flex:1}}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Dismiss menu" onPress={onDismiss}
+      <Pressable accessibilityRole="button" accessibilityLabel="Dismiss menu" onPress={dismiss}
         // Pointer-only: keyboard users close with Escape, so Tab never lands here.
         focusable={false}
-        style={{position:"absolute",top:0,right:0,bottom:0,left:0,backgroundColor:"rgba(0,0,0,0.24)"}}/>
+        {...{className:styled?"bg-text/25":undefined}} style={{position:"absolute",top:0,right:0,bottom:0,left:0}}/>
       <View accessibilityRole="menu" accessibilityLabel={accessibilityLabel}
         {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised",className)}}
         style={{position:"absolute",left:position.x,top:position.y,width:position.width,
@@ -79,7 +90,7 @@ export function CommandPopover({visible,onDismiss,onSelect,anchor,usableRegions,
             ref={node=>{if(node)refs.current.set(item.id,node);else refs.current.delete(item.id);}}
             accessibilityState={{disabled:item.disabled}}
             disabled={item.disabled}
-            onPress={()=>{onSelect(item.id);onDismiss();}}
+            onPress={()=>select(item.id)}
             {...{onKeyDown:(event:KeyEvent)=>onItemKey(event,item.id)}}
             {...{className:joinClasses(styled&&"border-b border-border focus-visible:bg-primary/10")}}
             style={{minHeight:56,paddingHorizontal:12,paddingVertical:7,justifyContent:"center",
