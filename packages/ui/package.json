@@ -1929,6 +1929,16 @@
       "types": "./dist/components/forge/canvas/canvas-pan-zoom-model.d.ts",
       "react-native": "./dist/components/forge/canvas/canvas-pan-zoom-model.js",
       "default": "./dist/components/forge/canvas/canvas-pan-zoom-model.js"
+    },
+    "./components/forge/canvas/GPUCanvasViewport": {
+      "types": "./dist/components/forge/canvas/GPUCanvasViewport.d.ts",
+      "react-native": "./dist/components/forge/canvas/GPUCanvasViewport.js",
+      "default": "./dist/components/forge/canvas/GPUCanvasViewport.js"
+    },
+    "./components/forge/canvas/graphite-frame": {
+      "types": "./dist/components/forge/canvas/graphite-frame.d.ts",
+      "react-native": "./dist/components/forge/canvas/graphite-frame.js",
+      "default": "./dist/components/forge/canvas/graphite-frame.js"
     }
   },
   "scripts": {
@@ -1946,7 +1956,8 @@
     "react-native": ">=0.88.0",
     "react-native-gesture-handler": ">=3.4.0 <4",
     "uniwind": ">=1.12.2 <2",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.0",
+    "react-native-skia": ">=3.9.1 <4"
   },
   "peerDependenciesMeta": {
     "@nyc-tron/core": {
@@ -1972,6 +1983,9 @@
     },
     "uniwind": {
       "optional": true
+    },
+    "react-native-skia": {
+      "optional": true
     }
   },
   "devDependencies": {
@@ -1987,7 +2001,8 @@
     "react-native-gesture-handler": "3.4.0",
     "typescript": "~6.0.3",
     "uniwind": "1.13.2",
-    "zustand": "5.0.16"
+    "zustand": "5.0.16",
+    "react-native-skia": "3.9.1"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

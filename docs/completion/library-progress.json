@@ -504,11 +504,16 @@
       "name": "GPUCanvasViewport",
       "phase": "P05",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/GPUCanvasViewport.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Skia v3/Graphite render surface with independent Rust document state.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P05-gpu-viewport.md"
+      ]
     },
     {
       "id": "B-02",

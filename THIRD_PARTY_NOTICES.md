@@ -113,3 +113,13 @@ publishing review before removing `private: true` from package manifests.
 ## Floating UI coordinate placement (geometry subpath)
 
 `packages/geometry/src/overlay-placement.ts` adapts the MIT-licensed Floating UI coordinate calculation and inlines its pure axis/alignment helpers at commit `e1e9f88993c19426563decfcc991feb706f1ac66`. Copyright (c) 2021 Floating UI contributors. The exact source/helper/license blobs and modification boundary are recorded in `packages/geometry/THIRD_PARTY_NOTICES.md`; the complete license is `packages/geometry/licenses/floating-ui-MIT.txt`. This port does not include a DOM renderer, native overlay host or the other candidate libraries listed in the source-admission document.
+
+## Optional Skia 3 rendering runtime
+
+`GPUCanvasViewport` uses `react-native-skia` 3.9.1 through an optional peer,
+without copying its implementation or bundling its native binaries into the UI
+tarball. Its MIT notice is retained in `licenses/REACT-NATIVE-SKIA-MIT.txt`:
+Copyright 2026-present William Candillon; Copyright 2021-2026 Shopify Inc.
+The native acceptance app pins that version and receives its declared Dawn,
+Graphite and CanvasKit runtime dependencies. Their upstream binary/dependency
+notices remain applicable to applications distributing those runtimes.

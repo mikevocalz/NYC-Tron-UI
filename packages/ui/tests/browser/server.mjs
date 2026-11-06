@@ -14,7 +14,10 @@ const fixtures=[["spreadsheet",resolve(here,"spreadsheet.tsx")],["",resolve(here
   ...readdirSync(resolve(here,"fixtures")).filter(f=>f.endsWith(".tsx")).map(f=>[f.slice(0,-4),resolve(here,"fixtures",f)])];
 const uiRequire=createRequire(resolve(here,"../../package.json"));
 const bundleOf=entry=>build({
+  // CanvasKit's browser branch never invokes its optional Node filesystem imports.
+  external:['fs','path'],
   plugins:[{name:"public-ui-exports",setup(builder){
+    builder.onResolve({filter:/^react-native\/(?:asset-registry|Libraries\/Image\/AssetRegistry)$/},args=>({path:args.path,external:true}));
     builder.onResolve({filter:/^@nyc-tron\/ui(?:\/|$)/},args=>({path:uiRequire.resolve(args.path)}));
   }}],entryPoints:[entry],bundle:true,write:false,
   format:"iife",jsx:"automatic",platform:"browser",
@@ -24,6 +27,7 @@ const bundleOf=entry=>build({
   // whose own node_modules (after a workspace install) would otherwise win.
   alias:{"react-native":resolve(here,"rn-shim.tsx"),
     "react-native-gesture-handler":resolve(here,"../../node_modules/react-native-gesture-handler"),
+    "react-native-skia":resolve(here,"../../node_modules/react-native-skia"),
     react:resolve(here,"node_modules/react"),"react-dom":resolve(here,"node_modules/react-dom"),
     zustand:resolve(here,"node_modules/zustand"),
     // Uniwind's web ScopedTheme, reproduced (see uniwind-shim.tsx).
@@ -31,14 +35,15 @@ const bundleOf=entry=>build({
     // NativeSeekBar renders @expo/ui's universal web build (plain RN Views).
     "@expo/ui":resolve(here,"node_modules/@expo/ui/build/universal/index.js")},
   nodePaths:[resolve(here,"node_modules")],
-  define:{"process.env.NODE_ENV":'"development"',__DEV__:"true"}});
+  define:{global:"globalThis","process.env.NODE_ENV":'"development"',__DEV__:"true"}});
 const bundles=new Map((await Promise.all(fixtures.map(async([name,entry])=>[name,(await bundleOf(entry)).outputFiles[0].contents]))));
 // Only the test document bootstrap is HTML. The rendered UI is React Native components.
 const doc=script=>'<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UI acceptance</title><link rel="stylesheet" href="/theme.css"></head><body><div id="root" style="min-height:100vh;display:flex"></div><script src="'+script+'"></script></body></html>';
 createServer((req,res)=>{
   const path=(req.url??"/").split("?")[0];
   const name=path.slice(1);
-  if(path==="/decoder.webm"){res.writeHead(200,{"Content-Type":"video/webm"});res.end(readFileSync(resolve(here,"../../../platform-services/tests/fixtures/decoder.webm")));}
+  if(path==="/skia/canvaskit.wasm"){res.writeHead(200,{"Content-Type":"application/wasm"});res.end(readFileSync(createRequire(uiRequire.resolve("react-native-skia/package.json")).resolve("canvaskit-wasm/bin/full/canvaskit.wasm")));}
+  else if(path==="/decoder.webm"){res.writeHead(200,{"Content-Type":"video/webm"});res.end(readFileSync(resolve(here,"../../../platform-services/tests/fixtures/decoder.webm")));}
   else if(path==="/bundle.js"){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(bundles.get(""));}
   else if(name.endsWith(".js")&&bundles.has(name.slice(0,-3))){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(bundles.get(name.slice(0,-3)));}
   else if(path==="/theme.css"){res.writeHead(200,{"Content-Type":"text/css"});res.end(css);}

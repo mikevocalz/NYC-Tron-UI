@@ -6,7 +6,7 @@ const appRequire = createRequire(path.join(__dirname, 'package.json'));
 const config = getDefaultConfig(__dirname);
 config.watchFolders = [...new Set([...(config.watchFolders ?? []), path.resolve(__dirname, '../../packages')])];
 // Workspace sources use the same runtime as the app's native build.
-const shared = ['react', 'react-native', 'expo', 'expo-modules-core', '@expo/ui', 'zustand', 'uniwind', 'react-native-safe-area-context', 'react-native-gesture-handler'];
+const shared = ['react', 'react-native', 'expo', 'expo-modules-core', '@expo/ui', 'zustand', 'uniwind', 'react-native-safe-area-context', 'react-native-gesture-handler', 'react-native-skia'];
 const resolveRequest = config.resolver.resolveRequest;
 config.resolver.resolveRequest = (context, name, platform) => {
   const root = shared.find(value => name === value || name.startsWith(value + '/'));
