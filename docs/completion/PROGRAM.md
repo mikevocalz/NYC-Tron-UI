@@ -54,3 +54,5 @@ P05 canvas navigation checkpoint: B-02 now has scoped native pan/pinch, wheel an
 P05 ruler checkpoint: B-03 now guards guide/origin edits across document, geometry and permission changes and fixes guide hit-area dimensions. [Ruler report](P05-rulers.md) records source/model and browser checks. Review count is 92 of 341.
 
 P05 GPU checkpoint: B-01 exposes a real Skia 3 Graphite surface with host-owned documents, scoped frame submission and resource cleanup. [GPU report](P05-gpu-viewport.md) records 820 source tests, 582 full browser checks, three final GPU cases and 13 validation packs. Review count is 93 of 341; native/runtime acceptance remains open.
+
+P05 snapping/pivot checkpoint: B-04, B-05 and B-08 have reviewed bounded feedback, settings and scoped pivot interactions. [Review report](P05-snapping-and-pivot.md) records 823 source tests and targeted interaction checks, including the shared numeric scope/async guard fix. Review count is 96 of 341.

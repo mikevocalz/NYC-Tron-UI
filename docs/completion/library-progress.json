@@ -554,9 +554,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas/SnapGridOverlay.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Configurable grid, magnetism and artboard intersections."
+      "requirement": "Configurable grid, magnetism and artboard intersections.",
+      "evidence": [
+        "P05-snapping-and-pivot.md"
+      ]
     },
     {
       "id": "B-05",
@@ -566,9 +569,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas/SmartGuides.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Object alignment, spacing and live snap feedback."
+      "requirement": "Object alignment, spacing and live snap feedback.",
+      "evidence": [
+        "P05-snapping-and-pivot.md"
+      ]
     },
     {
       "id": "B-06",
@@ -598,9 +604,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas/TransformOriginHandle.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pivot edits and angle snapping."
+      "requirement": "Pivot edits and angle snapping.",
+      "evidence": [
+        "P05-snapping-and-pivot.md"
+      ]
     },
     {
       "id": "B-09",

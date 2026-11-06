@@ -1,4 +1,4 @@
-import {useEffect,useRef} from "react";
+import {useEffect,useLayoutEffect,useRef} from "react";
 import {Platform,Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -11,6 +11,8 @@ import {joinClasses} from "../../styles.ts";
 /** Props for {@linkcode PrecisionScrubber}. */
 export interface PrecisionScrubberProps extends Omit<ViewProps,"children">,RangeConfig {
   label:string;
+  scope?:string;
+  revision?:string|number;
   /** The committed value. The scrubber never keeps its own copy after a gesture ends. */
   value:number;
   unit?:string;
@@ -53,7 +55,17 @@ const MODE_LABEL={fine:"Fine precision",normal:"Normal precision",coarse:"Coarse
  * pointer to cancel. Text entry, arrow keys, +/- buttons and screen-reader
  * increment/decrement all commit once through `onCommit`.
  */
-export function PrecisionScrubber({
+export function PrecisionScrubber({scope,revision=0,...props}:PrecisionScrubberProps){
+  const {label,min,max,step,detents,unit,disabled=false}=props;
+  if(!label.trim()||scope!==undefined&&(!scope.trim()||scope.length>512)||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid scrubber identity');
+  const boundary=JSON.stringify([scope??label,revision,min,max,step,detents,unit,disabled]);
+  const mounted=useRef(false),committed=useRef({boundary,props});
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
+  useLayoutEffect(()=>{committed.current={boundary,props};});
+  const current=()=>mounted.current&&committed.current.boundary===boundary&&!committed.current.props.disabled?committed.current.props:null;
+  return <PrecisionScrubberBody key={boundary} {...props} onPreview={value=>current()?.onPreview?.(value)} onCommit={value=>current()?.onCommit(value)}/>;
+}
+function PrecisionScrubberBody({
   label,value,min,max,step,detents,unit,disabled=false,onPreview,onCommit,
   forcedColors=false,transport:Transport=PanResponderDrag,className,unstyled=false,scaleColor,accentColor,style,...rest
 }:PrecisionScrubberProps){

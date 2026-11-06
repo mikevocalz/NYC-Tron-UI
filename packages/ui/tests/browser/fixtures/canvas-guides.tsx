@@ -170,7 +170,7 @@ function Canvas(){
       <SnapGridOverlay viewport={v} grid={s.doc.grid} snapped={s.drag?.grid}/>
       {s.doc.layers.map(l=><LayerBox key={l.id} l={l} v={v} selected={s.selected.includes(l.id)}/>)}
       <SmartGuides viewport={v} result={s.drag?.smart} names={Object.fromEntries(s.doc.layers.map(l=>[l.id,l.name]))}/>
-      {sel.length&&!s.drag?<TransformOriginHandle viewport={v}
+      {sel.length&&!s.drag?<TransformOriginHandle scope={String(s.scope)} disabled={s.rulerDisabled} viewport={v}
         corners={one?cornersOf(one):(()=>{const u=union(sel.map(boundsOf));return [[u.x,u.y],[u.x+u.w,u.y],[u.x+u.w,u.y+u.h],[u.x,u.y+u.h]] as const;})()}
         {...(one&&!one.locked?{transform:one.t}:{unavailableReason:one?`Unlock ${one.name} to move its pivot`:"Select one layer to move its pivot"})}
         onSetOrigin={(ox,oy)=>one&&setTransformOrigin(one.id,ox,oy)}/>:null}
@@ -207,7 +207,7 @@ function Panels(){
       distributeMode={s.mode} onDistributeModeChange={mode=>useHost.setState({mode})}
       spacing={s.spacing} onSpacingChange={spacing=>useHost.setState({spacing})} onDistribute={distributeLayers}
       {...(idx>=0?{stack:{index:idx,count:s.doc.layers.length}}:{})} onMoveLayer={moveLayer}/>
-    <SnapGridSettings grid={s.doc.grid} snap={s.doc.snap}
+    <SnapGridSettings scope={String(s.scope)} disabled={s.rulerDisabled} grid={s.doc.grid} snap={s.doc.snap}
       onGridChange={grid=>commit(`grid ${grid.visible?"on":"off"} ${grid.spacing}/${grid.subdivisions}`,d=>({...d,grid}))}
       onSnapChange={snap=>commit(`snap ${snap.enabled?"on":"off"} ${[snap.toGrid&&"grid",snap.toGuides&&"guides",snap.toArtboards&&"artboards"].filter(Boolean).join("+")} ${snap.thresholdPx} ${snap.strength}`,d=>({...d,snap}))}/>
   </View>;

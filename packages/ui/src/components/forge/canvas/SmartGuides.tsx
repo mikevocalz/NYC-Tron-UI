@@ -2,7 +2,7 @@ import {Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {docToScreen,validateViewport,type CanvasViewport} from "./canvas-viewport.ts";
 import {formatRulerNumber} from "./ruler-model.ts";
-import {smartGuideSummary,type SmartGuideResult} from "./smart-guides-model.ts";
+import {smartGuideSummary,validateSmartGuideResult,type SmartGuideResult} from "./smart-guides-model.ts";
 
 /** Props for {@linkcode SmartGuides}. */
 export interface SmartGuidesProps extends Omit<ViewProps,"children"> {
@@ -30,6 +30,7 @@ export interface SmartGuidesProps extends Omit<ViewProps,"children"> {
  */
 export function SmartGuides({viewport,result,names,formatGap=formatRulerNumber,className,unstyled=false,style,...rest}:SmartGuidesProps){
   validateViewport(viewport);
+  if(result)validateSmartGuideResult(result);
   const styled=!unstyled;
   const accent=joinClasses(styled&&"bg-accent");
   const sx=(v:number)=>docToScreen(viewport,"x",v),sy=(v:number)=>docToScreen(viewport,"y",v);
