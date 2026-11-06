@@ -2167,60 +2167,90 @@
       "name": "RatingAndFlagControl",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/RatingAndFlagControl.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Stars, color labels, pick/reject markers."
+      "requirement": "Stars, color labels, pick/reject markers.",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
     },
     {
       "id": "F-04",
       "name": "RAWDevelopPanel",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/RAWDevelopPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Non-destructive settings with default, revert and copy/paste."
+      "requirement": "Non-destructive settings with default, revert and copy/paste.",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
     },
     {
       "id": "F-05",
       "name": "ExposureAndWhiteBalance",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/ExposureAndWhiteBalance.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Exposure, temperature, tint, highlight and shadow."
+      "requirement": "Exposure, temperature, tint, highlight and shadow.",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
     },
     {
       "id": "F-06",
       "name": "ToneAndPresence",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/ToneAndPresence.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Contrast, texture, clarity, dehaze, vibrance."
+      "requirement": "Contrast, texture, clarity, dehaze, vibrance.",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
     },
     {
       "id": "F-07",
       "name": "EightBandColorMixer",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/EightBandColorMixer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Per-range hue/saturation/luminance adjustments."
+      "requirement": "Per-range hue/saturation/luminance adjustments.",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
     },
     {
       "id": "F-08",
       "name": "LensCorrectionPanel",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/LensCorrectionPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Distortion, chromatic aberration and profiles."
+      "requirement": "Distortion, chromatic aberration and profiles.",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
     },
     {
       "id": "F-09",

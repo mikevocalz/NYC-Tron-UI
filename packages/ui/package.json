@@ -1674,6 +1674,41 @@
       "types": "./dist/components/forge/color/gradient-options.d.ts",
       "react-native": "./dist/components/forge/color/gradient-options.js",
       "default": "./dist/components/forge/color/gradient-options.js"
+    },
+    "./components/forge/photo/ExposureAndWhiteBalance": {
+      "types": "./dist/components/forge/photo/ExposureAndWhiteBalance.d.ts",
+      "react-native": "./dist/components/forge/photo/ExposureAndWhiteBalance.js",
+      "default": "./dist/components/forge/photo/ExposureAndWhiteBalance.js"
+    },
+    "./components/forge/photo/ToneAndPresence": {
+      "types": "./dist/components/forge/photo/ToneAndPresence.d.ts",
+      "react-native": "./dist/components/forge/photo/ToneAndPresence.js",
+      "default": "./dist/components/forge/photo/ToneAndPresence.js"
+    },
+    "./components/forge/photo/EightBandColorMixer": {
+      "types": "./dist/components/forge/photo/EightBandColorMixer.d.ts",
+      "react-native": "./dist/components/forge/photo/EightBandColorMixer.js",
+      "default": "./dist/components/forge/photo/EightBandColorMixer.js"
+    },
+    "./components/forge/photo/LensCorrectionPanel": {
+      "types": "./dist/components/forge/photo/LensCorrectionPanel.d.ts",
+      "react-native": "./dist/components/forge/photo/LensCorrectionPanel.js",
+      "default": "./dist/components/forge/photo/LensCorrectionPanel.js"
+    },
+    "./components/forge/photo/RatingAndFlagControl": {
+      "types": "./dist/components/forge/photo/RatingAndFlagControl.d.ts",
+      "react-native": "./dist/components/forge/photo/RatingAndFlagControl.js",
+      "default": "./dist/components/forge/photo/RatingAndFlagControl.js"
+    },
+    "./components/forge/photo/photo-adjustments": {
+      "types": "./dist/components/forge/photo/photo-adjustments.d.ts",
+      "react-native": "./dist/components/forge/photo/photo-adjustments.js",
+      "default": "./dist/components/forge/photo/photo-adjustments.js"
+    },
+    "./components/forge/photo/RAWDevelopPanel": {
+      "types": "./dist/components/forge/photo/RAWDevelopPanel.d.ts",
+      "react-native": "./dist/components/forge/photo/RAWDevelopPanel.js",
+      "default": "./dist/components/forge/photo/RAWDevelopPanel.js"
     }
   },
   "scripts": {

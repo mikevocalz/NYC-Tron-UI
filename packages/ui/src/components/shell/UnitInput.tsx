@@ -87,7 +87,7 @@ export function UnitInput({
   return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{label}</Text>:null}
     <View style={{flexDirection:"row",alignItems:"center",gap:4}}>
-      <TextInput accessibilityLabel={label} editable={!disabled}
+      <TextInput accessibilityLabel={label} editable={!disabled} aria-disabled={disabled} accessibilityState={{disabled}}
         aria-invalid={!!error} aria-describedby={error?errorId:undefined}
         value={editing?draft:shown}
         selectTextOnFocus inputMode="text" autoCorrect={false} autoCapitalize="none" returnKeyType="done"
