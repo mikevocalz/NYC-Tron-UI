@@ -2430,10 +2430,15 @@
       "name": "MotionKeyframeTimeline",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/MotionKeyframeTimeline.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Keyframes per property, drag and select groups."
+      "requirement": "Keyframes per property, drag and select groups.",
+      "evidence": [
+        "P11-keyframe-timeline.md"
+      ]
     },
     {
       "id": "G-03",

@@ -1859,6 +1859,16 @@
       "types": "./dist/components/forge/motion/motion-curves.d.ts",
       "react-native": "./dist/components/forge/motion/motion-curves.js",
       "default": "./dist/components/forge/motion/motion-curves.js"
+    },
+    "./components/forge/motion/MotionKeyframeTimeline": {
+      "types": "./dist/components/forge/motion/MotionKeyframeTimeline.d.ts",
+      "react-native": "./dist/components/forge/motion/MotionKeyframeTimeline.js",
+      "default": "./dist/components/forge/motion/MotionKeyframeTimeline.js"
+    },
+    "./components/forge/motion/motion-timeline": {
+      "types": "./dist/components/forge/motion/motion-timeline.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-timeline.js",
+      "default": "./dist/components/forge/motion/motion-timeline.js"
     }
   },
   "scripts": {
