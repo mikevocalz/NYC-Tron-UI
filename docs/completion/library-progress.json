@@ -2460,10 +2460,15 @@
       "name": "EasingPresetGallery",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/EasingPresetGallery.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Hold, linear, ease, spring-like options where supported."
+      "requirement": "Hold, linear, ease, spring-like options where supported.",
+      "evidence": [
+        "P11-render-and-easing.md"
+      ]
     },
     {
       "id": "G-06",
@@ -2580,10 +2585,15 @@
       "name": "RenderQueuePanel",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/RenderQueuePanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Sequences, alpha mode, output profile and progress."
+      "requirement": "Sequences, alpha mode, output profile and progress.",
+      "evidence": [
+        "P11-render-and-easing.md"
+      ]
     },
     {
       "id": "H-01",

@@ -1819,6 +1819,26 @@
       "types": "./dist/components/forge/motion/motion-settings.d.ts",
       "react-native": "./dist/components/forge/motion/motion-settings.js",
       "default": "./dist/components/forge/motion/motion-settings.js"
+    },
+    "./components/forge/motion/EasingPresetGallery": {
+      "types": "./dist/components/forge/motion/EasingPresetGallery.d.ts",
+      "react-native": "./dist/components/forge/motion/EasingPresetGallery.js",
+      "default": "./dist/components/forge/motion/EasingPresetGallery.js"
+    },
+    "./components/forge/motion/RenderQueuePanel": {
+      "types": "./dist/components/forge/motion/RenderQueuePanel.d.ts",
+      "react-native": "./dist/components/forge/motion/RenderQueuePanel.js",
+      "default": "./dist/components/forge/motion/RenderQueuePanel.js"
+    },
+    "./components/forge/motion/motion-easing": {
+      "types": "./dist/components/forge/motion/motion-easing.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-easing.js",
+      "default": "./dist/components/forge/motion/motion-easing.js"
+    },
+    "./components/forge/motion/motion-render": {
+      "types": "./dist/components/forge/motion/motion-render.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-render.js",
+      "default": "./dist/components/forge/motion/motion-render.js"
     }
   },
   "scripts": {

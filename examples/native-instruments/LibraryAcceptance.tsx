@@ -7,7 +7,7 @@ import {useStore} from 'zustand';
 import {TabBar} from '@nyc-tron/ui/components/TabBar';
 import {useReservedRegions} from '@nyc-tron/reserved-regions';
 import {foldFeaturesFromRegions,resolveUsableRegions,type Rect} from '@nyc-tron/core/folds';
-import {MotionSettingsDemo} from './MotionSettingsDemo';
+import {MotionWorkbenchDemo} from './MotionWorkbenchDemo';
 import {ShellDemo} from './ShellDemo';
 import {ColorManagementDemo} from './ColorManagementDemo';
 import {PhotoWorkbenchDemo} from './PhotoWorkbenchDemo';
@@ -24,7 +24,7 @@ function LibraryContent(){
   <View ref={host} collapsable={false} onLayout={measure} style={{flex:1}}>
    <View style={[{position:'absolute',gap:8},pane?{left:pane.x,top:pane.y,width:pane.width,height:pane.height}:{inset:0}]}>
     <TabBar tabs={(['shell','management','adjustments','P3','photo','motion'] as const).map(key=>({key,label:key,active:key===state.family,onPress:()=>store.setState({family:key})}))}/>
-    <View style={{flex:1}}>{state.family==='shell'?<ShellDemo height={Math.max(280,(pane?.height??700)-64)}/>:state.family==='management'?<ColorManagementDemo/>:state.family==='adjustments'?<ColorAdjustmentsDemo/>:state.family==='P3'?<P3DiscDemo/>:state.family==='photo'?<PhotoWorkbenchDemo/>:<MotionSettingsDemo/>}</View>
+    <View style={{flex:1}}>{state.family==='shell'?<ShellDemo height={Math.max(280,(pane?.height??700)-64)}/>:state.family==='management'?<ColorManagementDemo/>:state.family==='adjustments'?<ColorAdjustmentsDemo/>:state.family==='P3'?<P3DiscDemo/>:state.family==='photo'?<PhotoWorkbenchDemo/>:<MotionWorkbenchDemo/>}</View>
    </View>
   </View>
  </KeyboardAvoidingView></SafeAreaView>;
