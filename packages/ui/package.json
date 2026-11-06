@@ -1514,6 +1514,51 @@
       "types": "./dist/components/forge/audio/audio-recovery-model.d.ts",
       "react-native": "./dist/components/forge/audio/audio-recovery-model.js",
       "default": "./dist/components/forge/audio/audio-recovery-model.js"
+    },
+    "./components/shell/AssetBrowser": {
+      "types": "./dist/components/shell/AssetBrowser.d.ts",
+      "react-native": "./dist/components/shell/AssetBrowser.js",
+      "default": "./dist/components/shell/AssetBrowser.js"
+    },
+    "./components/shell/asset-browser-model": {
+      "types": "./dist/components/shell/asset-browser-model.d.ts",
+      "react-native": "./dist/components/shell/asset-browser-model.js",
+      "default": "./dist/components/shell/asset-browser-model.js"
+    },
+    "./components/shell/HistoryPanel": {
+      "types": "./dist/components/shell/HistoryPanel.d.ts",
+      "react-native": "./dist/components/shell/HistoryPanel.js",
+      "default": "./dist/components/shell/HistoryPanel.js"
+    },
+    "./components/shell/history-model": {
+      "types": "./dist/components/shell/history-model.d.ts",
+      "react-native": "./dist/components/shell/history-model.js",
+      "default": "./dist/components/shell/history-model.js"
+    },
+    "./components/shell/FindReplacePopover": {
+      "types": "./dist/components/shell/FindReplacePopover.d.ts",
+      "react-native": "./dist/components/shell/FindReplacePopover.js",
+      "default": "./dist/components/shell/FindReplacePopover.js"
+    },
+    "./components/shell/FindReplaceContent": {
+      "types": "./dist/components/shell/FindReplaceContent.d.ts",
+      "react-native": "./dist/components/shell/FindReplaceContent.js",
+      "default": "./dist/components/shell/FindReplaceContent.js"
+    },
+    "./components/shell/find-replace-model": {
+      "types": "./dist/components/shell/find-replace-model.d.ts",
+      "react-native": "./dist/components/shell/find-replace-model.js",
+      "default": "./dist/components/shell/find-replace-model.js"
+    },
+    "./components/shell/ToastAndProgress": {
+      "types": "./dist/components/shell/ToastAndProgress.d.ts",
+      "react-native": "./dist/components/shell/ToastAndProgress.js",
+      "default": "./dist/components/shell/ToastAndProgress.js"
+    },
+    "./components/shell/progress-model": {
+      "types": "./dist/components/shell/progress-model.d.ts",
+      "react-native": "./dist/components/shell/progress-model.js",
+      "default": "./dist/components/shell/progress-model.js"
     }
   },
   "scripts": {

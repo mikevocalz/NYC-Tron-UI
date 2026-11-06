@@ -3,6 +3,7 @@ import {execFileSync} from "node:child_process";
 import {readdirSync,readFileSync} from "node:fs";
 import {createServer} from "node:http";
 import {dirname,resolve} from "node:path";
+import {createRequire} from "node:module";
 import {fileURLToPath} from "node:url";
 
 const here=dirname(fileURLToPath(import.meta.url));
@@ -11,7 +12,11 @@ const css=execFileSync(resolve(here,"node_modules/.bin/tailwindcss"),["-i",resol
 // and each fixtures/<name>.tsx at "/<name>".
 const fixtures=[["spreadsheet",resolve(here,"spreadsheet.tsx")],["",resolve(here,"fixture.tsx")],["primitives",resolve(here,"primitives.tsx")],
   ...readdirSync(resolve(here,"fixtures")).filter(f=>f.endsWith(".tsx")).map(f=>[f.slice(0,-4),resolve(here,"fixtures",f)])];
-const bundleOf=entry=>build({entryPoints:[entry],bundle:true,write:false,
+const uiRequire=createRequire(resolve(here,"../../package.json"));
+const bundleOf=entry=>build({
+  plugins:[{name:"public-ui-exports",setup(builder){
+    builder.onResolve({filter:/^@nyc-tron\/ui(?:\/|$)/},args=>({path:uiRequire.resolve(args.path)}));
+  }}],entryPoints:[entry],bundle:true,write:false,
   format:"iife",jsx:"automatic",platform:"browser",
   // Match web-aware consumers when a package ships platform file siblings.
   resolveExtensions:[".web.tsx",".web.ts",".web.jsx",".web.js",".tsx",".ts",".jsx",".js",".json"],

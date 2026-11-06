@@ -7,6 +7,7 @@ export {matchesQuery} from "./inspector-model.ts";
 /** Props for {@linkcode InspectorSearch}. */
 export interface InspectorSearchProps extends Omit<ViewProps,"children"> {
   query:string;
+  maxLength?:number;
   onQueryChange:(query:string)=>void;
   /** Accessible name and placeholder. @default "Search properties" */
   label?:string;
@@ -26,7 +27,7 @@ export interface InspectorSearchProps extends Omit<ViewProps,"children"> {
  * inspector filters rows.
  */
 export function InspectorSearch({
-  query,onQueryChange,label="Search properties",summary,className,unstyled=false,style,...rest
+  query,maxLength,onQueryChange,label="Search properties",summary,className,unstyled=false,style,...rest
 }:InspectorSearchProps){
   const styled=!unstyled;
   return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={style}>
@@ -34,7 +35,7 @@ export function InspectorSearch({
       style={{flexDirection:"row",alignItems:"center",minHeight:44,paddingHorizontal:10}}>
       <SearchGlyph styled={styled}/>
       <TextInput role="searchbox" accessibilityLabel={label} placeholder={label}
-        value={query} onChangeText={onQueryChange} autoCorrect={false} autoCapitalize="none" returnKeyType="search"
+        value={query} maxLength={maxLength} onChangeText={onQueryChange} autoCorrect={false} autoCapitalize="none" returnKeyType="search"
         onKeyPress={event=>{
           const k=shellKey(event);
           if(k.key==="Escape"&&query){k.preventDefault();onQueryChange("");}

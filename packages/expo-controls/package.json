@@ -64,6 +64,12 @@
       "browser": "./dist/components/Select.web.js",
       "react-native": "./dist/components/Select.native.js",
       "default": "./dist/components/Select.web.js"
+    },
+    "./FindReplacePopover": {
+      "types": "./dist/components/FindReplacePopover.web.d.ts",
+      "react-native": "./dist/components/FindReplacePopover.native.js",
+      "browser": "./dist/components/FindReplacePopover.web.js",
+      "default": "./dist/components/FindReplacePopover.web.js"
     }
   },
   "main": "./dist/index.js",
