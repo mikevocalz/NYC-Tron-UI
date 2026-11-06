@@ -56,6 +56,8 @@ export function panelLocation(layout:DockLayout,id:string):DockTarget|undefined{
  * is empty, a size is not positive, or a referenced id is not in `known`.
  */
 export function validateDockLayout(layout:DockLayout,known:readonly string[]):void{
+  if(known.length>256||new Set(known).size!==known.length||known.some(id=>typeof id!=="string"||!id.trim()||id.length>256)||layout.floating.length>256)throw new RangeError("Invalid known dock panel identities or budget");
+  if(layout.compactSize!==undefined&&(!Number.isFinite(layout.compactSize)||layout.compactSize<=0))throw new RangeError("Invalid compact dock size");
   const seen=new Set<string>();
   const knownIds=new Set(known);
   const add=(id:string)=>{

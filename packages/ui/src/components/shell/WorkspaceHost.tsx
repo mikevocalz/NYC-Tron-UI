@@ -1,4 +1,4 @@
-import {useEffect,useRef,type ComponentRef,type ReactNode} from "react";
+import {useEffect,useLayoutEffect,useRef,type ComponentRef,type ReactNode} from "react";
 import {Platform,Pressable,ScrollView,Text,View,type LayoutChangeEvent,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -10,7 +10,7 @@ import {AdaptiveDock,type DockPanel} from "./AdaptiveDock.tsx";
 import type {DockDefaults,DockLayout} from "./dock-model.ts";
 import {rovingTarget,shellKey} from "./shell-keys.ts";
 import {
-  documentLabel,layoutForMode,modeAnnouncement,modeShortcutIndex,modeShortcutLabel,validateWorkspace,
+  documentLabel,layoutForMode,modeAnnouncement,modeShortcutIndex,modeShortcutLabel,validateWorkspace,validateWorkspaceDocument,
   type WorkspaceDocument,type WorkspaceMode,
 } from "./workspace-model.ts";
 
@@ -32,6 +32,10 @@ export interface WorkspaceHostMode extends WorkspaceMode {
 export interface WorkspaceHostProps extends Omit<ViewProps,"children"> {
   /** The one document being edited. */
   document:WorkspaceDocument;
+  /** Disable mode and layout changes; the app retains ownership of canvas content. */
+  disabled?:boolean;
+  /** Relevant workspace/layout revision; changes cancel old pane interactions without remounting the canvas. */
+  revision?:string|number;
   modes:readonly WorkspaceHostMode[];
   activeModeId:string;
   /** A tab, Ctrl/Cmd+1..9 or a screen-reader tab activation picked a mode. */
@@ -92,10 +96,12 @@ const appleByDefault=()=>{
  * Each switch is announced politely.
  */
 export function WorkspaceHost({
-  document,modes,activeModeId,onModeChange,panels,layouts,onLayoutChange,canvas,leading,trailing,
+  document,revision=0,disabled=false,modes,activeModeId,onModeChange,panels,layouts,onLayoutChange,canvas,leading,trailing,
   enableModeShortcuts=true,applePlatform,compactBelow=600,features,usableRegions,dockDefaults,dockCompactBelow,
   isRTL=false,className,unstyled=false,style,onLayout,...rest
 }:WorkspaceHostProps){
+  validateWorkspaceDocument(document);
+  if(typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError("Invalid workspace revision");
   validateWorkspace(modes,layouts,panels.map(p=>p.id));
   const mode=modes.find(m=>m.id===activeModeId);
   if(!mode)throw new TypeError(`Active mode ${activeModeId} is not one of the modes`);
@@ -105,7 +111,8 @@ export function WorkspaceHost({
   const width=useStore(store,s=>s.width);
   const announcement=useStore(store,s=>s.announcement);
   const latest=useRef({modes,mode,onModeChange,onLayoutChange});
-  latest.current={modes,mode,onModeChange,onLayoutChange};
+  const viewScope=JSON.stringify([document.id,activeModeId,revision,disabled]),committedView=useRef<string|null>(null);
+  useLayoutEffect(()=>{latest.current={modes,mode,onModeChange,onLayoutChange};committedView.current=viewScope;return()=>{committedView.current=null;};},[viewScope,modes,mode,onModeChange,onLayoutChange]);
   const apple=applePlatform??appleByDefault();
   const styled=!unstyled;
   const dir={direction:isRTL?"rtl":"ltr"} as const;
@@ -121,9 +128,9 @@ export function WorkspaceHost({
     else announce(text);
   },[activeModeId,store]);
 
-  const pick=(id:string)=>{if(id!==latest.current.mode.id)latest.current.onModeChange(id);};
+  const pick=(id:string)=>{if(!disabled&&committedView.current===viewScope&&id!==latest.current.mode.id&&latest.current.modes.some(mode=>mode.id===id))latest.current.onModeChange(id);};
   const onKeyDown=(event:unknown)=>{
-    if(!enableModeShortcuts)return;
+    if(disabled||!enableModeShortcuts)return;
     const k=shellKey(event);
     const code=String((event as {nativeEvent?:{code?:unknown}}).nativeEvent?.code??"");
     const index=modeShortcutIndex({...k,code});
@@ -142,7 +149,7 @@ export function WorkspaceHost({
       {...(Platform.OS==="web"?{"aria-level":1}:{})}
       {...{className:joinClasses(styled&&"text-base font-semibold text-text")}} style={{flexShrink:1}}>{document.title}</Text>
   </View>;
-  const tabs=<ModeTabs modes={modes} active={mode.id} onPick={pick} apple={apple} rtl={isRTL} styled={styled}
+  const tabs=<ModeTabs key={document.id} modes={modes} active={mode.id} onPick={pick} disabled={disabled} apple={apple} rtl={isRTL} styled={styled}
     shortcuts={enableModeShortcuts}/>;
 
   return <View {...rest} onLayout={(event:LayoutChangeEvent)=>{store.setState({width:event.nativeEvent.layout.width});onLayout?.(event);}}
@@ -157,8 +164,8 @@ export function WorkspaceHost({
       </View>
       {narrow?tabs:null}
     </View>
-    <AdaptiveDock panels={modePanels} layout={layoutForMode(mode,layouts)}
-      onLayoutChange={next=>latest.current.onLayoutChange(latest.current.mode.id,next)}
+    <AdaptiveDock disabled={disabled} key={document.id} editScope={JSON.stringify([document.id,activeModeId])} revision={revision} panels={modePanels} layout={layoutForMode(mode,layouts)}
+      onLayoutChange={next=>{if(committedView.current===viewScope)latest.current.onLayoutChange(mode.id,next);}}
       workspaceLabel={documentLabel(document)} isRTL={isRTL}
       {...(features?{features}:{})} {...(usableRegions?{usableRegions}:{})} {...(dockDefaults?{defaults:dockDefaults}:{})}
       {...(dockCompactBelow!==undefined?{compactBelow:dockCompactBelow}:{})}
@@ -181,10 +188,12 @@ interface ModeTabsProps {
   rtl:boolean;
   styled:boolean;
   shortcuts:boolean;
+  disabled:boolean;
 }
-function ModeTabs({modes,active,onPick,apple,rtl,styled,shortcuts}:ModeTabsProps){
+function ModeTabs({modes,active,onPick,apple,rtl,styled,shortcuts,disabled}:ModeTabsProps){
   const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
   const onKeyDown=(i:number)=>(event:unknown)=>{
+    if(disabled)return;
     const k=shellKey(event);
     if(k.altKey||k.ctrlKey||k.metaKey)return;
     if(k.key==="Enter"||k.key===" "){k.preventDefault();onPick(modes[i]!.id);return;}
@@ -198,11 +207,11 @@ function ModeTabs({modes,active,onPick,apple,rtl,styled,shortcuts}:ModeTabsProps
       {modes.map((m,i)=>{
         const selected=m.id===active;
         const shortcut=shortcuts?modeShortcutLabel(i,apple):undefined;
-        return <Pressable key={m.id} ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
-          accessibilityLabel={m.label} accessibilityState={{selected}} aria-selected={selected}
+        return <Pressable key={m.id} disabled={disabled} ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
+          accessibilityLabel={m.label} accessibilityState={{selected,disabled}} aria-selected={selected}
           {...(shortcut?{accessibilityHint:shortcut}:{})}
           onPress={()=>onPick(m.id)}
-          {...{onKeyDown:onKeyDown(i),tabIndex:selected?0:-1,
+          {...{onKeyDown:onKeyDown(i),tabIndex:!disabled&&selected?0:-1,
             ...(shortcut?{"aria-keyshortcuts":(apple?"Meta+":"Control+")+(i+1)}:{}),
             className:joinClasses("min-h-11 min-w-11 flex-row items-center justify-center gap-2 px-3",
               styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",

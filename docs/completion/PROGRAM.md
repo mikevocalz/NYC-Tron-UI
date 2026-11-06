@@ -38,3 +38,5 @@ Expression editor checkpoint: G-11 provides native text input with completion, r
 P11 implementation checkpoint: all 15 G-series motion controls now have reviewed independent library exports. See [typed node graph](P11-node-graph.md). Native and eight-platform acceptance gates remain open; the full program is not complete.
 
 P11 native checkpoint: typed graph and expression scenarios pass twice on iOS and Android; the keyboard dismissal fragment passes once per platform after its documented setup. Compact pane/focus fixes and exact warning limits are recorded in [native motion](P11-native-motion.md). Implementation review remains 66 of 341; full acceptance stays unverified.
+
+P04 workspace checkpoint: A-01 through A-04 now have reviewed document/revision ownership, preset workflows, fold-aware docking and accessible resizing. [Workspace report](P04-workspace-shell.md) records 803 source and 548 browser checks plus two iOS replays. Review count is 70 of 341; P04 and all-platform acceptance remain open.

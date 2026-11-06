@@ -9,6 +9,11 @@ export interface WorkspaceDocument {
   readonly dirty?:boolean;
 }
 
+/** Document identity is also the canvas lifetime boundary. */
+export function validateWorkspaceDocument(document:WorkspaceDocument):void {
+ if(typeof document.id!=='string'||!document.id.trim()||document.id.length>256||typeof document.title!=='string'||!document.title.trim()||document.title.length>512||document.dirty!==undefined&&typeof document.dirty!=='boolean')throw new TypeError('Invalid workspace document identity or title');
+}
+
 /**
  * One editing mode of a {@linkcode WorkspaceHost}, such as edit, color, audio,
  * review or presentation. A mode is a panel set plus the layout it starts in.
@@ -36,22 +41,23 @@ export function validateWorkspace(
   modes:readonly WorkspaceMode[],layouts:Readonly<Record<string,DockLayout>>,panelIds:readonly string[],
 ):void{
   if(!modes.length)throw new TypeError("A workspace needs at least one mode");
+  if(modes.length>32||panelIds.length>256||new Set(panelIds).size!==panelIds.length)throw new RangeError("Workspace mode/panel identities exceed their budget or repeat");
   const seen=new Set<string>();
   const known=new Set(panelIds);
   for(const mode of modes){
-    if(typeof mode.id!=="string"||!mode.id||seen.has(mode.id))throw new TypeError("Duplicate or missing mode id");
-    if(typeof mode.label!=="string"||!mode.label.trim())throw new TypeError(`Mode ${mode.id} needs a label`);
+    if(typeof mode.id!=="string"||!mode.id.trim()||mode.id.length>256||seen.has(mode.id))throw new TypeError("Duplicate or missing mode id");
+    if(typeof mode.label!=="string"||!mode.label.trim()||mode.label.length>512)throw new TypeError(`Mode ${mode.id} needs a label`);
     seen.add(mode.id);
     for(const id of mode.panels)if(!known.has(id))throw new TypeError(`Mode ${mode.id} names unknown panel ${id}`);
     validateDockLayout(mode.defaultLayout,mode.panels);
-    const stored=layouts[mode.id];
+    const stored=Object.hasOwn(layouts,mode.id)?layouts[mode.id]:undefined;
     if(stored)validateDockLayout(stored,mode.panels);
   }
 }
 
 /** The layout a mode shows: the host's stored one, else the mode's default. */
 export function layoutForMode(mode:WorkspaceMode,layouts:Readonly<Record<string,DockLayout>>):DockLayout{
-  return layouts[mode.id]??mode.defaultLayout;
+  return (Object.hasOwn(layouts,mode.id)?layouts[mode.id]:undefined)??mode.defaultLayout;
 }
 
 /** The modifier and key fields {@linkcode modeShortcutIndex} reads from a keydown. */

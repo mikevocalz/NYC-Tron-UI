@@ -1,5 +1,5 @@
 import {useId,useMemo,useRef,useLayoutEffect,type ComponentRef} from 'react';
-import {FlatList,Text,TextInput,View,Platform,type ViewProps} from 'react-native';
+import {FlatList,Text,TextInput,View,Platform,type ViewProps,type StyleProp,type TextStyle} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
@@ -13,12 +13,14 @@ export interface ExpressionEditorProps extends Omit<ViewProps,'children'> {
  readonly onComplete:(query:ExpressionQuery,signal:AbortSignal)=>readonly ExpressionCompletion[]|Promise<readonly ExpressionCompletion[]>;
  readonly onValidate:(text:string,signal:AbortSignal)=>readonly ExpressionDiagnostic[]|Promise<readonly ExpressionDiagnostic[]>;
  readonly onApply:(text:string,signal:AbortSignal)=>void|Promise<void>;
+ /** Host-authored text, font, border and density overrides for the native source input. */
+ readonly inputClassName?:string;readonly inputStyle?:StyleProp<TextStyle>;
  readonly height?:number;readonly disabled?:boolean;readonly unstyled?:boolean;
 }
 /** Native code text input with explicit, cancellable host language services. This component never evaluates code. */
 export function ExpressionEditor(props:ExpressionEditorProps){validateExpressionText(props.value);useMemo(()=>validateExpressionReferences(props.references),[props.references]);if(!props.scope.trim()||typeof props.revision==='number'&&!Number.isFinite(props.revision)||!Number.isFinite(props.height??320)||(props.height??320)<80||(props.height??320)>4000)throw new RangeError('Invalid expression document or viewport');return <Editor key={props.scope} {...props}/>;}
 interface Local {focused:boolean;section:string;selection:ExpressionRange;requested:ExpressionRange|null;completion:{key:string;items:readonly ExpressionCompletion[]}|null;validation:{key:string;items:readonly ExpressionDiagnostic[]}|null}
-function Editor({scope,revision,value,onChange,references,onComplete,onValidate,onApply,height=320,disabled=false,unstyled=false,...props}:ExpressionEditorProps){
+function Editor({scope,revision,value,onChange,references,onComplete,onValidate,onApply,height=320,disabled=false,unstyled=false,inputClassName,inputStyle,...props}:ExpressionEditorProps){
  const input=useRef<ComponentRef<typeof TextInput>|null>(null),id=useId();
  const [local,store]=useLocalStore<Local>(()=>({focused:false,section:'editor',selection:{start:value.length,end:value.length},requested:null,completion:null,validation:null}));
  const range=validSelection(value,local.selection),identity=JSON.stringify([scope,revision,value]),completionIdentity=JSON.stringify([identity,range]);
@@ -38,7 +40,7 @@ function Editor({scope,revision,value,onChange,references,onComplete,onValidate,
     onFocus={()=>store.set(s=>({...s,focused:true}))} onBlur={()=>store.set(s=>({...s,focused:false}))}
     onChangeText={text=>{if(locked)return;validateExpressionText(text);store.set(s=>({...s,requested:null,completion:null}));onChange(text);}}
     onSelectionChange={event=>{const next=validSelection(value,event.nativeEvent.selection);store.set(s=>({...s,selection:next,requested:null}));}}
-    style={{height,minHeight:80,borderWidth:1,padding:8,fontFamily:'monospace'}} {...{className:joinClasses(!unstyled&&'text-text border-border rounded-control')}}/>
+    style={[{height,minHeight:80,padding:8},inputStyle]} {...{className:joinClasses(!unstyled&&'text-text border border-border rounded-control',inputClassName)}}/>
    <Button title="Complete" accessibilityLabel="Complete expression" disabled={locked||completion.pending!==null} unstyled={unstyled} onPress={complete}/>
   </View>:null}
   {local.section==='completions'?<FlatList data={items} keyExtractor={item=>item.id} style={{height}} initialNumToRender={4} windowSize={3} accessibilityLabel="Expression completions" ListEmptyComponent={<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>No completion results for this caret</Text>} renderItem={({item})=><View style={{gap:2}}><Button title={item.label} accessibilityLabel={`Insert completion ${item.label}`} disabled={locked} unstyled={unstyled} onPress={()=>insert(item.range,item.insertText)}/>{item.detail?<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{item.detail}</Text>:null}</View>}/>:null}

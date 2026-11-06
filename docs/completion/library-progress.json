@@ -22,9 +22,13 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/WorkspaceHost.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "One document and multiple editing modes with persistent panels."
+      "requirement": "One document and multiple editing modes with persistent panels.",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
     },
     {
       "id": "A-02",
@@ -34,9 +38,13 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/WorkspacePresetSwitcher.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Edit, color, audio, review, presentation, and custom layouts."
+      "requirement": "Edit, color, audio, review, presentation, and custom layouts.",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
     },
     {
       "id": "A-03",
@@ -46,9 +54,13 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/AdaptiveDock.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Left/right/bottom panes and floating/stacked dock targets."
+      "requirement": "Left/right/bottom panes and floating/stacked dock targets.",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
     },
     {
       "id": "A-04",
@@ -58,9 +70,13 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/PaneSplitter.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Resizable boundaries, safe minimums, and hinge awareness."
+      "requirement": "Resizable boundaries, safe minimums, and hinge awareness.",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
     },
     {
       "id": "A-05",
