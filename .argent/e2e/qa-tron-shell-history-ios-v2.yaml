@@ -1,0 +1,45 @@
+steps:
+  - echo: Restart the deterministic library consumer; prove Assets and cursor 2 before editing history.
+  - launch: com.nyctron.instruments.example
+  - await:
+      visible:
+        text: Search assets
+      timeout: 15000
+  - await:
+      idle: true
+  - await:
+      text:
+        in:
+          text: Consumer document state
+        contains: '"cursor":2'
+  - echo: Select History; expect the initial-state restore and undo controls.
+  - tap:
+      text: History
+  - await:
+      visible:
+        text: Restore initial state
+  - await:
+      idle: true
+  - echo: Undo the last history entry; expect cursor 1.
+  - tap:
+      text: Undo
+  - await:
+      text:
+        in:
+          text: Consumer document state
+        contains: '"cursor":1'
+  - echo: Redo restores cursor 2, then direct initial restore returns to cursor 0.
+  - tap:
+      text: Redo
+  - await:
+      text:
+        in:
+          text: Consumer document state
+        contains: '"cursor":2'
+  - tap:
+      text: Restore initial state
+  - await:
+      text:
+        in:
+          text: Consumer document state
+        contains: '"cursor":0'
