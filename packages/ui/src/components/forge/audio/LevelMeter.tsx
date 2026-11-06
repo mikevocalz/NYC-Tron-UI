@@ -1,3 +1,4 @@
+import {valueAccessibility} from "../value-a11y.ts";
 import { useEffect, useRef } from "react";
 import { View, type ViewProps } from "react-native";
 import { announce as speak } from "../announce.ts";
@@ -71,7 +72,7 @@ export function LevelMeter({
     accessible
     accessibilityRole="progressbar"
     accessibilityLabel={props.accessibilityLabel ?? "Input level"}
-    accessibilityValue={{ min: 0, max: 100, now: Math.round(fill * 100), text: bandLabels[band] }}
+    {...valueAccessibility({ min: 0, max: 100, now: Math.round(fill * 100), text: bandLabels[band] })}
   >
     <View
       {...{ className: joinClasses(!unstyled && (clipping ? "bg-danger" : "bg-accent"),

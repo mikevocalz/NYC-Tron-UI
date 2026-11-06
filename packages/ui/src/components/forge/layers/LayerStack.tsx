@@ -6,6 +6,7 @@ import {cancelPreview} from "../cancel-preview.ts";
 import {joinClasses} from "../../styles.ts";
 import {AnchoredPopover} from "../../overlays/AnchoredPopover.tsx";
 import {PrecisionScrubber} from "../inputs/PrecisionScrubber.tsx";
+import {ClipIndicator} from "./ClippingMaskControls.tsx";
 import {
  LAYER_NAME_MIN_WIDTH,LAYER_OPACITY_READOUT_WIDTH,LAYER_OPACITY_SLIDER_WIDTH,LAYER_THUMBNAIL_SIZE,LAYER_TOUCH_TARGET,
  dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerDetail,layerOpacityMode,normalizeOpacity,opacityFromDrag,
@@ -260,6 +261,7 @@ function LayerStackRow(props:RowProps){
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
    <VisibilityGlyph visible={layer.visible} styled={styled}/>
   </Pressable>
+  {layer.clippedTo?<ClipIndicator unstyled={!styled}/>:null}
   {layer.thumbnail?<Thumbnail thumbnail={layer.thumbnail} styled={styled} dimmed={!layer.visible}/>
    :props.thumbnailSlot?<View pointerEvents="none" style={{width:LAYER_THUMBNAIL_SIZE,marginEnd:4}}/>:null}
   {/* The name keeps 96pt beside the slider. With the readout it may shrink as a last resort, so remove never clips. */}

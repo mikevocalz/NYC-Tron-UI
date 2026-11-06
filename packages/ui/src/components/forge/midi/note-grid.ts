@@ -17,6 +17,12 @@ export interface MidiNote {
   readonly startTicks: number;
   /** Ticks > 0; start + length never passes the clip end. */
   readonly lengthTicks: number;
+  /**
+   * MIDI channel, 0..15 (people read it as 1..16; see
+   * {@linkcode channelLabel}). Left out, the engine plays the note on
+   * channel 0.
+   */
+  readonly channel?: number;
 }
 
 /** The visible pitch window and time scale of a piano roll. */
@@ -168,12 +174,43 @@ export function noteKeyEdit(n: MidiNote, key: string, shift: boolean, g: NoteGri
   return { kind: "move", startTicks, pitch };
 }
 
-/** Spoken description of a note, e.g. `"C4, beat 2, 1 beat long, velocity 100"`. */
-export function describeNote(n: MidiNote, ppq: number): string {
+/**
+ * Spoken description of a note, e.g. `"C4, beat 2, 1 beat long, velocity 100"`.
+ * With `withChannel`, appends `", channel 3"` (see {@linkcode channelLabel}).
+ */
+export function describeNote(n: MidiNote, ppq: number, withChannel = false): string {
   const beat = n.startTicks / ppq + 1;
   const beats = n.lengthTicks / ppq;
   const fmt = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(2));
-  return `${pitchName(n.pitch)}, beat ${fmt(beat)}, ${fmt(beats)} ${beats === 1 ? "beat" : "beats"} long, velocity ${n.velocity}`;
+  const base = `${pitchName(n.pitch)}, beat ${fmt(beat)}, ${fmt(beats)} ${beats === 1 ? "beat" : "beats"} long, velocity ${n.velocity}`;
+  return withChannel ? `${base}, ${channelLabel(n.channel ?? 0).toLowerCase()}` : base;
+}
+
+// ---------------------------------------------------------------------------
+// Channel
+// ---------------------------------------------------------------------------
+
+/** Highest MIDI channel, zero-based. */
+export const MAX_MIDI_CHANNEL = 15;
+
+/** True for an integer 0..15. */
+export function isMidiChannel(channel: number): boolean {
+  return Number.isInteger(channel) && channel >= 0 && channel <= MAX_MIDI_CHANNEL;
+}
+
+/** `"Channel 1"` for 0, `"Channel 16"` for 15: the one-based number people use. */
+export function channelLabel(channel: number): string {
+  if (!isMidiChannel(channel)) throw new RangeError("MIDI channel must be 0..15");
+  return `Channel ${channel + 1}`;
+}
+
+/**
+ * True when the notes play on more than one channel (a note without
+ * `channel` counts as channel 0). A roll names channels only then.
+ */
+export function usesSeveralChannels(notes: readonly MidiNote[]): boolean {
+  const first = notes[0]?.channel ?? 0;
+  return notes.some(n => (n.channel ?? 0) !== first);
 }
 
 // ---------------------------------------------------------------------------

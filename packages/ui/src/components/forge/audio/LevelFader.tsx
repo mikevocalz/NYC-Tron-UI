@@ -1,3 +1,4 @@
+import {valueAccessibility} from "../value-a11y.ts";
 import { useRef } from "react";
 import {
   I18nManager, PanResponder, Platform, Pressable, Text, View,
@@ -213,7 +214,7 @@ export function LevelFader({
     <View {...responder.current.panHandlers}
       accessible focusable={!disabled} accessibilityRole="adjustable"
       accessibilityLabel={label}
-      accessibilityValue={{ min: 0, max: 100, now: Math.round(position * 100), text: readout }}
+      {...valueAccessibility({ min: 0, max: 100, now: Math.round(position * 100), text: readout })}
       accessibilityState={{ disabled }}
       accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
       onAccessibilityAction={e => {

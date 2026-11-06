@@ -1,3 +1,4 @@
+import {importSpecifiers} from "./import-specifiers.mjs";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
@@ -15,7 +16,7 @@ const fail=message=>failures.push(message);
 const conditionExtension={types:".d.ts","react-native":".js",default:".js"};
 
 const bareName=spec=>spec.startsWith("@")?spec.split("/").slice(0,2).join("/"):spec.split("/")[0];
-const importSpecifiers=text=>[...text.matchAll(/(?:^|[\s;])(?:import|export)\s*(?:[^"';]*?\sfrom\s*)?["']([^"']+)["']/g)].map(m=>m[1]);
+
 
 // Names exported by a compiled .js or .d.ts file, following `export * from`.
 // Relative .ts/.tsx specifiers in declarations map to the sibling .d.ts.

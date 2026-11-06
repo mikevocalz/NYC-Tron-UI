@@ -135,3 +135,13 @@ light and dark plus RTL.
 
 Not covered: iOS/Android rendering, native drag and drop, Uniwind itself, the GestureHandlerDrag transport, screen
 readers, Safari and Firefox.
+
+`fixtures/timeline2.tsx` renders the second timeline cluster with controlled
+Zustand state and a seconds-based engine stand-in. `timeline2.spec.mjs` covers
+rename commit-once with a delayed response, marker drafts and Escape, slip and
+locked-track refusal, loop drag/cancel, transition application, marker creation,
+batch transactions and compact LTR/RTL track settings. `timeline2-shots.spec.mjs`
+writes 13 light/dark phone/tablet and RTL review captures. Actual Rust handoff
+is checked in Forge's Splice tests, not by this browser stand-in.
+
+`workspace5` covers workspace canvas identity, mode/preset changes, contextual overflow, file transfer settings/picking, color dialog preview/commit and presenter ink gestures. Its stand-in Zustand host is separate from Forge's real-engine tests. The server resolves `.web` siblings before generic files so Expo's gradient implementation is the actual web renderer. Captures wait for modal fades to settle.

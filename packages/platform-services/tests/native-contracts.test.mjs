@@ -19,7 +19,8 @@ const modules=[[HAPTICS_MODULE_NAME,"NYCTronHapticsModule"],[DOCUMENTS_MODULE_NA
 
 test("expo-module.config.json autolinks both platforms; android stays off the legacy list",()=>{
   assert.deepEqual(config.platforms,["apple","android"]);
-  assert.deepEqual(config.apple.modules,modules.map(m=>m[1]));
+  assert.deepEqual(config.apple.modules,[...modules.map(m=>m[1]),"NYCTronMediaDecoderModule"]);
+  assert.match(read("ios/NYCTronMediaDecoderModule.swift"),/@ExpoModule\("NYCTronMediaDecoder"\)/);
   assert.equal(config.android?.modules,undefined);
   assert.match(read("android/build.gradle"),/expoModule\s*\{[^}]*\bv2 true\b/);
 });

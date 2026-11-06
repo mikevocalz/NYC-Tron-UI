@@ -4,6 +4,12 @@ import type {GestureResponderEvent,PanResponderCallbacks} from "react-native";
 export interface LocalPoint {
   readonly x:number;
   readonly y:number;
+  /**
+   * Touch or stylus force 0..1 when the platform reports one (iOS touches and
+   * Apple Pencil, Android styluses). Absent for mice and for touch screens
+   * that report no force.
+   */
+  readonly pressure?:number;
 }
 /**
  * Callbacks for {@linkcode localPointerConfig}. Unlike `DragTransport`, which reports
@@ -27,6 +33,9 @@ export interface LocalPointerHandlers {
 }
 
 type Latest={readonly current:LocalPointerHandlers};
+
+const withForce=(point:{x:number;y:number},force:number|undefined):LocalPoint=>
+  typeof force==="number"&&Number.isFinite(force)&&force>0?{...point,pressure:Math.min(1,force)}:point;
 type Touch={readonly pageX:number;readonly pageY:number};
 
 /**
@@ -40,7 +49,7 @@ export function localPointerConfig(latest:Latest):PanResponderCallbacks{
   let origin={x:0,y:0,pageX:0,pageY:0};
   let pinch:{distance:number}|undefined;
   let live=false;
-  const local=(pageX:number,pageY:number):LocalPoint=>({x:origin.x+pageX-origin.pageX,y:origin.y+pageY-origin.pageY});
+  const local=(pageX:number,pageY:number,force?:number):LocalPoint=>withForce({x:origin.x+pageX-origin.pageX,y:origin.y+pageY-origin.pageY},force);
   const touchesOf=(event:GestureResponderEvent):readonly Touch[]=>event.nativeEvent.touches??[];
   const end=()=>{live=false;pinch=undefined;};
   return {
@@ -51,7 +60,7 @@ export function localPointerConfig(latest:Latest):PanResponderCallbacks{
       origin={x:n.locationX,y:n.locationY,pageX:n.pageX,pageY:n.pageY};
       pinch=undefined;
       live=true;
-      latest.current.onBegin({x:n.locationX,y:n.locationY});
+      latest.current.onBegin(withForce({x:n.locationX,y:n.locationY},n.force));
     },
     onPanResponderMove:event=>{
       if(!live)return;
@@ -70,7 +79,7 @@ export function localPointerConfig(latest:Latest):PanResponderCallbacks{
         return;
       }
       if(pinch)return;
-      latest.current.onMove(local(event.nativeEvent.pageX,event.nativeEvent.pageY));
+      latest.current.onMove(local(event.nativeEvent.pageX,event.nativeEvent.pageY,event.nativeEvent.force));
     },
     onPanResponderRelease:event=>{
       if(!live)return;

@@ -24,8 +24,9 @@ export interface RazorSplitToolProps extends Omit<ViewProps,"children"> {
  * Razor controls (D-20): a toggle that turns clip presses in
  * `TimelineClipLane` into splits at the pressed frame, and Split at playhead
  * for the selected clip. The button is disabled, with the reason spoken and
- * shown, unless a selected clip spans the playhead. Ripple edits are not
- * offered: the engine has no ripple operation yet.
+ * shown, unless a selected clip spans the playhead. Ripple edits live in
+ * `RollSlipSlideControls` (ripple trim) and `DragReorderAndRipple` (ripple
+ * delete).
  */
 export function RazorSplitTool({
   tool,onToolChange,tracks,selectedClipId,playheadFrame,rate,onEdit,disabled=false,className,unstyled=false,testID,style,...rest

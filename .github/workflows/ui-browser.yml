@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
+      - name: Install workspace optional peers used by the fixtures
+        working-directory: .
+        run: corepack enable && corepack pnpm install --frozen-lockfile --ignore-scripts
       - name: Install isolated browser test dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Chromium

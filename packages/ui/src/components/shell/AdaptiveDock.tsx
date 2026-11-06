@@ -31,8 +31,14 @@ export interface AdaptiveDockProps extends Omit<ViewProps,"children"> {
   layout:DockLayout;
   /** Every move, resize, tab switch, float and close proposes a whole new layout. */
   onLayoutChange:(next:DockLayout)=>void;
-  /** The document workspace in the middle. */
+  /**
+   * The document workspace in the middle. It stays mounted while docks open,
+   * close, move or collapse into the compact stack, so a canvas keeps its
+   * state across layout changes.
+   */
   children:ReactNode;
+  /** Accessible name of the workspace region. @default "Workspace" */
+  workspaceLabel?:string;
   /** Window-space fold features. Dividers seat on hinges instead of resting on them. */
   features?:readonly FoldFeature[];
   /** Dock-local regions that floating panels must stay inside (one per screen on a foldable). */
@@ -47,7 +53,7 @@ export interface AdaptiveDockProps extends Omit<ViewProps,"children"> {
 }
 
 type Drag={id:string;origin:DragPoint|undefined;from:Rect2D;rect:Rect2D;target:DockTarget|undefined};
-type Local={width:number;height:number;window:Rect2D|undefined;drag:Drag|undefined};
+type Local={width:number;height:number;window:Rect2D|undefined;drag:Drag|undefined;slot:Rect2D|undefined};
 const EDGE_NAME:Record<DockTarget,string>={left:"left dock",right:"right dock",bottom:"bottom dock",floating:"floating window"};
 const MIN_EDGE=160,MIN_WORKSPACE=200;
 
@@ -61,17 +67,19 @@ const MIN_EDGE=160,MIN_WORKSPACE=200;
  * `compactBelow` every panel joins a single stack under the workspace.
  */
 export function AdaptiveDock({
-  panels,layout,onLayoutChange,children,features,usableRegions,compactBelow=600,defaults,isRTL=false,
+  panels,layout,onLayoutChange,children,workspaceLabel="Workspace",features,usableRegions,compactBelow=600,defaults,isRTL=false,
   className,unstyled=false,style,onLayout,...rest
 }:AdaptiveDockProps){
   validateDockLayout(layout,panels.map(p=>p.id));
   const local=useRef<StoreApi<Local>|null>(null);
-  if(!local.current)local.current=createStore<Local>(()=>({width:0,height:0,window:undefined,drag:undefined}));
+  if(!local.current)local.current=createStore<Local>(()=>({width:0,height:0,window:undefined,drag:undefined,slot:undefined}));
   const store=local.current;
   const width=useStore(store,s=>s.width);
   const height=useStore(store,s=>s.height);
   const drag=useStore(store,s=>s.drag);
+  const slot=useStore(store,s=>s.slot);
   const host=useRef<ComponentRef<typeof View>>(null);
+  const workspaceSlot=useRef<ComponentRef<typeof View>>(null);
   const byId=new Map(panels.map(p=>[p.id,p]));
   const resolved:DockDefaults={
     edgeSize:defaults?.edgeSize??280,
@@ -84,10 +92,24 @@ export function AdaptiveDock({
   const dir={direction:isRTL?"rtl":"ltr"} as const;
   const compact=width>0&&width<compactBelow;
 
+  // The workspace renders once, in a layer over an empty slot inside the
+  // splitters. Opening or closing a dock changes how the splitters nest, which
+  // would remount anything rendered inside them; the layer never moves in the
+  // tree, so the document canvas keeps its state.
+  const measureSlot=()=>{
+    const node=workspaceSlot.current;
+    host.current?.measureInWindow?.((hx,hy)=>node?.measureInWindow?.((x,y,w,h)=>{
+      if(![x,y,w,h,hx,hy].every(Number.isFinite))return;
+      const next={x:x-hx,y:y-hy,width:w,height:h};
+      const prev=store.getState().slot;
+      if(!prev||prev.x!==next.x||prev.y!==next.y||prev.width!==next.width||prev.height!==next.height)store.setState({slot:next});
+    }));
+  };
   const onHostLayout=(event:LayoutChangeEvent)=>{
     const {width:w,height:h}=event.nativeEvent.layout;
     store.setState({width:w,height:h});
     host.current?.measureInWindow?.((x,y,mw,mh)=>store.setState({window:{x,y,width:mw,height:mh}}));
+    measureSlot();
     onLayout?.(event);
   };
 
@@ -118,7 +140,7 @@ export function AdaptiveDock({
       edge[0]!.toUpperCase()+edge.slice(1)+" dock panels");
   };
   const resize=(edge:DockEdge)=>(size:number)=>change(resizeStack(latest.current.layout,edge,size));
-  const workspace=<View style={{flex:1,...dir}} accessibilityLabel="Workspace">{children}</View>;
+  const workspace=<View ref={workspaceSlot} pointerEvents="none" style={{flex:1}} onLayout={measureSlot}/>;
 
   let body:ReactNode;
   if(compact){
@@ -176,6 +198,9 @@ export function AdaptiveDock({
   return <View {...rest} ref={host} onLayout={onHostLayout}
     {...{className:joinClasses("min-h-0 min-w-0",className)}} style={[{flex:1,direction:"ltr"},style]}>
     {width>0?body:null}
+    <View accessibilityLabel={workspaceLabel} {...{role:"region"}}
+      style={{position:"absolute",left:slot?.x??0,top:slot?.y??0,width:slot?.width??0,height:slot?.height??0,
+        overflow:"hidden",...dir}}>{children}</View>
     {!compact?layout.floating.map(f=>{
       const panel=byId.get(f.id)!;
       const rect=drag?.id===f.id?drag.rect:f.rect;

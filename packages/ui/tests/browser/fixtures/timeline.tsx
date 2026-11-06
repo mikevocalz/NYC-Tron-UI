@@ -71,6 +71,7 @@ function apply(edit:TimelineEdit){
   const id=Number(edit.clipId);
   if(edit.kind==="move")engine.moveClip(id,edit.startSeconds);
   else if(edit.kind==="split")engine.splitClip(id,edit.atSeconds);
+  else if(edit.kind!=="trim")throw new Error(edit.kind+" is not wired in this fixture");
   else if(edit.order==="trim-only")engine.trimClip(id,edit.inSeconds,edit.outSeconds);
   else if(edit.order==="trim-then-move"){engine.trimClip(id,edit.inSeconds,edit.outSeconds);engine.moveClip(id,edit.startSeconds);}
   else{engine.moveClip(id,edit.startSeconds);engine.trimClip(id,edit.inSeconds,edit.outSeconds);}

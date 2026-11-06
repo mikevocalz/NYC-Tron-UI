@@ -8,8 +8,9 @@ import { useStore } from "zustand";
 import { joinClasses } from "../../styles.ts";
 import {
   assertGrid, cellAt, describeNote, dragNote, dragNoteEnd, gridSize, isSharp, noteKeyEdit, noteRect,
-  pitchName, visiblePitches, type MidiNote, type NoteGrid,
+  pitchName, usesSeveralChannels, visiblePitches, type MidiNote, type NoteGrid,
 } from "./note-grid.ts";
+import { MidiChannelPicker } from "./MidiChannelPicker.tsx";
 
 const HIT = 44;
 /** Width of the keyboard column; a {@linkcode MIDIVelocityLane} below insets by it. */
@@ -63,6 +64,13 @@ export interface MIDIPianoRollProps extends Omit<ViewProps, "children"> {
    * can follow it (see `MIDIVelocityLane.scrollX`).
    */
   readonly onScrollX?: (x: number) => void;
+  /**
+   * Set the selected note's MIDI channel (0..15), once per press or key; maps
+   * onto the Cadence `setNoteChannel` op. Giving it shows a channel stepper
+   * above the grid while a note is selected. A note without `channel` shows
+   * as channel 1 (zero-based 0), which is where the engine plays it.
+   */
+  readonly onNoteChannel?: (index: number, channel: number) => void | Promise<unknown>;
   /** @default false */
   readonly disabled?: boolean;
   /** Accessible name. @default "Piano roll" */
@@ -81,13 +89,16 @@ export interface MIDIPianoRollProps extends Omit<ViewProps, "children"> {
  * Musical time runs left to right in every locale (as in notation and in
  * the engine), so the grid never mirrors for right-to-left layouts.
  *
+ * Note labels name the channel ("…, channel 10") only when the clip's
+ * notes use more than one channel.
+ *
  * Notes are plain views. This holds for a clip of a few hundred notes; a
  * dense arrangement view needs the Skia renderer, which is not verified yet.
  */
 export function MIDIPianoRoll({
   notes, clipTicks, ppq = 960, beatsPerBar = 4, lowestPitch = 48, highestPitch = 72,
   snapTicks, pixelsPerTick = 0.1, rowHeight = 44, height = 352, selectedIndex, onSelect,
-  onNoteMove, onNoteResize, onNoteAdd, onNoteRemove, onAudition, onScrollX, disabled = false, label = "Piano roll",
+  onNoteMove, onNoteResize, onNoteAdd, onNoteRemove, onAudition, onScrollX, onNoteChannel, disabled = false, label = "Piano roll",
   className, unstyled = false, ...rest
 }: MIDIPianoRollProps) {
   const grid: NoteGrid = {
@@ -124,8 +135,20 @@ export function MIDIPianoRoll({
     if (cell) void onNoteAdd(cell.startTicks, cell.lengthTicks, cell.pitch);
   };
 
+  const withChannel = usesSeveralChannels(notes);
+  const picked = selectedIndex !== undefined ? notes[selectedIndex] : undefined;
   return <View {...rest} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised overflow-hidden", className) }}>
+    {onNoteChannel && picked ? <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", columnGap: 12, rowGap: 4,
+        paddingHorizontal: 8, paddingVertical: 6 }}
+      {...{ className: joinClasses(styled && "border-b border-border") }}>
+      <Text {...{ className: joinClasses(styled && "text-text font-semibold") }} style={{ fontVariant: ["tabular-nums"] }}>
+        {pitchName(picked.pitch) + ", note " + (selectedIndex! + 1)}
+      </Text>
+      <MidiChannelPicker channel={picked.channel ?? 0} disabled={disabled} unstyled={unstyled}
+        label={"MIDI channel of " + pitchName(picked.pitch) + " note " + (selectedIndex! + 1)}
+        onChannelCommit={channel => onNoteChannel(selectedIndex!, channel)} />
+    </View> : null}
     <ScrollView ref={rowsScroll} style={{ height }} nestedScrollEnabled onLayout={onRowsLayout}>
       <View style={{ flexDirection: "row", direction: "ltr" }}>
         <View style={{ width: KEY_COLUMN }}>
@@ -159,7 +182,7 @@ export function MIDIPianoRoll({
                 style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: 2 }} />
             </Pressable>
             {notes.map((note, index) => noteRect(note, grid)
-              ? <NoteBox key={index} index={index} note={note} grid={grid} ppq={ppq}
+              ? <NoteBox key={index} index={index} note={note} grid={grid} ppq={ppq} withChannel={withChannel}
                   selected={index === selectedIndex} disabled={disabled} styled={styled}
                   onSelect={onSelect} onMove={onNoteMove} onResize={onNoteResize} onRemove={onNoteRemove} />
               : null)}
@@ -177,6 +200,8 @@ interface NoteBoxProps {
   readonly note: MidiNote;
   readonly grid: NoteGrid;
   readonly ppq: number;
+  /** Name the channel in the accessible label. */
+  readonly withChannel: boolean;
   readonly selected: boolean;
   readonly disabled: boolean;
   readonly styled: boolean;
@@ -187,7 +212,7 @@ interface NoteBoxProps {
 }
 
 /** One draggable note. Holds only the in-flight preview; the note itself is a prop. */
-function NoteBox({ index, note, grid, ppq, selected, disabled, styled, onSelect, onMove, onResize, onRemove }: NoteBoxProps) {
+function NoteBox({ index, note, grid, ppq, withChannel, selected, disabled, styled, onSelect, onMove, onResize, onRemove }: NoteBoxProps) {
   const latest = useRef({ index, note, grid, disabled, onSelect, onMove, onResize, onRemove });
   latest.current = { index, note, grid, disabled, onSelect, onMove, onResize, onRemove };
   const local = useRef<StoreApi<Drag> | null>(null);
@@ -268,7 +293,7 @@ function NoteBox({ index, note, grid, ppq, selected, disabled, styled, onSelect,
   const noSelect = Platform.OS === "web" ? { userSelect: "none", touchAction: "none", cursor: "grab" } as unknown as ViewStyle : undefined;
   return <View {...body.current.panHandlers}
     accessible focusable={!disabled} accessibilityRole="button"
-    accessibilityLabel={describeNote(note, ppq)}
+    accessibilityLabel={describeNote(note, ppq, withChannel)}
     accessibilityState={{ selected, disabled }}
     accessibilityActions={[
       { name: "moveEarlier", label: "Move earlier" }, { name: "moveLater", label: "Move later" },

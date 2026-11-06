@@ -1,6 +1,6 @@
 import {build} from "esbuild";
 import {execFileSync} from "node:child_process";
-import {readdirSync} from "node:fs";
+import {readdirSync,readFileSync} from "node:fs";
 import {createServer} from "node:http";
 import {dirname,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
@@ -13,6 +13,8 @@ const fixtures=[["spreadsheet",resolve(here,"spreadsheet.tsx")],["",resolve(here
   ...readdirSync(resolve(here,"fixtures")).filter(f=>f.endsWith(".tsx")).map(f=>[f.slice(0,-4),resolve(here,"fixtures",f)])];
 const bundleOf=entry=>build({entryPoints:[entry],bundle:true,write:false,
   format:"iife",jsx:"automatic",platform:"browser",
+  // Match web-aware consumers when a package ships platform file siblings.
+  resolveExtensions:[".web.tsx",".web.ts",".web.jsx",".web.js",".tsx",".ts",".jsx",".js",".json"],
   // Pin one React and one zustand: the component sources sit in packages/ui,
   // whose own node_modules (after a workspace install) would otherwise win.
   alias:{"react-native":resolve(here,"rn-shim.tsx"),
@@ -30,7 +32,8 @@ const doc=script=>'<!doctype html><html><head><meta charset="utf-8"><meta name="
 createServer((req,res)=>{
   const path=(req.url??"/").split("?")[0];
   const name=path.slice(1);
-  if(path==="/bundle.js"){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(bundles.get(""));}
+  if(path==="/decoder.webm"){res.writeHead(200,{"Content-Type":"video/webm"});res.end(readFileSync(resolve(here,"../../../platform-services/tests/fixtures/decoder.webm")));}
+  else if(path==="/bundle.js"){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(bundles.get(""));}
   else if(name.endsWith(".js")&&bundles.has(name.slice(0,-3))){res.writeHead(200,{"Content-Type":"text/javascript"});res.end(bundles.get(name.slice(0,-3)));}
   else if(path==="/theme.css"){res.writeHead(200,{"Content-Type":"text/css"});res.end(css);}
   else if(bundles.has(name)){res.writeHead(200,{"Content-Type":"text/html"});res.end(doc(name?"/"+name+".js":"/bundle.js"));}
