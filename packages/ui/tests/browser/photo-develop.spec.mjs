@@ -23,3 +23,8 @@ test('changing photos cancels pending paste and discards late completion',async(
 test('lens values stay disabled until enabled and profile identity is retained',async({page})=>{
  await page.goto('/photo-develop');await expect(page.getByRole('textbox',{name:'Lens distortion',exact:true})).toBeDisabled();await page.getByRole('switch',{name:'Enable lens corrections',exact:true}).click();await enter(page,'Lens distortion','-17');await page.getByRole('switch',{name:'Remove chromatic aberration',exact:true}).click();const s=await state(page);expect(s.value.lens).toEqual({enabled:true,profileId:null,distortion:-17,chromaticAberration:true});
 });
+
+
+test('switching photos discards a numeric draft before its old field can blur',async({page})=>{
+ await page.goto('/photo-develop');const field=page.getByRole('textbox',{name:'Exposure EV',exact:true});await field.fill('4.5');await page.getByRole('button',{name:'Switch photo',exact:true}).evaluate(button=>button.click());await page.getByRole('textbox',{name:'Exposure EV',exact:true}).blur();const s=await state(page);expect(s.photoId).toBe('portrait');expect(s.value.exposure.exposure).toBe(0);expect(s.commits).toBe(0);
+});

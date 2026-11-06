@@ -1794,6 +1794,31 @@
       "types": "./dist/components/forge/photo/photo-masks.d.ts",
       "react-native": "./dist/components/forge/photo/photo-masks.js",
       "default": "./dist/components/forge/photo/photo-masks.js"
+    },
+    "./components/forge/motion/Transform3DInspector": {
+      "types": "./dist/components/forge/motion/Transform3DInspector.d.ts",
+      "react-native": "./dist/components/forge/motion/Transform3DInspector.js",
+      "default": "./dist/components/forge/motion/Transform3DInspector.js"
+    },
+    "./components/forge/motion/CameraAndLightControls": {
+      "types": "./dist/components/forge/motion/CameraAndLightControls.d.ts",
+      "react-native": "./dist/components/forge/motion/CameraAndLightControls.js",
+      "default": "./dist/components/forge/motion/CameraAndLightControls.js"
+    },
+    "./components/forge/motion/MatteAndMaskPanel": {
+      "types": "./dist/components/forge/motion/MatteAndMaskPanel.d.ts",
+      "react-native": "./dist/components/forge/motion/MatteAndMaskPanel.js",
+      "default": "./dist/components/forge/motion/MatteAndMaskPanel.js"
+    },
+    "./components/forge/motion/ParticleEmitterControls": {
+      "types": "./dist/components/forge/motion/ParticleEmitterControls.d.ts",
+      "react-native": "./dist/components/forge/motion/ParticleEmitterControls.js",
+      "default": "./dist/components/forge/motion/ParticleEmitterControls.js"
+    },
+    "./components/forge/motion/motion-settings": {
+      "types": "./dist/components/forge/motion/motion-settings.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-settings.js",
+      "default": "./dist/components/forge/motion/motion-settings.js"
     }
   },
   "scripts": {

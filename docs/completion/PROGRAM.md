@@ -15,4 +15,14 @@ Required coverage is iOS/iPadOS, Android with tablet/foldable behavior, web, mac
 
 Preserve the existing single component owner, platform-native adapters, app-authored theme/navigation, Zustand/ref ownership, platform metadata, fold/RTL contracts and established app window dimensions/orientation. Use expo-horizon-core for Meta Horizon/Quest application configuration; scene geometry must remain separate from the app window contract. Review exact upstream files, dependency closure and licenses before copying source; retain all existing notices in packed artifacts.
 
-P00 sets up the complete scope and acceptance contract. P01 starts in Forge with the native runtime bootstrap; later UI and platform changes land here as their phases execute. This initial document does not claim that the remaining components are implemented.
+Implementation checkpoints are committed and pushed separately; the canonical ledger retains every requirement and acceptance gate.
+
+| Phase | Reviewed reusable implementations | Evidence |
+| --- | --- | --- |
+| P03 | Decoder/media services checkpoint; remaining native acceptance tracked separately | [Media report](P03-media-services.md) |
+| P04 | Numeric scrub/unit entry, assets, history, find/replace and real status/progress | [Native consumer contract](P19-native-library-contract.md), [Unit input review](P11-motion-settings.md) |
+| P07 | All 27 color controls | [Specification](P07-color-specification.md), [existing controls review](P07-existing-color-review.md), [native P3](P07-native-p3.md) |
+| P10 | All 18 photo controls | [Develop](P10-photo-develop.md), [catalog](P10-photo-catalog.md), [workflows](P10-photo-workflows.md), [masks/native proof](P10-photo-masks.md) |
+| P11 | Transform, camera/light, matte and emitter controls; remaining motion controls open | [Settings](P11-motion-settings.md) |
+
+This table records implementation checkpoints, not complete acceptance across the eight required platforms. Every other canonical component remains in library-progress.json for implementation or source review. Forge integration resumes after NYC-Tron completion.

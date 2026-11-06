@@ -170,9 +170,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/UnitInput.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "px, pt, mm, %, frames, seconds, samples, dB and conversion."
+      "requirement": "px, pt, mm, %, frames, seconds, samples, dB and conversion.",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
     },
     {
       "id": "A-14",
@@ -2477,30 +2480,45 @@
       "name": "Transform3DInspector",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/Transform3DInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Anchor, position, scale, rotations and opacity."
+      "requirement": "Anchor, position, scale, rotations and opacity.",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
     },
     {
       "id": "G-08",
       "name": "CameraAndLightControls",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/CameraAndLightControls.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "3D focal depth, view and lighting properties."
+      "requirement": "3D focal depth, view and lighting properties.",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
     },
     {
       "id": "G-09",
       "name": "MatteAndMaskPanel",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/MatteAndMaskPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Track matte sources, alpha/luma mode and feather."
+      "requirement": "Track matte sources, alpha/luma mode and feather.",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
     },
     {
       "id": "G-10",
@@ -2527,10 +2545,15 @@
       "name": "ParticleEmitterControls",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/ParticleEmitterControls.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Emit rate, life, motion, texture and seed."
+      "requirement": "Emit rate, life, motion, texture and seed.",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
     },
     {
       "id": "G-13",

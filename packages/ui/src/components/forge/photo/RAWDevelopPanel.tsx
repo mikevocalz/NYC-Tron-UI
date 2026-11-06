@@ -32,7 +32,7 @@ export function RAWDevelopPanel({photoId,revision,value,defaults,baseline,profil
  const locked=disabled||action.pending!==null;
  const serialized=serializePhotoDevelop(value);
  const commit=(next:PhotoDevelopSettings)=>{if(locked)return;validatePhotoDevelop(next);if(serializePhotoDevelop(next)!==serialized)onCommit(next);};
- return <View {...props} style={[{gap:16},props.style]}>
+ return <View key={photoId} {...props} style={[{gap:16},props.style]}>
   <Text {...{className:joinClasses(!unstyled&&'text-text')}}>Non-destructive develop settings</Text>
   <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>
    <Button title="Reset develop defaults" disabled={locked||serializePhotoDevelop(defaults)===serialized} unstyled={unstyled} onPress={()=>commit(parsePhotoDevelop(serializePhotoDevelop(defaults)))}/>
