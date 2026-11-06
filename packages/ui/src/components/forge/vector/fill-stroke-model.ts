@@ -33,8 +33,9 @@ export function paintSupport(kind:PaintableKind):PaintSupport{
   switch(kind){
     case "path":return {gradientFill:AVAILABLE,stroke:AVAILABLE,fillRule:AVAILABLE,paintOrder:AVAILABLE};
     case "shape":{
-      const convert=unavailable("Shape layers take a solid fill only. Convert the shape to a path for gradients, strokes and fill rules");
-      return {gradientFill:convert,stroke:convert,fillRule:convert,paintOrder:convert};
+      const convert=unavailable("Shape layers take a solid fill only. Convert the shape to a path for gradients and fill rules");
+      const stroke=unavailable("Convert the shape to a path to add a stroke");
+      return {gradientFill:convert,stroke,fillRule:convert,paintOrder:stroke};
     }
     case "boolean":{
       const fillOnly=unavailable("A boolean has a fill only. Expand it, or stroke its operands");

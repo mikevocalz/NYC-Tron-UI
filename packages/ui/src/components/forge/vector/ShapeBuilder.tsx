@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useEffect,useRef} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -48,6 +48,8 @@ export function ShapeBuilder({
   const store=local.current;
   const notice=useStore(store,s=>s.notice);
   const styled=!unstyled;
+  const contextKey=JSON.stringify([selection.map(l=>[l.id,l.kind,l.parent,l.parentKind,l.locked]),group?.id,group?.locked]);
+  useEffect(()=>{store.setState({notice:undefined});},[contextKey,store]);
   const block=(reason:string)=>store.setState({notice:reason});
   const ok=(run:()=>void)=>()=>{store.setState({notice:undefined});run();};
   const combineReason=availabilityReason(booleanAvailability(selection));

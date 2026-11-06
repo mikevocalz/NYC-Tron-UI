@@ -88,13 +88,13 @@ export function GestureCustomizationPanel({
    <Text {...{className:joinClasses(styled&&"text-xs",styled&&(dirty?"text-text":"text-text-muted"))}}>
     {dirty?"Unsaved changes":"All changes saved"}</Text>
   </View>
-  {actions.map(action=>{
+  {actions.map((action,index)=>{
    const bound=draft.bindings[action.id];
    const mine=conflictsForAction(conflicts,action.id);
    const errorText=mine.length?mine.map(c=>conflictMessage(c,gestures,actions)).join(". "):undefined;
    const def=gestures.find(g=>g.id===bound);
    const dupe=mine.find(c=>c.kind==="duplicate");
-   return <View key={action.id} style={{gap:6}}>
+   return <View key={action.id} style={{gap:6,zIndex:actions.length-index}}>
     <Select label={action.label} value={bound??NONE} unstyled={unstyled}
      options={[{value:NONE,label:"No gesture"},...gestures.map(g=>({value:g.id,
       label:g.reservedBy?`${g.label} (reserved)`:g.unavailableReason?`${g.label} (not on this device)`:g.label,
@@ -115,8 +115,8 @@ export function GestureCustomizationPanel({
   </View>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
    <Button variant="secondary" title="Reset to defaults" unstyled={unstyled}
-    disabled={sameGestureMap(draft,defaults)} accessibilityHint={sameGestureMap(draft,defaults)?"Already the defaults":undefined}
-    onPress={()=>edit(defaults,"Defaults restored. Save to keep them, or Cancel to go back.")}/>
+    onPress={()=>sameGestureMap(draft,defaults)?store.setState({notice:"Gestures are already at their defaults"})
+     :edit(defaults,"Defaults restored. Save to keep them, or Cancel to go back.")}/>
    <View style={{flexGrow:1}}/>
    <Button variant="ghost" title="Cancel" unstyled={unstyled}
     onPress={()=>{store.setState({draft:null,notice:undefined});onCancel();}}/>

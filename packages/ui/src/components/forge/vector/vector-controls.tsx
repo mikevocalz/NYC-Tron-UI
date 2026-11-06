@@ -6,6 +6,7 @@
  */
 import {useRef,type ReactNode} from "react";
 import {PanResponder,Pressable,Text,View,type GestureResponderEvent} from "react-native";
+import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
 import {joinClasses} from "../../styles.ts";
 import type {Point} from "./vector-types.ts";
 
@@ -104,7 +105,7 @@ export function CanvasKnob(props:CanvasKnobProps){
   const latest=useRef(props);
   latest.current=props;
   const pan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
-  if(!pan.current)pan.current=PanResponder.create({
+  if(!pan.current)pan.current=createCanvasResponder({
     onStartShouldSetPanResponder:e=>(e.nativeEvent.touches?.length??1)<=1,
     onMoveShouldSetPanResponder:()=>true,
     onPanResponderGrant:()=>latest.current.onBegin(),

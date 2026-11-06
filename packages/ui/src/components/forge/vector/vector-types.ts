@@ -232,7 +232,8 @@ export function nudgeDelta(key:string|undefined,shift:boolean):Point|undefined{
     default:return undefined;
   }
 }
-/** Rounds to 1/1000 so displayed and committed coordinates agree and float noise stays out of the document. */
+/** Rounds to 1/1000 so displayed and committed coordinates agree and float noise (and -0) stays out of the document. */
 export function roundCoord(value:number):number{
-  return Math.round(value*1000)/1000;
+  const r=Math.round(value*1000)/1000;
+  return r===0?0:r;
 }

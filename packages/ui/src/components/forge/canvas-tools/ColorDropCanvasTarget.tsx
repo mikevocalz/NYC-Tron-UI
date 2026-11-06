@@ -15,7 +15,7 @@
  * `onFill` instead of running in a view model; keyboard targeting added.
  */
 import {useEffect,useRef,type ComponentRef,type ReactNode} from "react";
-import {PanResponder,Platform,Pressable,Text,View,type ViewProps} from "react-native";
+import {PanResponder,Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
@@ -196,7 +196,7 @@ export function ColorDropCanvasTarget({
  return <View ref={root} collapsable={false} {...rest} {...{className:joinClasses("gap-2",className)}}
   style={[{position:"relative",maxWidth:"100%"},style]}>
   <View style={{flexDirection:"row",alignItems:"center",gap:10,minHeight:44}}>
-   <Pressable ref={chip} collapsable={false} {...pan.current.panHandlers}
+   <View ref={chip} collapsable={false} {...pan.current.panHandlers}
     {...{onKeyDown,focusable:true}} accessible role="button"
     aria-label={disabledReason!==undefined?`${colorLabel} fill colour, unavailable`:`${colorLabel} fill colour`}
     accessibilityState={{disabled:disabledReason!==undefined}}
@@ -209,7 +209,7 @@ export function ColorDropCanvasTarget({
     style={{width:44,height:44,borderRadius:22,borderWidth:active?2:1,alignItems:"center",justifyContent:"center",
      opacity:disabledReason!==undefined?0.5:1,...(Platform.OS==="web"?{cursor:disabledReason?"not-allowed":"grab",touchAction:"none",userSelect:"none"} as object:null)}}>
     <View pointerEvents="none" style={{width:34,height:34,borderRadius:17,backgroundColor:color}}/>
-   </Pressable>
+   </View>
    <View style={{flex:1,minWidth:0}}>
     <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>ColorDrop: {colorLabel}</Text>
     <Text testID="color-drop-band" aria-live="polite" accessibilityLiveRegion="polite" numberOfLines={2}

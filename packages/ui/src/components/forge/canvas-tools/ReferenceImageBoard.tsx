@@ -166,8 +166,8 @@ export function ReferenceImageBoard({
       onRelease={commitPreview} onCancel={cancelPreview}/>;
     })}
    </View>
-   {side.length>0?<ScrollView testID="reference-side" style={{width:sideWidth,maxHeight:height}}
-    contentContainerStyle={{gap:8}} {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken")}}>
+   {side.length>0?<View testID="reference-side" {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border bg-surface-raised")}}
+    style={{width:sideWidth,maxHeight:height}}><ScrollView contentContainerStyle={{paddingVertical:2}}>
     {side.map(ref=><Pressable key={ref.id} role="button" aria-label={referenceA11yLabel(ref)}
      aria-selected={ref.id===selectedId} onPress={()=>onSelect(ref.id)} {...{onKeyDown:onWindowKey(ref)}}
      {...{className:joinClasses(styled&&"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus",
@@ -175,7 +175,7 @@ export function ReferenceImageBoard({
      style={{margin:6,height:Math.round((sideWidth-12)*0.75),overflow:"hidden",position:"relative",opacity:ref.opacity}}>
      {picture(ref,sideWidth-16,Math.round((sideWidth-12)*0.75)-4)}
     </Pressable>)}
-   </ScrollView>:null}
+   </ScrollView></View>:null}
   </View>
   {references.length===0?<View style={{gap:8,alignItems:"flex-start"}}>
    <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>No reference images yet. Add one to keep it beside your canvas.</Text>

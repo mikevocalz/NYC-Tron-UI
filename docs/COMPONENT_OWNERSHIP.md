@@ -945,3 +945,7 @@ All controls below are original implementations; no third-party source was copie
 | ModeEdgeHandles | D-19/D-21 | Internal/shared edge gesture presentation for the selected trim mode |
 
 Phase 2 includes pure model/source tests and Chromium interaction tests with a Zustand stand-in. Forge separately verifies the callback shapes against this checkout's built declarations and runs the bound callbacks against real Rust. Browser captures cover light/dark phone/tablet and RTL. These are local source/browser/protocol checks, not a publication or native/device acceptance claim.
+
+## 2026-11-05 canvas/layers recovery
+
+The local canvas, layers, selection, canvas-tools and vector controls are integrated with independent public exports. Ownership, callback boundaries, preserved ProCraft provenance and platform limits are recorded in [CANVAS_CLUSTER.md](CANVAS_CLUSTER.md). Generic controls remain owned by NYC-Tron; the Prism engine and adapter remain owned by Forge. No unpublished component is claimed as part of the alpha.3 release.

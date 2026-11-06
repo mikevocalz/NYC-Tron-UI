@@ -4,6 +4,7 @@ import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {Button} from "../../Button.tsx";
 import {SegmentedControl} from "../../SegmentedControl.tsx";
+import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
 import {joinClasses} from "../../styles.ts";
 import {DraftBox,DraftPath,MarchingAnts} from "./selection-overlay.tsx";
 import {
@@ -132,7 +133,7 @@ export function SelectionMarquee({
  useEffect(()=>()=>{if(store.getState().draft)latest.current.onPreview?.(undefined);},[]);
 
  const pan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
- if(!pan.current)pan.current=PanResponder.create({
+ if(!pan.current)pan.current=createCanvasResponder({
   onStartShouldSetPanResponder:()=>true,onMoveShouldSetPanResponder:()=>true,
   onPanResponderTerminationRequest:()=>false,
   onPanResponderGrant:e=>{

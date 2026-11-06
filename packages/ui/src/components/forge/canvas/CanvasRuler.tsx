@@ -1,3 +1,4 @@
+import {useEffect,useRef} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import type {LocalPoint} from "../../gestures/local-pointer.ts";
@@ -81,7 +82,19 @@ export function CanvasRuler({
   const band=Math.max(RULER_TOUCH_BAND,thickness);
   const ctx:Ctx={viewport,unit,dpi,origin,thickness,band,styled,disabled,store,
     preview:p=>onGuidePreview?.(p),onAddGuide,onMoveGuide,onRemoveGuide,onOriginChange};
+  const ctxRef=useRef(ctx);
+  ctxRef.current=ctx;
   const drag=state.drag;
+  const dragging=drag!==undefined;
+  useEffect(()=>{
+    // A press on the transparent part of a touch band focuses nothing, so on web
+    // Escape is also heard on the window for as long as a drag lasts.
+    const target=globalThis as {addEventListener?:(t:string,l:(e:{key?:string})=>void)=>void;removeEventListener?:(t:string,l:(e:{key?:string})=>void)=>void};
+    if(!dragging||typeof target.addEventListener!=="function")return;
+    const onKey=(e:{key?:string})=>{if(e.key==="Escape")cancelDrag(ctxRef.current);};
+    target.addEventListener("keydown",onKey);
+    return ()=>target.removeEventListener?.("keydown",onKey);
+  },[dragging]);
   const live=drag?.kind==="guide"?drag:undefined;
   const livePosition=live?guidePositionAt(viewport,live.orientation,live.at):undefined;
   const liveRemoving=live?isOverOwnRuler(live.orientation,live.at,thickness):false;
@@ -164,17 +177,18 @@ function Ruler({orientation,ctx,pointer}:{orientation:CanvasGuide["orientation"]
     if(k.key==="Enter"||k.key===" "){stopKey(k);add();}
   };
   const marker=pointer?docToScreen(viewport,horizontal?"x":"y",horizontal?pointer.x:pointer.y)-thickness:undefined;
+  // The 44-unit band takes touches; the visible strip inside it is the focus
+  // target, so the keyboard ring hugs what is drawn.
   return <View {...handlers} collapsable={false}
-    accessible accessibilityRole="button" accessibilityLabel={name}
-    accessibilityHint={`Counts in ${unit}. Drag into the canvas to place a ${orientation} guide, or activate to add one in the middle.`}
-    accessibilityActions={[{name:"activate",label:`Add ${orientation} guide`}]}
-    onAccessibilityAction={e=>{if(e.nativeEvent.actionName==="activate")add();}}
-    aria-disabled={ctx.disabled}
-    {...{onKeyDown,focusable:!ctx.disabled,
-      className:joinClasses(styled&&"focus-visible:ring-2 focus-visible:ring-focus")}}
     style={{position:"absolute",...(horizontal?{left:thickness,top:0,width:length,height:band}:{left:0,top:thickness,width:band,height:length}),...NO_SELECT}}>
-    <View pointerEvents="none"
-      {...{className:joinClasses(styled&&"bg-surface-raised border-border",styled&&(horizontal?"border-b":"border-r"))}}
+    <View pointerEvents="box-only"
+      accessible accessibilityRole="button" accessibilityLabel={name}
+      accessibilityHint={`Counts in ${unit}. Drag into the canvas to place a ${orientation} guide, or activate to add one in the middle.`}
+      accessibilityActions={[{name:"activate",label:`Add ${orientation} guide`}]}
+      onAccessibilityAction={e=>{if(e.nativeEvent.actionName==="activate")add();}}
+      aria-disabled={ctx.disabled}
+      {...{onKeyDown,focusable:!ctx.disabled,
+        className:joinClasses(styled&&"bg-surface-raised border-border focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus",styled&&(horizontal?"border-b":"border-r"))}}
       style={{position:"absolute",left:0,top:0,overflow:"hidden",...(horizontal?{width:length,height:thickness}:{width:thickness,height:length})}}>
       {ticks.map((t,i)=>{
         const at=t.offset-thickness;
@@ -182,12 +196,15 @@ function Ruler({orientation,ctx,pointer}:{orientation:CanvasGuide["orientation"]
         return <View key={i} pointerEvents="none">
           <View {...{className:joinClasses(styled&&(t.level==="major"?"bg-text-muted":"bg-border"))}}
             style={horizontal?{position:"absolute",left:at,bottom:0,width:1,height:size}:{position:"absolute",top:at,right:0,height:1,width:size}}/>
-          {t.label!==undefined?<Text numberOfLines={1}
-            {...{className:joinClasses(styled&&"text-text-muted")}}
-            style={horizontal
-              ?{position:"absolute",left:at+3,top:1,fontSize:10,lineHeight:12,fontVariant:["tabular-nums"],width:52}
-              :{position:"absolute",left:thickness/2-26-1,top:at+3+26-6,width:52,height:12,fontSize:10,lineHeight:12,
-                textAlign:"right",fontVariant:["tabular-nums"],transform:[{rotate:"-90deg"}]}}>{t.label}</Text>:null}
+          {/* Labels sit in a fixed-width box: on web numberOfLines caps a Text at its
+              parent's width, which is only the ruler's thickness on the side ruler.
+              Side-ruler labels are turned to read upward, ending at their tick. */}
+          {t.label!==undefined?<View style={horizontal
+            ?{position:"absolute",left:at+3,top:1,width:52,height:12}
+            :{position:"absolute",left:thickness/2-26-2,top:at+3+26-6,width:52,height:12,transform:[{rotate:"-90deg"}]}}>
+            <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted")}}
+              style={{fontSize:10,lineHeight:12,fontVariant:["tabular-nums"],textAlign:horizontal?"left":"right"}}>{t.label}</Text>
+          </View>:null}
         </View>;
       })}
       {marker!==undefined&&marker>=0&&marker<=length?<View {...{className:joinClasses(styled&&"bg-accent")}}
@@ -203,7 +220,7 @@ function GuideLine({guide,ctx,focused,dragging}:{guide:CanvasGuide;ctx:Ctx;focus
   const half=band/2;
   const toOverlay=(p:LocalPoint)=>horizontal?{x:p.x,y:p.y+offset-half}:{x:p.x+offset-half,y:p.y};
   const handlers=useLocalPointer(guideDragHandlers(ctx,guide.orientation,toOverlay,guide.id,guide.position));
-  const length=horizontal?viewport.width:viewport.height;
+  const length=horizontal?viewport.height:viewport.width;
   if(offset<-half||offset>length+half)return null;
   const label=guideAccessibilityLabel(guide,unit,dpi,origin);
   const move=(delta:number)=>{if(!ctx.disabled)ctx.onMoveGuide(guide.id,tidy(guide.position+delta));};
@@ -278,19 +295,18 @@ function Corner({ctx}:{ctx:Ctx}){
     onCancel:()=>cancelDrag(ctx),
   });
   const moved=origin.x!==0||origin.y!==0;
-  return <View {...handlers} collapsable={false}
-    accessible accessibilityRole="button"
-    accessibilityLabel={`Ruler origin, ${unit}`}
-    accessibilityHint={onOriginChange?(moved?"Drag to move the zero point, or activate to reset it to the document corner.":"Drag into the canvas to move the zero point."):undefined}
-    aria-disabled={!enabled}
-    {...{onKeyDown:(event:unknown)=>{
-      const k=webKey(event);
-      if(k.key==="Escape")cancelDrag(ctx);
-      else if(k.key==="Enter"||k.key===" "){stopKey(k);reset();}
-    },focusable:enabled,className:joinClasses(styled&&"focus-visible:ring-2 focus-visible:ring-focus")}}
-    style={{position:"absolute",left:0,top:0,width:band,height:band,...NO_SELECT}}>
-    <View pointerEvents="none"
-      {...{className:joinClasses(styled&&"bg-surface-raised border-border border-b border-r")}}
+  return <View {...handlers} collapsable={false} style={{position:"absolute",left:0,top:0,width:band,height:band,...NO_SELECT}}>
+    <View pointerEvents="box-only"
+      accessible accessibilityRole="button"
+      accessibilityLabel={`Ruler origin, ${unit}`}
+      accessibilityHint={onOriginChange?(moved?"Drag to move the zero point, or activate to reset it to the document corner.":"Drag into the canvas to move the zero point."):undefined}
+      aria-disabled={!enabled}
+      {...{onKeyDown:(event:unknown)=>{
+        const k=webKey(event);
+        if(k.key==="Escape")cancelDrag(ctx);
+        else if(k.key==="Enter"||k.key===" "){stopKey(k);reset();}
+      },focusable:enabled,
+      className:joinClasses(styled&&"bg-surface-raised border-border border-b border-r focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus")}}
       style={{width:thickness,height:thickness,alignItems:"center",justifyContent:"center"}}>
       <Text numberOfLines={1} {...{className:joinClasses(styled&&(moved?"text-accent":"text-text-muted"))}}
         style={{fontSize:9,fontWeight:"600"}}>{unit}</Text>
