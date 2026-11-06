@@ -18,11 +18,11 @@ export function PhotoCatalogDemo(){
  const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,s=useStore(store,s=>s);
  return <View style={{padding:16,gap:12,maxWidth:700,width:'100%',flex:1}}>
   <TabBar tabs={(['Filters','Library','Compare','Metadata'] as const).map(key=>({key,label:key,active:s.section===key,onPress:()=>store.setState({section:key})}))}/>
-  <Text>Catalog UI consumer: 10,000 generated records; thumbnails unavailable</Text>
+  <Text {...{className:'text-text'}}>Catalog UI consumer: 10,000 generated records; thumbnails unavailable</Text>
   {s.section==='Filters'?<ScrollView style={{maxHeight:480}}><CatalogFilterBar catalogId="demo" value={s.filters} cameras={choices} lenses={[{id:'lens-1',label:'50 mm lens'}]} albums={[{id:'album-1',label:'Harbor album'}]} onChange={filters=>store.setState(s=>({filters,changes:s.changes+1}))}/></ScrollView>:null}
   {s.section==='Library'?<PhotoLibraryGrid photos={photos} selectedIds={s.selected} onSelectionChange={selected=>store.setState({selected})} onOpen={opened=>store.setState({opened})} height={300}/>:null}
   {s.section==='Compare'?<View style={{height:300}}><BeforeAfterCompare before={source} after={source} mode={s.mode} onModeChange={mode=>store.setState({mode})} split={s.split} onSplitCommit={split=>store.setState({split})} overlayOpacity={s.overlay} onOverlayOpacityCommit={overlay=>store.setState({overlay})}/></View>:null}
   {s.section==='Metadata'?<ScrollView style={{maxHeight:480}}><PhotoMetadataInspector value={{photoId:'photo-0',revision:s.metadataRevision,fileName:'Harbor.dng',mimeType:'image/x-adobe-dng',dimensions:{width:6000,height:4000},cameraMaker:'Test maker',cameraModel:'Test body',lens:null,capturedAt:'2026:11:06 09:10:00-05:00',exposureSeconds:1/125,aperture:2.8,iso:100,focalLengthMm:50,provenance:[{id:'import',label:'Source',value:'Original imported file retained'}]}} annotation={s.annotation} onAnnotationCommit={annotation=>store.setState(s=>({annotation,metadataRevision:s.metadataRevision+1,annotationCommits:s.annotationCommits+1}))}/></ScrollView>:null}
-  <Text testID="catalog-state" accessibilityLabel={`Catalog consumer state ${JSON.stringify(s)}`}>{JSON.stringify(s)}</Text>
+  <Text {...{className:'text-text'}} numberOfLines={3} testID="catalog-state" accessibilityLabel={`Catalog consumer state ${JSON.stringify(s)}`}>{JSON.stringify(s)}</Text>
  </View>;
 }

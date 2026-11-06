@@ -2312,30 +2312,45 @@
       "name": "PresetFilmstrip",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/PresetFilmstrip.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Hover/tap preview, favorite and batch apply."
+      "requirement": "Hover/tap preview, favorite and batch apply.",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
     },
     {
       "id": "F-14",
       "name": "BatchExportPanel",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/BatchExportPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Sizes, watermark, output format and metadata privacy."
+      "requirement": "Sizes, watermark, output format and metadata privacy.",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
     },
     {
       "id": "F-15",
       "name": "PhotoVersionHistoryBrowser",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/PhotoVersionHistoryBrowser.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Compare and restore non-destructive photo edit versions without losing originals. *Source candidate: `lightcraft/ui/VersionsScreen.kt`; requires verified implementation and license admission.*"
+      "requirement": "Compare and restore non-destructive photo edit versions without losing originals. *Source candidate: `lightcraft/ui/VersionsScreen.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
     },
     {
       "id": "F-16",
@@ -2352,10 +2367,15 @@
       "name": "PresetManager",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/PresetManager.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Manage reusable photo adjustments with import/export and versioned presets. *Source candidate: `lightcraft/ui/PresetManage.kt`; requires verified implementation and license admission.*"
+      "requirement": "Manage reusable photo adjustments with import/export and versioned presets. *Source candidate: `lightcraft/ui/PresetManage.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
     },
     {
       "id": "F-18",

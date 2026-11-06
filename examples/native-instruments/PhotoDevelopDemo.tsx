@@ -13,7 +13,7 @@ export function PhotoDevelopDemo({invalid=false,deferred=false}:{readonly invali
  const transfer=useRef<(()=>void)|null>(null);
  const commit=(value:PhotoDevelopSettings)=>store.setState(s=>({value,revision:s.revision+1,commits:s.commits+1}));
  return <ScrollView contentContainerStyle={{padding:16,gap:12,maxWidth:640,width:'100%'}}>
-  <Text>Photo develop consumer: settings only</Text>
+  <Text {...{className:'text-text'}}>Photo develop consumer: settings only</Text>
   <Button title="Switch photo" onPress={()=>store.setState(s=>({photoId:s.photoId==='harbor'?'portrait':'harbor',revision:0,value:defaultPhotoDevelop(),commits:0}))}/>
   {deferred?<Button title="Resolve pending paste" onPress={()=>transfer.current?.()}/>:null}
   <RatingAndFlagControl value={s.rating} onCommit={rating=>store.setState(s=>({rating,commits:s.commits+1}))}/>
@@ -24,6 +24,6 @@ export function PhotoDevelopDemo({invalid=false,deferred=false}:{readonly invali
     const abort=()=>{signal.removeEventListener('abort',abort);reject(new Error('Paste cancelled'));};
     transfer.current=finish;if(signal.aborted)abort();else signal.addEventListener('abort',abort,{once:true});
    });}}/>
-  <Text testID="photo-state" accessibilityLabel={`Photo consumer state ${JSON.stringify(s)}`}>{JSON.stringify(s)}</Text>
+  <Text {...{className:'text-text'}} numberOfLines={3} testID="photo-state" accessibilityLabel={`Photo consumer state ${JSON.stringify(s)}`}>{JSON.stringify(s)}</Text>
  </ScrollView>;
 }

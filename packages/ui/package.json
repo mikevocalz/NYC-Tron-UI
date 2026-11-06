@@ -1739,6 +1739,36 @@
       "types": "./dist/components/forge/photo/photo-metadata.d.ts",
       "react-native": "./dist/components/forge/photo/photo-metadata.js",
       "default": "./dist/components/forge/photo/photo-metadata.js"
+    },
+    "./components/forge/photo/PresetFilmstrip": {
+      "types": "./dist/components/forge/photo/PresetFilmstrip.d.ts",
+      "react-native": "./dist/components/forge/photo/PresetFilmstrip.js",
+      "default": "./dist/components/forge/photo/PresetFilmstrip.js"
+    },
+    "./components/forge/photo/PresetManager": {
+      "types": "./dist/components/forge/photo/PresetManager.d.ts",
+      "react-native": "./dist/components/forge/photo/PresetManager.js",
+      "default": "./dist/components/forge/photo/PresetManager.js"
+    },
+    "./components/forge/photo/photo-presets": {
+      "types": "./dist/components/forge/photo/photo-presets.d.ts",
+      "react-native": "./dist/components/forge/photo/photo-presets.js",
+      "default": "./dist/components/forge/photo/photo-presets.js"
+    },
+    "./components/forge/photo/PhotoVersionHistoryBrowser": {
+      "types": "./dist/components/forge/photo/PhotoVersionHistoryBrowser.d.ts",
+      "react-native": "./dist/components/forge/photo/PhotoVersionHistoryBrowser.js",
+      "default": "./dist/components/forge/photo/PhotoVersionHistoryBrowser.js"
+    },
+    "./components/forge/photo/BatchExportPanel": {
+      "types": "./dist/components/forge/photo/BatchExportPanel.d.ts",
+      "react-native": "./dist/components/forge/photo/BatchExportPanel.js",
+      "default": "./dist/components/forge/photo/BatchExportPanel.js"
+    },
+    "./components/forge/photo/photo-export": {
+      "types": "./dist/components/forge/photo/photo-export.d.ts",
+      "react-native": "./dist/components/forge/photo/photo-export.js",
+      "default": "./dist/components/forge/photo/photo-export.js"
     }
   },
   "scripts": {
