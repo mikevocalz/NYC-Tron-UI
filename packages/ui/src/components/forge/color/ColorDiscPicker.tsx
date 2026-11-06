@@ -1,4 +1,4 @@
-import {useEffect,useMemo,useRef} from "react";
+import {useEffect,useMemo,useRef,type ReactNode} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -22,6 +22,8 @@ export interface ColorDiscPickerProps extends Omit<ViewProps,"children"> {
   readonly maxSize?:number;
   /** Omit the separate brightness track when embedding the disc in grading controls. @default true */
   readonly showBrightness?:boolean;
+  /** Optional color-managed background. Receives the live value; owns no input or document state. */
+  readonly renderDisc?:(props:{size:number;value:HsvColor})=>ReactNode;
   readonly disabled?:boolean;
   /** Brightness track runs right to left. @default I18nManager.isRTL */
   readonly rtl?:boolean;
@@ -41,11 +43,13 @@ const r3=(n:number)=>Math.round(n*1000)/1000;
  * and saturation, because the host stores HSV rather than re-deriving it from
  * RGB. Arrow keys: Left/Right turn the hue 5°, Up/Down change saturation by 5%.
  *
- * sRGB display preview only. A Display P3 or wider-gamut preview needs the
- * owning engine's color management and is not drawn here.
+ * The default background is sRGB. Inject a color-managed renderDisc for another
+ * display space; HSV then describes that space's primaries. Document profile
+ * conversion remains the host's responsibility. The hex readout is numeric RGB,
+ * not an ICC conversion.
  */
 export function ColorDiscPicker({
-  value,onPreview,onCommit,maxSize=240,showBrightness=true,disabled=false,rtl,className,unstyled=false,testID,style,...rest
+  value,onPreview,onCommit,maxSize=240,showBrightness=true,renderDisc,disabled=false,rtl,className,unstyled=false,testID,style,...rest
 }:ColorDiscPickerProps){
   assertHsv(value);
   if(!Number.isFinite(maxSize)||maxSize<120||maxSize>800)throw new RangeError("maxSize must be 120..800");
@@ -116,14 +120,14 @@ export function ColorDiscPicker({
         else if(a==="decreaseHue")hueBy(-5);
       }}
       style={{width:size,height:size,borderRadius:size/2,alignSelf:"center",opacity:disabled?0.45:1,...NO_SELECT}}>
-      <HueSaturationDiscLayer size={size} value={shown.v}/>
+      {renderDisc ? <View pointerEvents="none" style={{position:"absolute",width:size,height:size}}>{renderDisc({size,value:shown})}</View> : <HueSaturationDiscLayer size={size} value={shown.v}/>}
       <View pointerEvents="none" {...{className:joinClasses(styled&&"border-border")}}
         style={{position:"absolute",left:0,top:0,width:size,height:size,borderRadius:size/2,borderWidth:1}}/>
       <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text")}}
         style={{position:"absolute",left:thumb.x-THUMB/2,top:thumb.y-THUMB/2,width:THUMB,height:THUMB,borderRadius:THUMB/2,
           borderWidth:2,alignItems:"center",justifyContent:"center"}}>
         <View {...{className:joinClasses(styled&&"border-surface-raised")}}
-          style={{width:THUMB-4,height:THUMB-4,borderRadius:(THUMB-4)/2,borderWidth:2,backgroundColor:opaque}}/>
+          style={{width:THUMB-4,height:THUMB-4,borderRadius:(THUMB-4)/2,borderWidth:2,backgroundColor:renderDisc?"transparent":opaque}}/>
       </View>
     </View>
     <View style={{flexDirection:"row",justifyContent:"space-between"}}>

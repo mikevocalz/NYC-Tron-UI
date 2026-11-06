@@ -10,5 +10,6 @@ public final class NYCTronInstrumentsModule: Module {
     Name("NYCTronInstruments")
     View(TronArcKnobView.self)
     View(TronXYPadView.self)
+    View(TronDisplayP3DiscView.self)
   }
 }

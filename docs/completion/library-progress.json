@@ -1181,16 +1181,15 @@
       "phase": "P07",
       "libraryScope": true,
       "sourceCandidates": [
-        "packages/ui/src/components/forge/color/ColorDiscPicker.tsx"
+        "packages/ui/src/components/forge/color/ColorDiscPicker.tsx",
+        "packages/native-controls/src/DisplayP3DiscLayer.tsx"
       ],
-      "implementationReview": "partial",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Disc-based hue and saturation picker with chromatic hue preservation near gray and wide-gamut preview. *Source candidate: `procraft/ui/ColorPanel.kt`; requires verified implementation and license admission.*",
-      "remainingLibraryWork": [
-        "Native wide-gamut display preview path"
-      ],
       "evidence": [
-        "P07-color-specification.md"
+        "P07-color-specification.md",
+        "P07-native-p3.md"
       ]
     },
     {

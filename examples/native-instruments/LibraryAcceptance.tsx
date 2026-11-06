@@ -9,8 +9,9 @@ import {useReservedRegions} from '@nyc-tron/reserved-regions';
 import {foldFeaturesFromRegions,resolveUsableRegions,type Rect} from '@nyc-tron/core/folds';
 import {ShellDemo} from './ShellDemo';
 import {ColorManagementDemo} from './ColorManagementDemo';
+import {P3DiscDemo} from './P3DiscDemo';
 import {ColorAdjustmentsDemo} from './ColorAdjustmentsDemo';
-type State={family:'shell'|'management'|'adjustments';viewport:Rect|null};
+type State={family:'shell'|'management'|'adjustments'|'P3';viewport:Rect|null};
 function LibraryContent(){
  const local=useRef<StoreApi<State>|null>(null);local.current??=createStore<State>(()=>({family:'shell',viewport:null}));const store=local.current,state=useStore(store,s=>s);
  const host=useRef<ComponentRef<typeof View>|null>(null),regions=useReservedRegions();
@@ -20,8 +21,8 @@ function LibraryContent(){
  return <SafeAreaView style={{flex:1,backgroundColor:'#101017'}}><KeyboardAvoidingView behavior={Platform.OS==='ios'?'padding':'height'} style={{flex:1}}>
   <View ref={host} collapsable={false} onLayout={measure} style={{flex:1}}>
    <View style={[{position:'absolute',gap:8},pane?{left:pane.x,top:pane.y,width:pane.width,height:pane.height}:{inset:0}]}>
-    <TabBar tabs={(['shell','management','adjustments'] as const).map(key=>({key,label:key,active:key===state.family,onPress:()=>store.setState({family:key})}))}/>
-    <View style={{flex:1}}>{state.family==='shell'?<ShellDemo height={Math.max(280,(pane?.height??700)-64)}/>:state.family==='management'?<ColorManagementDemo/>:<ColorAdjustmentsDemo/>}</View>
+    <TabBar tabs={(['shell','management','adjustments','P3'] as const).map(key=>({key,label:key,active:key===state.family,onPress:()=>store.setState({family:key})}))}/>
+    <View style={{flex:1}}>{state.family==='shell'?<ShellDemo height={Math.max(280,(pane?.height??700)-64)}/>:state.family==='management'?<ColorManagementDemo/>:state.family==='adjustments'?<ColorAdjustmentsDemo/>:<P3DiscDemo/>}</View>
    </View>
   </View>
  </KeyboardAvoidingView></SafeAreaView>;

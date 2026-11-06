@@ -24,3 +24,18 @@ iOS SwiftUI and Android Compose source is implemented; Xcode/Gradle compilation 
 No raw HTML, WebView, Expo Audio or Expo Video. Source: AudioKit Controls pinned upstream commit 717ce0d6d4e18f2849d484b578e0faf13bb38077; MIT © 2022 Aurelius Prochazka.
 
 Official Expo native skills used: expo-ui, expo-module, expo-native-ui, expo-migrate-module (https://github.com/expo/skills).
+
+### Display P3 disc background
+
+`@nyc-tron/native-controls/DisplayP3DiscLayer` supplies an input-free native color-managed background for `ColorDiscPicker.renderDisc`:
+
+```tsx
+<ColorDiscPicker value={p3Hsv} onCommit={setP3Hsv}
+  renderDisc={({size,value}) => <DisplayP3DiscLayer size={size} value={value.v}/>}/>
+```
+
+HSV here describes Display P3 primaries. The caller must convert document colors into that display space; passing sRGB HSV does not perform a profile conversion. Native SwiftUI `Color(.displayP3, ...)` and Compose `ColorSpaces.DisplayP3` retain the profile until platform rendering. The background has no gesture or state owner, and the existing disc owns input, preview and single-release commit. Its selection center remains transparent so an sRGB thumb cannot cover the P3 color. Default library rendering remains sRGB.
+
+Android hosts must request `android:colorMode="wideColorGamut"` for their activity when appropriate; this library never changes activity, window, orientation or manifest metadata. A narrow-gamut surface receives system mapping. Simulator screenshots cannot prove physical wide-gamut output. No HDR or arbitrary ICC conversion is provided by this layer. The native acceptance consumer has a separate P3 tab.
+
+Platform references: [SwiftUI Display P3](https://developer.apple.com/documentation/swiftui/color/rgbcolorspace), [Android wide color](https://developer.android.com/training/wide-color-gamut).

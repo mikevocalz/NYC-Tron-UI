@@ -15,6 +15,9 @@ class NYCTronInstrumentsModule : Module() {
         TronArcKnobContent(props, { onPreview(it) }, { onCommit(it) })
       }
     }
+    ExpoUIView<TronDisplayP3DiscProps>("TronDisplayP3DiscView") {
+      Content { props -> TronDisplayP3DiscContent(props) }
+    }
     ExpoUIView<TronXYPadProps>("TronXYPadView") {
       val onPreview by Event<TronXYValuePayload>()
       val onCommit by Event<TronXYValuePayload>()

@@ -190,3 +190,19 @@ test("a floating drag moves the palette exactly as far as the pointer",async({pa
   await page.mouse.up();
   await expect(page.getByTestId("docked")).toHaveText("floating 124,74");
 });
+
+
+test("injected color renderer receives live brightness and retains the disc input owner",async({page})=>{
+ await page.goto('/color?mode=compact&renderer=1');
+ const rendered=page.getByTestId('managed-disc');
+ await expect(rendered).toContainText('Managed brightness 0.82');
+ const brightness=page.getByRole('slider',{name:'Brightness',exact:true});
+ await brightness.focus();
+ await page.keyboard.press('ArrowRight');
+ await expect(commits(page)).toHaveText('commits 1');
+ await expect(rendered).toContainText('Managed brightness 0.83');
+ const disc=page.getByRole('slider',{name:'Hue and saturation'});
+ await disc.focus();await page.keyboard.press('ArrowRight');
+ await expect(commits(page)).toHaveText('commits 2');
+ await expect(hsv(page)).toHaveText('hsv 222 72 83 85');
+});

@@ -23,4 +23,4 @@ The mesh preview emits 9,216 RGBA bytes at its default size. A Node desktop chec
 
 Validation passed 760 source tests, workspace builds/types, the independent export/ledger checks, all 13 packed artifacts, and 34 color browser tests. These include Lab, policy changes, overprint, mapped/original data, gradient hint/type/angle/interpolation, independent channel presets, lift/gamma/gain, RGB parade, and actual interpolated mesh pixels.
 
-C-27 still needs its native wide-gamut display path. All new color controls retain their unverified native/device, accessibility narration and desktop/headset acceptance gates. This report does not mark the full color phase accepted.
+C-27 now has an injectable native Display P3 display path, described in P07-native-p3.md. All new color controls retain their unverified native/device, accessibility narration and desktop/headset acceptance gates. This report does not mark the full color phase accepted.

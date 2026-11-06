@@ -54,7 +54,7 @@ function PaletteBody({mode}:{mode:PaletteMode}){
     {id:"document",label:"This document",kind:"document",swatches:[]},
     {id:"named",label:"Named",kind:"named",swatches:named},
   ];
-  return mode==="compact"?<ColorDiscPicker value={committed} onPreview={preview} onCommit={commit} maxSize={232} rtl={rtl} testID="disc"/>
+  return mode==="compact"?<ColorDiscPicker value={committed} onPreview={preview} onCommit={commit} maxSize={232} rtl={rtl} testID="disc" renderDisc={params.has("renderer")?({size,value})=><View testID="managed-disc" style={{width:size,height:size,backgroundColor:"red"}}><Text>{`Managed brightness ${value.v}`}</Text></View>:undefined}/>
     :mode==="classic"?<View style={{gap:12}}>
       <ColorWheel value={committed} onPreview={preview} onCommit={commit} maxSize={220} testID="wheel"/>
       <AlphaSlider value={hsvToRgb(committed)} onPreview={c=>preview({...committed,alpha:c.alpha})}
