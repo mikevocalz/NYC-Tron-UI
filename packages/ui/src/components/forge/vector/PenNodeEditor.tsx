@@ -1,4 +1,4 @@
-import {useEffect,useRef,type ReactNode} from "react";
+import {useLayoutEffect,useRef,type ReactNode} from "react";
 import {Platform,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -32,6 +32,11 @@ export interface SetClosedIntent {
 export interface PenNodeEditorProps extends Omit<ViewProps,"children"> {
   /** The path layer's subpaths, in content coordinates. */
   subpaths:readonly Subpath[];
+  /** Optional content-coordinate snapping. The host must return finite coordinates. */
+  editScope?:string;
+  editRevision?:string|number;
+  snapPoint?:(point:Point,ref:NodeRef)=>Point;
+  snapHandle?:(offset:HandleOffset,node:PathNode,ref:NodeRef)=>HandleOffset;
   /** Overlay size in points; place it over the canvas region the transform maps into. */
   width:number;
   height:number;
@@ -94,16 +99,16 @@ const sideLabel=(side:HandleSide)=>side==="in"?"Incoming handle":"Outgoing handl
  * the overlay needs no SVG dependency; the engine renders the real curve.
  */
 export function PenNodeEditor({
-  subpaths,width,height,transform=IDENTITY_TRANSFORM,selection,onSelectionChange,onPreview,onSetPathNode,
+  subpaths,snapPoint,snapHandle,editScope,editRevision,width,height,transform=IDENTITY_TRANSFORM,selection,onSelectionChange,onPreview,onSetPathNode,
   onInsertNode,onRemoveNode,onSetNodeKind,onSetClosed,children,showCommands=true,label="Path nodes",
   accentColor,className,unstyled=false,style,...rest
 }:PenNodeEditorProps){
   validateSubpaths(subpaths);
   validateTransform(transform);
   if(![width,height].every(Number.isFinite)||width<=0||height<=0)throw new RangeError("Invalid editor size");
-  const latest=useRef({subpaths,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
+  const latest=useRef({subpaths,snapPoint,snapHandle,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
     onRemoveNode,onSetNodeKind,onSetClosed});
-  latest.current={subpaths,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
+  latest.current={subpaths,snapPoint,snapHandle,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
     onRemoveNode,onSetNodeKind,onSetClosed};
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({preview:null,notice:undefined}));
@@ -122,7 +127,7 @@ export function PenNodeEditor({
     store.setState({preview:null});
     latest.current.onPreview?.(undefined);
   };
-  useEffect(()=>()=>{if(drag.current)latest.current.onPreview?.(undefined);},[]);
+  useLayoutEffect(()=>()=>{drag.current=null;pressAt.current=null;if(store.getState().preview!==null){store.setState({preview:null});latest.current.onPreview?.(undefined);}},[store,editScope,editRevision]);
   const cancelDrag=()=>{
     const d=drag.current;
     if(!d)return false;
@@ -131,11 +136,23 @@ export function PenNodeEditor({
     return true;
   };
   const begin=(target:Target)=>{
+    if(drag.current){cancelDrag();return;}
     const p=latest.current;
     drag.current={target,start:p.subpaths,node:nodeAt(p.subpaths,target.ref),moved:false,cancelled:false};
     const sel=p.selection;
     if(!sel||sel.subpath!==target.ref.subpath||sel.index!==target.ref.index)p.onSelectionChange(target.ref);
     store.setState({notice:undefined});
+  };
+  const snappedNode=(node:PathNode,ref:NodeRef):PathNode=>{
+    const point=latest.current.snapPoint?.({x:node.x,y:node.y},ref);
+    if(!point)return node;
+    if(![point.x,point.y].every(Number.isFinite))throw new RangeError("Snapped point must be finite");
+    return {...node,x:point.x,y:point.y};
+  };
+  const snappedHandle=(offset:HandleOffset,node:PathNode,ref:NodeRef):HandleOffset=>{
+    const next=latest.current.snapHandle?.(offset,node,ref)??offset;
+    if(next.length!==2||!next.every(Number.isFinite))throw new RangeError("Snapped handle must be finite");
+    return next;
   };
   const dragTo=(dx:number,dy:number,mods:DragModifiers)=>{
     const d=drag.current;
@@ -144,10 +161,10 @@ export function PenNodeEditor({
     d.moved=true;
     const c=deltaToContent(latest.current.transform,dx,dy);
     let node:PathNode;
-    if(d.target.kind==="node")node=moveNode(d.node,c.x,c.y);
+    if(d.target.kind==="node")node=snappedNode(moveNode(d.node,c.x,c.y),d.target.ref);
     else{
       const h=d.node[d.target.side] as HandleOffset;
-      node=moveHandle(d.node,d.target.side,[h[0]+c.x,h[1]+c.y],mods.alt||altHeld.current);
+      node=moveHandle(d.node,d.target.side,snappedHandle([h[0]+c.x,h[1]+c.y],d.node,d.target.ref),mods.alt||altHeld.current);
     }
     d.last=node;
     const next=replaceNode(d.start,d.target.ref,node);
@@ -207,11 +224,11 @@ export function PenNodeEditor({
     const p=latest.current;
     const node=nodeAt(p.subpaths,target.ref);
     let next:PathNode;
-    if(target.kind==="node")next=moveNode(node,delta.x,delta.y);
+    if(target.kind==="node")next=snappedNode(moveNode(node,delta.x,delta.y),target.ref);
     else{
       const h=node[target.side];
       if(!h)return;
-      next=moveHandle(node,target.side,[h[0]+delta.x,h[1]+delta.y],alt);
+      next=moveHandle(node,target.side,snappedHandle([h[0]+delta.x,h[1]+delta.y],node,target.ref),alt);
     }
     p.onSetPathNode({subpath:target.ref.subpath,index:target.ref.index,node:next});
   };

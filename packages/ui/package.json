@@ -1879,6 +1879,16 @@
       "types": "./dist/components/forge/motion/composition-tree.d.ts",
       "react-native": "./dist/components/forge/motion/composition-tree.js",
       "default": "./dist/components/forge/motion/composition-tree.js"
+    },
+    "./components/forge/motion/MotionPathEditor": {
+      "types": "./dist/components/forge/motion/MotionPathEditor.d.ts",
+      "react-native": "./dist/components/forge/motion/MotionPathEditor.js",
+      "default": "./dist/components/forge/motion/MotionPathEditor.js"
+    },
+    "./components/forge/motion/motion-path": {
+      "types": "./dist/components/forge/motion/motion-path.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-path.js",
+      "default": "./dist/components/forge/motion/motion-path.js"
     }
   },
   "scripts": {

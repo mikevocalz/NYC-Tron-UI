@@ -2495,10 +2495,15 @@
       "name": "MotionPathEditor",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/MotionPathEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Spatial trajectory, tangent and point snapping."
+      "requirement": "Spatial trajectory, tangent and point snapping.",
+      "evidence": [
+        "P11-motion-path.md"
+      ]
     },
     {
       "id": "G-07",
