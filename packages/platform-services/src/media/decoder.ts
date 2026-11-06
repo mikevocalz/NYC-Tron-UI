@@ -64,7 +64,7 @@ export interface DecodeFrameOptions {
 
 /** A decoded video frame. */
 export interface DecodedFrame {
-  /** JPEG in the app's caches directory on iOS (`file://`), a `data:` URL on web. */
+  /** JPEG in the app's caches directory on iOS/Android (`file://`), a `data:` URL on web. */
   readonly uri:string;
   /** Native presentation time or browser seek target; consult `timing`. */
   readonly actualTimeUs:number;
@@ -84,7 +84,7 @@ export interface DecodeAudioOptions {
 }
 
 /**
- * Where the samples are. Web hands them over in memory; iOS writes
+ * Where the samples are. Web hands them over in memory; iOS/Android write
  * a raw file of little-endian Float32 samples, interleaved by channel, so a
  * minute of 48 kHz stereo (23 MB) never crosses the bridge as JS values.
  */

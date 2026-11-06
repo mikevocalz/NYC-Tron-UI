@@ -1,13 +1,15 @@
 # @nyc-tron/platform-services
 
-Three native services a creative app needs around its editors. Each one is a
-subpath, so an app takes only what it uses.
+Platform services for creative editors. Import each service by subpath.
 
 | Subpath | Roster ID | iOS | Android | Web |
 | --- | --- | --- | --- | --- |
 | `/haptics` | N-05 HapticsAndFeedback | `UIFeedbackGenerator` (selection, impact, notification), prepared generators | `View.performHapticFeedback`; no VIBRATE permission | unavailable; the opt-out still persists |
 | `/documents` | N-12 NativeFileAndShareAdapter | `UIDocumentPickerViewController` (import or open-in-place), security-scoped access, bookmarks; `UIActivityViewController` | `ACTION_OPEN_DOCUMENT` through the Activity Result API, persisted URI grants; share chooser through the kit's own `FileProvider` | pick through `@nyc-tron/ui`'s FilePicker; share through the Web Share API |
 | `/playback` | N-17 NativePlaybackLifecycle | `AVAudioSession` activation, interruptions, old-device-unavailable route changes, media-services resets | `AudioManager` focus (lost, transient, duckable, regained); `AudioDeviceCallback` for wired and Bluetooth outputs going away | unavailable; the policy still runs on events the app dispatches |
+
+| `/checkpoints` | N-10 document recovery storage | Immutable files through Expo FileSystem | Immutable files through Expo FileSystem | IndexedDB transactions |
+| `/media` | N-19 media decoder | AVFoundation probe, timestamped JPEG frames and Float32 PCM files | MediaExtractor/MediaCodec probe, timestamped JPEG frames and Float32 PCM files | Browser video seeking and Web Audio PCM |
 
 ## Haptics
 
@@ -61,6 +63,8 @@ const session = createPlatformPlaybackSession({
 });
 await session.activate({ category: "playback" });
 session.setIntent("playing");
+// When the sole app owner closes its player:
+await session.dispose({ releaseFocus: true });
 ```
 
 The policy (`nextPlaybackState`, also at `/playback-policy`) is a pure
@@ -71,14 +75,48 @@ headset or Bluetooth output pauses and never resumes by itself, so audio does
 not jump to the speaker. A media-services reset asks the app to rebuild its
 players.
 
+Disposal stops callbacks immediately and drains accepted operations. Shared
+preview/recording owners retain their focus coordinator and leave `releaseFocus`
+unset.
+
 Background audio is not configured here. iOS needs `UIBackgroundModes: audio`
 in the app's Info.plist; Android needs the app's own foreground media service.
 
+## Media decoding
+
+```ts
+import { createPlatformMediaDecoder } from "@nyc-tron/platform-services/media";
+const decoder = createPlatformMediaDecoder();
+const probe = await decoder.probe(localUri);
+const frame = await decoder.decodeFrame(localUri, { timeUs: 125000, maxWidth: 960, maxHeight: 540 });
+const audio = await decoder.decodeAudio(localUri, { startUs: 250000, durationUs: 500000, sampleRate: 24000 });
+await decoder.clearCache();
+```
+
+Times are integer microseconds. Frame results report the native presentation
+timestamp; the browser fallback reports its settled seek target. Native audio
+stays in little-endian interleaved Float32 files. Output URIs are cache entries
+and can be evicted. Keep source access grants open while decoding content URIs.
+
+Android accepts local file/content sources, SDR flexible 8-bit YUV frames and
+supported platform audio codecs. It resamples PCM linearly, bounds one output at
+128 MiB, keeps at most 256 MiB/256 output files, and stops a request after 30
+seconds. HDR, DRM and unsupported format/timestamp changes reject explicitly.
+These limits do not imply acceptance of every codec or color profile.
+
+## Checkpoints
+
+`createPlatformCheckpointStorage(namespace)` provides owned binary reads and
+atomic replacement. Native storage retains immutable generations; web storage
+waits for IndexedDB transaction completion. Corrupt/torn records fall back to a
+prior generation. Await `close()` to drain writes. This supports process recovery;
+OS power-loss fsync is not established.
+
 ## Native module
 
-Three Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
+Four Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
 Gradle library: `NYCTronHaptics`, `NYCTronDocuments` and
-`NYCTronPlaybackSession`. Swift uses the `@ExpoModule` / `@JS` / `@Record` /
+`NYCTronPlaybackSession` and `NYCTronMediaDecoder`. Swift uses the `@ExpoModule` / `@JS` / `@Record` /
 `@Event` macros and does not import ExpoUI. Kotlin is built by the `v2 true`
 Gradle plugin; the classes stay out of `android.modules` in
 `expo-module.config.json`. The Android library declares no permissions.
@@ -87,13 +125,15 @@ Peers: `expo` 58, `react`, `react-native`, `zustand`.
 
 ## Verified so far
 
-JS behavior tests with fake native modules, source contracts for both
-platforms, a mocked-host render test of the native FilePicker, a local
-`swiftc -swift-version 6` typecheck of the non-macro Swift against the
-iOS 27.1 simulator SDK, and CI compiles of both native sides into the example
-app (APK dex and merged-manifest check, iOS simulator build). Nothing has run
-on a device yet: no haptic has been felt, no document picked, no call has
-interrupted playback.
+731 repository source tests pass. Fresh iOS/Android simulator builds and native
+checks cover generated media frame/PCM decoding, picker import/bookmark recovery,
+local diagnostic export and checkpoint process relaunch. The media fixture returns
+12000 samples at 24000 Hz for its half-second span on both platforms.
+
+Physical haptics, calls, output-route changes, screen readers, wider codec/color
+profiles and the other required hosts still need acceptance. See the companion
+[Forge phase reports](https://github.com/mikevocalz/nitro-forge/tree/codex/complete-all-components/docs/completion/reports)
+for commands, artifacts and limits.
 
 ## Provenance
 
