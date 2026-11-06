@@ -1599,6 +1599,71 @@
       "types": "./dist/components/forge/color/color-management.d.ts",
       "react-native": "./dist/components/forge/color/color-management.js",
       "default": "./dist/components/forge/color/color-management.js"
+    },
+    "./components/forge/color/LevelsEditor": {
+      "types": "./dist/components/forge/color/LevelsEditor.d.ts",
+      "react-native": "./dist/components/forge/color/LevelsEditor.js",
+      "default": "./dist/components/forge/color/LevelsEditor.js"
+    },
+    "./components/forge/color/LiveHistogram": {
+      "types": "./dist/components/forge/color/LiveHistogram.d.ts",
+      "react-native": "./dist/components/forge/color/LiveHistogram.js",
+      "default": "./dist/components/forge/color/LiveHistogram.js"
+    },
+    "./components/forge/color/ColorGradingWheels": {
+      "types": "./dist/components/forge/color/ColorGradingWheels.d.ts",
+      "react-native": "./dist/components/forge/color/ColorGradingWheels.js",
+      "default": "./dist/components/forge/color/ColorGradingWheels.js"
+    },
+    "./components/forge/color/HSLSecondaryEditor": {
+      "types": "./dist/components/forge/color/HSLSecondaryEditor.d.ts",
+      "react-native": "./dist/components/forge/color/HSLSecondaryEditor.js",
+      "default": "./dist/components/forge/color/HSLSecondaryEditor.js"
+    },
+    "./components/forge/color/color-adjustments": {
+      "types": "./dist/components/forge/color/color-adjustments.d.ts",
+      "react-native": "./dist/components/forge/color/color-adjustments.js",
+      "default": "./dist/components/forge/color/color-adjustments.js"
+    },
+    "./components/forge/color/GradientStopEditor": {
+      "types": "./dist/components/forge/color/GradientStopEditor.d.ts",
+      "react-native": "./dist/components/forge/color/GradientStopEditor.js",
+      "default": "./dist/components/forge/color/GradientStopEditor.js"
+    },
+    "./components/forge/color/CurvesEditor": {
+      "types": "./dist/components/forge/color/CurvesEditor.d.ts",
+      "react-native": "./dist/components/forge/color/CurvesEditor.js",
+      "default": "./dist/components/forge/color/CurvesEditor.js"
+    },
+    "./components/forge/color/VideoScopesPanel": {
+      "types": "./dist/components/forge/color/VideoScopesPanel.d.ts",
+      "react-native": "./dist/components/forge/color/VideoScopesPanel.js",
+      "default": "./dist/components/forge/color/VideoScopesPanel.js"
+    },
+    "./components/forge/color/SVColorField": {
+      "types": "./dist/components/forge/color/SVColorField.d.ts",
+      "react-native": "./dist/components/forge/color/SVColorField.js",
+      "default": "./dist/components/forge/color/SVColorField.js"
+    },
+    "./components/forge/color/HueSlider": {
+      "types": "./dist/components/forge/color/HueSlider.d.ts",
+      "react-native": "./dist/components/forge/color/HueSlider.js",
+      "default": "./dist/components/forge/color/HueSlider.js"
+    },
+    "./components/forge/color/GradientMeshEditor": {
+      "types": "./dist/components/forge/color/GradientMeshEditor.d.ts",
+      "react-native": "./dist/components/forge/color/GradientMeshEditor.js",
+      "default": "./dist/components/forge/color/GradientMeshEditor.js"
+    },
+    "./components/forge/color/gradient-mesh": {
+      "types": "./dist/components/forge/color/gradient-mesh.d.ts",
+      "react-native": "./dist/components/forge/color/gradient-mesh.js",
+      "default": "./dist/components/forge/color/gradient-mesh.js"
+    },
+    "./components/forge/color/EyedropperTool": {
+      "types": "./dist/components/forge/color/EyedropperTool.d.ts",
+      "react-native": "./dist/components/forge/color/EyedropperTool.js",
+      "default": "./dist/components/forge/color/EyedropperTool.js"
     }
   },
   "scripts": {

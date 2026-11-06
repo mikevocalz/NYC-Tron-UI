@@ -724,9 +724,14 @@
       "name": "SVColorField",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/SVColorField.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-03",
@@ -744,9 +749,14 @@
       "name": "HueSlider",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/HueSlider.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-05",
@@ -831,9 +841,14 @@
       "name": "EyedropperTool",
       "phase": "P07",
       "libraryScope": false,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/EyedropperTool.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-12",
@@ -890,18 +905,28 @@
       "name": "GradientStopEditor",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/GradientStopEditor.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-17",
       "name": "GradientMeshEditor",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/GradientMeshEditor.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-18",
@@ -919,54 +944,84 @@
       "name": "LiveHistogram",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/LiveHistogram.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-20",
       "name": "LevelsEditor",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/LevelsEditor.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-21",
       "name": "CurvesEditor",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/CurvesEditor.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-22",
       "name": "ColorGradingWheels",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/ColorGradingWheels.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-23",
       "name": "HSLSecondaryEditor",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/HSLSecondaryEditor.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-24",
       "name": "VideoScopesPanel",
       "phase": "P07",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
-      "acceptance": "unverified"
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/color/VideoScopesPanel.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
     },
     {
       "id": "C-25",

@@ -20,6 +20,8 @@ export interface ColorDiscPickerProps extends Omit<ViewProps,"children"> {
   readonly onCommit:(next:HsvColor)=>void;
   /** Largest disc diameter in layout units. @default 240 */
   readonly maxSize?:number;
+  /** Omit the separate brightness track when embedding the disc in grading controls. @default true */
+  readonly showBrightness?:boolean;
   readonly disabled?:boolean;
   /** Brightness track runs right to left. @default I18nManager.isRTL */
   readonly rtl?:boolean;
@@ -43,7 +45,7 @@ const r3=(n:number)=>Math.round(n*1000)/1000;
  * owning engine's color management and is not drawn here.
  */
 export function ColorDiscPicker({
-  value,onPreview,onCommit,maxSize=240,disabled=false,rtl,className,unstyled=false,testID,style,...rest
+  value,onPreview,onCommit,maxSize=240,showBrightness=true,disabled=false,rtl,className,unstyled=false,testID,style,...rest
 }:ColorDiscPickerProps){
   assertHsv(value);
   if(!Number.isFinite(maxSize)||maxSize<120||maxSize>800)throw new RangeError("maxSize must be 120..800");
@@ -130,7 +132,7 @@ export function ColorDiscPicker({
       </Text>
       <Text selectable {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{fontVariant:["tabular-nums"]}}>{opaque}</Text>
     </View>
-    <ChannelTrack label="Brightness" value={shown.v} step={0.01} rtl={rtl} disabled={disabled} unstyled={unstyled}
+    {showBrightness ? <ChannelTrack label="Brightness" value={shown.v} step={0.01} rtl={rtl} disabled={disabled} unstyled={unstyled}
       stops={[{r:0,g:0,b:0,alpha:1},hsvToRgb({h:shown.h,s:shown.s,v:1,alpha:1})]}
       valueText={v=>`Brightness ${Math.round(v*100)} percent`}
       thumbColor={v=>rgbaToHex(hsvToRgb({...shown,v,alpha:1}),false)}
@@ -138,6 +140,6 @@ export function ColorDiscPicker({
       // it would mask the next committed value.
       onPreview={v=>{const c={...value,v};store.set(s=>({...s,preview:v===value.v?undefined:c}));onPreview?.(c);}}
       onCommit={v=>{end();commit({...value,v});}}
-      {...(testID?{testID:testID+"-brightness"}:{})}/>
+      {...(testID?{testID:testID+"-brightness"}:{})}/> : null}
   </View>;
 }
