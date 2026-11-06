@@ -1,3 +1,4 @@
+import {valueAccessibility} from "../value-a11y.ts";
 import { useRef } from "react";
 import {
   PanResponder, Platform, Pressable, Text, View,
@@ -7,7 +8,7 @@ import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { cancelPreview } from "../cancel-preview.ts";
 import { joinClasses } from "../../styles.ts";
-import { describePan, dragToPan, formatPan, panToPosition, quantizePan, stepPan } from "./pan.ts";
+import { describeBalance, describePan, dragToPan, formatPan, panToPosition, quantizePan, stepPan } from "./pan.ts";
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */
 const HIT = 44;
@@ -21,8 +22,18 @@ type Local = { preview: number; active: boolean };
 export interface PanControlProps extends Omit<ViewProps, "children"> {
   /** Committed mono pan from the app or engine, -1 (left) .. 1 (right). */
   readonly value: number;
-  /** Channel name; the accessible name is `"<label> pan"`. */
+  /**
+   * Channel name; the accessible name is `"<label> pan"`, or
+   * `"<label> balance"` in balance mode.
+   */
   readonly label: string;
+  /**
+   * `"pan"` positions a mono source; `"balance"` is for a stereo bus, where
+   * the engine attenuates the far side and keeps the near side. Changes the
+   * accessible name, the caption and the spoken value; the drawn track and
+   * the short readout are the same. @default "pan"
+   */
+  readonly mode?: "pan" | "balance";
   /** Live preview while dragging, and the restored value on cancel. */
   readonly onChange?: (pan: number) => void;
   /**
@@ -52,13 +63,12 @@ export interface PanControlProps extends Omit<ViewProps, "children"> {
  * layouts: left is the left speaker and Right arrow pans right everywhere.
  * Text around it follows the layout direction.
  *
- * Balance (independent left/right gain for a stereo source) and surround
- * positioning are not offered: the Cadence engine stores one equal-power
- * mono pan per track. Both are deferred until the engine has a channel
- * layout per track.
+ * With `mode="balance"` the same control drives a bus balance (see
+ * {@linkcode describeBalance}). Surround positioning is not offered: the
+ * Cadence engine is stereo only (roster E-33, struck).
  */
 export function PanControl({
-  value, label, onChange, onCommit, step = 0.05, width = 120, hideLabel = false, disabled = false,
+  value, label, mode = "pan", onChange, onCommit, step = 0.05, width = 120, hideLabel = false, disabled = false,
   className, unstyled = false, ...rest
 }: PanControlProps) {
   if (!Number.isFinite(width) || width <= THUMB * 2) throw new RangeError(`Pan width must be greater than ${THUMB * 2}`);
@@ -141,13 +151,15 @@ export function PanControl({
   const fillWidth = Math.abs(x + THUMB / 2 - centreX);
   const webTrack = Platform.OS === "web" ? { touchAction: "pan-y" } as unknown as ViewStyle : undefined;
   const readout = formatPan(current);
-  const name = label + " pan";
+  const balance = mode === "balance";
+  const name = label + (balance ? " balance" : " pan");
+  const spoken = balance ? describeBalance(current) : describePan(current);
 
   return <View {...rest} {...{ className: joinClasses("items-center gap-1", className) }}>
-    {hideLabel ? null : <Text {...{ className: joinClasses(styled && "text-text-muted") }}>Pan</Text>}
+    {hideLabel ? null : <Text {...{ className: joinClasses(styled && "text-text-muted") }}>{balance ? "Balance" : "Pan"}</Text>}
     <View {...responder.current.panHandlers}
       accessible focusable={!disabled} accessibilityRole="adjustable" accessibilityLabel={name}
-      accessibilityValue={{ min: -100, max: 100, now: Math.round(current * 100), text: describePan(current) }}
+      {...valueAccessibility({ min: -100, max: 100, now: Math.round(current * 100), text: spoken })}
       accessibilityState={{ disabled }}
       accessibilityActions={[{ name: "increment" }, { name: "decrement" }, { name: "centre", label: "Centre" }]}
       onAccessibilityAction={e => {
@@ -170,7 +182,7 @@ export function PanControl({
         style={{ position: "absolute", left: x, width: THUMB, top: (HIT - 24) / 2, height: 24, borderRadius: 4, borderWidth: 2 }} />
     </View>
     <Pressable accessibilityRole="button" accessibilityLabel={"Centre " + name}
-      accessibilityHint={"Currently " + describePan(current)} disabled={disabled || current === 0}
+      accessibilityHint={"Currently " + spoken} disabled={disabled || current === 0}
       onPress={centre}
       {...{ className: joinClasses(styled && "rounded-control active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus") }}
       style={{ minWidth: HIT, minHeight: HIT, paddingHorizontal: 6, justifyContent: "center", alignItems: "center" }}>

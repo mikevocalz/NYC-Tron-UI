@@ -81,3 +81,16 @@ export function describePan(pan: number): string {
   if (percent === 0) return "centre";
   return percent + " percent " + (pan < 0 ? "left" : "right");
 }
+
+/**
+ * Spoken readout for a bus balance, which the Cadence engine applies by
+ * attenuating the far side and keeping the near side: `"centre"`,
+ * `"25 percent right, left side at 75 percent"`.
+ */
+export function describeBalance(pan: number): string {
+  assertPan(pan);
+  const percent = Math.round(Math.abs(pan) * 100);
+  if (percent === 0) return "centre";
+  const far = pan < 0 ? "right" : "left";
+  return percent + " percent " + (pan < 0 ? "left" : "right") + ", " + far + " side at " + (100 - percent) + " percent";
+}

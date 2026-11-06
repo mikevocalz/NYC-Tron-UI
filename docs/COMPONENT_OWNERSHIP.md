@@ -949,3 +949,7 @@ Phase 2 includes pure model/source tests and Chromium interaction tests with a Z
 ## 2026-11-05 canvas/layers recovery
 
 The local canvas, layers, selection, canvas-tools and vector controls are integrated with independent public exports. Ownership, callback boundaries, preserved ProCraft provenance and platform limits are recorded in [CANVAS_CLUSTER.md](CANVAS_CLUSTER.md). Generic controls remain owned by NYC-Tron; the Prism engine and adapter remain owned by Forge. No unpublished component is claimed as part of the alpha.3 release.
+
+## 2026-11-05 audio cluster 2 recovery
+
+The local audio automation/routing/inserts/analysis and MIDI extensions are integrated with independent exports. See [AUDIO_CLUSTER_2.md](AUDIO_CLUSTER_2.md) for ownership, input/accessibility fixes, control mappings and platform/backend limits. NYC-Tron owns generic UI; Forge owns Cadence DSP/document operations and its mixer adapter. These controls are unpublished and are not attributed to the alpha.3 release.

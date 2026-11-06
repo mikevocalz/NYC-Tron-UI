@@ -1328,6 +1328,111 @@
       "types": "./dist/components/forge/vector/vector-types.d.ts",
       "react-native": "./dist/components/forge/vector/vector-types.js",
       "default": "./dist/components/forge/vector/vector-types.js"
+    },
+    "./components/forge/audio/AutomationLane": {
+      "types": "./dist/components/forge/audio/AutomationLane.d.ts",
+      "react-native": "./dist/components/forge/audio/AutomationLane.js",
+      "default": "./dist/components/forge/audio/AutomationLane.js"
+    },
+    "./components/forge/audio/AutomationModePicker": {
+      "types": "./dist/components/forge/audio/AutomationModePicker.d.ts",
+      "react-native": "./dist/components/forge/audio/AutomationModePicker.js",
+      "default": "./dist/components/forge/audio/AutomationModePicker.js"
+    },
+    "./components/forge/audio/BusAndRoutingMatrix": {
+      "types": "./dist/components/forge/audio/BusAndRoutingMatrix.d.ts",
+      "react-native": "./dist/components/forge/audio/BusAndRoutingMatrix.js",
+      "default": "./dist/components/forge/audio/BusAndRoutingMatrix.js"
+    },
+    "./components/forge/audio/DynamicsTransferGraph": {
+      "types": "./dist/components/forge/audio/DynamicsTransferGraph.d.ts",
+      "react-native": "./dist/components/forge/audio/DynamicsTransferGraph.js",
+      "default": "./dist/components/forge/audio/DynamicsTransferGraph.js"
+    },
+    "./components/forge/audio/EQFrequencyGraph": {
+      "types": "./dist/components/forge/audio/EQFrequencyGraph.d.ts",
+      "react-native": "./dist/components/forge/audio/EQFrequencyGraph.js",
+      "default": "./dist/components/forge/audio/EQFrequencyGraph.js"
+    },
+    "./components/forge/audio/InsertEffectRack": {
+      "types": "./dist/components/forge/audio/InsertEffectRack.d.ts",
+      "react-native": "./dist/components/forge/audio/InsertEffectRack.js",
+      "default": "./dist/components/forge/audio/InsertEffectRack.js"
+    },
+    "./components/forge/audio/LoudnessMeter": {
+      "types": "./dist/components/forge/audio/LoudnessMeter.d.ts",
+      "react-native": "./dist/components/forge/audio/LoudnessMeter.js",
+      "default": "./dist/components/forge/audio/LoudnessMeter.js"
+    },
+    "./components/forge/audio/MixGroupBar": {
+      "types": "./dist/components/forge/audio/MixGroupBar.d.ts",
+      "react-native": "./dist/components/forge/audio/MixGroupBar.js",
+      "default": "./dist/components/forge/audio/MixGroupBar.js"
+    },
+    "./components/forge/audio/PluginPresetBrowser": {
+      "types": "./dist/components/forge/audio/PluginPresetBrowser.d.ts",
+      "react-native": "./dist/components/forge/audio/PluginPresetBrowser.js",
+      "default": "./dist/components/forge/audio/PluginPresetBrowser.js"
+    },
+    "./components/forge/audio/SpectrogramView": {
+      "types": "./dist/components/forge/audio/SpectrogramView.d.ts",
+      "react-native": "./dist/components/forge/audio/SpectrogramView.js",
+      "default": "./dist/components/forge/audio/SpectrogramView.js"
+    },
+    "./components/forge/audio/automation": {
+      "types": "./dist/components/forge/audio/automation.d.ts",
+      "react-native": "./dist/components/forge/audio/automation.js",
+      "default": "./dist/components/forge/audio/automation.js"
+    },
+    "./components/forge/audio/dynamics-graph": {
+      "types": "./dist/components/forge/audio/dynamics-graph.d.ts",
+      "react-native": "./dist/components/forge/audio/dynamics-graph.js",
+      "default": "./dist/components/forge/audio/dynamics-graph.js"
+    },
+    "./components/forge/audio/eq-graph": {
+      "types": "./dist/components/forge/audio/eq-graph.d.ts",
+      "react-native": "./dist/components/forge/audio/eq-graph.js",
+      "default": "./dist/components/forge/audio/eq-graph.js"
+    },
+    "./components/forge/audio/inserts": {
+      "types": "./dist/components/forge/audio/inserts.d.ts",
+      "react-native": "./dist/components/forge/audio/inserts.js",
+      "default": "./dist/components/forge/audio/inserts.js"
+    },
+    "./components/forge/audio/loudness": {
+      "types": "./dist/components/forge/audio/loudness.d.ts",
+      "react-native": "./dist/components/forge/audio/loudness.js",
+      "default": "./dist/components/forge/audio/loudness.js"
+    },
+    "./components/forge/audio/meter-ballistics": {
+      "types": "./dist/components/forge/audio/meter-ballistics.d.ts",
+      "react-native": "./dist/components/forge/audio/meter-ballistics.js",
+      "default": "./dist/components/forge/audio/meter-ballistics.js"
+    },
+    "./components/forge/audio/mix-groups": {
+      "types": "./dist/components/forge/audio/mix-groups.d.ts",
+      "react-native": "./dist/components/forge/audio/mix-groups.js",
+      "default": "./dist/components/forge/audio/mix-groups.js"
+    },
+    "./components/forge/audio/routing": {
+      "types": "./dist/components/forge/audio/routing.d.ts",
+      "react-native": "./dist/components/forge/audio/routing.js",
+      "default": "./dist/components/forge/audio/routing.js"
+    },
+    "./components/forge/audio/spectrogram": {
+      "types": "./dist/components/forge/audio/spectrogram.d.ts",
+      "react-native": "./dist/components/forge/audio/spectrogram.js",
+      "default": "./dist/components/forge/audio/spectrogram.js"
+    },
+    "./components/forge/midi/MidiChannelPicker": {
+      "types": "./dist/components/forge/midi/MidiChannelPicker.d.ts",
+      "react-native": "./dist/components/forge/midi/MidiChannelPicker.js",
+      "default": "./dist/components/forge/midi/MidiChannelPicker.js"
+    },
+    "./components/forge/midi/velocity-line": {
+      "types": "./dist/components/forge/midi/velocity-line.d.ts",
+      "react-native": "./dist/components/forge/midi/velocity-line.js",
+      "default": "./dist/components/forge/midi/velocity-line.js"
     }
   },
   "scripts": {
