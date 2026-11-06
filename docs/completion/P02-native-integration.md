@@ -31,3 +31,25 @@ orientation contract; no navigation or XR app configuration was changed.
 Captured runtime evidence and binary provenance belong to the companion Forge
 completion program, PR63. Physical devices, screen readers and the complete
 required host matrix remain separate acceptance gates.
+
+## Reserved regions, precision ink and lifecycle cleanup
+
+The reserved-regions package now ships its SwiftPM manifest with the same iOS
+16.4 floor and SDK-gated source tree as CocoaPods. Its package regression checks
+that the manifest remains in release files. Native consumer linking is validated
+separately; these source checks do not prove physical foldable geometry.
+
+PrecisionScrubber accepts app-owned scaleColor/accentColor for native consumers
+without CSS. The forced-colors web branch retains system colors. Cadence's native
+lab uses the existing instrument bindings, so range and step match Rust. On both
+iOS and Android simulators, a decrement committed 1 to 0.99; OS-injected F7/F8
+restored 1 and 0.99. This is simulator keyboard evidence, not physical-keyboard or
+screen-reader acceptance.
+
+Playback session disposal now stops listeners immediately, suppresses late
+callbacks, drains accepted native operations and releases OS focus once. Await
+its returned promise when teardown must finish before another owner starts.
+Synchronous haptic bridge failures are treated as missed feedback, like rejected
+promises; invalid throttle intervals reject. Regression tests exercise these
+resource races and synchronous failures without claiming native interruption or
+physical motor output acceptance.

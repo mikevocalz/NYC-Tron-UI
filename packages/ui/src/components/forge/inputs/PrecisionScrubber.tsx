@@ -32,6 +32,9 @@ export interface PrecisionScrubberProps extends Omit<ViewProps,"children">,Range
   transport?:DragTransport;
   className?:string;
   unstyled?:boolean;
+  /** App-owned scale ink for native hosts without a CSS class pipeline. */
+  scaleColor?:string;
+  accentColor?:string;
 }
 
 type Pointer={hovered:boolean;focused:boolean};
@@ -52,7 +55,7 @@ const MODE_LABEL={fine:"Fine precision",normal:"Normal precision",coarse:"Coarse
  */
 export function PrecisionScrubber({
   label,value,min,max,step,detents,unit,disabled=false,onPreview,onCommit,
-  forcedColors=false,transport:Transport=PanResponderDrag,className,unstyled=false,style,...rest
+  forcedColors=false,transport:Transport=PanResponderDrag,className,unstyled=false,scaleColor,accentColor,style,...rest
 }:PrecisionScrubberProps){
   const latest=useRef({value,min,max,step,detents,disabled,onPreview,onCommit});
   latest.current={value,min,max,step,detents,disabled,onPreview,onCommit};
@@ -73,7 +76,7 @@ export function PrecisionScrubber({
   const reached=normalize(state.preview,min,max);
   const forced=forcedColors&&Platform.OS==="web";
   const styled=!unstyled;
-  const ink=forced?{line:{backgroundColor:CANVAS_TEXT,...SYSTEM_INK},accent:{backgroundColor:HIGHLIGHT,...SYSTEM_INK}}:undefined;
+  const ink=forced?{line:{backgroundColor:CANVAS_TEXT,...SYSTEM_INK},accent:{backgroundColor:HIGHLIGHT,...SYSTEM_INK}}:{line:{backgroundColor:scaleColor},accent:{backgroundColor:accentColor}};
   const lineClass=joinClasses(styled&&!forced&&"bg-border");
   const accentClass=joinClasses(styled&&!forced&&"bg-accent");
   const scaleBorder=state.active?"border-accent":focused?"border-focus":hovered?"border-text-muted":"border-border";

@@ -108,7 +108,7 @@ test("playback session: native events drive onAction; activate reports refusal",
   listeners.forEach(l=>l({type:"bogus"}));
   listeners.forEach(l=>l({type:"interruption-ended",shouldResume:true}));
   assert.deepEqual(actions,["pause","resume"]);
-  session.dispose();
+  await session.dispose();
   assert.equal(listeners.size,0);
   const web=createPlaybackSession(null,{onAction:a=>actions.push(a)});
   assert.equal(await web.activate({category:"playback"}),false);
@@ -139,4 +139,32 @@ test("documentPickerSource maps FilePicker's accept string to picker types",asyn
   const source=documentPickerSource({pick:async o=>{seen.push(o);return [];}},"open-in-place");
   await source.pick({accept:" .docx, image/png ,",multiple:true});
   assert.deepEqual(seen[0],{types:[".docx","image/png"],multiple:true,mode:"open-in-place"});
+});
+
+test("playback disposal drains activation, ignores stale callbacks and releases focus once",async()=>{
+  let finish,listener;
+  const calls=[];
+  const native={activate:()=>{calls.push("activate");return new Promise(resolve=>{finish=resolve;});},
+    deactivate:async()=>{calls.push("deactivate");},addListener:(_n,l)=>{listener=l;return {remove:()=>calls.push("remove")};}};
+  const session=createPlaybackSession(native,{onAction:()=>{throw Error("late callback");}});
+  const activation=session.activate({category:"playback"});
+  await Promise.resolve();
+  session.setIntent("playing");
+  const disposal=session.dispose();
+  assert.equal(session.dispose(),disposal);
+  listener({type:"interruption-began"});
+  session.setIntent("playing");
+  assert.equal(session.store.getState().intent,"paused");
+  await assert.rejects(session.activate({category:"playback"}),/disposed/);
+  assert.deepEqual(calls,["activate","remove"]);
+  finish(true);
+  await activation;await disposal;
+  assert.deepEqual(calls,["activate","remove","deactivate"]);
+});
+
+test("haptics: synchronous native failures are harmless and invalid intervals reject",()=>{
+  const haptics=createHaptics({play:()=>{throw Error("missing activity");},prepare:()=>{throw Error("missing activity");}});
+  assert.equal(haptics.play("light"),false);
+  assert.doesNotThrow(()=>haptics.prepare("light"));
+  for(const minIntervalMs of [-1,NaN,Infinity])assert.throws(()=>createHaptics(null,{minIntervalMs}),RangeError);
 });
