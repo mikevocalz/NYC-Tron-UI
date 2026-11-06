@@ -88,3 +88,7 @@ Current STTextView is GPL/commercial, despite older downstream descriptions sayi
 KeyboardKit's README badges it as commercially licensed (KeyboardKit Pro needs a license key).
 No code/assets from these packages are copied here. Kando assets have separate licenses.
 Root license review never substitutes for dependency/file notices.
+
+## Recovery integration checkpoint
+
+PR #26 was updated by merging current main (including #53 / alpha.4) into its preserved history. The Floating UI calculation, inlined utility helpers and MIT license were checked against their exact pinned upstream blobs. This is a pure geometry subpath; the other source candidates remain unported. Existing app window/navigation/state contracts are unchanged. The published alpha.4 assets are immutable and do not include this later subpath; it is available from source until a subsequent release. Current build/type/export/tarball checks are rerun for this integration rather than inferred from the earlier 156-test checkpoint.

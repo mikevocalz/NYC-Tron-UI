@@ -61,7 +61,20 @@
     "platformVerification": "NOT RUN",
     "admission": "Selected source and root license reviewed; transitive files, build integration and distribution notices must be reviewed before further copying.",
     "verifiedAtCommit": "e1e9f88993c19426563decfcc991feb706f1ac66",
-    "licenseUrl": "https://github.com/floating-ui/floating-ui/blob/e1e9f88993c19426563decfcc991feb706f1ac66/LICENSE"
+    "licenseUrl": "https://github.com/floating-ui/floating-ui/blob/e1e9f88993c19426563decfcc991feb706f1ac66/LICENSE",
+    "inlinedHelpers": {
+      "path": "packages/utils/src/index.ts",
+      "blobSha": "c6c7bd7b0d5a9a41e5e2d45606ac468bcfb1f615",
+      "functions": [
+        "getSide",
+        "getAlignment",
+        "getAxisLength",
+        "getAlignmentAxis",
+        "getSideAxis",
+        "getOppositeAxis"
+      ],
+      "license": "same pinned root MIT license"
+    }
   },
   {
     "repository": "TanStack/virtual",
