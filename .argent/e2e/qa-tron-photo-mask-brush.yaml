@@ -1,0 +1,20 @@
+steps:
+  - echo: Restart the standalone library consumer and verify its Assets baseline.
+  - launch: com.nyctron.instruments.example
+  - await: { visible: { text: Search assets }, timeout: 15000 }
+  - await: { idle: true }
+  - echo: Open photo controls, then Masks; expect the mask brush settings and an untouched document.
+  - tap: { text: photo }
+  - await: { visible: { text: Non-destructive develop settings } }
+  - await: { idle: true }
+  - tap: { text: Masks }
+  - await: { visible: { text: Mask brush radius pixels } }
+  - await: { text: { in: { text: Photo mask consumer state }, contains: '"commits":0' } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Mask brush stamp x fraction }, direction: down }
+  - echo: Draw one native brush gesture; expect one document commit with add-mask intent and cleared preview.
+  - swipe: { from: { text: Mask brush drawing surface }, by: { x: 0.2, y: 0.04 }, duration: 450, momentum: false }
+  - await: { text: { in: { text: Photo mask consumer state }, contains: '"commits":1' } }
+  - await: { text: { in: { text: Photo mask consumer state }, contains: '"operation":"add"' } }
+  - await: { text: { in: { text: Photo mask consumer state }, contains: '"previewPoints":0' } }
+  - await: { idle: true }

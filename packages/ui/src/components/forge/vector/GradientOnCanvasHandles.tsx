@@ -37,6 +37,8 @@ export interface GradientOnCanvasHandlesProps extends Omit<ViewProps,"children">
   children?:ReactNode;
   /** Show the stop and focal commands under the overlay. @default true */
   showCommands?:boolean;
+  /** Geometry-only overlays (e.g. photo masks) do not expose or add paint stops. */
+  geometryOnly?:boolean;
   /** @default "Gradient" */
   label?:string;
   /** Optional override; defaults to the theme's accent token. */
@@ -76,7 +78,7 @@ const ACTION_DELTA:Record<string,Point|undefined>={
  */
 export function GradientOnCanvasHandles({
   paint,width,height,transform=IDENTITY_TRANSFORM,selectedStop,onSelectStop,onPreview,onSetFill,children,
-  showCommands=true,label="Gradient",accentColor,className,unstyled=false,style,...rest
+  showCommands=true,geometryOnly=false,label="Gradient",accentColor,className,unstyled=false,style,...rest
 }:GradientOnCanvasHandlesProps){
   validateGradient(paint);
   validateTransform(transform);
@@ -210,6 +212,7 @@ export function GradientOnCanvasHandles({
     onBegin:point=>{pressAt.current=point;},
     onMove:()=>{},
     onRelease:point=>{
+      if(geometryOnly){pressAt.current=null;return;}
       const start=pressAt.current;
       pressAt.current=null;
       if(!start||Math.hypot(point.x-start.x,point.y-start.y)>TAP_SLOP*2)return;
@@ -251,7 +254,7 @@ export function GradientOnCanvasHandles({
       {circle.slice(1).map((pt,i)=><LinePiece key={"c"+i} from={circle[i]!} to={pt} thickness={1} opacity={0.7}
         className={accentLine} color={accentColor}/>)}
       <LinePiece from={view(from)} to={view(to)} thickness={2} className={accentLine} color={accentColor}/>
-      <LinePiece from={r.a} to={r.b} thickness={1} className={joinClasses(styled&&"bg-text-muted")}/>
+      {!geometryOnly?<LinePiece from={r.a} to={r.b} thickness={1} className={joinClasses(styled&&"bg-text-muted")}/>:null}
       {gradientHandles(shown).map(({handle,point})=>{
         const target:Target={kind:"handle",handle};
         return <CanvasKnob key={handle} at={view(point)} selected={false} styled={styled} zIndex={handle==="focal"?3:2}
@@ -269,7 +272,7 @@ export function GradientOnCanvasHandles({
           {handleGlyph(handle)}
         </CanvasKnob>;
       })}
-      {shown.stops.map((stop,index)=>{
+      {!geometryOnly&&shown.stops.map((stop,index)=>{
         const v=view(stopPoint(shown,stop.offset));
         const isSel=selected===index;
         const target:Target={kind:"stop",index};
@@ -298,7 +301,7 @@ export function GradientOnCanvasHandles({
         </CanvasKnob>;
       })}
     </View>
-    {showCommands?<View accessibilityRole="toolbar" aria-label="Gradient commands"
+    {showCommands&&!geometryOnly?<View accessibilityRole="toolbar" aria-label="Gradient commands"
       style={{flexDirection:"row",flexWrap:"wrap",gap:6,maxWidth:Math.max(width,320)}}>
       <VectorButton label="Add stop" styled={styled} onBlocked={block} onPress={addBetween}
         reason={availabilityReason(addStopAvailability(shown))}/>
@@ -310,6 +313,6 @@ export function GradientOnCanvasHandles({
           if(p.type==="radial"){store.setState({notice:undefined});latest.current.onSetFill(toggleFocal(p));}
         }}/>:null}
     </View>:null}
-    {showCommands?<NoticeLine text={notice??HINT} styled={styled} testID="gradient-notice"/>:null}
+    {showCommands&&!geometryOnly?<NoticeLine text={notice??HINT} styled={styled} testID="gradient-notice"/>:null}
   </View>;
 }

@@ -2267,30 +2267,45 @@
       "name": "LocalMaskBrush",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/LocalMaskBrush.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Add/subtract mask with feather and brush controls."
+      "requirement": "Add/subtract mask with feather and brush controls.",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
     },
     {
       "id": "F-10",
       "name": "LinearRadialGradientMask",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/LinearRadialGradientMask.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Interactive mask geometry and falloff."
+      "requirement": "Interactive mask geometry and falloff.",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
     },
     {
       "id": "F-11",
       "name": "LuminanceColorRangeMask",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/LuminanceColorRangeMask.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Range pickers, tolerance, combine masks."
+      "requirement": "Range pickers, tolerance, combine masks.",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
     },
     {
       "id": "F-12",
@@ -2357,10 +2372,15 @@
       "name": "CleanupAndRetouchPanel",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/CleanupAndRetouchPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Localized spot cleanup with native brush marks, bounded radius and preview. *Source candidate: `lightcraft/ui/RemoveTool.kt`; requires verified implementation and license admission.*"
+      "requirement": "Localized spot cleanup with native brush marks, bounded radius and preview. *Source candidate: `lightcraft/ui/RemoveTool.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
     },
     {
       "id": "F-17",

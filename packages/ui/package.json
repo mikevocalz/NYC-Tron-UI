@@ -1769,6 +1769,31 @@
       "types": "./dist/components/forge/photo/photo-export.d.ts",
       "react-native": "./dist/components/forge/photo/photo-export.js",
       "default": "./dist/components/forge/photo/photo-export.js"
+    },
+    "./components/forge/photo/LocalMaskBrush": {
+      "types": "./dist/components/forge/photo/LocalMaskBrush.d.ts",
+      "react-native": "./dist/components/forge/photo/LocalMaskBrush.js",
+      "default": "./dist/components/forge/photo/LocalMaskBrush.js"
+    },
+    "./components/forge/photo/CleanupAndRetouchPanel": {
+      "types": "./dist/components/forge/photo/CleanupAndRetouchPanel.d.ts",
+      "react-native": "./dist/components/forge/photo/CleanupAndRetouchPanel.js",
+      "default": "./dist/components/forge/photo/CleanupAndRetouchPanel.js"
+    },
+    "./components/forge/photo/LinearRadialGradientMask": {
+      "types": "./dist/components/forge/photo/LinearRadialGradientMask.d.ts",
+      "react-native": "./dist/components/forge/photo/LinearRadialGradientMask.js",
+      "default": "./dist/components/forge/photo/LinearRadialGradientMask.js"
+    },
+    "./components/forge/photo/LuminanceColorRangeMask": {
+      "types": "./dist/components/forge/photo/LuminanceColorRangeMask.d.ts",
+      "react-native": "./dist/components/forge/photo/LuminanceColorRangeMask.js",
+      "default": "./dist/components/forge/photo/LuminanceColorRangeMask.js"
+    },
+    "./components/forge/photo/photo-masks": {
+      "types": "./dist/components/forge/photo/photo-masks.d.ts",
+      "react-native": "./dist/components/forge/photo/photo-masks.js",
+      "default": "./dist/components/forge/photo/photo-masks.js"
     }
   },
   "scripts": {
