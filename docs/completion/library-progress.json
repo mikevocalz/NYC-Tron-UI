@@ -2440,20 +2440,30 @@
       "name": "KeyframeValueGraph",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/KeyframeValueGraph.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Bezier values, handles, interpolation and limits."
+      "requirement": "Bezier values, handles, interpolation and limits.",
+      "evidence": [
+        "P11-motion-curves.md"
+      ]
     },
     {
       "id": "G-04",
       "name": "KeyframeSpeedGraph",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/KeyframeSpeedGraph.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Temporal easing and velocity visualization."
+      "requirement": "Temporal easing and velocity visualization.",
+      "evidence": [
+        "P11-motion-curves.md"
+      ]
     },
     {
       "id": "G-05",
@@ -2565,10 +2575,15 @@
       "name": "TimeRemapCurve",
       "phase": "P11",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/motion/TimeRemapCurve.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Source time against composition time and interpolation."
+      "requirement": "Source time against composition time and interpolation.",
+      "evidence": [
+        "P11-motion-curves.md"
+      ]
     },
     {
       "id": "G-14",

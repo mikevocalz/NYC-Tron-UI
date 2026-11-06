@@ -40,7 +40,7 @@ export interface UnitInputProps extends Omit<ViewProps,"children"> {
   unstyled?:boolean;
 }
 
-type Local={editing:boolean;draft:string;error:string|undefined};
+type Local={editing:boolean;dirty:boolean;draft:string;error:string|undefined};
 const PLAIN:UnitContext={dimension:"ratio",unit:"x"};
 
 /** Display text for a plain or unit value. */
@@ -63,11 +63,11 @@ export function UnitInput({
 }:UnitInputProps){
   const styled=!unstyled;
   const local=useRef<StoreApi<Local>|null>(null);
-  if(!local.current)local.current=createStore<Local>(()=>({editing:false,draft:"",error:undefined}));
+  if(!local.current)local.current=createStore<Local>(()=>({editing:false,dirty:false,draft:"",error:undefined}));
   const store=local.current;
   const active=useRef(false),committedScope=useRef(scope);
-  useLayoutEffect(()=>{active.current=true;committedScope.current=scope;store.setState({editing:false,draft:"",error:undefined});return()=>{active.current=false;};},[scope,store]);
-  useLayoutEffect(()=>{if(disabled)store.setState({editing:false,draft:"",error:undefined});},[disabled,store]);
+  useLayoutEffect(()=>{active.current=true;committedScope.current=scope;store.setState({editing:false,dirty:false,draft:"",error:undefined});return()=>{active.current=false;};},[scope,store]);
+  useLayoutEffect(()=>{if(disabled)store.setState({editing:false,dirty:false,draft:"",error:undefined});},[disabled,store]);
   const allowed=()=>!disabled&&active.current&&committedScope.current===scope;
   const {editing,draft,error}=useStore(store,s=>s);
   const shown=display(value,context,precision);
@@ -76,13 +76,14 @@ export function UnitInput({
   const commit=(next:number)=>{
     if(!allowed())return;
     const bounded=bound(next);
-    store.setState({editing:false,error:undefined});
+    store.setState({editing:false,dirty:false,error:undefined});
     if(bounded!==value)onCommit(bounded);
   };
   const apply=()=>{
     if(!allowed())return;
     const s=store.getState();
     if(!s.editing)return;
+    if(!s.dirty){store.setState({editing:false,error:undefined});return;}
     const result=parseUnitExpression(s.draft,context??PLAIN);
     if(!result.ok){store.setState({error:result.error});return;}
     commit(result.value);
@@ -90,7 +91,9 @@ export function UnitInput({
   const nudge=(steps:number)=>{
     if(!allowed())return;
     const scale=context?unitScale(context.unit,context):1;
-    commit(value+steps*step*scale);
+    const state=store.getState(),parsed=state.editing&&state.dirty?parseUnitExpression(state.draft,context??PLAIN):undefined;
+    const base=parsed?.ok?parsed.value:value;
+    commit(base+steps*step*scale);
   };
   const errorId=`unit-error-${label.replace(/\W+/g,"-")}`;
   return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
@@ -102,8 +105,8 @@ export function UnitInput({
         selectTextOnFocus inputMode="text" autoCorrect={false} autoCapitalize="none" returnKeyType="done"
         // Enter commits and keeps focus, so an error stays next to the text that caused it.
         submitBehavior="submit" {...(Platform.OS==="web"?{blurOnSubmit:false}:{})}
-        onFocus={()=>{if(allowed())store.setState({editing:true,draft:shown,error:undefined});}}
-        onChangeText={text=>{if(allowed())store.setState({editing:true,draft:text,error:undefined});}}
+        onFocus={()=>{if(allowed())store.setState({editing:true,dirty:false,draft:shown,error:undefined});}}
+        onChangeText={text=>{if(allowed())store.setState({editing:true,dirty:true,draft:text,error:undefined});}}
         onSubmitEditing={apply}
         onBlur={()=>{
           apply();
@@ -113,7 +116,7 @@ export function UnitInput({
         }}
         onKeyPress={event=>{
           const k=shellKey(event);
-          if(k.key==="Escape"){store.setState({editing:false,error:undefined,draft:shown});return;}
+          if(k.key==="Escape"){store.setState({editing:false,dirty:false,error:undefined,draft:shown});return;}
           if(k.key==="ArrowUp"||k.key==="ArrowDown"){
             k.preventDefault();
             nudge((k.key==="ArrowUp"?1:-1)*(k.shiftKey?10:k.altKey?0.1:1));

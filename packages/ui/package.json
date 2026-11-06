@@ -1839,6 +1839,26 @@
       "types": "./dist/components/forge/motion/motion-render.d.ts",
       "react-native": "./dist/components/forge/motion/motion-render.js",
       "default": "./dist/components/forge/motion/motion-render.js"
+    },
+    "./components/forge/motion/KeyframeValueGraph": {
+      "types": "./dist/components/forge/motion/KeyframeValueGraph.d.ts",
+      "react-native": "./dist/components/forge/motion/KeyframeValueGraph.js",
+      "default": "./dist/components/forge/motion/KeyframeValueGraph.js"
+    },
+    "./components/forge/motion/KeyframeSpeedGraph": {
+      "types": "./dist/components/forge/motion/KeyframeSpeedGraph.d.ts",
+      "react-native": "./dist/components/forge/motion/KeyframeSpeedGraph.js",
+      "default": "./dist/components/forge/motion/KeyframeSpeedGraph.js"
+    },
+    "./components/forge/motion/TimeRemapCurve": {
+      "types": "./dist/components/forge/motion/TimeRemapCurve.d.ts",
+      "react-native": "./dist/components/forge/motion/TimeRemapCurve.js",
+      "default": "./dist/components/forge/motion/TimeRemapCurve.js"
+    },
+    "./components/forge/motion/motion-curves": {
+      "types": "./dist/components/forge/motion/motion-curves.d.ts",
+      "react-native": "./dist/components/forge/motion/motion-curves.js",
+      "default": "./dist/components/forge/motion/motion-curves.js"
     }
   },
   "scripts": {

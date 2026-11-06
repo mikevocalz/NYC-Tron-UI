@@ -23,6 +23,6 @@ Implementation checkpoints are committed and pushed separately; the canonical le
 | P04 | Numeric scrub/unit entry, assets, history, find/replace and real status/progress | [Native consumer contract](P19-native-library-contract.md), [Unit input review](P11-motion-settings.md) |
 | P07 | All 27 color controls | [Specification](P07-color-specification.md), [existing controls review](P07-existing-color-review.md), [native P3](P07-native-p3.md) |
 | P10 | All 18 photo controls | [Develop](P10-photo-develop.md), [catalog](P10-photo-catalog.md), [workflows](P10-photo-workflows.md), [masks/native proof](P10-photo-masks.md) |
-| P11 | Transform, camera/light, matte, emitter, easing and render queue; remaining motion controls open | [Settings](P11-motion-settings.md), [queue/easing](P11-render-and-easing.md) |
+| P11 | Scene settings, easing/render queue and value/speed/retiming graphs; remaining motion controls open | [Settings](P11-motion-settings.md), [queue/easing](P11-render-and-easing.md), [curves](P11-motion-curves.md) |
 
 This table records implementation checkpoints, not complete acceptance across the eight required platforms. Every other canonical component remains in library-progress.json for implementation or source review. Forge integration resumes after NYC-Tron completion.
