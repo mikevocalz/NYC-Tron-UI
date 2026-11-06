@@ -1,5 +1,5 @@
 import { useRef, type ComponentRef } from "react";
-import { I18nManager, Platform, Pressable, Text, View, type ViewProps } from "react-native";
+import { I18nManager, Platform, Pressable, Text, View, type ViewProps, type StyleProp, type ViewStyle, type TextStyle } from "react-native";
 import { joinClasses } from "./styles.ts";
 import { domIsRTL, isModified, nextChoiceIndex, rovingStop, webKey } from "./forms/choice-keys.ts";
 
@@ -21,6 +21,10 @@ export interface SegmentedControlProps<T extends string=string> extends Omit<Vie
   /** Classes for every segment, e.g. a flex-basis that wraps four into a 2x2 grid. */
   segmentClassName?:string;
   labelClassName?:string;
+  /** App-authored segment geometry/colors, including hosts without CSS interop. */
+  segmentStyle?:StyleProp<ViewStyle>|((state:{selected:boolean;disabled:boolean;pressed:boolean})=>StyleProp<ViewStyle>);
+  /** App-authored native label styling. */
+  labelStyle?:StyleProp<TextStyle>;
   /** No default visual classes: the app supplies the full recipe. */
   unstyled?:boolean;
 }
@@ -33,7 +37,7 @@ export interface SegmentedControlProps<T extends string=string> extends Omit<Vie
  * well wraps onto extra rows instead of overflowing a narrow pane.
  */
 export function SegmentedControl<T extends string=string>({
-  options,value,onChange,disabled=false,className,segmentClassName,labelClassName,unstyled=false,
+  options,value,onChange,disabled=false,className,segmentClassName,labelClassName,segmentStyle,labelStyle,unstyled=false,style,
   "aria-label":ariaLabel,"aria-labelledby":ariaLabelledBy,...rest
 }:SegmentedControlProps<T>){
   const styled=!unstyled;
@@ -57,6 +61,7 @@ export function SegmentedControl<T extends string=string>({
     select(next);
   };
   return <View {...rest} role="radiogroup" aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}
+    style={[{flexDirection:"row",flexWrap:"wrap"},style]}
     aria-disabled={disabled||undefined}
     {...{className:joinClasses("max-w-full flex-row flex-wrap",
       styled&&"gap-0.5 self-start rounded-control border border-border bg-surface-sunken p-0.5",className)}}>
@@ -65,13 +70,17 @@ export function SegmentedControl<T extends string=string>({
       return <Pressable key={option.value} ref={node=>{refs.current[i]=node;}}
         role="radio" aria-checked={active} disabled={off[i]}
         accessibilityState={{checked:active,disabled:off[i]}}
+        style={({pressed})=>[
+          {minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center"},
+          typeof segmentStyle==="function"?segmentStyle({selected:active,disabled:!!off[i],pressed}):segmentStyle,
+        ]}
         onPress={()=>select(i)}
         {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}:{})}
         {...{className:joinClasses("min-h-11 min-w-11 shrink-0 grow items-center justify-center",
           styled&&"rounded-control px-3 py-1.5 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none",
           styled&&(active?"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]":"bg-transparent hover:bg-surface-raised"),
           off[i]&&"opacity-50",segmentClassName)}}>
-        <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm font-medium",
+        <Text numberOfLines={1} style={labelStyle} {...{className:joinClasses(styled&&"text-sm font-medium",
           styled&&(active?"text-on-primary":"text-text"),labelClassName)}}>{option.label}</Text>
       </Pressable>;
     })}

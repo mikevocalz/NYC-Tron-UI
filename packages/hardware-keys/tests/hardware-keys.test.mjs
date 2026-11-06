@@ -22,6 +22,16 @@ const read=path=>readFileSync(join(root,path),"utf8");
 const kotlinDir="android/src/main/java/com/nyctron/hardwarekeys";
 const config=JSON.parse(read("expo-module.config.json"));
 
+test("SwiftPM package is shipped and preserves the pod's platform and module identity",()=>{
+  const pod=read("ios/NYCTronHardwareKeys.podspec"), spm=read("Package.swift");
+  const floor=pod.match(/ios: '([^']+)'/)[1];
+  const module=pod.match(/s\.name\s*=\s*'([^']+)'/)[1];
+  assert.ok(spm.includes(`.iOS("${floor}")`));
+  assert.ok(spm.includes(`name: "${module}"`));
+  assert.ok(JSON.parse(read("package.json")).files.includes("Package.swift"));
+  assert.match(spm,/path: "ios"/);
+});
+
 test("expo-module.config.json autolinks both platforms; android stays off the legacy list",()=>{
   assert.deepEqual(config.platforms,["apple","android"]);
   assert.deepEqual(config.apple?.modules,["NYCTronHardwareKeysModule"]);
