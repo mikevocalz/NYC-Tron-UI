@@ -8,7 +8,7 @@ Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavi
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
 > **Status: alpha prerelease, not native-certified.** The current prerelease,
-> [v0.1.0-alpha.3](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.3)
+> [v0.1.0-alpha.4](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4)
 > (2026-11-05), ships one tarball per package plus `SHA256SUMS` as GitHub
 > Release assets; see [Installing from a release](#installing-from-a-release).
 > Nothing is published to npm. CI validates pure policies, source boundaries,
@@ -121,14 +121,14 @@ https://github.com/mikevocalz/NYC-Tron-UI/releases/download/<tag>/<file>.tgz
 | `@nyc-tron/native-controls` | `nyc-tron-native-controls-<version>.tgz` |
 | `@nyc-tron/expo-controls` | `nyc-tron-expo-controls-<version>.tgz` |
 
-For the current prerelease, `v0.1.0-alpha.3`:
+For the current prerelease, `v0.1.0-alpha.4`:
 
 ```json
 {
   "dependencies": {
-    "@nyc-tron/core": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.3/nyc-tron-core-0.1.0-alpha.3.tgz",
-    "@nyc-tron/ui": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.3/nyc-tron-ui-0.1.0-alpha.3.tgz",
-    "@nyc-tron/panes": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.3/nyc-tron-panes-0.1.0-alpha.3.tgz"
+    "@nyc-tron/core": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.4/nyc-tron-core-0.1.0-alpha.4.tgz",
+    "@nyc-tron/ui": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.4/nyc-tron-ui-0.1.0-alpha.4.tgz",
+    "@nyc-tron/panes": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v0.1.0-alpha.4/nyc-tron-panes-0.1.0-alpha.4.tgz"
   }
 }
 ```
@@ -151,7 +151,7 @@ To check the tarballs before pinning them, download them with the release's
 `SHA256SUMS` and verify:
 
 ```sh
-gh release download v0.1.0-alpha.3 --repo mikevocalz/NYC-Tron-UI \
+gh release download v0.1.0-alpha.4 --repo mikevocalz/NYC-Tron-UI \
   -p SHA256SUMS -p 'nyc-tron-core-*.tgz' -p 'nyc-tron-ui-*.tgz'
 shasum -a 256 -c SHA256SUMS --ignore-missing
 ```
