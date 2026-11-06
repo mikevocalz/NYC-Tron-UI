@@ -206,3 +206,9 @@ test("injected color renderer receives live brightness and retains the disc inpu
  await expect(commits(page)).toHaveText('commits 2');
  await expect(hsv(page)).toHaveText('hsv 222 72 83 85');
 });
+
+
+test("harmony sample paints the same alpha used by its contrast calculation",async({page})=>{
+ await page.goto('/color?mode=compact');
+ await expect(page.getByText('Aa Sample heading',{exact:true})).toHaveCSS('color',/rgba\(.+, 0\.85\)/);
+});

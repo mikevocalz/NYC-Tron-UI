@@ -39,6 +39,7 @@ export function AlphaSlider({
   // Reads the store, not the render's draft: submit and blur can both fire
   // before a re-render, and the second call must see the cleared draft.
   const apply=()=>{
+    if(disabled)return;
     const d=store.get();
     if(d.text===undefined)return;
     const n=parseOpacityPercent(d.text);

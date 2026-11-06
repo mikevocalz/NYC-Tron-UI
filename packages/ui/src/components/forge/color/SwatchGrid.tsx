@@ -61,7 +61,7 @@ export function SwatchGrid({
       <Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>
         {`No swatches match “${trimmed}”.`}
       </Text>
-      <Button title="Clear search" variant="secondary" size="sm" onPress={()=>onQueryChange("")}/>
+      <Button title="Clear search" variant="secondary" size="sm" disabled={disabled} onPress={()=>onQueryChange("")}/>
     </View>:null}
     {shown.map(group=><View key={group.id} style={{gap:6}}>
       <Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{group.label}</Text>

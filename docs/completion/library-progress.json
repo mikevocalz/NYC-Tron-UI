@@ -807,9 +807,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/ColorPickerDialog.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Original/new comparison, commit/cancel, live preview."
+      "requirement": "Original/new comparison, commit/cancel, live preview.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-02",
@@ -834,9 +837,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/ColorWheel.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Hue ring with precision selector and hue retention."
+      "requirement": "Hue ring with precision selector and hue retention.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-04",
@@ -861,9 +867,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/AlphaSlider.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Checkerboard transparency preview and direct entry."
+      "requirement": "Checkerboard transparency preview and direct entry.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-06",
@@ -871,11 +880,14 @@
       "phase": "P07",
       "libraryScope": true,
       "sourceCandidates": [
-        "packages/ui/src/components/forge/ColorChannels.tsx"
+        "packages/ui/src/components/forge/color/ColorChannelFields.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "RGB, HSL, HSV, HEX and alpha values."
+      "requirement": "RGB, HSL, HSV, HEX and alpha values.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-07",
@@ -962,9 +974,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/ForegroundBackgroundChips.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Swap and reset foreground/background colors."
+      "requirement": "Swap and reset foreground/background colors.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-13",
@@ -974,9 +989,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/SwatchGrid.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Recent, document, saved, named and searchable swatches."
+      "requirement": "Recent, document, saved, named and searchable swatches.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-14",
@@ -1049,9 +1067,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Complementary, analogous and accessible contrast preview."
+      "requirement": "Complementary, analogous and accessible contrast preview.",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-19",
@@ -1171,9 +1192,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/FloatingColorPalette.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Dock/undock mobile color picker with compact, classic and palette modes; preserve active document colors. *Source candidate: `procraft/ui/ColorPanel.kt`; requires verified implementation and license admission.*"
+      "requirement": "Dock/undock mobile color picker with compact, classic and palette modes; preserve active document colors. *Source candidate: `procraft/ui/ColorPanel.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
     },
     {
       "id": "C-27",
