@@ -1709,6 +1709,36 @@
       "types": "./dist/components/forge/photo/RAWDevelopPanel.d.ts",
       "react-native": "./dist/components/forge/photo/RAWDevelopPanel.js",
       "default": "./dist/components/forge/photo/RAWDevelopPanel.js"
+    },
+    "./components/forge/photo/PhotoLibraryGrid": {
+      "types": "./dist/components/forge/photo/PhotoLibraryGrid.d.ts",
+      "react-native": "./dist/components/forge/photo/PhotoLibraryGrid.js",
+      "default": "./dist/components/forge/photo/PhotoLibraryGrid.js"
+    },
+    "./components/forge/photo/CatalogFilterBar": {
+      "types": "./dist/components/forge/photo/CatalogFilterBar.d.ts",
+      "react-native": "./dist/components/forge/photo/CatalogFilterBar.js",
+      "default": "./dist/components/forge/photo/CatalogFilterBar.js"
+    },
+    "./components/forge/photo/BeforeAfterCompare": {
+      "types": "./dist/components/forge/photo/BeforeAfterCompare.d.ts",
+      "react-native": "./dist/components/forge/photo/BeforeAfterCompare.js",
+      "default": "./dist/components/forge/photo/BeforeAfterCompare.js"
+    },
+    "./components/forge/photo/photo-catalog": {
+      "types": "./dist/components/forge/photo/photo-catalog.d.ts",
+      "react-native": "./dist/components/forge/photo/photo-catalog.js",
+      "default": "./dist/components/forge/photo/photo-catalog.js"
+    },
+    "./components/forge/photo/PhotoMetadataInspector": {
+      "types": "./dist/components/forge/photo/PhotoMetadataInspector.d.ts",
+      "react-native": "./dist/components/forge/photo/PhotoMetadataInspector.js",
+      "default": "./dist/components/forge/photo/PhotoMetadataInspector.js"
+    },
+    "./components/forge/photo/photo-metadata": {
+      "types": "./dist/components/forge/photo/photo-metadata.d.ts",
+      "react-native": "./dist/components/forge/photo/photo-metadata.js",
+      "default": "./dist/components/forge/photo/photo-metadata.js"
     }
   },
   "scripts": {

@@ -2147,20 +2147,30 @@
       "name": "PhotoLibraryGrid",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/PhotoLibraryGrid.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Virtualized large-photo catalog with fast thumbnails."
+      "requirement": "Virtualized large-photo catalog with fast thumbnails.",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
     },
     {
       "id": "F-02",
       "name": "CatalogFilterBar",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/CatalogFilterBar.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "EXIF, camera, lens, date, ratings, flags and album filters."
+      "requirement": "EXIF, camera, lens, date, ratings, flags and album filters.",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
     },
     {
       "id": "F-03",
@@ -2287,10 +2297,15 @@
       "name": "BeforeAfterCompare",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/BeforeAfterCompare.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Side-by-side, wipe and reference photo comparison."
+      "requirement": "Side-by-side, wipe and reference photo comparison.",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
     },
     {
       "id": "F-13",
@@ -2347,10 +2362,15 @@
       "name": "PhotoMetadataInspector",
       "phase": "P10",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/photo/PhotoMetadataInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Display provenance, camera/exposure/lens information and editing annotations. *Source candidate: `lightcraft/ui/InfoScreen.kt`; requires verified implementation and license admission.*"
+      "requirement": "Display provenance, camera/exposure/lens information and editing annotations. *Source candidate: `lightcraft/ui/InfoScreen.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
     },
     {
       "id": "G-01",
