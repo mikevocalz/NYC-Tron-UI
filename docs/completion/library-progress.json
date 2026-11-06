@@ -2577,7 +2577,9 @@
       "acceptance": "unverified",
       "requirement": "Code completion, references, validation and errors.",
       "evidence": [
-        "P11-expression-editor.md"
+        "P11-expression-editor.md",
+        "P11-native-motion.md",
+        "P11-native-motion-proof.json"
       ]
     },
     {
@@ -2622,7 +2624,9 @@
       "acceptance": "unverified",
       "requirement": "Pin/port connections, typed links and graph interaction.",
       "evidence": [
-        "P11-node-graph.md"
+        "P11-node-graph.md",
+        "P11-native-motion.md",
+        "P11-native-motion-proof.json"
       ]
     },
     {

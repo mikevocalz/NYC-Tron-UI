@@ -146,7 +146,7 @@ export function Select(props:SelectProps){
         styled&&(isSelected?"text-on-primary font-semibold":"text-text"))}}>{optionLabel(o)}</Text>
     </Pressable>;
   };
-  const list=<View role={"listbox" as never} nativeID={listId} aria-label={label}
+  const list=<View {...(testID?{testID:`${testID}-list`}:{})} role={"listbox" as never} nativeID={listId} aria-label={label}
     {...{className:joinClasses("w-full",
       web?"absolute left-0 right-0 top-full z-50 mt-1":"mt-1",
       styled&&"overflow-hidden rounded-control border border-border bg-surface-raised shadow-md")}}>
