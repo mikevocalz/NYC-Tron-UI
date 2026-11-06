@@ -6,7 +6,7 @@ export {MEDIA_DECODER_MODULE_NAME} from "../module-names.ts";
 
 /**
  * {@linkcode MediaDecoder} over AVAssetImageGenerator and AVAssetReader on
- * iOS. Android has no registered decoder and reports isAvailable false.
+ * iOS, and MediaExtractor/MediaCodec on Android.
  * Frames and PCM are written to the app's caches directory.
  */
 export function createPlatformMediaDecoder():MediaDecoder{

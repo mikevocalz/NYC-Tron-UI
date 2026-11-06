@@ -54,3 +54,24 @@ Synchronous haptic bridge failures are treated as missed feedback, like rejected
 promises; invalid throttle intervals reject. Regression tests exercise these
 resource races and synchronous failures without claiming native interruption or
 physical motor output acceptance.
+
+## Decoder foundation checkpoint (P03)
+
+Android now has a genuine Expo Modules 2 decoder. MediaExtractor selects local
+file/content tracks; MediaCodec supplies decoded presentation timestamps and
+flexible 8-bit YUV frames. The conversion honors crop, strides, SDR color range
+and rotation. Audio streams into little-endian interleaved Float32 cache files,
+with phase-continuous linear resampling and codec preroll. Requests are serialized
+on one worker; time, frame, PCM and disk-cache budgets bound work. Destruction
+stops accepted work through owner checks and closes the worker. DRM/HDR and
+unsupported format changes reject explicitly; this is not acceptance of those
+remaining formats or platforms.
+
+A real native generated H.264/AAC fixture exposed missing PCM samples at seek
+boundaries. Android now decodes preroll before trimming by PTS. The iOS reader
+also decodes preroll/converter tail and trims PCM buffers using timestamps.
+Native builds/runtime evidence belongs in the companion Forge P03 report.
+
+API references: [MediaCodec](https://developer.android.com/reference/android/media/MediaCodec),
+[Image crop/planes](https://developer.android.com/reference/android/media/Image),
+[AVAssetReaderTrackOutput](https://developer.apple.com/documentation/AVFoundation/AVAssetReaderTrackOutput).
