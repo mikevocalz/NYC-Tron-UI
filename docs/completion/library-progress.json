@@ -512,7 +512,9 @@
       "requirement": "Skia v3/Graphite render surface with independent Rust document state.",
       "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
       "evidence": [
-        "P05-gpu-viewport.md"
+        "P05-gpu-viewport.md",
+        "P05-native-canvas.md",
+        "P05-native-canvas-proof.json"
       ]
     },
     {
@@ -528,7 +530,9 @@
       "requirement": "Pinch, wheel, two-finger pan and zoom-to-fit.",
       "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
       "evidence": [
-        "P05-canvas-navigation.md"
+        "P05-canvas-navigation.md",
+        "P05-native-canvas.md",
+        "P05-native-canvas-proof.json"
       ]
     },
     {

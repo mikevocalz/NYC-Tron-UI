@@ -47,7 +47,8 @@ export function GPUCanvasViewport({scope,revision=0,viewport,drawFrame,clearColo
   catch(error){if(current()){const failure=error instanceof Error?error:new Error(String(error));store.setState({drawError:{boundary,message:failure.message.slice(0,1024)}});latest.current.onRenderError?.(failure);}}
   finally{context?.dispose();}
  },[boundary,state.gpu,state.layout,state.resume]);
- return <View {...rest} accessible accessibilityRole="image" accessibilityLabel={label} {...{className:joinClasses(!unstyled&&'bg-surface-sunken',className)}} style={[{width:viewport.width,height:viewport.height,overflow:'hidden',direction:'ltr'},style]} onLayout={onLayout}>
+ const failed=state.drawError?.boundary===boundary;
+ return <View {...rest} accessible={!failed&&state.gpu.available} accessibilityRole={!failed&&state.gpu.available?"image":undefined} accessibilityLabel={label} {...{className:joinClasses(!unstyled&&'bg-surface-sunken',className)}} style={[{width:viewport.width,height:viewport.height,overflow:'hidden',direction:'ltr'},style]} onLayout={onLayout}>
   {state.gpu.available?<SkiaGraphiteView ref={view} style={{position:'absolute',inset:0}} onLayout={event=>{const {width,height}=event.nativeEvent.layout;store.setState({layout:width>0&&height>0?width+':'+height:''});}}/>:renderUnavailable?.(state.gpu)??<Text accessibilityRole="alert" {...{className:joinClasses(!unstyled&&'text-text')}}>{state.gpu.error??'GPU rendering is unavailable'}</Text>}
   {state.drawError?.boundary===boundary?<Text accessibilityRole="alert" {...{className:joinClasses(!unstyled&&'text-text')}} style={{position:'absolute',inset:0}}>Canvas rendering failed: {state.drawError.message}</Text>:null}
  </View>;
