@@ -515,11 +515,16 @@
       "name": "CanvasPanZoom",
       "phase": "P05",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/CanvasPanZoom.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Pinch, wheel, two-finger pan and zoom-to-fit.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P05-canvas-navigation.md"
+      ]
     },
     {
       "id": "B-03",

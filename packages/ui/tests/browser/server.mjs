@@ -23,6 +23,7 @@ const bundleOf=entry=>build({
   // Pin one React and one zustand: the component sources sit in packages/ui,
   // whose own node_modules (after a workspace install) would otherwise win.
   alias:{"react-native":resolve(here,"rn-shim.tsx"),
+    "react-native-gesture-handler":resolve(here,"../../node_modules/react-native-gesture-handler"),
     react:resolve(here,"node_modules/react"),"react-dom":resolve(here,"node_modules/react-dom"),
     zustand:resolve(here,"node_modules/zustand"),
     // Uniwind's web ScopedTheme, reproduced (see uniwind-shim.tsx).
@@ -30,7 +31,7 @@ const bundleOf=entry=>build({
     // NativeSeekBar renders @expo/ui's universal web build (plain RN Views).
     "@expo/ui":resolve(here,"node_modules/@expo/ui/build/universal/index.js")},
   nodePaths:[resolve(here,"node_modules")],
-  define:{"process.env.NODE_ENV":'"development"'}});
+  define:{"process.env.NODE_ENV":'"development"',__DEV__:"true"}});
 const bundles=new Map((await Promise.all(fixtures.map(async([name,entry])=>[name,(await bundleOf(entry)).outputFiles[0].contents]))));
 // Only the test document bootstrap is HTML. The rendered UI is React Native components.
 const doc=script=>'<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UI acceptance</title><link rel="stylesheet" href="/theme.css"></head><body><div id="root" style="min-height:100vh;display:flex"></div><script src="'+script+'"></script></body></html>';
