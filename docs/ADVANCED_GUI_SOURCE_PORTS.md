@@ -92,3 +92,5 @@ Root license review never substitutes for dependency/file notices.
 ## Recovery integration checkpoint
 
 PR #26 was updated by merging current main (including #53 / alpha.4) into its preserved history. The Floating UI calculation, inlined utility helpers and MIT license were checked against their exact pinned upstream blobs. This is a pure geometry subpath; the other source candidates remain unported. Existing app window/navigation/state contracts are unchanged. The published alpha.4 assets are immutable and do not include this later subpath; it is available from source until a subsequent release. Current build/type/export/tarball checks are rerun for this integration rather than inferred from the earlier 156-test checkpoint.
+
+The package-local notices preserve the existing NYC-MON/NeonBlade corner-cut lineage alongside Floating UI. A tarball regression packs geometry and verifies all three license texts byte-for-byte, the notices for each source, and both compiled geometry subpaths. The final geometry suite has seven passing tests.
