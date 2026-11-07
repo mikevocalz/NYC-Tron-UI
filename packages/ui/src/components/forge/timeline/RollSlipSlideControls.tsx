@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 import {Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
@@ -12,7 +17,7 @@ import {
 import type {TimelineTool} from "./TimelineClipLane.tsx";
 
 /** Props for {@linkcode RollSlipSlideControls}. */
-export interface RollSlipSlideControlsProps extends Omit<ViewProps,"children"> {
+export interface RollSlipSlideControlsProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly tool:TimelineTool;
   readonly onToolChange:(tool:TimelineTool)=>void;
   readonly tracks:readonly TimelineTrack[];
@@ -48,9 +53,19 @@ const isMode=(t:TimelineTool):t is Mode=>t==="slip"||t==="slide"||t==="roll"||t=
  * edge chosen here. A nudge the engine would refuse is disabled, and the
  * reason is shown.
  */
-export function RollSlipSlideControls({
+export function RollSlipSlideControls({scope='RollSlipSlideControls',revision=0,...props}:RollSlipSlideControlsProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.tool,props.selectedClipId,props.rate,props.rippleScope]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><RollSlipSlideControlsBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onEdit={(value)=>guard.run('onEdit',host=>host.onEdit(value))}
+  onToolChange={(value)=>guard.current()?.onToolChange(value)}/></EditorInteractionScope.Provider>;
+}
+function RollSlipSlideControlsBody({
+ actionError=null,disabledReason,
   tool,onToolChange,tracks,selectedClipId,rate,rippleScope="track",onEdit,disabled=false,className,unstyled=false,testID,style,...rest
-}:RollSlipSlideControlsProps){
+}:RollSlipSlideControlsProps&{actionError?:string|null}){
   const [edge,edgeStore]=useLocalStore(()=>"tail" as "head"|"tail");
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
@@ -79,6 +94,7 @@ export function RollSlipSlideControls({
     :undefined;
   const stepLabel=(d:number)=>`${Math.abs(d)} frame${Math.abs(d)===1?"":"s"} ${d<0?"earlier":"later"}`;
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <SegmentedControl aria-label="Trim tool" options={MODES} value={MODES.some(m=>m.value===tool)?tool:""}
       onChange={onToolChange} disabled={disabled} unstyled={unstyled} {...id("tool")}/>
     {isMode(tool)?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{HELP[tool]}</Text>:null}

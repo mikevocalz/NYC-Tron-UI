@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
@@ -6,7 +11,7 @@ import {splitEdit,type TimelineEdit,type TimelineTrack} from "./edits.ts";
 import type {TimelineTool} from "./TimelineClipLane.tsx";
 
 /** Props for {@linkcode RazorSplitTool}. */
-export interface RazorSplitToolProps extends Omit<ViewProps,"children"> {
+export interface RazorSplitToolProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly tool:TimelineTool;
   readonly onToolChange:(tool:TimelineTool)=>void;
   readonly tracks:readonly TimelineTrack[];
@@ -28,9 +33,19 @@ export interface RazorSplitToolProps extends Omit<ViewProps,"children"> {
  * `RollSlipSlideControls` (ripple trim) and `DragReorderAndRipple` (ripple
  * delete).
  */
-export function RazorSplitTool({
+export function RazorSplitTool({scope='RazorSplitTool',revision=0,...props}:RazorSplitToolProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.tool,props.selectedClipId,props.rate]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><RazorSplitToolBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onEdit={(value)=>guard.run('onEdit',host=>host.onEdit(value))}
+  onToolChange={(value)=>guard.current()?.onToolChange(value)}/></EditorInteractionScope.Provider>;
+}
+function RazorSplitToolBody({
+ actionError=null,disabledReason,
   tool,onToolChange,tracks,selectedClipId,playheadFrame,rate,onEdit,disabled=false,className,unstyled=false,testID,style,...rest
-}:RazorSplitToolProps){
+}:RazorSplitToolProps&{actionError?:string|null}){
   const styled=!unstyled;
   const found=tracks.flatMap(t=>t.clips.filter(c=>c.id===selectedClipId).map(c=>({track:t,clip:c})))[0];
   const edit=found?splitEdit(found.clip,found.track.id,playheadFrame,rate):undefined;
@@ -39,6 +54,7 @@ export function RazorSplitTool({
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}}
     style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <Pressable accessibilityRole="switch" aria-checked={on} accessibilityState={{checked:on,disabled}} disabled={disabled}
       accessibilityLabel="Razor" accessibilityHint="When on, pressing a clip splits it at that point"
       onPress={()=>onToolChange(on?"select":"razor")} {...id("toggle")}

@@ -1620,9 +1620,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TimelineZoomAndScroll.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pinch centered at pointer, mini-map and fit selection."
+      "requirement": "Pinch centered at pointer, mini-map and fit selection.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-15",
@@ -1632,9 +1635,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TimelineClipLane.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Multi-track video/audio segments and region thumbnails."
+      "requirement": "Multi-track video/audio segments and region thumbnails.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-16",
@@ -1664,9 +1670,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TrackHeaders.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Lock, hide, mute, solo, enable, labels and track heights."
+      "requirement": "Lock, hide, mute, solo, enable, labels and track heights.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-19",
@@ -1676,9 +1685,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/ClipTrimHandles.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Non-destructive head/tail edits with snapping."
+      "requirement": "Non-destructive head/tail edits with snapping.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-20",
@@ -1688,9 +1700,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/RazorSplitTool.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Split at playhead, select edges, ripple operations."
+      "requirement": "Split at playhead, select edges, ripple operations.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-21",
@@ -1700,9 +1715,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/RollSlipSlideControls.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Industry trim modes with explicit preview feedback."
+      "requirement": "Industry trim modes with explicit preview feedback.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-22",
@@ -1712,9 +1730,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/DragReorderAndRipple.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Track/clip move, insert, overwrite and collision policy."
+      "requirement": "Track/clip move, insert, overwrite and collision policy.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-23",
@@ -1724,9 +1745,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TransitionHandles.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Overlap, fade, dissolve and editable duration."
+      "requirement": "Overlap, fade, dissolve and editable duration.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-24",
@@ -1736,9 +1760,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TimelineMarkers.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Named/color markers, snapping and keyboard navigation."
+      "requirement": "Named/color markers, snapping and keyboard navigation.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-25",
@@ -1748,9 +1775,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/SafeAreaOverlay.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Title/action safe, guides and aspect ratio framing."
+      "requirement": "Title/action safe, guides and aspect ratio framing.",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-26",
@@ -1811,9 +1841,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/OverlayAndEffectsTrackStack.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Separate and fold overlays, effects, stickers, captions and main media tracks; keep ordered timing. *Source candidate: `capcraft/ui/editor/Timeline.kt`; requires verified implementation and license admission.*"
+      "requirement": "Separate and fold overlays, effects, stickers, captions and main media tracks; keep ordered timing. *Source candidate: `capcraft/ui/editor/Timeline.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-32",
@@ -1874,9 +1907,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Preview and apply transitions with timing, available handles and capability checks. *Source candidate: `capcraft/ui/editor/panels/TransitionGlyph.kt`; requires verified implementation and license admission.*"
+      "requirement": "Preview and apply transitions with timing, available handles and capability checks. *Source candidate: `capcraft/ui/editor/panels/TransitionGlyph.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-38",
@@ -1916,9 +1952,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/BatchEditPanel.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Apply compatible color, speed or effect changes across selected clips with batch undo. *Source candidate: `capcraft/ui/editor/panels/BatchEditPanel.kt`; requires verified implementation and license admission.*"
+      "requirement": "Apply compatible color, speed or effect changes across selected clips with batch undo. *Source candidate: `capcraft/ui/editor/panels/BatchEditPanel.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
     },
     {
       "id": "D-42",

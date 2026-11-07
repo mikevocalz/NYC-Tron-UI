@@ -1,4 +1,9 @@
-import {useEffect,useRef,type ReactNode} from "react";
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
+import {useEffect,useLayoutEffect,useRef,type ReactNode} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -29,7 +34,7 @@ import {frameToX,scrollBy,visibleRange,zoomAt,type TimelineViewport} from "./vie
 export type TimelineTool="select"|"razor"|"slip"|"slide"|"roll"|"ripple";
 
 /** Props for {@linkcode TimelineClipLane}. */
-export interface TimelineClipLaneProps extends Omit<ViewProps,"children"> {
+export interface TimelineClipLaneProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Tracks top to bottom. Map the engine's timeline read (Splice `timeline`) to this shape. */
   readonly tracks:readonly TimelineTrack[];
   readonly viewport:TimelineViewport;
@@ -102,6 +107,7 @@ function ClipView(p:ClipViewProps){
   const latest=useRef(p);
   latest.current=p;
   const session=useRef<{x0:number;y0:number;moved:boolean;moving:boolean}|undefined>(undefined);
+  useLayoutEffect(()=>{if(session.current?.moving){session.current=undefined;drag.set(undefined);}},[viewport.startFrame,viewport.pxPerFrame,viewport.widthPx]);
   const targets=()=>snapping?snapTargets(latest.current.tracks,clip.id,[latest.current.playheadFrame]):[];
   const threshold=snapping?SNAP_PX/viewport.pxPerFrame:0;
   const override=dragState?.clips[clip.id];
@@ -279,11 +285,23 @@ function ClipView(p:ClipViewProps){
  * Ctrl/Cmd + wheel zooms at the pointer and Shift + wheel scrolls. Every
  * finished gesture emits one `TimelineEdit`.
  */
-export function TimelineClipLane({
+export function TimelineClipLane({scope='TimelineClipLane',revision=0,...props}:TimelineClipLaneProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.durationFrames,props.rate,props.laneHeight,props.tool,props.moveMode,props.rippleScope]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><TimelineClipLaneBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onEdit={(value)=>guard.run('onEdit',host=>host.onEdit(value))}
+  onViewportChange={(value)=>guard.current()?.onViewportChange(value)}
+  onSelect={(value)=>guard.current()?.onSelect(value)}
+  {...(props.onToggleSelect?{onToggleSelect:(value:Parameters<NonNullable<TimelineClipLaneProps['onToggleSelect']>>[0])=>guard.current()?.onToggleSelect?.(value)}:{})}/></EditorInteractionScope.Provider>;
+}
+function TimelineClipLaneBody({
+ actionError=null,disabledReason,
   tracks,viewport,onViewportChange,rate,durationFrames,playheadFrame,selectedClipId,onSelect,selectedClipIds,onToggleSelect,onEdit,
   tool="select",moveMode,rippleScope="track",snapping=true,laneHeight=56,renderClipContent,dropFrame=false,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:TimelineClipLaneProps){
+}:TimelineClipLaneProps&{actionError?:string|null}){
   if(!Number.isFinite(laneHeight)||laneHeight<44)throw new RangeError("laneHeight must be at least 44");
   const [dragState,drag]=useLocalStore(()=>undefined as Drag);
   const latest=useRef({viewport,onViewportChange,durationFrames,rate});
@@ -340,6 +358,7 @@ export function TimelineClipLane({
   const originId=draggedClip?tracks.find(t=>t.clips.includes(draggedClip))?.id:undefined;
   return <View {...rest} ref={container as never} {...(testID?{testID}:{})} accessibilityRole="list" accessibilityLabel="Timeline tracks"
     {...{className:joinClasses(className)}} style={[{width:viewport.widthPx,direction:"ltr"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {tracks.map(track=>{
       const clips=visibleClips(track,{start:range.start-1,end:range.end+1});
       const sel=track.clips.find(c=>c.id===selectedClipId);

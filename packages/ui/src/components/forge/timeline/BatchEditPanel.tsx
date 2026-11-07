@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 /*
  * Original implementation for NYC-Tron UI; no third-party source. Provenance
  * is recorded in docs/COMPONENT_OWNERSHIP.md.
@@ -14,7 +19,7 @@ import {
 } from "./batch.ts";
 
 /** Props for {@linkcode BatchEditPanel}. */
-export interface BatchEditPanelProps extends Omit<ViewProps,"children"> {
+export interface BatchEditPanelProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly tracks:readonly TimelineTrack[];
   /** The host's multi-selection (`TimelineClipLane` `selectedClipIds`). */
   readonly selectedClipIds:readonly string[];
@@ -41,10 +46,20 @@ export interface BatchEditPanelProps extends Omit<ViewProps,"children"> {
  * emits the whole list once. A failed check disables the action and says
  * which clip is in the way.
  */
-export function BatchEditPanel({
+export function BatchEditPanel({scope='BatchEditPanel',revision=0,...props}:BatchEditPanelProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.selectedClipIds,props.rate,props.rippleScope]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><BatchEditPanelBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onApply={(edits)=>guard.run('onApply',host=>host.onApply(edits))}
+  {...(props.onClearSelection?{onClearSelection:()=>guard.current()?.onClearSelection?.()}:{})}/></EditorInteractionScope.Provider>;
+}
+function BatchEditPanelBody({
+ actionError=null,disabledReason,
   tracks,selectedClipIds,rate,rippleScope="track",onApply,onClearSelection,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:BatchEditPanelProps){
+}:BatchEditPanelProps&{actionError?:string|null}){
   const [form,store]=useLocalStore(()=>({shift:"1",speed:"2"}));
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
@@ -60,6 +75,7 @@ export function BatchEditPanel({
   const why=(r:BatchResult)=>r.valid?undefined:r.reason;
   const n=sel.length;
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-3",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Text accessibilityLiveRegion="polite" {...id("count")} {...{className:joinClasses(styled&&"text-text font-semibold")}}>
         {n?`${n} clip${n===1?"":"s"} selected`:"No clips selected"}</Text>

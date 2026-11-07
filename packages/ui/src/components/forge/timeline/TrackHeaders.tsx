@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 import {useEffect,useRef} from "react";
 import {Pressable,Text,TextInput,View,type DimensionValue,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -9,7 +14,7 @@ import {trackSilenced,type TimelineTrack,type TrackKind} from "./edits.ts";
 export type TrackFlag="locked"|"hidden"|"muted"|"solo";
 
 /** Props for {@linkcode TrackHeaders}. */
-export interface TrackHeadersProps extends Omit<ViewProps,"children"> {
+export interface TrackHeadersProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The same tracks, in the same order, as the lanes beside it. */
   readonly tracks:readonly TimelineTrack[];
   /** Match `TimelineClipLane` `laneHeight`. @default 56 */
@@ -107,16 +112,29 @@ function NameField({track,onRename,disabled,styled}:{track:TimelineTrack;onRenam
  * every audio track that is not soloed, and the header says so. In `reorder`
  * mode the switches give way to move up and move down buttons.
  */
-export function TrackHeaders({
+export function TrackHeaders({scope='TrackHeaders',revision=0,...props}:TrackHeadersProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.laneHeight,props.compact,props.reorder]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><TrackHeadersBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSetFlag={(id,flag,value)=>guard.run('onSetFlag',host=>host.onSetFlag(id,flag,value))}
+  onRename={(id,name)=>guard.run('onRename',host=>host.onRename(id,name))}
+  {...(props.onMove?{onMove:(id:Parameters<NonNullable<TrackHeadersProps['onMove']>>[0],index:Parameters<NonNullable<TrackHeadersProps['onMove']>>[1])=>guard.run('onMove',host=>host.onMove?.(id,index))}:{})}
+  {...(props.onOpenTrack?{onOpenTrack:(value:Parameters<NonNullable<TrackHeadersProps['onOpenTrack']>>[0])=>guard.current()?.onOpenTrack?.(value)}:{})}/></EditorInteractionScope.Provider>;
+}
+function TrackHeadersBody({
+ actionError=null,disabledReason,
   tracks,laneHeight=56,onSetFlag,onRename,onMove,moveTarget,reorder=false,compact=false,openTrackId,onOpenTrack,allTracks,width=compact?56:232,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:TrackHeadersProps){
+}:TrackHeadersProps&{actionError?:string|null}){
   if(!Number.isFinite(laneHeight)||laneHeight<44)throw new RangeError("laneHeight must be at least 44");
   const styled=!unstyled;
   const target=moveTarget??((id:string,d:-1|1)=>{const i=tracks.findIndex(t=>t.id===id);const j=i+d;return i<0||j<0||j>=tracks.length?undefined:j;});
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   return <View {...rest} {...(testID?{testID}:{})} accessibilityRole="list" accessibilityLabel="Track headers"
     {...{className:joinClasses(className)}} style={[{width},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {tracks.map(track=>{
       const silenced=trackSilenced(track,allTracks??tracks);
       const soloedAway=track.kind==="audio"&&!track.muted&&silenced;

@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 import {useRef} from "react";
 import {Platform,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -13,7 +18,7 @@ import {
 } from "./viewport.ts";
 
 /** Props for {@linkcode TimelineZoomAndScroll}. */
-export interface TimelineZoomAndScrollProps extends Omit<ViewProps,"children"> {
+export interface TimelineZoomAndScrollProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly viewport:TimelineViewport;
   /** View state, not an edit: called on every zoom step and mini-map move. */
   readonly onViewportChange:(viewport:TimelineViewport)=>void;
@@ -39,9 +44,17 @@ const STEP=1.5;
  * scroll a quarter view. Pinch and Ctrl/Cmd-wheel zoom live on
  * `TimelineClipLane`, which shares this viewport.
  */
-export function TimelineZoomAndScroll({
+export function TimelineZoomAndScroll({scope='TimelineZoomAndScroll',revision=0,...props}:TimelineZoomAndScrollProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,props.durationFrames,props.rate,props.viewport.widthPx]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><TimelineZoomAndScrollBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onViewportChange={(value)=>guard.current()?.onViewportChange(value)}/></EditorInteractionScope.Provider>;
+}
+function TimelineZoomAndScrollBody({
+ actionError=null,disabledReason,
   viewport,onViewportChange,durationFrames,rate,playheadFrame,selection,disabled=false,className,unstyled=false,testID,style,...rest
-}:TimelineZoomAndScrollProps){
+}:TimelineZoomAndScrollProps&{actionError?:string|null}){
   const [mini,store]=useLocalStore(()=>({width:0}));
   const latest=useRef(viewport);
   latest.current=viewport;
@@ -78,6 +91,7 @@ export function TimelineZoomAndScroll({
   const total=Math.max(1,durationFrames,viewport.startFrame+visibleFrames(viewport));
   const percent=Math.round(Math.min(1,visibleFrames(viewport)/Math.max(1,durationFrames))*100);
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
       <Button title="Zoom out" variant="secondary" size="sm" {...id("zoom-out")}
         disabled={disabled||viewport.pxPerFrame<=limits.min} onPress={()=>change(zoomAt(viewport,anchor,1/STEP,durationFrames,rate))}/>

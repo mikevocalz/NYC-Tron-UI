@@ -1,3 +1,10 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
+import {Select} from '../../Select.tsx';
+import {snapFrame} from './edits.ts';
 import {useEffect,useRef} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -12,8 +19,11 @@ import {adjacentMarker,moveMarker,resizeMarker,sortMarkers,type MarkerUpdate,typ
 import {frameToX,type TimelineViewport} from "./viewport.ts";
 
 /** Props for {@linkcode TimelineMarkers}. */
-export interface TimelineMarkersProps extends Omit<ViewProps,"children"> {
+export interface TimelineMarkersProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly markers:readonly TimelineMarker[];
+  readonly colors?:readonly {id:string;label:string;value:string}[];
+  readonly onColorChange?:(id:string,colorId:string|undefined)=>void;
+  readonly snapFrames?:readonly number[];readonly snapThreshold?:number;
   readonly viewport:TimelineViewport;
   readonly rate:FrameRate;
   readonly durationFrames:number;
@@ -38,8 +48,8 @@ const NO_SELECT=(Platform.OS==="web"?{userSelect:"none",touchAction:"none"}:{}) 
 const HIT=44;
 const TAP_PX=4;
 
-function Flag({m,viewport,rate,durationFrames,selected,onSelect,onUpdate,onRemove,onSeek,dropFrame,disabled,styled}:{
-  m:TimelineMarker;viewport:TimelineViewport;rate:FrameRate;durationFrames:number;selected:boolean;
+function Flag({m,color,snapFrames=[],snapThreshold=0,viewport,rate,durationFrames,selected,onSelect,onUpdate,onRemove,onSeek,dropFrame,disabled,styled}:{
+  color?:string|undefined;snapFrames?:readonly number[]|undefined;snapThreshold?:number|undefined;m:TimelineMarker;viewport:TimelineViewport;rate:FrameRate;durationFrames:number;selected:boolean;
   onSelect:(id:string|undefined)=>void;onUpdate:TimelineMarkersProps["onUpdate"];onRemove:(id:string)=>void;onSeek:(f:number)=>void;
   dropFrame:boolean;disabled:boolean;styled:boolean;
 }){
@@ -47,7 +57,7 @@ function Flag({m,viewport,rate,durationFrames,selected,onSelect,onUpdate,onRemov
   const latest=useRef({m,viewport,rate,durationFrames,onUpdate,onSelect,disabled});
   latest.current={m,viewport,rate,durationFrames,onUpdate,onSelect,disabled};
   const s=useRef({x0:0,moved:false});
-  const target=(dx:number)=>{const l=latest.current;return Math.round(l.m.frame+dx/l.viewport.pxPerFrame);};
+  const target=(dx:number)=>{const l=latest.current;return Math.round(snapFrame(l.m.frame+dx/l.viewport.pxPerFrame,snapFrames,snapThreshold).frame);};
   const handlers=useLocalPointer({
     disabled,
     onBegin:pt=>{s.current={x0:pt.x,moved:false};},
@@ -108,8 +118,8 @@ function Flag({m,viewport,rate,durationFrames,selected,onSelect,onUpdate,onRemov
       }}
       style={{position:"absolute",left:x-HIT/2,top:0,width:HIT,height:HIT,alignItems:"center",...NO_SELECT}}>
       {/* A pennant on a staff. */}
-      <View pointerEvents="none" style={{position:"absolute",left:HIT/2-1,top:6,width:2,height:32}} {...{className:ink}}/>
-      <View pointerEvents="none" style={{position:"absolute",left:HIT/2+1,top:6,width:12,height:10,borderTopRightRadius:3,borderBottomRightRadius:3}} {...{className:ink}}/>
+      <View pointerEvents="none" style={{position:"absolute",left:HIT/2-1,top:6,width:2,height:32,...(color?{backgroundColor:color}:{})}} {...{className:ink}}/>
+      <View pointerEvents="none" style={{position:"absolute",left:HIT/2+1,top:6,width:12,height:10,borderTopRightRadius:3,borderBottomRightRadius:3,...(color?{backgroundColor:color}:{})}} {...{className:ink}}/>
     </View>
   </>;
 }
@@ -119,13 +129,27 @@ function Flag({m,viewport,rate,durationFrames,selected,onSelect,onUpdate,onRemov
  * per marker and a band for range markers, plus Add marker at the playhead,
  * previous and next, and an editor for the selected marker (name, note,
  * length, jump, remove). Drag a flag or use the arrow keys to move it; each
- * release, key press or committed field is one update. Markers have no
- * color: the engine stores none and the app's tokens draw them.
+ * release, key press or committed field is one update. Optional app-owned
+ * color metadata uses the supplied palette and callback, separate from engine timing.
  */
-export function TimelineMarkers({
-  markers,viewport,rate,durationFrames,playheadFrame,selectedMarkerId,onSelect,onAdd,onUpdate,onRemove,onSeek,
+export function TimelineMarkers({scope='TimelineMarkers',revision=0,...props}:TimelineMarkersProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,props.markers,props.viewport,props.durationFrames,props.rate,props.snapFrames,props.snapThreshold]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><TimelineMarkersBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onAdd={(value)=>guard.run('onAdd',host=>host.onAdd(value))}
+  onUpdate={(id,value)=>guard.run('onUpdate',host=>host.onUpdate(id,value))}
+  onRemove={(id)=>guard.run('onRemove',host=>host.onRemove(id))}
+  {...(props.onColorChange?{onColorChange:(id:Parameters<NonNullable<TimelineMarkersProps['onColorChange']>>[0],color:Parameters<NonNullable<TimelineMarkersProps['onColorChange']>>[1])=>guard.run('onColorChange',host=>host.onColorChange?.(id,color))}:{})}
+  onSelect={(id)=>guard.current()?.onSelect(id)}
+  onSeek={(value)=>guard.current()?.onSeek(value)}/></EditorInteractionScope.Provider>;
+}
+function TimelineMarkersBody({
+ actionError=null,disabledReason,
+  colors=[],onColorChange,snapFrames=[],snapThreshold=0,markers,viewport,rate,durationFrames,playheadFrame,selectedMarkerId,onSelect,onAdd,onUpdate,onRemove,onSeek,
   dropFrame=false,disabled=false,className,unstyled=false,testID,style,...rest
-}:TimelineMarkersProps){
+}:TimelineMarkersProps&{actionError?:string|null}){
+  if(markers.length>10000||new Set(markers.map(m=>m.id)).size!==markers.length||markers.some(m=>!m.id.trim()||m.id.length>512||m.name.length>1024||(m.note?.length??0)>8192||!Number.isSafeInteger(m.frame)||m.frame<0||m.durationFrames!==undefined&&(!Number.isSafeInteger(m.durationFrames)||m.durationFrames<0))||colors.length>256||new Set(colors.map(c=>c.id)).size!==colors.length||colors.some(c=>!c.id.trim()||!c.label.trim()||!c.value.trim())||snapFrames.length>10000||snapFrames.some(n=>!Number.isSafeInteger(n)||n<0)||!Number.isFinite(snapThreshold)||snapThreshold<0)throw new RangeError("Invalid timeline markers");
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const tc=(f:number)=>formatTimecode(Math.max(0,Math.round(f)),rate,{dropFrame});
@@ -138,7 +162,7 @@ export function TimelineMarkers({
   // The fields edit a draft of the selected marker; switching markers reloads it.
   useEffect(()=>{dirty.current={name:false,note:false};store.set({id:selected?.id??"",name:selected?.name??"",note:selected?.note??""});},[selected?.id,selected?.name,selected?.note,store]);
   const commitText=(field:"name"|"note")=>{
-    if(!selected||disabled||!dirty.current[field])return;
+    if(!selected||disabled||store.get().id!==selected.id||!dirty.current[field])return;
     dirty.current[field]=false;
     const value=store.get()[field].trim();
     if(field==="name"&&!value){store.set(d=>({...d,name:selected.name}));return;}
@@ -146,6 +170,7 @@ export function TimelineMarkers({
     onUpdate(selected.id,{frame:selected.frame,seconds:framesToSeconds(selected.frame,rate),[field]:value});
   };
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Button title="Add marker" variant="secondary" size="sm" disabled={disabled||durationFrames<0} {...id("add")}
         accessibilityHint={`Adds a marker at ${tc(playheadFrame)}`}
@@ -161,19 +186,20 @@ export function TimelineMarkers({
     <View accessibilityRole="list" accessibilityLabel="Markers" {...{className:joinClasses(styled&&"bg-surface-sunken border-b border-border")}}
       style={{height:HIT,width:viewport.widthPx,overflow:"hidden",direction:"ltr"}}>
       {sortMarkers(markers).map(m=><Flag key={m.id} m={m} viewport={viewport} rate={rate} durationFrames={durationFrames}
-        selected={m.id===selectedMarkerId} onSelect={onSelect} onUpdate={onUpdate} onRemove={onRemove} onSeek={onSeek}
+        color={colors.find(c=>c.id===m.colorId)?.value} snapFrames={snapFrames} snapThreshold={snapThreshold} selected={m.id===selectedMarkerId} onSelect={onSelect} onUpdate={onUpdate} onRemove={onRemove} onSeek={onSeek}
         dropFrame={dropFrame} disabled={disabled} styled={styled}/>)}
     </View>
     {selected?<View {...id("editor")} {...{className:joinClasses(styled&&"rounded-card border border-border bg-surface-raised")}}
       style={{padding:12,gap:10}}>
       <View style={{flexDirection:"row",flexWrap:"wrap",gap:12}}>
-        <TextField id={"marker-name-"+selected.id} label="Marker name" value={draft.name} editable={!disabled} style={{minWidth:160}}
+        <TextField id={"marker-name-"+selected.id} maxLength={1024} label="Marker name" value={draft.name} editable={!disabled} style={{minWidth:160}}
           className="grow" onChangeText={name=>{dirty.current.name=true;store.set(d=>({...d,name}));}} onBlur={()=>commitText("name")} onSubmitEditing={()=>commitText("name")}
           onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){dirty.current.name=false;store.set(d=>({...d,name:selected.name}));}}}/>
         <TextField id={"marker-note-"+selected.id} label="Note" value={draft.note} editable={!disabled} style={{minWidth:160}}
           className="grow" onChangeText={note=>{dirty.current.note=true;store.set(d=>({...d,note}));}} onBlur={()=>commitText("note")} onSubmitEditing={()=>commitText("note")}
           onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){dirty.current.note=false;store.set(d=>({...d,note:selected.note??""}));}}}/>
       </View>
+      {onColorChange?<Select label="Marker color" value={selected.colorId??""} options={[{value:"",label:"Default"},...colors.map(c=>({value:c.id,label:c.label}))]} disabled={disabled} unstyled={unstyled} onValueChange={color=>onColorChange(selected.id,color||undefined)}/>:null}
       <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
         <Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
           {selected.durationFrames?`${tc(selected.frame)} for ${tc(selected.durationFrames)}`:`At ${tc(selected.frame)}`}

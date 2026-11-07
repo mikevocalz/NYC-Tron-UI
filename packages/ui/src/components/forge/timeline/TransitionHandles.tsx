@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 import {useEffect,useMemo,useRef} from "react";
 import {Platform,Pressable,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -15,7 +20,7 @@ import {
 import {frameToX,type TimelineViewport} from "./viewport.ts";
 
 /** Props for {@linkcode TransitionHandles}. */
-export interface TransitionHandlesProps extends Omit<ViewProps,"children"> {
+export interface TransitionHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The lanes' tracks, in lane order. */
   readonly tracks:readonly TimelineTrack[];
   readonly transitions:readonly TimelineTransition[];
@@ -70,7 +75,7 @@ function Band({t,cut,max,top,height,viewport,rate,selected,onChange,onRemove,onS
     onBegin:pt=>{x0.current=pt.x;gesture.begin(t.durationFrames);},
     // The band is centered on the cut, so an edge moved by d frames changes the length by 2d.
     onMove:pt=>gesture.update(clampTransitionFrames(t.durationFrames+side*2*Math.round((pt.x-x0.current)/viewport.pxPerFrame),max)??t.durationFrames),
-    onRelease:()=>gesture.release(),
+    onRelease:pt=>{gesture.update(clampTransitionFrames(t.durationFrames+side*2*Math.round((pt.x-x0.current)/viewport.pxPerFrame),max)??t.durationFrames);gesture.release();},
     onCancel:()=>{gesture.cancel();store.set(undefined);},
   });
   const left=edgeHandlers(-1),right=edgeHandlers(1);
@@ -129,15 +134,29 @@ function Band({t,cut,max,top,height,viewport,rate,selected,onChange,onRemove,onS
  * crossfade. The engine drops a transition on its own when an edit separates
  * its clips; the band disappears with the next read.
  */
-export function TransitionHandles({
+export function TransitionHandles({scope='TransitionHandles',revision=0,...props}:TransitionHandlesProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.viewport,props.rate,props.laneHeight,props.transitions]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><TransitionHandlesBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onAdd={(value)=>guard.run('onAdd',host=>host.onAdd(value))}
+  onChange={(id,value)=>guard.run('onChange',host=>host.onChange(id,value))}
+  onRemove={(id)=>guard.run('onRemove',host=>host.onRemove(id))}
+  {...(props.onSelectCut?{onSelectCut:(value:Parameters<NonNullable<TransitionHandlesProps['onSelectCut']>>[0])=>guard.current()?.onSelectCut?.(value)}:{})}
+  {...(props.onSelectTransition?{onSelectTransition:(value:Parameters<NonNullable<TransitionHandlesProps['onSelectTransition']>>[0])=>guard.current()?.onSelectTransition?.(value)}:{})}/></EditorInteractionScope.Provider>;
+}
+function TransitionHandlesBody({
+ actionError=null,disabledReason,
   tracks,transitions,viewport,rate,laneHeight=56,defaultKind="cross_dissolve",defaultFrames=24,onAdd,onChange,onRemove,
   selectedCut,onSelectCut,selectedTransitionId,onSelectTransition,showCutTargets=true,dropFrame=false,disabled=false,
   unstyled=false,testID,style,...rest
-}:TransitionHandlesProps){
+}:TransitionHandlesProps&{actionError?:string|null}){
   if(!Number.isFinite(laneHeight)||laneHeight<44)throw new RangeError("laneHeight must be at least 44");
   const styled=!unstyled;
   return <View {...rest} pointerEvents="box-none" {...(testID?{testID}:{})}
     style={[{position:"absolute",left:0,top:0,width:viewport.widthPx,height:laneHeight*tracks.length,overflow:"hidden",direction:"ltr"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {tracks.flatMap((track,i)=>{
       const top=i*laneHeight;
       return cutsOf(track).flatMap(cut=>{
