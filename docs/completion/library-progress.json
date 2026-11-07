@@ -3926,10 +3926,15 @@
       "name": "ConnectorAndDiagramTools",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/ConnectorAndDiagramTools.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Sticky connectors, direction and labels."
+      "requirement": "Sticky connectors, direction and labels.",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
     },
     {
       "id": "J-08",
@@ -3963,10 +3968,15 @@
       "name": "MorphPreview",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/MorphPreview.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Inter-slide object correspondence and animation."
+      "requirement": "Inter-slide object correspondence and animation.",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
     },
     {
       "id": "J-11",
@@ -4029,20 +4039,30 @@
       "name": "MediaInsertInspector",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/MediaInsertInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Video/audio fit, trim and playback options."
+      "requirement": "Video/audio fit, trim and playback options.",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
     },
     {
       "id": "J-16",
       "name": "ChartAndTableEditor",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Data-bound charts and editable table formatting."
+      "requirement": "Data-bound charts and editable table formatting.",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
     },
     {
       "id": "K-01",

@@ -122,3 +122,5 @@ P13 formatting/data batch: eight formatting/rule/validation/sort, pivot, table-s
 P13 library implementation phase complete: all 21 spreadsheet rows have reviewed implementations. [Sheet/chart report](P13-sheet-management-and-charts.md) records the final six controls, bounded record virtualization and combined TypeScript build. Review count is 250 of 341. Acceptance tests remain deferred until user review. Continue with P14 slide/presentation components.
 
 P14 authoring/presenter batch: seven master/theme/shape/transition/notes/presenter/rehearsal rows have reviewed implementations. [Report](P14-authoring-and-presenter.md) records native shape handles, host session timing and the combined TypeScript build. Review count is 257 of 341. Nine P14 rows remain; acceptance remains deferred until user review.
+
+P14 diagram/media batch: four connector, morph, inserted-media and chart/table rows have reviewed implementations. [Report](P14-diagrams-morph-and-media.md) records host surfaces/frames, shared-owner reuse and combined TypeScript build. Review count is 261 of 341. Five P14 rows remain; acceptance testing stays deferred until user review.

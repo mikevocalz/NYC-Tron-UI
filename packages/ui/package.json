@@ -2474,6 +2474,26 @@
       "types": "./dist/components/forge/slides/RehearsalTimers.d.ts",
       "react-native": "./dist/components/forge/slides/RehearsalTimers.js",
       "default": "./dist/components/forge/slides/RehearsalTimers.js"
+    },
+    "./components/forge/slides/MorphPreview": {
+      "types": "./dist/components/forge/slides/MorphPreview.d.ts",
+      "react-native": "./dist/components/forge/slides/MorphPreview.js",
+      "default": "./dist/components/forge/slides/MorphPreview.js"
+    },
+    "./components/forge/slides/MediaInsertInspector": {
+      "types": "./dist/components/forge/slides/MediaInsertInspector.d.ts",
+      "react-native": "./dist/components/forge/slides/MediaInsertInspector.js",
+      "default": "./dist/components/forge/slides/MediaInsertInspector.js"
+    },
+    "./components/forge/slides/ChartAndTableEditor": {
+      "types": "./dist/components/forge/slides/ChartAndTableEditor.d.ts",
+      "react-native": "./dist/components/forge/slides/ChartAndTableEditor.js",
+      "default": "./dist/components/forge/slides/ChartAndTableEditor.js"
+    },
+    "./components/forge/slides/ConnectorAndDiagramTools": {
+      "types": "./dist/components/forge/slides/ConnectorAndDiagramTools.d.ts",
+      "react-native": "./dist/components/forge/slides/ConnectorAndDiagramTools.js",
+      "default": "./dist/components/forge/slides/ConnectorAndDiagramTools.js"
     }
   },
   "scripts": {
