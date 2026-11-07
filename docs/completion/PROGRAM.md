@@ -21,21 +21,32 @@ Implementation checkpoints are committed and pushed separately; the canonical le
 
 User direction, 2026-11-06: implement related controls together and defer repeated integration checks until the batch is ready. Target 4–8 related controls per batch, adjusted for shared ownership and complexity. Do not rebuild, run the full suite, repack every package or repeat unchanged native scenarios after each individual component.
 
-During implementation, use focused model/regression checks for the behavior being changed. At the batch boundary, build and typecheck once, run affected model and browser interaction suites, review the combined diff, update the evidence ledger, then commit and push. A shared gesture, ownership or native failure must be resolved before expanding the batch. A failed targeted check does not authorize marking a component reviewed.
-
-At each phase boundary, run the full source and browser suites, package/export checks and applicable native family scenarios. Rebuild native binaries when native code, dependencies or configuration change; use the existing installed runtime for compatible JavaScript changes. Repeat broader checks when fixes affect previously checked behavior. Keep platform acceptance separate from implementation review and preserve every canonical requirement.
+Latest user direction, 2026-11-07: finish every reusable component implementation first, then let the user review before full testing. Related batches receive a combined TypeScript build and static diff/export/ledger checks, followed by commits and pushes. Source/browser/native acceptance suites, native binary rebuilds and production engine validation remain deferred to that review gate. Historical runtime evidence is preserved in its phase reports and does not certify the new components.
 
 Apply the no-ai-slop writing skill and relevant native/domain skills. The external [Everything Claude Code verification-loop skill](https://github.com/WorldFlowAI/everything-claude-code/blob/432485ba6b92c14fb357276a98957f348bcff9ee/skills/verification-loop/SKILL.md) was inspected for build, type, test and diff review guidance. It is a reference, not an installed hook or replacement for this project's commands, Zustand requirement or evidence gates. Unrelated skills and repository-wide hook installations are unnecessary for component delivery.
 
-| Phase | Reviewed reusable implementations | Evidence |
-| --- | --- | --- |
-| P03 | Decoder/media services checkpoint; remaining native acceptance tracked separately | [Media report](P03-media-services.md) |
-| P04 | Numeric scrub/unit entry, assets, history, find/replace and real status/progress | [Native consumer contract](P19-native-library-contract.md), [Unit input review](P11-motion-settings.md) |
-| P07 | All 27 color controls | [Specification](P07-color-specification.md), [existing controls review](P07-existing-color-review.md), [native P3](P07-native-p3.md) |
-| P10 | All 18 photo controls | [Develop](P10-photo-develop.md), [catalog](P10-photo-catalog.md), [workflows](P10-photo-workflows.md), [masks/native proof](P10-photo-masks.md) |
-| P11 | Scene settings, easing/render queue and value/speed/retiming graphs; remaining motion controls open | [Settings](P11-motion-settings.md), [queue/easing](P11-render-and-easing.md), [curves](P11-motion-curves.md), [timeline](P11-keyframe-timeline.md) |
+Current implementation checkpoint: **329 of 329 library-scope rows implemented**. All 341 canonical IDs remain tracked; the other 12 are separately scoped engine/platform integration requirements. Every acceptance field remains evidence-gated. The implementation pass is ready for user review; full testing, platform acceptance, release and consumer pins remain open.
 
-This table records implementation checkpoints, not complete acceptance across the eight required platforms. Every other canonical component remains in library-progress.json for implementation or source review. Forge integration resumes after NYC-Tron completion.
+| Phase | Library rows implemented | Latest evidence |
+| --- | --- | --- |
+| P02 platform | 8/8 | [Platform/media controls](P02-P03-final-platform-and-media-controls.md) |
+| P03 media | 2/2 | [Platform/media controls](P02-P03-final-platform-and-media-controls.md) |
+| P04 shell | 30/30 | [Shell controls](P04-overlays-and-transfer.md) |
+| P05 canvas/layers/vector | 27/27 | [Vector/crop](P05-vector-and-crop-batch.md) |
+| P06 ink | 8/8 | [Brush/ink](P06-brush-and-ink-batch.md) |
+| P07 color | 27/27 | [Color review](P07-existing-color-review.md) |
+| P08 video/timeline | 41/41 | [Production tools](P08-video-production-tools.md) |
+| P09 audio/MIDI | 41/41 | [Mixer/analysis/MIDI](P09-mixer-analysis-and-midi.md) |
+| P10 photo | 18/18 | [Photo masks](P10-photo-masks.md) |
+| P11 motion | 15/15 | [Motion curves](P11-motion-curves.md) |
+| P12 documents | 22/22 | [Text/references](P12-text-surfaces-and-references.md) |
+| P13 spreadsheets | 21/21 | [Sheets/charts](P13-sheet-management-and-charts.md) |
+| P14 slides | 16/16 | [Canvas/deck/ink](P14-canvas-deck-and-native-ink.md) |
+| P15 PDF | 21/21 | [Signatures/forms/capture](P15-signatures-forms-and-capture.md) |
+| P16 design | 15/15 | [Prototypes/handoff](P16-prototypes-collaboration-and-handoff.md) |
+| P17 CAD/3D | 17/17 | [Graphs/drafting](P17-graphs-and-drafting.md) |
+
+The following entries retain the delivery history and the limits of each checkpoint. Counts below describe their recorded commit, not the current total.
 
 Composition hierarchy checkpoint: G-01 is implemented with independent exports, controlled visibility and nesting validation. See [P11 composition tree](P11-composition-tree.md). Native/platform acceptance remains open.
 
@@ -140,3 +151,5 @@ P16 library implementation phase complete: all 15 design rows have reviewed impl
 P17 viewport/texturing batch: nine viewport, orientation, transform, UV, channel, material, projected-brush, mask/generator and bake rows have reviewed implementations. [Report](P17-native-viewport-and-texturing.md) records native gestures, actual surface contracts and the combined TypeScript build. Review count is 311 of 341. Eight P17 rows remain; acceptance stays deferred until user review.
 
 P17 library implementation phase complete: all 17 CAD/3D rows have reviewed implementations. [Final CAD report](P17-graphs-and-drafting.md) records shared graph/pan owners, drafting commands, snaps, annotations, paper space and constraints with combined TypeScript build. Review count is 319 of 341. Ten library rows remain; acceptance stays deferred until user review.
+
+P02/P03 final implementation batch: the last ten library rows now have reviewed implementations, including actual AVPlayer and Android VideoView/MediaPlayer surfaces, exact-acknowledgement frame scrubbing, safe-area/fold composition and scoped recovery. [Report](P02-P03-final-platform-and-media-controls.md) records reused platform-service owners, new native sources, builds and remaining native compile/runtime gates. Review count is 329 of 341, covering all 329 library-scope rows. User review precedes broad testing; the 12 separately scoped integration requirements and full acceptance remain open.

@@ -39,3 +39,9 @@ HSV here describes Display P3 primaries. The caller must convert document colors
 Android hosts must request `android:colorMode="wideColorGamut"` for their activity when appropriate; this library never changes activity, window, orientation or manifest metadata. A narrow-gamut surface receives system mapping. Simulator screenshots cannot prove physical wide-gamut output. No HDR or arbitrary ICC conversion is provided by this layer. The native acceptance consumer has a separate P3 tab.
 
 Platform references: [SwiftUI Display P3](https://developer.apple.com/documentation/swiftui/color/rgbcolorspace), [Android wide color](https://developer.android.com/training/wide-color-gamut).
+
+### Decoder-backed video surface
+
+`@nyc-tron/native-controls/NativeVideoPlayer` renders AVPlayerLayer on iOS and VideoView/MediaPlayer on Android. Pass a unique `sourceId`, URI, playback intent, volume/rate, explicit seek token/time, dimensions, label and `onStatus`. Status comes from the actual player. Keep this leaf mounted above changing pane layouts; the app's existing playback-session owner controls audio focus. Existing host file/network access policies apply.
+
+Android reports player position at millisecond precision. This surface does not certify exact presented-frame seeks; `@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber` requires a separate exact presentation acknowledgement from the app's decoder. Source owners and observers are released on replacement/unmount. No Expo Video dependency or app/window/manifest change is introduced. New player TypeScript build and Swift syntax checks pass; native compilation/runtime acceptance remains pending user review.

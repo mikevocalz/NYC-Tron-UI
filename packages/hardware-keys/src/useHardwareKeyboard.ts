@@ -1,4 +1,4 @@
-import {useEffect,useRef} from "react";
+import {useEffect,useLayoutEffect,useRef} from "react";
 import type {KeyChord} from "@nyc-tron/ui/components/shell/shortcut-model";
 import type {KeyboardMap,KeyboardMapEntry} from "@nyc-tron/ui/components/shell/keyboard-map";
 import type {KeySource} from "./key-source.ts";
@@ -23,11 +23,13 @@ export function useKeySource(source:KeySource|undefined,options:UseHardwareKeybo
   const {map,enabled=true}=options;
   // Latest callback and scopes without re-subscribing on every render.
   const latest=useRef(options);
-  latest.current=options;
+  const mounted=useRef(false);
+  useLayoutEffect(()=>{latest.current=options;mounted.current=true;return()=>{mounted.current=false;};});
   useEffect(()=>{
     if(!source||!enabled)return;
     const registration=source.registerBindings(map.nativeBindings());
     const listener=source.addChordListener(chord=>{
+      if(!mounted.current||latest.current.enabled===false||latest.current.map!==map)return false;
       const {onCommand,activeScopes}=latest.current;
       const entry=map.resolve(chord,{activeScopes,textInputFocused:source.isTextInputFocused()});
       if(!entry)return false;

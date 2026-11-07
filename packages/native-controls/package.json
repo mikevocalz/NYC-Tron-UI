@@ -27,6 +27,11 @@
       "types": "./dist/DisplayP3DiscLayer.d.ts",
       "react-native": "./dist/DisplayP3DiscLayer.js",
       "default": "./dist/DisplayP3DiscLayer.js"
+    },
+    "./NativeVideoPlayer": {
+      "types": "./dist/NativeVideoPlayer.d.ts",
+      "react-native": "./dist/NativeVideoPlayer.js",
+      "default": "./dist/NativeVideoPlayer.js"
     }
   },
   "scripts": {

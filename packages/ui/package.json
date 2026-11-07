@@ -2754,6 +2754,16 @@
       "types": "./dist/components/forge/cad/ParametricConstraintEditor.d.ts",
       "react-native": "./dist/components/forge/cad/ParametricConstraintEditor.js",
       "default": "./dist/components/forge/cad/ParametricConstraintEditor.js"
+    },
+    "./components/forge/platform/AccessiblePrecisionScrubControl": {
+      "types": "./dist/components/forge/platform/AccessiblePrecisionScrubControl.d.ts",
+      "react-native": "./dist/components/forge/platform/AccessiblePrecisionScrubControl.js",
+      "default": "./dist/components/forge/platform/AccessiblePrecisionScrubControl.js"
+    },
+    "./components/forge/timeline/FrameAccurateScrubber": {
+      "types": "./dist/components/forge/timeline/FrameAccurateScrubber.d.ts",
+      "react-native": "./dist/components/forge/timeline/FrameAccurateScrubber.native.js",
+      "default": "./dist/components/forge/timeline/FrameAccurateScrubber.js"
     }
   },
   "scripts": {

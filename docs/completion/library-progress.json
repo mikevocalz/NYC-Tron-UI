@@ -1439,11 +1439,18 @@
       "name": "NativeVideoPlayer",
       "phase": "P03",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/native-controls/src/NativeVideoPlayer.tsx",
+        "packages/native-controls/ios/TronVideoPlayerView.swift",
+        "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronVideoPlayerView.kt"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Real iOS/Android decoder-backed playback surface.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "D-02",
@@ -1497,10 +1504,17 @@
       "name": "FrameAccurateScrubber",
       "phase": "P03",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/FrameAccurateScrubber.shared.tsx",
+        "packages/ui/src/components/forge/timeline/FrameAccurateScrubber.native.tsx",
+        "packages/ui/src/components/forge/timeline/FrameAccurateScrubber.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Coalesced seeks, frame snaps, exact final commit."
+      "requirement": "Coalesced seeks, frame snaps, exact final commit.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "D-06",
@@ -4927,40 +4941,70 @@
       "name": "HapticsAndFeedback",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/platform-services/src/haptics/index.ts",
+        "packages/platform-services/src/haptics/haptics.ts",
+        "packages/platform-services/ios/NYCTronHapticsModule.swift",
+        "packages/platform-services/android/src/main/java/com/nyctron/platformservices/NYCTronHapticsModule.kt"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Stateful tactile feedback with user opt-out."
+      "requirement": "Stateful tactile feedback with user opt-out.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-06",
       "name": "VoiceOverTalkBackSupport",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/shell/FocusAndA11yLayer.tsx",
+        "packages/ui/src/components/shell/a11y-audit.ts",
+        "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Labels, roles, adjustable controls and navigation."
+      "requirement": "Labels, roles, adjustable controls and navigation.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-07",
       "name": "HardwareKeyboardMap",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/hardware-keys/src/index.ts",
+        "packages/ui/src/components/shell/keyboard-map.ts",
+        "packages/hardware-keys/src/useHardwareKeyboard.ts",
+        "packages/hardware-keys/src/binding-registry.ts"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Desktop-level shortcuts and conflict resolution."
+      "requirement": "Desktop-level shortcuts and conflict resolution.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-08",
       "name": "SafeAreaFoldableLayout",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/panes/src/components/SafeAreaFoldableLayout.tsx",
+        "packages/panes/src/components/AdaptivePaneHost.tsx",
+        "packages/core/src/folds.ts"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Dual panes, occlusion/hinge and orientation changes."
+      "requirement": "Dual panes, occlusion/hinge and orientation changes.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-09",
@@ -4997,10 +5041,18 @@
       "name": "NativeFileAndShareAdapter",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/platform-services/src/documents/index.ts",
+        "packages/platform-services/src/documents/documents.ts",
+        "packages/platform-services/ios/NYCTronDocumentsModule.swift",
+        "packages/platform-services/android/src/main/java/com/nyctron/platformservices/NYCTronDocumentsModule.kt"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Open-in-place, document picker, share and security scope."
+      "requirement": "Open-in-place, document picker, share and security scope.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-13",
@@ -5047,10 +5099,17 @@
       "name": "NativePlaybackLifecycle",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/platform-services/src/playback/index.ts",
+        "packages/platform-services/src/playback/session.ts",
+        "packages/platform-services/src/playback/policy.ts"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Audio focus, interruptions, background and headset loss."
+      "requirement": "Audio focus, interruptions, background and headset loss.",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-18",
@@ -5080,19 +5139,28 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/AudioInterruptionRecoveryDialog.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Audio focus/route-loss/recovered-recording experience with safe pause/stop/resume. *Source candidate: `filmcraft/ui/editor/Voiceover.kt`; requires verified implementation and license admission.*"
+      "requirement": "Audio focus/route-loss/recovered-recording experience with safe pause/stop/resume. *Source candidate: `filmcraft/ui/editor/Voiceover.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     },
     {
       "id": "N-21",
       "name": "AccessiblePrecisionScrubControl",
       "phase": "P02",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/platform/AccessiblePrecisionScrubControl.tsx",
+        "packages/ui/src/components/gestures/GestureHandlerDrag.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Keyboard, switch control, screen reader adjustable value, trackpad and touch scrub parity. *Source candidate: `lightcraft/ui/DevelopSlider.kt`; requires verified implementation and license admission.*"
+      "requirement": "Keyboard, switch control, screen reader adjustable value, trackpad and touch scrub parity. *Source candidate: `lightcraft/ui/DevelopSlider.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
     }
   ]
 }
