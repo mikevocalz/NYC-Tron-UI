@@ -1,5 +1,7 @@
-import {useEffect,useRef,type ReactNode} from "react";
-import {Platform,View,type ViewProps} from "react-native";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useEffect,useLayoutEffect,useRef,type ReactNode} from "react";
+import {Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {joinClasses} from "../../styles.ts";
@@ -18,7 +20,7 @@ import {
 import {CanvasKnob,LinePiece,NoticeLine,VectorButton,type CanvasKeyEvent,type DragModifiers} from "./vector-controls.tsx";
 
 /** Props for {@linkcode GradientOnCanvasHandles}. The paint and stop selection are owned by the host. */
-export interface GradientOnCanvasHandlesProps extends Omit<ViewProps,"children"> {
+export interface GradientOnCanvasHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The layer's linear or radial fill. */
   paint:GradientPaint;
   /** Overlay size in points. */
@@ -32,7 +34,7 @@ export interface GradientOnCanvasHandlesProps extends Omit<ViewProps,"children">
   /** Paint to draw during a drag; `undefined` when it ends or is cancelled. */
   onPreview?:(paint:GradientPaint|undefined)=>void;
   /** One call per drag release, key press, added or deleted stop. Maps to `setFill {id, fill}`. */
-  onSetFill:(paint:GradientPaint)=>void;
+  onSetFill:(paint:GradientPaint,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Canvas content drawn under the handles; it never takes touches while they are mounted. */
   children?:ReactNode;
   /** Show the stop and focal commands under the overlay. @default true */
@@ -76,10 +78,19 @@ const ACTION_DELTA:Record<string,Point|undefined>={
  * unit (Shift: 10) or a stop by 1% (Shift: 10%). Escape cancels a drag. Each
  * release or key press commits once through `onSetFill`.
  */
-export function GradientOnCanvasHandles({
+export function GradientOnCanvasHandles({scope='gradient-handles',revision=0,...props}:GradientOnCanvasHandlesProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.width,props.height,props.transform,props.paint.type]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <GradientOnCanvasHandlesBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onSetFill={value=>guard.run('onSetFill',(host,signal)=>host.onSetFill(value,signal))}
+  onSelectStop={index=>guard.current()?.onSelectStop(index)}
+  {...(props.onPreview?{onPreview:(value:Parameters<NonNullable<GradientOnCanvasHandlesProps['onPreview']>>[0])=>guard.current()?.onPreview?.(value)}:{})}/>;
+}
+function GradientOnCanvasHandlesBody({
+  actionError=null,busy=false,disabledReason,
   paint,width,height,transform=IDENTITY_TRANSFORM,selectedStop,onSelectStop,onPreview,onSetFill,children,
   showCommands=true,geometryOnly=false,label="Gradient",accentColor,className,unstyled=false,style,...rest
-}:GradientOnCanvasHandlesProps){
+}:GradientOnCanvasHandlesProps&{actionError?:string|null;busy?:boolean}){
   validateGradient(paint);
   validateTransform(transform);
   if(![width,height].every(Number.isFinite)||width<=0||height<=0)throw new RangeError("Invalid overlay size");
@@ -96,6 +107,9 @@ export function GradientOnCanvasHandles({
   const styled=!unstyled;
   const selected=selectedStop!==undefined&&shown.stops[selectedStop]?selectedStop:undefined;
   useEffect(()=>()=>{if(drag.current)latest.current.onPreview?.(undefined);},[]);
+
+  const geometryBoundary=JSON.stringify([paint,transform,width,height,disabledReason,busy]);
+  useLayoutEffect(()=>{drag.current=null;pressAt.current=null;clearPreview();},[geometryBoundary]);
 
   const view=(q:Point)=>toView(transform,q);
   // Rail geometry in view space: the axis shifted sideways by STOP_RAIL.
@@ -247,6 +261,8 @@ export function GradientOnCanvasHandles({
   };
   return <View {...rest} {...{onKeyDown:onRootKey,className:joinClasses("gap-2",className)}}
     style={[{alignSelf:"flex-start",maxWidth:"100%"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Applying change"}</Text>:null}
     <View {...canvasHandlers} accessibilityLabel={label} testID="gradient-canvas"
       {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border")}}
       style={{width,height,position:"relative",direction:"ltr",...NO_SELECT}}>

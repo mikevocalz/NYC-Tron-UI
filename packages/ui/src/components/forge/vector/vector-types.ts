@@ -117,7 +117,8 @@ const finite=(...values:number[])=>values.every(Number.isFinite);
 /** Throws a RangeError unless `t` is an invertible matrix of finite numbers. */
 export function validateTransform(t:ViewTransform):void{
   if(t.length!==6||!finite(...t))throw new RangeError("View transform needs six finite numbers");
-  if(Math.abs(t[0]*t[3]-t[1]*t[2])<1e-12)throw new RangeError("View transform is not invertible");
+  const determinant=t[0]*t[3]-t[1]*t[2];
+  if(!Number.isFinite(determinant)||Math.abs(determinant)<1e-12)throw new RangeError("View transform is not invertible");
 }
 /** Content point to view point. */
 export function toView(t:ViewTransform,p:Point):Point{

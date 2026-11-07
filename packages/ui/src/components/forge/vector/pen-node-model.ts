@@ -38,12 +38,14 @@ export function nodeKindLabel(kind:NodeKind):string{
  * or more than {@linkcode PEN_MAX_NODES} nodes.
  */
 export function validateSubpaths(subpaths:readonly Subpath[]):void{
+  if(subpaths.length>PEN_MAX_NODES)throw new RangeError("Too many subpaths");
   if(subpaths.length===0)throw new RangeError("A path needs at least one subpath");
   let total=0;
   subpaths.forEach((sp,i)=>{
     if(sp.nodes.length===0)throw new RangeError("Subpath "+i+" has no nodes");
     total+=sp.nodes.length;
     for(const n of sp.nodes){
+      if(n.in!==undefined&&n.in.length!==2||n.out!==undefined&&n.out.length!==2)throw new RangeError("Path handles need two coordinates");
       const values=[n.x,n.y,...(n.in??[]),...(n.out??[])];
       if(!values.every(Number.isFinite))throw new RangeError("Path node coordinates must be finite");
       if(!Object.hasOwn(KIND_LABELS,n.kind))throw new RangeError("Unknown node kind: "+String(n.kind));

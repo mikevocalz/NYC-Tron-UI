@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEffect,useRef} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
@@ -12,19 +14,19 @@ import {availabilityReason,type BooleanOp} from "./vector-types.ts";
 import {GroupLabel,NoticeLine,VECTOR_TOUCH_TARGET,VectorButton} from "./vector-controls.tsx";
 
 /** Props for {@linkcode ShapeBuilder}. Selection and the boolean group come from the host's document. */
-export interface ShapeBuilderProps extends Omit<ViewProps,"children"> {
+export interface ShapeBuilderProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The selected layers. Two or more sibling, unlocked shapes or paths can be combined. */
   selection:readonly BuilderLayer[];
   /** The boolean group to edit: the selected boolean, or the boolean holding the selected operand. */
   group?:BooleanGroup;
   /** Combine the selection. Maps to `booleanLayers {ids, op}`. */
-  onBoolean:(intent:{ids:LayerId[];op:BooleanOp})=>void;
+  onBoolean:(intent:{ids:LayerId[];op:BooleanOp},signal?:AbortSignal)=>void|Promise<unknown>;
   /** Change the group's operation. Maps to `setBooleanOp {id, op}`. */
-  onSetBooleanOp:(intent:{id:LayerId;op:BooleanOp})=>void;
+  onSetBooleanOp:(intent:{id:LayerId;op:BooleanOp},signal?:AbortSignal)=>void|Promise<unknown>;
   /** Release the operands back into the parent. Maps to `ungroupLayer {id}`. */
-  onRelease:(intent:{id:LayerId})=>void;
+  onRelease:(intent:{id:LayerId},signal?:AbortSignal)=>void|Promise<unknown>;
   /** Expand the result into pixels. Maps to `rasterizeLayer {id}`. */
-  onExpand:(intent:{id:LayerId})=>void;
+  onExpand:(intent:{id:LayerId},signal?:AbortSignal)=>void|Promise<unknown>;
   /** An operand row was pressed; the host selects that layer for editing (`selectLayers`). Rows are static text without it. */
   onSelectOperand?:(id:LayerId)=>void;
   className?:string;
@@ -39,9 +41,20 @@ type Local={notice:string|undefined};
  * editable layers), switches the operation, releases the operands or expands
  * the result into pixels.
  */
-export function ShapeBuilder({
+export function ShapeBuilder({scope='shape-builder',revision=0,...props}:ShapeBuilderProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.selection,props.group]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <ShapeBuilderBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onBoolean={value=>guard.run('onBoolean',(host,signal)=>host.onBoolean(value,signal))}
+  onSetBooleanOp={value=>guard.run('onSetBooleanOp',(host,signal)=>host.onSetBooleanOp(value,signal))}
+  onRelease={value=>guard.run('onRelease',(host,signal)=>host.onRelease(value,signal))}
+  onExpand={value=>guard.run('onExpand',(host,signal)=>host.onExpand(value,signal))}
+  {...(props.onSelectOperand?{onSelectOperand:(id:Parameters<NonNullable<ShapeBuilderProps['onSelectOperand']>>[0])=>guard.current()?.onSelectOperand?.(id)}:{})}/>;
+}
+function ShapeBuilderBody({
+  actionError=null,busy=false,disabledReason,
   selection,group,onBoolean,onSetBooleanOp,onRelease,onExpand,onSelectOperand,className,unstyled=false,style,...rest
-}:ShapeBuilderProps){
+}:ShapeBuilderProps&{actionError?:string|null;busy?:boolean}){
   if(group)validateBooleanGroup(group);
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({notice:undefined}));
@@ -52,12 +65,14 @@ export function ShapeBuilder({
   useEffect(()=>{store.setState({notice:undefined});},[contextKey,store]);
   const block=(reason:string)=>store.setState({notice:reason});
   const ok=(run:()=>void)=>()=>{store.setState({notice:undefined});run();};
-  const combineReason=availabilityReason(booleanAvailability(selection));
-  const groupReason=availabilityReason(groupAvailability(group));
+  const combineReason=disabledReason??(busy?"Applying change":availabilityReason(booleanAvailability(selection)));
+  const groupReason=disabledReason??(busy?"Applying change":availabilityReason(groupAvailability(group)));
   const muted=joinClasses(styled&&"text-text-muted text-xs");
   const text=joinClasses(styled&&"text-text");
   return <View {...rest} {...{className:joinClasses("gap-3",styled&&"rounded-control border border-border bg-surface-raised p-3",className)}}
     style={[{minWidth:0},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Applying change"}</Text>:null}
     <View style={{gap:6}}>
       <GroupLabel styled={styled}>Combine shapes</GroupLabel>
       <Text {...{className:muted}}>{selection.length===1?"1 layer selected":`${selection.length} layers selected`}</Text>

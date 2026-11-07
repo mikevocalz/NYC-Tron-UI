@@ -795,9 +795,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/vector/PenNodeEditor.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Bezier handles, smooth/corner and curve joins."
+      "requirement": "Bezier handles, smooth/corner and curve joins.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-22",
@@ -807,9 +810,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/vector/ShapeBuilder.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Booleans, combine/subtract/intersect and editable operands."
+      "requirement": "Booleans, combine/subtract/intersect and editable operands.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-23",
@@ -819,9 +825,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/vector/FillStrokeInspector.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Stroke width, join/cap, dashes, fill rules and order."
+      "requirement": "Stroke width, join/cap, dashes, fill rules and order.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-24",
@@ -831,9 +840,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/vector/GradientOnCanvasHandles.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Move/rotate editable linear/radial/focal gradients."
+      "requirement": "Move/rotate editable linear/radial/focal gradients.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-25",
@@ -843,19 +855,27 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Align, evenly distribute, spacing and order."
+      "requirement": "Align, evenly distribute, spacing and order.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-26",
       "name": "GuidedCropAndStraighten",
       "phase": "P05",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/canvas/GuidedCropAndStraighten.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Crop handles, ratio presets, rotation and overlays."
+      "requirement": "Crop handles, ratio presets, rotation and overlays.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-27",
@@ -865,9 +885,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/layers/CanvasCompareView.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Before/after, split, overlay and reference view."
+      "requirement": "Before/after, split, overlay and reference view.",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-28",
@@ -877,9 +900,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/color/FloatingPaletteUndockHandle.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "ProCraft dock-to-floating color/tool palette, accessible drag targets and foldable-safe restoration. *Source candidate: `procraft/ui/ColorPanel.kt`; requires verified implementation and license admission.*"
+      "requirement": "ProCraft dock-to-floating color/tool palette, accessible drag targets and foldable-safe restoration. *Source candidate: `procraft/ui/ColorPanel.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
     },
     {
       "id": "B-29",

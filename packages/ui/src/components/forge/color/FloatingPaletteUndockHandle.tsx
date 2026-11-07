@@ -1,5 +1,7 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useRef} from "react";
-import {View,type ViewProps} from "react-native";
+import {Text,View,type ViewProps} from "react-native";
 import {DragGrabHandle} from "../../DragGrabHandle.tsx";
 import {keyboardKey,type DragPoint,type DragTransport,type DragTransportProps,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../../gestures/PanResponderDrag.tsx";
@@ -7,7 +9,7 @@ import {joinClasses} from "../../styles.ts";
 import {nudgePalette,placeFloatingPalette,shouldUndock,type PalettePosition,type PaletteRect} from "./floating-palette.ts";
 
 /** Props for {@linkcode FloatingPaletteUndockHandle}. */
-export interface FloatingPaletteUndockHandleProps extends Omit<ViewProps,"children"> {
+export interface FloatingPaletteUndockHandleProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly docked:boolean;
   /** The palette's current top-left in the host's coordinates: its docked spot, or its floating position. */
   readonly origin:PalettePosition;
@@ -20,11 +22,11 @@ export interface FloatingPaletteUndockHandleProps extends Omit<ViewProps,"childr
   /** Where to draw the palette during a drag; `undefined` when the drag ends or is cancelled. */
   readonly onPreview:(position:PalettePosition|undefined)=>void;
   /** A docked palette was dragged past the undock distance and released. One commit. */
-  readonly onUndock:(position:PalettePosition)=>void;
+  readonly onUndock:(position:PalettePosition,signal?:AbortSignal)=>void|Promise<unknown>;
   /** A floating palette was dragged or nudged to a new spot. One commit per release or key press. */
-  readonly onMove:(position:PalettePosition)=>void;
+  readonly onMove:(position:PalettePosition,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Enter, Space or the screen-reader action on a floating palette. */
-  readonly onDock:()=>void;
+  readonly onDock:(signal?:AbortSignal)=>void|Promise<unknown>;
   /** @default "Color palette" */
   readonly label?:string;
   readonly disabled?:boolean;
@@ -41,10 +43,19 @@ export interface FloatingPaletteUndockHandleProps extends Omit<ViewProps,"childr
  * keyboard focus, Enter or Space toggles docking and the arrow keys move a
  * floating palette 8 units (Page Up/Down 32).
  */
-export function FloatingPaletteUndockHandle({
-  docked,origin,size,bounds,obstacles=[],onPreview,onUndock,onMove,onDock,label="Color palette",
+export function FloatingPaletteUndockHandle({scope='palette-undock',revision=0,...props}:FloatingPaletteUndockHandleProps){
+ const placement=placeFloatingPalette(props.origin,props.size,props.bounds,props.obstacles);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason,props.docked,props.size,props.bounds,props.obstacles]);
+ const guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined||placement.overlapsObstacle);
+ return <FloatingPaletteUndockHandleBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||placement.overlapsObstacle||guard.pending}
+  onPreview={value=>guard.current()?.onPreview(value)}
+  onUndock={value=>guard.run('undock',(host,signal)=>host.onUndock(value,signal))} onMove={value=>guard.run('move',(host,signal)=>host.onMove(value,signal))}
+  onDock={()=>guard.run('dock',(host,signal)=>host.onDock(signal))}/>;
+}
+function FloatingPaletteUndockHandleBody({
+  actionError=null,disabledReason,docked,origin,size,bounds,obstacles=[],onPreview,onUndock,onMove,onDock,label="Color palette",
   disabled=false,unstyled=false,style,...rest
-}:FloatingPaletteUndockHandleProps){
+}:FloatingPaletteUndockHandleProps&{actionError?:string|null}){
   // `origin` is snapshotted when the drag starts. While floating, the host
   // redraws the palette at each preview, so a live `origin` would already
   // include the travel and every move would add it again.
@@ -76,6 +87,8 @@ export function FloatingPaletteUndockHandle({
   return <View {...{onKeyDown,focusable:!disabled,
       className:joinClasses(!unstyled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
     style={[{alignSelf:"center"},style]} {...rest}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason?<Text accessibilityLiveRegion="polite">{disabledReason}</Text>:null}
     <DragGrabHandle label={docked?`Undock ${label.toLowerCase()}`:`Move ${label.toLowerCase()}`}
       disabled={disabled} unstyled={unstyled}
       accessibilityActions={docked?[{name:"activate",label:"Undock"}]:[{name:"activate",label:"Dock"}]}

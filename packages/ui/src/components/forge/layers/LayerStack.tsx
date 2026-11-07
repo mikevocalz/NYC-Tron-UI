@@ -95,18 +95,19 @@ export function LayerStack({scope='layers',revision=0,disabled=false,expandedIds
  const rows=flattenLayerTree(props.layers,expandedIds),nested=props.layers.some(layer=>layer.parentId!=null),controls=nested||!!onToggleLocked||!!onExpandedChange;
  if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512||!Number.isFinite(props.rowHeight??56)||(props.rowHeight??56)>1000)throw new RangeError('Invalid layer stack identity or row size');
  const boundary=JSON.stringify([scope,revision,disabled,props.rowHeight,props.layers.map(layer=>[layer.id,layer.parentId,layer.locked]),expandedIds]);
+ const viewIdentity=JSON.stringify([scope,revision,disabled,props.rowHeight,props.layers.map(layer=>[layer.id,layer.parentId,layer.locked]).sort((a,b)=>String(a[0]).localeCompare(String(b[0])))]);
  const action=useOwnedAction(boundary),busy=action.pending!==null,request=useRef<symbol|null>(null);
  useLayoutEffect(()=>{request.current=null;},[boundary]);
  const committed=useRef<null|{boundary:string;props:typeof props;disabled:boolean;busy:boolean;onExpandedChange:typeof onExpandedChange;onToggleLocked:typeof onToggleLocked;onReparent:typeof onReparent}>(null);
  useLayoutEffect(()=>{committed.current={boundary,props,disabled,busy,onExpandedChange,onToggleLocked,onReparent};});useLayoutEffect(()=>()=>{committed.current=null;},[]);
  const current=()=>committed.current?.boundary===boundary&&!committed.current.disabled?committed.current:null;
- const mutate=(id:string,operation:()=>void|Promise<unknown>)=>{const p=current();if(!p||p.busy||request.current)return Promise.resolve();const token=Symbol();request.current=token;return action.run(id,async()=>{await operation();}).then(()=>{}).finally(()=>{if(request.current===token)request.current=null;});};
+ const mutate=(id:string,operation:()=>void|Promise<unknown>)=>{const p=current();if(!p||p.busy||request.current)return Promise.resolve();const token=Symbol();request.current=token;return action.run(id,()=>operation(),undefined,{pendingForAsyncOnly:true}).then(()=>{}).finally(()=>{if(request.current===token)request.current=null;});};
  const allowed=(id:string)=>{const p=current(),row=rows.find(row=>row.layer.id===id);return p&&!p.busy&&row&&!row.inheritedLock&&!row.layer.locked?p:null;};
  const move=(id:string,toIndex:number)=>{const p=allowed(id);if(!p)return;const row=rows.find(row=>row.layer.id===id)!,target=rows[toIndex];if(!target)return;if(!nested)return mutate(id,()=>p.props.onMove(id,toIndex));
   const parent=row.layer.parentId??null;if((target.layer.parentId??null)!==parent)return;const siblings=p.props.layers.filter(layer=>(layer.parentId??null)===parent&&layer.id!==id),index=siblings.findIndex(layer=>layer.id===target.layer.id);const from=rows.findIndex(value=>value.layer.id===id),at=index+(toIndex>from?1:0);if(!p.onReparent)return;validateLayerTreeMove(p.props.layers,id,parent,at);return mutate(id,()=>p.onReparent!(id,parent,at));
  };
  const effective=rows.map(row=>({...row.layer,locked:row.layer.locked||row.inheritedLock||disabled||busy}));
- return <LayerStackBody key={boundary} {...props} busy={busy} actionError={action.error} layers={effective} disabled={disabled||busy} canReorder={!nested||!!onReparent}
+ return <LayerStackBody key={viewIdentity} interactionBoundary={boundary} {...props} busy={busy} actionError={action.error} layers={effective} disabled={disabled||busy} canReorder={!nested||!!onReparent}
   onSelect={id=>{const p=current();if(p)p.props.onSelect(id);}} onToggleVisible={id=>{const p=current();if(p&&!p.busy)void mutate(id,()=>p.props.onToggleVisible(id));}}
   onOpacityPreview={(id,value)=>{const p=allowed(id);if(p)p.props.onOpacityPreview?.(id,value);}} onOpacityCommit={(id,value)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onOpacityCommit(id,value));}}
   onMove={move} onRename={(id,name)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onRename(id,name));}} {...(props.onRemove?{onRemove:(id:string)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onRemove!(id));}}:{})}
@@ -121,12 +122,13 @@ export function LayerStack({scope='layers',revision=0,disabled=false,expandedIds
 function LayerStackBody({
  layers,selectedId,onSelect,onToggleVisible,onOpacityPreview,onOpacityCommit,onMove,onRename,onRemove,
  rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,opacityControl="auto",className,unstyled=false,
- onLayout,renderControls,disabled=false,canReorder=true,busy=false,actionError=null,...rest
-}:LayerStackProps&{renderControls?:(layer:LayerRow)=>ReactNode;canReorder?:boolean;busy?:boolean;actionError?:string|null}){
+ interactionBoundary,onLayout,renderControls,disabled=false,canReorder=true,busy=false,actionError=null,...rest
+}:LayerStackProps&{interactionBoundary:string;renderControls?:(layer:LayerRow)=>ReactNode;canReorder?:boolean;busy?:boolean;actionError?:string|null}){
  validateLayers(layers);
  const local=useRef<StoreApi<Local>|null>(null);
  if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null,width:undefined,editing:null}));
  const store=local.current;
+ useLayoutEffect(()=>{store.setState({drag:null,opacity:null,editing:null});},[interactionBoundary,store]);
  const drag=useStore(store,s=>s.drag);
  const width=useStore(store,s=>s.width);
  const primaryHeight=Math.max(LAYER_TOUCH_TARGET,rowHeight),height=primaryHeight+(renderControls?44:0);

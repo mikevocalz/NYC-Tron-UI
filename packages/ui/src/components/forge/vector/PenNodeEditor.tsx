@@ -1,5 +1,7 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useLayoutEffect,useRef,type ReactNode} from "react";
-import {Platform,View,type ViewProps} from "react-native";
+import {Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {joinClasses} from "../../styles.ts";
@@ -29,7 +31,7 @@ export interface SetClosedIntent {
 }
 
 /** Props for {@linkcode PenNodeEditor}. The path, selection and every edit are owned by the host. */
-export interface PenNodeEditorProps extends Omit<ViewProps,"children"> {
+export interface PenNodeEditorProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The path layer's subpaths, in content coordinates. */
   subpaths:readonly Subpath[];
   /** Optional content-coordinate snapping. The host must return finite coordinates. */
@@ -48,22 +50,22 @@ export interface PenNodeEditorProps extends Omit<ViewProps,"children"> {
   /** The path to draw during a drag; `undefined` when the drag ends or is cancelled. Never persist here. */
   onPreview?:(subpaths:readonly Subpath[]|undefined)=>void;
   /** A node or handle was dragged and released, or nudged by one key press. Maps to `setPathNode`. */
-  onSetPathNode:(intent:SetPathNodeIntent)=>void;
+  onSetPathNode:(intent:SetPathNodeIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /**
    * A tap on the outline or the "Add node" command split a segment. Maps to
    * `insertPathNode` when {@linkcode InsertNodeIntent.neighborsChanged} is false,
    * otherwise `setPathNodes` with {@linkcode InsertNodeIntent.subpaths}.
    */
-  onInsertNode:(intent:InsertNodeIntent)=>void;
+  onInsertNode:(intent:InsertNodeIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Delete, Backspace or the command removed a node. Maps to `removePathNode`. */
-  onRemoveNode:(ref:NodeRef)=>void;
+  onRemoveNode:(ref:NodeRef,signal?:AbortSignal)=>void|Promise<unknown>;
   /**
    * The node kind changed. Maps to `setNodeKind`, or to `setPathNode` with
    * {@linkcode NodeKindIntent.node} when {@linkcode NodeKindIntent.handlesChanged}.
    */
-  onSetNodeKind:(intent:NodeKindIntent)=>void;
+  onSetNodeKind:(intent:NodeKindIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /** The selected node's subpath was closed or opened. Maps to `setSubpathClosed`. */
-  onSetClosed:(intent:SetClosedIntent)=>void;
+  onSetClosed:(intent:SetClosedIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Canvas content drawn under the overlay. It never takes touches while the editor is mounted. */
   children?:ReactNode;
   /** Show the node command bar under the overlay. @default true */
@@ -98,11 +100,25 @@ const sideLabel=(side:HandleSide)=>side==="in"?"Incoming handle":"Outgoing handl
  * Curves are drawn as short straight pieces sampled from the exact Bézier, so
  * the overlay needs no SVG dependency; the engine renders the real curve.
  */
-export function PenNodeEditor({
+export function PenNodeEditor({scope,revision,editScope,editRevision,...props}:PenNodeEditorProps){
+ const id=scope??editScope??'path-nodes',version=revision??editRevision??0;
+ const owner=JSON.stringify([...controlIdentity(id,version),props.disabledReason,props.width,props.height,props.transform]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <PenNodeEditorBody key={owner} {...props} editScope={id} editRevision={version} actionError={guard.error} busy={guard.pending}
+  onSelectionChange={value=>guard.current()?.onSelectionChange(value)} onPreview={value=>guard.current()?.onPreview?.(value)}
+  onSetPathNode={value=>guard.run('onSetPathNode',(host,signal)=>host.onSetPathNode(value,signal))}
+  onInsertNode={value=>guard.run('onInsertNode',(host,signal)=>host.onInsertNode(value,signal))}
+  onRemoveNode={value=>guard.run('onRemoveNode',(host,signal)=>host.onRemoveNode(value,signal))}
+  onSetNodeKind={value=>guard.run('onSetNodeKind',(host,signal)=>host.onSetNodeKind(value,signal))}
+  onSetClosed={value=>guard.run('onSetClosed',(host,signal)=>host.onSetClosed(value,signal))}
+/>;
+}
+function PenNodeEditorBody({
+  actionError=null,busy=false,disabledReason,
   subpaths,snapPoint,snapHandle,editScope,editRevision,width,height,transform=IDENTITY_TRANSFORM,selection,onSelectionChange,onPreview,onSetPathNode,
   onInsertNode,onRemoveNode,onSetNodeKind,onSetClosed,children,showCommands=true,label="Path nodes",
   accentColor,className,unstyled=false,style,...rest
-}:PenNodeEditorProps){
+}:PenNodeEditorProps&{actionError?:string|null;busy?:boolean}){
   validateSubpaths(subpaths);
   validateTransform(transform);
   if(![width,height].every(Number.isFinite)||width<=0||height<=0)throw new RangeError("Invalid editor size");
@@ -128,6 +144,8 @@ export function PenNodeEditor({
     latest.current.onPreview?.(undefined);
   };
   useLayoutEffect(()=>()=>{drag.current=null;pressAt.current=null;if(store.getState().preview!==null){store.setState({preview:null});latest.current.onPreview?.(undefined);}},[store,editScope,editRevision]);
+  const geometryBoundary=JSON.stringify([subpaths,transform,width,height,disabledReason,busy]);
+  useLayoutEffect(()=>{drag.current=null;pressAt.current=null;clearPreview();},[geometryBoundary]);
   const cancelDrag=()=>{
     const d=drag.current;
     if(!d)return false;
@@ -300,6 +318,8 @@ export function PenNodeEditor({
   const selSub=selected?shown[selected.subpath]:undefined;
   return <View {...rest} {...{onKeyDown:onRootKey,onKeyUp:onRootKeyUp,className:joinClasses("gap-2",className)}}
     style={[{alignSelf:"flex-start",maxWidth:"100%"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Applying path change"}</Text>:null}
     <View {...canvasHandlers} accessibilityLabel={label} testID="pen-canvas"
       {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border")}}
       // Canvas geometry stays left to right in RTL documents.
