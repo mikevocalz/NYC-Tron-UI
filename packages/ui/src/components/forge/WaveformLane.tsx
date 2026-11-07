@@ -1,4 +1,4 @@
-import {createStore} from 'zustand/vanilla';
+import {createWaveformGesture,waveformPosition,createWaveformLaneStore,writeWaveformPosition,stepWaveformPosition} from './waveform-gesture.ts';
 import {useStore} from 'zustand';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from './inputs/useScopedControl.ts';
 import {ErrorMessage} from '../feedback/ErrorMessage.tsx';
@@ -6,12 +6,10 @@ import { useRef,useLayoutEffect } from "react";
 import { PanResponder,Platform,View,type ViewProps,type ViewStyle } from "react-native";
 import { joinClasses } from "../styles.ts";
 import {
-  FULL_RANGE,assertWaveformRange,peaksToBars,rangePosition,resamplePeaks,scrollRange,slicePeaks,
+  FULL_RANGE,assertWaveformRange,peaksToBars,resamplePeaks,slicePeaks,
   type WaveformPeak,type WaveformRange,
 } from "./waveform.ts";
 
-/** Horizontal travel, in points, before a press becomes a scroll. */
-const SLOP=6;
 
 export interface WaveformLaneProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Measured real source signal extrema; not synthetic waves. */
@@ -41,7 +39,6 @@ export interface WaveformLaneProps extends Omit<ViewProps,"children">,ScopedCont
   unstyled?:boolean;
 }
 
-type Scroll={active:boolean;range:WaveformRange};
 /**
  * Per-component import: no audio API, Forge engines, Skia or Nitro.
  * Bounded native view count (<=128) at any zoom: `visibleRange` picks the
@@ -54,7 +51,7 @@ export function WaveformLane({scope='waveform',revision=0,...props}:WaveformLane
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.visibleRange,props.columns,props.height]);
  if(props.peaks.length>1048576||props.peaks.some(p=>!Number.isFinite(p.min)||!Number.isFinite(p.max)||p.min>p.max||p.min< -1||p.max>1))throw new RangeError('Invalid waveform peaks');
  const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
- return <View style={{minWidth:0}}><WaveformLaneBody key={owner} {...props}
+ return <View style={{minWidth:0}}><WaveformLaneBody sourceBoundary={JSON.stringify(controlIdentity(scope,revision))} gestureBoundary={owner} {...props}
   onSeekNormalized={props.onSeekNormalized?value=>{guard.current()?.onSeekNormalized?.(value);}:undefined}
   onVisibleRangeChange={props.onVisibleRangeChange?value=>{guard.current()?.onVisibleRangeChange?.(value);}:undefined}
   onVisibleRangeCommit={props.onVisibleRangeCommit?value=>guard.run('range',host=>host.onVisibleRangeCommit?.(value)):undefined}/>
@@ -62,56 +59,53 @@ export function WaveformLane({scope='waveform',revision=0,...props}:WaveformLane
 }
 function WaveformLaneBody({
 
-  peaks,columns=96,height=64,onSeekNormalized,position,accessibilityStep=0.05,
+  sourceBoundary,gestureBoundary,peaks,columns=96,height=64,onSeekNormalized,position,accessibilityStep=0.05,
   visibleRange=FULL_RANGE,onVisibleRangeChange,onVisibleRangeCommit,
   className,barClassName,unstyled=false,style,disabledReason,...props
-}:WaveformLaneProps){
+}:WaveformLaneProps&{sourceBoundary:string;gestureBoundary:string}){
   assertWaveformRange(visibleRange);
   const width=useRef(0);
-  const lastPosition=useRef(0);
-  const clamp=(n:number)=>Math.min(1,Math.max(0,n));
-  const current=position!==undefined&&Number.isFinite(position)?clamp(position):lastPosition.current;
-  const latest=useRef({onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange});
-  useLayoutEffect(()=>{latest.current={onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange};});
-  const local=useRef<ReturnType<typeof createWaveStore>|null>(null);
-  if(!local.current)local.current=createWaveStore(visibleRange);
+  const committedBoundary=useRef(gestureBoundary);
+  const gesture=useRef<ReturnType<typeof createWaveformGesture>|null>(null);
+  if(!gesture.current)gesture.current=createWaveformGesture();
+  const session=gesture.current;
+  const latest=useRef({onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange,sourceBoundary,position,accessibilityStep,disabled:disabledReason!==undefined});
+  useLayoutEffect(()=>{latest.current={onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange,sourceBoundary,position,accessibilityStep,disabled:disabledReason!==undefined};});
+  const local=useRef<ReturnType<typeof createWaveformLaneStore>|null>(null);
+  if(!local.current)local.current=createWaveformLaneStore(visibleRange,sourceBoundary);
   const store=local.current;
-  const snapshot=useStore(store,s=>s);
-  const range=snapshot.active?snapshot.range:visibleRange;
+  const active=useStore(store,s=>s.active);
+  const previewRange=useStore(store,s=>s.range);
+  const fallback=useStore(store,s=>s.fallback);
+  const current=waveformPosition(position,sourceBoundary,fallback);
+  const range=active?previewRange:visibleRange;
+  useLayoutEffect(()=>{committedBoundary.current=gestureBoundary;session.cancel();store.setState({active:false});},[gestureBoundary,session,store]);
+  useLayoutEffect(()=>()=>{session.cancel();},[session]);
   const seek=(next:number)=>{
-    const value=clamp(next);
-    lastPosition.current=value;
+    if(latest.current.disabled)return;
+    const value=writeWaveformPosition(store,latest.current.sourceBoundary,next);
     latest.current.onSeekNormalized?.(value);
   };
   const responder=useRef<ReturnType<typeof PanResponder.create>|null>(null);
   if(!responder.current)responder.current=PanResponder.create({
-    onStartShouldSetPanResponder:()=>latest.current.onSeekNormalized!=null||latest.current.onVisibleRangeCommit!=null,
-    onPanResponderGrant:()=>store.setState({active:false,range:latest.current.visibleRange}),
+    onStartShouldSetPanResponder:e=>(e.nativeEvent.touches?.length??1)<=1&&!latest.current.disabled&&(latest.current.onSeekNormalized!=null||latest.current.onVisibleRangeCommit!=null),
+    onPanResponderGrant:e=>{if(latest.current.disabled||(e.nativeEvent.touches?.length??1)>1){session.cancel();store.setState({active:false});return;}session.begin(committedBoundary.current,width.current,latest.current.visibleRange);store.setState({active:false,range:latest.current.visibleRange});},
     onPanResponderMove:(_e,g)=>{
-      const p=latest.current;
-      if(!p.onVisibleRangeCommit||width.current<=0)return;
-      if(!store.getState().active&&Math.abs(g.dx)<SLOP)return;
-      const next=scrollRange(p.visibleRange,g.dx,width.current);
-      const s=store.getState();
-      if(!s.active||next.start!==s.range.start){
-        store.setState({active:true,range:next});
-        p.onVisibleRangeChange?.(next);
-      }
+      const p=latest.current;if(p.disabled)return;
+      if(g.numberActiveTouches>1){const scrolling=session.cancel();store.setState({active:false});if(scrolling)p.onVisibleRangeChange?.(p.visibleRange);return;}
+      const next=session.move(committedBoundary.current,g.dx,p.onVisibleRangeCommit!=null);
+      if(next){store.setState({active:true,range:next});p.onVisibleRangeChange?.(next);}
     },
     onPanResponderRelease:e=>{
-      const p=latest.current;
-      const s=store.getState();
-      if(s.active){
-        store.setState({active:false});
-        if(s.range.start!==p.visibleRange.start)p.onVisibleRangeCommit?.(s.range);
-        return;
-      }
-      if(p.onSeekNormalized&&width.current>0)seek(rangePosition(p.visibleRange,e.nativeEvent.locationX,width.current));
+      const result=session.release(committedBoundary.current,e.nativeEvent.locationX);
+      store.setState({active:false});
+      const p=latest.current;if(!result||p.disabled)return;
+      if(result.kind==='range'){if(result.changed)p.onVisibleRangeCommit?.(result.range);}
+      else if(p.onSeekNormalized)seek(result.position);
     },
     onPanResponderTerminate:()=>{
-      if(!store.getState().active)return;
-      store.setState({active:false});
-      latest.current.onVisibleRangeChange?.(latest.current.visibleRange);
+      const scrolling=session.cancel();store.setState({active:false});
+      if(scrolling&&!latest.current.disabled)latest.current.onVisibleRangeChange?.(latest.current.visibleRange);
     },
     onPanResponderTerminationRequest:()=>!store.getState().active,
   });
@@ -130,13 +124,14 @@ function WaveformLaneBody({
     accessibilityRole={onSeekNormalized?"adjustable":"image"}
     accessibilityLabel={props.accessibilityLabel??"Audio waveform"}
     accessibilityState={{disabled:disabledReason!==undefined}}
-    onLayout={e=>{width.current=e.nativeEvent.layout.width;props.onLayout?.(e);}}
+    onLayout={e=>{if(committedBoundary.current!==gestureBoundary)return;const next=e.nativeEvent.layout.width;if(next!==width.current){const scrolling=session.cancel();store.setState({active:false});if(scrolling&&!latest.current.disabled)latest.current.onVisibleRangeChange?.(latest.current.visibleRange);width.current=Number.isFinite(next)&&next>0?next:0;}props.onLayout?.(e);}}
     accessibilityValue={onSeekNormalized?{min:0,max:100,now:Math.round(current*100)}:undefined}
     accessibilityActions={onSeekNormalized?[{name:"increment"},{name:"decrement"}]:undefined}
     onAccessibilityAction={onSeekNormalized?e=>{
+      if(committedBoundary.current!==gestureBoundary||latest.current.disabled||!latest.current.onSeekNormalized)return;
       // Step from the playhead; jumping to 0 or 1 would discard the position.
-      if(e.nativeEvent.actionName==="increment")seek(current+accessibilityStep);
-      if(e.nativeEvent.actionName==="decrement")seek(current-accessibilityStep);
+      const delta=e.nativeEvent.actionName==="increment"?latest.current.accessibilityStep:e.nativeEvent.actionName==="decrement"?-latest.current.accessibilityStep:0;
+      if(delta){const p=latest.current;const value=stepWaveformPosition(store,{source:p.sourceBoundary,...(p.position===undefined?{}:{position:p.position})},delta);p.onSeekNormalized?.(value);}
     }:undefined}
   >{bars.map((bar,i)=><View key={i} style={{flex:1,height}}>
     <View
@@ -145,5 +140,3 @@ function WaveformLaneBody({
     />
   </View>)}</View>;
 }
-
-function createWaveStore(range:WaveformRange){return createStore<Scroll>(()=>({active:false,range}));}
