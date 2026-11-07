@@ -1,3 +1,5 @@
+import {useLayoutEffect,useRef} from 'react';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Platform,Pressable,Text,View,type ViewProps} from "react-native";
@@ -36,14 +38,17 @@ export interface LoopRangeBarProps extends Omit<ViewProps,"children">,ScopedCont
 const NO_SELECT=(Platform.OS==="web"?{userSelect:"none",touchAction:"none"}:{}) as object;
 const HIT=44;
 
-function Edge({edge,range,viewport,durationFrames,rate,onPreview,onCommit,dropFrame,disabled,styled}:{
-  edge:"in"|"out";range:LoopRange;viewport:TimelineViewport;durationFrames:number;rate:FrameRate;
+function Edge({boundary,restorePreview,edge,range,viewport,durationFrames,rate,onPreview,onCommit,dropFrame,disabled,styled}:{
+  boundary:string;restorePreview?:LoopRangeBarProps["onPreview"];edge:"in"|"out";range:LoopRange;viewport:TimelineViewport;durationFrames:number;rate:FrameRate;
   onPreview?:(r:LoopRange)=>void;onCommit:(r:LoopCommit)=>void;dropFrame:boolean;disabled:boolean;styled:boolean;
 }){
+  const committed=useRef(boundary);
+  useLayoutEffect(()=>{committed.current=boundary;},[boundary]);
+  const admitted=()=>committed.current===boundary&&!disabled;
   const frame=edge==="in"?range.inFrame:range.outFrame;
   const left=frameToX(viewport,frame)-HIT/2;
-  const commit=(f:number)=>{const r=setLoopEdge(range,edge,f,durationFrames);if(r.inFrame!==range.inFrame||r.outFrame!==range.outFrame)onCommit(loopCommit(r,rate));};
-  const scrub=useFrameScrub({frame,disabled,
+  const commit=(f:number)=>{if(!admitted())return;const r=setLoopEdge(range,edge,f,durationFrames);if(r.inFrame!==range.inFrame||r.outFrame!==range.outFrame)onCommit(loopCommit(r,rate));};
+  const scrub=useFrameScrub({frame,disabled,boundary,onRestore:()=>restorePreview?.(range),
     onScrub:f=>onPreview?.(setLoopEdge(range,edge,f,durationFrames)),onCommit:commit,
     frameAt:p=>Math.min(durationFrames,Math.max(0,Math.round(xToFrame(viewport,left+p.x)))),
     grabPxPerFrame:viewport.pxPerFrame,durationFrames});
@@ -51,6 +56,7 @@ function Edge({edge,range,viewport,durationFrames,rate,onPreview,onCommit,dropFr
   const shownFrame=edge==="in"?shown.inFrame:shown.outFrame;
   const x=frameToX(viewport,shownFrame);
   const onKeyDown=(event:KeyEventLike)=>{
+    if(!admitted())return;
     const key=keyboardKey(event);
     if(key==="Escape"){scrub.cancel();return;}
     const next=frameForKey(key,frame,durationFrames,rate);
@@ -58,14 +64,16 @@ function Edge({edge,range,viewport,durationFrames,rate,onPreview,onCommit,dropFr
     (event as {preventDefault?:()=>void}).preventDefault?.();
     commit(next);
   };
-  if(x<-HIT||x>viewport.widthPx+HIT)return null;
+  const offscreen=x<-HIT||x>viewport.widthPx+HIT;
   return <View {...scrub.handlers}
-    {...{onKeyDown,focusable:!disabled,className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
-    accessible accessibilityRole="adjustable" accessibilityLabel={edge==="in"?"Loop start":"Loop end"}
+    {...{onKeyDown,focusable:!disabled&&!offscreen,className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
+    pointerEvents={offscreen?"none":undefined} accessibilityElementsHidden={offscreen} importantForAccessibility={offscreen?"no-hide-descendants":"auto"}
+    accessible={!offscreen} accessibilityRole="adjustable" accessibilityLabel={edge==="in"?"Loop start":"Loop end"}
     aria-valuemin={0} aria-valuemax={durationFrames} aria-valuenow={shownFrame}
     aria-valuetext={formatTimecode(shownFrame,rate,{dropFrame})} aria-disabled={disabled}
     accessibilityActions={[{name:"increment",label:"Later"},{name:"decrement",label:"Earlier"}]}
     onAccessibilityAction={e=>{
+      if(!admitted())return;
       const d=e.nativeEvent.actionName==="increment"?1:e.nativeEvent.actionName==="decrement"?-1:0;
       if(d&&!disabled)commit(frame+d);
     }}
@@ -85,18 +93,22 @@ function Edge({edge,range,viewport,durationFrames,rate,onPreview,onCommit,dropFr
  * short. Each release, key press or button commits once.
  */
 export function LoopRangeBar({scope='LoopRangeBar',revision=0,...props}:LoopRangeBarProps){
- const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.viewport,props.durationFrames,props.rate]);
+ const signature=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.viewport,props.durationFrames,props.rate,props.range,props.marks]);
+ const owner=useEditorBoundary([signature]);
  const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
- return <LoopRangeBarBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+ return <LoopRangeBarBody boundary={owner} restorePreview={props.onPreview} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
   onCommit={(value)=>guard.run('onCommit',host=>host.onCommit(value))}
   onLoopingChange={(value)=>guard.run('onLoopingChange',host=>host.onLoopingChange(value))}
   {...(props.onPreview?{onPreview:(value:Parameters<NonNullable<LoopRangeBarProps['onPreview']>>[0])=>guard.current()?.onPreview?.(value)}:{})}/>;
 }
 function LoopRangeBarBody({
-  actionError=null,disabledReason,
+  boundary,restorePreview,actionError=null,disabledReason,
   viewport,range,durationFrames,rate,looping,onLoopingChange,marks,onPreview,onCommit,dropFrame=false,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:LoopRangeBarProps&{actionError?:string|null}){
+}:LoopRangeBarProps&{boundary:string;restorePreview?:LoopRangeBarProps["onPreview"];actionError?:string|null}){
+  const useBoundary=useEditorBoundary([boundary,disabled]);
+  const latestLooping=useRef(looping);
+  useLayoutEffect(()=>{latestLooping.current=looping;});
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const tc=(f:number)=>formatTimecode(f,rate,{dropFrame});
@@ -111,7 +123,7 @@ function LoopRangeBarBody({
       <Pressable accessibilityRole="switch" aria-checked={looping} accessibilityState={{checked:looping,disabled:off||!range}}
         disabled={off||!range} accessibilityLabel="Loop playback"
         accessibilityHint={range?"Repeats the loop range while playing":"Set a loop range first"}
-        onPress={()=>onLoopingChange(!looping)} {...id("toggle")}
+        onPress={()=>onLoopingChange(!latestLooping.current)} {...id("toggle")}
         {...{className:joinClasses(styled&&"rounded-control border-2 px-3 focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(looping?"border-focus bg-surface-sunken":"border-border bg-surface-raised"))}}
         style={{minHeight:44,justifyContent:"center",opacity:off||!range?0.4:1}}>
@@ -131,9 +143,9 @@ function LoopRangeBarBody({
       {range&&endX>startX?<View pointerEvents="none" {...{className:joinClasses(styled&&(looping?"bg-info/20 border-y border-info":"bg-info/10 border-y border-info/50"))}}
         style={{position:"absolute",top:10,bottom:10,left:startX,width:endX-startX}}/>:null}
       {range?<>
-        <Edge edge="in" range={range} viewport={viewport} durationFrames={durationFrames} rate={rate} onPreview={onPreview}
+        <Edge boundary={useBoundary} restorePreview={restorePreview} edge="in" range={range} viewport={viewport} durationFrames={durationFrames} rate={rate} onPreview={onPreview}
           onCommit={onCommit} dropFrame={dropFrame} disabled={off} styled={styled}/>
-        <Edge edge="out" range={range} viewport={viewport} durationFrames={durationFrames} rate={rate} onPreview={onPreview}
+        <Edge boundary={useBoundary} restorePreview={restorePreview} edge="out" range={range} viewport={viewport} durationFrames={durationFrames} rate={rate} onPreview={onPreview}
           onCommit={onCommit} dropFrame={dropFrame} disabled={off} styled={styled}/>
       </>:null}
     </View>
