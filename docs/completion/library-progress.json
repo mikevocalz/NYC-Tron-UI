@@ -4627,90 +4627,135 @@
       "name": "Native3DViewport",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/Native3DViewport.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Orbit/pan/zoom, scene selection and material preview."
+      "requirement": "Orbit/pan/zoom, scene selection and material preview.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-02",
       "name": "ViewCubeAndAxisGizmo",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/ViewCubeAndAxisGizmo.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Orientation, orthographic/perspective modes."
+      "requirement": "Orientation, orthographic/perspective modes.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-03",
       "name": "TransformGizmo3D",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/TransformGizmo3D.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Translate/rotate/scale with axis constraints."
+      "requirement": "Translate/rotate/scale with axis constraints.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-04",
       "name": "UVEditor",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/UVEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "UV seams, islands, packing and synchronized 2D view."
+      "requirement": "UV seams, islands, packing and synchronized 2D view.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-05",
       "name": "TextureSetPanel",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/TextureSetPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "PBR channel groups and per-channel visibility."
+      "requirement": "PBR channel groups and per-channel visibility.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-06",
       "name": "PBRMaterialInspector",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/PBRMaterialInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Base color, roughness, metallic, normals, emissive."
+      "requirement": "Base color, roughness, metallic, normals, emissive.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-07",
       "name": "TextureBrush3D",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/TextureBrush3D.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Model painting across seams with true surface projection."
+      "requirement": "Model painting across seams with true surface projection.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-08",
       "name": "TextureMaskAndGenerator",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/TextureMaskAndGenerator.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Mask, smart generators and fill layer parameters."
+      "requirement": "Mask, smart generators and fill layer parameters.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-09",
       "name": "BakingMapPanel",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/BakingMapPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "AO, curvature, thickness, normals and bake output."
+      "requirement": "AO, curvature, thickness, normals and bake output.",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
     },
     {
       "id": "M-10",

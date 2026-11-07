@@ -2669,6 +2669,51 @@
       "types": "./dist/components/forge/design/MultiExportSlices.d.ts",
       "react-native": "./dist/components/forge/design/MultiExportSlices.js",
       "default": "./dist/components/forge/design/MultiExportSlices.js"
+    },
+    "./components/forge/cad/Native3DViewport": {
+      "types": "./dist/components/forge/cad/Native3DViewport.d.ts",
+      "react-native": "./dist/components/forge/cad/Native3DViewport.js",
+      "default": "./dist/components/forge/cad/Native3DViewport.js"
+    },
+    "./components/forge/cad/ViewCubeAndAxisGizmo": {
+      "types": "./dist/components/forge/cad/ViewCubeAndAxisGizmo.d.ts",
+      "react-native": "./dist/components/forge/cad/ViewCubeAndAxisGizmo.js",
+      "default": "./dist/components/forge/cad/ViewCubeAndAxisGizmo.js"
+    },
+    "./components/forge/cad/TransformGizmo3D": {
+      "types": "./dist/components/forge/cad/TransformGizmo3D.d.ts",
+      "react-native": "./dist/components/forge/cad/TransformGizmo3D.js",
+      "default": "./dist/components/forge/cad/TransformGizmo3D.js"
+    },
+    "./components/forge/cad/UVEditor": {
+      "types": "./dist/components/forge/cad/UVEditor.d.ts",
+      "react-native": "./dist/components/forge/cad/UVEditor.js",
+      "default": "./dist/components/forge/cad/UVEditor.js"
+    },
+    "./components/forge/cad/TextureSetPanel": {
+      "types": "./dist/components/forge/cad/TextureSetPanel.d.ts",
+      "react-native": "./dist/components/forge/cad/TextureSetPanel.js",
+      "default": "./dist/components/forge/cad/TextureSetPanel.js"
+    },
+    "./components/forge/cad/PBRMaterialInspector": {
+      "types": "./dist/components/forge/cad/PBRMaterialInspector.d.ts",
+      "react-native": "./dist/components/forge/cad/PBRMaterialInspector.js",
+      "default": "./dist/components/forge/cad/PBRMaterialInspector.js"
+    },
+    "./components/forge/cad/TextureBrush3D": {
+      "types": "./dist/components/forge/cad/TextureBrush3D.d.ts",
+      "react-native": "./dist/components/forge/cad/TextureBrush3D.js",
+      "default": "./dist/components/forge/cad/TextureBrush3D.js"
+    },
+    "./components/forge/cad/TextureMaskAndGenerator": {
+      "types": "./dist/components/forge/cad/TextureMaskAndGenerator.d.ts",
+      "react-native": "./dist/components/forge/cad/TextureMaskAndGenerator.js",
+      "default": "./dist/components/forge/cad/TextureMaskAndGenerator.js"
+    },
+    "./components/forge/cad/BakingMapPanel": {
+      "types": "./dist/components/forge/cad/BakingMapPanel.d.ts",
+      "react-native": "./dist/components/forge/cad/BakingMapPanel.js",
+      "default": "./dist/components/forge/cad/BakingMapPanel.js"
     }
   },
   "scripts": {
