@@ -27,6 +27,7 @@ internal class TronVideoOwner(context:Context) {
     if(Build.VERSION.SDK_INT>=26)view.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE)
     view.setOnPreparedListener { mp ->
       if(closed)return@setOnPreparedListener
+      if(player!==mp)appliedRate=null
       player=mp;prepared=true;failed=false
       mp.setOnSeekCompleteListener { completed ->
         if(closed||completed!==player)return@setOnSeekCompleteListener
@@ -42,7 +43,7 @@ internal class TronVideoOwner(context:Context) {
     props=next;view.contentDescription=next.label
     val key=next.sourceId+"\n"+next.uri
     if(key!=sourceKey){
-      sourceKey=key;prepared=false;failed=false;ended=false;seeking=false;requestedToken="";completedToken="";player=null
+      sourceKey=key;prepared=false;failed=false;ended=false;seeking=false;requestedToken="";completedToken="";player=null;appliedRate=null
       view.stopPlayback()
       try { view.setVideoURI(Uri.parse(next.uri));emit("loading") }
       catch(_:Exception){failed=true;emit("error","Video source could not be opened")}

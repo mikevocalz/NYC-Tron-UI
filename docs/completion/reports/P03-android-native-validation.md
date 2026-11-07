@@ -23,3 +23,7 @@ Post-delta command (same JDK/SDK environment):
 ```sh
 ./gradlew :nyc-tron-native-controls:compileDebugKotlin --no-daemon --max-workers=1 -PreactNativeArchitectures=arm64-v8a -Porg.gradle.parallel=false
 ```
+
+## Source replacement rate correction
+
+A new MediaPlayer must receive the requested playback rate even when the previous source used the same nondefault rate. The owner now invalidates its applied-rate cache on source replacement and when a different prepared MediaPlayer becomes current. Actual cached native-controls Kotlin compilation passed again in 18 seconds (one executed task); source contract checks passed 8/8 and scoped TypeScript passed. The installed SDK has no `sources/` tree, so this checkpoint does not claim a VideoView platform-source audit of stale replacement callbacks. Source-replacement runtime/rate and callback ownership acceptance remain open. No fake MediaPlayer regression was substituted for that native acceptance.
