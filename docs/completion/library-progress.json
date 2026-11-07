@@ -4101,10 +4101,15 @@
       "name": "PDFThumbnailSidebar",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFThumbnailSidebar.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Drag reorder, grouping and insert previews."
+      "requirement": "Drag reorder, grouping and insert previews.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-03",
@@ -4197,20 +4202,30 @@
       "name": "PageReorderOrganizer",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PageReorderOrganizer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Rearrange/duplicate/delete/rotate thumbnails."
+      "requirement": "Rearrange/duplicate/delete/rotate thumbnails.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-11",
       "name": "ExtractMergeSplitDialog",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/ExtractMergeSplitDialog.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Selected page range and source documents."
+      "requirement": "Selected page range and source documents.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-12",
@@ -4232,50 +4247,75 @@
       "name": "HyperlinkInspector",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/HyperlinkInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Link targets, internal page jumps and actions."
+      "requirement": "Link targets, internal page jumps and actions.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-14",
       "name": "RedactionReviewTool",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/RedactionReviewTool.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Redact preview and irreversible apply confirmation."
+      "requirement": "Redact preview and irreversible apply confirmation.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-15",
       "name": "EncryptPermissionsPanel",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/EncryptPermissionsPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Password, restrictions and compatibility levels."
+      "requirement": "Password, restrictions and compatibility levels.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-16",
       "name": "PDFCompareOverlay",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFCompareOverlay.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Visual diff and text change list."
+      "requirement": "Visual diff and text change list.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-17",
       "name": "PrintAndExportPreview",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PrintAndExportPreview.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Paper, crop, quality, PDF/A and output progress."
+      "requirement": "Paper, crop, quality, PDF/A and output progress.",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
     },
     {
       "id": "K-18",

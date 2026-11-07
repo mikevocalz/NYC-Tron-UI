@@ -2529,6 +2529,46 @@
       "types": "./dist/components/forge/pdf/BookmarkOutline.d.ts",
       "react-native": "./dist/components/forge/pdf/BookmarkOutline.js",
       "default": "./dist/components/forge/pdf/BookmarkOutline.js"
+    },
+    "./components/forge/pdf/PDFThumbnailSidebar": {
+      "types": "./dist/components/forge/pdf/PDFThumbnailSidebar.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFThumbnailSidebar.js",
+      "default": "./dist/components/forge/pdf/PDFThumbnailSidebar.js"
+    },
+    "./components/forge/pdf/PageReorderOrganizer": {
+      "types": "./dist/components/forge/pdf/PageReorderOrganizer.d.ts",
+      "react-native": "./dist/components/forge/pdf/PageReorderOrganizer.js",
+      "default": "./dist/components/forge/pdf/PageReorderOrganizer.js"
+    },
+    "./components/forge/pdf/ExtractMergeSplitDialog": {
+      "types": "./dist/components/forge/pdf/ExtractMergeSplitDialog.d.ts",
+      "react-native": "./dist/components/forge/pdf/ExtractMergeSplitDialog.js",
+      "default": "./dist/components/forge/pdf/ExtractMergeSplitDialog.js"
+    },
+    "./components/forge/pdf/HyperlinkInspector": {
+      "types": "./dist/components/forge/pdf/HyperlinkInspector.d.ts",
+      "react-native": "./dist/components/forge/pdf/HyperlinkInspector.js",
+      "default": "./dist/components/forge/pdf/HyperlinkInspector.js"
+    },
+    "./components/forge/pdf/PDFCompareOverlay": {
+      "types": "./dist/components/forge/pdf/PDFCompareOverlay.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFCompareOverlay.js",
+      "default": "./dist/components/forge/pdf/PDFCompareOverlay.js"
+    },
+    "./components/forge/pdf/PrintAndExportPreview": {
+      "types": "./dist/components/forge/pdf/PrintAndExportPreview.d.ts",
+      "react-native": "./dist/components/forge/pdf/PrintAndExportPreview.js",
+      "default": "./dist/components/forge/pdf/PrintAndExportPreview.js"
+    },
+    "./components/forge/pdf/EncryptPermissionsPanel": {
+      "types": "./dist/components/forge/pdf/EncryptPermissionsPanel.d.ts",
+      "react-native": "./dist/components/forge/pdf/EncryptPermissionsPanel.js",
+      "default": "./dist/components/forge/pdf/EncryptPermissionsPanel.js"
+    },
+    "./components/forge/pdf/RedactionReviewTool": {
+      "types": "./dist/components/forge/pdf/RedactionReviewTool.d.ts",
+      "react-native": "./dist/components/forge/pdf/RedactionReviewTool.js",
+      "default": "./dist/components/forge/pdf/RedactionReviewTool.js"
     }
   },
   "scripts": {

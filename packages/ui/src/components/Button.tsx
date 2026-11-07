@@ -14,6 +14,7 @@ export type ButtonSize="sm"|"md"|"lg";
 export interface ButtonProps extends Omit<PressableProps,"children"|"disabled"> {
   ref?:Ref<ComponentRef<typeof Pressable>>;
   title:string;
+  numberOfLines?:number;
   icon?:ReactNode;
   variant?:ButtonVariant;
   size?:ButtonSize;
@@ -37,9 +38,10 @@ const sizes:Record<ButtonSize,string>={
  lg:"min-h-12 gap-3 px-5 py-3"
 };
 export function Button({
-  title,icon,variant="primary",size="md",disabled=false,loading=false,
+  title,numberOfLines,icon,variant="primary",size="md",disabled=false,loading=false,
   className,unstyled=false,labelClassName,iconClassName,onPress,style,...rest
 }:ButtonProps) {
+  if(numberOfLines!==undefined&&(!Number.isInteger(numberOfLines)||numberOfLines<1||numberOfLines>64))throw new RangeError('Invalid button label line limit');
   const off=disabled||loading;
   const selected=variants[variant];
   return (
@@ -51,7 +53,7 @@ export function Button({
         !unstyled&&sizes[size],!unstyled&&selected.root,
         off&&"opacity-50",className
       )}}
-      style={style}
+      style={state=>[{minWidth:44,minHeight:size==='sm'?40:size==='lg'?48:44},typeof style==='function'?style(state):style]}
       // sm draws at 40pt; slop brings the touch target to the 44pt minimum.
       hitSlop={rest.hitSlop??(size==="sm"?2:undefined)}
       disabled={off}
@@ -62,7 +64,7 @@ export function Button({
     >
       {loading ? <ActivityIndicator accessibilityLabel="Loading" /> : null}
       {icon ? <View {...{className:joinClasses("items-center justify-center",iconClassName)}}>{icon}</View> : null}
-      <Text {...{className:joinClasses(!unstyled&&"font-semibold",!unstyled&&selected.label,labelClassName)}}>{title}</Text>
+      <Text numberOfLines={numberOfLines} style={{flexShrink:1}} {...{className:joinClasses(!unstyled&&"font-semibold",!unstyled&&selected.label,labelClassName)}}>{title}</Text>
     </Pressable>
   );
 }
