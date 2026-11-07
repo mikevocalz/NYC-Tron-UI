@@ -106,7 +106,7 @@ export function LayerStack({scope='layers',revision=0,disabled=false,expandedIds
   const parent=row.layer.parentId??null;if((target.layer.parentId??null)!==parent)return;const siblings=p.props.layers.filter(layer=>(layer.parentId??null)===parent&&layer.id!==id),index=siblings.findIndex(layer=>layer.id===target.layer.id);const from=rows.findIndex(value=>value.layer.id===id),at=index+(toIndex>from?1:0);if(!p.onReparent)return;validateLayerTreeMove(p.props.layers,id,parent,at);return mutate(id,()=>p.onReparent!(id,parent,at));
  };
  const effective=rows.map(row=>({...row.layer,locked:row.layer.locked||row.inheritedLock||disabled||busy}));
- return <View style={{minWidth:0}}><LayerStackBody key={boundary} {...props} layers={effective} disabled={disabled||busy} canReorder={!nested||!!onReparent}
+ return <LayerStackBody key={boundary} {...props} busy={busy} actionError={action.error} layers={effective} disabled={disabled||busy} canReorder={!nested||!!onReparent}
   onSelect={id=>{const p=current();if(p)p.props.onSelect(id);}} onToggleVisible={id=>{const p=current();if(p&&!p.busy)void mutate(id,()=>p.props.onToggleVisible(id));}}
   onOpacityPreview={(id,value)=>{const p=allowed(id);if(p)p.props.onOpacityPreview?.(id,value);}} onOpacityCommit={(id,value)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onOpacityCommit(id,value));}}
   onMove={move} onRename={(id,name)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onRename(id,name));}} {...(props.onRemove?{onRemove:(id:string)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onRemove!(id));}}:{})}
@@ -115,16 +115,14 @@ export function LayerStack({scope='layers',revision=0,disabled=false,expandedIds
    <Button title={original.locked?'Unlock':'Lock'} accessibilityLabel={(original.locked?'Unlock ':'Lock ')+layer.name} disabled={disabled||busy||row.inheritedLock||!onToggleLocked} unstyled={props.unstyled} style={{minWidth:44,minHeight:44}} onPress={()=>{const p=current();if(p&&!p.busy&&!row.inheritedLock)void mutate(layer.id,()=>p.onToggleLocked?.(layer.id));}}/>
    {nested||onReparent?<View style={{flex:1,minWidth:80}}><MenuButton label={'Group for '+layer.name} editScope={JSON.stringify([scope,revision,layer.id,original.parentId,original.locked,row.inheritedLock,disabled])} disabled={disabled||busy||!!original.locked||row.inheritedLock||!onReparent} unstyled={props.unstyled} items={[{id:'root',label:'Document root'},...groups.map(group=>{let unavailable=false;try{validateLayerTreeMove(props.layers,layer.id,group.id,0);}catch{unavailable=true;}return {id:'group:'+group.id,label:group.name,disabled:unavailable};})]} onSelect={value=>{const p=allowed(layer.id);if(!p?.onReparent)return;const parent=value==='root'?null:value.slice(6);if(parent===(original.parentId??null))return;const toIndex=p.props.layers.filter(item=>item.id!==layer.id&&(item.parentId??null)===parent).length;validateLayerTreeMove(p.props.layers,layer.id,parent,toIndex);void mutate(layer.id,()=>p.onReparent!(layer.id,parent,toIndex));}}><Text numberOfLines={1} {...{className:joinClasses(!props.unstyled&&'text-text')}}>{original.parentId?props.layers.find(item=>item.id===original.parentId)?.name:'Document root'}</Text></MenuButton></View>:null}
    <Text numberOfLines={1} {...{className:joinClasses(!props.unstyled&&'text-text-muted')}}>{'Level '+(row.depth+1)}</Text>
-  </View>;}}:{})}/>
-  {busy?<Text accessibilityLiveRegion="polite" {...{className:joinClasses(!props.unstyled&&'text-text-muted')}}>Updating layer</Text>:null}<ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={props.unstyled}/>
- </View>;
+  </View>;}}:{})}/>;
 }
 
 function LayerStackBody({
  layers,selectedId,onSelect,onToggleVisible,onOpacityPreview,onOpacityCommit,onMove,onRename,onRemove,
  rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,opacityControl="auto",className,unstyled=false,
- onLayout,renderControls,disabled=false,canReorder=true,...rest
-}:LayerStackProps&{renderControls?:(layer:LayerRow)=>ReactNode;canReorder?:boolean}){
+ onLayout,renderControls,disabled=false,canReorder=true,busy=false,actionError=null,...rest
+}:LayerStackProps&{renderControls?:(layer:LayerRow)=>ReactNode;canReorder?:boolean;busy?:boolean;actionError?:string|null}){
  validateLayers(layers);
  const local=useRef<StoreApi<Local>|null>(null);
  if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null,width:undefined,editing:null}));
@@ -155,6 +153,8 @@ function LayerStackBody({
       onOpacityPreview={onOpacityPreview} onOpacityCommit={onOpacityCommit} onMove={onMove} onRename={onRename}
       onRemove={onRemove}/>)}
   </ScrollView>
+  {busy?<Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&'text-text-muted')}}>Updating layer</Text>:null}
+  <ErrorMessage {...(actionError?{message:actionError}:{})} unstyled={unstyled}/>
  </View>;
 }
 
@@ -310,7 +310,7 @@ function LayerStackRow(props:RowProps){
   {/* The name keeps 96pt beside the slider. With the readout it may shrink as a last resort, so remove never clips. */}
   <View style={{flex:1,minWidth:props.mode==="slider"?LAYER_NAME_MIN_WIDTH:0,height:LAYER_TOUCH_TARGET,justifyContent:"center"}}>
    {rename
-    ?<TextInput autoFocus selectTextOnFocus accessibilityLabel={"Name for "+layer.name}
+    ?<TextInput maxLength={512} autoFocus selectTextOnFocus accessibilityLabel={"Name for "+layer.name}
       value={rename.draft} returnKeyType="done"
       onChangeText={draft=>store.setState({rename:{id:layer.id,draft}})}
       onSubmitEditing={finishRename} onBlur={finishRename}

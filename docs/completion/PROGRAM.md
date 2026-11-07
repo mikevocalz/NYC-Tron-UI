@@ -72,3 +72,5 @@ P05 layer-stack checkpoint: B-09 adds nested groups, inherited locks, controlled
 P05 blend/opacity checkpoint: B-11 adds precise alpha and explicit blend/compositing policy requests with scoped cancellation. [Blend report](P05-layer-blend.md) records 855 source tests and ten browser checks. Review count is 101 of 341.
 
 P05 mask/clipping checkpoint: B-12 and B-13 add scoped mutation/thumbnail ownership, inherited locks and held-press cancellation. [Review report](P05-mask-and-clipping.md) records 858 source tests and 22 browser checks. Review count is 103 of 341.
+
+P05 artboard checkpoint: B-14 adds scoped navigation/mutation/thumbnail ownership, bounded geometry and keyboard focus handling. [Artboard report](P05-artboard-navigation.md) also records the shared panel-root sizing fix, 864 source tests and browser rerun evidence. Review count is 104 of 341.

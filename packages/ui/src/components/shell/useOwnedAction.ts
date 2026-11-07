@@ -14,6 +14,6 @@ export function useOwnedAction(scope: string) {
     return () => owner.deactivate();
   }, [owner, scope]);
   const state = useStore(owner.store, value => value);
-  const run: typeof owner.run = (id, operation, consume) => committed.current === scope ? owner.run(id, operation, consume) : Promise.resolve(false);
+  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);
   return { ...state, run, cancel: owner.cancel };
 }

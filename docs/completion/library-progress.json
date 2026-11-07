@@ -709,9 +709,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/layers/ArtboardNavigator.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Multiple pages/artboards and navigation thumbnails."
+      "requirement": "Multiple pages/artboards and navigation thumbnails.",
+      "evidence": [
+        "P05-artboard-navigation.md"
+      ]
     },
     {
       "id": "B-15",

@@ -79,21 +79,19 @@ export function MaskThumbnailAndEditor({scope='mask-editor',revision=0,disabled=
  const committed=useRef<null|{boundary:string;props:typeof props}>(null);useLayoutEffect(()=>{committed.current={boundary,props};});useLayoutEffect(()=>{request.current=null;},[owner]);useLayoutEffect(()=>()=>{committed.current=null;},[]);
  const current=()=>!disabled&&!locked&&!pending&&committed.current?.boundary===boundary?committed.current.props:null;
  const run=(name:string,operation:(p:typeof props,signal:AbortSignal)=>void|Promise<unknown>)=>{const p=current();if(!p||request.current)return;const token=Symbol();request.current=token;void action.run(name,signal=>operation(p,signal)).finally(()=>{if(request.current===token)request.current=null;});};
- return <View><MaskThumbnailEditorBody key={owner} {...props} scope={scope} revision={revision} locked={locked||disabled||pending} {...(disabled||pending?{blockedReason:disabled?'Mask editing is disabled':'Updating mask'}:{})}
+ return <MaskThumbnailEditorBody key={owner} {...props} actionError={action.error} scope={scope} revision={revision} locked={locked||disabled||pending} {...(disabled||pending?{blockedReason:disabled?'Mask editing is disabled':'Updating mask'}:{})}
   onRefineDraftChange={draft=>{const p=current();if(p)p.onRefineDraftChange(normalizeRefine(draft));}}
   onAddMask={op=>{if(!mask&&!maskFillReason(op.fill,{locked:locked||disabled,hasSelection}))run('add', (p,signal)=>p.onAddMask(op,signal));}}
   onRemoveMask={op=>{if(mask)run('remove',(p,signal)=>p.onRemoveMask(op,signal));}}
   onSetMaskEnabled={op=>{if(mask)run('enabled',(p,signal)=>p.onSetMaskEnabled(op,signal));}}
   onInvertMask={op=>{if(mask)run('invert',(p,signal)=>p.onInvertMask(op,signal));}}
-  onRefineMask={op=>{if(mask&&!refineReason(op,locked||disabled))run('refine',(p,signal)=>p.onRefineMask(op,signal));}}/>
-  <ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={props.unstyled}/>
- </View>;
+  onRefineMask={op=>{if(mask&&!refineReason(op,locked||disabled))run('refine',(p,signal)=>p.onRefineMask(op,signal));}}/>;
 }
 
 function MaskThumbnailEditorBody({
-  scope="mask-editor",revision=0,layerId,layerName,locked=false,blockedReason,mask,hasSelection,loadMaskThumbnail,refineDraft,onRefineDraftChange,
+  scope="mask-editor",revision=0,actionError=null,layerId,layerName,locked=false,blockedReason,mask,hasSelection,loadMaskThumbnail,refineDraft,onRefineDraftChange,
   onAddMask,onRemoveMask,onSetMaskEnabled,onInvertMask,onRefineMask,cache,className,unstyled=false,...rest
-}:MaskThumbnailAndEditorProps&{blockedReason?:string}){
+}:MaskThumbnailAndEditorProps&{blockedReason?:string;actionError?:string|null}){
   const styled=!unstyled;
   const blocked=blockedReason??maskBlockedReason(locked);
   const heading=<Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>
@@ -112,6 +110,7 @@ function MaskThumbnailEditorBody({
           tone={o.fill==="reveal"?"primary":"secondary"} onPress={()=>onAddMask({id:layerId,fill:o.fill})}/>)}
       </View>
       <Reason text={shown} styled={styled}/>
+      <ErrorMessage {...(actionError?{message:actionError}:{})} unstyled={unstyled}/>
     </View>;
   }
   const draft=normalizeRefine(refineDraft);
@@ -159,5 +158,6 @@ function MaskThumbnailEditorBody({
       <PanelButton label="Delete mask" reason={blocked} styled={styled} grow
         onPress={()=>onRemoveMask({id:layerId,apply:false})}/>
     </View>
+    <ErrorMessage {...(actionError?{message:actionError}:{})} unstyled={unstyled}/>
   </View>;
 }
