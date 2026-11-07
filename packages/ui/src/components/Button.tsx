@@ -14,6 +14,8 @@ export type ButtonSize="sm"|"md"|"lg";
 export interface ButtonProps extends Omit<PressableProps,"children"|"disabled"> {
   ref?:Ref<ComponentRef<typeof Pressable>>;
   title:string;
+  /** Optional app-owned minimum layout target, at least 44 points. */
+  targetSize?:number;
   numberOfLines?:number;
   icon?:ReactNode;
   variant?:ButtonVariant;
@@ -38,10 +40,11 @@ const sizes:Record<ButtonSize,string>={
  lg:"min-h-12 gap-3 px-5 py-3"
 };
 export function Button({
-  title,numberOfLines,icon,variant="primary",size="md",disabled=false,loading=false,
+  title,targetSize,numberOfLines,icon,variant="primary",size="md",disabled=false,loading=false,
   className,unstyled=false,labelClassName,iconClassName,onPress,style,...rest
 }:ButtonProps) {
   if(numberOfLines!==undefined&&(!Number.isInteger(numberOfLines)||numberOfLines<1||numberOfLines>64))throw new RangeError('Invalid button label line limit');
+  if(targetSize!==undefined&&(!Number.isFinite(targetSize)||targetSize<44))throw new RangeError('Button target must be at least 44 points');
   const off=disabled||loading;
   const selected=variants[variant];
   return (
@@ -50,10 +53,10 @@ export function Button({
       {...{className:joinClasses(
         "flex-row items-center justify-center",
         !unstyled&&"rounded-control border active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none",
-        !unstyled&&sizes[size],!unstyled&&selected.root,
+        !unstyled&&(targetSize===undefined?sizes[size]:sizes[size].replace(/min-h-\d+/,"")),!unstyled&&selected.root,
         off&&"opacity-50",className
       )}}
-      style={state=>[{minWidth:44,minHeight:size==='sm'?40:size==='lg'?48:44},typeof style==='function'?style(state):style]}
+      style={state=>[{minWidth:targetSize??44,minHeight:targetSize??(size==='sm'?40:size==='lg'?48:44)},typeof style==='function'?style(state):style,targetSize===undefined?undefined:{minWidth:targetSize,minHeight:targetSize}]}
       // sm draws at 40pt; slop brings the touch target to the 44pt minimum.
       hitSlop={rest.hitSlop??(size==="sm"?2:undefined)}
       disabled={off}

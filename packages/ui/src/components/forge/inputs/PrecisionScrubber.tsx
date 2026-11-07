@@ -11,6 +11,10 @@ import {joinClasses} from "../../styles.ts";
 /** Props for {@linkcode PrecisionScrubber}. */
 export interface PrecisionScrubberProps extends Omit<ViewProps,"children">,RangeConfig {
   label:string;
+  /** App-owned touch target in layout points. Defaults to 44; comfortable hosts use 48. */
+  targetSize?:number;
+  /** Localized chrome. Numeric entry retains the existing decimal-input contract. */
+  labels?:Partial<{increase:string;decrease:string;value:string;gestureHint:string;idleHint:string;fine:string;normal:string;coarse:string}>;
   scope?:string;
   revision?:string|number;
   /** The committed value. The scrubber never keeps its own copy after a gesture ends. */
@@ -67,8 +71,13 @@ export function PrecisionScrubber({scope,revision=0,...props}:PrecisionScrubberP
 }
 function PrecisionScrubberBody({
   label,value,min,max,step,detents,unit,disabled=false,onPreview,onCommit,
-  forcedColors=false,transport:Transport=PanResponderDrag,className,unstyled=false,scaleColor,accentColor,style,...rest
+  forcedColors=false,transport:Transport=PanResponderDrag,className,unstyled=false,scaleColor,accentColor,targetSize=44,labels,style,...rest
 }:PrecisionScrubberProps){
+  if(!Number.isFinite(targetSize)||targetSize<44)throw new RangeError('Scrubber target must be at least 44 points');
+  if(Object.values(labels??{}).some(value=>value!==undefined&&(typeof value!=='string'||!value.trim())))throw new RangeError('Scrubber labels must be nonempty strings');
+  const copy={increase:'Increase '+label,decrease:'Decrease '+label,value:label+' value',
+    gestureHint:'Drag horizontally to adjust. Move upward for fine precision or downward for coarse. Use arrow keys or the increase and decrease buttons.',
+    idleHint:'Drag: up for fine, down for coarse',...MODE_LABEL,...Object.fromEntries(Object.entries(labels??{}).filter(([,value])=>value!==undefined))};
   const latest=useRef({value,min,max,step,detents,disabled,onPreview,onCommit});
   latest.current={value,min,max,step,detents,disabled,onPreview,onCommit};
   const local=useRef<{store:StoreApi<ScrubberState>;hover:StoreApi<Pointer>;model:ScrubberModel}|null>(null);
@@ -99,28 +108,28 @@ function PrecisionScrubberBody({
     if(key==="ArrowLeft"||key==="ArrowDown")void model.nudge(-1);
   };
   const stepButton=(direction:-1|1)=><Pressable accessibilityRole="button"
-    accessibilityLabel={(direction<0?"Decrease ":"Increase ")+label}
+    accessibilityLabel={direction<0?copy.decrease:copy.increase}
     aria-disabled={blocked} disabled={blocked} onPress={()=>void model.nudge(direction)}
     {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised")}}
-    style={{minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center"}}>
+    style={{minHeight:targetSize,minWidth:targetSize,alignItems:"center",justifyContent:"center"}}>
     <Text {...{className:joinClasses(styled&&"text-text text-xl")}}>{direction<0?"−":"+"}</Text>
   </Pressable>;
 
   return <View {...rest} {...{className:joinClasses("gap-2",className)}}
     style={[{opacity:disabled?0.5:1},state.active?NO_SELECT:null,style]}>
-    <View style={{flexDirection:"row",alignItems:"center",minHeight:44,justifyContent:"space-between",gap:10}}>
-      <Text {...{className:joinClasses(styled&&"text-text text-xs font-semibold")}} style={{flex:1}}>{label}</Text>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",minHeight:targetSize,justifyContent:"space-between",gap:10}}>
+      <Text {...{className:joinClasses(styled&&"text-text text-xs font-semibold")}} style={{flexGrow:1,flexShrink:1}}>{label}</Text>
       <View {...{className:joinClasses(styled&&"rounded-control border bg-surface-sunken",styled&&(state.editing?"border-focus":state.active?"border-accent":"border-border"))}}
-        style={{flexDirection:"row",alignItems:"center",paddingHorizontal:10,minHeight:44}}>
+        style={{flexDirection:"row",alignItems:"center",paddingHorizontal:10,minHeight:targetSize}}>
         <TextInput selectTextOnFocus keyboardType="decimal-pad" returnKeyType="done" editable={!blocked}
-          accessibilityLabel={label+" value"}
+          accessibilityLabel={copy.value}
           value={state.editing?state.draft:display}
           onFocus={()=>model.startEditing()}
           onChangeText={draft=>model.changeDraft(draft)}
           onSubmitEditing={()=>void model.applyDraft()}
           onBlur={()=>void model.applyDraft()}
           {...{className:joinClasses(styled&&"text-text font-semibold")}}
-          style={{width:64,textAlign:"right",fontVariant:["tabular-nums"],paddingVertical:6}}/>
+          style={{minHeight:targetSize,width:64,textAlign:"right",fontVariant:["tabular-nums"],paddingVertical:6}}/>
         {unit?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{paddingLeft:2}}>{unit}</Text>:null}
       </View>
     </View>
@@ -142,18 +151,18 @@ function PrecisionScrubberBody({
             onFocus={()=>hover.setState({focused:true})}
             onBlur={()=>hover.setState({focused:false})}
             accessible accessibilityRole="adjustable" accessibilityLabel={label}
-            accessibilityHint="Drag horizontally to adjust. Move upward for fine precision or downward for coarse. Use arrow keys or the increase and decrease buttons."
+            accessibilityHint={copy.gestureHint}
             // aria-* rather than accessibilityValue/State: React Native Web 0.21
             // drops the latter, and React Native maps both forms the same way.
             aria-valuemin={min} aria-valuemax={max} aria-valuenow={state.preview}
             aria-valuetext={display+(unit??"")}
             aria-disabled={blocked}
-            accessibilityActions={[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
+            accessibilityActions={[{name:"increment",label:copy.increase},{name:"decrement",label:copy.decrease}]}
             onAccessibilityAction={event=>{
               if(event.nativeEvent.actionName==="increment")void model.nudge(1);
               if(event.nativeEvent.actionName==="decrement")void model.nudge(-1);
             }}
-            style={{minHeight:44,paddingHorizontal:11,justifyContent:"center",overflow:"hidden",...NO_SELECT}}>
+            style={{minHeight:targetSize,paddingHorizontal:11,justifyContent:"center",overflow:"hidden",...NO_SELECT}}>
             <View pointerEvents="none" style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",minHeight:20}}>
               {scaleTicks(state.preview,min,max).map((tick,i)=><View key={i}
                 {...{className:tick.reached?accentClass:lineClass}}
@@ -171,7 +180,7 @@ function PrecisionScrubberBody({
     </View>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",columnGap:8,rowGap:4}}>
       <Text style={{flexShrink:1,maxWidth:"100%"}} {...{className:joinClasses(styled&&"text-xs",styled&&(state.active?"text-text":"text-text-muted"))}}>
-        {state.active?MODE_LABEL[state.mode]:"Drag: up for fine, down for coarse"}
+        {state.active?copy[state.mode]:copy.idleHint}
       </Text>
       <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"],flexShrink:1,maxWidth:"100%"}}>
         {formatStepValue(min,step)} – {formatStepValue(max,step)}{unit??""}
