@@ -12,6 +12,11 @@ export interface MaskInfo {
   /** Bumps whenever the mask pixels change, so the preview reloads. */
   readonly revision:number;
 }
+/** Thumbnail revisions are safe integer cache versions, including zero. */
+export function validateMaskInfo(mask:MaskInfo|null):void {
+ if(mask===null)return;
+ if(!mask||typeof mask.enabled!=='boolean'||typeof mask.inverted!=='boolean'||!Number.isSafeInteger(mask.revision)||mask.revision<0)throw new RangeError('Invalid mask state or thumbnail revision');
+}
 
 /** How a new mask starts: everything shown, everything hidden, or the pixel selection. */
 export type MaskFill="reveal"|"hide"|"selection";

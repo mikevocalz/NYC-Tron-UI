@@ -70,3 +70,5 @@ P05 multi-selection checkpoint: B-07 adds ordered range/toggle/lasso selection, 
 P05 layer-stack checkpoint: B-09 adds nested groups, inherited locks, controlled expansion/reparenting and scoped mutation handling. [Layer tree report](P05-layer-tree.md) records 852 source tests and the final browser checks. Review count is 100 of 341.
 
 P05 blend/opacity checkpoint: B-11 adds precise alpha and explicit blend/compositing policy requests with scoped cancellation. [Blend report](P05-layer-blend.md) records 855 source tests and ten browser checks. Review count is 101 of 341.
+
+P05 mask/clipping checkpoint: B-12 and B-13 add scoped mutation/thumbnail ownership, inherited locks and held-press cancellation. [Review report](P05-mask-and-clipping.md) records 858 source tests and 22 browser checks. Review count is 103 of 341.

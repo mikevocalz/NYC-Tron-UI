@@ -270,7 +270,7 @@ test("source contracts: controlled, token-only, engine-free, ported files carry 
   for(const op of ["onAddMask({id:layerId,fill:","onRemoveMask({id:layerId,apply:true})","onRemoveMask({id:layerId,apply:false})",
     "onSetMaskEnabled({id:layerId,enabled:","onInvertMask({id:layerId})","onRefineMask(refineOp(layerId"])
     assert.ok(mask.includes(op),op);
-  assert.ok(read("ClippingMaskControls.tsx").includes("onSetClipped({id:layerId,clipped:!layer.clipped})"));
+  assert.ok(read("ClippingMaskControls.tsx").includes("onSetClipped({id:layerId,clipped:!layer.clipped},signal)"));
   const button=read("panel-button.tsx");
   assert.ok(button.includes('", unavailable"')&&button.includes("accessibilityHint={reason}"),"disabled controls say why");
 });

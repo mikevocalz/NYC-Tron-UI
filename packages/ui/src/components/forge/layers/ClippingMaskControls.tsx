@@ -14,7 +14,11 @@
  * Modified for NYC-Tron UI on 2026-11-05: rewritten from Compose to React
  * Native; the glyph is drawn with token-colored views, and the toggle names
  * its base and stays visible with a reason when the layer cannot clip.
+ * Modified for NYC-Tron UI on 2026-11-06: added document ownership and permission guards; original licenses retained.
  */
+import {useLayoutEffect,useRef} from 'react';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {PanelButton,Reason} from "./panel-button.tsx";
@@ -22,12 +26,13 @@ import {CLIP_INDENT,clipReason,clipToggleLabel,type ClipLayer,type SetClippedOp}
 
 /** Props for {@linkcode ClipToggle}. */
 export interface ClipToggleProps extends Omit<ViewProps,"children"> {
+  scope?:string;revision?:string|number;disabled?:boolean;
   /** Layers top to bottom (index 0 is the top), as in `LayerStack`. */
   layers:readonly ClipLayer[];
   /** The layer the switch acts on. */
   layerId:string;
   /** `setClipped`. */
-  onSetClipped:(op:SetClippedOp)=>void;
+  onSetClipped:(op:SetClippedOp,signal?:AbortSignal)=>void|Promise<unknown>;
   className?:string;
   unstyled?:boolean;
 }
@@ -37,16 +42,22 @@ export interface ClipToggleProps extends Omit<ViewProps,"children"> {
  * to ("Clip to Photo"). On the bottom layer, or when every layer below is
  * already clipped, it stays visible and says why it cannot run.
  */
-export function ClipToggle({layers,layerId,onSetClipped,className,unstyled=false,...rest}:ClipToggleProps){
+export function ClipToggle({scope="clipping",revision=0,disabled=false,layers,layerId,onSetClipped,className,unstyled=false,...rest}:ClipToggleProps){
   const layer=layers.find(l=>l.id===layerId);
   if(!layer)throw new RangeError("Unknown layer: "+layerId);
-  const reason=clipReason(layers,layerId);
+  if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid clipping identity');
+  const blocked=clipReason(layers,layerId),boundary=JSON.stringify([scope,revision,disabled,layers,layerId]),action=useOwnedAction(boundary),pending=action.pending!==null,request=useRef<symbol|null>(null),committed=useRef<null|{boundary:string;onSetClipped:typeof onSetClipped}>(null);
+  useLayoutEffect(()=>{committed.current={boundary,onSetClipped};});useLayoutEffect(()=>{request.current=null;},[boundary]);useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const reason=disabled?'Clipping editing is disabled':pending?'Updating clipping':blocked;
+  const toggle=()=>{const p=committed.current;if(!p||p.boundary!==boundary||reason||request.current)return;const token=Symbol();request.current=token;void action.run(layerId,signal=>p.onSetClipped({id:layerId,clipped:!layer.clipped},signal)).finally(()=>{if(request.current===token)request.current=null;});};
   const styled=!unstyled;
-  return <View {...rest} {...{className:joinClasses("gap-1",className)}}>
+  const identity=JSON.stringify([scope,revision,disabled,layerId,layers.map(item=>[item.id,item.parent,item.parentId,item.locked,item.id===layerId?null:item.clipped])]);
+  return <View key={identity} {...rest} {...{className:joinClasses("gap-1",className)}}>
     <PanelButton role="switch" label={clipToggleLabel(layers,layerId)} checked={layer.clipped} reason={reason}
       styled={styled} icon={<ClipGlyph styled={styled}/>}
-      onPress={()=>onSetClipped({id:layerId,clipped:!layer.clipped})}/>
+      onPress={toggle}/>
     <Reason text={reason} styled={styled}/>
+    <ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={unstyled}/>
   </View>;
 }
 

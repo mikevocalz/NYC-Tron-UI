@@ -679,9 +679,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/layers/MaskThumbnailAndEditor.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Create, refine, disable, invert and preview masks."
+      "requirement": "Create, refine, disable, invert and preview masks.",
+      "evidence": [
+        "P05-mask-and-clipping.md"
+      ]
     },
     {
       "id": "B-13",
@@ -691,9 +694,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/layers/ClippingMaskControls.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Clip/unclip and visually display hierarchy."
+      "requirement": "Clip/unclip and visually display hierarchy.",
+      "evidence": [
+        "P05-mask-and-clipping.md"
+      ]
     },
     {
       "id": "B-14",
