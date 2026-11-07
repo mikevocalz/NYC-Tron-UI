@@ -1964,6 +1964,16 @@
       "types": "./dist/components/forge/layers/layer-tree-model.d.ts",
       "react-native": "./dist/components/forge/layers/layer-tree-model.js",
       "default": "./dist/components/forge/layers/layer-tree-model.js"
+    },
+    "./components/forge/layers/LayerBlendAndOpacity": {
+      "types": "./dist/components/forge/layers/LayerBlendAndOpacity.d.ts",
+      "react-native": "./dist/components/forge/layers/LayerBlendAndOpacity.js",
+      "default": "./dist/components/forge/layers/LayerBlendAndOpacity.js"
+    },
+    "./components/forge/layers/layer-blend-model": {
+      "types": "./dist/components/forge/layers/layer-blend-model.d.ts",
+      "react-native": "./dist/components/forge/layers/layer-blend-model.js",
+      "default": "./dist/components/forge/layers/layer-blend-model.js"
     }
   },
   "scripts": {

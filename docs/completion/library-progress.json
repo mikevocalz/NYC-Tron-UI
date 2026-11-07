@@ -661,10 +661,15 @@
       "name": "LayerBlendAndOpacity",
       "phase": "P05",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/layers/LayerBlendAndOpacity.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Mode selector, precise alpha and color-space handling."
+      "requirement": "Mode selector, precise alpha and color-space handling.",
+      "evidence": [
+        "P05-layer-blend.md"
+      ]
     },
     {
       "id": "B-12",
