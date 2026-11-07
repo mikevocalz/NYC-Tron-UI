@@ -19,4 +19,3 @@ struct PresentationIndexData {
     return presentationTimes[lower]
   }
 }
-
