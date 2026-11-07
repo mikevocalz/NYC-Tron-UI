@@ -22,6 +22,10 @@ class NYCTronMediaDecoderModule : Module() {
     worker.run { frame(uri, options) }
 
   @JS
+  suspend fun decodeIndexedFrameV1(uri: String, options: FrameRequestRecord): DecodedFrameRecord =
+    worker.run { indexedFrame(uri, options) }
+
+  @JS
   suspend fun decodeAudio(uri: String, options: AudioRequestRecord): DecodedAudioRecord =
     worker.run { audio(uri, options) }
 

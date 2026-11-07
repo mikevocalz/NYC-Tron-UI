@@ -3,7 +3,7 @@ import CoreMedia
 
 extension AVURLAsset {
   /// Enumerates compressed samples without synthesizing a nominal-FPS timeline.
-  func presentationIndex(maxFrames: Double) throws -> PresentationIndexRecord {
+  func presentationIndex(maxFrames: Double) throws -> PresentationIndexData {
     guard url.isFileURL else {
       throw MediaDecodeFailure(.unsupportedFormat, "A local file is required for a presentation index.")
     }
@@ -36,7 +36,7 @@ extension AVURLAsset {
     }
     defer { reader.cancelReading() }
     let deadline = ProcessInfo.processInfo.systemUptime + 30
-    var times: [Int64] = []
+    var samples: [(micros: Int64, time: CMTime)] = []
     var visited = 0
     while true {
       guard ProcessInfo.processInfo.systemUptime <= deadline else {
@@ -56,22 +56,25 @@ extension AVURLAsset {
          attachments.contains(where: { ($0[kCMSampleAttachmentKey_DoNotDisplay as String] as? Bool) == true }) {
         throw MediaDecodeFailure(.unsupportedFormat, "The video contains nondisplay samples.")
       }
-      let time = try micros(CMSampleBufferGetPresentationTimeStamp(sample))
+      // AVAssetReader supplies output time mapped through the track edit list.
+      // Raw compressed PTS can retain B-frame media offsets outside asset duration.
+      let exactTime = CMSampleBufferGetOutputPresentationTimeStamp(sample)
+      let time = try micros(exactTime)
       guard time < durationUs else {
         throw MediaDecodeFailure(.unsupportedFormat, "A presentation timestamp lies outside the video duration.")
       }
-      guard times.count < Int(maxFrames) else {
+      guard samples.count < Int(maxFrames) else {
         throw MediaDecodeFailure(.outOfRange, "The complete video index exceeds maxFrames.")
       }
-      times.append(time)
+      samples.append((micros: time, time: exactTime))
     }
-    guard reader.status == .completed, !times.isEmpty else {
+    guard reader.status == .completed, !samples.isEmpty else {
       throw MediaDecodeFailure(.decodeFailed, "The complete video index could not be read.")
     }
-    times.sort() // Compressed samples are emitted in decode order, including B frames.
-    for index in times.indices.dropFirst() where times[index] <= times[index - 1] {
+    samples.sort { $0.micros < $1.micros } // Compressed samples arrive in decode order.
+    for index in samples.indices.dropFirst() where samples[index].micros <= samples[index - 1].micros {
       throw MediaDecodeFailure(.unsupportedFormat, "The video has duplicate presentation timestamps at microsecond precision.")
     }
-    return PresentationIndexRecord(durationUs: Double(durationUs), timesUs: times.map { Double($0) })
+    return PresentationIndexData(durationUs: Double(durationUs), timesUs: samples.map { Double($0.micros) }, presentationTimes: samples.map { $0.time })
   }
 }

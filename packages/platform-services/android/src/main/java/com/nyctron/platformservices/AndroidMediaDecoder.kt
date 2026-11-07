@@ -163,6 +163,19 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
     return value.toLong()
   }
 
+  fun indexedFrame(uri: String, request: FrameRequestRecord): DecodedFrameRecord {
+    micros(request.timeUs)
+    val index = presentationIndex(uri, 200_000.0)
+    if (index.timesUs.binarySearch(request.timeUs) < 0)
+      throw MediaDecodeFailure("out-of-range", "No indexed frame has this presentation timestamp.")
+    val decoded = frame(uri, request)
+    if (decoded.actualTimeUs != request.timeUs) {
+      Uri.parse(decoded.uri).path?.let { File(it).delete() }
+      throw MediaDecodeFailure("decode-failed", "The decoded frame does not match the indexed presentation time.")
+    }
+    return decoded
+  }
+
   fun frame(uri: String, request: FrameRequestRecord): DecodedFrameRecord {
     val time = micros(request.timeUs)
     if (request.maxWidth !in 1.0..4096.0 || request.maxHeight !in 1.0..4096.0 || request.maxWidth % 1 != 0.0 || request.maxHeight % 1 != 0.0)

@@ -123,6 +123,9 @@ export interface MediaDecoder {
   /** Present only when the linked binary exposes presentationIndexV1. Absent in alpha.4. */
   readonly presentationIndexVersion?:1;
   presentationIndex?(uri:string,options?:PresentationIndexOptions):Promise<MediaPresentationIndex>;
+  /** Optional strict actual-PTS decode; older binaries keep decodeFrame semantics. */
+  readonly indexedFrameVersion?:1;
+  decodeIndexedFrame?(uri:string,options:DecodeFrameOptions):Promise<DecodedFrame>;
   probe(uri:string):Promise<MediaProbe>;
   decodeFrame(uri:string,options:DecodeFrameOptions):Promise<DecodedFrame>;
   decodeAudio(uri:string,options:DecodeAudioOptions):Promise<DecodedAudio>;
@@ -134,6 +137,7 @@ export interface MediaDecoder {
 export interface MediaDecoderNative {
   /** Optional ABI addition; old linked binaries remain valid. */
   presentationIndexV1?(uri:string,maxFrames:number):Promise<unknown>;
+  decodeIndexedFrameV1?(uri:string,options:{timeUs:number;maxWidth:number;maxHeight:number}):Promise<unknown>;
   probe(uri:string):Promise<unknown>;
   decodeFrame(uri:string,options:{timeUs:number;maxWidth:number;maxHeight:number}):Promise<unknown>;
   /** `sampleRate` 0 keeps the file's rate. */
@@ -288,6 +292,18 @@ export function createMediaDecoder(native:MediaDecoderNative|null):MediaDecoder{
         if(!Number.isSafeInteger(maxFrames)||maxFrames<1||maxFrames>MAX_PRESENTATION_INDEX_FRAMES)
           throw outOfRange(`maxFrames must be an integer from 1 to ${MAX_PRESENTATION_INDEX_FRAMES}`);
         return withDecodeCancellation(options.signal,()=>call(()=>native.presentationIndexV1!(uri,maxFrames),payload=>toMediaPresentationIndex(payload,maxFrames)));
+      },
+    }:{}),
+    ...(typeof native.decodeIndexedFrameV1==="function"?{
+      indexedFrameVersion:1 as const,
+      async decodeIndexedFrame(uri:string,options:DecodeFrameOptions){
+        const request=normalizeFrameOptions(options);
+        return withDecodeCancellation(options.signal,()=>call(()=>native.decodeIndexedFrameV1!(uri,request),payload=>{
+          const nativeTime=(payload&&typeof payload==="object"?payload:{}) as {actualTimeUs?:unknown};
+          if(!isMicros(nativeTime.actualTimeUs)||nativeTime.actualTimeUs!==request.timeUs)throw bad("indexed frame presentation time");
+          const frame=toDecodedFrame(payload);
+          return frame;
+        }));
       },
     }:{}),
     probe:uri=>call(()=>native.probe(uri),toMediaProbe),

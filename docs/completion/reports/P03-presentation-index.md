@@ -22,3 +22,7 @@ The installed Apple SDK headers were inspected for AVAssetReader's nil settings,
 Required before P03 completion: independent source review; native compiler checks after review; CFR/VFR and B-frame fixtures proving actual timestamp enumeration, duplicate/malformed/oversized rejection, cancellation/owner release and large-index bounds on iOS and Android; release availability; Forge consumer integration and full frame-step/player lifetime acceptance. The existing experimental v1 player evidence alone does not complete those exit criteria. Manifests, window configuration, default dependencies and locks were not changed.
 
 Independent review follow-up: the public `toMediaPresentationIndex` parser validates its own integer 1–200,000 budget, including direct calls. Android now explicitly rejects API levels below 28 before reaching `MediaExtractor.getSampleSize` and rejects negative sample sizes paired with a valid PTS. The established Android minimum SDK was preserved. Native code remains uncompiled and unexecuted.
+
+## Focused iOS follow-up
+
+Subsequent authorized native validation compiled and ran the actual index/shared image-generator source on an iOS27.1 simulator. See P03-ios-producer-validation.md for actual CFR/VFR/B-frame evidence, the output-PTS edit-list fix, additive strict rational decode capability and precise remaining Expo bridge/Android/player gates. The earlier uncompiled statement records the initial source checkpoint, not the current producer-only evidence.
