@@ -11,6 +11,8 @@ import {groupThreads,resolveReply,threadCounts,threadLabel,type CommentEntry,typ
 /** Props for {@linkcode CommentsThreadPanel}. Each action renders only when its callback is passed. */
 export interface CommentsThreadPanelProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly threads:readonly CommentThread[];
+  readonly groupBy?:'page'|'none';
+  readonly describeLocation?:(thread:CommentThread)=>string;
   readonly selectedId?:string;
   readonly disabled?:boolean;
   readonly mentions?:readonly {id:string;label:string}[];
@@ -43,12 +45,12 @@ export function CommentsThreadPanel({scope='comments',revision=0,...props}:Comme
  if(props.threads.length>4096||new Set(props.threads.map(t=>t.id)).size!==props.threads.length||props.threads.some(t=>!t.id.trim()||t.id.length>256||t.body.length>65536||t.replies.length>1024||t.replies.some(r=>r.body.length>65536))||(props.mentions?.length??0)>256)throw new RangeError('Invalid comment roster');
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
  return <CommentsThreadPanelBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
- onSelect={id=>guard.current()?.onSelect(id)} onFilterChange={props.onFilterChange?f=>guard.current()?.onFilterChange?.(f):undefined}
+ onSelect={id=>{const h=guard.current();if(h?.threads.some(t=>t.id===id))h.onSelect(id);}} onFilterChange={props.onFilterChange?f=>guard.current()?.onFilterChange?.(f):undefined}
  onReply={props.onReply?async(id,body,mentions)=>{const ok=await guard.run('reply',h=>{if(!h.threads.some(t=>t.id===id&&!t.resolved))throw new Error('This comment thread is unavailable');return h.onReply?.(id,body,mentions?.filter(id=>h.mentions?.some(m=>m.id===id)));});if(ok!==true)throw new Error('The reply was not saved. Your draft is retained.');}:undefined}
  onResolvedChange={props.onResolvedChange?(id,resolved)=>guard.run('resolve',h=>h.onResolvedChange?.(id,resolved)):undefined}
  onDelete={props.onDelete?id=>guard.run('delete',h=>h.onDelete?.(id)):undefined} onRetry={props.onRetry?()=>guard.run('retry',h=>h.onRetry?.()):undefined}/>;
 }
-function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,mentions=[],
+function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,mentions=[],groupBy='page',describeLocation,
 
   threads,selectedId,onSelect,onReply,onResolvedChange,onDelete,filter="all",onFilterChange,error,onRetry,label="Comments",
   className,unstyled=false,...rest
@@ -56,7 +58,7 @@ function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,ment
   const styled=!unstyled;
   const [local,store]=useLocalStore<Local>(()=>({drafts:{},failed:{},busy:{},mentions:{}}));
   const canFilter=onResolvedChange!==undefined&&onFilterChange!==undefined;
-  const groups=groupThreads(threads,canFilter?filter:"all");
+  const grouped=groupThreads(threads,canFilter?filter:'all'),groups=groupBy==='none'?[{page:0,threads:grouped.flatMap(g=>g.threads)}].filter(g=>g.threads.length>0):grouped;
   const counts=threadCounts(threads);
   const text=joinClasses(styled&&"text-text");
   const muted=joinClasses(styled&&"text-text-muted text-sm");
@@ -92,7 +94,7 @@ function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,ment
     </Text>
     :<ScrollView style={{flexShrink:1}} contentContainerStyle={{gap:14}} keyboardShouldPersistTaps="handled">
       {groups.map(g=><View key={g.page} style={{gap:8}}>
-        <Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{"Page "+(g.page+1)}</Text>
+        {groupBy==='page'?<Text accessibilityRole="header" {...{className:joinClasses(styled&&'text-text text-sm font-semibold')}}>{'Page '+(g.page+1)}</Text>:null}
         {g.threads.map(t=>{
           const on=t.id===selectedId;
           const draft=local.drafts[t.id]??"";
@@ -101,11 +103,11 @@ function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,ment
           return <View key={t.id}
             {...{className:joinClasses(styled&&"rounded-card border",styled&&(on?"border-accent bg-surface-raised":"border-border bg-surface-raised"))}}
             style={{padding:10,gap:8,opacity:t.resolved?0.7:1}}>
-            <Pressable accessibilityRole="button" accessibilityLabel={threadLabel(t)} accessibilityState={{selected:on}}
+            <Pressable accessibilityRole="button" accessibilityLabel={describeLocation?describeLocation(t)+', '+threadLabel(t).replace(/^Page [0-9]+, /,''):threadLabel(t)} accessibilityState={{selected:on}}
               accessibilityHint="Shows this comment on its page" onPress={()=>onSelect(t.id)}
               {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
               style={{minHeight:OFFICE_TOUCH_TARGET,gap:2,justifyContent:"center"}}>
-              <Entry entry={t} styled={styled}/>
+              {describeLocation?<Text {...{className:muted}}>{describeLocation(t)}</Text>:null}<Entry entry={t} styled={styled}/>
             </Pressable>
             {t.replies.length?<View {...{className:joinClasses(styled&&"border-border")}} style={{gap:8,borderStartWidth:1,paddingStart:10}}>
               {t.replies.map(r=><Entry key={r.id} entry={r} styled={styled}/>)}

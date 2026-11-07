@@ -2429,6 +2429,11 @@
       "types": "./dist/components/forge/spreadsheet/PivotFieldList.d.ts",
       "react-native": "./dist/components/forge/spreadsheet/PivotFieldList.js",
       "default": "./dist/components/forge/spreadsheet/PivotFieldList.js"
+    },
+    "./components/forge/spreadsheet/RangeComments": {
+      "types": "./dist/components/forge/spreadsheet/RangeComments.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/RangeComments.js",
+      "default": "./dist/components/forge/spreadsheet/RangeComments.js"
     }
   },
   "scripts": {

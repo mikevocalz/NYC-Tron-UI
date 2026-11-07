@@ -3638,9 +3638,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/spreadsheet/SheetTabs.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Add, rename, duplicate, reorder, protect and colors."
+      "requirement": "Add, rename, duplicate, reorder, protect and colors.",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
     },
     {
       "id": "I-09",
@@ -3710,9 +3713,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/spreadsheet/ChartBuilder.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Chart type gallery, axes, labels, series and formatting."
+      "requirement": "Chart type gallery, axes, labels, series and formatting.",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
     },
     {
       "id": "I-14",
@@ -3722,9 +3728,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/spreadsheet/SparklineEditor.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "In-cell tiny charts and data range controls."
+      "requirement": "In-cell tiny charts and data range controls.",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
     },
     {
       "id": "I-15",
@@ -3764,19 +3773,27 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/spreadsheet/FreezeSplitControls.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Rows/cols frozen, split view and divider geometry."
+      "requirement": "Rows/cols frozen, split view and divider geometry.",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
     },
     {
       "id": "I-18",
       "name": "RangeComments",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/RangeComments.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Notes, discussions and focus/resolve state."
+      "requirement": "Notes, discussions and focus/resolve state.",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
     },
     {
       "id": "I-19",
@@ -3801,9 +3818,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Readable card-form editing of table rows on phones and folded screens. *Source candidate: `gridcraft/ui/editor/Cards.kt`; requires verified implementation and license admission.*"
+      "requirement": "Readable card-form editing of table rows on phones and folded screens. *Source candidate: `gridcraft/ui/editor/Cards.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
     },
     {
       "id": "I-21",
