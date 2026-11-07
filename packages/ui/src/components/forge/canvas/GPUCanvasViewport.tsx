@@ -32,10 +32,10 @@ export function GPUCanvasViewport({scope,revision=0,viewport,drawFrame,clearColo
  useLayoutEffect(()=>{latest.current={boundary,drawFrame,onGpuChange,onFrameSubmitted,onRenderError};});
  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
  useEffect(()=>{
-  let alive=true;
+  let alive=true;let previous=AppState.currentState;
   const watch=(gpu:SkGpuInfo)=>{void gpu.lost.then(()=>{if(!alive)return;const next=Skia.gpu;store.setState(s=>({gpu:statusOf(next,s.gpu.generation+1)}));if(next.lost!==gpu.lost)watch(next);},error=>{if(alive)store.setState(s=>({gpu:{...s.gpu,available:false,error:String(error)}}));});};
   watch(Skia.gpu);
-  const subscription=AppState.addEventListener('change',value=>{if(value==='active'&&alive)store.setState(s=>({resume:s.resume+1}));});
+  const subscription=AppState.addEventListener('change',value=>{const resuming=value==='active'&&(previous==='background'||previous==='inactive');previous=value;if(resuming&&alive)store.setState(s=>({resume:s.resume+1}));});
   return()=>{alive=false;subscription.remove();};
  },[store]);
  useEffect(()=>{if(mounted.current)latest.current.onGpuChange?.(state.gpu);},[state.gpu]);

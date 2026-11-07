@@ -8,7 +8,7 @@ steps:
   - await: { visible: { text: Next canvas document } }
   - await: { idle: true }
   - await: { text: { in: { text: Canvas navigation state }, contains: '"commits":[]' } }
-  - pinch: { on: { text: { matches: '^Canvas navigation$' } }, scale: 2 }
+  - pinch: { on: { id: canvas-navigation-viewport }, scale: 2 }
   - await: { text: { in: { text: Canvas navigation state }, contains: '"commits":["canvas-a:' } }
   - tap: { text: Next canvas document }
   - await: { text: { in: { text: Canvas navigation state }, contains: '"documentId":"canvas-b"' } }
