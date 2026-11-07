@@ -207,8 +207,17 @@ function MIDIPianoRollBody({actionError,disabledReason,retained,
           scrollEventThrottle={16}
           onScroll={e=>{
             if(!mounted.current||viewportWidth.current<=0)return;
-            const x=boundX(e.nativeEvent.contentOffset.x);
-            if(pendingScroll.current!==null&&Math.abs(x-pendingScroll.current)>=0.5)return;
+            const rawX=e.nativeEvent.contentOffset.x;
+            if(!Number.isFinite(rawX))return;
+            // A stale old-layout offset must not become a matching acknowledgement
+            // merely because clamping maps it onto the new pending target.
+            if(pendingScroll.current!==null&&Math.abs(rawX-pendingScroll.current)>=0.5){
+              const maxX=Math.max(0,size.width-viewportWidth.current);
+              if(rawX<=-0.5||rawX>=maxX+0.5)restoreX();
+              return;
+            }
+            const x=boundX(rawX);
+            if(Math.abs(rawX-x)>=0.5){restoreX();return;}
             pendingScroll.current=null;actualX.current=x;acknowledgeX(x);
           }}>
           <View style={{ width: size.width, height: size.height }}>
