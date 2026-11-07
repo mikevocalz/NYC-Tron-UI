@@ -4134,9 +4134,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/pdf/TextSearchResults.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Document-wide indexing, highlights and jump."
+      "requirement": "Document-wide indexing, highlights and jump.",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-05",
@@ -4161,9 +4164,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/pdf/AnnotationToolbar.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Text, highlight, underline, strike, draw and shapes."
+      "requirement": "Text, highlight, underline, strike, draw and shapes.",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-07",
@@ -4173,29 +4179,42 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/pdf/CommentsThreadPanel.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Thread, author, reply and resolve actions."
+      "requirement": "Thread, author, reply and resolve actions.",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-08",
       "name": "SignatureStampTool",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/SignatureStampTool.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pen draw, image signature and preview placement."
+      "requirement": "Pen draw, image signature and preview placement.",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-09",
       "name": "PDFFormFieldEditor",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFFormFieldEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Checkbox, signature, text, dropdown and validation."
+      "requirement": "Checkbox, signature, text, dropdown and validation.",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-10",
@@ -4325,30 +4344,43 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/pdf/PDFReadAloudTransport.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "PDF text/speech alignment, playback rate, current sentence and screen reader cooperation. *Source candidate: `pdfcraft/ui/viewer/ReadAloud.kt`; requires verified implementation and license admission.*"
+      "requirement": "PDF text/speech alignment, playback rate, current sentence and screen reader cooperation. *Source candidate: `pdfcraft/ui/viewer/ReadAloud.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-19",
       "name": "PDFVoiceNoteAttachment",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFVoiceNoteAttachment.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Record actual attached audio notes, show duration and playback state. *Source candidate: `pdfcraft/ui/viewer/VoiceRecorder.kt`; requires verified implementation and license admission.*"
+      "requirement": "Record actual attached audio notes, show duration and playback state. *Source candidate: `pdfcraft/ui/viewer/VoiceRecorder.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-20",
       "name": "PDFScanSession",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFScanSession.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Camera capture multi-page scan, correction and PDF document append/replace. *Source candidate: `pdfcraft/ui/ScanSession.kt`; requires verified implementation and license admission.*",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
     },
     {
       "id": "K-21",

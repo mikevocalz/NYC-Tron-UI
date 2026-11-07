@@ -1,7 +1,7 @@
 import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {Pressable,ScrollView,Text,TextInput,View,type ViewProps} from "react-native";
+import {Pressable,SectionList,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -92,17 +92,16 @@ function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,ment
     :groups.length===0?<Text {...{className:muted}}>
       {threads.length===0?"No comments in this document.":filter==="resolved"?"No resolved comments.":"No open comments."}
     </Text>
-    :<ScrollView style={{flexShrink:1}} contentContainerStyle={{gap:14}} keyboardShouldPersistTaps="handled">
-      {groups.map(g=><View key={g.page} style={{gap:8}}>
-        {groupBy==='page'?<Text accessibilityRole="header" {...{className:joinClasses(styled&&'text-text text-sm font-semibold')}}>{'Page '+(g.page+1)}</Text>:null}
-        {g.threads.map(t=>{
+    :<SectionList style={{flexShrink:1}} sections={groups.map(g=>({page:g.page,data:g.threads}))} keyExtractor={t=>t.id} keyboardShouldPersistTaps="handled" stickySectionHeadersEnabled={false}
+      renderSectionHeader={({section:g})=>groupBy==='page'?<Text accessibilityRole="header" {...{className:joinClasses(styled&&'text-text text-sm font-semibold')}}>{'Page '+(g.page+1)}</Text>:null}
+      renderItem={({item:t})=>{
           const on=t.id===selectedId;
           const draft=local.drafts[t.id]??"";
           const failed=local.failed[t.id];
           const busy=local.busy[t.id]===true||disabled;
           return <View key={t.id}
             {...{className:joinClasses(styled&&"rounded-card border",styled&&(on?"border-accent bg-surface-raised":"border-border bg-surface-raised"))}}
-            style={{padding:10,gap:8,opacity:t.resolved?0.7:1}}>
+            style={{padding:10,gap:8,marginBottom:8,opacity:t.resolved?0.7:1}}>
             <Pressable accessibilityRole="button" accessibilityLabel={describeLocation?describeLocation(t)+', '+threadLabel(t).replace(/^Page [0-9]+, /,''):threadLabel(t)} accessibilityState={{selected:on}}
               accessibilityHint="Shows this comment on its page" onPress={()=>onSelect(t.id)}
               {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
@@ -130,9 +129,7 @@ function CommentsThreadPanelBody({actionError,disabledReason,disabled=false,ment
                 onPress={()=>void onDelete(t.id)}/>:null}
             </View>:null}
           </View>;
-        })}
-      </View>)}
-    </ScrollView>}
+        }}/> }
   </View>;
 }
 

@@ -1,4 +1,6 @@
-import {Pressable,ScrollView,Text,TextInput,View,type ViewProps} from "react-native";
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {Pressable,SectionList,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {OFFICE_TOUCH_TARGET,SkipGlyph,ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
@@ -14,7 +16,7 @@ export interface PdfSearchProgress {
 }
 
 /** Props for {@linkcode TextSearchResults}. */
-export interface TextSearchResultsProps extends Omit<ViewProps,"children"> {
+export interface TextSearchResultsProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly query:string;
   readonly onQueryChange:(query:string)=>void;
   /** Starts (or restarts) the search. Return key and the field's search action call it. */
@@ -53,9 +55,18 @@ export interface TextSearchResultsProps extends Omit<ViewProps,"children"> {
  * host's page renderer provides; this list gives it the page and the char
  * range.
  */
-export function TextSearchResults({
+export function TextSearchResults({scope='pdf-search',revision=0,...props}:TextSearchResultsProps){
+ if(props.hits.length>1000||props.query.length>8192||!Number.isSafeInteger(props.progress.pageCount)||props.progress.pageCount<0||!Number.isSafeInteger(props.progress.searched)||props.progress.searched<0||props.progress.searched>props.progress.pageCount||props.hits.some(h=>!Number.isSafeInteger(h.page)||h.page<0||h.page>=props.progress.pageCount||!Number.isSafeInteger(h.start)||!Number.isSafeInteger(h.end)||h.start<0||h.end<h.start))throw new RangeError('Invalid PDF search state');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason]),guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <><ErrorMessage message={guard.error??props.disabledReason} unstyled={props.unstyled}/><TextSearchResultsBody {...props}
+ onQueryChange={q=>guard.current()?.onQueryChange(q)} onSubmit={q=>guard.run('search',h=>h.onSubmit(q))}
+ onSelect={(index,hit)=>{const h=guard.current(),actual=h?.hits[index];if(h&&actual&&actual.page===hit.page&&actual.start===hit.start&&actual.end===hit.end)h.onSelect(index,actual);}}
+ onCaseSensitiveChange={props.onCaseSensitiveChange?v=>guard.current()?.onCaseSensitiveChange?.(v):undefined}
+ onWholeWordsChange={props.onWholeWordsChange?v=>guard.current()?.onWholeWordsChange?.(v):undefined}/></>;
+}
+function TextSearchResultsBody({
   query,onQueryChange,onSubmit,searchedQuery,hits,current,onSelect,progress,error,caseSensitive=false,onCaseSensitiveChange,
-  wholeWords=false,onWholeWordsChange,className,unstyled=false,...rest
+  wholeWords=false,onWholeWordsChange,className,unstyled=false,scope:_scope,revision:_revision,disabledReason,...rest
 }:TextSearchResultsProps){
   const styled=!unstyled;
   const groups=groupHitsByPage(hits);
@@ -84,11 +95,11 @@ export function TextSearchResults({
   return <View {...rest} accessibilityRole="search" accessibilityLabel="Search document" {...{onKeyDown}}
     {...{className:joinClasses("min-w-0",className)}} style={[{gap:10},rest.style as object]}>
     <View style={{flexDirection:"row",gap:6,alignItems:"center"}}>
-      <TextInput value={query} onChangeText={onQueryChange} onSubmitEditing={submit} returnKeyType="search"
+      <TextInput editable={disabledReason===undefined} maxLength={8192} value={query} onChangeText={onQueryChange} onSubmitEditing={submit} returnKeyType="search"
         placeholder="Find in document" accessibilityLabel="Find in document" autoCorrect={false} autoCapitalize="none"
         {...{enterKeyHint:"search",className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken text-text px-3 focus:border-focus")}}
         style={{flex:1,minWidth:0,minHeight:OFFICE_TOUCH_TARGET}}/>
-      <Button title="Search" variant="secondary" disabled={!trimmed} onPress={submit}/>
+      <Button title="Search" unstyled={unstyled} variant="secondary" disabled={!trimmed||disabledReason!==undefined} onPress={submit}/>
     </View>
     {onCaseSensitiveChange||onWholeWordsChange?<View style={{flexDirection:"row",gap:6,flexWrap:"wrap"}}>
       {onCaseSensitiveChange?<ToolButton label="Match case" checked={caseSensitive} styled={styled}
@@ -118,13 +129,9 @@ export function TextSearchResults({
               </ToolButton>
             </View>
           </View>
-          <ScrollView style={{flexShrink:1}} contentContainerStyle={{gap:12}} keyboardShouldPersistTaps="handled">
-            {groups.map(group=><View key={group.page} style={{gap:2}}>
-              <Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>
-                {"Page "+(group.page+1)}
-                <Text {...{className:muted}}>{"  "+(group.items.length===1?"1 match":group.items.length+" matches")}</Text>
-              </Text>
-              {group.items.map(({hit,index})=>{
+          <SectionList style={{flexShrink:1}} sections={groups.map(g=>({page:g.page,data:g.items}))} keyExtractor={({index})=>String(index)} keyboardShouldPersistTaps="handled" stickySectionHeadersEnabled={false}
+            renderSectionHeader={({section:group})=><Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{"Page "+(group.page+1)+" · "+group.data.length+" matches"}</Text>}
+            renderItem={({item:{hit,index}})=>{
                 const on=index===current;
                 return <Pressable key={index} accessibilityRole="button" accessibilityState={{selected:on}}
                   accessibilityLabel={"Page "+(hit.page+1)+": "+hit.before+hit.match+hit.after}
@@ -135,9 +142,7 @@ export function TextSearchResults({
                     {hit.before}<Text style={{fontWeight:"700"}}>{hit.match}</Text>{hit.after}
                   </Text>
                 </Pressable>;
-              })}
-            </View>)}
-          </ScrollView>
+              }}/>
         </>}
   </View>;
 }

@@ -2569,6 +2569,31 @@
       "types": "./dist/components/forge/pdf/RedactionReviewTool.d.ts",
       "react-native": "./dist/components/forge/pdf/RedactionReviewTool.js",
       "default": "./dist/components/forge/pdf/RedactionReviewTool.js"
+    },
+    "./components/forge/pdf/SignatureStampTool": {
+      "types": "./dist/components/forge/pdf/SignatureStampTool.d.ts",
+      "react-native": "./dist/components/forge/pdf/SignatureStampTool.js",
+      "default": "./dist/components/forge/pdf/SignatureStampTool.js"
+    },
+    "./components/forge/pdf/PDFFormFieldEditor": {
+      "types": "./dist/components/forge/pdf/PDFFormFieldEditor.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFFormFieldEditor.js",
+      "default": "./dist/components/forge/pdf/PDFFormFieldEditor.js"
+    },
+    "./components/forge/pdf/PDFVoiceNoteAttachment": {
+      "types": "./dist/components/forge/pdf/PDFVoiceNoteAttachment.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFVoiceNoteAttachment.js",
+      "default": "./dist/components/forge/pdf/PDFVoiceNoteAttachment.js"
+    },
+    "./components/forge/pdf/PDFScanSession": {
+      "types": "./dist/components/forge/pdf/PDFScanSession.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFScanSession.js",
+      "default": "./dist/components/forge/pdf/PDFScanSession.js"
+    },
+    "./components/forge/inputs/PointEditor2D": {
+      "types": "./dist/components/forge/inputs/PointEditor2D.d.ts",
+      "react-native": "./dist/components/forge/inputs/PointEditor2D.js",
+      "default": "./dist/components/forge/inputs/PointEditor2D.js"
     }
   },
   "scripts": {
