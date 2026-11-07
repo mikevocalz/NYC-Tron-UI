@@ -43,7 +43,7 @@ function RulerHandle({boundary,label,position,textWidth,width,disabled,unstyled,
  const ready=()=>!disabled&&width>44&&gate.ready(coordinates);
  const next=(dx:number)=>Math.round(Math.min(textWidth,Math.max(0,(start.current??position)+dx/(width-44)*textWidth))*2)/2;
  const clear=()=>{gate.cancel();start.current=null;store.setState({preview:null});};
- const pan=usePanGesture({enabled:!disabled&&width>44,runOnJS:true,maxPointers:1,minDistance:4,activeOffsetX:[-4,4],failOffsetY:[-8,8],
+ const pan=usePanGesture({enabled:!disabled&&width>44,runOnJS:true,maxPointers:1,activeOffsetX:[-4,4],failOffsetY:[-8,8],
   onActivate:()=>{if(ready()&&gate.begin(coordinates))start.current=position;},
   onUpdate:e=>{if(ready()&&gate.current(coordinates)&&start.current!==null)store.setState({preview:next(e.translationX)});},
   onDeactivate:e=>{if(!ready()||!gate.current(coordinates))return;const value=next(e.translationX),valid=gate.finish(coordinates);start.current=null;store.setState({preview:null});if(valid&&!e.canceled)void onCommit(value);},
