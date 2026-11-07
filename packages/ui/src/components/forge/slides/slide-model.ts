@@ -135,3 +135,9 @@ export function gridMove(index:number,key:string,columns:number,count:number,rtl
   const next=index+delta;
   return next>=0&&next<count?next:undefined;
 }
+
+/** Bounded source geometry shared by canvas, sorter and filmstrip. */
+export function validateSlideSummary(slide:SlideSummary):void{
+ if(!slide.id.trim()||slide.id.length>256||slide.objects.length>2048||new Set(slide.objects.map(o=>o.id)).size!==slide.objects.length||slide.objects.reduce((n,o)=>n+(o.text?.length??0),0)>1048576||slide.objects.some(o=>!o.id.trim()||o.id.length>256||!['text','rect','image'].includes(o.kind)||![o.x,o.y,o.w,o.h,o.rotation].every(Number.isFinite)||o.w<=0||o.h<=0||o.w>1e7||o.h>1e7||o.src!==undefined&&o.src.length>8192||o.opacity!==undefined&&(!Number.isFinite(o.opacity)||o.opacity<0||o.opacity>1)))throw new RangeError('Invalid slide source geometry');
+ for(const rgba of [slide.background,...slide.objects.flatMap(o=>[o.fill,o.color])])if(rgba&&(rgba.length!==4||rgba.some(n=>!Number.isFinite(n)||n<0||n>255)))throw new RangeError('Invalid slide document color');
+}

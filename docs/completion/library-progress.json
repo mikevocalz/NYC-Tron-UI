@@ -3848,9 +3848,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/slides/SlideFilmstrip.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Thumbnails, sections, reorder and selection."
+      "requirement": "Thumbnails, sections, reorder and selection.",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
     },
     {
       "id": "J-02",
@@ -3860,9 +3863,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/slides/SlideSorter.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Grid thumbnail mode with multiselect."
+      "requirement": "Grid thumbnail mode with multiselect.",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
     },
     {
       "id": "J-03",
@@ -3902,9 +3908,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/slides/SlideCanvas.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Editable text/shapes/media with resize and snapping."
+      "requirement": "Editable text/shapes/media with resize and snapping.",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
     },
     {
       "id": "J-06",
@@ -3959,9 +3968,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/slides/SlideAnimationPane.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Entrance/emphasis/exit, object order and triggers."
+      "requirement": "Entrance/emphasis/exit, object order and triggers.",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
     },
     {
       "id": "J-10",
@@ -4029,10 +4041,15 @@
       "name": "InkAndLaserPointer",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/InkAndLaserPointer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Live pen/laser overlays with optional capture."
+      "requirement": "Live pen/laser overlays with optional capture.",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
     },
     {
       "id": "J-15",

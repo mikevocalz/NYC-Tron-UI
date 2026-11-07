@@ -2494,6 +2494,11 @@
       "types": "./dist/components/forge/slides/ConnectorAndDiagramTools.d.ts",
       "react-native": "./dist/components/forge/slides/ConnectorAndDiagramTools.js",
       "default": "./dist/components/forge/slides/ConnectorAndDiagramTools.js"
+    },
+    "./components/forge/slides/InkAndLaserPointer": {
+      "types": "./dist/components/forge/slides/InkAndLaserPointer.d.ts",
+      "react-native": "./dist/components/forge/slides/InkAndLaserPointer.js",
+      "default": "./dist/components/forge/slides/InkAndLaserPointer.js"
     }
   },
   "scripts": {
