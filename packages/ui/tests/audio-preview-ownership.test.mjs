@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {createAudioPreviewOwner,audioGestureCurrent,audioResponderCurrent} from '../src/components/forge/audio/audio-preview-owner.ts';
+import {createAudioPreviewOwner,commitAudioPreview,audioGestureCurrent,audioResponderCurrent} from '../src/components/forge/audio/audio-preview-owner.ts';
 test('geometry/source/disable restoration reaches the original preview callback and committed value',()=>{
  const owner=createAudioPreviewOwner(),old=[],next=[];const original=v=>old.push(v),replacement=v=>next.push(v);
  owner.publish('doc1:length160',original,0.5,0.8);owner.publish('doc1:length160',original,0.5,0.9);
@@ -49,4 +49,19 @@ test('reentrant unscoped clear vetoes a replacement while original preview is de
  assert.deepEqual(calls,[['old',2],['old',1]]);
  // An obsolete scoped cleanup is not a veto of a different current owner.
  owner.publish('new',v=>calls.push(['new',v]),5,6);owner.clear('old');owner.clear('new');assert.deepEqual(calls.slice(-2),[['new',6],['new',5]]);
+});
+
+
+test('successful commit consumes preview without restoring; rejection restores once',async()=>{
+ for(const failure of [false,true]){
+  const owner=createAudioPreviewOwner(),calls=[];owner.publish('same',v=>calls.push(['preview',v]),1,2);
+  const result=await commitAudioPreview(owner,'same',track=>{calls.push(['dispatch']);return track(()=>{calls.push(['commit',2]);if(failure)throw new Error('rejected');return undefined;})===undefined;});
+  assert.equal(result,!failure);assert.deepEqual(calls,failure?[['preview',2],['dispatch'],['commit',2],['preview',1]]:[['preview',2],['dispatch'],['commit',2]]);owner.clear();assert.equal(calls.length,failure?4:3);
+ }
+});
+test('false host result restores feedback but late failed commit cannot overwrite a newer preview',async()=>{
+ const owner=createAudioPreviewOwner(),calls=[];owner.publish('old',v=>calls.push(['old',v]),1,2);
+ assert.equal(await commitAudioPreview(owner,'old',track=>track(()=>false)),false);assert.deepEqual(calls,[['old',2],['old',1]]);
+ let fail;owner.publish('old',v=>calls.push(['old',v]),1,2);const pending=commitAudioPreview(owner,'old',track=>track(()=>new Promise((_,reject)=>{fail=reject;})));
+ owner.publish('new',v=>calls.push(['new',v]),3,4);fail(new Error('old rejected'));assert.equal(await pending,false);assert.deepEqual(calls.at(-1),['new',4]);owner.clear();assert.deepEqual(calls.at(-1),['new',3]);
 });

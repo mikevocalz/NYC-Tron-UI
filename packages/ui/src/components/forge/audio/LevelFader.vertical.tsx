@@ -1,4 +1,4 @@
-import {createAudioPreviewOwner,audioGestureCurrent} from './audio-preview-owner.ts';
+import {createAudioPreviewOwner,commitAudioPreview,audioGestureCurrent} from './audio-preview-owner.ts';
 import {audioTargetSize} from './audio-chrome.ts';
 import {useLayoutEffect,useRef} from 'react';
 import {Text,TextInput,View,type ViewProps} from 'react-native';
@@ -27,7 +27,7 @@ export function NativeVerticalFader({scope='vertical-fader',revision=0,...props}
  useLayoutEffect(()=>()=>previews.current!.clear(owner),[owner]);
  useLayoutEffect(()=>{committedOwner.current=owner;cancel();tapRejected.current=true;store.setState({draft:formatDb(value),dirty:false,error:null});},[owner,value,off]);
  const admitted=()=>committedOwner.current===owner&&!off&&!!guard.current();
- const commit=(gain:number)=>{if(!admitted())return Promise.resolve(false);previews.current!.clear(owner);if(!admitted())return Promise.resolve(false);store.setState({preview:null});return guard.run('gain',(host,signal)=>gain!==host.value?host.onCommit(gain,signal):undefined);};
+ const commit=(gain:number)=>{if(!admitted())return Promise.resolve(false);store.setState({preview:null});return commitAudioPreview(previews.current!,owner,track=>guard.run('gain',(host,signal)=>track(()=>gain!==host.value?host.onCommit(gain,signal):undefined)));};
  const update=(dy:number)=>{if(!admitted())return;const a=active.current;if(!a||!audioGestureCurrent(a.owner,owner,off)||!guard.current())return;const next=dragToGain(a.start,-dy*(store.getState().fine ? .1 : 1),length-16,range);a.value=next;store.setState({preview:next});const host=guard.current();if(host?.onPreview)previews.current!.publish(owner,host.onPreview,host.value,next);};
  const pan=usePanGesture({enabled:!off,runOnJS:true,maxPointers:1,activeOffsetY:[-4,4],failOffsetX:[-8,8],
   onActivate:event=>{if(!admitted())return;active.current={owner,start:gainToPosition(value,range),value};update(event.translationY);},

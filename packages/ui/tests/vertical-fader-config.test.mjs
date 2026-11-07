@@ -65,11 +65,11 @@ test('queued old vertical callbacks cannot clear a replacement source preview or
  blocked=true;tap.onBegin();tap.onActivate();newInput.props.onChangeText('3');newInput.props.onSubmitEditing();newPan.onActivate({translationY:-60});newPan.onUpdate({translationY:-60});newPan.onDeactivate({translationY:-60,canceled:false});newPan.onFinalize({canceled:true});walk(newTree,node=>{node.props?.onKeyDown?.({key:'Home',preventDefault(){}});if(node.props?.title==='Reset unity'||node.props?.title==='Fine off')node.props.onPress();});blocked=false;tap.onActivate();
  walk(oldTree,node=>{node.props?.onKeyDown?.({key:'Home',preventDefault(){}});if(node.props?.title==='Reset unity')node.props.onPress();});
  assert.deepEqual(oldCommits,[]);assert.deepEqual(newCommits,[]);assert.deepEqual(newPreview,[newLive]);
- newPan.onDeactivate({translationY:-20,canceled:false});assert.equal(newCommits.length,1);assert.ok(Math.abs(newCommits[0]-newLive)<1e-12);assert.equal(newPreview.at(-1),0.2);newInput.props.onSubmitEditing();assert.equal(newCommits.length,2);assert.equal(newCommits[1],1);
+ newPan.onDeactivate({translationY:-20,canceled:false});assert.equal(newCommits.length,1);assert.ok(Math.abs(newCommits[0]-newLive)<1e-12);assert.equal(newPreview.at(-1),newLive);newInput.props.onSubmitEditing();assert.equal(newCommits.length,2);assert.equal(newCommits[1],1);
  let armed=false,replacementPan,replacementLive;const abandoned=[],replacement=[];
- render({scope:'restore-old',value:0.5,label:'Bass',onCommit:v=>abandoned.push(v),onPreview:v=>{if(armed&&v===0.5){armed=false;render({scope:'restore-new',value:0.2,label:'Bass',onCommit:v=>replacement.push(v),onPreview:v=>{replacementLive=v;}});replacementPan=pan;replacementPan.onActivate({translationY:-20});}}});
+ render({scope:'restore-old',value:0.5,label:'Bass',onCommit:v=>{abandoned.push(v);return false;},onPreview:v=>{if(armed&&v===0.5){armed=false;render({scope:'restore-new',value:0.2,label:'Bass',onCommit:v=>replacement.push(v),onPreview:v=>{replacementLive=v;}});replacementPan=pan;replacementPan.onActivate({translationY:-20});}}});
  const beforeReplacement=pan;beforeReplacement.onActivate({translationY:-10});armed=true;beforeReplacement.onDeactivate({translationY:-10,canceled:false});
  const sharedStore=refs.map(v=>v.current).find(v=>v?.getState&&'fine' in v.getState());
- assert.deepEqual(abandoned,[]);assert.ok(replacementLive>0.2);assert.equal(sharedStore.getState().preview,replacementLive,'old commit must not clear reentrant replacement preview');
+ assert.equal(abandoned.length,1);assert.ok(replacementLive>0.2);assert.equal(sharedStore.getState().preview,replacementLive,'old commit must not clear reentrant replacement preview');
  replacementPan.onDeactivate({translationY:-20,canceled:false});assert.equal(replacement.length,1);
 });

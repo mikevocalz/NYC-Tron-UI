@@ -1,4 +1,4 @@
-import {createAudioPreviewOwner,audioResponderCurrent} from './audio-preview-owner.ts';
+import {createAudioPreviewOwner,commitAudioPreview,audioResponderCurrent} from './audio-preview-owner.ts';
 import {audioTargetSize} from './audio-chrome.ts';
 import {NativeVerticalFader} from './LevelFader.vertical.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
@@ -107,13 +107,13 @@ function HorizontalLevelFader({scope='horizontal-fader',revision=0,...props}:Lev
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.value,props.range,props.length,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
  const previews=useRef<ReturnType<typeof createAudioPreviewOwner<number>>|null>(null);previews.current??=createAudioPreviewOwner();
  useLayoutEffect(()=>()=>previews.current!.clear(owner),[owner]);
- return <LevelFaderBody gestureBoundary={owner} onPreviewCancel={()=>previews.current!.clear(owner)} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onChange={gain=>{const host=guard.current();if(host?.onChange)previews.current!.publish(owner,host.onChange,host.value,gain);}} onCommit={gain=>{previews.current!.clear(owner);return guard.run('gain',(host,signal)=>host.onCommit(gain,signal));}}/>;
+ return <LevelFaderBody gestureBoundary={owner} onPreviewCancel={()=>previews.current!.clear(owner)} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onStepChange={gain=>guard.current()?.onChange?.(gain)} onChange={gain=>{const host=guard.current();if(host?.onChange)previews.current!.publish(owner,host.onChange,host.value,gain);}} onCommit={gain=>commitAudioPreview(previews.current!,owner,track=>guard.run('gain',(host,signal)=>track(()=>host.onCommit(gain,signal))))}/>;
 }
 function LevelFaderBody({
-  gestureBoundary,onPreviewCancel,scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
+  gestureBoundary,onPreviewCancel,onStepChange,scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
   orientation = "vertical", length = 160, disabled = false,
   className, unstyled = false, targetSize, labels, ...rest
-}: LevelFaderProps&{gestureBoundary:string;onPreviewCancel:()=>void;actionError?:string|null}) {
+}: LevelFaderProps&{gestureBoundary:string;onPreviewCancel:()=>void;onStepChange:(gain:number)=>void;actionError?:string|null}) {
   const HIT = audioTargetSize(targetSize);
   if (!Number.isFinite(value) || value < 0) throw new RangeError("Gain must be finite and nonnegative");
   if (!Number.isFinite(stepDb) || stepDb <= 0) throw new RangeError("stepDb must be finite and positive");
@@ -122,8 +122,8 @@ function LevelFaderBody({
   }
   const vertical = orientation === "vertical";
   const travel = length - THUMB;
-  const latest = useRef({ value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, vertical, travel });
-  latest.current = { value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, vertical, travel };
+  const latest = useRef({ value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, onStepChange, vertical, travel });
+  latest.current = { value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, onStepChange, vertical, travel };
   const local = useRef<StoreApi<Local> | null>(null);
   if (!local.current) local.current = createStore<Local>(() => ({ preview: value, active: false }));
   const store = local.current;
@@ -140,9 +140,8 @@ function LevelFaderBody({
   useLayoutEffect(()=>{cancel();},[boundary]);
   useLayoutEffect(()=>()=>onPreviewCancel(),[]);
   const commit = (next: number) => {
-    const source=boundaryRef.current,p=latest.current;
-    admitted.current=null;p.onPreviewCancel();
-    if(boundaryRef.current!==source)return;
+    const p=latest.current;
+    admitted.current=null;
     store.setState({ active: false, preview: next });
     if (next === clampGain(p.value, p.range)) return;
     void p.onCommit(next);
@@ -197,7 +196,7 @@ function LevelFaderBody({
     if (p.disabled || store.getState().active) return;
     const next = stepGain(p.value, direction, p.stepDb, p.range);
     if (next === clampGain(p.value, p.range)) return;
-    p.onChange?.(next);
+    p.onStepChange(next);
     if(boundaryRef.current!==boundary)return;
     commit(next);
   };

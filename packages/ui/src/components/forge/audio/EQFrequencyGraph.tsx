@@ -1,5 +1,5 @@
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {createAudioPreviewOwner,audioResponderCurrent} from './audio-preview-owner.ts';
+import {createAudioPreviewOwner,commitAudioPreview,audioResponderCurrent} from './audio-preview-owner.ts';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
@@ -98,7 +98,7 @@ export function EQFrequencyGraph({scope='EQFrequencyGraph',revision=0,...props}:
  const previews=useRef<ReturnType<typeof createAudioPreviewOwner<{index:number;edit:EqBandEdit}>>|null>(null);previews.current??=createAudioPreviewOwner();
  useLayoutEffect(()=>()=>previews.current!.clear(owner),[owner]);
  return <EQFrequencyGraphBody scope={scope} revision={revision} gestureBoundary={owner} onPreviewCancel={()=>previews.current!.clear(owner)} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
-  onBandCommit={(...args:Parameters<EQFrequencyGraphProps['onBandCommit']>)=>{previews.current!.clear(owner);return guard.run('onBandCommit',h=>h.onBandCommit(...args));}}
+  onBandCommit={(...args:Parameters<EQFrequencyGraphProps['onBandCommit']>)=>commitAudioPreview(previews.current!,owner,track=>guard.run('onBandCommit',h=>track(()=>h.onBandCommit(...args))))}
   onQCommit={props.onQCommit?(index,q)=>guard.run('q',h=>h.onQCommit?.(index,q)):undefined}
   onEnabledCommit={props.onEnabledCommit?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onEnabledCommit']>>)=>guard.run('onEnabledCommit',h=>h.onEnabledCommit?.(...args)):undefined}
   onBandChange={props.onBandChange?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onBandChange']>>)=>{const host=guard.current(),band=host?.bands[args[0]];if(host?.onBandChange&&band){const notify=host.onBandChange;previews.current!.publish(owner,v=>notify(v.index,v.edit),{index:args[0],edit:{freqHz:band.freqHz,gainDb:band.gainDb}},{index:args[0],edit:args[1]},notify);}}:undefined}

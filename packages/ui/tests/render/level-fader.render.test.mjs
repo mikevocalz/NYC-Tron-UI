@@ -93,30 +93,37 @@ function find(n, pred) {
 }
 const track = tree => find(tree, n => n.props?.accessibilityRole === "adjustable");
 
+let nextGestureId=0;
+function responderGesture(){
+ const stateID=++nextGestureId;let last={dx:0,dy:0};
+ return {state:(delta={})=>{last={...last,...delta};return{stateID,x0:100,y0:100,moveX:100+last.dx,moveY:100+last.dy,vx:0,vy:0,numberActiveTouches:1,...last};},
+  event:phase=>({nativeEvent:{touches:phase==='release'||phase==='cancel'?[]:[{identifier:stateID,pageX:100,pageY:100}],changedTouches:[{identifier:stateID,pageX:100,pageY:100}]}})};
+}
+
 test("horizontal drag previews on every distinct value and commits once on release", () => {
   const h = harness(); const previews = []; const commits = [];
   const props = { value: 1, label: "Vocals", length: 116,
     onChange: g => previews.push(g), onCommit: g => commits.push(g) };
   h.renderHorizontal(props);
-  const g = h.responder();
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: -50, dy: 0 });
-  g.onPanResponderMove({}, { dx: -50, dy: 0 });
-  g.onPanResponderMove({}, { dx: -100, dy: 0 });
+  const g = h.responder(), gesture = responderGesture();
+  g.onPanResponderGrant(gesture.event('grant'),gesture.state());
+  g.onPanResponderMove(gesture.event('move'),gesture.state({ dx: -50, dy: 0 }));
+  g.onPanResponderMove(gesture.event('move'),gesture.state({ dx: -50, dy: 0 }));
+  g.onPanResponderMove(gesture.event('move'),gesture.state({ dx: -100, dy: 0 }));
   assert.equal(previews.length, 2, "repeat positions are not re-emitted");
   assert.equal(commits.length, 0, "no commit mid-drag");
   const tree = h.renderHorizontal(props);
   assert.equal(track(tree).props.accessibilityValue.now, 0);
-  g.onPanResponderRelease();
+  g.onPanResponderRelease(gesture.event('release'),gesture.state());
   assert.deepEqual(commits, [0]);
 });
 test("horizontal drag over 25 pt of 100 pt travel moves 15 dB", () => {
   const h = harness(); const commits = [];
   h.renderHorizontal({ value: h.level.dbToGain(-30), label: "Bass", length: 116, onCommit: g => commits.push(g) });
-  const g = h.responder();
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 25, dy: 0 });
-  g.onPanResponderRelease();
+  const g = h.responder(), gesture = responderGesture();
+  g.onPanResponderGrant(gesture.event('grant'),gesture.state());
+  g.onPanResponderMove(gesture.event('move'),gesture.state({ dx: 25, dy: 0 }));
+  g.onPanResponderRelease(gesture.event('release'),gesture.state());
   assert.equal(commits.length, 1);
   assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 15) < 1e-9);
 });
@@ -124,10 +131,10 @@ test("cancelled horizontal drag restores the committed value without committing"
   const h = harness(); const previews = []; const commits = [];
   const props = { value: 0.5, label: "Pad", onChange: g => previews.push(g), onCommit: g => commits.push(g) };
   h.renderHorizontal(props);
-  const g = h.responder();
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 40, dy: 0 });
-  g.onPanResponderTerminate();
+  const g = h.responder(), gesture = responderGesture();
+  g.onPanResponderGrant(gesture.event('grant'),gesture.state());
+  g.onPanResponderMove(gesture.event('move'),gesture.state({ dx: 40, dy: 0 }));
+  g.onPanResponderTerminate(gesture.event('cancel'),gesture.state());
   assert.equal(commits.length, 0);
   assert.equal(previews.at(-1), 0.5);
   assert.equal(track(h.renderHorizontal(props)).props.accessibilityValue.text, "-6.0 dB");
@@ -135,16 +142,16 @@ test("cancelled horizontal drag restores the committed value without committing"
 test("unchanged horizontal release does not commit", () => {
   const h = harness(); const commits = [];
   h.renderHorizontal({ value: 1, label: "Keys", onCommit: g => commits.push(g) });
-  const g = h.responder();
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 30, dy: 0 });
-  g.onPanResponderRelease();
+  const g = h.responder(), gesture = responderGesture();
+  g.onPanResponderGrant(gesture.event('grant'),gesture.state());
+  g.onPanResponderMove(gesture.event('move'),gesture.state({ dx: 30, dy: 0 }));
+  g.onPanResponderRelease(gesture.event('release'),gesture.state());
   assert.equal(commits.length, 0, "already at the top of travel");
 });
 test("horizontal screen-reader actions step in dB and commit each step", async () => {
-  const h = harness(); const commits = []; const previews = [];
+  const h = harness(); const commits = []; const previews = []; const order=[];
   const tree = h.renderHorizontal({ value: h.level.dbToGain(-6), label: "Drums",
-    onChange: g => previews.push(g), onCommit: g => commits.push(g) });
+    onChange: g => {previews.push(g);order.push("preview");}, onCommit: g => {commits.push(g);order.push("commit");} });
   const t = track(tree);
   assert.equal(t.props.accessibilityLabel, "Drums");
   assert.equal(t.props.accessibilityActions.map(a => a.name).join(), "increment,decrement");
@@ -154,13 +161,14 @@ test("horizontal screen-reader actions step in dB and commit each step", async (
   t.props.onAccessibilityAction({ nativeEvent: { actionName: "decrement" } });
   assert.equal(commits.length, 2);
   assert.deepEqual(previews, commits);
+  assert.deepEqual(order,["preview","commit","preview","commit"],"steps emit no cancellation restoration");
   assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 5) < 1e-9);
   assert.ok(Math.abs(h.level.gainToDb(commits[1]) + 7) < 1e-9);
 });
 test("disabled horizontal fader refuses gestures and steps", () => {
   const h = harness(); const commits = [];
   const tree = h.renderHorizontal({ value: 0.5, label: "FX", disabled: true, onCommit: g => commits.push(g) });
-  assert.equal(h.responder().onMoveShouldSetPanResponder({}, { dx: 0, dy: 30 }), false);
+  assert.equal(h.responder().onMoveShouldSetPanResponder({}, responderGesture().state({ dx: 0, dy: 30 })), false);
   track(tree).props.onAccessibilityAction({ nativeEvent: { actionName: "increment" } });
   assert.equal(track(tree).props.accessibilityState.disabled, true);
   assert.equal(commits.length, 0);
@@ -169,10 +177,10 @@ test("horizontal travel follows reading direction in RTL", () => {
   for (const [rtl, dx] of [[false, 30], [true, -30]]) {
     const h = harness({ rtl }); const commits = [];
     h.renderHorizontal({ value: 0, label: "Send", orientation: "horizontal", onCommit: g => commits.push(g) });
-    const g = h.responder();
-    g.onPanResponderGrant();
-    g.onPanResponderMove({}, { dx, dy: 0 });
-    g.onPanResponderRelease();
+    const g = h.responder(), gesture = responderGesture();
+    g.onPanResponderGrant(gesture.event('grant'),gesture.state());
+    g.onPanResponderMove(gesture.event('move'),gesture.state({ dx, dy: 0 }));
+    g.onPanResponderRelease(gesture.event('release'),gesture.state());
     assert.equal(commits.length, 1, `rtl=${rtl}`);
     assert.ok(commits[0] > 0);
   }
@@ -199,22 +207,22 @@ test("horizontal invalid values throw instead of rendering a fake level", () => 
 test("horizontal fader claims only travel-axis drags and keeps them against a parent scroll", () => {
   const h = harness();
   h.renderHorizontal({ value: 0.5, label: "Vox", onCommit: () => {} });
-  const g = h.responder();
+  const g = h.responder(), gesture = responderGesture();
   assert.equal(g.onStartShouldSetPanResponder(), false, "a press alone never claims");
-  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 3, dy: 2 }), false, "inside slop");
-  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 6, dy: 40 }), false, "vertical swipe remains available to the parent");
-  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: -12, dy: 3 }), true);
-  assert.equal(g.onMoveShouldSetPanResponderCapture({}, { dx: -12, dy: 3 }), true);
+  assert.equal(g.onMoveShouldSetPanResponder(gesture.event('move'),gesture.state({ dx: 3, dy: 2 })), false, "inside slop");
+  assert.equal(g.onMoveShouldSetPanResponder(gesture.event('move'),gesture.state({ dx: 6, dy: 40 })), false, "vertical swipe remains available to the parent");
+  assert.equal(g.onMoveShouldSetPanResponder(gesture.event('move'),gesture.state({ dx: -12, dy: 3 })), true);
+  assert.equal(g.onMoveShouldSetPanResponderCapture(gesture.event('move'),gesture.state({ dx: -12, dy: 3 })), true);
   assert.equal(g.onPanResponderTerminationRequest(), true, "idle fader yields");
-  g.onPanResponderGrant();
+  g.onPanResponderGrant(gesture.event('grant'),gesture.state());
   assert.equal(g.onPanResponderTerminationRequest(), false, "an active drag is kept");
   assert.equal(g.onShouldBlockNativeResponder(), true);
-  g.onPanResponderRelease();
+  g.onPanResponderRelease(gesture.event('release'),gesture.state());
   assert.equal(g.onPanResponderTerminationRequest(), true);
   const hz = harness();
   hz.renderHorizontal({ value: 0.5, label: "Send", orientation: "horizontal", onCommit: () => {} });
-  assert.equal(hz.responder().onMoveShouldSetPanResponder({}, { dx: 2, dy: 30 }), false);
-  assert.equal(hz.responder().onMoveShouldSetPanResponder({}, { dx: 12, dy: 2 }), true);
+  assert.equal(hz.responder().onMoveShouldSetPanResponder({}, responderGesture().state({ dx: 2, dy: 30 })), false);
+  assert.equal(hz.responder().onMoveShouldSetPanResponder({}, responderGesture().state({ dx: 12, dy: 2 })), true);
 });
 test("horizontal arrow keys step the focused track", () => {
   const h = harness({ os: "web" }); const commits = [];
@@ -416,4 +424,41 @@ test("vertical fader validates gains, travel, step and labels at render", () => 
   for (const invalid of [{ value: NaN }, { value: -0.1 }, { value: 2 }, { length: 20 }, { stepDb: 0 }, { label: " " }]) {
     assert.throws(() => h.render({ value: 0.5, label: "Gain", onCommit: () => {}, ...invalid }), { name: "RangeError" });
   }
+});
+
+
+test("horizontal old gesture IDs cannot release or cancel a newer active preview",()=>{
+ const h=harness(),commits=[];const props={value:1,label:'Owned',length:116,onCommit:v=>commits.push(v)};h.renderHorizontal(props);const g=h.responder(),old=responderGesture(),current=responderGesture();
+ g.onPanResponderGrant(old.event('grant'),old.state());g.onPanResponderMove(old.event('move'),old.state({dx:-25}));
+ g.onPanResponderGrant(current.event('grant'),current.state());g.onPanResponderMove(current.event('move'),current.state({dx:-50}));
+ g.onPanResponderTerminate(old.event('cancel'),old.state());g.onPanResponderRelease(old.event('release'),old.state());assert.deepEqual(commits,[]);
+ assert.equal(track(h.renderHorizontal(props)).props.accessibilityValue.now,50);
+ g.onPanResponderRelease(current.event('release'),current.state());assert.equal(commits.length,1);assert.ok(Math.abs(h.level.gainToDb(commits[0])+30)<1e-9);
+});
+
+test("queued horizontal accessibility steps cannot retarget a replacement source",()=>{
+ const h=harness(),old=[],current=[];const previous=track(h.renderHorizontal({scope:'old',value:0.5,label:'Gain',onCommit:v=>old.push(v)}));
+ const next=track(h.renderHorizontal({scope:'new',value:0.5,label:'Gain',onCommit:v=>current.push(v)}));
+ previous.props.onAccessibilityAction({nativeEvent:{actionName:'increment'}});assert.deepEqual(old,[]);assert.deepEqual(current,[]);
+ next.props.onAccessibilityAction({nativeEvent:{actionName:'increment'}});assert.equal(current.length,1);
+});
+
+test('successful horizontal and vertical releases never restore original feedback before commit',async()=>{
+ for(const orientation of ['horizontal','vertical']){
+  const h=harness(),events=[];const props={orientation,value:1,label:'Release',length:116,onChange:v=>events.push(['preview',v]),onCommit:v=>events.push(['commit',v])};h.render(props);
+  let release;
+  if(orientation==='horizontal'){const g=h.responder(),gesture=responderGesture();g.onPanResponderGrant(gesture.event('grant'),gesture.state());g.onPanResponderMove(gesture.event('move'),gesture.state({dx:-50}));release=()=>g.onPanResponderRelease(gesture.event('release'),gesture.state());}
+  else{const g=h.pan();g.onActivate({translationY:50});release=()=>g.onDeactivate({translationY:50,canceled:false});}
+  const expected=events.at(-1)[1];release();await new Promise(resolve=>setImmediate(resolve));assert.deepEqual(events.at(-1),['commit',expected]);assert.equal(events.filter(e=>e[0]==='preview'&&e[1]===1).length,0,orientation);
+  h.render(props);assert.equal(events.filter(e=>e[0]==='preview'&&e[1]===1).length,0,'controlled refresh after success must not restore consumed feedback');
+ }
+});
+
+test('rejected and false fader commits restore the original feedback once after dispatch',async()=>{
+ for(const orientation of ['horizontal','vertical'])for(const outcome of ['reject','false']){
+  const h=harness(),events=[];h.render({orientation,value:1,label:'Rejected',length:116,onChange:v=>events.push(['preview',v]),onCommit:v=>{events.push(['commit',v]);return outcome==='reject'?Promise.reject(new Error('Host refused gain')):false;}});
+  if(orientation==='horizontal'){const g=h.responder(),gesture=responderGesture();g.onPanResponderGrant(gesture.event('grant'),gesture.state());g.onPanResponderMove(gesture.event('move'),gesture.state({dx:-50}));g.onPanResponderRelease(gesture.event('release'),gesture.state());}
+  else{const g=h.pan();g.onActivate({translationY:50});g.onDeactivate({translationY:50,canceled:false});}
+  await new Promise(resolve=>setImmediate(resolve));assert.equal(events.filter(e=>e[0]==='commit').length,1);assert.equal(events.filter(e=>e[0]==='preview'&&e[1]===1).length,1);assert.deepEqual(events.at(-1),['preview',1]);
+ }
 });
