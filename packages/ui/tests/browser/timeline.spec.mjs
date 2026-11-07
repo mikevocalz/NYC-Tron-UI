@@ -30,6 +30,8 @@ test("dragging the selected clip moves it once, through the engine's moveClip",a
 
 test("a move onto a neighbour shows the overlap and commits nothing",async({page})=>{
   await page.goto("/timeline?select=12&frame=0");
+  // The initial zoom clips this long clip; fit it before choosing an interior drag target.
+  await page.getByTestId("zoom-fit-all").click();
   const before=(await clipsOf(page))["12"];
   const p=await ppf(page);
   await dragBy(page,clip(page,"Ferry close-up"),-60*p,0,{release:false,fx:0.6});

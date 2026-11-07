@@ -149,9 +149,11 @@ export function ChannelStrip({
         {...{ className: i === 0 && bus ? joinClasses(styled && "text-xs font-semibold text-text") : small }}
         style={{ textAlign: "center", lineHeight: ROUTING_LINE }}>{line}</Text>)}
     </View> : null}
-    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 4 }}>
+    {/* Keep numeric entry inside its strip instead of using its intrinsic input width. */}
+    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 4, width: "100%" }}>
       <LevelFader targetSize={target} labels={labels?.fader} value={channel.gain} label={channel.name} range={range} length={faderLength}
-        disabled={disabled} onChange={onGainChange} onCommit={onGainCommit} unstyled={unstyled} />
+        disabled={disabled} onChange={onGainChange} onCommit={onGainCommit} unstyled={unstyled}
+        style={{ width: stripWidth, minWidth: 0, flexShrink: 1 }} />
       {meter ? <View style={{ width: CHANNEL_STRIP_METER_WIDTH - 4, alignItems: "center", gap: 9, paddingTop: 12 }}>
         <Text numberOfLines={1}
           {...{ className: joinClasses(styled && "text-xs", styled && (clipped ? "font-semibold text-danger" : "text-text-muted")) }}

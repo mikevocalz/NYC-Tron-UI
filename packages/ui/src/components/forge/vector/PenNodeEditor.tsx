@@ -104,7 +104,8 @@ export function PenNodeEditor({scope,revision,editScope,editRevision,...props}:P
  const id=scope??editScope??'path-nodes',version=revision??editRevision??0;
  const owner=JSON.stringify([...controlIdentity(id,version),props.disabledReason,props.width,props.height,props.transform]);
  const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
- return <PenNodeEditorBody key={owner} {...props} editScope={id} editRevision={version} actionError={guard.error} busy={guard.pending}
+ // Revision effects discard stale gestures without replacing the focused keyboard target.
+ return <PenNodeEditorBody key={id} {...props} editScope={id} editRevision={version} actionError={guard.error} busy={guard.pending}
   onSelectionChange={value=>guard.current()?.onSelectionChange(value)} onPreview={value=>guard.current()?.onPreview?.(value)}
   onSetPathNode={value=>guard.run('onSetPathNode',(host,signal)=>host.onSetPathNode(value,signal))}
   onInsertNode={value=>guard.run('onInsertNode',(host,signal)=>host.onInsertNode(value,signal))}

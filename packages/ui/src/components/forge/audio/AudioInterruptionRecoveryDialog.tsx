@@ -17,7 +17,7 @@ export type AudioInterruptionRecoveryDialogProps=Base&(
 /** Explicit recovery decisions; rejected actions keep the dialog open with the error. */
 export function AudioInterruptionRecoveryDialog({scope='audio-recovery',revision=0,...props}:AudioInterruptionRecoveryDialogProps){
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.visible,props.notice,props.disabledReason]),guard=useScopedControl(owner,props,!props.visible||props.disabledReason!==undefined);
- const invoke=async(action:(host:typeof props)=>unknown)=>{const ok=await guard.run('recovery',h=>action(h));if(ok!==true)throw new Error('Audio recovery action was not completed');};
+ const invoke=async(action:(host:typeof props)=>unknown)=>{let failure:unknown;const ok=await guard.run('recovery',async h=>{try{return await action(h);}catch(error){failure=error;throw error;}});if(ok!==true)throw failure??new Error('Audio recovery action was not completed');};
  return <AudioRecoveryBody key={owner} {...props} onClose={()=>guard.current()?.onClose()}
  {...('onKeep' in props?{onKeep:()=>invoke(h=>'onKeep' in h?h.onKeep():undefined),onDiscard:()=>invoke(h=>'onDiscard' in h?h.onDiscard():undefined)}:'onRetry' in props?{onRetry:()=>invoke(h=>'onRetry' in h?h.onRetry():undefined),onStop:()=>invoke(h=>'onStop' in h?h.onStop():undefined)}:{onResume:()=>invoke(h=>'onResume' in h&&h.notice.kind==='paused'&&h.notice.ready?h.onResume():Promise.reject(new Error('Audio is not ready'))),onStop:()=>invoke(h=>'onStop' in h?h.onStop():undefined)})}/>;
 }

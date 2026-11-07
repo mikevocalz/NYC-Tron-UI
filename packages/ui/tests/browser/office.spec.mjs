@@ -201,7 +201,16 @@ test.describe("K PDF",()=>{
     // The fixture searches from page 2; its first hit stays current while page 1's hits sort in front of it.
     await expect(state(page,"pdf-state")).toContainText("current 2 hits 5");
     await expect(search.getByText("Match 3 of 5")).toBeVisible();
-    await expect(search.getByRole("heading")).toHaveText([/^Page 1\s+2 matches$/,/^Page 2\s+1 match$/,/^Page 3\s+1 match$/,/^Page 4\s+1 match$/]);
+    // SectionList renders a window of results. Check the initial page order,
+    // then scroll the list to verify the final page rather than requiring all rows mounted.
+    await expect(search.getByRole("heading").first()).toHaveText("Page 1 · 2 matches");
+    await expect(search.getByRole("heading").nth(1)).toHaveText("Page 2 · 1 match");
+    const thirdPage=search.getByRole("heading",{name:"Page 3 · 1 match",exact:true});
+    await thirdPage.scrollIntoViewIfNeeded();
+    await thirdPage.hover();
+    await page.mouse.wheel(0,800);
+    await expect(thirdPage).toBeVisible();
+    await expect(search.getByRole("heading",{name:"Page 4 · 1 match",exact:true})).toBeVisible();
     for(let i=0;i<3;i++)await search.getByRole("button",{name:"Next match"}).click();
     await expect(state(page,"pdf-state")).toContainText("current 0 hits 5");
     await search.getByRole("button",{name:"Match case"}).click();

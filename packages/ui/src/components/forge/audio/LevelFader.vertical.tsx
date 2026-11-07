@@ -24,7 +24,7 @@ export function NativeVerticalFader({scope='vertical-fader',revision=0,...props}
  useLayoutEffect(()=>{cancel();tapRejected.current=true;store.setState({draft:formatDb(value),dirty:false,error:null});},[owner,value,off]);
  const commit=(gain:number)=>{store.setState({preview:null});return guard.run('gain',(host,signal)=>gain!==host.value?host.onCommit(gain,signal):undefined);};
  const update=(dy:number)=>{const a=active.current;if(!a||a.owner!==owner||!guard.current())return;const next=dragToGain(a.start,-dy*(store.getState().fine ? .1 : 1),length-16,range);a.value=next;store.setState({preview:next});guard.current()?.onPreview?.(next);};
- const pan=usePanGesture({enabled:!off,runOnJS:true,minDistance:4,maxPointers:1,activeOffsetY:[-4,4],failOffsetX:[-8,8],
+ const pan=usePanGesture({enabled:!off,runOnJS:true,maxPointers:1,activeOffsetY:[-4,4],failOffsetX:[-8,8],
   onActivate:event=>{if(!guard.current())return;active.current={owner,start:gainToPosition(value,range),value};update(event.translationY);},
   onUpdate:event=>update(event.translationY),onTouchesDown:event=>{if(event.numberOfTouches>1)cancel();},
   onDeactivate:event=>{if(event.canceled){cancel();return;}update(event.translationY);const a=active.current;active.current=null;if(a?.owner===owner)void commit(a.value);},onFinalize:event=>{if(event.canceled)cancel();},

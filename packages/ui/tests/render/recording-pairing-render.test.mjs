@@ -12,17 +12,38 @@ import ts from "typescript";
 const src = resolve(dirname(fileURLToPath(import.meta.url)), "../../src/components");
 function harness({ os = "ios", withOptions = true } = {}) {
   const announcements = [];
-  let refs = [], cursor = 0;
+  const slots = new Map();
+  const effects = [];
+  let path = "root", cursor = 0;
+  const slot = init => {
+    const key = path + "#" + cursor++;
+    if (!slots.has(key)) slots.set(key, init());
+    return slots.get(key);
+  };
+  const effect = (fn, deps) => {
+    const state = slot(() => ({ deps: undefined, cleanup: undefined }));
+    if (!state.deps || !deps || deps.some((value, i) => !Object.is(value, state.deps[i]))) {
+      state.deps = deps;
+      effects.push(() => { state.cleanup?.(); state.cleanup = fn(); });
+    }
+  };
   const element = (type, props, key) => ({ type, props: props ?? {}, key });
   const mocks = {
     react: {
-      useRef: value => refs[cursor++] ?? (refs[cursor - 1] = { current: value }),
-      useEffect: effect => { effect(); },
+      useRef: value => slot(() => ({ current: value })),
+      useEffect: effect,
+      useLayoutEffect: effect,
       useState: value => [value, () => {}],
       // Read the real waveform's gesture-store snapshot. This harness tests
       // parent wiring; subscription/reconciliation is covered by browser tests.
       useSyncExternalStore: (_subscribe, getSnapshot) => getSnapshot(),
     },
+    "zustand/vanilla": { createStore: init => {
+      let value = init();
+      return { getState: () => value,
+        setState: next => { value = { ...value, ...(typeof next === "function" ? next(value) : next) }; } };
+    } },
+    zustand: { useStore: (store, selector) => selector(store.getState()) },
     "react/jsx-runtime": { jsx: element, jsxs: element, Fragment: "Fragment" },
     "react-native": {
       View: "View", Text: "Text", Pressable: "Pressable", Modal: "Modal", ScrollView: "ScrollView",
@@ -43,23 +64,33 @@ function harness({ os = "ios", withOptions = true } = {}) {
     const code = ts.transpileModule(readFileSync(path, "utf8"), {
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX },
     }).outputText;
-    runInNewContext(code, { exports, JSON, Math, Date, Number, String, RangeError, Array, Object,
+    runInNewContext(code, { exports, JSON, Math, Date, Number, String, RangeError, Array, Object, AbortController,
       require: name => mocks[name] ?? load(resolve(dirname(path), name)) }, { filename: path });
     return exports;
   }
-  const expand = node => {
-    if (Array.isArray(node)) return node.flatMap(expand);
+  const expand = (node, at) => {
+    if (Array.isArray(node)) return node.flatMap((child, i) => expand(child, at + "/" + i));
     if (!node || typeof node !== "object") return node === null || node === undefined || node === false ? [] : [node];
-    if (typeof node.type === "function") return expand(node.type(node.props));
-    const children = node.props.children === undefined ? [] : expand(node.props.children);
+    if (typeof node.type === "function") {
+      const saved = [path, cursor];
+      path = at + ":" + node.type.name + (node.key ?? ""); cursor = 0;
+      const out = node.type(node.props), here = path;
+      [path, cursor] = saved;
+      return expand(out, here);
+    }
+    const children = node.props.children === undefined ? [] : expand(node.props.children, at + "/" + node.type);
     return [{ type: node.type, props: { ...node.props, children } }];
   };
-  const render = el => { cursor = 0; return expand(el); };
+  const render = el => {
+    const tree = expand(el, "root");
+    for (const commit of effects.splice(0)) commit();
+    return tree;
+  };
   const all = (tree, pred) => tree.filter(n => n && typeof n === "object").flatMap(n => [...(pred(n) ? [n] : []), ...all(n.props.children ?? [], pred)]);
   const text = n => (n.props.children ?? []).map(c => typeof c === "string" || typeof c === "number" ? String(c) : text(c)).join("");
   const buttons = tree => all(tree, n => n.type === "Pressable" && n.props.accessibilityRole === "button");
   const button = (tree, label) => buttons(tree).find(b => text(b).includes(label) || b.props.accessibilityLabel === label);
-  return { load, render, all, text, buttons, button, announcements, reset: () => { refs = []; } };
+  return { load, render, all, text, buttons, button, announcements, reset: () => { for (const state of slots.values()) state.cleanup?.(); slots.clear(); } };
 }
 
 test("DevicePairingDialog wires every state to the right callback", () => {
