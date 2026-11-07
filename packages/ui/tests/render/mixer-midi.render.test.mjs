@@ -429,13 +429,13 @@ test("WaveformLane: sideways drag scrolls the window once; a tap seeks inside it
   const tree = find(h.render(WaveformLane, props),n=>n.props?.__responder);
   tree.props.onLayout({ nativeEvent: { layout: { width: 200 } } });
   const g = tree.props.__responder;
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 3, dy: 0 });
+  g.onPanResponderGrant({ nativeEvent: { touches: [{}] } });
+  g.onPanResponderMove({}, { dx: 3, dy: 0, numberActiveTouches: 1 });
   g.onPanResponderRelease({ nativeEvent: { locationX: 100 } });
   assert.deepEqual(seeks, [0.625], "a short move is a tap");
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 40, dy: 0 });
-  g.onPanResponderMove({}, { dx: 80, dy: 0 });
+  g.onPanResponderGrant({ nativeEvent: { touches: [{}] } });
+  g.onPanResponderMove({}, { dx: 40, dy: 0, numberActiveTouches: 1 });
+  g.onPanResponderMove({}, { dx: 80, dy: 0, numberActiveTouches: 1 });
   g.onPanResponderRelease({ nativeEvent: { locationX: 100 } });
   assert.deepEqual(plain(ranges), [{ start: 0.4, end: 0.65 }]);
   assert.equal(seeks.length, 1, "a scroll does not seek");

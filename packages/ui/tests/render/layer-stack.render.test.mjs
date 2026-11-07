@@ -16,8 +16,19 @@ function harness({ rtl = false } = {}) {
   const responders = [];
   const layoutEffects = [];
   const element = (type, props) => ({ type, props });
+  const contextToken = Symbol("mock React context");
+  const createContext = value => {
+    const context = { [contextToken]: true, currentValue: value };
+    context.Provider = context; // React 19 supports the context itself as provider.
+    context.Consumer = ({ children }) => children(context.currentValue);
+    return context;
+  };
+  const useContext = context => {
+    if (!context?.[contextToken]) throw new TypeError("useContext requires a context");
+    return context.currentValue;
+  };
   const mocks = {
-    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: fn => { layoutEffects.push(fn); },
+    react: { createContext, useContext, useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: fn => { layoutEffects.push(fn); },
       useMemo: f => f(), cloneElement: (el, props) => ({ ...el, props: { ...el.props, ...props } }) },
     "react/jsx-runtime": { jsx: element, jsxs: element },
     "react-native": {
@@ -48,6 +59,12 @@ function harness({ rtl = false } = {}) {
   const expand = node => {
     if (Array.isArray(node)) return node.map(expand);
     if (!node || typeof node !== "object") return node;
+    if (node.type?.[contextToken]) {
+      const context = node.type, previous = context.currentValue;
+      context.currentValue = node.props.value;
+      try { return expand(node.props.children); }
+      finally { context.currentValue = previous; }
+    }
     if (typeof node.type === "function") return expand(node.type(node.props));
     const children = node.props?.children;
     return children === undefined ? node : { ...node, props: { ...node.props, children: expand(children) } };
