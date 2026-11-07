@@ -1,5 +1,8 @@
 import type {DockLayout} from "./dock-model.ts";
 
+/** Bounded size of a workspace preset menu. */
+export const MAX_WORKSPACE_PRESETS=1000;
+
 /** Ids of the presets every studio workspace ships with. */
 export const BUILT_IN_PRESET_IDS=["edit","color","audio","review","presentation"] as const;
 /** One of {@linkcode BUILT_IN_PRESET_IDS}. */
@@ -49,21 +52,25 @@ export function presetNameMessage(problem:PresetNameProblem|undefined,name:strin
 
 /** First free "<name> copy", "<name> copy 2", ... that fits the length cap. */
 export function copyName(name:string,presets:readonly WorkspacePreset[]):string{
-  const base=name.trim();
-  for(let n=1;;n++){
+  if(presets.length>MAX_WORKSPACE_PRESETS)throw new RangeError("Workspace preset budget exceeded");
+  const base=name.trim(),occupied=new Set(presets.map(p=>p.name.trim().toLocaleLowerCase()));
+  for(let n=1;n<=presets.length+1;n++){
     const suffix=n===1?" copy":` copy ${n}`;
     const room=PRESET_NAME_MAX-[...suffix].length;
     const candidate=[...base].slice(0,room).join("").trimEnd()+suffix;
-    if(!presetNameProblem(candidate,presets))return candidate;
+    if(!occupied.has(candidate.toLocaleLowerCase()))return candidate;
   }
+  throw new RangeError("No workspace preset copy name available");
 }
 
 /** Throws on duplicate or missing ids and blank names. */
 export function validatePresetList(presets:readonly WorkspacePreset[]):void{
+  if(presets.length>MAX_WORKSPACE_PRESETS)throw new RangeError("Workspace preset budget exceeded");
   const seen=new Set<string>();
   for(const p of presets){
-    if(typeof p.id!=="string"||!p.id||seen.has(p.id))throw new TypeError("Duplicate or missing preset id");
-    if(typeof p.name!=="string"||!p.name.trim())throw new TypeError(`Preset ${p.id} needs a name`);
+    if(typeof p.id!=="string"||!p.id.trim()||p.id.length>256||seen.has(p.id))throw new TypeError("Duplicate or missing preset id");
+    if(typeof p.name!=="string"||!p.name.trim()||p.name.length>512)throw new TypeError(`Preset ${p.id} needs a name`);
+    if(typeof p.builtIn!=="boolean"||p.modified!==undefined&&typeof p.modified!=="boolean")throw new TypeError("Invalid workspace preset permissions");
     seen.add(p.id);
   }
 }

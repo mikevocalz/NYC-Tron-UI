@@ -52,6 +52,7 @@ export interface RefineEdgeRequest {
 export function validateWandSettings(s:MagicWandSettings):void{
   if(!Number.isInteger(s.tolerance)||s.tolerance<0||s.tolerance>MAX_TOLERANCE)
     throw new RangeError(`Tolerance must be a whole number 0..${MAX_TOLERANCE}`);
+  if(typeof s.contiguous!=="boolean")throw new RangeError("Contiguous must be a boolean");
   if(s.sample!=="composite"&&s.sample!=="layer")throw new RangeError(`Unknown wand sample "${String(s.sample)}"`);
 }
 

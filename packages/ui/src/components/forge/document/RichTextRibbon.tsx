@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import type {ReactNode} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -18,7 +20,7 @@ export interface RibbonParagraphStyle {
 }
 
 /** Props for {@linkcode RichTextRibbon}. Each group renders only when its callback is passed. */
-export interface RichTextRibbonProps extends Omit<ViewProps,"children"> {
+export interface RichTextRibbonProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Character state of the selection, from `ribbonStateFor`. */
   readonly state:RibbonState;
   /** Bold, italic, underline and strikethrough. */
@@ -63,11 +65,23 @@ const ALL_TOGGLES:readonly InlineToggle[]=["bold","italic","underline","strike"]
  * reports intent. Groups wrap onto new lines on narrow screens instead of
  * scrolling, so every control stays reachable.
  */
-export function RichTextRibbon({
+export function RichTextRibbon({scope='RichTextRibbon',revision=0,...props}:RichTextRibbonProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <RichTextRibbonBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onToggle={props.onToggle?(...args:Parameters<NonNullable<RichTextRibbonProps['onToggle']>>)=>guard.run('onToggle',h=>h.onToggle?.(...args)):undefined}
+  onColorChange={props.onColorChange?(...args:Parameters<NonNullable<RichTextRibbonProps['onColorChange']>>)=>guard.run('onColorChange',h=>h.onColorChange?.(...args)):undefined}
+  onHighlightChange={props.onHighlightChange?(...args:Parameters<NonNullable<RichTextRibbonProps['onHighlightChange']>>)=>guard.run('onHighlightChange',h=>h.onHighlightChange?.(...args)):undefined}
+  onFontFamilyChange={props.onFontFamilyChange?(...args:Parameters<NonNullable<RichTextRibbonProps['onFontFamilyChange']>>)=>guard.run('onFontFamilyChange',h=>h.onFontFamilyChange?.(...args)):undefined}
+  onFontSizeChange={props.onFontSizeChange?(...args:Parameters<NonNullable<RichTextRibbonProps['onFontSizeChange']>>)=>guard.run('onFontSizeChange',h=>h.onFontSizeChange?.(...args)):undefined}
+  onChangeCase={props.onChangeCase?(...args:Parameters<NonNullable<RichTextRibbonProps['onChangeCase']>>)=>guard.run('onChangeCase',h=>h.onChangeCase?.(...args)):undefined}
+  onParagraphStyleChange={props.onParagraphStyleChange?(...args:Parameters<NonNullable<RichTextRibbonProps['onParagraphStyleChange']>>)=>guard.run('onParagraphStyleChange',h=>h.onParagraphStyleChange?.(...args)):undefined}
+ />;
+}
+function RichTextRibbonBody({actionError,disabledReason,
   state,onToggle,toggles=ALL_TOGGLES,colors,onColorChange,highlights,highlight,onHighlightChange,fontFamilies,fontFamily,
   onFontFamilyChange,fontSize,onFontSizeChange,onChangeCase,paragraphStyles,paragraphStyle,onParagraphStyleChange,
   disabled=false,label="Formatting",className,unstyled=false,...rest
-}:RichTextRibbonProps){
+}:RichTextRibbonProps&{actionError?:string|null}){
   const styled=!unstyled;
   const sizeKnown=typeof fontSize==="number";
   return <View {...rest} accessibilityRole="toolbar" accessibilityLabel={label}
@@ -114,7 +128,7 @@ export function RichTextRibbon({
       {(Object.keys(TEXT_CASE_LABELS) as TextCase[]).map(c=><ToolButton quiet key={c} label={TEXT_CASE_LABELS[c]} disabled={disabled}
         styled={styled} onPress={()=>onChangeCase(c)}/>)}
     </Group>:null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 function Group({label,styled,children}:{label:string;styled:boolean;children:ReactNode}){

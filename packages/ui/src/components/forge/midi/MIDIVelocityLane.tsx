@@ -1,3 +1,6 @@
+import {assertMidiNotes} from './note-grid.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 /**
  * Velocity lane under a piano roll: per-note bars plus a line tool.
  *
@@ -39,7 +42,7 @@ const LINE_REACH = BAR / 2 + 2;
 export type VelocityTool = "bars" | "line";
 
 /** Props for {@linkcode MIDIVelocityLane}. */
-export interface MIDIVelocityLaneProps extends Omit<ViewProps, "children"> {
+export interface MIDIVelocityLaneProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** The same notes, in the same order, as the piano roll above. */
   readonly notes: readonly MidiNote[];
   readonly clipTicks: number;
@@ -109,11 +112,25 @@ type Lane = {
  * Time runs left to right in every locale, so the bars and the line never
  * mirror; the tool row follows the layout direction.
  */
-export function MIDIVelocityLane({
+export function MIDIVelocityLane({scope='MIDIVelocityLane',revision=0,...props}:MIDIVelocityLaneProps){
+ const retained=useRef({scrollX:0,scope,revision});
+ if(retained.current.scope!==scope||retained.current.revision!==revision)retained.current={scrollX:0,scope,revision};
+ const saved=useRef<ReturnType<typeof createVelocityToolStore>|null>(null);saved.current??=createVelocityToolStore();const toolStore=saved.current,localTool=useStore(toolStore,s=>s.tool);
+ assertMidiNotes(props.notes,props.clipTicks);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.pixelsPerTick,props.height,props.inset,props.notes,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <MIDIVelocityLaneBody key={owner} {...props} retained={retained.current} tool={props.tool??localTool} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onVelocityCommit={(...args:Parameters<MIDIVelocityLaneProps['onVelocityCommit']>)=>guard.run('onVelocityCommit',h=>h.onVelocityCommit(...args))}
+  onVelocitiesCommit={props.onVelocitiesCommit?(...args:Parameters<NonNullable<MIDIVelocityLaneProps['onVelocitiesCommit']>>)=>guard.run('onVelocitiesCommit',h=>h.onVelocitiesCommit?.(...args)):undefined}
+  onSelect={props.onSelect?(...args:Parameters<NonNullable<MIDIVelocityLaneProps['onSelect']>>)=>{guard.current()?.onSelect?.(...args);}:undefined}
+  onToolChange={tool=>{const h=guard.current();if(h){toolStore.setState({tool});h.onToolChange?.(tool);}}}
+ />;
+}
+function MIDIVelocityLaneBody({actionError,disabledReason,retained,
   notes, clipTicks, pixelsPerTick = 0.1, height = 96, inset = 0, scrollX, step = 4, selectedIndex, onSelect,
   onVelocityCommit, onVelocitiesCommit, tool, onToolChange, disabled = false, label = "Velocity",
   className, unstyled = false, style, ...rest
-}: MIDIVelocityLaneProps) {
+}: MIDIVelocityLaneProps&{actionError?:string|null;retained:{scrollX:number}}) {
+ if(notes.length>4096)throw new RangeError('MIDI velocity lane exceeds drawing budget');
   if (!Number.isInteger(clipTicks) || clipTicks <= 0) throw new RangeError("clipTicks must be a positive integer");
   if (!Number.isFinite(height) || height < HIT) throw new RangeError(`Velocity lane height must be at least ${HIT}`);
   const styled = !unstyled;
@@ -128,7 +145,7 @@ export function MIDIVelocityLane({
   const rampEnd = useStore(store, s => s.rampEnd);
   const batch = onVelocitiesCommit !== undefined;
   const activeTool: VelocityTool = batch ? tool ?? ownTool : "bars";
-  const ownScroll = useRef(0);
+  const ownScroll = useRef(retained.scrollX);
   const geometry = () => ({ pixelsPerTick, inset: 0, scrollX: scrollX ?? ownScroll.current, height });
 
   const latest = useRef({ notes, disabled, onVelocitiesCommit, geometry });
@@ -260,8 +277,8 @@ export function MIDIVelocityLane({
       </View>
       <View style={{ flex: 1, height, overflow: "hidden" }}>
         {scrollX === undefined
-          ? <ScrollView horizontal style={{ flex: 1 }} scrollEventThrottle={16}
-              onScroll={e => { ownScroll.current = e.nativeEvent.contentOffset.x; }}>{content}</ScrollView>
+          ? <ScrollView horizontal contentOffset={{x:retained.scrollX,y:0}} style={{ flex: 1 }} scrollEventThrottle={16}
+              onScroll={e => { ownScroll.current = e.nativeEvent.contentOffset.x;retained.scrollX=ownScroll.current; }}>{content}</ScrollView>
           : <View style={{ transform: [{ translateX: -scrollX }] }}>{content}</View>}
         {empty}
         {activeTool === "line" && !disabled && notes.length > 0
@@ -279,7 +296,7 @@ export function MIDIVelocityLane({
           : null}
       </View>
     </View>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 /** A segment drawn as a rotated view about its centre (the Sparkline technique). */
@@ -382,3 +399,5 @@ function VelocityBar({ index, note, x, laneHeight, step, selected, disabled, sty
       style={{ position: "absolute", left: (HIT - BAR) / 2 - 3, width: BAR + 6, height: 4, borderRadius: 2, bottom: Math.max(2, h) - 2 }} />
   </View>;
 }
+
+function createVelocityToolStore(){return createStore<{tool:VelocityTool}>(()=>({tool:"bars"}));}

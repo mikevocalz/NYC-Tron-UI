@@ -1,0 +1,6 @@
+Focused recorded native player lifecycle, final seven-step YAML unchanged between passes.
+Pass1:7passed0failed0errored0skipped7.0s.
+Pass2:7passed0failed0errored0skipped7.1s.
+Both include native bridge pass, idle, semantic tap id=p03-start-player, player identity, player PASS and final idle; no runner warnings.
+The live recorder misclassified the point under this foldable display as AXTextField. The verified app-defined p03-start-player button id was retained during polish; both final semantic-ID replays exercised the intended control. No coordinate exception remains.
+No new simulator-service recycle was performed for the player case; it reuses the services recovered during the bridge step. This is not broad P19 acceptance.

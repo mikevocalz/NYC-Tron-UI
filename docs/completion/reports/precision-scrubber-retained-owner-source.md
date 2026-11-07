@@ -1,0 +1,11 @@
+# PrecisionScrubber retained input ownership
+
+The native body, input, transport and per-instance Zustand stores remain mounted when scope, revision, bounds or disabled configuration changes. The wrapper now issues a monotonic interaction boundary instead of keying the body. A semantic source/config transition resets transient draft, preview, mode, pending and error state at layout commit. An unchanged boundary preserves the current draft and focus host. Revisiting an earlier scope still receives a new token, preventing old closures from regaining admission.
+
+Rendered event handlers capture that boundary. After replacement or unmount, queued drag, draft, submit and nudge handlers cannot read or write the replacement source. Boundary admission consumes an active gesture; its later release cannot commit. The model epochs asynchronous commits, so an old rejection or completion cannot publish an error or clear a newer source's pending state. Engine writes already begun are not claimed to be canceled; the existing final host guard remains in place.
+
+Preview cancellation uses the raw callback and committed value captured when the gesture began, including on source change and unmount after normal write admission closes. Replacement callbacks cannot receive the previous host's restoration. Preview leases clear before a commit. Controlled value synchronization remains idle-only within an unchanged source.
+
+Validation: 28 focused model/source tests passed across precision-scrubber.test.mjs and precision-scrubber-ownership.test.mjs; UI and slots TypeScript passed. Cases cover pending source replacement, old rejection/finally isolation, late release and draft handlers, stable-source draft retention, callback replacement unmount restoration and throwing-host cleanup and synchronous host reentrancy during begin, commit and admission. No native focus/device/runtime acceptance was performed. No dependency, window or platform configuration changed.
+
+Raw host restoration can synchronously admit or invalidate another source. Begin/commit recheck epoch and boundary after restoration, and admission/invalidation finalizers run only for their own epoch, so older continuations cannot overwrite replacement work.

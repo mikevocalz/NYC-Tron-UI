@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 /*
  * Original implementation for NYC-Tron UI; no third-party source. Provenance
  * is recorded in docs/COMPONENT_OWNERSHIP.md.
@@ -50,10 +55,26 @@ export interface OverlayAndEffectsTrackStackProps extends Omit<TimelineClipLaneP
  * picture over the video tracks and take the same clips. Every lane prop
  * passes through to `TimelineClipLane`.
  */
-export function OverlayAndEffectsTrackStack({
+export function OverlayAndEffectsTrackStack({scope='OverlayAndEffectsTrackStack',revision=0,...props}:OverlayAndEffectsTrackStackProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.durationFrames,props.rate,props.laneHeight,props.tool,props.moveMode,props.rippleScope]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><OverlayAndEffectsTrackStackBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSetFlag={(id,flag,value)=>guard.run('onSetFlag',host=>host.onSetFlag(id,flag,value))}
+  onRename={(id,name)=>guard.run('onRename',host=>host.onRename(id,name))}
+  onMoveTrack={(id,index)=>guard.run('onMoveTrack',host=>host.onMoveTrack(id,index))}
+  onAddTrack={(kind)=>guard.run('onAddTrack',host=>host.onAddTrack(kind))}
+  onEdit={(value)=>guard.run('onEdit',host=>host.onEdit(value))}
+  onViewportChange={(value)=>guard.current()?.onViewportChange(value)}
+  onSelect={(value)=>guard.current()?.onSelect(value)}
+  {...(props.onToggleSelect?{onToggleSelect:(value:Parameters<NonNullable<OverlayAndEffectsTrackStackProps['onToggleSelect']>>[0])=>guard.current()?.onToggleSelect?.(value)}:{})}/></EditorInteractionScope.Provider>;
+}
+function OverlayAndEffectsTrackStackBody({
+ actionError=null,disabledReason,
   tracks,onSetFlag,onRename,onMoveTrack,onAddTrack,compactHeaders=false,headerWidth=compactHeaders?56:232,laneOverlay,laneHeight=56,disabled=false,unstyled=false,testID,
   style,className,...lane
-}:OverlayAndEffectsTrackStackProps){
+}:OverlayAndEffectsTrackStackProps&{actionError?:string|null}){
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const shown=stackOrder(tracks);
@@ -65,6 +86,7 @@ export function OverlayAndEffectsTrackStack({
   const headerProps={laneHeight,onSetFlag,onRename,onMove:onMoveTrack,moveTarget:(trackId:string,d:-1|1)=>stackMoveTarget(tracks,trackId,d),
     reorder,disabled,unstyled};
   return <View {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Button title="Add video track" variant="secondary" size="sm" disabled={disabled} onPress={()=>onAddTrack("video")} {...id("add-video")}/>
       <Button title="Add overlay track" variant="secondary" size="sm" disabled={disabled} onPress={()=>onAddTrack("overlay")} {...id("add-overlay")}/>

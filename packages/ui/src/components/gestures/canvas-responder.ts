@@ -1,7 +1,7 @@
 import {PanResponder,Platform,type GestureResponderEvent,type PanResponderCallbacks,type PanResponderGestureState} from "react-native";
 
 type Pointer = {
-  pointerId:number;button:number;clientX:number;clientY:number;pageX:number;pageY:number;
+  pointerId:number;button:number;isPrimary?:boolean;clientX:number;clientY:number;pageX:number;pageY:number;
   altKey?:boolean;shiftKey?:boolean;ctrlKey?:boolean;metaKey?:boolean;
 };
 type Surface = {
@@ -44,7 +44,7 @@ export function createCanvasResponder(config:PanResponderCallbacks):ReturnType<t
     onPointerDown(event:PointerEvent){
       const n=event.nativeEvent;
       if(active){const args=normalize(event);args[1].numberActiveTouches=2;try{config.onPanResponderTerminate?.(...args);}finally{release();}return;}
-      if(n.button!==0)return;
+      if(n.button!==0||n.isPrimary===false)return;
       const args=normalize(event);
       if(config.onStartShouldSetPanResponder?.(...args)===false)return;
       event.preventDefault();

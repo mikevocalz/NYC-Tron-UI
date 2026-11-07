@@ -80,6 +80,14 @@ test("meters: display only, clipped channel named in text, absent when not passe
   await expect(page.getByText("Clip",{exact:true})).toBeVisible();
   await expect(page.getByRole("progressbar",{name:"Keys level"})).toHaveAttribute("aria-valuetext","Silent");
   await expect(page.getByRole("progressbar")).toHaveCount(7);
+  // Numeric gain entry must not widen the fader into its meter or next strip.
+  const channel=page.getByRole("group",{name:/^Snare,/});
+  const channelBox=await channel.boundingBox();
+  const faderBox=await page.getByLabel("Snare fader",{exact:true}).boundingBox();
+  const meterBox=await snare.boundingBox();
+  expect(faderBox.x).toBeGreaterThanOrEqual(channelBox.x);
+  expect(faderBox.x+faderBox.width).toBeLessThanOrEqual(meterBox.x);
+  expect(meterBox.x+meterBox.width).toBeLessThanOrEqual(channelBox.x+channelBox.width);
   await snare.click();
   await expect(log(page)).toHaveText("");
   await page.goto("/mixer2?meters=0");

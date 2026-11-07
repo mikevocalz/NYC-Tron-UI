@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 /*
  * Original implementation for NYC-Tron UI; no third-party source. Provenance
  * is recorded in docs/COMPONENT_OWNERSHIP.md.
@@ -10,7 +15,7 @@ import {rippleDeleteEdit,type MoveMode,type RippleScope,type TimelineEdit,type T
 import {TRIM_MODE_PROBLEM_TEXT,rippleDeletePreview} from "./trim-modes.ts";
 
 /** Props for {@linkcode DragReorderAndRipple}. */
-export interface DragReorderAndRippleProps extends Omit<ViewProps,"children"> {
+export interface DragReorderAndRippleProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Pass the same value to `TimelineClipLane` `moveMode`. `undefined` is a strict move. */
   readonly moveMode:MoveMode|undefined;
   readonly onMoveModeChange:(mode:MoveMode|undefined)=>void;
@@ -44,10 +49,21 @@ const MODE_HELP:Readonly<Record<ModeValue,string>>={
  * the reason shown, when there is no selection, the track is locked, or
  * closing the gap would overlap a clip on another track.
  */
-export function DragReorderAndRipple({
+export function DragReorderAndRipple({scope='DragReorderAndRipple',revision=0,...props}:DragReorderAndRippleProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const signature=useIdentityMemo(()=>timelineEditSignature(props.tracks),[props.tracks]);
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,signature,props.selectedClipId,props.moveMode,props.rippleScope]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><DragReorderAndRippleBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onEdit={(value)=>guard.run('onEdit',host=>host.onEdit(value))}
+  onMoveModeChange={(value)=>guard.current()?.onMoveModeChange(value)}
+  onRippleScopeChange={(value)=>guard.current()?.onRippleScopeChange(value)}/></EditorInteractionScope.Provider>;
+}
+function DragReorderAndRippleBody({
+ actionError=null,disabledReason,
   moveMode,onMoveModeChange,rippleScope,onRippleScopeChange,tracks,selectedClipId,onEdit,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:DragReorderAndRippleProps){
+}:DragReorderAndRippleProps&{actionError?:string|null}){
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const found=tracks.flatMap(t=>t.clips.filter(c=>c.id===selectedClipId).map(clip=>({track:t,clip})))[0];
@@ -55,6 +71,7 @@ export function DragReorderAndRipple({
   const reason=!found?"Select a clip to ripple delete it":preview&&!preview.valid&&preview.problem?TRIM_MODE_PROBLEM_TEXT[preview.problem]:undefined;
   const mode:ModeValue=moveMode??"strict";
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <SegmentedControl aria-label="When a moved clip meets another" options={MODES} value={mode} disabled={disabled}
       onChange={v=>onMoveModeChange(v==="strict"?undefined:v)} unstyled={unstyled} {...id("mode")}/>
     <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{MODE_HELP[mode]}</Text>

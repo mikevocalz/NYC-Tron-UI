@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useMemo } from "react";
 import { Text, View, type ViewProps } from "react-native";
 import { Button } from "../../Button.tsx";
@@ -14,7 +16,7 @@ import { SPARKLINE_KINDS, sparklineSpecProblem, type SparklineKind, type Sparkli
  * passes for `spec.dataRange`. Saving is the app's `onApply`; without it there
  * is no apply button.
  */
-export interface SparklineEditorProps extends Omit<ViewProps, "children"> {
+export interface SparklineEditorProps extends Omit<ViewProps, "children">,ScopedControlProps {
   readonly spec: SparklineSpec;
   readonly onSpecChange: (spec: SparklineSpec) => void;
   readonly cells: Readonly<Record<string, { readonly computed: string | number | boolean | null } | undefined>>;
@@ -22,6 +24,7 @@ export interface SparklineEditorProps extends Omit<ViewProps, "children"> {
   readonly selection?: SheetRange;
   readonly onApply?: (spec: SparklineSpec) => unknown;
   readonly onRemove?: (spec: SparklineSpec) => unknown;
+  readonly disabled?:boolean;
   readonly className?: string;
   readonly unstyled?: boolean;
 }
@@ -43,12 +46,22 @@ export function sparklineValues(range: SheetRange, cells: SparklineEditorProps["
   return out;
 }
 
-export function SparklineEditor({
+export function SparklineEditor({scope='SparklineEditor',revision=0,...props}:SparklineEditorProps){
+ const identity=JSON.stringify(controlIdentity(scope,revision)),owner=JSON.stringify([identity,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SparklineEditorBody key={identity} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onApply={props.onApply?(...args:Parameters<NonNullable<SparklineEditorProps['onApply']>>)=>guard.run('onApply',h=>h.onApply?.(...args)):undefined}
+  onRemove={props.onRemove?(...args:Parameters<NonNullable<SparklineEditorProps['onRemove']>>)=>guard.run('onRemove',h=>h.onRemove?.(...args)):undefined}
+  onSpecChange={(...args:Parameters<SparklineEditorProps['onSpecChange']>)=>{guard.current()?.onSpecChange(...args);}}
+ />;
+}
+function SparklineEditorBody({actionError,disabledReason,disabled=false,
   spec, onSpecChange, cells, selection, onApply, onRemove, className, unstyled = false, ...props
-}: SparklineEditorProps) {
+}: SparklineEditorProps&{actionError?:string|null}) {
   const set = (patch: Partial<SparklineSpec>) => onSpecChange({ ...spec, ...patch });
-  const problem = sparklineSpecProblem(spec, parseA1Range);
+  const baseProblem = sparklineSpecProblem(spec, parseA1Range);
   const range = parseA1Range(spec.dataRange);
+  const length=range?Math.max(range.endRow-range.startRow+1,range.endColumn-range.startColumn+1):0;
+  const problem=baseProblem??(length>MAX_SPARKLINE_VALUES?{field:'dataRange' as const,message:`Use at most ${MAX_SPARKLINE_VALUES} source cells for an in-cell chart`}:undefined);
   const valid = range !== undefined && problem === undefined;
   const values = useMemo(() => (valid ? sparklineValues(range, cells) : []), [valid, range?.startRow, range?.endRow,
     range?.startColumn, range?.endColumn, cells]);
@@ -60,26 +73,26 @@ export function SparklineEditor({
   return <View {...props} {...{ className: joinClasses(!unstyled && "rounded-card border border-border bg-surface-raised", className) }}
     style={[{ padding: 16, gap: 16 }, props.style]}>
     <PanelHeading title="Sparkline" unstyled={unstyled} />
-    <PanelChoices label="Type" value={spec.kind} unstyled={unstyled}
+    <PanelChoices disabled={disabled} label="Type" value={spec.kind} unstyled={unstyled}
       choices={SPARKLINE_KINDS.map(kind => ({ value: kind, label: KIND_LABEL[kind] }))}
       onChange={kind => set({ kind })} />
     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, alignItems: "flex-end" }}>
-      <PanelField label="Data range" value={spec.dataRange} placeholder="B2:M2" unstyled={unstyled}
+      <PanelField disabled={disabled} label="Data range" value={spec.dataRange} placeholder="B2:M2" unstyled={unstyled}
         error={problem?.field === "dataRange" ? problem.message : undefined}
         onChange={dataRange => set({ dataRange })} />
-      {selectionIsLine ? <Button title="Use selection" variant="secondary" unstyled={unstyled}
+      {selectionIsLine ? <Button disabled={disabled} title="Use selection" variant="secondary" unstyled={unstyled}
         onPress={() => set({ dataRange: rangeAddress(selection) })} /> : null}
-      <PanelField label="Show in cell" value={spec.location} placeholder="N2" unstyled={unstyled}
+      <PanelField disabled={disabled} label="Show in cell" value={spec.location} placeholder="N2" unstyled={unstyled}
         error={problem?.field === "location" ? problem.message : undefined}
         onChange={location => set({ location })} />
     </View>
     <View>
-      <PanelCheckbox unstyled={unstyled} label="Mark the high point" checked={spec.showHigh} onChange={showHigh => set({ showHigh })} />
-      <PanelCheckbox unstyled={unstyled} label="Mark the low point" checked={spec.showLow} onChange={showLow => set({ showLow })} />
-      {negativeMatters ? <PanelCheckbox unstyled={unstyled} label="Shade negative values" checked={spec.showNegative}
+      <PanelCheckbox disabled={disabled} unstyled={unstyled} label="Mark the high point" checked={spec.showHigh} onChange={showHigh => set({ showHigh })} />
+      <PanelCheckbox disabled={disabled} unstyled={unstyled} label="Mark the low point" checked={spec.showLow} onChange={showLow => set({ showLow })} />
+      {negativeMatters ? <PanelCheckbox disabled={disabled} unstyled={unstyled} label="Shade negative values" checked={spec.showNegative}
         onChange={showNegative => set({ showNegative })} /> : null}
     </View>
-    {spec.kind !== "winloss" ? <PanelChoices label="Axis starts at" value={spec.axisMin} unstyled={unstyled}
+    {spec.kind !== "winloss" ? <PanelChoices disabled={disabled} label="Axis starts at" value={spec.axisMin} unstyled={unstyled}
       choices={[{ value: "auto", label: "Lowest value" }, { value: "zero", label: "Zero" }]}
       onChange={axisMin => set({ axisMin })} /> : null}
     <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
@@ -95,11 +108,11 @@ export function SparklineEditor({
       </Text>
     </View>
     {onApply || onRemove ? <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: 8 }}>
-      {onRemove ? <Button title="Remove sparkline" variant="secondary" unstyled={unstyled} onPress={() => onRemove(spec)} /> : null}
-      {onApply ? <Button title="Apply" disabled={Boolean(problem)} unstyled={unstyled} onPress={() => onApply(spec)} /> : null}
+      {onRemove ? <Button disabled={disabled} title="Remove sparkline" variant="secondary" unstyled={unstyled} onPress={() => onRemove(spec)} /> : null}
+      {onApply ? <Button title="Apply" disabled={disabled||Boolean(problem)} unstyled={unstyled} onPress={() => onApply(spec)} /> : null}
     </View> : null}
     {range && !problem ? <Text {...{ className: muted }} style={{ fontSize: 12 }}>
       {`Draws ${rangeAddress(range)} in ${spec.location.toUpperCase()}.`}
     </Text> : null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

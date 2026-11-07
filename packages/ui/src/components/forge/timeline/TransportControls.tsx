@@ -1,10 +1,12 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {Glyph,type TransportGlyph} from "./glyphs.tsx";
 
 /** Props for {@linkcode TransportControls}. */
-export interface TransportControlsProps extends Omit<ViewProps,"children"> {
+export interface TransportControlsProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** What the player reports, not what was last requested. */
   readonly playing:boolean;
   readonly frame:number;
@@ -26,10 +28,19 @@ export interface TransportControlsProps extends Omit<ViewProps,"children"> {
  * a frame and Home/End jump. Frame steps stop at the timeline's ends. Playback
  * itself (decoding, the clock) belongs to the host's player.
  */
-export function TransportControls({
+export function TransportControls({scope='TransportControls',revision=0,...props}:TransportControlsProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.durationFrames]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <TransportControlsBody key={owner} {...props} actionError={guard.error} {...(guard.pending?{disabledReason:'Operation in progress'}:{})}
+  onPlayPause={()=>guard.run('onPlayPause',host=>host.onPlayPause())}
+  onStop={()=>guard.run('onStop',host=>host.onStop())}
+  onSeek={(value)=>guard.run('onSeek',host=>host.onSeek(value))}/>;
+}
+function TransportControlsBody({
+  actionError=null,
   playing,frame,durationFrames,onPlayPause,onStop,onSeek,disabledReason,className,unstyled=false,testID,style,...rest
-}:TransportControlsProps){
-  if(!Number.isSafeInteger(durationFrames)||durationFrames<0)throw new RangeError("durationFrames must be a nonnegative integer");
+}:TransportControlsProps&{actionError?:string|null}){
+  if(!Number.isSafeInteger(frame)||frame<0||!Number.isSafeInteger(durationFrames)||durationFrames<0)throw new RangeError("durationFrames must be a nonnegative integer");
   const off=disabledReason!==undefined||durationFrames===0;
   const styled=!unstyled;
   const f=Math.min(durationFrames,Math.max(0,Math.round(frame)));
@@ -60,6 +71,7 @@ export function TransportControls({
     // Media controls are not mirrored in right-to-left layouts (Material and Apple guidance):
     // they describe tape direction, not reading order.
     style={[{flexDirection:"row",alignItems:"center",flexWrap:"wrap",direction:"ltr"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {button("start","Go to start",()=>seek(0),f===0)}
     {button("previous-frame","Previous frame",()=>seek(f-1),f===0)}
     {button(playing?"pause":"play",playing?"Pause":"Play",onPlayPause,false,true)}

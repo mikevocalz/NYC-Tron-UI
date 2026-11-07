@@ -30,6 +30,8 @@ export interface SlideAnimation {
   /** Seconds from the slide appearing. */
   readonly startS:number;
   readonly durationS:number;
+  readonly trigger?:'on-click'|'with-previous'|'after-previous';
+  readonly order?:number;
 }
 
 /** Longest start or duration the pane accepts, in seconds. */

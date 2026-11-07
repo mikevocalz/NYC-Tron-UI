@@ -8,7 +8,7 @@ import { findInPageText, insertPageHits, stepHit, searchPageOrder, groupHitsByPa
 import { orderTools, toolForKey, toolForSubtype } from "../src/components/forge/pdf/annotation-model.ts";
 import { groupThreads, threadCounts, resolveReply, threadLabel } from "../src/components/forge/pdf/comments-model.ts";
 import { ribbonStateFor, nextToggle, applyTextCase, stepFontSize, ribbonShortcut, sharedValue } from "../src/components/forge/document/ribbon-model.ts";
-import { listMarker, listMarkers, canIndent, canOutdent, shiftLevels, defaultLevelFormats } from "../src/components/forge/document/list-model.ts";
+import { listMarker, listMarkers, listPreviewMarkers, LIST_PREVIEW_MARKER_MAX, BULLETS_NUMBERING_CAPABILITIES, canIndent, canOutdent, shiftLevels, defaultLevelFormats } from "../src/components/forge/document/list-model.ts";
 import { visibleOutline, headingAtBlock, rowForHeading, headingsByPage } from "../src/components/forge/document/outline-model.ts";
 import { moveId, moveBlock, planMoves, nextSelection, gridColumns, gridMove, rgbaCss, slideTitle, slideLabel } from "../src/components/forge/slides/slide-model.ts";
 import { snapRect, resizeFromCorner, nudge, stepRotation, hitTest, fitScale, objectLabel } from "../src/components/forge/slides/canvas-model.ts";
@@ -126,6 +126,24 @@ test("H-07 lists: markers, restart under shallower items, nesting policy", () =>
   assert.deepEqual(shiftLevels(items, 1, 2, -1).map(i => i.level), [0, 0, 0, 0, 1]);
   assert.throws(() => shiftLevels(items, 1, 1, 1), RangeError);
   assert.throws(() => listMarkers([{ level: 9 }], []), RangeError);
+});
+
+test("H-07 authoritative markers preserve starts, mixed nonlist rows and the default counter contract",()=>{
+  const formats=defaultLevelFormats("numbered");
+  const plain=[{level:0},{level:1},{level:0}];
+  assert.deepEqual(listPreviewMarkers(plain,formats,"numbered"),listMarkers(plain,formats));
+  assert.deepEqual(listPreviewMarkers([{level:0,marker:"5."},{level:0,marker:""},{level:1,marker:"III."}],formats,"mixed"),["5.","","III."]);
+  assert.deepEqual(listPreviewMarkers([{level:0,marker:"7."},{level:0}],formats,"none"),["7.",""]);
+  assert.deepEqual(listPreviewMarkers([{level:0,marker:"Host"},{level:0}],formats,"numbered"),["Host","2."]);
+  assert.deepEqual(BULLETS_NUMBERING_CAPABILITIES,{version:1,authoritativeMarkers:true});
+  assert.equal(Object.isFrozen(BULLETS_NUMBERING_CAPABILITIES),true);
+});
+test("H-07 authoritative markers admit long valid letters and reject control, multiline and malformed text",()=>{
+  const formats=defaultLevelFormats("numbered");
+  assert.equal(listPreviewMarkers([{level:8,marker:"A".repeat(770)+"."}],formats,"mixed")[0].length,771);
+  for(const marker of ["x\ny","x\ty","x\u2028y","x\u2029y","x\u202ey","\u0000","\ud800","a".repeat(LIST_PREVIEW_MARKER_MAX+1),null,7]){
+    assert.throws(()=>listPreviewMarkers([{level:0,marker}],formats,"mixed"),RangeError);
+  }
 });
 
 test("H-15 outline: relative depth, collapse, show level, caret and pages", () => {

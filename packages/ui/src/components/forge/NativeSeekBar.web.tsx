@@ -22,21 +22,19 @@ type ChangeTarget = {
 export function NativeSeekBar(props: NativeSeekBarProps) {
   const { model, shown, step } = useSeekBarModel(props);
   const host = useRef<ComponentRef<typeof View> | null>(null);
-  const release = useRef(model.release);
-  release.current = model.release;
   useEffect(() => {
     // React Native Web renders a View as a DOM element.
     const node = host.current as unknown as ChangeTarget | null;
     if (!node) return;
     const onChange = (event: { target: unknown }) => {
       const value = (event.target as { value?: unknown } | null)?.value;
-      if (typeof value === "string") release.current(Number.parseFloat(value));
+      if (typeof value === "string") model.release(Number.parseFloat(value));
     };
     node.addEventListener("change", onChange);
     return () => node.removeEventListener("change", onChange);
-  }, []);
+  }, [model.key]);
   return <SeekBarLayout props={props} shown={shown} step={step} off={model.off}
-    slider={<View ref={host} style={{ width: "100%" }}>
+    slider={<View key={model.key} ref={host} style={{ width: "100%" }}>
       <Host style={{ width: "100%" }}>
         <Slider min={0} max={1} value={model.position} disabled={model.off} onValueChange={model.move} />
       </Host>

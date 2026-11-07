@@ -1,12 +1,16 @@
+import {createAudioPreviewOwner,commitAudioPreview,audioResponderCurrent} from './audio-preview-owner.ts';
+import {audioTargetSize} from './audio-chrome.ts';
+import {NativeVerticalFader} from './LevelFader.vertical.tsx';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {valueAccessibility} from "../value-a11y.ts";
-import { useRef } from "react";
+import { useRef,useLayoutEffect } from "react";
 import {
   I18nManager, PanResponder, Platform, Pressable, Text, View,
   type GestureResponderEvent, type KeyDownEvent, type PanResponderGestureState, type ViewProps, type ViewStyle,
 } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
-import { cancelPreview } from "../cancel-preview.ts";
 import { joinClasses } from "../../styles.ts";
 import {
   FADER_RANGES, clampGain, dragToGain, formatDb, gainToPosition, stepGain,
@@ -16,14 +20,24 @@ import {
 /** Visual thickness of the thumb along the travel axis, in points. */
 const THUMB = 16;
 /** Minimum hit area across the travel axis (iOS 44pt / Android 48dp floor). */
-const HIT = 44;
 /** Travel-axis movement, in points, before the fader claims a touch. */
 const SLOP = 4;
 
 type Local = { preview: number; active: boolean };
 
+export interface LevelFaderLabels {
+ lower?:(name:string,step:number)=>string;raise?:(name:string,step:number)=>string;
+ gainInput?:(name:string)=>string;faderName?:(name:string)=>string;
+ fineOn?:string;fineOff?:string;fineOnName?:string;fineOffName?:string;
+ reset?:string;resetName?:string;raiseAction?:string;lowerAction?:string;resetAction?:string;
+ invalidValue?:(min:number,max:number)=>string;
+}
+
 /** Props for {@linkcode LevelFader}. */
-export interface LevelFaderProps extends Omit<ViewProps, "children"> {
+export interface LevelFaderProps extends Omit<ViewProps, "children">,ScopedControlProps {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?:LevelFaderLabels;
   /** Committed linear gain from the app or engine (0 = silence, 1 = 0 dB). */
   readonly value: number;
   /** Accessible name and visible label, e.g. `"Vocals"`. */
@@ -40,7 +54,7 @@ export interface LevelFaderProps extends Omit<ViewProps, "children"> {
    * is unchanged. The fader keeps showing `value`, so a rejected promise
    * leaves the old level on screen; report the failure from the app.
    */
-  readonly onCommit: (gain: number) => void | Promise<unknown>;
+  readonly onCommit: (gain: number,signal?:AbortSignal) => void | Promise<unknown>;
   /**
    * Decibel window of the travel. The bottom of travel is always silence.
    * @default FADER_RANGES.UNITY (-60 dB to 0 dB)
@@ -86,11 +100,21 @@ export interface LevelFaderProps extends Omit<ViewProps, "children"> {
  * track with responder gestures so it can separate preview from commit and
  * needs no `@expo/ui` host.
  */
-export function LevelFader({
-  value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
+export function LevelFader({orientation='vertical',onChange,disabled=false,...props}:LevelFaderProps){
+ return orientation==='horizontal'?<HorizontalLevelFader {...props} orientation={orientation} disabled={disabled} {...(onChange?{onChange}:{})}/>:<NativeVerticalFader {...props} range={props.range??FADER_RANGES.UNITY} length={props.length??160} {...(onChange?{onPreview:onChange}:{})} {...(disabled?{disabledReason:props.disabledReason??'Gain editing is paused'}:{})}/>;
+}
+function HorizontalLevelFader({scope='horizontal-fader',revision=0,...props}:LevelFaderProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.value,props.range,props.length,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ const previews=useRef<ReturnType<typeof createAudioPreviewOwner<number>>|null>(null);previews.current??=createAudioPreviewOwner();
+ useLayoutEffect(()=>()=>previews.current!.clear(owner),[owner]);
+ return <LevelFaderBody gestureBoundary={owner} onPreviewCancel={()=>previews.current!.clear(owner)} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onStepChange={gain=>guard.current()?.onChange?.(gain)} onChange={gain=>{const host=guard.current();if(host?.onChange)previews.current!.publish(owner,host.onChange,host.value,gain);}} onCommit={gain=>commitAudioPreview(previews.current!,owner,track=>guard.run('gain',(host,signal)=>track(()=>host.onCommit(gain,signal))))}/>;
+}
+function LevelFaderBody({
+  gestureBoundary,onPreviewCancel,onStepChange,scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
   orientation = "vertical", length = 160, disabled = false,
-  className, unstyled = false, ...rest
-}: LevelFaderProps) {
+  className, unstyled = false, targetSize, labels, ...rest
+}: LevelFaderProps&{gestureBoundary:string;onPreviewCancel:()=>void;onStepChange:(gain:number)=>void;actionError?:string|null}) {
+  const HIT = audioTargetSize(targetSize);
   if (!Number.isFinite(value) || value < 0) throw new RangeError("Gain must be finite and nonnegative");
   if (!Number.isFinite(stepDb) || stepDb <= 0) throw new RangeError("stepDb must be finite and positive");
   if (!Number.isFinite(length) || length <= THUMB * 2) {
@@ -98,8 +122,8 @@ export function LevelFader({
   }
   const vertical = orientation === "vertical";
   const travel = length - THUMB;
-  const latest = useRef({ value, range, stepDb, disabled, onChange, onCommit, vertical, travel });
-  latest.current = { value, range, stepDb, disabled, onChange, onCommit, vertical, travel };
+  const latest = useRef({ value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, onStepChange, vertical, travel });
+  latest.current = { value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, onStepChange, vertical, travel };
   const local = useRef<StoreApi<Local> | null>(null);
   if (!local.current) local.current = createStore<Local>(() => ({ preview: value, active: false }));
   const store = local.current;
@@ -109,13 +133,15 @@ export function LevelFader({
   const position = gainToPosition(current, range);
   const startPosition = useRef(0);
 
-  const cancel = () => cancelPreview(
-    latest.current.value,
-    restored => store.setState({ active: false, preview: restored }),
-    latest.current.onChange,
-  );
+  const boundary=JSON.stringify([gestureBoundary,value,range,length,disabled,orientation,I18nManager.isRTL]);
+  const boundaryRef=useRef(boundary);boundaryRef.current=boundary;
+  const admitted=useRef<string|null>(null),gestureId=useRef<number|null>(null);
+  const cancel=()=>{admitted.current=null;gestureId.current=null;store.setState({active:false,preview:latest.current.value});latest.current.onPreviewCancel();};
+  useLayoutEffect(()=>{cancel();},[boundary]);
+  useLayoutEffect(()=>()=>onPreviewCancel(),[]);
   const commit = (next: number) => {
-    const p = latest.current;
+    const p=latest.current;
+    admitted.current=null;
     store.setState({ active: false, preview: next });
     if (next === clampGain(p.value, p.range)) return;
     void p.onCommit(next);
@@ -134,15 +160,16 @@ export function LevelFader({
     onStartShouldSetPanResponder: () => false,
     onMoveShouldSetPanResponder: claims,
     onMoveShouldSetPanResponderCapture: claims,
-    onPanResponderGrant: () => {
+    onPanResponderGrant: (_event,gesture) => {
       const p = latest.current;
+      if(p.disabled)return;admitted.current=boundaryRef.current;gestureId.current=gesture.stateID;
       const start = clampGain(p.value, p.range);
       startPosition.current = gainToPosition(start, p.range);
       store.setState({ active: true, preview: start });
     },
     onPanResponderMove: (_event, gesture) => {
       const p = latest.current;
-      if (p.disabled) return;
+      if (!audioResponderCurrent(admitted.current,boundaryRef.current,p.disabled,gestureId.current,gesture.stateID)||!store.getState().active) return;
       // Up raises a vertical fader. Horizontal travel follows reading
       // direction, so RTL layouts raise the level toward the left.
       const delta = p.vertical ? -gesture.dy : I18nManager.isRTL ? -gesture.dx : gesture.dx;
@@ -152,23 +179,25 @@ export function LevelFader({
         p.onChange?.(next);
       }
     },
-    onPanResponderRelease: () => {
-      if (!store.getState().active) return;
+    onPanResponderRelease: (_event,gesture) => {
+      if (!store.getState().active||!audioResponderCurrent(admitted.current,boundaryRef.current,latest.current.disabled,gestureId.current,gesture.stateID)) return;
       if (latest.current.disabled) { cancel(); return; }
       commit(store.getState().preview);
     },
-    onPanResponderTerminate: cancel,
+    onPanResponderTerminate: (_event,gesture)=>{if(audioResponderCurrent(admitted.current,boundaryRef.current,false,gestureId.current,gesture.stateID))cancel();},
     // Keep the drag once it started; releasing it mid-move would snap the
     // level back while the finger is still on the fader.
     onPanResponderTerminationRequest: () => !store.getState().active,
     onShouldBlockNativeResponder: () => true,
   });
   const nudge = (direction: -1 | 1) => {
+    if(boundaryRef.current!==boundary)return;
     const p = latest.current;
     if (p.disabled || store.getState().active) return;
     const next = stepGain(p.value, direction, p.stepDb, p.range);
     if (next === clampGain(p.value, p.range)) return;
-    p.onChange?.(next);
+    p.onStepChange(next);
+    if(boundaryRef.current!==boundary)return;
     commit(next);
   };
 
@@ -210,6 +239,7 @@ export function LevelFader({
 
   return <View {...rest}
     {...{ className: joinClasses("items-center gap-2", styled && "rounded-control bg-surface-raised p-3", className) }}>
+      <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>{label}</Text>
     <View {...responder.current.panHandlers}
       accessible focusable={!disabled} accessibilityRole="adjustable"
@@ -234,11 +264,11 @@ export function LevelFader({
     <Text {...{ className: joinClasses(styled && "text-text-muted") }}
       style={{ fontVariant: ["tabular-nums"] }}>{readout}</Text>
     <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-      <Pressable accessibilityRole="button" accessibilityLabel={`Lower ${label} by ${stepDb} dB`}
+      <Pressable accessibilityRole="button" accessibilityLabel={labels?.lower?.(label,stepDb)??`Lower ${label} by ${stepDb} dB`}
         disabled={disabled} onPress={() => nudge(-1)} {...{ className: stepClass }} style={stepButton}>
         <Text {...{ className: text }}>−</Text>
       </Pressable>
-      <Pressable accessibilityRole="button" accessibilityLabel={`Raise ${label} by ${stepDb} dB`}
+      <Pressable accessibilityRole="button" accessibilityLabel={labels?.raise?.(label,stepDb)??`Raise ${label} by ${stepDb} dB`}
         disabled={disabled} onPress={() => nudge(1)} {...{ className: stepClass }} style={stepButton}>
         <Text {...{ className: text }}>+</Text>
       </Pressable>

@@ -1,81 +1,28 @@
-/*
- * Structural references (Mobbin, iOS; structure only). Mobbin has no DAW
- * automation-mode screens, so these are the closest patterns:
- * - Waymo audio settings: the control's name sits directly above its
- *   options, no separate section heading.
- * - Facebook reel editor: a short row of equal, labelled tool choices.
- * - TikTok video editor: lane-level options grouped beside the lanes they
- *   act on rather than in a modal.
- */
-import { useRef, type ComponentRef } from "react";
-import { Platform, Pressable, Text, View, type KeyDownEvent, type ViewProps } from "react-native";
-import { joinClasses } from "../../styles.ts";
-import { AUTOMATION_MODES, type AutomationMode } from "./automation.ts";
-import type { AutomationLane } from "./AutomationLane.tsx";
-
-const HIT = 44;
-const NAMES: Record<AutomationMode, string> = { off: "Off", read: "Read" };
-
-/** Props for {@linkcode AutomationModePicker}. */
-export interface AutomationModePickerProps extends Omit<ViewProps, "children"> {
-  /** Committed lane mode from the engine. */
-  readonly mode: AutomationMode;
-  /**
-   * Once per press, arrow key or screen-reader selection of a different
-   * mode. The picker keeps showing `mode` until the app passes a new one.
-   */
-  readonly onModeCommit: (mode: AutomationMode) => void | Promise<unknown>;
-  /** Visible group name and accessible name. @default "Automation" */
-  readonly label?: string;
-  /** @default false */
-  readonly disabled?: boolean;
-  className?: string;
-  unstyled?: boolean;
+import {Text,View,type ViewProps} from "react-native";
+import {SegmentedControl} from "../../SegmentedControl.tsx";
+import {ErrorMessage} from "../../feedback/ErrorMessage.tsx";
+import {joinClasses} from "../../styles.ts";
+import {controlIdentity,useScopedControl,type ScopedControlProps} from "../inputs/useScopedControl.ts";
+import {AUTOMATION_MODES,type AutomationMode} from "./automation.ts";
+export interface AutomationModePickerProps extends Omit<ViewProps,"children">,ScopedControlProps {
+ readonly mode:AutomationMode;readonly onModeCommit:(mode:AutomationMode,signal?:AbortSignal)=>void|Promise<unknown>;
+ /** Only the host can enable live write/touch/latch/trim support. */
+ readonly capabilities?:readonly {mode:AutomationMode;disabledReason?:string}[];
+ readonly label?:string;readonly disabled?:boolean;className?:string;unstyled?:boolean;
 }
-
-/**
- * Controlled radio group for an {@linkcode AutomationLane}'s mode: Off (the
- * fader or pan control sets the value) or Read (the lane's points do). Tab
- * reaches the checked option; Left/Right or Up/Down move and commit.
- *
- * Write, touch and latch are not drawn: they record fader moves while the
- * transport plays, and the Cadence engine contract has no live-transport
- * recording, so the options would do nothing.
- */
-export function AutomationModePicker({
-  mode, onModeCommit, label = "Automation", disabled = false, className, unstyled = false, style, ...rest
-}: AutomationModePickerProps) {
-  const styled = !unstyled;
-  const refs = useRef<Partial<Record<AutomationMode, ComponentRef<typeof Pressable> | null>>>({});
-  const choose = (next: AutomationMode, focus = false) => {
-    if (disabled) return;
-    if (focus) refs.current[next]?.focus?.();
-    if (next !== mode) void onModeCommit(next);
-  };
-  const onKeyDown = (e: KeyDownEvent) => {
-    const key = e.nativeEvent.key;
-    const dir = key === "ArrowRight" || key === "ArrowDown" ? 1 : key === "ArrowLeft" || key === "ArrowUp" ? -1 : 0;
-    if (dir === 0) return;
-    e.preventDefault();
-    const i = AUTOMATION_MODES.indexOf(mode);
-    choose(AUTOMATION_MODES[(i + dir + AUTOMATION_MODES.length) % AUTOMATION_MODES.length]!, true);
-  };
-  return <View {...rest} {...{ className: joinClasses("gap-1", className) }} style={style}>
-    <Text {...{ className: joinClasses(styled && "text-text-muted text-sm") }}>{label}</Text>
-    <View accessibilityRole="radiogroup" accessibilityLabel={label} accessibilityState={{ disabled }}
-      {...{ className: joinClasses(styled && "rounded-control border border-border bg-surface-sunken") }}
-      style={{ flexDirection: "row", alignSelf: "flex-start", padding: 2, gap: 2, opacity: disabled ? 0.45 : 1 }}>
-      {AUTOMATION_MODES.map(m => {
-        const on = m === mode;
-        return <Pressable key={m} ref={r => { refs.current[m] = r; }}
-          accessibilityRole="radio" accessibilityLabel={NAMES[m]} accessibilityState={{ checked: on, disabled }} {...(Platform.OS === "web" ? {"aria-checked":on,"aria-disabled":disabled} : {})}
-          focusable={!disabled && on} disabled={disabled} onPress={() => choose(m)} onKeyDown={onKeyDown}
-          {...{ className: joinClasses(styled && "rounded-control items-center justify-center focus-visible:ring-2 focus-visible:ring-focus active:opacity-80",
-            styled && (on ? "bg-primary" : "bg-transparent")) }}
-          style={{ minWidth: 64, minHeight: HIT, paddingHorizontal: 14 }}>
-          <Text {...{ className: joinClasses(styled && "font-semibold", styled && (on ? "text-on-primary" : "text-text")) }}>{NAMES[m]}</Text>
-        </Pressable>;
-      })}
-    </View>
-  </View>;
+const NAMES:Record<AutomationMode,string>={off:"Off",read:"Read",write:"Write",touch:"Touch",latch:"Latch",trim:"Trim"};
+const LEGACY=[{mode:'off'},{mode:'read'}] as const;
+/** Full mode picker with explicit live-transport capabilities and controlled acknowledgements. */
+export function AutomationModePicker({scope='automation-mode',revision=0,...props}:AutomationModePickerProps){
+ const {mode,onModeCommit:_commit,capabilities=LEGACY,label='Automation',disabled=false,disabledReason,className,unstyled=false,style,...rest}=props;
+ if(!AUTOMATION_MODES.includes(mode)||capabilities.length>6||new Set(capabilities.map(c=>c.mode)).size!==capabilities.length||capabilities.some(c=>!AUTOMATION_MODES.includes(c.mode)))throw new RangeError('Invalid automation modes');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),disabled,disabledReason,capabilities]),guard=useScopedControl(owner,props,disabled||disabledReason!==undefined);
+ const reason=(m:AutomationMode)=>{const capability=capabilities.find(c=>c.mode===m);return capability?('disabledReason' in capability?capability.disabledReason:undefined):'Not supported by the current audio host';};
+ return <View {...rest} {...{className:joinClasses('gap-1',className)}} style={style}>
+  <Text {...{className:joinClasses(!unstyled&&'text-text-muted text-sm')}}>{label}</Text>
+  <SegmentedControl aria-label={label} value={mode} disabled={disabled||disabledReason!==undefined||guard.pending} unstyled={unstyled} options={AUTOMATION_MODES.map(m=>({value:m,label:NAMES[m],disabled:reason(m)!==undefined}))}
+   onChange={next=>guard.run('mode',(host,signal)=>{const caps=host.capabilities??LEGACY,entry=caps.find(c=>c.mode===next);return entry&&(!('disabledReason' in entry)||entry.disabledReason===undefined)?host.onModeCommit(next,signal):undefined;})}/>
+  {AUTOMATION_MODES.filter(m=>reason(m)!==undefined).map(m=><Text key={m} {...{className:joinClasses(!unstyled&&'text-text-muted text-xs')}}>{NAMES[m]}: {reason(m)}</Text>)}
+  <ErrorMessage message={guard.error??undefined} unstyled={unstyled}/>
+ </View>;
 }

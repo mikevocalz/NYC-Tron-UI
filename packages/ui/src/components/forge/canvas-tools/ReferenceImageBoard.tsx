@@ -15,13 +15,15 @@
  * React Native component on theme tokens; several host-owned references with
  * fit/crop, opacity, lock, pin and float/side/overlay placement; keyboard moves.
  */
-import {useEffect,useRef,type ReactNode} from "react";
+import {useEffect,useLayoutEffect,useRef,type ReactNode} from "react";
 import {PanResponder,Platform,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {Button} from "../../Button.tsx";
 import {SegmentedControl} from "../../SegmentedControl.tsx";
 import {joinClasses} from "../../styles.ts";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {SwitchRow} from "../selection/switch-row.tsx";
 import {
  REFERENCE_BAR_HEIGHT,REFERENCE_FITS,REFERENCE_PLACEMENTS,clampFrame,formatReferenceOpacity,moveFrame,pictureRect,
@@ -30,18 +32,18 @@ import {
 } from "./reference-board-model.ts";
 
 /** Props for {@linkcode ReferenceImageBoard}. The reference list is host state, kept apart from the document. */
-export interface ReferenceImageBoardProps extends Omit<ViewProps,"children"> {
+export interface ReferenceImageBoardProps extends Omit<ViewProps,"children">,ScopedControlProps {
  references:readonly ReferenceImage[];
  /** The reference whose settings the inspector shows. */
  selectedId?:string|undefined;
  onSelect:(id:string)=>void;
  /** One call per drag release, key press or control change. */
- onUpdate:(id:string,patch:ReferencePatch)=>void;
+ onUpdate:(id:string,patch:ReferencePatch,signal?:AbortSignal)=>void|Promise<unknown>;
  /** The frame drawn during a drag, then `undefined` on release or cancel. */
  onPreview?:(id:string,frame:BoardRect|undefined)=>void;
  /** Ask the host to pick an image and add it. */
- onAdd:()=>void;
- onRemove:(id:string)=>void;
+ onAdd:(signal?:AbortSignal)=>void|Promise<unknown>;
+ onRemove:(id:string,signal?:AbortSignal)=>void|Promise<unknown>;
  /** Draws a reference's picture. The node should fill its parent; the board sizes and clips it. */
  renderImage:(reference:ReferenceImage)=>ReactNode;
  /** Board (canvas area) size in layout units. Floating windows stay inside it. */
@@ -71,14 +73,24 @@ type Local={preview:{id:string;frame:BoardRect}|null;notice:string|undefined};
  * pinned ones refuse moving, each saying why. Overlays never take pointer input,
  * so drawing reaches the canvas under them.
  */
-export function ReferenceImageBoard({
+export function ReferenceImageBoard({scope='reference-board',revision=0,...props}:ReferenceImageBoardProps&{actionError?:string|null;busy?:boolean}){
+ validateReferences(props.references,props.selectedId);
+ if(![props.width,props.height,props.sideWidth??168].every(n=>Number.isFinite(n)&&n>0))throw new RangeError('Invalid reference board dimensions');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.width,props.height,props.references.map(r=>[r.id,r.locked,r.pinned,r.placement])]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <ReferenceImageBoardBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onSelect={id=>guard.current()?.onSelect(id)} onPreview={(id,frame)=>guard.current()?.onPreview?.(id,frame)}
+  onUpdate={(id,patch)=>guard.run('update',(host,signal)=>host.onUpdate(id,patch,signal))}
+  onAdd={()=>guard.run('add',(host,signal)=>host.onAdd(signal))} onRemove={id=>guard.run('remove',(host,signal)=>host.onRemove(id,signal))}/>;
+}
+function ReferenceImageBoardBody({
  references,selectedId,onSelect,onUpdate,onPreview,onAdd,onRemove,renderImage,width,height,sideWidth=168,children,
- label="Reference images",className,unstyled=false,style,...rest
-}:ReferenceImageBoardProps){
+ actionError=null,busy=false,disabledReason,label="Reference images",className,unstyled=false,style,...rest
+}:ReferenceImageBoardProps&{actionError?:string|null;busy?:boolean}){
  validateReferences(references,selectedId);
  const styled=!unstyled;
  const latest=useRef({references,width,height,onUpdate,onPreview,onRemove,onSelect});
- latest.current={references,width,height,onUpdate,onPreview,onRemove,onSelect};
+ useLayoutEffect(()=>{latest.current={references,width,height,onUpdate,onPreview,onRemove,onSelect};});
  const local=useRef<StoreApi<Local>|null>(null);
  if(!local.current)local.current=createStore<Local>(()=>({preview:null,notice:undefined}));
  const store=local.current;
@@ -88,7 +100,7 @@ export function ReferenceImageBoard({
 
  const find=(id:string)=>latest.current.references.find(r=>r.id===id);
  const refuse=(ref:ReferenceImage,edit:ReferenceEdit)=>{
-  const problem=referenceEditProblem(ref,edit);
+  const problem=disabledReason??(busy?"Reference change in progress":referenceEditProblem(ref,edit));
   if(problem)store.setState({notice:problem});
   return problem!==undefined;
  };
@@ -115,7 +127,7 @@ export function ReferenceImageBoard({
   store.setState({preview:null});
   latest.current.onPreview?.(p.id,undefined);
   const ref=find(p.id);
-  if(!ref)return;
+  if(!ref||refuse(ref,"move"))return;
   const {x,y,width:w,height:h}=p.frame;
   if(x!==ref.x||y!==ref.y||w!==ref.width||h!==ref.height)latest.current.onUpdate(ref.id,{x,y,width:w,height:h});
  };
@@ -140,6 +152,8 @@ export function ReferenceImageBoard({
  };
 
  return <View {...rest} role="group" aria-label={label} {...{className:joinClasses("gap-3",className)}} style={[{maxWidth:"100%"},style]}>
+  <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+  {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Reference change in progress"}</Text>:null}
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:12,alignItems:"flex-start"}}>
    <View testID="reference-board" {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border")}}
     style={{width,height,position:"relative"}}>
@@ -179,7 +193,7 @@ export function ReferenceImageBoard({
   </View>
   {references.length===0?<View style={{gap:8,alignItems:"flex-start"}}>
    <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>No reference images yet. Add one to keep it beside your canvas.</Text>
-   <Button title="Add reference image" unstyled={unstyled} onPress={onAdd}/>
+   <Button title="Add reference image" unstyled={unstyled} onPress={()=>onAdd()}/>
   </View>:<Inspector reference={selected} styled={styled} unstyled={unstyled}
    onAdd={onAdd} onRemove={()=>selected&&remove(selected)}
    onChange={(edit,patch)=>selected&&update(selected,edit,patch)}
@@ -254,12 +268,12 @@ function FloatingWindow({reference:ref,frame,selected,styled,picture,onSelect,on
 }
 
 function Inspector({reference:ref,styled,unstyled,onAdd,onRemove,onChange,onToggleLock}:{
- reference:ReferenceImage|undefined;styled:boolean;unstyled:boolean;onAdd:()=>void;onRemove:()=>void;
+ reference:ReferenceImage|undefined;styled:boolean;unstyled:boolean;onAdd:(signal?:AbortSignal)=>void|Promise<unknown>;onRemove:()=>void;
  onChange:(edit:ReferenceEdit,patch:ReferencePatch)=>void;onToggleLock:()=>void;
 }){
  if(!ref)return <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
   <Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{flexShrink:1}}>Select a reference to change it.</Text>
-  <Button title="Add reference image" variant="secondary" unstyled={unstyled} onPress={onAdd}/>
+  <Button title="Add reference image" variant="secondary" unstyled={unstyled} onPress={()=>onAdd()}/>
  </View>;
  const lockedReason=ref.locked?`${ref.label} is locked. Unlock it to change it.`:undefined;
  const step=(d:-1|1)=>{
@@ -294,7 +308,7 @@ function Inspector({reference:ref,styled,unstyled,onAdd,onRemove,onChange,onTogg
   <SwitchRow label="Lock" unstyled={unstyled} value={ref.locked} detail="Blocks every change until unlocked"
    onValueChange={onToggleLock}/>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
-   <Button title="Add reference image" variant="secondary" unstyled={unstyled} onPress={onAdd}/>
+   <Button title="Add reference image" variant="secondary" unstyled={unstyled} onPress={()=>onAdd()}/>
    <Button title="Remove" variant="danger" unstyled={unstyled} disabled={ref.locked}
     accessibilityHint={lockedReason} onPress={onRemove}/>
   </View>

@@ -1,0 +1,518 @@
+{
+  "scenario": "qa-tron-native-overlays",
+  "steps": 28,
+  "ios": {
+    "device": "BBCC4078-E64D-4642-893B-ACF80ACB29A1",
+    "passes": [
+      {
+        "content": [
+          {
+            "type": "text",
+            "text": "Running e2e test \"qa-tron-native-overlays\" on BBCC4078-E64D-4642-893B-ACF80ACB29A1 (28 steps)"
+          },
+          {
+            "type": "text",
+            "text": "[1] ✓ launch (4.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[2] ✓ await visible \"Search assets\" (1.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[3] ✓ idle (4.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[4] ✓ tap \"overlays\" (0.9s)"
+          },
+          {
+            "type": "text",
+            "text": "[5] ✓ await visible \"Native action menu section\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[6] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[]\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[7] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[8] ✓ tap \"Layer actions\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[9] ✓ await visible \"Rename layer\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[10] ✓ await visible \"Locked action\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[11] ✓ idle (1.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[12] ✓ tap \"Rename layer\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[13] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\"]\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[14] ✓ idle (0.8s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle."
+          },
+          {
+            "type": "text",
+            "text": "[15] ✓ tap id=native-overlay-component (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[16] ✓ await visible \"Popover\" within (id=native-overlay-component-list) (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[17] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[18] ✓ tap \"Popover\" within (id=native-overlay-component-list) (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[19] ✓ await visible \"Native popover section\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[20] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[21] ✓ tap \"Open layer properties\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[22] ✓ await visible \"Native layer properties\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[23] ✓ idle (0.9s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle."
+          },
+          {
+            "type": "text",
+            "text": "[24] ✓ tap \"Apply layer property\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[25] ✓ await hidden \"Native layer properties\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[26] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\",\\\"popover:apply\\\"]\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[27] ✓ await \"Native overlay state\" contains \"\\\"open\\\":false\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[28] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "PASS — 28 passed, 0 failed, 0 errored, 0 skipped (21.0s)"
+          }
+        ]
+      },
+      {
+        "content": [
+          {
+            "type": "text",
+            "text": "Running e2e test \"qa-tron-native-overlays\" on BBCC4078-E64D-4642-893B-ACF80ACB29A1 (28 steps)"
+          },
+          {
+            "type": "text",
+            "text": "[1] ✓ launch (2.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[2] ✓ await visible \"Search assets\" (1.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[3] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[4] ✓ tap \"overlays\" (0.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[5] ✓ await visible \"Native action menu section\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[6] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[]\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[7] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[8] ✓ tap \"Layer actions\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[9] ✓ await visible \"Rename layer\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[10] ✓ await visible \"Locked action\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[11] ✓ idle (1.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[12] ✓ tap \"Rename layer\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[13] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\"]\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[14] ✓ idle (0.8s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle."
+          },
+          {
+            "type": "text",
+            "text": "[15] ✓ tap id=native-overlay-component (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[16] ✓ await visible \"Popover\" within (id=native-overlay-component-list) (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[17] ✓ idle (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[18] ✓ tap \"Popover\" within (id=native-overlay-component-list) (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[19] ✓ await visible \"Native popover section\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[20] ✓ idle (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[21] ✓ tap \"Open layer properties\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[22] ✓ await visible \"Native layer properties\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[23] ✓ idle (1.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[24] ✓ tap \"Apply layer property\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[25] ✓ await hidden \"Native layer properties\" (0.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[26] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\",\\\"popover:apply\\\"]\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[27] ✓ await \"Native overlay state\" contains \"\\\"open\\\":false\" (0.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[28] ✓ idle (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "PASS — 28 passed, 0 failed, 0 errored, 0 skipped (15.2s)"
+          }
+        ]
+      }
+    ]
+  },
+  "android": {
+    "device": "emulator-5554",
+    "passes": [
+      {
+        "content": [
+          {
+            "type": "text",
+            "text": "Running e2e test \"qa-tron-native-overlays\" on emulator-5554 (28 steps)"
+          },
+          {
+            "type": "text",
+            "text": "[1] ✓ launch (16.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[2] ✓ await visible \"Search assets\" (9.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[3] ✓ idle (1.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[4] ✓ tap \"overlays\" (1.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[5] ✓ await visible \"Native action menu section\" (2.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[6] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[]\" (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[7] ✓ idle (0.9s)"
+          },
+          {
+            "type": "text",
+            "text": "[8] ✓ tap \"Layer actions\" (0.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[9] ✓ await visible \"Rename layer\" (3.2s)"
+          },
+          {
+            "type": "text",
+            "text": "[10] ✓ await visible \"Locked action\" (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[11] ✓ idle (0.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[12] ✓ tap \"Rename layer\" (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[13] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\"]\" (3.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[14] ✓ idle (1.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[15] ✓ tap id=native-overlay-component (0.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[16] ✓ await visible \"Popover\" within (id=native-overlay-component-list) (1.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[17] ✓ idle (2.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[18] ✓ tap \"Popover\" within (id=native-overlay-component-list) (0.8s)"
+          },
+          {
+            "type": "text",
+            "text": "[19] ✓ await visible \"Native popover section\" (1.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[20] ✓ idle (0.9s)"
+          },
+          {
+            "type": "text",
+            "text": "[21] ✓ tap \"Open layer properties\" (0.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[22] ✓ await visible \"Native layer properties\" (2.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[23] ✓ idle (0.8s)"
+          },
+          {
+            "type": "text",
+            "text": "[24] ✓ tap \"Apply layer property\" (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[25] ✓ await hidden \"Native layer properties\" (1.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[26] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\",\\\"popover:apply\\\"]\" (0.2s)"
+          },
+          {
+            "type": "text",
+            "text": "[27] ✓ await \"Native overlay state\" contains \"\\\"open\\\":false\" (0.2s)"
+          },
+          {
+            "type": "text",
+            "text": "[28] ✓ idle (1.0s)"
+          },
+          {
+            "type": "text",
+            "text": "PASS — 28 passed, 0 failed, 0 errored, 0 skipped (58.8s)"
+          }
+        ]
+      },
+      {
+        "content": [
+          {
+            "type": "text",
+            "text": "Running e2e test \"qa-tron-native-overlays\" on emulator-5554 (28 steps)"
+          },
+          {
+            "type": "text",
+            "text": "[1] ✓ launch (11.8s)"
+          },
+          {
+            "type": "text",
+            "text": "[2] ✓ await visible \"Search assets\" (13.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[3] ✓ idle (1.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[4] ✓ tap \"overlays\" (0.8s)"
+          },
+          {
+            "type": "text",
+            "text": "[5] ✓ await visible \"Native action menu section\" (2.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[6] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[]\" (0.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[7] ✓ idle (0.9s)"
+          },
+          {
+            "type": "text",
+            "text": "[8] ✓ tap \"Layer actions\" (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[9] ✓ await visible \"Rename layer\" (2.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[10] ✓ await visible \"Locked action\" (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[11] ✓ idle (0.8s)"
+          },
+          {
+            "type": "text",
+            "text": "[12] ✓ tap \"Rename layer\" (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[13] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\"]\" (2.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[14] ✓ idle (1.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[15] ✓ tap id=native-overlay-component (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[16] ✓ await visible \"Popover\" within (id=native-overlay-component-list) (1.1s)"
+          },
+          {
+            "type": "text",
+            "text": "[17] ✓ idle (1.9s)"
+          },
+          {
+            "type": "text",
+            "text": "[18] ✓ tap \"Popover\" within (id=native-overlay-component-list) (0.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[19] ✓ await visible \"Native popover section\" (1.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[20] ✓ idle (1.0s)"
+          },
+          {
+            "type": "text",
+            "text": "[21] ✓ tap \"Open layer properties\" (0.6s)"
+          },
+          {
+            "type": "text",
+            "text": "[22] ✓ await visible \"Native layer properties\" (2.3s)"
+          },
+          {
+            "type": "text",
+            "text": "[23] ✓ idle (0.7s)"
+          },
+          {
+            "type": "text",
+            "text": "[24] ✓ tap \"Apply layer property\" (0.5s)"
+          },
+          {
+            "type": "text",
+            "text": "[25] ✓ await hidden \"Native layer properties\" (1.4s)"
+          },
+          {
+            "type": "text",
+            "text": "[26] ✓ await \"Native overlay state\" contains \"\\\"events\\\":[\\\"menu:rename\\\",\\\"popover:apply\\\"]\" (0.2s)"
+          },
+          {
+            "type": "text",
+            "text": "[27] ✓ await \"Native overlay state\" contains \"\\\"open\\\":false\" (0.2s)"
+          },
+          {
+            "type": "text",
+            "text": "[28] ✓ idle (0.9s)"
+          },
+          {
+            "type": "text",
+            "text": "PASS — 28 passed, 0 failed, 0 errored, 0 skipped (54.1s)"
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "iOS small-region idle warnings are retained; the changing regions were not independently classified. Explicit loaded-content and callback checks passed; the inspected native UI had no loading indicator.",
+    "Android had no idle warnings in these two replays. Its task-owned APK had previously been speed-compiled after an ART startup issue; these are not unoptimized cold-start measurements.",
+    "Disabled Locked action was present and visibly subdued on iOS; these runs do not assert physical screen-reader speech or disabled hardware activation.",
+    "iOS native menu/popover layout was inspected inside the 382-point usable cover pane. Android evidence here is semantic replay, not a screenshot geometry verdict.",
+    "The first walkthrough encountered a dead iOS CoreDevice transport before delivery. It was recovered with device-scoped services and a new launch. Only the final unchanged replays count.",
+    "Desktop/headset, physical narration/hardware keyboard, remaining native components and eight-platform acceptance remain open."
+  ]
+}

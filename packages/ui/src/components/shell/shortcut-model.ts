@@ -126,3 +126,16 @@ export function commandForChord(commands:readonly ShortcutCommand[],chord:KeyCho
   const binding=bindingFromChord(chord,apple);
   return binding===undefined?undefined:commands.find(c=>c.binding!==undefined&&normalizeBinding(c.binding)===binding);
 }
+
+/** Bound searchable shortcut declarations and prevent ambiguous recording targets. */
+export function validateShortcutCommands(commands:readonly ShortcutCommand[]):void {
+ if(commands.length>1000)throw new RangeError("Too many shortcut commands");
+ const ids=new Set<string>();
+ for(const command of commands){
+  if(!command.id.trim()||command.id.length>256||ids.has(command.id))throw new TypeError("Duplicate or invalid shortcut command id");
+  if(!command.label.trim()||command.label.length>512||command.group!==undefined&&command.group.length>512)throw new TypeError("Invalid shortcut label/group");
+  if(command.binding!==undefined&&!normalizeBinding(command.binding)||command.defaultBinding!==undefined&&!normalizeBinding(command.defaultBinding))throw new TypeError("Invalid shortcut binding");
+  if(command.keywords&&(command.keywords.length>256||command.keywords.some(k=>k.length>512)))throw new RangeError("Invalid shortcut keywords");
+  ids.add(command.id);
+ }
+}

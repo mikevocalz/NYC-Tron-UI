@@ -1,10 +1,12 @@
+import {createStore} from "zustand/vanilla";
+
 /**
  * A per-instance store for transient gesture and draft state (a drag preview, a
  * text draft, a measured width). Components use it instead of `useState` so a
  * gesture's bookkeeping lives outside React's render cycle and can be read
  * synchronously from responder callbacks. Created by {@linkcode createLocalStore};
- * components use it through `useLocalStore`. Kept free of React so pure tests
- * can import it without an install.
+ * components use it through `useLocalStore`. Zustand owns the state; this value-replacement
+ * adapter remains independent of React.
  */
 export interface LocalStore<T> {
   get():T;
@@ -16,19 +18,15 @@ export interface LocalStore<T> {
 
 /** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */
 export function createLocalStore<T>(initial:T):LocalStore<T>{
-  let state=initial;
-  const listeners=new Set<()=>void>();
+  const store=createStore<{value:T}>(()=>({value:initial}));
   return {
-    get:()=>state,
+    get:()=>store.getState().value,
     set(next){
-      const value=typeof next==="function"?(next as (p:T)=>T)(state):next;
-      if(Object.is(value,state))return;
-      state=value;
-      for(const listener of [...listeners])listener();
+      store.setState(current=>{
+        const value=typeof next==="function"?(next as (p:T)=>T)(current.value):next;
+        return Object.is(value,current.value)?current:{value};
+      });
     },
-    subscribe(listener){
-      listeners.add(listener);
-      return ()=>{listeners.delete(listener);};
-    },
+    subscribe(listener){return store.subscribe(()=>listener());},
   };
 }

@@ -43,11 +43,11 @@ export function validateArtboards(artboards:readonly ArtboardItem[]):void{
   if(artboards.length>ARTBOARD_MAX)throw new RangeError("Artboard navigator exceeds "+ARTBOARD_MAX+" artboards");
   const seen=new Set<string>();
   for(const a of artboards){
-    if(!a.id||seen.has(a.id))throw new RangeError("Duplicate or empty artboard id: "+a.id);
+    if(!a.id.trim()||a.id.length>512||seen.has(a.id))throw new RangeError("Duplicate or empty artboard id: "+a.id);
     seen.add(a.id);
-    if(!a.name.trim())throw new RangeError("Artboard name is blank: "+a.id);
-    if(![a.x,a.y,a.w,a.h].every(Number.isFinite)||a.w<=0||a.h<=0)throw new RangeError("Invalid artboard geometry: "+a.id);
-    if(a.revision!==undefined&&!Number.isFinite(a.revision))throw new RangeError("Invalid artboard revision: "+a.id);
+    if(!a.name.trim()||a.name.length>512)throw new RangeError("Artboard name is blank: "+a.id);
+    if(![a.x,a.y,a.w,a.h,a.x+a.w,a.y+a.h].every(Number.isFinite)||a.w<=0||a.h<=0)throw new RangeError("Invalid artboard geometry: "+a.id);
+    if(a.revision!==undefined&&(!Number.isSafeInteger(a.revision)||a.revision<0))throw new RangeError("Invalid artboard revision: "+a.id);
   }
 }
 
@@ -64,19 +64,22 @@ export function nextArtboardName(artboards:readonly Pick<ArtboardItem,"name">[])
  * the rightmost artboard and level with the top-most one, so it never overlaps.
  */
 export function newArtboardOp(artboards:readonly ArtboardItem[],likeId?:string):AddArtboardOp{
+  validateArtboards(artboards);if(artboards.length>=ARTBOARD_MAX)throw new RangeError("Artboard render limit reached");
   const like=artboards.find(a=>a.id===likeId)??artboards[artboards.length-1];
   const w=like?.w??DEFAULT_ARTBOARD_SIZE.w,h=like?.h??DEFAULT_ARTBOARD_SIZE.h;
   const name=nextArtboardName(artboards);
   if(artboards.length===0)return {name,x:0,y:0,w,h};
   const right=Math.max(...artboards.map(a=>a.x+a.w));
   const top=Math.min(...artboards.map(a=>a.y));
-  return {name,x:right+ARTBOARD_GAP,y:top,w,h};
+  const x=right+ARTBOARD_GAP;if(!Number.isFinite(x+w)||x<=right)throw new RangeError("No representable position for the next artboard");
+  return {name,x,y:top,w,h};
 }
 
 /** Grid columns for a pane `width` points wide. Never below 1. */
 export function artboardColumns(width:number,gap=8):number{
+  if(!Number.isFinite(gap)||gap<0)throw new RangeError("Invalid artboard tile gap");
   if(!Number.isFinite(width)||width<=0)return 1;
-  return Math.max(1,Math.floor((width+gap)/(ARTBOARD_TILE_MIN+gap)));
+  return Math.min(ARTBOARD_MAX,Math.max(1,Math.floor((width+gap)/(ARTBOARD_TILE_MIN+gap))));
 }
 
 /**
@@ -87,6 +90,7 @@ export function artboardColumns(width:number,gap=8):number{
 export function artboardDropIndex({from,dx,dy,count,columns,cellWidth,cellHeight,rtl=false}:{
   from:number;dx:number;dy:number;count:number;columns:number;cellWidth:number;cellHeight:number;rtl?:boolean;
 }):number{
+  if(!Number.isSafeInteger(count)||count<1||count>ARTBOARD_MAX||!Number.isSafeInteger(columns)||columns<1||columns>ARTBOARD_MAX)throw new RangeError("Invalid artboard count or columns");
   if(!Number.isInteger(from)||from<0||from>=count)throw new RangeError("Drag start index out of range");
   if(![dx,dy,cellWidth,cellHeight].every(Number.isFinite)||cellWidth<=0||cellHeight<=0||columns<1)
     throw new RangeError("Invalid drag metrics");
@@ -114,6 +118,7 @@ export type ArtboardKeyAction=
 export function artboardKeyAction(key:string|undefined,{index,count,columns,layout,rtl=false,alt=false}:{
   index:number;count:number;columns:number;layout:ArtboardLayout;rtl?:boolean;alt?:boolean;
 }):ArtboardKeyAction|null{
+  if(!Number.isSafeInteger(count)||count<0||count>ARTBOARD_MAX||!Number.isSafeInteger(columns)||columns<1||columns>ARTBOARD_MAX||!Number.isInteger(index)||index<0||count>0&&index>=count||!["list","grid"].includes(layout))throw new RangeError("Invalid artboard keyboard metrics");
   if(key===undefined||count===0)return null;
   if(!alt){
     if(key==="Enter"||key===" ")return {kind:"select"};

@@ -1,3 +1,6 @@
+import {Button} from '../../Button.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 /**
  * Plugin preset browser (roster E-23).
  *
@@ -23,7 +26,7 @@ const HIT = 44;
 export type PresetListStatus = "loading" | "error" | "ready";
 
 /** Props for {@linkcode PluginPresetBrowser}. */
-export interface PluginPresetBrowserProps extends Omit<ViewProps, "children"> {
+export interface PluginPresetBrowserProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Effect type whose presets are listed. Names the heading and the list. */
   readonly kind: InsertKind;
   /** Presets for `kind`, factory first, in display order. */
@@ -35,9 +38,11 @@ export interface PluginPresetBrowserProps extends Omit<ViewProps, "children"> {
    * current preset applies it again, which resets parameters edited since.
    * A rejected promise leaves `currentId` unchanged on screen.
    */
-  readonly onApply: (presetId: string) => void | Promise<unknown>;
+  readonly onApply: (presetId: string,transaction?:{undoGroup:string}) => void | Promise<unknown>;
   /** @default "ready" */
   readonly status?: PresetListStatus;
+  readonly onSave?:(name:string)=>void|Promise<unknown>;
+  readonly comparison?:{active:'A'|'B';hasA:boolean;hasB:boolean;onCapture:(slot:'A'|'B')=>void|Promise<unknown>;onRecall:(slot:'A'|'B')=>void|Promise<unknown>};
   /** Shown as a Retry button when `status` is `"error"`. */
   readonly onRetry?: () => void;
   /** @default false */
@@ -54,15 +59,27 @@ export interface PluginPresetBrowserProps extends Omit<ViewProps, "children"> {
  * Loading and error states say what is happening; nothing is listed while
  * presets load.
  */
-export function PluginPresetBrowser({
-  kind, presets, currentId, onApply, status = "ready", onRetry, disabled = false,
+export function PluginPresetBrowser({scope='PluginPresetBrowser',revision=0,...props}:PluginPresetBrowserProps){
+ const transaction=useRef(0);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.kind,props.status,props.disabled,props.disabledReason,props.presets.map(p=>p.id)]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <PluginPresetBrowserBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onApply={id=>guard.run('onApply',h=>h.onApply(id,{undoGroup:owner+':preset:'+String(++transaction.current)}))}
+  onSave={props.onSave?name=>guard.run('save',h=>h.onSave?.(name)):undefined}
+  comparison={props.comparison?{...props.comparison,onCapture:slot=>guard.run('capture',h=>h.comparison?.onCapture(slot)),onRecall:slot=>guard.run('recall',h=>h.comparison?.onRecall(slot))}:undefined}
+  onRetry={props.onRetry?(...args:Parameters<NonNullable<PluginPresetBrowserProps['onRetry']>>)=>guard.run('onRetry',h=>h.onRetry?.(...args)):undefined}
+ />;
+}
+function PluginPresetBrowserBody({actionError,disabledReason,
+  kind, presets, currentId, onApply, status = "ready", onRetry, disabled = false,onSave,comparison,
   className, unstyled = false, ...rest
-}: PluginPresetBrowserProps) {
+}: PluginPresetBrowserProps&{actionError?:string|null}) {
+  if(presets.length>4096||new Set(presets.map(p=>p.id)).size!==presets.length||presets.some(p=>!p.id.trim()||p.id.length>512||!p.label.trim()||p.label.length>1024))throw new RangeError('Invalid preset catalog');
   const styled = !unstyled;
-  const local = useRef<StoreApi<{ query: string }> | null>(null);
-  if (!local.current) local.current = createStore(() => ({ query: "" }));
+  const local = useRef<StoreApi<{ query: string;name:string }> | null>(null);
+  if (!local.current) local.current = createStore(() => ({ query: "",name:"" }));
   const store = local.current;
   const query = useStore(store, s => s.query);
+  const saveName=useStore(store,s=>s.name);
   const refs = useRef(new Map<string, { focus?: () => void } | null>());
   const name = INSERT_KIND_LABELS[kind];
   const shown = filterPresets(presets, query);
@@ -143,6 +160,8 @@ export function PluginPresetBrowser({
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised", className) }}
     style={[{ padding: 12, gap: 10 }, rest.style]}>
     <Text role="heading" {...{ "aria-level": 3 }} {...{ className: joinClasses(styled && "text-text font-semibold text-base") }}>{`${name} presets`}</Text>
+    {comparison?<View style={{gap:6}}><Text {...{className:body}}>Comparison: {comparison.active}</Text><View style={{flexDirection:'row',flexWrap:'wrap',gap:6}}>{(['A','B'] as const).map(slot=><View key={slot} style={{gap:6}}><Button title={'Capture '+slot} disabled={disabled} unstyled={unstyled} onPress={()=>comparison.onCapture(slot)}/><Button title={'Recall '+slot} disabled={disabled||!(slot==='A'?comparison.hasA:comparison.hasB)} unstyled={unstyled} onPress={()=>comparison.onRecall(slot)}/></View>)}</View></View>:null}
+    {onSave?<View style={{gap:6}}><TextInput accessibilityLabel="New preset name" value={saveName} maxLength={256} editable={!disabled} onChangeText={name=>store.setState({name})} style={{minHeight:44,padding:8}} {...{className:body}}/><Button title="Save current settings as preset" disabled={disabled||!saveName.trim()} unstyled={unstyled} onPress={()=>onSave(saveName.trim())}/></View>:null}
     {content}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

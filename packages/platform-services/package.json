@@ -37,6 +37,12 @@
       "react-native": "./dist/playback/policy.js",
       "default": "./dist/playback/policy.js"
     },
+    "./checkpoints": {
+      "types": "./dist/checkpoints/index.d.ts",
+      "browser": "./dist/checkpoints/index.js",
+      "react-native": "./dist/checkpoints/index.native.js",
+      "default": "./dist/checkpoints/index.js"
+    },
     "./media": {
       "types": "./dist/media/index.d.ts",
       "browser": "./dist/media/index.js",
@@ -52,6 +58,7 @@
   },
   "peerDependencies": {
     "expo": "^58.0.0",
+    "expo-file-system": "^58.0.0",
     "react": ">=19.0.0",
     "react-native": ">=0.88.0",
     "zustand": "^5.0.0"
@@ -59,18 +66,30 @@
   "devDependencies": {
     "@types/react": "~19.3.0",
     "expo": "58.0.23",
+    "expo-file-system": "58.0.13",
     "react": "19.3.0",
     "react-native": "0.88.1",
     "typescript": "~6.0.3",
     "zustand": "5.0.16"
   },
+  "peerDependenciesMeta": {
+    "expo-file-system": {
+      "optional": true
+    }
+  },
   "files": [
+    "Package.swift",
     "dist",
     "ios",
     "android/build.gradle",
     "android/src",
     "expo-module.config.json",
     "README.md",
-    "LICENSE"
-  ]
+    "LICENSE",
+    "THIRD_PARTY.md",
+    "third-party"
+  ],
+  "dependencies": {
+    "mediabunny": "1.65.2"
+  }
 }

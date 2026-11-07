@@ -1,9 +1,9 @@
-import {useRef,type ComponentRef,type ReactNode,type Ref} from "react";
+import {useLayoutEffect,useRef,type ComponentRef,type ReactNode,type Ref} from "react";
 import {Pressable,useWindowDimensions,type PressableProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
-import type {Rect2D} from "../overlays/popover-position.ts";
+import {hasUsableRegion,type Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {shellKey} from "./shell-keys.ts";
 
@@ -13,6 +13,8 @@ export type {CommandMenuItem} from "../overlays/CommandPopover.tsx";
 export interface MenuButtonProps extends Omit<PressableProps,"children"|"onPress"|"accessibilityLabel"|"aria-label"> {
   /** Accessible name of the button, e.g. "Panel options". */
   label:string;
+  /** Logical document/action identity; changes dismiss pending measurements and menus. */
+  editScope?:string;
   items:readonly CommandMenuItem[];
   onSelect:(id:string)=>void;
   /** Visible content. The button is at least 44 by 44 points. */
@@ -37,29 +39,42 @@ export interface MenuButtonProps extends Omit<PressableProps,"children"|"onPress
  * button when it closes.
  */
 export function MenuButton({
-  label,items,onSelect,children,usableRegions,menuWidth=240,disabled=false,className,unstyled=false,style,ref:forwarded,...rest
+  label,editScope="menu",items,onSelect,children,usableRegions,menuWidth=240,disabled=false,className,unstyled=false,style,ref:forwarded,...rest
 }:MenuButtonProps){
+  if(!editScope.trim()||editScope.length>32768)throw new RangeError("Invalid menu edit scope");
   const window=useWindowDimensions();
-  const local=useRef<StoreApi<{anchor:Rect2D|undefined}>|null>(null);
-  if(!local.current)local.current=createStore<{anchor:Rect2D|undefined}>(()=>({anchor:undefined}));
-  const store=local.current;
-  const anchor=useStore(store,s=>s.anchor);
+  type Anchor={rect:Rect2D;scope:string;request:number};
+  type Local={anchor:Anchor|undefined;request:number};
+  const local=useRef<StoreApi<Local>|null>(null);
+  if(!local.current)local.current=createStore<Local>(()=>({anchor:undefined,request:0}));
+  const store=local.current,anchor=useStore(store,s=>s.anchor);
   const ref=useRef<ComponentRef<typeof Pressable>>(null);
-  const off=disabled||!items.some(item=>!item.disabled);
-  const open=()=>{
-    if(off)return;
-    const node=ref.current as unknown as {measureInWindow?:(cb:(x:number,y:number,w:number,h:number)=>void)=>void}|null;
-    if(!node?.measureInWindow){store.setState({anchor:{x:0,y:0,width:0,height:0}});return;}
-    node.measureInWindow((x,y,width,height)=>store.setState({anchor:{x,y,width,height}}));
-  };
   const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
+  const off=disabled||!items.some(item=>!item.disabled)||!hasUsableRegion(regions);
+  const committed=useRef<{scope:string;off:boolean;items:readonly CommandMenuItem[];onSelect:typeof onSelect}|null>(null);
+  useLayoutEffect(()=>{committed.current={scope:editScope,off,items,onSelect};});
+  useLayoutEffect(()=>{store.setState(s=>({anchor:undefined,request:s.request+1}));},[editScope,off,store]);
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const owns=(at:Anchor)=>committed.current?.scope===at.scope&&!committed.current.off&&store.getState().request===at.request;
+  const open=()=>{
+    const p=committed.current;
+    if(!p||p.off||p.scope!==editScope)return;
+    const node=ref.current as unknown as {measureInWindow?:(cb:(x:number,y:number,w:number,h:number)=>void)=>void}|null;
+    if(!node?.measureInWindow)return;
+    const request=store.getState().request+1;store.setState({request});
+    node.measureInWindow((x,y,width,height)=>{
+      const next={scope:editScope,request,rect:{x,y,width,height}};
+      if(owns(next)&&[x,y,width,height].every(Number.isFinite)&&width>0&&height>0)store.setState({anchor:next});
+    });
+  };
+  const shown=anchor?.scope===editScope&&!off?anchor:undefined;
   return <>
     <Pressable {...rest} ref={node=>{
       ref.current=node;
       if(typeof forwarded==="function")forwarded(node);else if(forwarded)forwarded.current=node;
     }} accessibilityRole="button" accessibilityLabel={label}
-      aria-haspopup="menu" aria-expanded={anchor!==undefined}
-      accessibilityState={{disabled:off,expanded:anchor!==undefined}}
+      aria-haspopup="menu" aria-expanded={shown!==undefined}
+      accessibilityState={{disabled:off,expanded:shown!==undefined}}
       disabled={off} onPress={open}
       {...{onKeyDown:(event:unknown)=>{
         const k=shellKey(event);
@@ -71,8 +86,8 @@ export function MenuButton({
       style={style}>
       {children}
     </Pressable>
-    {anchor?<CommandPopover visible accessibilityLabel={label} anchor={anchor} usableRegions={regions}
-      items={items} width={menuWidth} onSelect={onSelect}
-      onDismiss={()=>store.setState({anchor:undefined})}/>:null}
+    {shown?<CommandPopover scope={editScope} key={shown.request} visible accessibilityLabel={label} anchor={shown.rect} usableRegions={regions}
+      items={items} width={menuWidth} onSelect={id=>{const p=committed.current;if(owns(shown)&&p?.items.some(item=>item.id===id&&!item.disabled))p.onSelect(id);}}
+      onDismiss={()=>{if(owns(shown))store.setState({anchor:undefined});}}/>:null}
   </>;
 }

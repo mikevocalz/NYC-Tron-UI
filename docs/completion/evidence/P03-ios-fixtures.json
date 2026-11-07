@@ -1,0 +1,212 @@
+{
+  "cfr": {
+    "timesUs": [
+      0,
+      33333,
+      66667,
+      100000,
+      133333,
+      166667,
+      200000,
+      233333,
+      266667,
+      300000,
+      333333,
+      366667
+    ],
+    "ffprobe": [
+      {
+        "pts_time": "0.000000",
+        "pict_type": "I",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "pts_time": "0.033333",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.066667",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.100000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.133333",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.166667",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.200000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.233333",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.266667",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.300000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.333333",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.366667",
+        "pict_type": "P"
+      }
+    ],
+    "fixtureSha256": "b0027b5f831b73323fc01acd5ac3f819f2f63a71352ff70c6ee280b792871bb1"
+  },
+  "vfr": {
+    "timesUs": [
+      0,
+      100000,
+      200000,
+      233333,
+      300000,
+      400000,
+      466667,
+      500000,
+      600000,
+      700000,
+      800000,
+      900000
+    ],
+    "ffprobe": [
+      {
+        "pts_time": "0.000000",
+        "pict_type": "I",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "pts_time": "0.100000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.200000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.233333",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.300000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.400000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.466667",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.500000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.600000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.700000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.800000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.900000",
+        "pict_type": "P"
+      }
+    ],
+    "fixtureSha256": "beeab1268ee18f10eb7d79939b914fde9300506b93d0a787bf989fea51267030"
+  },
+  "bframes": {
+    "timesUs": [
+      0,
+      33333,
+      66667,
+      100000,
+      133333,
+      166667,
+      200000,
+      233333,
+      266667,
+      300000,
+      333333,
+      366667
+    ],
+    "ffprobe": [
+      {
+        "pts_time": "0.000000",
+        "pict_type": "I",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "pts_time": "0.033333",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.066667",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.100000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.133333",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.166667",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.200000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.233333",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.266667",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.300000",
+        "pict_type": "P"
+      },
+      {
+        "pts_time": "0.333333",
+        "pict_type": "B"
+      },
+      {
+        "pts_time": "0.366667",
+        "pict_type": "P"
+      }
+    ],
+    "fixtureSha256": "251fe48161a93c6ea1baf859d5a45533b6be991f75164fd735e94dc989e260b7"
+  }
+}

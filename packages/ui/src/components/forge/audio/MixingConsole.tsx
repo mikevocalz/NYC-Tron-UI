@@ -1,8 +1,14 @@
+import {audioTargetSize} from './audio-chrome.ts';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {InsertEffectRack,type InsertEffectRackProps} from './InsertEffectRack.tsx';
+import {BusAndRoutingMatrix,type BusAndRoutingMatrixProps} from './BusAndRoutingMatrix.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { ScrollView, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { EmptyState, type EmptyStateExit } from "../../feedback/EmptyState.tsx";
-import { ChannelStrip, channelRouting, type ChannelMeter } from "./ChannelStrip.tsx";
-import { MixGroupBar } from "./MixGroupBar.tsx";
+import { ChannelStrip, channelRouting, type ChannelStripProps, type ChannelMeter } from "./ChannelStrip.tsx";
+import { MixGroupBar, type MixGroupBarProps } from "./MixGroupBar.tsx";
 import { FADER_RANGES, type FaderRange } from "./level.ts";
 import { mixGroups } from "./mix-groups.ts";
 import { audibility, type MixerChannel } from "./mixer.ts";
@@ -10,9 +16,16 @@ import { audibility, type MixerChannel } from "./mixer.ts";
 type Id = MixerChannel["id"];
 
 /** Props for {@linkcode MixingConsole}. */
-export interface MixingConsoleProps extends Omit<ViewProps, "children"> {
+export interface MixingConsoleProps extends Omit<ViewProps, "children">,ScopedControlProps {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly channelLabels?:ChannelStripProps["labels"];
+  readonly groupLabels?:MixGroupBarProps["labels"];
+  readonly emptyLabels?:{title?:string;description?:string};
   /** Committed channel state from the engine, tracks and buses in strip order. */
   readonly channels: readonly MixerChannel[];
+  readonly insertRacks?:Readonly<Record<string,Omit<InsertEffectRackProps,'label'|'scope'|'revision'|'disabled'|'unstyled'>>>;
+  readonly routing?:Omit<BusAndRoutingMatrixProps,'scope'|'revision'|'disabled'|'unstyled'>;
   readonly onGainCommit: (id: Id, gain: number) => void | Promise<unknown>;
   /** Pan on a track, balance on a bus. */
   readonly onPanCommit: (id: Id, pan: number) => void | Promise<unknown>;
@@ -65,21 +78,36 @@ export interface MixingConsoleProps extends Omit<ViewProps, "children"> {
  * bar with group solo and mute, solo-safe toggles, bus strips with balance,
  * and each track's output bus.
  *
- * Not drawn, with reasons: a true-peak meter (the engine reports sample
- * peak only), surround panning (roster E-33 struck: the engine is stereo
- * only), and FX insert slots and send editing (E-19/E-20).
+ * Optional insert racks and routing reuse their independent controls. Sample-peak
+ * telemetry stays distinct from true peaks; surround has its own speaker-field control.
  */
-export function MixingConsole({
+export function MixingConsole({scope='MixingConsole',revision=0,...props}:MixingConsoleProps){
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),props.channels.map(c=>[c.id,c.kind,c.group]),props.range,props.faderLength,props.disabled,props.disabledReason])]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <MixingConsoleBody key={owner} {...props} scope={owner} revision={revision} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onGainCommit={(...args:Parameters<MixingConsoleProps['onGainCommit']>)=>guard.run('onGainCommit',h=>h.onGainCommit(...args))}
+  onPanCommit={(...args:Parameters<MixingConsoleProps['onPanCommit']>)=>guard.run('onPanCommit',h=>h.onPanCommit(...args))}
+  onMutedCommit={(...args:Parameters<MixingConsoleProps['onMutedCommit']>)=>guard.run('onMutedCommit',h=>h.onMutedCommit(...args))}
+  onSoloCommit={(...args:Parameters<MixingConsoleProps['onSoloCommit']>)=>guard.run('onSoloCommit',h=>h.onSoloCommit(...args))}
+  onSoloSafeCommit={props.onSoloSafeCommit?(...args:Parameters<NonNullable<MixingConsoleProps['onSoloSafeCommit']>>)=>guard.run('onSoloSafeCommit',h=>h.onSoloSafeCommit?.(...args)):undefined}
+  onGroupSoloCommit={props.onGroupSoloCommit?(...args:Parameters<NonNullable<MixingConsoleProps['onGroupSoloCommit']>>)=>guard.run('onGroupSoloCommit',h=>h.onGroupSoloCommit?.(...args)):undefined}
+  onGroupMutedCommit={props.onGroupMutedCommit?(...args:Parameters<NonNullable<MixingConsoleProps['onGroupMutedCommit']>>)=>guard.run('onGroupMutedCommit',h=>h.onGroupMutedCommit?.(...args)):undefined}
+  onGainChange={props.onGainChange?(...args:Parameters<NonNullable<MixingConsoleProps['onGainChange']>>)=>{guard.current()?.onGainChange?.(...args);}:undefined}
+  onPanChange={props.onPanChange?(...args:Parameters<NonNullable<MixingConsoleProps['onPanChange']>>)=>{guard.current()?.onPanChange?.(...args);}:undefined}
+ />;
+}
+function MixingConsoleBody({actionError,disabledReason,scope='mixing-console',revision=0,insertRacks,routing,
   channels, onGainCommit, onPanCommit, onMutedCommit, onSoloCommit, onSoloSafeCommit,
   onGroupSoloCommit, onGroupMutedCommit, onGainChange, onPanChange, meters,
   range = FADER_RANGES.UNITY, faderLength = 160, emptyAction, disabled = false, label = "Mixer",
-  className, unstyled = false, ...rest
-}: MixingConsoleProps) {
+  className, unstyled = false, targetSize, channelLabels, groupLabels, emptyLabels, ...rest
+}: MixingConsoleProps&{actionError?:string|null}) {
+  const target = audioTargetSize(targetSize);
   const styled = !unstyled;
+  if(channels.length>256||new Set(channels.map(c=>String(c.id))).size!==channels.length||channels.some(c=>typeof c.id==='number'&&!Number.isFinite(c.id)||String(c.id).length>256||!c.name.trim()||c.name.length>1024||!Number.isFinite(c.gain)||c.gain<0||!Number.isFinite(c.pan)||Math.abs(c.pan)>1))throw new RangeError('Invalid mixer channels');
   const states = audibility(channels);
   if (channels.length === 0) {
-    return <EmptyState {...rest} title="No tracks to mix"
-      description="Add a track to the project and its channel strip appears here."
+    return <EmptyState {...rest} title={emptyLabels?.title ?? "No tracks to mix"}
+      description={emptyLabels?.description ?? "Add a track to the project and its channel strip appears here."}
       exitAction={emptyAction}
       {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised", className) }} />;
   }
@@ -92,7 +120,7 @@ export function MixingConsole({
   return <View {...rest} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised", className) }}>
     {groups.length > 0 && onGroupSoloCommit && onGroupMutedCommit
-      ? <MixGroupBar groups={groups} disabled={disabled} unstyled={unstyled}
+      ? <MixGroupBar targetSize={target} labels={groupLabels} groups={groups} disabled={disabled} unstyled={unstyled}
         onGroupSoloCommit={onGroupSoloCommit} onGroupMutedCommit={onGroupMutedCommit}
         {...{ className: joinClasses(styled && "border-b border-border") }}
         style={{ padding: 8 }} />
@@ -100,7 +128,7 @@ export function MixingConsole({
     <ScrollView horizontal showsHorizontalScrollIndicator contentContainerStyle={{ paddingHorizontal: 4 }}>
       {channels.map((channel, i) => <View key={channel.id} style={{ flexDirection: "row" }}>
         {i > 0 ? <View {...{ className: joinClasses(styled && "bg-border") }} style={{ width: 1, alignSelf: "stretch" }} /> : null}
-        <ChannelStrip channel={channel} audibility={states[i]} range={range} faderLength={faderLength}
+        <View style={{gap:8}}><ChannelStrip targetSize={target} labels={channelLabels} channel={channel} audibility={states[i]} range={range} faderLength={faderLength}
           disabled={disabled} unstyled={unstyled} outputName={outputNameOf(channel)} routingLines={routingLines}
           meter={meters ? meters[String(channel.id)] ?? { peak: 0 } : undefined}
           onGainCommit={gain => onGainCommit(channel.id, gain)}
@@ -110,7 +138,9 @@ export function MixingConsole({
           onSoloSafeCommit={onSoloSafeCommit ? safe => onSoloSafeCommit(channel.id, safe) : undefined}
           onGainChange={onGainChange ? gain => onGainChange(channel.id, gain) : undefined}
           onPanChange={onPanChange ? pan => onPanChange(channel.id, pan) : undefined} />
+        {insertRacks?.[String(channel.id)]?<InsertEffectRack {...insertRacks[String(channel.id)]!} label={channel.name} scope={scope+':inserts:'+String(channel.id)} revision={revision} disabled={disabled} unstyled={unstyled}/>:null}</View>
       </View>)}
     </ScrollView>
-  </View>;
+    {routing?<BusAndRoutingMatrix {...routing} scope={scope+':routing'} revision={revision} disabled={disabled} unstyled={unstyled}/>:null}
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

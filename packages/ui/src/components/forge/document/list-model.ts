@@ -45,6 +45,11 @@ export function listMarker(format:ListFormat,n:number,level=0):string{
   }
 }
 
+/** Source capability; consumers must check the linked control, not assume a release has it. */
+export const BULLETS_NUMBERING_CAPABILITIES=Object.freeze({version:1 as const,authoritativeMarkers:true as const});
+/** Maximum UTF-16 code units in one host-supplied, single-line marker. */
+export const LIST_PREVIEW_MARKER_MAX=4096;
+
 /** One paragraph of a list. */
 export interface ListItemLevel {
   readonly level:number;
@@ -69,6 +74,16 @@ export function listMarkers(items:readonly ListItemLevel[],formats:readonly List
     for(let d=it.level+1;d<=LIST_MAX_LEVEL;d++)counters[d]=0;
     return listMarker(formats[it.level]??"bullet",counters[it.level]!,it.level);
   });
+}
+
+/** Optional authoritative text; the empty string intentionally represents no marker. */
+export interface ListMarkerItem extends ListItemLevel {readonly marker?:string}
+/** Preserve the legacy counter helper while allowing document-owned starts/mixed contexts. */
+export function listPreviewMarkers(items:readonly ListMarkerItem[],formats:readonly ListFormat[],kind:ListKind|"mixed"):string[]{
+  validateLevels(items);
+  for(const item of items){if(item.marker!==undefined&&(typeof item.marker!=="string"||item.marker.length>LIST_PREVIEW_MARKER_MAX||/[\p{Cc}\p{Cf}\p{Cs}\p{Zl}\p{Zp}]/u.test(item.marker)))throw new RangeError("Invalid authoritative list preview marker");}
+  const defaults=items.some(item=>item.marker===undefined)?(kind==="none"?items.map(()=>""):listMarkers(items,formats)):undefined;
+  return items.map((item,index)=>item.marker??defaults![index]!);
 }
 
 /**

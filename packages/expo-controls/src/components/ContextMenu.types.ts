@@ -8,6 +8,7 @@ export interface ContextMenuProps {
   readonly actions:readonly TronMenuAction[];
   readonly onAction:(id:string)=>void;
   readonly children:ReactNode;
+  readonly scope?:string;
   readonly disabled?:boolean;
   readonly testID?:string;
 }

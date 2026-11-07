@@ -128,6 +128,7 @@ test("status bar zoom steps, zoom presets and unit menu commit",async({page})=>{
   await page.getByRole("button",{name:"Zoom 200%"}).click();
   await page.getByRole("menuitem",{name:"50%"}).click();
   await expect(page.getByTestId("status")).toHaveText("zoom 50 units px");
+  await expect(page.getByRole("button",{name:"Zoom 50%",exact:true})).toBeFocused();
   await page.getByRole("button",{name:"Units: Pixels"}).click();
   await page.getByRole("menuitem",{name:/Millimeters/}).click();
   await expect(page.getByTestId("status")).toHaveText("zoom 50 units mm");

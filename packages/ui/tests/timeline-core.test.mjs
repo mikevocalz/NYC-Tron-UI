@@ -325,12 +325,16 @@ test("safe areas follow SMPTE and the picture's aspect fit",()=>{
 });
 
 const tlDir=new URL("../src/components/forge/timeline/",import.meta.url);
-test("timeline sources use tokens, no hex literals, no engine or optional-peer imports, no useState",()=>{
+test("timeline sources use tokens, no hex literals, no engine or optional renderer imports, no useState",()=>{
   for(const f of readdirSync(tlDir).filter(n=>/\.(ts|tsx)$/.test(n))){
     const text=readFileSync(new URL(f,tlDir),"utf8");
     assert.equal(text.match(/["'`]#[0-9A-Fa-f]{3,8}["'`]/g),null,f);
-    assert.ok(!/from\s+["'](?:@nitro-forge\/|@acme\/|@expo\/ui|expo-linear-gradient|@shopify\/react-native-skia|zustand)/.test(text),f);
+    assert.ok(!/from\s+["'](?:@nitro-forge\/|@acme\/|@expo\/ui|expo-linear-gradient|(?:@shopify\/)?react-native-skia)/.test(text),f);
     assert.ok(!/useState\b/.test(text),f+" uses useState");
+    // Pure timeline models remain importable without React or the state peer.
+    // The decoded-waveform cache deliberately owns a vanilla Zustand store.
+    if(["time.ts","ruler.ts","viewport.ts","edits.ts","safe-area.ts","frame-keys.ts"].includes(f))
+      assert.doesNotMatch(text,/from\s+["'](?:react|react-native|zustand)(?:["'/])/,f);
   }
 });
 

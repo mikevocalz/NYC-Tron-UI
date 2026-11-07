@@ -15,6 +15,11 @@
       "types": "./dist/components/AdaptivePaneHost.d.ts",
       "react-native": "./dist/components/AdaptivePaneHost.js",
       "default": "./dist/components/AdaptivePaneHost.js"
+    },
+    "./SafeAreaFoldableLayout": {
+      "types": "./dist/components/SafeAreaFoldableLayout.d.ts",
+      "react-native": "./dist/components/SafeAreaFoldableLayout.js",
+      "default": "./dist/components/SafeAreaFoldableLayout.js"
     }
   },
   "main": "./dist/index.js",

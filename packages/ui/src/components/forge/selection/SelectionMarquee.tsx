@@ -1,14 +1,17 @@
-import {useEffect,useRef,type ComponentRef,type ReactNode} from "react";
+import {useEffect,useLayoutEffect,useRef,type ComponentRef,type ReactNode} from "react";
 import {PanResponder,Platform,Text,View,type GestureResponderEvent,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {Button} from "../../Button.tsx";
 import {SegmentedControl} from "../../SegmentedControl.tsx";
 import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useOwnedAction} from '../../shell/useOwnedAction.ts';
+import type {Rect2D} from '../../overlays/popover-position.ts';
 import {joinClasses} from "../../styles.ts";
 import {DraftBox,DraftPath,MarchingAnts} from "./selection-overlay.tsx";
 import {
- SELECTION_MODES,SELECTION_TOOLS,appendLassoPoint,boxFromCorners,buildSelectRegion,closesPolygon,describeSelection,
+ LASSO_MAX_POINTS,SELECTION_MODES,SELECTION_TOOLS,appendLassoPoint,boxFromCorners,buildSelectRegion,closesPolygon,describeSelection,
  describeShape,docRectToView,docToView,initialKeyboardRect,modeFromModifiers,modeLabel,moveKeyboardRect,
  resizeKeyboardRect,resolveSelectionKey,toolHint,validateMapping,validateSelectionProps,viewToDoc,
  type DocPoint,type DocRect,type SelectRegionRequest,type SelectionKey,type SelectionMode,type SelectionShape,
@@ -17,6 +20,10 @@ import {
 
 /** Props for {@linkcode SelectionMarquee}. The selection itself lives in the host's editor. */
 export interface SelectionMarqueeProps extends Omit<ViewProps,"children"> {
+ scope?:string;revision?:string|number;
+ /** Canvas-local usable panes. The app positions its toolbar through its existing layout owner. */
+ usableRegions?:readonly Rect2D[];
+ renderToolbar?:(controls:ReactNode)=>ReactNode;
  /** The active marquee tool. */
  tool:SelectionTool;
  onToolChange:(tool:SelectionTool)=>void;
@@ -34,15 +41,15 @@ export interface SelectionMarqueeProps extends Omit<ViewProps,"children"> {
  /** Bounds of the committed selection (from the editor's `getSelection`), or `undefined` when empty. */
  selectionBounds?:DocRect|undefined;
  /** Exactly once per completed gesture or keyboard commit. Maps to `selectRegion`. */
- onSelectRegion:(request:SelectRegionRequest)=>void;
+ onSelectRegion:(request:SelectRegionRequest,signal?:AbortSignal)=>void|Promise<unknown>;
  /** The in-progress shape during a gesture, then `undefined` on commit or cancel. Never persist it. */
  onPreview?:(shape:SelectionShape|undefined)=>void;
  /** Maps to `selectAll`. */
- onSelectAll:()=>void;
+ onSelectAll:(signal?:AbortSignal)=>void|Promise<unknown>;
  /** Maps to `deselect`. */
- onDeselect:()=>void;
+ onDeselect:(signal?:AbortSignal)=>void|Promise<unknown>;
  /** Maps to `invertSelection`. */
- onInvertSelection:()=>void;
+ onInvertSelection:(signal?:AbortSignal)=>void|Promise<unknown>;
  /**
   * Why selecting is unavailable right now (for example "The active layer is hidden").
   * The surface then refuses gestures and shows this text.
@@ -78,23 +85,40 @@ type Mods={shiftKey?:boolean;altKey?:boolean};
  * Ctrl/Cmd+Shift+I select all, deselect and invert. Canvas geometry stays
  * left-to-right in RTL layouts; the toolbar mirrors.
  */
-export function SelectionMarquee({
- tool,onToolChange,mode,onModeChange,feather,width,height,documentWidth,documentHeight,selectionBounds,
+export function SelectionMarquee({scope='selection',revision=0,...props}:SelectionMarqueeProps){
+ validateSelectionProps({tool:props.tool,mode:props.mode,feather:props.feather,bounds:props.selectionBounds});
+ validateMapping({viewWidth:props.width,viewHeight:props.height,docWidth:props.documentWidth,docHeight:props.documentHeight});
+ const regions=props.usableRegions??[{x:0,y:0,width:props.width,height:props.height}];
+ if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512||!(props.label??'Selection').trim()||(props.label??'Selection').length>512||props.disabledReason!==undefined&&(!props.disabledReason.trim()||props.disabledReason.length>1024)||regions.length>256||regions.some(r=>![r.x,r.y,r.width,r.height,r.x+r.width,r.y+r.height].every(Number.isFinite)||r.x<0||r.y<0||r.width<0||r.height<0||r.x+r.width>props.width||r.y+r.height>props.height))throw new RangeError('Invalid selection identity or usable panes');
+ const usable=regions.filter(r=>r.width>0&&r.height>0),owner=JSON.stringify([scope,revision,props.tool,props.mode,props.feather,props.width,props.height,props.documentWidth,props.documentHeight,props.disabledReason,usable]),boundary=JSON.stringify([owner,props.selectionBounds]);
+ const action=useOwnedAction(owner),pending=action.pending!==null,request=useRef<symbol|null>(null),committed=useRef<null|{boundary:string;pending:boolean;props:typeof props}>(null);
+ useLayoutEffect(()=>{committed.current={boundary,pending,props};});useLayoutEffect(()=>{request.current=null;},[owner]);useLayoutEffect(()=>()=>{committed.current=null;},[]);
+ const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.pending&&!request.current&&p.props.disabledReason===undefined?p.props:null;};
+ const run=(name:string,operation:(p:typeof props,signal:AbortSignal)=>void|Promise<unknown>)=>{const p=current();if(!p)return;const token=Symbol();request.current=token;return action.run(name,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(request.current===token)request.current=null;});};
+ return <SelectionMarqueeBody key={owner} {...props} usableRegions={usable} pending={pending} actionError={action.error} {...(pending?{disabledReason:'Selection change in progress'}:{})}
+  onToolChange={tool=>{const p=current();if(p)p.onToolChange(tool);}} onModeChange={mode=>{const p=current();if(p)p.onModeChange(mode);}}
+  onPreview={shape=>current()?.onPreview?.(shape)} onSelectRegion={value=>run('region',(host,signal)=>host.onSelectRegion(value,signal))}
+  onSelectAll={()=>run('all',(p,signal)=>p.onSelectAll(signal))} onDeselect={()=>run('clear',(p,signal)=>p.onDeselect(signal))} onInvertSelection={()=>run('invert',(p,signal)=>p.onInvertSelection(signal))}/>;
+}
+
+function SelectionMarqueeBody({
+ usableRegions,renderToolbar,pending=false,actionError=null,tool,onToolChange,mode,onModeChange,feather,width,height,documentWidth,documentHeight,selectionBounds,
  onSelectRegion,onPreview,onSelectAll,onDeselect,onInvertSelection,disabledReason,children,label="Selection",
  className,unstyled=false,style,...rest
-}:SelectionMarqueeProps){
+}:SelectionMarqueeProps&{pending?:boolean;actionError?:string|null}){
  validateSelectionProps({tool,mode,feather,bounds:selectionBounds});
  const mapping:ViewMapping={viewWidth:width,viewHeight:height,docWidth:documentWidth,docHeight:documentHeight};
  validateMapping(mapping);
- const latest=useRef({tool,mode,feather,mapping,disabledReason,onSelectRegion,onPreview});
- latest.current={tool,mode,feather,mapping,disabledReason,onSelectRegion,onPreview};
+ const regions=usableRegions??[{x:0,y:0,width,height}];
+ const latest=useRef({tool,mode,feather,mapping,regions,disabledReason,onSelectRegion,onPreview});
+ useLayoutEffect(()=>{latest.current={tool,mode,feather,mapping,regions,disabledReason,onSelectRegion,onPreview};});
  const local=useRef<StoreApi<Local>|null>(null);
  if(!local.current)local.current=createStore<Local>(()=>({draft:null,notice:undefined,held:{shift:false,alt:false}}));
  const store=local.current;
  const draft=useStore(store,s=>s.draft);
  const notice=useStore(store,s=>s.notice);
  const surface=useRef<ComponentRef<typeof View>|null>(null);
- const gesture=useRef<{start:DocPoint;startView:DocPoint;moved:boolean;cancelled:boolean}|null>(null);
+ const gesture=useRef<{start:DocPoint;startView:DocPoint;moved:boolean;cancelled:boolean;pane:Rect2D}|null>(null);
  const styled=!unstyled;
 
  const shapeOf=(d:Draft):SelectionShape=>{
@@ -134,15 +158,16 @@ export function SelectionMarquee({
 
  const pan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
  if(!pan.current)pan.current=createCanvasResponder({
-  onStartShouldSetPanResponder:()=>true,onMoveShouldSetPanResponder:()=>true,
+  onStartShouldSetPanResponder:(event,state)=>{const p=latest.current,v=viewPoint(event);return p.disabledReason===undefined&&state.numberActiveTouches<=1&&p.regions.some(r=>v[0]>=r.x&&v[1]>=r.y&&v[0]<=r.x+r.width&&v[1]<=r.y+r.height);},onMoveShouldSetPanResponder:()=>false,
   onPanResponderTerminationRequest:()=>false,
   onPanResponderGrant:e=>{
    const p=latest.current;
    (surface.current as unknown as {focus?:()=>void}|null)?.focus?.();
    if(p.disabledReason!==undefined){store.setState({notice:p.disabledReason});gesture.current=null;return;}
    const v=viewPoint(e);
+   const pane=p.regions.find(r=>v[0]>=r.x&&v[1]>=r.y&&v[0]<=r.x+r.width&&v[1]<=r.y+r.height);if(!pane){gesture.current=null;return;}
    const start=viewToDoc(p.mapping,v[0],v[1]);
-   gesture.current={start,startView:v,moved:false,cancelled:false};
+   gesture.current={start,startView:v,moved:false,cancelled:false,pane};
    const mods=modsFrom(e.nativeEvent as Mods);
    const m=modeFromModifiers(p.mode,mods);
    const d=store.getState().draft;
@@ -157,7 +182,8 @@ export function SelectionMarquee({
    if(g.numberActiveTouches>1){cancel();return;}
    if(Math.hypot(g.dx,g.dy)>4)gs.moved=true;
    const p=latest.current;
-   const at=viewToDoc(p.mapping,gs.startView[0]+g.dx,gs.startView[1]+g.dy);
+   const x=gs.startView[0]+g.dx,y=gs.startView[1]+g.dy;if(x<gs.pane.x||y<gs.pane.y||x>gs.pane.x+gs.pane.width||y>gs.pane.y+gs.pane.height){cancel();return;}
+   const at=viewToDoc(p.mapping,x,y);
    const d=store.getState().draft;
    if(d?.kind==="box"){
     const shift=!!(e.nativeEvent as Mods).shiftKey||store.getState().held.shift;
@@ -173,6 +199,8 @@ export function SelectionMarquee({
    if(!gs||gs.cancelled)return;
    const p=latest.current;
    const d=store.getState().draft;
+   const x=gs.startView[0]+g.dx,y=gs.startView[1]+g.dy;
+   if(x<gs.pane.x||y<gs.pane.y||x>gs.pane.x+gs.pane.width||y>gs.pane.y+gs.pane.height){cancel();return;}
    if(p.tool==="polygon"){
     if(gs.moved)return;
     const v:DocPoint=[gs.startView[0]+g.dx,gs.startView[1]+g.dy];
@@ -180,6 +208,7 @@ export function SelectionMarquee({
     if(d?.kind==="polygon"){
      const viewPts=d.points.map(pt=>docToView(p.mapping,pt));
      if(closesPolygon(viewPts,v)){commit(d);return;}
+     if(d.points.length>=LASSO_MAX_POINTS){store.setState({notice:"Polygon point limit reached"});return;}
      setDraft({...d,points:[...d.points,at]});
     }else{
      setDraft({kind:"polygon",points:[at],mode:modeFromModifiers(p.mode,modsFrom(e.nativeEvent as Mods))});
@@ -187,7 +216,8 @@ export function SelectionMarquee({
     store.setState({notice:undefined});
     return;
    }
-   if(d&&(d.kind==="box"||d.kind==="lasso"))commit(d);
+   if(d?.kind==="box")commit({...d,b:viewToDoc(p.mapping,x,y),constrain:(!!(e.nativeEvent as Mods).shiftKey||store.getState().held.shift)&&!d.shiftAtStart});
+   else if(d?.kind==="lasso")commit({...d,points:appendLassoPoint(d.points,viewToDoc(p.mapping,x,y),0)});
   },
   onPanResponderTerminate:()=>{gesture.current=null;cancel();},
  });
@@ -249,11 +279,11 @@ export function SelectionMarquee({
  const status=notice??(draft?`${describeShape(shapeOf(draft))}, ${modeLabel(draft.kind==="keyboard"?mode:draft.mode)}`
   :disabledReason??toolHint(tool));
 
- return <View {...rest} {...{className:joinClasses("gap-2",className)}} style={[{maxWidth:"100%"},style]}>
+ const controls=<>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
-   <SegmentedControl aria-label="Selection tool" value={tool} unstyled={unstyled}
+   <SegmentedControl disabled={disabledReason!==undefined} aria-label="Selection tool" value={tool} unstyled={unstyled}
     options={SELECTION_TOOLS.map(t=>({value:t.tool,label:t.label}))} onChange={onToolChange}/>
-   <SegmentedControl aria-label="Selection mode" value={mode} unstyled={unstyled}
+   <SegmentedControl disabled={disabledReason!==undefined} aria-label="Selection mode" value={mode} unstyled={unstyled}
     options={SELECTION_MODES.map(m=>({value:m.mode,label:m.label}))} onChange={onModeChange}/>
   </View>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
@@ -266,6 +296,11 @@ export function SelectionMarquee({
     disabled={disabledReason!==undefined} onPress={()=>{cancel();onInvertSelection();}}/>
    {!selectionBounds?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Nothing is selected</Text>:null}
   </View>
+ </>;
+ return <View {...rest} {...{className:joinClasses("gap-2",className)}} style={[{maxWidth:"100%"},style]}>
+  {renderToolbar?renderToolbar(controls):controls}
+  {pending?<Text accessibilityLiveRegion="polite">Selection change in progress</Text>:null}
+  <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
   <View ref={surface} collapsable={false} {...pan.current.panHandlers}
    {...{onKeyDown,onKeyUp,focusable:true,
     className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border focus-visible:ring-2 focus-visible:ring-focus")}}
@@ -282,10 +317,12 @@ export function SelectionMarquee({
    style={{width,height,position:"relative",...(Platform.OS==="web"?{cursor:disabledReason?"not-allowed":"crosshair",userSelect:"none"} as object:null),
     opacity:disabledReason!==undefined?0.6:1}}>
    <View pointerEvents="none" style={{position:"absolute",left:0,top:0,width,height}}>{children}</View>
+   {regions.map((region,index)=><View key={index} pointerEvents="none" style={{position:'absolute',left:region.x,top:region.y,width:region.width,height:region.height,overflow:'hidden'}}><View pointerEvents="none" style={{position:'absolute',left:-region.x,top:-region.y,width,height}}>
    {selectionBounds?<MarchingAnts rect={viewRect(selectionBounds)} styled={styled} testID="selection-ants"/>:null}
    {viewDraft&&viewDraft.kind!=="polygon"?<DraftBox rect={viewRect(viewDraft)} ellipse={viewDraft.kind==="ellipse"} styled={styled}/>:null}
    {viewDraft?.kind==="polygon"?<DraftPath points={viewDraft.points.map(pt=>docToView(mapping,pt))}
     closed={draft?.kind==="lasso"} vertices={draft?.kind==="polygon"} closable={viewDraft.points.length>=3} styled={styled}/>:null}
+   </View></View>)}
   </View>
   <Text aria-live="polite" accessibilityLiveRegion="polite" numberOfLines={2}
    {...{className:joinClasses(styled&&"text-xs",styled&&(notice||disabledReason?"text-text":"text-text-muted"))}}

@@ -1,3 +1,4 @@
+import './global.css';
 import { I18nManager, ScrollView, Text, View, useWindowDimensions } from "react-native";
 import { create } from "zustand";
 import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";

@@ -19,18 +19,23 @@ import { FADER_RANGES, dbToGain, formatDb, gainToDb, stepGain } from "./level.ts
 import { PAN_CENTRE_DETENT, formatPan, quantizePan, stepPan } from "./pan.ts";
 
 /** The automatable parameter of a track lane, drawn by `AutomationLane`. */
-export type AutomationParam = "gain" | "pan";
+export interface CustomAutomationParam {readonly id:string;readonly label:string;readonly minimum:number;readonly maximum:number;readonly defaultValue:number;readonly step:number;readonly unit?:string;readonly scale?:'linear'|'log'}
+export type AutomationParam = "gain" | "pan" | CustomAutomationParam;
+export function validateAutomationParam(param:AutomationParam):void{
+ if(typeof param==='string'){if(param!=='gain'&&param!=='pan')throw new RangeError('Unknown automation parameter');return;}
+ if(!param.id.trim()||param.id.length>512||!param.label.trim()||param.label.length>1024||![param.minimum,param.maximum,param.defaultValue,param.step].every(Number.isFinite)||param.minimum>=param.maximum||Math.abs(param.minimum)>1e12||Math.abs(param.maximum)>1e12||param.defaultValue<param.minimum||param.defaultValue>param.maximum||param.step<=0||param.step>param.maximum-param.minimum||!Number.isFinite((param.maximum-param.minimum)/param.step)||(param.maximum-param.minimum)/param.step>Number.MAX_SAFE_INTEGER||param.unit!==undefined&&param.unit.length>64||param.scale!==undefined&&!['linear','log'].includes(param.scale)||param.scale==='log'&&(param.minimum<=0||!Number.isFinite(param.maximum/param.minimum)))throw new RangeError('Invalid automation parameter');
+}
 
 /**
  * Engine automation mode. `off` ignores the points (the fader or pan control
- * sets the value); `read` follows them. Write, touch and latch need a running
- * transport and are not part of the engine contract.
+ * sets the value); `read` follows them. Write/touch/latch/trim are enabled
+ * only when the host supplies the corresponding live-transport capability.
  * @see {@linkcode AUTOMATION_MODES}
  */
-export type AutomationMode = "off" | "read";
+export type AutomationMode = "off" | "read" | "write" | "touch" | "latch" | "trim";
 
-/** Every mode the engine supports, in picker order. */
-export const AUTOMATION_MODES: readonly AutomationMode[] = ["off", "read"];
+/** Every UI mode, in picker order; the picker gates host capabilities. */
+export const AUTOMATION_MODES: readonly AutomationMode[] = ["off", "read", "write", "touch", "latch", "trim"];
 
 /** One automation breakpoint: absolute timeline ticks and a parameter value. */
 export interface AutomationPoint {
@@ -62,16 +67,20 @@ export interface AutomationGeometry {
 
 /** Inclusive value range of a parameter. */
 export function paramRange(param: AutomationParam): { readonly min: number; readonly max: number } {
+  validateAutomationParam(param);if(typeof param==='object')return {min:param.minimum,max:param.maximum};
   return param === "gain" ? { min: 0, max: 1 } : { min: -1, max: 1 };
 }
 
 /** Value the engine uses when a lane has no points: unity gain or centre pan. */
 export function neutralValue(param: AutomationParam): number {
+  validateAutomationParam(param);if(typeof param==='object')return param.defaultValue;
   return param === "gain" ? 1 : 0;
 }
 
 /** @throws {RangeError} On a nonpositive scale, height or length. */
 export function assertGeometry(g: AutomationGeometry): void {
+  validateAutomationParam(g.param);
+  if(!Number.isFinite(g.lengthTicks*g.pixelsPerTick)||g.lengthTicks*g.pixelsPerTick>Number.MAX_SAFE_INTEGER)throw new RangeError("Automation geometry cannot be represented");
   if (!Number.isFinite(g.pixelsPerTick) || g.pixelsPerTick <= 0) throw new RangeError("pixelsPerTick must be positive");
   if (!Number.isFinite(g.height) || g.height <= AUTOMATION_LANE_PAD * 2) {
     throw new RangeError(`Automation lane height must exceed ${AUTOMATION_LANE_PAD * 2}`);
@@ -95,6 +104,7 @@ function quantizeGain(gain: number): number {
  */
 export function clampAutomationValue(param: AutomationParam, value: number): number {
   if (!Number.isFinite(value)) throw new RangeError("Automation value must be finite");
+  if(typeof param==='object'){validateAutomationParam(param);return Math.min(param.maximum,Math.max(param.minimum,param.minimum+Math.round((value-param.minimum)/param.step)*param.step));}
   return param === "pan" ? quantizePan(value) : quantizeGain(value);
 }
 
@@ -105,6 +115,7 @@ export function clampAutomationValue(param: AutomationParam, value: number): num
  * pan is linear with right at the top.
  */
 export function valueToPosition(param: AutomationParam, value: number): number {
+  if(typeof param==='object'){validateAutomationParam(param);const v=Math.min(param.maximum,Math.max(param.minimum,value));return param.scale==='log'?Math.log(v/param.minimum)/Math.log(param.maximum/param.minimum):(v-param.minimum)/(param.maximum-param.minimum);}
   if (param === "pan") return (Math.min(1, Math.max(-1, value)) + 1) / 2;
   return Math.cbrt(Math.min(1, Math.max(0, value)));
 }
@@ -112,6 +123,7 @@ export function valueToPosition(param: AutomationParam, value: number): number {
 /** Inverse of {@linkcode valueToPosition}, quantized like {@linkcode clampAutomationValue}. */
 export function positionToValue(param: AutomationParam, position: number): number {
   const p = Math.min(1, Math.max(0, position));
+  if(typeof param==='object'){validateAutomationParam(param);return clampAutomationValue(param,param.scale==='log'?param.minimum*(param.maximum/param.minimum)**p:param.minimum+p*(param.maximum-param.minimum));}
   if (param === "gain") return quantizeGain(p * p * p);
   const pan = quantizePan(p * 2 - 1);
   return Math.abs(pan) <= PAN_CENTRE_DETENT / 2 ? 0 : pan;
@@ -206,7 +218,7 @@ export function automationSegments(points: readonly AutomationPoint[], g: Automa
     const [ax, ay] = xy[i - 1]!, [bx, by] = xy[i]!;
     // The engine ramps linear gain, which is a curve on the dB scale: split
     // gain ramps into short pieces that sample the real render.
-    const pieces = g.param === "gain" && a.value !== b.value ? Math.min(32, Math.max(2, Math.ceil((bx - ax) / 6))) : 1;
+    const pieces = (g.param === "gain"||typeof g.param==='object'&&g.param.scale==='log') && a.value !== b.value ? Math.min(32, Math.max(2, Math.ceil((bx - ax) / 6))) : 1;
     let px = ax, py = ay;
     for (let k = 1; k <= pieces; k++) {
       const t = k / pieces;
@@ -325,12 +337,14 @@ export function automationKeyEdit(points: readonly AutomationPoint[], index: num
 
 /** One value step: 1 dB / 5 % pan, or 6 dB / 25 % pan when `big`. */
 export function stepAutomationValue(param: AutomationParam, value: number, direction: -1 | 1, big = false): number {
+  if(typeof param==='object')return clampAutomationValue(param,value+param.step*direction*(big?10:1));
   if (param === "pan") return stepPan(Math.min(1, Math.max(-1, value)), direction, big ? 0.25 : 0.05);
   return stepGain(Math.min(1, Math.max(0, value)), direction, big ? 6 : 1, FADER_RANGES.UNITY);
 }
 
 /** Display text for a value: gain as `"-6.0 dB"` / `"-inf dB"`, pan as `"L 30"`, `"C"`, `"R 30"`. */
 export function formatAutomationValue(param: AutomationParam, value: number): string {
+  if(typeof param==='object')return Number(clampAutomationValue(param,value).toPrecision(8))+(param.unit?' '+param.unit:'');
   if (param === "pan") return formatPan(Math.min(1, Math.max(-1, value)));
   const text = formatDb(Math.min(1, Math.max(0, value)));
   return text === "-∞ dB" ? "-inf dB" : text;

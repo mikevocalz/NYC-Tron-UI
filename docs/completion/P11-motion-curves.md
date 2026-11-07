@@ -1,0 +1,13 @@
+# P11 value, speed and retiming curves
+
+G-03 KeyframeValueGraph, G-04 KeyframeSpeedGraph and G-13 TimeRemapCurve share one controlled scalar-curve editor and original bounded math. Key IDs, property values, revision, selection, playhead and view range belong to the host. A pointer edit previews locally and releases once; Escape, document/revision changes and viewport changes discard captured work. Keyboard actions, virtualized key selection, numeric values/limits, interpolation, view range and key insertion/deletion are available independently of freehand input.
+
+Bezier handles retain absolute seconds and property values. Time is inverted with bounded bisection, and insertion uses de Casteljau subdivision to preserve the prior curve. Linear/hold values are exact under their definitions. Velocity is analytic and retains reverse slopes; hold jumps and vertical tangents produce an explicit undefined sample instead of a fabricated finite speed. Incoming/outgoing influence and slope can be edited numerically. The graph has a bounded sampled display and sparse key markers at high density; its horizontal virtualized key list still exposes every source key. Property/time limits remain authoritative.
+
+TimeRemapCurve uses source seconds against composition seconds, retaining reverse and freeze segments while bounding values to the source duration. The host owns native decoding/rendering and precise frame scheduling. The UI does not simulate a decoder or start playback.
+
+Five model tests cover value/velocity behavior, nonuniform Bezier subdivision, undefined tangents, negative speed, bounded grouped translations, and invalid identities/order. Five browser graph paths cover drag preview/one commit/Escape, numeric edits, insertion/deletion, temporal influence, source-time limits and stale document releases. Existing unit/inspector regressions pass alongside them.
+
+The review found and fixed a shared numeric precision issue: focusing/blurring or submitting an untouched rounded field must preserve the full committed float. UnitInput now tracks an actual edit separately, and arrow steps start from a valid typed draft. Dedicated regressions cover both behaviors. Full workspace verification passed 784 source tests, builds/types and all 13 packed artifacts. All 516 browser checks passed after the shared precision fix. Native runtime/narration and other-platform graph acceptance remain unverified. Six canonical motion components remain open.
+
+The temporal inversion convention follows the [W3C cubic Bezier easing definition](https://www.w3.org/TR/css-easing-1/#cubic-bezier-easing-functions). The scalar property editor uses explicit property limits and constant values outside its key interval rather than claiming CSS extrapolation semantics.

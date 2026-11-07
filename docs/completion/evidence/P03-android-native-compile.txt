@@ -1,0 +1,37 @@
+Focused Android native compile attempt, 2026-11-07
+Host: isolated p03-decoder-native-host
+RN 0.88.1 / Expo 58.0.23 / Gradle wrapper 9.4.1 / JDK 17 / arm64-v8a
+Stopped by operator (SIGINT) at 2.85 GiB available to preserve disk safety; no APK/runtime pass.
+These completed tasks precede the subsequent Kotlin player source split/range-rejection delta.
+
+> Task :nyc-tron-native-controls:preBuild UP-TO-DATE
+> Task :nyc-tron-platform-services:preBuild UP-TO-DATE
+> Task :nyc-tron-native-controls:preDebugBuild UP-TO-DATE
+> Task :nyc-tron-native-controls:processDebugNavigationResources
+> Task :nyc-tron-platform-services:preDebugBuild UP-TO-DATE
+> Task :nyc-tron-platform-services:processDebugNavigationResources
+> Task :nyc-tron-native-controls:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :nyc-tron-native-controls:generateDebugResources
+> Task :nyc-tron-native-controls:packageDebugResources
+> Task :nyc-tron-native-controls:parseDebugLocalResources
+> Task :nyc-tron-native-controls:generateDebugRFile
+> Task :nyc-tron-native-controls:javaPreCompileDebug
+> Task :nyc-tron-platform-services:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :nyc-tron-platform-services:generateDebugResources
+> Task :nyc-tron-platform-services:packageDebugResources
+> Task :nyc-tron-platform-services:parseDebugLocalResources
+> Task :nyc-tron-platform-services:generateDebugRFile
+> Task :nyc-tron-platform-services:javaPreCompileDebug
+> Task :nyc-tron-native-controls:generateDebugAssets UP-TO-DATE
+> Task :nyc-tron-native-controls:mergeDebugAssets
+> Task :nyc-tron-platform-services:generateDebugAssets UP-TO-DATE
+> Task :nyc-tron-platform-services:mergeDebugAssets
+> Task :nyc-tron-platform-services:compileDebugKotlin
+> Task :nyc-tron-platform-services:compileDebugJavaWithJavac NO-SOURCE
+> Task :nyc-tron-platform-services:bundleLibCompileToJarDebug
+> Task :nyc-tron-platform-services:processDebugJavaRes
+> Task :nyc-tron-native-controls:compileDebugKotlin
+> Task :nyc-tron-native-controls:compileDebugJavaWithJavac NO-SOURCE
+> Task :nyc-tron-native-controls:bundleLibCompileToJarDebug
+> Task :nyc-tron-native-controls:processDebugJavaRes
+> Task :nyc-tron-native-controls:bundleLibRuntimeToDirDebug

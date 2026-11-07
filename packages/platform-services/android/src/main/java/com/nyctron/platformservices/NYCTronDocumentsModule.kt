@@ -10,6 +10,7 @@ import io.github.expo.modules.v2.react.androidContextOrNull
 import io.github.expo.modules.v2.react.currentActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 /**
  * Android side of @nyc-tron/platform-services/documents (N-12).
@@ -49,13 +50,23 @@ class NYCTronDocumentsModule : Module() {
     }
   }
 
-  /** Null when the app no longer holds a read grant for the bookmark. */
+  /** A retained grant can outlive a deleted or unavailable provider file. */
   @JS
-  fun restoreAccess(bookmark: String): RestoredAccessRecord? {
+  suspend fun restoreAccess(bookmark: String): RestoredAccessRecord? {
     val resolver = androidContextOrNull?.contentResolver ?: return null
     val uri = Uri.parse(bookmark)
+    if (uri.scheme != "content") return null
     val held = resolver.persistedUriPermissions.any { it.uri == uri && it.isReadPermission }
-    return if (held) RestoredAccessRecord(uri = bookmark, bookmark = bookmark, stale = false) else null
+    if (!held) return null
+    return withContext(Dispatchers.IO) {
+      try {
+        resolver.openAssetFileDescriptor(uri, "r")?.use {
+          RestoredAccessRecord(uri = bookmark, bookmark = bookmark, stale = false)
+        }
+      } catch (_: IOException) { null }
+        catch (_: SecurityException) { null }
+        catch (_: IllegalArgumentException) { null }
+    }
   }
 
   @JS

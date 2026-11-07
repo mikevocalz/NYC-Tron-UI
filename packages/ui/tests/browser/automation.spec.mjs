@@ -89,7 +89,7 @@ test("click on empty lane adds a snapped point; Add point uses the cursor",async
 
 test("mode picker is a radio group; arrows move and commit",async({page})=>{
   const group=page.getByRole("radiogroup",{name:"Vocal volume mode"});
-  await expect(group.getByRole("radio")).toHaveCount(2);
+  await expect(group.getByRole("radio")).toHaveCount(6);
   await expect(group.getByRole("radio",{name:"Read"})).toBeChecked();
   await group.getByRole("radio",{name:"Off"}).click();
   await expect(log(page)).toHaveText("mode gain off");
@@ -98,7 +98,7 @@ test("mode picker is a radio group; arrows move and commit",async({page})=>{
   await page.keyboard.press("ArrowRight");
   await expect(log(page)).toHaveText("mode gain off\nmode gain read");
   await expect(group.getByRole("radio",{name:"Read"})).toBeFocused();
-  for(const m of ["Write","Touch","Latch"])await expect(page.getByRole("radio",{name:m})).toHaveCount(0);
+  for(const m of ["Write","Touch","Latch","Trim"]){await expect(group.getByRole("radio",{name:m})).toBeDisabled();await expect(gainLane(page).getByText(m+": Not supported by the current audio host")).toBeVisible();}
 });
 
 test("disabled lane and picker ignore input",async({page})=>{
@@ -125,7 +125,7 @@ test("targets are at least 44px and the phone page never scrolls sideways",async
   await page.goto("/automation");
   const targets=[...await page.getByRole("slider").all(),...await page.getByRole("radio").all(),
     ...await page.getByRole("button",{name:/^Add point/}).all()];
-  expect(targets.length).toBe(6+6+3);
+  expect(targets.length).toBe(6+18+3);
   for(const t of targets){const b=await t.boundingBox();expect(b.width).toBeGreaterThanOrEqual(44);expect(b.height).toBeGreaterThanOrEqual(44);}
   const over=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
   expect(over).toBeLessThanOrEqual(0);

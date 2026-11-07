@@ -1,3 +1,8 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 /*
  * Portions ported from FilmCraft for Android,
  * https://github.com/artcraft-android/filmcraft-android
@@ -27,7 +32,7 @@ import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {clipEnd,trimEdit,trimPreview,type EditPreview,type TimelineClip,type TimelineEdit,type TimelineTrack} from "./edits.ts";
 
 /** Props for {@linkcode ClipTrimHandles}. */
-export interface ClipTrimHandlesProps {
+export interface ClipTrimHandlesProps extends ScopedControlProps {
   readonly clip:TimelineClip;
   readonly track:TimelineTrack;
   readonly rate:FrameRate;
@@ -56,6 +61,7 @@ function Handle({edge,...p}:ClipTrimHandlesProps&{edge:"head"|"tail"}){
   const latest=useRef(p);
   latest.current=p;
   const edgeFrame=edge==="head"?clip.startFrame:clipEnd(clip);
+  const startX=useRef(0);
   const start=useRef(edgeFrame);
   const gesture=useMemo(()=>createValueGesture<EditPreview>({
     disabled:()=>latest.current.disabled??false,
@@ -77,9 +83,9 @@ function Handle({edge,...p}:ClipTrimHandlesProps&{edge:"head"|"tail"}){
   const origin={startFrame:clip.startFrame,sourceIn:clip.sourceIn,sourceOut:clip.sourceOut,valid:true};
   const handlers=useLocalPointer({
     disabled,
-    onBegin:pt=>{start.current=edgeFrame-(pt.x-HIT/2)/pxPerFrame;gesture.begin(origin);},
-    onMove:pt=>gesture.update(preview(start.current+(pt.x-HIT/2)/latest.current.pxPerFrame)),
-    onRelease:()=>{gesture.release();latest.current.onPreview(edge,undefined);},
+    onBegin:pt=>{startX.current=pt.x;start.current=edgeFrame;gesture.begin(origin);},
+    onMove:pt=>gesture.update(preview(start.current+(pt.x-startX.current)/latest.current.pxPerFrame)),
+    onRelease:pt=>{gesture.update(preview(start.current+(pt.x-startX.current)/latest.current.pxPerFrame));gesture.release();latest.current.onPreview(edge,undefined);},
     onCancel:()=>{gesture.cancel();latest.current.onPreview(edge,undefined);},
   });
   const nudge=(d:number)=>{
@@ -125,7 +131,14 @@ function Handle({edge,...p}:ClipTrimHandlesProps&{edge:"head"|"tail"}){
  * `trim` edit. The handles are adjustable: arrow keys and screen-reader steps
  * move the edge a frame and commit.
  */
-export function ClipTrimHandles(props:ClipTrimHandlesProps){
+export function ClipTrimHandles({scope='clip-trim',revision=0,...props}:ClipTrimHandlesProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,props.clip,props.track.locked,props.pxPerFrame,props.height,props.rate]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled||!!props.track.locked);
+ return <EditorInteractionScope.Provider value={boundary}><ErrorMessage message={guard.error??undefined} unstyled={props.unstyled}/><ClipTrimHandlesBody {...props} disabled={!!props.disabled||props.disabledReason!==undefined||!!props.track.locked||guard.pending}
+  onPreview={(edge,value)=>guard.current()?.onPreview(edge,value)} onEdit={value=>guard.run('trim',host=>host.onEdit(value))}/></EditorInteractionScope.Provider>;
+}
+function ClipTrimHandlesBody(props:ClipTrimHandlesProps){
   return <>
     <Handle edge="head" {...props}/>
     <Handle edge="tail" {...props}/>

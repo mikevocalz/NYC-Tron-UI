@@ -1,0 +1,15 @@
+# P05 vector, crop and workspace controls
+
+Reviewed implementations: B-21 PenNodeEditor, B-22 ShapeBuilder, B-23 FillStrokeInspector, B-24 GradientOnCanvasHandles, B-25 AlignDistributePanel, B-26 GuidedCropAndStraighten, B-27 CanvasCompareView and B-28 FloatingPaletteUndockHandle.
+
+The existing vector owners retain editable Bezier nodes and smooth/corner/symmetric handles, path splitting/closing, non-destructive boolean operands, fill/stroke rules/dashes/order, and linear/radial/focal gradient handles and stops. Public scope/revision and permission boundaries now guard host mutations, pass optional AbortSignals, prevent overlapping requests and display rejected operations. Pen editScope/editRevision remain supported aliases. Controlled geometry replacement abandons stale path/gradient previews; transforms reject non-finite determinants and path handles validate dimensions. These controls submit host operations and do not implement the rendering engine.
+
+Alignment retains selection/canvas/artboard targets, centre/gap distribution, fixed spacing and stacking order. Selection/configuration is validated and operations are scoped/cancellable. Canvas comparison retains actual supplied pixel/URI images in split/side-by-side/overlay/reference modes; source, layout, mode and permission changes cancel old divider previews. URI dimensions must be finite. Comparison is also the shared BeforeAfterCompare owner.
+
+GuidedCropAndStraighten is a new independent export over the existing ImageCropOverlay owner. It adds free/original/square/4:3/3:2/16:9 ratios, bounded aspect-preserving resize, straightening, quarter-turn commands, reset and thirds/centre/no guides. Image pixels and rotated image rendering remain host-owned. Crop movement and corner targets now use RNGH 3 hooks with single-contact cancellation and simultaneous canvas-navigation relations. The host must provide GestureHandlerRootView as with the other RNGH components. Keyboard and accessibility movement/resize remain available. No window size/orientation or native manifest changes were made.
+
+Floating palette placement now searches combinations of all bounds/obstacle edges, including separating zero-width folds, with bounded geometry. If no legal position fits, the handle refuses a placement transaction. Scoped async movement/docking cannot commit into another document. Existing provenance notices remain unchanged.
+
+LayerStack follow-up: ordering/expansion changes invalidate in-progress gestures without remounting the whole list. Immediate/reconciled operations no longer publish a temporary pending state solely because of an async wrapper. This preserves the component identities needed for keyboard focus; actual keyboard replay is deferred.
+
+Validation: the combined @nyc-tron/ui TypeScript build passed. Browser/native/full-suite testing follows the user's implementation review. Existing legacy gesture adapters outside crop are retained; no broader gesture migration or platform acceptance is claimed. P05 now has 27/27 reviewed library implementations; total implementation review is 117/341. All platform acceptance gates remain open.

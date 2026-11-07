@@ -1,0 +1,13 @@
+# P05 layer stack and nested groups
+
+B-09 extends the existing LayerStack owner. Flat consumers keep their existing callbacks. A parentId identifies nested groups; expanded IDs remain host-controlled. The new independent layer-tree-model validates the complete hierarchy, flattens visible rows and checks sibling insertion/reparent requests. Missing parents, cycles, descendant drops and moves into or out of locked groups are rejected. Group moves retain every descendant's identity and parent.
+
+Rows expose lock/unlock, inherited locks, collapse/expand and an anchored group menu. Reparenting uses one host callback with the destination group and the insertion index among remaining siblings. Drag and Alt+arrow reorder work within the current sibling group; the group menu changes parent. A second 44-point control row keeps these actions inside narrow panels. Visibility and selection remain available for locked content under the existing contract. Inline opacity now supports arrows, Home/End and keyboard focus through controlled acknowledgements.
+
+Scope/revision, hierarchy/order, expansion and permissions retire active edits. Replaced documents and lock changes cancel held drags. Native resources and the in-flight admission token stay in refs; preview state remains per-instance Zustand. The existing owned-action helper blocks overlapping mutations and reports host errors. Legacy callback implementations remain responsible for their already-started external work; the example captures the document and rejects a late completion after replacement.
+
+Validation passes 852 source tests, UI build/types and native consumer types. Five model checks cover hierarchy, order and lock constraints. All 27 affected browser cases passed, followed by all twelve final tree cases after the added keyboard-opacity check. The final cases cover collapse/expand, inherited locks, reparenting, group/drag reorder, one opacity commit, retained keyboard focus, document/permission/lock replacement, host failure/recovery, pending request replacement and narrow RTL targets. Existing flat layer and layer-panel cases remain passing.
+
+Review caught an inline picker opening beneath the next fixed-height row; the group chooser now uses the existing anchored menu. The static render harness now runs committed layout effects before invoking handlers, and separate simulated mutations wait for the prior request to settle. The source assertion counts the single row commit path separately from its ownership wrapper. These checks do not establish native runtime, spoken accessibility or large-document performance.
+
+Review count is 100 of 341. P05 continues with blend/opacity, masks and the remaining canvas controls; all eight-platform acceptance gates remain open.

@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 /**
  * Insert effect rack (roster E-20).
  *
@@ -28,7 +30,7 @@ import {
 const HIT = 44;
 
 /** Props for {@linkcode InsertEffectRack}. */
-export interface InsertEffectRackProps extends Omit<ViewProps, "children"> {
+export interface InsertEffectRackProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed insert chain, first slot processes first. */
   readonly inserts: readonly InsertSlot[];
   /** Track or bus name, used in the heading and accessible names. */
@@ -71,10 +73,21 @@ export interface InsertEffectRackProps extends Omit<ViewProps, "children"> {
  * chain holds `maxInserts` slots the button is disabled and the reason is
  * shown under it.
  */
-export function InsertEffectRack({
+export function InsertEffectRack({scope='InsertEffectRack',revision=0,...props}:InsertEffectRackProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason,props.inserts.map(p=>[p.id,p.kind]),props.maxInserts]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <InsertEffectRackBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onAdd={(...args:Parameters<InsertEffectRackProps['onAdd']>)=>guard.run('onAdd',h=>h.onAdd(...args))}
+  onRemove={(...args:Parameters<InsertEffectRackProps['onRemove']>)=>guard.run('onRemove',h=>h.onRemove(...args))}
+  onMove={(...args:Parameters<InsertEffectRackProps['onMove']>)=>guard.run('onMove',h=>h.onMove(...args))}
+  onBypassCommit={(...args:Parameters<InsertEffectRackProps['onBypassCommit']>)=>guard.run('onBypassCommit',h=>h.onBypassCommit(...args))}
+  onSelect={props.onSelect?(...args:Parameters<NonNullable<InsertEffectRackProps['onSelect']>>)=>{guard.current()?.onSelect?.(...args);}:undefined}
+ />;
+}
+function InsertEffectRackBody({actionError,disabledReason,
   inserts, label, maxInserts = MAX_INSERTS, selectedId, onSelect, onAdd, onRemove, onMove, onBypassCommit,
   disabled = false, className, unstyled = false, ...rest
-}: InsertEffectRackProps) {
+}: InsertEffectRackProps&{actionError?:string|null}) {
+  if(!Number.isInteger(maxInserts)||maxInserts<1||maxInserts>256||inserts.length>maxInserts||new Set(inserts.map(v=>v.id)).size!==inserts.length||inserts.some(v=>!v.id.trim()||v.id.length>512||!INSERT_KINDS.includes(v.kind)))throw new RangeError('Invalid insert rack');
   const styled = !unstyled;
   const local = useRef<StoreApi<{ picking: boolean }> | null>(null);
   if (!local.current) local.current = createStore(() => ({ picking: false }));
@@ -143,7 +156,7 @@ export function InsertEffectRack({
         </Pressable>)}
       </View> : null}
     </View>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 type SlotRowProps = {

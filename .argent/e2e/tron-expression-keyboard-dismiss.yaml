@@ -1,0 +1,13 @@
+executionPrerequisite: Standalone consumer at Motion > Expression > Diagnostics immediately after a fresh qa-tron-motion-expression-native pass, applied value time. Restores this view when finished.
+steps:
+  - tap: { text: Source }
+  - await: { visible: { text: Expression source } }
+  - await: { idle: true }
+  - await: { visible: { text: Done editing expression } }
+  - tap: { text: Done editing expression }
+  - await: { hidden: { text: Done editing expression } }
+  - await: { text: { in: { text: Motion expression state }, contains: '"value":"time"' } }
+  - await: { idle: true }
+  - tap: { text: Diagnostics }
+  - await: { visible: { text: No diagnostics reported } }
+  - await: { idle: true }

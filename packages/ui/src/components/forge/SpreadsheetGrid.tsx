@@ -1,4 +1,8 @@
-import { useEffect, useMemo, useRef, type ReactNode } from "react";
+import {useEditorBoundary} from '../gestures/editor-interaction-scope.ts';
+import {FormulaBar} from './spreadsheet/FormulaBar.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from './inputs/useScopedControl.ts';
+import {ErrorMessage} from '../feedback/ErrorMessage.tsx';
+import { useEffect,useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
 import { Animated, I18nManager, Text, TextInput, Pressable, View, type ViewProps } from "react-native";
 import type { ScrollViewInstance } from "react-native";
 import { useStore } from "zustand";
@@ -24,7 +28,7 @@ export interface SpreadsheetCell {
 /**
  * Range {@linkcode SpreadsheetGrid} asks the host to load. `startRow..endRow`
  * and `startColumn..endColumn` (end-exclusive) are block-snapped with one
- * block of lookahead. Frozen panes always show rows `0..frozenRows` and
+ * block of lookahead. The request includes only the visible portion of frozen rows `0..frozenRows` and
  * columns `0..frozenColumns`, so the host must load those too.
  */
 export interface SpreadsheetWindowRequest {
@@ -35,8 +39,9 @@ export interface SpreadsheetWindowRequest {
   readonly frozenRows: number;
   readonly frozenColumns: number;
 }
-export interface SpreadsheetGridProps extends Omit<ViewProps, "children"> {
+export interface SpreadsheetGridProps extends Omit<ViewProps, "children">,ScopedControlProps {
   readonly sheetId: string;
+  readonly readOnly?:boolean;
   /** Display name used to keep `'This Sheet'!A1` references highlighted; other sheets' references are not. */
   readonly sheetName?: string;
   readonly rowCount: number;
@@ -121,19 +126,31 @@ function display(value:SpreadsheetCell["computed"]|undefined) {
  * fling never shows the strips a frame behind. Only the visible window is
  * rendered on every pane.
  */
-export function SpreadsheetGrid({
+export function SpreadsheetGrid({scope='spreadsheet-grid',revision=0,...props}:SpreadsheetGridProps){
+ if(!props.sheetId.trim()||props.sheetId.length>256||!Number.isSafeInteger(props.rowCount)||props.rowCount<0||props.rowCount>1048576||!Number.isSafeInteger(props.columnCount)||props.columnCount<0||props.columnCount>16384||Object.keys(props.cells).length>100000)throw new RangeError('Invalid virtual spreadsheet');
+ const identity=JSON.stringify([...controlIdentity(scope,revision),props.sheetId]),owner=useEditorBoundary([JSON.stringify([identity,props.readOnly,props.disabledReason])]),guard=useScopedControl(owner,props,props.disabledReason!==undefined),observe=useScopedControl(identity,props,props.disabledReason!==undefined);
+ return <SpreadsheetGridBody key={identity} {...props} interactionBoundary={owner} actionError={guard.error}
+ onCommitCell={props.onCommitCell&&!props.readOnly&&props.disabledReason===undefined?async(address,raw)=>{const ok=await guard.run('cell',h=>h.onCommitCell?.(address,raw));if(ok!==true)throw new Error('Cell edit was not saved. The draft is retained.');}:undefined}
+ onFillRange={props.onFillRange&&!props.readOnly&&props.disabledReason===undefined?async plan=>{const ok=await guard.run('fill',h=>h.onFillRange?.(plan));if(ok!==true)throw new Error('The fill operation did not complete.');}:undefined}
+ onSelectionChange={props.onSelectionChange?selection=>guard.current()?.onSelectionChange?.(selection):undefined}
+ onCopyRange={props.onCopyRange?(range,tsv)=>guard.current()?.onCopyRange?.(range,tsv):undefined}
+ onWindowChange={props.onWindowChange?range=>observe.current()?.onWindowChange?.(range):undefined}/>;
+}
+function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledReason,
+
   sheetId,sheetName,rowCount,columnCount,cells,width,height,rowHeight:preferredRowHeight=32,
   columnWidth:preferredColumnWidth=112,compactBelow=540,frozenRows=0,frozenColumns=0,
   selection:selectionProp,onSelectionChange,onCommitCell,onCopyRange,maxCopyCells=1_000_000,
   highlightReferences=true,onFillRange,renderCellContent,showFormulaBar=true,fillTransport:FillTransport=PanResponderDrag,onWindowChange,
   className,headerClassName,cellClassName,unstyled=false,onLayout,style,...props
-}:SpreadsheetGridProps) {
+}:SpreadsheetGridProps&{interactionBoundary:string;actionError?:string|null}) {
   const stateRef=useRef<StoreApi<GridLocal>|null>(null);
   if(!stateRef.current)stateRef.current=createStore<GridLocal>(()=>({
     x:0,y:0,draft:"",dirty:false,pending:false,editVersion:0,error:null,measuredWidth:0,measuredHeight:0,selection:null,
     fillFrom:undefined,fillPlan:undefined,
   }));
   const state=stateRef.current;
+  useLayoutEffect(()=>{state.setState({fillFrom:undefined,fillPlan:undefined});},[interactionBoundary,width,height,preferredRowHeight,preferredColumnWidth,frozenRows,frozenColumns]);
   const x=useStore(state,s=>s.x);
   const y=useStore(state,s=>s.y);
   const draft=useStore(state,s=>s.draft);
@@ -183,6 +200,8 @@ export function SpreadsheetGrid({
     rowHeaderWidth:left,columnHeaderHeight:headerHeight,frozenRows,frozenColumns});
   const fr=frozen.frozenRows;
   const fc=frozen.frozenColumns;
+  const visibleFrozenRows=Math.min(fr,Math.max(0,Math.ceil((gridHeight-headerHeight)/rowHeight)));
+  const visibleFrozenColumns=Math.min(fc,Math.max(0,Math.ceil((viewportWidth-left)/columnWidth)));
   const body=frozen.body;
   const bodyHeight=Math.max(0,gridHeight-headerHeight-frozen.frozenHeight);
   // An invalid controlled address is a host bug; selectionRange throws with the address.
@@ -203,8 +222,8 @@ export function SpreadsheetGrid({
   const ready=viewportWidth>0&&viewportHeight>formulaBarHeight;
   useEffect(()=>{
     if(!ready)return;
-    onWindowChangeRef.current?.({...prefetch,frozenRows:fr,frozenColumns:fc});
-  },[sheetId,ready,prefetch.startRow,prefetch.endRow,prefetch.startColumn,prefetch.endColumn,fr,fc]);
+    onWindowChangeRef.current?.({...prefetch,frozenRows:visibleFrozenRows,frozenColumns:visibleFrozenColumns});
+  },[sheetId,ready,prefetch.startRow,prefetch.endRow,prefetch.startColumn,prefetch.endColumn,fr,fc,visibleFrozenRows,visibleFrozenColumns]);
 
   const commit=()=>commitCellEdit(focus,onCommitCell,state.getState,patch=>state.setState(patch));
   const select=(next:SheetSelection)=>{
@@ -280,8 +299,9 @@ export function SpreadsheetGrid({
     [body.columns.start,body.columns.end]);
   const bodyRows=useMemo(()=>Array.from({length:body.rows.end-body.rows.start},(_,i)=>body.rows.start+i),
     [body.rows.start,body.rows.end]);
-  const frozenColumnList=useMemo(()=>Array.from({length:fc},(_,i)=>i),[fc]);
-  const frozenRowList=useMemo(()=>Array.from({length:fr},(_,i)=>i),[fr]);
+  const frozenColumnList=useMemo(()=>Array.from({length:visibleFrozenColumns},(_,i)=>i),[visibleFrozenColumns]);
+  const frozenRowList=useMemo(()=>Array.from({length:visibleFrozenRows},(_,i)=>i),[visibleFrozenRows]);
+  if((bodyRows.length+visibleFrozenRows)*(bodyColumns.length+visibleFrozenColumns)>16384)throw new RangeError('Spreadsheet pane exceeds the visible-cell drawing budget');
   const leftGap=(body.columns.start-fc)*columnWidth;
   const rightGap=(columnCount-body.columns.end)*columnWidth;
   const topGap=(body.rows.start-fr)*rowHeight;
@@ -307,8 +327,9 @@ export function SpreadsheetGrid({
         const columns=Math.round((rtl?from.x-point.x:point.x-from.x)/columnWidth);
         state.setState({fillPlan:fillTarget(range,{rows,columns},{rowCount,columnCount})});
       }}
-      onRelease={()=>{
-        const plan=state.getState().fillPlan;
+      onRelease={point=>{
+        const from=state.getState().fillFrom;
+        const plan=from?fillTarget(range,{rows:Math.round((point.y-from.y)/rowHeight),columns:Math.round((rtl?from.x-point.x:point.x-from.x)/columnWidth)},{rowCount,columnCount}):undefined;
         state.setState({fillFrom:undefined,fillPlan:undefined});
         if(plan)void fill(plan);
       }}
@@ -393,19 +414,13 @@ export function SpreadsheetGrid({
           Swipe sideways for more columns
         </Text>:null}
       </View>
-      <TextInput
-        {...{className:joinClasses(!unstyled&&"rounded-control border border-border bg-surface-sunken text-text focus:border-focus")}}
-        style={{flex:metrics.compact?undefined:1,
-          width:metrics.compact?"100%":undefined,minHeight:44,paddingHorizontal:10}}
-        accessibilityLabel="Formula bar"
-        editable={Boolean(focus&&onCommitCell)&&!pending}
-        value={formulaText}
-        onChangeText={next=>state.setState(current=>({draft:next,dirty:true,editVersion:current.editVersion+1}))}
-        onSubmitEditing={()=>void commit()}
-        onBlur={()=>{if(dirty)void commit();}}
-        returnKeyType="done"
-      />
+      <FormulaBar scope={sheetId} revision={interactionBoundary} address={focus} value={formulaText} originalValue={focus?cells[focus]?.raw??'':''} pending={pending} readOnly={!focus||!onCommitCell} hideActions unstyled={unstyled}
+       style={{flex:metrics.compact?undefined:1,width:metrics.compact?'100%':undefined}}
+       onChange={next=>state.setState(current=>({draft:next,dirty:true,editVersion:current.editVersion+1}))}
+       onCommit={()=>commit()} onCancel={()=>state.setState(current=>({draft:focus?cells[focus]?.raw??'':'',dirty:false,error:null,editVersion:current.editVersion+1}))}/>
+
     </View>:null}
+    <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/>
     {error?<Text selectable accessibilityLiveRegion="polite" accessibilityRole="alert"
       {...{className:joinClasses("px-2",!unstyled&&"text-danger")}}>{error}</Text>:null}
     {/* Keys are handled here, not on the root, so arrows typed in the formula bar never move the selection. */}

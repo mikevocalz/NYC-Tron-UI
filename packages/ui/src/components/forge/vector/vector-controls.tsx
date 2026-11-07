@@ -68,6 +68,8 @@ export function GroupLabel({children,styled,nativeID}:{children:string;styled:bo
 export interface DragModifiers {
   readonly alt:boolean;
   readonly shift:boolean;
+  readonly ctrl?:boolean;
+  readonly meta?:boolean;
 }
 /** Keyboard event shape on web (`key`, modifiers) and native (`nativeEvent`). */
 export type CanvasKeyEvent={
@@ -86,7 +88,7 @@ export interface CanvasKnobProps {
   onAction:(name:string)=>void;
   onKeyDown:(event:CanvasKeyEvent)=>void;
   onFocus?:()=>void;
-  onBegin:()=>void;
+  onBegin:(modifiers:DragModifiers)=>void;
   /** View-space travel since the press. Preview only. */
   onMove:(dx:number,dy:number,modifiers:DragModifiers)=>void;
   onRelease:()=>void;
@@ -108,7 +110,7 @@ export function CanvasKnob(props:CanvasKnobProps){
   if(!pan.current)pan.current=createCanvasResponder({
     onStartShouldSetPanResponder:e=>(e.nativeEvent.touches?.length??1)<=1,
     onMoveShouldSetPanResponder:()=>true,
-    onPanResponderGrant:()=>latest.current.onBegin(),
+    onPanResponderGrant:e=>{const n=e.nativeEvent as {altKey?:boolean;shiftKey?:boolean;ctrlKey?:boolean;metaKey?:boolean};latest.current.onBegin({alt:n.altKey===true,shift:n.shiftKey===true,ctrl:n.ctrlKey===true,meta:n.metaKey===true});},
     onPanResponderMove:(e:GestureResponderEvent,g)=>{
       if(g.numberActiveTouches>1){latest.current.onCancel();return;}
       const n=e.nativeEvent as {altKey?:boolean;shiftKey?:boolean};

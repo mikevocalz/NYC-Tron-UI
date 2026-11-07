@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { Text, View } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
@@ -7,11 +7,14 @@ import { joinClasses } from "../styles.ts";
 import { clampFrame, formatTimecode, frameToPosition, positionToFrame } from "./timebase.ts";
 import type { NativeSeekBarProps } from "./NativeSeekBar.types.ts";
 
+import {controlIdentity} from "./inputs/useScopedControl.ts";
+
 type Drag = { preview: number | undefined };
 
 /** What a platform slider needs from the shared seek-bar state. */
 export interface SeekBarModel {
   /** True when disabled or the media has no frames. */
+  readonly key:string;
   readonly off: boolean;
   /** Slider value in [0, 1]: the dragged frame mid-drag, otherwise `frame`. */
   readonly position: number;
@@ -40,28 +43,31 @@ export function useSeekBarModel(props: NativeSeekBarProps) {
     throw new RangeError("Invalid frame count or step");
   const onCommit = props.onCommit ?? props.onSeek;
   if (typeof onCommit !== "function") throw new TypeError("NativeSeekBar needs onCommit (or the deprecated onSeek)");
+  const boundary=JSON.stringify([...controlIdentity(props.scope??"native-seek",props.revision??0),durationFrames,stepFrames,disabled]);
   const current = clampFrame(frame, durationFrames);
   const off = disabled || durationFrames === 0;
-  const latest = useRef({ current, durationFrames, off, onPreview, onCommit });
-  latest.current = { current, durationFrames, off, onPreview, onCommit };
+  const latest = useRef({ boundary,current, durationFrames, off, onPreview, onCommit });
+  useLayoutEffect(()=>{latest.current = { boundary,current, durationFrames, off, onPreview, onCommit };});
   const local = useRef<StoreApi<Drag> | null>(null);
   if (!local.current) local.current = createStore<Drag>(() => ({ preview: undefined }));
   const store = local.current;
+  useLayoutEffect(()=>{store.setState({preview:undefined});},[boundary,store]);
   const preview = useStore(store, s => s.preview);
   const shown = preview ?? current;
 
   const commit = (next: number) => {
     const p = latest.current;
+    if(p.boundary!==boundary)return;
     store.setState({ preview: undefined });
     if (p.off || next === p.current) return;
     p.onCommit(next);
   };
   const model: SeekBarModel = {
-    off,
+    key:boundary,off,
     position: frameToPosition(shown, durationFrames),
     move: position => {
       const p = latest.current;
-      if (p.off || !Number.isFinite(position)) return;
+      if (p.boundary!==boundary||p.off || !Number.isFinite(position)) return;
       const next = toFrame(position, p.durationFrames);
       if (next === (store.getState().preview ?? p.current)) return;
       store.setState({ preview: next });
@@ -69,6 +75,7 @@ export function useSeekBarModel(props: NativeSeekBarProps) {
     },
     release: position => {
       const p = latest.current;
+      if(p.boundary!==boundary)return;
       const dragged = store.getState().preview;
       if (position !== undefined && Number.isFinite(position)) commit(toFrame(position, p.durationFrames));
       else if (dragged !== undefined) commit(dragged);
@@ -93,7 +100,7 @@ export function SeekBarLayout({ props, shown, step, off, slider }: {
   slider: ReactNode;
 }) {
   const {
-    frame: _frame, durationFrames, frameRate, onPreview: _preview, onCommit: _commit, onSeek: _seek,
+    scope:_scope,revision:_revision,frame: _frame, durationFrames, frameRate, onPreview: _preview, onCommit: _commit, onSeek: _seek,
     stepFrames = 1, dropFrameTimecode = false, disabled: _disabled, className, unstyled = false, style, ...rest
   } = props;
   const tc = (f: number) => formatTimecode(f, frameRate, { dropFrame: dropFrameTimecode });

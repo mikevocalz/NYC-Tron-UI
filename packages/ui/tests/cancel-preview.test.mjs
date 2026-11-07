@@ -22,7 +22,11 @@ test("cancel works without app preview and never requires a commit callback",()=
 test("all gesture controls roll back previews and ignore release after termination",()=>{
  for(const file of ["inputs/InstrumentKnob.tsx","inputs/InstrumentXYPad.tsx","graphics/ImageCropOverlay.tsx"]){
   const source=readFileSync(new URL("../src/components/forge/"+file,import.meta.url),"utf8");
-  assert.match(source,/onPanResponderTerminate:cancel/);
+  assert.match(source,/const cancel=\(\)=>cancelPreview\(/);
+  if(file.startsWith("graphics/")){
+   assert.match(source,/useEditorPan\(\{[^}]*onCancel:cancel/);
+   assert.match(source,/onCancel=\{cancel\}/, "crop handles share the rollback callback");
+  }else assert.match(source,/onPanResponderTerminate:cancel/);
   assert.match(source,/if\(store.getState\(\).active\)commit/);
  }
 });

@@ -60,7 +60,7 @@ test("android record carries every ReservedRegion field; dp conversion uses disp
 
 test("the package ships the native sources and no Gradle build output", () => {
   const files = JSON.parse(read("package.json")).files;
-  for (const f of ["ios", "android/build.gradle", "android/src", "expo-module.config.json"]) assert.ok(files.includes(f), f);
+  for (const f of ["Package.swift", "ios", "android/build.gradle", "android/src", "expo-module.config.json"]) assert.ok(files.includes(f), f);
   assert.ok(!files.includes("android"), "android/ would ship android/build/ after a local Gradle run");
 });
 
@@ -220,4 +220,12 @@ test("web: the snapshot is stable between reads and empty when hinge-blind", () 
   assert.equal(web.useReservedRegions(), web.useReservedRegions(), "useSyncExternalStore needs a cached snapshot");
   assert.deepEqual(plain(webHarness(undefined, undefined).useReservedRegions()), []);
   assert.equal(webHarness(undefined, undefined).isReservedRegionsAvailable(), false);
+});
+
+ test("SwiftPM preserves the native product and SDK-gated source tree", () => {
+  const manifest = read("Package.swift");
+  assert.match(manifest, /name: "NYCTronReservedRegions"/);
+  assert.match(manifest, /path: "ios"/);
+  assert.match(manifest, /\.iOS\("16\.4"\)/);
+  assert.match(manifest, /exclude: \["NYCTronReservedRegions.podspec"\]/);
 });

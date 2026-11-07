@@ -1,3 +1,8 @@
+import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
+import {useLayoutEffect} from 'react';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {Pressable,ScrollView,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
@@ -6,7 +11,7 @@ import {CloseMark,OFFICE_TOUCH_TARGET} from "../office/office-controls.tsx";
 import {effectLabel,formatSeconds,parseSeconds,playOrder,timelineEnd,type AnimationCategory,type AnimationEffect,type SlideAnimation} from "./animation-model.ts";
 
 /** Props for {@linkcode SlideAnimationPane}. */
-export interface SlideAnimationPaneProps extends Omit<ViewProps,"children"> {
+export interface SlideAnimationPaneProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly animations:readonly SlideAnimation[];
   /** Effects the host's engine plays. Categories with no effect are not shown. */
   readonly effects:readonly AnimationEffect[];
@@ -20,11 +25,15 @@ export interface SlideAnimationPaneProps extends Omit<ViewProps,"children"> {
   readonly onRemove?:(index:number)=>void|Promise<unknown>;
   /** Plays the slide's animations once on the canvas. */
   readonly onPreview?:()=>void;
+  readonly onTimingCommit?:(index:number,value:{startS:number;durationS:number;trigger:'on-click'|'with-previous'|'after-previous'})=>unknown;
+  readonly onOrderCommit?:(indices:readonly number[])=>unknown;
+  readonly supportedTriggers?:readonly ('on-click'|'with-previous'|'after-previous')[];
+  disabled?:boolean;
   className?:string;
   unstyled?:boolean;
 }
 
-type Local={kind:string|undefined;start:string;duration:string;error:string|undefined;busy:boolean};
+type Local={kind:string|undefined;start:string;duration:string;error:string|undefined;busy:boolean;activeIndex:number|null};
 
 const CATEGORY_LABEL:Record<AnimationCategory,string>={entrance:"Entrance",emphasis:"Emphasis",exit:"Exit"};
 
@@ -34,18 +43,30 @@ const CATEGORY_LABEL:Record<AnimationCategory,string>={entrance:"Entrance",empha
  * and exit, start and duration in seconds) for the object selected on the
  * canvas; remove; and preview.
  */
-export function SlideAnimationPane({
-  animations,effects,objectLabel,selectedObjectId,onAdd,onRemove,onPreview,className,unstyled=false,...rest
-}:SlideAnimationPaneProps){
+export function SlideAnimationPane({scope='SlideAnimationPane',revision=0,...props}:SlideAnimationPaneProps){
+ if(props.animations.length>4096||props.effects.length>256||new Set(props.animations.map(a=>a.index)).size!==props.animations.length||props.animations.some(a=>!Number.isSafeInteger(a.index)||a.index<0||!Number.isFinite(a.startS)||a.startS<0||a.startS>600||!Number.isFinite(a.durationS)||a.durationS<=0||a.durationS>600))throw new RangeError('Invalid slide animation schedule');
+ const identity=JSON.stringify(controlIdentity(scope,revision)),owner=useEditorBoundary([JSON.stringify([identity,props.disabled,props.disabledReason,props.animations.map(a=>[a.index,a.objectId,a.kind])])]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SlideAnimationPaneBody key={identity} {...props} boundary={owner} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onTimingCommit={props.onTimingCommit?(...args)=>guard.run('timing',h=>{if(!h.animations.some(a=>a.index===args[0])||![args[1].startS,args[1].durationS].every(Number.isFinite)||args[1].startS<0||args[1].startS>600||args[1].durationS<=0||args[1].durationS>600||!(h.supportedTriggers??['on-click']).includes(args[1].trigger))throw new Error('Animation timing or trigger unavailable');return h.onTimingCommit?.(...args);}):undefined}
+  onOrderCommit={props.onOrderCommit?indices=>guard.run('order',h=>{if(indices.length!==h.animations.length||new Set(indices).size!==indices.length||indices.some(index=>!h.animations.some(a=>a.index===index)))throw new Error('Animation order no longer matches this slide');return h.onOrderCommit?.(indices);}):undefined}
+  onAdd={props.onAdd?async(...args:Parameters<NonNullable<SlideAnimationPaneProps['onAdd']>>)=>{const ok=await guard.run('onAdd',h=>{if(args[0].objectId!==h.selectedObjectId||!h.effects.some(e=>e.kind===args[0].kind))throw new Error('Select an object and an available animation effect');return h.onAdd?.(...args);});if(ok!==true)throw new Error('Animation change did not complete');}:undefined}
+  onRemove={props.onRemove?(...args:Parameters<NonNullable<SlideAnimationPaneProps['onRemove']>>)=>guard.run('onRemove',h=>h.animations.some(a=>a.index===args[0])?h.onRemove?.(...args):undefined):undefined}
+  onPreview={props.onPreview?(...args:Parameters<NonNullable<SlideAnimationPaneProps['onPreview']>>)=>{guard.current()?.onPreview?.(...args);}:undefined}
+ />;
+}
+function SlideAnimationPaneBody({boundary,actionError,disabledReason,disabled=false,
+  animations,effects,objectLabel,selectedObjectId,onAdd,onRemove,onPreview,onTimingCommit,onOrderCommit,supportedTriggers=['on-click'],className,unstyled=false,...rest
+}:SlideAnimationPaneProps&{boundary:string;actionError?:string|null}){
   const styled=!unstyled;
-  const [local,store]=useLocalStore<Local>(()=>({kind:undefined,start:"0",duration:"0.5",error:undefined,busy:false}));
-  const ordered=playOrder(animations);
+  const [local,store]=useLocalStore<Local>(()=>({kind:undefined,start:"0",duration:"0.5",error:undefined,busy:false,activeIndex:null}));
+  useLayoutEffect(()=>{store.set(s=>({...s,busy:false,activeIndex:animations.some(a=>a.index===s.activeIndex)?s.activeIndex:null}));},[boundary]);
+  const ordered=onOrderCommit?[...animations].sort((a,b)=>(a.order??a.index)-(b.order??b.index)):playOrder(animations),active=animations.find(a=>a.index===local.activeIndex);
   const kind=local.kind??effects[0]?.kind;
   const muted=joinClasses(styled&&"text-text-muted text-sm");
   const text=joinClasses(styled&&"text-text");
   const field=joinClasses(styled&&"rounded-control border border-border bg-surface-sunken text-text px-3 focus:border-focus");
   const add=async()=>{
-    if(!onAdd||!selectedObjectId||!kind)return;
+    if(disabled||local.busy||!onAdd||!selectedObjectId||!kind)return;
     const s=parseSeconds(local.start,{allowZero:true});
     const d=parseSeconds(local.duration,{allowZero:false});
     if("error" in s){store.set(x=>({...x,error:"Start: "+s.error}));return;}
@@ -60,7 +81,7 @@ export function SlideAnimationPane({
       <Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>
         {ordered.length===0?"No animations on this slide":(ordered.length===1?"1 animation":ordered.length+" animations")+", "+formatSeconds(timelineEnd(ordered))}
       </Text>
-      {onPreview&&ordered.length?<Button title="Preview" variant="secondary" size="sm" onPress={onPreview}/>:null}
+      {onPreview&&ordered.length?<Button disabled={disabled} title="Preview" variant="secondary" size="sm" onPress={onPreview}/>:null}
     </View>
     {ordered.length?<ScrollView style={{flexShrink:1}} contentContainerStyle={{gap:2}}>
       {ordered.map((a,i)=>{
@@ -69,13 +90,14 @@ export function SlideAnimationPane({
         return <View key={a.index} {...{className:joinClasses(styled&&"rounded-control",styled&&on&&"bg-accent/10")}}
           style={{flexDirection:"row",alignItems:"center",gap:8,minHeight:OFFICE_TOUCH_TARGET,paddingStart:8}}>
           <Text {...{className:muted}} style={{width:22,fontVariant:["tabular-nums"]}}>{i+1}</Text>
-          <View accessible accessibilityLabel={(i+1)+". "+name+", "+effectLabel(a.kind,effects)+", starts at "+formatSeconds(a.startS)+", lasts "+formatSeconds(a.durationS)}
+          <Pressable disabled={disabled} onPress={()=>store.set(s=>({...s,activeIndex:a.index}))} accessible accessibilityRole="button" accessibilityLabel={(i+1)+". "+name+", "+effectLabel(a.kind,effects)+", starts at "+formatSeconds(a.startS)+", lasts "+formatSeconds(a.durationS)}
             style={{flex:1,minWidth:0}}>
             <Text numberOfLines={1} {...{className:text}} style={{fontWeight:"600"}}>{name}</Text>
             <Text numberOfLines={1} {...{className:muted}}>{effectLabel(a.kind,effects)+", "+formatSeconds(a.startS)+" for "+formatSeconds(a.durationS)}</Text>
-          </View>
+          </Pressable>
+          {onOrderCommit?<Button title="Earlier in animation order" disabled={disabled||i===0} variant="secondary" unstyled={unstyled} onPress={()=>{const ids=ordered.map(a=>a.index);[ids[i-1],ids[i]]=[ids[i]!,ids[i-1]!];void onOrderCommit(ids);}}/>:null}
           {onRemove?<Pressable accessibilityRole="button" accessibilityLabel={"Remove "+effectLabel(a.kind,effects)+" on "+name}
-            onPress={()=>void onRemove(a.index)}
+            disabled={disabled} onPress={()=>void onRemove(a.index)}
             {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
             style={{width:OFFICE_TOUCH_TARGET,height:OFFICE_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
             <CloseMark styled={styled}/>
@@ -83,6 +105,11 @@ export function SlideAnimationPane({
         </View>;
       })}
     </ScrollView>:null}
+    {active&&onTimingCommit?<PropertyInspector scope={boundary+':'+active.index} label="Animation timing and trigger" unstyled={unstyled} disabledReason={disabled?'Animation editing unavailable':undefined} fields={[
+     {kind:'number',id:'startS',label:'Start time',value:active.startS,min:0,max:600,step:.01,unit:'s'},
+     {kind:'number',id:'durationS',label:'Duration',value:active.durationS,min:.001,max:600,step:.01,unit:'s'},
+     {kind:'choice',id:'trigger',label:'Start trigger',value:active.trigger??'on-click',choices:['on-click','with-previous','after-previous'].map(id=>({id,label:id,disabled:!supportedTriggers.includes(id as 'on-click'|'with-previous'|'after-previous')}))}
+    ]} onCommit={(id,value)=>onTimingCommit(active.index,{startS:active.startS,durationS:active.durationS,trigger:active.trigger??'on-click',[id]:value})}/>:null}
     {onAdd&&effects.length?<View {...{className:joinClasses(styled&&"rounded-card border border-border bg-surface-raised")}} style={{padding:10,gap:10}}>
       <Text accessibilityRole="header" {...{className:text}} style={{fontWeight:"600"}}>
         {selectedObjectId?"Add animation to "+objectLabel(selectedObjectId):"Select an object on the slide to animate it"}
@@ -107,16 +134,16 @@ export function SlideAnimationPane({
         <View style={{gap:4,flexGrow:1,flexBasis:100}}>
           <Text {...{className:muted}}>Start (seconds)</Text>
           <TextInput value={local.start} onChangeText={v=>store.set(x=>({...x,start:v,error:undefined}))} inputMode="decimal"
-            accessibilityLabel="Start, in seconds" editable={!!selectedObjectId} {...{className:field}} style={{minHeight:OFFICE_TOUCH_TARGET}}/>
+            accessibilityLabel="Start, in seconds" maxLength={64} editable={!disabled&&!!selectedObjectId} {...{className:field}} style={{minHeight:OFFICE_TOUCH_TARGET}}/>
         </View>
         <View style={{gap:4,flexGrow:1,flexBasis:100}}>
           <Text {...{className:muted}}>Duration (seconds)</Text>
           <TextInput value={local.duration} onChangeText={v=>store.set(x=>({...x,duration:v,error:undefined}))} inputMode="decimal"
-            accessibilityLabel="Duration, in seconds" editable={!!selectedObjectId} {...{className:field}} style={{minHeight:OFFICE_TOUCH_TARGET}}/>
+            accessibilityLabel="Duration, in seconds" maxLength={64} editable={!disabled&&!!selectedObjectId} {...{className:field}} style={{minHeight:OFFICE_TOUCH_TARGET}}/>
         </View>
-        <Button title="Add animation" loading={local.busy} disabled={!selectedObjectId||!kind} onPress={()=>void add()}/>
+        <Button title="Add animation" loading={local.busy} disabled={disabled||local.busy||!selectedObjectId||!kind} onPress={()=>void add()}/>
       </View>
       {local.error?<Text accessibilityLiveRegion="assertive" {...{className:joinClasses(styled&&"text-danger text-sm")}}>{local.error}</Text>:null}
     </View>:null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

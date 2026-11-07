@@ -1,5 +1,9 @@
-import {useRef,type ReactNode} from "react";
-import {I18nManager,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
+import {validateSlideSummary} from './slide-model.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useRef,useLayoutEffect,type ReactNode} from "react";
+import {I18nManager,Pressable,FlatList,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
@@ -7,7 +11,7 @@ import {SlideThumbnail} from "./SlideThumbnail.tsx";
 import {SLIDE_DEFAULT_SIZE,gridColumns,gridMove,moveBlock,nextSelection,slideLabel,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
 
 /** Props for {@linkcode SlideSorter}. Selection is controlled; actions render only when their callbacks are passed. */
-export interface SlideSorterProps extends Omit<ViewProps,"children"> {
+export interface SlideSorterProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly slides:readonly SlideSummary[];
   readonly selectedIds:readonly string[];
   readonly onSelectionChange:(ids:string[])=>void;
@@ -24,6 +28,7 @@ export interface SlideSorterProps extends Omit<ViewProps,"children"> {
   readonly renderImage?:(src:string,object:SlideObject)=>ReactNode;
   /** Smallest thumbnail width in points; columns are fitted to the measured width. @default 160 */
   readonly minThumbnailWidth?:number;
+  disabled?:boolean;
   className?:string;
   unstyled?:boolean;
 }
@@ -37,26 +42,39 @@ const GAP=12;
  * start, one place earlier or later, or the end. Arrow keys move focus in the
  * grid, Space toggles, Enter opens.
  */
-export function SlideSorter({
+export function SlideSorter({scope='SlideSorter',revision=0,...props}:SlideSorterProps){
+ if(props.slides.length>10000||props.slides.reduce((n,s)=>n+s.objects.length,0)>100000||new Set(props.slides.map(s=>s.id)).size!==props.slides.length||props.selectedIds.some(id=>!props.slides.some(s=>s.id===id)))throw new RangeError('Invalid slide sorter roster');props.slides.forEach(validateSlideSummary);
+ const identity=JSON.stringify(controlIdentity(scope,revision)),owner=useEditorBoundary([JSON.stringify([identity,props.disabled,props.disabledReason,props.slides.map(s=>s.id)])]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SlideSorterBody key={identity} {...props} boundary={owner} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onReorder={props.onReorder?(...args:Parameters<NonNullable<SlideSorterProps['onReorder']>>)=>guard.run('onReorder',h=>h.onReorder?.(...args)):undefined}
+  onRemove={props.onRemove?(...args:Parameters<NonNullable<SlideSorterProps['onRemove']>>)=>guard.run('onRemove',h=>h.onRemove?.(...args)):undefined}
+  onSelectionChange={(...args:Parameters<NonNullable<SlideSorterProps['onSelectionChange']>>)=>{guard.current()?.onSelectionChange?.(...args);}}
+  onOpen={props.onOpen?(...args:Parameters<NonNullable<SlideSorterProps['onOpen']>>)=>{guard.current()?.onOpen?.(...args);}:undefined}
+ />;
+}
+function SlideSorterBody({boundary,actionError,disabledReason,disabled=false,
   slides,selectedIds,onSelectionChange,onOpen,onReorder,onRemove,size=SLIDE_DEFAULT_SIZE,renderImage,minThumbnailWidth=160,
   className,unstyled=false,...rest
-}:SlideSorterProps){
+}:SlideSorterProps&{boundary:string;actionError?:string|null}){
   const styled=!unstyled;
   const [local,store]=useLocalStore(()=>({width:0,anchor:undefined as string|undefined,multi:false}));
   const refs=useRef(new Map<number,{focus?:()=>void}|null>());
   const order=slides.map(s=>s.id);
   const columns=gridColumns(local.width,minThumbnailWidth,GAP);
   const cell=local.width>0?Math.floor((local.width-GAP*(columns-1))/columns):minThumbnailWidth;
+  const tileHeight=Math.ceil((cell-8)*size.height/size.width+40),list=useRef<FlatList<SlideSummary>|null>(null),scrollAnchor=useRef(0),pendingFocus=useRef<number|null>(null);
+  useLayoutEffect(()=>{list.current?.scrollToOffset({offset:Math.floor(scrollAnchor.current/columns)*(tileHeight+GAP),animated:false});},[columns,tileHeight]);
   const selected=new Set(selectedIds);
   const count=selected.size;
   const indexes=order.map((id,i)=>selected.has(id)?i:-1).filter(i=>i>=0);
   const first=indexes[0]??-1,last=indexes.at(-1)??-1;
   const reorder=(to:number)=>{
-    if(!onReorder||count===0)return;
+    if(disabled||!onReorder||count===0)return;
     const next=moveBlock(order,selectedIds,to);
     if(next.some((id,i)=>id!==order[i]))void onReorder(next);
   };
   const pick=(id:string,mode:"replace"|"toggle"|"range")=>{
+    if(disabled)return;
     const r=nextSelection(order,selectedIds,local.anchor,id,mode);
     store.set(s=>({...s,anchor:r.anchor}));
     onSelectionChange(r.selected);
@@ -71,24 +89,27 @@ export function SlideSorter({
         {count===0?"No slides selected":count===1?"1 slide selected":count+" slides selected"}
       </Text>
       {onReorder?<>
-        <ToolButton label="Move to start" disabled={count===0||last<count} styled={styled} onPress={()=>reorder(0)}/>
-        <ToolButton label="Move earlier" disabled={count===0||first<=0} styled={styled} onPress={()=>reorder(first-1)}/>
-        <ToolButton label="Move later" disabled={count===0||last>=order.length-1} styled={styled} onPress={()=>reorder(first+1)}/>
-        <ToolButton label="Move to end" disabled={count===0||first>=order.length-count} styled={styled} onPress={()=>reorder(order.length)}/>
+        <ToolButton label="Move to start" disabled={disabled||count===0||last<count} styled={styled} onPress={()=>reorder(0)}/>
+        <ToolButton label="Move earlier" disabled={disabled||count===0||first<=0} styled={styled} onPress={()=>reorder(first-1)}/>
+        <ToolButton label="Move later" disabled={disabled||count===0||last>=order.length-1} styled={styled} onPress={()=>reorder(first+1)}/>
+        <ToolButton label="Move to end" disabled={disabled||count===0||first>=order.length-count} styled={styled} onPress={()=>reorder(order.length)}/>
       </>:null}
-      {onRemove?<ToolButton label={count>1?"Delete "+count+" slides":"Delete slide"} disabled={count===0||count>=order.length}
+      {onRemove?<ToolButton label={count>1?"Delete "+count+" slides":"Delete slide"} disabled={disabled||count===0||count>=order.length}
         styled={styled} onPress={()=>void onRemove(order.filter(id=>selected.has(id)))}/>:null}
     </View>
-    <ScrollView onLayout={e=>store.set(s=>({...s,width:e.nativeEvent.layout.width}))}
-      contentContainerStyle={{flexDirection:"row",flexWrap:"wrap",gap:GAP}}>
-      {slides.map((slide,index)=>{
+    <FlatList ref={list} key={columns} numColumns={columns} data={slides} keyExtractor={slide=>slide.id} initialNumToRender={Math.max(6,columns*2)} windowSize={5} removeClippedSubviews={false}
+      initialScrollIndex={Math.floor(scrollAnchor.current/columns)} getItemLayout={(_data,index)=>({length:tileHeight+GAP,offset:(tileHeight+GAP)*index,index})}
+      onScroll={e=>{scrollAnchor.current=Math.max(0,Math.floor(e.nativeEvent.contentOffset.y/(tileHeight+GAP))*columns);}} scrollEventThrottle={32}
+      onLayout={e=>store.set(s=>({...s,width:e.nativeEvent.layout.width}))} style={{maxHeight:640}} contentContainerStyle={{gap:GAP}} columnWrapperStyle={columns>1?{gap:GAP}:undefined}
+      extraData={[selectedIds,disabled,local.multi]} renderItem={({item:slide,index})=>{
+
         const on=selected.has(slide.id);
         const onKeyDown=(e:OfficeKeyEvent)=>{
           const {key,shift,mod}=officeKey(e);
           const next=gridMove(index,key,columns,slides.length,I18nManager.isRTL);
           let handled=true;
           if(next!==undefined){
-            refs.current.get(next)?.focus?.();
+            const node=refs.current.get(next);if(node)node.focus?.();else{pendingFocus.current=next;list.current?.scrollToOffset({offset:Math.floor(next/columns)*(tileHeight+GAP),animated:false});}
             if(shift)pick(order[next]!,"range");
           }
           else if(key===" ")pick(slide.id,"toggle");
@@ -97,8 +118,8 @@ export function SlideSorter({
           else handled=false;
           if(handled)(e as unknown as {preventDefault?:()=>void}).preventDefault?.();
         };
-        return <View key={slide.id} style={{width:cell,gap:4}}>
-          <Pressable ref={node=>{refs.current.set(index,node as unknown as {focus?:()=>void}|null);}}
+        return <View key={slide.id} style={{width:cell,height:tileHeight,gap:4}}>
+          <Pressable disabled={disabled} ref={node=>{refs.current.set(index,node as unknown as {focus?:()=>void}|null);if(node&&pendingFocus.current===index){(node as unknown as {focus?:()=>void}).focus?.();pendingFocus.current=null;}}}
             accessibilityRole="checkbox" accessibilityLabel={slideLabel(slide,index,slides.length)} accessibilityState={{checked:on}}
             accessibilityHint={onOpen?"Double tap to select. Use the open action to edit.":undefined}
             accessibilityActions={onOpen?[{name:"activate"},{name:"open",label:"Open slide"}]:[{name:"activate"}]}
@@ -120,7 +141,6 @@ export function SlideSorter({
           </Pressable>
           <Text {...{className:muted}} style={{fontVariant:["tabular-nums"],textAlign:"center"}}>{index+1}</Text>
         </View>;
-      })}
-    </ScrollView>
-  </View>;
+      }}/>
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

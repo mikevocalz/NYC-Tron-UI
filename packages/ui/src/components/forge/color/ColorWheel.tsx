@@ -42,6 +42,7 @@ export function ColorWheel({
 }:ColorWheelProps){
   assertHsv(value);
   if(!Number.isFinite(maxSize)||maxSize<120||maxSize>800)throw new RangeError("maxSize must be 120..800");
+  if(!Number.isFinite(step)||step<=0||step>360)throw new RangeError("Hue step must be greater than 0 and at most 360 degrees");
   const [state,store]=useLocalStore(()=>({width:0,preview:undefined as number|undefined,fine:false}));
   const latest=useRef({value,onPreview,onCommit,disabled});
   latest.current={value,onPreview,onCommit,disabled};

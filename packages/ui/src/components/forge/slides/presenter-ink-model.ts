@@ -124,7 +124,7 @@ export function normalizePoint(x:number,y:number,view:InkViewSize,pressure?:numb
   if(!(view.width>0)||!(view.height>0))throw new RangeError("The ink view has no size yet");
   const clamp=(n:number)=>Math.min(1,Math.max(0,n));
   const p={x:clamp(x/view.width),y:clamp(y/view.height)};
-  return pressure!==undefined&&Number.isFinite(pressure)&&pressure>0?{...p,pressure:clamp(pressure)}:p;
+  return pressure!==undefined&&Number.isFinite(pressure)&&pressure>=0?{...p,pressure:clamp(pressure)}:p;
 }
 
 /** `points` plus `next`, unless `next` is within {@linkcode MIN_POINT_SPACING} of the last point. */

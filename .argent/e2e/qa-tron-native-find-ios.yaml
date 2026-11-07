@@ -1,0 +1,36 @@
+steps:
+  - echo: Restart to the deterministic shell, then open native Find without changing its document.
+  - launch: com.nyctron.instruments.example
+  - await: { visible: { text: Search assets }, timeout: 15000 }
+  - await: { idle: true }
+  - echo: Select Find; expect the document editor and Find and replace trigger.
+  - tap: { text: Find }
+  - await: { visible: { text: Find and replace } }
+  - await: { idle: true }
+  - echo: Open the native anchored Find surface; expect two document matches.
+  - tap: { text: Find and replace }
+  - await: { visible: { text: Replacement text }, timeout: 10000 }
+  - await: { idle: true }
+  - await: { visible: { text: 2 matches } }
+  - type:
+      into: { text: Replacement text }
+      text: $&
+      submit: false
+  # UIKit's editable value is exposed by AXRuntime but omitted in the projected
+  # UIView text used by directives; retain the recorded structural value check.
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector: { text: Replacement text }
+      expectedText: $&
+  - echo: Replace all matches with the literal dollar/ampersand string; expect zero matches and a changed document.
+  - tap: { text: Replace all }
+  - await: { visible: { text: 0 matches } }
+  - echo: Close native Find; replacement controls disappear and the host document retains the literal replacement.
+  - tap: { text: Close find and replace }
+  - await: { hidden: { text: Replacement text } }
+  - await:
+      text:
+        in: { text: Consumer document state }
+        contains: '"text":"Hello $&. $& of NYC-Tron."'
+  - await: { idle: true }

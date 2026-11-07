@@ -12,11 +12,14 @@ const ID=/^[a-zA-Z0-9][a-zA-Z0-9._:-]*$/;
 
 /** Rejects duplicate or malformed IDs and empty labels before anything renders. */
 export function validateCommands(commands:readonly PaletteCommand[]):void{
+  if(commands.length>1000)throw new RangeError("Too many palette commands");
   const seen=new Set<string>();
   for(const command of commands){
-    if(typeof command.id!=="string"||!ID.test(command.id)||seen.has(command.id))
+    if(typeof command.id!=="string"||command.id.length>256||!ID.test(command.id)||seen.has(command.id))
       throw new TypeError("Duplicate or invalid command ID");
-    if(typeof command.label!=="string"||!command.label.trim())throw new TypeError("Command label required");
+    if(typeof command.label!=="string"||!command.label.trim()||command.label.length>512)throw new TypeError("Command label required");
+    if(command.keywords&&(command.keywords.length>256||command.keywords.some(k=>typeof k!=="string"||k.length>512)))throw new TypeError("Invalid command keywords");
+    if(command.disabled!==undefined&&typeof command.disabled!=="boolean")throw new TypeError("Invalid command availability");
     seen.add(command.id);
   }
 }

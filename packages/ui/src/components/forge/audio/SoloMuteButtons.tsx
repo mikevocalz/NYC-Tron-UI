@@ -1,13 +1,25 @@
+import {audioTargetSize,audioCopy} from './audio-chrome.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useId } from "react";
 import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { webToggleProps } from "../toggle-a11y.ts";
 import type { Audibility, audibility } from "./mixer.ts";
 
-const HIT = 44;
+
+export interface SoloMuteLabels {
+ mute:(name:string)=>string;solo:(name:string)=>string;safe:(name:string)=>string;
+ muteText:string;soloText:string;safeText:string;silencedHint:string;
+}
+const defaultToggleLabels:SoloMuteLabels={mute:name=>'Mute '+name,solo:name=>'Solo '+name,safe:name=>'Solo safe '+name,
+ muteText:'M',soloText:'S',safeText:'Safe',silencedHint:'Silent while another channel is soloed'};
 
 /** Props for {@linkcode SoloMuteButtons}. */
-export interface SoloMuteButtonsProps extends Omit<ViewProps, "children"> {
+export interface SoloMuteButtonsProps extends Omit<ViewProps, "children">,ScopedControlProps {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?:Partial<SoloMuteLabels>;
   /** Channel name used in the accessible names, e.g. `"Mute Bass"`. */
   readonly label: string;
   /** Committed mute state. */
@@ -50,15 +62,25 @@ export interface SoloMuteButtonsProps extends Omit<ViewProps, "children"> {
  * is muted (see {@linkcode audibility}). Group solo and mute live in
  * `MixGroupBar`.
  */
-export function SoloMuteButtons({
+export function SoloMuteButtons({scope='SoloMuteButtons',revision=0,...props}:SoloMuteButtonsProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SoloMuteButtonsBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onMutedCommit={(...args:Parameters<SoloMuteButtonsProps['onMutedCommit']>)=>guard.run('onMutedCommit',h=>h.onMutedCommit(...args))}
+  onSoloCommit={(...args:Parameters<SoloMuteButtonsProps['onSoloCommit']>)=>guard.run('onSoloCommit',h=>h.onSoloCommit(...args))}
+  onSoloSafeCommit={props.onSoloSafeCommit?(...args:Parameters<NonNullable<SoloMuteButtonsProps['onSoloSafeCommit']>>)=>guard.run('onSoloSafeCommit',h=>h.onSoloSafeCommit?.(...args)):undefined}
+ />;
+}
+function SoloMuteButtonsBody({actionError,disabledReason,
   label, muted, solo, audibility, onMutedCommit, onSoloCommit, soloSafe = false, onSoloSafeCommit,
-  direction = "row", disabled = false,
+  direction = "row", disabled = false, targetSize, labels,
   className, unstyled = false, style, ...rest
-}: SoloMuteButtonsProps) {
+}: SoloMuteButtonsProps&{actionError?:string|null}) {
+  const HIT = audioTargetSize(targetSize);
+  const copy = audioCopy(defaultToggleLabels, labels);
   const styled = !unstyled;
   const silenced = audibility === "silenced-by-solo";
   const hintId = useId();
-  const hint = silenced && !muted ? "Silent while another channel is soloed" : undefined;
+  const hint = silenced && !muted ? copy.silencedHint : undefined;
   // React Native Web drops accessibilityHint; describe the button by id there.
   const webHint = Platform.OS === "web" && hint !== undefined;
   const base = "rounded-control items-center justify-center focus-visible:ring-2 focus-visible:ring-focus active:opacity-80";
@@ -75,28 +97,28 @@ export function SoloMuteButtons({
   return <View {...rest} {...{ className: joinClasses("gap-1", className) }}
     style={[{ flexDirection: withSafe ? "column" : direction }, style]}>
     <View style={{ flexDirection: direction, gap: 4 }}>
-    <Pressable accessibilityRole="togglebutton" accessibilityLabel={"Mute " + label}
+    <Pressable accessibilityRole="togglebutton" accessibilityLabel={copy.mute(label)}
       accessibilityState={{ checked: muted, disabled }} {...webToggleProps(muted)}
       accessibilityHint={hint} {...(webHint ? { "aria-describedby": hintId } : {})}
       disabled={disabled} onPress={() => { void onMutedCommit(!muted); }}
       {...{ className: muteClass }}
       style={[box, silenced && !muted ? { borderStyle: "dashed" } : null]}>
-      <Text {...{ className: muteText }}>M</Text>
+      <Text {...{ className: muteText }}>{copy.muteText}</Text>
     </Pressable>
-    <Pressable accessibilityRole="togglebutton" accessibilityLabel={"Solo " + label}
+    <Pressable accessibilityRole="togglebutton" accessibilityLabel={copy.solo(label)}
       accessibilityState={{ checked: solo, disabled }} {...webToggleProps(solo)}
       disabled={disabled} onPress={() => { void onSoloCommit(!solo); }}
       {...{ className: soloClass }} style={box}>
-      <Text {...{ className: soloText }}>S</Text>
+      <Text {...{ className: soloText }}>{copy.soloText}</Text>
     </Pressable>
     </View>
-    {withSafe ? <Pressable accessibilityRole="togglebutton" accessibilityLabel={"Solo safe " + label}
+    {withSafe ? <Pressable accessibilityRole="togglebutton" accessibilityLabel={copy.safe(label)}
       accessibilityState={{ checked: soloSafe, disabled }} {...webToggleProps(soloSafe)}
       disabled={disabled} onPress={() => { void onSoloSafeCommit(!soloSafe); }}
       {...{ className: safeClass }} style={[box, { paddingHorizontal: 8 }]}>
-      <Text {...{ className: safeText }}>Safe</Text>
+      <Text {...{ className: safeText }}>{copy.safeText}</Text>
     </Pressable> : null}
     {webHint ? <Text nativeID={hintId}
       style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0 }}>{hint}</Text> : null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

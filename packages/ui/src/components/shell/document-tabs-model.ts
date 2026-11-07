@@ -10,11 +10,13 @@ export interface DocumentTab {
 
 /** Throws on a missing title or a duplicate id, before anything renders. */
 export function validateDocumentTabs(tabs:readonly DocumentTab[]):void{
+  if(tabs.length>1000)throw new RangeError("Too many document tabs");
   const seen=new Set<string>();
   for(const tab of tabs){
-    if(typeof tab.id!=="string"||!tab.id)throw new TypeError("Document tab id required");
+    if(typeof tab.id!=="string"||!tab.id.trim()||tab.id.length>256)throw new TypeError("Document tab id required");
     if(seen.has(tab.id))throw new TypeError(`Duplicate document tab ${tab.id}`);
-    if(typeof tab.title!=="string"||!tab.title.trim())throw new TypeError(`Document tab ${tab.id} needs a title`);
+    if(typeof tab.title!=="string"||!tab.title.trim()||tab.title.length>512)throw new TypeError(`Document tab ${tab.id} needs a title`);
+    if(tab.dirty!==undefined&&typeof tab.dirty!=="boolean"||tab.closable!==undefined&&typeof tab.closable!=="boolean")throw new TypeError("Invalid document tab flags");
     seen.add(tab.id);
   }
 }

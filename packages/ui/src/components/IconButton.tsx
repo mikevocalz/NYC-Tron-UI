@@ -13,6 +13,8 @@ export interface IconButtonProps extends Omit<PressableProps,"children"|"disable
   /** Both sizes meet the 44pt minimum; `sm` suits dense pane chrome. */
   size?:"sm"|"md";
   disabled?:boolean;
+  /** App-owned minimum target in points, at least 44. */
+  targetSize?:number;
   /** Toggle state. Omit for ordinary actions; pass false for an untoggled toggle. */
   selected?:boolean;
   /** Explicit corner radius in points, for chrome that pins a radius. */
@@ -36,15 +38,15 @@ const variants:Record<IconButtonVariant,string>={
  */
 export function IconButton({
   icon,"aria-label":ariaLabel,accessibilityHint,variant="ghost",size="md",disabled=false,
-  selected,cornerRadius,className,style,unstyled=false,onPress,...rest
+  selected,cornerRadius,className,style,unstyled=false,onPress,targetSize,...rest
 }:IconButtonProps){
+  if(targetSize!==undefined&&(!Number.isFinite(targetSize)||targetSize<44))throw new RangeError('Icon button target must be at least 44 points');
   const styled=!unstyled;
   const radius=cornerRadius===undefined?undefined:{borderRadius:cornerRadius};
-  const merged:PressableProps["style"]=radius
-    ?(typeof style==="function"?state=>[radius,style(state)]:[radius,style])
-    :style;
+  const target={minWidth:targetSize??(size==='sm'?44:48),minHeight:targetSize??(size==='sm'?44:48)};
+  const merged:PressableProps["style"]=typeof style==='function'?state=>[target,radius,style(state),targetSize===undefined?undefined:target]:[target,radius,style,targetSize===undefined?undefined:target];
   return <Pressable {...rest} style={merged}
-    accessibilityRole="button" accessibilityLabel={ariaLabel} accessibilityHint={accessibilityHint}
+    accessibilityRole="button" aria-label={ariaLabel} accessibilityLabel={ariaLabel} accessibilityHint={accessibilityHint}
     accessibilityState={{...rest.accessibilityState,disabled,...(selected===undefined?{}:{selected})}}
     {...(Platform.OS==="web"&&selected!==undefined?{"aria-pressed":selected}:{})}
     disabled={disabled} onPress={onPress}

@@ -53,6 +53,8 @@ export type LayerRow=Readonly<{
  locked?:boolean;
  /** What the layer contains. */
  kind:LayerKind;
+ /** Optional containing group. Flat stacks omit this field. */
+ parentId?:string|null;
  /**
   * Text shown under the name and spoken as "<kindLabel> layer", replacing the
   * built-in {@linkcode layerKindLabel} for `kind`, e.g. "Rectangle" for a
@@ -150,9 +152,10 @@ export function validateLayers(layers:readonly LayerRow[]):void{
  if(layers.length>LAYER_STACK_MAX_ROWS)throw new RangeError("Layer stack exceeds "+LAYER_STACK_MAX_ROWS+" rows");
  const seen=new Set<string>();
  for(const layer of layers){
-  if(!layer.id||seen.has(layer.id))throw new RangeError("Duplicate or empty layer id: "+layer.id);
+  if(!layer.id.trim()||layer.id.length>512||seen.has(layer.id))throw new RangeError("Duplicate or empty layer id: "+layer.id);
   seen.add(layer.id);
-  if(!layer.name.trim())throw new RangeError("Layer name is blank: "+layer.id);
+  if(!layer.name.trim()||layer.name.length>512)throw new RangeError("Layer name is blank or too long: "+layer.id);
+  if(typeof layer.visible!=="boolean"||layer.locked!==undefined&&typeof layer.locked!=="boolean"||layer.parentId!=null&&(!layer.parentId.trim()||layer.parentId.length>512))throw new RangeError("Invalid layer visibility, lock or parent: "+layer.id);
   if(!Number.isFinite(layer.opacity)||layer.opacity<0||layer.opacity>1)
    throw new RangeError("Layer opacity must be within 0..1: "+layer.id);
   if(!Object.hasOwn(KIND_LABELS,layer.kind))throw new RangeError("Unknown layer kind: "+String(layer.kind));

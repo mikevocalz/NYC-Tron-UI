@@ -1,7 +1,7 @@
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {assertHsv,assertRgba,hsvToRgb,rgbaToHex,type HsvColor,type RgbaColor} from "../color.ts";
-import {contrastRating} from "./contrast.ts";
+import {compositeOver,contrastRating} from "./contrast.ts";
 import {HARMONY_KINDS,harmonyColors,type HarmonyKind} from "./harmony.ts";
 
 /** Props for {@linkcode ColorHarmonyAssistant}. */
@@ -60,7 +60,7 @@ export function ColorHarmonyAssistant({
           accessibilityLabel={`${i===0?"Base color":"Use"} ${hex}, contrast ${rating.ratio} to 1, ${level(rating)}`}
           {...{className:joinClasses(styled&&"rounded-control border border-border p-1 focus-visible:ring-2 focus-visible:ring-focus")}}
           style={{width:76,gap:4,alignItems:"stretch"}}>
-          <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control")}} style={{height:44,backgroundColor:hex}}/>
+          <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control")}} style={{height:44,backgroundColor:rgbaToHex(compositeOver(rgb,contrastBackground),false)}}/>
           <Text {...{className:joinClasses(styled&&"text-text text-xs")}} style={{fontVariant:["tabular-nums"]}}>{hex}</Text>
           <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"]}}>
             {`${rating.ratio}:1 ${rating.aa?"AA":"fails"}`}
@@ -70,8 +70,8 @@ export function ColorHarmonyAssistant({
     </View>
     <View {...{className:joinClasses(styled&&"rounded-control border border-border")}}
       style={{backgroundColor:background,padding:12,gap:4}}>
-      <Text style={{color:rgbaToHex(base,false),fontSize:24,fontWeight:"700"}}>Aa Sample heading</Text>
-      <Text style={{color:rgbaToHex(base,false),fontSize:15}}>Body text in the base color on this background.</Text>
+      <Text style={{color:rgbaToHex(base),fontSize:24,fontWeight:"700"}}>Aa Sample heading</Text>
+      <Text style={{color:rgbaToHex(base),fontSize:15}}>Body text in the base color on this background.</Text>
     </View>
     <Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
       {`Base on background: ${baseRating.ratio}:1, ${level(baseRating)}.`}

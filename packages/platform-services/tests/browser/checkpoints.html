@@ -1,0 +1,48 @@
+<!doctype html><meta charset="utf-8"><title>Checkpoint storage acceptance</title>
+<main><h1>Checkpoint storage acceptance</h1><pre id="result" aria-live="polite">Running…</pre></main>
+<script type="module">
+import {createPlatformCheckpointStorage} from "/checkpoints/platform.web.js";
+const result = document.querySelector("#result");
+const check = (value, message) => { if (!value) throw new Error(message); };
+const equal = (a, b) => a?.length === b.length && a.every((v, i) => v === b[i]);
+const storage = createPlatformCheckpointStorage("browser-acceptance");
+try {
+  const prior = await storage.read("document");
+  const reopened = equal(prior, [9, 8, 7, 6]);
+  const input = new Uint8Array([1, 2, 3, 4]);
+  const writing = storage.write("document", input);
+  input.fill(99); await writing;
+  const read = await storage.read("document");
+  check(equal(read, [1, 2, 3, 4]), "Caller mutation changed persisted bytes");
+  read.fill(88);
+  check(equal(await storage.read("document"), [1, 2, 3, 4]), "Read returned shared mutable state");
+
+  // Abort after the request succeeds: a request-success implementation would
+  // falsely report a committed save and fail this real transaction check.
+  const put = IDBObjectStore.prototype.put;
+  IDBObjectStore.prototype.put = function (...args) {
+    const request = put.apply(this, args);
+    request.addEventListener("success", () => request.transaction.abort());
+    return request;
+  };
+  let rejected = false;
+  try { await storage.write("document", new Uint8Array([5, 5, 5])); }
+  catch { rejected = true; }
+  finally { IDBObjectStore.prototype.put = put; }
+  check(rejected, "Aborted transaction was reported as saved");
+  check(equal(await storage.read("document"), [1, 2, 3, 4]), "Aborted transaction lost the previous checkpoint");
+  await storage.write("document", new Uint8Array([9, 8, 7, 6]));
+  await storage.close();
+  rejected = false;
+  try { await storage.read("document"); } catch { rejected = true; }
+  check(rejected, "Closed storage still accepted reads");
+  const fresh = createPlatformCheckpointStorage("browser-acceptance");
+  try { check(equal(await fresh.read("document"), [9, 8, 7, 6]), "Fresh connection lost the saved checkpoint"); }
+  finally { await fresh.close(); }
+  result.textContent = `PASS: owned buffers, atomic transaction abort, retained checkpoint, fresh connection and cleanup. Prior page checkpoint reopened: ${reopened}.`;
+  document.documentElement.dataset.acceptance = "passed";
+} catch (error) {
+  result.textContent = `FAIL: ${error.stack ?? error}`;
+  document.documentElement.dataset.acceptance = "failed";
+} finally { await storage.close(); }
+</script>

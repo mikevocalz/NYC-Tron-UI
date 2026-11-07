@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateWorkspaceDocument,validateWorkspace,layoutForMode} from '../src/components/shell/workspace-model.ts';
+import {validatePresetList,copyName,MAX_WORKSPACE_PRESETS} from '../src/components/shell/workspace-preset-model.ts';
+const layout={floating:[]};
+test('workspace document keys are validated and inherited layout names never replace the default',()=>{validateWorkspaceDocument({id:'doc',title:'Harbor',dirty:false});for(const document of [{id:'',title:'Harbor'},{id:'x',title:' '},{id:'x',title:'Harbor',dirty:'false'}])assert.throws(()=>validateWorkspaceDocument(document));const mode={id:'constructor',label:'Custom',panels:[],defaultLayout:layout};validateWorkspace([mode],{},[]);assert.equal(layoutForMode(mode,{}),layout);assert.equal(layoutForMode(mode,Object.create({constructor:{invalid:true}})),layout);assert.throws(()=>validateWorkspace([mode],{},['same','same']));});
+test('preset metadata cannot lose its built-in permission flag and name copying has a bounded search',()=>{const preset={id:'x',name:'Layout',builtIn:true,modified:false};validatePresetList([preset]);assert.throws(()=>validatePresetList([{...preset,builtIn:undefined}]));assert.throws(()=>validatePresetList([{...preset,modified:'false'}]));const occupied=Array.from({length:MAX_WORKSPACE_PRESETS},(_,i)=>({...preset,id:String(i),name:i?'Layout copy '+(i+1):'Layout copy'}));assert.equal(copyName('Layout',occupied),'Layout copy 1001');assert.throws(()=>copyName('Layout',[...occupied,preset]));});

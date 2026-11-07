@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEffect,useRef} from "react";
 import {Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
@@ -25,7 +27,7 @@ export interface PaintSwatch {
 }
 
 /** Props for {@linkcode FillStrokeInspector}. Every value is the selected layer's, owned by the host. */
-export interface FillStrokeInspectorProps extends Omit<ViewProps,"children"> {
+export interface FillStrokeInspectorProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The layer's content kind; shapes take a solid fill only and booleans a fill only. */
   kind:PaintableKind;
   fill:Paint|null;
@@ -39,15 +41,15 @@ export interface FillStrokeInspectorProps extends Omit<ViewProps,"children"> {
   /** The gradient stop a fill swatch recolors (shared with the on-canvas handles). @default 0 */
   selectedStop?:number;
   /** Maps to `setFill {id, fill}`. */
-  onSetFill:(fill:Paint|null)=>void;
+  onSetFill:(fill:Paint|null,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Maps to `setStroke {id, stroke}`. One call per release, key press or submitted field. */
-  onSetStroke:(stroke:Stroke|null)=>void;
+  onSetStroke:(stroke:Stroke|null,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Stroke to draw while a value is being scrubbed; `undefined` when the scrub ends. */
   onPreviewStroke?:(stroke:Stroke|undefined)=>void;
   /** Maps to `setFillRule {id, rule}`. */
-  onSetFillRule:(rule:FillRule)=>void;
+  onSetFillRule:(rule:FillRule,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Maps to `setPaintOrder {id, order}`. */
-  onSetPaintOrder:(order:PaintOrder)=>void;
+  onSetPaintOrder:(order:PaintOrder,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Opens the host's color picker for a color outside the swatches. The button shows only when this is passed. */
   onRequestColor?:(target:"fill"|"stroke")=>void;
   className?:string;
@@ -68,10 +70,22 @@ const sameColor=(a:Rgba,b:Rgba)=>a.every((v,i)=>v===b[i]);
  * offset and paint order. Controls a layer kind cannot use stay visible,
  * disabled, with the reason under them.
  */
-export function FillStrokeInspector({
+export function FillStrokeInspector({scope='fill-stroke',revision=0,...props}:FillStrokeInspectorProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.kind,props.bounds]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <FillStrokeInspectorBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onSetFill={value=>guard.run('onSetFill',(host,signal)=>host.onSetFill(value,signal))}
+  onSetStroke={value=>guard.run('onSetStroke',(host,signal)=>host.onSetStroke(value,signal))}
+  onSetFillRule={value=>guard.run('onSetFillRule',(host,signal)=>host.onSetFillRule(value,signal))}
+  onSetPaintOrder={value=>guard.run('onSetPaintOrder',(host,signal)=>host.onSetPaintOrder(value,signal))}
+  {...(props.onRequestColor?{onRequestColor:(target:Parameters<NonNullable<FillStrokeInspectorProps['onRequestColor']>>[0])=>guard.current()?.onRequestColor?.(target)}:{})}
+  {...(props.onPreviewStroke?{onPreviewStroke:(value:Parameters<NonNullable<FillStrokeInspectorProps['onPreviewStroke']>>[0])=>guard.current()?.onPreviewStroke?.(value)}:{})}/>;
+}
+function FillStrokeInspectorBody({
+  actionError=null,busy=false,disabledReason,
   kind,fill,stroke,fillRule,paintOrder,bounds,swatches,selectedStop=0,onSetFill,onSetStroke,onPreviewStroke,
   onSetFillRule,onSetPaintOrder,onRequestColor,className,unstyled=false,style,...rest
-}:FillStrokeInspectorProps){
+}:FillStrokeInspectorProps&{actionError?:string|null;busy?:boolean}){
   if(fill)validatePaint(fill);
   if(stroke)validateStroke(stroke);
   const support=paintSupport(kind);
@@ -85,8 +99,8 @@ export function FillStrokeInspector({
   const styled=!unstyled;
   const fallback:Rgba=swatches[0]?.color??[0,0,0,255];
   const muted=joinClasses(styled&&"text-text-muted text-xs");
-  const gradientReason=availabilityReason(support.gradientFill);
-  const strokeReason=availabilityReason(support.stroke);
+  const gradientReason=disabledReason??(busy?"Applying change":availabilityReason(support.gradientFill));
+  const strokeReason=disabledReason??(busy?"Applying change":availabilityReason(support.stroke));
   const fillType=fillTypeOf(fill);
   const stop=fill&&fill.type!=="solid"?Math.min(selectedStop,fill.stops.length-1):0;
   const fillColor=fill?(fill.type==="solid"?fill.color:fill.stops[stop]!.color):undefined;
@@ -113,6 +127,8 @@ export function FillStrokeInspector({
 
   return <View {...rest} {...{className:joinClasses("gap-4",styled&&"rounded-control border border-border bg-surface-raised p-3",className)}}
     style={[{minWidth:0},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Applying change"}</Text>:null}
     <View style={{gap:8}} testID="fill-section">
       <GroupLabel styled={styled}>Fill</GroupLabel>
       <SegmentedControl aria-label="Fill type" unstyled={unstyled} value={fillType}

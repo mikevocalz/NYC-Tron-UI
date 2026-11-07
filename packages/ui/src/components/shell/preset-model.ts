@@ -10,10 +10,12 @@ export interface PresetLike {
 
 /** Throws on a duplicate id or an empty name. */
 export function validatePresets(presets:readonly PresetLike[]):void{
+  if(presets.length>1000)throw new RangeError("Too many gallery presets");
   const seen=new Set<string>();
   for(const p of presets){
-    if(typeof p.id!=="string"||!p.id||seen.has(p.id))throw new TypeError("Duplicate or missing preset id");
-    if(typeof p.name!=="string"||!p.name.trim())throw new TypeError(`Preset ${p.id} needs a name`);
+    if(typeof p.id!=="string"||!p.id.trim()||p.id.length>256||seen.has(p.id))throw new TypeError("Duplicate or missing preset id");
+    if(typeof p.name!=="string"||!p.name.trim()||p.name.length>512)throw new TypeError(`Preset ${p.id} needs a name`);
+    if(p.favorite!==undefined&&typeof p.favorite!=="boolean")throw new TypeError("Invalid preset favorite state");
     seen.add(p.id);
   }
 }

@@ -12,8 +12,8 @@ const pan = { ...gain, param: "pan" };
 const pts = [{ ticks: 960, value: 1 }, { ticks: 1920, value: 0.5 }, { ticks: 3840, value: 0.25 }];
 const close = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) < eps, `${a} != ${b}`);
 
-test("modes are off and read only", () => {
-  assert.deepEqual([...AUTOMATION_MODES], ["off", "read"]);
+test("automation modes include host-gated live transport modes", () => {
+  assert.deepEqual([...AUTOMATION_MODES], ["off", "read", "write", "touch", "latch", "trim"]);
   assert.equal(neutralValue("gain"), 1);
   assert.equal(neutralValue("pan"), 0);
 });

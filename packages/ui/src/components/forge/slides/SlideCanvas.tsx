@@ -1,4 +1,7 @@
-import {useRef,type ReactNode} from "react";
+import {validateSlideSummary} from './slide-model.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useRef,useLayoutEffect,useMemo,type ReactNode} from "react";
 import {PanResponder,Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -8,7 +11,7 @@ import {SLIDE_SNAP_POINTS,fitScale,nudge,objectLabel,resizeFromCorner,snapRect,s
 import {SLIDE_DEFAULT_SIZE,rgbaCss,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
 
 /** Props for {@linkcode SlideCanvas}. Every edit is reported once, on release or commit; the slide is controlled. */
-export interface SlideCanvasProps extends Omit<ViewProps,"children"> {
+export interface SlideCanvasProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly slide:SlideSummary;
   readonly size?:SlideSize;
   readonly selectedObjectId?:string;
@@ -28,6 +31,7 @@ export interface SlideCanvasProps extends Omit<ViewProps,"children"> {
   readonly renderImage?:(src:string,object:SlideObject)=>ReactNode;
   /** @default "Slide" */
   readonly label?:string;
+  disabled?:boolean;
   className?:string;
   unstyled?:boolean;
 }
@@ -45,15 +49,26 @@ type Local={width:number;height:number;preview:Preview|null;editing:{id:string;d
  * The slide is document geometry, so it is never mirrored in RTL layouts:
  * drags, the resize corner and arrow keys move objects in slide space.
  */
-export function SlideCanvas({
+export function SlideCanvas({scope='slide-canvas',revision=0,...props}:SlideCanvasProps){
+ validateSlideSummary(props.slide);const identity=JSON.stringify([...controlIdentity(scope,revision),props.slide.id]),owner=JSON.stringify([identity,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SlideCanvasBody key={identity} {...props} boundary={owner} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+ onSelectObject={id=>{const h=guard.current();if(h&&(id===undefined||h.slide.objects.some(o=>o.id===id)))h.onSelectObject(id);}}
+ onMoveObject={props.onMoveObject?(id,x,y)=>guard.run('move',h=>h.slide.objects.some(o=>o.id===id)?h.onMoveObject?.(id,x,y):undefined):undefined}
+ onResizeObject={props.onResizeObject?(id,w,h)=>guard.run('resize',host=>host.slide.objects.some(o=>o.id===id)?host.onResizeObject?.(id,w,h):undefined):undefined}
+ onRotateObject={props.onRotateObject?(id,degrees)=>guard.run('rotate',h=>h.slide.objects.some(o=>o.id===id)?h.onRotateObject?.(id,degrees):undefined):undefined}
+ onRemoveObject={props.onRemoveObject?id=>guard.run('remove',h=>h.slide.objects.some(o=>o.id===id)?h.onRemoveObject?.(id):undefined):undefined}
+ onSetText={props.onSetText?async(id,text)=>{const ok=await guard.run('text',h=>{if(!h.slide.objects.some(o=>o.id===id&&o.kind==='text'))throw new Error('This text object is unavailable');return h.onSetText?.(id,text);});if(ok!==true)throw new Error('Text was not saved; the draft is retained');}:undefined}/>;
+}
+function SlideCanvasBody({boundary,actionError,disabledReason,disabled=false,
+
   slide,size=SLIDE_DEFAULT_SIZE,selectedObjectId,onSelectObject,onMoveObject,onResizeObject,onRotateObject,onSetText,
   onRemoveObject,snap=true,renderImage,label="Slide",className,unstyled=false,...rest
-}:SlideCanvasProps){
+}:SlideCanvasProps&{boundary:string;actionError?:string|null}){
   const styled=!unstyled;
   const [local,store]=useLocalStore<Local>(()=>({width:0,height:0,preview:null,editing:null}));
   const scale=fitScale(size,local.width,local.height>0?local.height:Infinity);
-  const latest=useRef({slide,size,scale,snap,selectedObjectId,onSelectObject,onMoveObject,onResizeObject});
-  latest.current={slide,size,scale,snap,selectedObjectId,onSelectObject,onMoveObject,onResizeObject};
+  const latest=useRef({slide,size,scale,snap,selectedObjectId,onSelectObject,onMoveObject,onResizeObject,disabled});
+  useLayoutEffect(()=>{latest.current={slide,size,scale,snap,selectedObjectId,onSelectObject,onMoveObject,onResizeObject,disabled};});
   const start=useRef<SlideObject|null>(null);
   // Page position where the drag began. The responder is granted only after 3pt of travel, and
   // some hosts restart gestureState.dx at the grant, so distance is measured from the page instead.
@@ -67,17 +82,20 @@ export function SlideCanvas({
     if(o)store.set(s=>({...s,preview:{id:o.id,x:o.x,y:o.y,w:o.w,h:o.h,guides:[]}}));
   };
   const cancel=()=>{start.current=null;store.set(s=>({...s,preview:null}));};
+  const objectSignature=useMemo(()=>JSON.stringify(slide.objects),[slide.objects]);
+  useLayoutEffect(()=>{cancel();},[boundary,objectSignature,scale,size.width,size.height,selectedObjectId]);
   const movePan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
   if(!movePan.current)movePan.current=PanResponder.create({
     onStartShouldSetPanResponder:()=>false,
     // Capture phase: the object's Pressable already holds the press, and a drag past 3pt is a move, not a tap.
     onMoveShouldSetPanResponderCapture:(e,g)=>{
-      const claim=latest.current.onMoveObject!==undefined&&latest.current.selectedObjectId!==undefined&&Math.hypot(g.dx,g.dy)>3;
+      const claim=!latest.current.disabled&&latest.current.onMoveObject!==undefined&&latest.current.selectedObjectId!==undefined&&Math.hypot(g.dx,g.dy)>3;
       if(claim)anchor.current={x:e.nativeEvent.pageX-g.dx,y:e.nativeEvent.pageY-g.dy};
       return claim;
     },
     onPanResponderGrant:begin,
-    onPanResponderMove:e=>{
+    onPanResponderMove:(e,g)=>{
+      if(g.numberActiveTouches>1){cancel();return;}
       const p=latest.current,o=start.current;
       if(!o||p.scale<=0)return;
       const dx=e.nativeEvent.pageX-anchor.current.x,dy=e.nativeEvent.pageY-anchor.current.y;
@@ -86,45 +104,46 @@ export function SlideCanvas({
       const s=p.snap?snapRect(raw,others,p.size,SLIDE_SNAP_POINTS/p.scale):{x:raw.x,y:raw.y,guides:[]};
       store.set(st=>({...st,preview:{id:o.id,x:round(s.x),y:round(s.y),w:o.w,h:o.h,guides:s.guides}}));
     },
-    onPanResponderRelease:()=>{
-      const o=start.current,pv=store.get().preview;
-      cancel();
-      if(o&&pv&&(pv.x!==o.x||pv.y!==o.y))void latest.current.onMoveObject?.(o.id,pv.x,pv.y);
+    onPanResponderRelease:e=>{
+      const o=start.current,p=latest.current;if(!o||p.scale<=0){cancel();return;}
+      const raw={x:o.x+(e.nativeEvent.pageX-anchor.current.x)/p.scale,y:o.y+(e.nativeEvent.pageY-anchor.current.y)/p.scale,w:o.w,h:o.h},next=p.snap?snapRect(raw,p.slide.objects.filter(x=>x.id!==o.id),p.size,SLIDE_SNAP_POINTS/p.scale):raw;
+      cancel();if(round(next.x)!==o.x||round(next.y)!==o.y)void p.onMoveObject?.(o.id,round(next.x),round(next.y));
     },
     onPanResponderTerminate:cancel,
     onPanResponderTerminationRequest:()=>false,
   });
   const sizePan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
   if(!sizePan.current)sizePan.current=PanResponder.create({
-    onStartShouldSetPanResponder:()=>latest.current.onResizeObject!==undefined,
-    onMoveShouldSetPanResponder:()=>latest.current.onResizeObject!==undefined,
+    onStartShouldSetPanResponder:()=>!latest.current.disabled&&latest.current.onResizeObject!==undefined,
+    onMoveShouldSetPanResponder:()=>!latest.current.disabled&&latest.current.onResizeObject!==undefined,
     onPanResponderGrant:begin,
     onPanResponderMove:(e,g)=>{
+      if(g.numberActiveTouches>1){cancel();return;}
       const p=latest.current,o=start.current;
       if(!o||p.scale<=0)return;
       const keep=(e.nativeEvent as unknown as {shiftKey?:boolean}).shiftKey===true;
       const r=resizeFromCorner(o,g.dx/p.scale,g.dy/p.scale,keep);
       store.set(st=>({...st,preview:{id:o.id,x:o.x,y:o.y,w:r.w,h:r.h,guides:[]}}));
     },
-    onPanResponderRelease:()=>{
-      const o=start.current,pv=store.get().preview;
-      cancel();
-      if(o&&pv&&(pv.w!==o.w||pv.h!==o.h))void latest.current.onResizeObject?.(o.id,pv.w,pv.h);
+    onPanResponderRelease:(e,g)=>{
+      const o=start.current,p=latest.current;if(!o||p.scale<=0){cancel();return;}
+      const keep=(e.nativeEvent as unknown as {shiftKey?:boolean}).shiftKey===true,next=resizeFromCorner(o,g.dx/p.scale,g.dy/p.scale,keep);cancel();
+      if(next.w!==o.w||next.h!==o.h)void p.onResizeObject?.(o.id,next.w,next.h);
     },
     onPanResponderTerminate:cancel,
     onPanResponderTerminationRequest:()=>false,
   });
 
   const startEditing=(o:SlideObject)=>{if(o.kind==="text"&&onSetText)store.set(s=>({...s,editing:{id:o.id,draft:o.text??""}}));};
-  const finishEditing=(commit:boolean)=>{
-    const ed=store.get().editing;
-    if(!ed)return;
-    store.set(s=>({...s,editing:null}));
-    const o=slide.objects.find(x=>x.id===ed.id);
-    if(commit&&o&&ed.draft!==(o.text??""))void onSetText?.(ed.id,ed.draft);
+  const savingText=useRef(false);
+  const finishEditing=async(commit:boolean)=>{
+    const ed=store.get().editing;if(!ed||savingText.current)return;
+    if(!commit){store.set(s=>({...s,editing:null}));return;}
+    const o=slide.objects.find(x=>x.id===ed.id);if(!o||ed.draft===(o.text??'')){store.set(s=>({...s,editing:null}));return;}
+    savingText.current=true;try{await onSetText?.(ed.id,ed.draft);if(store.get().editing?.id===ed.id&&store.get().editing?.draft===ed.draft)store.set(s=>({...s,editing:null}));}catch{/* Scoped owner shows the failure; preserve this draft. */}finally{savingText.current=false;}
   };
   const onKeyDown=(e:OfficeKeyEvent)=>{
-    if(local.editing)return;
+    if(local.editing||disabled)return;
     const {key,shift}=officeKey(e);
     const o=selected;
     let handled=true;
@@ -175,7 +194,7 @@ export function SlideCanvas({
             {...{className:joinClasses(styled&&"border",styled&&(on?"border-focus":"border-transparent"))}}
             style={{position:"absolute",left:shown.x*scale-1,top:shown.y*scale-1,width:shown.w*scale+2,height:shown.h*scale+2,
               transform:shown.rotation?[{rotate:shown.rotation+"deg"}]:undefined}}/>
-          {editing?<TextInput autoFocus multiline value={local.editing!.draft} accessibilityLabel="Text box contents"
+          {editing?<TextInput autoFocus multiline editable={!disabled} maxLength={1048576} value={local.editing!.draft} accessibilityLabel="Text box contents"
             onChangeText={draft=>store.set(s=>({...s,editing:{id:o.id,draft}}))}
             onBlur={()=>finishEditing(true)}
             onKeyPress={e=>{if(e.nativeEvent.key==="Escape")finishEditing(false);}}
@@ -194,7 +213,7 @@ export function SlideCanvas({
       {slide.objects.length===0?<View pointerEvents="none" style={{position:"absolute",left:0,right:0,top:0,bottom:0,alignItems:"center",justifyContent:"center"}}>
         <Text {...{className:joinClasses(styled&&"text-text-muted")}}>Empty slide. Add text, a shape or an image.</Text>
       </View>:null}
-    </View>:null}
+    </View>:null}<ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/>
   </View>;
 }
 

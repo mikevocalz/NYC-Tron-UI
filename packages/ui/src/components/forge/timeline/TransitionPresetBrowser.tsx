@@ -1,11 +1,16 @@
+import {useContext,useMemo as useIdentityMemo} from 'react';
+import {EditorInteractionScope,useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {timelineEditSignature} from './timeline-identity.ts';
 /*
  * Original implementation for NYC-Tron UI; no third-party source. Provenance
  * is recorded in docs/COMPONENT_OWNERSHIP.md.
  *
- * No preview video: Forge has no compositor yet, so each kind is shown as a
- * drawn diagram. When a compositor lands, a host can render a preview next
- * to the list; this component stays the chooser.
+ * Static diagrams identify transition kinds. The host compositor supplies
+ * actual media preview through renderPreview; diagrams are not video output.
  */
+import type {ReactNode} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
@@ -30,9 +35,11 @@ export interface PresetBrowserCut {
 }
 
 /** Props for {@linkcode TransitionPresetBrowser}. */
-export interface TransitionPresetBrowserProps extends Omit<ViewProps,"children"> {
+export interface TransitionPresetBrowserProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** @default TRANSITION_KINDS (the kinds Splice stores) */
   readonly kinds?:readonly TransitionKindInfo[];
+  /** Host compositor preview of actual source media. Static diagrams remain labelled diagrams. */
+  readonly renderPreview?:(kind:string,durationFrames:number)=>ReactNode;
   /** The selected cut, or `undefined`; Apply is disabled with the reason shown until there is one. */
   readonly cut?:PresetBrowserCut;
   readonly rate:FrameRate;
@@ -78,10 +85,19 @@ function Diagram({kind,styled}:{kind:string;styled:boolean}){
  * audio cuts. Apply is disabled, with the reason shown, until a cut is
  * selected, and when the clips have no spare media for a transition.
  */
-export function TransitionPresetBrowser({
-  kinds=TRANSITION_KINDS,cut,rate,presetsSeconds=[0.5,1,2],onApply,dropFrame=false,disabled=false,
+export function TransitionPresetBrowser({scope='TransitionPresetBrowser',revision=0,...props}:TransitionPresetBrowserProps){
+ const parent=useContext(EditorInteractionScope),owner=JSON.stringify(controlIdentity(scope,revision));
+ const boundary=useEditorBoundary([owner,parent,props.disabledReason,props.disabled,props.cut,props.rate,props.kinds]);
+ const guard=useScopedControl(boundary,props,props.disabledReason!==undefined||!!props.disabled);
+ return <EditorInteractionScope.Provider value={boundary}><TransitionPresetBrowserBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onApply={(kind,frames,seconds)=>guard.run('onApply',host=>host.onApply(kind,frames,seconds))}/></EditorInteractionScope.Provider>;
+}
+function TransitionPresetBrowserBody({
+ actionError=null,disabledReason,
+  renderPreview,kinds=TRANSITION_KINDS,cut,rate,presetsSeconds=[0.5,1,2],onApply,dropFrame=false,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:TransitionPresetBrowserProps){
+}:TransitionPresetBrowserProps&{actionError?:string|null}){
+  if(kinds.length>256||new Set(kinds.map(k=>k.kind)).size!==kinds.length||presetsSeconds.length>64||presetsSeconds.some(n=>!Number.isFinite(n)||n<=0)||cut!==undefined&&(!Number.isSafeInteger(cut.maxFrames)||cut.maxFrames<0))throw new RangeError("Invalid transition catalog");
   const fps=rate.numerator/rate.denominator;
   const [state,store]=useLocalStore(()=>({query:"",kind:"",frames:Math.max(1,Math.round(fps))}));
   const styled=!unstyled;
@@ -95,8 +111,10 @@ export function TransitionPresetBrowser({
   const tc=(f:number)=>formatTimecode(f,rate,{dropFrame});
   const presets=presetsSeconds.map(s=>({value:String(Math.max(1,Math.round(s*fps))),label:s+" s"}));
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-3",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {kind&&renderPreview?<View accessibilityLabel="Live transition preview">{renderPreview(kind.kind,frames)}</View>:<Text {...{className:joinClasses(styled&&"text-text-muted")}}>Live transition preview not provided by this editor</Text>}
     <TextField id={(testID??"transitions")+"-search"} label="Search transitions" value={state.query}
-      onChangeText={query=>store.set(s=>({...s,query}))} editable={!disabled} autoCorrect={false}/>
+      maxLength={128} onChangeText={query=>store.set(s=>({...s,query}))} editable={!disabled} autoCorrect={false}/>
     <View accessibilityRole="radiogroup" accessibilityLabel="Transition" style={{gap:4}}>
       {shown.length?shown.map(k=>{
         const on=k.kind===kind?.kind;

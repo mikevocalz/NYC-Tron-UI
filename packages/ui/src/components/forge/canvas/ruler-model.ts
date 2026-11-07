@@ -171,9 +171,10 @@ export interface CanvasGuide {
 export type NewCanvasGuide=Omit<CanvasGuide,"id">;
 /** Throws a `RangeError` for a duplicate id, an unknown orientation or a non-finite position. */
 export function validateGuides(guides:readonly CanvasGuide[]):void{
+  if(guides.length>10000)throw new RangeError("At most 10000 guides are supported");
   const ids=new Set<string>();
   for(const g of guides){
-    if(!g.id)throw new RangeError("Every guide needs an id");
+    if(!g.id.trim()||g.id.length>512)throw new RangeError("Every guide needs an id");
     if(ids.has(g.id))throw new RangeError(`Duplicate guide id ${g.id}`);
     ids.add(g.id);
     if(g.orientation!=="horizontal"&&g.orientation!=="vertical")throw new RangeError(`Guide ${g.id} has an unknown orientation`);

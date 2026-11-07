@@ -58,13 +58,13 @@ export function PanelChoices<T extends string>({ label, value, choices, onChange
 }
 
 /** Labeled single-line field; `error` is announced and drawn under it. */
-export function PanelField({ label, value, onChange, placeholder, error, hint, unstyled, autoCapitalize = "none" }: {
-  label: string; value: string; onChange: (next: string) => void; placeholder?: string;
+export function PanelField({disabled=false, label, value, onChange, placeholder, error, hint, unstyled, autoCapitalize = "none" }: {
+  disabled?:boolean;label: string; value: string; onChange: (next: string) => void; placeholder?: string;
   error?: string; hint?: string; unstyled: boolean; autoCapitalize?: "none" | "sentences";
 }) {
   return <View style={{ gap: 4, minWidth: 140, flexGrow: 1, flexBasis: 140 }}>
     <Text {...{ className: !unstyled ? "text-text-muted" : undefined }} style={{ fontSize: 13 }}>{label}</Text>
-    <TextInput value={value} onChangeText={onChange} placeholder={placeholder} accessibilityLabel={label}
+    <TextInput editable={!disabled} maxLength={8192} value={value} onChangeText={onChange} placeholder={placeholder} accessibilityLabel={label}
       accessibilityHint={hint} autoCapitalize={autoCapitalize} autoCorrect={false} aria-invalid={Boolean(error)}
       {...{ className: joinClasses(!unstyled && "rounded-control border bg-surface-sunken text-text focus:border-focus",
         !unstyled && (error ? "border-danger" : "border-border")) }}

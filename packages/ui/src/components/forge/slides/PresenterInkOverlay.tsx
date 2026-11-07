@@ -1,50 +1,46 @@
-import {useEffect,useRef} from 'react';
-import {View,type ViewProps,type GestureResponderEvent} from 'react-native';
-import {createStore,type StoreApi} from 'zustand/vanilla';
+import {useEffect,useLayoutEffect,useRef,type ReactNode} from 'react';
+import {Text,View,type ViewProps} from 'react-native';
+import {GestureDetector,PointerType,usePanGesture} from 'react-native-gesture-handler';
+import {createStore} from 'zustand/vanilla';
 import {useStore} from 'zustand';
-import {createCanvasResponder} from '../../gestures/canvas-responder.ts';
 import {webKey} from '../../forms/choice-keys.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import type {InkSize} from '../ink/ink-model.ts';
+import {INK_SIZES} from '../ink/ink-model.ts';
 import {appendPoint,createStrokeIdFactory,normalizePoint,resolvePresenterInkKey,strokeSegments,strokesUnderEraser,validatePresenterStrokes,presenterModeStatus,HIGHLIGHTER_OPACITY,LASER_TRAIL_MS,type PresenterInkMode,type PresenterInkPoint,type PresenterInkStroke} from './presenter-ink-model.ts';
-
-/** Controlled normalized presentation ink. The host owns session strokes and undo. */
-export interface PresenterInkOverlayProps extends Omit<ViewProps,'children'> {
- readonly mode:PresenterInkMode;readonly color:string;readonly size:InkSize;readonly strokes:readonly PresenterInkStroke[];
- readonly onStrokeCommit:(stroke:PresenterInkStroke)=>void|Promise<unknown>;
- readonly onRemoveStrokes:(ids:readonly string[])=>void|Promise<unknown>;
- readonly onModeChange:(mode:PresenterInkMode)=>void;readonly disabled?:boolean;readonly reducedMotion?:boolean;
+export interface PresenterInkFrame {strokes:readonly PresenterInkStroke[];laser:PresenterInkPoint|undefined;width:number;height:number;frame:number}
+export interface PresenterInkOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {
+ mode:PresenterInkMode;color:string;size:InkSize;strokes:readonly PresenterInkStroke[];
+ onStrokeCommit:(stroke:PresenterInkStroke,signal?:AbortSignal)=>void|Promise<unknown>;onRemoveStrokes:(ids:readonly string[],signal?:AbortSignal)=>void|Promise<unknown>;
+ onModeChange:(mode:PresenterInkMode)=>void;onLaserPoint?:(point:PresenterInkPoint|null)=>void;disabled?:boolean;reducedMotion?:boolean;
+ /** Optional renderer adapter; default portable Views are limited to 4096 points. */
+ renderInk?:(frame:PresenterInkFrame)=>ReactNode;unstyled?:boolean;
 }
-type Local={width:number;height:number;draft:PresenterInkStroke|undefined;laser:PresenterInkPoint|undefined};
-/** A stable overlay; off passes input through, Escape cancels, one commit per stroke/erase gesture. */
-export function PresenterInkOverlay({mode,color,size,strokes,onStrokeCommit,onRemoveStrokes,onModeChange,disabled=false,reducedMotion=false,style,...rest}:PresenterInkOverlayProps){
- validatePresenterStrokes(strokes);
- const local=useRef<StoreApi<Local>|null>(null);if(!local.current)local.current=createStore<Local>(()=>({width:0,height:0,draft:undefined,laser:undefined}));
- const store=local.current;const state=useStore(store,s=>s);const latest=useRef({mode,color,size,strokes,onStrokeCommit,onRemoveStrokes,onModeChange,disabled});latest.current={mode,color,size,strokes,onStrokeCommit,onRemoveStrokes,onModeChange,disabled};
- const makeId=useRef(createStrokeIdFactory());const active=useRef(false),erased=useRef(new Set<string>());
- const cancel=()=>{active.current=false;erased.current.clear();store.setState({draft:undefined,laser:undefined});};
- useEffect(()=>{cancel();},[mode,disabled]);
- useEffect(()=>{if(!state.laser)return;const timer=setTimeout(()=>store.setState({laser:undefined}),reducedMotion?150:LASER_TRAIL_MS);return()=>clearTimeout(timer);},[state.laser,reducedMotion,store]);
- const point=(e:GestureResponderEvent)=>{const s=store.getState();return normalizePoint(e.nativeEvent.locationX,e.nativeEvent.locationY,s);};
- const move=(e:GestureResponderEvent)=>{
-  if(!active.current)return;const p=point(e),v=latest.current,s=store.getState();
-  if(v.mode==='laser')store.setState({laser:p});
-  else if(v.mode==='eraser'){for(const id of strokesUnderEraser(v.strokes,p,s))erased.current.add(id);}
-  else if(s.draft)store.setState({draft:{...s.draft,points:appendPoint(s.draft.points,p,s)}});
- };
- const responder=useRef<ReturnType<typeof createCanvasResponder>|null>(null);
- if(!responder.current)responder.current=createCanvasResponder({
-  onStartShouldSetPanResponder:()=>!latest.current.disabled&&latest.current.mode!=='off'&&store.getState().width>0&&store.getState().height>0,
-  onPanResponderGrant:e=>{active.current=true;erased.current.clear();const v=latest.current;if(v.mode==='pen'||v.mode==='highlighter')store.setState({draft:{id:makeId.current(),tool:v.mode,color:v.color,size:v.size,points:[point(e)]}});else move(e);},
-  onPanResponderMove:move,
-  onPanResponderRelease:e=>{if(latest.current.disabled){cancel();return;}if(!active.current)return;move(e);const draft=store.getState().draft,ids=[...erased.current];active.current=false;erased.current.clear();store.setState({draft:undefined});if(draft)void latest.current.onStrokeCommit(draft);else if(ids.length)void latest.current.onRemoveStrokes(ids);},
-  onPanResponderTerminate:cancel,onPanResponderTerminationRequest:()=>!active.current,
+type Sample={x:number;y:number;pointerType:PointerType;stylusData?:{pressure:number}};
+/** Shared native recognizer/ink state owner. Renderer adapters never own strokes or capture sessions. */
+export function PresenterInkOverlay({scope='presenter-ink',revision=0,...props}:PresenterInkOverlayProps){
+ const {mode,color,size,strokes,onStrokeCommit:_stroke,onRemoveStrokes:_remove,onModeChange:_mode,onLaserPoint:_laser,disabled=false,reducedMotion=false,renderInk,unstyled=false,disabledReason,style,...rest}=props;
+ validatePresenterStrokes(strokes);const pointCount=strokes.reduce((sum,s)=>sum+s.points.length,0);
+ if(strokes.length>4096||pointCount>(renderInk?131072:4096)||!color.trim()||color.length>256||!INK_SIZES.includes(size)||!['off','laser','pen','highlighter','eraser'].includes(mode))throw new RangeError('Presenter ink exceeds the renderer budget or has invalid settings');
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),mode,color,size,disabled,disabledReason])]),guard=useScopedControl(owner,props,disabled||disabledReason!==undefined),observe=useScopedControl(owner,props,disabled||disabledReason!==undefined),off=disabled||guard.pending||disabledReason!==undefined;
+ const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,s=useStore(store,v=>v),active=useRef(false),erased=useRef(new Set<string>()),makeId=useRef(createStrokeIdFactory());
+ const cancel=()=>{active.current=false;erased.current.clear();store.setState(v=>({draft:undefined,laser:undefined,frame:v.frame+1}));observe.current()?.onLaserPoint?.(null);};
+ useLayoutEffect(()=>{cancel();},[owner,off,s.width,s.height]);
+ useEffect(()=>{if(!s.laser)return;const timer=setTimeout(()=>{store.setState(v=>({laser:undefined,frame:v.frame+1}));observe.current()?.onLaserPoint?.(null);},reducedMotion?150:LASER_TRAIL_MS);return()=>clearTimeout(timer);},[s.laser,reducedMotion,owner]);
+ const point=(e:Sample)=>normalizePoint(e.x,e.y,store.getState(),e.pointerType===PointerType.STYLUS?e.stylusData?.pressure:undefined);
+ const move=(e:Sample)=>{const h=guard.current(),v=store.getState();if(!active.current||!h)return;const p=point(e);if(h.mode==='laser'){store.setState(s=>({laser:p,frame:s.frame+1}));h.onLaserPoint?.(p);}else if(h.mode==='eraser'){for(const id of strokesUnderEraser(h.strokes,p,v))erased.current.add(id);}else if(v.draft){if(v.draft.points.length>=(renderInk?8192:Math.max(1,4096-pointCount))){cancel();store.setState({notice:'Stroke limit reached; draw a shorter stroke'});return;}store.setState(s=>({draft:{...v.draft!,points:appendPoint(v.draft!.points,p,v)},frame:s.frame+1}));}};
+ const gesture=usePanGesture({enabled:!off&&mode!=='off'&&s.width>0&&s.height>0,runOnJS:true,minDistance:0,maxPointers:1,
+ onActivate:e=>{const h=guard.current();if(!h)return;active.current=true;erased.current.clear();store.setState({notice:null});if((h.mode==='pen'||h.mode==='highlighter')&&!renderInk&&pointCount>=4096){active.current=false;store.setState({notice:'Portable ink limit reached; clear ink or use the Graphite renderer'});return;}if(h.mode==='pen'||h.mode==='highlighter')store.setState(v=>({draft:{id:makeId.current(),tool:h.mode as 'pen'|'highlighter',color:h.color,size:h.size,points:[point(e)]},frame:v.frame+1}));else move(e);},
+ onUpdate:move,onTouchesDown:e=>{if(e.numberOfTouches>1)cancel();},onDeactivate:e=>{if(e.canceled){cancel();return;}if(!active.current)return;move(e);if(!active.current)return;const v=store.getState(),ids=[...erased.current];active.current=false;erased.current.clear();store.setState(s=>({draft:undefined,frame:s.frame+1}));if(v.draft)void guard.run('stroke',(h,signal)=>h.onStrokeCommit(v.draft!,signal));else if(ids.length)void guard.run('erase',(h,signal)=>h.onRemoveStrokes(ids,signal));},onFinalize:e=>{if(e.canceled)cancel();},
  });
- const key=(event:unknown)=>{if(latest.current.disabled)return;const k=webKey(event),command=resolvePresenterInkKey(k);if(!command)return;k.preventDefault();if(command.type==='exit'){cancel();latest.current.onModeChange('off');}else if(command.type==='tool')latest.current.onModeChange(command.tool);else {const last=latest.current.strokes.at(-1);if(last)void latest.current.onRemoveStrokes([last.id]);}};
- return <View {...rest} {...responder.current.panHandlers} pointerEvents={mode==='off'||disabled?'none':'auto'} focusable={mode!=='off'&&!disabled} accessibilityLabel={presenterModeStatus(mode)} {...{onKeyDown:key}}
-  onLayout={e=>store.setState({width:e.nativeEvent.layout.width,height:e.nativeEvent.layout.height})} style={[{position:'absolute',left:0,top:0,right:0,bottom:0,overflow:'hidden',direction:'ltr',...(mode!=='off'?{touchAction:'none'}:{} )},style]}>
-  {[...strokes,...(state.draft?[state.draft]:[])].map(stroke=><View key={stroke.id} pointerEvents="none" needsOffscreenAlphaCompositing={stroke.tool==='highlighter'} style={{position:'absolute',left:0,top:0,right:0,bottom:0,opacity:stroke.tool==='highlighter'?HIGHLIGHTER_OPACITY:1}}>
-   {strokeSegments(stroke,state).map((s,i)=><View key={i} style={{position:'absolute',left:s.left,top:s.top,width:s.length,height:s.thickness,borderRadius:s.thickness/2,backgroundColor:stroke.color,transform:[{rotate:`${s.angle}deg`}]}}/>)}
-  </View>)}
-  {state.laser?<View pointerEvents="none" {...{className:'bg-danger'}} style={{position:'absolute',left:state.laser.x*state.width-5,top:state.laser.y*state.height-5,width:10,height:10,borderRadius:5}}/>:null}
- </View>;
+ const frame:PresenterInkFrame={strokes:[...strokes,...(s.draft?[s.draft]:[])],laser:s.laser,width:s.width,height:s.height,frame:s.frame};
+ return <GestureDetector gesture={gesture} touchAction="none"><View {...rest} collapsable={false} pointerEvents={mode==='off'||off?'none':'auto'} focusable={mode!=='off'&&!off} accessibilityLabel={presenterModeStatus(mode)}
+ {...{onKeyDown:(event:unknown)=>{const h=guard.current();if(!h)return;const k=webKey(event),command=resolvePresenterInkKey(k);if(!command)return;k.preventDefault();if(command.type==='exit'){cancel();h.onModeChange('off');}else if(command.type==='tool')h.onModeChange(command.tool);else{const last=h.strokes.at(-1);if(last)void guard.run('undo',(p,signal)=>p.onRemoveStrokes([last.id],signal));}}}}
+ onLayout={e=>{store.setState({width:e.nativeEvent.layout.width,height:e.nativeEvent.layout.height});rest.onLayout?.(e);}} style={[{position:'absolute',left:0,top:0,right:0,bottom:0,overflow:'hidden',direction:'ltr'},style]}>
+ {renderInk?renderInk(frame):<>{frame.strokes.map(stroke=><View key={stroke.id} pointerEvents="none" needsOffscreenAlphaCompositing={stroke.tool==='highlighter'} style={{position:'absolute',left:0,right:0,top:0,bottom:0,opacity:stroke.tool==='highlighter'?HIGHLIGHTER_OPACITY:1}}>{strokeSegments(stroke,frame).map((segment,index)=><View key={index} style={{position:'absolute',left:segment.left,top:segment.top,width:segment.length,height:segment.thickness,borderRadius:segment.thickness/2,backgroundColor:stroke.color,transform:[{rotate:segment.angle+'deg'}]}}/>)}</View>)}{s.laser?<View pointerEvents="none" {...{className:unstyled?undefined:'bg-danger'}} style={{position:'absolute',left:s.laser.x*s.width-5,top:s.laser.y*s.height-5,width:10,height:10,borderRadius:5}}/>:null}</>}
+ {s.notice?<Text {...{className:unstyled?undefined:'text-text bg-surface-raised'}}>{s.notice}</Text>:null}<ErrorMessage message={guard.error??disabledReason} unstyled={unstyled}/>
+ </View></GestureDetector>;
 }
+function makeStore(){return createStore(()=>({width:0,height:0,draft:undefined as PresenterInkStroke|undefined,laser:undefined as PresenterInkPoint|undefined,frame:0,notice:null as string|null}));}

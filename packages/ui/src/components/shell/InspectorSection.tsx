@@ -1,4 +1,4 @@
-import {use,useId,useMemo,type ReactNode} from "react";
+import {use,useId,useMemo,useRef,useLayoutEffect,type ReactNode} from "react";
 import {Platform,Pressable,Switch,Text,View,type ViewProps} from "react-native";
 import {useStore} from "zustand";
 import {createStore} from "zustand/vanilla";
@@ -44,11 +44,18 @@ const EMPTY_REGISTRY=createStore(()=>({rows:{}}));
 export function InspectorSection({
   title,expanded,onExpandedChange,enabled,onEnabledChange,onReset,modified,children,className,unstyled=false,style,...rest
 }:InspectorSectionProps){
+  if(!title.trim()||title.length>512)throw new RangeError("Invalid inspector section title");
   const styled=!unstyled;
   const id=useId();
   const panel=use(InspectorPanelContext);
   const parent=use(InspectorSectionContext);
   const disabled=parent.disabled||enabled===false;
+  const committed=useRef<{parentDisabled:boolean;expanded:boolean;enabled:typeof enabled;onExpandedChange:typeof onExpandedChange;onEnabledChange:typeof onEnabledChange;onReset:typeof onReset;modified:typeof modified}|null>(null);
+  useLayoutEffect(()=>{committed.current={parentDisabled:parent.disabled,expanded,enabled,onExpandedChange,onEnabledChange,onReset,modified};});
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const toggle=()=>{const p=committed.current;p?.onExpandedChange(!p.expanded);};
+  const enable=(value:boolean)=>{const p=committed.current;if(p&&!p.parentDisabled)p.onEnabledChange?.(value);};
+  const reset=()=>{const p=committed.current;if(p&&!p.parentDisabled&&(p.modified??true))p.onReset?.();};
   const path=useMemo(()=>[...parent.path,id],[parent.path,id]);
   const context=useMemo(()=>({path,disabled,depth:parent.depth+1}),[path,disabled,parent.depth]);
   const searching=!!panel?.query.trim();
@@ -66,14 +73,14 @@ export function InspectorSection({
       <View style={{width:4+indent}}/>
       <Pressable accessibilityRole="button" accessibilityLabel={title}
         accessibilityState={{expanded:open}} aria-expanded={open}
-        onPress={()=>onExpandedChange(!expanded)}
+        onPress={toggle}
         {...{className:joinClasses("min-h-11 flex-1 flex-row items-center gap-2",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}>
         <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
           style={{width:7,height:7,borderRightWidth:1.5,borderBottomWidth:1.5,transform:[{rotate:open?"45deg":"-45deg"}],marginHorizontal:4}}/>
         <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm font-semibold",styled&&(disabled?"text-text-muted":"text-text"))}}
           style={{flexShrink:1}}>{title}</Text>
       </Pressable>
-      {showReset?<Pressable accessibilityRole="button" accessibilityLabel={"Reset "+title} onPress={onReset} disabled={parent.disabled}
+      {showReset?<Pressable accessibilityRole="button" accessibilityLabel={"Reset "+title} onPress={reset} disabled={parent.disabled}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control px-2 focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-sunken")}}>
         <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Reset</Text>
       </Pressable>:null}
@@ -81,11 +88,11 @@ export function InspectorSection({
           direction the thumb leaves the track, so the web switch keeps ltr. */}
       {/* The switch itself is smaller than 44pt; this pointer-only wrapper extends its target. */}
       {onEnabledChange?<Pressable accessible={false} focusable={false} disabled={parent.disabled}
-        onPress={()=>onEnabledChange(enabled===false)}
+        onPress={()=>enable(committed.current?.enabled===false)}
         style={{minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center",
         ...(Platform.OS==="web"?{direction:"ltr" as const}:null)}}>
         <Switch accessibilityLabel={"Enable "+title} value={enabled!==false} disabled={parent.disabled}
-          onValueChange={onEnabledChange} {...(styled?WEB_SWITCH_COLORS:{})}/>
+          onValueChange={enable} {...(styled?WEB_SWITCH_COLORS:{})}/>
       </Pressable>:null}
     </View>
     <InspectorSectionContext.Provider value={context}>

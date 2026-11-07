@@ -1,0 +1,7 @@
+# Motion path checkpoint
+
+G-06 MotionPathEditor adapts the existing PenNodeEditor rather than introducing another native input owner. It exposes spatial trajectories, anchor and tangent manipulation, shape-preserving insertion, deletion, corner/smooth/symmetric conversion and open/closed paths through one controlled commit contract. Optional point snapping uses host targets and a content-coordinate grid within an explicit tolerance. Optional tangent angle snapping preserves the dragged handle length. Relative handle offsets survive anchor movement.
+
+Document and revision changes cancel preview work before another release can commit. Revision reconciliation keeps keyboard focus so repeated arrow nudges continue editing. Escape, OS termination, extra pointers and concurrent handle captures cancel work. The shared editor clears its imperative drag on unmount. The native consumer measures its available pane; app window dimensions and orientation are unchanged.
+
+Three pure model checks cover tie order, tolerance, tangent length/direction and invalid configuration. Three rendered motion-path paths exercise snapped preview/commit, tangents, repeated keyboard nudges, Escape and document cancellation, alongside the existing vector browser regression suite. These checks cover the bounded 1,000-node native overlay contract, not GPU path rendering or motion evaluation. Native runtime and eight-platform acceptance remain open.

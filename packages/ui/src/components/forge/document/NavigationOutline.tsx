@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import type {ReactNode} from "react";
 import {Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -17,7 +19,7 @@ export interface OutlineBookmark {
 export type OutlineView="headings"|"pages"|"bookmarks";
 
 /** Props for {@linkcode NavigationOutline}. */
-export interface NavigationOutlineProps extends Omit<ViewProps,"children"> {
+export interface NavigationOutlineProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly headings:readonly OutlineHeading[];
   /** Block the caret is in; the heading above it is marked current. */
   readonly caretBlock?:number;
@@ -33,6 +35,7 @@ export interface NavigationOutlineProps extends Omit<ViewProps,"children"> {
   readonly onJumpToBookmark?:(bookmark:OutlineBookmark)=>void;
   /** Show headings down to this level (1–9); 0 shows every level. @default 0 */
   readonly showLevel?:number;
+  readonly disabled?:boolean;
   className?:string;
   unstyled?:boolean;
 }
@@ -45,10 +48,18 @@ type Local={view:OutlineView;collapsed:ReadonlySet<string>};
  * Up/Down move between headings, Left/Right collapse and expand (mirrored in
  * RTL by the platform), Enter jumps.
  */
-export function NavigationOutline({
+export function NavigationOutline({scope='NavigationOutline',revision=0,...props}:NavigationOutlineProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <NavigationOutlineBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onJumpToHeading={(...args:Parameters<NavigationOutlineProps['onJumpToHeading']>)=>guard.run('onJumpToHeading',h=>h.onJumpToHeading(...args))}
+  onJumpToPage={props.onJumpToPage?(...args:Parameters<NonNullable<NavigationOutlineProps['onJumpToPage']>>)=>guard.run('onJumpToPage',h=>h.onJumpToPage?.(...args)):undefined}
+  onJumpToBookmark={props.onJumpToBookmark?(...args:Parameters<NonNullable<NavigationOutlineProps['onJumpToBookmark']>>)=>guard.run('onJumpToBookmark',h=>h.onJumpToBookmark?.(...args)):undefined}
+ />;
+}
+function NavigationOutlineBody({actionError,disabledReason,disabled=false,
   headings,caretBlock,onJumpToHeading,pageCount,onJumpToPage,renderPageThumbnail,bookmarks,onJumpToBookmark,showLevel=0,
   className,unstyled=false,...rest
-}:NavigationOutlineProps){
+}:NavigationOutlineProps&{actionError?:string|null}){
   const styled=!unstyled;
   const [local,store]=useLocalStore<Local>(()=>({view:"headings",collapsed:new Set()}));
   const rows=visibleOutline(headings,local.collapsed,showLevel);
@@ -125,5 +136,5 @@ export function NavigationOutline({
           {b.page!==undefined?<Text {...{className:muted}}>{"Page "+(b.page+1)}</Text>:null}
         </Pressable>)}
     </ScrollView>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

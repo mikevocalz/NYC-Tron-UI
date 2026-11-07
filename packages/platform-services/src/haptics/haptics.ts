@@ -64,6 +64,7 @@ const ignore=()=>undefined;
 export function createHaptics(native:HapticsNative|null,options:HapticsOptions={}):Haptics{
   const key=options.storageKey??"nyc-tron.haptics.enabled";
   const minInterval=options.minIntervalMs??30;
+  if(!Number.isFinite(minInterval)||minInterval<0)throw new RangeError("minIntervalMs must be finite and nonnegative");
   const now=options.now??(()=>globalThis.performance?.now?.()??Date.now());
   const stored=options.storage?.getString(key);
   const store=createStore<HapticsState>(()=>({enabled:stored!=="false"}));
@@ -82,12 +83,14 @@ export function createHaptics(native:HapticsNative|null,options:HapticsOptions={
       if(prev!==undefined&&t-prev<minInterval)return false;
       last.set(kind,t);
       // A rejected play is a missed tap, not an app error.
-      Promise.resolve(native.play(kind)).catch(ignore);
-      return true;
+      try { Promise.resolve(native.play(kind)).catch(ignore); return true; }
+      catch { return false; }
     },
     prepare(kind){
       check(kind);
-      if(native?.prepare&&store.getState().enabled)Promise.resolve(native.prepare(kind)).catch(ignore);
+      if(native?.prepare&&store.getState().enabled){
+        try { Promise.resolve(native.prepare(kind)).catch(ignore); } catch { /* A missed warmup is harmless. */ }
+      }
     },
     setEnabled(enabled){
       store.setState({enabled});

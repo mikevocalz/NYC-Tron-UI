@@ -1,4 +1,4 @@
-import {useEffect,useRef,type ComponentRef} from "react";
+import {useEffect,useLayoutEffect,useRef,type ComponentRef} from "react";
 import {I18nManager,Platform,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,rovingTarget,shellKey} from "./shell-keys.ts";
@@ -9,6 +9,8 @@ export {activeAfterClose,moveDocument} from "./document-tabs-model.ts";
 
 /** Props for {@linkcode DocumentTabBar}. */
 export interface DocumentTabBarProps extends Omit<ViewProps,"children"> {
+  /** Workspace identity/revision cancel obsolete document actions. */
+  scope?:string;revision?:string|number;disabled?:boolean;
   documents:readonly DocumentTab[];
   /** The focused document. A value matching no tab selects none. */
   activeId:string|undefined;
@@ -37,11 +39,17 @@ export interface DocumentTabBarProps extends Omit<ViewProps,"children"> {
  * horizontally and keeps the active tab in view on narrow panes.
  */
 export function DocumentTabBar({
-  documents,activeId,onActivate,onClose,onReorder,label="Open documents",
+  scope="documents",revision=0,disabled=false,documents,activeId,onActivate,onClose,onReorder,label="Open documents",
   className,tabClassName,unstyled=false,style,...rest
 }:DocumentTabBarProps){
   validateDocumentTabs(documents);
   const styled=!unstyled;
+  const boundary=JSON.stringify([scope,revision,disabled]);
+  const committed=useRef<{boundary:string;documents:readonly DocumentTab[];onActivate:typeof onActivate;onClose:typeof onClose;onReorder:typeof onReorder}|null>(null);
+  useLayoutEffect(()=>{committed.current={boundary,documents,onActivate,onClose,onReorder};});
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const current=()=>!disabled&&committed.current?.boundary===boundary?committed.current:null;
+  const activate=(id:string)=>{const p=current();if(p?.documents.some(d=>d.id===id))p.onActivate(id);};
   const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
   const offsets=useRef(new Map<string,{x:number;width:number}>());
   const scroller=useRef<ComponentRef<typeof ScrollView>>(null);
@@ -52,24 +60,24 @@ export function DocumentTabBar({
     const at=activeId?offsets.current.get(activeId):undefined;
     if(!at||!viewport.current)return;
     scroller.current?.scrollTo({x:Math.max(0,at.x+at.width/2-viewport.current/2),animated:false});
-  },[activeId]);
+  },[activeId,documents]);
 
   const focusAt=(i:number)=>(refs.current[i] as unknown as {focus?:()=>void}|null)?.focus?.();
-  const move=(i:number,delta:-1|1)=>{
-    const doc=documents[i];
-    if(!doc||!onReorder)return;
-    const to=i+delta;
-    if(to<0||to>=documents.length)return;
-    onReorder(doc.id,to);
+  const move=(id:string,delta:-1|1)=>{
+    const p=current();if(!p?.onReorder)return;
+    const index=p.documents.findIndex(d=>d.id===id),to=index+delta;
+    if(index<0||to<0||to>=p.documents.length)return;
+    p.onReorder(id,to);
   };
-  const close=(doc:DocumentTab)=>{if(onClose&&doc.closable!==false)onClose(doc.id);};
+  const close=(doc:DocumentTab)=>{const p=current(),subject=p?.documents.find(d=>d.id===doc.id);if(subject&&subject.closable!==false)p?.onClose?.(subject.id);};
   const onKeyDown=(i:number)=>(event:unknown)=>{
+    if(!current())return;
     const k=shellKey(event);
     const rtl=nodeIsRTL(k.target)||I18nManager.isRTL;
     const doc=documents[i]!;
     if((k.ctrlKey||k.metaKey)&&k.shiftKey&&(k.key==="ArrowLeft"||k.key==="ArrowRight")){
       k.preventDefault();
-      move(i,(k.key==="ArrowRight")!==rtl?1:-1);
+      move(doc.id,(k.key==="ArrowRight")!==rtl?1:-1);
       return;
     }
     if(k.altKey||k.ctrlKey||k.metaKey)return;
@@ -78,7 +86,7 @@ export function DocumentTabBar({
     if(next===null)return;
     k.preventDefault();
     focusAt(next);
-    onActivate(documents[next]!.id);
+    activate(documents[next]!.id);
   };
 
   return <View {...rest} {...{className:joinClasses("min-w-0",styled&&"border-b border-border bg-surface-sunken",className)}} style={style}>
@@ -100,17 +108,17 @@ export function DocumentTabBar({
             {...{className:joinClasses(styled&&"rounded-t-control",styled&&(selected?"bg-surface-raised border-x border-t border-border":"bg-transparent"),tabClassName)}}
             style={{flexDirection:"row",alignItems:"center",maxWidth:240,marginTop:4}}>
             <Pressable ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
-              accessibilityLabel={documentTabLabel(doc)} accessibilityState={{selected}} aria-selected={selected}
+              accessibilityLabel={documentTabLabel(doc)} disabled={disabled} accessibilityState={{selected,disabled}} aria-selected={selected}
               accessibilityActions={actions}
               onAccessibilityAction={event=>{
                 const name=event.nativeEvent.actionName;
-                if(name==="activate")onActivate(doc.id);
+                if(name==="activate")activate(doc.id);
                 if(name==="close")close(doc);
-                if(name==="moveEarlier")move(i,-1);
-                if(name==="moveLater")move(i,1);
+                if(name==="moveEarlier")move(doc.id,-1);
+                if(name==="moveLater")move(doc.id,1);
               }}
-              onPress={()=>onActivate(doc.id)}
-              {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}:{})}
+              onPress={()=>activate(doc.id)}
+              {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:!disabled&&i===stop?0:-1}:{})}
               {...{className:joinClasses("min-h-11 flex-row items-center gap-2",styled&&"rounded-control px-3 focus-visible:ring-2 focus-visible:ring-focus")}}
               style={{flexShrink:1}}>
               {doc.dirty?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-accent")}}
@@ -119,7 +127,7 @@ export function DocumentTabBar({
                 style={{flexShrink:1}}>{doc.title}</Text>
             </Pressable>
             {closable?<Pressable accessibilityRole="button" accessibilityLabel={"Close "+doc.title}
-              onPress={()=>close(doc)}
+              disabled={disabled} onPress={()=>close(doc)}
               // The tab carries the close action for keyboards and screen readers.
               {...(Platform.OS==="web"?{tabIndex:-1}:{accessibilityElementsHidden:true,importantForAccessibility:"no-hide-descendants" as const})}
               {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control hover:bg-surface-sunken")}}>

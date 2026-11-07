@@ -29,6 +29,7 @@ const assertRatio=(r:number,what:string)=>{
 /** The largest `aspect` (width/height) rectangle centered in `container`: the picture's letterbox or pillarbox fit. */
 export function fitAspect(container:{readonly width:number;readonly height:number},aspect:number):OverlayRect{
   assertRatio(aspect,"Aspect");
+  if(![container.width,container.height].every(Number.isFinite)||container.width<0||container.height<0)throw new RangeError("Invalid safe-area container");
   if(!(container.width>0)||!(container.height>0))return {x:0,y:0,width:0,height:0};
   const wide=container.width/container.height>aspect;
   const width=wide?container.height*aspect:container.width;
@@ -46,7 +47,7 @@ export function insetRect(rect:OverlayRect,fraction:number):OverlayRect{
 /** Picture, action-safe and title-safe rectangles for a picture of `aspect` inside `container`. */
 export function safeAreas(container:{readonly width:number;readonly height:number},aspect:number,spec:SafeAreaSpec="smpte"){
   const s=typeof spec==="string"?SAFE_AREA_PRESETS[spec]:spec;
-  if(!(s.title<=s.action))throw new RangeError("Title safe must sit inside action safe");
+  if(!s||!(s.title<=s.action))throw new RangeError("Title safe must sit inside action safe");
   const picture=fitAspect(container,aspect);
   return {picture,action:insetRect(picture,s.action),title:insetRect(picture,s.title),fractions:s};
 }

@@ -46,8 +46,12 @@ export interface PlaybackSession {
   setIntent(intent:"playing"|"paused"):void;
   /** Feeds one event through the policy, as the native listener does. Returns the action taken. */
   dispatch(event:AudioSessionEvent):PlaybackAction;
-  /** Stops listening. */
-  dispose():void;
+  /**
+   * Stops listening immediately and drains accepted operations. Idempotent.
+   * releaseFocus is opt-in: only the app's sole session owner may release the
+   * process-wide OS session; preview/capture coordinators arbitrate it themselves.
+   */
+  dispose(options?:{releaseFocus?:boolean}):Promise<void>;
 }
 
 /** Options for {@linkcode createPlaybackSession}. */
@@ -62,7 +66,17 @@ export interface PlaybackSessionOptions {
  */
 export function createPlaybackSession(native:PlaybackSessionNative|null,options:PlaybackSessionOptions):PlaybackSession{
   const store=createStore<PlaybackLifecycleState>(()=>IDLE_PLAYBACK);
+  let closed=false;
+  let tail:Promise<unknown>=Promise.resolve();
+  let disposal:Promise<void>|undefined;
+  const enqueue=<T>(work:()=>Promise<T>|T):Promise<T>=>{
+    if(closed)return Promise.reject(new Error("Playback session is disposed"));
+    const result=tail.then(work);
+    tail=result.catch(()=>undefined);
+    return result;
+  };
   const dispatch=(event:AudioSessionEvent):PlaybackAction=>{
+    if(closed)return "none";
     const {state,action}=nextPlaybackState(store.getState(),event);
     store.setState(state,true);
     if(action!=="none")options.onAction(action,event);
@@ -75,19 +89,24 @@ export function createPlaybackSession(native:PlaybackSessionNative|null,options:
   return {
     isAvailable:native!==null,
     store,
-    async activate({category,mixWithOthers=false}){
-      if(!native)return false;
-      return await native.activate({category,mixWithOthers});
+    activate({category,mixWithOthers=false}){
+      return enqueue(()=>native?native.activate({category,mixWithOthers}):false);
     },
-    async deactivate(){
-      if(native)await native.deactivate();
+    deactivate(){
+      return enqueue(async()=>{if(native)await native.deactivate();});
     },
     setIntent(intent){
+      if(closed)return;
       store.setState(setPlaybackIntent(store.getState(),intent),true);
     },
     dispatch,
-    dispose(){
+    dispose({releaseFocus=false}={}){
+      if(disposal)return disposal;
+      closed=true;
       sub?.remove();
+      store.setState(IDLE_PLAYBACK,true);
+      disposal=tail.then(async()=>{if(native&&releaseFocus)await native.deactivate();});
+      return disposal;
     },
   };
 }

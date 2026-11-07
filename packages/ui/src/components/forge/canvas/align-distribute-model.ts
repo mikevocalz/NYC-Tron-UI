@@ -69,9 +69,10 @@ const unlockReason=(names:string[],verb:string)=>
 
 /** Throws a `RangeError` for duplicate or empty ids. */
 export function validateAlignItems(items:readonly AlignItem[]):void{
+  if(items.length>10000)throw new RangeError("Too many layers for alignment");
   const seen=new Set<string>();
   for(const i of items){
-    if(!i.id)throw new RangeError("Every selected layer needs an id");
+    if(!i.id.trim()||i.id.length>512||!i.name.trim()||i.name.length>1024)throw new RangeError("Every selected layer needs an id");
     if(seen.has(i.id))throw new RangeError(`Layer ${i.id} is selected twice`);
     seen.add(i.id);
   }
