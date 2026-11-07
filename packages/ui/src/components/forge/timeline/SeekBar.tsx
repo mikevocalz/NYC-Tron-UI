@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -8,7 +10,7 @@ import {frameForKey} from "./frame-keys.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
 
 /** Props for {@linkcode SeekBar}. */
-export interface SeekBarProps extends Omit<ViewProps,"children"> {
+export interface SeekBarProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The player's reported frame. */
   readonly frame:number;
   readonly durationFrames:number;
@@ -37,10 +39,18 @@ const THUMB=20;
  * Home/End. Unlike `NativeSeekBar` (the `@expo/ui` native slider), it needs no
  * optional peer and reports where the drag ends.
  */
-export function SeekBar({
+export function SeekBar({scope='SeekBar',revision=0,...props}:SeekBarProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.durationFrames,props.rate]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
+ return <SeekBarBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSeek={(value)=>guard.run('onSeek',host=>host.onSeek(value))}
+  {...(props.onScrub?{onScrub:(value:Parameters<NonNullable<SeekBarProps['onScrub']>>[0])=>guard.current()?.onScrub?.(value)}:{})}/>;
+}
+function SeekBarBody({
+  actionError=null,disabledReason,
   frame,durationFrames,rate,buffered=[],onScrub,onSeek,dropFrame=false,disabled=false,label="Playback position",
   className,unstyled=false,testID,style,...rest
-}:SeekBarProps){
+}:SeekBarProps&{actionError?:string|null}){
   if(!Number.isSafeInteger(durationFrames)||durationFrames<0)throw new RangeError("durationFrames must be a nonnegative integer");
   const [layout,store]=useLocalStore(()=>({width:0}));
   const off=disabled||durationFrames===0;
@@ -61,6 +71,7 @@ export function SeekBar({
   };
   const step=(d:number)=>{const n=clamp(frame+d);if(!off&&n!==clamp(frame))onSeek(n);};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-1",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View {...scrub.handlers}
       {...{onKeyDown,focusable:!off,className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
       onLayout={e=>store.set({width:e.nativeEvent.layout.width})}

@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Platform,Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
@@ -10,7 +12,7 @@ import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
 
 /** Props for {@linkcode LoopRangeBar}. */
-export interface LoopRangeBarProps extends Omit<ViewProps,"children"> {
+export interface LoopRangeBarProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly viewport:TimelineViewport;
   /** The stored loop (Splice `setLoopRange`), or none. */
   readonly range:LoopRange|undefined;
@@ -82,10 +84,19 @@ function Edge({edge,range,viewport,durationFrames,rate,onPreview,onCommit,dropFr
  * end. The range is never empty: an end pushed past the other stops a frame
  * short. Each release, key press or button commits once.
  */
-export function LoopRangeBar({
+export function LoopRangeBar({scope='LoopRangeBar',revision=0,...props}:LoopRangeBarProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.viewport,props.durationFrames,props.rate]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
+ return <LoopRangeBarBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onCommit={(value)=>guard.run('onCommit',host=>host.onCommit(value))}
+  onLoopingChange={(value)=>guard.run('onLoopingChange',host=>host.onLoopingChange(value))}
+  {...(props.onPreview?{onPreview:(value:Parameters<NonNullable<LoopRangeBarProps['onPreview']>>[0])=>guard.current()?.onPreview?.(value)}:{})}/>;
+}
+function LoopRangeBarBody({
+  actionError=null,disabledReason,
   viewport,range,durationFrames,rate,looping,onLoopingChange,marks,onPreview,onCommit,dropFrame=false,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:LoopRangeBarProps){
+}:LoopRangeBarProps&{actionError?:string|null}){
   const styled=!unstyled;
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const tc=(f:number)=>formatTimecode(f,rate,{dropFrame});
@@ -95,6 +106,7 @@ export function LoopRangeBar({
   const endX=range?Math.min(viewport.widthPx,frameToX(viewport,range.outFrame)):0;
   const off=disabled||durationFrames<1;
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Pressable accessibilityRole="switch" aria-checked={looping} accessibilityState={{checked:looping,disabled:off||!range}}
         disabled={off||!range} accessibilityLabel="Loop playback"

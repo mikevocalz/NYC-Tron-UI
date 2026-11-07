@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useRef} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -5,7 +7,7 @@ import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {DEFAULT_SHUTTLE_LADDER,assertLadder,shuttleLabel,shuttleRate} from "./shuttle.ts";
 
 /** Props for {@linkcode JKLShuttleController}. */
-export interface JKLShuttleControllerProps extends Omit<ViewProps,"children"> {
+export interface JKLShuttleControllerProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The player's reported rate: 0 stopped, negative in reverse. */
   readonly rate:number;
   readonly onRateChange:(rate:number)=>void;
@@ -28,10 +30,18 @@ export interface JKLShuttleControllerProps extends Omit<ViewProps,"children"> {
  * keys work too, and holding K while pressing J or L steps one frame. Media
  * controls keep tape direction, so the row is not mirrored in RTL.
  */
-export function JKLShuttleController({
+export function JKLShuttleController({scope='JKLShuttleController',revision=0,...props}:JKLShuttleControllerProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.supportsReverse,props.ladder]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <JKLShuttleControllerBody key={owner} {...props} actionError={guard.error} {...(guard.pending?{disabledReason:'Operation in progress'}:{})}
+  onRateChange={(value)=>guard.run('onRateChange',host=>host.onRateChange(value))}
+  {...(props.onStep?{onStep:(value:Parameters<NonNullable<JKLShuttleControllerProps['onStep']>>[0])=>guard.run('onStep',host=>host.onStep?.(value))}:{})}/>;
+}
+function JKLShuttleControllerBody({
+  actionError=null,
   rate,onRateChange,ladder=DEFAULT_SHUTTLE_LADDER,supportsReverse=false,onStep,disabledReason,
   className,unstyled=false,testID,style,...rest
-}:JKLShuttleControllerProps){
+}:JKLShuttleControllerProps&{actionError?:string|null}){
   assertLadder(ladder);
   const off=disabledReason!==undefined;
   const styled=!unstyled;
@@ -65,6 +75,7 @@ export function JKLShuttleController({
     accessibilityRole="toolbar" accessibilityLabel="Shuttle"
     {...{className:joinClasses("gap-2",className)}}
     style={[{flexDirection:"row",alignItems:"center",flexWrap:"wrap",direction:"ltr"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {key("j",jStops?"Slower":"Reverse",jStops?"Slows forward playback one step":"Plays in reverse; press again to go faster",rate<0,jStops&&rate<=0)}
     {key("k","Stop","Stops playback. Hold K and press J or L to step a frame",rate===0)}
     {key("l","Forward","Plays forward; press again to go faster",rate>0)}

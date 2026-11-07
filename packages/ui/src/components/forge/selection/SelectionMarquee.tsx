@@ -281,9 +281,9 @@ function SelectionMarqueeBody({
 
  const controls=<>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
-   <SegmentedControl aria-label="Selection tool" value={tool} unstyled={unstyled}
+   <SegmentedControl disabled={disabledReason!==undefined} aria-label="Selection tool" value={tool} unstyled={unstyled}
     options={SELECTION_TOOLS.map(t=>({value:t.tool,label:t.label}))} onChange={onToolChange}/>
-   <SegmentedControl aria-label="Selection mode" value={mode} unstyled={unstyled}
+   <SegmentedControl disabled={disabledReason!==undefined} aria-label="Selection mode" value={mode} unstyled={unstyled}
     options={SELECTION_MODES.map(m=>({value:m.mode,label:m.label}))} onChange={onModeChange}/>
   </View>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>

@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
@@ -9,7 +11,7 @@ import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
 
 /** Props for {@linkcode InOutRangeHandles}. */
-export interface InOutRangeHandlesProps extends Omit<ViewProps,"children"> {
+export interface InOutRangeHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly viewport:TimelineViewport;
   readonly range:InOutRange;
   readonly durationFrames:number;
@@ -72,10 +74,18 @@ function MarkHandle({mark,frame,range,viewport,durationFrames,rate,onPreview,onC
  * range filled and a draggable, keyboard-adjustable handle per mark. Setting an in at or after the out (or the
  * reverse) clears the other mark instead of making an empty range.
  */
-export function InOutRangeHandles({
+export function InOutRangeHandles({scope='InOutRangeHandles',revision=0,...props}:InOutRangeHandlesProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.viewport,props.durationFrames,props.rate]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
+ return <InOutRangeHandlesBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onCommit={(value)=>guard.run('onCommit',host=>host.onCommit(value))}
+  {...(props.onPreview?{onPreview:(value:Parameters<NonNullable<InOutRangeHandlesProps['onPreview']>>[0])=>guard.current()?.onPreview?.(value)}:{})}/>;
+}
+function InOutRangeHandlesBody({
+  actionError=null,disabledReason,
   viewport,range,durationFrames,rate,playheadFrame,onPreview,onCommit,dropFrame=false,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:InOutRangeHandlesProps){
+}:InOutRangeHandlesProps&{actionError?:string|null}){
   const styled=!unstyled;
   const tc=(f:number)=>formatTimecode(f,rate,{dropFrame});
   const startX=range.inFrame===undefined?0:frameToX(viewport,range.inFrame);
@@ -84,6 +94,7 @@ export function InOutRangeHandles({
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const common={range,viewport,durationFrames,rate,onPreview,onCommit,dropFrame,disabled,styled};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Button title="Set in" variant="secondary" size="sm" disabled={disabled} {...id("set-in")}
         onPress={()=>onCommit(setMark(range,"in",playheadFrame,durationFrames))}/>

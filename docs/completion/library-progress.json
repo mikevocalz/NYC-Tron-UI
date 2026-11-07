@@ -1472,11 +1472,15 @@
       "libraryScope": true,
       "sourceCandidates": [
         "packages/ui/src/components/forge/NativeSeekBar.native.tsx",
-        "packages/ui/src/components/forge/NativeSeekBar.web.tsx"
+        "packages/ui/src/components/forge/NativeSeekBar.web.tsx",
+        "packages/ui/src/components/forge/timeline/SeekBar.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Buffered and played ranges, touch/pen/mouse seeking."
+      "requirement": "Buffered and played ranges, touch/pen/mouse seeking.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-05",
@@ -1496,9 +1500,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TransportControls.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Play, pause, stop, jump, previous/next frame."
+      "requirement": "Play, pause, stop, jump, previous/next frame.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-07",
@@ -1508,9 +1515,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/PlaybackRateMenu.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Speeds, reverse/shuttle where supported and pitch policy."
+      "requirement": "Speeds, reverse/shuttle where supported and pitch policy.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-08",
@@ -1520,9 +1530,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TimecodeDisplay.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Frames, source/timecode, drop-frame and sample time."
+      "requirement": "Frames, source/timecode, drop-frame and sample time.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-09",
@@ -1532,9 +1545,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/JKLShuttleController.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Variable-speed jog/shuttle keyboard and touch modes."
+      "requirement": "Variable-speed jog/shuttle keyboard and touch modes.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-10",
@@ -1544,9 +1560,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TimelineRuler.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Timecode ticks, zoom, guides and marks."
+      "requirement": "Timecode ticks, zoom, guides and marks.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-11",
@@ -1556,9 +1575,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/TimelinePlayhead.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Drag anywhere, follows playback, visible across tracks."
+      "requirement": "Drag anywhere, follows playback, visible across tracks.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-12",
@@ -1568,9 +1590,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/InOutRangeHandles.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Trim/preview range and set selection bounds."
+      "requirement": "Trim/preview range and set selection bounds.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-13",
@@ -1580,9 +1605,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/timeline/LoopRangeBar.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Enable loop, range handles and toggle state."
+      "requirement": "Enable loop, range handles and toggle state.",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
     },
     {
       "id": "D-14",

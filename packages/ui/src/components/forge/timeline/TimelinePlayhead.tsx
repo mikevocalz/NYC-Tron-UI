@@ -1,4 +1,6 @@
-import {Platform,View,type ViewProps} from "react-native";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {formatTimecode,type FrameRate} from "../timebase.ts";
@@ -7,7 +9,7 @@ import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
 
 /** Props for {@linkcode TimelinePlayhead}. */
-export interface TimelinePlayheadProps extends Omit<ViewProps,"children"> {
+export interface TimelinePlayheadProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly viewport:TimelineViewport;
   /** The player's reported frame; the line follows it during playback. */
   readonly frame:number;
@@ -34,9 +36,17 @@ const HIT=44;
  * frame is scrolled out of view the head pins to the nearer edge so it stays
  * reachable. Keep it in view during playback with `followPlayhead`.
  */
-export function TimelinePlayhead({
+export function TimelinePlayhead({scope='TimelinePlayhead',revision=0,...props}:TimelinePlayheadProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.viewport,props.height,props.durationFrames,props.rate]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
+ return <TimelinePlayheadBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSeek={(value)=>guard.run('onSeek',host=>host.onSeek(value))}
+  {...(props.onScrub?{onScrub:(value:Parameters<NonNullable<TimelinePlayheadProps['onScrub']>>[0])=>guard.current()?.onScrub?.(value)}:{})}/>;
+}
+function TimelinePlayheadBody({
+  actionError=null,disabledReason,
   viewport,frame,durationFrames,rate,height,onScrub,onSeek,dropFrame=false,disabled=false,unstyled=false,testID,style,...rest
-}:TimelinePlayheadProps){
+}:TimelinePlayheadProps&{actionError?:string|null}){
   const clamp=(f:number)=>Math.min(durationFrames,Math.max(0,Math.round(f)));
   const committed=clamp(frame);
   const rawX=frameToX(viewport,committed);
@@ -60,6 +70,7 @@ export function TimelinePlayhead({
   const step=(d:number)=>{const n=clamp(committed+d);if(!disabled&&n!==committed)onSeek(n);};
   return <View {...rest} pointerEvents="box-none" {...(testID?{testID}:{})}
     style={[{position:"absolute",left:0,top:0,width:viewport.widthPx,height,direction:"ltr"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {inView?<View pointerEvents="none" {...{className:joinClasses(styled&&"bg-accent")}}
       style={{position:"absolute",left:x-1,top:0,width:2,height}}/>:null}
     <View {...scrub.handlers}

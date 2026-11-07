@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -5,7 +7,7 @@ import type {FrameRate} from "../timebase.ts";
 import {formatTime,parseTime,supportsDropFrame,type TimeFormat} from "./time.ts";
 
 /** Props for {@linkcode TimecodeDisplay}. */
-export interface TimecodeDisplayProps extends Omit<ViewProps,"children"> {
+export interface TimecodeDisplayProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly frame:number;
   readonly rate:FrameRate;
   readonly format:TimeFormat;
@@ -36,10 +38,18 @@ const HINT:Record<TimeFormat,string>={
  * in the current format commits once, out-of-range or malformed text is
  * rejected with the expected format, and the field keeps the draft.
  */
-export function TimecodeDisplay({
+export function TimecodeDisplay({scope='TimecodeDisplay',revision=0,...props}:TimecodeDisplayProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.format,props.rate,props.durationFrames,props.dropFrame]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <TimecodeDisplayBody key={owner} {...props} actionError={guard.error} {...(guard.pending?{disabledReason:'Operation in progress'}:{})}
+  {...(props.onCommit?{onCommit:(value:Parameters<NonNullable<TimecodeDisplayProps['onCommit']>>[0])=>guard.run('onCommit',host=>host.onCommit?.(value))}:{})}
+  {...(props.onFormatChange?{onFormatChange:(value:Parameters<NonNullable<TimecodeDisplayProps['onFormatChange']>>[0])=>guard.current()?.onFormatChange?.(value)}:{})}/>;
+}
+function TimecodeDisplayBody({disabledReason,
+  actionError=null,
   frame,rate,format,onFormatChange,dropFrame=false,sampleRate,onCommit,durationFrames,label="Current time",
   className,unstyled=false,testID,style,...rest
-}:TimecodeDisplayProps){
+}:TimecodeDisplayProps&{actionError?:string|null}){
   if(dropFrame&&!supportsDropFrame(rate))throw new RangeError("Drop-frame timecode needs 29.97 or 59.94 fps");
   const [draft,store]=useLocalStore(()=>undefined as {text:string;error?:string}|undefined);
   const styled=!unstyled;
@@ -51,7 +61,7 @@ export function TimecodeDisplay({
   // blur's apply runs before a re-render, so it must see the cleared draft.
   const apply=()=>{
     const d=store.get();
-    if(!d||!onCommit)return;
+    if(disabledReason!==undefined||!d||!onCommit)return;
     const f=parseTime(d.text,rate,current,opts);
     if(f===undefined||(durationFrames!==undefined&&f>durationFrames)){
       store.set({...d,error:f===undefined?HINT[current]+".":`Enter a time up to ${formatTime(durationFrames!,rate,current,opts)}.`});
@@ -63,7 +73,8 @@ export function TimecodeDisplay({
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const text=joinClasses(styled&&"text-text text-lg font-semibold");
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-1",className)}} style={[{flexDirection:"row",alignItems:"center",flexWrap:"wrap",gap:8},style]}>
-    {onCommit?<TextInput value={draft?.text??shown} onChangeText={t=>store.set({text:t})}
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {onCommit?<TextInput editable={disabledReason===undefined} maxLength={128} value={draft?.text??shown} onChangeText={t=>store.set({text:t})}
       onSubmitEditing={apply} onBlur={apply} selectTextOnFocus autoCorrect={false} autoCapitalize="none"
       accessibilityLabel={`${label}, ${FORMAT_LABEL[current]}`} accessibilityHint={HINT[current]} aria-invalid={Boolean(draft?.error)}
       {...id("input")}
@@ -71,7 +82,7 @@ export function TimecodeDisplay({
         styled&&(draft?.error?"border-danger":"border-border"))}}
       style={{minHeight:44,minWidth:150,fontVariant:["tabular-nums"]}}/>
       :<Text selectable accessibilityLabel={`${label} ${shown}`} {...{className:text}} style={{fontVariant:["tabular-nums"]}}>{shown}</Text>}
-    {onFormatChange?<Pressable accessibilityRole="button" accessibilityLabel={`Time format: ${FORMAT_LABEL[current]}`}
+    {onFormatChange?<Pressable disabled={disabledReason!==undefined} accessibilityRole="button" accessibilityLabel={`Time format: ${FORMAT_LABEL[current]}`}
       accessibilityHint="Switches to the next time format" {...id("format")}
       onPress={()=>{store.set(undefined);onFormatChange(formats[(formats.indexOf(current)+1)%formats.length]!);}}
       {...{className:joinClasses(styled&&"rounded-control border border-border px-3 focus-visible:ring-2 focus-visible:ring-focus")}}

@@ -1,10 +1,12 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Pressable,Switch,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {speedLabel} from "./ruler.ts";
 
 /** Props for {@linkcode PlaybackRateMenu}. */
-export interface PlaybackRateMenuProps extends Omit<ViewProps,"children"> {
+export interface PlaybackRateMenuProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Current playback rate; negative plays in reverse. */
   readonly rate:number;
   readonly onRateChange:(rate:number)=>void;
@@ -25,16 +27,25 @@ export interface PlaybackRateMenuProps extends Omit<ViewProps,"children"> {
  * list of rates, plus reverse and a preserve-pitch switch when the player
  * supports them. One `onRateChange` per choice; the list closes after it.
  */
-export function PlaybackRateMenu({
+export function PlaybackRateMenu({scope='PlaybackRateMenu',revision=0,...props}:PlaybackRateMenuProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.supportsReverse,props.rates]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
+ return <PlaybackRateMenuBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onRateChange={(value)=>guard.run('onRateChange',host=>host.onRateChange(value))}
+  {...(props.onPreservePitchChange?{onPreservePitchChange:(value:Parameters<NonNullable<PlaybackRateMenuProps['onPreservePitchChange']>>[0])=>guard.run('onPreservePitchChange',host=>host.onPreservePitchChange?.(value))}:{})}/>;
+}
+function PlaybackRateMenuBody({
+  actionError=null,disabledReason,
   rate,onRateChange,rates=[0.25,0.5,1,1.5,2],supportsReverse=false,preservePitch,onPreservePitchChange,
   disabled=false,className,unstyled=false,testID,style,...rest
-}:PlaybackRateMenuProps){
-  if(rates.some(r=>!Number.isFinite(r)||r<=0))throw new RangeError("Forward rates must be positive");
+}:PlaybackRateMenuProps&{actionError?:string|null}){
+  if(!Number.isFinite(rate)||rates.length>64||new Set(rates).size!==rates.length||rates.some(r=>!Number.isFinite(r)||r<=0))throw new RangeError("Forward rates must be positive");
   const [open,store]=useLocalStore(()=>false);
   const styled=!unstyled;
   const options=supportsReverse?[-1,...rates]:[...rates];
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <Pressable accessibilityRole="button" accessibilityLabel={`Playback speed ${speedLabel(rate)}`}
       accessibilityState={{expanded:open,disabled}} aria-expanded={open} disabled={disabled}
       onPress={()=>store.set(o=>!o)} {...id("toggle")}
