@@ -2024,6 +2024,56 @@
       "types": "./dist/components/forge/devices/PenPairingDialog.d.ts",
       "react-native": "./dist/components/forge/devices/PenPairingDialog.js",
       "default": "./dist/components/forge/devices/PenPairingDialog.js"
+    },
+    "./components/forge/timeline/MediaMonitor": {
+      "types": "./dist/components/forge/timeline/MediaMonitor.d.ts",
+      "react-native": "./dist/components/forge/timeline/MediaMonitor.js",
+      "default": "./dist/components/forge/timeline/MediaMonitor.js"
+    },
+    "./components/forge/timeline/SourceMonitor": {
+      "types": "./dist/components/forge/timeline/SourceMonitor.d.ts",
+      "react-native": "./dist/components/forge/timeline/SourceMonitor.js",
+      "default": "./dist/components/forge/timeline/SourceMonitor.js"
+    },
+    "./components/forge/timeline/ProgramMonitor": {
+      "types": "./dist/components/forge/timeline/ProgramMonitor.d.ts",
+      "react-native": "./dist/components/forge/timeline/ProgramMonitor.js",
+      "default": "./dist/components/forge/timeline/ProgramMonitor.js"
+    },
+    "./components/forge/timeline/VideoFilmstrip": {
+      "types": "./dist/components/forge/timeline/VideoFilmstrip.d.ts",
+      "react-native": "./dist/components/forge/timeline/VideoFilmstrip.js",
+      "default": "./dist/components/forge/timeline/VideoFilmstrip.js"
+    },
+    "./components/forge/timeline/AudioClipWaveform": {
+      "types": "./dist/components/forge/timeline/AudioClipWaveform.d.ts",
+      "react-native": "./dist/components/forge/timeline/AudioClipWaveform.js",
+      "default": "./dist/components/forge/timeline/AudioClipWaveform.js"
+    },
+    "./components/forge/timeline/ScopesDock": {
+      "types": "./dist/components/forge/timeline/ScopesDock.d.ts",
+      "react-native": "./dist/components/forge/timeline/ScopesDock.js",
+      "default": "./dist/components/forge/timeline/ScopesDock.js"
+    },
+    "./components/forge/timeline/MulticamAngleViewer": {
+      "types": "./dist/components/forge/timeline/MulticamAngleViewer.d.ts",
+      "react-native": "./dist/components/forge/timeline/MulticamAngleViewer.js",
+      "default": "./dist/components/forge/timeline/MulticamAngleViewer.js"
+    },
+    "./components/forge/timeline/RenderCacheIndicator": {
+      "types": "./dist/components/forge/timeline/RenderCacheIndicator.d.ts",
+      "react-native": "./dist/components/forge/timeline/RenderCacheIndicator.js",
+      "default": "./dist/components/forge/timeline/RenderCacheIndicator.js"
+    },
+    "./components/forge/timeline/PictureInPictureControls": {
+      "types": "./dist/components/forge/timeline/PictureInPictureControls.d.ts",
+      "react-native": "./dist/components/forge/timeline/PictureInPictureControls.js",
+      "default": "./dist/components/forge/timeline/PictureInPictureControls.js"
+    },
+    "./components/forge/timeline/waveform-cache": {
+      "types": "./dist/components/forge/timeline/waveform-cache.d.ts",
+      "react-native": "./dist/components/forge/timeline/waveform-cache.js",
+      "default": "./dist/components/forge/timeline/waveform-cache.js"
     }
   },
   "scripts": {

@@ -1450,20 +1450,30 @@
       "name": "SourceMonitor",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/SourceMonitor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Load, preview, select in/out points for source assets."
+      "requirement": "Load, preview, select in/out points for source assets.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-03",
       "name": "ProgramMonitor",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/ProgramMonitor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Accurate timeline output, overlays and frame display."
+      "requirement": "Accurate timeline output, overlays and frame display.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-04",
@@ -1647,20 +1657,30 @@
       "name": "VideoFilmstrip",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/VideoFilmstrip.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Cached thumbnails by zoom/time with virtualization."
+      "requirement": "Cached thumbnails by zoom/time with virtualization.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-17",
       "name": "AudioClipWaveform",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/AudioClipWaveform.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Audio wave underneath clip with peaks cache."
+      "requirement": "Audio wave underneath clip with peaks cache.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-18",
@@ -1787,30 +1807,45 @@
       "name": "ScopesDock",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/ScopesDock.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Video scopes anchored to source/program scopes."
+      "requirement": "Video scopes anchored to source/program scopes.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-27",
       "name": "MulticamAngleViewer",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/MulticamAngleViewer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Synchronized preview and track angle selection."
+      "requirement": "Synchronized preview and track angle selection.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-28",
       "name": "RenderCacheIndicator",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/RenderCacheIndicator.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Queue progress, invalidation and preview quality."
+      "requirement": "Queue progress, invalidation and preview quality.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-29",
@@ -1827,11 +1862,16 @@
       "name": "PictureInPictureControls",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/PictureInPictureControls.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Where platform supports PiP and background state.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
     },
     {
       "id": "D-31",
