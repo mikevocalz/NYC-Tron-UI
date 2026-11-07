@@ -43,3 +43,19 @@ test('queued semantic handle and stop actions reject changed geometry before acc
  assert.equal(gradientTargetCurrent('new','new',false,paint,{kind:'handle',handle:'start'}),true);
  assert.equal(gradientTargetCurrent('new','new',false,paint,{kind:'stop',index:1}),true);
 });
+
+test('reentrant restoration publishing a newer owner prevents stale replacement notification',()=>{
+ const owner=createGradientPreviewOwner();const calls=[];
+ const newer=v=>calls.push(['newer',v]);
+ owner.publish('old',v=>{calls.push(['old',v]);if(v===undefined)owner.publish('newer',newer,'authoritative');},'initial');
+ owner.publish('stale',v=>calls.push(['stale',v]),'obsolete');
+ assert.deepEqual(calls,[['old','initial'],['old',undefined],['newer','authoritative']]);
+ owner.clear('stale');assert.equal(calls.length,3);
+ owner.clear('newer');assert.deepEqual(calls.at(-1),['newer',undefined]);
+});
+test('reentrant restoration clear wins even while the previous lease is already detached',()=>{
+ const owner=createGradientPreviewOwner();const calls=[];
+ owner.publish('old',v=>{calls.push(['old',v]);if(v===undefined)owner.clear();},'initial');
+ owner.publish('stale',v=>calls.push(['stale',v]),'obsolete');owner.clear();
+ assert.deepEqual(calls,[['old','initial'],['old',undefined]]);
+});
