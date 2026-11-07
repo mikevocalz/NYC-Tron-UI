@@ -1,3 +1,4 @@
+import {createGradientPreviewOwner} from './gradient-preview-owner.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEffect,useLayoutEffect,useRef,type ReactNode} from "react";
@@ -79,18 +80,22 @@ const ACTION_DELTA:Record<string,Point|undefined>={
  * release or key press commits once through `onSetFill`.
  */
 export function GradientOnCanvasHandles({scope='gradient-handles',revision=0,...props}:GradientOnCanvasHandlesProps){
- const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.width,props.height,props.transform,props.paint.type]);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.width,props.height,props.transform,props.paint]);
  const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
- return <GradientOnCanvasHandlesBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+ const previewOwner=useRef<ReturnType<typeof createGradientPreviewOwner<GradientPaint>>|null>(null);
+ if(!previewOwner.current)previewOwner.current=createGradientPreviewOwner<GradientPaint>();
+ const previews=previewOwner.current;
+ useLayoutEffect(()=>()=>previews.clear(owner),[owner,previews]);
+ return <GradientOnCanvasHandlesBody gestureBoundary={owner} {...props} actionError={guard.error} busy={guard.pending}
   onSetFill={value=>guard.run('onSetFill',(host,signal)=>host.onSetFill(value,signal))}
   onSelectStop={index=>guard.current()?.onSelectStop(index)}
-  {...(props.onPreview?{onPreview:(value:Parameters<NonNullable<GradientOnCanvasHandlesProps['onPreview']>>[0])=>guard.current()?.onPreview?.(value)}:{})}/>;
+  onPreview={value=>{if(value===undefined){previews.clear(owner);return;}const host=guard.current();if(host?.onPreview)previews.publish(owner,host.onPreview,value);}}/>;
 }
 function GradientOnCanvasHandlesBody({
-  actionError=null,busy=false,disabledReason,
+  gestureBoundary,actionError=null,busy=false,disabledReason,
   paint,width,height,transform=IDENTITY_TRANSFORM,selectedStop,onSelectStop,onPreview,onSetFill,children,
   showCommands=true,geometryOnly=false,label="Gradient",accentColor,className,unstyled=false,style,...rest
-}:GradientOnCanvasHandlesProps&{actionError?:string|null;busy?:boolean}){
+}:GradientOnCanvasHandlesProps&{gestureBoundary:string;actionError?:string|null;busy?:boolean}){
   validateGradient(paint);
   validateTransform(transform);
   if(![width,height].every(Number.isFinite)||width<=0||height<=0)throw new RangeError("Invalid overlay size");
@@ -108,8 +113,8 @@ function GradientOnCanvasHandlesBody({
   const selected=selectedStop!==undefined&&shown.stops[selectedStop]?selectedStop:undefined;
   useEffect(()=>()=>{if(drag.current)latest.current.onPreview?.(undefined);},[]);
 
-  const geometryBoundary=JSON.stringify([paint,transform,width,height,disabledReason,busy]);
-  useLayoutEffect(()=>{drag.current=null;pressAt.current=null;clearPreview();},[geometryBoundary]);
+  const geometryBoundary=JSON.stringify([gestureBoundary,paint,transform,width,height,disabledReason,busy]);
+  useLayoutEffect(()=>{drag.current=null;pressAt.current=null;clearPreview();store.setState({notice:undefined});},[geometryBoundary]);
 
   const view=(q:Point)=>toView(transform,q);
   // Rail geometry in view space: the axis shifted sideways by STOP_RAIL.
@@ -133,6 +138,7 @@ function GradientOnCanvasHandlesBody({
     return true;
   };
   const begin=(target:Target)=>{
+    if(disabledReason!==undefined||busy)return;
     const p=latest.current;
     drag.current={target,start:p.paint,moved:false,cancelled:false};
     if(target.kind==="stop"&&p.selectedStop!==target.index)p.onSelectStop(target.index);
@@ -140,7 +146,7 @@ function GradientOnCanvasHandlesBody({
   };
   const dragTo=(dx:number,dy:number,mods:DragModifiers)=>{
     const d=drag.current;
-    if(!d||d.cancelled)return;
+    if(!d||d.cancelled||disabledReason!==undefined||busy)return;
     if(!d.moved&&Math.hypot(dx,dy)<TAP_SLOP)return;
     d.moved=true;
     const t=latest.current.transform;
@@ -161,12 +167,13 @@ function GradientOnCanvasHandlesBody({
   const release=()=>{
     const d=drag.current;
     drag.current=null;
-    if(!d||d.cancelled)return;
+    if(!d||d.cancelled||disabledReason!==undefined||busy)return;
     clearPreview();
     if(d.moved&&d.last)latest.current.onSetFill(d.last);
   };
   const block=(reason:string)=>store.setState({notice:reason});
   const deleteStop=(index:number|undefined)=>{
+    if(disabledReason!==undefined||busy)return;
     const p=latest.current;
     const reason=availabilityReason(removeStopAvailability(p.paint,index));
     if(reason!==undefined||index===undefined){block(reason??"");return;}
@@ -175,6 +182,7 @@ function GradientOnCanvasHandlesBody({
     p.onSelectStop(Math.min(index,p.paint.stops.length-2));
   };
   const addAt=(offset:number)=>{
+    if(disabledReason!==undefined||busy)return;
     const p=latest.current;
     const reason=availabilityReason(addStopAvailability(p.paint));
     if(reason!==undefined){block(reason);return;}
@@ -190,6 +198,7 @@ function GradientOnCanvasHandlesBody({
     addAt(i+1<p.paint.stops.length?(a+b)/2:(p.paint.stops[i-1]!.offset+a)/2);
   };
   const nudge=(target:Target,key:string|undefined,shift:boolean)=>{
+    if(disabledReason!==undefined||busy)return false;
     const p=latest.current;
     if(target.kind==="handle"){
       const d=nudgeDelta(key,shift);
@@ -223,7 +232,7 @@ function GradientOnCanvasHandlesBody({
   };
 
   const canvasHandlers=useLocalPointer({
-    onBegin:point=>{pressAt.current=point;},
+    onBegin:point=>{if(disabledReason===undefined&&!busy)pressAt.current=point;},
     onMove:()=>{},
     onRelease:point=>{
       if(geometryOnly){pressAt.current=null;return;}

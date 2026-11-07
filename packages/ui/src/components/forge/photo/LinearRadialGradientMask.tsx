@@ -1,5 +1,5 @@
 import {useLayoutEffect,useMemo,useRef,type ReactNode} from 'react';
-import {Image,Text,View,type ViewProps} from 'react-native';
+import {Image,View,type ViewProps} from 'react-native';
 import {Select} from '../../Select.tsx';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {useLocalStore} from '../../useLocalStore.ts';
@@ -23,10 +23,10 @@ function fromPaint(value:PhotoGradientMask,next:GradientPaint):PhotoGradientMask
 export function LinearRadialGradientMask({scope,value,imageSize,width,onCommit,onPreview,children,disabled=false,unstyled=false,...props}:LinearRadialGradientMaskProps){
  validatePhotoGradient(value,imageSize);if(!scope.trim()||!Number.isFinite(width)||width<120||width>4000)throw new RangeError('Gradient mask display width must be 120..4000');
  const [local,store]=useLocalStore(()=>({preview:null as PhotoGradientMask|null}));
- const boundary=JSON.stringify([scope,value,imageSize.width,imageSize.height,width]);
+ const boundary=JSON.stringify([scope,value,imageSize.width,imageSize.height,width,disabled]);
  const committed=useRef<string|null>(null);
  useLayoutEffect(()=>{committed.current=boundary;return()=>{committed.current=null;};},[boundary]);
- useLayoutEffect(()=>{store.set({preview:null});return()=>{const active=store.get().preview!==null;store.set({preview:null});if(active)onPreview?.(undefined);};},[boundary,store]);
+ useLayoutEffect(()=>{store.set({preview:null});},[boundary,store]);
  const shown=local.preview??value;
  const scale=width/imageSize.width,height=imageSize.height*scale;
  const preview=useMemo(()=>{const factor=64/Math.max(imageSize.width,imageSize.height),w=Math.max(1,Math.round(imageSize.width*factor)),h=Math.max(1,Math.round(imageSize.height*factor)),pixels=new Uint8Array(w*h*4);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4;pixels[i]=80;pixels[i+1]=180;pixels[i+2]=255;pixels[i+3]=Math.round(photoGradientCoverage(shown,(x+.5)/w*imageSize.width,(y+.5)/h*imageSize.height)*115);}return rasterToImage({width:w,height:h,pixels});},[shown,imageSize.width,imageSize.height]);
@@ -37,6 +37,6 @@ export function LinearRadialGradientMask({scope,value,imageSize,width,onCommit,o
   <UnitInput label="Gradient mask feather" value={value.feather} min={0} max={1} step={.05} disabled={disabled} unstyled={unstyled} onCommit={feather=>set({feather})}/>
   <Select label="Gradient mask combine" value={value.combine} options={['replace','add','subtract','intersect'].map(value=>({value,label:value}))} disabled={disabled} unstyled={unstyled} onValueChange={combine=>set({combine:combine as PhotoMaskCombine})}/>
   <SettingSwitch label="Invert gradient mask" on={value.invert} onChange={invert=>set({invert})} disabled={disabled} styled={!unstyled}/>
-  {disabled?<View style={{width,height}}>{content}<Text>Gradient mask editing disabled</Text></View>:<GradientOnCanvasHandles key={boundary} geometryOnly showCommands={false} paint={paint(value)} width={width} height={height} transform={[scale,0,0,scale,0,0]} selectedStop={undefined} onSelectStop={()=>{}} onPreview={next=>{if(committed.current!==boundary)return;if(!next){store.set({preview:null});onPreview?.(undefined);return;}const mask=fromPaint(value,next);try{validatePhotoGradient(mask,imageSize);}catch{onPreview?.(undefined);return;}store.set({preview:mask});onPreview?.(mask);}} onSetFill={next=>{if(committed.current!==boundary)return;const mask=fromPaint(value,next);try{validatePhotoGradient(mask,imageSize);}catch{return;}if(!disabled)onCommit(mask);}} unstyled={unstyled} label="Photo gradient mask handles">{content}</GradientOnCanvasHandles>}
+  <GradientOnCanvasHandles scope={scope} revision={JSON.stringify(value)} disabledReason={disabled?"Gradient mask editing disabled":undefined} geometryOnly showCommands={false} paint={paint(value)} width={width} height={height} transform={[scale,0,0,scale,0,0]} selectedStop={undefined} onSelectStop={()=>{}} onPreview={next=>{if(!next){store.set({preview:null});onPreview?.(undefined);return;}if(disabled||committed.current!==boundary)return;const mask=fromPaint(value,next);try{validatePhotoGradient(mask,imageSize);}catch{onPreview?.(undefined);return;}store.set({preview:mask});onPreview?.(mask);}} onSetFill={next=>{if(committed.current!==boundary)return;const mask=fromPaint(value,next);try{validatePhotoGradient(mask,imageSize);}catch{return;}if(!disabled)onCommit(mask);}} unstyled={unstyled} label="Photo gradient mask handles">{content}</GradientOnCanvasHandles>
  </View>;
 }
