@@ -30,7 +30,7 @@ internal class TronVideoOwner(context:Context) {
       if(player!==mp)appliedRate=null
       player=mp;prepared=true;failed=false
       mp.setOnSeekCompleteListener { completed ->
-        if(closed||completed!==player)return@setOnSeekCompleteListener
+        if(closed||!prepared||failed||completed!==player)return@setOnSeekCompleteListener
         seeking=false;completedToken=requestedToken?:"";apply();emit("ready")
       }
       apply();emit("ready")
@@ -43,6 +43,7 @@ internal class TronVideoOwner(context:Context) {
     props=next;view.contentDescription=next.label
     val key=next.sourceId+"\n"+next.uri
     if(key!=sourceKey){
+      player?.setOnSeekCompleteListener(null)
       sourceKey=key;prepared=false;failed=false;ended=false;seeking=false;requestedToken="";completedToken="";player=null;appliedRate=null
       view.stopPlayback()
       try { view.setVideoURI(Uri.parse(next.uri));emit("loading") }
