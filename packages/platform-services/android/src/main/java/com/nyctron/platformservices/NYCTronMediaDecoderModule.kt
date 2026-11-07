@@ -14,6 +14,10 @@ class NYCTronMediaDecoderModule : Module() {
   suspend fun probe(uri: String): MediaProbeRecord = worker.run { probe(uri) }
 
   @JS
+  suspend fun presentationIndexV1(uri: String, maxFrames: Double): PresentationIndexRecord =
+    worker.run { presentationIndex(uri, maxFrames) }
+
+  @JS
   suspend fun decodeFrame(uri: String, options: FrameRequestRecord): DecodedFrameRecord =
     worker.run { frame(uri, options) }
 

@@ -20,6 +20,14 @@ public final class NYCTronMediaDecoderModule: Module {
   }
 
   @JS
+  func presentationIndexV1(_ uri: String, _ maxFrames: Double) async throws -> PresentationIndexRecord {
+    try await decode {
+      let source = try MediaSource(uri: uri)
+      return try source.asset().presentationIndex(maxFrames: maxFrames)
+    }
+  }
+
+  @JS
   func decodeFrame(_ uri: String, _ options: FrameRequestRecord) async throws -> DecodedFrameRecord {
     let request = try checked { try FrameRequest(options) }
     return try await decode { try MediaSource(uri: uri).asset().decodedFrame(request) }

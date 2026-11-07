@@ -78,6 +78,53 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
     } finally { source.release() }
   }
 
+  /** Complete compressed-sample PTS index; no codec or nominal-FPS interpolation. */
+  fun presentationIndex(uri: String, maxFrames: Double): PresentationIndexRecord {
+    if (android.os.Build.VERSION.SDK_INT < 28)
+      throw MediaDecodeFailure("unsupported-format", "Presentation indexing requires Android API 28 or later.")
+    if (!maxFrames.isFinite() || maxFrames % 1.0 != 0.0 || maxFrames < 1 || maxFrames > 200_000)
+      throw MediaDecodeFailure("out-of-range", "maxFrames must be an integer from 1 to 200000.")
+    val source = extractor(uri)
+    try {
+      var track = -1
+      var duration = 0L
+      for (i in 0 until source.trackCount) {
+        checkActive()
+        val format = source.getTrackFormat(i)
+        if (format.containsKey(MediaFormat.KEY_DURATION)) duration = maxOf(duration, format.getLong(MediaFormat.KEY_DURATION))
+        if (track < 0 && format.getString(MediaFormat.KEY_MIME)?.startsWith("video/") == true) track = i
+      }
+      if (track < 0 || duration <= 0 || duration > 9_007_199_254_740_991L)
+        throw MediaDecodeFailure("unsupported-format", "A finite video timeline is required.")
+      source.selectTrack(track)
+      val times = ArrayList<Long>()
+      while (true) {
+        checkActive()
+        val time = source.sampleTime
+        if (time == -1L) break
+        if (time < 0 || time >= duration)
+          throw MediaDecodeFailure("unsupported-format", "A presentation timestamp lies outside the video duration.")
+        if (source.sampleFlags and (MediaExtractor.SAMPLE_FLAG_ENCRYPTED or MediaExtractor.SAMPLE_FLAG_PARTIAL_FRAME) != 0)
+          throw MediaDecodeFailure("unsupported-format", "Encrypted or partial video samples cannot be indexed.")
+        val sampleSize = source.sampleSize
+        if (sampleSize < 0)
+          throw MediaDecodeFailure("decode-failed", "The video sample size is unavailable.")
+        if (sampleSize > 32L * 1024 * 1024)
+          throw MediaDecodeFailure("unsupported-format", "The encoded video sample exceeds the index size budget.")
+        if (times.size >= maxFrames.toInt())
+          throw MediaDecodeFailure("out-of-range", "The complete video index exceeds maxFrames.")
+        times.add(time)
+        if (!source.advance()) break
+      }
+      checkActive()
+      if (times.isEmpty()) throw MediaDecodeFailure("decode-failed", "The video index is empty.")
+      times.sort()
+      for (i in 1 until times.size) if (times[i] <= times[i - 1])
+        throw MediaDecodeFailure("unsupported-format", "The video has duplicate presentation timestamps.")
+      return PresentationIndexRecord(duration.toDouble(), times.map { it.toDouble() })
+    } finally { source.release() }
+  }
+
   private fun number(format: MediaFormat?, key: String): Double {
     if (format == null || !format.containsKey(key)) return 0.0
     return try { format.getInteger(key).toDouble() } catch (_: ClassCastException) { format.getFloat(key).toDouble() }
