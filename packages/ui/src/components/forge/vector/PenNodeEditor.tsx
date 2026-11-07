@@ -20,6 +20,15 @@ import {
 } from "./vector-types.ts";
 import {CanvasKnob,LinePiece,NoticeLine,VectorButton,type CanvasKeyEvent,type DragModifiers} from "./vector-controls.tsx";
 
+/** Source contract for hosts that require scoped, focus-preserving canvas edits.
+ * Older alpha.4 artifacts omit this marker; availability must be detected at runtime. */
+export const PEN_NODE_EDITOR_CAPABILITIES = Object.freeze({
+  version: 1 as const,
+  scopedInteractions: true as const,
+  geometryCancellation: true as const,
+  stableGeometryFocus: true as const,
+});
+
 /** `setPathNode` intent: replace one node. */
 export interface SetPathNodeIntent extends NodeRef {
   readonly node:PathNode;
