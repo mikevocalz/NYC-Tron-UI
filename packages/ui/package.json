@@ -2629,6 +2629,46 @@
       "types": "./dist/components/forge/design/VariablesAndModes.d.ts",
       "react-native": "./dist/components/forge/design/VariablesAndModes.js",
       "default": "./dist/components/forge/design/VariablesAndModes.js"
+    },
+    "./components/forge/design/PrototypeConnectionTool": {
+      "types": "./dist/components/forge/design/PrototypeConnectionTool.d.ts",
+      "react-native": "./dist/components/forge/design/PrototypeConnectionTool.js",
+      "default": "./dist/components/forge/design/PrototypeConnectionTool.js"
+    },
+    "./components/forge/design/InteractionTriggerEditor": {
+      "types": "./dist/components/forge/design/InteractionTriggerEditor.d.ts",
+      "react-native": "./dist/components/forge/design/InteractionTriggerEditor.js",
+      "default": "./dist/components/forge/design/InteractionTriggerEditor.js"
+    },
+    "./components/forge/design/PrototypePreviewPlayer": {
+      "types": "./dist/components/forge/design/PrototypePreviewPlayer.d.ts",
+      "react-native": "./dist/components/forge/design/PrototypePreviewPlayer.js",
+      "default": "./dist/components/forge/design/PrototypePreviewPlayer.js"
+    },
+    "./components/forge/design/FlowOverview": {
+      "types": "./dist/components/forge/design/FlowOverview.d.ts",
+      "react-native": "./dist/components/forge/design/FlowOverview.js",
+      "default": "./dist/components/forge/design/FlowOverview.js"
+    },
+    "./components/forge/design/DevHandoffInspector": {
+      "types": "./dist/components/forge/design/DevHandoffInspector.d.ts",
+      "react-native": "./dist/components/forge/design/DevHandoffInspector.js",
+      "default": "./dist/components/forge/design/DevHandoffInspector.js"
+    },
+    "./components/forge/design/CollaborationPresence": {
+      "types": "./dist/components/forge/design/CollaborationPresence.d.ts",
+      "react-native": "./dist/components/forge/design/CollaborationPresence.js",
+      "default": "./dist/components/forge/design/CollaborationPresence.js"
+    },
+    "./components/forge/design/CommentPins": {
+      "types": "./dist/components/forge/design/CommentPins.d.ts",
+      "react-native": "./dist/components/forge/design/CommentPins.js",
+      "default": "./dist/components/forge/design/CommentPins.js"
+    },
+    "./components/forge/design/MultiExportSlices": {
+      "types": "./dist/components/forge/design/MultiExportSlices.d.ts",
+      "react-native": "./dist/components/forge/design/MultiExportSlices.js",
+      "default": "./dist/components/forge/design/MultiExportSlices.js"
     }
   },
   "scripts": {

@@ -4507,80 +4507,120 @@
       "name": "PrototypeConnectionTool",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/PrototypeConnectionTool.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Drag targets, hot spots and navigation links."
+      "requirement": "Drag targets, hot spots and navigation links.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-09",
       "name": "InteractionTriggerEditor",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/InteractionTriggerEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Tap, press, hover, drag and timer events."
+      "requirement": "Tap, press, hover, drag and timer events.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-10",
       "name": "PrototypePreviewPlayer",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/PrototypePreviewPlayer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Screen preview and animated transitions."
+      "requirement": "Screen preview and animated transitions.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-11",
       "name": "FlowOverview",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/FlowOverview.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Connected frames, entry points and navigation flows."
+      "requirement": "Connected frames, entry points and navigation flows.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-12",
       "name": "DevHandoffInspector",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/DevHandoffInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Spacing, typography, assets and code hints."
+      "requirement": "Spacing, typography, assets and code hints.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-13",
       "name": "CollaborationPresence",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/CollaborationPresence.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "User cursors, selections and live conflict states."
+      "requirement": "User cursors, selections and live conflict states.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-14",
       "name": "CommentPins",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/CommentPins.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Thread pins positioned on design canvas."
+      "requirement": "Thread pins positioned on design canvas.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "L-15",
       "name": "MultiExportSlices",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/MultiExportSlices.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Presets, resolutions, asset batching and transparent bounds."
+      "requirement": "Presets, resolutions, asset batching and transparent bounds.",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
     },
     {
       "id": "M-01",
