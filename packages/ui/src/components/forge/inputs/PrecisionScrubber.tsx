@@ -1,4 +1,5 @@
-import {useEffect,useLayoutEffect,useRef} from "react";
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {useLayoutEffect,useRef} from "react";
 import {Platform,Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -62,35 +63,38 @@ const MODE_LABEL={fine:"Fine precision",normal:"Normal precision",coarse:"Coarse
 export function PrecisionScrubber({scope,revision=0,...props}:PrecisionScrubberProps){
   const {label,min,max,step,detents,unit,disabled=false}=props;
   if(!label.trim()||scope!==undefined&&(!scope.trim()||scope.length>512)||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid scrubber identity');
-  const boundary=JSON.stringify([scope??label,revision,min,max,step,detents,unit,disabled]);
+  const signature=JSON.stringify([scope??label,revision,min,max,step,detents,unit,disabled]);
+  const boundary=useEditorBoundary([signature]);
   const mounted=useRef(false),committed=useRef({boundary,props});
   useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
   useLayoutEffect(()=>{committed.current={boundary,props};});
   const current=()=>mounted.current&&committed.current.boundary===boundary&&!committed.current.props.disabled?committed.current.props:null;
-  return <PrecisionScrubberBody key={boundary} {...props} onPreview={value=>current()?.onPreview?.(value)} onCommit={value=>current()?.onCommit(value)}/>;
+  return <PrecisionScrubberBody boundary={boundary} {...props} onCommit={value=>current()?.onCommit(value)}/>;
 }
 function PrecisionScrubberBody({
-  label,value,min,max,step,detents,unit,disabled=false,onPreview,onCommit,
+  boundary,label,value,min,max,step,detents,unit,disabled=false,onPreview,onCommit,
   forcedColors=false,transport:Transport=PanResponderDrag,className,unstyled=false,scaleColor,accentColor,targetSize=44,labels,style,...rest
-}:PrecisionScrubberProps){
+}:PrecisionScrubberProps&{boundary:string}){
   if(!Number.isFinite(targetSize)||targetSize<44)throw new RangeError('Scrubber target must be at least 44 points');
   if(Object.values(labels??{}).some(value=>value!==undefined&&(typeof value!=='string'||!value.trim())))throw new RangeError('Scrubber labels must be nonempty strings');
   const copy={increase:'Increase '+label,decrease:'Decrease '+label,value:label+' value',
     gestureHint:'Drag horizontally to adjust. Move upward for fine precision or downward for coarse. Use arrow keys or the increase and decrease buttons.',
     idleHint:'Drag: up for fine, down for coarse',...MODE_LABEL,...Object.fromEntries(Object.entries(labels??{}).filter(([,value])=>value!==undefined))};
   const latest=useRef({value,min,max,step,detents,disabled,onPreview,onCommit});
-  latest.current={value,min,max,step,detents,disabled,onPreview,onCommit};
+  useLayoutEffect(()=>{latest.current={value,min,max,step,detents,disabled,onPreview,onCommit};});
   const local=useRef<{store:StoreApi<ScrubberState>;hover:StoreApi<Pointer>;model:ScrubberModel}|null>(null);
   if(!local.current){
     const store=createStore<ScrubberState>(()=>initialScrubberState(value,step));
     const hover=createStore<Pointer>(()=>({hovered:false,focused:false}));
     local.current={store,hover,model:createScrubberModel(store,()=>latest.current)};
   }
-  const {store,hover,model}=local.current;
+  const {store,hover,model:controller}=local.current;
+  useLayoutEffect(()=>{controller.admit(boundary);},[boundary,controller]);
+  const model=controller.scoped(boundary);
   const state=useStore(store,s=>s);
   const {hovered,focused}=useStore(hover,s=>s);
-  useEffect(()=>model.sync(),[value,step,model]);
-  useEffect(()=>()=>model.cancel(),[model]);
+  useLayoutEffect(()=>controller.sync(),[value,step,controller]);
+  useLayoutEffect(()=>()=>controller.invalidate(),[controller]);
 
   const blocked=disabled||state.pending;
   const display=formatStepValue(state.preview,step);
