@@ -107,9 +107,9 @@ export function MIDIPianoRoll({scope='MIDIPianoRoll',revision=0,...props}:MIDIPi
  if(retained.current.scope!==scope||retained.current.revision!==revision)retained.current={x:0,y:null,scope,revision};
  assertMidiNotes(props.notes,props.clipTicks);
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.ppq,props.beatsPerBar,props.timeSignature,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.notes,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
- // Channel acknowledgements do not replace focused controls; geometry still resets gestures.
- const bodyKey=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.ppq,props.beatsPerBar,props.timeSignature,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.notes.map(({channel,...note})=>note),props.disabled,props.disabledReason]);
- return <MIDIPianoRollBody key={bodyKey} {...props} retained={retained.current} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+ // Note acknowledgements preserve focused controls. The full owner still cancels stale gestures.
+ const bodyKey=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.ppq,props.beatsPerBar,props.timeSignature,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.disabled,props.disabledReason]);
+ return <MIDIPianoRollBody key={bodyKey} {...props} interactionBoundary={owner} retained={retained.current} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
   onNoteMove={(...args:Parameters<MIDIPianoRollProps['onNoteMove']>)=>guard.run('onNoteMove',h=>h.onNoteMove(...args))}
   onNoteResize={(...args:Parameters<MIDIPianoRollProps['onNoteResize']>)=>guard.run('onNoteResize',h=>h.onNoteResize(...args))}
   onNoteAdd={props.onNoteAdd?(...args:Parameters<NonNullable<MIDIPianoRollProps['onNoteAdd']>>)=>guard.run('onNoteAdd',h=>h.onNoteAdd?.(...args)):undefined}
@@ -120,12 +120,12 @@ export function MIDIPianoRoll({scope='MIDIPianoRoll',revision=0,...props}:MIDIPi
   onScrollX={props.onScrollX?(...args:Parameters<NonNullable<MIDIPianoRollProps['onScrollX']>>)=>{guard.current()?.onScrollX?.(...args);}:undefined}
  />;
 }
-function MIDIPianoRollBody({actionError,disabledReason,retained,
+function MIDIPianoRollBody({actionError,disabledReason,retained,interactionBoundary,
   notes, clipTicks, ppq = 960, beatsPerBar = 4, timeSignature, scrollX, lowestPitch = 48, highestPitch = 72,
   snapTicks, pixelsPerTick = 0.1, rowHeight = 44, height = 352, selectedIndex, onSelect,
   onNoteMove, onNoteResize, onNoteAdd, onNoteRemove, onAudition, onScrollX, onNoteChannel, disabled = false, label = "Piano roll",
   className, unstyled = false, ...rest
-}: MIDIPianoRollProps&{actionError?:string|null;retained:{x:number;y:number|null}}) {
+}: MIDIPianoRollProps&{actionError?:string|null;interactionBoundary:string;retained:{x:number;y:number|null}}) {
   const grid: NoteGrid = {
     clipTicks, lowestPitch, highestPitch, pixelsPerTick, rowHeight,
     snapTicks: snapTicks ?? Math.max(1, Math.round(ppq / 4)),
@@ -235,7 +235,7 @@ function MIDIPianoRollBody({actionError,disabledReason,retained,
                 style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: 2 }} />
             </Pressable>
             {notes.map((note, index) => noteRect(note, grid)
-              ? <NoteBox key={index} index={index} note={note} grid={grid} ppq={ppq} withChannel={withChannel}
+              ? <NoteBox key={index} interactionBoundary={interactionBoundary} index={index} note={note} grid={grid} ppq={ppq} withChannel={withChannel}
                   selected={index === selectedIndex} disabled={disabled} styled={styled}
                   onSelect={onSelect} onMove={onNoteMove} onResize={onNoteResize} onRemove={onNoteRemove} />
               : null)}
@@ -249,6 +249,7 @@ function MIDIPianoRollBody({actionError,disabledReason,retained,
 type Drag = { mode: "idle" | "move" | "resize"; startTicks: number; pitch: number; lengthTicks: number };
 
 interface NoteBoxProps {
+  readonly interactionBoundary: string;
   readonly index: number;
   readonly note: MidiNote;
   readonly grid: NoteGrid;
@@ -265,15 +266,16 @@ interface NoteBoxProps {
 }
 
 /** One draggable note. Holds only the in-flight preview; the note itself is a prop. */
-function NoteBox({ index, note, grid, ppq, withChannel, selected, disabled, styled, onSelect, onMove, onResize, onRemove }: NoteBoxProps) {
+function NoteBox({ interactionBoundary, index, note, grid, ppq, withChannel, selected, disabled, styled, onSelect, onMove, onResize, onRemove }: NoteBoxProps) {
   const latest = useRef({ index, note, grid, disabled, onSelect, onMove, onResize, onRemove });
-  latest.current = { index, note, grid, disabled, onSelect, onMove, onResize, onRemove };
+  useLayoutEffect(() => { latest.current = { index, note, grid, disabled, onSelect, onMove, onResize, onRemove }; });
   const local = useRef<StoreApi<Drag> | null>(null);
   if (!local.current) local.current = createStore<Drag>(() => ({ mode: "idle", startTicks: 0, pitch: 0, lengthTicks: 0 }));
   const store = local.current;
   const drag = useStore(store, s => s);
   const idle = { mode: "idle" as const, startTicks: 0, pitch: 0, lengthTicks: 0 };
   const cancel = () => store.setState(idle);
+  useLayoutEffect(() => { cancel(); }, [interactionBoundary]);
   const begin = (mode: "move" | "resize") => {
     const p = latest.current;
     p.onSelect?.(p.index);

@@ -205,8 +205,11 @@ test.describe("K PDF",()=>{
     // then scroll the list to verify the final page rather than requiring all rows mounted.
     await expect(search.getByRole("heading").first()).toHaveText("Page 1 · 2 matches");
     await expect(search.getByRole("heading").nth(1)).toHaveText("Page 2 · 1 match");
-    await search.evaluate(root=>{for(const el of root.querySelectorAll('*'))if(el.scrollHeight>el.clientHeight&&getComputedStyle(el).overflowY==='auto')el.scrollTop=el.scrollHeight;});
-    await expect(search.getByRole("heading",{name:"Page 3 · 1 match",exact:true})).toBeVisible();
+    const thirdPage=search.getByRole("heading",{name:"Page 3 · 1 match",exact:true});
+    await thirdPage.scrollIntoViewIfNeeded();
+    await thirdPage.hover();
+    await page.mouse.wheel(0,800);
+    await expect(thirdPage).toBeVisible();
     await expect(search.getByRole("heading",{name:"Page 4 · 1 match",exact:true})).toBeVisible();
     for(let i=0;i<3;i++)await search.getByRole("button",{name:"Next match"}).click();
     await expect(state(page,"pdf-state")).toContainText("current 0 hits 5");

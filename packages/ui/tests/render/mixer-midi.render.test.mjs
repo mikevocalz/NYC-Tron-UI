@@ -102,12 +102,13 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   }
   return {
     module: rel => load(resolve(src, rel)),
-    render: (Component, props) => {
+    render: (Component, props, commit = true) => {
       path = "root"; cursor = 0;
       const tree=expand({ type: Component, props, key: undefined }, "root");
-      for (const commit of layouts.splice(0)) commit();
+      if (commit) for (const effect of layouts.splice(0)) effect();
       return tree;
     },
+    commitLayouts: () => { for (const effect of layouts.splice(0)) effect(); },
     flushEffects: () => { for (const fn of effects.splice(0)) fn(); },
     runTimers: () => { for (const t of timers.splice(0)) if (t.live) t.fn(); },
   };
@@ -262,6 +263,44 @@ test("MIDIPianoRoll: end grip resizes; interrupted drags and taps commit nothing
   body.onPanResponderRelease();
   assert.equal(calls.filter(c => c[0] === "move").length, 0);
   assert.equal(noteNode(h.render(MIDIPianoRoll, props), "C4").props.style.left, 0, "cancel restores");
+});
+
+test("MIDIPianoRoll: a note acknowledgement cancels an active gesture without replacing its body", () => {
+  const h = harness();
+  const { MIDIPianoRoll } = h.module("forge/midi/MIDIPianoRoll.tsx");
+  const calls = [];
+  const props = rollProps(calls);
+  const tree = h.render(MIDIPianoRoll, props);
+  const gesture = noteNode(tree, "E4").props.__responder;
+  gesture.onPanResponderGrant();
+  gesture.onPanResponderMove({}, { dx: 96, dy: -88 });
+  const changed = { ...props, notes: props.notes.map((note, index) => index === 1 ? { ...note, lengthTicks: 720 } : note) };
+  h.render(MIDIPianoRoll, changed);
+  gesture.onPanResponderMove({}, { dx: 144, dy: -44 });
+  gesture.onPanResponderRelease();
+  assert.deepEqual(calls, [["select", 1]], "a stale drag cannot commit against acknowledged notes");
+  const restored = noteNode(h.render(MIDIPianoRoll, changed), "E4");
+  assert.equal(restored.props.style.left, 96);
+});
+
+test("MIDIPianoRoll: an uncommitted note render cannot replace live responder data or callbacks", () => {
+  const h = harness();
+  const { MIDIPianoRoll } = h.module("forge/midi/MIDIPianoRoll.tsx");
+  const calls = [], replacementCalls = [];
+  const props = rollProps(calls);
+  const gesture = noteNode(h.render(MIDIPianoRoll, props), "E4").props.__responder;
+  gesture.onPanResponderGrant();
+  h.render(MIDIPianoRoll, { ...rollProps(replacementCalls),
+    notes: props.notes.map((note, index) => index === 1 ? { ...note, startTicks: 1920, pitch: 70 } : note),
+  }, false);
+  gesture.onPanResponderMove({}, { dx: 48, dy: -44 });
+  gesture.onPanResponderRelease();
+  assert.deepEqual(calls, [["select", 1], ["move", 1, 1440, 65]], "the live gesture uses the last committed note and callback");
+  assert.deepEqual(replacementCalls, []);
+  h.commitLayouts();
+  gesture.onPanResponderMove({}, { dx: 96, dy: -88 });
+  gesture.onPanResponderRelease();
+  assert.deepEqual(replacementCalls, [], "committing the replacement cancels the old gesture");
 });
 
 test("MIDIPianoRoll: keyboard and screen-reader actions edit the focused note", async () => {
