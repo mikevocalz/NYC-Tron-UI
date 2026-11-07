@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import type {ReactNode} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
@@ -12,7 +14,7 @@ import {clampRate,formatRate,readAloudPosition,stepRate,wordSpans,type ReadAloud
 export type ReadAloudStatus="stopped"|"playing"|"paused"|"unavailable";
 
 /** Props for {@linkcode ReadAloudTransport}. */
-export interface ReadAloudTransportProps extends Omit<ViewProps,"children"> {
+export interface ReadAloudTransportProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The reading queue, from `readAloudSentences`. */
   readonly sentences:readonly ReadAloudSentence[];
   /** Index into `sentences` of the sentence being read or about to be read. */
@@ -43,6 +45,7 @@ export interface ReadAloudTransportProps extends Omit<ViewProps,"children"> {
   readonly announceSentences?:boolean;
   /** @default "Read aloud" */
   readonly label?:string;
+  readonly disabled?:boolean;
   className?:string;
   unstyled?:boolean;
 }
@@ -59,20 +62,29 @@ export interface ReadAloudTransportProps extends Omit<ViewProps,"children"> {
  * Keys on web: Space plays or pauses, Left/Right step a sentence, + and -
  * change speed.
  */
-export function ReadAloudTransport({
+export function ReadAloudTransport({scope='read-aloud',revision=0,...props}:ReadAloudTransportProps){
+ if(props.sentences.length>100000||!Number.isFinite(props.rate)||props.rate<.5||props.rate>3)throw new RangeError('Invalid read-aloud session');
+ const identity=JSON.stringify(controlIdentity(scope,revision)),owner=JSON.stringify([identity,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined),stop=useScopedControl(identity,props);
+ return <ReadAloudTransportBody key={identity} {...props} actionError={guard.error??stop.error}
+ onPlay={()=>guard.run('play',h=>h.onPlay())} onPause={()=>guard.run('pause',h=>h.onPause())} onSkip={direction=>guard.run('skip',h=>h.onSkip(direction))} onRateChange={rate=>guard.run('rate',h=>h.onRateChange(rate))}
+ onStop={props.onStop?()=>{guard.cancel();return stop.run('stop',h=>h.onStop?.());}:undefined} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}/>;
+}
+function ReadAloudTransportBody({actionError,disabledReason,disabled=false,
+
   sentences,index,wordIndex,status,unavailableReason="No voice is available on this device.",rate,onRateChange,
   onPlay,onPause,onSkip,onStop,context,accessory,announceSentences=false,label="Read aloud",className,unstyled=false,...rest
-}:ReadAloudTransportProps){
+}:ReadAloudTransportProps&{actionError?:string|null}){
   const styled=!unstyled;
   const count=sentences.length;
   const current=count>0?sentences[Math.min(Math.max(index,0),count-1)]:undefined;
   const playing=status==="playing";
-  const canPlay=status!=="unavailable"&&count>0;
+  const canPlay=!disabled&&status!=="unavailable"&&count>0;
   const canBack=canPlay&&index>0;
   const canForward=canPlay&&index<count-1;
   const r=clampRate(rate);
   const toggle=()=>{if(!canPlay)return;if(playing)onPause();else onPlay();};
   const onKeyDown=(e:OfficeKeyEvent)=>{
+    if(disabled)return;
     const {key}=officeKey(e);
     let handled=true;
     if(key===" "||key==="Spacebar")toggle();
@@ -110,10 +122,10 @@ export function ReadAloudTransport({
       <ToolButton quiet label="Next sentence" iconOnly disabled={!canForward} styled={styled} onPress={()=>onSkip(1)}>
         <SkipGlyph styled={styled}/>
       </ToolButton>
-      <Pressable accessibilityRole="adjustable" accessibilityLabel="Reading speed"
+      <Pressable disabled={disabled} accessibilityState={{disabled}} accessibilityRole="adjustable" accessibilityLabel="Reading speed"
         accessibilityValue={{min:50,max:300,now:Math.round(r*100),text:formatRate(r)}}
         accessibilityActions={[{name:"increment"},{name:"decrement"}]}
-        onAccessibilityAction={e=>onRateChange(stepRate(r,e.nativeEvent.actionName==="increment"?1:-1))}
+        onAccessibilityAction={e=>!disabled&&onRateChange(stepRate(r,e.nativeEvent.actionName==="increment"?1:-1))}
         accessibilityHint="Tap for the next speed"
         onPress={()=>onRateChange(r>=3?0.5:stepRate(r,1))}
         {...{className:joinClasses(styled&&"rounded-control border border-border focus-visible:ring-2 focus-visible:ring-focus")}}
@@ -123,7 +135,7 @@ export function ReadAloudTransport({
       {onStop?<ToolButton label="Stop reading" styled={styled} onPress={onStop}/>:null}
       {accessory}
     </View>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 function SentenceText({sentence,wordIndex,styled,announce}:{sentence:ReadAloudSentence;wordIndex:number|undefined;styled:boolean;announce:boolean}){

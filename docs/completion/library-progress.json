@@ -3222,9 +3222,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/document/RichTextRibbon.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Font family, size, style, highlighter, colors and cases."
+      "requirement": "Font family, size, style, highlighter, colors and cases.",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-04",
@@ -3279,9 +3282,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/document/BulletsNumberingEditor.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Multilevel list and nesting policy."
+      "requirement": "Multilevel list and nesting policy.",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-08",
@@ -3358,20 +3364,30 @@
       "name": "CommentsAndReviewRail",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/CommentsAndReviewRail.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Threaded comments, mentions and resolve."
+      "requirement": "Threaded comments, mentions and resolve.",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-14",
       "name": "TrackChangesView",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/TrackChangesView.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Add/delete/format diffs with accept/reject controls."
+      "requirement": "Add/delete/format diffs with accept/reject controls.",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-15",
@@ -3381,19 +3397,27 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/document/NavigationOutline.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Headings, bookmark jump and page thumbnails."
+      "requirement": "Headings, bookmark jump and page thumbnails.",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-16",
       "name": "TableOfContentsEditor",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/TableOfContentsEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Automatic headings and update fields."
+      "requirement": "Automatic headings and update fields.",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-17",
@@ -3443,19 +3467,27 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/document/DocumentReadAloudTransport.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Synchronized text-to-speech controls and highlighted paragraph reading position. *Source candidate: `wordcraft/ui/editor/EditorScreen.kt`; requires verified implementation and license admission.*"
+      "requirement": "Synchronized text-to-speech controls and highlighted paragraph reading position. *Source candidate: `wordcraft/ui/editor/EditorScreen.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "H-22",
       "name": "DictationSessionPanel",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/DictationSessionPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Speech-to-text input with permission/record state, review, editing and undo. *Source candidate: `wordcraft/ui/editor/EditorInput.kt`; requires verified implementation and license admission.*"
+      "requirement": "Speech-to-text input with permission/record state, review, editing and undo. *Source candidate: `wordcraft/ui/editor/EditorInput.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
     },
     {
       "id": "I-01",

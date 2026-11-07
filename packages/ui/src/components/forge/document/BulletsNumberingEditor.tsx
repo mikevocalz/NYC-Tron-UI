@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
@@ -12,7 +14,7 @@ export interface ListPreviewItem {
 }
 
 /** Props for {@linkcode BulletsNumberingEditor}. Each control renders only when its callback is passed. */
-export interface BulletsNumberingEditorProps extends Omit<ViewProps,"children"> {
+export interface BulletsNumberingEditorProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The list as it stands; the selected paragraphs are `[selectionStart, selectionEnd]`. */
   readonly items:readonly ListPreviewItem[];
   readonly selectionStart:number;
@@ -28,6 +30,7 @@ export interface BulletsNumberingEditorProps extends Omit<ViewProps,"children"> 
   readonly onLevelFormatChange?:(level:number,format:ListFormat)=>void;
   /** Moves the selection one level deeper (+1) or shallower (-1); renders the indent pair. */
   readonly onShiftLevel?:(direction:1|-1)=>void;
+  readonly disabled?:boolean;
   className?:string;
   unstyled?:boolean;
 }
@@ -40,10 +43,18 @@ const KIND_LABEL:Record<ListKind,string>={none:"Not a list",bullet:"Bulleted",nu
  * at most, nine levels), pick a format per level, and preview the markers
  * the result produces. On web, Tab and Shift+Tab indent and outdent.
  */
-export function BulletsNumberingEditor({
+export function BulletsNumberingEditor({scope='BulletsNumberingEditor',revision=0,...props}:BulletsNumberingEditorProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <BulletsNumberingEditorBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onKindChange={(...args:Parameters<BulletsNumberingEditorProps['onKindChange']>)=>guard.run('onKindChange',h=>h.onKindChange(...args))}
+  onLevelFormatChange={props.onLevelFormatChange?(...args:Parameters<NonNullable<BulletsNumberingEditorProps['onLevelFormatChange']>>)=>guard.run('onLevelFormatChange',h=>h.onLevelFormatChange?.(...args)):undefined}
+  onShiftLevel={props.onShiftLevel?(...args:Parameters<NonNullable<BulletsNumberingEditorProps['onShiftLevel']>>)=>guard.run('onShiftLevel',h=>h.onShiftLevel?.(...args)):undefined}
+ />;
+}
+function BulletsNumberingEditorBody({actionError,disabledReason,disabled=false,
   items,selectionStart,selectionEnd,kind,kinds,onKindChange,levelFormats,onLevelFormatChange,onShiftLevel,
   className,unstyled=false,...rest
-}:BulletsNumberingEditorProps){
+}:BulletsNumberingEditorProps&{actionError?:string|null}){
   const styled=!unstyled;
   const formats=levelFormats??defaultLevelFormats("bullet");
   const markers=kind==="none"?items.map(()=>""):listMarkers(items,formats);
@@ -61,7 +72,7 @@ export function BulletsNumberingEditor({
   return <View {...rest} accessibilityLabel="Bullets and numbering" {...{role:"group",onKeyDown}}
     {...{className:joinClasses("min-w-0",className)}} style={[{gap:12},rest.style as object]}>
     <View accessibilityRole="radiogroup" accessibilityLabel="List kind" style={{flexDirection:"row",flexWrap:"wrap",gap:4}}>
-      {kinds.map(k=><Pressable key={k} accessibilityRole="radio" accessibilityState={{checked:kind===k}} onPress={()=>onKindChange(k)}
+      {kinds.map(k=><Pressable key={k} accessibilityRole="radio" accessibilityState={{checked:kind===k,disabled}} disabled={disabled} onPress={()=>onKindChange(k)}
         {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(kind===k?"border-accent bg-accent/10":"border-border"))}}
         style={{minHeight:OFFICE_TOUCH_TARGET,paddingHorizontal:12,justifyContent:"center"}}>
@@ -69,8 +80,8 @@ export function BulletsNumberingEditor({
       </Pressable>)}
     </View>
     {onShiftLevel?<View style={{flexDirection:"row",gap:4,flexWrap:"wrap"}}>
-      <ToolButton label="Decrease indent" disabled={!outdentOk} styled={styled} onPress={()=>onShiftLevel(-1)}/>
-      <ToolButton label="Increase indent" disabled={!indentOk} styled={styled} onPress={()=>onShiftLevel(1)}/>
+      <ToolButton label="Decrease indent" disabled={disabled||!outdentOk} styled={styled} onPress={()=>onShiftLevel(-1)}/>
+      <ToolButton label="Increase indent" disabled={disabled||!indentOk} styled={styled} onPress={()=>onShiftLevel(1)}/>
     </View>:null}
     {onLevelFormatChange&&kind!=="none"?<View style={{gap:6}}>
       {Array.from({length:deepest+1},(_,level)=><View key={level} accessibilityLabel={"Level "+(level+1)+" format"}
@@ -79,7 +90,7 @@ export function BulletsNumberingEditor({
         {LIST_FORMATS.map(f=>{
           const on=formats[level]===f;
           return <Pressable key={f} accessibilityRole="radio" accessibilityLabel={formatLabel(f)} accessibilityState={{checked:on}}
-            onPress={()=>onLevelFormatChange(level,f)}
+            disabled={disabled} onPress={()=>onLevelFormatChange(level,f)}
             {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
               styled&&(on?"border-accent bg-accent/10":"border-border"))}}
             style={{minWidth:OFFICE_TOUCH_TARGET,minHeight:OFFICE_TOUCH_TARGET,alignItems:"center",justifyContent:"center",paddingHorizontal:6}}>
@@ -98,5 +109,5 @@ export function BulletsNumberingEditor({
         </View>;
       })}
     </View>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

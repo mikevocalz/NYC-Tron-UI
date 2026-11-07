@@ -2299,6 +2299,26 @@
       "types": "./dist/components/forge/document/ParagraphRuler.d.ts",
       "react-native": "./dist/components/forge/document/ParagraphRuler.js",
       "default": "./dist/components/forge/document/ParagraphRuler.js"
+    },
+    "./components/forge/document/CommentsAndReviewRail": {
+      "types": "./dist/components/forge/document/CommentsAndReviewRail.d.ts",
+      "react-native": "./dist/components/forge/document/CommentsAndReviewRail.js",
+      "default": "./dist/components/forge/document/CommentsAndReviewRail.js"
+    },
+    "./components/forge/document/TrackChangesView": {
+      "types": "./dist/components/forge/document/TrackChangesView.d.ts",
+      "react-native": "./dist/components/forge/document/TrackChangesView.js",
+      "default": "./dist/components/forge/document/TrackChangesView.js"
+    },
+    "./components/forge/document/TableOfContentsEditor": {
+      "types": "./dist/components/forge/document/TableOfContentsEditor.d.ts",
+      "react-native": "./dist/components/forge/document/TableOfContentsEditor.js",
+      "default": "./dist/components/forge/document/TableOfContentsEditor.js"
+    },
+    "./components/forge/document/DictationSessionPanel": {
+      "types": "./dist/components/forge/document/DictationSessionPanel.d.ts",
+      "react-native": "./dist/components/forge/document/DictationSessionPanel.js",
+      "default": "./dist/components/forge/document/DictationSessionPanel.js"
     }
   },
   "scripts": {
