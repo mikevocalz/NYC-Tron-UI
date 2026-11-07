@@ -2541,80 +2541,120 @@
       "name": "VoiceIsolationPanel",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/VoiceIsolationPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Native-backed speech separation preview, processing progress and revert. *Source candidate: `capcraft/ui/editor/panels/IsolateVoice.kt`; requires verified implementation and license admission.*"
+      "requirement": "Native-backed speech separation preview, processing progress and revert. *Source candidate: `capcraft/ui/editor/panels/IsolateVoice.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-35",
       "name": "BeatDetectionMarkerLane",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/BeatDetectionMarkerLane.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Beat markers aligned to audio clip timeline and editable by user. *Source candidate: `capcraft/ui/editor/panels/BeatsPanel.kt`; requires verified implementation and license admission.*"
+      "requirement": "Beat markers aligned to audio clip timeline and editable by user. *Source candidate: `capcraft/ui/editor/panels/BeatsPanel.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-36",
       "name": "SoundEffectsLibrary",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/SoundEffectsLibrary.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Preview, search, category filter and insert licensed sound effects onto audio tracks. *Source candidate: `capcraft/ui/editor/panels/SoundFx.kt`; requires verified implementation and license admission.*"
+      "requirement": "Preview, search, category filter and insert licensed sound effects onto audio tracks. *Source candidate: `capcraft/ui/editor/panels/SoundFx.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-37",
       "name": "SpeechTranscriptTakeReview",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/SpeechTranscriptTakeReview.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Review recognized speech against recorded takes with speaker/timing corrections. *Source candidate: `capcraft/ui/editor/panels/SpeechPanel.kt`; requires verified implementation and license admission.*"
+      "requirement": "Review recognized speech against recorded takes with speaker/timing corrections. *Source candidate: `capcraft/ui/editor/panels/SpeechPanel.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-38",
       "name": "VoiceoverCountdownAndTakeBin",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/VoiceoverCountdownAndTakeBin.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Countdown, recording input monitor, take management and safe discard/retry. *Source candidate: `filmcraft/ui/editor/Voiceover.kt`; requires verified implementation and license admission.*"
+      "requirement": "Countdown, recording input monitor, take management and safe discard/retry. *Source candidate: `filmcraft/ui/editor/Voiceover.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-39",
       "name": "AudioEffectsPresetPanel",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AudioEffectsPresetPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Per-clip audio effects and editable parameters, offline preview and bypass. *Source candidate: `capcraft/ui/editor/panels/AudioEffects.kt`; requires verified implementation and license admission.*"
+      "requirement": "Per-clip audio effects and editable parameters, offline preview and bypass. *Source candidate: `capcraft/ui/editor/panels/AudioEffects.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-40",
       "name": "NoiseReductionMonitor",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/NoiseReductionMonitor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Audition selected noise cleanup with measured signal and reversible commit. *Source candidate: `capcraft/ui/editor/panels/IsolateVoice.kt`; requires verified implementation and license admission.*"
+      "requirement": "Audition selected noise cleanup with measured signal and reversible commit. *Source candidate: `capcraft/ui/editor/panels/IsolateVoice.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "E-41",
       "name": "AutoDuckEnvelopePanel",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AutoDuckEnvelopePanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Automated music-under-dialogue volume ducking with adjustable sensitivity and envelopes. *Source candidate: `capcraft/ui/editor/panels/AudioEffects.kt`; requires verified implementation and license admission.*"
+      "requirement": "Automated music-under-dialogue volume ducking with adjustable sensitivity and envelopes. *Source candidate: `capcraft/ui/editor/panels/AudioEffects.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
     },
     {
       "id": "F-01",

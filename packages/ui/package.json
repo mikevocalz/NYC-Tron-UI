@@ -2180,40 +2180,85 @@
       "react-native": "./dist/components/forge/audio/PanAndBalanceControl.js",
       "default": "./dist/components/forge/audio/PanAndBalanceControl.js"
     },
-    "./forge/audio/ClipGainEnvelope": {
+    "./components/forge/audio/ClipGainEnvelope": {
       "types": "./dist/components/forge/audio/ClipGainEnvelope.d.ts",
-      "react-native": "./src/components/forge/audio/ClipGainEnvelope.tsx",
+      "react-native": "./dist/components/forge/audio/ClipGainEnvelope.js",
       "default": "./dist/components/forge/audio/ClipGainEnvelope.js"
     },
-    "./forge/audio/AudioClipTrimAndFade": {
+    "./components/forge/audio/AudioClipTrimAndFade": {
       "types": "./dist/components/forge/audio/AudioClipTrimAndFade.d.ts",
-      "react-native": "./src/components/forge/audio/AudioClipTrimAndFade.tsx",
+      "react-native": "./dist/components/forge/audio/AudioClipTrimAndFade.js",
       "default": "./dist/components/forge/audio/AudioClipTrimAndFade.js"
     },
-    "./forge/audio/LoopPunchRecording": {
+    "./components/forge/audio/LoopPunchRecording": {
       "types": "./dist/components/forge/audio/LoopPunchRecording.d.ts",
-      "react-native": "./src/components/forge/audio/LoopPunchRecording.tsx",
+      "react-native": "./dist/components/forge/audio/LoopPunchRecording.js",
       "default": "./dist/components/forge/audio/LoopPunchRecording.js"
     },
-    "./forge/audio/SampleEditor": {
+    "./components/forge/audio/SampleEditor": {
       "types": "./dist/components/forge/audio/SampleEditor.d.ts",
-      "react-native": "./src/components/forge/audio/SampleEditor.tsx",
+      "react-native": "./dist/components/forge/audio/SampleEditor.js",
       "default": "./dist/components/forge/audio/SampleEditor.js"
     },
-    "./forge/audio/LatencyCalibrationPanel": {
+    "./components/forge/audio/LatencyCalibrationPanel": {
       "types": "./dist/components/forge/audio/LatencyCalibrationPanel.d.ts",
-      "react-native": "./src/components/forge/audio/LatencyCalibrationPanel.tsx",
+      "react-native": "./dist/components/forge/audio/LatencyCalibrationPanel.js",
       "default": "./dist/components/forge/audio/LatencyCalibrationPanel.js"
     },
-    "./forge/audio/TakePlaylistAndComping": {
+    "./components/forge/audio/TakePlaylistAndComping": {
       "types": "./dist/components/forge/audio/TakePlaylistAndComping.d.ts",
-      "react-native": "./src/components/forge/audio/TakePlaylistAndComping.tsx",
+      "react-native": "./dist/components/forge/audio/TakePlaylistAndComping.js",
       "default": "./dist/components/forge/audio/TakePlaylistAndComping.js"
     },
-    "./forge/audio/AudioVideoSync": {
+    "./components/forge/audio/AudioVideoSync": {
       "types": "./dist/components/forge/audio/AudioVideoSync.d.ts",
-      "react-native": "./src/components/forge/audio/AudioVideoSync.tsx",
+      "react-native": "./dist/components/forge/audio/AudioVideoSync.js",
       "default": "./dist/components/forge/audio/AudioVideoSync.js"
+    },
+    "./components/forge/audio/AudioProcessingPanel": {
+      "types": "./dist/components/forge/audio/AudioProcessingPanel.d.ts",
+      "react-native": "./dist/components/forge/audio/AudioProcessingPanel.js",
+      "default": "./dist/components/forge/audio/AudioProcessingPanel.js"
+    },
+    "./components/forge/audio/VoiceIsolationPanel": {
+      "types": "./dist/components/forge/audio/VoiceIsolationPanel.d.ts",
+      "react-native": "./dist/components/forge/audio/VoiceIsolationPanel.js",
+      "default": "./dist/components/forge/audio/VoiceIsolationPanel.js"
+    },
+    "./components/forge/audio/NoiseReductionMonitor": {
+      "types": "./dist/components/forge/audio/NoiseReductionMonitor.d.ts",
+      "react-native": "./dist/components/forge/audio/NoiseReductionMonitor.js",
+      "default": "./dist/components/forge/audio/NoiseReductionMonitor.js"
+    },
+    "./components/forge/audio/AutoDuckEnvelopePanel": {
+      "types": "./dist/components/forge/audio/AutoDuckEnvelopePanel.d.ts",
+      "react-native": "./dist/components/forge/audio/AutoDuckEnvelopePanel.js",
+      "default": "./dist/components/forge/audio/AutoDuckEnvelopePanel.js"
+    },
+    "./components/forge/audio/AudioEffectsPresetPanel": {
+      "types": "./dist/components/forge/audio/AudioEffectsPresetPanel.d.ts",
+      "react-native": "./dist/components/forge/audio/AudioEffectsPresetPanel.js",
+      "default": "./dist/components/forge/audio/AudioEffectsPresetPanel.js"
+    },
+    "./components/forge/audio/BeatDetectionMarkerLane": {
+      "types": "./dist/components/forge/audio/BeatDetectionMarkerLane.d.ts",
+      "react-native": "./dist/components/forge/audio/BeatDetectionMarkerLane.js",
+      "default": "./dist/components/forge/audio/BeatDetectionMarkerLane.js"
+    },
+    "./components/forge/audio/SoundEffectsLibrary": {
+      "types": "./dist/components/forge/audio/SoundEffectsLibrary.d.ts",
+      "react-native": "./dist/components/forge/audio/SoundEffectsLibrary.js",
+      "default": "./dist/components/forge/audio/SoundEffectsLibrary.js"
+    },
+    "./components/forge/audio/SpeechTranscriptTakeReview": {
+      "types": "./dist/components/forge/audio/SpeechTranscriptTakeReview.d.ts",
+      "react-native": "./dist/components/forge/audio/SpeechTranscriptTakeReview.js",
+      "default": "./dist/components/forge/audio/SpeechTranscriptTakeReview.js"
+    },
+    "./components/forge/audio/VoiceoverCountdownAndTakeBin": {
+      "types": "./dist/components/forge/audio/VoiceoverCountdownAndTakeBin.d.ts",
+      "react-native": "./dist/components/forge/audio/VoiceoverCountdownAndTakeBin.js",
+      "default": "./dist/components/forge/audio/VoiceoverCountdownAndTakeBin.js"
     }
   },
   "scripts": {
