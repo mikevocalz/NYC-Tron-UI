@@ -3,7 +3,9 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
-import {LIST_FORMATS,canIndent,defaultLevelFormats,canOutdent,formatLabel,listMarker,listMarkers,type ListFormat,type ListKind} from "./list-model.ts";
+import {LIST_FORMATS,canIndent,defaultLevelFormats,canOutdent,formatLabel,listMarker,listPreviewMarkers,type ListFormat,type ListKind} from "./list-model.ts";
+
+export {BULLETS_NUMBERING_CAPABILITIES} from "./list-model.ts";
 
 /** A paragraph the editor shows in its preview. */
 export interface ListPreviewItem {
@@ -11,6 +13,8 @@ export interface ListPreviewItem {
   readonly text:string;
   /** 0-based nesting level. */
   readonly level:number;
+  /** Host-authoritative marker; empty suppresses a marker. Omit for legacy start-at-one preview. */
+  readonly marker?:string;
 }
 
 /** Props for {@linkcode BulletsNumberingEditor}. Each control renders only when its callback is passed. */
@@ -57,7 +61,7 @@ function BulletsNumberingEditorBody({actionError,disabledReason,disabled=false,
 }:BulletsNumberingEditorProps&{actionError?:string|null}){
   const styled=!unstyled;
   const formats=levelFormats??defaultLevelFormats("bullet");
-  const markers=kind==="none"?items.map(()=>""):listMarkers(items,formats);
+  const markers=listPreviewMarkers(items,formats,kind);
   const indentOk=onShiftLevel!==undefined&&canIndent(items,selectionStart,selectionEnd);
   const outdentOk=onShiftLevel!==undefined&&canOutdent(items,selectionStart,selectionEnd);
   const deepest=items.reduce((m,it)=>Math.max(m,it.level),0);
