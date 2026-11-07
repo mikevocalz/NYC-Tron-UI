@@ -169,11 +169,11 @@ function PrecisionScrubberBody({
       </View>
       {stepButton(1)}
     </View>
-    <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-      <Text {...{className:joinClasses(styled&&"text-xs",styled&&(state.active?"text-text":"text-text-muted"))}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",columnGap:8,rowGap:4}}>
+      <Text style={{flexShrink:1,maxWidth:"100%"}} {...{className:joinClasses(styled&&"text-xs",styled&&(state.active?"text-text":"text-text-muted"))}}>
         {state.active?MODE_LABEL[state.mode]:"Drag: up for fine, down for coarse"}
       </Text>
-      <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"]}}>
+      <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"],flexShrink:1,maxWidth:"100%"}}>
         {formatStepValue(min,step)} – {formatStepValue(max,step)}{unit??""}
       </Text>
     </View>
