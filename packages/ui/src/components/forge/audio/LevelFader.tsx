@@ -1,16 +1,16 @@
+import {createAudioPreviewOwner,audioResponderCurrent} from './audio-preview-owner.ts';
 import {audioTargetSize} from './audio-chrome.ts';
 import {NativeVerticalFader} from './LevelFader.vertical.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {valueAccessibility} from "../value-a11y.ts";
-import { useRef } from "react";
+import { useRef,useLayoutEffect } from "react";
 import {
   I18nManager, PanResponder, Platform, Pressable, Text, View,
   type GestureResponderEvent, type KeyDownEvent, type PanResponderGestureState, type ViewProps, type ViewStyle,
 } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
-import { cancelPreview } from "../cancel-preview.ts";
 import { joinClasses } from "../../styles.ts";
 import {
   FADER_RANGES, clampGain, dragToGain, formatDb, gainToPosition, stepGain,
@@ -104,14 +104,16 @@ export function LevelFader({orientation='vertical',onChange,disabled=false,...pr
  return orientation==='horizontal'?<HorizontalLevelFader {...props} orientation={orientation} disabled={disabled} {...(onChange?{onChange}:{})}/>:<NativeVerticalFader {...props} range={props.range??FADER_RANGES.UNITY} length={props.length??160} {...(onChange?{onPreview:onChange}:{})} {...(disabled?{disabledReason:props.disabledReason??'Gain editing is paused'}:{})}/>;
 }
 function HorizontalLevelFader({scope='horizontal-fader',revision=0,...props}:LevelFaderProps){
- const owner=JSON.stringify([...controlIdentity(scope,revision),props.range,props.length,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
- return <LevelFaderBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onChange={gain=>guard.current()?.onChange?.(gain)} onCommit={gain=>guard.run('gain',(host,signal)=>host.onCommit(gain,signal))}/>;
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.value,props.range,props.length,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ const previews=useRef<ReturnType<typeof createAudioPreviewOwner<number>>|null>(null);previews.current??=createAudioPreviewOwner();
+ useLayoutEffect(()=>()=>previews.current!.clear(owner),[owner]);
+ return <LevelFaderBody gestureBoundary={owner} onPreviewCancel={()=>previews.current!.clear(owner)} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onChange={gain=>{const host=guard.current();if(host?.onChange)previews.current!.publish(owner,host.onChange,host.value,gain);}} onCommit={gain=>{previews.current!.clear(owner);return guard.run('gain',(host,signal)=>host.onCommit(gain,signal));}}/>;
 }
 function LevelFaderBody({
-  scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
+  gestureBoundary,onPreviewCancel,scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
   orientation = "vertical", length = 160, disabled = false,
   className, unstyled = false, targetSize, labels, ...rest
-}: LevelFaderProps&{actionError?:string|null}) {
+}: LevelFaderProps&{gestureBoundary:string;onPreviewCancel:()=>void;actionError?:string|null}) {
   const HIT = audioTargetSize(targetSize);
   if (!Number.isFinite(value) || value < 0) throw new RangeError("Gain must be finite and nonnegative");
   if (!Number.isFinite(stepDb) || stepDb <= 0) throw new RangeError("stepDb must be finite and positive");
@@ -120,8 +122,8 @@ function LevelFaderBody({
   }
   const vertical = orientation === "vertical";
   const travel = length - THUMB;
-  const latest = useRef({ value, range, stepDb, disabled, onChange, onCommit, vertical, travel });
-  latest.current = { value, range, stepDb, disabled, onChange, onCommit, vertical, travel };
+  const latest = useRef({ value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, vertical, travel });
+  latest.current = { value, range, stepDb, disabled, onChange, onCommit, onPreviewCancel, vertical, travel };
   const local = useRef<StoreApi<Local> | null>(null);
   if (!local.current) local.current = createStore<Local>(() => ({ preview: value, active: false }));
   const store = local.current;
@@ -131,13 +133,16 @@ function LevelFaderBody({
   const position = gainToPosition(current, range);
   const startPosition = useRef(0);
 
-  const cancel = () => cancelPreview(
-    latest.current.value,
-    restored => store.setState({ active: false, preview: restored }),
-    latest.current.onChange,
-  );
+  const boundary=JSON.stringify([gestureBoundary,value,range,length,disabled,orientation,I18nManager.isRTL]);
+  const boundaryRef=useRef(boundary);boundaryRef.current=boundary;
+  const admitted=useRef<string|null>(null),gestureId=useRef<number|null>(null);
+  const cancel=()=>{admitted.current=null;gestureId.current=null;store.setState({active:false,preview:latest.current.value});latest.current.onPreviewCancel();};
+  useLayoutEffect(()=>{cancel();},[boundary]);
+  useLayoutEffect(()=>()=>onPreviewCancel(),[]);
   const commit = (next: number) => {
-    const p = latest.current;
+    const source=boundaryRef.current,p=latest.current;
+    admitted.current=null;p.onPreviewCancel();
+    if(boundaryRef.current!==source)return;
     store.setState({ active: false, preview: next });
     if (next === clampGain(p.value, p.range)) return;
     void p.onCommit(next);
@@ -156,15 +161,16 @@ function LevelFaderBody({
     onStartShouldSetPanResponder: () => false,
     onMoveShouldSetPanResponder: claims,
     onMoveShouldSetPanResponderCapture: claims,
-    onPanResponderGrant: () => {
+    onPanResponderGrant: (_event,gesture) => {
       const p = latest.current;
+      if(p.disabled)return;admitted.current=boundaryRef.current;gestureId.current=gesture.stateID;
       const start = clampGain(p.value, p.range);
       startPosition.current = gainToPosition(start, p.range);
       store.setState({ active: true, preview: start });
     },
     onPanResponderMove: (_event, gesture) => {
       const p = latest.current;
-      if (p.disabled) return;
+      if (!audioResponderCurrent(admitted.current,boundaryRef.current,p.disabled,gestureId.current,gesture.stateID)||!store.getState().active) return;
       // Up raises a vertical fader. Horizontal travel follows reading
       // direction, so RTL layouts raise the level toward the left.
       const delta = p.vertical ? -gesture.dy : I18nManager.isRTL ? -gesture.dx : gesture.dx;
@@ -174,23 +180,25 @@ function LevelFaderBody({
         p.onChange?.(next);
       }
     },
-    onPanResponderRelease: () => {
-      if (!store.getState().active) return;
+    onPanResponderRelease: (_event,gesture) => {
+      if (!store.getState().active||!audioResponderCurrent(admitted.current,boundaryRef.current,latest.current.disabled,gestureId.current,gesture.stateID)) return;
       if (latest.current.disabled) { cancel(); return; }
       commit(store.getState().preview);
     },
-    onPanResponderTerminate: cancel,
+    onPanResponderTerminate: (_event,gesture)=>{if(audioResponderCurrent(admitted.current,boundaryRef.current,false,gestureId.current,gesture.stateID))cancel();},
     // Keep the drag once it started; releasing it mid-move would snap the
     // level back while the finger is still on the fader.
     onPanResponderTerminationRequest: () => !store.getState().active,
     onShouldBlockNativeResponder: () => true,
   });
   const nudge = (direction: -1 | 1) => {
+    if(boundaryRef.current!==boundary)return;
     const p = latest.current;
     if (p.disabled || store.getState().active) return;
     const next = stepGain(p.value, direction, p.stepDb, p.range);
     if (next === clampGain(p.value, p.range)) return;
     p.onChange?.(next);
+    if(boundaryRef.current!==boundary)return;
     commit(next);
   };
 

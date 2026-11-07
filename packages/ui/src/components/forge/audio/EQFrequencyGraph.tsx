@@ -1,3 +1,5 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {createAudioPreviewOwner,audioResponderCurrent} from './audio-preview-owner.ts';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
@@ -14,7 +16,7 @@ import {valueAccessibility} from "../value-a11y.ts";
  * axis, dB gridlines, numbered band handles, a readout row under the plot)
  * follows the common desktop EQ arrangement, drawn here from scratch.
  */
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useLayoutEffect } from "react";
 import {
   PanResponder, Platform, Pressable, Text, View,
   type GestureResponderEvent, type KeyDownEvent, type LayoutChangeEvent, type PanResponderGestureState,
@@ -92,19 +94,21 @@ type Local = { width: number; drag?: Drag; staleFor?: readonly EqResponsePoint[]
  * insert's band list.
  */
 export function EQFrequencyGraph({scope='EQFrequencyGraph',revision=0,...props}:EQFrequencyGraphProps){
- const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason,props.height,props.range,props.bands.map(b=>b.type)]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
- return <EQFrequencyGraphBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
-  onBandCommit={(...args:Parameters<EQFrequencyGraphProps['onBandCommit']>)=>guard.run('onBandCommit',h=>h.onBandCommit(...args))}
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason,props.height,props.range,props.bands]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ const previews=useRef<ReturnType<typeof createAudioPreviewOwner<{index:number;edit:EqBandEdit}>>|null>(null);previews.current??=createAudioPreviewOwner();
+ useLayoutEffect(()=>()=>previews.current!.clear(owner),[owner]);
+ return <EQFrequencyGraphBody scope={scope} revision={revision} gestureBoundary={owner} onPreviewCancel={()=>previews.current!.clear(owner)} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onBandCommit={(...args:Parameters<EQFrequencyGraphProps['onBandCommit']>)=>{previews.current!.clear(owner);return guard.run('onBandCommit',h=>h.onBandCommit(...args));}}
   onQCommit={props.onQCommit?(index,q)=>guard.run('q',h=>h.onQCommit?.(index,q)):undefined}
   onEnabledCommit={props.onEnabledCommit?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onEnabledCommit']>>)=>guard.run('onEnabledCommit',h=>h.onEnabledCommit?.(...args)):undefined}
-  onBandChange={props.onBandChange?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onBandChange']>>)=>{guard.current()?.onBandChange?.(...args);}:undefined}
+  onBandChange={props.onBandChange?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onBandChange']>>)=>{const host=guard.current(),band=host?.bands[args[0]];if(host?.onBandChange&&band){const notify=host.onBandChange;previews.current!.publish(owner,v=>notify(v.index,v.edit),{index:args[0],edit:{freqHz:band.freqHz,gainDb:band.gainDb}},{index:args[0],edit:args[1]},notify);}}:undefined}
   onSelect={props.onSelect?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onSelect']>>)=>{guard.current()?.onSelect?.(...args);}:undefined}
  />;
 }
-function EQFrequencyGraphBody({actionError,disabledReason,
+function EQFrequencyGraphBody({scope='EQFrequencyGraph',revision=0,gestureBoundary,onPreviewCancel,actionError,disabledReason,
   bands, response, onBandCommit, onBandChange, selectedIndex, onSelect, onEnabledCommit,onQCommit,
   range = EQ_DEFAULT_RANGE_DB, height = 200, disabled = false, label, className, unstyled = false, style, ...rest
-}: EQFrequencyGraphProps&{actionError?:string|null}) {
+}: EQFrequencyGraphProps&{gestureBoundary:string;onPreviewCancel:()=>void;actionError?:string|null}) {
   if(bands.length>8||bands.some(b=>!['peak','low_shelf','high_shelf','low_pass','high_pass'].includes(b.type)||![b.freqHz,b.gainDb,b.q].every(Number.isFinite)||b.freqHz<20||b.freqHz>20000||Math.abs(b.gainDb)>24||b.q<.1||b.q>18)||response.length>16384||response.some(p=>!Number.isFinite(p.hz)||p.hz<=0||!Number.isFinite(p.db)))throw new RangeError('Invalid EQ data');
   if (!Number.isFinite(height) || height < HIT * 2) throw new RangeError(`EQ plot height must be at least ${HIT * 2}`);
   if (!Number.isFinite(range) || range <= 0) throw new RangeError("EQ range must be positive");
@@ -117,12 +121,17 @@ function EQFrequencyGraphBody({actionError,disabledReason,
   const latest = useRef({ bands, response, onBandCommit, onBandChange, onSelect, disabled });
   latest.current = { bands, response, onBandCommit, onBandChange, onSelect, disabled };
 
+  const boundary=JSON.stringify([gestureBoundary,width,height,range,disabled,bands]);
+  const qScope=useEditorBoundary([scope,revision,selectedIndex,selectedIndex===undefined?undefined:bands[selectedIndex]?.type]);
+  const committed=useRef(boundary);
+  useLayoutEffect(()=>{committed.current=boundary;store.setState({drag:undefined,staleFor:undefined});onPreviewCancel();return()=>{onPreviewCancel();};},[boundary,store]);
   const plot: EqPlot | undefined = width > 0 ? { width, height, rangeDb: range } : undefined;
   const segments = useMemo(() => (plot ? eqResponseSegments(response, plot) : []), [response, width, height, range]);
   const freqLines = useMemo(() => (plot ? eqFrequencyGridlines(width) : []), [width]);
   const gainLines = useMemo(() => eqGainGridlines(height, range), [height, range]);
 
   const commit = (index: number, edit: EqBandEdit) => {
+    if(committed.current!==boundary)return;
     const p = latest.current;
     const band = p.bands[index];
     store.setState({ drag: undefined });
@@ -134,18 +143,18 @@ function EQFrequencyGraphBody({actionError,disabledReason,
     const result = p.onBandCommit(index, edit);
     // A rejected commit leaves the old band and curve current again.
     if (result && typeof (result as Promise<unknown>).then === "function") {
-      (result as Promise<unknown>).then(undefined, () => {
-        if (store.getState().staleFor === p.response) store.setState({ staleFor: undefined });
+      (result as Promise<unknown>).then(applied => {
+        if(applied===false&&committed.current===boundary&&store.getState().staleFor===p.response)store.setState({staleFor:undefined});
+      }, () => {
+        if (committed.current===boundary&&store.getState().staleFor === p.response) store.setState({ staleFor: undefined });
       });
     }
   };
   const cancel = () => {
-    const d = store.getState().drag;
     store.setState({ drag: undefined, staleFor: undefined });
-    const band = d && latest.current.bands[d.index];
-    if (band) latest.current.onBandChange?.(d.index, { freqHz: band.freqHz, gainDb: band.gainDb });
+    onPreviewCancel();
   };
-  const ctx = { store, latest, commit, cancel };
+  const ctx = { store, latest, commit, cancel, boundary };
 
   const styled = !unstyled;
   const dimmed = staleFor !== undefined && staleFor === response;
@@ -222,7 +231,7 @@ function EQFrequencyGraphBody({actionError,disabledReason,
             <Readout label="Type" value={bandTypeName(shown.type)} styled={styled} />
             <Readout label="Freq" value={formatFreq(shown.freqHz)} styled={styled} />
             <Readout label="Gain" value={isPassBand(shown.type) ? "Not used" : formatGain(shown.gainDb)} styled={styled} />
-            {onQCommit?<PrecisionScrubber label={`Band ${selectedIndex+1} Q`} value={shown.q} min={.1} max={18} step={.01} disabled={disabled} unstyled={unstyled} onCommit={q=>onQCommit(selectedIndex,q)}/>:<Readout label="Q" value={formatQ(shown.q)} styled={styled} />}
+            {onQCommit?<PrecisionScrubber scope={qScope} label={`Band ${selectedIndex+1} Q`} value={shown.q} min={.1} max={18} step={.01} disabled={disabled} unstyled={unstyled} onCommit={q=>onQCommit(selectedIndex,q)}/>:<Readout label="Q" value={formatQ(shown.q)} styled={styled} />}
             {onEnabledCommit
               ? <Pressable accessibilityRole="togglebutton" accessibilityLabel={"Band " + (selectedIndex + 1) + " on"}
                 accessibilityState={{ checked: shown.enabled, disabled }} {...webToggleProps(shown.enabled)}
@@ -248,6 +257,7 @@ function Readout({ label, value, styled }: { label: string; value: string; style
 }
 
 interface HandleCtx {
+  readonly boundary:string;
   readonly store: StoreApi<Local>;
   readonly latest: { current: { bands: readonly EqBand[]; response: readonly EqResponsePoint[]; onBandChange?: (index: number, edit: EqBandEdit) => void;
     onSelect?: (index: number) => void; disabled: boolean } };
@@ -271,20 +281,23 @@ function BandHandle({ index, band, plot, preview, selected, disabled, styled, ct
   mine.current = { index, band, plot, ctx };
   const responder = useRef<ReturnType<typeof PanResponder.create> | null>(null);
   const moved = useRef(false);
+  const admitted=useRef<string|null>(null),gestureId=useRef<number|null>(null);
+  useLayoutEffect(()=>{admitted.current=null;gestureId.current=null;moved.current=false;},[ctx.boundary]);
   const claims = (_e: GestureResponderEvent, g: PanResponderGestureState) =>
     !mine.current.ctx.latest.current.disabled && Math.hypot(g.dx, g.dy) >= SLOP;
   if (!responder.current) responder.current = PanResponder.create({
     onStartShouldSetPanResponder: () => !mine.current.ctx.latest.current.disabled,
     onMoveShouldSetPanResponder: claims,
     onMoveShouldSetPanResponderCapture: claims,
-    onPanResponderGrant: () => {
+    onPanResponderGrant: (_event,g) => {
       const m = mine.current;
+      if(m.ctx.latest.current.disabled)return;admitted.current=m.ctx.boundary;gestureId.current=g.stateID;
       moved.current = false;
       m.ctx.latest.current.onSelect?.(m.index);
     },
     onPanResponderMove: (_e, g) => {
       const m = mine.current;
-      if (m.ctx.latest.current.disabled) return;
+      if (!audioResponderCurrent(admitted.current,m.ctx.boundary,m.ctx.latest.current.disabled,gestureId.current,g.stateID)) return;
       if (!moved.current && Math.hypot(g.dx, g.dy) < SLOP) return;
       const start = { freqHz: m.band.freqHz, gainDb: m.band.gainDb };
       const edit = dragBand(start, m.band.type, g.dx, g.dy, m.plot);
@@ -298,13 +311,15 @@ function BandHandle({ index, band, plot, preview, selected, disabled, styled, ct
       m.ctx.store.setState({ drag: { index: m.index, edit } });
       m.ctx.latest.current.onBandChange?.(m.index, edit);
     },
-    onPanResponderRelease: () => {
+    onPanResponderRelease: (_event,g) => {
       const m = mine.current;
+      if(!audioResponderCurrent(admitted.current,m.ctx.boundary,m.ctx.latest.current.disabled,gestureId.current,g.stateID))return;admitted.current=null;
       const d = m.ctx.store.getState().drag;
       if (!d || d.index !== m.index) return;
       m.ctx.commit(m.index, d.edit);
     },
-    onPanResponderTerminate: () => {
+    onPanResponderTerminate: (_event,g) => {
+      if(!audioResponderCurrent(admitted.current,mine.current.ctx.boundary,false,gestureId.current,g.stateID))return;admitted.current=null;
       const d = mine.current.ctx.store.getState().drag;
       if (d && d.index === mine.current.index) mine.current.ctx.cancel();
     },
@@ -312,6 +327,7 @@ function BandHandle({ index, band, plot, preview, selected, disabled, styled, ct
     onShouldBlockNativeResponder: () => true,
   });
   const keyEdit = (key: string, fine: boolean): boolean => {
+    if(mine.current.ctx.boundary!==ctx.boundary)return false;
     const m = mine.current;
     if (m.ctx.latest.current.disabled || m.ctx.store.getState().drag) return false;
     const next = stepBand(m.band, key, fine);
@@ -321,10 +337,11 @@ function BandHandle({ index, band, plot, preview, selected, disabled, styled, ct
     return true;
   };
   const onKeyDown = (e: KeyDownEvent) => {
+    if(mine.current.ctx.boundary!==ctx.boundary)return;
     const { key, shiftKey } = e.nativeEvent;
     if (key === "Escape") {
       const d = mine.current.ctx.store.getState().drag;
-      if (d && d.index === index) { e.preventDefault(); mine.current.ctx.cancel(); }
+      if (d && d.index === index) { e.preventDefault(); admitted.current=null;gestureId.current=null;moved.current=false;mine.current.ctx.cancel(); }
       return;
     }
     if (keyEdit(key, shiftKey === true)) e.preventDefault();
@@ -357,7 +374,7 @@ function BandHandle({ index, band, plot, preview, selected, disabled, styled, ct
       else if (a === "decrement") keyEdit(pass ? "ArrowLeft" : "ArrowDown", false);
     }}
     onKeyDown={onKeyDown}
-    onFocus={() => ctx.latest.current.onSelect?.(index)}
+    onFocus={() => {if(mine.current.ctx.boundary===ctx.boundary)ctx.latest.current.onSelect?.(index);}}
     {...{ className: joinClasses(styled && "rounded-full focus-visible:ring-2 focus-visible:ring-focus") }}
     style={{ position: "absolute", left: x - HIT / 2, top: y - HIT / 2, width: HIT, height: HIT,
       alignItems: "center", justifyContent: "center", zIndex: selected || active ? 2 : 1, ...webStyle }}>
