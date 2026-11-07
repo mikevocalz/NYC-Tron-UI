@@ -12,6 +12,7 @@ import {useFrameScrub} from "./useFrameScrub.ts";
 
 /** Props for {@linkcode InOutRangeHandles}. */
 export interface InOutRangeHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
+  readonly showCommands?:boolean;
   readonly viewport:TimelineViewport;
   readonly range:InOutRange;
   readonly durationFrames:number;
@@ -83,7 +84,7 @@ export function InOutRangeHandles({scope='InOutRangeHandles',revision=0,...props
 }
 function InOutRangeHandlesBody({
   actionError=null,disabledReason,
-  viewport,range,durationFrames,rate,playheadFrame,onPreview,onCommit,dropFrame=false,disabled=false,
+  showCommands=true,viewport,range,durationFrames,rate,playheadFrame,onPreview,onCommit,dropFrame=false,disabled=false,
   className,unstyled=false,testID,style,...rest
 }:InOutRangeHandlesProps&{actionError?:string|null}){
   const styled=!unstyled;
@@ -95,7 +96,7 @@ function InOutRangeHandlesBody({
   const common={range,viewport,durationFrames,rate,onPreview,onCommit,dropFrame,disabled,styled};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    {showCommands?<View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
       <Button title="Set in" variant="secondary" size="sm" disabled={disabled} {...id("set-in")}
         onPress={()=>onCommit(setMark(range,"in",playheadFrame,durationFrames))}/>
       <Button title="Set out" variant="secondary" size="sm" disabled={disabled} {...id("set-out")}
@@ -105,7 +106,7 @@ function InOutRangeHandlesBody({
       <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"]}}>
         {hasRange?`In ${range.inFrame===undefined?"start":tc(range.inFrame)}, out ${range.outFrame===undefined?"end":tc(range.outFrame)}`:"No range marked"}
       </Text>
-    </View>
+    </View>:null}
     <View {...{className:joinClasses(styled&&"bg-surface-sunken border-b border-border")}}
       style={{height:HIT,width:viewport.widthPx,overflow:"hidden",direction:"ltr"}}>
       {hasRange?<View pointerEvents="none" {...{className:joinClasses(styled&&"bg-accent/10 border-y border-accent")}}

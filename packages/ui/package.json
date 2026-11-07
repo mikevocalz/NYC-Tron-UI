@@ -2074,6 +2074,61 @@
       "types": "./dist/components/forge/timeline/waveform-cache.d.ts",
       "react-native": "./dist/components/forge/timeline/waveform-cache.js",
       "default": "./dist/components/forge/timeline/waveform-cache.js"
+    },
+    "./components/forge/timeline/ExportMonitor": {
+      "types": "./dist/components/forge/timeline/ExportMonitor.d.ts",
+      "react-native": "./dist/components/forge/timeline/ExportMonitor.js",
+      "default": "./dist/components/forge/timeline/ExportMonitor.js"
+    },
+    "./components/forge/timeline/VideoSpeedRampCurve": {
+      "types": "./dist/components/forge/timeline/VideoSpeedRampCurve.d.ts",
+      "react-native": "./dist/components/forge/timeline/VideoSpeedRampCurve.js",
+      "default": "./dist/components/forge/timeline/VideoSpeedRampCurve.js"
+    },
+    "./components/forge/timeline/VideoQualityInspector": {
+      "types": "./dist/components/forge/timeline/VideoQualityInspector.d.ts",
+      "react-native": "./dist/components/forge/timeline/VideoQualityInspector.js",
+      "default": "./dist/components/forge/timeline/VideoQualityInspector.js"
+    },
+    "./components/forge/timeline/VideoStabilizationInspector": {
+      "types": "./dist/components/forge/timeline/VideoStabilizationInspector.d.ts",
+      "react-native": "./dist/components/forge/timeline/VideoStabilizationInspector.js",
+      "default": "./dist/components/forge/timeline/VideoStabilizationInspector.js"
+    },
+    "./components/forge/timeline/AutoReframeGuides": {
+      "types": "./dist/components/forge/timeline/AutoReframeGuides.d.ts",
+      "react-native": "./dist/components/forge/timeline/AutoReframeGuides.js",
+      "default": "./dist/components/forge/timeline/AutoReframeGuides.js"
+    },
+    "./components/forge/timeline/CoverFramePicker": {
+      "types": "./dist/components/forge/timeline/CoverFramePicker.d.ts",
+      "react-native": "./dist/components/forge/timeline/CoverFramePicker.js",
+      "default": "./dist/components/forge/timeline/CoverFramePicker.js"
+    },
+    "./components/forge/timeline/VideoEffectsBrowser": {
+      "types": "./dist/components/forge/timeline/VideoEffectsBrowser.d.ts",
+      "react-native": "./dist/components/forge/timeline/VideoEffectsBrowser.js",
+      "default": "./dist/components/forge/timeline/VideoEffectsBrowser.js"
+    },
+    "./components/forge/timeline/MotionTrackingOverlay": {
+      "types": "./dist/components/forge/timeline/MotionTrackingOverlay.d.ts",
+      "react-native": "./dist/components/forge/timeline/MotionTrackingOverlay.js",
+      "default": "./dist/components/forge/timeline/MotionTrackingOverlay.js"
+    },
+    "./components/forge/timeline/CaptionWordTimingHandles": {
+      "types": "./dist/components/forge/timeline/CaptionWordTimingHandles.d.ts",
+      "react-native": "./dist/components/forge/timeline/CaptionWordTimingHandles.js",
+      "default": "./dist/components/forge/timeline/CaptionWordTimingHandles.js"
+    },
+    "./components/forge/timeline/AutoCaptionTranscriptTimeline": {
+      "types": "./dist/components/forge/timeline/AutoCaptionTranscriptTimeline.d.ts",
+      "react-native": "./dist/components/forge/timeline/AutoCaptionTranscriptTimeline.js",
+      "default": "./dist/components/forge/timeline/AutoCaptionTranscriptTimeline.js"
+    },
+    "./components/forge/timeline/StickerMotionLane": {
+      "types": "./dist/components/forge/timeline/StickerMotionLane.d.ts",
+      "react-native": "./dist/components/forge/timeline/StickerMotionLane.js",
+      "default": "./dist/components/forge/timeline/StickerMotionLane.js"
     }
   },
   "scripts": {

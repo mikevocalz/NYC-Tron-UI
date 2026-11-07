@@ -22,5 +22,6 @@ export function useScopedControl<P>(boundary:string,props:P,disabled=false){
   const token=Symbol(id);admitted.current=token;
   return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});
  };
- return {current,run,pending,error:action.error};
+ const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};
+ return {current,run,cancel,pending,pendingId:action.pending,error:action.error};
 }

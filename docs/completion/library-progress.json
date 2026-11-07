@@ -1852,10 +1852,15 @@
       "name": "ExportMonitor",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/ExportMonitor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Preset, codec, resolution, frame rate and render progress."
+      "requirement": "Preset, codec, resolution, frame rate and render progress.",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-30",
@@ -1893,51 +1898,76 @@
       "name": "VideoSpeedRampCurve",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/VideoSpeedRampCurve.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Keyframed clip speed curve with draggable knots, accurate retime, source-duration estimate and undo. *Source candidate: `capcraft/ui/editor/panels/SpeedCurveEditor.kt`; requires verified implementation and license admission.*",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-33",
       "name": "AutoCaptionTranscriptTimeline",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/AutoCaptionTranscriptTimeline.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Transcript-to-caption blocks with editable text, speaker labels and playback sync. *Source candidate: `capcraft/ui/editor/panels/AutoCaptions.kt`; requires verified implementation and license admission.*"
+      "requirement": "Transcript-to-caption blocks with editable text, speaker labels and playback sync. *Source candidate: `capcraft/ui/editor/panels/AutoCaptions.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-34",
       "name": "CaptionWordTimingHandles",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/CaptionWordTimingHandles.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Word-level caption segment handles, collision checks, frame alignment and timing preview. *Source candidate: `capcraft/ui/editor/panels/Transcript.kt`; requires verified implementation and license admission.*"
+      "requirement": "Word-level caption segment handles, collision checks, frame alignment and timing preview. *Source candidate: `capcraft/ui/editor/panels/Transcript.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-35",
       "name": "AutoReframeGuides",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/AutoReframeGuides.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Aspect-ratio-aware crop guidance and subject tracking with user override. *Source candidate: `capcraft/ui/editor/panels/AutoReframe.kt`; requires verified implementation and license admission.*"
+      "requirement": "Aspect-ratio-aware crop guidance and subject tracking with user override. *Source candidate: `capcraft/ui/editor/panels/AutoReframe.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-36",
       "name": "VideoStabilizationInspector",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/VideoStabilizationInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Stabilization strength, crop side effects, before/after preview and bounded quality controls. *Source candidate: `capcraft/ui/editor/panels/StabilizePanel.kt`; requires verified implementation and license admission.*"
+      "requirement": "Stabilization strength, crop side effects, before/after preview and bounded quality controls. *Source candidate: `capcraft/ui/editor/panels/StabilizePanel.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-37",
@@ -1959,30 +1989,45 @@
       "name": "VideoEffectsBrowser",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/VideoEffectsBrowser.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Video and body-effect choices, masks, intensity and per-clip previews. *Source candidate: `capcraft/ui/editor/panels/EffectLayer.kt`; requires verified implementation and license admission.*"
+      "requirement": "Video and body-effect choices, masks, intensity and per-clip previews. *Source candidate: `capcraft/ui/editor/panels/EffectLayer.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-39",
       "name": "MotionTrackingOverlay",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/MotionTrackingOverlay.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Track objects for effects/text with progress, correction points and loss-of-track handling. *Source candidate: `capcraft/ui/editor/panels/Tracking.kt`; requires verified implementation and license admission.*"
+      "requirement": "Track objects for effects/text with progress, correction points and loss-of-track handling. *Source candidate: `capcraft/ui/editor/panels/Tracking.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-40",
       "name": "CoverFramePicker",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/CoverFramePicker.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Choose a frame or source image as the actual exported cover/thumbnail. *Source candidate: `capcraft/ui/editor/CoverEditor.kt`; requires verified implementation and license admission.*"
+      "requirement": "Choose a frame or source image as the actual exported cover/thumbnail. *Source candidate: `capcraft/ui/editor/CoverEditor.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-41",
@@ -2004,21 +2049,31 @@
       "name": "VideoQualityInspector",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/VideoQualityInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Media resolution, bit depth, frame rate, codec, preview/export capability and warnings. *Source candidate: `capcraft/ui/editor/panels/VideoQuality.kt`; requires verified implementation and license admission.*",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "D-43",
       "name": "StickerMotionLane",
       "phase": "P08",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/timeline/StickerMotionLane.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Insert stickers as timeline objects with transforms, keyframes and independently adjustable range. *Source candidate: `capcraft/ui/editor/panels/Stickers.kt`; requires verified implementation and license admission.*"
+      "requirement": "Insert stickers as timeline objects with transforms, keyframes and independently adjustable range. *Source candidate: `capcraft/ui/editor/panels/Stickers.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
     },
     {
       "id": "E-01",
