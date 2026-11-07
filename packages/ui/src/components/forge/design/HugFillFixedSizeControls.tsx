@@ -1,0 +1,7 @@
+import {PropertyInspector,type PropertyInspectorProps,type InspectorProperty} from '../inputs/PropertyInspector.tsx';
+export interface AxisSizing {mode:'hug'|'fill'|'fixed';value:number;canHug:boolean;canFill:boolean;unavailableReason?:string}
+export interface HugFillFixedSizeControlsProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {x:AxisSizing;y:AxisSizing;onCommit:(axis:'x'|'y',value:AxisSizing,signal?:AbortSignal)=>unknown}
+export function HugFillFixedSizeControls({x,y,onCommit,...props}:HugFillFixedSizeControlsProps){
+ const fields:InspectorProperty[]=[];for(const axis of ['x','y'] as const){const v=axis==='x'?x:y;fields.push({kind:'choice',id:axis+':mode',label:(axis==='x'?'Width':'Height')+' sizing',value:v.mode,disabledReason:v.unavailableReason,choices:[{id:'hug',label:'Hug contents',disabled:!v.canHug},{id:'fill',label:'Fill parent',disabled:!v.canFill},{id:'fixed',label:'Fixed'}]});if(v.mode==='fixed')fields.push({kind:'number',id:axis+':value',label:axis==='x'?'Width':'Height',value:v.value,min:.001,max:1000000,step:1,disabledReason:v.unavailableReason});}
+ return <PropertyInspector {...props} label="Axis sizing" fields={fields} onCommit={(id,value,s)=>{const [a,key]=id.split(':'),axis=a as 'x'|'y',v=axis==='x'?x:y;if(key==='mode'&&(value==='hug'&&!v.canHug||value==='fill'&&!v.canFill))throw new Error('Sizing mode unavailable');return onCommit(axis,{...v,[key!]:value},s);}}/>;
+}

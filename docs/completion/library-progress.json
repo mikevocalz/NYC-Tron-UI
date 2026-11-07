@@ -4402,70 +4402,105 @@
       "name": "FrameAndComponentTree",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/FrameAndComponentTree.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Frames, instances, groups and layers in hierarchy."
+      "requirement": "Frames, instances, groups and layers in hierarchy.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-02",
       "name": "AutoLayoutInspector",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/AutoLayoutInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Direction, gap, padding, wrap, alignment."
+      "requirement": "Direction, gap, padding, wrap, alignment.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-03",
       "name": "HugFillFixedSizeControls",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/HugFillFixedSizeControls.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Per-axis sizing modes with live layout."
+      "requirement": "Per-axis sizing modes with live layout.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-04",
       "name": "ConstraintsPanel",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/ConstraintsPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Anchoring, min/max and responsive relationships."
+      "requirement": "Anchoring, min/max and responsive relationships.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-05",
       "name": "ComponentVariantPicker",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/ComponentVariantPicker.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Variant properties and instance overrides."
+      "requirement": "Variant properties and instance overrides.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-06",
       "name": "ReusableStylesPanel",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/ReusableStylesPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Colors, text, effects and assets."
+      "requirement": "Colors, text, effects and assets.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-07",
       "name": "VariablesAndModes",
       "phase": "P16",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/design/VariablesAndModes.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Token modes, aliases and binding visualization."
+      "requirement": "Token modes, aliases and binding visualization.",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
     },
     {
       "id": "L-08",

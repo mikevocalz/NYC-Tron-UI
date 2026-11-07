@@ -2594,6 +2594,41 @@
       "types": "./dist/components/forge/inputs/PointEditor2D.d.ts",
       "react-native": "./dist/components/forge/inputs/PointEditor2D.js",
       "default": "./dist/components/forge/inputs/PointEditor2D.js"
+    },
+    "./components/forge/design/FrameAndComponentTree": {
+      "types": "./dist/components/forge/design/FrameAndComponentTree.d.ts",
+      "react-native": "./dist/components/forge/design/FrameAndComponentTree.js",
+      "default": "./dist/components/forge/design/FrameAndComponentTree.js"
+    },
+    "./components/forge/design/AutoLayoutInspector": {
+      "types": "./dist/components/forge/design/AutoLayoutInspector.d.ts",
+      "react-native": "./dist/components/forge/design/AutoLayoutInspector.js",
+      "default": "./dist/components/forge/design/AutoLayoutInspector.js"
+    },
+    "./components/forge/design/HugFillFixedSizeControls": {
+      "types": "./dist/components/forge/design/HugFillFixedSizeControls.d.ts",
+      "react-native": "./dist/components/forge/design/HugFillFixedSizeControls.js",
+      "default": "./dist/components/forge/design/HugFillFixedSizeControls.js"
+    },
+    "./components/forge/design/ConstraintsPanel": {
+      "types": "./dist/components/forge/design/ConstraintsPanel.d.ts",
+      "react-native": "./dist/components/forge/design/ConstraintsPanel.js",
+      "default": "./dist/components/forge/design/ConstraintsPanel.js"
+    },
+    "./components/forge/design/ComponentVariantPicker": {
+      "types": "./dist/components/forge/design/ComponentVariantPicker.d.ts",
+      "react-native": "./dist/components/forge/design/ComponentVariantPicker.js",
+      "default": "./dist/components/forge/design/ComponentVariantPicker.js"
+    },
+    "./components/forge/design/ReusableStylesPanel": {
+      "types": "./dist/components/forge/design/ReusableStylesPanel.d.ts",
+      "react-native": "./dist/components/forge/design/ReusableStylesPanel.js",
+      "default": "./dist/components/forge/design/ReusableStylesPanel.js"
+    },
+    "./components/forge/design/VariablesAndModes": {
+      "types": "./dist/components/forge/design/VariablesAndModes.d.ts",
+      "react-native": "./dist/components/forge/design/VariablesAndModes.js",
+      "default": "./dist/components/forge/design/VariablesAndModes.js"
     }
   },
   "scripts": {
