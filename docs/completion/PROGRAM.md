@@ -17,6 +17,16 @@ Preserve the existing single component owner, platform-native adapters, app-auth
 
 Implementation checkpoints are committed and pushed separately; the canonical ledger retains every requirement and acceptance gate.
 
+## Batch delivery cadence
+
+User direction, 2026-11-06: implement related controls together and defer repeated integration checks until the batch is ready. Target 4–8 related controls per batch, adjusted for shared ownership and complexity. Do not rebuild, run the full suite, repack every package or repeat unchanged native scenarios after each individual component.
+
+During implementation, use focused model/regression checks for the behavior being changed. At the batch boundary, build and typecheck once, run affected model and browser interaction suites, review the combined diff, update the evidence ledger, then commit and push. A shared gesture, ownership or native failure must be resolved before expanding the batch. A failed targeted check does not authorize marking a component reviewed.
+
+At each phase boundary, run the full source and browser suites, package/export checks and applicable native family scenarios. Rebuild native binaries when native code, dependencies or configuration change; use the existing installed runtime for compatible JavaScript changes. Repeat broader checks when fixes affect previously checked behavior. Keep platform acceptance separate from implementation review and preserve every canonical requirement.
+
+Apply the no-ai-slop writing skill and relevant native/domain skills. The external [Everything Claude Code verification-loop skill](https://github.com/WorldFlowAI/everything-claude-code/blob/432485ba6b92c14fb357276a98957f348bcff9ee/skills/verification-loop/SKILL.md) was inspected for build, type, test and diff review guidance. It is a reference, not an installed hook or replacement for this project's commands, Zustand requirement or evidence gates. Unrelated skills and repository-wide hook installations are unnecessary for component delivery.
+
 | Phase | Reviewed reusable implementations | Evidence |
 | --- | --- | --- |
 | P03 | Decoder/media services checkpoint; remaining native acceptance tracked separately | [Media report](P03-media-services.md) |
