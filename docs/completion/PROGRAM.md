@@ -62,3 +62,5 @@ P05 native canvas checkpoint: the 39-step pinch/Metal canvas/error recovery scen
 P05 thumbnail checkpoint: B-10 now isolates document cache identities, bounds pending/stale resources and recovers from malformed provider output. [Resource report](P05-thumbnail-resources.md) records 835 source tests, 15 browser checks and the persistent Android API 26/manifest verification. Review count is 97 of 341; Android runtime and remaining P05 work stay open.
 
 P05 Android canvas checkpoint: the final 39-step native scenario now passes twice per platform on iOS Metal and Android emulator Vulkan/SwiftShader. [Native evidence](P05-native-canvas.md) records the lifecycle fix and exact virtual-renderer limits. Review count remains 97 of 341.
+
+P05 selection-bounds checkpoint: B-06 now provides scoped move/resize/rotation, hit testing and pane-safe targets with composed navigation ownership. [Selection report](P05-selection-bounds.md) records 841 source tests and 32 affected browser checks. Review count is 98 of 341.

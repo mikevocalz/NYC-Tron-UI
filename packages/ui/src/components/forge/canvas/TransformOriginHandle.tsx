@@ -1,5 +1,6 @@
 import {useLayoutEffect,useRef} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
+import {SelectionOutline} from "../selection/SelectionOutline.tsx";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {webKey} from "../../forms/choice-keys.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -13,6 +14,8 @@ import {
 
 /** Props for {@linkcode TransformOriginHandle}. */
 export interface TransformOriginHandleProps extends Omit<ViewProps,"children"> {
+  /** Hide the shared outline/anchor ink when composing with SelectionBounds. */
+  readonly showBounds?:boolean;
   readonly scope?:string;
   readonly revision?:string|number;
   readonly viewport:CanvasViewport;
@@ -55,7 +58,7 @@ const HIT=44;
  * which snaps to 15° with Shift.
  */
 export function TransformOriginHandle({
-  scope="canvas-pivot",revision=0,viewport,corners,transform,unavailableReason,onSetOrigin:commitOrigin,onPreview:previewOrigin,disabled=false,className,unstyled=false,style,...rest
+  showBounds=true,scope="canvas-pivot",revision=0,viewport,corners,transform,unavailableReason,onSetOrigin:commitOrigin,onPreview:previewOrigin,disabled=false,className,unstyled=false,style,...rest
 }:TransformOriginHandleProps){
   validateViewport(viewport);
   if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid pivot identity');
@@ -113,23 +116,18 @@ export function TransformOriginHandle({
   };
   const anchorNow=transform?currentAnchor(corners,transform):undefined;
   const step=(direction:1|-1)=>commitAt(anchorPoint(corners,cycleAnchor(anchorNow,direction)));
-  const edge=(a:DocPoint,b:DocPoint,i:number)=>{
-    const len=Math.hypot(b.x-a.x,b.y-a.y),angle=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
-    return <View key={"e"+i} {...{className:joinClasses(styled&&"bg-primary")}}
-      style={{position:"absolute",left:(a.x+b.x)/2-len/2,top:(a.y+b.y)/2-0.5,width:len,height:1,opacity:0.7,transform:[{rotate:`${angle}deg`}]}}/>;
-  };
   const dragAnchor=state.drag?.anchor;
   return <View {...rest} pointerEvents="box-none" {...{className:joinClasses(className)}}
     style={[{position:"absolute",left:0,top:0,width:viewport.width,height:viewport.height,overflow:"hidden",direction:"ltr"},style]}>
-    <View pointerEvents="none" style={{position:"absolute",left:0,top:0,right:0,bottom:0}}>
-      {screenCorners.map((a,i)=>edge(a,screenCorners[(i+1)%4]!,i))}
+    {showBounds?<View pointerEvents="none" style={{position:"absolute",left:0,top:0,right:0,bottom:0}}>
+      <SelectionOutline points={screenCorners} width={viewport.width} height={viewport.height} unstyled={unstyled}/>
       {ORIGIN_ANCHORS.map(anchor=>{
         const p=docPointToScreen(viewport,anchorPoint(corners,anchor));
         const hot=dragAnchor===anchor;
         return <View key={anchor} {...{className:joinClasses(styled&&"border",styled&&(hot?"bg-primary border-primary":"bg-surface-raised border-primary"))}}
           style={{position:"absolute",left:p.x-(hot?5:4),top:p.y-(hot?5:4),width:hot?10:8,height:hot?10:8}}/>;
       })}
-    </View>
+    </View>:null}
     {transform?<View {...handlers} collapsable={false}
       accessible accessibilityRole="adjustable" accessibilityLabel="Pivot"
       accessibilityHint="Drag to move the point the layer rotates and scales around. Arrow keys nudge it; keys 1 to 9 jump to the anchors."

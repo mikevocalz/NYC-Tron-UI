@@ -1,4 +1,4 @@
-import {useEffect,useLayoutEffect,useRef,type ComponentRef,type ReactNode} from 'react';
+import {useEffect,useLayoutEffect,useMemo,useRef,type ComponentRef,type ReactNode} from 'react';
 import {Platform,View,type ViewProps} from 'react-native';
 import {GestureDetector,usePanGesture,usePinchGesture,useSimultaneousGestures} from 'react-native-gesture-handler';
 import {createStore,type StoreApi} from 'zustand/vanilla';
@@ -7,6 +7,7 @@ import {shellKey} from '../../shell/shell-keys.ts';
 import {joinClasses} from '../../styles.ts';
 import type {Rect2D} from '../../overlays/popover-position.ts';
 import {validateViewport,validateDocRect,type CanvasViewport,type DocPoint,type DocRect} from './canvas-viewport.ts';
+import {CanvasGestureRelations} from './canvas-gesture-relations.ts';
 import {canvasFromTouches,canvasFromWheel,fitCanvas,panCanvasBy,sameCanvasView,validateZoomLimits,zoomCanvasAt} from './canvas-pan-zoom-model.ts';
 export type {CanvasViewport,DocRect} from './canvas-viewport.ts';
 export interface CanvasPanZoomProps extends Omit<ViewProps,'children'> {
@@ -72,7 +73,7 @@ export function CanvasPanZoom({scope,revision=0,viewport,onPreview,onCommit,chil
   onTouchesUp:event=>{if(!current())return;const ended=new Set(event.changedTouches.map(t=>t.id));touches.current=event.allTouches.filter(t=>!ended.has(t.id));for(const id of ended)touchOwners.current.delete(id);touchActive.current=false;touchStart.current=null;if(session.current?.kind==='touch')finish();},onTouchesCancel:()=>{if(!current())return;touchOwners.current.clear();touches.current=[];cancelTouch();},
   onDeactivate:event=>{if(!current())return;if(session.current?.kind==='touch'){if(event.canceled)cancelTouch();else finish();}},onFinalize:event=>{if(!current())return;if(event.canceled)cancelTouch();}});
  const pinch=usePinchGesture({enabled:!off,runOnJS:true,onActivate:activate});
- const gesture=useSimultaneousGestures(pan,pinch);
+ const gesture=useSimultaneousGestures(pan,pinch),relations=useMemo(()=>({gestures:[pan,pinch],onePointerPan:panWithOnePointer}),[pan,pinch,panWithOnePointer]);
  const wheel=(event:Wheel)=>{const p=current(),node=host.current as unknown as WebHost|null,rect=node?.getBoundingClientRect?.();if(!p||!rect||rect.width<=0||rect.height<=0||event.target?.closest?.('input,textarea,select,[contenteditable="true"]')||![0,1,2].includes(event.deltaMode))return;
   const anchor={x:(event.clientX-rect.left)*p.viewport.width/rect.width,y:(event.clientY-rect.top)*p.viewport.height/rect.height};if(!p.regions.some(r=>r.width>0&&r.height>0&&contains(r,anchor)))return;
   if(session.current?.kind==='touch'){cancelTouch();return;}let active=session.current;if(!active){active={kind:'wheel',boundary:p.boundary,from:p.viewport,value:p.viewport,points:[],ids:[]};session.current=active;}
@@ -91,5 +92,5 @@ export function CanvasPanZoom({scope,revision=0,viewport,onPreview,onCommit,chil
   accessibilityActions={off?[]:[{name:'increment',label:'Zoom in'},{name:'decrement',label:'Zoom out'},{name:'actualSize',label:'Actual size'},...(contentBounds?[{name:'fit',label:'Fit document'}]:[]),{name:'panLeft',label:'Pan left'},{name:'panRight',label:'Pan right'},{name:'panUp',label:'Pan up'},{name:'panDown',label:'Pan down'}]}
   onAccessibilityAction={event=>command(event.nativeEvent.actionName)} onLayout={event=>{measure();onLayout?.(event);}}
   {...(Platform.OS==='web'?{onKeyDown,tabIndex:off?-1:0,onPointerEnter:measure}:{})}
-  {...{className:joinClasses(!unstyled&&'focus-visible:ring-2 focus-visible:ring-focus',className)}} style={[{width:viewport.width,height:viewport.height,overflow:'hidden',direction:'ltr'},style]}>{children(shown)}</View></GestureDetector>;
+  {...{className:joinClasses(!unstyled&&'focus-visible:ring-2 focus-visible:ring-focus',className)}} style={[{width:viewport.width,height:viewport.height,overflow:'hidden',direction:'ltr'},style]}>{<CanvasGestureRelations.Provider value={relations}>{children(shown)}</CanvasGestureRelations.Provider>}</View></GestureDetector>;
 }

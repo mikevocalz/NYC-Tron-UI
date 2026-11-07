@@ -586,10 +586,15 @@
       "name": "SelectionBounds",
       "phase": "P05",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/selection/SelectionBounds.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Hit-testing, move, resize and rotation handles."
+      "requirement": "Hit-testing, move, resize and rotation handles.",
+      "evidence": [
+        "P05-selection-bounds.md"
+      ]
     },
     {
       "id": "B-07",
