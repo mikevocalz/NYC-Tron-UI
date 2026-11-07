@@ -74,7 +74,7 @@ function Fixture(){
     <View onLayout={e=>useHost.setState({bounds:{width:e.nativeEvent.layout.width,height:e.nativeEvent.layout.height}})}
       style={{flexDirection:"row",flexWrap:"wrap",gap:16,alignItems:"flex-start",minHeight:640}}>
       {hinge.map((h,i)=><View key={i} testID="hinge" {...{className:"bg-border"}} style={{position:"absolute",left:h.x,top:0,width:h.width,height:h.height,opacity:0.6}}/>)}
-      <FloatingColorPalette testID="palette" docked={s.docked} position={s.position} mode={s.mode}
+      {s.bounds.width>0&&s.bounds.height>0?<FloatingColorPalette testID="palette" docked={s.docked} position={s.position} mode={s.mode}
         bounds={{x:0,y:0,width:s.bounds.width,height:s.bounds.height}} obstacles={hinge}
         onModeChange={mode=>useHost.setState({mode})}
         onUndock={position=>useHost.setState({docked:false,position})}
@@ -83,7 +83,7 @@ function Fixture(){
         onClose={()=>useHost.setState({docked:true})}
         style={s.docked?{flexBasis:300,flexGrow:1,maxWidth:420}:undefined}>
         {mode=><PaletteBody mode={mode}/>}
-      </FloatingColorPalette>
+      </FloatingColorPalette>:null}
       <View style={{flexBasis:300,flexGrow:1,gap:16,maxWidth:460}}>
         <View {...{className:"rounded-card border border-border bg-surface-raised"}} style={{padding:12,gap:12}}>
           <ForegroundBackgroundChips testID="chips" value={s.pair} active={s.slot}

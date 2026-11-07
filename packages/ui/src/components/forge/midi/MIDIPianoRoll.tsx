@@ -107,7 +107,9 @@ export function MIDIPianoRoll({scope='MIDIPianoRoll',revision=0,...props}:MIDIPi
  if(retained.current.scope!==scope||retained.current.revision!==revision)retained.current={x:0,y:null,scope,revision};
  assertMidiNotes(props.notes,props.clipTicks);
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.ppq,props.beatsPerBar,props.timeSignature,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.notes,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
- return <MIDIPianoRollBody key={owner} {...props} retained={retained.current} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+ // Channel acknowledgements do not replace focused controls; geometry still resets gestures.
+ const bodyKey=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.ppq,props.beatsPerBar,props.timeSignature,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.notes.map(({channel,...note})=>note),props.disabled,props.disabledReason]);
+ return <MIDIPianoRollBody key={bodyKey} {...props} retained={retained.current} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
   onNoteMove={(...args:Parameters<MIDIPianoRollProps['onNoteMove']>)=>guard.run('onNoteMove',h=>h.onNoteMove(...args))}
   onNoteResize={(...args:Parameters<MIDIPianoRollProps['onNoteResize']>)=>guard.run('onNoteResize',h=>h.onNoteResize(...args))}
   onNoteAdd={props.onNoteAdd?(...args:Parameters<NonNullable<MIDIPianoRollProps['onNoteAdd']>>)=>guard.run('onNoteAdd',h=>h.onNoteAdd?.(...args)):undefined}

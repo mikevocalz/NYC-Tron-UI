@@ -250,10 +250,8 @@ function SheetTabsBody({actionError,disabledReason,disabled=false,
         })}
       </View> : null}
     </View> : null}
-    {error ? <Text selectable accessibilityRole="alert" accessibilityLiveRegion="polite"
-      {...{ className: joinClasses(!unstyled && "text-danger") }} style={{ paddingHorizontal: 12, paddingVertical: 6 }}>{error}</Text> : null}
     {activeIndex < 0 && tabs.length > 0 ? <Text {...{ className: mutedClass }} style={{ paddingHorizontal: 12 }}>
       No sheet is selected.
     </Text> : null}
-  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
+  <ErrorMessage message={actionError??error??disabledReason} unstyled={unstyled}/></View>;
 }

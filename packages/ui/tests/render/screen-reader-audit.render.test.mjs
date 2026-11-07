@@ -10,8 +10,8 @@ import {auditAccessibility} from "../../src/components/shell/a11y-audit.ts";
 // N-06 per-control screen-reader audit. Each control renders once on a
 // mocked iOS host and the tree goes through auditAccessibility: names,
 // adjustable values and actions, action handlers, target sizes. Child
-// components (UnitInput, drag transports) stay unexpanded elements, so each
-// control is audited for the props it sets itself. This is a static check of
+// components (UnitInput, drag transports) expand into their real host props.
+// This is a static check of
 // what VoiceOver/TalkBack would read, not a run with the screen reader on.
 const src=resolve(dirname(fileURLToPath(import.meta.url)),"../../src/components");
 
@@ -34,6 +34,10 @@ function loader(os="ios"){
     "react-native":{View:"View",Text:"Text",Pressable:"Pressable",TextInput:"TextInput",ScrollView:"ScrollView",Modal:"Modal",
       I18nManager:{isRTL:false},Platform:{OS:os,select:o=>o[os]??o.default},
       PanResponder:{create:()=>({panHandlers:{}})},AccessibilityInfo:{sendAccessibilityEvent(){}},StyleSheet:{create:s=>s,hairlineWidth:1}},
+    "react-native-gesture-handler":{
+      GestureDetector:"GestureDetector",usePanGesture:options=>options,
+      useTapGesture:options=>options,useCompetingGestures:(...gestures)=>gestures,
+    },
     "zustand/vanilla":{createStore:store},
     zustand:{useStore:(s,sel)=>sel?sel(s.getState()):s.getState()},
     "@nyc-tron/core/folds":{},
@@ -45,7 +49,7 @@ function loader(os="ios"){
     cache.set(path,exports);
     const code=ts.transpileModule(readFileSync(path,"utf8"),{compilerOptions:{module:ts.ModuleKind.CommonJS,
       target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,verbatimModuleSyntax:false}}).outputText;
-    runInNewContext(code,{exports,globalThis,require:name=>mocks[name]??load(resolve(dirname(path),name))},{filename:path});
+    runInNewContext(code,{exports,globalThis,AbortController,require:name=>mocks[name]??load(resolve(dirname(path),name))},{filename:path});
     return exports;
   }
   // Function components render in place so the audit sees the hosts they produce.

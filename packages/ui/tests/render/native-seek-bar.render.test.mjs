@@ -19,6 +19,7 @@ function harness(os, file = FILES[os]) {
   const refs = [];
   let cursor = 0;
   let effects = [];
+  let layouts = [];
   // Expands the kit's own function components (SeekBarLayout) so the tree
   // shows the host elements; Button stays a leaf through its mock.
   const element = (type, props) => typeof type === "function" ? type(props) : { type, props };
@@ -26,6 +27,12 @@ function harness(os, file = FILES[os]) {
     react: {
       useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }),
       useEffect: fn => { effects.push(fn); },
+      useLayoutEffect: (fn,deps) => {
+        const i=cursor++,s=refs[i]??(refs[i]={});
+        if(!s.deps||!deps||deps.some((d,i)=>d!==s.deps[i])){
+          s.deps=deps;layouts.push(()=>{s.cleanup?.();s.cleanup=fn();});
+        }
+      },
     },
     "react/jsx-runtime": { jsx: element, jsxs: element, Fragment: "Fragment" },
     "react-native": { View: "View", Text: "Text", Platform: { OS: os } },
@@ -56,7 +63,7 @@ function harness(os, file = FILES[os]) {
   const { NativeSeekBar } = load(resolve(src, file));
   let tree;
   return {
-    render: props => { cursor = 0; effects = []; tree = NativeSeekBar(props); return tree; },
+    render: props => { cursor = 0; effects = []; tree = NativeSeekBar(props); for(const fn of layouts.splice(0))fn(); return tree; },
     /** Runs the effects of the last render, as React would after commit; returns their cleanups. */
     mount: () => effects.map(fn => fn()).filter(Boolean),
     tree: () => tree,

@@ -130,7 +130,7 @@ function TextSearchResultsBody({
             </View>
           </View>
           <SectionList style={{flexShrink:1}} sections={groups.map(g=>({page:g.page,data:g.items}))} keyExtractor={({index})=>String(index)} keyboardShouldPersistTaps="handled" stickySectionHeadersEnabled={false}
-            renderSectionHeader={({section:group})=><Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{"Page "+(group.page+1)+" · "+group.data.length+" matches"}</Text>}
+            renderSectionHeader={({section:group})=><Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{"Page "+(group.page+1)+" · "+group.data.length+(group.data.length===1?" match":" matches")}</Text>}
             renderItem={({item:{hit,index}})=>{
                 const on=index===current;
                 return <Pressable key={index} accessibilityRole="button" accessibilityState={{selected:on}}

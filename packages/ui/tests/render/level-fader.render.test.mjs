@@ -6,50 +6,85 @@ import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
 import ts from "typescript";
 
-// Runs the real LevelFader with mocked RN hosts and the real PanResponder
-// config. This proves the preview/commit contract, not React reconciliation,
-// native gesture arbitration or screen-reader output on a device.
+// Expands the real LevelFader and its ownership hooks against mocked RN hosts.
+// Vertical controls use RNGH callbacks; horizontal controls use PanResponder.
+// These checks cover callback wiring and rendered props, not native gesture
+// arbitration, React reconciliation or screen-reader output on a device.
 const src = resolve(dirname(fileURLToPath(import.meta.url)), "../../src/components");
 function harness({ rtl = false, os = "ios" } = {}) {
-  const refs = [];
-  let cursor = 0;
-  let responder;
-  const element = (type, props) => ({ type, props });
+  const slots = new Map();
+  const layouts = [];
+  let path = "root", cursor = 0;
+  let responder, pan, tap;
+  const slot = init => {
+    const key = path + "#" + cursor++;
+    if (!slots.has(key)) slots.set(key, init());
+    return slots.get(key);
+  };
+  const effect = (fn, deps) => {
+    const state = slot(() => ({ deps: undefined, cleanup: undefined }));
+    if (!state.deps || !deps || deps.some((value, i) => !Object.is(value, state.deps[i]))) {
+      state.deps = deps;
+      layouts.push(() => { state.cleanup?.(); state.cleanup = fn(); });
+    }
+  };
+  const element = (type, props, key) => ({ type, props: props ?? {}, key });
   const mocks = {
-    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }) },
+    react: { useRef: value => slot(() => ({ current: value })), useLayoutEffect: effect, useEffect: effect },
     "react/jsx-runtime": { jsx: element, jsxs: element },
     "react-native": {
-      View: "View", Text: "Text", Pressable: "Pressable",
+      View: "View", Text: "Text", TextInput: "TextInput", Pressable: "Pressable",
       I18nManager: { isRTL: rtl },
       Platform: { OS: os },
       PanResponder: { create: config => { responder = config; return { panHandlers: {} }; } },
     },
+    "react-native-gesture-handler": {
+      GestureDetector: "GestureDetector",
+      usePanGesture: config => { pan = config; return { kind: "pan", config }; },
+      useTapGesture: config => { tap = config; return { kind: "tap", config }; },
+      useCompetingGestures: (...gestures) => gestures,
+    },
     "zustand/vanilla": { createStore: init => {
       let value = init();
-      return { getState: () => value, setState: next => { value = { ...value, ...next }; } };
+      return { getState: () => value,
+        setState: next => { value = { ...value, ...(typeof next === "function" ? next(value) : next) }; } };
     } },
     zustand: { useStore: (store, selector) => selector(store.getState()) },
   };
   const cache = new Map();
-  function load(path) {
-    if (cache.has(path)) return cache.get(path);
+  function load(file) {
+    if (cache.has(file)) return cache.get(file);
     const exports = {};
-    const code = ts.transpileModule(readFileSync(path, "utf8"), {
+    const code = ts.transpileModule(readFileSync(file, "utf8"), {
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
         jsx: ts.JsxEmit.ReactJSX, verbatimModuleSyntax: false },
     }).outputText;
-    cache.set(path, exports);
-    runInNewContext(code, { exports, require: name => mocks[name] ?? load(resolve(dirname(path), name)) },
-      { filename: path });
+    cache.set(file, exports);
+    runInNewContext(code, { exports, AbortController,
+      require: name => mocks[name] ?? load(resolve(dirname(file), name)) }, { filename: file });
     return exports;
+  }
+  function expand(node, at) {
+    if (Array.isArray(node)) return node.map((child, i) => expand(child, at + "/" + i));
+    if (!node || typeof node !== "object") return node;
+    if (typeof node.type === "function") {
+      const saved = [path, cursor];
+      path = at + ":" + node.type.name + (node.key ?? ""); cursor = 0;
+      const out = node.type(node.props), here = path;
+      [path, cursor] = saved;
+      return expand(out, here);
+    }
+    return { ...node, props: { ...node.props, children: expand(node.props.children, at + "/" + node.type) } };
   }
   const { LevelFader } = load(resolve(src, "forge/audio/LevelFader.tsx"));
   const level = load(resolve(src, "forge/audio/level.ts"));
-  return {
-    level,
-    render: props => { cursor = 0; return LevelFader(props); },
-    gesture: () => responder,
+  const render = props => {
+    const tree = expand(element(LevelFader, props), "root");
+    for (const commit of layouts.splice(0)) commit();
+    return tree;
   };
+  return { level, render, renderHorizontal: props => render({ ...props, orientation: "horizontal" }),
+    responder: () => responder, pan: () => pan, tap: () => tap };
 }
 const kids = n => [n?.props?.children].flat(Infinity).filter(x => x && typeof x === "object");
 function find(n, pred) {
@@ -58,73 +93,74 @@ function find(n, pred) {
 }
 const track = tree => find(tree, n => n.props?.accessibilityRole === "adjustable");
 
-test("drag previews on every distinct value and commits once on release", () => {
+test("horizontal drag previews on every distinct value and commits once on release", () => {
   const h = harness(); const previews = []; const commits = [];
   const props = { value: 1, label: "Vocals", length: 116,
     onChange: g => previews.push(g), onCommit: g => commits.push(g) };
-  h.render(props);
-  const g = h.gesture();
+  h.renderHorizontal(props);
+  const g = h.responder();
   g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 0, dy: 50 });
-  g.onPanResponderMove({}, { dx: 0, dy: 50 });
-  g.onPanResponderMove({}, { dx: 0, dy: 100 });
+  g.onPanResponderMove({}, { dx: -50, dy: 0 });
+  g.onPanResponderMove({}, { dx: -50, dy: 0 });
+  g.onPanResponderMove({}, { dx: -100, dy: 0 });
   assert.equal(previews.length, 2, "repeat positions are not re-emitted");
   assert.equal(commits.length, 0, "no commit mid-drag");
-  const tree = h.render(props);
+  const tree = h.renderHorizontal(props);
   assert.equal(track(tree).props.accessibilityValue.now, 0);
   g.onPanResponderRelease();
   assert.deepEqual(commits, [0]);
 });
-test("a drag at 100 pt of travel moves 30 dB on the unity range", () => {
+test("horizontal drag over 25 pt of 100 pt travel moves 15 dB", () => {
   const h = harness(); const commits = [];
-  h.render({ value: h.level.dbToGain(-30), label: "Bass", length: 116, onCommit: g => commits.push(g) });
-  const g = h.gesture();
+  h.renderHorizontal({ value: h.level.dbToGain(-30), label: "Bass", length: 116, onCommit: g => commits.push(g) });
+  const g = h.responder();
   g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 0, dy: -25 });
+  g.onPanResponderMove({}, { dx: 25, dy: 0 });
   g.onPanResponderRelease();
   assert.equal(commits.length, 1);
   assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 15) < 1e-9);
 });
-test("cancelled drag restores the committed value without committing", () => {
+test("cancelled horizontal drag restores the committed value without committing", () => {
   const h = harness(); const previews = []; const commits = [];
   const props = { value: 0.5, label: "Pad", onChange: g => previews.push(g), onCommit: g => commits.push(g) };
-  h.render(props);
-  const g = h.gesture();
+  h.renderHorizontal(props);
+  const g = h.responder();
   g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 0, dy: -40 });
+  g.onPanResponderMove({}, { dx: 40, dy: 0 });
   g.onPanResponderTerminate();
   assert.equal(commits.length, 0);
   assert.equal(previews.at(-1), 0.5);
-  assert.equal(track(h.render(props)).props.accessibilityValue.text, "-6.0 dB");
+  assert.equal(track(h.renderHorizontal(props)).props.accessibilityValue.text, "-6.0 dB");
 });
-test("unchanged release does not commit", () => {
+test("unchanged horizontal release does not commit", () => {
   const h = harness(); const commits = [];
-  h.render({ value: 1, label: "Keys", onCommit: g => commits.push(g) });
-  const g = h.gesture();
+  h.renderHorizontal({ value: 1, label: "Keys", onCommit: g => commits.push(g) });
+  const g = h.responder();
   g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 0, dy: -30 });
+  g.onPanResponderMove({}, { dx: 30, dy: 0 });
   g.onPanResponderRelease();
   assert.equal(commits.length, 0, "already at the top of travel");
 });
-test("screen-reader actions step in dB and commit each step", () => {
+test("horizontal screen-reader actions step in dB and commit each step", async () => {
   const h = harness(); const commits = []; const previews = [];
-  const tree = h.render({ value: h.level.dbToGain(-6), label: "Drums",
+  const tree = h.renderHorizontal({ value: h.level.dbToGain(-6), label: "Drums",
     onChange: g => previews.push(g), onCommit: g => commits.push(g) });
   const t = track(tree);
   assert.equal(t.props.accessibilityLabel, "Drums");
   assert.equal(t.props.accessibilityActions.map(a => a.name).join(), "increment,decrement");
   assert.equal(t.props.accessibilityValue.text, "-6.0 dB");
   t.props.onAccessibilityAction({ nativeEvent: { actionName: "increment" } });
+  await Promise.resolve();
   t.props.onAccessibilityAction({ nativeEvent: { actionName: "decrement" } });
   assert.equal(commits.length, 2);
   assert.deepEqual(previews, commits);
   assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 5) < 1e-9);
   assert.ok(Math.abs(h.level.gainToDb(commits[1]) + 7) < 1e-9);
 });
-test("disabled fader refuses gestures and steps", () => {
+test("disabled horizontal fader refuses gestures and steps", () => {
   const h = harness(); const commits = [];
-  const tree = h.render({ value: 0.5, label: "FX", disabled: true, onCommit: g => commits.push(g) });
-  assert.equal(h.gesture().onMoveShouldSetPanResponder({}, { dx: 0, dy: 30 }), false);
+  const tree = h.renderHorizontal({ value: 0.5, label: "FX", disabled: true, onCommit: g => commits.push(g) });
+  assert.equal(h.responder().onMoveShouldSetPanResponder({}, { dx: 0, dy: 30 }), false);
   track(tree).props.onAccessibilityAction({ nativeEvent: { actionName: "increment" } });
   assert.equal(track(tree).props.accessibilityState.disabled, true);
   assert.equal(commits.length, 0);
@@ -132,8 +168,8 @@ test("disabled fader refuses gestures and steps", () => {
 test("horizontal travel follows reading direction in RTL", () => {
   for (const [rtl, dx] of [[false, 30], [true, -30]]) {
     const h = harness({ rtl }); const commits = [];
-    h.render({ value: 0, label: "Send", orientation: "horizontal", onCommit: g => commits.push(g) });
-    const g = h.gesture();
+    h.renderHorizontal({ value: 0, label: "Send", orientation: "horizontal", onCommit: g => commits.push(g) });
+    const g = h.responder();
     g.onPanResponderGrant();
     g.onPanResponderMove({}, { dx, dy: 0 });
     g.onPanResponderRelease();
@@ -141,11 +177,11 @@ test("horizontal travel follows reading direction in RTL", () => {
     assert.ok(commits[0] > 0);
   }
 });
-test("every pressable target is at least 44 pt", () => {
+test("every horizontal fader pressable target is at least 44 pt", () => {
   const h = harness();
-  const tree = h.render({ value: 0.5, label: "Mix", onCommit: () => {} });
+  const tree = h.renderHorizontal({ value: 0.5, label: "Mix", onCommit: () => {} });
   const t = track(tree);
-  assert.ok(t.props.style.width >= 44);
+  assert.ok(t.props.style.height >= 44);
   const buttons = [];
   (function walk(n) { if (n?.type === "Pressable") buttons.push(n); kids(n).forEach(walk); })(tree);
   assert.equal(buttons.length, 2);
@@ -154,21 +190,21 @@ test("every pressable target is at least 44 pt", () => {
     assert.match(b.props.accessibilityLabel, /(Raise|Lower) Mix by 1 dB/);
   }
 });
-test("invalid values throw instead of rendering a fake level", () => {
+test("horizontal invalid values throw instead of rendering a fake level", () => {
   const h = harness();
-  assert.throws(() => h.render({ value: NaN, label: "X", onCommit: () => {} }), { name: "RangeError" });
-  assert.throws(() => h.render({ value: 1, label: "X", length: 20, onCommit: () => {} }), { name: "RangeError" });
+  assert.throws(() => h.renderHorizontal({ value: NaN, label: "X", onCommit: () => {} }), { name: "RangeError" });
+  assert.throws(() => h.renderHorizontal({ value: 1, label: "X", length: 20, onCommit: () => {} }), { name: "RangeError" });
 });
 
-test("claims only travel-axis drags and keeps them against a parent scroll", () => {
+test("horizontal fader claims only travel-axis drags and keeps them against a parent scroll", () => {
   const h = harness();
-  h.render({ value: 0.5, label: "Vox", onCommit: () => {} });
-  const g = h.gesture();
+  h.renderHorizontal({ value: 0.5, label: "Vox", onCommit: () => {} });
+  const g = h.responder();
   assert.equal(g.onStartShouldSetPanResponder(), false, "a press alone never claims");
-  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 2, dy: 3 }), false, "inside slop");
-  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 40, dy: 6 }), false, "horizontal swipe scrolls the mixer");
-  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 3, dy: -12 }), true);
-  assert.equal(g.onMoveShouldSetPanResponderCapture({}, { dx: 3, dy: -12 }), true);
+  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 3, dy: 2 }), false, "inside slop");
+  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: 6, dy: 40 }), false, "vertical swipe remains available to the parent");
+  assert.equal(g.onMoveShouldSetPanResponder({}, { dx: -12, dy: 3 }), true);
+  assert.equal(g.onMoveShouldSetPanResponderCapture({}, { dx: -12, dy: 3 }), true);
   assert.equal(g.onPanResponderTerminationRequest(), true, "idle fader yields");
   g.onPanResponderGrant();
   assert.equal(g.onPanResponderTerminationRequest(), false, "an active drag is kept");
@@ -176,34 +212,208 @@ test("claims only travel-axis drags and keeps them against a parent scroll", () 
   g.onPanResponderRelease();
   assert.equal(g.onPanResponderTerminationRequest(), true);
   const hz = harness();
-  hz.render({ value: 0.5, label: "Send", orientation: "horizontal", onCommit: () => {} });
-  assert.equal(hz.gesture().onMoveShouldSetPanResponder({}, { dx: 2, dy: 30 }), false);
-  assert.equal(hz.gesture().onMoveShouldSetPanResponder({}, { dx: 12, dy: 2 }), true);
+  hz.renderHorizontal({ value: 0.5, label: "Send", orientation: "horizontal", onCommit: () => {} });
+  assert.equal(hz.responder().onMoveShouldSetPanResponder({}, { dx: 2, dy: 30 }), false);
+  assert.equal(hz.responder().onMoveShouldSetPanResponder({}, { dx: 12, dy: 2 }), true);
 });
-test("arrow keys step the focused track", () => {
+test("horizontal arrow keys step the focused track", () => {
   const h = harness({ os: "web" }); const commits = [];
-  const t = track(h.render({ value: h.level.dbToGain(-6), label: "Keys", onCommit: g => commits.push(g) }));
+  const t = track(h.renderHorizontal({ value: h.level.dbToGain(-6), label: "Keys", onCommit: g => commits.push(g) }));
   assert.equal(t.props.focusable, true);
-  assert.equal(t.props.style.touchAction, "pan-x");
+  assert.equal(t.props.style.touchAction, "pan-y");
   let prevented = 0;
   t.props.onKeyDown({ nativeEvent: { key: "ArrowUp" }, preventDefault: () => prevented++ });
   t.props.onKeyDown({ nativeEvent: { key: "Tab" }, preventDefault: () => prevented++ });
   assert.equal(prevented, 1);
   assert.equal(Math.round(h.level.gainToDb(commits[0])), -5);
-  assert.equal(track(harness().render({ value: 0.5, label: "N", onCommit: () => {} })).props.style.touchAction, undefined);
+  assert.equal(track(harness().renderHorizontal({ value: 0.5, label: "N", onCommit: () => {} })).props.style.touchAction, undefined);
 });
-test("a range with headroom marks unity", () => {
+test("horizontal range with headroom marks unity", () => {
   const h = harness();
   const has = props => {
     let found = false;
-    (function walk(n) { if (n?.props?.className === "bg-text-muted") found = true; kids(n).forEach(walk); })(h.render(props));
+    (function walk(n) { if (n?.props?.className === "bg-text-muted") found = true; kids(n).forEach(walk); })(h.renderHorizontal(props));
     return found;
   };
   assert.equal(has({ value: 1, label: "U", onCommit: () => {} }), false);
   assert.equal(has({ value: 1, label: "C", range: h.level.FADER_RANGES.CHANNEL, onCommit: () => {} }), true);
 });
-test("stepDb and negative gain are validated at render", () => {
+test("horizontal stepDb and negative gain are validated at render", () => {
   const h = harness();
-  assert.throws(() => h.render({ value: 0.5, label: "X", stepDb: 0, onCommit: () => {} }), { name: "RangeError" });
-  assert.throws(() => h.render({ value: -0.1, label: "X", onCommit: () => {} }), { name: "RangeError" });
+  assert.throws(() => h.renderHorizontal({ value: 0.5, label: "X", stepDb: 0, onCommit: () => {} }), { name: "RangeError" });
+  assert.throws(() => h.renderHorizontal({ value: -0.1, label: "X", onCommit: () => {} }), { name: "RangeError" });
+});
+
+const button = (tree, label) => find(tree, n => n.type === "Pressable" && n.props.accessibilityLabel === label);
+const input = tree => find(tree, n => n.type === "TextInput");
+const detector = tree => find(tree, n => n.type === "GestureDetector");
+const flushActions = async () => { await Promise.resolve(); await Promise.resolve(); };
+
+test("vertical fader previews RNGH travel and commits only the final value", () => {
+  const h = harness(); const previews = []; const commits = [];
+  const props = { value: 1, label: "Vocals", length: 116,
+    onChange: gain => previews.push(gain), onCommit: gain => commits.push(gain) };
+  const tree = h.render(props), g = h.pan();
+  assert.equal(h.responder(), undefined, "vertical faders do not instantiate PanResponder");
+  assert.equal(detector(tree).props.gesture.map(g => g.kind).join(), "pan,tap");
+  g.onActivate({ translationY: 25 });
+  assert.ok(Math.abs(h.level.gainToDb(previews.at(-1)) + 15) < 1e-9);
+  g.onUpdate({ translationY: 50 });
+  assert.ok(Math.abs(h.level.gainToDb(previews.at(-1)) + 30) < 1e-9);
+  assert.equal(commits.length, 0, "preview never commits mid-drag");
+  assert.equal(track(h.render(props)).props.accessibilityValue.text, "-30.0 dB");
+  g.onDeactivate({ translationY: 100, canceled: false });
+  g.onFinalize({ canceled: false });
+  assert.deepEqual(commits, [0]);
+  assert.equal(track(h.render(props)).props.accessibilityValue.text, "0.0 dB", "the app still owns the committed value");
+});
+
+test("vertical cancellation and extra pointers restore gain without committing", () => {
+  for (const cancel of [g => g.onDeactivate({ translationY: -40, canceled: true }),
+    g => g.onFinalize({ canceled: true }), g => g.onTouchesDown({ numberOfTouches: 2 })]) {
+    const h = harness(); const previews = []; const commits = [];
+    const props = { value: 0.5, label: "Pad", onChange: gain => previews.push(gain), onCommit: gain => commits.push(gain) };
+    h.render(props); const g = h.pan();
+    g.onActivate({ translationY: -40 });
+    assert.notEqual(previews.at(-1), props.value);
+    cancel(g);
+    g.onUpdate({ translationY: -60 });
+    g.onDeactivate({ translationY: -60, canceled: false });
+    assert.deepEqual(commits, []);
+    assert.equal(previews.at(-1), props.value);
+    assert.equal(track(h.render(props)).props.accessibilityValue.text, "-6.0 dB");
+  }
+});
+
+test("vertical RNGH config admits single-pointer vertical travel and unchanged releases do not commit", () => {
+  const h = harness(); const commits = [];
+  h.render({ value: 1, label: "Keys", onCommit: gain => commits.push(gain) });
+  const g = h.pan();
+  assert.equal(g.enabled, true);
+  assert.equal(g.runOnJS, true);
+  assert.equal(g.maxPointers, 1);
+  assert.equal(Array.from(g.activeOffsetY).join(), "-4,4");
+  assert.equal(Array.from(g.failOffsetX).join(), "-8,8");
+  g.onActivate({ translationY: -30 });
+  g.onDeactivate({ translationY: -30, canceled: false });
+  assert.deepEqual(commits, []);
+});
+
+test("vertical screen-reader actions step in dB and reset to unity", async () => {
+  const h = harness(); const commits = [];
+  const tree = h.render({ value: h.level.dbToGain(-6), label: "Drums", onCommit: gain => commits.push(gain) });
+  const t = track(tree);
+  assert.equal(t.props.accessibilityLabel, "Drums");
+  assert.equal(t.props.accessibilityActions.map(a => a.name).join(), "increment,decrement,reset");
+  assert.ok(t.props.accessibilityActions.every(action => action.label));
+  assert.equal(t.props.accessibilityValue.text, "-6.0 dB");
+  for (const actionName of ["increment", "decrement", "reset"]) {
+    t.props.onAccessibilityAction({ nativeEvent: { actionName } });
+    await flushActions();
+  }
+  assert.equal(commits.length, 3);
+  assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 5) < 1e-9);
+  assert.ok(Math.abs(h.level.gainToDb(commits[1]) + 7) < 1e-9);
+  assert.equal(commits[2], 1);
+});
+
+test("disabled vertical faders reject gesture, keyboard and accessibility edits", () => {
+  const h = harness(); const commits = [];
+  const tree = h.render({ value: 0.5, label: "FX", disabled: true, onCommit: gain => commits.push(gain) });
+  assert.equal(h.pan().enabled, false);
+  assert.equal(h.tap().enabled, false);
+  assert.equal(track(tree).props.accessibilityState.disabled, true);
+  assert.equal(track(tree).props.focusable, false);
+  assert.equal(input(tree).props.editable, false);
+  track(tree).props.onAccessibilityAction({ nativeEvent: { actionName: "increment" } });
+  track(tree).props.onKeyDown({ key: "ArrowUp" });
+  h.pan().onActivate({ translationY: -40 });
+  h.pan().onDeactivate({ translationY: -40, canceled: false });
+  assert.deepEqual(commits, []);
+});
+
+test("vertical targets and keyboard controls retain the native gesture contract", async () => {
+  const h = harness({ os: "web" }); const commits = [];
+  const tree = h.render({ value: h.level.dbToGain(-6), label: "Mix", targetSize: 48, onCommit: gain => commits.push(gain) });
+  assert.equal(track(tree).props.style.width, 48);
+  assert.equal(input(tree).props.style.minHeight, 48);
+  assert.equal(detector(tree).props.touchAction, "pan-x");
+  for (const label of ["Lower Mix by 1 dB", "Raise Mix by 1 dB", "Fine gain off", "Reset gain to unity"]) {
+    const b = button(tree, label);
+    assert.ok(b, label);
+    const style = Object.assign({}, ...b.props.style({ pressed: false }).filter(Boolean));
+    assert.ok(style.minWidth >= 48 && style.minHeight >= 48, label);
+  }
+  let prevented = 0;
+  const key = (key, shiftKey = false) => track(tree).props.onKeyDown({ key, shiftKey, preventDefault: () => prevented++ });
+  key("ArrowUp", true); await flushActions();
+  key("Home"); await flushActions();
+  key("End"); await flushActions();
+  key("Tab");
+  assert.equal(prevented, 3);
+  assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 5.9) < 1e-9);
+  assert.deepEqual(commits.slice(1), [0, 1]);
+});
+
+test("vertical fine mode reduces travel to one tenth", () => {
+  const h = harness(); const commits = [];
+  const props = { value: h.level.dbToGain(-30), label: "Bass", length: 116, onCommit: gain => commits.push(gain) };
+  button(h.render(props), "Fine gain off").props.onPress();
+  const tree = h.render(props);
+  assert.ok(button(tree, "Fine gain on"));
+  h.pan().onActivate({ translationY: -25 });
+  h.pan().onDeactivate({ translationY: -25, canceled: false });
+  assert.equal(commits.length, 1);
+  assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 28.5) < 1e-9);
+});
+
+test("vertical double tap resets unity but rejects multiple touches", async () => {
+  const h = harness(); const commits = [];
+  h.render({ value: 0.5, label: "Send", onCommit: gain => commits.push(gain) });
+  const tap = h.tap();
+  assert.equal(tap.numberOfTaps, 2);
+  assert.equal(tap.maxDelay, 300);
+  assert.equal(tap.maxDuration, 250);
+  tap.onBegin(); tap.onTouchesDown({ numberOfTouches: 2 }); tap.onActivate();
+  assert.deepEqual(commits, []);
+  tap.onBegin(); tap.onTouchesDown({ numberOfTouches: 1 }); tap.onActivate();
+  await flushActions();
+  assert.deepEqual(commits, [1]);
+});
+
+test("vertical numeric entry validates dB and accepts silence", async () => {
+  const h = harness(); const commits = [];
+  const props = { value: 0.5, label: "Send", onCommit: gain => commits.push(gain) };
+  let tree = h.render(props);
+  assert.equal(input(tree).props.accessibilityLabel, "Send gain decibels");
+  input(tree).props.onChangeText("3"); input(tree).props.onSubmitEditing();
+  tree = h.render(props);
+  assert.deepEqual(commits, []);
+  assert.ok(find(tree, n => n.props?.role === "alert"), "out-of-range gain reports an error");
+  input(tree).props.onChangeText("-12 dB"); input(tree).props.onSubmitEditing();
+  await flushActions();
+  input(tree).props.onBlur();
+  assert.equal(commits.length, 1, "blur does not recommit a submitted value");
+  assert.ok(Math.abs(h.level.gainToDb(commits[0]) + 12) < 1e-9);
+  input(tree).props.onChangeText("-inf"); input(tree).props.onSubmitEditing();
+  await flushActions();
+  assert.deepEqual(commits.slice(1), [0]);
+});
+
+test("vertical scope changes invalidate a drag before a later release", () => {
+  const h = harness(); const commits = [];
+  const props = { value: 0.5, label: "Send", onCommit: gain => commits.push(gain) };
+  h.render({ ...props, scope: "track-a" });
+  const oldPan = h.pan(); oldPan.onActivate({ translationY: -20 });
+  h.render({ ...props, scope: "track-b" });
+  oldPan.onDeactivate({ translationY: -40, canceled: false });
+  assert.deepEqual(commits, []);
+  assert.equal(track(h.render({ ...props, scope: "track-b" })).props.accessibilityValue.text, "-6.0 dB");
+});
+
+test("vertical fader validates gains, travel, step and labels at render", () => {
+  const h = harness();
+  for (const invalid of [{ value: NaN }, { value: -0.1 }, { value: 2 }, { length: 20 }, { stepDb: 0 }, { label: " " }]) {
+    assert.throws(() => h.render({ value: 0.5, label: "Gain", onCommit: () => {}, ...invalid }), { name: "RangeError" });
+  }
 });

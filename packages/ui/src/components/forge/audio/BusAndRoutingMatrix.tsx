@@ -99,6 +99,7 @@ function isRTL(): boolean {
 export function BusAndRoutingMatrix({scope='BusAndRoutingMatrix',revision=0,...props}:BusAndRoutingMatrixProps){
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.sources.map(s=>s.id),props.buses.map(b=>b.id),props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
  return <BusAndRoutingMatrixBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  emptyAction={props.emptyAction?{...props.emptyAction,onPress:()=>{guard.current()?.emptyAction?.onPress();}}:undefined}
   onInputCommit={props.onInputCommit?(...args)=>guard.run('input',h=>{const b=h.ioBindings?.find(b=>b.sourceId===args[0]);return b&&(args[1]===null||b.inputs.some(v=>v.id===args[1]))?h.onInputCommit?.(...args):undefined;}):undefined}
   onSidechainCommit={props.onSidechainCommit?(...args)=>guard.run('sidechain',h=>{const b=h.ioBindings?.find(b=>b.sourceId===args[0]);return b&&(args[1]===null||b.sidechains.some(v=>v.id===args[1]))?h.onSidechainCommit?.(...args):undefined;}):undefined}
   onOutputCommit={(...args:Parameters<BusAndRoutingMatrixProps['onOutputCommit']>)=>guard.run('onOutputCommit',h=>h.onOutputCommit(...args))}
@@ -137,6 +138,7 @@ function BusAndRoutingMatrixBody({actionError,disabledReason,
   });
   return <View {...rest} onLayout={measure} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: frame }} style={[{ opacity: width === 0 ? 0 : 1 }, rest.style]}>
+    {buses.length===0?<EmptyState title="No buses yet" description="Add a bus to send tracks to a shared output or effect." exitAction={disabled?undefined:emptyAction} unstyled={unstyled}/>:null}
     {ioBindings.map(binding=><View key={String(binding.sourceId)} style={{gap:8,padding:8}}>
      <Text {...{className:muted}}>{sources.find(s=>s.id===binding.sourceId)?.name} input and sidechain</Text>
      {onInputCommit?<Select label="Track input" value={binding.inputId===null?'none':'source:'+binding.inputId} options={[{value:'none',label:'No input'},...binding.inputs.map(v=>({value:'source:'+v.id,label:v.label}))]} disabled={disabled} unstyled={unstyled} onValueChange={id=>onInputCommit(binding.sourceId,id==='none'?null:id.slice(7))}/>:null}
