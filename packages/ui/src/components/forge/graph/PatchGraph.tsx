@@ -1,4 +1,4 @@
-import {useEffect,useMemo,useRef,useLayoutEffect} from "react";
+import {useMemo,useRef,useLayoutEffect} from "react";
 import {PanResponder,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -6,9 +6,11 @@ import {compatiblePorts,cubicGraphPoints,getPortAnchor,validatePatchGraph,
  GRAPH_HEADER_HEIGHT,GRAPH_PORT_ROW_HEIGHT,
  type GraphNode,type GraphEdge,type GraphPoint,type GraphSelection} from "./model.ts";
 import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
+import {ErrorMessage} from "../../feedback/ErrorMessage.tsx";
+import {createGraphRequests,currentGraphOutput,graphInteractionBoundary,graphDragPoint,graphDisplayedNodes} from "./patch-interaction-model.ts";
 import {joinClasses} from "../../styles.ts";
 
-type Local={positions:Readonly<Record<string,GraphPoint>>;output:GraphSelection|null};
+type Local={positions:Readonly<Record<string,GraphPoint>>;output:GraphSelection|null;error:string|null};
 export interface PatchGraphProps extends Omit<ViewProps,"children">{
  nodes:readonly GraphNode[];
  edges:readonly GraphEdge[];
@@ -17,6 +19,9 @@ export interface PatchGraphProps extends Omit<ViewProps,"children">{
  disabled?:boolean;
  scrollEnabled?:boolean;
  interactionScale?:number;
+ /** Geometry/source changes cancel gestures without replacing focused native views. */
+ interactionBoundary?:string|number;
+ onInteractionError?:(message:string)=>void;
  onInvalidConnection?:(message:string)=>void;
  selectedNodeId?:string|null;
  onSelectNode?:(id:string)=>void;
@@ -29,37 +34,36 @@ export interface PatchGraphProps extends Omit<ViewProps,"children">{
 }
 /** Native RN graph interaction surface. GPU wire renderer required beyond preview-sized graphs. */
 export function PatchGraph({
- nodes,edges,width,height,disabled=false,scrollEnabled=true,interactionScale=1,onInvalidConnection,selectedNodeId,onSelectNode,onMoveNode,onConnect,
+ nodes,edges,width,height,disabled=false,scrollEnabled=true,interactionScale=1,interactionBoundary="graph",onInteractionError,onInvalidConnection,selectedNodeId,onSelectNode,onMoveNode,onConnect,
  accentColor,className,unstyled=false,...rest
 }:PatchGraphProps){
  const local=useRef<StoreApi<Local>|null>(null);
- if(!local.current)local.current=createStore<Local>(()=>({positions:{},output:null}));
+ if(!local.current)local.current=createStore<Local>(()=>({positions:{},output:null,error:null}));
  const store=local.current;
- const {positions,output}=useStore(store,s=>s);
- const rendered=useMemo(()=>nodes.map(n=>({...n,...positions[n.id]})),[nodes,positions]);
- useEffect(()=>{
-   const pending=store.getState().positions;
-   const next={...pending};
-   let changed=false;
-   for(const node of nodes){
-     if(pending[node.id]?.x===node.x&&pending[node.id]?.y===node.y){delete next[node.id];changed=true;}
-   }
-   if(changed)store.setState({positions:next});
- },[nodes,store]);
+ const positions=useStore(store,s=>s.positions),pendingOutput=useStore(store,s=>s.output),error=useStore(store,s=>s.error);
+ const boundary=graphInteractionBoundary(interactionBoundary,nodes,edges,width,height,interactionScale,disabled);
+ const requests=useRef<ReturnType<typeof createGraphRequests>|null>(null);requests.current??=createGraphRequests();
+ const committed=useRef<string|null>(null);
+ useLayoutEffect(()=>{committed.current=boundary;requests.current!.invalidate();store.setState({positions:{},output:null,error:null});return()=>{committed.current=null;requests.current!.invalidate();};},[boundary,store]);
+ useLayoutEffect(()=>{requests.current!.activate();return()=>requests.current!.deactivate();},[]);
+ const current=()=>committed.current===boundary&&!disabled;
+ const output=currentGraphOutput(nodes,pendingOutput);
+ const rendered=useMemo(()=>graphDisplayedNodes(nodes,positions,committed.current,boundary),[nodes,positions,boundary]);
+ const report=(message:string)=>{store.setState({error:message});onInteractionError?.(message);};
  validatePatchGraph(rendered,edges);if(!Number.isFinite(interactionScale)||interactionScale<=0)throw new RangeError("Invalid graph interaction scale");
  const byId=new Map(rendered.map(n=>[n.id,n] as const));
- const selectOutput=(port:GraphSelection)=>{if(!disabled)store.setState({output:port});};
+ const selectOutput=(port:GraphSelection)=>{if(current())store.setState({output:port,error:null});};
  const selectInput=(input:GraphSelection)=>{
-  if(disabled)return;
+  if(!current())return;
   if(output&&compatiblePorts(output,input)){
-   void onConnect?.({nodeId:output.nodeId,portId:output.portId},{nodeId:input.nodeId,portId:input.portId});
+   void requests.current!.run(()=>onConnect?.({nodeId:output.nodeId,portId:output.portId},{nodeId:input.nodeId,portId:input.portId}),report);
    store.setState({output:null});
   }else onInvalidConnection?.(output?"Ports must have matching types and belong to different nodes":"Select an output before connecting an input");
  };
- const previewMove=(id:string,point:GraphPoint)=>store.setState(s=>({positions:{...s.positions,[id]:point}}));
+ const previewMove=(id:string,point:GraphPoint|undefined)=>{if(current())store.setState(s=>{const positions={...s.positions};if(point)positions[id]=point;else delete positions[id];return{positions};});};
  const commitMove=(id:string,point:GraphPoint)=>{
-  void onMoveNode?.(id,point);
-  // Keep the preview until controlled engine nodes catch up; new gestures start at the visible position.
+  previewMove(id,undefined);
+  if(current())void requests.current!.run(()=>onMoveNode?.(id,point),report);
  };
  const cancelPending=()=>store.setState({output:null});
  const styled=!unstyled;
@@ -78,7 +82,7 @@ export function PatchGraph({
            transform:[{rotate:Math.atan2(dy,dx)*180/Math.PI+"deg"}]}}/>;
        });
      })}
-     {rendered.map(node=><PatchNode key={node.id} node={node} interactionScale={interactionScale} selected={selectedNodeId===node.id} disabled={disabled}
+     {rendered.map(node=><PatchNode key={node.id} node={node} boundary={boundary} interactionScale={interactionScale} selected={selectedNodeId===node.id} disabled={disabled}
        accentColor={accentColor} styled={styled} pendingOutput={output?.nodeId===node.id?output.portId:null}
        onSelect={()=>{if(!disabled)onSelectNode?.(node.id);}} onPreview={point=>previewMove(node.id,point)}
        onCommit={point=>commitMove(node.id,point)}
@@ -93,16 +97,19 @@ export function PatchGraph({
     onPress={cancelPending} style={{minHeight:44,justifyContent:"center",paddingHorizontal:12}}>
       <Text {...{className:joinClasses(styled&&"text-text")}}>Connecting {output.nodeId}:{output.portId} · Tap an input, or cancel</Text>
     </Pressable>:null}
+  <ErrorMessage message={error??undefined} unstyled={unstyled}/>
  </View>;
 }
 type PatchNodeProps={
- node:GraphNode;interactionScale:number;disabled:boolean;selected:boolean;accentColor:string|undefined;styled:boolean;pendingOutput:string|null;
- onSelect:()=>void;onPreview:(p:GraphPoint)=>void;onCommit:(p:GraphPoint)=>void;
+ node:GraphNode;boundary:string;interactionScale:number;disabled:boolean;selected:boolean;accentColor:string|undefined;styled:boolean;pendingOutput:string|null;
+ onSelect:()=>void;onPreview:(p:GraphPoint|undefined)=>void;onCommit:(p:GraphPoint)=>void;
  onInput:(portId:string)=>void;onOutput:(portId:string)=>void;
 };
-function PatchNode({node,interactionScale,disabled,selected,accentColor,styled,pendingOutput,onSelect,onPreview,onCommit,onInput,onOutput}:PatchNodeProps){
- const latest=useRef({node,interactionScale,disabled,onSelect,onPreview,onCommit});
- latest.current={node,interactionScale,disabled,onSelect,onPreview,onCommit};
+function PatchNode({node,boundary,interactionScale,disabled,selected,accentColor,styled,pendingOutput,onSelect,onPreview,onCommit,onInput,onOutput}:PatchNodeProps){
+ const latest=useRef({node,boundary,interactionScale,disabled,onSelect,onPreview,onCommit});
+ latest.current={node,boundary,interactionScale,disabled,onSelect,onPreview,onCommit};
+ const admitted=useRef<string|null>(null);
+ useLayoutEffect(()=>{admitted.current=null;cancelled.current=true;},[boundary]);
  const start=useRef<GraphPoint>({x:node.x,y:node.y});
  const active=useRef(false),cancelled=useRef(false);
  useLayoutEffect(()=>{active.current=true;return()=>{active.current=false;cancelled.current=true;};},[]);
@@ -110,15 +117,16 @@ function PatchNode({node,interactionScale,disabled,selected,accentColor,styled,p
  if(!pan.current)pan.current=createCanvasResponder({
   onStartShouldSetPanResponder:e=>!latest.current.disabled&&(e.nativeEvent.touches?.length??1)<=1,
   onMoveShouldSetPanResponder:()=>!latest.current.disabled,
-  onPanResponderGrant:()=>{cancelled.current=false;start.current={x:latest.current.node.x,y:latest.current.node.y};},
-  onPanResponderMove:(_e,g)=>{if(!active.current||latest.current.disabled||cancelled.current)return;if(g.numberActiveTouches>1){cancelled.current=true;latest.current.onPreview(start.current);return;}latest.current.onPreview({x:Math.max(0,start.current.x+g.dx/latest.current.interactionScale),y:Math.max(0,start.current.y+g.dy/latest.current.interactionScale)});},
+  onPanResponderGrant:()=>{admitted.current=latest.current.boundary;cancelled.current=false;start.current={x:latest.current.node.x,y:latest.current.node.y};},
+  onPanResponderMove:(_e,g)=>{if(!active.current||admitted.current!==latest.current.boundary||latest.current.disabled||cancelled.current)return;if(g.numberActiveTouches>1){cancelled.current=true;latest.current.onPreview(undefined);return;}latest.current.onPreview(graphDragPoint(start.current,g.dx,g.dy,latest.current.interactionScale));},
   onPanResponderRelease:(_e,g)=>{
-    if(!active.current||latest.current.disabled||cancelled.current)return;
-    if(Math.abs(g.dx)+Math.abs(g.dy)<4)latest.current.onSelect();
-    else latest.current.onCommit({x:Math.max(0,start.current.x+g.dx/latest.current.interactionScale),y:Math.max(0,start.current.y+g.dy/latest.current.interactionScale)});
+    if(!active.current||admitted.current!==latest.current.boundary||latest.current.disabled||cancelled.current)return;
+    cancelled.current=true;admitted.current=null;
+    if(Math.abs(g.dx)+Math.abs(g.dy)<4){latest.current.onPreview(undefined);latest.current.onSelect();}
+    else latest.current.onCommit(graphDragPoint(start.current,g.dx,g.dy,latest.current.interactionScale));
   },
   onPanResponderTerminationRequest:()=>false,
-  onPanResponderTerminate:()=>{cancelled.current=true;if(active.current)latest.current.onPreview(start.current);},
+  onPanResponderTerminate:()=>{cancelled.current=true;if(active.current)latest.current.onPreview(undefined);},
  });
  const w=node.width??200;
  const height=GRAPH_HEADER_HEIGHT+14+Math.max(node.inputs.length,node.outputs.length)*GRAPH_PORT_ROW_HEIGHT;
