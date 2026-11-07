@@ -3199,20 +3199,30 @@
       "name": "PaginatedTextCanvas",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/PaginatedTextCanvas.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Native editable text with page layout and cursor."
+      "requirement": "Native editable text with page layout and cursor.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-02",
       "name": "TextSelectionAndCaret",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/TextSelectionAndCaret.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Keyboard/selection handles, bidirectional text."
+      "requirement": "Keyboard/selection handles, bidirectional text.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-03",
@@ -3354,10 +3364,15 @@
       "name": "TextWrapAndFrames",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/TextWrapAndFrames.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Object anchors, text boxes, threaded text frames."
+      "requirement": "Object anchors, text boxes, threaded text frames.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-13",
@@ -3424,40 +3439,60 @@
       "name": "FootnoteCitationEditor",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/FootnoteCitationEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "References, citation picker and bibliography."
+      "requirement": "References, citation picker and bibliography.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-18",
       "name": "SpellGrammarPopover",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/SpellGrammarPopover.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Suggestions, ignore/dictionary and offline states."
+      "requirement": "Suggestions, ignore/dictionary and offline states.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-19",
       "name": "MailMergeFieldPicker",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/MailMergeFieldPicker.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Data-field insertion and recipient preview."
+      "requirement": "Data-field insertion and recipient preview.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-20",
       "name": "LayoutSpreadNavigator",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/LayoutSpreadNavigator.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Facing pages, parent/master pages and overset text."
+      "requirement": "Facing pages, parent/master pages and overset text.",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
     },
     {
       "id": "H-21",

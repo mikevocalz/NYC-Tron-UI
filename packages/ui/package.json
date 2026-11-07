@@ -2319,6 +2319,41 @@
       "types": "./dist/components/forge/document/DictationSessionPanel.d.ts",
       "react-native": "./dist/components/forge/document/DictationSessionPanel.js",
       "default": "./dist/components/forge/document/DictationSessionPanel.js"
+    },
+    "./components/forge/document/TextWrapAndFrames": {
+      "types": "./dist/components/forge/document/TextWrapAndFrames.d.ts",
+      "react-native": "./dist/components/forge/document/TextWrapAndFrames.js",
+      "default": "./dist/components/forge/document/TextWrapAndFrames.js"
+    },
+    "./components/forge/document/LayoutSpreadNavigator": {
+      "types": "./dist/components/forge/document/LayoutSpreadNavigator.d.ts",
+      "react-native": "./dist/components/forge/document/LayoutSpreadNavigator.js",
+      "default": "./dist/components/forge/document/LayoutSpreadNavigator.js"
+    },
+    "./components/forge/document/MailMergeFieldPicker": {
+      "types": "./dist/components/forge/document/MailMergeFieldPicker.d.ts",
+      "react-native": "./dist/components/forge/document/MailMergeFieldPicker.js",
+      "default": "./dist/components/forge/document/MailMergeFieldPicker.js"
+    },
+    "./components/forge/document/SpellGrammarPopover": {
+      "types": "./dist/components/forge/document/SpellGrammarPopover.d.ts",
+      "react-native": "./dist/components/forge/document/SpellGrammarPopover.js",
+      "default": "./dist/components/forge/document/SpellGrammarPopover.js"
+    },
+    "./components/forge/document/FootnoteCitationEditor": {
+      "types": "./dist/components/forge/document/FootnoteCitationEditor.d.ts",
+      "react-native": "./dist/components/forge/document/FootnoteCitationEditor.js",
+      "default": "./dist/components/forge/document/FootnoteCitationEditor.js"
+    },
+    "./components/forge/document/TextSelectionAndCaret": {
+      "types": "./dist/components/forge/document/TextSelectionAndCaret.d.ts",
+      "react-native": "./dist/components/forge/document/TextSelectionAndCaret.js",
+      "default": "./dist/components/forge/document/TextSelectionAndCaret.js"
+    },
+    "./components/forge/document/PaginatedTextCanvas": {
+      "types": "./dist/components/forge/document/PaginatedTextCanvas.d.ts",
+      "react-native": "./dist/components/forge/document/PaginatedTextCanvas.js",
+      "default": "./dist/components/forge/document/PaginatedTextCanvas.js"
     }
   },
   "scripts": {
