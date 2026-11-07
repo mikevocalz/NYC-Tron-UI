@@ -3869,20 +3869,30 @@
       "name": "MasterLayoutEditor",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/MasterLayoutEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Parent/master, placeholders and theme inheritance."
+      "requirement": "Parent/master, placeholders and theme inheritance.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-04",
       "name": "ThemeAndTemplateGallery",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/ThemeAndTemplateGallery.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Theme colors, fonts, presets and preview."
+      "requirement": "Theme colors, fonts, presets and preview.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-05",
@@ -3901,10 +3911,15 @@
       "name": "ShapePresetGallery",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/ShapePresetGallery.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Vector shapes, editable adjustment handles."
+      "requirement": "Vector shapes, editable adjustment handles.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-07",
@@ -3921,10 +3936,15 @@
       "name": "TransitionPicker",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/TransitionPicker.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Timing, duration and effect previews."
+      "requirement": "Timing, duration and effect previews.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-09",
@@ -3953,31 +3973,46 @@
       "name": "SlideNotesEditor",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/SlideNotesEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Speaker notes with rich text."
+      "requirement": "Speaker notes with rich text.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-12",
       "name": "PresenterView",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/PresenterView.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Current/next slide, notes, clock and timer.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-13",
       "name": "RehearsalTimers",
       "phase": "P14",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/slides/RehearsalTimers.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Record timings, reset, elapsed and session stats."
+      "requirement": "Record timings, reset, elapsed and session stats.",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
     },
     {
       "id": "J-14",

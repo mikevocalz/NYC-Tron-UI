@@ -2434,6 +2434,46 @@
       "types": "./dist/components/forge/spreadsheet/RangeComments.d.ts",
       "react-native": "./dist/components/forge/spreadsheet/RangeComments.js",
       "default": "./dist/components/forge/spreadsheet/RangeComments.js"
+    },
+    "./components/forge/inputs/AssetPresetGallery": {
+      "types": "./dist/components/forge/inputs/AssetPresetGallery.d.ts",
+      "react-native": "./dist/components/forge/inputs/AssetPresetGallery.js",
+      "default": "./dist/components/forge/inputs/AssetPresetGallery.js"
+    },
+    "./components/forge/slides/ThemeAndTemplateGallery": {
+      "types": "./dist/components/forge/slides/ThemeAndTemplateGallery.d.ts",
+      "react-native": "./dist/components/forge/slides/ThemeAndTemplateGallery.js",
+      "default": "./dist/components/forge/slides/ThemeAndTemplateGallery.js"
+    },
+    "./components/forge/slides/MasterLayoutEditor": {
+      "types": "./dist/components/forge/slides/MasterLayoutEditor.d.ts",
+      "react-native": "./dist/components/forge/slides/MasterLayoutEditor.js",
+      "default": "./dist/components/forge/slides/MasterLayoutEditor.js"
+    },
+    "./components/forge/slides/ShapePresetGallery": {
+      "types": "./dist/components/forge/slides/ShapePresetGallery.d.ts",
+      "react-native": "./dist/components/forge/slides/ShapePresetGallery.js",
+      "default": "./dist/components/forge/slides/ShapePresetGallery.js"
+    },
+    "./components/forge/slides/TransitionPicker": {
+      "types": "./dist/components/forge/slides/TransitionPicker.d.ts",
+      "react-native": "./dist/components/forge/slides/TransitionPicker.js",
+      "default": "./dist/components/forge/slides/TransitionPicker.js"
+    },
+    "./components/forge/slides/SlideNotesEditor": {
+      "types": "./dist/components/forge/slides/SlideNotesEditor.d.ts",
+      "react-native": "./dist/components/forge/slides/SlideNotesEditor.js",
+      "default": "./dist/components/forge/slides/SlideNotesEditor.js"
+    },
+    "./components/forge/slides/PresenterView": {
+      "types": "./dist/components/forge/slides/PresenterView.d.ts",
+      "react-native": "./dist/components/forge/slides/PresenterView.js",
+      "default": "./dist/components/forge/slides/PresenterView.js"
+    },
+    "./components/forge/slides/RehearsalTimers": {
+      "types": "./dist/components/forge/slides/RehearsalTimers.d.ts",
+      "react-native": "./dist/components/forge/slides/RehearsalTimers.js",
+      "default": "./dist/components/forge/slides/RehearsalTimers.js"
     }
   },
   "scripts": {
