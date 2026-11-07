@@ -1,3 +1,4 @@
+import {gradientTargetCurrent} from './gradient-target-owner.ts';
 import {createGradientPreviewOwner} from './gradient-preview-owner.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
@@ -100,7 +101,7 @@ function GradientOnCanvasHandlesBody({
   validateTransform(transform);
   if(![width,height].every(Number.isFinite)||width<=0||height<=0)throw new RangeError("Invalid overlay size");
   const latest=useRef({paint,transform,selectedStop,onSelectStop,onPreview,onSetFill});
-  latest.current={paint,transform,selectedStop,onSelectStop,onPreview,onSetFill};
+  useLayoutEffect(()=>{latest.current={paint,transform,selectedStop,onSelectStop,onPreview,onSetFill};});
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({preview:null,notice:undefined}));
   const store=local.current;
@@ -114,7 +115,10 @@ function GradientOnCanvasHandlesBody({
   useEffect(()=>()=>{if(drag.current)latest.current.onPreview?.(undefined);},[]);
 
   const geometryBoundary=JSON.stringify([gestureBoundary,paint,transform,width,height,disabledReason,busy]);
-  useLayoutEffect(()=>{drag.current=null;pressAt.current=null;clearPreview();store.setState({notice:undefined});},[geometryBoundary]);
+  const committedGesture=useRef(geometryBoundary);
+  const admitted=()=>committedGesture.current===geometryBoundary&&disabledReason===undefined&&!busy;
+  const currentTarget=(target:Target)=>gradientTargetCurrent(geometryBoundary,committedGesture.current,disabledReason!==undefined||busy,latest.current.paint,target);
+  useLayoutEffect(()=>{committedGesture.current=geometryBoundary;drag.current=null;pressAt.current=null;clearPreview();store.setState({notice:undefined});},[geometryBoundary]);
 
   const view=(q:Point)=>toView(transform,q);
   // Rail geometry in view space: the axis shifted sideways by STOP_RAIL.
@@ -131,6 +135,7 @@ function GradientOnCanvasHandlesBody({
     latest.current.onPreview?.(undefined);
   };
   const cancelDrag=()=>{
+    if(!admitted())return false;
     const d=drag.current;
     if(!d)return false;
     d.cancelled=true;
@@ -138,13 +143,14 @@ function GradientOnCanvasHandlesBody({
     return true;
   };
   const begin=(target:Target)=>{
-    if(disabledReason!==undefined||busy)return;
+    if(!currentTarget(target))return;
     const p=latest.current;
     drag.current={target,start:p.paint,moved:false,cancelled:false};
     if(target.kind==="stop"&&p.selectedStop!==target.index)p.onSelectStop(target.index);
     store.setState({notice:undefined});
   };
   const dragTo=(dx:number,dy:number,mods:DragModifiers)=>{
+    if(!admitted())return;
     const d=drag.current;
     if(!d||d.cancelled||disabledReason!==undefined||busy)return;
     if(!d.moved&&Math.hypot(dx,dy)<TAP_SLOP)return;
@@ -165,6 +171,7 @@ function GradientOnCanvasHandlesBody({
     latest.current.onPreview?.(next);
   };
   const release=()=>{
+    if(!admitted())return;
     const d=drag.current;
     drag.current=null;
     if(!d||d.cancelled||disabledReason!==undefined||busy)return;
@@ -173,7 +180,7 @@ function GradientOnCanvasHandlesBody({
   };
   const block=(reason:string)=>store.setState({notice:reason});
   const deleteStop=(index:number|undefined)=>{
-    if(disabledReason!==undefined||busy)return;
+    if(!admitted())return;
     const p=latest.current;
     const reason=availabilityReason(removeStopAvailability(p.paint,index));
     if(reason!==undefined||index===undefined){block(reason??"");return;}
@@ -182,7 +189,7 @@ function GradientOnCanvasHandlesBody({
     p.onSelectStop(Math.min(index,p.paint.stops.length-2));
   };
   const addAt=(offset:number)=>{
-    if(disabledReason!==undefined||busy)return;
+    if(!admitted())return;
     const p=latest.current;
     const reason=availabilityReason(addStopAvailability(p.paint));
     if(reason!==undefined){block(reason);return;}
@@ -192,18 +199,21 @@ function GradientOnCanvasHandlesBody({
     p.onSelectStop(result.index);
   };
   const addBetween=()=>{
+    if(!admitted())return;
     const p=latest.current;
     const i=p.selectedStop??0;
     const a=p.paint.stops[i]?.offset??0,b=p.paint.stops[i+1]?.offset??Math.min(1,a+0.2);
     addAt(i+1<p.paint.stops.length?(a+b)/2:(p.paint.stops[i-1]!.offset+a)/2);
   };
   const nudge=(target:Target,key:string|undefined,shift:boolean)=>{
-    if(disabledReason!==undefined||busy)return false;
+    if(!currentTarget(target))return false;
     const p=latest.current;
     if(target.kind==="handle"){
       const d=nudgeDelta(key,shift);
       if(!d)return false;
-      const from=gradientHandles(p.paint).find(h=>h.handle===target.handle)!.point;
+      const found=gradientHandles(p.paint).find(h=>h.handle===target.handle);
+      if(!found)return false;
+      const from=found.point;
       p.onSetFill(moveGradientHandle(p.paint,target.handle,{x:from.x+d.x,y:from.y+d.y}));
       return true;
     }
@@ -217,6 +227,7 @@ function GradientOnCanvasHandlesBody({
     return true;
   };
   const onKnobKey=(target:Target)=>(event:CanvasKeyEvent)=>{
+    if(!currentTarget(target))return;
     const key=keyboardKey(event);
     const shift=event.shiftKey??event.nativeEvent?.shiftKey??false;
     if(key==="Escape"){
@@ -228,13 +239,15 @@ function GradientOnCanvasHandlesBody({
     if(nudge(target,key,shift))event.preventDefault?.();
   };
   const onRootKey=(event:CanvasKeyEvent)=>{
+    if(!admitted())return;
     if(keyboardKey(event)==="Escape"&&drag.current){cancelDrag();event.preventDefault?.();}
   };
 
   const canvasHandlers=useLocalPointer({
-    onBegin:point=>{if(disabledReason===undefined&&!busy)pressAt.current=point;},
+    onBegin:point=>{if(admitted())pressAt.current=point;},
     onMove:()=>{},
     onRelease:point=>{
+      if(!admitted())return;
       if(geometryOnly){pressAt.current=null;return;}
       const start=pressAt.current;
       pressAt.current=null;
@@ -287,9 +300,11 @@ function GradientOnCanvasHandlesBody({
           label={`${handleLabel(handle)}, ${handleValueText(shown,handle)}`}
           hint={handle==="end"?"Drag to move or rotate. Shift snaps the angle.":"Drag or use arrow keys to move."}
           actions={MOVE_ACTIONS}
-          onAction={name=>{const d=ACTION_DELTA[name];if(d){
+          onAction={name=>{if(!currentTarget(target))return;const d=ACTION_DELTA[name];if(d){
             const p=latest.current;
-            const at=gradientHandles(p.paint).find(h=>h.handle===handle)!.point;
+            const found=gradientHandles(p.paint).find(h=>h.handle===handle);
+            if(!found)return;
+            const at=found.point;
             p.onSetFill(moveGradientHandle(p.paint,handle,{x:at.x+d.x,y:at.y+d.y}));
           }}}
           onKeyDown={onKnobKey(target)}
@@ -308,13 +323,14 @@ function GradientOnCanvasHandlesBody({
           actions={[{name:"activate",label:"Select"},{name:"increment",label:"Move forward"},
             {name:"decrement",label:"Move back"},{name:"remove",label:"Delete stop"}]}
           onAction={name=>{
+            if(!currentTarget(target))return;
             const p=latest.current;
             if(name==="activate")p.onSelectStop(index);
             else if(name==="increment")nudge(target,"ArrowRight",false);
             else if(name==="decrement")nudge(target,"ArrowLeft",false);
             else if(name==="remove")deleteStop(index);
           }}
-          onFocus={()=>{if(latest.current.selectedStop!==index)latest.current.onSelectStop(index);}}
+          onFocus={()=>{if(!currentTarget(target))return;if(latest.current.selectedStop!==index)latest.current.onSelectStop(index);}}
           onKeyDown={onKnobKey(target)}
           onBegin={()=>begin(target)} onMove={dragTo} onRelease={release} onCancel={cancelDrag}>
           <View pointerEvents="none"

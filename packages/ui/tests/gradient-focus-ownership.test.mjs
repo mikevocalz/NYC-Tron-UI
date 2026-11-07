@@ -29,6 +29,17 @@ test('both gradient layers retain mounted identity across resize, source updates
  assert.match(shared,/gestureBoundary=\{owner\}/);
  assert.match(shared,/\[gestureBoundary,paint,transform,width,height,disabledReason,busy\]/);
  assert.match(shared,/drag.current=null;pressAt.current=null;clearPreview\(\)/);
- assert.match(shared,/const release=\(\)=>\{\s*const d=drag.current;\s*drag.current=null;\s*if\(!d\|\|d.cancelled\|\|disabledReason!==undefined\|\|busy\)return;/);
+ assert.match(shared,/const release=\(\)=>\{\s*if\(!admitted\(\)\)return;\s*const d=drag.current;\s*drag.current=null;\s*if\(!d\|\|d.cancelled\|\|disabledReason!==undefined\|\|busy\)return;/);
  assert.match(shared,/if\(!start\|\|Math.hypot/);
+});
+
+test('queued semantic handle and stop actions reject changed geometry before access',async()=>{
+ const {gradientTargetCurrent}=await import('../src/components/forge/vector/gradient-target-owner.ts');
+ const paint={type:'linear',x0:0,y0:0,x1:10,y1:0,stops:[{offset:0,color:[0,0,0,255]},{offset:1,color:[255,255,255,255]}]};
+ assert.equal(gradientTargetCurrent('new','new',false,paint,{kind:'handle',handle:'radius'}),false);
+ assert.equal(gradientTargetCurrent('old','new',false,paint,{kind:'stop',index:0}),false);
+ assert.equal(gradientTargetCurrent('new','new',true,paint,{kind:'handle',handle:'start'}),false);
+ assert.equal(gradientTargetCurrent('new','new',false,paint,{kind:'stop',index:2}),false);
+ assert.equal(gradientTargetCurrent('new','new',false,paint,{kind:'handle',handle:'start'}),true);
+ assert.equal(gradientTargetCurrent('new','new',false,paint,{kind:'stop',index:1}),true);
 });
