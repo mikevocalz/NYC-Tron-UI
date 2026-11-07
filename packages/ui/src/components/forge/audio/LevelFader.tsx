@@ -1,3 +1,6 @@
+import {NativeVerticalFader} from './LevelFader.vertical.tsx';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {valueAccessibility} from "../value-a11y.ts";
 import { useRef } from "react";
 import {
@@ -23,7 +26,7 @@ const SLOP = 4;
 type Local = { preview: number; active: boolean };
 
 /** Props for {@linkcode LevelFader}. */
-export interface LevelFaderProps extends Omit<ViewProps, "children"> {
+export interface LevelFaderProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed linear gain from the app or engine (0 = silence, 1 = 0 dB). */
   readonly value: number;
   /** Accessible name and visible label, e.g. `"Vocals"`. */
@@ -40,7 +43,7 @@ export interface LevelFaderProps extends Omit<ViewProps, "children"> {
    * is unchanged. The fader keeps showing `value`, so a rejected promise
    * leaves the old level on screen; report the failure from the app.
    */
-  readonly onCommit: (gain: number) => void | Promise<unknown>;
+  readonly onCommit: (gain: number,signal?:AbortSignal) => void | Promise<unknown>;
   /**
    * Decibel window of the travel. The bottom of travel is always silence.
    * @default FADER_RANGES.UNITY (-60 dB to 0 dB)
@@ -86,11 +89,18 @@ export interface LevelFaderProps extends Omit<ViewProps, "children"> {
  * track with responder gestures so it can separate preview from commit and
  * needs no `@expo/ui` host.
  */
-export function LevelFader({
-  value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
+export function LevelFader({orientation='vertical',onChange,disabled=false,...props}:LevelFaderProps){
+ return orientation==='horizontal'?<HorizontalLevelFader {...props} orientation={orientation} disabled={disabled} {...(onChange?{onChange}:{})}/>:<NativeVerticalFader {...props} range={props.range??FADER_RANGES.UNITY} length={props.length??160} {...(onChange?{onPreview:onChange}:{})} {...(disabled?{disabledReason:props.disabledReason??'Gain editing is paused'}:{})}/>;
+}
+function HorizontalLevelFader({scope='horizontal-fader',revision=0,...props}:LevelFaderProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.range,props.length,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <LevelFaderBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onChange={gain=>guard.current()?.onChange?.(gain)} onCommit={gain=>guard.run('gain',(host,signal)=>host.onCommit(gain,signal))}/>;
+}
+function LevelFaderBody({
+  scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
   orientation = "vertical", length = 160, disabled = false,
   className, unstyled = false, ...rest
-}: LevelFaderProps) {
+}: LevelFaderProps&{actionError?:string|null}) {
   if (!Number.isFinite(value) || value < 0) throw new RangeError("Gain must be finite and nonnegative");
   if (!Number.isFinite(stepDb) || stepDb <= 0) throw new RangeError("stepDb must be finite and positive");
   if (!Number.isFinite(length) || length <= THUMB * 2) {
@@ -210,6 +220,7 @@ export function LevelFader({
 
   return <View {...rest}
     {...{ className: joinClasses("items-center gap-2", styled && "rounded-control bg-surface-raised p-3", className) }}>
+      <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>{label}</Text>
     <View {...responder.current.panHandlers}
       accessible focusable={!disabled} accessibilityRole="adjustable"

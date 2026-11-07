@@ -2129,6 +2129,56 @@
       "types": "./dist/components/forge/timeline/StickerMotionLane.d.ts",
       "react-native": "./dist/components/forge/timeline/StickerMotionLane.js",
       "default": "./dist/components/forge/timeline/StickerMotionLane.js"
+    },
+    "./components/forge/audio/VerticalFader": {
+      "types": "./dist/components/forge/audio/VerticalFader.d.ts",
+      "react-native": "./dist/components/forge/audio/VerticalFader.js",
+      "default": "./dist/components/forge/audio/VerticalFader.js"
+    },
+    "./components/forge/audio/NativeAudioTransport": {
+      "types": "./dist/components/forge/audio/NativeAudioTransport.d.ts",
+      "react-native": "./dist/components/forge/audio/NativeAudioTransport.js",
+      "default": "./dist/components/forge/audio/NativeAudioTransport.js"
+    },
+    "./components/forge/audio/RecordingArmButton": {
+      "types": "./dist/components/forge/audio/RecordingArmButton.d.ts",
+      "react-native": "./dist/components/forge/audio/RecordingArmButton.js",
+      "default": "./dist/components/forge/audio/RecordingArmButton.js"
+    },
+    "./components/forge/audio/InputMonitorToggle": {
+      "types": "./dist/components/forge/audio/InputMonitorToggle.d.ts",
+      "react-native": "./dist/components/forge/audio/InputMonitorToggle.js",
+      "default": "./dist/components/forge/audio/InputMonitorToggle.js"
+    },
+    "./components/forge/audio/DeviceAndChannelPicker": {
+      "types": "./dist/components/forge/audio/DeviceAndChannelPicker.d.ts",
+      "react-native": "./dist/components/forge/audio/DeviceAndChannelPicker.js",
+      "default": "./dist/components/forge/audio/DeviceAndChannelPicker.js"
+    },
+    "./components/forge/audio/StereoMultichannelWaveform": {
+      "types": "./dist/components/forge/audio/StereoMultichannelWaveform.d.ts",
+      "react-native": "./dist/components/forge/audio/StereoMultichannelWaveform.js",
+      "default": "./dist/components/forge/audio/StereoMultichannelWaveform.js"
+    },
+    "./components/forge/audio/LiveRecordingWaveform": {
+      "types": "./dist/components/forge/audio/LiveRecordingWaveform.d.ts",
+      "react-native": "./dist/components/forge/audio/LiveRecordingWaveform.js",
+      "default": "./dist/components/forge/audio/LiveRecordingWaveform.js"
+    },
+    "./components/forge/audio/RealtimePeakMeter": {
+      "types": "./dist/components/forge/audio/RealtimePeakMeter.d.ts",
+      "react-native": "./dist/components/forge/audio/RealtimePeakMeter.js",
+      "default": "./dist/components/forge/audio/RealtimePeakMeter.js"
+    },
+    "./components/forge/audio/SurroundPanView": {
+      "types": "./dist/components/forge/audio/SurroundPanView.d.ts",
+      "react-native": "./dist/components/forge/audio/SurroundPanView.js",
+      "default": "./dist/components/forge/audio/SurroundPanView.js"
+    },
+    "./components/forge/audio/PanAndBalanceControl": {
+      "types": "./dist/components/forge/audio/PanAndBalanceControl.d.ts",
+      "react-native": "./dist/components/forge/audio/PanAndBalanceControl.js",
+      "default": "./dist/components/forge/audio/PanAndBalanceControl.js"
     }
   },
   "scripts": {

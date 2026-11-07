@@ -2080,11 +2080,16 @@
       "name": "NativeAudioTransport",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/NativeAudioTransport.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Low-latency play/pause/record/punch transport.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-02",
@@ -2103,20 +2108,30 @@
       "name": "StereoMultichannelWaveform",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/StereoMultichannelWaveform.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Split channels, channel labels and peak/rms modes."
+      "requirement": "Split channels, channel labels and peak/rms modes.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-04",
       "name": "LiveRecordingWaveform",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Continuous capture waveform with honest input levels."
+      "requirement": "Continuous capture waveform with honest input levels.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-05",
@@ -2135,32 +2150,47 @@
       "name": "RecordingArmButton",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/RecordingArmButton.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Per-track arming with armed/recording/error states."
+      "requirement": "Per-track arming with armed/recording/error states.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-07",
       "name": "InputMonitorToggle",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/InputMonitorToggle.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Hardware monitoring, software monitoring and feedback guard.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-08",
       "name": "DeviceAndChannelPicker",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/DeviceAndChannelPicker.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Microphones, interface input/output and sample rate.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-09",
@@ -2190,9 +2220,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/AutomationLane.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Breakpoint draw/edit for volume, pan and plugin params."
+      "requirement": "Breakpoint draw/edit for volume, pan and plugin params.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-12",
@@ -2202,9 +2235,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/AutomationModePicker.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Read/write/touch/latch/trim with state indication."
+      "requirement": "Read/write/touch/latch/trim with state indication.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-13",
@@ -2223,30 +2259,45 @@
       "name": "VerticalFader",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/VerticalFader.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "dB taper, fine control, numeric gain and double-tap reset."
+      "requirement": "dB taper, fine control, numeric gain and double-tap reset.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-15",
       "name": "PanAndBalanceControl",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/PanAndBalanceControl.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Mono pan, stereo balance and surround positioning."
+      "requirement": "Mono pan, stereo balance and surround positioning.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-16",
       "name": "RealtimePeakMeter",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Peak hold, clipping, true peak and meter falloff."
+      "requirement": "Peak hold, clipping, true peak and meter falloff.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-17",
@@ -2437,10 +2488,15 @@
       "name": "SurroundPanView",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/SurroundPanView.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Multispeaker field and source/destination routing."
+      "requirement": "Multispeaker field and source/destination routing.",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
     },
     {
       "id": "E-34",

@@ -1,3 +1,7 @@
+import {useMemo as useIdentityMemo} from 'react';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {valueAccessibility} from "../value-a11y.ts";
 /*
  * Structural references (Mobbin, iOS; structure only). Mobbin has no DAW
@@ -11,7 +15,7 @@ import {valueAccessibility} from "../value-a11y.ts";
  * - Suno extend: a waveform lane with the exact time readout of the handle
  *   being dragged shown outside the drawing.
  */
-import { useRef } from "react";
+import { useLayoutEffect,useRef } from "react";
 import {
   PanResponder, Platform, Pressable, ScrollView, Text, View,
   type GestureResponderEvent, type KeyDownEvent, type ViewProps, type ViewStyle,
@@ -22,7 +26,7 @@ import { joinClasses } from "../../styles.ts";
 import {
   AUTOMATION_PPQ, DEFAULT_SNAP_TICKS, assertGeometry, automationKeyEdit, automationSegments,
   canAddPointAt, clampAutomationValue, describeAutomationPoint, dragPoint, formatPosition, hitTestPoint, neutralValue,
-  snapTicksTo, ticksToX, valueAt, valueToPosition, valueToY, yToValue,
+  snapTicksTo, ticksToX, valueAt, valueToPosition, valueToY, yToValue,paramRange,formatAutomationValue,positionToValue,
   type AutomationGeometry, type AutomationMode, type AutomationParam, type AutomationPoint,
 } from "./automation.ts";
 import type { AutomationModePicker } from "./AutomationModePicker.tsx";
@@ -47,7 +51,7 @@ type Drag = { index: number; ticks: number; value: number };
 const IDLE: Drag = { index: -1, ticks: 0, value: 0 };
 
 /** Props for {@linkcode AutomationLane}. */
-export interface AutomationLaneProps extends Omit<ViewProps, "children"> {
+export interface AutomationLaneProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Which lane this is: linear gain 0..1 or pan -1..1. Sets the scale and readouts. */
   readonly param: AutomationParam;
   /** Committed points from the engine, sorted by `ticks`, at most one per tick. */
@@ -82,15 +86,15 @@ export interface AutomationLaneProps extends Omit<ViewProps, "children"> {
    * Once per tap on empty lane area or "Add point" press. Never called for a
    * tick that already has a point (the engine rejects duplicates).
    */
-  readonly onPointAdd: (ticks: number, value: number) => void | Promise<unknown>;
+  readonly onPointAdd: (ticks: number, value: number,signal?:AbortSignal) => void | Promise<unknown>;
   /**
    * Once per finished drag or key step. `ticks` is always strictly between
    * the neighbours, so the index never changes. A rejected promise leaves the
    * committed point on screen.
    */
-  readonly onPointMove: (index: number, ticks: number, value: number) => void | Promise<unknown>;
+  readonly onPointMove: (index: number, ticks: number, value: number,signal?:AbortSignal) => void | Promise<unknown>;
   /** Delete/Backspace on a focused point, or the screen-reader "Delete point" action. */
-  readonly onPointRemove: (index: number) => void | Promise<unknown>;
+  readonly onPointRemove: (index: number,signal?:AbortSignal) => void | Promise<unknown>;
   /** @default false */
   readonly disabled?: boolean;
   /** Visible title and accessible name, e.g. `"Vocal volume automation"`. */
@@ -118,18 +122,31 @@ export interface AutomationLaneProps extends Omit<ViewProps, "children"> {
  * linearly only. Write, touch and latch recording are covered in
  * {@linkcode AutomationModePicker}.
  */
-export function AutomationLane({
-  param, points, mode, lengthTicks, pixelsPerTick = 0.1, scrollX, height = 160, snapTicks = DEFAULT_SNAP_TICKS,
+export function AutomationLane({scope='automation-lane',revision=0,...props}:AutomationLaneProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),typeof props.param==='object'?props.param.id:props.param]);
+ const signature=useIdentityMemo(()=>JSON.stringify(props.points),[props.points]),boundary=useEditorBoundary([owner,signature,JSON.stringify(props.param),props.disabled,props.disabledReason,props.lengthTicks,props.pixelsPerTick,props.height,props.snapTicks]);
+ const guard=useScopedControl(boundary,props,!!props.disabled||props.disabledReason!==undefined);
+ return <AutomationLaneBody key={owner} {...props} interactionBoundary={boundary} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSelect={index=>guard.current()?.onSelect?.(index)}
+  onPointAdd={(ticks,value)=>guard.run('add',(host,signal)=>host.onPointAdd(ticks,value,signal))}
+  onPointMove={(index,ticks,value)=>guard.run('move',(host,signal)=>host.onPointMove(index,ticks,value,signal))}
+  onPointRemove={index=>guard.run('remove',(host,signal)=>host.onPointRemove(index,signal))}/>;
+}
+function AutomationLaneBody({
+  interactionBoundary,actionError=null,disabledReason,param, points, mode, lengthTicks, pixelsPerTick = 0.1, scrollX, height = 160, snapTicks = DEFAULT_SNAP_TICKS,
   ppq = AUTOMATION_PPQ, beatsPerBar = 4, selectedIndex, onSelect, cursorTicks = 0, onPointAdd, onPointMove,
   onPointRemove, disabled = false, label, className, unstyled = false, style, ...rest
-}: AutomationLaneProps) {
+}: AutomationLaneProps&{interactionBoundary:string;actionError?:string|null}) {
   const geometry: AutomationGeometry = { param, height, pixelsPerTick, lengthTicks };
   assertGeometry(geometry);
+  const bounds=paramRange(param);if(points.length>10000||points.some((p,i)=>!Number.isSafeInteger(p.ticks)||p.ticks<0||p.ticks>lengthTicks||i>0&&p.ticks<=points[i-1]!.ticks||!Number.isFinite(p.value)||p.value<bounds.min||p.value>bounds.max))throw new RangeError("Invalid automation points");
   if (!Number.isInteger(snapTicks) || snapTicks < 1) throw new RangeError("snapTicks must be a positive integer");
   const styled = !unstyled;
   const local = useRef<StoreApi<Drag> | null>(null);
   if (!local.current) local.current = createStore<Drag>(() => IDLE);
   const store = local.current;
+  const pressBoundary=useRef<string|null>(null);
+  useLayoutEffect(()=>{store.setState(IDLE);pressBoundary.current=null;},[interactionBoundary,store]);
   const drag = useStore(store, s => s);
   const shown = drag.index >= 0 && drag.index < points.length
     ? points.map((p, i) => (i === drag.index ? { ticks: drag.ticks, value: drag.value } : p)) : points;
@@ -140,10 +157,11 @@ export function AutomationLane({
   const beatPx = ppq * pixelsPerTick;
   const beatCount = Math.ceil(lengthTicks / ppq);
   const lines: number[] = [];
-  for (let b = 1; b < beatCount; b++) if (beatCount <= MAX_BEAT_LINES || b % beatsPerBar === 0) lines.push(b);
+  const beatStep=beatCount<=MAX_BEAT_LINES?1:beatsPerBar*Math.max(1,Math.ceil(beatCount/beatsPerBar/MAX_BEAT_LINES));
+  for(let b=beatStep;b<beatCount&&lines.length<MAX_BEAT_LINES;b+=beatStep)lines.push(b);
 
   const addAt = (e: GestureResponderEvent) => {
-    if (disabled) return;
+    if (disabled||pressBoundary.current!==interactionBoundary) return;
     let { locationX: x, locationY: y } = e.nativeEvent;
     if (web) {
       const event = e as unknown as {nativeEvent:{clientX:number;clientY:number};currentTarget:{getBoundingClientRect():{left:number;top:number}}};
@@ -167,10 +185,10 @@ export function AutomationLane({
   const focusPoint = focusIndex !== undefined ? shown[focusIndex] : undefined;
   const readout = focusPoint ? `Point ${focusIndex! + 1}: ${describeAutomationPoint(focusPoint, param, ppq, beatsPerBar)}` : "";
   const status = [
-    off ? (param === "gain" ? "Automation off: the fader sets the level" : "Automation off: the pan control sets the position") : "",
+    off ? (typeof param==='object'?`Automation off: manual ${param.label}`:param === "gain" ? "Automation off: the fader sets the level" : "Automation off: the pan control sets the position") : "",
     points.length === 0 ? `No points. ${web ? "Click" : "Tap"} the lane to add one` : "",
   ].filter(Boolean);
-  const axis = param === "gain"
+  const axis = typeof param==='object'?[param.minimum,positionToValue(param,.5),param.maximum].map(v=>({v,t:formatAutomationValue(param,v)})):param === "gain"
     ? [{ v: 1, t: "0 dB" }, { v: 0.5012, t: "-6" }, { v: 0.1, t: "-20" }, { v: 0.01, t: "-40" }, { v: 0, t: "-inf" }]
     : [{ v: 1, t: "R" }, { v: 0, t: "C" }, { v: -1, t: "L" }];
   const muted = joinClasses(styled && "text-text-muted");
@@ -178,7 +196,7 @@ export function AutomationLane({
 
   const content = <View style={{ width: width + LEAD * 2, height, direction: "ltr" }}>
    <View style={{ position: "absolute", left: LEAD, top: 0, width, height }}>
-    <Pressable accessible={false} focusable={false} disabled={disabled} onPress={addAt}
+    <Pressable accessible={false} focusable={false} disabled={disabled} onPressIn={()=>{pressBoundary.current=interactionBoundary;}} onPress={addAt}
       style={{ position: "absolute", left: 0, top: 0, width, height,
         ...(web ? { cursor: disabled ? "default" : "copy" } as unknown as ViewStyle : null) }}>
       {lines.map(b => <View key={b} pointerEvents="none"
@@ -201,6 +219,7 @@ export function AutomationLane({
   return <View {...rest} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised overflow-hidden", className) }}
     style={style}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "baseline", columnGap: 12, rowGap: 2,
       paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 }}>
       <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>{label}</Text>
@@ -261,7 +280,7 @@ function PointHandle({
   index, points, shown, geometry, snapTicks, ppq, beatsPerBar, store, selected, off, disabled, styled, onSelect, onMove, onRemove,
 }: PointHandleProps) {
   const latest = useRef({ index, points, geometry, snapTicks, ppq, beatsPerBar, disabled, onSelect, onMove, onRemove });
-  latest.current = { index, points, geometry, snapTicks, ppq, beatsPerBar, disabled, onSelect, onMove, onRemove };
+  useLayoutEffect(()=>{latest.current = { index, points, geometry, snapTicks, ppq, beatsPerBar, disabled, onSelect, onMove, onRemove };});
   const point = points[index]!;
   const active = useStore(store, s => s.index === index);
   const cancel = () => { if (store.getState().index === latest.current.index) store.setState(IDLE); };
@@ -330,8 +349,8 @@ function PointHandle({
     accessible focusable={!disabled} accessibilityRole="adjustable"
     accessibilityLabel={`Point ${index + 1}`}
     {...valueAccessibility({
-      min: param === "gain" ? 0 : -100, max: 100,
-      now: Math.round((param === "gain" ? position : point.value) * 100),
+      min: typeof param==='object'?param.minimum:param === "gain" ? 0 : -100, max: typeof param==='object'?param.maximum:100,
+      now: typeof param==='object'?point.value:Math.round((param === "gain" ? position : point.value) * 100),
       text: describeAutomationPoint(point, param, ppq, beatsPerBar),
     })}
     accessibilityState={{ selected, disabled }}
