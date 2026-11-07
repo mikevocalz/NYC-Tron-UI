@@ -1,3 +1,6 @@
+import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {valueAccessibility} from "../value-a11y.ts";
 /*
  * Structural references (Mobbin, iOS, structure only):
@@ -35,7 +38,7 @@ const SLOP = 3;
 const AXIS = 18;
 
 /** Props for {@linkcode EQFrequencyGraph}. */
-export interface EQFrequencyGraphProps extends Omit<ViewProps, "children"> {
+export interface EQFrequencyGraphProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed bands from the engine, at most 8, in band order. */
   readonly bands: readonly EqBand[];
   /**
@@ -48,9 +51,7 @@ export interface EQFrequencyGraphProps extends Omit<ViewProps, "children"> {
   readonly response: readonly EqResponsePoint[];
   /**
    * Once per finished handle drag or key press, with the band's new
-   * frequency and gain. Not called when nothing changed. Q edits are not
-   * offered here yet; when they are, they will arrive as an added field on
-   * this edit object. A rejected promise keeps the committed band on screen.
+   * frequency and gain. Not called when nothing changed. Q is edited through the separate onQCommit capability. A rejected promise keeps the committed band on screen.
    */
   readonly onBandCommit: (index: number, edit: EqBandEdit) => void | Promise<unknown>;
   /** Live values while a handle is dragged, and the committed values again on cancel. Never persisted. */
@@ -60,6 +61,7 @@ export interface EQFrequencyGraphProps extends Omit<ViewProps, "children"> {
   /** A handle was pressed, focused or dragged, or a band chip was chosen. */
   readonly onSelect?: (index: number) => void;
   /** The readout's on/off toggle. Without it the toggle is hidden. */
+  readonly onQCommit?:(index:number,q:number)=>void|Promise<unknown>;
   readonly onEnabledCommit?: (index: number, enabled: boolean) => void | Promise<unknown>;
   /** Half the visible dB span. @default 18 */
   readonly range?: number;
@@ -86,14 +88,24 @@ type Local = { width: number; drag?: Drag; staleFor?: readonly EqResponsePoint[]
  *
  * The graph does no filter math. While a handle moves, only the handle
  * follows the pointer; the curve dims until the engine sends a new
- * `response`. Frequency runs left to right in every locale. Band type and Q
- * are shown read-only; adding, removing and retyping bands belong to the
+ * `response`. Frequency runs left to right in every locale. Band type is shown read-only; Q has an optional admitted editor; adding, removing and retyping bands belong to the
  * insert's band list.
  */
-export function EQFrequencyGraph({
-  bands, response, onBandCommit, onBandChange, selectedIndex, onSelect, onEnabledCommit,
+export function EQFrequencyGraph({scope='EQFrequencyGraph',revision=0,...props}:EQFrequencyGraphProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason,props.height,props.range,props.bands.map(b=>b.type)]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <EQFrequencyGraphBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onBandCommit={(...args:Parameters<EQFrequencyGraphProps['onBandCommit']>)=>guard.run('onBandCommit',h=>h.onBandCommit(...args))}
+  onQCommit={props.onQCommit?(index,q)=>guard.run('q',h=>h.onQCommit?.(index,q)):undefined}
+  onEnabledCommit={props.onEnabledCommit?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onEnabledCommit']>>)=>guard.run('onEnabledCommit',h=>h.onEnabledCommit?.(...args)):undefined}
+  onBandChange={props.onBandChange?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onBandChange']>>)=>{guard.current()?.onBandChange?.(...args);}:undefined}
+  onSelect={props.onSelect?(...args:Parameters<NonNullable<EQFrequencyGraphProps['onSelect']>>)=>{guard.current()?.onSelect?.(...args);}:undefined}
+ />;
+}
+function EQFrequencyGraphBody({actionError,disabledReason,
+  bands, response, onBandCommit, onBandChange, selectedIndex, onSelect, onEnabledCommit,onQCommit,
   range = EQ_DEFAULT_RANGE_DB, height = 200, disabled = false, label, className, unstyled = false, style, ...rest
-}: EQFrequencyGraphProps) {
+}: EQFrequencyGraphProps&{actionError?:string|null}) {
+  if(bands.length>8||bands.some(b=>!['peak','low_shelf','high_shelf','low_pass','high_pass'].includes(b.type)||![b.freqHz,b.gainDb,b.q].every(Number.isFinite)||b.freqHz<20||b.freqHz>20000||Math.abs(b.gainDb)>24||b.q<.1||b.q>18)||response.length>16384||response.some(p=>!Number.isFinite(p.hz)||p.hz<=0||!Number.isFinite(p.db)))throw new RangeError('Invalid EQ data');
   if (!Number.isFinite(height) || height < HIT * 2) throw new RangeError(`EQ plot height must be at least ${HIT * 2}`);
   if (!Number.isFinite(range) || range <= 0) throw new RangeError("EQ range must be positive");
   const local = useRef<StoreApi<Local> | null>(null);
@@ -210,7 +222,7 @@ export function EQFrequencyGraph({
             <Readout label="Type" value={bandTypeName(shown.type)} styled={styled} />
             <Readout label="Freq" value={formatFreq(shown.freqHz)} styled={styled} />
             <Readout label="Gain" value={isPassBand(shown.type) ? "Not used" : formatGain(shown.gainDb)} styled={styled} />
-            <Readout label="Q" value={formatQ(shown.q)} styled={styled} />
+            {onQCommit?<PrecisionScrubber label={`Band ${selectedIndex+1} Q`} value={shown.q} min={.1} max={18} step={.01} disabled={disabled} unstyled={unstyled} onCommit={q=>onQCommit(selectedIndex,q)}/>:<Readout label="Q" value={formatQ(shown.q)} styled={styled} />}
             {onEnabledCommit
               ? <Pressable accessibilityRole="togglebutton" accessibilityLabel={"Band " + (selectedIndex + 1) + " on"}
                 accessibilityState={{ checked: shown.enabled, disabled }} {...webToggleProps(shown.enabled)}
@@ -225,7 +237,7 @@ export function EQFrequencyGraph({
           </View>
           : <Text {...{ className: muted }}>Select a band to see its settings.</Text>}
       </View>}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 function Readout({ label, value, styled }: { label: string; value: string; styled: boolean }) {

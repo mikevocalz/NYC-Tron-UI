@@ -2144,9 +2144,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/SpectrogramView.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Time-frequency view, zoom and color scale."
+      "requirement": "Time-frequency view, zoom and color scale.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-06",
@@ -2263,9 +2266,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/MixingConsole.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Channel strips, meters, FX slots, grouping and routing."
+      "requirement": "Channel strips, meters, FX slots, grouping and routing.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-14",
@@ -2320,9 +2326,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/LoudnessMeter.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "RMS, LUFS, integrated/short-term and reset semantics."
+      "requirement": "RMS, LUFS, integrated/short-term and reset semantics.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-18",
@@ -2332,9 +2341,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/SoloMuteButtons.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Clear states, group solo and solo-safe display."
+      "requirement": "Clear states, group solo and solo-safe display.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-19",
@@ -2344,9 +2356,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Inputs, sends, sidechain, master, aux and bus map."
+      "requirement": "Inputs, sends, sidechain, master, aux and bus map.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-20",
@@ -2356,9 +2371,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/InsertEffectRack.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Slots, enable/bypass, ordering, plugin settings."
+      "requirement": "Slots, enable/bypass, ordering, plugin settings.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-21",
@@ -2368,9 +2386,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/EQFrequencyGraph.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Frequency, Q, gain, high/low-pass filter handles."
+      "requirement": "Frequency, Q, gain, high/low-pass filter handles.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-22",
@@ -2380,9 +2401,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Threshold, ratio, knee, makeup and reduction."
+      "requirement": "Threshold, ratio, knee, makeup and reduction.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-23",
@@ -2392,9 +2416,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Search/preset store with A/B and undo grouping."
+      "requirement": "Search/preset store with A/B and undo grouping.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-24",
@@ -2404,9 +2431,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/midi/MIDIPianoRoll.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pitch lanes, note rectangles, resize and audition."
+      "requirement": "Pitch lanes, note rectangles, resize and audition.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-25",
@@ -2416,9 +2446,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Bars/curves and channel/velocity editing."
+      "requirement": "Bars/curves and channel/velocity editing.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-26",
@@ -2428,9 +2461,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/midi/StepSequencer.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Beat-grid input, accents and instrument lanes."
+      "requirement": "Beat-grid input, accents and instrument lanes.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-27",
@@ -2440,9 +2476,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/audio/TempoAndMetronome.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "BPM/tap-tempo, time signature and click feedback."
+      "requirement": "BPM/tap-tempo, time signature and click feedback.",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
     },
     {
       "id": "E-28",

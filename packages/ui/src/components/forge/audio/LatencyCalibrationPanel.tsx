@@ -1,3 +1,4 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {View,Text,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
@@ -14,7 +15,7 @@ export interface LatencyCalibrationPanelProps extends Omit<ViewProps,'children'>
 export function LatencyCalibrationPanel({scope='latency-calibration',revision=0,...props}:LatencyCalibrationPanelProps){
  const {deviceLabel,sampleRate,bufferSizes,bufferSamples,offsetSamples,measurement,status,error,unavailableReason,onMeasure:_measure,onCancel,onBufferCommit:_buffer,onOffsetCommit:_offset,unstyled=false,disabledReason,style,...rest}=props;
  if(!deviceLabel.trim()||deviceLabel.length>1024||!Number.isFinite(sampleRate)||sampleRate<1||sampleRate>768000||bufferSizes.length>64||bufferSizes.some(n=>!Number.isSafeInteger(n)||n<1||n>1048576)||new Set(bufferSizes).size!==bufferSizes.length||!Number.isSafeInteger(bufferSamples)||bufferSamples<1||!Number.isSafeInteger(offsetSamples)||Math.abs(offsetSamples)>sampleRate*10||!['idle','measuring','error'].includes(status)||measurement&&(!Number.isFinite(measurement.roundTripSamples)||measurement.roundTripSamples<0||!Number.isFinite(measurement.driftPpm)||!Number.isFinite(measurement.confidence)||measurement.confidence<0||measurement.confidence>1||!measurement.measuredAt.trim()||measurement.measuredAt.length>256))throw new RangeError('Invalid latency calibration');
- const owner=JSON.stringify([...controlIdentity(scope,revision),deviceLabel,sampleRate,bufferSizes,disabledReason]),guard=useScopedControl(owner,props,disabledReason!==undefined||status==='measuring'),off=guard.pending||disabledReason!==undefined||status==='measuring';
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),deviceLabel,sampleRate,bufferSizes,disabledReason])]),guard=useScopedControl(owner,props,disabledReason!==undefined||status==='measuring'),off=guard.pending||disabledReason!==undefined||status==='measuring';
  return <View {...rest} accessibilityLabel="Latency calibration" style={[{gap:8},style]}>
   <Text {...{className:unstyled?undefined:'text-text'}}>{deviceLabel} · {sampleRate} Hz · current buffer {bufferSamples} samples</Text>
   <View style={{flexDirection:'row',flexWrap:'wrap',gap:6}}>{bufferSizes.map(n=><Button key={n} title={n+' sample buffer'} accessibilityState={{selected:n===bufferSamples}} disabled={off} unstyled={unstyled} onPress={()=>guard.run('buffer',(h,s)=>h.bufferSizes.includes(n)?h.onBufferCommit(n,s):undefined)}/>)}</View>

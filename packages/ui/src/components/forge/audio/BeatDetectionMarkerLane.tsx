@@ -1,3 +1,4 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {View,Text,type ViewProps} from 'react-native';
 import {TimelineMarkers,type TimelineMarkersProps} from '../timeline/TimelineMarkers.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
@@ -13,7 +14,7 @@ export interface BeatDetectionMarkerLaneProps extends Omit<ViewProps,'children'>
 export function BeatDetectionMarkerLane({scope='beat-markers',revision=0,...props}:BeatDetectionMarkerLaneProps){
  const {lane,sensitivity,detectedBpm,status,progress,error,unavailableReason,onSensitivityCommit:_sensitivity,onDetect:_detect,onCancel,unstyled=false,disabledReason,style,...rest}=props;
  if(!Number.isFinite(sensitivity)||sensitivity<0||sensitivity>1||detectedBpm!==null&&(!Number.isFinite(detectedBpm)||detectedBpm<=0||detectedBpm>1000)||!['idle','detecting','ready','error'].includes(status)||progress!==undefined&&(!Number.isFinite(progress)||progress<0||progress>1))throw new RangeError('Invalid beat detection');
- const owner=JSON.stringify([...controlIdentity(scope,revision),disabledReason]),guard=useScopedControl(owner,props,disabledReason!==undefined||status==='detecting'),off=guard.pending||disabledReason!==undefined||status==='detecting';
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),disabledReason])]),guard=useScopedControl(owner,props,disabledReason!==undefined||status==='detecting'),off=guard.pending||disabledReason!==undefined||status==='detecting';
  return <View {...rest} accessibilityLabel="Beat detection markers" style={[{gap:8},style]}>
   <PrecisionScrubber scope={owner} label="Beat detection sensitivity" min={0} max={1} step={.01} value={sensitivity} disabled={off} unstyled={unstyled} onCommit={n=>guard.run('sensitivity',(h,s)=>h.onSensitivityCommit(n,s))}/>
   <Button title="Detect clip beats" disabled={off||unavailableReason!==undefined} accessibilityHint={unavailableReason} unstyled={unstyled} onPress={()=>guard.run('detect',(h,s)=>h.unavailableReason===undefined?h.onDetect(s):undefined)}/>

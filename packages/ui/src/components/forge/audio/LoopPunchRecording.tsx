@@ -1,3 +1,4 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
@@ -12,7 +13,7 @@ export interface LoopPunchRecordingProps extends Omit<ViewProps,'children'>,Scop
 export function LoopPunchRecording({scope='loop-punch',revision=0,...props}:LoopPunchRecordingProps){
  const {durationSamples,sampleRate,value,recording,passCount,onCommit:_commit,unstyled=false,disabledReason,style,...rest}=props;
  if(!Number.isSafeInteger(durationSamples)||durationSamples<1||!Number.isFinite(sampleRate)||sampleRate<1||sampleRate>768000||!Number.isSafeInteger(passCount)||passCount<0||![value.startSample,value.endSample,value.preRollSamples,value.postRollSamples].every(Number.isSafeInteger)||value.startSample<0||value.endSample<=value.startSample||value.endSample>durationSamples||value.preRollSamples<0||value.postRollSamples<0||value.preRollSamples>durationSamples||value.postRollSamples>durationSamples)throw new RangeError('Invalid loop recording range');
- const owner=JSON.stringify([...controlIdentity(scope,revision),durationSamples,sampleRate,recording,disabledReason]),guard=useScopedControl(owner,props,recording||disabledReason!==undefined),off=recording||guard.pending||disabledReason!==undefined;
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),durationSamples,sampleRate,recording,disabledReason])]),guard=useScopedControl(owner,props,recording||disabledReason!==undefined),off=recording||guard.pending||disabledReason!==undefined;
  const change=(patch:Partial<LoopPunchConfiguration>)=>guard.run('configuration',(host,signal)=>host.onCommit({...host.value,...patch},signal));
  return <View {...rest} accessibilityLabel="Loop and punch recording" style={[{gap:8},style]}>
   <Text {...{className:unstyled?undefined:'text-text'}} accessibilityLiveRegion="polite">{recording?'Recording':'Stopped'} · {passCount} completed passes</Text>

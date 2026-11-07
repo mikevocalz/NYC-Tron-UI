@@ -1,3 +1,4 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {useRef} from 'react';
 import {FlatList,Text,View,type ViewProps} from 'react-native';
 import {GestureDetector,usePanGesture} from 'react-native-gesture-handler';
@@ -20,7 +21,7 @@ export interface TakePlaylistAndCompingProps extends Omit<ViewProps,'children'>,
 export function TakePlaylistAndComping({scope='take-comping',revision=0,...props}:TakePlaylistAndCompingProps){
  const {takes,regions,durationSamples,selection,selectedTakeId,recording,onSelectionChange:_range,onSelectTake:_select,onAudition:_audition,onComp:_comp,onRemoveRegion:_remove,unstyled=false,disabledReason,style,...rest}=props;
  if(!Number.isSafeInteger(durationSamples)||durationSamples<1||takes.length>256||new Set(takes.map(t=>t.id)).size!==takes.length||takes.some(t=>!t.id.trim()||t.id.length>512||!t.label.trim()||t.label.length>1024||!Number.isSafeInteger(t.lengthSamples)||t.lengthSamples<1||t.lengthSamples>durationSamples)||regions.length>10000||new Set(regions.map(r=>r.id)).size!==regions.length||regions.some(r=>!r.id.trim()||r.id.length>512||!takes.some(t=>t.id===r.takeId&&r.endSample<=t.lengthSamples)||!Number.isSafeInteger(r.startSample)||!Number.isSafeInteger(r.endSample)||r.startSample<0||r.endSample<=r.startSample)||!Number.isSafeInteger(selection.startSample)||!Number.isSafeInteger(selection.endSample)||selection.startSample<0||selection.endSample<=selection.startSample||selection.endSample>durationSamples)throw new RangeError('Invalid take comping data');
- const owner=JSON.stringify([...controlIdentity(scope,revision),durationSamples,takes.map(t=>[t.id,t.lengthSamples,t.muted]),recording,disabledReason]),guard=useScopedControl(owner,props,recording||disabledReason!==undefined),off=guard.pending||recording||disabledReason!==undefined;
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),durationSamples,takes.map(t=>[t.id,t.lengthSamples,t.muted]),recording,disabledReason])]),guard=useScopedControl(owner,props,recording||disabledReason!==undefined),off=guard.pending||recording||disabledReason!==undefined;
  const comp=(id:string,start=selection.startSample,end=selection.endSample)=>guard.run('comp',(h,s)=>h.takes.some(t=>t.id===id&&!t.muted&&end<=t.lengthSamples)&&start>=0&&end>start?h.onComp(id,start,end,s):undefined);
  return <View {...rest} style={[{gap:8},style]} accessibilityLabel="Take playlist and comping">
   <Text {...{className:unstyled?undefined:'text-text'}}>Swipe a take to comp a range, or set the range and choose Use selection.</Text>

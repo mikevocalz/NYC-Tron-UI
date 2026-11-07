@@ -1,3 +1,4 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {View,Text,type ViewProps} from 'react-native';
 import {WaveformLane,type WaveformLaneProps} from '../WaveformLane.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
@@ -15,7 +16,7 @@ export function AudioClipTrimAndFade({scope='audio-region',revision=0,...props}:
  const {lengthSamples,sampleRate,region,peaks,overlapSamples=0,onCommit:_commit,onPreview:_preview,disabledReason,unstyled=false,style,...rest}=props;
  const {startSample,endSample,fadeInSamples,fadeOutSamples,gainDb,crossfade}=region,span=endSample-startSample;
  if(!Number.isSafeInteger(lengthSamples)||lengthSamples<1||!Number.isFinite(sampleRate)||sampleRate<1||sampleRate>768000||![startSample,endSample,fadeInSamples,fadeOutSamples,overlapSamples].every(Number.isSafeInteger)||startSample<0||endSample>lengthSamples||span<1||fadeInSamples<0||fadeOutSamples<0||fadeInSamples+fadeOutSamples>span||overlapSamples<0||overlapSamples>span||!Number.isFinite(gainDb)||gainDb< -144||gainDb>24||!['none','linear','equal-power'].includes(crossfade))throw new RangeError('Invalid audio region');
- const owner=JSON.stringify([...controlIdentity(scope,revision),lengthSamples,sampleRate,disabledReason,overlapSamples]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),lengthSamples,sampleRate,disabledReason,overlapSamples])]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;
  const next=(patch:Partial<AudioClipRegion>,base=region)=>{const r={...base,...patch},n=r.endSample-r.startSample;r.fadeInSamples=Math.min(r.fadeInSamples,n);r.fadeOutSamples=Math.min(r.fadeOutSamples,n-r.fadeInSamples);return r;};
  const commit=(patch:Partial<AudioClipRegion>)=>guard.run('region',(host,signal)=>host.onCommit(next(patch,host.region),signal));
  return <View {...rest} style={[{gap:8},style]} accessibilityLabel="Audio clip trim and fades">

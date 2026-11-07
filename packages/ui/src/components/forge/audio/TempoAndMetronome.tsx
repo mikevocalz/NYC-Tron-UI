@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useEffect, useRef } from "react";
 import { Pressable, Text, View, type KeyDownEvent, type ViewProps } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -18,7 +20,7 @@ export interface MetronomeBinding {
 }
 
 /** Props for {@linkcode TempoAndMetronome}. */
-export interface TempoAndMetronomeProps extends Omit<ViewProps, "children"> {
+export interface TempoAndMetronomeProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed tempo, 20..400 BPM. */
   readonly bpm: number;
   /** Committed time signature, `[numerator, denominator]`. */
@@ -56,10 +58,18 @@ type Taps = { taps: number[] };
  * sequence without committing. The click sound belongs to the audio layer;
  * this control only shows the beat it is given.
  */
-export function TempoAndMetronome({
+export function TempoAndMetronome({scope='TempoAndMetronome',revision=0,...props}:TempoAndMetronomeProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason,props.timeSignature]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <TempoAndMetronomeBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  metronome={props.metronome?{...props.metronome,onChange:value=>guard.run('metronome',h=>h.metronome?.onChange(value))}:undefined}
+  onTempoCommit={(...args:Parameters<TempoAndMetronomeProps['onTempoCommit']>)=>guard.run('onTempoCommit',h=>h.onTempoCommit(...args))}
+  onTimeSignatureCommit={(...args:Parameters<TempoAndMetronomeProps['onTimeSignatureCommit']>)=>guard.run('onTimeSignatureCommit',h=>h.onTimeSignatureCommit(...args))}
+ />;
+}
+function TempoAndMetronomeBody({actionError,disabledReason,
   bpm, timeSignature, onTempoCommit, onTimeSignatureCommit, metronome, beat, now = Date.now,
   disabled = false, className, unstyled = false, ...rest
-}: TempoAndMetronomeProps) {
+}: TempoAndMetronomeProps&{actionError?:string|null}) {
   const [numerator, denominator] = timeSignature;
   if (!isValidTimeSignature(timeSignature)) throw new RangeError("Invalid time signature " + formatTimeSignature(timeSignature));
   const latest = useRef({ bpm, onTempoCommit, disabled });
@@ -162,5 +172,5 @@ export function TempoAndMetronome({
         })}
       </View> : null}
     </View> : null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

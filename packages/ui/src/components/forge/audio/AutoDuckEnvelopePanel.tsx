@@ -12,5 +12,5 @@ export function AutoDuckEnvelopePanel({settings,onSettingsCommit,envelope,...pro
  {id:'depthDb',label:'Music attenuation',min:0,max:60,step:.5,unit:'dB',value:settings.depthDb},
  {id:'attackMs',label:'Duck attack',min:1,max:5000,step:1,unit:'ms',value:settings.attackMs},
  {id:'releaseMs',label:'Duck release',min:1,max:10000,step:1,unit:'ms',value:settings.releaseMs}
- ]} onParameter={(id,value,signal)=>onSettingsCommit({...settings,[id]:value},signal)} preview={<ClipGainEnvelope {...envelope} disabled={envelope.disabled||props.job.status==='processing'||props.disabledReason!==undefined||!props.capability.available} unstyled={props.unstyled}/>}/>;
+ ]} onParameter={(id,value,signal)=>onSettingsCommit({...settings,[id]:value},signal)} preview={<ClipGainEnvelope {...envelope} scope={props.scope??'auto-duck-envelope'} revision={props.revision??0} disabled={envelope.disabled||props.job.status==='processing'||props.disabledReason!==undefined||!props.capability.available} unstyled={props.unstyled}/>}/>;
 }

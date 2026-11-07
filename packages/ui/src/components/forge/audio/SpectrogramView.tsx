@@ -1,3 +1,7 @@
+import {Button} from '../../Button.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {assertWaveformRange,type WaveformRange} from '../waveform.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 /*
  * Structural references (Mobbin, iOS, structure only):
  * - TIDE, Ambient Noise: time-banded history with a step legend under it.
@@ -20,7 +24,7 @@ import {
 export type SpectrogramStatus = "measuring" | "ready" | "error" | "empty";
 
 /** Props for {@linkcode SpectrogramView}. Data comes from the engine's `spectrogram` op. */
-export interface SpectrogramViewProps extends Omit<ViewProps, "children"> {
+export interface SpectrogramViewProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Name of the analysed range, used as the group label. */
   readonly label: string;
   /** What to draw: a placeholder, the grid, an error or the empty message. */
@@ -33,6 +37,8 @@ export interface SpectrogramViewProps extends Omit<ViewProps, "children"> {
   readonly hopSeconds: number;
   /** Plot height in pt. @default 160 */
   readonly height?: number;
+  readonly visibleRange?:WaveformRange;
+  readonly onVisibleRangeCommit?:(range:WaveformRange)=>void|Promise<unknown>;
   /** Shown when `status` is `"error"`. */
   readonly error?: string;
   className?: string;
@@ -52,9 +58,19 @@ const STEP_CLASS: Record<Exclude<IntensityStep, 0>, string> = {
  * steps; equal adjacent cells merge into one View, so the drawn count stays
  * at or under 96 x 32.
  */
-export function SpectrogramView({
-  label, status, frames, bandsHz, hopSeconds, height = 160, error, className, unstyled = false, style, ...props
-}: SpectrogramViewProps) {
+export function SpectrogramView({scope='spectrogram',revision=0,...props}:SpectrogramViewProps){
+ const range=props.visibleRange??{start:0,end:1};assertWaveformRange(range);
+ if(props.frames.length>32768||props.bandsHz.length>512||props.frames.length*props.bandsHz.length>2097152||props.frames.some(f=>f.length!==props.bandsHz.length||f.some(n=>!Number.isFinite(n)))||props.bandsHz.some((n,i)=>!Number.isFinite(n)||n<=0||i>0&&n<=props.bandsHz[i-1]!)||!Number.isFinite(props.hopSeconds)||props.hopSeconds<=0||!Number.isFinite(props.frames.length*props.hopSeconds)||!Number.isFinite(props.height??160)||(props.height??160)<44||(props.height??160)>4096)throw new RangeError('Invalid spectrogram data');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason]),guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <SpectrogramViewBody {...props} actionError={guard.error} onVisibleRangeCommit={props.onVisibleRangeCommit?range=>guard.run('range',h=>h.onVisibleRangeCommit?.(range)):undefined}/>;
+}
+function SpectrogramViewBody({actionError,disabledReason,visibleRange={start:0,end:1},onVisibleRangeCommit,
+
+  label, status, frames:sourceFrames, bandsHz, hopSeconds, height = 160, error, className, unstyled = false, style, ...props
+}: SpectrogramViewProps&{actionError?:string|null}) {
+  const start=Math.floor(visibleRange.start*sourceFrames.length),end=Math.max(start+1,Math.ceil(visibleRange.end*sourceFrames.length)),frames=sourceFrames.slice(start,end);
+  const span=visibleRange.end-visibleRange.start;
+  const rangeAt=(left:number,size=span)=>({start:Math.min(1-size,Math.max(0,left)),end:Math.min(1-size,Math.max(0,left))+size});
   const local = useRef<StoreApi<{width:number}> | null>(null);
   if (!local.current) local.current = createStore(() => ({width:0}));
   const store = local.current;
@@ -128,6 +144,13 @@ export function SpectrogramView({
     {...{ className: joinClasses(!unstyled && "rounded-card border border-border bg-surface-raised", className) }}
     style={[{ padding: 16, gap: 12 }, style]}>
     <Text role="heading" aria-level={3} {...{ className: joinClasses(!unstyled && "text-text font-semibold") }} style={{ fontSize: 15 }}>{label}</Text>
-    {body}
+    {onVisibleRangeCommit?<View style={{flexDirection:'row',flexWrap:'wrap',gap:6}}>
+     <Button title="Zoom into spectrum" disabled={disabledReason!==undefined||sourceFrames.length<2||span<=1/Math.max(1,sourceFrames.length)} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start+span/4,Math.max(1/Math.max(1,sourceFrames.length),span/2)))}/>
+     <Button title="Zoom out of spectrum" disabled={disabledReason!==undefined||span>=1} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start-span/2,Math.min(1,span*2)))}/>
+     <Button title="Earlier spectrum" disabled={disabledReason!==undefined||visibleRange.start===0} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start-span/2))}/>
+     <Button title="Later spectrum" disabled={disabledReason!==undefined||visibleRange.end===1} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start+span/2))}/>
+    </View>:null}
+    <Text {...{className:muted}}>Source window {(start*hopSeconds).toFixed(3)}–{(Math.min(end,sourceFrames.length)*hopSeconds).toFixed(3)} s</Text>
+    {body}<ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/>
   </View>;
 }

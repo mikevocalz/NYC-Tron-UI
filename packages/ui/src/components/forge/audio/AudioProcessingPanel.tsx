@@ -1,3 +1,4 @@
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import type {ReactNode} from 'react';
 import {Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
@@ -20,7 +21,7 @@ export interface AudioProcessingPanelProps extends Omit<ViewProps,'children'>,Sc
 export function AudioProcessingPanel({scope='audio-processing',revision=0,...props}:AudioProcessingPanelProps){
  const {label,parameters,job,capability,audition,canApply,canRevert,onParameter:_parameter,onProcess:_process,onCancel,onAudition:_audition,onApply:_apply,onRevert:_revert,measurements=[],preview,unstyled=false,disabledReason,style,...rest}=props;
  if(!label.trim()||label.length>1024||parameters.length>64||new Set(parameters.map(p=>p.id)).size!==parameters.length||parameters.some(p=>!p.id.trim()||p.id.length>512||!p.label.trim()||p.label.length>1024||![p.value,p.min,p.max,p.step].every(Number.isFinite)||p.min>=p.max||p.step<=0||p.value<p.min||p.value>p.max)||!['idle','processing','ready','error'].includes(job.status)||job.progress!==undefined&&(!Number.isFinite(job.progress)||job.progress<0||job.progress>1)||!['original','processed'].includes(audition)||measurements.length>64||measurements.some(m=>!m.label.trim()||m.label.length>1024||m.value.length>2048))throw new RangeError('Invalid audio processing panel');
- const owner=JSON.stringify([...controlIdentity(scope,revision),label,disabledReason,capability,parameters.map(p=>[p.id,p.min,p.max,p.step])]),guard=useScopedControl(owner,props,disabledReason!==undefined||!capability.available||job.status==='processing'),off=guard.pending||disabledReason!==undefined||!capability.available||job.status==='processing';
+ const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),label,disabledReason,capability,parameters.map(p=>[p.id,p.min,p.max,p.step])])]),guard=useScopedControl(owner,props,disabledReason!==undefined||!capability.available||job.status==='processing'),off=guard.pending||disabledReason!==undefined||!capability.available||job.status==='processing';
  return <View {...rest} accessibilityLabel={label} style={[{gap:8,minWidth:0},style]}>
   <Text accessibilityRole="header" {...{className:unstyled?undefined:'text-text'}}>{label}</Text>
   {parameters.map(p=><PrecisionScrubber key={p.id} scope={owner+p.id} label={p.label} min={p.min} max={p.max} step={p.step} value={p.value} unit={p.unit} disabled={off} unstyled={unstyled} onCommit={value=>guard.run('parameter',(h,s)=>{const current=h.parameters.find(v=>v.id===p.id);return current&&value>=current.min&&value<=current.max?h.onParameter(p.id,value,s):undefined;})}/>)}

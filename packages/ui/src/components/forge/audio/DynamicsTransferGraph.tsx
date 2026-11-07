@@ -1,3 +1,6 @@
+import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {valueAccessibility} from "../value-a11y.ts";
 /*
  * Structural references (Mobbin, iOS, structure only):
@@ -40,7 +43,7 @@ const THUMB = 14;
 const SIDE_BY_SIDE = 520;
 
 /** Props for {@linkcode DynamicsTransferGraph}. */
-export interface DynamicsTransferGraphProps extends Omit<ViewProps, "children"> {
+export interface DynamicsTransferGraphProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed compressor parameters from the engine. Attack and release are not drawn on a static curve. */
   readonly params: DynamicsParams;
   /**
@@ -58,6 +61,9 @@ export interface DynamicsTransferGraphProps extends Omit<ViewProps, "children"> 
   readonly onRatioCommit: (ratio: number) => void | Promise<unknown>;
   /** Current input level from a meter, dBFS. Drawn as a dot on the curve; display only. */
   readonly inputLevelDb?: number;
+  readonly gainReductionDb?:number;
+  readonly onKneeCommit?:(db:number)=>void|Promise<unknown>;
+  readonly onMakeupCommit?:(db:number)=>void|Promise<unknown>;
   /** Largest plot side, points. The plot shrinks to fit narrower containers. @default 280 */
   readonly maxSize?: number;
   /** @default false */
@@ -80,13 +86,24 @@ type Local = { width: number; active: boolean; preview: number; staleFor?: reado
  *
  * The graph does no compressor math. While the threshold moves, only the
  * marker follows; the curve dims until the engine sends a new `curve`.
- * Knee and makeup are read-only here. Levels run left to right in every
+ * Knee and makeup editors require the corresponding host callbacks. Levels run left to right in every
  * locale.
  */
-export function DynamicsTransferGraph({
-  params, curve, onThresholdCommit, onThresholdChange, onRatioCommit, inputLevelDb, maxSize = 280,
+export function DynamicsTransferGraph({scope='DynamicsTransferGraph',revision=0,...props}:DynamicsTransferGraphProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason,props.maxSize]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <DynamicsTransferGraphBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onKneeCommit={props.onKneeCommit?db=>guard.run('knee',h=>h.onKneeCommit?.(db)):undefined}
+  onMakeupCommit={props.onMakeupCommit?db=>guard.run('makeup',h=>h.onMakeupCommit?.(db)):undefined}
+  onThresholdCommit={(...args:Parameters<DynamicsTransferGraphProps['onThresholdCommit']>)=>guard.run('onThresholdCommit',h=>h.onThresholdCommit(...args))}
+  onRatioCommit={(...args:Parameters<DynamicsTransferGraphProps['onRatioCommit']>)=>guard.run('onRatioCommit',h=>h.onRatioCommit(...args))}
+  onThresholdChange={props.onThresholdChange?(...args:Parameters<NonNullable<DynamicsTransferGraphProps['onThresholdChange']>>)=>{guard.current()?.onThresholdChange?.(...args);}:undefined}
+ />;
+}
+function DynamicsTransferGraphBody({actionError,disabledReason,
+  params, curve, onThresholdCommit, onThresholdChange, onRatioCommit, inputLevelDb,gainReductionDb,onKneeCommit,onMakeupCommit, maxSize = 280,
   disabled = false, label = "Compressor", className, unstyled = false, style, ...rest
-}: DynamicsTransferGraphProps) {
+}: DynamicsTransferGraphProps&{actionError?:string|null}) {
+  if(![params.thresholdDb,params.ratio,params.kneeDb,params.makeupDb].every(Number.isFinite)||params.thresholdDb< -60||params.thresholdDb>0||params.ratio<1||params.ratio>20||params.kneeDb<0||params.kneeDb>24||params.makeupDb<0||params.makeupDb>24||curve.length>16384||curve.some(p=>!Number.isFinite(p.inDb)||!Number.isFinite(p.outDb))||gainReductionDb!==undefined&&(!Number.isFinite(gainReductionDb)||gainReductionDb<0))throw new RangeError('Invalid dynamics data');
   if (!Number.isFinite(maxSize) || maxSize < HIT * 2) throw new RangeError(`maxSize must be at least ${HIT * 2}`);
   const committed = clampThreshold(params.thresholdDb);
   const local = useRef<StoreApi<Local> | null>(null);
@@ -249,8 +266,9 @@ export function DynamicsTransferGraph({
       <View style={{ gap: 12, flexShrink: 1 }}>
         <View style={{ flexDirection: "row", flexWrap: "wrap", columnGap: 20, rowGap: 8 }}>
           <Readout label="Threshold" value={formatThreshold(threshold)} styled={styled} />
-          <Readout label="Knee" value={formatKnee(params.kneeDb)} styled={styled} />
-          <Readout label="Makeup" value={formatMakeup(params.makeupDb)} styled={styled} />
+          {onKneeCommit?<PrecisionScrubber label="Compressor knee" value={params.kneeDb} min={0} max={24} step={.1} unit="dB" disabled={disabled} unstyled={unstyled} onCommit={onKneeCommit}/>:<Readout label="Knee" value={formatKnee(params.kneeDb)} styled={styled}/>}
+          {onMakeupCommit?<PrecisionScrubber label="Compressor makeup" value={params.makeupDb} min={0} max={24} step={.1} unit="dB" disabled={disabled} unstyled={unstyled} onCommit={onMakeupCommit}/>:<Readout label="Makeup" value={formatMakeup(params.makeupDb)} styled={styled}/>}
+          <Readout label="Measured gain reduction" value={gainReductionDb===undefined?'Not reported':gainReductionDb.toFixed(2)+' dB'} styled={styled}/>
           {inputLevelDb !== undefined && Number.isFinite(inputLevelDb)
             ? <Readout label="Input" value={Math.round(inputLevelDb) + " dB"} styled={styled} /> : null}
         </View>
@@ -272,7 +290,7 @@ export function DynamicsTransferGraph({
         </View>
       </View>
     </View>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 function Readout({ label, value, styled }: { label: string; value: string; styled: boolean }) {

@@ -278,3 +278,8 @@ export function stepCells(
     return { on: true, noteIndex: i, accent: notes[i]!.velocity >= accentVelocity };
   }));
 }
+
+/** Reject malformed engine note rosters before allocating editor views. */
+export function assertMidiNotes(notes:readonly MidiNote[],clipTicks:number):void{
+ if(!Number.isSafeInteger(clipTicks)||clipTicks<1||notes.length>4096||notes.some(n=>!Number.isInteger(n.pitch)||n.pitch<0||n.pitch>127||!Number.isInteger(n.velocity)||n.velocity<0||n.velocity>127||!Number.isSafeInteger(n.startTicks)||n.startTicks<0||!Number.isSafeInteger(n.lengthTicks)||n.lengthTicks<1||n.startTicks+n.lengthTicks>clipTicks||n.channel!==undefined&&(!Number.isInteger(n.channel)||n.channel<0||n.channel>15)))throw new RangeError('Invalid MIDI note roster');
+}

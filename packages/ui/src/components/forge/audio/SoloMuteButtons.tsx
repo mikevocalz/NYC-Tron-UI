@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useId } from "react";
 import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
@@ -7,7 +9,7 @@ import type { Audibility, audibility } from "./mixer.ts";
 const HIT = 44;
 
 /** Props for {@linkcode SoloMuteButtons}. */
-export interface SoloMuteButtonsProps extends Omit<ViewProps, "children"> {
+export interface SoloMuteButtonsProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Channel name used in the accessible names, e.g. `"Mute Bass"`. */
   readonly label: string;
   /** Committed mute state. */
@@ -50,11 +52,19 @@ export interface SoloMuteButtonsProps extends Omit<ViewProps, "children"> {
  * is muted (see {@linkcode audibility}). Group solo and mute live in
  * `MixGroupBar`.
  */
-export function SoloMuteButtons({
+export function SoloMuteButtons({scope='SoloMuteButtons',revision=0,...props}:SoloMuteButtonsProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SoloMuteButtonsBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onMutedCommit={(...args:Parameters<SoloMuteButtonsProps['onMutedCommit']>)=>guard.run('onMutedCommit',h=>h.onMutedCommit(...args))}
+  onSoloCommit={(...args:Parameters<SoloMuteButtonsProps['onSoloCommit']>)=>guard.run('onSoloCommit',h=>h.onSoloCommit(...args))}
+  onSoloSafeCommit={props.onSoloSafeCommit?(...args:Parameters<NonNullable<SoloMuteButtonsProps['onSoloSafeCommit']>>)=>guard.run('onSoloSafeCommit',h=>h.onSoloSafeCommit?.(...args)):undefined}
+ />;
+}
+function SoloMuteButtonsBody({actionError,disabledReason,
   label, muted, solo, audibility, onMutedCommit, onSoloCommit, soloSafe = false, onSoloSafeCommit,
   direction = "row", disabled = false,
   className, unstyled = false, style, ...rest
-}: SoloMuteButtonsProps) {
+}: SoloMuteButtonsProps&{actionError?:string|null}) {
   const styled = !unstyled;
   const silenced = audibility === "silenced-by-solo";
   const hintId = useId();
@@ -98,5 +108,5 @@ export function SoloMuteButtons({
     </Pressable> : null}
     {webHint ? <Text nativeID={hintId}
       style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0 }}>{hint}</Text> : null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
