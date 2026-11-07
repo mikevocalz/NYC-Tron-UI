@@ -1,7 +1,7 @@
 import {assertMidiNotes} from './note-grid.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
-import { useRef, type ComponentRef } from "react";
+import { useLayoutEffect, useRef, type ComponentRef } from "react";
 import {
   PanResponder, Platform, Pressable, ScrollView, Text, View,
   type GestureResponderEvent, type KeyDownEvent, type ViewProps, type ViewStyle,
@@ -11,7 +11,7 @@ import { useStore } from "zustand";
 import { joinClasses } from "../../styles.ts";
 import {
   assertGrid, cellAt, describeNote, dragNote, dragNoteEnd, gridSize, isSharp, noteKeyEdit, noteRect,
-  pitchName, usesSeveralChannels, visiblePitches, type MidiNote, type NoteGrid,
+  midiGridLines, pitchName, usesSeveralChannels, visiblePitches, type MidiNote, type NoteGrid,
 } from "./note-grid.ts";
 import { MidiChannelPicker } from "./MidiChannelPicker.tsx";
 
@@ -32,8 +32,10 @@ export interface MIDIPianoRollProps extends Omit<ViewProps, "children">,ScopedCo
   readonly clipTicks: number;
   /** Ticks per quarter note. @default 960 */
   readonly ppq?: number;
-  /** Beats per bar, for bar lines. @default 4 */
+  /** Quarter-note beats per bar for legacy callers. Ignored by timeSignature. @default 4 */
   readonly beatsPerBar?: number;
+  /** Musical numerator/denominator. Overrides beatsPerBar without rounding measure boundaries. */
+  readonly timeSignature?: readonly [number,number];
   /** @default 48 (C3) */
   readonly lowestPitch?: number;
   /** @default 72 (C5) */
@@ -67,6 +69,8 @@ export interface MIDIPianoRollProps extends Omit<ViewProps, "children">,ScopedCo
    * can follow it (see `MIDIVelocityLane.scrollX`).
    */
   readonly onScrollX?: (x: number) => void;
+  /** Nonnegative requested horizontal offset in layout points, clamped after measuring the viewport. */
+  readonly scrollX?: number;
   /**
    * Set the selected note's MIDI channel (0..15), once per press or key; maps
    * onto the Cadence `setNoteChannel` op. Giving it shows a channel stepper
@@ -102,7 +106,7 @@ export function MIDIPianoRoll({scope='MIDIPianoRoll',revision=0,...props}:MIDIPi
  const retained=useRef({x:0,y:null as number|null,scope,revision});
  if(retained.current.scope!==scope||retained.current.revision!==revision)retained.current={x:0,y:null,scope,revision};
  assertMidiNotes(props.notes,props.clipTicks);
- const owner=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.notes,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.ppq,props.beatsPerBar,props.timeSignature,props.pixelsPerTick,props.rowHeight,props.lowestPitch,props.highestPitch,props.snapTicks,props.notes,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
  return <MIDIPianoRollBody key={owner} {...props} retained={retained.current} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
   onNoteMove={(...args:Parameters<MIDIPianoRollProps['onNoteMove']>)=>guard.run('onNoteMove',h=>h.onNoteMove(...args))}
   onNoteResize={(...args:Parameters<MIDIPianoRollProps['onNoteResize']>)=>guard.run('onNoteResize',h=>h.onNoteResize(...args))}
@@ -115,7 +119,7 @@ export function MIDIPianoRoll({scope='MIDIPianoRoll',revision=0,...props}:MIDIPi
  />;
 }
 function MIDIPianoRollBody({actionError,disabledReason,retained,
-  notes, clipTicks, ppq = 960, beatsPerBar = 4, lowestPitch = 48, highestPitch = 72,
+  notes, clipTicks, ppq = 960, beatsPerBar = 4, timeSignature, scrollX, lowestPitch = 48, highestPitch = 72,
   snapTicks, pixelsPerTick = 0.1, rowHeight = 44, height = 352, selectedIndex, onSelect,
   onNoteMove, onNoteResize, onNoteAdd, onNoteRemove, onAudition, onScrollX, onNoteChannel, disabled = false, label = "Piano roll",
   className, unstyled = false, ...rest
@@ -125,16 +129,25 @@ function MIDIPianoRollBody({actionError,disabledReason,retained,
     snapTicks: snapTicks ?? Math.max(1, Math.round(ppq / 4)),
   };
   assertGrid(grid);
-  if(notes.length>4096||!Number.isSafeInteger(ppq)||ppq<1||!Number.isSafeInteger(beatsPerBar)||beatsPerBar<1||beatsPerBar>64||!Number.isFinite(sizeProduct(grid))||sizeProduct(grid)>1000000000)throw new RangeError('MIDI grid exceeds drawing budget');
+  if(notes.length>4096||!Number.isSafeInteger(ppq)||ppq<1||!Number.isFinite(sizeProduct(grid))||sizeProduct(grid)>1000000000)throw new RangeError('MIDI grid exceeds drawing budget');
   const styled = !unstyled;
   const size = gridSize(grid);
   const rows = visiblePitches(grid);
-  const beatPx = ppq * pixelsPerTick;
-  const beatCount = Math.ceil(clipTicks / ppq);
-  const drawBeats = beatCount <= MAX_BEAT_LINES;
-  const lines: number[] = [];
-  const stride=drawBeats?1:Math.max(beatsPerBar,Math.ceil(beatCount/MAX_BEAT_LINES/beatsPerBar)*beatsPerBar);
-  for(let b=stride;b<beatCount;b+=stride)lines.push(b);
+  const lines=midiGridLines(clipTicks,ppq,beatsPerBar,timeSignature,MAX_BEAT_LINES);
+  if(scrollX!==undefined&&(!Number.isFinite(scrollX)||scrollX<0))throw new RangeError('Invalid MIDI scroll offset');
+  const horizontal=useRef<ComponentRef<typeof ScrollView>|null>(null);
+  const viewportWidth=useRef(0),dragging=useRef(false),actualX=useRef(0),acknowledgedX=useRef<number|null>(null),pendingScroll=useRef<number|null>(null),mounted=useRef(true);
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
+  const boundX=(value:number)=>Math.max(0,Math.min(value,Math.max(0,size.width-viewportWidth.current)));
+  const acknowledgeX=(x:number)=>{retained.x=x;if(acknowledgedX.current!==x){acknowledgedX.current=x;onScrollX?.(x);}};
+  const restoreX=()=>{
+    if(!mounted.current||viewportWidth.current<=0||dragging.current)return;
+    const target=boundX(scrollX??retained.x);
+    if(Math.abs(target-actualX.current)<0.5){pendingScroll.current=null;acknowledgeX(target);return;}
+    pendingScroll.current=target;
+    horizontal.current?.scrollTo({x:target,y:0,animated:false});
+  };
+  useLayoutEffect(()=>{restoreX();},[scrollX,size.width]);
 
   // Open on the notes, not on the top row: scroll once, on first layout.
   const rowsScroll = useRef<ComponentRef<typeof ScrollView> | null>(null);
@@ -170,7 +183,7 @@ function MIDIPianoRollBody({actionError,disabledReason,retained,
         label={"MIDI channel of " + pitchName(picked.pitch) + " note " + (selectedIndex! + 1)}
         onChannelCommit={channel => onNoteChannel(selectedIndex!, channel)} />
     </View> : null}
-    <ScrollView ref={rowsScroll} style={{ height }} nestedScrollEnabled onLayout={onRowsLayout} onScroll={e=>{retained.y=e.nativeEvent.contentOffset.y;}} scrollEventThrottle={16}>
+    <ScrollView ref={rowsScroll} style={{ height }} nestedScrollEnabled onLayout={onRowsLayout} onScroll={e=>{if(mounted.current)retained.y=e.nativeEvent.contentOffset.y;}} scrollEventThrottle={16}>
       <View style={{ flexDirection: "row", direction: "ltr" }}>
         <View style={{ width: KEY_COLUMN }}>
           {rows.map(pitch => {
@@ -187,18 +200,26 @@ function MIDIPianoRollBody({actionError,disabledReason,retained,
               : <View key={pitch} {...{ className: keyClass }} style={{ height: rowHeight }}>{text}</View>;
           })}
         </View>
-        <ScrollView horizontal nestedScrollEnabled contentOffset={{x:retained.x,y:0}} style={{ flex: 1, direction: "ltr" }}
+        <ScrollView ref={horizontal} horizontal nestedScrollEnabled style={{ flex: 1, direction: "ltr" }}
+          onLayout={e=>{viewportWidth.current=e.nativeEvent.layout.width;restoreX();}}
+          onContentSizeChange={()=>restoreX()} onScrollBeginDrag={()=>{dragging.current=true;pendingScroll.current=null;}}
+          onScrollEndDrag={()=>{dragging.current=false;restoreX();}}
           scrollEventThrottle={16}
-          onScroll={e=>{retained.x=e.nativeEvent.contentOffset.x;onScrollX?.(retained.x);}}>
+          onScroll={e=>{
+            if(!mounted.current||viewportWidth.current<=0)return;
+            const x=boundX(e.nativeEvent.contentOffset.x);
+            if(pendingScroll.current!==null&&Math.abs(x-pendingScroll.current)>=0.5)return;
+            pendingScroll.current=null;actualX.current=x;acknowledgeX(x);
+          }}>
           <View style={{ width: size.width, height: size.height }}>
             <Pressable accessible={false} disabled={disabled || !onNoteAdd} onPress={addAt}
               style={{ position: "absolute", left: 0, top: 0, width: size.width, height: size.height }}>
               {rows.map((pitch, i) => <View key={pitch} pointerEvents="none"
                 {...{ className: joinClasses(styled && "border-b border-border", styled && isSharp(pitch) && "bg-surface-sunken") }}
                 style={{ position: "absolute", left: 0, right: 0, top: i * rowHeight, height: rowHeight }} />)}
-              {lines.map(b => <View key={b} pointerEvents="none"
-                {...{ className: joinClasses(styled && (b % beatsPerBar === 0 ? "bg-text-muted" : "bg-border")) }}
-                style={{ position: "absolute", top: 0, bottom: 0, left: b * beatPx, width: b % beatsPerBar === 0 ? 2 : 1 }} />)}
+              {lines.map(line => <View key={line.ticks} pointerEvents="none"
+                {...{ className: joinClasses(styled && (line.bar ? "bg-text-muted" : "bg-border")) }}
+                style={{ position: "absolute", top: 0, bottom: 0, left: line.ticks * pixelsPerTick, width: line.bar ? 2 : 1 }} />)}
               <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-text-muted") }}
                 style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: 2 }} />
             </Pressable>
@@ -342,3 +363,6 @@ function NoteBox({ index, note, grid, ppq, withChannel, selected, disabled, styl
 }
 
 function sizeProduct(g:NoteGrid){return g.clipTicks*g.pixelsPerTick;}
+
+/** Optional runtime probe for hosts whose published dependency predates these props. */
+MIDIPianoRoll.capabilities = Object.freeze({version:1 as const,rationalTimeSignature:true as const,controlledScrollX:true as const});
