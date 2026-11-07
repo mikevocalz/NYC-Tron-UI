@@ -4762,80 +4762,120 @@
       "name": "NodeGraphCanvas",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/NodeGraphCanvas.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Visual nodes, sockets, cables, pan/zoom and selection."
+      "requirement": "Visual nodes, sockets, cables, pan/zoom and selection.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-11",
       "name": "NodeLibrarySearch",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/NodeLibrarySearch.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Search nodes and drag to graph."
+      "requirement": "Search nodes and drag to graph.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-12",
       "name": "LiveNodeThumbnail",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/LiveNodeThumbnail.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Preview images and dependency/cook status."
+      "requirement": "Preview images and dependency/cook status.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-13",
       "name": "DraftingCommandLine",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/DraftingCommandLine.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "CAD command entry, history and completion."
+      "requirement": "CAD command entry, history and completion.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-14",
       "name": "ObjectSnapsAndOrtho",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/ObjectSnapsAndOrtho.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Endpoint, midpoint, tangent and polar feedback."
+      "requirement": "Endpoint, midpoint, tangent and polar feedback.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-15",
       "name": "DimensionsAndHatching",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/DimensionsAndHatching.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Associative measurement and area patterns."
+      "requirement": "Associative measurement and area patterns.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-16",
       "name": "PaperSpaceLayout",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/PaperSpaceLayout.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Viewport sizes, scale, sheet templates and print."
+      "requirement": "Viewport sizes, scale, sheet templates and print.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "M-17",
       "name": "ParametricConstraintEditor",
       "phase": "P17",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/cad/ParametricConstraintEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Expressions, geometric constraints and conflicts."
+      "requirement": "Expressions, geometric constraints and conflicts.",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
     },
     {
       "id": "N-01",

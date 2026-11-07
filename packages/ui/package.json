@@ -2714,6 +2714,46 @@
       "types": "./dist/components/forge/cad/BakingMapPanel.d.ts",
       "react-native": "./dist/components/forge/cad/BakingMapPanel.js",
       "default": "./dist/components/forge/cad/BakingMapPanel.js"
+    },
+    "./components/forge/cad/NodeGraphCanvas": {
+      "types": "./dist/components/forge/cad/NodeGraphCanvas.d.ts",
+      "react-native": "./dist/components/forge/cad/NodeGraphCanvas.js",
+      "default": "./dist/components/forge/cad/NodeGraphCanvas.js"
+    },
+    "./components/forge/cad/NodeLibrarySearch": {
+      "types": "./dist/components/forge/cad/NodeLibrarySearch.d.ts",
+      "react-native": "./dist/components/forge/cad/NodeLibrarySearch.js",
+      "default": "./dist/components/forge/cad/NodeLibrarySearch.js"
+    },
+    "./components/forge/cad/LiveNodeThumbnail": {
+      "types": "./dist/components/forge/cad/LiveNodeThumbnail.d.ts",
+      "react-native": "./dist/components/forge/cad/LiveNodeThumbnail.js",
+      "default": "./dist/components/forge/cad/LiveNodeThumbnail.js"
+    },
+    "./components/forge/cad/DraftingCommandLine": {
+      "types": "./dist/components/forge/cad/DraftingCommandLine.d.ts",
+      "react-native": "./dist/components/forge/cad/DraftingCommandLine.js",
+      "default": "./dist/components/forge/cad/DraftingCommandLine.js"
+    },
+    "./components/forge/cad/ObjectSnapsAndOrtho": {
+      "types": "./dist/components/forge/cad/ObjectSnapsAndOrtho.d.ts",
+      "react-native": "./dist/components/forge/cad/ObjectSnapsAndOrtho.js",
+      "default": "./dist/components/forge/cad/ObjectSnapsAndOrtho.js"
+    },
+    "./components/forge/cad/DimensionsAndHatching": {
+      "types": "./dist/components/forge/cad/DimensionsAndHatching.d.ts",
+      "react-native": "./dist/components/forge/cad/DimensionsAndHatching.js",
+      "default": "./dist/components/forge/cad/DimensionsAndHatching.js"
+    },
+    "./components/forge/cad/PaperSpaceLayout": {
+      "types": "./dist/components/forge/cad/PaperSpaceLayout.d.ts",
+      "react-native": "./dist/components/forge/cad/PaperSpaceLayout.js",
+      "default": "./dist/components/forge/cad/PaperSpaceLayout.js"
+    },
+    "./components/forge/cad/ParametricConstraintEditor": {
+      "types": "./dist/components/forge/cad/ParametricConstraintEditor.d.ts",
+      "react-native": "./dist/components/forge/cad/ParametricConstraintEditor.js",
+      "default": "./dist/components/forge/cad/ParametricConstraintEditor.js"
     }
   },
   "scripts": {

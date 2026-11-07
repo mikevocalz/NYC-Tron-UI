@@ -15,6 +15,8 @@ export interface PatchGraphProps extends Omit<ViewProps,"children">{
  width:number;
  height:number;
  disabled?:boolean;
+ scrollEnabled?:boolean;
+ interactionScale?:number;
  onInvalidConnection?:(message:string)=>void;
  selectedNodeId?:string|null;
  onSelectNode?:(id:string)=>void;
@@ -27,7 +29,7 @@ export interface PatchGraphProps extends Omit<ViewProps,"children">{
 }
 /** Native RN graph interaction surface. GPU wire renderer required beyond preview-sized graphs. */
 export function PatchGraph({
- nodes,edges,width,height,disabled=false,onInvalidConnection,selectedNodeId,onSelectNode,onMoveNode,onConnect,
+ nodes,edges,width,height,disabled=false,scrollEnabled=true,interactionScale=1,onInvalidConnection,selectedNodeId,onSelectNode,onMoveNode,onConnect,
  accentColor,className,unstyled=false,...rest
 }:PatchGraphProps){
  const local=useRef<StoreApi<Local>|null>(null);
@@ -44,7 +46,7 @@ export function PatchGraph({
    }
    if(changed)store.setState({positions:next});
  },[nodes,store]);
- validatePatchGraph(rendered,edges);
+ validatePatchGraph(rendered,edges);if(!Number.isFinite(interactionScale)||interactionScale<=0)throw new RangeError("Invalid graph interaction scale");
  const byId=new Map(rendered.map(n=>[n.id,n] as const));
  const selectOutput=(port:GraphSelection)=>{if(!disabled)store.setState({output:port});};
  const selectInput=(input:GraphSelection)=>{
@@ -62,8 +64,8 @@ export function PatchGraph({
  const cancelPending=()=>store.setState({output:null});
  const styled=!unstyled;
  return <View {...rest} {...{className:joinClasses("overflow-hidden",!unstyled&&"rounded-control bg-surface-sunken",className)}}>
-  <ScrollView horizontal nestedScrollEnabled>
-   <ScrollView nestedScrollEnabled>
+  <ScrollView horizontal nestedScrollEnabled scrollEnabled={scrollEnabled}>
+   <ScrollView nestedScrollEnabled scrollEnabled={scrollEnabled}>
     <View style={{width,height,minWidth:width,minHeight:height}}>
      {edges.flatMap(edge=>{
        const from=byId.get(edge.from.nodeId)!,to=byId.get(edge.to.nodeId)!;
@@ -76,7 +78,7 @@ export function PatchGraph({
            transform:[{rotate:Math.atan2(dy,dx)*180/Math.PI+"deg"}]}}/>;
        });
      })}
-     {rendered.map(node=><PatchNode key={node.id} node={node} selected={selectedNodeId===node.id} disabled={disabled}
+     {rendered.map(node=><PatchNode key={node.id} node={node} interactionScale={interactionScale} selected={selectedNodeId===node.id} disabled={disabled}
        accentColor={accentColor} styled={styled} pendingOutput={output?.nodeId===node.id?output.portId:null}
        onSelect={()=>{if(!disabled)onSelectNode?.(node.id);}} onPreview={point=>previewMove(node.id,point)}
        onCommit={point=>commitMove(node.id,point)}
@@ -94,13 +96,13 @@ export function PatchGraph({
  </View>;
 }
 type PatchNodeProps={
- node:GraphNode;disabled:boolean;selected:boolean;accentColor:string|undefined;styled:boolean;pendingOutput:string|null;
+ node:GraphNode;interactionScale:number;disabled:boolean;selected:boolean;accentColor:string|undefined;styled:boolean;pendingOutput:string|null;
  onSelect:()=>void;onPreview:(p:GraphPoint)=>void;onCommit:(p:GraphPoint)=>void;
  onInput:(portId:string)=>void;onOutput:(portId:string)=>void;
 };
-function PatchNode({node,disabled,selected,accentColor,styled,pendingOutput,onSelect,onPreview,onCommit,onInput,onOutput}:PatchNodeProps){
- const latest=useRef({node,disabled,onSelect,onPreview,onCommit});
- latest.current={node,disabled,onSelect,onPreview,onCommit};
+function PatchNode({node,interactionScale,disabled,selected,accentColor,styled,pendingOutput,onSelect,onPreview,onCommit,onInput,onOutput}:PatchNodeProps){
+ const latest=useRef({node,interactionScale,disabled,onSelect,onPreview,onCommit});
+ latest.current={node,interactionScale,disabled,onSelect,onPreview,onCommit};
  const start=useRef<GraphPoint>({x:node.x,y:node.y});
  const active=useRef(false),cancelled=useRef(false);
  useLayoutEffect(()=>{active.current=true;return()=>{active.current=false;cancelled.current=true;};},[]);
@@ -109,11 +111,11 @@ function PatchNode({node,disabled,selected,accentColor,styled,pendingOutput,onSe
   onStartShouldSetPanResponder:e=>!latest.current.disabled&&(e.nativeEvent.touches?.length??1)<=1,
   onMoveShouldSetPanResponder:()=>!latest.current.disabled,
   onPanResponderGrant:()=>{cancelled.current=false;start.current={x:latest.current.node.x,y:latest.current.node.y};},
-  onPanResponderMove:(_e,g)=>{if(!active.current||latest.current.disabled||cancelled.current)return;if(g.numberActiveTouches>1){cancelled.current=true;latest.current.onPreview(start.current);return;}latest.current.onPreview({x:Math.max(0,start.current.x+g.dx),y:Math.max(0,start.current.y+g.dy)});},
+  onPanResponderMove:(_e,g)=>{if(!active.current||latest.current.disabled||cancelled.current)return;if(g.numberActiveTouches>1){cancelled.current=true;latest.current.onPreview(start.current);return;}latest.current.onPreview({x:Math.max(0,start.current.x+g.dx/latest.current.interactionScale),y:Math.max(0,start.current.y+g.dy/latest.current.interactionScale)});},
   onPanResponderRelease:(_e,g)=>{
     if(!active.current||latest.current.disabled||cancelled.current)return;
     if(Math.abs(g.dx)+Math.abs(g.dy)<4)latest.current.onSelect();
-    else latest.current.onCommit({x:Math.max(0,start.current.x+g.dx),y:Math.max(0,start.current.y+g.dy)});
+    else latest.current.onCommit({x:Math.max(0,start.current.x+g.dx/latest.current.interactionScale),y:Math.max(0,start.current.y+g.dy/latest.current.interactionScale)});
   },
   onPanResponderTerminationRequest:()=>false,
   onPanResponderTerminate:()=>{cancelled.current=true;if(active.current)latest.current.onPreview(start.current);},
