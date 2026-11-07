@@ -2179,6 +2179,41 @@
       "types": "./dist/components/forge/audio/PanAndBalanceControl.d.ts",
       "react-native": "./dist/components/forge/audio/PanAndBalanceControl.js",
       "default": "./dist/components/forge/audio/PanAndBalanceControl.js"
+    },
+    "./forge/audio/ClipGainEnvelope": {
+      "types": "./dist/components/forge/audio/ClipGainEnvelope.d.ts",
+      "react-native": "./src/components/forge/audio/ClipGainEnvelope.tsx",
+      "default": "./dist/components/forge/audio/ClipGainEnvelope.js"
+    },
+    "./forge/audio/AudioClipTrimAndFade": {
+      "types": "./dist/components/forge/audio/AudioClipTrimAndFade.d.ts",
+      "react-native": "./src/components/forge/audio/AudioClipTrimAndFade.tsx",
+      "default": "./dist/components/forge/audio/AudioClipTrimAndFade.js"
+    },
+    "./forge/audio/LoopPunchRecording": {
+      "types": "./dist/components/forge/audio/LoopPunchRecording.d.ts",
+      "react-native": "./src/components/forge/audio/LoopPunchRecording.tsx",
+      "default": "./dist/components/forge/audio/LoopPunchRecording.js"
+    },
+    "./forge/audio/SampleEditor": {
+      "types": "./dist/components/forge/audio/SampleEditor.d.ts",
+      "react-native": "./src/components/forge/audio/SampleEditor.tsx",
+      "default": "./dist/components/forge/audio/SampleEditor.js"
+    },
+    "./forge/audio/LatencyCalibrationPanel": {
+      "types": "./dist/components/forge/audio/LatencyCalibrationPanel.d.ts",
+      "react-native": "./src/components/forge/audio/LatencyCalibrationPanel.tsx",
+      "default": "./dist/components/forge/audio/LatencyCalibrationPanel.js"
+    },
+    "./forge/audio/TakePlaylistAndComping": {
+      "types": "./dist/components/forge/audio/TakePlaylistAndComping.d.ts",
+      "react-native": "./src/components/forge/audio/TakePlaylistAndComping.tsx",
+      "default": "./dist/components/forge/audio/TakePlaylistAndComping.js"
+    },
+    "./forge/audio/AudioVideoSync": {
+      "types": "./dist/components/forge/audio/AudioVideoSync.d.ts",
+      "react-native": "./src/components/forge/audio/AudioVideoSync.tsx",
+      "default": "./dist/components/forge/audio/AudioVideoSync.js"
     }
   },
   "scripts": {

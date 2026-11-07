@@ -1,4 +1,8 @@
-import { useRef,useSyncExternalStore } from "react";
+import {createStore} from 'zustand/vanilla';
+import {useStore} from 'zustand';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from './inputs/useScopedControl.ts';
+import {ErrorMessage} from '../feedback/ErrorMessage.tsx';
+import { useRef,useLayoutEffect } from "react";
 import { PanResponder,Platform,View,type ViewProps,type ViewStyle } from "react-native";
 import { joinClasses } from "../styles.ts";
 import {
@@ -9,7 +13,7 @@ import {
 /** Horizontal travel, in points, before a press becomes a scroll. */
 const SLOP=6;
 
-export interface WaveformLaneProps extends Omit<ViewProps,"children"> {
+export interface WaveformLaneProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Measured real source signal extrema; not synthetic waves. */
   readonly peaks:readonly WaveformPeak[];
   readonly columns?:number;
@@ -38,18 +42,6 @@ export interface WaveformLaneProps extends Omit<ViewProps,"children"> {
 }
 
 type Scroll={active:boolean;range:WaveformRange};
-/** Gesture-local store. Plain React so the lane keeps no zustand dependency. */
-type Local={get:()=>Scroll;set:(next:Partial<Scroll>)=>void;subscribe:(fn:()=>void)=>()=>void};
-function createLocal(initial:Scroll):Local{
-  let state=initial;
-  const listeners=new Set<()=>void>();
-  return {
-    get:()=>state,
-    set:next=>{state={...state,...next};listeners.forEach(fn=>fn());},
-    subscribe:fn=>{listeners.add(fn);return()=>{listeners.delete(fn);};},
-  };
-}
-
 /**
  * Per-component import: no audio API, Forge engines, Skia or Nitro.
  * Bounded native view count (<=128) at any zoom: `visibleRange` picks the
@@ -58,10 +50,21 @@ function createLocal(initial:Scroll):Local{
  * once on release. A GPU (Skia) lane for dense multitrack timelines is
  * deferred until that backend is verified on devices.
  */
-export function WaveformLane({
+export function WaveformLane({scope='waveform',revision=0,...props}:WaveformLaneProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.visibleRange,props.columns,props.height]);
+ if(props.peaks.length>1048576||props.peaks.some(p=>!Number.isFinite(p.min)||!Number.isFinite(p.max)||p.min>p.max||p.min< -1||p.max>1))throw new RangeError('Invalid waveform peaks');
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <View style={{minWidth:0}}><WaveformLaneBody key={owner} {...props}
+  onSeekNormalized={props.onSeekNormalized?value=>{guard.current()?.onSeekNormalized?.(value);}:undefined}
+  onVisibleRangeChange={props.onVisibleRangeChange?value=>{guard.current()?.onVisibleRangeChange?.(value);}:undefined}
+  onVisibleRangeCommit={props.onVisibleRangeCommit?value=>guard.run('range',host=>host.onVisibleRangeCommit?.(value)):undefined}/>
+  <ErrorMessage message={guard.error??props.disabledReason} unstyled={props.unstyled}/></View>;
+}
+function WaveformLaneBody({
+
   peaks,columns=96,height=64,onSeekNormalized,position,accessibilityStep=0.05,
   visibleRange=FULL_RANGE,onVisibleRangeChange,onVisibleRangeCommit,
-  className,barClassName,unstyled=false,style,...props
+  className,barClassName,unstyled=false,style,disabledReason,...props
 }:WaveformLaneProps){
   assertWaveformRange(visibleRange);
   const width=useRef(0);
@@ -69,11 +72,11 @@ export function WaveformLane({
   const clamp=(n:number)=>Math.min(1,Math.max(0,n));
   const current=position!==undefined&&Number.isFinite(position)?clamp(position):lastPosition.current;
   const latest=useRef({onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange});
-  latest.current={onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange};
-  const local=useRef<Local|null>(null);
-  if(!local.current)local.current=createLocal({active:false,range:visibleRange});
+  useLayoutEffect(()=>{latest.current={onSeekNormalized,onVisibleRangeChange,onVisibleRangeCommit,visibleRange};});
+  const local=useRef<ReturnType<typeof createWaveStore>|null>(null);
+  if(!local.current)local.current=createWaveStore(visibleRange);
   const store=local.current;
-  const snapshot=useSyncExternalStore(store.subscribe,store.get,store.get);
+  const snapshot=useStore(store,s=>s);
   const range=snapshot.active?snapshot.range:visibleRange;
   const seek=(next:number)=>{
     const value=clamp(next);
@@ -83,34 +86,34 @@ export function WaveformLane({
   const responder=useRef<ReturnType<typeof PanResponder.create>|null>(null);
   if(!responder.current)responder.current=PanResponder.create({
     onStartShouldSetPanResponder:()=>latest.current.onSeekNormalized!=null||latest.current.onVisibleRangeCommit!=null,
-    onPanResponderGrant:()=>store.set({active:false,range:latest.current.visibleRange}),
+    onPanResponderGrant:()=>store.setState({active:false,range:latest.current.visibleRange}),
     onPanResponderMove:(_e,g)=>{
       const p=latest.current;
       if(!p.onVisibleRangeCommit||width.current<=0)return;
-      if(!store.get().active&&Math.abs(g.dx)<SLOP)return;
+      if(!store.getState().active&&Math.abs(g.dx)<SLOP)return;
       const next=scrollRange(p.visibleRange,g.dx,width.current);
-      const s=store.get();
+      const s=store.getState();
       if(!s.active||next.start!==s.range.start){
-        store.set({active:true,range:next});
+        store.setState({active:true,range:next});
         p.onVisibleRangeChange?.(next);
       }
     },
     onPanResponderRelease:e=>{
       const p=latest.current;
-      const s=store.get();
+      const s=store.getState();
       if(s.active){
-        store.set({active:false});
+        store.setState({active:false});
         if(s.range.start!==p.visibleRange.start)p.onVisibleRangeCommit?.(s.range);
         return;
       }
       if(p.onSeekNormalized&&width.current>0)seek(rangePosition(p.visibleRange,e.nativeEvent.locationX,width.current));
     },
     onPanResponderTerminate:()=>{
-      if(!store.get().active)return;
-      store.set({active:false});
+      if(!store.getState().active)return;
+      store.setState({active:false});
       latest.current.onVisibleRangeChange?.(latest.current.visibleRange);
     },
-    onPanResponderTerminationRequest:()=>!store.get().active,
+    onPanResponderTerminationRequest:()=>!store.getState().active,
   });
   if(!Number.isFinite(accessibilityStep)||accessibilityStep<=0||accessibilityStep>1)
     throw new RangeError("accessibilityStep must be within (0, 1]");
@@ -126,6 +129,7 @@ export function WaveformLane({
     accessible
     accessibilityRole={onSeekNormalized?"adjustable":"image"}
     accessibilityLabel={props.accessibilityLabel??"Audio waveform"}
+    accessibilityState={{disabled:disabledReason!==undefined}}
     onLayout={e=>{width.current=e.nativeEvent.layout.width;props.onLayout?.(e);}}
     accessibilityValue={onSeekNormalized?{min:0,max:100,now:Math.round(current*100)}:undefined}
     accessibilityActions={onSeekNormalized?[{name:"increment"},{name:"decrement"}]:undefined}
@@ -141,3 +145,5 @@ export function WaveformLane({
     />
   </View>)}</View>;
 }
+
+function createWaveStore(range:WaveformRange){return createStore<Scroll>(()=>({active:false,range}));}

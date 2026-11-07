@@ -2099,9 +2099,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/WaveformLane.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Scrollable and editable audio clip peaks in timeline."
+      "requirement": "Scrollable and editable audio clip peaks in timeline.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-03",
@@ -2197,20 +2200,30 @@
       "name": "AudioClipTrimAndFade",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AudioClipTrimAndFade.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Fades, crossfades, non-destructive trim and region gain."
+      "requirement": "Fades, crossfades, non-destructive trim and region gain.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-10",
       "name": "ClipGainEnvelope",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/ClipGainEnvelope.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Direct draggable editable envelope within clip."
+      "requirement": "Direct draggable editable envelope within clip.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-11",
@@ -2436,52 +2449,77 @@
       "name": "TakePlaylistAndComping",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/TakePlaylistAndComping.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Multiple takes, swipe comping and lanes."
+      "requirement": "Multiple takes, swipe comping and lanes.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-29",
       "name": "LoopPunchRecording",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/LoopPunchRecording.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pre/post-roll, loop recording and punch boundaries."
+      "requirement": "Pre/post-roll, loop recording and punch boundaries.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-30",
       "name": "SampleEditor",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/SampleEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Sample start/end/loop and pitch keyboard mapping."
+      "requirement": "Sample start/end/loop and pitch keyboard mapping.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-31",
       "name": "AudioVideoSync",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/AudioVideoSync.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Picture track playback locked to audio sample clock.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-32",
       "name": "LatencyCalibrationPanel",
       "phase": "P09",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/audio/LatencyCalibrationPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Round-trip offset, device buffer and drift diagnostics.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
     },
     {
       "id": "E-33",
