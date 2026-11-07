@@ -84,3 +84,7 @@ P05 blend/opacity checkpoint: B-11 adds precise alpha and explicit blend/composi
 P05 mask/clipping checkpoint: B-12 and B-13 add scoped mutation/thumbnail ownership, inherited locks and held-press cancellation. [Review report](P05-mask-and-clipping.md) records 858 source tests and 22 browser checks. Review count is 103 of 341.
 
 P05 artboard checkpoint: B-14 adds scoped navigation/mutation/thumbnail ownership, bounded geometry and keyboard focus handling. [Artboard report](P05-artboard-navigation.md) also records the shared panel-root sizing fix, 864 source tests and browser rerun evidence. Review count is 104 of 341.
+
+User direction, 2026-11-06 (implementation first): finish the remaining component batches before the user's review; broad acceptance testing follows that review. Keep batch build checks and fix compile errors while coding. Do not present this deferred testing as a pass or mark platform acceptance complete. This direction supersedes the earlier requirement to run full suites at each phase boundary.
+
+P05 selection tools batch: B-19, B-20, B-30, B-31 and B-34 have reviewed controlled implementations with document/revision boundaries and cancellable host operations. [Batch report](P05-selection-tools-batch.md) records the build check and deferred runtime tests. Review count is 109 of 341; acceptance remains unverified.

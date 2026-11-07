@@ -23,15 +23,17 @@ import {useStore} from "zustand";
 import {Button} from "../../Button.tsx";
 import {Select} from "../../Select.tsx";
 import {joinClasses} from "../../styles.ts";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {PrecisionScrubber} from "../inputs/PrecisionScrubber.tsx";
 import {
  MAX_HOLD_DELAY_S,MIN_HOLD_DELAY_S,assignGesture,clampHoldDelay,conflictMessage,conflictsForAction,findGestureConflicts,
- keepGestureFor,sameGestureMap,saveProblem,usesHeldGesture,validateGestureCatalog,
+ keepGestureFor,sameGestureMap,saveProblem,usesHeldGesture,validateGestureCatalog,validateGestureMap,
  type GestureDefinition,type GestureMap,type QuickActionDefinition,
 } from "./gesture-map-model.ts";
 
 /** Props for {@linkcode GestureCustomizationPanel}. */
-export interface GestureCustomizationPanelProps extends Omit<ViewProps,"children"> {
+export interface GestureCustomizationPanelProps extends Omit<ViewProps,"children">,ScopedControlProps {
  /** Gestures this device can recognise, in menu order. */
  gestures:readonly GestureDefinition[];
  /** Quick actions, one row each. */
@@ -41,7 +43,7 @@ export interface GestureCustomizationPanelProps extends Omit<ViewProps,"children
  /** What "Reset to defaults" restores into the draft. */
  defaults:GestureMap;
  /** Save with no conflicts and at least one change. One call per press. */
- onSave:(map:GestureMap)=>void;
+ onSave:(map:GestureMap,signal?:AbortSignal)=>void|Promise<unknown>;
  /** Cancel: the draft is dropped. The host closes the panel. */
  onCancel:()=>void;
  /** @default "Gesture controls" */
@@ -60,9 +62,16 @@ const NONE="";
  * a conflict on each row it touches and blocks Save until resolved; a duplicate
  * offers "Keep for <action>", which releases the gesture from the other rows.
  */
-export function GestureCustomizationPanel({
- gestures,actions,value,defaults,onSave,onCancel,label="Gesture controls",className,unstyled=false,...rest
-}:GestureCustomizationPanelProps){
+export function GestureCustomizationPanel({scope='gesture-map',revision=0,...props}:GestureCustomizationPanelProps&{actionError?:string|null;busy?:boolean}){
+ validateGestureCatalog(props.gestures,props.actions);validateGestureMap(props.value);validateGestureMap(props.defaults);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.gestures,props.actions]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <GestureCustomizationPanelBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onSave={value=>guard.run('save',(host,signal)=>host.onSave(value,signal))} onCancel={()=>guard.current()?.onCancel()}/>;
+}
+function GestureCustomizationPanelBody({
+ actionError=null,busy=false,disabledReason,gestures,actions,value,defaults,onSave,onCancel,label="Gesture controls",className,unstyled=false,...rest
+}:GestureCustomizationPanelProps&{actionError?:string|null;busy?:boolean}){
  validateGestureCatalog(gestures,actions);
  const styled=!unstyled;
  const local=useRef<StoreApi<Local>|null>(null);
@@ -73,9 +82,10 @@ export function GestureCustomizationPanel({
  // A new saved value (after Save, or from elsewhere) replaces the draft.
  useEffect(()=>{store.setState({draft:null});},[value,store]);
  const draft=draftState??value;
- const edit=(next:GestureMap,message?:string)=>store.setState({draft:sameGestureMap(next,value)?null:next,notice:message});
+ const edit=(next:GestureMap,message?:string)=>{if(busy||disabledReason!==undefined)return;store.setState({draft:sameGestureMap(next,value)?null:next,notice:message});};
  const conflicts=findGestureConflicts(draft,gestures,actions);
- const blocked=saveProblem(draft,value,conflicts);
+ const unavailable=busy||disabledReason!==undefined;
+ const blocked=disabledReason??(busy?"Saving gestures":saveProblem(draft,value,conflicts));
  const dirty=!sameGestureMap(draft,value);
  const held=usesHeldGesture(draft,gestures);
  const gestureLabel=(id:string)=>gestures.find(g=>g.id===id)?.label??id;
@@ -83,6 +93,8 @@ export function GestureCustomizationPanel({
 
  return <View {...rest} role="group" aria-label={label}
   {...{className:joinClasses("gap-3",styled&&"rounded-card border border-border bg-surface-raised p-4",className)}}>
+  <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+  {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Saving gestures"}</Text>:null}
   <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",gap:8,flexWrap:"wrap"}}>
    <Text role="heading" aria-level={2} {...{className:joinClasses(styled&&"text-text text-lg font-semibold")}}>{label}</Text>
    <Text {...{className:joinClasses(styled&&"text-xs",styled&&(dirty?"text-text":"text-text-muted"))}}>
@@ -95,7 +107,7 @@ export function GestureCustomizationPanel({
    const def=gestures.find(g=>g.id===bound);
    const dupe=mine.find(c=>c.kind==="duplicate");
    return <View key={action.id} style={{gap:6,zIndex:actions.length-index}}>
-    <Select label={action.label} value={bound??NONE} unstyled={unstyled}
+    <Select disabled={unavailable} label={action.label} value={bound??NONE} unstyled={unstyled}
      options={[{value:NONE,label:"No gesture"},...gestures.map(g=>({value:g.id,
       label:g.reservedBy?`${g.label} (reserved)`:g.unavailableReason?`${g.label} (not on this device)`:g.label,
       disabled:g.reservedBy!==undefined&&g.id!==bound}))]}
@@ -109,19 +121,19 @@ export function GestureCustomizationPanel({
   })}
   <View style={{gap:4}}>
    <PrecisionScrubber label="Hold delay" unit=" s" value={draft.holdDelayS} min={MIN_HOLD_DELAY_S} max={MAX_HOLD_DELAY_S} step={0.05}
-    disabled={!held} unstyled={unstyled} onCommit={v=>edit({...draft,holdDelayS:clampHoldDelay(v)})}/>
+    disabled={!held||unavailable} unstyled={unstyled} onCommit={v=>edit({...draft,holdDelayS:clampHoldDelay(v)})}/>
    {!held?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>
     Applies when an action uses a held gesture such as Touch and hold.</Text>:null}
   </View>
   <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
-   <Button variant="secondary" title="Reset to defaults" unstyled={unstyled}
+   <Button variant="secondary" title="Reset to defaults" disabled={unavailable} unstyled={unstyled}
     onPress={()=>sameGestureMap(draft,defaults)?store.setState({notice:"Gestures are already at their defaults"})
      :edit(defaults,"Defaults restored. Save to keep them, or Cancel to go back.")}/>
    <View style={{flexGrow:1}}/>
-   <Button variant="ghost" title="Cancel" unstyled={unstyled}
+   <Button variant="ghost" title="Cancel" disabled={unavailable} unstyled={unstyled}
     onPress={()=>{store.setState({draft:null,notice:undefined});onCancel();}}/>
    <Button title="Save" unstyled={unstyled} disabled={blocked!==undefined} accessibilityHint={blocked}
-    onPress={()=>{if(blocked)return;store.setState({notice:"Gestures saved"});onSave(draft);}}/>
+    onPress={()=>{if(blocked)return;store.setState({notice:"Saving gestures"});onSave(draft);}}/>
   </View>
   <Text aria-live="polite" accessibilityLiveRegion="polite"
    {...{className:joinClasses(styled&&"text-xs",styled&&(conflicts.length?"text-danger":"text-text-muted"))}}>

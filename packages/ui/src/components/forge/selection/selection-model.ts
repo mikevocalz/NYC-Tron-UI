@@ -105,7 +105,8 @@ export function validateMapping(m:ViewMapping):void{
 const clamp=(v:number,lo:number,hi:number)=>Math.min(Math.max(v,lo),hi);
 /** View point to document pixels, clamped to the document. */
 export function viewToDoc(m:ViewMapping,x:number,y:number):DocPoint{
-  return [clamp(x*m.docWidth/m.viewWidth,0,m.docWidth),clamp(y*m.docHeight/m.viewHeight,0,m.docHeight)];
+  validateMapping(m);if(![x,y].every(Number.isFinite))throw new RangeError("Selection coordinates must be finite");
+  return [clamp(x/m.viewWidth,0,1)*m.docWidth,clamp(y/m.viewHeight,0,1)*m.docHeight];
 }
 /** Document point to view units. */
 export function docToView(m:ViewMapping,p:DocPoint):DocPoint{
@@ -144,12 +145,14 @@ export function shapeBounds(shape:SelectionShape):DocRect{
 
 /** Appends a lasso point unless it is within {@linkcode LASSO_MIN_SPACING} of the last one. */
 export function appendLassoPoint(points:readonly DocPoint[],p:DocPoint,minSpacing=LASSO_MIN_SPACING):readonly DocPoint[]{
+  if(!p.every(Number.isFinite)||!Number.isFinite(minSpacing)||minSpacing<0)throw new RangeError("Invalid lasso point or spacing");
   const last=points[points.length-1];
   if(last&&Math.hypot(p[0]-last[0],p[1]-last[1])<minSpacing)return points;
-  return [...points,p];
+  return [...(points.length>=LASSO_MAX_POINTS?thinPoints(points,Math.ceil(LASSO_MAX_POINTS/2)):points),p];
 }
 /** Thins a stroke evenly to at most `max` points, keeping the first and last. */
 export function thinPoints(points:readonly DocPoint[],max=LASSO_MAX_POINTS):readonly DocPoint[]{
+  if(!Number.isSafeInteger(max)||max<2||max>LASSO_MAX_POINTS)throw new RangeError("Invalid selection point budget");
   if(points.length<=max)return points;
   const out:DocPoint[]=[];
   for(let i=0;i<max;i++)out.push(points[Math.round(i*(points.length-1)/(max-1))]!);
@@ -165,11 +168,13 @@ export function closesPolygon(points:readonly DocPoint[],p:DocPoint,radius=POLYG
 export function shapeProblem(shape:SelectionShape):string|undefined{
   if(shape.kind==="polygon"){
     if(shape.points.length<3)return "A polygon needs at least three points";
+    if(shape.points.length>50000)return "Polygon point budget exceeded";
     if(!shape.points.every(([x,y])=>Number.isFinite(x)&&Number.isFinite(y)))return "Polygon points must be numbers";
     const b=pointsBounds(shape.points);
     return b.w<1||b.h<1?"The selection is too small":undefined;
   }
-  if(![shape.x,shape.y,shape.w,shape.h].every(Number.isFinite))return "Selection edges must be numbers";
+  if(!["rect","ellipse"].includes(shape.kind))return "Unknown selection shape";
+  if(![shape.x,shape.y,shape.w,shape.h,shape.x+shape.w,shape.y+shape.h].every(Number.isFinite))return "Selection edges must be numbers";
   return shape.w<1||shape.h<1?"The selection is too small":undefined;
 }
 
@@ -184,6 +189,7 @@ export function clampRadius(r:number):number{
  * small to mean anything (a click without a drag), so nothing is committed.
  */
 export function buildSelectRegion(shape:SelectionShape,mode:SelectionMode,feather:number):SelectRegionRequest|undefined{
+  if(!SELECTION_MODES.some(item=>item.mode===mode))throw new RangeError("Unknown selection mode");
   if(shapeProblem(shape)!==undefined)return undefined;
   const r=clampRadius(feather);
   const rounded:SelectionShape=shape.kind==="polygon"
@@ -280,7 +286,7 @@ export function validateSelectionProps(p:{tool:string;mode:string;feather:number
   if(!SELECTION_MODES.some(m=>m.mode===p.mode))throw new RangeError(`Unknown selection mode "${p.mode}"`);
   if(!Number.isFinite(p.feather)||p.feather<0||p.feather>MAX_SELECTION_RADIUS)
     throw new RangeError(`Feather must be 0..${MAX_SELECTION_RADIUS}`);
-  if(p.bounds&&![p.bounds.x,p.bounds.y,p.bounds.w,p.bounds.h].every(Number.isFinite))
+  if(p.bounds&&(![p.bounds.x,p.bounds.y,p.bounds.w,p.bounds.h,p.bounds.x+p.bounds.w,p.bounds.y+p.bounds.h].every(Number.isFinite)||p.bounds.w<0||p.bounds.h<0))
     throw new RangeError("Selection bounds must be numbers");
 }
 

@@ -123,14 +123,16 @@ export function referenceEditProblem(ref:ReferenceImage,edit:ReferenceEdit):stri
 
 /** Throws for a reference list the board cannot draw honestly. */
 export function validateReferences(refs:readonly ReferenceImage[],selectedId?:string):void{
+  if(refs.length>256)throw new RangeError("Reference board supports at most 256 images");
   const ids=new Set<string>();
   for(const r of refs){
+    if(!r.id.trim()||r.id.length>512||r.label.length>1024)throw new RangeError("Invalid reference identity");
     if(ids.has(r.id))throw new RangeError(`Duplicate reference id "${r.id}"`);
     ids.add(r.id);
     if(r.label.trim()==="")throw new RangeError(`Reference "${r.id}" needs a label`);
     if(![r.imageWidth,r.imageHeight,r.width,r.height].every(n=>Number.isFinite(n)&&n>0))
       throw new RangeError(`Reference "${r.id}" needs positive sizes`);
-    if(![r.x,r.y].every(Number.isFinite))throw new RangeError(`Reference "${r.id}" needs a numeric position`);
+    if(![r.x,r.y,r.x+r.width,r.y+r.height].every(Number.isFinite))throw new RangeError(`Reference "${r.id}" needs a numeric position`);
     if(!(r.opacity>=REFERENCE_MIN_OPACITY&&r.opacity<=1))throw new RangeError(`Reference "${r.id}" opacity must be 0.1..1`);
     if(!["float","side","overlay"].includes(r.placement))throw new RangeError(`Unknown placement "${r.placement}"`);
     if(r.fit!=="fit"&&r.fit!=="crop")throw new RangeError(`Unknown fit "${r.fit}"`);

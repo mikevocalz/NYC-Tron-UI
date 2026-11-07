@@ -765,9 +765,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/selection/SelectionMarquee.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Rectangular, elliptical, polygonal and freehand selection."
+      "requirement": "Rectangular, elliptical, polygonal and freehand selection.",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
     },
     {
       "id": "B-20",
@@ -777,9 +780,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/selection/MagicSelectionControls.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Tolerance, feather, grow/shrink and refine edge."
+      "requirement": "Tolerance, feather, grow/shrink and refine edge.",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
     },
     {
       "id": "B-21",
@@ -893,9 +899,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Drag a color chip onto a bounded canvas region with live drop feedback and one fill transaction. *Source candidate: `procraft/ui/ColorDropUi.kt`; requires verified implementation and license admission.*"
+      "requirement": "Drag a color chip onto a bounded canvas region with live drop feedback and one fill transaction. *Source candidate: `procraft/ui/ColorDropUi.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
     },
     {
       "id": "B-31",
@@ -905,9 +914,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pinned and movable visual reference images, fit/crop, lock and overlay modes. *Source candidate: `procraft/ui/ReferenceUi.kt`; requires verified implementation and license admission.*"
+      "requirement": "Pinned and movable visual reference images, fit/crop, lock and overlay modes. *Source candidate: `procraft/ui/ReferenceUi.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
     },
     {
       "id": "B-32",
@@ -937,9 +949,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/canvas-tools/GestureCustomizationPanel.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Map touch/stylus gestures and quick actions with cancellation and conflict checks. *Source candidate: `procraft/ui/GestureControlsUi.kt`; requires verified implementation and license admission.*"
+      "requirement": "Map touch/stylus gestures and quick actions with cancellation and conflict checks. *Source candidate: `procraft/ui/GestureControlsUi.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
     },
     {
       "id": "C-01",
