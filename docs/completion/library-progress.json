@@ -601,10 +601,15 @@
       "name": "MultiSelectionControls",
       "phase": "P05",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/selection/MultiSelectionControls.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Group/lasso/shift selection with shared property state."
+      "requirement": "Group/lasso/shift selection with shared property state.",
+      "evidence": [
+        "P05-multi-selection.md"
+      ]
     },
     {
       "id": "B-08",

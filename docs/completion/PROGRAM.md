@@ -64,3 +64,5 @@ P05 thumbnail checkpoint: B-10 now isolates document cache identities, bounds pe
 P05 Android canvas checkpoint: the final 39-step native scenario now passes twice per platform on iOS Metal and Android emulator Vulkan/SwiftShader. [Native evidence](P05-native-canvas.md) records the lifecycle fix and exact virtual-renderer limits. Review count remains 97 of 341.
 
 P05 selection-bounds checkpoint: B-06 now provides scoped move/resize/rotation, hit testing and pane-safe targets with composed navigation ownership. [Selection report](P05-selection-bounds.md) records 841 source tests and 32 affected browser checks. Review count is 98 of 341.
+
+P05 multi-selection checkpoint: B-07 adds ordered range/toggle/lasso selection, grouping and shared property transactions. [Review report](P05-multi-selection.md) records 847 source tests and ten browser checks. Review count is 99 of 341.

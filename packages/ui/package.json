@@ -1949,6 +1949,16 @@
       "types": "./dist/components/forge/selection/selection-bounds-model.d.ts",
       "react-native": "./dist/components/forge/selection/selection-bounds-model.js",
       "default": "./dist/components/forge/selection/selection-bounds-model.js"
+    },
+    "./components/forge/selection/MultiSelectionControls": {
+      "types": "./dist/components/forge/selection/MultiSelectionControls.d.ts",
+      "react-native": "./dist/components/forge/selection/MultiSelectionControls.js",
+      "default": "./dist/components/forge/selection/MultiSelectionControls.js"
+    },
+    "./components/forge/selection/multi-selection-model": {
+      "types": "./dist/components/forge/selection/multi-selection-model.d.ts",
+      "react-native": "./dist/components/forge/selection/multi-selection-model.js",
+      "default": "./dist/components/forge/selection/multi-selection-model.js"
     }
   },
   "scripts": {
