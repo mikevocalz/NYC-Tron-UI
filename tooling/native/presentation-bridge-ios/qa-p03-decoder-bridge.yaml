@@ -1,0 +1,17 @@
+steps:
+  - launch: ai.nyctron.p03bridge
+  - tool: await-ui-element
+    args:
+      bundleId: ai.nyctron.p03bridge
+      selector:
+        text: P03 BRIDGE
+      condition: visible
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      bundleId: ai.nyctron.p03bridge
+      selector:
+        text: P03 BRIDGE
+      condition: text
+      timeoutMs: 30000
+      expectedText: P03 BRIDGE PASS

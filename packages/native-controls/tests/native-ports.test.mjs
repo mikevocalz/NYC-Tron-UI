@@ -12,7 +12,7 @@ test("SDK58 autolinking registers identical custom controls on Apple and Android
  assert.deepEqual(conf.coreFeatures,["swiftui","compose"]);
  const swift=read("ios/NYCTronInstrumentsModule.swift");
  const android=read("android/src/main/java/com/nyctron/instruments/NYCTronInstrumentsModule.kt");
- for(const name of ["TronArcKnobView","TronXYPadView"]){
+ for(const name of ["TronArcKnobView","TronXYPadView","TronVideoPlayerView"]){
    assert.ok(swift.includes("View("+name+".self)")&&!swift.includes("ExpoUIView("),name);
    assert.ok(android.includes('("'+name+'")'),name);
  }
@@ -23,7 +23,7 @@ test("SDK58 autolinking registers identical custom controls on Apple and Android
 test("iOS sources and podspec do not depend on ExpoUI",()=>{
  // Expo 58 SwiftPM cannot give a source module another source module's
  // product, and @expo/ui ships no prebuilt XCFramework. Core covers the views.
- for(const path of ["ios/NYCTronInstrumentsModule.swift","ios/TronArcKnobView.swift","ios/TronXYPadView.swift"]){
+ for(const path of ["ios/NYCTronInstrumentsModule.swift","ios/TronArcKnobView.swift","ios/TronXYPadView.swift","ios/TronVideoPlayerView.swift","ios/TronVideoPlayerProps.swift","ios/TronAVPlayerSurface.swift","ios/TronPlayerLayerView.swift","ios/TronVideoPlayerCoordinator.swift"]){
    assert.doesNotMatch(read(path),/^import ExpoUI$|UIBaseViewProps|ExpoUIView\(/m,path);
  }
  assert.doesNotMatch(read("ios/NYCTronInstruments.podspec"),/dependency 'ExpoUI'/);

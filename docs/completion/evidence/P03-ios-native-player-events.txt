@@ -1,0 +1,15 @@
+ LOG  P03PLAYER {"phase":"readyA","seekToken":"","error":"","sourceId":"A","status":"loading","positionUs":0,"durationUs":0,"target":40,"timeStamp":306218251.325916}
+ LOG  P03PLAYER {"phase":"readyA","seekToken":"","error":"","sourceId":"A","status":"ready","positionUs":0,"durationUs":3000000,"target":40,"timeStamp":306218277.153}
+ LOG  P03PLAYER {"phase":"playingA","status":"playing","durationUs":3000000,"seekToken":"","error":"","sourceId":"A","positionUs":146,"target":40,"timeStamp":306218301.268125}
+ LOG  P03PLAYER {"phase":"pausedA","status":"paused","durationUs":3000000,"seekToken":"","error":"","sourceId":"A","positionUs":5879,"target":40,"timeStamp":306218307.137458}
+ LOG  P03PLAYER {"phase":"seekA","status":"paused","durationUs":3000000,"seekToken":"","error":"","sourceId":"A","positionUs":500000,"target":40,"timeStamp":306218311.939333}
+ LOG  P03PLAYER {"phase":"seekA","status":"paused","durationUs":3000000,"seekToken":"seek-A-1","error":"","sourceId":"A","positionUs":500000,"target":40,"timeStamp":306218321.513791}
+ LOG  P03PLAYER {"phase":"readyB","status":"loading","durationUs":0,"seekToken":"","error":"","sourceId":"B","positionUs":0,"target":40,"timeStamp":306218328.192166}
+ LOG  P03PLAYER {"phase":"readyB","positionUs":0,"durationUs":0,"seekToken":"","status":"loading","error":"","sourceId":"B","target":40,"timeStamp":306218330.658583}
+ LOG  P03PLAYER {"phase":"readyB","status":"ready","durationUs":934000,"seekToken":"","error":"","sourceId":"B","positionUs":0,"target":40,"timeStamp":306218335.111166}
+ LOG  P03PLAYER {"phase":"remounted","error":"","status":"loading","positionUs":0,"sourceId":"C","durationUs":0,"seekToken":"","target":56,"timeStamp":306218866.511458}
+ LOG  P03PLAYER {"phase":"remounted","error":"","status":"ready","positionUs":0,"sourceId":"C","durationUs":3000000,"seekToken":"","target":56,"timeStamp":306218876.231083}
+ LOG  P03PLAYER {"phase":"errorD","error":"","status":"loading","positionUs":0,"sourceId":"D","durationUs":0,"seekToken":"","target":56,"timeStamp":306218882.381166}
+ LOG  P03PLAYER {"phase":"errorD","positionUs":0,"status":"error","error":"Video decoding failed","seekToken":"","sourceId":"D","durationUs":0,"target":56,"timeStamp":306218883.16575}
+ LOG  P03PLAYER {"phase":"recoveryE","positionUs":0,"status":"loading","error":"","seekToken":"","sourceId":"E","durationUs":0,"target":56,"timeStamp":306218888.062583}
+ LOG  P03PLAYER {"phase":"recoveryE","positionUs":0,"status":"ready","error":"","seekToken":"","sourceId":"E","durationUs":3000000,"target":56,"timeStamp":306218892.199375}

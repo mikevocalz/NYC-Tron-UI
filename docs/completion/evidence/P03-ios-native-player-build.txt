@@ -1,0 +1,17 @@
+Isolated source host /Users/mikevocalz/recovered-work/2026-11-05/p03-decoder-native-host
+Xcode27.1 Swift6.4, existing generated native language settings unchanged.
+Command: xcodebuild -project ios/NitroForgeCadenceNative.xcodeproj -scheme NitroForgeCadenceNative -configuration Debug -sdk iphonesimulator -destination id=BBCC4078-E64D-4642-893B-ACF80ACB29A1 -derivedDataPath derived -jobs 2 build CODE_SIGNING_ALLOWED=NO
+
+SwiftCompile normal arm64 Compiling\ TronVideoPlayerProps.swift /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronVideoPlayerProps.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronVideoPlayerProps.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 Compiling\ TronPlayerLayerView.swift /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronPlayerLayerView.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronPlayerLayerView.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 Compiling\ NYCTronInstrumentsModule.swift /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/NYCTronInstrumentsModule.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/NYCTronInstrumentsModule.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 Compiling\ TronVideoPlayerView.swift /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronVideoPlayerView.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronVideoPlayerView.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 Compiling\ TronVideoPlayerCoordinator.swift /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronVideoPlayerCoordinator.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronVideoPlayerCoordinator.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 Compiling\ TronAVPlayerSurface.swift /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronAVPlayerSurface.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+SwiftCompile normal arm64 /Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls/ios/TronAVPlayerSurface.swift (in target 'NYCTronInstruments' from project 'nyc-tron-native-controls')
+** BUILD SUCCEEDED **
