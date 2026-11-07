@@ -1,7 +1,13 @@
-import {useEffect,useRef} from "react";
-import {I18nManager,PanResponder,Pressable,ScrollView,Text,TextInput,View,type PressableProps,type ViewProps} from "react-native";
+import {useEffect,useLayoutEffect,useRef,type ReactNode} from "react";
+import {I18nManager,Platform,PanResponder,Pressable,ScrollView,Text,TextInput,View,type PressableProps,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
+import {Button} from '../../Button.tsx';
+import {nodeIsRTL} from '../../shell/shell-keys.ts';
+import {MenuButton} from '../../shell/MenuButton.tsx';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useOwnedAction} from '../../shell/useOwnedAction.ts';
+import {flattenLayerTree,validateLayerTreeMove} from './layer-tree-model.ts';
 import {cancelPreview} from "../cancel-preview.ts";
 import {joinClasses} from "../../styles.ts";
 import {AnchoredPopover} from "../../overlays/AnchoredPopover.tsx";
@@ -21,6 +27,12 @@ type KeyEvent=Parameters<NonNullable<PressableProps["onKeyDown"]>>[0];
 
 /** Props for {@linkcode LayerStack}. Every layer value is controlled by the app. */
 export interface LayerStackProps extends Omit<ViewProps,"children">{
+ /** Document boundary. Reusing layer IDs across documents must change this scope. */
+ scope?:string;revision?:string|number;disabled?:boolean;
+ expandedIds?:readonly string[];onExpandedChange?:(ids:readonly string[])=>void;
+ onToggleLocked?:(id:string)=>void|Promise<unknown>;
+ /** Sibling insertion index after removing the moved layer. Nested stacks use this callback. */
+ onReparent?:(id:string,parentId:string|null,toIndex:number)=>void|Promise<unknown>;
  /** Layers top to bottom: index 0 is the topmost layer and the first row. */
  layers:readonly LayerRow[];
  /** Id of the selected layer, or `undefined` for no selection. */
@@ -79,18 +91,47 @@ export interface LayerStackProps extends Omit<ViewProps,"children">{
  * Controlled layer list for editors. Visibility, opacity, order, names and
  * selection all live in the app; the component holds only gesture previews.
  */
-export function LayerStack({
+export function LayerStack({scope='layers',revision=0,disabled=false,expandedIds=[],onExpandedChange,onToggleLocked,onReparent,...props}:LayerStackProps){
+ const rows=flattenLayerTree(props.layers,expandedIds),nested=props.layers.some(layer=>layer.parentId!=null),controls=nested||!!onToggleLocked||!!onExpandedChange;
+ if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512||!Number.isFinite(props.rowHeight??56)||(props.rowHeight??56)>1000)throw new RangeError('Invalid layer stack identity or row size');
+ const boundary=JSON.stringify([scope,revision,disabled,props.rowHeight,props.layers.map(layer=>[layer.id,layer.parentId,layer.locked]),expandedIds]);
+ const action=useOwnedAction(boundary),busy=action.pending!==null,request=useRef<symbol|null>(null);
+ useLayoutEffect(()=>{request.current=null;},[boundary]);
+ const committed=useRef<null|{boundary:string;props:typeof props;disabled:boolean;busy:boolean;onExpandedChange:typeof onExpandedChange;onToggleLocked:typeof onToggleLocked;onReparent:typeof onReparent}>(null);
+ useLayoutEffect(()=>{committed.current={boundary,props,disabled,busy,onExpandedChange,onToggleLocked,onReparent};});useLayoutEffect(()=>()=>{committed.current=null;},[]);
+ const current=()=>committed.current?.boundary===boundary&&!committed.current.disabled?committed.current:null;
+ const mutate=(id:string,operation:()=>void|Promise<unknown>)=>{const p=current();if(!p||p.busy||request.current)return Promise.resolve();const token=Symbol();request.current=token;return action.run(id,async()=>{await operation();}).then(()=>{}).finally(()=>{if(request.current===token)request.current=null;});};
+ const allowed=(id:string)=>{const p=current(),row=rows.find(row=>row.layer.id===id);return p&&!p.busy&&row&&!row.inheritedLock&&!row.layer.locked?p:null;};
+ const move=(id:string,toIndex:number)=>{const p=allowed(id);if(!p)return;const row=rows.find(row=>row.layer.id===id)!,target=rows[toIndex];if(!target)return;if(!nested)return mutate(id,()=>p.props.onMove(id,toIndex));
+  const parent=row.layer.parentId??null;if((target.layer.parentId??null)!==parent)return;const siblings=p.props.layers.filter(layer=>(layer.parentId??null)===parent&&layer.id!==id),index=siblings.findIndex(layer=>layer.id===target.layer.id);const from=rows.findIndex(value=>value.layer.id===id),at=index+(toIndex>from?1:0);if(!p.onReparent)return;validateLayerTreeMove(p.props.layers,id,parent,at);return mutate(id,()=>p.onReparent!(id,parent,at));
+ };
+ const effective=rows.map(row=>({...row.layer,locked:row.layer.locked||row.inheritedLock||disabled||busy}));
+ return <View style={{minWidth:0}}><LayerStackBody key={boundary} {...props} layers={effective} disabled={disabled||busy} canReorder={!nested||!!onReparent}
+  onSelect={id=>{const p=current();if(p)p.props.onSelect(id);}} onToggleVisible={id=>{const p=current();if(p&&!p.busy)void mutate(id,()=>p.props.onToggleVisible(id));}}
+  onOpacityPreview={(id,value)=>{const p=allowed(id);if(p)p.props.onOpacityPreview?.(id,value);}} onOpacityCommit={(id,value)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onOpacityCommit(id,value));}}
+  onMove={move} onRename={(id,name)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onRename(id,name));}} {...(props.onRemove?{onRemove:(id:string)=>{const p=allowed(id);if(p)return mutate(id,()=>p.props.onRemove!(id));}}:{})}
+  {...(controls?{renderControls:(layer:LayerRow)=>{const row=rows.find(value=>value.layer.id===layer.id)!,original=row.layer;const groups=props.layers.filter(item=>item.kind==='group');return <View style={{height:44,flexDirection:'row',alignItems:'center',gap:4,paddingStart:Math.min(row.depth,6)*8}}>
+   {original.kind==='group'?<Button title={expandedIds.includes(layer.id)?'−':'+'} accessibilityLabel={(expandedIds.includes(layer.id)?'Collapse ':'Expand ')+layer.name} disabled={disabled||busy||!row.hasChildren||!onExpandedChange} unstyled={props.unstyled} style={{minWidth:44,minHeight:44}} onPress={()=>{const p=current();if(p&&!p.busy)p.onExpandedChange?.(expandedIds.includes(layer.id)?expandedIds.filter(id=>id!==layer.id):[...expandedIds,layer.id]);}}/>:<View style={{width:44}}/>}
+   <Button title={original.locked?'Unlock':'Lock'} accessibilityLabel={(original.locked?'Unlock ':'Lock ')+layer.name} disabled={disabled||busy||row.inheritedLock||!onToggleLocked} unstyled={props.unstyled} style={{minWidth:44,minHeight:44}} onPress={()=>{const p=current();if(p&&!p.busy&&!row.inheritedLock)void mutate(layer.id,()=>p.onToggleLocked?.(layer.id));}}/>
+   {nested||onReparent?<View style={{flex:1,minWidth:80}}><MenuButton label={'Group for '+layer.name} editScope={JSON.stringify([scope,revision,layer.id,original.parentId,original.locked,row.inheritedLock,disabled])} disabled={disabled||busy||!!original.locked||row.inheritedLock||!onReparent} unstyled={props.unstyled} items={[{id:'root',label:'Document root'},...groups.map(group=>{let unavailable=false;try{validateLayerTreeMove(props.layers,layer.id,group.id,0);}catch{unavailable=true;}return {id:'group:'+group.id,label:group.name,disabled:unavailable};})]} onSelect={value=>{const p=allowed(layer.id);if(!p?.onReparent)return;const parent=value==='root'?null:value.slice(6);if(parent===(original.parentId??null))return;const toIndex=p.props.layers.filter(item=>item.id!==layer.id&&(item.parentId??null)===parent).length;validateLayerTreeMove(p.props.layers,layer.id,parent,toIndex);void mutate(layer.id,()=>p.onReparent!(layer.id,parent,toIndex));}}><Text numberOfLines={1} {...{className:joinClasses(!props.unstyled&&'text-text')}}>{original.parentId?props.layers.find(item=>item.id===original.parentId)?.name:'Document root'}</Text></MenuButton></View>:null}
+   <Text numberOfLines={1} {...{className:joinClasses(!props.unstyled&&'text-text-muted')}}>{'Level '+(row.depth+1)}</Text>
+  </View>;}}:{})}/>
+  {busy?<Text accessibilityLiveRegion="polite" {...{className:joinClasses(!props.unstyled&&'text-text-muted')}}>Updating layer</Text>:null}<ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={props.unstyled}/>
+ </View>;
+}
+
+function LayerStackBody({
  layers,selectedId,onSelect,onToggleVisible,onOpacityPreview,onOpacityCommit,onMove,onRename,onRemove,
  rowHeight=56,label="Layers",emptyLabel="No layers",accentColor,opacityControl="auto",className,unstyled=false,
- onLayout,...rest
-}:LayerStackProps){
+ onLayout,renderControls,disabled=false,canReorder=true,...rest
+}:LayerStackProps&{renderControls?:(layer:LayerRow)=>ReactNode;canReorder?:boolean}){
  validateLayers(layers);
  const local=useRef<StoreApi<Local>|null>(null);
  if(!local.current)local.current=createStore<Local>(()=>({opacity:null,drag:null,rename:null,width:undefined,editing:null}));
  const store=local.current;
  const drag=useStore(store,s=>s.drag);
  const width=useStore(store,s=>s.width);
- const height=Math.max(LAYER_TOUCH_TARGET,rowHeight);
+ const primaryHeight=Math.max(LAYER_TOUCH_TARGET,rowHeight),height=primaryHeight+(renderControls?44:0);
  const styled=!unstyled;
  // One row with a thumbnail gives every row the slot, so names and opacity tracks stay in columns.
  const thumbnailSlot=layers.some(l=>l.thumbnail!==undefined);
@@ -109,7 +150,7 @@ export function LayerStack({
    {layers.length===0
     ?<Text {...{className:joinClasses(styled&&"text-text-muted")}} style={{padding:12}}>{emptyLabel}</Text>
     :layers.map((layer,index)=><LayerStackRow key={layer.id} store={store} layer={layer} index={index}
-      count={layers.length} rowHeight={height} thumbnailSlot={thumbnailSlot} mode={mode} selected={layer.id===selectedId} styled={styled}
+      count={layers.length} rowHeight={height} primaryHeight={primaryHeight} controls={renderControls?.(layer)} disabled={disabled} canReorder={canReorder} thumbnailSlot={thumbnailSlot} mode={mode} selected={layer.id===selectedId} styled={styled}
       accentColor={accentColor} onSelect={onSelect} onToggleVisible={onToggleVisible}
       onOpacityPreview={onOpacityPreview} onOpacityCommit={onOpacityCommit} onMove={onMove} onRename={onRename}
       onRemove={onRemove}/>)}
@@ -118,7 +159,7 @@ export function LayerStack({
 }
 
 type RowProps={
- store:StoreApi<Local>;layer:LayerRow;index:number;count:number;rowHeight:number;thumbnailSlot:boolean;
+ store:StoreApi<Local>;layer:LayerRow;index:number;count:number;rowHeight:number;primaryHeight:number;controls:ReactNode;disabled:boolean;canReorder:boolean;thumbnailSlot:boolean;
  mode:LayerOpacityMode;selected:boolean;
  styled:boolean;accentColor:string|undefined;
 }&Pick<LayerStackProps,"onSelect"|"onToggleVisible"|"onOpacityPreview"|"onOpacityCommit"|"onMove"|"onRename"|"onRemove">;
@@ -130,7 +171,7 @@ function LayerStackRow(props:RowProps){
  const opacityPreview=useStore(store,s=>s.opacity?.id===layer.id?s.opacity.value:undefined);
  const drag=useStore(store,s=>s.drag?.id===layer.id?s.drag:null);
  const rename=useStore(store,s=>s.rename?.id===layer.id?s.rename:null);
- const locked=layer.locked===true;
+ const locked=props.disabled||layer.locked===true;
  const opacity=opacityPreview??layer.opacity;
  const trackWidth=useRef(0);
  const opacityStart=useRef(layer.opacity);
@@ -145,12 +186,12 @@ function LayerStackRow(props:RowProps){
   const p=latest.current;
   store.setState({opacity:null});
   const next=normalizeOpacity(value);
-  return next!==p.layer.opacity?p.onOpacityCommit(p.layer.id,next):undefined;
+  return !p.disabled&&!p.layer.locked&&next!==p.layer.opacity?p.onOpacityCommit(p.layer.id,next):undefined;
  };
  const opacityPan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
  if(!opacityPan.current)opacityPan.current=PanResponder.create({
-  onStartShouldSetPanResponder:()=>latest.current.layer.locked!==true,
-  onMoveShouldSetPanResponder:()=>latest.current.layer.locked!==true,
+  onStartShouldSetPanResponder:()=>!latest.current.disabled&&latest.current.layer.locked!==true,
+  onMoveShouldSetPanResponder:()=>!latest.current.disabled&&latest.current.layer.locked!==true,
   onPanResponderGrant:()=>{
    const p=latest.current;
    opacityStart.current=p.layer.opacity;
@@ -176,13 +217,13 @@ function LayerStackRow(props:RowProps){
 
  const move=(toIndex:number)=>{
   const p=latest.current;
-  if(p.layer.locked||toIndex<0||toIndex>=p.count||toIndex===p.index)return;
+  if(p.disabled||!p.canReorder||p.layer.locked||toIndex<0||toIndex>=p.count||toIndex===p.index)return;
   void p.onMove(p.layer.id,toIndex);
  };
  const dragPan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
  if(!dragPan.current)dragPan.current=PanResponder.create({
-  onStartShouldSetPanResponder:()=>latest.current.layer.locked!==true,
-  onMoveShouldSetPanResponder:()=>latest.current.layer.locked!==true,
+  onStartShouldSetPanResponder:()=>latest.current.canReorder&&!latest.current.disabled&&latest.current.layer.locked!==true,
+  onMoveShouldSetPanResponder:()=>latest.current.canReorder&&!latest.current.disabled&&latest.current.layer.locked!==true,
   onPanResponderGrant:()=>{
    const p=latest.current;
    store.setState({drag:{id:p.layer.id,from:p.index,to:p.index,dy:0}});
@@ -204,11 +245,11 @@ function LayerStackRow(props:RowProps){
  });
 
  const startRename=()=>{
-  if(!latest.current.layer.locked)store.setState({rename:{id:layer.id,draft:layer.name}});
+  if(!latest.current.disabled&&!latest.current.layer.locked)store.setState({rename:{id:layer.id,draft:layer.name}});
  };
  const finishRename=()=>{
   const current=store.getState().rename;
-  if(current?.id!==layer.id)return;
+  if(current?.id!==layer.id||latest.current.disabled||latest.current.layer.locked)return;
   store.setState({rename:null});
   const next=resolveRename(latest.current.layer.name,current.draft);
   if(next!==undefined)void latest.current.onRename(layer.id,next);
@@ -217,10 +258,12 @@ function LayerStackRow(props:RowProps){
  const removable=props.onRemove!==undefined&&!locked;
  const remove=()=>{
   const p=latest.current;
-  if(p.onRemove&&p.layer.locked!==true)void p.onRemove(p.layer.id);
+  if(p.onRemove&&!p.disabled&&p.layer.locked!==true)void p.onRemove(p.layer.id);
  };
  const onRowKey=(e:KeyEvent)=>{
   const key=e.nativeEvent.key;
+  if(key==="Escape"){store.setState({drag:null,rename:null});cancelOpacity();e.preventDefault();return;}
+  if(e.nativeEvent.altKey&&(key==="ArrowUp"||key==="ArrowDown")){e.preventDefault();move(index+(key==="ArrowUp"?-1:1));return;}
   if(key!=="Delete"&&key!=="Backspace")return;
   if(!removable)return;
   e.preventDefault();
@@ -243,20 +286,20 @@ function LayerStackRow(props:RowProps){
  const percent=Math.round(opacity*100);
  const dimmed={opacity:locked?0.45:1};
 
- return <View
+ return <View testID={"layer-row-"+layer.id}
    {...{className:joinClasses(styled&&"border-b border-border",styled&&(selected||drag)&&"bg-surface-raised")}}
-   style={{height:rowHeight,flexDirection:"row",alignItems:"center",
-    zIndex:drag?1:0,transform:drag?[{translateY:drag.dy}]:undefined}}>
+   style={{height:rowHeight,zIndex:drag?1:0,transform:drag?[{translateY:drag.dy}]:undefined}}>
+  <View style={{height:props.primaryHeight,flexDirection:"row",alignItems:"center"}}>
   <View pointerEvents="none" {...{className:joinClasses(styled&&selected&&!accentColor&&"bg-accent")}}
    style={{position:"absolute",start:0,top:0,bottom:0,width:3,...(selected?accent:null)}}/>
   {/* Screen readers reorder through the row's move actions instead of this handle. */}
-  <View {...dragPan.current.panHandlers} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
+  <View testID={"layer-reorder-"+layer.id} {...dragPan.current.panHandlers} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",gap:3,...dimmed}}>
    {[0,1,2].map(i=><View key={i} {...{className:joinClasses(styled&&"bg-text-muted")}}
     style={{width:16,height:2,borderRadius:1}}/>)}
   </View>
   <Pressable accessibilityRole="switch" accessibilityLabel={"Show "+layer.name}
-   accessibilityState={{checked:layer.visible}} onPress={()=>latest.current.onToggleVisible(layer.id)}
+   accessibilityState={{checked:layer.visible,disabled:props.disabled}} disabled={props.disabled} onPress={()=>latest.current.onToggleVisible(layer.id)}
    {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
    <VisibilityGlyph visible={layer.visible} styled={styled}/>
@@ -276,7 +319,7 @@ function LayerStackRow(props:RowProps){
       style={{minHeight:LAYER_TOUCH_TARGET,paddingHorizontal:8}}/>
     :<Pressable accessibilityRole="button" accessibilityLabel={layerAccessibilityLabel(layer,index,count)}
       accessibilityHint={locked?undefined:"Double tap to select. Long press to rename."}
-      accessibilityState={{selected}} accessibilityActions={rowActions}
+      accessibilityState={{selected,disabled:props.disabled}} disabled={props.disabled} accessibilityActions={rowActions}
       onAccessibilityAction={e=>{
        const action=e.nativeEvent.actionName;
        if(action==="activate")latest.current.onSelect(layer.id);
@@ -299,7 +342,8 @@ function LayerStackRow(props:RowProps){
   <View {...opacityPan.current.panHandlers}
    accessible accessibilityRole="adjustable" accessibilityLabel={layer.name+" opacity"}
    accessibilityValue={{min:0,max:100,now:percent,text:formatOpacity(opacity)}}
-   accessibilityState={{disabled:locked}}
+   accessibilityState={{disabled:locked}} aria-disabled={locked}
+   {...(Platform.OS==='web'?{tabIndex:locked?-1 as const:0 as const,onKeyDown:(event:KeyEvent)=>{const key=event.nativeEvent.key;if(locked)return;if(key==='Escape'){event.preventDefault();cancelOpacity();return;}if(event.nativeEvent.ctrlKey||event.nativeEvent.metaKey||event.nativeEvent.altKey)return;const rtl=nodeIsRTL(event.currentTarget)||I18nManager.isRTL;const direction=key==='ArrowUp'?1:key==='ArrowDown'?-1:key==='ArrowRight'?(rtl?-1:1):key==='ArrowLeft'?(rtl?1:-1):0;if(direction||key==='Home'||key==='End'){event.preventDefault();void commitOpacity(key==='Home'?0:key==='End'?1:stepOpacity(layer.opacity,direction as -1|1,event.nativeEvent.shiftKey?.5:.05));}}}:{})}
    accessibilityActions={[{name:"increment"},{name:"decrement"}]}
    onAccessibilityAction={e=>{
     if(e.nativeEvent.actionName==="increment")stepActions(1);
@@ -325,6 +369,8 @@ function LayerStackRow(props:RowProps){
    style={{width:LAYER_TOUCH_TARGET,height:LAYER_TOUCH_TARGET,alignItems:"center",justifyContent:"center",...dimmed}}>
    <RemoveGlyph styled={styled}/>
   </Pressable>:null}
+  </View>
+  {props.controls}
  </View>;
 }
 

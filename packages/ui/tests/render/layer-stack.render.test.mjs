@@ -14,9 +14,10 @@ function harness({ rtl = false } = {}) {
   const refs = [];
   let cursor = 0;
   const responders = [];
+  const layoutEffects = [];
   const element = (type, props) => ({ type, props });
   const mocks = {
-    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: () => {},
+    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: fn => { layoutEffects.push(fn); },
       useMemo: f => f(), cloneElement: (el, props) => ({ ...el, props: { ...el.props, ...props } }) },
     "react/jsx-runtime": { jsx: element, jsxs: element },
     "react-native": {
@@ -39,7 +40,7 @@ function harness({ rtl = false } = {}) {
         jsx: ts.JsxEmit.ReactJSX, verbatimModuleSyntax: false },
     }).outputText;
     cache.set(path, exports);
-    runInNewContext(code, { exports, require: name => mocks[name] ?? load(resolve(dirname(path), name)) },
+    runInNewContext(code, { exports, AbortController, require: name => mocks[name] ?? load(resolve(dirname(path), name)) },
       { filename: path });
     return exports;
   }
@@ -52,7 +53,7 @@ function harness({ rtl = false } = {}) {
     return children === undefined ? node : { ...node, props: { ...node.props, children: expand(children) } };
   };
   return {
-    render: props => { cursor = 0; return expand(LayerStack(props)); },
+    render: props => { cursor = 0; layoutEffects.length = 0; const tree = expand(LayerStack(props)); for (const effect of layoutEffects) effect(); return tree; },
     // Each row creates its opacity responder, then its drag responder.
     opacityResponder: row => responders[row * 2],
   };
@@ -117,19 +118,23 @@ test("no onRemove means no remove control, action or key handling", () => {
   assert.equal(prevented, false, "Delete passes through when the host cannot remove");
 });
 
-test("onRemove adds a button, a screen-reader action and Delete/Backspace on the row", () => {
+test("onRemove adds a button, a screen-reader action and Delete/Backspace on the row", async () => {
   const removed = [];
   const tree = harness().render(props({ onRemove: id => removed.push(id) }));
   const button = byLabel(tree, "Remove Card");
   assert.equal(button.type, "Pressable");
   assert.equal(button.props.accessibilityRole, "button");
   button.props.onPress();
+  await new Promise(resolve => setImmediate(resolve));
   const main = rowMain(tree, "Card");
   assert.equal(main.props.accessibilityActions.find(a => a.name === "remove")?.label, "Remove");
   main.props.onAccessibilityAction({ nativeEvent: { actionName: "remove" } });
+  await new Promise(resolve => setImmediate(resolve));
   let prevented = 0;
-  for (const key of ["Delete", "Backspace", "Enter"])
+  for (const key of ["Delete", "Backspace", "Enter"]) {
     main.props.onKeyDown({ nativeEvent: { key }, preventDefault: () => { prevented++; } });
+    await new Promise(resolve => setImmediate(resolve));
+  }
   assert.deepEqual(removed, ["rect", "rect", "rect", "rect"], "button, action, Delete and Backspace; Enter is not remove");
   assert.equal(prevented, 2);
 });

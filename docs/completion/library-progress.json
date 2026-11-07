@@ -634,9 +634,12 @@
       "sourceCandidates": [
         "packages/ui/src/components/forge/layers/LayerStack.tsx"
       ],
-      "implementationReview": "pending",
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Drag reorder, nested groups, visibility and lock."
+      "requirement": "Drag reorder, nested groups, visibility and lock.",
+      "evidence": [
+        "P05-layer-tree.md"
+      ]
     },
     {
       "id": "B-10",

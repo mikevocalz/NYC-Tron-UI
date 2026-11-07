@@ -1959,6 +1959,11 @@
       "types": "./dist/components/forge/selection/multi-selection-model.d.ts",
       "react-native": "./dist/components/forge/selection/multi-selection-model.js",
       "default": "./dist/components/forge/selection/multi-selection-model.js"
+    },
+    "./components/forge/layers/layer-tree-model": {
+      "types": "./dist/components/forge/layers/layer-tree-model.d.ts",
+      "react-native": "./dist/components/forge/layers/layer-tree-model.js",
+      "default": "./dist/components/forge/layers/layer-tree-model.js"
     }
   },
   "scripts": {
