@@ -1,0 +1,9 @@
+# Spreadsheet grid and formula controls
+
+Reviewed I-01 through I-07. VirtualSpreadsheetGrid reuses the existing two-axis SpreadsheetGrid owner, with native-driver frozen-strip transforms, bounded visible windows, controlled selection and block-prefetch callbacks. No duplicate grid or formula engine was added. Extremely large frozen counts now allocate/request only their visible portion; the actual freeze configuration is retained. A visible-cell budget prevents unbounded native view allocation.
+
+FormulaBar is the extracted controlled input used by SpreadsheetGrid and independent consumers. It retains the workbook-owned draft, groups submit/blur through the shared admission guard, cancels with Escape and blocks the subsequent blur from committing the cancelled draft. NameBox validates named/A1 ranges against actual sheet bounds. FormulaAutocomplete uses supplied parser/catalog suggestions and replacement spans; ReferenceColorizer reuses the licensed tokenizer/tone owner and host grid-coordinate highlights.
+
+CellSelectionOverlay draws clipped segments in explicit nonoccluded/frozen pane rectangles and shares a native RNGH range handle for resize and fill. FillHandleAndAutoFill shares its recognizer and pure fill planner; copy/series/formula rebasing remain host transactions. The separate AutoFillModePicker belongs in the app's usable toolbar. Scope, range, pane geometry and mode changes invalidate obsolete gestures. The existing grid fill adapter now uses final release coordinates.
+
+Validation: combined UI TypeScript build passed. Full source/browser/native gesture, scroll, keyboard/focus, accessibility and workbook-engine suites remain deferred until user review. Legacy grid scrolling/fill adapters remain where identified; new RNGH controls are not presented as device-validated. No formulas are evaluated and no workbook persistence is implemented in UI.

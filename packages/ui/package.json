@@ -2354,6 +2354,41 @@
       "types": "./dist/components/forge/document/PaginatedTextCanvas.d.ts",
       "react-native": "./dist/components/forge/document/PaginatedTextCanvas.js",
       "default": "./dist/components/forge/document/PaginatedTextCanvas.js"
+    },
+    "./components/forge/spreadsheet/VirtualSpreadsheetGrid": {
+      "types": "./dist/components/forge/spreadsheet/VirtualSpreadsheetGrid.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/VirtualSpreadsheetGrid.js",
+      "default": "./dist/components/forge/spreadsheet/VirtualSpreadsheetGrid.js"
+    },
+    "./components/forge/spreadsheet/FormulaBar": {
+      "types": "./dist/components/forge/spreadsheet/FormulaBar.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FormulaBar.js",
+      "default": "./dist/components/forge/spreadsheet/FormulaBar.js"
+    },
+    "./components/forge/spreadsheet/NameBox": {
+      "types": "./dist/components/forge/spreadsheet/NameBox.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/NameBox.js",
+      "default": "./dist/components/forge/spreadsheet/NameBox.js"
+    },
+    "./components/forge/spreadsheet/FormulaAutocomplete": {
+      "types": "./dist/components/forge/spreadsheet/FormulaAutocomplete.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FormulaAutocomplete.js",
+      "default": "./dist/components/forge/spreadsheet/FormulaAutocomplete.js"
+    },
+    "./components/forge/spreadsheet/ReferenceColorizer": {
+      "types": "./dist/components/forge/spreadsheet/ReferenceColorizer.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/ReferenceColorizer.js",
+      "default": "./dist/components/forge/spreadsheet/ReferenceColorizer.js"
+    },
+    "./components/forge/spreadsheet/CellSelectionOverlay": {
+      "types": "./dist/components/forge/spreadsheet/CellSelectionOverlay.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/CellSelectionOverlay.js",
+      "default": "./dist/components/forge/spreadsheet/CellSelectionOverlay.js"
+    },
+    "./components/forge/spreadsheet/FillHandleAndAutoFill": {
+      "types": "./dist/components/forge/spreadsheet/FillHandleAndAutoFill.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/FillHandleAndAutoFill.js",
+      "default": "./dist/components/forge/spreadsheet/FillHandleAndAutoFill.js"
     }
   },
   "scripts": {

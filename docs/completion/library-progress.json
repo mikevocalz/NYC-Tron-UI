@@ -3529,70 +3529,106 @@
       "name": "VirtualSpreadsheetGrid",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/VirtualSpreadsheetGrid.tsx",
+        "packages/ui/src/components/forge/SpreadsheetGrid.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Huge row/column virtualization and stable scrolling."
+      "requirement": "Huge row/column virtualization and stable scrolling.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-02",
       "name": "CellSelectionOverlay",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/CellSelectionOverlay.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Range selection with fill/resize and frozen panes."
+      "requirement": "Range selection with fill/resize and frozen panes.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-03",
       "name": "FormulaBar",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/FormulaBar.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Edit and view raw formula with cancellation."
+      "requirement": "Edit and view raw formula with cancellation.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-04",
       "name": "NameBox",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/NameBox.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Go to named ranges/addresses and display selection."
+      "requirement": "Go to named ranges/addresses and display selection.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-05",
       "name": "FormulaAutocomplete",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/FormulaAutocomplete.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Function signatures, references and suggestions."
+      "requirement": "Function signatures, references and suggestions.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-06",
       "name": "ReferenceColorizer",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/ReferenceColorizer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Colored formula references and highlight ranges."
+      "requirement": "Colored formula references and highlight ranges.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-07",
       "name": "FillHandleAndAutoFill",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/FillHandleAndAutoFill.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Copy formulas, series and drag previews."
+      "requirement": "Copy formulas, series and drag previews.",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
     },
     {
       "id": "I-08",
