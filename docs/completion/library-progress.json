@@ -3231,30 +3231,45 @@
       "name": "TypographyInspector",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/TypographyInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Kerning, tracking, leading, paragraph space and glyphs."
+      "requirement": "Kerning, tracking, leading, paragraph space and glyphs.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-05",
       "name": "ParagraphStylesGallery",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/ParagraphStylesGallery.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Named styles, overrides, live preview and hierarchy."
+      "requirement": "Named styles, overrides, live preview and hierarchy.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-06",
       "name": "ParagraphRuler",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/ParagraphRuler.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Indents, tab stops, margins and columns."
+      "requirement": "Indents, tab stops, margins and columns.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-07",
@@ -3273,40 +3288,60 @@
       "name": "InsertTableGrid",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/InsertTableGrid.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Touch grid selection and rows/columns insertion."
+      "requirement": "Touch grid selection and rows/columns insertion.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-09",
       "name": "TableLayoutInspector",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/TableLayoutInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Cell merge/split, border, fill and alignment."
+      "requirement": "Cell merge/split, border, fill and alignment.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-10",
       "name": "HeadersFootersEditor",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/HeadersFootersEditor.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Running titles, page numbers and first-page behavior."
+      "requirement": "Running titles, page numbers and first-page behavior.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-11",
       "name": "PageSetupPanel",
       "phase": "P12",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/document/PageSetupPanel.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Margins, paper sizes, orientation, sections and columns."
+      "requirement": "Margins, paper sizes, orientation, sections and columns.",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
     },
     {
       "id": "H-12",

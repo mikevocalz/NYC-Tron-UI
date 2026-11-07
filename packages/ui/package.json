@@ -2259,6 +2259,46 @@
       "types": "./dist/components/forge/audio/VoiceoverCountdownAndTakeBin.d.ts",
       "react-native": "./dist/components/forge/audio/VoiceoverCountdownAndTakeBin.js",
       "default": "./dist/components/forge/audio/VoiceoverCountdownAndTakeBin.js"
+    },
+    "./components/forge/inputs/PropertyInspector": {
+      "types": "./dist/components/forge/inputs/PropertyInspector.d.ts",
+      "react-native": "./dist/components/forge/inputs/PropertyInspector.js",
+      "default": "./dist/components/forge/inputs/PropertyInspector.js"
+    },
+    "./components/forge/document/TypographyInspector": {
+      "types": "./dist/components/forge/document/TypographyInspector.d.ts",
+      "react-native": "./dist/components/forge/document/TypographyInspector.js",
+      "default": "./dist/components/forge/document/TypographyInspector.js"
+    },
+    "./components/forge/document/PageSetupPanel": {
+      "types": "./dist/components/forge/document/PageSetupPanel.d.ts",
+      "react-native": "./dist/components/forge/document/PageSetupPanel.js",
+      "default": "./dist/components/forge/document/PageSetupPanel.js"
+    },
+    "./components/forge/document/HeadersFootersEditor": {
+      "types": "./dist/components/forge/document/HeadersFootersEditor.d.ts",
+      "react-native": "./dist/components/forge/document/HeadersFootersEditor.js",
+      "default": "./dist/components/forge/document/HeadersFootersEditor.js"
+    },
+    "./components/forge/document/ParagraphStylesGallery": {
+      "types": "./dist/components/forge/document/ParagraphStylesGallery.d.ts",
+      "react-native": "./dist/components/forge/document/ParagraphStylesGallery.js",
+      "default": "./dist/components/forge/document/ParagraphStylesGallery.js"
+    },
+    "./components/forge/document/TableLayoutInspector": {
+      "types": "./dist/components/forge/document/TableLayoutInspector.d.ts",
+      "react-native": "./dist/components/forge/document/TableLayoutInspector.js",
+      "default": "./dist/components/forge/document/TableLayoutInspector.js"
+    },
+    "./components/forge/document/InsertTableGrid": {
+      "types": "./dist/components/forge/document/InsertTableGrid.d.ts",
+      "react-native": "./dist/components/forge/document/InsertTableGrid.js",
+      "default": "./dist/components/forge/document/InsertTableGrid.js"
+    },
+    "./components/forge/document/ParagraphRuler": {
+      "types": "./dist/components/forge/document/ParagraphRuler.d.ts",
+      "react-native": "./dist/components/forge/document/ParagraphRuler.js",
+      "default": "./dist/components/forge/document/ParagraphRuler.js"
     }
   },
   "scripts": {
