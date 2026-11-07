@@ -2389,6 +2389,46 @@
       "types": "./dist/components/forge/spreadsheet/FillHandleAndAutoFill.d.ts",
       "react-native": "./dist/components/forge/spreadsheet/FillHandleAndAutoFill.js",
       "default": "./dist/components/forge/spreadsheet/FillHandleAndAutoFill.js"
+    },
+    "./components/forge/spreadsheet/CellFormatInspector": {
+      "types": "./dist/components/forge/spreadsheet/CellFormatInspector.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/CellFormatInspector.js",
+      "default": "./dist/components/forge/spreadsheet/CellFormatInspector.js"
+    },
+    "./components/forge/spreadsheet/ValidationDropdown": {
+      "types": "./dist/components/forge/spreadsheet/ValidationDropdown.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/ValidationDropdown.js",
+      "default": "./dist/components/forge/spreadsheet/ValidationDropdown.js"
+    },
+    "./components/forge/spreadsheet/TableStyleGallery": {
+      "types": "./dist/components/forge/spreadsheet/TableStyleGallery.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/TableStyleGallery.js",
+      "default": "./dist/components/forge/spreadsheet/TableStyleGallery.js"
+    },
+    "./components/forge/spreadsheet/ConditionalFormatRules": {
+      "types": "./dist/components/forge/spreadsheet/ConditionalFormatRules.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/ConditionalFormatRules.js",
+      "default": "./dist/components/forge/spreadsheet/ConditionalFormatRules.js"
+    },
+    "./components/forge/spreadsheet/SortFilterHeader": {
+      "types": "./dist/components/forge/spreadsheet/SortFilterHeader.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SortFilterHeader.js",
+      "default": "./dist/components/forge/spreadsheet/SortFilterHeader.js"
+    },
+    "./components/forge/spreadsheet/DataImportWizard": {
+      "types": "./dist/components/forge/spreadsheet/DataImportWizard.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/DataImportWizard.js",
+      "default": "./dist/components/forge/spreadsheet/DataImportWizard.js"
+    },
+    "./components/forge/spreadsheet/SavedSheetViewManager": {
+      "types": "./dist/components/forge/spreadsheet/SavedSheetViewManager.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/SavedSheetViewManager.js",
+      "default": "./dist/components/forge/spreadsheet/SavedSheetViewManager.js"
+    },
+    "./components/forge/spreadsheet/PivotFieldList": {
+      "types": "./dist/components/forge/spreadsheet/PivotFieldList.d.ts",
+      "react-native": "./dist/components/forge/spreadsheet/PivotFieldList.js",
+      "default": "./dist/components/forge/spreadsheet/PivotFieldList.js"
     }
   },
   "scripts": {

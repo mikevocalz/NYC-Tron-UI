@@ -3647,40 +3647,60 @@
       "name": "CellFormatInspector",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/CellFormatInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Numbers, currency, dates, borders, fills, alignment."
+      "requirement": "Numbers, currency, dates, borders, fills, alignment.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-10",
       "name": "ConditionalFormatRules",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/ConditionalFormatRules.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Rules editor, color scales, icons and data bars."
+      "requirement": "Rules editor, color scales, icons and data bars.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-11",
       "name": "ValidationDropdown",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/ValidationDropdown.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Editable list and error validation feedback."
+      "requirement": "Editable list and error validation feedback.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-12",
       "name": "SortFilterHeader",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/SortFilterHeader.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Dropdowns, multi-sort and visible row filters."
+      "requirement": "Dropdowns, multi-sort and visible row filters.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-13",
@@ -3711,20 +3731,30 @@
       "name": "PivotFieldList",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/PivotFieldList.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Drag row/column/value/filter fields and aggregates."
+      "requirement": "Drag row/column/value/filter fields and aggregates.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-16",
       "name": "TableStyleGallery",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/TableStyleGallery.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Named tables, header, totals and structured references."
+      "requirement": "Named tables, header, totals and structured references.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-17",
@@ -3753,10 +3783,15 @@
       "name": "DataImportWizard",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/DataImportWizard.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "CSV/TSV/XLSX types, headers and conversion preview."
+      "requirement": "CSV/TSV/XLSX types, headers and conversion preview.",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "I-20",
@@ -3775,10 +3810,15 @@
       "name": "SavedSheetViewManager",
       "phase": "P13",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/spreadsheet/SavedSheetViewManager.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Store and restore grid/view presets, visible columns and sort/filter scope. *Source candidate: `gridcraft/ui/editor/Tabs.kt`; requires verified implementation and license admission.*"
+      "requirement": "Store and restore grid/view presets, visible columns and sort/filter scope. *Source candidate: `gridcraft/ui/editor/Tabs.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
     },
     {
       "id": "J-01",
