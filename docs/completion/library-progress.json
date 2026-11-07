@@ -721,41 +721,61 @@
       "name": "BrushPresetBrowser",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/BrushPresetBrowser.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Presets, preview stroke and favorites."
+      "requirement": "Presets, preview stroke and favorites.",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-16",
       "name": "BrushDynamicsInspector",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/BrushDynamicsInspector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Size, hardness, flow, spacing, stabilizer, scatter."
+      "requirement": "Size, hardness, flow, spacing, stabilizer, scatter.",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-17",
       "name": "InkStrokePreview",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/InkStrokePreview.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
       "requirement": "Pressure/tilt/twist and real-time latency feedback.",
-      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge."
+      "ownershipNote": "Reusable UI belongs to NYC-Tron; processing and engine integration remain with Forge.",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-18",
       "name": "EraserModePicker",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/EraserModePicker.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pixel, vector, mask and object-aware erasing."
+      "requirement": "Pixel, vector, mask and object-aware erasing.",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-19",
@@ -912,10 +932,15 @@
       "name": "BrushTaperControl",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/BrushTaperControl.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pen-versus-touch taper start/end, pressure and tip controls with live test strokes. *Source candidate: `procraft/ui/BrushStudio.kt`; requires verified implementation and license admission.*"
+      "requirement": "Pen-versus-touch taper start/end, pressure and tip controls with live test strokes. *Source candidate: `procraft/ui/BrushStudio.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-30",
@@ -952,20 +977,30 @@
       "name": "TimelapsePlaybackExporter",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/TimelapsePlaybackExporter.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Record non-destructive drawing history and produce a real media file with export progress. *Source candidate: `procraft/ui/TimeLapseUi.kt`; requires verified implementation and license admission.*"
+      "requirement": "Record non-destructive drawing history and produce a real media file with export progress. *Source candidate: `procraft/ui/TimeLapseUi.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-33",
       "name": "BrushStabilizationPreview",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/ink/BrushStabilizationPreview.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Preview streamline/stabilization and motion filtering while maintaining pressure fidelity. *Source candidate: `procraft/ui/BrushStudio.kt`; requires verified implementation and license admission.*"
+      "requirement": "Preview streamline/stabilization and motion filtering while maintaining pressure fidelity. *Source candidate: `procraft/ui/BrushStudio.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "B-34",
@@ -3995,10 +4030,15 @@
       "name": "PenPairingDialog",
       "phase": "P06",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/devices/PenPairingDialog.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Honest BLE link vs verified input and cancellation."
+      "requirement": "Honest BLE link vs verified input and cancellation.",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
     },
     {
       "id": "N-03",

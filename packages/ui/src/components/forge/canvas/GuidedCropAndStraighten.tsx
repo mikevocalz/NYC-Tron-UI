@@ -32,7 +32,7 @@ export function GuidedCropAndStraighten({scope='guided-crop',revision=0,...props
  const {onCommit:_commit,onPreview:_preview,disabledReason,...viewProps}=rest;
  return <View {...viewProps} style={[{minWidth:0,gap:8},style]} accessibilityLabel="Crop and straighten">
   <ErrorMessage message={guard.error??undefined} unstyled={unstyled}/>
-  {off?<Text accessibilityLiveRegion="polite">{disabledReason??'Applying crop'}</Text>:null}
+  {off?<Text {...{className:unstyled?undefined:'text-text'}} accessibilityLiveRegion="polite">{disabledReason??'Applying crop'}</Text>:null}
   <SegmentedControl aria-label="Crop ratio" disabled={off} options={RATIOS} value={value.ratio} unstyled={unstyled} onChange={name=>{const r=ratio(name);void commit({...value,ratio:name,rect:r===undefined?value.rect:fitCropAspect(value.rect,r)});}}/>
   <ImageCropOverlay key={owner} scope={scope} revision={revision} disabled={off} rect={value.rect} width={width} height={height} grid={grid} {...(aspect===undefined?{}:{aspectRatio:aspect})} unstyled={unstyled}
    onPreview={rect=>guard.current()?.onPreview?.({...value,rect})} onCommit={rect=>commit({...value,rect})}>{children}</ImageCropOverlay>

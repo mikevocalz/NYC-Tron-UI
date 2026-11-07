@@ -1979,6 +1979,51 @@
       "types": "./dist/components/forge/canvas/GuidedCropAndStraighten.d.ts",
       "react-native": "./dist/components/forge/canvas/GuidedCropAndStraighten.js",
       "default": "./dist/components/forge/canvas/GuidedCropAndStraighten.js"
+    },
+    "./components/forge/ink/BrushPresetBrowser": {
+      "types": "./dist/components/forge/ink/BrushPresetBrowser.d.ts",
+      "react-native": "./dist/components/forge/ink/BrushPresetBrowser.js",
+      "default": "./dist/components/forge/ink/BrushPresetBrowser.js"
+    },
+    "./components/forge/ink/BrushDynamicsInspector": {
+      "types": "./dist/components/forge/ink/BrushDynamicsInspector.d.ts",
+      "react-native": "./dist/components/forge/ink/BrushDynamicsInspector.js",
+      "default": "./dist/components/forge/ink/BrushDynamicsInspector.js"
+    },
+    "./components/forge/ink/InkStrokePreview": {
+      "types": "./dist/components/forge/ink/InkStrokePreview.d.ts",
+      "react-native": "./dist/components/forge/ink/InkStrokePreview.js",
+      "default": "./dist/components/forge/ink/InkStrokePreview.js"
+    },
+    "./components/forge/ink/EraserModePicker": {
+      "types": "./dist/components/forge/ink/EraserModePicker.d.ts",
+      "react-native": "./dist/components/forge/ink/EraserModePicker.js",
+      "default": "./dist/components/forge/ink/EraserModePicker.js"
+    },
+    "./components/forge/ink/BrushTaperControl": {
+      "types": "./dist/components/forge/ink/BrushTaperControl.d.ts",
+      "react-native": "./dist/components/forge/ink/BrushTaperControl.js",
+      "default": "./dist/components/forge/ink/BrushTaperControl.js"
+    },
+    "./components/forge/ink/TimelapsePlaybackExporter": {
+      "types": "./dist/components/forge/ink/TimelapsePlaybackExporter.d.ts",
+      "react-native": "./dist/components/forge/ink/TimelapsePlaybackExporter.js",
+      "default": "./dist/components/forge/ink/TimelapsePlaybackExporter.js"
+    },
+    "./components/forge/ink/BrushStabilizationPreview": {
+      "types": "./dist/components/forge/ink/BrushStabilizationPreview.d.ts",
+      "react-native": "./dist/components/forge/ink/BrushStabilizationPreview.js",
+      "default": "./dist/components/forge/ink/BrushStabilizationPreview.js"
+    },
+    "./components/forge/ink/brush-model": {
+      "types": "./dist/components/forge/ink/brush-model.d.ts",
+      "react-native": "./dist/components/forge/ink/brush-model.js",
+      "default": "./dist/components/forge/ink/brush-model.js"
+    },
+    "./components/forge/devices/PenPairingDialog": {
+      "types": "./dist/components/forge/devices/PenPairingDialog.d.ts",
+      "react-native": "./dist/components/forge/devices/PenPairingDialog.js",
+      "default": "./dist/components/forge/devices/PenPairingDialog.js"
     }
   },
   "scripts": {
