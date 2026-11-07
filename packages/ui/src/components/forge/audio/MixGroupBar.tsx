@@ -1,3 +1,4 @@
+import {audioTargetSize,audioCopy} from './audio-chrome.ts';
 /**
  * Row of mix group chips with group solo and mute.
  *
@@ -15,10 +16,20 @@ import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import type { MixGroup, mixGroups } from "./mix-groups.ts";
 
-const HIT = 44;
+
+export interface MixGroupLabels {
+ region:string;solo:string;mute:string;someSoloed:string;someMuted:string;
+ memberCount:(count:number)=>string;groupName:(name:string,count:string)=>string;
+ soloName:(name:string)=>string;muteName:(name:string)=>string;
+}
+const defaultGroupLabels:MixGroupLabels={region:'Mix groups',solo:'Solo',mute:'Mute',someSoloed:'Some members soloed',someMuted:'Some members muted',
+ memberCount:n=>n+(n===1?' channel':' channels'),groupName:(name,count)=>name+' group, '+count,soloName:name=>'Solo group '+name,muteName:name=>'Mute group '+name};
 
 /** Props for {@linkcode MixGroupBar}. */
 export interface MixGroupBarProps extends Omit<ViewProps, "children"> {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?:Partial<MixGroupLabels>;
   /** From {@linkcode mixGroups}, in display order. */
   readonly groups: readonly MixGroup[];
   /**
@@ -55,8 +66,10 @@ function toggleA11y(state: Tri, disabled: boolean): Record<string, unknown> {
  * has a group and both group callbacks are passed.
  */
 export function MixGroupBar({
-  groups, onGroupSoloCommit, onGroupMutedCommit, disabled = false, className, unstyled = false, ...rest
+  groups, onGroupSoloCommit, onGroupMutedCommit, disabled = false, targetSize, labels, className, unstyled = false, ...rest
 }: MixGroupBarProps) {
+  const HIT = audioTargetSize(targetSize);
+  const copy = audioCopy(defaultGroupLabels, labels);
   const styled = !unstyled;
   const toggle = (kind: "Solo" | "Mute", group: MixGroup) => {
     const state: Tri = kind === "Solo"
@@ -66,24 +79,24 @@ export function MixGroupBar({
     const fill = kind === "Solo" ? "bg-accent border-accent" : "bg-primary border-primary";
     const onText = kind === "Solo" ? "text-surface-raised" : "text-on-primary";
     return <Pressable key={kind} {...toggleA11y(state, disabled)}
-      accessibilityLabel={kind + " group " + group.name}
-      accessibilityHint={state === "mixed" ? (kind === "Solo" ? "Some members soloed" : "Some members muted") : undefined}
+      accessibilityLabel={(kind==="Solo"?copy.soloName:copy.muteName)(group.name)}
+      accessibilityHint={state === "mixed" ? (kind === "Solo" ? copy.someSoloed : copy.someMuted) : undefined}
       disabled={disabled}
       onPress={() => { void (kind === "Solo" ? onGroupSoloCommit : onGroupMutedCommit)(group.name, !on); }}
       {...{ className: joinClasses(styled && "rounded-control items-center justify-center focus-visible:ring-2 focus-visible:ring-focus active:opacity-80",
         styled && (on ? fill : state === "mixed" ? "border-accent bg-surface-raised" : "border-border bg-surface-raised")) }}
       style={{ minWidth: HIT + 8, minHeight: HIT, paddingHorizontal: 8, borderWidth: 2,
         borderStyle: state === "mixed" ? "dashed" : "solid", opacity: disabled ? 0.45 : 1 }}>
-      <Text {...{ className: joinClasses(styled && "font-semibold", styled && (on ? onText : "text-text")) }}>{kind}</Text>
+      <Text {...{ className: joinClasses(styled && "font-semibold", styled && (on ? onText : "text-text")) }}>{kind==="Solo"?copy.solo:copy.mute}</Text>
     </Pressable>;
   };
-  return <View {...rest} accessibilityLabel="Mix groups" {...{ role: "group" }}
+  return <View {...rest} accessibilityLabel={copy.region} {...{ role: "group" }}
     {...{ className: joinClasses("flex-row flex-wrap gap-2", className) }}>
     {groups.map(group => {
-      const count = group.memberIds.length + (group.memberIds.length === 1 ? " channel" : " channels");
-      return <View key={group.name} {...{ role: "group", "aria-label": group.name + " group, " + count }}
+      const count = copy.memberCount(group.memberIds.length);
+      return <View key={group.name} {...{ role: "group", "aria-label": copy.groupName(group.name,count) }}
         {...{ className: joinClasses("flex-row items-center gap-2", styled && "rounded-control border border-border bg-surface-sunken") }}
-        style={{ paddingVertical: 4, paddingStart: 10, paddingEnd: 4 }}>
+        style={{ flexWrap:"wrap", maxWidth:"100%", paddingVertical: 4, paddingStart: 10, paddingEnd: 4 }}>
         <View style={{ minWidth: 56, maxWidth: 140 }}>
           <Text numberOfLines={1} {...{ className: joinClasses(styled && "font-semibold text-text") }}>{group.name}</Text>
           <Text numberOfLines={1} {...{ className: joinClasses(styled && "text-xs text-text-muted") }}>{count}</Text>

@@ -1,3 +1,4 @@
+import {audioTargetSize} from './audio-chrome.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {InsertEffectRack,type InsertEffectRackProps} from './InsertEffectRack.tsx';
 import {BusAndRoutingMatrix,type BusAndRoutingMatrixProps} from './BusAndRoutingMatrix.tsx';
@@ -6,8 +7,8 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { ScrollView, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { EmptyState, type EmptyStateExit } from "../../feedback/EmptyState.tsx";
-import { ChannelStrip, channelRouting, type ChannelMeter } from "./ChannelStrip.tsx";
-import { MixGroupBar } from "./MixGroupBar.tsx";
+import { ChannelStrip, channelRouting, type ChannelStripProps, type ChannelMeter } from "./ChannelStrip.tsx";
+import { MixGroupBar, type MixGroupBarProps } from "./MixGroupBar.tsx";
 import { FADER_RANGES, type FaderRange } from "./level.ts";
 import { mixGroups } from "./mix-groups.ts";
 import { audibility, type MixerChannel } from "./mixer.ts";
@@ -16,6 +17,11 @@ type Id = MixerChannel["id"];
 
 /** Props for {@linkcode MixingConsole}. */
 export interface MixingConsoleProps extends Omit<ViewProps, "children">,ScopedControlProps {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly channelLabels?:ChannelStripProps["labels"];
+  readonly groupLabels?:MixGroupBarProps["labels"];
+  readonly emptyLabels?:{title?:string;description?:string};
   /** Committed channel state from the engine, tracks and buses in strip order. */
   readonly channels: readonly MixerChannel[];
   readonly insertRacks?:Readonly<Record<string,Omit<InsertEffectRackProps,'label'|'scope'|'revision'|'disabled'|'unstyled'>>>;
@@ -93,14 +99,15 @@ function MixingConsoleBody({actionError,disabledReason,scope='mixing-console',re
   channels, onGainCommit, onPanCommit, onMutedCommit, onSoloCommit, onSoloSafeCommit,
   onGroupSoloCommit, onGroupMutedCommit, onGainChange, onPanChange, meters,
   range = FADER_RANGES.UNITY, faderLength = 160, emptyAction, disabled = false, label = "Mixer",
-  className, unstyled = false, ...rest
+  className, unstyled = false, targetSize, channelLabels, groupLabels, emptyLabels, ...rest
 }: MixingConsoleProps&{actionError?:string|null}) {
+  const target = audioTargetSize(targetSize);
   const styled = !unstyled;
   if(channels.length>256||new Set(channels.map(c=>String(c.id))).size!==channels.length||channels.some(c=>typeof c.id==='number'&&!Number.isFinite(c.id)||String(c.id).length>256||!c.name.trim()||c.name.length>1024||!Number.isFinite(c.gain)||c.gain<0||!Number.isFinite(c.pan)||Math.abs(c.pan)>1))throw new RangeError('Invalid mixer channels');
   const states = audibility(channels);
   if (channels.length === 0) {
-    return <EmptyState {...rest} title="No tracks to mix"
-      description="Add a track to the project and its channel strip appears here."
+    return <EmptyState {...rest} title={emptyLabels?.title ?? "No tracks to mix"}
+      description={emptyLabels?.description ?? "Add a track to the project and its channel strip appears here."}
       exitAction={emptyAction}
       {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised", className) }} />;
   }
@@ -113,7 +120,7 @@ function MixingConsoleBody({actionError,disabledReason,scope='mixing-console',re
   return <View {...rest} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised", className) }}>
     {groups.length > 0 && onGroupSoloCommit && onGroupMutedCommit
-      ? <MixGroupBar groups={groups} disabled={disabled} unstyled={unstyled}
+      ? <MixGroupBar targetSize={target} labels={groupLabels} groups={groups} disabled={disabled} unstyled={unstyled}
         onGroupSoloCommit={onGroupSoloCommit} onGroupMutedCommit={onGroupMutedCommit}
         {...{ className: joinClasses(styled && "border-b border-border") }}
         style={{ padding: 8 }} />
@@ -121,7 +128,7 @@ function MixingConsoleBody({actionError,disabledReason,scope='mixing-console',re
     <ScrollView horizontal showsHorizontalScrollIndicator contentContainerStyle={{ paddingHorizontal: 4 }}>
       {channels.map((channel, i) => <View key={channel.id} style={{ flexDirection: "row" }}>
         {i > 0 ? <View {...{ className: joinClasses(styled && "bg-border") }} style={{ width: 1, alignSelf: "stretch" }} /> : null}
-        <View style={{gap:8}}><ChannelStrip channel={channel} audibility={states[i]} range={range} faderLength={faderLength}
+        <View style={{gap:8}}><ChannelStrip targetSize={target} labels={channelLabels} channel={channel} audibility={states[i]} range={range} faderLength={faderLength}
           disabled={disabled} unstyled={unstyled} outputName={outputNameOf(channel)} routingLines={routingLines}
           meter={meters ? meters[String(channel.id)] ?? { peak: 0 } : undefined}
           onGainCommit={gain => onGainCommit(channel.id, gain)}

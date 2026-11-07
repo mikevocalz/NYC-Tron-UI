@@ -1,9 +1,10 @@
+import {audioTargetSize} from './audio-chrome.ts';
 import { Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
-import { LevelFader } from "./LevelFader.tsx";
+import { LevelFader, type LevelFaderProps } from "./LevelFader.tsx";
 import { LevelMeter } from "./LevelMeter.tsx";
-import { PanControl } from "./PanControl.tsx";
-import { SoloMuteButtons } from "./SoloMuteButtons.tsx";
+import { PanControl, type PanControlProps } from "./PanControl.tsx";
+import { SoloMuteButtons, type SoloMuteButtonsProps } from "./SoloMuteButtons.tsx";
 import { FADER_RANGES, gainToDb, type FaderRange } from "./level.ts";
 import type { MeterBand } from "./level-meter.ts";
 import { describeAudibility, type Audibility, type MixerChannel } from "./mixer.ts";
@@ -23,6 +24,9 @@ export interface ChannelMeter {
 
 /** Props for {@linkcode ChannelStrip}. */
 export interface ChannelStripProps extends Omit<ViewProps, "children"> {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?:{fader?:LevelFaderProps["labels"];pan?:PanControlProps["labels"];toggles?:SoloMuteButtonsProps["labels"]};
   readonly channel: MixerChannel;
   /** From {@linkcode audibility} across the whole console. @default from `channel.muted` */
   readonly audibility?: Audibility;
@@ -119,12 +123,14 @@ function holdReadout(hold: number): string {
 export function ChannelStrip({
   channel, audibility, onGainCommit, onPanCommit, onMutedCommit, onSoloCommit, onSoloSafeCommit,
   onGainChange, onPanChange, meter, outputName, routingLines = 0,
-  range = FADER_RANGES.UNITY, faderLength = 160, disabled = false, className, unstyled = false, style, ...rest
+  range = FADER_RANGES.UNITY, faderLength = 160, disabled = false, targetSize, labels, className, unstyled = false, style, ...rest
 }: ChannelStripProps) {
+  const target = audioTargetSize(targetSize);
+  const stripWidth = CHANNEL_STRIP_WIDTH + (target - 44) * 2;
   const styled = !unstyled;
   const state: Audibility = audibility ?? (channel.muted ? "muted" : "audible");
   const bus = channel.kind === "bus";
-  const width = CHANNEL_STRIP_WIDTH + (meter ? CHANNEL_STRIP_METER_WIDTH : 0);
+  const width = stripWidth + (meter ? CHANNEL_STRIP_METER_WIDTH : 0);
   const hold = meter?.hold === undefined ? meter?.peak : Math.max(meter.hold, meter.peak);
   const clipped = hold !== undefined && hold >= 1;
   const small = joinClasses(styled && "text-xs text-text-muted");
@@ -144,7 +150,7 @@ export function ChannelStrip({
         style={{ textAlign: "center", lineHeight: ROUTING_LINE }}>{line}</Text>)}
     </View> : null}
     <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 4 }}>
-      <LevelFader value={channel.gain} label={channel.name} range={range} length={faderLength}
+      <LevelFader targetSize={target} labels={labels?.fader} value={channel.gain} label={channel.name} range={range} length={faderLength}
         disabled={disabled} onChange={onGainChange} onCommit={onGainCommit} unstyled={unstyled} />
       {meter ? <View style={{ width: CHANNEL_STRIP_METER_WIDTH - 4, alignItems: "center", gap: 9, paddingTop: 12 }}>
         <Text numberOfLines={1}
@@ -155,9 +161,9 @@ export function ChannelStrip({
           style={{ height: faderLength }} />
       </View> : null}
     </View>
-    <PanControl value={channel.pan} label={channel.name} mode={bus ? "balance" : "pan"} width={CHANNEL_STRIP_WIDTH - 16}
+    <PanControl targetSize={target} labels={labels?.pan} value={channel.pan} label={channel.name} mode={bus ? "balance" : "pan"} width={stripWidth - 16}
       disabled={disabled} onChange={onPanChange} onCommit={onPanCommit} unstyled={unstyled} />
-    <SoloMuteButtons label={channel.name} muted={channel.muted} solo={channel.solo} audibility={state}
+    <SoloMuteButtons targetSize={target} labels={labels?.toggles} label={channel.name} muted={channel.muted} solo={channel.solo} audibility={state}
       soloSafe={channel.soloSafe ?? false} onSoloSafeCommit={onSoloSafeCommit}
       disabled={disabled} onMutedCommit={onMutedCommit} onSoloCommit={onSoloCommit} unstyled={unstyled} />
   </View>;

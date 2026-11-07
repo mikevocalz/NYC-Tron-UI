@@ -1,3 +1,4 @@
+import {audioTargetSize} from './audio-chrome.ts';
 import {valueAccessibility} from "../value-a11y.ts";
 import { useRef } from "react";
 import {
@@ -11,15 +12,24 @@ import { joinClasses } from "../../styles.ts";
 import { describeBalance, describePan, dragToPan, formatPan, panToPosition, quantizePan, stepPan } from "./pan.ts";
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */
-const HIT = 44;
 const THUMB = 14;
 /** Horizontal movement, in points, before the control claims a touch. */
 const SLOP = 4;
 
 type Local = { preview: number; active: boolean };
 
+export interface PanControlLabels {
+ pan?:string;balance?:string;centreAction?:string;
+ name?:(channel:string,mode:'pan'|'balance')=>string;
+ centreName?:(name:string)=>string;currentHint?:(spoken:string)=>string;
+ spoken?:(value:number,mode:'pan'|'balance')=>string;
+}
+
 /** Props for {@linkcode PanControl}. */
 export interface PanControlProps extends Omit<ViewProps, "children"> {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?:PanControlLabels;
   /** Committed mono pan from the app or engine, -1 (left) .. 1 (right). */
   readonly value: number;
   /**
@@ -69,8 +79,9 @@ export interface PanControlProps extends Omit<ViewProps, "children"> {
  */
 export function PanControl({
   value, label, mode = "pan", onChange, onCommit, step = 0.05, width = 120, hideLabel = false, disabled = false,
-  className, unstyled = false, ...rest
+  className, unstyled = false, targetSize, labels, ...rest
 }: PanControlProps) {
+  const HIT = audioTargetSize(targetSize);
   if (!Number.isFinite(width) || width <= THUMB * 2) throw new RangeError(`Pan width must be greater than ${THUMB * 2}`);
   const committed = quantizePan(value);
   const travel = width - THUMB;
@@ -152,16 +163,16 @@ export function PanControl({
   const webTrack = Platform.OS === "web" ? { touchAction: "pan-y" } as unknown as ViewStyle : undefined;
   const readout = formatPan(current);
   const balance = mode === "balance";
-  const name = label + (balance ? " balance" : " pan");
-  const spoken = balance ? describeBalance(current) : describePan(current);
+  const name = labels?.name?.(label,mode)??label + (balance ? " balance" : " pan");
+  const spoken = labels?.spoken?.(current,mode)??(balance ? describeBalance(current) : describePan(current));
 
   return <View {...rest} {...{ className: joinClasses("items-center gap-1", className) }}>
-    {hideLabel ? null : <Text {...{ className: joinClasses(styled && "text-text-muted") }}>{balance ? "Balance" : "Pan"}</Text>}
+    {hideLabel ? null : <Text {...{ className: joinClasses(styled && "text-text-muted") }}>{balance ? (labels?.balance??"Balance") : (labels?.pan??"Pan")}</Text>}
     <View {...responder.current.panHandlers}
       accessible focusable={!disabled} accessibilityRole="adjustable" accessibilityLabel={name}
       {...valueAccessibility({ min: -100, max: 100, now: Math.round(current * 100), text: spoken })}
       accessibilityState={{ disabled }}
-      accessibilityActions={[{ name: "increment" }, { name: "decrement" }, { name: "centre", label: "Centre" }]}
+      accessibilityActions={[{ name: "increment" }, { name: "decrement" }, { name: "centre", label: labels?.centreAction??"Centre" }]}
       onAccessibilityAction={e => {
         const action = e.nativeEvent.actionName;
         if (action === "increment") nudge(1);
@@ -181,8 +192,8 @@ export function PanControl({
       <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-surface-raised border-accent") }}
         style={{ position: "absolute", left: x, width: THUMB, top: (HIT - 24) / 2, height: 24, borderRadius: 4, borderWidth: 2 }} />
     </View>
-    <Pressable accessibilityRole="button" accessibilityLabel={"Centre " + name}
-      accessibilityHint={"Currently " + spoken} disabled={disabled || current === 0}
+    <Pressable accessibilityRole="button" accessibilityLabel={labels?.centreName?.(name)??"Centre " + name}
+      accessibilityHint={labels?.currentHint?.(spoken)??"Currently " + spoken} disabled={disabled || current === 0}
       onPress={centre}
       {...{ className: joinClasses(styled && "rounded-control active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus") }}
       style={{ minWidth: HIT, minHeight: HIT, paddingHorizontal: 6, justifyContent: "center", alignItems: "center" }}>

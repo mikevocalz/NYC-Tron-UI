@@ -1,3 +1,4 @@
+import {audioTargetSize} from './audio-chrome.ts';
 import {NativeVerticalFader} from './LevelFader.vertical.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
@@ -19,14 +20,24 @@ import {
 /** Visual thickness of the thumb along the travel axis, in points. */
 const THUMB = 16;
 /** Minimum hit area across the travel axis (iOS 44pt / Android 48dp floor). */
-const HIT = 44;
 /** Travel-axis movement, in points, before the fader claims a touch. */
 const SLOP = 4;
 
 type Local = { preview: number; active: boolean };
 
+export interface LevelFaderLabels {
+ lower?:(name:string,step:number)=>string;raise?:(name:string,step:number)=>string;
+ gainInput?:(name:string)=>string;faderName?:(name:string)=>string;
+ fineOn?:string;fineOff?:string;fineOnName?:string;fineOffName?:string;
+ reset?:string;resetName?:string;raiseAction?:string;lowerAction?:string;resetAction?:string;
+ invalidValue?:(min:number,max:number)=>string;
+}
+
 /** Props for {@linkcode LevelFader}. */
 export interface LevelFaderProps extends Omit<ViewProps, "children">,ScopedControlProps {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?:LevelFaderLabels;
   /** Committed linear gain from the app or engine (0 = silence, 1 = 0 dB). */
   readonly value: number;
   /** Accessible name and visible label, e.g. `"Vocals"`. */
@@ -99,8 +110,9 @@ function HorizontalLevelFader({scope='horizontal-fader',revision=0,...props}:Lev
 function LevelFaderBody({
   scope:_scope,revision:_revision,disabledReason,actionError=null,value, label, onChange, onCommit, range = FADER_RANGES.UNITY, stepDb = 1,
   orientation = "vertical", length = 160, disabled = false,
-  className, unstyled = false, ...rest
+  className, unstyled = false, targetSize, labels, ...rest
 }: LevelFaderProps&{actionError?:string|null}) {
+  const HIT = audioTargetSize(targetSize);
   if (!Number.isFinite(value) || value < 0) throw new RangeError("Gain must be finite and nonnegative");
   if (!Number.isFinite(stepDb) || stepDb <= 0) throw new RangeError("stepDb must be finite and positive");
   if (!Number.isFinite(length) || length <= THUMB * 2) {
@@ -245,11 +257,11 @@ function LevelFaderBody({
     <Text {...{ className: joinClasses(styled && "text-text-muted") }}
       style={{ fontVariant: ["tabular-nums"] }}>{readout}</Text>
     <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-      <Pressable accessibilityRole="button" accessibilityLabel={`Lower ${label} by ${stepDb} dB`}
+      <Pressable accessibilityRole="button" accessibilityLabel={labels?.lower?.(label,stepDb)??`Lower ${label} by ${stepDb} dB`}
         disabled={disabled} onPress={() => nudge(-1)} {...{ className: stepClass }} style={stepButton}>
         <Text {...{ className: text }}>−</Text>
       </Pressable>
-      <Pressable accessibilityRole="button" accessibilityLabel={`Raise ${label} by ${stepDb} dB`}
+      <Pressable accessibilityRole="button" accessibilityLabel={labels?.raise?.(label,stepDb)??`Raise ${label} by ${stepDb} dB`}
         disabled={disabled} onPress={() => nudge(1)} {...{ className: stepClass }} style={stepButton}>
         <Text {...{ className: text }}>+</Text>
       </Pressable>
