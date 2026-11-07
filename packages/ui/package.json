@@ -2499,6 +2499,36 @@
       "types": "./dist/components/forge/slides/InkAndLaserPointer.d.ts",
       "react-native": "./dist/components/forge/slides/InkAndLaserPointer.js",
       "default": "./dist/components/forge/slides/InkAndLaserPointer.js"
+    },
+    "./components/forge/pdf/PDFPageLayoutSelector": {
+      "types": "./dist/components/forge/pdf/PDFPageLayoutSelector.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFPageLayoutSelector.js",
+      "default": "./dist/components/forge/pdf/PDFPageLayoutSelector.js"
+    },
+    "./components/forge/pdf/VirtualPDFPageViewer": {
+      "types": "./dist/components/forge/pdf/VirtualPDFPageViewer.d.ts",
+      "react-native": "./dist/components/forge/pdf/VirtualPDFPageViewer.js",
+      "default": "./dist/components/forge/pdf/VirtualPDFPageViewer.js"
+    },
+    "./components/forge/pdf/PDFTextSelection": {
+      "types": "./dist/components/forge/pdf/PDFTextSelection.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFTextSelection.js",
+      "default": "./dist/components/forge/pdf/PDFTextSelection.js"
+    },
+    "./components/forge/pdf/PDFInlineTextEdit": {
+      "types": "./dist/components/forge/pdf/PDFInlineTextEdit.d.ts",
+      "react-native": "./dist/components/forge/pdf/PDFInlineTextEdit.js",
+      "default": "./dist/components/forge/pdf/PDFInlineTextEdit.js"
+    },
+    "./components/forge/inputs/OutlineTree": {
+      "types": "./dist/components/forge/inputs/OutlineTree.d.ts",
+      "react-native": "./dist/components/forge/inputs/OutlineTree.js",
+      "default": "./dist/components/forge/inputs/OutlineTree.js"
+    },
+    "./components/forge/pdf/BookmarkOutline": {
+      "types": "./dist/components/forge/pdf/BookmarkOutline.d.ts",
+      "react-native": "./dist/components/forge/pdf/BookmarkOutline.js",
+      "default": "./dist/components/forge/pdf/BookmarkOutline.js"
     }
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode,Ref,ComponentRef } from "react";
 import { ActivityIndicator, Pressable, Text, View, type PressableProps } from "react-native";
 import { joinClasses } from "./styles.ts";
 
@@ -12,6 +12,7 @@ import { joinClasses } from "./styles.ts";
 export type ButtonVariant="primary"|"secondary"|"ghost"|"danger";
 export type ButtonSize="sm"|"md"|"lg";
 export interface ButtonProps extends Omit<PressableProps,"children"|"disabled"> {
+  ref?:Ref<ComponentRef<typeof Pressable>>;
   title:string;
   icon?:ReactNode;
   variant?:ButtonVariant;

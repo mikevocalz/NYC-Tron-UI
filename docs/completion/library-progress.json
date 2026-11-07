@@ -4086,10 +4086,15 @@
       "name": "VirtualPDFPageViewer",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/VirtualPDFPageViewer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Fast multi-page text and vector render."
+      "requirement": "Fast multi-page text and vector render.",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
     },
     {
       "id": "K-02",
@@ -4106,10 +4111,15 @@
       "name": "PDFPageLayoutSelector",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFPageLayoutSelector.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Single, continuous, facing-page/two-up modes."
+      "requirement": "Single, continuous, facing-page/two-up modes.",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
     },
     {
       "id": "K-04",
@@ -4128,10 +4138,15 @@
       "name": "PDFTextSelection",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFTextSelection.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Copyable reading-order aware text selection."
+      "requirement": "Copyable reading-order aware text selection.",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
     },
     {
       "id": "K-06",
@@ -4202,10 +4217,15 @@
       "name": "BookmarkOutline",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/BookmarkOutline.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Hierarchy, expand/collapse and destinations."
+      "requirement": "Hierarchy, expand/collapse and destinations.",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
     },
     {
       "id": "K-13",
@@ -4295,10 +4315,15 @@
       "name": "PDFInlineTextEdit",
       "phase": "P15",
       "libraryScope": true,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/ui/src/components/forge/pdf/PDFInlineTextEdit.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Editable PDF text with font/layout limitations, hit testing and truthful save status. *Source candidate: `pdfcraft/ui/viewer/Edit.kt`; requires verified implementation and license admission.*"
+      "requirement": "Editable PDF text with font/layout limitations, hit testing and truthful save status. *Source candidate: `pdfcraft/ui/viewer/Edit.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
     },
     {
       "id": "L-01",

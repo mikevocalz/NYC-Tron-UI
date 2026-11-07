@@ -126,3 +126,5 @@ P14 authoring/presenter batch: seven master/theme/shape/transition/notes/present
 P14 diagram/media batch: four connector, morph, inserted-media and chart/table rows have reviewed implementations. [Report](P14-diagrams-morph-and-media.md) records host surfaces/frames, shared-owner reuse and combined TypeScript build. Review count is 261 of 341. Five P14 rows remain; acceptance testing stays deferred until user review.
 
 P14 library implementation phase complete: all 16 slide/presentation rows have reviewed implementations. [Canvas/deck/ink report](P14-canvas-deck-and-native-ink.md) records the final five controls, native RNGH/Graphite ink, virtual deck lists and combined TypeScript build. Review count is 266 of 341. Full acceptance stays deferred until user review. Continue with P15 PDF components.
+
+P15 viewer/text batch: five virtual-viewer/layout, native selection, bookmark and inline text rows have reviewed implementations. [Report](P15-viewer-selection-and-text.md) records native renderer/font/save contracts and the combined TypeScript build. Review count is 271 of 341. Sixteen P15 rows remain; acceptance stays deferred until user review.
