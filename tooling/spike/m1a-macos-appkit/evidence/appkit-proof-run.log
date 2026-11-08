@@ -1,0 +1,4 @@
+NSSegmentedControl segments=3 selected=1
+NSButton title="Start lesson" bezelStyle=1
+NSWindow frame={{80, 440}, {736, 452}} title="M1-a AppKit spike"
+WINDOWID=12771
