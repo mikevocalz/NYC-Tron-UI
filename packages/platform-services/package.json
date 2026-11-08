@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
-  "description": "Native platform services for NYC-Tron UI: haptics with user opt-out, document picking with open-in-place and sharing, and audio session lifecycle (interruptions, focus, headset loss)",
+  "description": "Native platform services for NYC-Tron UI: haptics with user opt-out, document picking with open-in-place and sharing, audio session lifecycle (interruptions, focus, headset loss), and media encoding to MP4",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -60,6 +60,12 @@
       "browser": "./dist/media-cache/index.js",
       "react-native": "./dist/media-cache/index.native.js",
       "default": "./dist/media-cache/index.js"
+    },
+    "./encoder": {
+      "types": "./dist/encoder/index.d.ts",
+      "browser": "./dist/encoder/index.js",
+      "react-native": "./dist/encoder/index.native.js",
+      "default": "./dist/encoder/index.js"
     }
   },
   "scripts": {

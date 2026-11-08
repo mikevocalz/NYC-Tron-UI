@@ -9,7 +9,8 @@
       "NYCTronHapticsModule",
       "NYCTronDocumentsModule",
       "NYCTronPlaybackSessionModule",
-      "NYCTronMediaDecoderModule"
+      "NYCTronMediaDecoderModule",
+      "NYCTronMediaEncoderModule"
     ]
   }
 }

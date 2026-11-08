@@ -3,6 +3,11 @@
 The web frame decoder imports unmodified Mediabunny 1.65.2, licensed under
 MPL-2.0. Its license is included at `third-party/mediabunny/LICENSE`.
 
+# Media encoder dependency
+
+The web encoder imports unmodified Mediabunny 1.65.2, licensed under
+MPL-2.0. Its license is included at `third-party/mediabunny/LICENSE`.
+
 The complete Source Code Form, including original notices, is available in the
 [exact npm source package](https://registry.npmjs.org/mediabunny/-/mediabunny-1.65.2.tgz)
 and at [upstream commit 173f6b70765fa3a6ffc1c82737514416fa559ef5](https://github.com/Vanilagy/mediabunny/tree/173f6b70765fa3a6ffc1c82737514416fa559ef5).

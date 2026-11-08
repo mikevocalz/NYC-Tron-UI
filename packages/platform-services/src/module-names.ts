@@ -9,3 +9,5 @@ export const DOCUMENTS_MODULE_NAME="NYCTronDocuments";
 export const PLAYBACK_SESSION_MODULE_NAME="NYCTronPlaybackSession";
 /** Media frame and audio decoding (N-19). */
 export const MEDIA_DECODER_MODULE_NAME="NYCTronMediaDecoder";
+/** Media encoding to MP4 (H.264 + AAC). */
+export const MEDIA_ENCODER_MODULE_NAME="NYCTronMediaEncoder";

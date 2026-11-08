@@ -16,8 +16,10 @@ let package = Package(
       exclude: ["NYCTronPlatformServices.podspec"],
       linkerSettings: [
         .linkedFramework("AVFoundation"),
+        .linkedFramework("AudioToolbox"),
         .linkedFramework("CoreMedia"),
         .linkedFramework("UniformTypeIdentifiers"),
+        .linkedFramework("VideoToolbox"),
       ]
     )
   ]
