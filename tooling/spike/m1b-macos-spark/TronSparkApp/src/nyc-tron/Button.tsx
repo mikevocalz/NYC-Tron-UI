@@ -1,0 +1,73 @@
+import type { ReactNode,Ref,ComponentRef } from "react";
+import { ActivityIndicator, Pressable, Text, View, type PressableProps } from "react-native";
+import { joinClasses } from "./styles.ts";
+
+/**
+ * Brand-neutral accessible press control. Native Chrome/Fluent/SwiftUI
+ * wrappers are separate future adapters; this base is an RN presentational
+ * component and does not pretend to be AppKit/WinUI.
+ *
+ * The consumer owns its --color-* / --radius-* / --shadow-* Tailwind values.
+ */
+export type ButtonVariant="primary"|"secondary"|"ghost"|"danger";
+export type ButtonSize="sm"|"md"|"lg";
+export interface ButtonProps extends Omit<PressableProps,"children"|"disabled"> {
+  ref?:Ref<ComponentRef<typeof Pressable>>;
+  title:string;
+  /** Optional app-owned minimum layout target, at least 44 points. */
+  targetSize?:number;
+  numberOfLines?:number;
+  icon?:ReactNode;
+  variant?:ButtonVariant;
+  size?:ButtonSize;
+  disabled?:boolean;
+  loading?:boolean;
+  className?:string;
+  /** Complete visual override: app supplies its own Tailwind recipe. */
+  unstyled?:boolean;
+  labelClassName?:string;
+  iconClassName?:string;
+}
+const variants:Record<ButtonVariant,{root:string;label:string}>={
+ primary:{root:"bg-primary border-border text-on-primary",label:"text-on-primary"},
+ secondary:{root:"bg-surface-raised border-border",label:"text-text"},
+ ghost:{root:"bg-transparent border-transparent",label:"text-text"},
+ danger:{root:"bg-danger border-danger",label:"text-on-danger"}
+};
+const sizes:Record<ButtonSize,string>={
+ sm:"min-h-10 gap-2 px-3 py-2",
+ md:"min-h-11 gap-2 px-4 py-2.5",
+ lg:"min-h-12 gap-3 px-5 py-3"
+};
+export function Button({
+  title,targetSize,numberOfLines,icon,variant="primary",size="md",disabled=false,loading=false,
+  className,unstyled=false,labelClassName,iconClassName,onPress,style,...rest
+}:ButtonProps) {
+  if(numberOfLines!==undefined&&(!Number.isInteger(numberOfLines)||numberOfLines<1||numberOfLines>64))throw new RangeError('Invalid button label line limit');
+  if(targetSize!==undefined&&(!Number.isFinite(targetSize)||targetSize<44))throw new RangeError('Button target must be at least 44 points');
+  const off=disabled||loading;
+  const selected=variants[variant];
+  return (
+    <Pressable
+      {...rest}
+      {...{className:joinClasses(
+        "flex-row items-center justify-center",
+        !unstyled&&"rounded-control border active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none",
+        !unstyled&&(targetSize===undefined?sizes[size]:sizes[size].replace(/min-h-\d+/,"")),!unstyled&&selected.root,
+        off&&"opacity-50",className
+      )}}
+      style={state=>[{minWidth:targetSize??44,minHeight:targetSize??(size==='sm'?40:size==='lg'?48:44)},typeof style==='function'?style(state):style,targetSize===undefined?undefined:{minWidth:targetSize,minHeight:targetSize}]}
+      // sm draws at 40pt; slop brings the touch target to the 44pt minimum.
+      hitSlop={rest.hitSlop??(size==="sm"?2:undefined)}
+      disabled={off}
+      accessibilityRole="button"
+      accessibilityLabel={rest.accessibilityLabel??title}
+      accessibilityState={{...rest.accessibilityState,disabled:off,busy:loading}}
+      onPress={onPress}
+    >
+      {loading ? <ActivityIndicator accessibilityLabel="Loading" /> : null}
+      {icon ? <View {...{className:joinClasses("items-center justify-center",iconClassName)}}>{icon}</View> : null}
+      <Text numberOfLines={numberOfLines} style={{flexShrink:1}} {...{className:joinClasses(!unstyled&&"font-semibold",!unstyled&&selected.label,labelClassName)}}>{title}</Text>
+    </Pressable>
+  );
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "./node_modules/@legendapp/spark/schema.json",
+  "name": "TronSparkApp",
+  "version": "0.0.1",
+  "window": {
+    "size": {
+      "width": 1000,
+      "height": 700
+    },
+    "restoreBounds": true
+  },
+  "macos": {
+    "buildNumber": "1",
+    "bundleIdentifier": "com.example.tronsparkapp",
+    "infoPlist": {
+      "CFBundleName": "TronSparkApp"
+    }
+  },
+  "platforms": [
+    "macos"
+  ],
+  "expo": {
+    "name": "TronSparkApp",
+    "slug": "TronSparkApp",
+    "version": "0.0.1",
+    "platforms": [
+      "macos",
+      "ios",
+      "android",
+      "windows"
+    ],
+    "icon": "./assets/icon.png",
+    "macos": {
+      "version": "0.0.1",
+      "buildNumber": "1",
+      "bundleIdentifier": "com.example.tronsparkapp",
+      "infoPlist": {
+        "CFBundleName": "TronSparkApp"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.example.tronsparkapp",
+      "infoPlist": {
+        "CFBundleName": "TronSparkApp"
+      }
+    },
+    "android": {
+      "package": "com.example.tronsparkapp"
+    },
+    "windows": {
+      "displayName": "TronSparkApp",
+      "namespace": "com.example.tronsparkapp",
+      "packageGuid": "5f036c81-099a-4f7d-a12e-0caf71a43aa5",
+      "projectGuid": "234db74e-ca26-4244-b08e-3a637f797b29"
+    },
+    "experiments": {
+      "outOfTreePlatforms": true
+    }
+  },
+  "projectId": "234db74e-ca26-4244-b08e-3a637f797b29"
+}

@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@source './src';
+
+/* App-owned dark palette, mirroring examples/native-instruments/global.css.
+   The library exports no global theme (AGENTS.md rule 2). */
+@theme {
+  --color-primary: #B2A7FF;
+  --color-on-primary: #101017;
+  --color-accent: #5EEAD4;
+  --color-surface: #101017;
+  --color-surface-raised: #20202C;
+  --color-surface-sunken: #17171F;
+  --color-text: #F6F6FD;
+  --color-text-muted: #AAAABB;
+  --color-border: #48485C;
+  --color-focus: #FDE68A;
+  --color-danger: #FB7185;
+  --color-on-danger: #101017;
+  --color-success: #5EEAD4;
+  --color-info: #B2A7FF;
+  --radius-control: 8px;
+  --radius-card: 12px;
+}

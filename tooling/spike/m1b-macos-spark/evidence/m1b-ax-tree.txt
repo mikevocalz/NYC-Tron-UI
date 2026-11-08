@@ -1,0 +1,19 @@
+AXUnknown | Design | radio button, unchecked
+AXUnknown | Preview | radio button, checked
+AXUnknown | Handoff | radio button, unchecked
+AXRadioGroup | Spark native segmented control | 
+AXRadioButton | Design | 0
+AXRadioButton | Preview | 1
+AXRadioButton | Handoff | 0
+AXButton | Primary | missing value
+AXButton | Secondary | missing value
+AXButton | Ghost | missing value
+AXButton | Danger | missing value
+AXButton | Loading | busy
+AXBusyIndicator | busy indicator | true
+AXButton | Disabled | missing value
+AXTextField | Notes | 
+AXButton | increment arrow button | missing value
+AXButton | decrement arrow button | missing value
+AXButton | increment page button | missing value
+AXButton | decrement page button | missing value
