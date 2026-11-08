@@ -5059,20 +5059,36 @@
       "name": "LongTaskScheduler",
       "phase": "P02",
       "libraryScope": false,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/platform-services/src/scheduler/scheduler.ts",
+        "packages/platform-services/src/scheduler/index.ts",
+        "packages/platform-services/src/scheduler/index.native.ts"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Cancelable decode/export/render without JS blocking."
+      "requirement": "Cancelable decode/export/render without JS blocking.",
+      "evidence": [
+        "P02-n13-n14-services.md"
+      ],
+      "implementationNote": "NYC-Tron owns the cooperative TS scheduler subpath @nyc-tron/platform-services/scheduler. Native codec offload and device acceptance remain engine/host work."
     },
     {
       "id": "N-14",
       "name": "MediaCache",
       "phase": "P02",
       "libraryScope": false,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "sourceCandidates": [
+        "packages/platform-services/src/media-cache/media-cache.ts",
+        "packages/platform-services/src/media-cache/index.ts",
+        "packages/platform-services/src/media-cache/index.native.ts"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Waveform peaks, preview frames, thumbnails and eviction."
+      "requirement": "Waveform peaks, preview frames, thumbnails and eviction.",
+      "evidence": [
+        "P02-n13-n14-services.md"
+      ],
+      "implementationNote": "NYC-Tron owns the bounded LRU subpath @nyc-tron/platform-services/media-cache for host-supplied derived bytes. Persistence, disk quotas and decoder integration remain host work."
     },
     {
       "id": "N-15",
