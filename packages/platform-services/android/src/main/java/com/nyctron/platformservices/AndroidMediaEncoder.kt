@@ -226,18 +226,23 @@ internal class AndroidMediaEncoder(private val context: () -> Context?) {
   private var audioPending: ByteArray? = null
   private var audioPendingOffset = 0
   private var audioPendingPtsUs = 0L
-  private var videoColorFormat = MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible
+  // Set by createVideoEncoder before any frame is converted; Flexible is
+  // never accepted (see preferredColorFormat).
+  private var videoColorFormat = MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar
   private var rgbaFrame: ByteArray? = null
   private var yuvFrame: ByteArray? = null
 
   private fun write(output: File, video: VideoSpec?, audio: AudioSpec?) {
-    muxer = MediaMuxer(output.absolutePath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
-    video?.let { videoCodec = createVideoEncoder(it) }
-    audio?.let { audioCodec = createAudioEncoder(it) }
     val videoInfo = MediaCodec.BufferInfo()
     val audioInfo = MediaCodec.BufferInfo()
 
     try {
+      // Everything that can throw lives inside the try so the finally below
+      // always releases the muxer and codecs, even when encoder creation
+      // fails after the muxer exists.
+      muxer = MediaMuxer(output.absolutePath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
+      video?.let { videoCodec = createVideoEncoder(it) }
+      audio?.let { audioCodec = createAudioEncoder(it) }
       while (true) {
         checkActive()
         var progress = false
@@ -254,12 +259,26 @@ internal class AndroidMediaEncoder(private val context: () -> Context?) {
       checkActive()
       if (videoSamples + audioSamples == 0L)
         throw MediaEncodeFailure("encode-failed", "The encoders produced no samples.")
-      muxer?.stop()
     } finally {
+      // MediaMuxer must be stopped (to finalize the moov atom) and released on
+      // every path, including failures thrown before the happy-path stop().
+      try { if (muxerStarted) muxer?.stop() } catch (_: Exception) {}
+      try { muxer?.release() } catch (_: Exception) {}
       try { videoCodec?.stop() } catch (_: Exception) {}
       try { audioCodec?.stop() } catch (_: Exception) {}
       videoCodec?.release(); audioCodec?.release()
       videoCodec = null; audioCodec = null; muxer = null
+      // The worker is reused across encode() calls: every piece of per-encode
+      // session state must return to its initial value or the next encode
+      // sees stale done-flag/sample counters.
+      videoTrack = -1; audioTrack = -1
+      muxerStarted = false
+      videoFormatReady = false; audioFormatReady = false
+      videoInputDone = false; audioInputDone = false
+      videoOutputDone = false; audioOutputDone = false
+      videoSamples = 0L; audioSamples = 0L
+      videoFrame = 0; audioFrameCursor = 0
+      audioPending = null; audioPendingOffset = 0; audioPendingPtsUs = 0L
     }
   }
 
@@ -289,16 +308,21 @@ internal class AndroidMediaEncoder(private val context: () -> Context?) {
     return codec
   }
 
-  /** Prefer flexible NV12-style input, then explicit semi-planar, then planar. */
+  /** Prefer semi-planar NV12, then planar I420. */
   private fun preferredColorFormat(codec: MediaCodec): Int {
     val caps = try { codec.codecInfo.getCapabilitiesForType("video/avc").colorFormats } catch (_: Exception) { intArrayOf() }
     for (wanted in intArrayOf(
-      MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible,
       MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar,
       MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar)) {
       if (caps.contains(wanted)) return wanted
     }
-    return MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible
+    // COLOR_FormatYUV420Flexible is deliberately not accepted: its plane
+    // layout is codec-defined (often strided), and the ByteBuffer input API
+    // used here cannot express those strides, so packed NV12 could be
+    // misread. A device offering only Flexible is rejected honestly instead
+    // of producing a corrupt picture.
+    throw MediaEncodeFailure("unsupported-format",
+      "No H.264 encoder on this device accepts tightly packed NV12 or I420 input.")
   }
 
   private fun createAudioEncoder(spec: AudioSpec): MediaCodec {
@@ -443,11 +467,17 @@ internal class AndroidMediaEncoder(private val context: () -> Context?) {
       val capacity = buffer.capacity()
       val remaining = pending.size - audioPendingOffset
       val n = minOf(capacity, remaining)
+      // AAC input must be whole codec frames: a buffer boundary may not split
+      // a frame, so round the write down to a frame multiple and leave the
+      // tail in `audioPending` for the next input buffer.
+      val aligned = n - (n % spec.codecBytesPerFrame)
+      if (aligned <= 0)
+        throw MediaEncodeFailure("encode-failed", "The audio input buffer is smaller than one codec frame.")
       buffer.clear()
-      buffer.put(pending, audioPendingOffset, n)
+      buffer.put(pending, audioPendingOffset, aligned)
       val pts = audioPendingPtsUs + Math.round((audioPendingOffset / spec.codecBytesPerFrame) * 1_000_000.0 / spec.sampleRate)
-      audioPendingOffset += n
-      codec.queueInputBuffer(index, 0, n, pts, 0)
+      audioPendingOffset += aligned
+      codec.queueInputBuffer(index, 0, aligned, pts, 0)
       if (audioPendingOffset >= pending.size) {
         audioPending = null
         // If the chunk ended exactly at the source end, EOS rides the next buffer.

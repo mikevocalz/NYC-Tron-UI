@@ -81,6 +81,11 @@ final class MediaEncoder: Sendable {
     if videoSpec == nil && audioSpec == nil {
       throw MediaEncodeFailure(.outOfRange, "encode requires a video or an audio track")
     }
+    // The FileHandles opened during validation are ours to close on every path.
+    defer {
+      videoSpec?.handle.closeFile()
+      audioSpec?.handle.closeFile()
+    }
 
     let output = try MediaEncoderOutputDirectory.newFile()
     do {
@@ -203,25 +208,31 @@ final class MediaEncoder: Sendable {
       audioInput = input
     }
 
-    guard writer.startWriting() else {
-      throw MediaEncodeFailure(.encodeFailed, "AVAssetWriter refused to start: \(writer.error?.localizedDescription ?? "unknown")")
-    }
-    writer.startSession(atSourceTime: .zero)
+    do {
+      guard writer.startWriting() else {
+        throw MediaEncodeFailure(.encodeFailed, "AVAssetWriter refused to start: \(writer.error?.localizedDescription ?? "unknown")")
+      }
+      writer.startSession(atSourceTime: .zero)
 
-    if let video, let input = videoInput, let adaptor = pixelAdaptor {
-      try feedVideo(video, input: input, adaptor: adaptor)
-    }
-    if let audio, let input = audioInput {
-      try feedAudio(audio, input: input)
-    }
-    videoInput?.markAsFinished()
-    audioInput?.markAsFinished()
+      if let video, let input = videoInput, let adaptor = pixelAdaptor {
+        try feedVideo(video, input: input, adaptor: adaptor)
+      }
+      if let audio, let input = audioInput {
+        try feedAudio(audio, input: input)
+      }
+      videoInput?.markAsFinished()
+      audioInput?.markAsFinished()
 
-    let finished = DispatchSemaphore(value: 0)
-    writer.finishWriting { finished.signal() }
-    _ = finished.wait(timeout: .now() + 86_400)
-    guard writer.status == .completed else {
-      throw MediaEncodeFailure(.encodeFailed, "AVAssetWriter finished with status \(writer.status.rawValue)")
+      let finished = DispatchSemaphore(value: 0)
+      writer.finishWriting { finished.signal() }
+      _ = finished.wait(timeout: .now() + 86_400)
+      guard writer.status == .completed else {
+        throw MediaEncodeFailure(.encodeFailed, "AVAssetWriter finished with status \(writer.status.rawValue)")
+      }
+    } catch {
+      // A writer left in .writing leaks its inputs and the output file handle.
+      if writer.status == .writing { writer.cancelWriting() }
+      throw error
     }
   }
 
@@ -363,12 +374,23 @@ final class MediaEncoder: Sendable {
     pcm.withUnsafeBufferPointer { src in
       raw.copyMemory(from: src.baseAddress!, byteCount: byteCount)
     }
+    // CMBlockBufferCreateWithMemoryBlock does not take ownership of
+    // `memoryBlock`: without a deallocator the raw allocation leaks on every
+    // successful encode. The custom block source frees it when the block
+    // buffer is released (the sample buffer retains it for the writer).
+    var blockSource = CMBlockBufferCustomBlockSource(
+      version: kCMBlockBufferCustomBlockSourceVersion,
+      AllocateBlock: nil,
+      FreeBlock: { _, doomedMemoryBlock, _ in
+        doomedMemoryBlock.deallocate()
+      },
+      refCon: nil)
     let blockStatus = CMBlockBufferCreateWithMemoryBlock(
       allocator: kCFAllocatorDefault, memoryBlock: raw, blockLength: byteCount,
-      blockAllocator: kCFAllocatorDefault, customBlockSource: nil,
+      blockAllocator: kCFAllocatorDefault, customBlockSource: &blockSource,
       offsetToData: 0, dataLength: byteCount, flags: kCMBlockBufferAssureMemoryNowFlag,
       blockBufferOut: &blockBuffer)
-    guard blockStatus == kCMBlockBufferNoErr, let blockBuffer else {
+    guard blockStatus == kCMBlockBufferNoErr, blockBuffer != nil else {
       raw.deallocate()
       throw MediaEncodeFailure(.encodeFailed, "CMBlockBufferCreateWithMemoryBlock failed (\(blockStatus)).")
     }
@@ -390,28 +412,41 @@ final class MediaEncoder: Sendable {
       asbd.mBytesPerPacket = UInt32(spec.bytesPerFrame)
     }
     var formatDescription: CMFormatDescription?
-    var formatStatus = CMAudioFormatDescriptionCreate(allocator: kCFAllocatorDefault, asbd: &asbd,
+    let formatStatus = CMAudioFormatDescriptionCreate(allocator: kCFAllocatorDefault, asbd: &asbd,
                                                      layoutSize: 0, layout: nil,
                                                      magicCookieSize: 0, magicCookie: nil,
                                                      extensions: nil, formatDescriptionOut: &formatDescription)
-    guard formatStatus == noErr, let formatDescription else {
+    guard formatStatus == noErr, formatDescription != nil else {
+      // Dropping the block buffer runs FreeBlock above, freeing `raw`.
+      blockBuffer = nil
       throw MediaEncodeFailure(.encodeFailed, "CMAudioFormatDescriptionCreate failed (\(formatStatus)).")
     }
 
     let timescale = Int32(spec.sampleRate)
+    // One timing entry covers the whole buffer: its duration is a single
+    // sample (one PCM frame), per the CMSampleBufferCreateReady contract.
     var timing = CMSampleTimingInfo(
-      duration: CMTime(value: Int64(frames), timescale: timescale),
+      duration: CMTime(value: 1, timescale: timescale),
       presentationTimeStamp: CMTime(value: Int64(startFrame), timescale: timescale),
       decodeTimeStamp: .invalid)
     var sampleBuffer: CMSampleBuffer?
+    // Interleaved LPCM: every sample (one frame across all channels) is
+    // spec.bytesPerFrame bytes.
     let status = CMSampleBufferCreateReady(
-      allocator: kCFAllocatorDefault, formatDescription: formatDescription,
-      sampleCount: frames, sampleTimingEntryCount: 1, sampleTimingArray: &timing,
-      dataBuffer: blockBuffer, dataReady: true, makeDataReadyCallback: nil,
-      refcon: nil, sampleBufferOut: &sampleBuffer)
-    guard status == noErr, let sampleBuffer else {
+      allocator: kCFAllocatorDefault,
+      dataBuffer: blockBuffer,
+      formatDescription: formatDescription,
+      sampleCount: frames,
+      sampleTimingEntryCount: 1,
+      sampleTimingArray: &timing,
+      sampleSizeEntryCount: 1,
+      sampleSizeArray: [spec.bytesPerFrame],
+      sampleBufferOut: &sampleBuffer)
+    guard status == noErr, sampleBuffer != nil else {
+      blockBuffer = nil
+      formatDescription = nil
       throw MediaEncodeFailure(.encodeFailed, "CMSampleBufferCreateReady failed (\(status)).")
     }
-    return sampleBuffer
+    return sampleBuffer!
   }
 }

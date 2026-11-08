@@ -35,7 +35,7 @@ finished file.
 | iOS | AVAssetWriter H.264 + AAC; RGBA→BGRA CVPixelBuffer feed, LPCM→AAC CMSampleBuffers | implemented, **unverified** — no Xcode/simulator run |
 | Android | MediaCodec `video/avc` + `audio/mp4a-latm` + MediaMuxer; RGBA→NV12/I420 conversion, f32→s16 PCM | implemented, **unverified** — no Gradle/device run |
 | Web | WebCodecs `VideoEncoder`/`AudioEncoder` through unmodified Mediabunny 1.65.2 (MPL-2.0, see `THIRD_PARTY.md`), faststart MP4 in memory returned as a `data:` URL | implemented, **unverified** — no browser run |
-| macOS / Windows / visionOS / XR | none — `findNativeModule` returns null and calls reject `unsupported-format` | **not implemented** |
+| macOS / Windows / visionOS / XR | none — `findNativeModule` returns null and calls reject `unsupported-format`; the podspec pins `ios: '16.4'` only, so visionOS targets cannot link the module at all despite the Expo config's `apple` umbrella | **not implemented** |
 
 ## Honest limits
 
@@ -49,6 +49,14 @@ finished file.
   to small clips.
 - `probe()` reports codec/container availability, not per-device success at a
   given size or frame rate. Hardware-acceleration status is not reported.
+- Android accepts only `COLOR_FormatYUV420SemiPlanar` (NV12) or
+  `COLOR_FormatYUV420Planar` (I420) H.264 inputs; a device whose encoders
+  expose only `COLOR_FormatYUV420Flexible` rejects with `unsupported-format`,
+  because the flexible plane layout cannot be expressed through the
+  ByteBuffer input API.
+- The web path's 120 s deadline covers the whole encode, including stalls
+  inside Mediabunny `add()`/`start()`/`finalize()` awaits; an overrun reports
+  `encode-failed`, a caller abort reports `cancelled`.
 - No encoder was benchmarked; RGBA→YUV conversion cost, bitrate behavior,
   cancellation drain time and memory use are unmeasured.
 - Windows (Media Foundation) and desktop Linux/XR targets named in the

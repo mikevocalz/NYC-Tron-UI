@@ -44,7 +44,21 @@ export async function encodeWebCodecsMp4(request:EncodeRequest,signal:AbortSigna
   const abort=()=>cancellation.abort();
   if(signal?.aborted)cancellation.abort();
   signal?.addEventListener("abort",abort,{once:true});
-  const deadline=setTimeout(()=>cancellation.abort(),ENCODE_DEADLINE_MS);
+  // The deadline must also bound awaits that never settle on their own:
+  // Mediabunny's add()/start()/finalize() can stall inside a codec callback
+  // that ignores the signal, so each one races the shared cancellation.
+  let timedOut=false;
+  const deadline=setTimeout(()=>{timedOut=true;cancellation.abort();},ENCODE_DEADLINE_MS);
+  const deadlineError=()=>new MediaEncodeError(timedOut?"encode-failed":"cancelled",
+    timedOut?"Media encoding exceeded its time budget.":"Media encoding was cancelled.");
+  const withinDeadline=<T>(promise:Promise<T>):Promise<T>=>new Promise((resolve,reject)=>{
+    if(cancellation.signal.aborted){reject(deadlineError());return;}
+    const onAbort=()=>reject(deadlineError());
+    cancellation.signal.addEventListener("abort",onAbort,{once:true});
+    promise.then(
+      value=>{cancellation.signal.removeEventListener("abort",onAbort);resolve(value);},
+      error=>{cancellation.signal.removeEventListener("abort",onAbort);reject(error);});
+  });
   try{
     const {Output,Mp4OutputFormat,BufferTarget,VideoSampleSource,AudioSampleSource,VideoSample,AudioSample,Quality}=await import("mediabunny");
     const target=new BufferTarget();
@@ -62,7 +76,7 @@ export async function encodeWebCodecsMp4(request:EncodeRequest,signal:AbortSigna
       audioSource=new AudioSampleSource({codec:"aac",quality:new Quality("medium")});
       output.addAudioTrack(audioSource);
     }
-    await output.start();
+    await withinDeadline(output.start());
 
     if(video&&videoSource&&frameBytes){
       const frameSize=video.width*video.height*VIDEO_BYTES_PER_PIXEL;
@@ -71,7 +85,7 @@ export async function encodeWebCodecsMp4(request:EncodeRequest,signal:AbortSigna
         if(cancellation.signal.aborted)throw new MediaEncodeError("cancelled","Media encoding was cancelled.");
         const data=frameBytes.subarray(i*frameSize,(i+1)*frameSize);
         const sample:VideoSample=new VideoSample(data,{format:"RGBA",codedWidth:video.width,codedHeight:video.height,timestamp:i*frameSeconds,duration:frameSeconds});
-        try{await videoSource.add(sample);}finally{sample.close();}
+        try{await withinDeadline(videoSource.add(sample));}finally{sample.close();}
       }
     }
 
@@ -87,11 +101,11 @@ export async function encodeWebCodecsMp4(request:EncodeRequest,signal:AbortSigna
         const timestamp=framesWritten/sampleRate;
         offset+=frames*bytesPerFrame;framesWritten+=frames;
         const sample:AudioSample=new AudioSample({data,format:audio.sampleFormat as "f32"|"s16",numberOfChannels:audio.channels,sampleRate,timestamp});
-        try{await audioSource.add(sample);}finally{sample.close();}
+        try{await withinDeadline(audioSource.add(sample));}finally{sample.close();}
       }
     }
 
-    await output.finalize();
+    await withinDeadline(output.finalize());
     const buffer=target.buffer;
     if(!buffer||buffer.byteLength<1)throw new MediaEncodeError("encode-failed","The encoder produced an empty file.");
     // data: URL keeps the result self-contained like the decoder's frame URIs.
