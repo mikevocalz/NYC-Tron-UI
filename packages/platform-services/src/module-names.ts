@@ -11,3 +11,5 @@ export const PLAYBACK_SESSION_MODULE_NAME="NYCTronPlaybackSession";
 export const MEDIA_DECODER_MODULE_NAME="NYCTronMediaDecoder";
 /** Media encoding to MP4 (H.264 + AAC). */
 export const MEDIA_ENCODER_MODULE_NAME="NYCTronMediaEncoder";
+/** Streaming speech recognition (SFSpeechRecognizer / SpeechRecognizer / SpeechRecognition). */
+export const SPEECH_MODULE_NAME="NYCTronSpeech";

@@ -5,3 +5,4 @@ export * from "./documents/index.ts";
 export * from "./playback/index.ts";
 export * from "./media/index.ts";
 export * from "./encoder/index.ts";
+export * from "./speech/index.ts";

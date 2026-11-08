@@ -12,6 +12,7 @@ Platform services for creative editors. Import each service by subpath.
 | `/media` | N-19 media decoder | AVFoundation probe, timestamped JPEG frames and Float32 PCM files | MediaExtractor/MediaCodec probe, timestamped JPEG frames and Float32 PCM files | Browser video seeking and Web Audio PCM |
 | `/scheduler` | N-13 long-task scheduling | Cooperative FIFO queue; identical on every host | Same | Same |
 | `/media-cache` | N-14 media cache | Bounded LRU for host-supplied derived bytes; identical on every host | Same | Same |
+| `/speech` | ASR provider (Forge P-asr decision) | `SFSpeechRecognizer` + `AVAudioEngine` tap; `requiresOnDeviceRecognition` when `onDeviceOnly` | `SpeechRecognizer` with `EXTRA_PREFER_OFFLINE` / on-device API (31+); system owns the mic | `SpeechRecognition`/`webkitSpeechRecognition`; no on-device mode — consent required |
 
 ## Haptics
 
@@ -141,14 +142,72 @@ measures `ArrayBuffer`, views and `{ bytes }` wrappers; pass `estimate` for
 other shapes. `close()` drops every retained reference. The cache never
 decodes media and holds no document state.
 
+## Speech recognition
+
+```ts
+import { createPlatformSpeechRecognizer, createSpeechConsent } from "@nyc-tron/platform-services/speech";
+
+const consent = createSpeechConsent({ storage: mmkv }); // separate from telemetry consent
+const speech = createPlatformSpeechRecognizer({ consent });
+const probe = await speech.probe(); // { available, onDevice, networkPossible }
+
+const session = await speech.start({ locale: "en-US", hints: ["NYC-Tron"] }); // onDeviceOnly: true by default
+session.addListener(event => {
+  if (event.type === "partial") preview(event.text);
+  if (event.type === "final") commit(event.text);       // words? when the platform supplies timings
+  if (event.type === "end") finish(event.reason);
+  if (event.type === "error") report(event.error.code);
+});
+await session.stop();  // flush: resolves on the terminal "end"/"error" event
+// or session.abort() to cancel immediately
+```
+
+On-device is the default (`onDeviceOnly: true`). Passing
+`onDeviceOnly: false` — or any recognition on web — may route audio to a
+network recognizer and requires `consent.networkRecognition`, granted only
+through `createSpeechConsent`'s explicit `grantNetworkRecognition()` from
+the app's own settings UI. This consent is **not** the N-18 telemetry
+consent; neither authorizes the other.
+
+Platform notes and honest limits:
+
+- **iOS:** requests `NSSpeechRecognitionUsageDescription` and
+  `NSMicrophoneUsageDescription` (both must be in the host Info.plist) and
+  activates a `.playAndRecord` audio session for the session's lifetime —
+  coordinate with `NYCTronPlaybackSession` so the two do not fight over
+  `AVAudioSession`. `requiresOnDeviceRecognition` is set for
+  `onDeviceOnly`; server recognition only runs when it is false *and*
+  consent is granted. Word timings come from
+  `SFSpeechRecognitionResult.segments`.
+- **Android:** declares `RECORD_AUDIO`; the host must grant it at runtime
+  (`start` rejects `"permission"` otherwise). `onDeviceOnly` (the default)
+  requires `createOnDeviceSpeechRecognizer` on API 31+ — when it is
+  unavailable `start` rejects `"unsupported-format"` rather than falling
+  back to a network path. `onDeviceOnly: false` uses the network-capable
+  recognizer and requires speech consent at the JS layer.
+  `probe().networkPossible` stays
+  true. No word timings. `hints` map to `EXTRA_BIASING_STRINGS` on API 33+.
+- **Web:** every browser path is treated as cloud-class — there is no API
+  to verify on-device routing, so `onDeviceOnly: true` rejects
+  `"unsupported-format"` and `onDeviceOnly: false` requires consent.
+- **Windows/Linux:** no backend in this package; `isAvailable` is false
+  and calls reject `"unsupported-format"`.
+
+Sessions are capped at 4 per recognizer and bounded by `maxSessionMs`
+(default 10 minutes); past it the session aborts with `"recognition-failed"`.
+Nothing here is journaled or snapshotted — committed transcript text is the
+host's data to feed engines through their normal ops.
+
 ## Native module
 
-Four Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
-Gradle library: `NYCTronHaptics`, `NYCTronDocuments` and
-`NYCTronPlaybackSession` and `NYCTronMediaDecoder`. Swift uses the `@ExpoModule` / `@JS` / `@Record` /
+Six Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
+Gradle library: `NYCTronHaptics`, `NYCTronDocuments`,
+`NYCTronPlaybackSession`, `NYCTronMediaDecoder`, `NYCTronMediaEncoder` and
+`NYCTronSpeech`. Swift uses the `@ExpoModule` / `@JS` / `@Record` /
 `@Event` macros and does not import ExpoUI. Kotlin is built by the `v2 true`
 Gradle plugin; the classes stay out of `android.modules` in
-`expo-module.config.json`. The Android library declares no permissions.
+`expo-module.config.json`. The Android library declares exactly one
+permission, `RECORD_AUDIO`, for speech recognition.
 
 Peers: `expo` 58, `react`, `react-native`, `zustand`.
 
@@ -161,7 +220,9 @@ local diagnostic export and checkpoint process relaunch. The media fixture retur
 12000 samples at 24000 Hz for its half-second span on both platforms.
 
 Physical haptics, calls, output-route changes, screen readers, wider codec/color
-profiles and the other required hosts still need acceptance. See the companion
+profiles, real speech-recognition sessions on any platform (the Swift/Kotlin
+backends are contract-tested but unrun on device) and the other required
+hosts still need acceptance. See the companion
 [Forge phase reports](https://github.com/mikevocalz/nitro-forge/tree/codex/complete-all-components/docs/completion/reports)
 for commands, artifacts and limits.
 
