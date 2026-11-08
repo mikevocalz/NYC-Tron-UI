@@ -1,0 +1,724 @@
+{
+  "date": "2026-11-08",
+  "platform": "web",
+  "runtime": "Headless Chromium via Playwright 1.62.1 (chromium-1234, Google Chrome for Testing) on macOS arm64; React Native Web 0.21.4; Tailwind v4 theme; fixtures bundled by esbuild and served by packages/ui/tests/browser/server.mjs on http://127.0.0.1:4179",
+  "command": "cd packages/ui/tests/browser && npm ci --ignore-scripts && npx playwright test",
+  "result": {
+    "specFiles": 81,
+    "tests": 657,
+    "passed": 657,
+    "failed": 0,
+    "skipped": 0,
+    "duration": "1.8m"
+  },
+  "specs": {
+    "analysis-shots.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "analysis",
+        "analysis",
+        "analysis",
+        "analysis"
+      ]
+    },
+    "analysis.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "analysis",
+        "analysis",
+        "analysis",
+        "analysis",
+        "analysis",
+        "analysis",
+        "analysis"
+      ]
+    },
+    "artboard.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "artboard"
+      ]
+    },
+    "automation-shots.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "automation",
+        "automation",
+        "automation"
+      ]
+    },
+    "automation.spec.mjs": {
+      "tests": 9,
+      "passed": 9,
+      "fixtures": [
+        "automation",
+        "automation",
+        "automation"
+      ]
+    },
+    "canvas-guides-shots.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "canvas-guides",
+        "canvas-guides",
+        "canvas-guides",
+        "canvas-guides",
+        "canvas-guides"
+      ]
+    },
+    "canvas-guides.spec.mjs": {
+      "tests": 11,
+      "passed": 11,
+      "fixtures": [
+        "canvas-guides",
+        "canvas-guides"
+      ]
+    },
+    "canvas-navigation.spec.mjs": {
+      "tests": 9,
+      "passed": 9,
+      "fixtures": [
+        "canvas-navigation",
+        "canvas-navigation"
+      ]
+    },
+    "color-adjustments.spec.mjs": {
+      "tests": 14,
+      "passed": 14,
+      "fixtures": [
+        "color-adjustments",
+        "color-adjustments",
+        "color-adjustments"
+      ]
+    },
+    "color-management.spec.mjs": {
+      "tests": 9,
+      "passed": 9,
+      "fixtures": [
+        "color-management",
+        "color-management",
+        "color-management"
+      ]
+    },
+    "color-shots.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "color",
+        "color",
+        "color"
+      ]
+    },
+    "color.spec.mjs": {
+      "tests": 13,
+      "passed": 13,
+      "fixtures": [
+        "color",
+        "color",
+        "color",
+        "color",
+        "color",
+        "color",
+        "color"
+      ]
+    },
+    "command-ownership.spec.mjs": {
+      "tests": 4,
+      "passed": 4,
+      "fixtures": [
+        "command-ownership"
+      ]
+    },
+    "composition-tree.spec.mjs": {
+      "tests": 3,
+      "passed": 3,
+      "fixtures": [
+        "composition-tree"
+      ]
+    },
+    "eqdyn-shots.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "eqdyn",
+        "eqdyn",
+        "eqdyn",
+        "eqdyn"
+      ]
+    },
+    "eqdyn.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "eqdyn",
+        "eqdyn",
+        "eqdyn"
+      ]
+    },
+    "forms-shots.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "forms",
+        "forms",
+        "forms"
+      ]
+    },
+    "forms.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "forms",
+        "forms"
+      ]
+    },
+    "gpu-canvas.spec.mjs": {
+      "tests": 3,
+      "passed": 3,
+      "fixtures": [
+        "gpu-canvas"
+      ]
+    },
+    "hardware-keys.spec.mjs": {
+      "tests": 3,
+      "passed": 3,
+      "fixtures": [
+        "shell-commands"
+      ]
+    },
+    "ink.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "ink",
+        "ink",
+        "ink"
+      ]
+    },
+    "layer-blend.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "layer-blend",
+        "layer-blend"
+      ]
+    },
+    "layer-panels-shots.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "layer-panels",
+        "layer-panels",
+        "layer-panels",
+        "layer-panels"
+      ]
+    },
+    "layer-panels.spec.mjs": {
+      "tests": 12,
+      "passed": 12,
+      "fixtures": [
+        "layer-panels",
+        "layer-panels",
+        "layer-panels",
+        "layer-panels",
+        "layer-panels"
+      ]
+    },
+    "layer-tree.spec.mjs": {
+      "tests": 12,
+      "passed": 12,
+      "fixtures": [
+        "layer-tree",
+        "layer-tree"
+      ]
+    },
+    "layers.spec.mjs": {
+      "tests": 4,
+      "passed": 4,
+      "fixtures": [
+        "(root)"
+      ]
+    },
+    "mask-clip.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "mask-clip"
+      ]
+    },
+    "media6.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "media6",
+        "media6",
+        "media6"
+      ]
+    },
+    "midi2-shots.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "midi2",
+        "midi2",
+        "midi2"
+      ]
+    },
+    "midi2.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "midi2",
+        "midi2",
+        "midi2"
+      ]
+    },
+    "mixer.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "mixer",
+        "mixer",
+        "mixer"
+      ]
+    },
+    "mixer2-shots.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "mixer2",
+        "mixer2",
+        "mixer2"
+      ]
+    },
+    "mixer2.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "mixer2",
+        "mixer2"
+      ]
+    },
+    "motion-curves.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "motion-curves"
+      ]
+    },
+    "motion-effects.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "motion-effects"
+      ]
+    },
+    "motion-expression.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "motion-expression"
+      ]
+    },
+    "motion-node-graph.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "motion-node-graph"
+      ]
+    },
+    "motion-path.spec.mjs": {
+      "tests": 3,
+      "passed": 3,
+      "fixtures": [
+        "motion-path"
+      ]
+    },
+    "motion-queue.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "motion-queue",
+        "motion-queue",
+        "motion-queue"
+      ]
+    },
+    "motion-settings.spec.mjs": {
+      "tests": 4,
+      "passed": 4,
+      "fixtures": [
+        "motion-settings"
+      ]
+    },
+    "motion-timeline.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "motion-timeline"
+      ]
+    },
+    "multi-selection.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "multi-selection",
+        "multi-selection"
+      ]
+    },
+    "office-shots.spec.mjs": {
+      "tests": 17,
+      "passed": 17,
+      "fixtures": [
+        "office",
+        "office",
+        "office",
+        "office"
+      ]
+    },
+    "office.spec.mjs": {
+      "tests": 16,
+      "passed": 16,
+      "fixtures": [
+        "office",
+        "office"
+      ]
+    },
+    "overlay-ownership.spec.mjs": {
+      "tests": 10,
+      "passed": 10,
+      "fixtures": [
+        "overlay-ownership"
+      ]
+    },
+    "pairing.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "pairing",
+        "pairing",
+        "pairing",
+        "pairing",
+        "pairing",
+        "pairing"
+      ]
+    },
+    "panel-layout.spec.mjs": {
+      "tests": 3,
+      "passed": 3,
+      "fixtures": [
+        "panel-layout",
+        "panel-layout"
+      ]
+    },
+    "photo-catalog.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "photo-catalog"
+      ]
+    },
+    "photo-develop.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "photo-develop",
+        "photo-develop",
+        "photo-develop"
+      ]
+    },
+    "photo-masks.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "photo-masks",
+        "photo-masks"
+      ]
+    },
+    "photo-workflow.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "photo-workflow",
+        "photo-workflow",
+        "photo-workflow"
+      ]
+    },
+    "precision-ownership.spec.mjs": {
+      "tests": 11,
+      "passed": 11,
+      "fixtures": [
+        "precision-ownership"
+      ]
+    },
+    "primitives.spec.mjs": {
+      "tests": 14,
+      "passed": 14,
+      "fixtures": [
+        "primitives",
+        "primitives",
+        "primitives"
+      ]
+    },
+    "routing-shots.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "routing",
+        "routing",
+        "routing",
+        "routing",
+        "routing"
+      ]
+    },
+    "routing.spec.mjs": {
+      "tests": 11,
+      "passed": 11,
+      "fixtures": [
+        "routing",
+        "routing",
+        "routing",
+        "routing",
+        "routing",
+        "routing",
+        "routing",
+        "routing",
+        "routing"
+      ]
+    },
+    "scrubber.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "(root)"
+      ]
+    },
+    "seekbar.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "(root)",
+        "(root)"
+      ]
+    },
+    "selection-bounds.spec.mjs": {
+      "tests": 9,
+      "passed": 9,
+      "fixtures": [
+        "selection-bounds",
+        "selection-bounds",
+        "selection-bounds"
+      ]
+    },
+    "selection-tools-shots.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "selection-tools",
+        "selection-tools",
+        "selection-tools",
+        "selection-tools",
+        "selection-tools"
+      ]
+    },
+    "selection-tools.spec.mjs": {
+      "tests": 13,
+      "passed": 13,
+      "fixtures": [
+        "selection-tools",
+        "selection-tools"
+      ]
+    },
+    "shell-commands-shots.spec.mjs": {
+      "tests": 7,
+      "passed": 7,
+      "fixtures": [
+        "shell-commands",
+        "shell-commands",
+        "shell-commands",
+        "shell-commands"
+      ]
+    },
+    "shell-commands.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "shell-commands"
+      ]
+    },
+    "shell-consumers.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "shell-consumers",
+        "shell-consumers"
+      ]
+    },
+    "shell-inspector-shots.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "shell-inspector",
+        "shell-inspector",
+        "shell-inspector",
+        "shell-inspector"
+      ]
+    },
+    "shell-inspector.spec.mjs": {
+      "tests": 11,
+      "passed": 11,
+      "fixtures": [
+        "shell-inspector",
+        "shell-inspector"
+      ]
+    },
+    "shell-layout-shots.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "shell-layout",
+        "shell-layout",
+        "shell-layout",
+        "shell-layout",
+        "shell-layout"
+      ]
+    },
+    "shell-layout.spec.mjs": {
+      "tests": 11,
+      "passed": 11,
+      "fixtures": [
+        "shell-layout"
+      ]
+    },
+    "shots.spec.mjs": {
+      "tests": 14,
+      "passed": 14,
+      "fixtures": [
+        "(root)",
+        "(root)",
+        "(root)"
+      ]
+    },
+    "spreadsheet.spec.mjs": {
+      "tests": 13,
+      "passed": 13,
+      "fixtures": [
+        "spreadsheet"
+      ]
+    },
+    "studio-gaps.spec.mjs": {
+      "tests": 18,
+      "passed": 18,
+      "fixtures": [
+        "studio-gaps",
+        "studio-gaps",
+        "studio-gaps",
+        "studio-gaps"
+      ]
+    },
+    "thumbnail-ownership.spec.mjs": {
+      "tests": 3,
+      "passed": 3,
+      "fixtures": [
+        "thumbnail-ownership"
+      ]
+    },
+    "timeline-shots.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "timeline",
+        "timeline",
+        "timeline"
+      ]
+    },
+    "timeline.spec.mjs": {
+      "tests": 13,
+      "passed": 13,
+      "fixtures": [
+        "timeline",
+        "timeline",
+        "timeline",
+        "timeline",
+        "timeline",
+        "timeline",
+        "timeline",
+        "timeline"
+      ]
+    },
+    "timeline2-shots.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "timeline2",
+        "timeline2",
+        "timeline2"
+      ]
+    },
+    "timeline2.spec.mjs": {
+      "tests": 9,
+      "passed": 9,
+      "fixtures": [
+        "timeline2"
+      ]
+    },
+    "unit-boundary.spec.mjs": {
+      "tests": 4,
+      "passed": 4,
+      "fixtures": [
+        "unit-boundary",
+        "unit-boundary"
+      ]
+    },
+    "vector-shots.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "vector",
+        "vector",
+        "vector"
+      ]
+    },
+    "vector.spec.mjs": {
+      "tests": 19,
+      "passed": 19,
+      "fixtures": [
+        "vector",
+        "vector"
+      ]
+    },
+    "workspace-continuity.spec.mjs": {
+      "tests": 6,
+      "passed": 6,
+      "fixtures": [
+        "workspace-continuity"
+      ]
+    },
+    "workspace5-shots.spec.mjs": {
+      "tests": 5,
+      "passed": 5,
+      "fixtures": [
+        "workspace5",
+        "workspace5",
+        "workspace5"
+      ]
+    },
+    "workspace5.spec.mjs": {
+      "tests": 8,
+      "passed": 8,
+      "fixtures": [
+        "workspace5",
+        "workspace5"
+      ]
+    }
+  },
+  "rowCoverage": {
+    "rows": 177,
+    "note": "Row mapping derived from esbuild metafile inputs per fixture matched to canonical sourceCandidates; per-spec row IDs in P-web-browser-lane.md"
+  },
+  "limits": "Real Chromium headless through Playwright against a local fixture server. This is web-runtime evidence only: not a physical device, not a packaged browser build, and not the other seven required platforms (ios, android, macos, windows, visionos, quest, pico). Status stays 'partial'; no row is accepted on this evidence alone. *-shots specs write review captures to the gitignored shots/ directory; they are not pixel goldens."
+}
