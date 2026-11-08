@@ -10,6 +10,8 @@ Platform services for creative editors. Import each service by subpath.
 
 | `/checkpoints` | N-10 document recovery storage | Immutable files through Expo FileSystem | Immutable files through Expo FileSystem | IndexedDB transactions |
 | `/media` | N-19 media decoder | AVFoundation probe, timestamped JPEG frames and Float32 PCM files | MediaExtractor/MediaCodec probe, timestamped JPEG frames and Float32 PCM files | Browser video seeking and Web Audio PCM |
+| `/scheduler` | N-13 long-task scheduling | Cooperative FIFO queue; identical on every host | Same | Same |
+| `/media-cache` | N-14 media cache | Bounded LRU for host-supplied derived bytes; identical on every host | Same | Same |
 
 ## Haptics
 
@@ -112,6 +114,33 @@ waits for IndexedDB transaction completion. Corrupt/torn records fall back to a
 prior generation. Await `close()` to drain writes. This supports process recovery;
 OS power-loss fsync is not established.
 
+## Scheduler
+
+`createLongTaskScheduler()` from `/scheduler` runs host-supplied decode,
+export and render work as a cooperative FIFO queue, one task at a time, with a
+yield to the event loop before each start. Each task gets a `TaskContext`:
+`checkpoint()` yields and throws `TaskCancelledError` once cancelled,
+`throwIfCancelled()` checks synchronously, and `reportProgress()` delivers
+clamped 0..1 progress to the submit options. `cancel(id)` rejects queued work
+immediately and marks running work; `close()` rejects the queue and resolves
+when running work next yields.
+
+JavaScript cannot preempt synchronous work, so a task that never checkpoints
+keeps the scheduler open and `close()` waits for it. Native codec offload,
+worker threads and cancellation of already-submitted decode stay with the
+engine/host — this module owns ordering, bounds, progress and settled results.
+
+## Media cache
+
+`createMediaCache({ maxBytes, maxEntries?, estimate?, onEvict? })` from
+`/media-cache` is a bounded least-recently-used store for derived bytes the
+host generates and keys: waveform peaks, preview frames, thumbnails. `get`
+refreshes recency, `peek` does not, `set` evicts oldest-first until both bounds
+hold, and values larger than `maxBytes` are rejected. The default estimator
+measures `ArrayBuffer`, views and `{ bytes }` wrappers; pass `estimate` for
+other shapes. `close()` drops every retained reference. The cache never
+decodes media and holds no document state.
+
 ## Native module
 
 Four Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
@@ -125,7 +154,8 @@ Peers: `expo` 58, `react`, `react-native`, `zustand`.
 
 ## Verified so far
 
-731 repository source tests pass. Fresh iOS/Android simulator builds and native
+982 repository source tests pass, including the scheduler and media-cache
+suites. Fresh iOS/Android simulator builds and native
 checks cover generated media frame/PCM decoding, picker import/bookmark recovery,
 local diagnostic export and checkpoint process relaunch. The media fixture returns
 12000 samples at 24000 Hz for its half-second span on both platforms.

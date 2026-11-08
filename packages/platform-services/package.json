@@ -48,6 +48,18 @@
       "browser": "./dist/media/index.js",
       "react-native": "./dist/media/index.native.js",
       "default": "./dist/media/index.js"
+    },
+    "./scheduler": {
+      "types": "./dist/scheduler/index.d.ts",
+      "browser": "./dist/scheduler/index.js",
+      "react-native": "./dist/scheduler/index.native.js",
+      "default": "./dist/scheduler/index.js"
+    },
+    "./media-cache": {
+      "types": "./dist/media-cache/index.d.ts",
+      "browser": "./dist/media-cache/index.js",
+      "react-native": "./dist/media-cache/index.native.js",
+      "default": "./dist/media-cache/index.js"
     }
   },
   "scripts": {

@@ -12,8 +12,17 @@ for(const row of ledger.components){
  if(!row.name||!row.phase||!row.requirement||typeof row.libraryScope!=='boolean')fail(`Missing scope metadata for ${row.id}`);
  for(const source of row.sourceCandidates){if(!source.startsWith('packages/')||source.includes('..')||!existsSync(resolve(root,source)))fail(`${row.id} has a missing source candidate: ${source}`);}
  if(['implemented','partial'].includes(row.implementationReview)){
-  implemented++;if(row.implementationReview==='partial'){partial++;if(!row.remainingLibraryWork?.length)fail(`${row.id} must name its remaining library work`);}else if(row.remainingLibraryWork?.length)fail(`${row.id} still has unfinished library requirements`);
-  if(!row.libraryScope||!row.sourceCandidates.length||!row.evidence?.length)fail(`${row.id} needs owned source and evidence`);
+  // Library rows count toward the library total. Non-library rows may record
+  // an implemented NYC-Tron-owned adapter (e.g. a platform-services subpath)
+  // while their engine/platform acceptance stays unverified; they still need
+  // owned source, evidence and a public export, but never count as library
+  // implementations and cannot be partial.
+  if(row.libraryScope){
+   implemented++;
+   if(row.implementationReview==='partial'){partial++;if(!row.remainingLibraryWork?.length)fail(`${row.id} must name its remaining library work`);}
+   else if(row.remainingLibraryWork?.length)fail(`${row.id} still has unfinished library requirements`);
+  }else if(row.implementationReview==='partial')fail(`${row.id} is outside library scope; record implemented or pending`);
+  if(!row.sourceCandidates.length||!row.evidence?.length)fail(`${row.id} needs owned source and evidence`);
   for(const report of row.evidence)if(report.includes('..')||!existsSync(resolve(root,'docs/completion',report)))fail(`${row.id} has a missing report`);
   const exported=row.sourceCandidates.some(source=>{
    const dist=resolve(root,source.replace('/src/','/dist/').replace(/\.tsx?$/,'.js'));
