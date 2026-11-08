@@ -103,6 +103,12 @@ final class SpeechRecognizerEngine {
       let audioEngine = AVAudioEngine()
       let input = audioEngine.inputNode
       let format = input.outputFormat(forBus: 0)
+      // A zeroed format (no input route, or the session not yet active)
+      // makes installTap raise an uncatchable NSException; reject instead.
+      guard format.sampleRate > 0, format.channelCount > 0 else {
+        try? audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+        throw SpeechFailure(.unsupportedFormat, "This device has no usable audio input for recognition.")
+      }
       do {
         input.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
           request.append(buffer)
@@ -110,6 +116,8 @@ final class SpeechRecognizerEngine {
         audioEngine.prepare()
         try audioEngine.start()
       } catch {
+        // installTap already ran, so removing it here cannot raise.
+        input.removeTap(onBus: 0)
         try? audioSession.setActive(false, options: .notifyOthersOnDeactivation)
         throw SpeechFailure(.unsupportedFormat, "This device has no usable audio input for recognition.")
       }
@@ -133,6 +141,9 @@ final class SpeechRecognizerEngine {
         throw SpeechFailure(.notFound, "The speech session is unknown or already finished.")
       }
       entry.request.endAudio()
+      // Stop capture now; finish() stops it again idempotently on the
+      // terminal event.
+      entry.engine.stop()
     }
   }
 
@@ -148,7 +159,8 @@ final class SpeechRecognizerEngine {
 
   func closeAll() {
     queue.async {
-      for entry in self.sessions.values { self.finish(entry, kind: "end", reason: "aborted") }
+      // Snapshot: finish() removes from `sessions` during iteration.
+      for entry in Array(self.sessions.values) { self.finish(entry, kind: "end", reason: "aborted") }
     }
   }
 

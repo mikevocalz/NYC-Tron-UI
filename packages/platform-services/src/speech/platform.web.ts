@@ -53,7 +53,8 @@ function createWebNative(consent:SpeechConsent|undefined):SpeechRecognizerNative
   const sessions=new Map<string,WebSession>();
   const listeners=new Set<(payload:unknown)=>void>();
   let counter=0;
-  const emit=(payload:unknown)=>{for(const l of listeners)l(payload);};
+  // One throwing listener must not starve the others.
+  const emit=(payload:unknown)=>{for(const l of listeners){try{l(payload);}catch{/* advisory fan-out */}}};
   return {
     async probe(){
       // Browsers give no on-device guarantee and may route audio to their

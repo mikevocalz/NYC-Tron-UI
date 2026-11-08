@@ -91,6 +91,19 @@ test("Android shares app files through the kit's own FileProvider with a per-app
   assert.deepEqual(permissions,["android.permission.RECORD_AUDIO"]);
 });
 
+test("Android onDeviceOnly never falls back to a network-capable recognizer",()=>{
+  const src=read(`${kt}/AndroidSpeechRecognizer.kt`);
+  // onDeviceOnly is a privacy promise: without the API-31+ on-device
+  // recognizer, start must reject unsupported-format. The network-capable
+  // recognizer is reachable only from the consented onDeviceOnly=false arm.
+  assert.match(src,/options\.onDeviceOnly\)\s*\{[\s\S]*?createOnDeviceSpeechRecognizer\(ctx\)[\s\S]*?unsupported-format[\s\S]*?\}\s*else\s*\{[\s\S]*?createSpeechRecognizer\(ctx\)/);
+  assert.match(src,/catch \(failure: SecurityException\)[\s\S]*?"permission"/);
+  assert.match(src,/sessions\.values\.toList\(\)/);
+  const swift=read("ios/SpeechRecognizerEngine.swift");
+  assert.match(swift,/Array\(self\.sessions\.values\)/);
+  assert.match(swift,/format\.sampleRate > 0, format\.channelCount > 0/);
+});
+
 test("no Swift file imports ExpoUI and the podspec does not depend on it",()=>{
   const files=[...readdirSync(join(root,"ios")).filter(f=>f.endsWith(".swift")).map(f=>"ios/"+f),
     ...readdirSync(join(root,"ios/Extensions")).map(f=>"ios/Extensions/"+f)];

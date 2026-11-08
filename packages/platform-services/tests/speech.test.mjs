@@ -127,6 +127,29 @@ test('session cap and timeout bound intake',async()=>{
   await assert.rejects(s.stop(),{code:'recognition-failed'});
 });
 
+test('a throwing listener does not starve the others or the waiters',async()=>{
+  const r=createSpeechRecognizer(base());
+  const s=await r.start();
+  const seen=[];
+  s.addListener(()=>{throw new Error('bad listener');});
+  s.addListener(e=>seen.push(e));
+  const done=s.stop();
+  emit({session:s.id,kind:'end',reason:'stopped'});
+  await done;
+  assert.deepEqual(seen.map(e=>e.type),['end']);
+});
+
+test('a rejected native stop drops its waiter; the session stays usable',async()=>{
+  let calls=0;
+  const r=createSpeechRecognizer({...base(),stop:async()=>{calls++;throw Error('[not-found] gone');}});
+  const s=await r.start();
+  await assert.rejects(s.stop(),e=>e.code==='not-found');
+  const a=s.abort();
+  emit({session:s.id,kind:'end',reason:'aborted'});
+  await a;
+  assert.equal(calls,1);
+});
+
 test('native failures retain their stable code',async()=>{
   const r=createSpeechRecognizer({...base(),start:async()=>{throw Error('[consent-required] nope');}});
   await assert.rejects(r.start(),e=>e.code==='consent-required');

@@ -21,10 +21,13 @@ import java.util.concurrent.atomic.AtomicInteger
  * to "speech" events and enforces the session cap. All recognizer calls run
  * on the main thread, where RecognitionListener callbacks arrive.
  *
- * On-device honesty: EXTRA_PREFER_OFFLINE and createOnDeviceSpeechRecognizer
- * are the strongest guarantees the API offers, but Android may still route
- * audio to a network recognizer — `probe().networkPossible` stays true and
- * the JS consent gate covers `onDeviceOnly: false`.
+ * On-device honesty: `onDeviceOnly` is a privacy promise, so it requires
+ * the API-31+ on-device recognizer; when that is unavailable `start`
+ * rejects "unsupported-format" instead of silently falling back to a
+ * network-capable recognizer. `onDeviceOnly: false` may still route audio
+ * off-device — `probe().networkPossible` stays true and the JS consent
+ * gate requires `networkRecognition` before that path is reachable.
+ * EXTRA_PREFER_OFFLINE remains only a hint, never a guarantee.
  */
 internal class AndroidSpeechRecognizer(
   private val context: () -> Context?,
@@ -63,12 +66,20 @@ internal class AndroidSpeechRecognizer(
     if (sessions.size >= maxSessions)
       throw SpeechFailure("busy", "At most $maxSessions speech sessions may run at once.")
 
-    val recognizer = if (options.onDeviceOnly &&
-      Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-      SpeechRecognizer.isOnDeviceRecognitionAvailable(ctx)
-    ) {
-      SpeechRecognizer.createOnDeviceSpeechRecognizer(ctx)
+    val recognizer = if (options.onDeviceOnly) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+        SpeechRecognizer.isOnDeviceRecognitionAvailable(ctx)
+      ) {
+        SpeechRecognizer.createOnDeviceSpeechRecognizer(ctx)
+      } else {
+        // No honest fallback: the network-capable recognizer could send
+        // audio off-device, and onDeviceOnly callers never granted
+        // networkRecognition consent.
+        throw SpeechFailure("unsupported-format", "On-device speech recognition is unavailable on this device.")
+      }
     } else {
+      // onDeviceOnly=false may route audio off-device; the JS layer has
+      // already required networkRecognition consent to reach this branch.
       SpeechRecognizer.createSpeechRecognizer(ctx)
     }
 
@@ -124,6 +135,10 @@ internal class AndroidSpeechRecognizer(
     })
     try {
       recognizer.startListening(intent)
+    } catch (failure: SecurityException) {
+      sessions.remove(id)
+      recognizer.destroy()
+      throw SpeechFailure("permission", "Microphone permission was denied.")
     } catch (failure: Exception) {
       sessions.remove(id)
       recognizer.destroy()
@@ -149,7 +164,8 @@ internal class AndroidSpeechRecognizer(
   fun close() {
     // Sessions live on the main thread; post the teardown there.
     android.os.Handler(android.os.Looper.getMainLooper()).post {
-      for (entry in sessions.values) finish(entry, "end", reason = "aborted")
+      // Snapshot: finish() removes from `sessions` during iteration.
+      for (entry in sessions.values.toList()) finish(entry, "end", reason = "aborted")
     }
   }
 

@@ -332,7 +332,8 @@ export function createSpeechRecognizer(native:SpeechRecognizerNative|null,option
   });
   const remove=(id:string)=>{const s=sessions.get(id);if(s?.timer!==undefined)clearTimeout(s.timer);sessions.delete(id);};
   const deliver=(state:SessionState,id:string,event:SpeechSessionEvent)=>{
-    for(const listener of state.listeners)listener(event);
+    // One throwing listener must not starve the others or the waiters.
+    for(const listener of state.listeners){try{listener(event);}catch{/* advisory fan-out */}}
     if(event.type==="error"){
       state.done=true;remove(id);
       for(const w of state.waiters)w.reject(event.error);
@@ -346,10 +347,17 @@ export function createSpeechRecognizer(native:SpeechRecognizerNative|null,option
   const settle=(id:string,nativeCall:()=>Promise<unknown>):Promise<void>=>{
     const state=sessions.get(id);
     if(!state)return Promise.reject(new SpeechError("not-found","The speech session is unknown or already finished."));
-    const done=new Promise<void>((resolve,reject)=>state.waiters.push({resolve,reject}));
+    let waiter!:SessionState["waiters"][number];
+    const done=new Promise<void>((resolve,reject)=>{waiter={resolve,reject};state.waiters.push(waiter);});
     return Promise.resolve()
       .then(nativeCall)
-      .then(()=>done,(error)=>{throw toSpeechError(error);});
+      .then(()=>done,(error)=>{
+        // The native call rejected, so no terminal event is owed to this
+        // waiter; drop it rather than retaining it until session end.
+        const at=state.waiters.indexOf(waiter);
+        if(at>=0)state.waiters.splice(at,1);
+        throw toSpeechError(error);
+      });
   };
   return {
     isAvailable:native!==null,
