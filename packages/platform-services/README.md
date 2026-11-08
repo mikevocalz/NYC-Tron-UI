@@ -184,8 +184,8 @@ Platform notes and honest limits:
   requires `createOnDeviceSpeechRecognizer` on API 31+ — when it is
   unavailable `start` rejects `"unsupported-format"` rather than falling
   back to a network path. `onDeviceOnly: false` uses the network-capable
-  recognizer with `EXTRA_PREFER_OFFLINE` — a hint, not a guarantee — and
-  requires speech consent at the JS layer. `probe().networkPossible` stays
+  recognizer and requires speech consent at the JS layer.
+  `probe().networkPossible` stays
   true. No word timings. `hints` map to `EXTRA_BIASING_STRINGS` on API 33+.
 - **Web:** every browser path is treated as cloud-class — there is no API
   to verify on-device routing, so `onDeviceOnly: true` rejects
