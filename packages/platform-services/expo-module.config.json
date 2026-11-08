@@ -10,7 +10,8 @@
       "NYCTronDocumentsModule",
       "NYCTronPlaybackSessionModule",
       "NYCTronMediaDecoderModule",
-      "NYCTronMediaEncoderModule"
+      "NYCTronMediaEncoderModule",
+      "NYCTronSpeechModule"
     ]
   }
 }

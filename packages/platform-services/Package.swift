@@ -20,6 +20,7 @@ let package = Package(
         .linkedFramework("CoreMedia"),
         .linkedFramework("UniformTypeIdentifiers"),
         .linkedFramework("VideoToolbox"),
+        .linkedFramework("Speech"),
       ]
     )
   ]

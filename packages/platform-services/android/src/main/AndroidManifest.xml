@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Speech recognition owns the microphone through SpeechRecognizer; the
+       runtime grant is the host's job, start() rejects "permission" without it. -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-feature android:name="android.hardware.microphone" android:required="false" />
   <application>
     <!-- Shares files from the app's cache and files directories; the
          authority is per app, so two apps using the kit never collide. -->
