@@ -1,0 +1,13 @@
+node_modules/
+.threaded-runtime/
+.spark/*
+!.spark/version
+macos/
+dist/
+app.json
+windows/
+.expo/
+
+# Spark verified release package inputs
+!/spark-packages/
+!/spark-packages/**
