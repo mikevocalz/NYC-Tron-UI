@@ -1,0 +1,37 @@
+Starting project at /private/tmp/m1a-spark/M1aSpikeApp
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+ WARN  Failed to download the latest version of React Native DevTools. Using a fallback version instead. Connect to the internet or check your network settings.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Downloading Spark Runner (13.3 MB)…
+Downloading Spark Runner ░░░░░░░░░░ 0%
+Downloading Spark Runner █░░░░░░░░░ 10%
+Downloading Spark Runner ██░░░░░░░░ 20%
+Downloading Spark Runner ███░░░░░░░ 30%
+Downloading Spark Runner ████░░░░░░ 40%
+Downloading Spark Runner █████░░░░░ 50%
+Downloading Spark Runner ██████░░░░ 60%
+Downloading Spark Runner ███████░░░ 70%
+Downloading Spark Runner ████████░░ 80%
+Downloading Spark Runner █████████░ 90%
+Downloading Spark Runner ██████████ 100%
+Spark Runner installed, opening your app…
+
+› Desktop: ● Ready to open Spark Runner
+  Fast Refresh enabled
+
+
+› Desktop: ● Running in Spark Runner
+  Fast Refresh enabled
+
+2026-11-08 07:44:03.555 SparkRunner[26298:20295023] _setUpFeatureFlags called with release level 2
+2026-11-08 07:44:03.572 SparkRunner[26298:20295291] [RCTMultipartDataTask] GET http://127.0.0.1:8081/index.bundle?platform=macos&dev=true&minify=false
+macos ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+macos ./index.ts ▓▓░░░░░░░░░░░░░░ 13.2% ( 46/192)
+macos ./index.ts ▓▓▓▓▓▓▓▓▓▓░░░░░░ 65.9% (514/633)
+macos Bundled 10038ms index.ts (752 modules)
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1108 07:44:13.706348 1879339008 ReactInstance.cpp:256] ReactInstance: evaluateJavaScript() with JS bundle
+2026-11-08 07:44:13.876 SparkRunner[26298:20295291] Expo is being initialized from the deprecated ExpoBridgeModule, make sure to migrate to ExpoReactNativeFactory in your project
