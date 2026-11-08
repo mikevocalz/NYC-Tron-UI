@@ -28,7 +28,16 @@
       "evidence": [
         "P04-workspace-shell.md",
         "P04-workspace-native-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-workspace-shell.md",
+            "P04-workspace-native-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-02",
@@ -44,7 +53,16 @@
       "evidence": [
         "P04-workspace-shell.md",
         "P04-workspace-native-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-workspace-shell.md",
+            "P04-workspace-native-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-03",
@@ -60,7 +78,16 @@
       "evidence": [
         "P04-workspace-shell.md",
         "P04-workspace-native-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-workspace-shell.md",
+            "P04-workspace-native-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-04",
@@ -76,7 +103,16 @@
       "evidence": [
         "P04-workspace-shell.md",
         "P04-workspace-native-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-workspace-shell.md",
+            "P04-workspace-native-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-05",
@@ -306,7 +342,23 @@
         "P04-overlays-and-transfer.md",
         "P04-native-overlays.md",
         "P04-native-overlays-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-native-overlays.md",
+            "P04-native-overlays-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P04-native-overlays.md",
+            "P04-native-overlays-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-20",
@@ -324,7 +376,23 @@
         "P04-overlays-and-transfer.md",
         "P04-native-overlays.md",
         "P04-native-overlays-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-native-overlays.md",
+            "P04-native-overlays-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P04-native-overlays.md",
+            "P04-native-overlays-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-21",
@@ -386,6 +454,13 @@
       ],
       "platformEvidence": {
         "ios": {
+          "status": "partial",
+          "evidence": [
+            "P19-native-library-contract.md",
+            "P19-native-proof.json"
+          ]
+        },
+        "android": {
           "status": "partial",
           "evidence": [
             "P19-native-library-contract.md",
@@ -455,7 +530,23 @@
         "P04-overlays-and-transfer.md",
         "P04-native-overlays.md",
         "P04-native-overlays-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P04-native-overlays.md",
+            "P04-native-overlays-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P04-native-overlays.md",
+            "P04-native-overlays-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "A-29",
@@ -516,7 +607,23 @@
         "P05-native-canvas.md",
         "P05-native-canvas-proof.json",
         "P05-android-merged-manifest-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P05-native-canvas.md",
+            "P05-native-canvas-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P05-native-canvas.md",
+            "P05-native-canvas-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "B-02",
@@ -534,7 +641,23 @@
         "P05-canvas-navigation.md",
         "P05-native-canvas.md",
         "P05-native-canvas-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P05-native-canvas.md",
+            "P05-native-canvas-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P05-native-canvas.md",
+            "P05-native-canvas-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "B-03",
@@ -2841,8 +2964,25 @@
       "acceptance": "unverified",
       "requirement": "Add/subtract mask with feather and brush controls.",
       "evidence": [
-        "P10-photo-masks.md"
-      ]
+        "P10-photo-masks.md",
+        "P10-native-brush-proof.json"
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P10-photo-masks.md",
+            "P10-native-brush-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P10-photo-masks.md",
+            "P10-native-brush-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "F-10",
@@ -3144,7 +3284,23 @@
         "P11-expression-editor.md",
         "P11-native-motion.md",
         "P11-native-motion-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P11-native-motion.md",
+            "P11-native-motion-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P11-native-motion.md",
+            "P11-native-motion-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "G-12",
@@ -3191,7 +3347,23 @@
         "P11-node-graph.md",
         "P11-native-motion.md",
         "P11-native-motion-proof.json"
-      ]
+      ],
+      "platformEvidence": {
+        "ios": {
+          "status": "partial",
+          "evidence": [
+            "P11-native-motion.md",
+            "P11-native-motion-proof.json"
+          ]
+        },
+        "android": {
+          "status": "partial",
+          "evidence": [
+            "P11-native-motion.md",
+            "P11-native-motion-proof.json"
+          ]
+        }
+      }
     },
     {
       "id": "G-15",
