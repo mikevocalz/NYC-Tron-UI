@@ -71,3 +71,8 @@ native AppKit/WinUI/Compose/SwiftUI behavior.
 - Web Tab/Shift+Tab stay inside `NativeActionMenu`, `CommandPopover`, `NativePopover` and `CommandPalette`; focus returns to the opener on close.
 - Chromium Playwright checks cover the web keyboard paths. `examples/native-instruments` renders them and the native-controls workflow compiles it for Android and iOS.
 - NOT RUN: any device or simulator session, screen-reader output, native popover placement on foldables.
+
+## Media encoder provider (platform-services `/encoder`)
+
+- `@nyc-tron/platform-services/encoder`: bounded raw RGBA8/PCM sources to H.264+AAC faststart MP4 per the encoder-provider decision record. iOS AVAssetWriter, Android MediaCodec+MediaMuxer, web WebCodecs+Mediabunny 1.65.2 (MPL-2.0, `THIRD_PARTY.md`).
+- Contract/validation unit tests and native source-contract checks run in package CI; **no** iOS, Android, browser or desktop runtime executed the encoder. See [ENCODER_PROVIDER.md](ENCODER_PROVIDER.md) for the honest status table; `platformEvidence` remains `unverified` on every platform.

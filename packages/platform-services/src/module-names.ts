@@ -7,3 +7,5 @@ export const HAPTICS_MODULE_NAME="NYCTronHaptics";
 export const DOCUMENTS_MODULE_NAME="NYCTronDocuments";
 /** Audio session lifecycle (N-17). */
 export const PLAYBACK_SESSION_MODULE_NAME="NYCTronPlaybackSession";
+/** Media encoding to MP4 (H.264 + AAC). */
+export const MEDIA_ENCODER_MODULE_NAME="NYCTronMediaEncoder";

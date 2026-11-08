@@ -2,6 +2,6 @@
   "name": "NYCTronPlatformServices",
   "platforms": ["apple", "android"],
   "apple": {
-    "modules": ["NYCTronHapticsModule", "NYCTronDocumentsModule", "NYCTronPlaybackSessionModule"]
+    "modules": ["NYCTronHapticsModule", "NYCTronDocumentsModule", "NYCTronPlaybackSessionModule", "NYCTronMediaEncoderModule"]
   }
 }

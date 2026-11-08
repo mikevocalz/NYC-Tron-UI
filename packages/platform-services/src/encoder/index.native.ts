@@ -1,0 +1,7 @@
+export {createPlatformMediaEncoder,MEDIA_ENCODER_MODULE_NAME} from "./platform.native.ts";
+export {createMediaEncoder,MediaEncodeError,toMediaEncodeError,normalizeEncodeRequest,normalizeVideoTrack,normalizeAudioTrack,toMediaEncoderProbe,toEncodedMedia,
+  withEncodeCancellation,MEDIA_ENCODE_ERROR_CODES,MAX_ENCODE_EDGE,MAX_ENCODE_PIXELS,MAX_ENCODE_FRAMES,MAX_VIDEO_SOURCE_BYTES,MAX_AUDIO_SOURCE_BYTES,
+  MIN_ENCODE_SAMPLE_RATE,MAX_ENCODE_SAMPLE_RATE,MAX_ENCODE_CHANNELS,MAX_ENCODE_RATE_PART,MIN_ENCODE_FPS,MAX_ENCODE_FPS,VIDEO_BYTES_PER_PIXEL,
+  VIDEO_PIXEL_FORMAT,AUDIO_SAMPLE_FORMATS,AUDIO_SAMPLE_BYTES} from "./encoder.ts";
+export type {AudioSampleFormat,EncodeAudioNative,EncodeAudioTrack,EncodeOptions,EncodeRequest,EncodeVideoNative,EncodeVideoTrack,
+  EncodedMedia,MediaEncodeErrorCode,MediaEncoder,MediaEncoderNative,MediaEncoderProbe} from "./encoder.ts";

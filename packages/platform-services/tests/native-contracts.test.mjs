@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 import {readFileSync,readdirSync} from "node:fs";
 import {dirname,join,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
-import {HAPTICS_MODULE_NAME,DOCUMENTS_MODULE_NAME,PLAYBACK_SESSION_MODULE_NAME} from "../src/module-names.ts";
+import {HAPTICS_MODULE_NAME,DOCUMENTS_MODULE_NAME,PLAYBACK_SESSION_MODULE_NAME,MEDIA_ENCODER_MODULE_NAME} from "../src/module-names.ts";
 import {HAPTIC_KINDS} from "../src/haptics/kinds.ts";
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),"..");
@@ -15,7 +15,7 @@ const read=path=>readFileSync(join(root,path),"utf8");
 const kt="android/src/main/java/com/nyctron/platformservices";
 const config=JSON.parse(read("expo-module.config.json"));
 const modules=[[HAPTICS_MODULE_NAME,"NYCTronHapticsModule"],[DOCUMENTS_MODULE_NAME,"NYCTronDocumentsModule"],
-  [PLAYBACK_SESSION_MODULE_NAME,"NYCTronPlaybackSessionModule"]];
+  [PLAYBACK_SESSION_MODULE_NAME,"NYCTronPlaybackSessionModule"],[MEDIA_ENCODER_MODULE_NAME,"NYCTronMediaEncoderModule"]];
 
 test("expo-module.config.json autolinks both platforms; android stays off the legacy list",()=>{
   assert.deepEqual(config.platforms,["apple","android"]);
@@ -33,7 +33,7 @@ test("each module registers the JS name on both platforms",()=>{
 
 test("the JS-facing functions and events exist on both platforms",()=>{
   const expect={NYCTronHapticsModule:["play","prepare"],NYCTronDocumentsModule:["pick","restoreAccess","releaseAccess","share"],
-    NYCTronPlaybackSessionModule:["activate","deactivate"]};
+    NYCTronPlaybackSessionModule:["activate","deactivate"],NYCTronMediaEncoderModule:["probe","encode","clearCache"]};
   for(const [cls,fns] of Object.entries(expect))for(const fn of fns){
     assert.match(read(`ios/${cls}.swift`),new RegExp(`@JS[\\s\\S]*?func ${fn}\\(`),`${cls}.swift ${fn}`);
     assert.match(read(`${kt}/${cls}.kt`),new RegExp(`@JS\\s*\\n\\s*(suspend )?fun ${fn}\\(`),`${cls}.kt ${fn}`);
