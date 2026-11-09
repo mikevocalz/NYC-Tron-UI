@@ -38,7 +38,7 @@ class NycTronPlaybackProcessor extends AudioWorkletProcessor {
     this.port.onmessage = (e) => {
       const m = e.data || {};
       const incoming = m.buffer instanceof ArrayBuffer ? new Float32Array(m.buffer)
-        : ArrayBuffer.isView(m.buffer) ? new Float32Array(m.buffer.buffer, m.buffer.byteOffset, m.buffer.byteLength)
+        : ArrayBuffer.isView(m.buffer) ? new Float32Array(m.buffer.buffer, m.buffer.byteOffset, m.buffer.byteLength / Float32Array.BYTES_PER_ELEMENT)
         : null;
       if (m.type === "write" && incoming) {
         // Chunked copy: contiguous runs between ring wrap and capacity are
