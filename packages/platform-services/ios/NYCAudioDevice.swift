@@ -65,7 +65,7 @@ final class NYCAudioDevice {
     guard options.deviceId.isEmpty else {
       throw AudioDeviceFailure(.unsupportedFormat, "iOS does not expose per-device output selection; leave deviceId empty.")
     }
-    try stateLock.withLock {
+    return try stateLock.withLock {
       let session = AVAudioSession.sharedInstance()
       let outFormat = engine.outputNode.outputFormat(forBus: 0)
       let sampleRate = options.sampleRate > 0 ? options.sampleRate
@@ -78,7 +78,7 @@ final class NYCAudioDevice {
         : max(1, min(8, hwChannels > 0 ? hwChannels : 2))
       // AVAudioEngine renders Float32; s16 requests still negotiate f32 and
       // the actual format is reported back honestly.
-      guard let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: Float(sampleRate),
+      guard let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: Double(sampleRate),
                                        channels: AVAudioChannelCount(channels), interleaved: false) else {
         throw AudioDeviceFailure(.unsupportedFormat, "Could not build a Float32 format for \(sampleRate) Hz x \(channels).")
       }

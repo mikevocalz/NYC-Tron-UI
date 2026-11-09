@@ -66,7 +66,7 @@ test('provider validates writes against the negotiated format',async()=>{
   const native={
     probe:async()=>({available:true,defaultSampleRate:48000,outputs:[],inputs:[]}),
     openOutput:async o=>{calls.push(['open',o]);return {stream:'out-1',sampleRate:o.sampleRate||48000,channels:o.channels||2,sampleFormat:'f32',latencyMs:5};},
-    writeOutput:async(s,p)=>{calls.push(['write',s,p.frames,p.sampleFormat]);},
+    writeOutput:async(r)=>{calls.push(['write',r.stream,r.frames,r.sampleFormat]);},
     stats:async s=>({stream:s,sampleRate:48000,channels:2,sampleFormat:'f32',queuedFrames:1,capacityFrames:10,droppedFrames:0,underrunFrames:0}),
     closeOutput:async s=>{calls.push(['close',s]);},
     openInput:async()=>({stream:'in-1',sampleRate:48000,channels:1,sampleFormat:'f32',latencyMs:0}),
@@ -108,7 +108,7 @@ test('pcm payloads cross the bridge as Uint8Array views (H1 contract)',async()=>
   const native={
     probe:async()=>({available:true,defaultSampleRate:48000,outputs:[],inputs:[]}),
     openOutput:async()=>({stream:'out-1',sampleRate:48000,channels:2,sampleFormat:'f32',latencyMs:0}),
-    writeOutput:async(s,p)=>{writeSamples=p.samples;},
+    writeOutput:async(r)=>{writeSamples=r.samples;},
     stats:async s=>({stream:s,sampleRate:48000,channels:2,sampleFormat:'f32',queuedFrames:0,capacityFrames:1,droppedFrames:0,underrunFrames:0}),
     closeOutput:async()=>{},
     openInput:async()=>({stream:'in-1',sampleRate:48000,channels:1,sampleFormat:'f32',latencyMs:0}),
@@ -126,12 +126,15 @@ test('pcm payloads cross the bridge as Uint8Array views (H1 contract)',async()=>
   await p.writeOutput('out-1',{samples:new ArrayBuffer(4*2*10),frames:10,sampleFormat:'f32'});
   assert.ok(writeSamples instanceof Uint8Array,'native.writeOutput must receive a Uint8Array');
   assert.equal(writeSamples.byteLength,80);
-  // … or a view with a nonzero byteOffset; only its window crosses the bridge.
+  // … or a view with a nonzero byteOffset; the provider copies the window
+  // into a fresh Uint8Array for the bridge (iOS Data requires it).
   const wide=new Uint8Array(88);
+  for(let i=8;i<88;i++)wide[i]=i&0xff;
   await p.writeOutput('out-1',{samples:wide.subarray(8,88),frames:10,sampleFormat:'f32'});
   assert.ok(writeSamples instanceof Uint8Array);
   assert.equal(writeSamples.byteLength,80);
-  assert.equal(writeSamples.byteOffset,8,'the view offset must be preserved for native');
+  assert.equal(writeSamples.byteOffset,0,'native receives a fresh copy, not the caller view');
+  for(let i=0;i<80;i++)assert.equal(writeSamples[i],(8+i)&0xff,'view window contents must cross intact');
   // readInput accepts the bridged Uint8Array and returns a normalized view.
   await p.openInput();
   const chunk=await p.readInput('in-1',64);

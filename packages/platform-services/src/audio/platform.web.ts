@@ -287,7 +287,9 @@ function createWebAudioNative():AudioDeviceNative|null{
       return {available:true,defaultSampleRate:context?.sampleRate??0,outputs,inputs};
     },
     openOutput:(o)=>openOutput(o),
-    writeOutput:async(stream,payload)=>{
+    writeOutput:async(request)=>{
+      const {stream}=request;
+      const payload={samples:request.samples,frames:request.frames,sampleFormat:request.sampleFormat};
       const entry=outputs.get(stream);
       if(!entry)throw webError("device-not-found",`Unknown output stream "${stream}".`);
       const channels=entry.format.channels;

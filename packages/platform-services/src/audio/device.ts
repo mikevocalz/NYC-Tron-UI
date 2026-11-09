@@ -138,7 +138,7 @@ export interface AudioDeviceProvider {
 export interface AudioDeviceNative {
   probe():Promise<unknown>;
   openOutput(options:{deviceId:string;sampleRate:number;channels:number;sampleFormat:string;bufferMs:number}):Promise<unknown>;
-  writeOutput(stream:string,payload:{samples:Uint8Array;sampleFormat:string;frames:number}):Promise<void>;
+  writeOutput(request:{stream:string;samples:Uint8Array;sampleFormat:string;frames:number}):Promise<void>;
   stats(stream:string):Promise<unknown>;
   closeOutput(stream:string):Promise<void>;
   openInput(options:{deviceId:string;sampleRate:number;channels:number;sampleFormat:string;bufferMs:number}):Promise<unknown>;
@@ -361,7 +361,11 @@ export function createAudioDeviceProvider(native:AudioDeviceNative|null):AudioDe
       const request=normalizePcmChunk(chunk,format.channels);
       if(request.sampleFormat!==format.sampleFormat)
         throw outOfRange(`chunk.sampleFormat ${request.sampleFormat} does not match the stream's ${format.sampleFormat}`);
-      try{await native.writeOutput(stream,{samples:request.samples,sampleFormat:request.sampleFormat,frames:request.frames});}
+      // Native contract is one AudioWriteRecord argument (Swift `AudioWriteRecord`,
+      // Kotlin `AudioWriteRecord`); Expo `Data` fields require a Uint8Array.
+      const view=request.samples;
+      const pcm=new Uint8Array(view.buffer.slice(view.byteOffset,view.byteOffset+view.byteLength));
+      try{await native.writeOutput({stream,samples:pcm,sampleFormat:request.sampleFormat,frames:request.frames});}
       catch(error){throw toAudioDeviceError(error);}
     },
     stats:stream=>call(()=>native.stats(stream),toAudioStreamStats),
