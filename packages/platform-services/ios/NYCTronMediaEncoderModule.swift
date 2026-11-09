@@ -17,12 +17,12 @@ public final class NYCTronMediaEncoderModule: Module {
 
   @JS
   func probe() async throws -> EncoderProbeRecord {
-    try await run { encoder.probe() }
+    try await run { self.encoder.probe() }
   }
 
   @JS
   func encode(_ video: EncodeVideoRecord?, _ audio: EncodeAudioRecord?) async throws -> EncodedMediaRecord {
-    try await run { try encoder.encode(video: video, audio: audio) }
+    try await run { try self.encoder.encode(video: video, audio: audio) }
   }
 
   @JS

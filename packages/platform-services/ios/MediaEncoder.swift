@@ -201,9 +201,9 @@ final class MediaEncoder: Sendable {
         AVNumberOfChannelsKey: audio.channels,
         AVEncoderBitRateKey: audio.channels > 1 ? 128_000 : 64_000,
       ]
-      let input = AVAssetWriterInput(mediaType: .audio, outputSettings: settings)
+      let input = AVAssetWriterInput(mediaType: .audio, outputSettings: settings,
+                                     sourceFormatHint: try audioFormatDescription(audio))
       input.expectsMediaDataInRealTime = false
-      input.sourceFormatHint = try audioFormatDescription(audio)
       writer.add(input)
       audioInput = input
     }
@@ -215,10 +215,10 @@ final class MediaEncoder: Sendable {
       writer.startSession(atSourceTime: .zero)
 
       if let video, let input = videoInput, let adaptor = pixelAdaptor {
-        try feedVideo(video, input: input, adaptor: adaptor)
+        try feedVideo(video, input: input, adaptor: adaptor, writer: writer)
       }
       if let audio, let input = audioInput {
-        try feedAudio(audio, input: input)
+        try feedAudio(audio, input: input, writer: writer)
       }
       videoInput?.markAsFinished()
       audioInput?.markAsFinished()
@@ -238,7 +238,7 @@ final class MediaEncoder: Sendable {
 
   /// Reads the RGBA8 file frame by frame, swizzles to BGRA inside a pooled
   /// CVPixelBuffer and appends at exact rational-rate timestamps.
-  private func feedVideo(_ spec: VideoSpec, input: AVAssetWriterInput, adaptor: AVAssetWriterInputPixelBufferAdaptor) throws {
+  private func feedVideo(_ spec: VideoSpec, input: AVAssetWriterInput, adaptor: AVAssetWriterInputPixelBufferAdaptor, writer: AVAssetWriter) throws {
     var rgba = [UInt8](repeating: 0, count: spec.frameBytes)
     let timescale: Int32 = 600
     for index in 0..<spec.frameCount {
@@ -250,7 +250,7 @@ final class MediaEncoder: Sendable {
       try swizzleRGBA(toBGRA: pixelBuffer, rgba: rgba, width: spec.width, height: spec.height)
       let pts = CMTime(seconds: Double(index) * spec.frameSeconds, preferredTimescale: timescale)
       guard adaptor.append(pixelBuffer, withPresentationTime: pts) else {
-        throw MediaEncodeFailure(.encodeFailed, "The pixel buffer was rejected: \(input.error?.localizedDescription ?? "unknown")")
+        throw MediaEncodeFailure(.encodeFailed, "The pixel buffer was rejected: \(writer.error?.localizedDescription ?? "unknown")")
       }
     }
   }
@@ -280,12 +280,12 @@ final class MediaEncoder: Sendable {
       return pixelBuffer
     }
     let attributes: [String: Any] = [
-      String(kCVPixelBufferPixelFormatTypeKey): kCVPixelBufferPixelFormatType_32BGRA,
+      String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_32BGRA,
       String(kCVPixelBufferWidthKey): width,
       String(kCVPixelBufferHeightKey): height,
       String(kCVPixelBufferIOSurfacePropertiesKey): [:] as CFDictionary,
     ]
-    let status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelBufferPixelFormatType_32BGRA,
+    let status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_32BGRA,
                                      attributes as CFDictionary, &pixelBuffer)
     guard status == kCVReturnSuccess, let pixelBuffer else {
       throw MediaEncodeFailure(.encodeFailed, "CVPixelBufferCreate failed (\(status)).")
@@ -348,7 +348,7 @@ final class MediaEncoder: Sendable {
   }
 
   /// Reads PCM in bounded chunks and appends CMSampleBuffers of AAC-ready LPCM.
-  private func feedAudio(_ spec: AudioSpec, input: AVAssetWriterInput) throws {
+  private func feedAudio(_ spec: AudioSpec, input: AVAssetWriterInput, writer: AVAssetWriter) throws {
     let chunkFrames = 8192
     var frameCursor = 0
     while frameCursor < spec.frames {
@@ -361,7 +361,7 @@ final class MediaEncoder: Sendable {
       }
       let buffer = try makeSampleBuffer(pcm: pcm, spec: spec, startFrame: frameCursor, frames: want)
       guard input.append(buffer) else {
-        throw MediaEncodeFailure(.encodeFailed, "The audio sample was rejected: \(input.error?.localizedDescription ?? "unknown")")
+        throw MediaEncodeFailure(.encodeFailed, "The audio sample was rejected: \(writer.error?.localizedDescription ?? "unknown")")
       }
       frameCursor += want
     }

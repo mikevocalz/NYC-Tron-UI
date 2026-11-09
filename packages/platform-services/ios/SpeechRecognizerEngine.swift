@@ -149,7 +149,7 @@ final class SpeechRecognizerEngine {
 
   func abort(_ session: String) {
     queue.async {
-      guard let entry = sessions[session], !entry.ended else { return }
+      guard let entry = self.sessions[session], !entry.ended else { return }
       entry.aborted = true
       entry.task?.cancel()
       entry.request.endAudio()
@@ -198,7 +198,7 @@ final class SpeechRecognizerEngine {
   }
 
   private func emit(_ entry: SpeechSessionEntry, kind: String, text: String = "", wordsJson: String = "") {
-    onEvent(SpeechEventRecord(session: entry.id, kind: kind, text: text, wordsJson: wordsJson))
+    onEvent(SpeechEventRecord(session: entry.id, kind: kind, text: text, wordsJson: wordsJson, reason: "", code: "", message: ""))
   }
 
   /// Tears the session down and emits exactly one terminal event. Idempotent
