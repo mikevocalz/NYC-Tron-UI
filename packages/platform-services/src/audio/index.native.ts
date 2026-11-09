@@ -1,0 +1,4 @@
+export {createPlatformAudioDevice,AUDIO_DEVICE_MODULE_NAME} from "./platform.native.ts";
+export {createAudioDeviceProvider,AUDIO_DEVICE_ERROR_CODES,AudioDeviceError,bytesPerSample,normalizeFormat,normalizeOpenOptions,normalizePcmChunk,toAudioDeviceError,toAudioDeviceEvent,toAudioDeviceProbe,toAudioStreamHandle,toAudioStreamStats,toPcmChunk,
+  MAX_PCM_CHUNK_BYTES,MAX_READ_FRAMES,MIN_AUDIO_SAMPLE_RATE,MAX_AUDIO_SAMPLE_RATE,MAX_AUDIO_CHANNELS,MIN_AUDIO_CHANNELS,DEFAULT_BUFFER_MS,MAX_BUFFER_MS} from "./device.ts";
+export type {AudioDeviceErrorCode,AudioDeviceEvent,AudioDeviceNative,AudioDeviceProbe,AudioDeviceProvider,AudioDeviceDescriptor,AudioFormat,PcmSampleFormat,AudioStreamHandle,AudioStreamStats,OpenAudioStreamOptions,PcmChunk} from "./device.ts";

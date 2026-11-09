@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-  <!-- Speech recognition owns the microphone through SpeechRecognizer; the
-       runtime grant is the host's job, start() rejects "permission" without it. -->
+  <!-- Speech recognition and /audio capture own the microphone (SpeechRecognizer
+       and AudioRecord); the runtime grant is the host's job — openInput rejects
+       "permission" without it. -->
   <uses-permission android:name="android.permission.RECORD_AUDIO" />
   <uses-feature android:name="android.hardware.microphone" android:required="false" />
   <application>
