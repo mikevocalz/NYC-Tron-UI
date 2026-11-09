@@ -6,3 +6,4 @@ export * from "./playback/index.ts";
 export * from "./media/index.ts";
 export * from "./encoder/index.ts";
 export * from "./speech/index.ts";
+export * from "./audio/index.ts";

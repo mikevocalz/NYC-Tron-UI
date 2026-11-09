@@ -11,7 +11,8 @@
       "NYCTronPlaybackSessionModule",
       "NYCTronMediaDecoderModule",
       "NYCTronMediaEncoderModule",
-      "NYCTronSpeechModule"
+      "NYCTronSpeechModule",
+      "NYCTronAudioDeviceModule"
     ]
   }
 }

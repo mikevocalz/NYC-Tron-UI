@@ -13,6 +13,7 @@ Platform services for creative editors. Import each service by subpath.
 | `/scheduler` | N-13 long-task scheduling | Cooperative FIFO queue; identical on every host | Same | Same |
 | `/media-cache` | N-14 media cache | Bounded LRU for host-supplied derived bytes; identical on every host | Same | Same |
 | `/speech` | ASR provider (Forge P-asr decision) | `SFSpeechRecognizer` + `AVAudioEngine` tap; `requiresOnDeviceRecognition` when `onDeviceOnly` | `SpeechRecognizer` with `EXTRA_PREFER_OFFLINE` / on-device API (31+); system owns the mic | `SpeechRecognition`/`webkitSpeechRecognition`; no on-device mode — consent required |
+| `/audio` | Audio device provider (Forge P09 decision) | `AVAudioEngine` + `AVAudioSourceNode` ring playback, input-node tap capture | `AudioTrack` writer thread + `AudioRecord` capture ring | `AudioContext` + AudioWorklet playback/capture |
 
 ## Haptics
 
@@ -198,12 +199,65 @@ Sessions are capped at 4 per recognizer and bounded by `maxSessionMs`
 Nothing here is journaled or snapshotted — committed transcript text is the
 host's data to feed engines through their normal ops.
 
+## Audio devices
+
+```ts
+import { createPlatformAudioDevice } from "@nyc-tron/platform-services/audio";
+
+const audio = createPlatformAudioDevice();
+const probe = await audio.probe();                       // endpoints + default rate
+const out = await audio.openOutput({ sampleRate: 48000, channels: 2, bufferMs: 200 });
+// host renders lookahead windows and pushes bounded chunks ahead of the playhead
+await audio.writeOutput(out.stream, { samples: pcm.buffer, frames: 960, sampleFormat: out.format.sampleFormat });
+const stats = await audio.stats(out.stream);             // queued/dropped/underrun frames
+await audio.closeOutput(out.stream);
+
+const input = await audio.openInput();                   // asks for mic permission on native
+const chunk = await audio.readInput(input.stream, 4096); // interleaved f32, possibly short/empty
+await audio.closeInput(input.stream);
+```
+
+The contract follows the Forge P09 audio-device-host decision: engines stay
+pure and synchronous — the host renders lookahead windows and pushes bounded
+PCM chunks; each platform keeps a bounded ring between the write path and the
+realtime consumer, so audio callbacks never call into engine code. Underruns
+are counted as silence frames and drops as rejected overflow; both surface
+through `stats()` polling, and lifecycle failures emit `"audio"` events
+(`device-lost`, `error`).
+
+Platform notes and honest limits:
+
+- **iOS:** `AVAudioEngine` with one `AVAudioSourceNode` per output stream
+  pulling a bounded interleaved-f32 ring; capture is an input-node tap into a
+  second ring. Negotiated output is always Float32 (s16 requests report
+  `"f32"`). `probe()` reports the system default endpoints only —
+  `AVAudioSession` exposes no public device list, and per-device input
+  selection is rejected. Capture requests record permission and switches the
+  shared session to `.record`/`.playAndRecord`; coordinate with
+  `NYCTronPlaybackSession`, which owns activation for playback-only apps.
+- **Android:** `AudioTrack` (`PCM_16BIT`, `MODE_STREAM`) fed by a writer
+  thread over a bounded chunk queue — output negotiates `"s16"` only in v1,
+  mono/stereo channels. `AudioRecord` capture delivers interleaved f32 and
+  requires the runtime `RECORD_AUDIO` grant. Device selection uses
+  `AudioDeviceInfo.setPreferredDevice`.
+- **Web:** one shared `AudioContext` (its native rate is negotiated — other
+  requested rates reject `"unsupported-format"`) plus two AudioWorklets
+  loaded from a Blob URL: playback pops a ring per quantum, capture pushes
+  input frames the main thread polls. Output device pick uses
+  `AudioContext.setSinkId` where the browser has it; input uses
+  `getUserMedia` with `deviceId` constraints.
+- **Ring caveat:** the native rings use a short bounded lock, not a formally
+  wait-free SPSC — the decision doc itself flags lock-free correctness as
+  needing a prototype. Everything here is contract-tested but **unrun on
+  any device**; treat latency figures, underrun behavior and capture paths
+  as unverified until the device-test plan lands.
+
 ## Native module
 
-Six Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
+Seven Expo Modules 2 modules in one pod (`NYCTronPlatformServices`) and one
 Gradle library: `NYCTronHaptics`, `NYCTronDocuments`,
-`NYCTronPlaybackSession`, `NYCTronMediaDecoder`, `NYCTronMediaEncoder` and
-`NYCTronSpeech`. Swift uses the `@ExpoModule` / `@JS` / `@Record` /
+`NYCTronPlaybackSession`, `NYCTronMediaDecoder`, `NYCTronMediaEncoder`,
+`NYCTronSpeech` and `NYCTronAudioDevice`. Swift uses the `@ExpoModule` / `@JS` / `@Record` /
 `@Event` macros and does not import ExpoUI. Kotlin is built by the `v2 true`
 Gradle plugin; the classes stay out of `android.modules` in
 `expo-module.config.json`. The Android library declares exactly one
@@ -220,8 +274,9 @@ local diagnostic export and checkpoint process relaunch. The media fixture retur
 12000 samples at 24000 Hz for its half-second span on both platforms.
 
 Physical haptics, calls, output-route changes, screen readers, wider codec/color
-profiles, real speech-recognition sessions on any platform (the Swift/Kotlin
-backends are contract-tested but unrun on device) and the other required
+profiles, real speech-recognition sessions on any platform, the audio device
+provider (Swift/Kotlin/AudioWorklet backends are contract-tested but unrun on
+device) and the other required
 hosts still need acceptance. See the companion
 [Forge phase reports](https://github.com/mikevocalz/nitro-forge/tree/codex/complete-all-components/docs/completion/reports)
 for commands, artifacts and limits.

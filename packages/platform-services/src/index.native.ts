@@ -6,3 +6,4 @@ export * from "./playback/index.native.ts";
 export * from "./media/index.native.ts";
 export * from "./encoder/index.native.ts";
 export * from "./speech/index.native.ts";
+export * from "./audio/index.native.ts";

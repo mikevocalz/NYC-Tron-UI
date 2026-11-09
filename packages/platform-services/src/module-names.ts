@@ -13,3 +13,5 @@ export const MEDIA_DECODER_MODULE_NAME="NYCTronMediaDecoder";
 export const MEDIA_ENCODER_MODULE_NAME="NYCTronMediaEncoder";
 /** Streaming speech recognition (SFSpeechRecognizer / SpeechRecognizer / SpeechRecognition). */
 export const SPEECH_MODULE_NAME="NYCTronSpeech";
+/** Audio device playback and capture (AVAudioEngine / AudioTrack+AudioRecord / AudioWorklet). */
+export const AUDIO_DEVICE_MODULE_NAME="NYCTronAudioDevice";
