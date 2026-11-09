@@ -101,6 +101,45 @@ test('provider validates writes against the negotiated format',async()=>{
   await assert.rejects(p.readInput('in-1',10),{code:'device-not-found'});
 });
 
+test('pcm payloads cross the bridge as Uint8Array views (H1 contract)',async()=>{
+  // Expo Modules delivers Data/ByteArray as Uint8Array, never ArrayBuffer:
+  // writeOutput must hand native a Uint8Array, and readInput must accept one.
+  let writeSamples=null;
+  const native={
+    probe:async()=>({available:true,defaultSampleRate:48000,outputs:[],inputs:[]}),
+    openOutput:async()=>({stream:'out-1',sampleRate:48000,channels:2,sampleFormat:'f32',latencyMs:0}),
+    writeOutput:async(s,p)=>{writeSamples=p.samples;},
+    stats:async s=>({stream:s,sampleRate:48000,channels:2,sampleFormat:'f32',queuedFrames:0,capacityFrames:1,droppedFrames:0,underrunFrames:0}),
+    closeOutput:async()=>{},
+    openInput:async()=>({stream:'in-1',sampleRate:48000,channels:1,sampleFormat:'f32',latencyMs:0}),
+    // Native returns a Uint8Array view, possibly offset into a larger buffer.
+    readInput:async()=>{
+      const backing=new Uint8Array(64);
+      backing.set(new Uint8Array(8),24); // 2 frames x 1ch x f32 at byteOffset 24
+      return {stream:'in-1',samples:backing.subarray(24,32),frames:2,sampleRate:48000,channels:1,sampleFormat:'f32'};
+    },
+    closeInput:async()=>{},
+  };
+  const p=createAudioDeviceProvider(native);
+  await p.openOutput();
+  // Caller may pass an ArrayBuffer …
+  await p.writeOutput('out-1',{samples:new ArrayBuffer(4*2*10),frames:10,sampleFormat:'f32'});
+  assert.ok(writeSamples instanceof Uint8Array,'native.writeOutput must receive a Uint8Array');
+  assert.equal(writeSamples.byteLength,80);
+  // … or a view with a nonzero byteOffset; only its window crosses the bridge.
+  const wide=new Uint8Array(88);
+  await p.writeOutput('out-1',{samples:wide.subarray(8,88),frames:10,sampleFormat:'f32'});
+  assert.ok(writeSamples instanceof Uint8Array);
+  assert.equal(writeSamples.byteLength,80);
+  assert.equal(writeSamples.byteOffset,8,'the view offset must be preserved for native');
+  // readInput accepts the bridged Uint8Array and returns a normalized view.
+  await p.openInput();
+  const chunk=await p.readInput('in-1',64);
+  assert.equal(chunk.frames,2);
+  assert.ok(chunk.samples instanceof Uint8Array||chunk.samples instanceof ArrayBuffer);
+  assert.equal(chunk.samples.byteLength,8);
+});
+
 test('unavailable provider rejects honestly and never calls native',async()=>{
   const p=createAudioDeviceProvider(null);
   assert.equal(p.isAvailable,false);

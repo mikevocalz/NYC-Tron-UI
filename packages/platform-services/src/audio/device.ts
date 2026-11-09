@@ -81,10 +81,17 @@ export interface AudioStreamHandle {
   readonly latencyMs:number;
 }
 
-/** Interleaved PCM handed to {@linkcode AudioDeviceProvider.writeOutput} or returned by readInput. */
+/**
+ * Interleaved PCM handed to {@linkcode AudioDeviceProvider.writeOutput} or
+ * returned by readInput. Callers may pass an `ArrayBuffer` or any
+ * `ArrayBufferView` (e.g. `Uint8Array`); the provider normalizes views —
+ * honouring `byteOffset`/`byteLength` — to a `Uint8Array` view before the
+ * payload crosses the native bridge, because Expo Modules delivers
+ * `Data`/`ByteArray` as `Uint8Array`, never `ArrayBuffer`.
+ */
 export interface PcmChunk {
   /** Little-endian interleaved samples: `frames * channels` values in `format.sampleFormat`. */
-  readonly samples:ArrayBuffer;
+  readonly samples:ArrayBuffer|ArrayBufferView;
   readonly frames:number;
   readonly sampleFormat:PcmSampleFormat;
 }
@@ -131,7 +138,7 @@ export interface AudioDeviceProvider {
 export interface AudioDeviceNative {
   probe():Promise<unknown>;
   openOutput(options:{deviceId:string;sampleRate:number;channels:number;sampleFormat:string;bufferMs:number}):Promise<unknown>;
-  writeOutput(stream:string,payload:{samples:ArrayBuffer;sampleFormat:string;frames:number}):Promise<void>;
+  writeOutput(stream:string,payload:{samples:Uint8Array;sampleFormat:string;frames:number}):Promise<void>;
   stats(stream:string):Promise<unknown>;
   closeOutput(stream:string):Promise<void>;
   openInput(options:{deviceId:string;sampleRate:number;channels:number;sampleFormat:string;bufferMs:number}):Promise<unknown>;
@@ -212,18 +219,35 @@ export function normalizeOpenOptions(options:OpenAudioStreamOptions={}):{deviceI
  * {@linkcode MAX_PCM_CHUNK_BYTES}.
  * @throws AudioDeviceError "out-of-range" on any mismatch
  */
-export function normalizePcmChunk(chunk:PcmChunk,channels:number):PcmChunk{
+/** A {@linkcode PcmChunk} whose samples are already normalized to a `Uint8Array` view. */
+export type NormalizedPcmChunk=PcmChunk&{readonly samples:Uint8Array};
+
+export function normalizePcmChunk(chunk:PcmChunk,channels:number):NormalizedPcmChunk{
   if(!chunk||typeof chunk!=="object")throw outOfRange("chunk must be an object");
   const {samples,frames,sampleFormat}=chunk;
-  if(!(samples instanceof ArrayBuffer))throw outOfRange("chunk.samples must be an ArrayBuffer");
+  if(!(samples instanceof ArrayBuffer)&&!ArrayBuffer.isView(samples))
+    throw outOfRange("chunk.samples must be an ArrayBuffer or ArrayBufferView");
   if(!Number.isSafeInteger(frames)||frames<0)throw outOfRange("chunk.frames must be a nonnegative integer");
   if(sampleFormat!=="f32"&&sampleFormat!=="s16")throw outOfRange("chunk.sampleFormat must be \"f32\" or \"s16\"");
+  const view=toPcmView(samples);
   const expected=frames*channels*bytesPerSample(sampleFormat);
-  if(samples.byteLength!==expected)
-    throw outOfRange(`chunk.samples is ${samples.byteLength} bytes but ${frames} frames at ${channels} channels/${sampleFormat} needs ${expected}`);
-  if(samples.byteLength>MAX_PCM_CHUNK_BYTES)
+  if(view.byteLength!==expected)
+    throw outOfRange(`chunk.samples is ${view.byteLength} bytes but ${frames} frames at ${channels} channels/${sampleFormat} needs ${expected}`);
+  if(view.byteLength>MAX_PCM_CHUNK_BYTES)
     throw outOfRange(`chunk.samples exceeds the ${MAX_PCM_CHUNK_BYTES}-byte per-call limit`);
-  return {samples,frames,sampleFormat};
+  return {samples:view,frames,sampleFormat};
+}
+
+/**
+ * Normalizes `ArrayBuffer | ArrayBufferView` to a `Uint8Array` view covering
+ * exactly the payload bytes. Views keep their `byteOffset`/`byteLength`, so
+ * a window into a larger buffer never leaks neighbouring bytes across the
+ * bridge. The view shares the caller's storage — native sides must treat it
+ * as read-only input.
+ */
+function toPcmView(samples:ArrayBuffer|ArrayBufferView):Uint8Array{
+  if(samples instanceof ArrayBuffer)return new Uint8Array(samples);
+  return new Uint8Array(samples.buffer,samples.byteOffset,samples.byteLength);
 }
 
 const num=(v:unknown)=>typeof v==="number"&&Number.isFinite(v)?v:undefined;
@@ -281,11 +305,14 @@ export function toPcmChunk(payload:unknown,expectedChannels?:number):PcmChunk{
   const sampleFormat=str(p.sampleFormat);
   if(sampleFormat!=="f32")throw bad("PCM chunk"); // capture is delivered as f32 on every platform
   const samples=p.samples;
-  if(!(samples instanceof ArrayBuffer))throw bad("PCM chunk");
+  // Expo Modules delivers Data/ByteArray as Uint8Array; accept it and any
+  // other view the same way.
+  if(!(samples instanceof ArrayBuffer)&&!ArrayBuffer.isView(samples))throw bad("PCM chunk");
+  const view=toPcmView(samples as ArrayBuffer|ArrayBufferView);
   const channels=expectedChannels??num(p.channels)??0;
   const need=frames*channels*4;
-  if(need!==samples.byteLength)throw bad("PCM chunk");
-  return {samples,frames,sampleFormat};
+  if(need!==view.byteLength)throw bad("PCM chunk");
+  return {samples:view,frames,sampleFormat};
 }
 
 /** Reads a native "audio" event payload. */

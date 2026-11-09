@@ -118,7 +118,11 @@ internal class AndroidAudioDevice(
       AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, channelConfig,
         AudioFormat.ENCODING_PCM_16BIT, minBuf * 4, AudioTrack.MODE_STREAM)
     }
-    findDevice(options.deviceId, output = true)?.let { track.preferredDevice = it }
+    val preferred = findDevice(options.deviceId, output = true)
+    if (preferred != null && !track.setPreferredDevice(preferred)) {
+      runCatching { track.release() }
+      throw AudioDeviceFailure("device-error", "Could not select audio device \"${options.deviceId}\" for output.")
+    }
     track.play()
 
     val id = "android-out-${counter.incrementAndGet()}"
@@ -126,8 +130,9 @@ internal class AndroidAudioDevice(
     synchronized(lock) { outputs[id] = stream }
     stream.start()
     val latency = if (Build.VERSION.SDK_INT >= 26) runCatching { track.latency }.getOrDefault(0) else 0
+    // AudioTrack.getLatency() reports MICROSECONDS (API 26+); the contract is ms.
     return AudioStreamHandleRecord(stream = id, sampleRate = sampleRate, channels = channels,
-      sampleFormat = "s16", latencyMs = latency.toDouble())
+      sampleFormat = "s16", latencyMs = latency / 1000.0)
   }
 
   fun writeOutput(request: AudioWriteRecord) {
@@ -189,11 +194,28 @@ internal class AndroidAudioDevice(
       record.release()
       throw AudioDeviceFailure("device-error", "AudioRecord failed to initialize at ${sampleRate} Hz.")
     }
-    findDevice(options.deviceId, output = false)?.let { record.preferredDevice = it }
+    val preferred = findDevice(options.deviceId, output = false)
+    if (preferred != null && !record.setPreferredDevice(preferred)) {
+      runCatching { record.release() }
+      throw AudioDeviceFailure("device-error", "Could not select audio device \"${options.deviceId}\" for input.")
+    }
 
     val id = "android-in-${counter.incrementAndGet()}"
     val stream = InputStream(id, record, capacityFrames, sampleRate, channels)
     synchronized(lock) { inputs[id] = stream }
+    try {
+      record.startRecording()
+    } catch (e: Exception) {
+      synchronized(lock) { inputs.remove(id) }
+      runCatching { record.release() }
+      throw AudioDeviceFailure("device-error", "AudioRecord failed to start: ${e.message}")
+    }
+    if (record.recordingState != AudioRecord.RECORDSTATE_RECORDING) {
+      synchronized(lock) { inputs.remove(id) }
+      runCatching { record.stop() }
+      runCatching { record.release() }
+      throw AudioDeviceFailure("device-error", "AudioRecord did not enter RECORDSTATE_RECORDING.")
+    }
     stream.start()
     return AudioStreamHandleRecord(stream = id, sampleRate = sampleRate, channels = channels,
       sampleFormat = "f32", latencyMs = 0.0)
@@ -299,6 +321,8 @@ internal class AndroidAudioDevice(
     private var underrunFrames = 0L
     private val running = AtomicBoolean(false)
     private var thread: Thread? = null
+    /** Unconsumed whole frames from a partially written chunk; writer-thread only. */
+    private var carry: QueuedChunk? = null
 
     fun offer(bytes: ByteArray, frames: Int) {
       synchronized(queueLock) {
@@ -328,20 +352,68 @@ internal class AndroidAudioDevice(
       val silence = ByteArray(burstFrames * bytesPerFrame)
       thread = Thread({
         while (running.get()) {
-          val chunk = queue.poll(50, TimeUnit.MILLISECONDS)
+          // A partially written chunk's remainder takes priority over newly
+          // queued audio so playback order and frame accounting stay exact.
+          val chunk = carry ?: queue.poll(50, TimeUnit.MILLISECONDS)
+          carry = null
           if (chunk == null) {
             // Nothing queued: keep the stream alive with counted silence so
             // underruns are visible in stats() rather than silent gaps.
-            val written = track.write(silence, 0, silence.size)
-            if (written < 0) { fail("AudioTrack write failed ($written)"); break }
+            if (writeAll(silence) < 0) { fail("AudioTrack write failed"); break }
             synchronized(queueLock) { underrunFrames += burstFrames }
             continue
           }
-          val written = track.write(chunk.bytes, 0, chunk.bytes.size)
-          if (written < 0) { fail("AudioTrack write failed ($written)"); break }
-          synchronized(queueLock) { queuedFrames = maxOf(0, queuedFrames - chunk.frames) }
+          val written = writeAll(chunk.bytes)
+          if (written < 0) {
+            fail("AudioTrack write failed")
+            accountWrite(chunk, 0) // running is false now: remainder counts dropped
+            break
+          }
+          accountWrite(chunk, written)
         }
       }, "nyc-tron-audio-out").apply { isDaemon = true; start() }
+    }
+
+    /** Blocking write loop: returns bytes consumed, or -1 on track error. */
+    private fun writeAll(bytes: ByteArray): Int {
+      var offset = 0
+      while (offset < bytes.size) {
+        if (!running.get()) return offset
+        val written = track.write(bytes, offset, bytes.size - offset)
+        if (written < 0) return -1
+        if (written == 0) {
+          try { Thread.sleep(5) } catch (_: InterruptedException) {
+            Thread.currentThread().interrupt(); return offset
+          }
+          continue
+        }
+        offset += written
+      }
+      return offset
+    }
+
+    /**
+     * Accounts a chunk after AudioTrack consumed `written` bytes. Only whole
+     * PCM frames count; unconsumed whole frames are carried to the next loop
+     * iteration instead of being dropped, and bytes that can never form a
+     * frame are counted as dropped so queuedFrames never drifts.
+     */
+    private fun accountWrite(chunk: QueuedChunk, written: Int) {
+      val consumedFrames = written / bytesPerFrame
+      val remainingFrames = chunk.frames - consumedFrames
+      var carryFrames = 0
+      if (running.get() && written % bytesPerFrame == 0 && remainingFrames > 0) {
+        carryFrames = minOf(remainingFrames, (chunk.bytes.size - written) / bytesPerFrame)
+        if (carryFrames > 0) {
+          carry = QueuedChunk(
+            chunk.bytes.copyOfRange(written, written + carryFrames * bytesPerFrame), carryFrames)
+        }
+      }
+      val droppedNow = remainingFrames - carryFrames
+      synchronized(queueLock) {
+        queuedFrames = maxOf(0, queuedFrames - consumedFrames)
+        if (droppedNow > 0) droppedFrames += droppedNow
+      }
     }
 
     private fun fail(message: String) {
@@ -352,6 +424,7 @@ internal class AndroidAudioDevice(
     fun close() {
       running.set(false)
       thread?.join(500)
+      carry = null
       runCatching { track.stop() }
       runCatching { track.release() }
       queue.clear()
@@ -375,7 +448,7 @@ internal class AndroidAudioDevice(
 
     fun start() {
       if (!running.compareAndSet(false, true)) return
-      record.startRecording()
+      // startRecording() already ran (and was verified) in openInput.
       val shortCount = maxOf(256, AudioRecord.getMinBufferSize(sampleRate,
         if (channels == 1) AudioFormat.CHANNEL_IN_MONO else AudioFormat.CHANNEL_IN_STEREO,
         AudioFormat.ENCODING_PCM_16BIT) / 2)

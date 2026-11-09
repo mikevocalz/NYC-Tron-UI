@@ -33,17 +33,36 @@ final class PCMRingBuffer {
   var underrunFrames: Int { lock.withLock { _underrunFrames } }
   var queuedFrames: Int { lock.withLock { count } }
 
+  /// Largest slice pushed or popped per lock acquisition. Multi-megabyte
+  /// chunks are split so the realtime consumer (render block, input tap)
+  /// never waits behind a long critical section.
+  private static let sliceFrames = 4096
+
   /// Pushes up to `frames` interleaved Float32 samples; returns frames stored.
   /// Overflow drops the incoming tail and counts it — played audio stays contiguous.
+  /// Large pushes are chunked into {@link sliceFrames}-sized slices, each
+  /// under its own short lock, so render() is never starved by a big write.
   @discardableResult
   func push(_ samples: UnsafeBufferPointer<Float>, frames: Int) -> Int {
+    guard frames > 0 else { return 0 }
+    var stored = 0
+    var offset = 0
+    while offset < frames {
+      let n = min(PCMRingBuffer.sliceFrames, frames - offset)
+      stored += pushSlice(samples, frames: n, offsetFrames: offset)
+      offset += n
+    }
+    return stored
+  }
+
+  private func pushSlice(_ samples: UnsafeBufferPointer<Float>, frames: Int, offsetFrames: Int) -> Int {
     guard frames > 0 else { return 0 }
     return lock.withLock {
       let free = capacityFrames - count
       let n = min(free, frames)
       if n <= 0 { _droppedFrames += frames; return 0 }
       for i in 0..<n {
-        let srcBase = i * channels
+        let srcBase = (offsetFrames + i) * channels
         let dstBase = head * channels
         for c in 0..<channels {
           storage[dstBase + c] = srcBase + c < samples.count ? samples[srcBase + c] : 0
@@ -57,14 +76,28 @@ final class PCMRingBuffer {
   }
 
   /// Pops up to `frames` interleaved Float32 samples into `out`; returns frames read.
+  /// Large pops are chunked the same way so a big readInput cannot stall the
+  /// render thread or the input tap.
   @discardableResult
   func pop(into out: UnsafeMutableBufferPointer<Float>, frames: Int) -> Int {
+    guard frames > 0 else { return 0 }
+    var done = 0
+    while done < frames {
+      let want = min(PCMRingBuffer.sliceFrames, frames - done)
+      let n = popSlice(into: out, frames: want, offsetFrames: done)
+      done += n
+      if n < want { break } // ring drained
+    }
+    return done
+  }
+
+  private func popSlice(into out: UnsafeMutableBufferPointer<Float>, frames: Int, offsetFrames: Int) -> Int {
     guard frames > 0 else { return 0 }
     return lock.withLock {
       let n = min(frames, count)
       for i in 0..<n {
         let srcBase = tail * channels
-        let dstBase = i * channels
+        let dstBase = (offsetFrames + i) * channels
         for c in 0..<channels {
           if dstBase + c < out.count { out[dstBase + c] = storage[srcBase + c] }
         }

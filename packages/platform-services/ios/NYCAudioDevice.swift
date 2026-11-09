@@ -37,6 +37,7 @@ final class NYCAudioDevice {
   private var inputTapInstalled = false
   private var counter = 0
   private var configObserver: NSObjectProtocol?
+  private var inputConfigObserver: NSObjectProtocol?
   private let stateLock = NSLock()
   var onEvent: ((AudioDeviceEventRecord) -> Void)?
 
@@ -58,6 +59,12 @@ final class NYCAudioDevice {
   // MARK: - output
 
   func openOutput(_ options: AudioOpenOptionsRecord) throws -> AudioStreamHandleRecord {
+    // Per-device output selection is not exposed by AVAudioSession; a
+    // non-empty deviceId is rejected honestly rather than ignored — same
+    // contract as openInput.
+    guard options.deviceId.isEmpty else {
+      throw AudioDeviceFailure(.unsupportedFormat, "iOS does not expose per-device output selection; leave deviceId empty.")
+    }
     try stateLock.withLock {
       let session = AVAudioSession.sharedInstance()
       let outFormat = engine.outputNode.outputFormat(forBus: 0)
@@ -158,6 +165,13 @@ final class NYCAudioDevice {
   // MARK: - input
 
   func openInput(_ options: AudioOpenOptionsRecord) async throws -> AudioStreamHandleRecord {
+    // The capture engine carries a single input-node tap shared by all input
+    // streams; AVAudioEngine raises an NSException on a second installTap, so
+    // a second openInput must fail fast with "busy" instead of crashing.
+    let inputBusy = stateLock.withLock { !inputs.isEmpty || inputTapInstalled }
+    guard !inputBusy else {
+      throw AudioDeviceFailure(.busy, "An input stream is already open; close it before opening another.")
+    }
     // Per-device input selection is not exposed by AVAudioSession; a
     // non-empty deviceId is rejected honestly rather than ignored.
     guard options.deviceId.isEmpty else {
@@ -184,6 +198,11 @@ final class NYCAudioDevice {
       throw AudioDeviceFailure(.deviceError, "Could not activate a record-capable audio session: \(error.localizedDescription)")
     }
     return try stateLock.withLock {
+      // Re-check under the lock: two concurrent openInput calls could both
+      // pass the early guard.
+      guard inputs.isEmpty, !inputTapInstalled else {
+        throw AudioDeviceFailure(.busy, "An input stream is already open; close it before opening another.")
+      }
       let captureEngine = self.inputEngine ?? AVAudioEngine()
       self.inputEngine = captureEngine
       let input = captureEngine.inputNode
@@ -201,19 +220,27 @@ final class NYCAudioDevice {
       let ring = PCMRingBuffer(channels: channels, capacityFrames: capacityFrames)
       let tapChannels = Int(format.channelCount)
       let isFloat = format.commonFormat == .pcmFormatFloat32
+      // Scratch is allocated once outside the tap: the realtime callback must
+      // not allocate per buffer. 4096 frames gives headroom over the 1024
+      // requested bufferSize; an oversized delivery reallocates (rare).
+      var scratch = [Float](repeating: 0, count: 4096 * tapChannels)
       input.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
         let frames = Int(buffer.frameLength)
-        var interleaved = [Float](repeating: 0, count: frames * tapChannels)
+        if frames * tapChannels > scratch.count {
+          scratch = [Float](repeating: 0, count: frames * tapChannels)
+        }
         if isFloat, let floatData = buffer.floatChannelData {
           for f in 0..<frames {
-            for c in 0..<tapChannels { interleaved[f * tapChannels + c] = floatData[c][f] }
+            for c in 0..<tapChannels { scratch[f * tapChannels + c] = floatData[c][f] }
           }
         } else if let intData = buffer.int16ChannelData {
           for f in 0..<frames {
-            for c in 0..<tapChannels { interleaved[f * tapChannels + c] = Float(Int32(intData[c][f])) / 32768 }
+            for c in 0..<tapChannels { scratch[f * tapChannels + c] = Float(Int32(intData[c][f])) / 32768 }
           }
+        } else {
+          for i in 0..<(frames * tapChannels) { scratch[i] = 0 }
         }
-        interleaved.withUnsafeBufferPointer { ring.push($0, frames: frames) }
+        scratch.withUnsafeBufferPointer { ring.push($0, frames: frames) }
       }
       inputTapInstalled = true
       if !captureEngine.isRunning {
@@ -223,6 +250,7 @@ final class NYCAudioDevice {
           throw AudioDeviceFailure(.deviceError, "The capture engine failed to start: \(error.localizedDescription)")
         }
       }
+      installInputConfigObserverIfNeeded(engine: captureEngine)
       counter += 1
       let id = "ios-in-\(counter)"
       inputs[id] = InputStream(id: id, ring: ring, sampleRate: sampleRate, channels: channels)
@@ -255,6 +283,10 @@ final class NYCAudioDevice {
         if inputTapInstalled { inputEngine.inputNode.removeTap(onBus: 0); inputTapInstalled = false }
         inputEngine.stop()
         self.inputEngine = nil
+        if let inputConfigObserver {
+          NotificationCenter.default.removeObserver(inputConfigObserver)
+          self.inputConfigObserver = nil
+        }
         if outputs.isEmpty {
           try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         }
@@ -279,6 +311,22 @@ final class NYCAudioDevice {
     }
   }
 
+  /// Route/sample-rate changes on the capture engine invalidate input
+  /// streams the same way output-engine changes do; report them through the
+  /// event bus instead of letting callers discover silence.
+  private func installInputConfigObserverIfNeeded(engine: AVAudioEngine) {
+    guard inputConfigObserver == nil else { return }
+    inputConfigObserver = NotificationCenter.default.addObserver(
+      forName: .AVAudioEngineConfigurationChange, object: engine, queue: nil
+    ) { [weak self] _ in
+      guard let self else { return }
+      for id in self.inputs.keys {
+        self.onEvent?(AudioDeviceEventRecord(stream: id, kind: "device-lost",
+          message: "The audio input configuration changed; reopen the stream."))
+      }
+    }
+  }
+
   func closeAll() {
     stateLock.withLock {
       for (_, stream) in outputs { engine.detach(stream.node) }
@@ -293,6 +341,10 @@ final class NYCAudioDevice {
       if let configObserver {
         NotificationCenter.default.removeObserver(configObserver)
         self.configObserver = nil
+      }
+      if let inputConfigObserver {
+        NotificationCenter.default.removeObserver(inputConfigObserver)
+        self.inputConfigObserver = nil
       }
     }
   }

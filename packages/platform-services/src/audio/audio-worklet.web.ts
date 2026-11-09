@@ -12,7 +12,10 @@
  *   messages when a dry spell starts.
  * - `nyc-tron-capture` — `process()` pushes input frames into a second
  *   ring; the main thread polls with `{type:"read",requestId,maxFrames}`
- *   and gets `{type:"input",requestId,buffer,frames}` replies.
+ *   and gets chunked `{type:"input-part",requestId,buffer,frames}` replies
+ *   (bounded transferred slices off a preallocated scratch) closed by
+ *   `{type:"input-end",requestId}`. Parts keep every port message small and
+ *   allocation-bounded on the audio thread.
  *
  * Both rings are plain Float32Arrays touched only on the audio thread;
  * main-thread writes arrive as port messages, which the worklet applies
@@ -34,16 +37,25 @@ class NycTronPlaybackProcessor extends AudioWorkletProcessor {
     this.dry = 0;    // consecutive silent quanta
     this.port.onmessage = (e) => {
       const m = e.data || {};
-      if (m.type === "write" && m.buffer instanceof ArrayBuffer) {
-        const incoming = new Float32Array(m.buffer);
-        const frames = (incoming.length / this.channels) | 0;
-        for (let f = 0; f < frames; f++) {
-          if (this.count >= this.capacity) { this.dropped += 1; break; }
-          const base = this.head * this.channels;
-          for (let c = 0; c < this.channels; c++)
-            this.ring[base + c] = incoming[f * this.channels + c] || 0;
-          this.head = (this.head + 1) % this.capacity;
-          this.count += 1;
+      const incoming = m.buffer instanceof ArrayBuffer ? new Float32Array(m.buffer)
+        : ArrayBuffer.isView(m.buffer) ? new Float32Array(m.buffer.buffer, m.buffer.byteOffset, m.buffer.byteLength)
+        : null;
+      if (m.type === "write" && incoming) {
+        // Chunked copy: contiguous runs between ring wrap and capacity are
+        // moved with typed-array set() instead of a per-frame JS loop, so a
+        // max-size chunk cannot stall the audio thread. A full ring drops
+        // the whole remaining tail and counts every dropped frame.
+        const totalFrames = (incoming.length / this.channels) | 0;
+        let f = 0;
+        while (f < totalFrames) {
+          const free = this.capacity - this.count;
+          if (free <= 0) { this.dropped += totalFrames - f; break; }
+          const run = Math.min(totalFrames - f, free, this.capacity - this.head);
+          const src = f * this.channels, dst = this.head * this.channels, len = run * this.channels;
+          this.ring.set(incoming.subarray(src, src + len), dst);
+          this.head = (this.head + run) % this.capacity;
+          this.count += run;
+          f += run;
         }
       } else if (m.type === "stats") {
         this.port.postMessage({ type: "stats", requestId: m.requestId, queuedFrames: this.count,
@@ -92,18 +104,31 @@ class NycTronCaptureProcessor extends AudioWorkletProcessor {
     this.ring = new Float32Array(this.capacity * this.channels);
     this.head = 0; this.tail = 0; this.count = 0;
     this.dropped = 0; // overwritten oldest frames on overflow
+    // Preallocated staging for read replies: each part copies ring→scratch
+    // with set() runs, then slice()+transfer hands an exact-size buffer to
+    // the main thread — no unbounded allocation on the audio thread.
+    this.readScratchFrames = Math.min(this.capacity, 16384);
+    this.readScratch = new Float32Array(this.readScratchFrames * this.channels);
     this.port.onmessage = (e) => {
       const m = e.data || {};
       if (m.type === "read" && typeof m.requestId === "number") {
-        const want = Math.max(0, Math.min(m.maxFrames | 0, this.count, this.capacity));
-        const out = new Float32Array(want * this.channels);
-        for (let f = 0; f < want; f++) {
-          const base = this.tail * this.channels;
-          for (let c = 0; c < this.channels; c++) out[f * this.channels + c] = this.ring[base + c];
-          this.tail = (this.tail + 1) % this.capacity;
+        let remaining = Math.max(0, Math.min(m.maxFrames | 0, this.count, this.capacity));
+        while (remaining > 0) {
+          const n = Math.min(remaining, this.readScratchFrames);
+          let left = n, dst = 0;
+          while (left > 0) {
+            const run = Math.min(left, this.capacity - this.tail);
+            const len = run * this.channels;
+            this.readScratch.set(this.ring.subarray(this.tail * this.channels, this.tail * this.channels + len), dst * this.channels);
+            this.tail = (this.tail + run) % this.capacity;
+            dst += run; left -= run;
+          }
+          this.count -= n;
+          remaining -= n;
+          const part = this.readScratch.slice(0, n * this.channels);
+          this.port.postMessage({ type: "input-part", requestId: m.requestId, buffer: part.buffer, frames: n }, [part.buffer]);
         }
-        this.count -= want;
-        this.port.postMessage({ type: "input", requestId: m.requestId, buffer: out.buffer, frames: want }, [out.buffer]);
+        this.port.postMessage({ type: "input-end", requestId: m.requestId });
       } else if (m.type === "stats") {
         this.port.postMessage({ type: "stats", requestId: m.requestId, queuedFrames: this.count,
           capacityFrames: this.capacity, droppedFrames: this.dropped, underrunFrames: 0 });

@@ -225,6 +225,12 @@ are counted as silence frames and drops as rejected overflow; both surface
 through `stats()` polling, and lifecycle failures emit `"audio"` events
 (`device-lost`, `error`).
 
+`PcmChunk.samples` accepts an `ArrayBuffer` or any `ArrayBufferView`
+(`Uint8Array`, `DataView`, …); the provider normalizes to a `Uint8Array`
+view honouring `byteOffset`/`byteLength` before the payload crosses the
+native bridge, which delivers PCM as `Uint8Array` on every platform.
+`readInput` results come back as the same normalized view type.
+
 Platform notes and honest limits:
 
 - **iOS:** `AVAudioEngine` with one `AVAudioSourceNode` per output stream
@@ -232,8 +238,10 @@ Platform notes and honest limits:
   second ring. Negotiated output is always Float32 (s16 requests report
   `"f32"`). `probe()` reports the system default endpoints only —
   `AVAudioSession` exposes no public device list, and per-device input
-  selection is rejected. Capture requests record permission and switches the
-  shared session to `.record`/`.playAndRecord`; coordinate with
+  selection is rejected for both directions. One input stream may be open at
+  a time — the capture engine carries a single input-node tap, so a second
+  `openInput` rejects `"busy"`. Capture requests record permission and
+  switches the shared session to `.record`/`.playAndRecord`; coordinate with
   `NYCTronPlaybackSession`, which owns activation for playback-only apps.
 - **Android:** `AudioTrack` (`PCM_16BIT`, `MODE_STREAM`) fed by a writer
   thread over a bounded chunk queue — output negotiates `"s16"` only in v1,
@@ -243,9 +251,11 @@ Platform notes and honest limits:
 - **Web:** one shared `AudioContext` (its native rate is negotiated — other
   requested rates reject `"unsupported-format"`) plus two AudioWorklets
   loaded from a Blob URL: playback pops a ring per quantum, capture pushes
-  input frames the main thread polls. Output device pick uses
-  `AudioContext.setSinkId` where the browser has it; input uses
-  `getUserMedia` with `deviceId` constraints.
+  input frames the main thread polls in bounded transferred parts. `probe()`
+  is side-effect free — it enumerates devices without creating the context,
+  so `defaultSampleRate` reports `0` until the first stream opens. Output
+  device pick uses `AudioContext.setSinkId` where the browser has it; input
+  uses `getUserMedia` with `deviceId` constraints.
 - **Ring caveat:** the native rings use a short bounded lock, not a formally
   wait-free SPSC — the decision doc itself flags lock-free correctness as
   needing a prototype. Everything here is contract-tested but **unrun on

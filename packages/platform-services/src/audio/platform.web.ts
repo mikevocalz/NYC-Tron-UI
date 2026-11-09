@@ -41,9 +41,17 @@ interface CaptureEntry {
   readonly track:MediaStreamTrack;
   readonly format:AudioFormat;
   readonly capacityFrames:number;
+  /** The track "ended" listener, kept so closeInput can detach it (M6). */
+  onEnded:()=>void;
 }
 
-interface PendingRead {resolve:(payload:unknown)=>void;reject:(error:unknown)=>void;timer:ReturnType<typeof setTimeout>}
+interface PendingRead {
+  resolve:(payload:unknown)=>void;
+  reject:(error:unknown)=>void;
+  timer:ReturnType<typeof setTimeout>;
+  /** Accumulates "input-part" messages until "input-end" (chunked capture reads). */
+  parts?:{buffers:ArrayBuffer[];frames:number};
+}
 
 const READ_TIMEOUT_MS=2000;
 const MIN_CAPACITY_FRAMES=4096;
@@ -116,12 +124,41 @@ function createWebAudioNative():AudioDeviceNative|null{
         if(waiter){pending.delete(m.requestId);clearTimeout(waiter.timer);waiter.resolve(m as Record<string,unknown>);}
         return;
       }
+      // Chunked capture reads: the worklet replies in bounded transferred
+      // parts so it never allocates an unbounded buffer on the audio thread.
+      if(m.type==="input-part"&&typeof m.requestId==="number"&&m.buffer instanceof ArrayBuffer){
+        const waiter=pending.get(m.requestId);
+        if(waiter?.parts){waiter.parts.buffers.push(m.buffer);waiter.parts.frames+=typeof m.frames==="number"?m.frames:0;}
+        return;
+      }
+      if(m.type==="input-end"&&typeof m.requestId==="number"){
+        const waiter=pending.get(m.requestId);
+        if(waiter?.parts){
+          pending.delete(m.requestId);clearTimeout(waiter.timer);
+          const parts=waiter.parts;waiter.parts=undefined;
+          let floats=0;
+          for(const b of parts.buffers)floats+=b.byteLength/4;
+          const merged=new Float32Array(floats);
+          let offset=0;
+          for(const b of parts.buffers){const view=new Float32Array(b);merged.set(view,offset);offset+=view.length;}
+          waiter.resolve({type:"input",requestId:m.requestId,buffer:merged.buffer,frames:parts.frames});
+        }
+        return;
+      }
       if(m.type==="event"&&m.kind==="underrun"){
         // Underrun detail is pollable through stats(); the event bus carries
         // lifecycle only, matching the native contract.
         return;
       }
     };
+  }
+
+  /** Detaches the ended listener, closes the worklet port and stops the graph. */
+  function teardownCapture(entry:CaptureEntry){
+    entry.track.removeEventListener("ended",entry.onEnded);
+    try{entry.node.port.onmessage=null;entry.node.port.close();}catch{/* already closed */}
+    try{entry.node.disconnect();entry.gain.disconnect();entry.source.disconnect();}catch{/* already gone */}
+    entry.stream.getTracks().forEach(t=>t.stop());
   }
 
   async function maybeCloseContext(){
@@ -203,24 +240,33 @@ function createWebAudioNative():AudioDeviceNative|null{
     node.connect(gain);
     gain.connect(ctx.destination);
     const id=`web-in-${++nextId}`;
-    const entry:CaptureEntry={node,gain,source,stream,track,format:{sampleRate,channels,sampleFormat:"f32"},capacityFrames};
+    const entry:CaptureEntry={node,gain,source,stream,track,format:{sampleRate,channels,sampleFormat:"f32"},capacityFrames,onEnded:()=>{}};
     inputs.set(id,entry);
     onPortMessage(entry);
-    const onEnded=()=>{
+    entry.onEnded=()=>{
       inputs.delete(id);
-      try{node.disconnect();gain.disconnect();source.disconnect();}catch{/* already gone */}
-      stream.getTracks().forEach(t=>t.stop());
+      teardownCapture(entry);
       emit({stream:id,kind:"device-lost",message:"The capture device went away."});
       void maybeCloseContext();
     };
-    track.addEventListener("ended",onEnded);
+    track.addEventListener("ended",entry.onEnded);
     return {stream:id,format:entry.format,latencyMs:0};
   }
 
-  function toFloat(samples:ArrayBuffer,sampleFormat:string):ArrayBuffer{
-    if(sampleFormat==="f32")return samples;
-    const src=new DataView(samples);
-    const frames=samples.byteLength/2;
+  function toFloat(samples:ArrayBuffer|ArrayBufferView,sampleFormat:string):ArrayBuffer{
+    // Accept the normalized Uint8Array view the provider hands over (and any
+    // other view) without leaking bytes outside its byteOffset/byteLength.
+    const u8=samples instanceof ArrayBuffer?new Uint8Array(samples)
+      :new Uint8Array(samples.buffer,samples.byteOffset,samples.byteLength);
+    if(sampleFormat==="f32"){
+      // Copy before transfer: postMessage's transfer list would neuter the
+      // caller's ArrayBuffer (the view shares it), which the contract forbids.
+      const copy=new Uint8Array(u8.byteLength);
+      copy.set(u8);
+      return copy.buffer;
+    }
+    const src=new DataView(u8.buffer,u8.byteOffset,u8.byteLength);
+    const frames=u8.byteLength/2;
     const out=new Float32Array(frames);
     for(let i=0;i<frames;i++)out[i]=src.getInt16(i*2,true)/32768;
     return out.buffer;
@@ -228,7 +274,9 @@ function createWebAudioNative():AudioDeviceNative|null{
 
   return {
     probe:async()=>{
-      const ctx=await ensureContext();
+      // Lazy: probing must not spin up an AudioContext (autoplay policies and
+      // audio hardware stay untouched until the first stream opens). The rate
+      // is reported once a context exists; 0 means "not yet known".
       const devices=typeof navigator!=="undefined"&&navigator.mediaDevices?.enumerateDevices
         ?await navigator.mediaDevices.enumerateDevices().catch(()=>[]):[];
       const outputs:unknown[]=[],inputs:unknown[]=[];
@@ -236,7 +284,7 @@ function createWebAudioNative():AudioDeviceNative|null{
         if(d.kind==="audiooutput")outputs.push({id:d.deviceId,name:d.label||"audio output",kind:"output"});
         if(d.kind==="audioinput")inputs.push({id:d.deviceId,name:d.label||"audio input",kind:"input"});
       }
-      return {available:true,defaultSampleRate:ctx.sampleRate,outputs,inputs};
+      return {available:true,defaultSampleRate:context?.sampleRate??0,outputs,inputs};
     },
     openOutput:(o)=>openOutput(o),
     writeOutput:async(stream,payload)=>{
@@ -265,7 +313,9 @@ function createWebAudioNative():AudioDeviceNative|null{
       const entry=outputs.get(stream);
       if(!entry)return;
       outputs.delete(stream);
+      entry.node.port.onmessage=null;
       entry.node.port.postMessage({type:"reset"});
+      entry.node.port.close();
       entry.node.disconnect();
       await maybeCloseContext();
     },
@@ -276,7 +326,7 @@ function createWebAudioNative():AudioDeviceNative|null{
       const requestId=nextRequest++;
       const reply=await new Promise<Record<string,unknown>>((resolve,reject)=>{
         const timer=setTimeout(()=>{pending.delete(requestId);reject(webError("device-error","The capture worklet did not answer a read."));},READ_TIMEOUT_MS);
-        pending.set(requestId,{resolve:p=>{clearTimeout(timer);pending.delete(requestId);resolve(p as Record<string,unknown>);},reject:()=>{clearTimeout(timer);pending.delete(requestId);reject(webError("device-error","The capture worklet failed."));},timer});
+        pending.set(requestId,{resolve:p=>{clearTimeout(timer);pending.delete(requestId);resolve(p as Record<string,unknown>);},reject:()=>{clearTimeout(timer);pending.delete(requestId);reject(webError("device-error","The capture worklet failed."));},timer,parts:{buffers:[],frames:0}});
         entry.node.port.postMessage({type:"read",requestId,maxFrames});
       });
       const buffer=reply.buffer;
@@ -288,8 +338,7 @@ function createWebAudioNative():AudioDeviceNative|null{
       const entry=inputs.get(stream);
       if(!entry)return;
       inputs.delete(stream);
-      entry.node.disconnect();entry.gain.disconnect();
-      entry.stream.getTracks().forEach(t=>t.stop());
+      teardownCapture(entry);
       await maybeCloseContext();
     },
     addListener(_eventName:"audio",listener:(payload:unknown)=>void){
