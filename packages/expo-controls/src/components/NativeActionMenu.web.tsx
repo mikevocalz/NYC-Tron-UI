@@ -1,5 +1,5 @@
 import { useRef, useLayoutEffect, type ReactNode, type ElementRef } from "react";
-import { Modal, Pressable, ScrollView, Text, View, type PressableProps } from "react-native";
+import { Modal, Platform, Pressable, ScrollView, Text, View, type PressableProps } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import type { NativeActionMenuProps } from "./NativeActionMenu.types.ts";
@@ -8,15 +8,15 @@ import { useRestoreFocus } from "@nyc-tron/ui/components/overlays/focus-restore"
 import { enabledMenuLeaves, findEnabledMenuAction, menuFocusTarget, normalizeMenuActions, type TronMenuAction } from "./menu-model.ts";
 
 type MenuKeyEvent = Parameters<NonNullable<PressableProps["onKeyDown"]>>[0];
-// This file runs on RN web: the native event is a browser KeyboardEvent.
-const keyData=(event:MenuKeyEvent)=>event.nativeEvent as {
+// RN web and desktop hosts can place key data on the event or nativeEvent.
+const keyData=(event:MenuKeyEvent)=>(event.nativeEvent??event) as {
   key:string;shiftKey?:boolean;altKey?:boolean;ctrlKey?:boolean;metaKey?:boolean
 };
 
 /**
- * Working RN web presentation. Expo's MenuView intentionally does nothing
- * on web; never ship a web menu whose actions cannot fire.
- * Desktop Windows/macOS require separate native host adapters.
+ * Shared RN Modal presentation for web, QNX and Marathon. Expo's MenuView
+ * has no working web action callback, and the Qt hosts have no Expo module.
+ * This is a shared control, not a platform-native menu adapter.
  */
 export function NativeActionMenu({
   scope="native-actions",trigger,actions,onAction,longPress=false,disabled=false,accessibilityLabel,testID
@@ -28,6 +28,12 @@ export function NativeActionMenu({
   // Every close path (Escape, selection, backdrop) returns focus to the trigger.
   useRestoreFocus(open);
   const itemRefs=useRef(new Map<string,ElementRef<typeof View>>());
+  const triggerRef=useRef<ElementRef<typeof View>>(null);
+  const wasOpen=useRef(false);
+  useLayoutEffect(()=>{
+    if(wasOpen.current&&!open&&Platform.OS!=="web")triggerRef.current?.focus?.();
+    wasOpen.current=open;
+  },[open]);
   const initialKey=useRef("Home");
   const normalized=normalizeMenuActions(actions);
   const canOpen=!disabled&&normalized.length>0;
@@ -39,7 +45,7 @@ export function NativeActionMenu({
   const close=()=>store.setState({open:false});
   const focus=(key:string,currentId?:string)=>{
     const id=menuFocusTarget(actions,currentId,key);
-    if(id)itemRefs.current.get(id)?.focus();
+    if(id)itemRefs.current.get(id)?.focus?.();
   };
   const show=(key="Home")=>{
     if(!current())return;
@@ -51,20 +57,20 @@ export function NativeActionMenu({
     if(altKey||ctrlKey||metaKey)return;
     // Tab and Shift+Tab cycle through the enabled items and never leave the open menu.
     if(key==="Tab"){
-      event.preventDefault();event.stopPropagation();
+      event.preventDefault?.();event.stopPropagation?.();
       const next=cycleFocusTarget(enabledMenuLeaves(actions).map(action=>action.id),id,!!shiftKey);
-      if(next)itemRefs.current.get(next)?.focus();
+      if(next)itemRefs.current.get(next)?.focus?.();
       return;
     }
     if(key==="Escape"){
-      event.preventDefault();event.stopPropagation();close();return;
+      event.preventDefault?.();event.stopPropagation?.();close();return;
     }
     // RN web's Pressable only synthesizes Space for button roles, not menu items.
     if(key===" "||key==="Spacebar"){
-      event.preventDefault();event.stopPropagation();run(id);return;
+      event.preventDefault?.();event.stopPropagation?.();run(id);return;
     }
     if(menuFocusTarget(actions,id,key)){
-      event.preventDefault();event.stopPropagation();focus(key,id);
+      event.preventDefault?.();event.stopPropagation?.();focus(key,id);
     }
   };
   const run=(id:string)=>{
@@ -97,13 +103,13 @@ export function NativeActionMenu({
       </Pressable>}
     </View>);
   return <View testID={testID}>
-    <Pressable style={{minWidth:44,minHeight:44,justifyContent:"center"}} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+    <Pressable ref={triggerRef} style={{minWidth:44,minHeight:44,justifyContent:"center"}} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
       aria-expanded={open}
       {...{"aria-haspopup":"menu" as const,onKeyDown:(event:MenuKeyEvent)=>{
         const {key,altKey,ctrlKey,metaKey}=keyData(event);
         if(!canOpen||altKey||ctrlKey||metaKey)return;
         if(key==="ArrowDown"||key==="ArrowUp"){
-          event.preventDefault();show(key==="ArrowUp"?"End":"Home");
+          event.preventDefault?.();show(key==="ArrowUp"?"End":"Home");
         }
       }}}
       accessibilityState={{disabled:!canOpen,expanded:open}}

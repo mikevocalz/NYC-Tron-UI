@@ -544,9 +544,11 @@
           "target": "./dist/index.d.ts",
           "conditions": {
             "types": "./dist/index.d.ts",
+            "qnx": "./dist/index.shared.js",
+            "marathon": "./dist/index.shared.js",
             "browser": "./dist/index.js",
             "react-native": "./dist/index.native.js",
-            "default": "./dist/index.js"
+            "default": "./dist/index.shared.js"
           },
           "symbols": {
             "ContextMenuProps": [
@@ -602,6 +604,8 @@
           "target": "./dist/components/ContextMenu.web.d.ts",
           "conditions": {
             "types": "./dist/components/ContextMenu.web.d.ts",
+            "qnx": "./dist/components/ContextMenu.web.js",
+            "marathon": "./dist/components/ContextMenu.web.js",
             "browser": "./dist/components/ContextMenu.web.js",
             "react-native": "./dist/components/ContextMenu.native.js",
             "default": "./dist/components/ContextMenu.web.js"
@@ -621,6 +625,8 @@
           "target": "./dist/components/FindReplacePopover.web.d.ts",
           "conditions": {
             "types": "./dist/components/FindReplacePopover.web.d.ts",
+            "qnx": "./dist/components/FindReplacePopover.web.js",
+            "marathon": "./dist/components/FindReplacePopover.web.js",
             "react-native": "./dist/components/FindReplacePopover.native.js",
             "browser": "./dist/components/FindReplacePopover.web.js",
             "default": "./dist/components/FindReplacePopover.web.js"
@@ -640,6 +646,8 @@
           "target": "./dist/components/NativeActionMenu.web.d.ts",
           "conditions": {
             "types": "./dist/components/NativeActionMenu.web.d.ts",
+            "qnx": "./dist/components/NativeActionMenu.web.js",
+            "marathon": "./dist/components/NativeActionMenu.web.js",
             "browser": "./dist/components/NativeActionMenu.web.js",
             "react-native": "./dist/components/NativeActionMenu.native.js",
             "default": "./dist/components/NativeActionMenu.web.js"
@@ -656,6 +664,8 @@
           "target": "./dist/components/NativeDropdown.d.ts",
           "conditions": {
             "types": "./dist/components/NativeDropdown.d.ts",
+            "qnx": "./dist/components/NativeDropdown.shared.js",
+            "marathon": "./dist/components/NativeDropdown.shared.js",
             "browser": "./dist/components/NativeDropdown.js",
             "react-native": "./dist/components/NativeDropdown.native.js",
             "default": "./dist/components/NativeDropdown.js"
@@ -696,6 +706,8 @@
           "target": "./dist/components/NativePopover.web.d.ts",
           "conditions": {
             "types": "./dist/components/NativePopover.web.d.ts",
+            "qnx": "./dist/components/NativePopover.web.js",
+            "marathon": "./dist/components/NativePopover.web.js",
             "browser": "./dist/components/NativePopover.web.js",
             "react-native": "./dist/components/NativePopover.native.js",
             "default": "./dist/components/NativePopover.web.js"
@@ -724,6 +736,8 @@
           "target": "./dist/components/NativeSliderField.web.d.ts",
           "conditions": {
             "types": "./dist/components/NativeSliderField.web.d.ts",
+            "qnx": "./dist/components/NativeSliderField.web.js",
+            "marathon": "./dist/components/NativeSliderField.web.js",
             "browser": "./dist/components/NativeSliderField.web.js",
             "react-native": "./dist/components/NativeSliderField.native.js",
             "default": "./dist/components/NativeSliderField.web.js"
@@ -743,6 +757,8 @@
           "target": "./dist/components/NativeSplitButton.web.d.ts",
           "conditions": {
             "types": "./dist/components/NativeSplitButton.web.d.ts",
+            "qnx": "./dist/components/NativeSplitButton.web.js",
+            "marathon": "./dist/components/NativeSplitButton.web.js",
             "browser": "./dist/components/NativeSplitButton.web.js",
             "react-native": "./dist/components/NativeSplitButton.native.js",
             "default": "./dist/components/NativeSplitButton.web.js"
@@ -762,6 +778,8 @@
           "target": "./dist/components/Select.web.d.ts",
           "conditions": {
             "types": "./dist/components/Select.web.d.ts",
+            "qnx": "./dist/components/Select.web.js",
+            "marathon": "./dist/components/Select.web.js",
             "browser": "./dist/components/Select.web.js",
             "react-native": "./dist/components/Select.native.js",
             "default": "./dist/components/Select.web.js"
@@ -787,6 +805,8 @@
           "target": "./dist/components/Tooltip.web.d.ts",
           "conditions": {
             "types": "./dist/components/Tooltip.web.d.ts",
+            "qnx": "./dist/components/Tooltip.unavailable.js",
+            "marathon": "./dist/components/Tooltip.unavailable.js",
             "browser": "./dist/components/Tooltip.web.js",
             "react-native": "./dist/components/Tooltip.native.js",
             "default": "./dist/components/Tooltip.web.js"
@@ -806,6 +826,8 @@
           "target": "./dist/components/menu-model.d.ts",
           "conditions": {
             "types": "./dist/components/menu-model.d.ts",
+            "qnx": "./dist/components/menu-model.js",
+            "marathon": "./dist/components/menu-model.js",
             "react-native": "./dist/components/menu-model.js",
             "default": "./dist/components/menu-model.js"
           },
@@ -21510,7 +21532,7 @@
     },
     "@nyc-tron/ui/dist/components/Select.d.ts#SelectBaseProps": {
       "signatures": [
-        "export interface SelectBaseProps extends Omit<ViewProps, \"children\" | \"role\"> {\n    label: string;\n    value: string;\n    onValueChange: (value: string) => void;\n    disabled?: boolean;\n    placeholder?: string;\n    hint?: string;\n    errorText?: string;\n    className?: string;\n    triggerClassName?: string;\n    unstyled?: boolean;\n}"
+        "export interface SelectBaseProps extends Omit<ViewProps, \"children\" | \"role\"> {\n    label: string;\n    value: string;\n    onValueChange: (value: string) => void;\n    disabled?: boolean;\n    placeholder?: string;\n    hint?: string;\n    errorText?: string;\n    className?: string;\n    labelClassName?: string;\n    triggerClassName?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",

@@ -18,71 +18,93 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "qnx": "./dist/index.shared.js",
+      "marathon": "./dist/index.shared.js",
       "browser": "./dist/index.js",
       "react-native": "./dist/index.native.js",
-      "default": "./dist/index.js"
+      "default": "./dist/index.shared.js"
     },
     "./NativeDropdown": {
       "types": "./dist/components/NativeDropdown.d.ts",
+      "qnx": "./dist/components/NativeDropdown.shared.js",
+      "marathon": "./dist/components/NativeDropdown.shared.js",
       "browser": "./dist/components/NativeDropdown.js",
       "react-native": "./dist/components/NativeDropdown.native.js",
       "default": "./dist/components/NativeDropdown.js"
     },
     "./NativeActionMenu": {
       "types": "./dist/components/NativeActionMenu.web.d.ts",
+      "qnx": "./dist/components/NativeActionMenu.web.js",
+      "marathon": "./dist/components/NativeActionMenu.web.js",
       "browser": "./dist/components/NativeActionMenu.web.js",
       "react-native": "./dist/components/NativeActionMenu.native.js",
       "default": "./dist/components/NativeActionMenu.web.js"
     },
     "./NativePopover": {
       "types": "./dist/components/NativePopover.web.d.ts",
+      "qnx": "./dist/components/NativePopover.web.js",
+      "marathon": "./dist/components/NativePopover.web.js",
       "browser": "./dist/components/NativePopover.web.js",
       "react-native": "./dist/components/NativePopover.native.js",
       "default": "./dist/components/NativePopover.web.js"
     },
     "./Tooltip": {
       "types": "./dist/components/Tooltip.web.d.ts",
+      "qnx": "./dist/components/Tooltip.unavailable.js",
+      "marathon": "./dist/components/Tooltip.unavailable.js",
       "browser": "./dist/components/Tooltip.web.js",
       "react-native": "./dist/components/Tooltip.native.js",
       "default": "./dist/components/Tooltip.web.js"
     },
     "./NativeSliderField": {
       "types": "./dist/components/NativeSliderField.web.d.ts",
+      "qnx": "./dist/components/NativeSliderField.web.js",
+      "marathon": "./dist/components/NativeSliderField.web.js",
       "browser": "./dist/components/NativeSliderField.web.js",
       "react-native": "./dist/components/NativeSliderField.native.js",
       "default": "./dist/components/NativeSliderField.web.js"
     },
     "./NativeSplitButton": {
       "types": "./dist/components/NativeSplitButton.web.d.ts",
+      "qnx": "./dist/components/NativeSplitButton.web.js",
+      "marathon": "./dist/components/NativeSplitButton.web.js",
       "browser": "./dist/components/NativeSplitButton.web.js",
       "react-native": "./dist/components/NativeSplitButton.native.js",
       "default": "./dist/components/NativeSplitButton.web.js"
     },
     "./ContextMenu": {
       "types": "./dist/components/ContextMenu.web.d.ts",
+      "qnx": "./dist/components/ContextMenu.web.js",
+      "marathon": "./dist/components/ContextMenu.web.js",
       "browser": "./dist/components/ContextMenu.web.js",
       "react-native": "./dist/components/ContextMenu.native.js",
       "default": "./dist/components/ContextMenu.web.js"
     },
     "./menu-model": {
       "types": "./dist/components/menu-model.d.ts",
+      "qnx": "./dist/components/menu-model.js",
+      "marathon": "./dist/components/menu-model.js",
       "react-native": "./dist/components/menu-model.js",
       "default": "./dist/components/menu-model.js"
     },
     "./Select": {
       "types": "./dist/components/Select.web.d.ts",
+      "qnx": "./dist/components/Select.web.js",
+      "marathon": "./dist/components/Select.web.js",
       "browser": "./dist/components/Select.web.js",
       "react-native": "./dist/components/Select.native.js",
       "default": "./dist/components/Select.web.js"
     },
     "./FindReplacePopover": {
       "types": "./dist/components/FindReplacePopover.web.d.ts",
+      "qnx": "./dist/components/FindReplacePopover.web.js",
+      "marathon": "./dist/components/FindReplacePopover.web.js",
       "react-native": "./dist/components/FindReplacePopover.native.js",
       "browser": "./dist/components/FindReplacePopover.web.js",
       "default": "./dist/components/FindReplacePopover.web.js"
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.shared.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
@@ -113,5 +135,13 @@
     "@expo/ui": "58.0.27",
     "expo": "58.0.14",
     "zustand": "5.0.16"
+  },
+  "peerDependenciesMeta": {
+    "@expo/ui": {
+      "optional": true
+    },
+    "expo": {
+      "optional": true
+    }
   }
 }

@@ -37,6 +37,8 @@ export interface SelectBaseProps extends Omit<ViewProps,"children"|"role"> {
   hint?:string;
   errorText?:string;
   className?:string;
+  /** Additional app-owned classes for the visible caption. */
+  labelClassName?:string;
   triggerClassName?:string;
   unstyled?:boolean;
 }
@@ -71,7 +73,7 @@ const optionLabel=(o:SelectOption)=>o.label??o.value;
 export function Select(props:SelectProps){
   const {
     label,value,onValueChange,disabled=false,placeholder="Choose…",hint,errorText,
-    className,triggerClassName,unstyled=false,testID,options:_options,groups,...rest
+    className,labelClassName,triggerClassName,unstyled=false,testID,options:_options,groups,...rest
   }=props;
   const options=selectOptions(props);
   const styled=!unstyled,web=Platform.OS==="web";
@@ -165,7 +167,7 @@ export function Select(props:SelectProps){
     </ScrollView>
   </View>;
   return <View {...rest} {...{className:joinClasses("w-full min-w-0 gap-2",open&&web&&"relative z-50",className)}}>
-    <Text nativeID={id+"-label"} {...{className:joinClasses(styled&&"text-sm font-semibold text-text")}}>{label}</Text>
+    <Text nativeID={id+"-label"} {...{className:joinClasses(styled&&"text-sm font-semibold text-text",labelClassName)}}>{label}</Text>
     <View {...{className:"relative w-full"}}>
       <Pressable role="combobox" testID={testID}
         accessibilityLabel={web?label:label+", "+shown}

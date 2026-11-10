@@ -12,6 +12,7 @@ import type { NativeAppearanceProps } from "./native-appearance.ts";
  *   users need.
  * - Web: shown after a hover or keyboard-focus delay, hidden on leave, blur
  *   or Escape, and linked to the anchor with `aria-describedby`.
+ * - QNX/Marathon: unavailable; importing is safe, but rendering throws.
  */
 export interface TooltipProps extends NativeAppearanceProps {
   readonly label: string;
