@@ -103,6 +103,10 @@ bool DesktopSession::ResolveNativeDrop(std::string const& token, std::string con
   return m_drag->Resolve(token, request, accepted);
 }
 void DesktopSession::CancelNativeDrag(std::string const& request) { if (m_drag) m_drag->Cancel(request); }
+void DesktopSession::EnableNativeDragDiagnostics() {
+  if (!m_drag) throw std::runtime_error("Native drag host is unavailable");
+  m_drag->EnableDiagnostics();
+}
 void DesktopSession::CloseRequest(std::string const& id, std::string const& generation) {
   auto iterator = m_windows.find(id);
   if (m_disposed || iterator == m_windows.end() || iterator->second->generation != generation) return;

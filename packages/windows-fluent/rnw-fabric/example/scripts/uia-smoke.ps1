@@ -71,6 +71,7 @@ public static class NativeWindow {
 "@
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 . "$PSScriptRoot\uia-crash-dumps.ps1"
+. "$PSScriptRoot\uia-native-drag-trace.ps1"
 $AE = [System.Windows.Automation.AutomationElement]
 $Tree = [System.Windows.Automation.TreeScope]
 . "$PSScriptRoot\uia-drag-input.ps1"
@@ -688,6 +689,10 @@ try {
 } finally {
   try { if ($null -ne $process -and -not $process.HasExited) { Stop-Process -InputObject $process -Force } }
   catch { Write-Host "Consumer cleanup unavailable: $($_.Exception.Message)" }
+  try {
+    $traceProcessStopped = $null -ne $process -and $process.HasExited
+    Save-NativeDragTrace $AppUserModelId $ownedProcessId $OutDir $traceProcessStopped
+  } catch { Write-Host "Native drag trace retention unavailable: $($_.Exception.Message)" }
   try { Restore-OwnedCrashDump $crashCapture }
   catch { Write-Host "WER setting restoration unavailable: $($_.Exception.Message)" }
   try { Save-CrashDumpReceipt $crashCapture $OutDir $ownedProcessId }

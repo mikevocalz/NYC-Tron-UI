@@ -27,6 +27,7 @@ struct TronDesktop : std::enable_shared_from_this<TronDesktop> {
   REACT_METHOD(startNativeDrag) void startNativeDrag(std::string owner, std::string source, std::string token, std::string request, Promise&& promise) noexcept;
   REACT_METHOD(resolveNativeDrop) void resolveNativeDrop(std::string owner, std::string token, std::string request, bool accepted, winrt::Microsoft::ReactNative::ReactPromise<bool>&& promise) noexcept;
   REACT_METHOD(cancelNativeDrag) void cancelNativeDrag(std::string owner, std::string request, winrt::Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept;
+  REACT_METHOD(enableNativeDragDiagnostics) void enableNativeDragDiagnostics(std::string owner, winrt::Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept;
  private:
   void Run(std::string owner, Promise promise, std::function<void(nyctron::desktop::DesktopSession&)> work) noexcept;
   winrt::Microsoft::ReactNative::ReactContext m_context;

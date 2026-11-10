@@ -347,6 +347,32 @@ These APIs implement same-runtime app-owned cross-window transfer. External
 file/text import, export to another process, touch/pen behavior and Narrator
 speech require their own explicit integration and acceptance.
 
+### Native acceptance diagnostics
+
+The reference consumer explicitly enables a private generated-module diagnostic
+hook after connecting its desktop owner. Public package exports and
+`WindowsWindowHost` do not expose that hook. Ordinary consumers leave tracing
+disabled. The hook accepts only the connected owner token and uses a fixed,
+process-specific filename in the packaged app's
+[local app data folder](https://learn.microsoft.com/en-us/uwp/api/windows.storage.applicationdata.localfolder).
+
+The trace records native lifecycle flags, actual `CanDrag`/`AllowDrop` readback,
+target enter/over/drop events, data-format/property presence, broker lifetime
+checks, and offer/approval/completion decisions. Records contain fixed labels,
+booleans, numeric geometry and HRESULTs. They contain no owner tokens, nonces,
+document payloads or app-authored labels. Limits are 512 records and 256 KiB per
+session, including a reserved terminal entry; each record is limited to 4 KiB.
+Trace failures are isolated from input, deferrals and native results.
+
+After the acceptance app stops, the UIA driver copies the original JSONL bytes
+into its evidence directory. `native-drag-trace-receipt.json` binds those bytes
+to the observed process and records their SHA-256 before and after copying.
+Only a matching, verified trace from the stopped process is removed from the
+app folder. Missing files, mismatched identities, incomplete JSON and budget
+exhaustion remain explicit diagnostic limits. Neither a trace nor the absence
+of target events replaces the real drag, rejection, cancellation and transfer
+assertions.
+
 Microsoft API references:
 
 - [WinUI drag and drop](https://learn.microsoft.com/en-us/windows/apps/develop/data/drag-and-drop)

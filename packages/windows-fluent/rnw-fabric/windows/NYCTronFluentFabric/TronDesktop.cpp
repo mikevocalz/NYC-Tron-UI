@@ -82,4 +82,14 @@ void TronDesktop::cancelNativeDrag(std::string owner, std::string request, Micro
     catch (...) { promise.Reject("Native drag cancellation failed"); }
   });
 }
+void TronDesktop::enableNativeDragDiagnostics(std::string owner, Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept {
+  m_context.UIDispatcher().Post([self = shared_from_this(), owner = std::move(owner), promise] {
+    try {
+      if (!self->m_session) throw std::runtime_error("Native desktop is not connected");
+      self->m_session->RequireOwner(owner);
+      self->m_session->EnableNativeDragDiagnostics();
+      promise.Resolve();
+    } catch (...) { promise.Reject("Native drag diagnostics could not be enabled"); }
+  });
+}
 }
