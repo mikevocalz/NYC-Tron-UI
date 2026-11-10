@@ -1,0 +1,239 @@
+﻿2026-11-10T21:18:38.7617796Z Current runner version: '2.338.2'
+2026-11-10T21:18:38.7641727Z ##[group]Runner Image Provisioner
+2026-11-10T21:18:38.7642477Z Hosted Compute Agent
+2026-11-10T21:18:38.7642836Z Version: 20261028.624
+2026-11-10T21:18:38.7643256Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-10T21:18:38.7643720Z Build Date: 2026-10-28T21:51:42Z
+2026-11-10T21:18:38.7644146Z Worker ID: {f2059e7c-1745-49d9-9f39-6f1007dd630c}
+2026-11-10T21:18:38.7644668Z Region: centralus
+2026-11-10T21:18:38.7645007Z Cloud: Azure
+2026-11-10T21:18:38.7645398Z ##[endgroup]
+2026-11-10T21:18:38.7646441Z ##[group]Operating System
+2026-11-10T21:18:38.7646820Z Ubuntu
+2026-11-10T21:18:38.7647228Z 26.04.1
+2026-11-10T21:18:38.7647553Z LTS
+2026-11-10T21:18:38.7647865Z ##[endgroup]
+2026-11-10T21:18:38.7648256Z ##[group]Runner Image
+2026-11-10T21:18:38.7648642Z Image: ubuntu-26.04
+2026-11-10T21:18:38.7649083Z Version: 20261101.186.1
+2026-11-10T21:18:38.7649898Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-10T21:18:38.7650854Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-10T21:18:38.7651442Z ##[endgroup]
+2026-11-10T21:18:38.7652228Z ##[group]GITHUB_TOKEN Permissions
+2026-11-10T21:18:38.7654260Z Contents: read
+2026-11-10T21:18:38.7654706Z Metadata: read
+2026-11-10T21:18:38.7655087Z ##[endgroup]
+2026-11-10T21:18:38.7657074Z Secret source: Actions
+2026-11-10T21:18:38.7657645Z Cache mode: write
+2026-11-10T21:18:38.7658440Z Prepare workflow directory
+2026-11-10T21:18:38.7910585Z Prepare all required actions
+2026-11-10T21:18:38.7949054Z Getting action download info
+2026-11-10T21:18:39.0398929Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-10T21:18:39.1427825Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-10T21:18:39.2326398Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-10T21:18:39.3884395Z Complete job name: Canonical core release archive
+2026-11-10T21:18:39.4603171Z ##[group]Run actions/checkout@v4
+2026-11-10T21:18:39.4603645Z with:
+2026-11-10T21:18:39.4603918Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-10T21:18:39.4606363Z   token: ***
+2026-11-10T21:18:39.4606616Z   ssh-strict: true
+2026-11-10T21:18:39.4606875Z   ssh-user: git
+2026-11-10T21:18:39.4607140Z   persist-credentials: true
+2026-11-10T21:18:39.4607428Z   clean: true
+2026-11-10T21:18:39.4607697Z   sparse-checkout-cone-mode: true
+2026-11-10T21:18:39.4608003Z   fetch-depth: 1
+2026-11-10T21:18:39.4608258Z   fetch-tags: false
+2026-11-10T21:18:39.4608521Z   show-progress: true
+2026-11-10T21:18:39.4608799Z   lfs: false
+2026-11-10T21:18:39.4609046Z   submodules: false
+2026-11-10T21:18:39.4609313Z   set-safe-directory: true
+2026-11-10T21:18:39.4609622Z   allow-unsafe-pr-checkout: false
+2026-11-10T21:18:39.4610010Z ##[endgroup]
+2026-11-10T21:18:39.7130468Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-10T21:18:39.7133121Z ##[group]Getting Git version info
+2026-11-10T21:18:39.7134144Z Working directory is '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-10T21:18:39.7135304Z [command]/usr/bin/git version
+2026-11-10T21:18:39.7136100Z git version 2.56.0
+2026-11-10T21:18:39.7147661Z ##[endgroup]
+2026-11-10T21:18:39.7161490Z Temporarily overriding HOME='/home/runner/work/_temp/4aa91fce-d453-4969-a039-a88c7b2473e9' before making global git config changes
+2026-11-10T21:18:39.7163048Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-10T21:18:39.7166267Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-10T21:18:39.7244175Z Deleting the contents of '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-10T21:18:39.7256759Z ##[group]Initializing the repository
+2026-11-10T21:18:39.7261399Z [command]/usr/bin/git init /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-10T21:18:39.7521223Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-10T21:18:39.7522408Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-10T21:18:39.7523189Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-10T21:18:39.7524043Z hint: call:
+2026-11-10T21:18:39.7524453Z hint:
+2026-11-10T21:18:39.7525011Z hint: 	git config --global init.defaultBranch <name>
+2026-11-10T21:18:39.7525629Z hint:
+2026-11-10T21:18:39.7526364Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-10T21:18:39.7527315Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-10T21:18:39.7528105Z hint:
+2026-11-10T21:18:39.7528546Z hint: 	git branch -m <name>
+2026-11-10T21:18:39.7529035Z hint:
+2026-11-10T21:18:39.7529674Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-10T21:18:39.7547183Z Initialized empty Git repository in /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-10T21:18:39.7562305Z [command]/usr/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-10T21:18:39.7625429Z ##[endgroup]
+2026-11-10T21:18:39.7626681Z ##[group]Disabling automatic garbage collection
+2026-11-10T21:18:39.7629697Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-10T21:18:39.7679068Z ##[endgroup]
+2026-11-10T21:18:39.7679901Z ##[group]Setting up auth
+2026-11-10T21:18:39.7684314Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-10T21:18:39.7726145Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-10T21:18:39.8167106Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-10T21:18:39.8210877Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-10T21:18:39.8491215Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-10T21:18:39.8526328Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-10T21:18:39.8782854Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-10T21:18:39.8827381Z ##[endgroup]
+2026-11-10T21:18:39.8827979Z ##[group]Fetching the repository
+2026-11-10T21:18:39.8834541Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e5b0974bc7bc59ef174250b4af32e4cc4839494a:refs/remotes/pull/59/merge
+2026-11-10T21:18:41.2833059Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-10T21:18:41.2835079Z  * [new ref]         e5b0974bc7bc59ef174250b4af32e4cc4839494a -> pull/59/merge
+2026-11-10T21:18:41.2837948Z ##[endgroup]
+2026-11-10T21:18:41.2838741Z ##[group]Determining the checkout info
+2026-11-10T21:18:41.2839481Z ##[endgroup]
+2026-11-10T21:18:41.2844508Z [command]/usr/bin/git sparse-checkout disable
+2026-11-10T21:18:41.5073605Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-10T21:18:41.5108683Z ##[group]Checking out the ref
+2026-11-10T21:18:41.5112509Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/59/merge
+2026-11-10T21:18:41.6211942Z Note: switching to 'refs/remotes/pull/59/merge'.
+2026-11-10T21:18:41.6212369Z 
+2026-11-10T21:18:41.6212603Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-10T21:18:41.6213119Z changes and commit them, and you can discard any commits you make in this
+2026-11-10T21:18:41.6213602Z state without impacting any branches by switching back to a branch.
+2026-11-10T21:18:41.6213953Z 
+2026-11-10T21:18:41.6214205Z If you want to create a new branch to retain commits you create, you may
+2026-11-10T21:18:41.6214666Z do so (now or later) by using -c with the switch command. Example:
+2026-11-10T21:18:41.6215399Z 
+2026-11-10T21:18:41.6215541Z   git switch -c <new-branch-name>
+2026-11-10T21:18:41.6215753Z 
+2026-11-10T21:18:41.6216058Z Or undo this operation with:
+2026-11-10T21:18:41.6216221Z 
+2026-11-10T21:18:41.6216336Z   git switch -
+2026-11-10T21:18:41.6216510Z 
+2026-11-10T21:18:41.6216794Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-10T21:18:41.6217169Z 
+2026-11-10T21:18:41.6217497Z HEAD is now at e5b0974 Merge 3b1d6745bde04abf367fba9865343d38b2149e5f into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-10T21:18:41.6226912Z ##[endgroup]
+2026-11-10T21:18:41.6276324Z [command]/usr/bin/git log -1 --format=%H
+2026-11-10T21:18:41.6303770Z e5b0974bc7bc59ef174250b4af32e4cc4839494a
+2026-11-10T21:18:41.6643243Z ##[group]Run actions/setup-node@v4
+2026-11-10T21:18:41.6643475Z with:
+2026-11-10T21:18:41.6643655Z   node-version: 24.19.0
+2026-11-10T21:18:41.6643822Z   always-auth: false
+2026-11-10T21:18:41.6643999Z   check-latest: false
+2026-11-10T21:18:41.6645552Z   token: ***
+2026-11-10T21:18:41.6645717Z ##[endgroup]
+2026-11-10T21:18:41.7753144Z Attempting to download 24.19.0...
+2026-11-10T21:18:41.7882246Z (node:2180) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T21:18:41.7882949Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:18:42.5784020Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-10T21:18:43.0000109Z Extracting ...
+2026-11-10T21:18:43.0109836Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/be5e526d-449c-4c31-8f5e-ff309b8566db -f /home/runner/work/_temp/18a7a636-a458-478d-8706-e55765312222
+2026-11-10T21:18:43.5976036Z Adding to the cache ...
+2026-11-10T21:18:46.7282196Z ##[group]Environment details
+2026-11-10T21:18:46.9165172Z node: v24.19.0
+2026-11-10T21:18:46.9165463Z npm: 11.17.0
+2026-11-10T21:18:46.9165636Z yarn: 1.22.22
+2026-11-10T21:18:46.9166387Z ##[endgroup]
+2026-11-10T21:18:46.9374671Z ##[group]Run corepack enable
+2026-11-10T21:18:46.9374956Z [36;1mcorepack enable[0m
+2026-11-10T21:18:46.9375176Z [36;1mcorepack pnpm install --frozen-lockfile --ignore-scripts[0m
+2026-11-10T21:18:46.9426233Z shell: /usr/bin/bash -e {0}
+2026-11-10T21:18:46.9426440Z ##[endgroup]
+2026-11-10T21:18:47.9771855Z Scope: all 16 workspace projects
+2026-11-10T21:18:48.0198418Z Lockfile is up to date, resolution step is skipped
+2026-11-10T21:18:48.0535213Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-11-10T21:18:48.0901202Z Packages: +537
+2026-11-10T21:18:48.0902039Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-10T21:18:49.0552169Z Progress: resolved 537, reused 0, downloaded 165, added 166
+2026-11-10T21:18:50.0554676Z Progress: resolved 537, reused 0, downloaded 290, added 269
+2026-11-10T21:18:51.1147683Z Progress: resolved 537, reused 0, downloaded 447, added 449
+2026-11-10T21:18:52.1150219Z Progress: resolved 537, reused 0, downloaded 475, added 465
+2026-11-10T21:18:53.1163196Z Progress: resolved 537, reused 0, downloaded 482, added 469
+2026-11-10T21:18:54.1173332Z Progress: resolved 537, reused 0, downloaded 516, added 490
+2026-11-10T21:18:54.3599379Z Progress: resolved 537, reused 0, downloaded 519, added 537, done
+2026-11-10T21:18:54.7716453Z 
+2026-11-10T21:18:54.7717149Z devDependencies:
+2026-11-10T21:18:54.7717483Z + @types/react 19.3.0
+2026-11-10T21:18:54.7717743Z + typescript 6.0.3
+2026-11-10T21:18:54.7717870Z 
+2026-11-10T21:18:54.7914378Z Done in 7s using pnpm v10.32.1
+2026-11-10T21:18:54.9386760Z ##[group]Run node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs
+2026-11-10T21:18:54.9387859Z [36;1mnode --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs[0m
+2026-11-10T21:18:54.9388676Z [36;1mcorepack pnpm --filter @nyc-tron/core build[0m
+2026-11-10T21:18:54.9389071Z [36;1mnode tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core[0m
+2026-11-10T21:18:54.9435423Z shell: /usr/bin/bash -e {0}
+2026-11-10T21:18:54.9435584Z ##[endgroup]
+2026-11-10T21:18:55.2498608Z ✔ request timeout keeps the real session connected until its owner closes it (224.213ms)
+2026-11-10T21:18:55.4228150Z ✔ authentication timeout retains an immediately owned handle and rejects commands (173.332861ms)
+2026-11-10T21:18:55.4242414Z ✔ explicit close settles a pending handshake and disconnects its owned socket (1.889418ms)
+2026-11-10T21:18:55.4251738Z ✔ initial connection failure still returns a cleanup handle (1.314911ms)
+2026-11-10T21:18:55.4303916Z ✔ normal reference preparation cannot patch the installed SDK (12.398012ms)
+2026-11-10T21:18:55.4304773Z ✔ a different SDK version cannot receive the private transport patch (7.061887ms)
+2026-11-10T21:18:55.4305446Z ✔ changed pinned driver bytes fail before writing a patch or receipt (5.373345ms)
+2026-11-10T21:18:55.4317750Z ✔ copies only the requested core archive and preserves its bytes (43.021728ms)
+2026-11-10T21:18:55.4319685Z ✔ rejects a changed archive before installing or copying it (47.831381ms)
+2026-11-10T21:18:55.4320521Z ✔ rejects a valid hash for the wrong package identity (11.971315ms)
+2026-11-10T21:18:55.4321544Z ✔ rejects duplicate checksums and archive source links (85.802588ms)
+2026-11-10T21:18:55.4322268Z ℹ tests 11
+2026-11-10T21:18:55.4322500Z ℹ suites 0
+2026-11-10T21:18:55.4322739Z ℹ pass 11
+2026-11-10T21:18:55.4322950Z ℹ fail 0
+2026-11-10T21:18:55.4323223Z ℹ cancelled 0
+2026-11-10T21:18:55.4323448Z ℹ skipped 0
+2026-11-10T21:18:55.4323658Z ℹ todo 0
+2026-11-10T21:18:55.4323988Z ℹ duration_ms 459.310666
+2026-11-10T21:18:55.6632967Z 
+2026-11-10T21:18:55.6633989Z > @nyc-tron/core@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/core
+2026-11-10T21:18:55.6634647Z > tsc --project tsconfig.build.json
+2026-11-10T21:18:55.6634805Z 
+2026-11-10T21:18:57.7924618Z nyc-tron-core-1.0.0.tgz  @nyc-tron/core  68 files  sha256 dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355
+2026-11-10T21:18:57.7925422Z Wrote 1 tarballs and SHA256SUMS to /home/runner/work/_temp/appkit-shared
+2026-11-10T21:18:57.8042303Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T21:18:57.8042491Z with:
+2026-11-10T21:18:57.8042627Z   name: macos-appkit-shared-packages
+2026-11-10T21:18:57.8042794Z   if-no-files-found: error
+2026-11-10T21:18:57.8042931Z   retention-days: 14
+2026-11-10T21:18:57.8043081Z   path: /home/runner/work/_temp/appkit-shared/
+2026-11-10T21:18:57.8043251Z   compression-level: 6
+2026-11-10T21:18:57.8043378Z   overwrite: false
+2026-11-10T21:18:57.8043506Z   include-hidden-files: false
+2026-11-10T21:18:57.8043652Z ##[endgroup]
+2026-11-10T21:18:57.9348230Z (node:2379) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T21:18:57.9348824Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:18:57.9408371Z With the provided path, there will be 2 files uploaded
+2026-11-10T21:18:57.9413534Z Artifact name is valid!
+2026-11-10T21:18:57.9416429Z Root directory input is valid!
+2026-11-10T21:18:58.2346128Z Beginning upload of artifact content to blob storage
+2026-11-10T21:18:58.2526490Z (node:2379) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-10T21:18:58.4310611Z Uploaded bytes 51323
+2026-11-10T21:18:58.4678186Z Finished uploading artifact content to blob storage!
+2026-11-10T21:18:58.4678922Z SHA256 digest of uploaded artifact zip is 9fe94f1de15447e9868eab166948c4c48d0ee0f365e8649e5b90d3d043d39629
+2026-11-10T21:18:58.4679419Z Finalizing artifact upload
+2026-11-10T21:18:58.8291379Z Artifact macos-appkit-shared-packages.zip successfully finalized. Artifact ID 13804281260
+2026-11-10T21:18:58.8292740Z Artifact macos-appkit-shared-packages has been successfully uploaded! Final size is 51323 bytes. Artifact ID is 13804281260
+2026-11-10T21:18:58.8298345Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42903677542/artifacts/13804281260
+2026-11-10T21:18:58.8493296Z Post job cleanup.
+2026-11-10T21:18:58.9486198Z (node:2392) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T21:18:58.9487014Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:18:58.9688886Z Post job cleanup.
+2026-11-10T21:18:59.0390328Z [command]/usr/bin/git version
+2026-11-10T21:18:59.0434727Z git version 2.56.0
+2026-11-10T21:18:59.0467410Z Temporarily overriding HOME='/home/runner/work/_temp/954d433b-9898-46d8-97bb-8803d2cb0e8f' before making global git config changes
+2026-11-10T21:18:59.0468241Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-10T21:18:59.0472252Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-10T21:18:59.0529165Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-10T21:18:59.0576763Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-10T21:18:59.0904763Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-10T21:18:59.0939293Z http.https://github.com/.extraheader
+2026-11-10T21:18:59.0951779Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-10T21:18:59.1019410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-10T21:18:59.1304331Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-10T21:18:59.1341832Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-10T21:18:59.1783661Z Cleaning up orphan processes
+2026-11-10T21:18:59.2112802Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

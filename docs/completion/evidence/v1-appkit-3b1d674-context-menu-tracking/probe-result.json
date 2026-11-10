@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "original": {
+        "outcome": "finite-response-preserved",
+        "returned": true,
+        "threw": false,
+        "bytes": 94
+      },
+      "case": "finite-frame",
+      "patched": {
+        "outcome": "finite-response-preserved",
+        "returned": true,
+        "threw": false,
+        "bytes": 94
+      }
+    },
+    {
+      "original": {
+        "outcome": "exception-escaped",
+        "returned": false,
+        "threw": true,
+        "bytes": 0
+      },
+      "case": "nan-frame",
+      "patched": {
+        "outcome": "structured-failure",
+        "returned": true,
+        "threw": false,
+        "bytes": 115
+      }
+    },
+    {
+      "original": {
+        "outcome": "exception-escaped",
+        "returned": false,
+        "threw": true,
+        "bytes": 0
+      },
+      "case": "positive-infinite-frame",
+      "patched": {
+        "outcome": "structured-failure",
+        "returned": true,
+        "threw": false,
+        "bytes": 115
+      }
+    },
+    {
+      "original": {
+        "outcome": "exception-escaped",
+        "returned": false,
+        "threw": true,
+        "bytes": 0
+      },
+      "case": "negative-infinite-frame",
+      "patched": {
+        "outcome": "structured-failure",
+        "returned": true,
+        "threw": false,
+        "bytes": 115
+      }
+    },
+    {
+      "original": {
+        "outcome": "exception-escaped",
+        "returned": false,
+        "threw": true,
+        "bytes": 0
+      },
+      "case": "unsupported-object",
+      "patched": {
+        "outcome": "structured-failure",
+        "returned": true,
+        "threw": false,
+        "bytes": 115
+      }
+    },
+    {
+      "original": {
+        "outcome": "exception-escaped",
+        "returned": false,
+        "threw": true,
+        "bytes": 0
+      },
+      "case": "nil-response",
+      "patched": {
+        "outcome": "structured-failure",
+        "returned": true,
+        "threw": false,
+        "bytes": 115
+      }
+    },
+    {
+      "original": {
+        "outcome": "exception-escaped",
+        "returned": false,
+        "threw": true,
+        "bytes": 0
+      },
+      "case": "throwing-container",
+      "patched": {
+        "outcome": "structured-failure",
+        "returned": true,
+        "threw": false,
+        "bytes": 115
+      }
+    }
+  ],
+  "scope": "foundation-socketpair-probe",
+  "nativeInteractionsAccepted": false,
+  "limitation": "Controlled serializer inputs test transport behavior; they do not establish the cause of the preceding native mount timeout.",
+  "throwingFixtureConstructed": true,
+  "closedPeer": "explicit-failure",
+  "privacyCase": {
+    "outcome": "structured-failure",
+    "returned": true,
+    "threw": false,
+    "bytes": 131
+  },
+  "sourceRevision": "e5b0974bc7bc59ef174250b4af32e4cc4839494a",
+  "patchSha256": "6b1f071f9aeb580fe3a0b84b3ee8d36d82343334a4cd49098ef85a0025be8444",
+  "beforeSha256": "c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc",
+  "afterSha256": "f89ab25a6ef5a3cf0a41e83f18fccd85ddb09bcbdecfc17db002110f3b763cb2",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "probeSourceSha256": "e0549f3e15490a65b930726dc9b12538f30df5e130f07b9dcbf07a6b146e1c53",
+  "executableSha256": "31192de36b86542cecfa9de65b156ff91ce5519528d9566431569c47d988c977",
+  "traceSha256": "3f939db23aad0bedf31e91968722267d70f9495cbb166572cc31ccafce4f2bde",
+  "tracePrivacy": "passed"
+}

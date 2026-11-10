@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "review": "independent root verification",
+  "artifactId": 13804707156,
+  "originalZipSHA256": "e12be82c05749ba5006142dcfb2edb56964e51d14814b1b837c7eb9152186937",
+  "originalZipBytes": 859057,
+  "all42UniqueMembersAndExtractedBytesVerified": true,
+  "sevenDirectOriginalsVerified": true,
+  "completeSourceJobLogIndependentlyComparedToConnector": true,
+  "sourceJobLogSHA256": "ae888688921afcc71410132f86dea77850d4b28fcefe91a46cf1ec83dd37e2d3",
+  "headMergeTreesAndParentsVerified": true,
+  "allFourPatchInputsVerifiedAgainstActualCheckout": true,
+  "originalPatchedSourceAndProbeSourceTraceHashesVerified": true,
+  "probeCasesAndBoundariesVerified": true,
+  "selectedMilestonesComparedToOriginalFrames": 20,
+  "threeNumberedExcerptsComparedToOriginalLines": true,
+  "successfulStatusResponsesAfterCancellation": 367,
+  "limitations": [
+    "Original native-app payload and probe executable hash fields are producer-reported; those binaries are not in this retained ZIP and were not independently rehashed.",
+    "The original menu commands have no generation identity and do not prove which native menu was canceled.",
+    "Only the controls/display interaction group completed; the full native gate failed."
+  ]
+}

@@ -36,7 +36,7 @@ struct NativeDragRegion : Xaml::Controls::ContentControlT<NativeDragRegion> {
   Peers::AutomationPeer OnCreateAutomationPeer() {
     // ContentControl has no built-in peer. Reuse native owner name, geometry,
     // enabled state and focus support, with an explicit non-Button identity.
-    return winrt::make<NativeDragRegionAutomationPeer>(this->as<Xaml::FrameworkElement>());
+    return winrt::make<NativeDragRegionAutomationPeer>(static_cast<Xaml::FrameworkElement>(*this));
   }
 };
 // Acquired and completed on the UI dispatcher. Every exit, including exceptions in

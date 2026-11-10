@@ -1,0 +1,738 @@
+﻿2026-11-10T21:19:40.9814607Z Current runner version: '2.338.2'
+2026-11-10T21:19:40.9841696Z ##[group]Runner Image Provisioner
+2026-11-10T21:19:40.9843113Z Hosted Compute Agent
+2026-11-10T21:19:40.9843671Z Version: 20261103.629
+2026-11-10T21:19:40.9844451Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-10T21:19:40.9845532Z Build Date: 2026-11-03T17:26:59Z
+2026-11-10T21:19:40.9846182Z Worker ID: {d32e555b-dd51-49af-8527-8a3a0b7bd8a8}
+2026-11-10T21:19:40.9846848Z Region: eastus2
+2026-11-10T21:19:40.9847364Z Cloud: Azure
+2026-11-10T21:19:40.9847903Z ##[endgroup]
+2026-11-10T21:19:40.9849396Z ##[group]Operating System
+2026-11-10T21:19:40.9850020Z Microsoft Windows Server 2025
+2026-11-10T21:19:40.9850576Z 10.0.26100
+2026-11-10T21:19:40.9851117Z Datacenter
+2026-11-10T21:19:40.9851615Z ##[endgroup]
+2026-11-10T21:19:40.9852117Z ##[group]Runner Image
+2026-11-10T21:19:40.9852664Z Image: windows-2025-vs2026
+2026-11-10T21:19:40.9853219Z Version: 20261103.298.1
+2026-11-10T21:19:40.9854800Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261103.298/images/windows/Windows2025-VS2026-Readme.md
+2026-11-10T21:19:40.9856563Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261103.298
+2026-11-10T21:19:40.9857540Z ##[endgroup]
+2026-11-10T21:19:40.9858574Z ##[group]GITHUB_TOKEN Permissions
+2026-11-10T21:19:40.9860595Z Contents: read
+2026-11-10T21:19:40.9861152Z Metadata: read
+2026-11-10T21:19:40.9861865Z ##[endgroup]
+2026-11-10T21:19:40.9866117Z Secret source: Actions
+2026-11-10T21:19:40.9868320Z Cache mode: write
+2026-11-10T21:19:40.9869053Z Prepare workflow directory
+2026-11-10T21:19:41.0247529Z Prepare all required actions
+2026-11-10T21:19:41.0319237Z Getting action download info
+2026-11-10T21:19:41.2043109Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-10T21:19:41.3351502Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-10T21:19:41.5074380Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-11-10T21:19:41.7972020Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-10T21:19:42.1492928Z Complete job name: VS 2026 RNW 0.85 XAML Fabric native C++ compile
+2026-11-10T21:19:42.3167840Z ##[group]Run actions/checkout@v4
+2026-11-10T21:19:42.3169031Z with:
+2026-11-10T21:19:42.3169518Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-10T21:19:42.3174785Z   token: ***
+2026-11-10T21:19:42.3175257Z   ssh-strict: true
+2026-11-10T21:19:42.3175726Z   ssh-user: git
+2026-11-10T21:19:42.3176761Z   persist-credentials: true
+2026-11-10T21:19:42.3177326Z   clean: true
+2026-11-10T21:19:42.3177812Z   sparse-checkout-cone-mode: true
+2026-11-10T21:19:42.3178388Z   fetch-depth: 1
+2026-11-10T21:19:42.3178853Z   fetch-tags: false
+2026-11-10T21:19:42.3179342Z   show-progress: true
+2026-11-10T21:19:42.3179825Z   lfs: false
+2026-11-10T21:19:42.3180330Z   submodules: false
+2026-11-10T21:19:42.3180836Z   set-safe-directory: true
+2026-11-10T21:19:42.3181392Z   allow-unsafe-pr-checkout: false
+2026-11-10T21:19:42.3182282Z ##[endgroup]
+2026-11-10T21:19:42.4676018Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-10T21:19:42.4678090Z ##[group]Getting Git version info
+2026-11-10T21:19:42.4678894Z Working directory is 'D:\a\NYC-Tron-UI\NYC-Tron-UI'
+2026-11-10T21:19:42.5590488Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-10T21:19:42.8240097Z git version 2.56.0.windows.4
+2026-11-10T21:19:42.8295851Z ##[endgroup]
+2026-11-10T21:19:42.8315933Z Temporarily overriding HOME='D:\a\_temp\9f6c61ac-ae44-41f0-886f-d1907f1857f5' before making global git config changes
+2026-11-10T21:19:42.8317230Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-10T21:19:42.8326296Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-10T21:19:42.8932244Z Deleting the contents of 'D:\a\NYC-Tron-UI\NYC-Tron-UI'
+2026-11-10T21:19:42.8939198Z ##[group]Initializing the repository
+2026-11-10T21:19:42.8948560Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-10T21:19:42.9779464Z Initialized empty Git repository in D:/a/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-10T21:19:42.9850998Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-10T21:19:43.0553716Z ##[endgroup]
+2026-11-10T21:19:43.0554495Z ##[group]Disabling automatic garbage collection
+2026-11-10T21:19:43.0562947Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-11-10T21:19:43.0973497Z ##[endgroup]
+2026-11-10T21:19:43.0974218Z ##[group]Setting up auth
+2026-11-10T21:19:43.0985274Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-10T21:19:43.1379051Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-10T21:19:44.4695695Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-10T21:19:44.5167307Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-10T21:19:45.0842787Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-10T21:19:45.1224074Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-10T21:19:45.7005098Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-11-10T21:19:45.7421773Z ##[endgroup]
+2026-11-10T21:19:45.7435744Z ##[group]Fetching the repository
+2026-11-10T21:19:45.7439915Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9d1f73dae3c36b62613fd6b1d58d10d2e029a54e:refs/remotes/pull/60/merge
+2026-11-10T21:19:47.4103170Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-10T21:19:47.4104035Z  * [new ref]         9d1f73dae3c36b62613fd6b1d58d10d2e029a54e -> pull/60/merge
+2026-11-10T21:19:47.4149889Z ##[endgroup]
+2026-11-10T21:19:47.4150319Z ##[group]Determining the checkout info
+2026-11-10T21:19:47.4152945Z ##[endgroup]
+2026-11-10T21:19:47.4161880Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-11-10T21:19:47.4706308Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-11-10T21:19:47.5239500Z ##[group]Checking out the ref
+2026-11-10T21:19:47.5254199Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/60/merge
+2026-11-10T21:19:48.1609912Z Note: switching to 'refs/remotes/pull/60/merge'.
+2026-11-10T21:19:48.1610411Z 
+2026-11-10T21:19:48.1610622Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-10T21:19:48.1611599Z changes and commit them, and you can discard any commits you make in this
+2026-11-10T21:19:48.1612427Z state without impacting any branches by switching back to a branch.
+2026-11-10T21:19:48.1612815Z 
+2026-11-10T21:19:48.1613130Z If you want to create a new branch to retain commits you create, you may
+2026-11-10T21:19:48.1614130Z do so (now or later) by using -c with the switch command. Example:
+2026-11-10T21:19:48.1614553Z 
+2026-11-10T21:19:48.1614686Z   git switch -c <new-branch-name>
+2026-11-10T21:19:48.1614876Z 
+2026-11-10T21:19:48.1614972Z Or undo this operation with:
+2026-11-10T21:19:48.1615158Z 
+2026-11-10T21:19:48.1615252Z   git switch -
+2026-11-10T21:19:48.1615362Z 
+2026-11-10T21:19:48.1616737Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-10T21:19:48.1617063Z 
+2026-11-10T21:19:48.1617471Z HEAD is now at 9d1f73d Merge e37b1873044ac259dcf60a1d40fd6e8269c8a6cf into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-10T21:19:48.1794832Z ##[endgroup]
+2026-11-10T21:19:48.2623659Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-10T21:19:48.3036190Z 9d1f73dae3c36b62613fd6b1d58d10d2e029a54e
+2026-11-10T21:19:48.3589246Z ##[group]Run actions/setup-node@v4
+2026-11-10T21:19:48.3589558Z with:
+2026-11-10T21:19:48.3589741Z   node-version: 24.19.0
+2026-11-10T21:19:48.3589957Z   always-auth: false
+2026-11-10T21:19:48.3590151Z   check-latest: false
+2026-11-10T21:19:48.3592664Z   token: ***
+2026-11-10T21:19:48.3592845Z ##[endgroup]
+2026-11-10T21:19:48.5257026Z Attempting to download 24.19.0...
+2026-11-10T21:19:48.5434278Z (node:4420) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T21:19:48.5435928Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:19:49.1466018Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-win32-x64.7z
+2026-11-10T21:19:49.5597805Z Extracting ...
+2026-11-10T21:19:51.9428102Z Adding to the cache ...
+2026-11-10T21:19:56.0021256Z ##[group]Environment details
+2026-11-10T21:19:57.3159655Z node: v24.19.0
+2026-11-10T21:19:57.3159992Z npm: 11.17.0
+2026-11-10T21:19:57.3160244Z yarn: 1.22.22
+2026-11-10T21:19:57.3160899Z ##[endgroup]
+2026-11-10T21:19:57.3474815Z ##[group]Run npm install --ignore-scripts --no-audit --no-fund
+2026-11-10T21:19:57.3475361Z [36;1mnpm install --ignore-scripts --no-audit --no-fund[0m
+2026-11-10T21:19:57.4065195Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:19:57.4065684Z ##[endgroup]
+2026-11-10T21:20:19.4184839Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-10T21:20:22.1846764Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-10T21:20:38.1960828Z 
+2026-11-10T21:20:38.1961476Z added 625 packages in 40s
+2026-11-10T21:20:40.1690679Z ##[group]Run npm run build
+2026-11-10T21:20:40.1691022Z [36;1mnpm run build[0m
+2026-11-10T21:20:40.1691302Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:20:40.1691606Z [36;1mnpm test[0m
+2026-11-10T21:20:40.1691857Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:20:40.1763053Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:20:40.1763423Z ##[endgroup]
+2026-11-10T21:20:40.8971818Z 
+2026-11-10T21:20:40.8972567Z > @nyc-tron/windows-fluent-fabric@1.0.0 build
+2026-11-10T21:20:40.8973425Z > node scripts/build-peers.mjs && tsc -p tsconfig.build.json
+2026-11-10T21:20:40.8973867Z 
+2026-11-10T21:20:44.3722960Z 
+2026-11-10T21:20:44.3723808Z > @nyc-tron/windows-fluent-fabric@1.0.0 test
+2026-11-10T21:20:44.3724551Z > node --test tests/*.test.mjs isolated-tests/*.test.mjs
+2026-11-10T21:20:44.3724928Z 
+2026-11-10T21:20:44.5461542Z (node:2724) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/a/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/dist/native-drag-controller.js is not specified and it doesn't parse as CommonJS.
+2026-11-10T21:20:44.5507577Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-10T21:20:44.5516748Z To eliminate this warning, add "type": "module" to \\?\D:\a\NYC-Tron-UI\NYC-Tron-UI\packages\windows-fluent\rnw-fabric\package.json.
+2026-11-10T21:20:44.5550499Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-10T21:20:44.5670310Z ✔ native Move plus live approval releases one original opaque payload only after DropCompleted (13.1473ms)
+2026-11-10T21:20:44.5691271Z ✔ application rejection completes the native deferral with None and retains the payload (1.7585ms)
+2026-11-10T21:20:44.5721937Z ✔ approved native none result never authorizes a move (1.0782ms)
+2026-11-10T21:20:44.5724532Z ✔ approved native copy result never authorizes a move (0.903ms)
+2026-11-10T21:20:44.5741716Z ✔ approved native link result never authorizes a move (1.1809ms)
+2026-11-10T21:20:44.5767957Z ✔ approved native unknown result never authorizes a move (0.8905ms)
+2026-11-10T21:20:44.5799688Z ✔ foreign connections and replaced source lifetimes cannot reach the app drop policy (1.0155ms)
+2026-11-10T21:20:44.5812821Z ✔ main close invalidates an unresolved native drop (1.4389ms)
+2026-11-10T21:20:44.5838099Z ✔ document close invalidates an unresolved native drop (1.0519ms)
+2026-11-10T21:20:44.5842108Z ✔ main minimize invalidates an unresolved native drop (1.2217ms)
+2026-11-10T21:20:44.5845409Z ✔ document minimize invalidates an unresolved native drop (0.8725ms)
+2026-11-10T21:20:44.5864741Z ✔ unmounting the target cancels the dropping token and rejects late application approval (1.0254ms)
+2026-11-10T21:20:44.5876983Z ✔ native deadline finishes without waiting for an unresponsive application callback (0.7069ms)
+2026-11-10T21:20:44.5909478Z ✔ disposal and a replaced target generation cannot authorize the reported OS Move (1.1724ms)
+2026-11-10T21:20:44.5916077Z ✔ native drag requires the registered transport and a currently observed source (0.9758ms)
+2026-11-10T21:20:44.5959710Z ✔ malformed completion cannot transfer and cancels the native request (0.3959ms)
+2026-11-10T21:20:44.5990067Z ✔ overlay events consult only the live committed scope and disabled state (0.4866ms)
+2026-11-10T21:20:44.6006887Z ✔ a dismissal veto without a React commit is acknowledged and a later request reaches the app (0.4296ms)
+2026-11-10T21:20:44.6056797Z ✔ delivery acknowledges exceptions and stale scopes without invoking a replacement owner (0.4104ms)
+2026-11-10T21:20:44.6102008Z ✔ inspector acknowledgments are bounded nonnegative integer counts (0.9335ms)
+2026-11-10T21:20:44.6134450Z (node:6376) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/a/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/dist/navigation-binding.js is not specified and it doesn't parse as CommonJS.
+2026-11-10T21:20:44.6148301Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-10T21:20:44.6150026Z To eliminate this warning, add "type": "module" to \\?\D:\a\NYC-Tron-UI\NYC-Tron-UI\packages\windows-fluent\rnw-fabric\package.json.
+2026-11-10T21:20:44.6168155Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-10T21:20:44.6185449Z ✔ focus requests belong only to the current mounted native host (3.2577ms)
+2026-11-10T21:20:44.6267369Z (node:3248) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/a/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/dist/window-controller.js is not specified and it doesn't parse as CommonJS.
+2026-11-10T21:20:44.6305068Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-10T21:20:44.6322293Z To eliminate this warning, add "type": "module" to \\?\D:\a\NYC-Tron-UI\NYC-Tron-UI\packages\windows-fluent\rnw-fabric\package.json.
+2026-11-10T21:20:44.6329421Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-10T21:20:44.6357874Z ✔ native protocol validates geometry and freezes all leases (9.4472ms)
+2026-11-10T21:20:44.6401080Z ✔ connection attaches one primary and ignores stale and foreign-owner observations (5.9297ms)
+2026-11-10T21:20:44.6410711Z ✔ open owns request bytes before queueing and observes actual native geometry (1.3374ms)
+2026-11-10T21:20:44.6416699Z ✔ failed native move leaves the committed window registry unchanged (1.4302ms)
+2026-11-10T21:20:44.6420108Z ✔ actual native focus updates the core stacking order used by saved layouts (1.542ms)
+2026-11-10T21:20:44.6427145Z ✔ close requests are delivered once and veto retains the native surface (3.5444ms)
+2026-11-10T21:20:44.6438458Z ✔ reusing a window ID cancels transfers addressed to the previous native lifetime (1.1564ms)
+2026-11-10T21:20:44.6439892Z ✔ minimization cancels an active drag and native restore retains identity (1.1317ms)
+2026-11-10T21:20:44.6441280Z ✔ only a live app-approved drop authorizes a transfer of the original payload (1.4178ms)
+2026-11-10T21:20:44.6442919Z ✔ restoring a layout invalidates pending drops and retains a disconnected home through focus echoes (3.2489ms)
+2026-11-10T21:20:44.6444440Z ✔ layout restore validates all window identities before issuing any OS move (0.7011ms)
+2026-11-10T21:20:44.6445842Z ✔ layout restore replays every native surface in saved bottom-to-top order (2.5572ms)
+2026-11-10T21:20:44.6447225Z ✔ dispose drains accepted native operations and rejects new commands (0.5034ms)
+2026-11-10T21:20:44.6448462Z ✔ connection failure releases both native subscriptions (0.3609ms)
+2026-11-10T21:20:44.6449705Z ✔ navigation transport owns destination arrays and detaches stale native hosts (1.6261ms)
+2026-11-10T21:20:44.7008160Z ✔ RNW 0.85 native codegen includes Fabric view and strongly typed events (2.7108ms)
+2026-11-10T21:20:44.7009821Z ✔ C++ registers a native WinUI XAML island, not a fabricated React View (0.3671ms)
+2026-11-10T21:20:44.7014607Z ✔ the Windows Fabric peer lane cannot be silently installed into Expo58 (0.398ms)
+2026-11-10T21:20:44.7016071Z ✔ route approval remains app-owned and unrelated updates retain native items (0.4139ms)
+2026-11-10T21:20:44.7025263Z ✔ pane approval remains app-owned: a rejected toggle is put back (0.4305ms)
+2026-11-10T21:20:44.7026644Z ✔ items and the NavigationView carry Narrator names (0.2896ms)
+2026-11-10T21:20:44.7030689Z ✔ library and consumer build against the same stable Windows App SDK (0.3343ms)
+2026-11-10T21:20:44.7032004Z ✔ island width follows the committed pane state instead of a fixed width (0.3278ms)
+2026-11-10T21:20:44.7033979Z ✔ consumer solution registers the x64 library project for solution builds (0.366ms)
+2026-11-10T21:20:44.7037244Z ✔ native failures reach JS through onNativeError instead of being swallowed (0.7062ms)
+2026-11-10T21:20:44.7038687Z ✔ RTL layout passes authored direction with the host locale as fallback (0.422ms)
+2026-11-10T21:20:44.7043642Z ✔ registration asks RNW to create its XamlApplication for the island (0.2176ms)
+2026-11-10T21:20:44.7044772Z ✔ Metro resolves the typed codegen source; types and default resolve to dist (1.1762ms)
+2026-11-10T21:20:44.7159704Z ℹ tests 49
+2026-11-10T21:20:44.7160172Z ℹ suites 0
+2026-11-10T21:20:44.7160583Z ℹ pass 49
+2026-11-10T21:20:44.7161121Z ℹ fail 0
+2026-11-10T21:20:44.7161647Z ℹ cancelled 0
+2026-11-10T21:20:44.7162100Z ℹ skipped 0
+2026-11-10T21:20:44.7162474Z ℹ todo 0
+2026-11-10T21:20:44.7162874Z ℹ duration_ms 274.2867
+2026-11-10T21:20:44.8111849Z ##[group]Run node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
+2026-11-10T21:20:44.8112946Z [36;1mnode tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json[0m
+2026-11-10T21:20:44.8187483Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:20:44.8187837Z ##[endgroup]
+2026-11-10T21:20:46.1695467Z API signatures match: 1 packages, 8 subpaths, 44 reachable declarations.
+2026-11-10T21:20:46.3286252Z ##[group]Run actions/download-artifact@v4
+2026-11-10T21:20:46.3286602Z with:
+2026-11-10T21:20:46.3286814Z   name: windows-fabric-shared-packages
+2026-11-10T21:20:46.3287087Z   path: D:\a\_temp/windows-shared
+2026-11-10T21:20:46.3287332Z   merge-multiple: false
+2026-11-10T21:20:46.3287553Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-10T21:20:46.3288625Z   run-id: 42903675797
+2026-11-10T21:20:46.3288817Z ##[endgroup]
+2026-11-10T21:20:46.5139176Z Downloading single artifact
+2026-11-10T21:20:46.5351487Z (node:1176) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T21:20:46.5352888Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:20:46.6586286Z Preparing to download the following artifacts:
+2026-11-10T21:20:46.6587416Z - windows-fabric-shared-packages (ID: 13802639755, Size: 62822, Expected Digest: sha256:e27cc983eb8ada8a1a2f3be04eebfa4f1fa8d7044365909b3e14b339f10eb110)
+2026-11-10T21:20:46.7947144Z Redirecting to blob download url: https://productionresultssa11.blob.core.windows.net/actions-results/e287fdea-38be-80d3-bc5c-d52aa0588686/workflow-job-run-341ee5de-6823-5906-8bfa-d79a5aa0c184/artifacts/426c26b407d766d30ac2d529b17108f0a79cdb4659c768bc71ebe8a8d99ce721.zip
+2026-11-10T21:20:46.7949628Z Starting download of artifact to: D:\a\_temp\windows-shared
+2026-11-10T21:20:46.8498483Z (node:1176) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-10T21:20:46.8583732Z SHA256 digest of downloaded artifact is e27cc983eb8ada8a1a2f3be04eebfa4f1fa8d7044365909b3e14b339f10eb110
+2026-11-10T21:20:46.8584430Z Artifact download completed successfully.
+2026-11-10T21:20:46.8584768Z Total of 1 artifact(s) downloaded
+2026-11-10T21:20:46.8592201Z Download artifact has finished successfully
+2026-11-10T21:20:46.8894902Z ##[group]Run $consumer = Join-Path $env:RUNNER_TEMP "tron-windows-consumer"
+2026-11-10T21:20:46.8895547Z [36;1m$consumer = Join-Path $env:RUNNER_TEMP "tron-windows-consumer"[0m
+2026-11-10T21:20:46.8896240Z [36;1mnode packages/windows-fluent/rnw-fabric/scripts/prepare-consumer.mjs $consumer "$env:RUNNER_TEMP/windows-shared"[0m
+2026-11-10T21:20:46.8896870Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:20:46.8897371Z [36;1m"WIN_CONSUMER=$consumer" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8[0m
+2026-11-10T21:20:46.8970499Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:20:46.8970846Z ##[endgroup]
+2026-11-10T21:20:48.6054757Z npm notice
+2026-11-10T21:20:48.6058096Z npm notice package: @nyc-tron/windows-fluent-fabric@1.0.0
+2026-11-10T21:20:48.6058954Z npm notice Tarball Contents
+2026-11-10T21:20:48.6083289Z npm notice 1.1kB LICENSE
+2026-11-10T21:20:48.6083766Z npm notice 20.6kB README.md
+2026-11-10T21:20:48.6084390Z npm notice 1.3kB THIRD_PARTY_NOTICES.md
+2026-11-10T21:20:48.6085042Z npm notice 1.5kB dist/drag-drop.windows.d.ts
+2026-11-10T21:20:48.6085699Z npm notice 3.0kB dist/drag-drop.windows.js
+2026-11-10T21:20:48.6086293Z npm notice 205B dist/index.d.ts
+2026-11-10T21:20:48.6086779Z npm notice 89B dist/index.js
+2026-11-10T21:20:48.6087463Z npm notice 222B dist/native-direction.d.ts
+2026-11-10T21:20:48.6088262Z npm notice 316B dist/native-direction.js
+2026-11-10T21:20:48.6089070Z npm notice 1.3kB dist/native-drag-controller.d.ts
+2026-11-10T21:20:48.6089954Z npm notice 8.5kB dist/native-drag-controller.js
+2026-11-10T21:20:48.6090733Z npm notice 1.4kB dist/NativeTronDesktop.d.ts
+2026-11-10T21:20:48.6091535Z npm notice 116B dist/NativeTronDesktop.js
+2026-11-10T21:20:48.6092307Z npm notice 1.8kB dist/navigation-binding.d.ts
+2026-11-10T21:20:48.6093058Z npm notice 5.0kB dist/navigation-binding.js
+2026-11-10T21:20:48.6093775Z npm notice 709B dist/navigation-host.windows.d.ts
+2026-11-10T21:20:48.6094270Z npm notice 1.5kB dist/navigation-host.windows.js
+2026-11-10T21:20:48.6094909Z npm notice 830B dist/overlay-binding.d.ts
+2026-11-10T21:20:48.6095448Z npm notice 1.1kB dist/overlay-binding.js
+2026-11-10T21:20:48.6095936Z npm notice 313B dist/overlay-model.d.ts
+2026-11-10T21:20:48.6096255Z npm notice 1.7kB dist/overlay-model.js
+2026-11-10T21:20:48.6096822Z npm notice 2.2kB dist/overlay-types.d.ts
+2026-11-10T21:20:48.6097464Z npm notice 11B dist/overlay-types.js
+2026-11-10T21:20:48.6097847Z npm notice 1.0kB dist/overlays.windows.d.ts
+2026-11-10T21:20:48.6098437Z npm notice 5.4kB dist/overlays.windows.js
+2026-11-10T21:20:48.6099097Z npm notice 641B dist/TronDragSurfaceNativeComponent.d.ts
+2026-11-10T21:20:48.6099549Z npm notice 113B dist/TronDragSurfaceNativeComponent.js
+2026-11-10T21:20:48.6099970Z npm notice 1.9kB dist/TronNavigationView.windows.d.ts
+2026-11-10T21:20:48.6100517Z npm notice 3.2kB dist/TronNavigationView.windows.js
+2026-11-10T21:20:48.6101238Z npm notice 1.2kB dist/TronNavigationViewNativeComponent.d.ts
+2026-11-10T21:20:48.6101948Z npm notice 549B dist/TronNavigationViewNativeComponent.js
+2026-11-10T21:20:48.6102444Z npm notice 1.3kB dist/TronOverlayAnchorNativeComponent.d.ts
+2026-11-10T21:20:48.6102889Z npm notice 234B dist/TronOverlayAnchorNativeComponent.js
+2026-11-10T21:20:48.6103270Z npm notice 1.4kB dist/window-controller.d.ts
+2026-11-10T21:20:48.6103641Z npm notice 12.4kB dist/window-controller.js
+2026-11-10T21:20:48.6103975Z npm notice 860B dist/window-protocol.d.ts
+2026-11-10T21:20:48.6104301Z npm notice 4.8kB dist/window-protocol.js
+2026-11-10T21:20:48.6104629Z npm notice 4.8kB dist/window-types.d.ts
+2026-11-10T21:20:48.6104929Z npm notice 11B dist/window-types.js
+2026-11-10T21:20:48.6105215Z npm notice 336B dist/windows.d.ts
+2026-11-10T21:20:48.6105493Z npm notice 501B dist/windows.js
+2026-11-10T21:20:48.6105838Z npm notice 1.2kB licenses/REACT-NATIVE-WINDOWS-MIT.txt
+2026-11-10T21:20:48.6106172Z npm notice 3.5kB package.json
+2026-11-10T21:20:48.6109930Z npm notice 346B react-native.config.js
+2026-11-10T21:20:48.6110536Z npm notice 3.9kB src/drag-drop.windows.tsx
+2026-11-10T21:20:48.6110873Z npm notice 200B src/index.ts
+2026-11-10T21:20:48.6111172Z npm notice 384B src/native-direction.ts
+2026-11-10T21:20:48.6111539Z npm notice 8.8kB src/native-drag-controller.ts
+2026-11-10T21:20:48.6111909Z npm notice 1.5kB src/NativeTronDesktop.ts
+2026-11-10T21:20:48.6112281Z npm notice 5.9kB src/navigation-binding.ts
+2026-11-10T21:20:48.6112642Z npm notice 1.9kB src/navigation-host.windows.tsx
+2026-11-10T21:20:48.6112983Z npm notice 1.4kB src/overlay-binding.ts
+2026-11-10T21:20:48.6113302Z npm notice 1.8kB src/overlay-model.ts
+2026-11-10T21:20:48.6113595Z npm notice 2.2kB src/overlay-types.ts
+2026-11-10T21:20:48.6113899Z npm notice 5.5kB src/overlays.windows.tsx
+2026-11-10T21:20:48.6114371Z npm notice 630B src/TronDragSurfaceNativeComponent.ts
+2026-11-10T21:20:48.6114854Z npm notice 4.3kB src/TronNavigationView.windows.tsx
+2026-11-10T21:20:48.6115372Z npm notice 1.7kB src/TronNavigationViewNativeComponent.ts
+2026-11-10T21:20:48.6115918Z npm notice 1.3kB src/TronOverlayAnchorNativeComponent.ts
+2026-11-10T21:20:48.6116367Z npm notice 12.7kB src/window-controller.ts
+2026-11-10T21:20:48.6116837Z npm notice 5.1kB src/window-protocol.ts
+2026-11-10T21:20:48.6117249Z npm notice 4.7kB src/window-types.ts
+2026-11-10T21:20:48.6117659Z npm notice 683B src/windows.ts
+2026-11-10T21:20:48.6118211Z npm notice 323B windows/ExperimentalFeatures.props
+2026-11-10T21:20:48.6119144Z npm notice 972B windows/NYCTronFluentFabric.sln
+2026-11-10T21:20:48.6120036Z npm notice 4.1kB windows/NYCTronFluentFabric/DesktopGeometry.cpp
+2026-11-10T21:20:48.6121316Z npm notice 623B windows/NYCTronFluentFabric/DesktopGeometry.h
+2026-11-10T21:20:48.6121911Z npm notice 14.6kB windows/NYCTronFluentFabric/DesktopSession.cpp
+2026-11-10T21:20:48.6122487Z npm notice 2.6kB windows/NYCTronFluentFabric/DesktopSession.h
+2026-11-10T21:20:48.6123088Z npm notice 1.0kB windows/NYCTronFluentFabric/InspectorEditSequence.h
+2026-11-10T21:20:48.6123744Z npm notice 2.4kB windows/NYCTronFluentFabric/InspectorEditSequenceTests.cpp
+2026-11-10T21:20:48.6124363Z npm notice 2.8kB windows/NYCTronFluentFabric/IslandConnection.h
+2026-11-10T21:20:48.6124959Z npm notice 1.9kB windows/NYCTronFluentFabric/IslandLayout.h
+2026-11-10T21:20:48.6125524Z npm notice 3.1kB windows/NYCTronFluentFabric/IslandLayoutTests.cpp
+2026-11-10T21:20:48.6126351Z npm notice 9.1kB windows/NYCTronFluentFabric/NativeDragBroker.cpp
+2026-11-10T21:20:48.6126955Z npm notice 2.3kB windows/NYCTronFluentFabric/NativeDragBroker.h
+2026-11-10T21:20:48.6144275Z npm notice 139B windows/NYCTronFluentFabric/NYCTronFluentFabric.def
+2026-11-10T21:20:48.6144972Z npm notice 23B windows/NYCTronFluentFabric/NYCTronFluentFabric.rc
+2026-11-10T21:20:48.6145604Z npm notice 7.2kB windows/NYCTronFluentFabric/NYCTronFluentFabric.vcxproj
+2026-11-10T21:20:48.6146434Z npm notice 1.4kB windows/NYCTronFluentFabric/OverlayDismissal.h
+2026-11-10T21:20:48.6147270Z npm notice 2.9kB windows/NYCTronFluentFabric/OverlayDismissalTests.cpp
+2026-11-10T21:20:48.6148053Z npm notice 65B windows/NYCTronFluentFabric/pch.cpp
+2026-11-10T21:20:48.6148682Z npm notice 434B windows/NYCTronFluentFabric/pch.h
+2026-11-10T21:20:48.6149442Z npm notice 745B windows/NYCTronFluentFabric/ReactPackageProvider.cpp
+2026-11-10T21:20:48.6149974Z npm notice 599B windows/NYCTronFluentFabric/ReactPackageProvider.h
+2026-11-10T21:20:48.6150493Z npm notice 202B windows/NYCTronFluentFabric/ReactPackageProvider.idl
+2026-11-10T21:20:48.6150969Z npm notice 14B windows/NYCTronFluentFabric/resource.h
+2026-11-10T21:20:48.6151372Z npm notice 38B windows/NYCTronFluentFabric/targetver.h
+2026-11-10T21:20:48.6151797Z npm notice 7.1kB windows/NYCTronFluentFabric/TronDesktop.cpp
+2026-11-10T21:20:48.6152230Z npm notice 2.7kB windows/NYCTronFluentFabric/TronDesktop.h
+2026-11-10T21:20:48.6152688Z npm notice 16.8kB windows/NYCTronFluentFabric/TronDragSurface.cpp
+2026-11-10T21:20:48.6154205Z npm notice 164B windows/NYCTronFluentFabric/TronDragSurface.h
+2026-11-10T21:20:48.6154784Z npm notice 19.6kB windows/NYCTronFluentFabric/TronNavigationView.cpp
+2026-11-10T21:20:48.6155296Z npm notice 349B windows/NYCTronFluentFabric/TronNavigationView.h
+2026-11-10T21:20:48.6155792Z npm notice 23.1kB windows/NYCTronFluentFabric/TronOverlayAnchor.cpp
+2026-11-10T21:20:48.6156272Z npm notice 166B windows/NYCTronFluentFabric/TronOverlayAnchor.h
+2026-11-10T21:20:48.6156637Z npm notice Tarball Details
+2026-11-10T21:20:48.6156944Z npm notice name: @nyc-tron/windows-fluent-fabric
+2026-11-10T21:20:48.6157251Z npm notice version: 1.0.0
+2026-11-10T21:20:48.6157617Z npm notice filename: nyc-tron-windows-fluent-fabric-1.0.0.tgz
+2026-11-10T21:20:48.6158011Z npm notice package size: 72.7 kB
+2026-11-10T21:20:48.6158293Z npm notice unpacked size: 295.0 kB
+2026-11-10T21:20:48.6158640Z npm notice shasum: 2fe73573d613ce686300e6c7537c45aa930d97a6
+2026-11-10T21:20:48.6159087Z npm notice integrity: sha512-NUPGTS8G8bc1t[...]ZMKzCyZYAxTOg==
+2026-11-10T21:20:48.6159961Z npm notice total files: 96
+2026-11-10T21:20:48.6160191Z npm notice
+2026-11-10T21:20:48.6160833Z nyc-tron-windows-fluent-fabric-1.0.0.tgz
+2026-11-10T21:21:02.5274157Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-10T21:21:02.8465993Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-10T21:21:16.2939130Z 
+2026-11-10T21:21:16.2939791Z added 666 packages in 27s
+2026-11-10T21:21:16.6106503Z Prepared actual-tarball Windows consumer: D:\a\_temp\tron-windows-consumer
+2026-11-10T21:21:16.6111848Z (node:8028) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+2026-11-10T21:21:16.6113038Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:21:16.6981147Z ##[group]Run npm run codegen
+2026-11-10T21:21:16.6981499Z [36;1mnpm run codegen[0m
+2026-11-10T21:21:16.6981806Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:21:16.6983646Z [36;1mforeach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h")) {[0m
+2026-11-10T21:21:16.6985812Z [36;1m  if (-not (Test-Path $header)) { throw "Missing generated native header: $header" }[0m
+2026-11-10T21:21:16.6986220Z [36;1m}[0m
+2026-11-10T21:21:16.7063526Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:21:16.7063865Z env:
+2026-11-10T21:21:16.7064083Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T21:21:16.7064435Z ##[endgroup]
+2026-11-10T21:21:17.4462975Z 
+2026-11-10T21:21:17.4463663Z > @nyc-tron/windows-fluent-fabric@1.0.0 codegen
+2026-11-10T21:21:17.4464339Z > react-native codegen-windows
+2026-11-10T21:21:17.4464674Z 
+2026-11-10T21:21:23.6753732Z - Running codegen-windows...
+2026-11-10T21:21:23.7299812Z Generating NativeTronDesktopSpec.g.h
+2026-11-10T21:21:23.7325163Z Generating TronDragSurface.g.h
+2026-11-10T21:21:23.7359795Z Generating TronNavigationView.g.h
+2026-11-10T21:21:23.7364722Z Generating TronOverlayAnchor.g.h
+2026-11-10T21:21:23.7404974Z Writing  D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\codegen\.clang-format
+2026-11-10T21:21:23.7409950Z Writing  D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\codegen\NativeTronDesktopSpec.g.h
+2026-11-10T21:21:23.7418103Z Writing  D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\codegen\react\components\NYCTronFluentFabric\TronDragSurface.g.h
+2026-11-10T21:21:23.7422458Z Writing  D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\codegen\react\components\NYCTronFluentFabric\TronNavigationView.g.h
+2026-11-10T21:21:23.7426953Z Writing  D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\codegen\react\components\NYCTronFluentFabric\TronOverlayAnchor.g.h
+2026-11-10T21:21:23.7431004Z ✔ Running codegen-windows...
+2026-11-10T21:21:23.7433900Z Success: Codegen-windows changes completed. (69ms)
+2026-11-10T21:21:23.8530835Z ##[group]Run npm run init:windows
+2026-11-10T21:21:23.8531214Z [36;1mnpm run init:windows[0m
+2026-11-10T21:21:23.8531530Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:21:23.8531870Z [36;1mnpm run prepare:host[0m
+2026-11-10T21:21:23.8532161Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:21:23.8532465Z [36;1mnpm run typecheck[0m
+2026-11-10T21:21:23.8532731Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:21:23.8533026Z [36;1mnpm test[0m
+2026-11-10T21:21:23.8533294Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:21:23.8604298Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:21:23.8604644Z env:
+2026-11-10T21:21:23.8604865Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T21:21:23.8605144Z ##[endgroup]
+2026-11-10T21:21:24.5814882Z 
+2026-11-10T21:21:24.5815488Z > nyc-tron-windows-example@0.0.0 init:windows
+2026-11-10T21:21:24.5816411Z > react-native init-windows --template cpp-app --name NYCTronWindowsExample --overwrite --no-telemetry
+2026-11-10T21:21:24.5816902Z 
+2026-11-10T21:21:26.4626023Z - Running init-windows...
+2026-11-10T21:21:26.5121080Z ℹ Running init-windows...
+2026-11-10T21:21:26.5121878Z ℹ Using template 'cpp-app'...
+2026-11-10T21:21:26.5123005Z ℹ Running cpp-app preInstall()...
+2026-11-10T21:21:26.5250899Z new jest.config.windows.js
+2026-11-10T21:21:26.5271474Z new metro.config.js
+2026-11-10T21:21:26.5280400Z new NuGet.config
+2026-11-10T21:21:26.5290713Z new windows\.gitignore
+2026-11-10T21:21:26.5299770Z new windows\ExperimentalFeatures.props
+2026-11-10T21:21:26.5313439Z new windows\NYCTronWindowsExample.Package\Images\LockScreenLogo.scale-200.png
+2026-11-10T21:21:26.5335149Z new windows\NYCTronWindowsExample.Package\Images\SplashScreen.scale-200.png
+2026-11-10T21:21:26.5348470Z new windows\NYCTronWindowsExample.Package\Images\Square150x150Logo.scale-200.png
+2026-11-10T21:21:26.5362729Z new windows\NYCTronWindowsExample.Package\Images\Square44x44Logo.scale-200.png
+2026-11-10T21:21:26.5386778Z new windows\NYCTronWindowsExample.Package\Images\Square44x44Logo.targetsize-24_altform-unplated.png
+2026-11-10T21:21:26.5399284Z new windows\NYCTronWindowsExample.Package\Images\StoreLogo.png
+2026-11-10T21:21:26.5411150Z new windows\NYCTronWindowsExample.Package\Images\Wide310x150Logo.scale-200.png
+2026-11-10T21:21:26.5435458Z new windows\NYCTronWindowsExample.Package\NYCTronWindowsExample.Package.wapproj
+2026-11-10T21:21:26.5462927Z new windows\NYCTronWindowsExample.Package\Package.appxmanifest
+2026-11-10T21:21:26.5496110Z new windows\NYCTronWindowsExample.sln
+2026-11-10T21:21:26.5506082Z new windows\NYCTronWindowsExample\.gitignore
+2026-11-10T21:21:26.5512981Z new windows\NYCTronWindowsExample\AutolinkedNativeModules.g.cpp
+2026-11-10T21:21:26.5519001Z new windows\NYCTronWindowsExample\AutolinkedNativeModules.g.h
+2026-11-10T21:21:26.5525395Z new windows\NYCTronWindowsExample\AutolinkedNativeModules.g.props
+2026-11-10T21:21:26.5532057Z new windows\NYCTronWindowsExample\AutolinkedNativeModules.g.targets
+2026-11-10T21:21:26.5548626Z new windows\NYCTronWindowsExample\NYCTronWindowsExample.cpp
+2026-11-10T21:21:26.5556727Z new windows\NYCTronWindowsExample\NYCTronWindowsExample.h
+2026-11-10T21:21:26.5570190Z new windows\NYCTronWindowsExample\NYCTronWindowsExample.ico
+2026-11-10T21:21:26.5573110Z new windows\NYCTronWindowsExample\NYCTronWindowsExample.rc
+2026-11-10T21:21:26.5589571Z new windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj
+2026-11-10T21:21:26.5601388Z new windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj.filters
+2026-11-10T21:21:26.5610318Z new windows\NYCTronWindowsExample\pch.cpp
+2026-11-10T21:21:26.5620837Z new windows\NYCTronWindowsExample\pch.h
+2026-11-10T21:21:26.5626565Z new windows\NYCTronWindowsExample\resource.h
+2026-11-10T21:21:26.5631893Z new windows\NYCTronWindowsExample\small.ico
+2026-11-10T21:21:26.5640927Z new windows\NYCTronWindowsExample\targetver.h
+2026-11-10T21:21:26.5641972Z ℹ Running cpp-app postInstall()...
+2026-11-10T21:21:33.5459659Z To run your new windows app:
+2026-11-10T21:21:33.5461768Z    npx @react-native-community/cli run-windows
+2026-11-10T21:21:33.5462624Z ✔ Running init-windows...
+2026-11-10T21:21:33.5465026Z Success: init-windows completed. (7084ms)
+2026-11-10T21:21:33.8625540Z 
+2026-11-10T21:21:33.8626503Z > nyc-tron-windows-example@0.0.0 prepare:host
+2026-11-10T21:21:33.8627227Z > node scripts/prepare-host.mjs
+2026-11-10T21:21:33.8627544Z 
+2026-11-10T21:21:33.9412967Z Prepared Windows consumer solution entry, ProjectReference and native package registration.
+2026-11-10T21:21:34.2377896Z 
+2026-11-10T21:21:34.2378800Z > nyc-tron-windows-example@0.0.0 typecheck
+2026-11-10T21:21:34.2379896Z > tsc --noEmit -p tsconfig.json
+2026-11-10T21:21:34.2380223Z 
+2026-11-10T21:21:36.1941721Z 
+2026-11-10T21:21:36.1948040Z > nyc-tron-windows-example@0.0.0 test
+2026-11-10T21:21:36.1949134Z > node --experimental-strip-types --test tests/*.test.mjs
+2026-11-10T21:21:36.1949752Z 
+2026-11-10T21:21:36.4292627Z (node:3608) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/a/_temp/tron-windows-consumer/overlay-store.ts is not specified and it doesn't parse as CommonJS.
+2026-11-10T21:21:36.4294463Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-10T21:21:36.4295262Z To eliminate this warning, add "type": "module" to \\?\D:\a\_temp\tron-windows-consumer\package.json.
+2026-11-10T21:21:36.4295905Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-10T21:21:36.4492423Z ✔ the inspector owner accepts rapid cumulative edits, rejects explicitly and ignores stale counts/scopes (1.9279ms)
+2026-11-10T21:21:36.4494461Z ✔ the document owner applies only the controller's final authorized payload (0.4615ms)
+2026-11-10T21:21:36.4507276Z ✔ coalesced leave and return remounts the inspector with its draft retained and an independent edit-count domain (0.541ms)
+2026-11-10T21:21:36.4638514Z (node:2940) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/a/_temp/tron-windows-consumer/route-store.ts is not specified and it doesn't parse as CommonJS.
+2026-11-10T21:21:36.4640409Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-10T21:21:36.4641753Z To eliminate this warning, add "type": "module" to \\?\D:\a\_temp\tron-windows-consumer\package.json.
+2026-11-10T21:21:36.4643279Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-10T21:21:36.4644801Z ✔ pending and rejected routes preserve selection; acceptance commits once (1.7685ms)
+2026-11-10T21:21:36.4646151Z ✔ disabled/stale routes and settings never replace committed selection (0.3863ms)
+2026-11-10T21:21:36.4646991Z ℹ tests 5
+2026-11-10T21:21:36.4647343Z ℹ suites 0
+2026-11-10T21:21:36.4647702Z ℹ pass 5
+2026-11-10T21:21:36.4648058Z ℹ fail 0
+2026-11-10T21:21:36.4648404Z ℹ cancelled 0
+2026-11-10T21:21:36.4648772Z ℹ skipped 0
+2026-11-10T21:21:36.4649119Z ℹ todo 0
+2026-11-10T21:21:36.4649493Z ℹ duration_ms 194.9813
+2026-11-10T21:21:36.5282215Z ##[group]Run $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+2026-11-10T21:21:36.5282992Z [36;1m$vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"[0m
+2026-11-10T21:21:36.5283598Z [36;1m$vs = & $vswhere -latest -products * -version "[18.0,19.0)" -property installationPath[0m
+2026-11-10T21:21:36.5284187Z [36;1mif (-not $vs) { throw "Visual Studio 2026 required by RNW 0.85 is unavailable" }[0m
+2026-11-10T21:21:36.5284707Z [36;1m$msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"[0m
+2026-11-10T21:21:36.5285147Z [36;1m$sdkRoot = "${env:ProgramFiles(x86)}\Windows Kits\10\Include"[0m
+2026-11-10T21:21:36.5285821Z [36;1m$installed = @(Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending)[0m
+2026-11-10T21:21:36.5286559Z [36;1mif (-not $installed) { throw "No compatible Windows SDK installed on runner" }[0m
+2026-11-10T21:21:36.5287010Z [36;1m$sdkVersion = $installed[0].Name[0m
+2026-11-10T21:21:36.5287455Z [36;1mWrite-Host "Using installed Windows SDK $sdkVersion instead of RNW's absent 10.0.22621.0"[0m
+2026-11-10T21:21:36.5288455Z [36;1m& $msbuild "windows\NYCTronFluentFabric.sln" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$sdkVersion" "/p:UseExperimentalNuget=true" "/restore" "/m" "/v:minimal"[0m
+2026-11-10T21:21:36.5289329Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-10T21:21:36.5362441Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-10T21:21:36.5362809Z env:
+2026-11-10T21:21:36.5363036Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T21:21:36.5363328Z ##[endgroup]
+2026-11-10T21:21:43.4942874Z Using installed Windows SDK 10.0.26100.0 instead of RNW's absent 10.0.22621.0
+2026-11-10T21:21:53.2610724Z MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
+2026-11-10T21:21:54.4963682Z 
+2026-11-10T21:22:10.0322899Z   Determining projects to restore...
+2026-11-10T21:25:00.2169558Z   Restored D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\NYCTronFluentFabric.vcxproj (in 2.8 min).
+2026-11-10T21:25:06.2901301Z   Discovered package 'react-native-windows' with version '0.85.0'
+2026-11-10T21:25:54.8072914Z   - Running x64 node on a x64 machine
+2026-11-10T21:25:54.8075543Z   Γä╣ Running x64 node on a x64 machine
+2026-11-10T21:25:54.8703374Z   - Running codegen-windows...
+2026-11-10T21:25:54.8705924Z   
+2026-11-10T21:25:54.8711372Z   Run codegen with options: 
+2026-11-10T21:25:54.8712367Z   {
+2026-11-10T21:25:54.8712827Z     "files": [
+2026-11-10T21:25:54.8713482Z       "src/**/*Native*.[jt]s"
+2026-11-10T21:25:54.8714050Z     ],
+2026-11-10T21:25:54.8714635Z     "componentsWindows": true,
+2026-11-10T21:25:54.8715267Z     "internalComponents": false,
+2026-11-10T21:25:54.8716009Z     "cppStringType": "std::string",
+2026-11-10T21:25:54.8716831Z     "separateDataTypes": false,
+2026-11-10T21:25:54.8717397Z     "libraryName": "NYCTronFluentFabric",
+2026-11-10T21:25:54.8717960Z     "methodOnly": false,
+2026-11-10T21:25:54.8718508Z     "modulesCxx": false,
+2026-11-10T21:25:54.8719095Z     "modulesTypeScriptTypes": false,
+2026-11-10T21:25:54.8719704Z     "modulesWindows": true,
+2026-11-10T21:25:54.8720432Z     "namespace": "winrt::NYCTronFluentFabric::Codegen",
+2026-11-10T21:25:54.8721891Z     "outputDirectory": "D:\\a\\_temp\\tron-windows-consumer\\node_modules\\@nyc-tron\\windows-fluent-fabric\\windows\\NYCTronFluentFabric\\codegen",
+2026-11-10T21:25:54.8723238Z     "test": false
+2026-11-10T21:25:54.8723718Z   }
+2026-11-10T21:25:54.9213739Z   Generating NativeTronDesktopSpec.g.h
+2026-11-10T21:25:54.9263136Z   Generating TronDragSurface.g.h
+2026-11-10T21:25:54.9263897Z   Generating TronNavigationView.g.h
+2026-11-10T21:25:54.9264457Z   Generating TronOverlayAnchor.g.h
+2026-11-10T21:25:54.9286670Z   Γ£ö Running codegen-windows...
+2026-11-10T21:25:54.9291995Z   Success: Codegen-windows changes completed. (59ms)
+2026-11-10T21:25:56.0250684Z   64 bit MIDLRT Processing D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\ReactPackageProvider.idl
+2026-11-10T21:25:56.2091814Z   ReactPackageProvider.idl
+2026-11-10T21:25:57.1969580Z   64 bit MIDLRT Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\winrt\winrtbase.idl
+2026-11-10T21:25:57.2169996Z   winrtbase.idl
+2026-11-10T21:25:57.3578046Z   64 bit MIDLRT Processing C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\winrt\midlbase.idl
+2026-11-10T21:25:57.3802284Z   midlbase.idl
+2026-11-10T21:25:57.4094997Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.interactiveexperiences\1.8.260430001\metadata\10.0.18362.0\microsoft.foundation.winmd
+2026-11-10T21:25:57.4210371Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ai\1.8.76\metadata\microsoft.graphics.imaging.winmd
+2026-11-10T21:25:57.4213113Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.interactiveexperiences\1.8.260430001\metadata\10.0.18362.0\microsoft.graphics.winmd
+2026-11-10T21:25:57.4216402Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.reactnative\0.85.0\lib\uap10.0\microsoft.reactnative.winmd
+2026-11-10T21:25:57.4218830Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.security.authentication.oauth.winmd
+2026-11-10T21:25:57.4222720Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.winui\1.8.260505002\metadata\microsoft.ui.text.winmd
+2026-11-10T21:25:57.4225825Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.interactiveexperiences\1.8.260430001\metadata\10.0.18362.0\microsoft.ui.winmd
+2026-11-10T21:25:57.4228348Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.winui\1.8.260505002\metadata\microsoft.ui.xaml.winmd
+2026-11-10T21:25:57.4232739Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.web.webview2\1.0.3179.45\lib\microsoft.web.webview2.core.winmd
+2026-11-10T21:25:57.4237007Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ai\1.8.76\metadata\microsoft.windows.ai.contentsafety.winmd
+2026-11-10T21:25:57.4240861Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ai\1.8.76\metadata\microsoft.windows.ai.foundation.winmd
+2026-11-10T21:25:57.4244098Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ai\1.8.76\metadata\microsoft.windows.ai.imaging.winmd
+2026-11-10T21:25:57.4246837Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ml\1.8.2197\metadata\microsoft.windows.ai.machinelearning.winmd
+2026-11-10T21:25:57.4249634Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ai\1.8.76\metadata\microsoft.windows.ai.text.winmd
+2026-11-10T21:25:57.4252044Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.ai\1.8.76\metadata\microsoft.windows.ai.winmd
+2026-11-10T21:25:57.4254312Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.applicationmodel.background.universalbgtask.winmd
+2026-11-10T21:25:57.4257994Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.applicationmodel.background.winmd
+2026-11-10T21:25:57.4261151Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.applicationmodel.dynamicdependency.winmd
+2026-11-10T21:25:57.4264386Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.applicationmodel.resources.winmd
+2026-11-10T21:25:57.4268473Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.applicationmodel.windowsappruntime.winmd
+2026-11-10T21:25:57.4271500Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.applifecycle.winmd
+2026-11-10T21:25:57.4274280Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.appnotifications.builder.winmd
+2026-11-10T21:25:57.4277579Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.appnotifications.winmd
+2026-11-10T21:25:57.4280671Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.badgenotifications.winmd
+2026-11-10T21:25:57.4283382Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.foundation.winmd
+2026-11-10T21:25:57.4286002Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.globalization.winmd
+2026-11-10T21:25:57.4287784Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.management.deployment.winmd
+2026-11-10T21:25:57.4290835Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.media.capture.winmd
+2026-11-10T21:25:57.4293362Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.pushnotifications.winmd
+2026-11-10T21:25:57.4296269Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.security.accesscontrol.winmd
+2026-11-10T21:25:57.4299008Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.storage.pickers.winmd
+2026-11-10T21:25:57.4301784Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.storage.winmd
+2026-11-10T21:25:57.4304554Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.system.power.winmd
+2026-11-10T21:25:57.4308107Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.foundation\1.8.260505001\metadata\microsoft.windows.system.winmd
+2026-11-10T21:25:57.4310257Z   Processing WinMD c:\users\runneradmin\.nuget\packages\microsoft.windowsappsdk.widgets\1.8.251231004\metadata\microsoft.windows.widgets.winmd
+2026-11-10T21:25:57.4311758Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ai.actions.actionscontract\8.0.0.0\windows.ai.actions.actionscontract.winmd
+2026-11-10T21:25:57.4413952Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ai.agents.agentscontract\2.0.0.0\windows.ai.agents.agentscontract.winmd
+2026-11-10T21:25:57.4515876Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ai.machinelearning.machinelearningcontract\5.0.0.0\windows.ai.machinelearning.machinelearningcontract.winmd
+2026-11-10T21:25:57.4563986Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ai.machinelearning.preview.machinelearningpreviewcontract\2.0.0.0\windows.ai.machinelearning.preview.machinelearningpreviewcontract.winmd
+2026-11-10T21:25:57.4604298Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.activation.activatedeventscontract\1.0.0.0\windows.applicationmodel.activation.activatedeventscontract.winmd
+2026-11-10T21:25:57.4741724Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.activation.activationcamerasettingscontract\1.0.0.0\windows.applicationmodel.activation.activationcamerasettingscontract.winmd
+2026-11-10T21:25:57.4840853Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.activation.contactactivatedeventscontract\1.0.0.0\windows.applicationmodel.activation.contactactivatedeventscontract.winmd
+2026-11-10T21:25:57.4945742Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.activation.webuisearchactivatedeventscontract\1.0.0.0\windows.applicationmodel.activation.webuisearchactivatedeventscontract.winmd
+2026-11-10T21:25:57.4952681Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.background.backgroundalarmapplicationcontract\1.0.0.0\windows.applicationmodel.background.backgroundalarmapplicationcontract.winmd
+2026-11-10T21:25:57.4989034Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.calls.background.callsbackgroundcontract\4.0.0.0\windows.applicationmodel.calls.background.callsbackgroundcontract.winmd
+2026-11-10T21:25:57.5102492Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.calls.callsphonecontract\7.0.0.0\windows.applicationmodel.calls.callsphonecontract.winmd
+2026-11-10T21:25:57.5110207Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.calls.callsvoipcontract\5.0.0.0\windows.applicationmodel.calls.callsvoipcontract.winmd
+2026-11-10T21:25:57.5154048Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.calls.lockscreencallcontract\1.0.0.0\windows.applicationmodel.calls.lockscreencallcontract.winmd
+2026-11-10T21:25:57.5192274Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.communicationblocking.communicationblockingcontract\2.0.0.0\windows.applicationmodel.communicationblocking.communicationblockingcontract.winmd
+2026-11-10T21:25:57.5244211Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.fulltrustappcontract\2.0.0.0\windows.applicationmodel.fulltrustappcontract.winmd
+2026-11-10T21:25:57.5251159Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.overlay.overlaycontract\1.0.0.0\windows.applicationmodel.overlay.overlaycontract.winmd
+2026-11-10T21:25:57.5286565Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.preview.inkworkspace.previewinkworkspacecontract\1.0.0.0\windows.applicationmodel.preview.inkworkspace.previewinkworkspacecontract.winmd
+2026-11-10T21:25:57.5384760Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.preview.notes.previewnotescontract\2.0.0.0\windows.applicationmodel.preview.notes.previewnotescontract.winmd
+2026-11-10T21:25:57.5485647Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.preview.startupappspreviewcontract\1.0.0.0\windows.applicationmodel.preview.startupappspreviewcontract.winmd
+2026-11-10T21:25:57.5530631Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.resources.management.resourceindexercontract\2.0.0.0\windows.applicationmodel.resources.management.resourceindexercontract.winmd
+2026-11-10T21:25:57.5567917Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.search.core.searchcorecontract\1.0.0.0\windows.applicationmodel.search.core.searchcorecontract.winmd
+2026-11-10T21:25:57.5638071Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.search.searchcontract\1.0.0.0\windows.applicationmodel.search.searchcontract.winmd
+2026-11-10T21:25:57.5675895Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.socialinfo.socialinfocontract\2.0.0.0\windows.applicationmodel.socialinfo.socialinfocontract.winmd
+2026-11-10T21:25:57.5753850Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.startuptaskcontract\3.0.0.0\windows.applicationmodel.startuptaskcontract.winmd
+2026-11-10T21:25:57.5760703Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.applicationmodel.wallet.walletcontract\2.0.0.0\windows.applicationmodel.wallet.walletcontract.winmd
+2026-11-10T21:25:57.5801616Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.custom.customdevicecontract\1.0.0.0\windows.devices.custom.customdevicecontract.winmd
+2026-11-10T21:25:57.5841385Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.deviceslowlevelcontract\3.0.0.0\windows.devices.deviceslowlevelcontract.winmd
+2026-11-10T21:25:57.5892608Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.portable.portabledevicecontract\1.0.0.0\windows.devices.portable.portabledevicecontract.winmd
+2026-11-10T21:25:57.5899080Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.power.powergridapicontract\1.0.0.0\windows.devices.power.powergridapicontract.winmd
+2026-11-10T21:25:57.5998617Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.printers.extensions.extensionscontract\2.0.0.0\windows.devices.printers.extensions.extensionscontract.winmd
+2026-11-10T21:25:57.6108354Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.printers.printerscontract\1.0.0.0\windows.devices.printers.printerscontract.winmd
+2026-11-10T21:25:57.6204478Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.scanners.scannerdevicecontract\1.0.0.0\windows.devices.scanners.scannerdevicecontract.winmd
+2026-11-10T21:25:57.6242207Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.smartcards.smartcardbackgroundtriggercontract\3.0.0.0\windows.devices.smartcards.smartcardbackgroundtriggercontract.winmd
+2026-11-10T21:25:57.6248404Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.smartcards.smartcardemulatorcontract\6.0.0.0\windows.devices.smartcards.smartcardemulatorcontract.winmd
+2026-11-10T21:25:57.6292706Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.devices.sms.legacysmsapicontract\1.0.0.0\windows.devices.sms.legacysmsapicontract.winmd
+2026-11-10T21:25:57.6336876Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.foundation.foundationcontract\4.0.0.0\windows.foundation.foundationcontract.winmd
+2026-11-10T21:25:57.6380393Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.foundation.universalapicontract\19.0.0.0\windows.foundation.universalapicontract.winmd
+2026-11-10T21:25:57.6544675Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.gaming.input.gaminginputpreviewcontract\2.0.0.0\windows.gaming.input.gaminginputpreviewcontract.winmd
+2026-11-10T21:25:57.6638272Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.gaming.preview.gamesenumerationcontract\2.0.0.0\windows.gaming.preview.gamesenumerationcontract.winmd
+2026-11-10T21:25:57.6675265Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.gaming.ui.gamechatoverlaycontract\1.0.0.0\windows.gaming.ui.gamechatoverlaycontract.winmd
+2026-11-10T21:25:57.6770255Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.gaming.ui.gaminguiprovidercontract\1.0.0.0\windows.gaming.ui.gaminguiprovidercontract.winmd
+2026-11-10T21:25:57.6802398Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.gaming.xboxlive.storageapicontract\1.0.0.0\windows.gaming.xboxlive.storageapicontract.winmd
+2026-11-10T21:25:57.6843941Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.globalization.globalizationjapanesephoneticanalyzercontract\1.0.0.0\windows.globalization.globalizationjapanesephoneticanalyzercontract.winmd
+2026-11-10T21:25:57.6933322Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.graphics.printing3d.printing3dcontract\4.0.0.0\windows.graphics.printing3d.printing3dcontract.winmd
+2026-11-10T21:25:57.6977833Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.management.deployment.preview.deploymentpreviewcontract\1.0.0.0\windows.management.deployment.preview.deploymentpreviewcontract.winmd
+2026-11-10T21:25:57.7067857Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.management.deployment.sharedpackagecontainercontract\1.0.0.0\windows.management.deployment.sharedpackagecontainercontract.winmd
+2026-11-10T21:25:57.7179383Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.management.update.windowsupdatecontract\3.0.0.0\windows.management.update.windowsupdatecontract.winmd
+2026-11-10T21:25:57.7219958Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.management.workplace.workplacesettingscontract\1.0.0.0\windows.management.workplace.workplacesettingscontract.winmd
+2026-11-10T21:25:57.7225853Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.appbroadcasting.appbroadcastingcontract\1.0.0.0\windows.media.appbroadcasting.appbroadcastingcontract.winmd
+2026-11-10T21:25:57.7312095Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.apprecording.apprecordingcontract\1.0.0.0\windows.media.apprecording.apprecordingcontract.winmd
+2026-11-10T21:25:57.7347116Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.capture.appbroadcastcontract\2.0.0.0\windows.media.capture.appbroadcastcontract.winmd
+2026-11-10T21:25:57.7380303Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.capture.appcapturecontract\4.0.0.0\windows.media.capture.appcapturecontract.winmd
+2026-11-10T21:25:57.7416012Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.capture.appcapturemetadatacontract\1.0.0.0\windows.media.capture.appcapturemetadatacontract.winmd
+2026-11-10T21:25:57.7422337Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.capture.cameracaptureuicontract\1.0.0.0\windows.media.capture.cameracaptureuicontract.winmd
+2026-11-10T21:25:57.7429094Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.capture.gamebarcontract\1.0.0.0\windows.media.capture.gamebarcontract.winmd
+2026-11-10T21:25:57.7472277Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.devices.callcontrolcontract\1.0.0.0\windows.media.devices.callcontrolcontract.winmd
+2026-11-10T21:25:57.7512356Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.mediacontrolcontract\1.0.0.0\windows.media.mediacontrolcontract.winmd
+2026-11-10T21:25:57.7518789Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.playlists.playlistscontract\1.0.0.0\windows.media.playlists.playlistscontract.winmd
+2026-11-10T21:25:57.7554741Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.media.protection.protectionrenewalcontract\1.0.0.0\windows.media.protection.protectionrenewalcontract.winmd
+2026-11-10T21:25:57.7560418Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.networking.connectivity.wwancontract\3.0.0.0\windows.networking.connectivity.wwancontract.winmd
+2026-11-10T21:25:57.7597831Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.networking.networkoperators.legacynetworkoperatorscontract\1.0.0.0\windows.networking.networkoperators.legacynetworkoperatorscontract.winmd
+2026-11-10T21:25:57.7628111Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.networking.sockets.controlchanneltriggercontract\3.0.0.0\windows.networking.sockets.controlchanneltriggercontract.winmd
+2026-11-10T21:25:57.7635639Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.networking.xboxlive.xboxlivesecuresocketscontract\1.0.0.0\windows.networking.xboxlive.xboxlivesecuresocketscontract.winmd
+2026-11-10T21:25:57.7641087Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.perception.automation.core.perceptionautomationcorecontract\1.0.0.0\windows.perception.automation.core.perceptionautomationcorecontract.winmd
+2026-11-10T21:25:57.7646255Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.security.enterprisedata.enterprisedatacontract\5.0.0.0\windows.security.enterprisedata.enterprisedatacontract.winmd
+2026-11-10T21:25:57.7686522Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.security.exchangeactivesyncprovisioning.eascontract\1.0.0.0\windows.security.exchangeactivesyncprovisioning.eascontract.winmd
+2026-11-10T21:25:57.7693035Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.security.isolation.isolatedwindowsenvironmentcontract\5.0.0.0\windows.security.isolation.isolatedwindowsenvironmentcontract.winmd
+2026-11-10T21:25:57.7732938Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.services.maps.guidancecontract\3.0.0.0\windows.services.maps.guidancecontract.winmd
+2026-11-10T21:25:57.7773214Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.services.maps.localsearchcontract\4.0.0.0\windows.services.maps.localsearchcontract.winmd
+2026-11-10T21:25:57.7810352Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.services.store.storecontract\4.0.0.0\windows.services.store.storecontract.winmd
+2026-11-10T21:25:57.7851840Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.services.targetedcontent.targetedcontentcontract\1.0.0.0\windows.services.targetedcontent.targetedcontentcontract.winmd
+2026-11-10T21:25:57.7856854Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.storage.provider.cloudfilescontract\7.0.0.0\windows.storage.provider.cloudfilescontract.winmd
+2026-11-10T21:25:57.7939525Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.power.thermal.powerthermalapicontract\1.0.0.0\windows.system.power.thermal.powerthermalapicontract.winmd
+2026-11-10T21:25:57.7945436Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.profile.platformautomaticappsignincontract\1.0.0.0\windows.system.profile.platformautomaticappsignincontract.winmd
+2026-11-10T21:25:57.7976085Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.profile.profilehardwaretokencontract\1.0.0.0\windows.system.profile.profilehardwaretokencontract.winmd
+2026-11-10T21:25:57.7982148Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.profile.profileretailinfocontract\2.0.0.0\windows.system.profile.profileretailinfocontract.winmd
+2026-11-10T21:25:57.7986780Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.profile.profilesharedmodecontract\2.0.0.0\windows.system.profile.profilesharedmodecontract.winmd
+2026-11-10T21:25:57.8024691Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.profile.systemmanufacturers.systemmanufacturerscontract\3.0.0.0\windows.system.profile.systemmanufacturers.systemmanufacturerscontract.winmd
+2026-11-10T21:25:57.8031041Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.systemmanagementcontract\7.0.0.0\windows.system.systemmanagementcontract.winmd
+2026-11-10T21:25:57.8072925Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.userprofile.userprofilecontract\2.0.0.0\windows.system.userprofile.userprofilecontract.winmd
+2026-11-10T21:25:57.8078987Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.system.userprofile.userprofilelockscreencontract\1.0.0.0\windows.system.userprofile.userprofilelockscreencontract.winmd
+2026-11-10T21:25:57.8083962Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.applicationsettings.applicationssettingscontract\1.0.0.0\windows.ui.applicationsettings.applicationssettingscontract.winmd
+2026-11-10T21:25:57.8185499Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.core.animationmetrics.animationmetricscontract\1.0.0.0\windows.ui.core.animationmetrics.animationmetricscontract.winmd
+2026-11-10T21:25:57.8191253Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.core.corewindowdialogscontract\1.0.0.0\windows.ui.core.corewindowdialogscontract.winmd
+2026-11-10T21:25:57.8223903Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.input.preview.text.previewtextcontract\1.0.0.0\windows.ui.input.preview.text.previewtextcontract.winmd
+2026-11-10T21:25:57.8229526Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.shell.companionwindows.companionwindowscontract\1.0.0.0\windows.ui.shell.companionwindows.companionwindowscontract.winmd
+2026-11-10T21:25:57.8271645Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.shell.securityappmanagercontract\1.0.0.0\windows.ui.shell.securityappmanagercontract.winmd
+2026-11-10T21:25:57.8277077Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.shell.tasks.apptaskcontract\2.0.0.0\windows.ui.shell.tasks.apptaskcontract.winmd
+2026-11-10T21:25:57.8309862Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.shell.windowtabmanagercontract\1.0.0.0\windows.ui.shell.windowtabmanagercontract.winmd
+2026-11-10T21:25:57.8315330Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.uiautomation.uiautomationcontract\2.0.0.0\windows.ui.uiautomation.uiautomationcontract.winmd
+2026-11-10T21:25:57.8354518Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.viewmanagement.viewmanagementviewscalingcontract\1.0.0.0\windows.ui.viewmanagement.viewmanagementviewscalingcontract.winmd
+2026-11-10T21:25:57.8405193Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.xaml.core.direct.xamldirectcontract\5.0.0.0\windows.ui.xaml.core.direct.xamldirectcontract.winmd
+2026-11-10T21:25:57.8495326Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.ui.xaml.hosting.hostingcontract\5.0.0.0\windows.ui.xaml.hosting.hostingcontract.winmd
+2026-11-10T21:25:57.8501963Z   Processing WinMD c:\program files (x86)\windows kits\10\references\10.0.26100.0\windows.web.http.diagnostics.httpdiagnosticscontract\2.0.0.0\windows.web.http.diagnostics.httpdiagnosticscontract.winmd
+2026-11-10T21:25:58.8829860Z   Microsoft(R) Metadata Merge Utility Version 10.0.49.
+2026-11-10T21:25:58.8830602Z   
+2026-11-10T21:25:58.8830975Z   
+2026-11-10T21:25:58.8831784Z   Processing input metadata file x64\Release\Unmerged\ReactPackageProvider.winmd.
+2026-11-10T21:25:58.8832403Z   Saved output metadata file NYCTronFluentFabric.winmd.
+2026-11-10T21:25:58.8832986Z   Validating metadata file x64\Release\Merged\NYCTronFluentFabric.winmd.
+2026-11-10T21:26:01.1128095Z   pch.cpp
+2026-11-10T21:26:26.4552317Z   DesktopGeometry.cpp
+2026-11-10T21:26:26.8669711Z   DesktopSession.cpp
+2026-11-10T21:26:28.1920625Z   TronDesktop.cpp
+2026-11-10T21:26:29.9271998Z   TronOverlayAnchor.cpp
+2026-11-10T21:26:39.1205928Z   NativeDragBroker.cpp
+2026-11-10T21:26:39.6402478Z   TronDragSurface.cpp
+2026-11-10T21:26:47.6138223Z D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\TronDragSurface.cpp(39,62): error C2039: 'as': is not a member of 'winrt::NYCTronFluentFabric::NativeDragRegion' [D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\NYCTronFluentFabric.vcxproj]
+2026-11-10T21:26:47.6163965Z   (compiling source file '/TronDragSurface.cpp')
+2026-11-10T21:26:47.6165485Z       D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\TronDragSurface.cpp(29,8):
+2026-11-10T21:26:47.6167013Z       see declaration of 'winrt::NYCTronFluentFabric::NativeDragRegion'
+2026-11-10T21:26:47.6167781Z   
+2026-11-10T21:26:47.6170328Z D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\TronDragSurface.cpp(39,89): error C2059: syntax error: ')' [D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\NYCTronFluentFabric.vcxproj]
+2026-11-10T21:26:47.6172790Z   (compiling source file '/TronDragSurface.cpp')
+2026-11-10T21:26:47.6173358Z   
+2026-11-10T21:26:47.8188789Z   TronNavigationView.cpp
+2026-11-10T21:26:57.2565243Z   ReactPackageProvider.cpp
+2026-11-10T21:26:58.9481006Z   module.g.cpp
+2026-11-10T21:26:59.0942796Z   JsiAbiApi.cpp
+2026-11-10T21:27:00.2169957Z   JsiApiContext.cpp
+2026-11-10T21:27:00.9144335Z   JsiValueHelpers.cpp
+2026-11-10T21:27:00.9697048Z   JSValue.cpp
+2026-11-10T21:27:01.3553519Z   JSValueTreeReader.cpp
+2026-11-10T21:27:01.6127617Z   JSValueTreeWriter.cpp
+2026-11-10T21:27:01.9175206Z   ModuleRegistration.cpp
+2026-11-10T21:27:01.9818761Z   ReactPromise.cpp
+2026-11-10T21:27:02.4059354Z   TurboModuleProvider.cpp
+2026-11-10T21:27:03.6882732Z ##[error]Process completed with exit code 1.
+2026-11-10T21:27:03.7126225Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T21:27:03.7126950Z with:
+2026-11-10T21:27:03.7127298Z   name: winui-fabric-uia-smoke
+2026-11-10T21:27:03.7127629Z   path: D:\a\_temp/uia-smoke
+2026-11-10T21:27:03.7127929Z   if-no-files-found: warn
+2026-11-10T21:27:03.7128178Z   compression-level: 6
+2026-11-10T21:27:03.7128470Z   overwrite: false
+2026-11-10T21:27:03.7128733Z   include-hidden-files: false
+2026-11-10T21:27:03.7129012Z env:
+2026-11-10T21:27:03.7129272Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T21:27:03.7129634Z ##[endgroup]
+2026-11-10T21:27:03.9277613Z (node:3388) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T21:27:03.9307583Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T21:27:03.9363703Z ##[warning]No files were found with the provided path: D:\a\_temp/uia-smoke. No artifacts will be uploaded.
+2026-11-10T21:27:03.9801597Z Post job cleanup.
+2026-11-10T21:27:04.2239125Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-10T21:27:04.2656909Z git version 2.56.0.windows.4
+2026-11-10T21:27:04.2746251Z Temporarily overriding HOME='D:\a\_temp\02b87bf2-9592-4fd9-b076-67b2f674099a' before making global git config changes
+2026-11-10T21:27:04.2747810Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-10T21:27:04.2760798Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-10T21:27:04.3206594Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-10T21:27:04.3727386Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-10T21:27:05.0105061Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-10T21:27:05.0529666Z http.https://github.com/.extraheader
+2026-11-10T21:27:05.0591876Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-10T21:27:05.1006349Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-10T21:27:05.6876524Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-10T21:27:05.7278803Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-10T21:27:06.3360623Z Cleaning up orphan processes
+2026-11-10T21:27:06.3644938Z Terminate orphan process: pid (6368) (vctip)
+2026-11-10T21:27:06.3785218Z Terminate orphan process: pid (948) (mspdbsrv)
+2026-11-10T21:27:06.4436130Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/download-artifact@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

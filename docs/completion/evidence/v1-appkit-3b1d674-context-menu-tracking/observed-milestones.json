@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "source": "original-evidence.zip/nyc-tron-appkit-evidence/commands.jsonl",
+  "operations": [
+    {
+      "request": {
+        "window": "main",
+        "action": "show",
+        "command": "tron.window",
+        "id": 2
+      },
+      "startedAt": "2026-11-10T21:29:33.811Z",
+      "respondedAt": "2026-11-10T21:29:34.058Z",
+      "response": {
+        "ok": true,
+        "activationPath": "NSWorkspace.openApplication",
+        "processId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "command": "tron.inspect",
+        "id": 3
+      },
+      "startedAt": "2026-11-10T21:29:34.058Z",
+      "respondedAt": "2026-11-10T21:29:34.062Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "",
+        "labels": []
+      }
+    },
+    {
+      "request": {
+        "testID": "root-main",
+        "timeoutMs": 20000,
+        "command": "waitFor",
+        "id": 4
+      },
+      "startedAt": "2026-11-10T21:29:34.062Z",
+      "respondedAt": "2026-11-10T21:29:34.338Z",
+      "response": {
+        "ok": true,
+        "frame": {
+          "y": 28,
+          "x": 0,
+          "width": 1024,
+          "height": 653
+        },
+        "window": "spark.main"
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "status-main",
+        "command": "tron.inspect",
+        "id": 6
+      },
+      "startedAt": "2026-11-10T21:29:34.403Z",
+      "respondedAt": "2026-11-10T21:29:34.405Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "Native workspace ready",
+        "labels": [
+          "Native workspace ready"
+        ]
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "command": "tron.inspect",
+        "id": 7
+      },
+      "startedAt": "2026-11-10T21:29:34.405Z",
+      "respondedAt": "2026-11-10T21:29:34.411Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": true,
+        "hasTextField": true,
+        "hasTableView": true,
+        "hasSplitView": true,
+        "hasNativeDragView": true,
+        "label": "",
+        "labels": [
+          "Workspace navigation",
+          "Document",
+          "Preferences",
+          "Protected destination",
+          "NYC-Tron / Workspace",
+          "A familiar place to work",
+          "Keep one document open in two native windows. Edits, selection and the local save checkpoint stay with the app while you resize.",
+          "Document title",
+          "A place for focused work",
+          "Collection",
+          "Studio",
+          "Save local changes",
+          "Open document window",
+          "Document actions",
+          "Inspect document",
+          "Document inspector",
+          "Inspector document title",
+          "Close inspector",
+          "Confirm inspector action",
+          "{\"ins\":0,\"moves\":0,\"outs\":0,\"presses\":0,\"active\":false}",
+          "Local checkpoint",
+          "All changes saved",
+          "Move document to main",
+          "Document owner: main",
+          "Native workspace ready",
+          "1 native windows \u00b7 Ready",
+          "Restore document window",
+          "Remember layout",
+          "Restore layout"
+        ]
+      }
+    },
+    {
+      "request": {
+        "itemId": "menu-save",
+        "command": "tron.menu",
+        "id": 8
+      },
+      "startedAt": "2026-11-10T21:29:34.411Z",
+      "respondedAt": "2026-11-10T21:29:34.411Z",
+      "response": {
+        "ok": true,
+        "nativeMenu": true,
+        "enabled": true
+      }
+    },
+    {
+      "request": {
+        "itemId": "menu-disabled",
+        "command": "tron.menu",
+        "id": 9
+      },
+      "startedAt": "2026-11-10T21:29:34.411Z",
+      "respondedAt": "2026-11-10T21:29:34.411Z",
+      "response": {
+        "ok": true,
+        "nativeMenu": true,
+        "enabled": false
+      }
+    },
+    {
+      "request": {
+        "itemId": "menu-save",
+        "action": "select",
+        "command": "tron.menu",
+        "id": 13
+      },
+      "startedAt": "2026-11-10T21:29:34.560Z",
+      "respondedAt": "2026-11-10T21:29:34.569Z",
+      "response": {
+        "ok": true,
+        "nativeMenu": true,
+        "enabled": true
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "status-main",
+        "command": "tron.inspect",
+        "id": 14
+      },
+      "startedAt": "2026-11-10T21:29:34.569Z",
+      "respondedAt": "2026-11-10T21:29:34.573Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "Saved in this local reference session",
+        "labels": [
+          "Saved in this local reference session"
+        ]
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "saved-main",
+        "command": "tron.inspect",
+        "id": 15
+      },
+      "startedAt": "2026-11-10T21:29:34.590Z",
+      "respondedAt": "2026-11-10T21:29:34.604Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "",
+        "labels": [
+          "Local checkpoint",
+          "Checkpoint from the application menu",
+          "All changes saved"
+        ]
+      }
+    },
+    {
+      "request": {
+        "testID": "context-main",
+        "action": "press",
+        "window": "main",
+        "command": "tron.control",
+        "id": 19
+      },
+      "startedAt": "2026-11-10T21:29:34.718Z",
+      "respondedAt": "2026-11-10T21:29:34.891Z",
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "request": {
+        "command": "tron.context-menu",
+        "id": 21
+      },
+      "startedAt": "2026-11-10T21:29:34.946Z",
+      "respondedAt": "2026-11-10T21:29:34.947Z",
+      "response": {
+        "ok": true,
+        "shown": true,
+        "nativeMenu": true,
+        "items": [
+          {
+            "id": "context-save",
+            "enabled": true,
+            "class": "NSMenuItem"
+          },
+          {
+            "id": "context-disabled",
+            "enabled": false,
+            "class": "NSMenuItem"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "action": "select",
+        "itemId": "context-save",
+        "command": "tron.context-menu",
+        "id": 22
+      },
+      "startedAt": "2026-11-10T21:29:34.947Z",
+      "respondedAt": "2026-11-10T21:29:34.948Z",
+      "response": {
+        "ok": true,
+        "shown": true,
+        "nativeMenu": true,
+        "items": [
+          {
+            "id": "context-save",
+            "enabled": true,
+            "class": "NSMenuItem"
+          },
+          {
+            "id": "context-disabled",
+            "enabled": false,
+            "class": "NSMenuItem"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "status-main",
+        "command": "tron.inspect",
+        "id": 24
+      },
+      "startedAt": "2026-11-10T21:29:35.003Z",
+      "respondedAt": "2026-11-10T21:29:35.005Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "Saved in this local reference session",
+        "labels": [
+          "Saved in this local reference session"
+        ]
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "saved-main",
+        "command": "tron.inspect",
+        "id": 25
+      },
+      "startedAt": "2026-11-10T21:29:35.005Z",
+      "respondedAt": "2026-11-10T21:29:35.007Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "",
+        "labels": [
+          "Local checkpoint",
+          "Checkpoint from the context menu",
+          "All changes saved"
+        ]
+      }
+    },
+    {
+      "request": {
+        "testID": "context-main",
+        "action": "press",
+        "window": "main",
+        "command": "tron.control",
+        "id": 26
+      },
+      "startedAt": "2026-11-10T21:29:35.007Z",
+      "respondedAt": "2026-11-10T21:29:35.024Z",
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "request": {
+        "command": "tron.context-menu",
+        "id": 27
+      },
+      "startedAt": "2026-11-10T21:29:35.024Z",
+      "respondedAt": "2026-11-10T21:29:35.024Z",
+      "response": {
+        "ok": true,
+        "shown": true,
+        "nativeMenu": true,
+        "items": [
+          {
+            "id": "context-save",
+            "enabled": true,
+            "class": "NSMenuItem"
+          },
+          {
+            "id": "context-disabled",
+            "enabled": false,
+            "class": "NSMenuItem"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "action": "cancel",
+        "command": "tron.context-menu",
+        "id": 28
+      },
+      "startedAt": "2026-11-10T21:29:35.025Z",
+      "respondedAt": "2026-11-10T21:29:35.025Z",
+      "response": {
+        "ok": true,
+        "shown": true,
+        "nativeMenu": true,
+        "items": [
+          {
+            "id": "context-save",
+            "enabled": true,
+            "class": "NSMenuItem"
+          },
+          {
+            "id": "context-disabled",
+            "enabled": false,
+            "class": "NSMenuItem"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "status-main",
+        "command": "tron.inspect",
+        "id": 29
+      },
+      "startedAt": "2026-11-10T21:29:35.025Z",
+      "respondedAt": "2026-11-10T21:29:35.027Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "Saved in this local reference session",
+        "labels": [
+          "Saved in this local reference session"
+        ]
+      }
+    },
+    {
+      "request": {
+        "window": "main",
+        "testID": "status-main",
+        "command": "tron.inspect",
+        "id": 395
+      },
+      "startedAt": "2026-11-10T21:29:54.988Z",
+      "respondedAt": "2026-11-10T21:29:54.991Z",
+      "response": {
+        "ok": true,
+        "processId": 22665,
+        "frontmostProcessId": 22665,
+        "activationPolicy": 0,
+        "visible": true,
+        "key": true,
+        "applicationActive": true,
+        "hasButton": false,
+        "hasTextField": false,
+        "hasTableView": false,
+        "hasSplitView": false,
+        "hasNativeDragView": false,
+        "label": "Saved in this local reference session",
+        "labels": [
+          "Saved in this local reference session"
+        ]
+      }
+    }
+  ],
+  "afterCancelStatusResponses": 367,
+  "afterCancelDistinctStatusLabels": [
+    "Saved in this local reference session"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-startup-and-controls-passed-context-menu-dismissal-timeout",
+  "runId": 42903677542,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42903677542",
+  "nativeJobId": 130136545418,
+  "sourceJobId": 130135991611,
+  "pullRequestHead": "3b1d6745bde04abf367fba9865343d38b2149e5f",
+  "checkoutRevision": "e5b0974bc7bc59ef174250b4af32e4cc4839494a",
+  "tree": "28155a3373b323a20d53b877fcd25b024471d298",
+  "artifact": {
+    "id": 13804707156,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 859057,
+    "expectedSha256": "e12be82c05749ba5006142dcfb2edb56964e51d14814b1b837c7eb9152186937",
+    "downloadedSha256": "e12be82c05749ba5006142dcfb2edb56964e51d14814b1b837c7eb9152186937",
+    "digestVerified": true,
+    "retainedPath": "original-evidence.zip",
+    "fileMembers": 42,
+    "manifest": "original-member-manifest.json"
+  },
+  "sourceJobLog": {
+    "retainedPath": "source-job.log",
+    "bytes": 19234,
+    "sha256": "ae888688921afcc71410132f86dea77850d4b28fcefe91a46cf1ec83dd37e2d3",
+    "tests": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "completeNativeBuildLog": {
+    "path": "nyc-tron-appkit-consumer/.spark/logs/1794345719049-fe7ae839-3489-4f0c-893d-b95c4ee5de1b-xcodebuild.log",
+    "bytes": 12299645,
+    "sha256": "0dbb953db5f938121381cd2e0a0771e1b251d83c2f59db824a49a50389872c56"
+  },
+  "observedMilestones": "observed-milestones.json",
+  "completedInteractionChecks": [
+    "native-appkit-controls-and-display-module"
+  ],
+  "failedStep": "Exercise actual native controls and window lifetimes",
+  "runtimeError": "Timed out waiting for Native context menu dismissed",
+  "activationRequestRoundTripMilliseconds": 247,
+  "rootMountRequestRoundTripMilliseconds": 276,
+  "nativeRootTimeoutMilliseconds": 20000,
+  "clientResponseTimeoutMilliseconds": 35000,
+  "launchedProcessId": 22665,
+  "executableSha256": "0cb80c7e44079f9133db20479c50b4a793b5d91cb454beb3b9a4b4e05cff82d3",
+  "nativePayloadSha256": "cff18fd4930f19751e6c689c482aec6f6ed6c1a08efb0f35a75cd14dea18fc54",
+  "requestTraceRecords": 794,
+  "contextDismissalStatusResponsesAfterCancel": 367,
+  "processSample": {
+    "durationSeconds": 2,
+    "intervalMilliseconds": 10,
+    "exitCode": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": "Sampling process 22665 for 2 seconds with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 22665 written to file /Users/runner/work/_temp/nyc-tron-appkit-evidence/native-process-sample.txt\n",
+    "threadGroups": 6,
+    "hasThreadStacks": true,
+    "file": "native-process-sample.txt",
+    "sha256": "43e1cd336602e53adf7cd4dec72a60b72da3f3667e65ff1e68e25059cc50897a"
+  },
+  "privateFoundationProbe": {
+    "status": "passed",
+    "scope": "foundation-socketpair-probe",
+    "nativeInteractionsAccepted": false,
+    "patchSha256": "6b1f071f9aeb580fe3a0b84b3ee8d36d82343334a4cd49098ef85a0025be8444",
+    "beforeSha256": "c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc",
+    "afterSha256": "f89ab25a6ef5a3cf0a41e83f18fccd85ddb09bcbdecfc17db002110f3b763cb2"
+  },
+  "gesturePermissionObserved": false,
+  "passedReportEmitted": false,
+  "testedPackageRetained": false,
+  "limitations": [
+    "This exact run proves owned activation, React mount, JavaScript readiness and the native control/display check; it does not establish the cause of earlier hidden-mode mount delays.",
+    "The native application menu action and first context-menu selection produced the expected app-owned saved title. The combined menu acceptance group did not pass because the subsequent cancellation status was never observed.",
+    "The original driver recorded no menu generation or identity. An ordering/identity gap allows the second cancellation to target an earlier tracked menu; this receipt cannot establish which native menu received cancelTracking.",
+    "All 167 sampled main-thread stacks remain inside an AppKit NSMenu popup tracking event loop after the failure. Driver requests still received successful responses; the sample does not establish a transport stall or production cancellation defect.",
+    "The callback cancellation cause remains unproven until the separate tracking-generation correction is tested.",
+    "No tooltip-hover, popover, responder, multiwindow, native drag, or CGEvent permission acceptance was reached. No passed native report or tested-package receipt was emitted.",
+    "The Foundation probe tests controlled send-function inputs. Its passed result is separate from native interaction acceptance."
+  ]
+}

@@ -1,0 +1,5 @@
+Xcode 26.2
+Build version 17C52
+Apple Swift version 6.2.3 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+Target: arm64-apple-macosx15.0
+/Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk

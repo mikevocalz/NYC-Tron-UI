@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "e5b0974bc7bc59ef174250b4af32e4cc4839494a",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "executableSha256": "0cb80c7e44079f9133db20479c50b4a793b5d91cb454beb3b9a4b4e05cff82d3",
+  "payloadSha256": "cff18fd4930f19751e6c689c482aec6f6ed6c1a08efb0f35a75cd14dea18fc54",
+  "entries": [
+    {
+      "path": "Contents/_CodeSignature/CodeResources",
+      "type": "file",
+      "bytes": 7723,
+      "sha256": "5780f529e74a5e09d62309ad0f6e78fd1b45c6b89b9a50a2a297d87954259231"
+    },
+    {
+      "path": "Contents/Frameworks/hermesvm.framework/hermesvm",
+      "type": "symlink",
+      "target": "Versions/Current/hermesvm"
+    },
+    {
+      "path": "Contents/Frameworks/hermesvm.framework/Resources",
+      "type": "symlink",
+      "target": "Versions/Current/Resources"
+    },
+    {
+      "path": "Contents/Frameworks/hermesvm.framework/Versions/0/_CodeSignature/CodeResources",
+      "type": "file",
+      "bytes": 2442,
+      "sha256": "af8a5d3356ed8ebe4f22d9db8d1b4bcfafb280d0500383b64ce531a97a32f604"
+    },
+    {
+      "path": "Contents/Frameworks/hermesvm.framework/Versions/0/hermesvm",
+      "type": "file",
+      "bytes": 4878128,
+      "sha256": "ecd2ae17165836583d4fc3f509d8ecdccddb79d316ed1de8d58a52c5157cfa4a"
+    },
+    {
+      "path": "Contents/Frameworks/hermesvm.framework/Versions/0/Resources/Info.plist",
+      "type": "file",
+      "bytes": 866,
+      "sha256": "5990030ce7b5982fdb2e3cbebd6addbd3d7593f83431a70cf15dfe312d0df9ac"
+    },
+    {
+      "path": "Contents/Frameworks/hermesvm.framework/Versions/Current",
+      "type": "symlink",
+      "target": "0"
+    },
+    {
+      "path": "Contents/Info.plist",
+      "type": "file",
+      "bytes": 2370,
+      "sha256": "ac78a92bb88fdf0b44b0ec5be2d3102a2b30dca87657256fcfe0b7c9ab43da14"
+    },
+    {
+      "path": "Contents/MacOS/NYCTronAppKitReference",
+      "type": "file",
+      "bytes": 6634288,
+      "sha256": "0cb80c7e44079f9133db20479c50b4a793b5d91cb454beb3b9a4b4e05cff82d3"
+    },
+    {
+      "path": "Contents/PkgInfo",
+      "type": "file",
+      "bytes": 8,
+      "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0"
+    },
+    {
+      "path": "Contents/Resources/boost_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1287,
+      "sha256": "3d5a122289a8839ad796cfa246973635d9e15ec89defa5e3badbceaf9a779541"
+    },
+    {
+      "path": "Contents/Resources/EXConstants.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1284,
+      "sha256": "ec5d50c0094fee8913896319fa8370ae2f9388640dd154778d31df5a8a4bccfa"
+    },
+    {
+      "path": "Contents/Resources/EXConstants.bundle/Contents/Resources/app.config",
+      "type": "file",
+      "bytes": 785,
+      "sha256": "792877952be0b330baf16c97e5a2a343c3ce90dd57a9d8a363152fb9716ccce7"
+    },
+    {
+      "path": "Contents/Resources/ExpoConstants_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1304,
+      "sha256": "5b7fb147370ca1ab578b63fd38d66d578eb52c8d3dfb6117b180f708d3df7e74"
+    },
+    {
+      "path": "Contents/Resources/ExpoConstants_privacy.bundle/Contents/Resources/PrivacyInfo.xcprivacy",
+      "type": "file",
+      "bytes": 607,
+      "sha256": "2b2d8edb71d51c5b1f1ace4cdb28a94baf22fdde9bbf2e2bfc17d187ff7b5f47"
+    },
+    {
+      "path": "Contents/Resources/ExpoFileSystem_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1306,
+      "sha256": "1e495ae0d3cd3e9710fce37974c7d7186dff54e720bf889736d29b92ca8127b4"
+    },
+    {
+      "path": "Contents/Resources/ExpoFileSystem_privacy.bundle/Contents/Resources/PrivacyInfo.xcprivacy",
+      "type": "file",
+      "bytes": 877,
+      "sha256": "33b0e074f273f588a64ba5632909c6a8cf1f16db8e4cd84c6978bd222dfd65bd"
+    },
+    {
+      "path": "Contents/Resources/glog_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1284,
+      "sha256": "aa28bed7e0c4726758acddfa9f9cb72f7b760d5c414b39c7b65b12ce4a2e6cb2"
+    },
+    {
+      "path": "Contents/Resources/main.jsbundle",
+      "type": "file",
+      "bytes": 1951126,
+      "sha256": "493bc8ef49625bb8558675948db686a62af5a32fff88288ff887c16e19694594"
+    },
+    {
+      "path": "Contents/Resources/Main.storyboardc/Info.plist",
+      "type": "file",
+      "bytes": 163,
+      "sha256": "ebfd876a0a4abb31a1c45810539e4b73f6f1811df4aa6e5ea87495fa9f5ee3fe"
+    },
+    {
+      "path": "Contents/Resources/Main.storyboardc/MainMenu.nib",
+      "type": "file",
+      "bytes": 22456,
+      "sha256": "e70806cbb9bea7c10e522e251d80bbb2511972e6c5ea79dc701eb45a61d77352"
+    },
+    {
+      "path": "Contents/Resources/PrivacyInfo.xcprivacy",
+      "type": "file",
+      "bytes": 1283,
+      "sha256": "e4465baecfb4d203727fdc87011d0076d1d397345da3c96359b823376df3a0c2"
+    },
+    {
+      "path": "Contents/Resources/RCT-Folly_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1299,
+      "sha256": "77e0e7ef4693a36cb803ded4dd57682a1abe8e9e38e21d4cc1b1edfbedc0b644"
+    },
+    {
+      "path": "Contents/Resources/React-Core_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1297,
+      "sha256": "4361735ee16783d343d02b7e87c95c97f8af57d85fa230446bf2d9a1340c304f"
+    },
+    {
+      "path": "Contents/Resources/React-Core_privacy.bundle/Contents/Resources/PrivacyInfo.xcprivacy",
+      "type": "file",
+      "bytes": 768,
+      "sha256": "7c08969e459621a6ecec043ccdb9012651f185811945f75517c623dae2e11627"
+    },
+    {
+      "path": "Contents/Resources/React-cxxreact_privacy.bundle/Contents/Info.plist",
+      "type": "file",
+      "bytes": 1305,
+      "sha256": "9f648e1fc2aa34cdae01ae2087beb81bb47bcea7b4cd0379affa1161c29eed6b"
+    },
+    {
+      "path": "Contents/Resources/React-cxxreact_privacy.bundle/Contents/Resources/PrivacyInfo.xcprivacy",
+      "type": "file",
+      "bytes": 552,
+      "sha256": "0587d155c56a6f4f0647ebc6b6a0bd026615cd610ee8f209a9786b79a96ad335"
+    },
+    {
+      "path": "Contents/Resources/spark-runtime.json",
+      "type": "file",
+      "bytes": 2412,
+      "sha256": "ca6d2dd605c961a680831b1cba2c5222ec4ebb1989d5a0db0fe5c68d9cc2cd5b"
+    }
+  ]
+}

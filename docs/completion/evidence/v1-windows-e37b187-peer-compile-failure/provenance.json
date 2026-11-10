@@ -1,0 +1,36 @@
+{
+  "sourceJobId": 130135984589,
+  "sourceConclusion": "success",
+  "nativeJobId": 130136493870,
+  "nativeConclusion": "failure",
+  "firstFailedStep": "Build installed native C++/WinRT Fabric package",
+  "retention": "Complete decoded connector job log preserved byte for byte; workflow metadata are complete connector snapshots.",
+  "originalJobLog": {
+    "path": "original-native-job.log",
+    "bytes": 81561,
+    "sha256": "c9ec426e28e5092bec153799a4edb262535dc7c6a1ab02cba3a1635d53f6af98"
+  },
+  "nativeArtifactCreated": false,
+  "testedPackageCreated": false,
+  "compilerDiagnostics": [
+    {
+      "file": "TronDragSurface.cpp",
+      "line": 39,
+      "column": 62,
+      "code": "C2039",
+      "message": "'as' is not a member of winrt::NYCTronFluentFabric::NativeDragRegion"
+    },
+    {
+      "file": "TronDragSurface.cpp",
+      "line": 39,
+      "column": 89,
+      "code": "C2059",
+      "message": "syntax error: ')'"
+    }
+  ],
+  "correction": {
+    "reviewedCommit": "f8bddae897077d41af4302493a62323a8abf6f83",
+    "publishedHead": "8effb2dbe2573c96032b20a835a517ce0d52df9c",
+    "description": "Use static_cast<Xaml::FrameworkElement>(*this), the conversion provided by the pinned C++/WinRT composable base. Native result belongs to the new run, not this receipt."
+  }
+}

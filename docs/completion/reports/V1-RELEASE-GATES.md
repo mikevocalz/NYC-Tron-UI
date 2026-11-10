@@ -12,7 +12,7 @@ The latest completed desktop attempts still failed their complete native gates.
 The original failures, supported corrections and new native runs have separate
 receipts; a source or compiler pass does not substitute for interaction results.
 
-### Windows: crash point passed, native drag start still failing
+### Windows: corrected native region compiled, OS drag under validation
 
 [Windows at `988008c`](../evidence/v1-windows-988008c-drag-transition-failure/README.md)
 compiled and deployed, passed overlay-removal traversal and strict inspector
@@ -67,11 +67,21 @@ DragStarting, DropCompleted and the existing data/broker lifecycle. The driver
 now requires stable owned native endpoints, checked ordered SendInput moves
 and retained pointer/window/provider observations. Seven portable mocked-provider
 regressions and all 49 isolated checks passed; actual Win32 input is separate.
-The [new native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42903675797)
-has passed source checks and is compiling the candidate. Its strict drag-start,
-transfer and cancellation outcomes remain required.
+Its [completed native run](../evidence/v1-windows-e37b187-peer-compile-failure/README.md)
+passed source checks but failed library compilation because the composable
+implementation does not expose `this->as<FrameworkElement>()`. The complete
+original native job log and checkout identity are retained. Application build,
+deployment and native interactions were skipped in that run.
 
-### AppKit: initial reply arrives after the client deadline
+The independently reviewed one-line correction at `8effb2db` uses the pinned
+C++/WinRT composable base's `static_cast<Xaml::FrameworkElement>(*this)`
+conversion. [Its native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42906047583)
+has passed source, native library and executable compilation. Strict drag-start,
+transfer and cancellation outcomes remain required. Portable checks had not
+compiled the failed native peer implementation; the new native compiler result
+is recorded separately.
+
+### AppKit: startup passed, exact native menu tracking under validation
 
 [AppKit at `c0f6601`](../evidence/v1-appkit-c0f6601-live-mount-timeout/README.md)
 passed eight source checks, installed-consumer preparation/API checks and native
@@ -120,9 +130,30 @@ show/activation before the unchanged root mount and JS-ready waits. The pinned
 host creates its exact main window and native placeholder before React, and the
 command/inspection path does not require Fabric mount. This corrects the
 interactive test's startup ordering without assigning a historical cause.
-[The next native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42903677542)
-has passed all eleven source checks; exact owner, activation, mount and actual
-gesture assertions still require their completed native result.
+Its [completed native run](../evidence/v1-appkit-3b1d674-context-menu-tracking/README.md)
+passed all eleven source checks, the actual Foundation/socketpair probe, native
+compilation, strict same-process activation, root mounting and JS readiness.
+The native controls/display interaction group passed. Native application-menu
+and context-menu save actions reached React and updated the saved title, but
+the later context-menu dismissal assertion timed out. Hover, popover and OS-drag
+acceptance were not reached. The complete original ZIP, all 42 member hashes,
+source job log and exact checkout are retained and independently verified.
+
+The private fixture lacked a native end/new-generation barrier between selecting
+the first menu and canceling the second. Selection could resolve its React
+Promise while the first menu still tracked; the next inspection accepted any
+tracked menu. All 367 subsequent status responses still showed the saved state,
+and the failure sample shows a native menu tracking. The original trace cannot
+identify which menu received cancellation or prove a production callback defect.
+
+The reviewed follow-up at `8fe74048` derives generations and completion from
+actual NSMenu begin/end notifications. Actions require the exact live generation;
+the verifier observes the first native end before reopening, requires a newer
+second generation and observes its end after cancellation. The existing native
+cancelTracking operation, save/title and canceled/dismissed assertions remain.
+[The new native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42907095248)
+has passed all eleven source checks and is building the native app. Its actual
+tracking, callback and complete interaction results remain required.
 
 ### Actual gestures remain mandatory
 

@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "artifactId": 13804707156,
+  "archive": "original-evidence.zip",
+  "archiveSha256": "e12be82c05749ba5006142dcfb2edb56964e51d14814b1b837c7eb9152186937",
+  "members": [
+    {
+      "path": "nyc-tron-appkit-evidence/app.log",
+      "bytes": 454438,
+      "sha256": "d33abd3b553f3d85953cce112fbb8b6bc2aea81e96ee2816986f07e94abf31c6"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/commands.jsonl",
+      "bytes": 428013,
+      "sha256": "a217aae86cc34d6238db51e49f328885d9de56d477c6e34858c2fc5730fcb21d"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/failure.json",
+      "bytes": 244,
+      "sha256": "1d5c32649521159ab0f6a57d872504d8bdd55430638d54fee5fb9c4c50f09552"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/invocation.json",
+      "bytes": 450,
+      "sha256": "7ece27e91a3e19a8fa1587543bf2a5a559209c9984f5f678f44e944385e6d1d7"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/native-artifact.json",
+      "bytes": 6128,
+      "sha256": "ac901963f53711e4f218c7400064f17b279fa9a478d94d2bc74f230e6b93e7df"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/native-process-failure.json",
+      "bytes": 1320,
+      "sha256": "7437509b6e51dc7a9dfb2c4fc921e742eb9d17b76a27fb53b18f1fcfcfd98985"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/native-process-sample.txt",
+      "bytes": 193278,
+      "sha256": "43e1cd336602e53adf7cd4dec72a60b72da3f3667e65ff1e68e25059cc50897a"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/package-preparation.json",
+      "bytes": 26586,
+      "sha256": "d36230b1d6beb5c35cea1e6bb5baa736d76a2b55a2fc999f83e599a902c85825"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/patch-receipt.json",
+      "bytes": 2223,
+      "sha256": "20966a82efb7f6e7deef2716ed79bf9926919384f969e39c2e500eb966e2c68e"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/probe-result.json",
+      "bytes": 3434,
+      "sha256": "7d0ee46fcd710b7cb0aa97c0acc4ebe7331ff2119d2113fbc722ded717edf248"
+    },
+    {
+      "path": "nyc-tron-appkit-evidence/probe-trace.log",
+      "bytes": 6131,
+      "sha256": "3f939db23aad0bedf31e91968722267d70f9495cbb166572cc31ccafce4f2bde"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/package-preparation.json",
+      "bytes": 26586,
+      "sha256": "d36230b1d6beb5c35cea1e6bb5baa736d76a2b55a2fc999f83e599a902c85825"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/package-lock.json",
+      "bytes": 610651,
+      "sha256": "36a4eb59741b6fcce9974afc4101b841f4ff410d667d89d23b95c8a8f1d2ff7a"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/spark-sdk-inputs.json",
+      "bytes": 1473,
+      "sha256": "a45ff1d0b950d0d3e45892ff0b09aca135622713a765f827736b36e6ef9b9a1f"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE",
+      "bytes": 1066,
+      "sha256": "870d7b2eda9f2b0c69ea146c7ece1c24a197987451c6006b1e45df52f30168a0"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/SparkSend.original.inc.mm",
+      "bytes": 507,
+      "sha256": "166c8855a97ba2ce331930ca82a0b85c45ab56c6b6899638b62b3c25052e8e91"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/SparkSend.patched.inc.mm",
+      "bytes": 6601,
+      "sha256": "f1340cd58cc0f1f569a838049a15d7cf9133f412b2660c3ca4ee14fb6b21170f"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/SparkTestDriver.original.mm",
+      "bytes": 19741,
+      "sha256": "c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/SparkTestDriver.patched.mm",
+      "bytes": 26245,
+      "sha256": "f89ab25a6ef5a3cf0a41e83f18fccd85ddb09bcbdecfc17db002110f3b763cb2"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/patch-receipt.json",
+      "bytes": 2223,
+      "sha256": "20966a82efb7f6e7deef2716ed79bf9926919384f969e39c2e500eb966e2c68e"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/probe-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/probe-output.json",
+      "bytes": 2859,
+      "sha256": "5ba0f597ae39fcedac4cfaa133e15b7af4905ea5cd915c903abb6cfabc29e574"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/probe-result.json",
+      "bytes": 3434,
+      "sha256": "7d0ee46fcd710b7cb0aa97c0acc4ebe7331ff2119d2113fbc722ded717edf248"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/probe-trace.log",
+      "bytes": 6131,
+      "sha256": "3f939db23aad0bedf31e91968722267d70f9495cbb166572cc31ccafce4f2bde"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/acceptance-transport/probe.mm",
+      "bytes": 7535,
+      "sha256": "e0549f3e15490a65b930726dc9b12538f30df5e130f07b9dcbf07a6b146e1c53"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345642252-753c1f34-7075-43ee-a181-918810d82c41-cli.log",
+      "bytes": 530,
+      "sha256": "9741e9ee562710790220c097a26622e9a9a32ff1479046f2cb25b985d3f4e657"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345654941-edce825d-2c0a-47fd-a511-abc092cdd24b-cli.log",
+      "bytes": 447,
+      "sha256": "cd35ddb598c21420ccf8133f52e0816d1e080feaff6d3503f9f90249c4341bff"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345666209-33816e19-a930-4972-86e0-359742dd1df3-xcodebuild.log",
+      "bytes": 31,
+      "sha256": "9fec9509a0037736274232072cadc58613fa6ddcafd55fa0915151df641590d3"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345666304-d22f28af-dbac-47a0-87eb-691dd4fb4167-xcrun.log",
+      "bytes": 104,
+      "sha256": "f4f77eb0ff42aaab9ab3cb979aa97b8c982776057d0a6f845c576fa53dc2c465"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345666802-91eb13e9-5a9c-4f99-8fc5-bb919114d83a-cli.log",
+      "bytes": 447,
+      "sha256": "3746999f1e6ca2c8ebc65165da8180705ef223b058d9e366c7143c6c13995de8"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345672548-563e5422-91ed-4e60-ac6a-e8166594d129-cli.log",
+      "bytes": 447,
+      "sha256": "385c559e021b6ce3bb2f883471c1804f7929010713f5ae87b6d6b551623f3aae"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345678468-a6868b2e-ff4d-40ed-b258-0709d3c09d13-cli.js.log",
+      "bytes": 238,
+      "sha256": "7d2e9b9a9033507ceaa9af78dbace424b3300aa471e12c4d9237c8cf8c3b49dd"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345680265-f592a1d4-7306-470d-84a6-28fdd8f2512a-pod.log",
+      "bytes": 26994,
+      "sha256": "7c8ab7e4b3ce4028380541fe842879fbb982ea9c7918009fc53a3febd260e893"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345719030-6a343c9b-a352-4b13-ad6e-b4baea9bcedf-plutil.log",
+      "bytes": 1015,
+      "sha256": "68211ef61e44c24c42d6383d69963e148da7b6d5e0b8e414e06e96ea8d6dcefd"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794345719049-fe7ae839-3489-4f0c-893d-b95c4ee5de1b-xcodebuild.log",
+      "bytes": 12299645,
+      "sha256": "0dbb953db5f938121381cd2e0a0771e1b251d83c2f59db824a49a50389872c56"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/logs/1794346172424-7f0424af-a367-446d-83dc-e6faad3dfa4a-codesign.log",
+      "bytes": 143,
+      "sha256": "8747d386578a599d1d6da24f113a086d41c4ae4e3d354bca52de8304a29f7f1c"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/commands.jsonl",
+      "bytes": 4260,
+      "sha256": "1d6474cb870a3bdb5a82bae7921a64a56318966d1f4eb9bd8f3cb91851b9abfb"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/selection-report.json",
+      "bytes": 57821,
+      "sha256": "2a8d1869d6580ab897e134ba05622a4c6dcbb74b397ec459b1cfec8769f6b082"
+    },
+    {
+      "path": "nyc-tron-appkit-consumer/.spark/version",
+      "bytes": 6,
+      "sha256": "a5dd346546a384362936b97a4c2f5da2d3d253043ea9679aa7b97d89550dfdbd"
+    },
+    {
+      "path": "appkit-toolchain/isolated-conformance.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "appkit-toolchain/isolated-conformance.swift",
+      "bytes": 128,
+      "sha256": "280b0a7db2f70bd1315b78045628472cbc632ef15d83c888b98b3bf7c4aeb3ce"
+    },
+    {
+      "path": "appkit-toolchain/versions.txt",
+      "bytes": 232,
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b"
+    }
+  ]
+}

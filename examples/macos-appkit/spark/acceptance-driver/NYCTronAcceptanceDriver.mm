@@ -51,6 +51,15 @@ static NSRect OwnerCoordinates(NSWindow *owner, NSRect screenRect) {
 }
 static NSDictionary *Failure(NSString *message) { return @{ @"ok": @NO, @"error": @{ @"code": @"E_ACCEPTANCE", @"message": message } }; }
 static NSMenu *TrackedContextMenu;
+static NSUInteger ContextMenuGeneration, TrackedContextMenuGeneration, EndedContextMenuGeneration;
+static NSUInteger ContextMenuTraceEvents;
+static void TraceContextMenu(NSString *phase, NSUInteger generation) {
+  if (ContextMenuTraceEvents++ >= 64) return;
+  // Fixed phase labels and local generations only; AppKit supplies the log's
+  // timestamp. An operation returning is separate from its end notification.
+  NSLog(@"NYCTronContextMenu phase=%@ generation=%lu active=%lu ended=%lu", phase,
+    (unsigned long)generation, (unsigned long)TrackedContextMenuGeneration, (unsigned long)EndedContextMenuGeneration);
+}
 static NSMenuItem *FindMenuItem(NSMenu *menu, NSString *identifier) {
   for (NSMenuItem *item in menu.itemArray) {
     if ([item.identifier isEqual:identifier]) return item;
@@ -191,10 +200,19 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
   dispatch_async(dispatch_get_main_queue(), ^{
     [NSNotificationCenter.defaultCenter addObserverForName:NSMenuDidBeginTrackingNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
       NSMenu *menu = [note.object isKindOfClass:NSMenu.class] ? note.object : nil;
-      if ([menu.title isEqual:@"ContextMenu"]) TrackedContextMenu = menu;
+      if ([menu.title isEqual:@"ContextMenu"]) {
+        TrackedContextMenu = menu;
+        TrackedContextMenuGeneration = ++ContextMenuGeneration;
+        TraceContextMenu(@"begin", TrackedContextMenuGeneration);
+      }
     }];
     [NSNotificationCenter.defaultCenter addObserverForName:NSMenuDidEndTrackingNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
-      if (TrackedContextMenu == note.object) TrackedContextMenu = nil;
+      if (TrackedContextMenu == note.object) {
+        EndedContextMenuGeneration = TrackedContextMenuGeneration;
+        TrackedContextMenu = nil;
+        TrackedContextMenuGeneration = 0;
+        TraceContextMenu(@"end", EndedContextMenuGeneration);
+      }
     }];
     SparkTestDriverRegisterCommand(@"tron.inspect", ^(NSDictionary *request, SparkTestDriverReply reply) {
       NSWindow *window = Window(request[@"window"] ?: @"main");
@@ -323,19 +341,39 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
     });
     SparkTestDriverRegisterCommand(@"tron.context-menu", ^(NSDictionary *request, SparkTestDriverReply reply) {
       NSMenu *menu = TrackedContextMenu;
-      if (!menu) { reply(@{ @"ok": @YES, @"shown": @NO }); return; }
+      NSUInteger generation = TrackedContextMenuGeneration;
+      NSString *action = request[@"action"];
+      if (!menu) {
+        if (action) { TraceContextMenu(@"rejected-absent", 0); reply(Failure(@"No native context menu is tracking")); return; }
+        reply(@{ @"ok": @YES, @"shown": @NO, @"generation": @0, @"endedGeneration": @(EndedContextMenuGeneration) }); return;
+      }
+      // A selected command can resolve its React Promise before AppKit ends
+      // tracking. Never let a later operation silently target that old menu.
+      if (action && (![request[@"generation"] isKindOfClass:NSNumber.class] || [request[@"generation"] doubleValue] != (double)generation)) {
+        TraceContextMenu(@"rejected-generation", generation);
+        reply(Failure(@"Native context menu tracking generation changed")); return;
+      }
       NSMutableArray *items = [NSMutableArray new];
       for (NSMenuItem *item in menu.itemArray) {
         [items addObject:@{ @"id": [item.representedObject isKindOfClass:NSString.class] ? item.representedObject : @"", @"enabled": @(item.enabled), @"class": NSStringFromClass(item.class) }];
       }
-      if ([request[@"action"] isEqual:@"select"]) {
+      if ([action isEqual:@"select"]) {
         NSMenuItem *selected = nil;
         for (NSMenuItem *item in menu.itemArray) if ([item.representedObject isEqual:request[@"itemId"]]) selected = item;
         if (!selected || !selected.enabled || selected.hidden || !selected.action) { reply(Failure(@"Context menu item is not selectable")); return; }
+        TraceContextMenu(@"select-requested", generation);
         [menu performActionForItemAtIndex:[menu indexOfItem:selected]];
         [menu cancelTracking];
-      } else if ([request[@"action"] isEqual:@"cancel"]) [menu cancelTracking];
-      reply(@{ @"ok": @YES, @"shown": @YES, @"nativeMenu": @([menu isKindOfClass:NSMenu.class]), @"items": items });
+        TraceContextMenu(@"select-returned", generation);
+      } else if ([action isEqual:@"cancel"]) {
+        TraceContextMenu(@"cancel-requested", generation);
+        [menu cancelTracking];
+        TraceContextMenu(@"cancel-returned", generation);
+      } else if (action) { reply(Failure(@"Unknown native context menu action")); return; }
+      NSMutableDictionary *result = [@{ @"ok": @YES, @"shown": @(TrackedContextMenu != nil), @"nativeMenu": @([menu isKindOfClass:NSMenu.class]), @"items": items,
+        @"generation": @(TrackedContextMenuGeneration), @"endedGeneration": @(EndedContextMenuGeneration) } mutableCopy];
+      if (action) result[@"actedOnGeneration"] = @(generation);
+      reply(result);
     });
     SparkTestDriverRegisterCommand(@"tron.windows", ^(NSDictionary *request, SparkTestDriverReply reply) {
       NSMutableArray *windows = [NSMutableArray new];

@@ -1,0 +1,108 @@
+1: Analysis of sampling NYCTronAppKitReference (pid 22665) every 10 milliseconds
+2: Process:         NYCTronAppKitReference [22665]
+3: Path:            /Users/USER/*/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference
+4: Load Address:    0x1007a8000
+5: Identifier:      org.nyctron.appkit.reference
+6: Version:         1.0.0 (1)
+7: Code Type:       ARM64
+8: Platform:        macOS
+9: Parent Process:  node [22657]
+10: Target Type:     live task
+11:
+12: Date/Time:       2026-11-10 21:29:55.169 +0000
+13: Launch Time:     2026-11-10 21:29:33.144 +0000
+14: OS Version:      macOS 15.8.2 (24H232)
+15: Report Version:  7
+16: Analysis Tool:   /usr/bin/sample
+17:
+18: Physical footprint:         34.0M
+19: Physical footprint (peak):  34.0M
+20: Idle exit:                  untracked
+21: ----
+22:
+23: Call graph:
+24:     167 Thread_60923   DispatchQueue_1: com.apple.main-thread  (serial)
+25:     + 167 start  (in dyld) + 6076  [0x19b06ab98]
+26:     +   167 NSApplicationMain  (in AppKit) + 880  [0x19f3e52dc]
+27:     +     167 -[NSApplication run]  (in AppKit) + 480  [0x19f40ebe4]
+28:     +       167 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]  (in AppKit) + 688  [0x19fdba5cc]
+29:     +         167 _DPSNextEvent  (in AppKit) + 684  [0x19f41ba34]
+30:     +           167 _BlockUntilNextEventMatchingListInModeWithFilter  (in HIToolbox) + 76  [0x1a7131484]
+31:     +             167 ReceiveNextEventCommon  (in HIToolbox) + 216  [0x1a6fa631c]
+32:     +               167 RunCurrentEventLoopInMode  (in HIToolbox) + 324  [0x1a6fa327c]
+33:     +                 167 CFRunLoopRunSpecific  (in CoreFoundation) + 572  [0x19b4f5368]
+34:     +                   167 __CFRunLoopRun  (in CoreFoundation) + 824  [0x19b4f5d28]
+35:     +                     167 __CFRunLoopDoBlocks  (in CoreFoundation) + 352  [0x19b4f6e94]
+36:     +                       167 __CFRUNLOOP_IS_CALLING_OUT_TO_A_BLOCK__  (in CoreFoundation) + 28  [0x19b4f6f84]
+37:     +                         167 -[NSMenu popUpMenuPositioningItem:atLocation:inView:appearance:]  (in AppKit) + 256  [0x19fc3b354]
+38:     +                           167 -[NSCocoaMenuImpl _popUpMenuPositioningItem:atCocoaIndex:atLocation:inView:withPrivateFlags:appearance:]  (in AppKit) + 372  [0x19fdec3e8]
+39:     +                             167 _NSPopUpMenu  (in AppKit) + 2124  [0x19fde7dcc]
+40:     +                               167 +[NSContextMenuImpl presentPopup:fromView:withContext:animated:]  (in AppKit) + 1044  [0x19fb8f874]
+41:     +                                 167 -[NSContextMenuTrackingSession startMonitoringEvents:]  (in AppKit) + 144  [0x1a024a3e0]
+42:     +                                   167 -[NSMenuTrackingSession startMonitoringEvents:]  (in AppKit) + 284  [0x19fbdb26c]
+43:     +                                     167 -[NSMenuTrackingSession startRunningMenuEventLoop:]  (in AppKit) + 300  [0x19fbdb40c]
+44:     +                                       167 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]  (in AppKit) + 688  [0x19fdba5cc]
+45:     +                                         167 _DPSNextEvent  (in AppKit) + 684  [0x19f41ba34]
+46:     +                                           167 _BlockUntilNextEventMatchingListInModeWithFilter  (in HIToolbox) + 76  [0x1a7131484]
+47:     +                                             167 ReceiveNextEventCommon  (in HIToolbox) + 676  [0x1a6fa64e8]
+48:     +                                               167 RunCurrentEventLoopInMode  (in HIToolbox) + 324  [0x1a6fa327c]
+49:     +                                                 167 CFRunLoopRunSpecific  (in CoreFoundation) + 572  [0x19b4f5368]
+50:     +                                                   167 __CFRunLoopRun  (in CoreFoundation) + 1208  [0x19b4f5ea8]
+51:     +                                                     167 __CFRunLoopServiceMachPort  (in CoreFoundation) + 160  [0x19b4f758c]
+52:     +                                                       167 mach_msg  (in libsystem_kernel.dylib) + 24  [0x19b3c9fa8]
+53:     +                                                         167 mach_msg_overwrite  (in libsystem_kernel.dylib) + 484  [0x19b3d2764]
+54:     +                                                           167 mach_msg2_internal  (in libsystem_kernel.dylib) + 76  [0x19b3dc338]
+55:     +                                                             167 mach_msg2_trap  (in libsystem_kernel.dylib) + 8  [0x19b3c9c34]
+56:     167 Thread_60984
+57:     + 167 thread_start  (in libsystem_pthread.dylib) + 8  [0x19b406b80]
+58:     +   167 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x19b40bbc8]
+59:     +     167 __NSThread__block_start__  (in Foundation) + 76  [0x19d38f4b4]
+60:     +       167 ???  (in NYCTronAppKitReference)  load address 0x1007a8000 + 0x13f900  [0x1008e7900]
+61:     +         167 ???  (in NYCTronAppKitReference)  load address 0x1007a8000 + 0x13fe5c  [0x1008e7e5c]
+62:     +           167 __recvfrom  (in libsystem_kernel.dylib) + 8  [0x19b3ce158]
+63:     167 Thread_61039: com.facebook.react.runtime.JavaScript
+64:     + 167 thread_start  (in libsystem_pthread.dylib) + 8  [0x19b406b80]
+65:     +   167 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x19b40bbc8]
+66:     +     167 __NSThread__start__  (in Foundation) + 732  [0x19cabfbd8]
+67:     +       167 ???  (in NYCTronAppKitReference)  load address 0x1007a8000 + 0x30560c  [0x100aad60c]
+68:     +         167 CFRunLoopRunSpecific  (in CoreFoundation) + 572  [0x19b4f5368]
+69:     +           167 __CFRunLoopRun  (in CoreFoundation) + 1208  [0x19b4f5ea8]
+70:     +             167 __CFRunLoopServiceMachPort  (in CoreFoundation) + 160  [0x19b4f758c]
+71:     +               167 mach_msg  (in libsystem_kernel.dylib) + 24  [0x19b3c9fa8]
+72:     +                 167 mach_msg_overwrite  (in libsystem_kernel.dylib) + 484  [0x19b3d2764]
+73:     +                   167 mach_msg2_internal  (in libsystem_kernel.dylib) + 76  [0x19b3dc338]
+74:     +                     167 mach_msg2_trap  (in libsystem_kernel.dylib) + 8  [0x19b3c9c34]
+75:     167 Thread_61040: hades
+76:     + 167 thread_start  (in libsystem_pthread.dylib) + 8  [0x19b406b80]
+77:     +   167 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x19b40bbc8]
+78:     +     167 std::__thread_proxy[abi:nn190102]<std::tuple<std::unique_ptr<std::__thread_struct>, hermes::vm::HadesGC::Executor::Executor()::'lambda'()>>(void*)  (in hermesvm) + 44  [0x1017963dc]
+79:     +       167 hermes::vm::HadesGC::Executor::worker()  (in hermesvm) + 104  [0x101796468]
+80:     +         167 std::condition_variable::wait(std::unique_lock<std::mutex>&)  (in libc++.1.dylib) + 32  [0x19b33c268]
+81:     +           167 _pthread_cond_wait  (in libsystem_pthread.dylib) + 984  [0x19b40c09c]
+82:     +             167 __psynch_cvwait  (in libsystem_kernel.dylib) + 8  [0x19b3cd3cc]
+83:     167 Thread_61042: com.apple.NSEventThread
+84:     + 167 thread_start  (in libsystem_pthread.dylib) + 8  [0x19b406b80]
+85:     +   167 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x19b40bbc8]
+86:     +     167 _NSEventThread  (in AppKit) + 140  [0x19f53f78c]
+87:     +       167 CFRunLoopRunSpecific  (in CoreFoundation) + 572  [0x19b4f5368]
+88:     +         167 __CFRunLoopRun  (in CoreFoundation) + 1208  [0x19b4f5ea8]
+89:     +           167 __CFRunLoopServiceMachPort  (in CoreFoundation) + 160  [0x19b4f758c]
+90:     +             167 mach_msg  (in libsystem_kernel.dylib) + 24  [0x19b3c9fa8]
+91:     +               167 mach_msg_overwrite  (in libsystem_kernel.dylib) + 484  [0x19b3d2764]
+92:     +                 167 mach_msg2_internal  (in libsystem_kernel.dylib) + 76  [0x19b3dc338]
+93:     +                   167 mach_msg2_trap  (in libsystem_kernel.dylib) + 8  [0x19b3c9c34]
+94:     167 Thread_61043
+95:       167 start_wqthread  (in libsystem_pthread.dylib) + 8  [0x19b406b74]
+96:         167 _pthread_wqthread  (in libsystem_pthread.dylib) + 368  [0x19b407e6c]
+97:           167 __workq_kernreturn  (in libsystem_kernel.dylib) + 8  [0x19b3cb8b0]
+98:
+99: Total number in stack (recursive counted multiple, when >=5):
+100:
+101: Sort by top of stack, same collapsed (when >= 5):
+102:         mach_msg2_trap  (in libsystem_kernel.dylib)        501
+103:         __psynch_cvwait  (in libsystem_kernel.dylib)        167
+104:         __recvfrom  (in libsystem_kernel.dylib)        167
+105:         __workq_kernreturn  (in libsystem_kernel.dylib)        167
+106:
+107: Binary Images:
+108:        0x1007a8000 -        0x100c9353f +org.nyctron.appkit.reference (1.0.0 - 1) <8B7408E3-C6BA-3430-B8B3-C1B9A22DFB6E> /Users/*/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference

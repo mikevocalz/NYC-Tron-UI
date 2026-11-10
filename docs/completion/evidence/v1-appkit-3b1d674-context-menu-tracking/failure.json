@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "sourceRevision": "e5b0974bc7bc59ef174250b4af32e4cc4839494a",
+  "checks": [
+    "native-appkit-controls-and-display-module"
+  ],
+  "error": "Timed out waiting for Native context menu dismissed"
+}
