@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 public static class NativeWindow {
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+  [DllImport("user32.dll")] public static extern bool IsWindow(IntPtr window);
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetWindowPos(IntPtr window, IntPtr after, int x, int y, int width, int height, uint flags);
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetCursorPos(int x, int y);
   [DllImport("user32.dll", SetLastError=true)] static extern bool GetCursorPos(out POINT point);
@@ -53,6 +54,7 @@ public static class NativeWindow {
 }
 "@
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
+. "$PSScriptRoot\uia-crash-dumps.ps1"
 $AE = [System.Windows.Automation.AutomationElement]
 $Tree = [System.Windows.Automation.TreeScope]
 
@@ -87,7 +89,12 @@ function Save-Screenshot([string]$name, $target) {
 function Save-Tree($root, [string]$name = "uia-tree") {
   # Provider teardown can race a diagnostic walk. Retain that error while the
   # separate exact-name/visibility assertions continue to determine acceptance.
-  $lines = try {
+  $capturedAt = [DateTime]::UtcNow.ToString("o")
+  $rootIdentity = try {
+    "HWND={0}; process={1}; runtimeId={2}" -f $root.Current.NativeWindowHandle, $root.Current.ProcessId, ($root.GetRuntimeId() -join ",")
+  } catch { "Root unavailable: $($_.Exception.Message)" }
+  $enumerationError = $null
+  [string[]]$lines = @(try {
     foreach ($element in $root.FindAll($Tree::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
       try {
         $c = $element.Current
@@ -96,11 +103,16 @@ function Save-Tree($root, [string]$name = "uia-tree") {
       } catch { "Provider unavailable during snapshot: $($_.Exception.Message)" }
     }
   } catch {
+    $enumerationError = $_.Exception.Message
     "UIA tree enumeration failed: $($_.Exception.Message)"
-  }
+  })
   $path = Join-Path $OutDir "$name.txt"
-  $lines | Set-Content -Path $path -Encoding UTF8
-  Write-Host "Saved UIA tree ($($lines.Count) elements) to $path"
+  # An empty pipeline does not execute Set-Content. Always overwrite an older
+  # snapshot, including zero descendants, and retain the exact root and time.
+  $descendantCount = if ($null -eq $enumerationError) { $lines.Count } else { "unavailable" }
+  [string[]]$record = @("Captured UTC: $capturedAt", "Root: $rootIdentity", "Descendants: $descendantCount", "") + $lines
+  [System.IO.File]::WriteAllLines($path, $record, [System.Text.UTF8Encoding]::new($true))
+  Write-Host "Saved UIA tree ($descendantCount descendants) to $path"
 }
 
 function Refresh-OwnedWindow($root) {
@@ -312,41 +324,106 @@ function Invoke-NativeDrag($main, $secondary, [bool]$cancel = $false) {
 
 # Startup-crash evidence: installed Windows App Runtime packages and the
 # Application event log entries written since launch.
-function Write-Diagnostics($since) {
+function Write-Diagnostics($since, [int]$expectedProcessId = 0) {
   Write-Host "Installed Windows App Runtime packages:"
   Get-AppxPackage -Name "*WindowsAppRuntime*" -ErrorAction SilentlyContinue |
     ForEach-Object { Write-Host "  $($_.PackageFullName)" }
-  Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = $since } -ErrorAction SilentlyContinue |
-    Select-Object -First 20 | Format-List TimeCreated, ProviderName, Id, Message | Out-String | Write-Host
+  $queryErrors = @()
+  $scanned = @(Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = $since; Id = 1000, 1001 } -MaxEvents 50 -ErrorAction SilentlyContinue -ErrorVariable queryErrors)
+  $records = @($scanned | Where-Object { $_.Message -like "*$ProcessName*" } |
+    ForEach-Object {
+      $xml = $_.ToXml()
+      $eventData = ([xml]$xml).Event.EventData.Data
+      $reportedProcess = $eventData | Where-Object { $_.Name -eq "ProcessId" -or $_.Name -eq "FaultingProcessId" } | Select-Object -First 1
+      $eventProcessId = $null
+      if ($null -ne $reportedProcess) {
+        $value = $reportedProcess.InnerText
+        $eventProcessId = if ($value -match '^0x') { [Convert]::ToInt64($value.Substring(2), 16) } else { [long]$value }
+      }
+      # WER1001 does not always carry the app PID. Retain that limitation rather
+      # than treating the WER service's execution PID as the failed app's PID.
+      if ($expectedProcessId -eq 0 -or $null -eq $eventProcessId -or $eventProcessId -eq $expectedProcessId) {
+        @{ time = $_.TimeCreated.ToUniversalTime().ToString("o"); provider = $_.ProviderName; id = $_.Id; recordId = $_.RecordId; processId = $eventProcessId; expectedProcessId = $expectedProcessId; match = $(if ($expectedProcessId -gt 0 -and $null -ne $eventProcessId) { "app-name-pid-and-time" } else { "app-name-and-time" }); message = $_.Message; xml = $xml }
+      }
+    } | Select-Object -First 20)
+  $queryFailures = @($queryErrors | Where-Object { $_.FullyQualifiedErrorId -notlike "NoMatchingEventsFound*" } |
+    ForEach-Object { @{ message = $_.Exception.Message; id = $_.FullyQualifiedErrorId; category = [string]$_.CategoryInfo.Category } })
+  @{ capturedAt = [DateTime]::UtcNow.ToString("o"); status = $(if ($queryFailures.Count) { "failed" } else { "completed" }); since = $since.ToUniversalTime().ToString("o"); appName = $ProcessName; expectedProcessId = $expectedProcessId; scannedLimit = 50; scannedCount = $scanned.Count; retainedLimit = 20; retainedCount = $records.Count; errors = $queryFailures } |
+    ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 (Join-Path $OutDir "application-error-query.json")
+  ConvertTo-Json -InputObject $records -Depth 6 | Set-Content -Encoding UTF8 (Join-Path $OutDir "application-error-events.json")
+  Write-Host "Matching Application Error/WER records: $($records.Count)"
+  $records | ForEach-Object { Write-Host $_.message }
+}
+
+function Save-FailureStatus($failure, $nativeProcess, [IntPtr]$originalWindowHandle, [string]$originalProcessStartTime) {
+  $status = [ordered]@{
+    schemaVersion = 1; status = "failed"; sourceRevision = $env:GITHUB_SHA
+    capturedAt = [DateTime]::UtcNow.ToString("o")
+    primaryFailure = @{ message = $failure.Exception.Message; type = $failure.Exception.GetType().FullName; position = $failure.InvocationInfo.PositionMessage; scriptStack = $failure.ScriptStackTrace }
+    processId = $null; processStartedAt = $originalProcessStartTime; hasExited = $null; exitCode = $null
+    originalWindowHandle = $originalWindowHandle.ToInt64()
+  }
+  try {
+    if ($null -ne $nativeProcess) {
+      $status.processId = $nativeProcess.Id
+      $nativeProcess.Refresh()
+      $status.hasExited = $nativeProcess.HasExited
+      if ($status.hasExited) { $status.exitCode = $nativeProcess.ExitCode; $status.exitCodeHex = "{0:X8}" -f $status.exitCode }
+    }
+  } catch { $status.processObservationError = $_.Exception.Message }
+  try {
+    [uint32]$windowProcess = 0
+    [NativeWindow]::GetWindowThreadProcessId($originalWindowHandle, [ref]$windowProcess) | Out-Null
+    $status.windowExists = [NativeWindow]::IsWindow($originalWindowHandle)
+    $status.windowProcessId = $windowProcess
+    $foreground = [NativeWindow]::GetForegroundWindow()
+    [uint32]$foregroundProcess = 0
+    [NativeWindow]::GetWindowThreadProcessId($foreground, [ref]$foregroundProcess) | Out-Null
+    $status.foregroundWindowHandle = $foreground.ToInt64()
+    $status.foregroundProcessId = $foregroundProcess
+  } catch { $status.windowObservationError = $_.Exception.Message }
+  $status | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 (Join-Path $OutDir "failure-status.json")
+  Write-Host "Failure process observation: process=$($status.processId), exited=$($status.hasExited), exitCode=$($status.exitCode), HWND=$($status.originalWindowHandle), exists=$($status.windowExists), windowProcess=$($status.windowProcessId)"
 }
 
 $started = Get-Date
-Write-Host "Launching shell:AppsFolder\$AppUserModelId"
-Start-Process "shell:AppsFolder\$AppUserModelId"
 $process = $null
 $window = $null
+$ownedWindowHandle = [IntPtr]::Zero
+$ownedProcessId = 0
+$ownedProcessStartTime = ""
+$crashCapture = $null
 try {
+  $crashCapture = Enable-OwnedCrashDump "$ProcessName.exe" (Join-Path $OutDir "crash-dumps")
+  try { Save-CrashDumpReceipt $crashCapture $OutDir $ownedProcessId }
+  catch { Write-Host "Could not retain initial crash-capture settings: $($_.Exception.Message)" }
+  Write-Host "Launching shell:AppsFolder\$AppUserModelId"
+  Start-Process "shell:AppsFolder\$AppUserModelId"
   $deadline = (Get-Date).AddSeconds(30)
   while ((Get-Date) -lt $deadline -and $null -eq $process) {
     $process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue | Select-Object -First 1
     if ($null -eq $process) { Start-Sleep -Milliseconds 250 }
   }
   if ($null -eq $process) {
-    Write-Diagnostics $started
     throw "Process '$ProcessName' did not start within 30 s"
   }
+  # Retain a process handle while alive so ExitCode remains observable after a
+  # later failure, instead of trying to reopen an already terminated PID.
+  $ownedProcessId = $process.Id
+  $null = $process.Handle
+  $ownedProcessStartTime = $process.StartTime.ToUniversalTime().ToString("o")
   $processCondition = New-Object System.Windows.Automation.PropertyCondition($AE::ProcessIdProperty, $process.Id)
   $deadline = (Get-Date).AddSeconds(90)
   while ((Get-Date) -lt $deadline -and $null -eq $window) {
     if ($process.HasExited) {
       Write-Host "Process exited before showing a window."
-      Write-Diagnostics $started
       throw "Consumer process exited before creating a window"
     }
     $window = $AE::RootElement.FindFirst($Tree::Children, $processCondition)
     if ($null -eq $window) { Start-Sleep -Milliseconds 500 }
   }
   if ($null -eq $window) { throw "No top-level window for process $($process.Id) within 90 s" }
+  $ownedWindowHandle = [IntPtr]$window.Current.NativeWindowHandle
   Write-Host "Window '$($window.Current.Name)' class '$($window.Current.ClassName)'"
   # Keep the complete acceptance controls inside the runner's work area.
   $window.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Maximized)
@@ -423,7 +500,7 @@ try {
   Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
   Find-ByName $window "Native windows: 2" | Out-Null
   Save-Screenshot "06-native-reopened" $document
-  Save-Tree $document
+  Save-Tree $document "06-document-tree"
   # The menu/flyout controls below are real WinUI popup trees. Native UIA
   # patterns and OS keyboard input exercise their application-owned callbacks.
   $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
@@ -592,14 +669,31 @@ try {
   $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
   Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"
 } catch {
-  Write-Host "UIA smoke failed: $($_.Exception.Message)"
+  $primaryFailure = $_
+  Write-Host "UIA smoke failed: $($primaryFailure.Exception.Message)"
+  try { Save-FailureStatus $primaryFailure $process $ownedWindowHandle $ownedProcessStartTime }
+  catch { Write-Host "Could not retain process/window failure status: $($_.Exception.Message)" }
+  try { Write-Diagnostics $started $ownedProcessId }
+  catch { Write-Host "Could not retain Application Error/WER records: $($_.Exception.Message)" }
   if ($null -ne $window) {
-    Save-Tree $window
-    Save-Screenshot "failure" $window
+    try { Save-Tree $window }
+    catch { Write-Host "Could not retain failure tree: $($_.Exception.Message)" }
+    try { Save-Screenshot "failure" $window }
+    catch {
+      Write-Host "Owned-window failure capture unavailable: $($_.Exception.Message)"
+      try { Save-Screenshot "failure-desktop" $null }
+      catch { Write-Host "Desktop failure capture unavailable: $($_.Exception.Message)" }
+    }
   } else {
-    Save-Screenshot "failure-desktop" $null
+    try { Save-Screenshot "failure-desktop" $null }
+    catch { Write-Host "Desktop failure capture unavailable: $($_.Exception.Message)" }
   }
-  throw
+  throw $primaryFailure
 } finally {
-  if ($null -ne $process -and -not $process.HasExited) { Stop-Process -Id $process.Id -Force }
+  try { if ($null -ne $process -and -not $process.HasExited) { Stop-Process -InputObject $process -Force } }
+  catch { Write-Host "Consumer cleanup unavailable: $($_.Exception.Message)" }
+  try { Restore-OwnedCrashDump $crashCapture }
+  catch { Write-Host "WER setting restoration unavailable: $($_.Exception.Message)" }
+  try { Save-CrashDumpReceipt $crashCapture $OutDir $ownedProcessId }
+  catch { Write-Host "Could not retain crash-dump receipt: $($_.Exception.Message)" }
 }
