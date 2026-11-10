@@ -37,6 +37,11 @@ struct TronNavigationViewComponentView
     try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
     catch (...) { ReportNativeError("Could not retain the navigation connection: " + DescribeCurrentException()); }
   }
+  void LayoutChanged(winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
+    if (m_disposed) return;
+    try { m_connection.UpdateLayout(sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>(), args); }
+    catch (...) { ReportNativeError("Could not update navigation input geometry: " + DescribeCurrentException()); }
+  }
 
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) noexcept {
@@ -393,6 +398,9 @@ void RegisterTronNavigationViewComponent(
               islandView.UserData(*data);
               islandView.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
                 if (auto owner = weak.get()) owner->Mounted(mounted);
+              });
+              islandView.LayoutMetricsChanged([weak = data->get_weak()](winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
+                if (auto owner = weak.get()) owner->LayoutChanged(sender, args);
               });
               islandView.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
                 if (auto owner = weak.get()) owner->Destroy();

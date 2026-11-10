@@ -42,6 +42,11 @@ struct TronOverlayAnchorComponentView
     try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
     catch (...) { Error("Could not retain the native overlay connection: " + Exception()); }
   }
+  void LayoutChanged(winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
+    if (m_disposed) return;
+    try { m_connection.UpdateLayout(sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>(), args); }
+    catch (...) { Error("Could not update native overlay input geometry: " + Exception()); }
+  }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
       m_island = Xaml::XamlIsland{};
@@ -323,6 +328,9 @@ void RegisterTronOverlayAnchorComponent(winrt::Microsoft::ReactNative::IReactPac
         auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronOverlayAnchorComponentView>(); data->InitializeContentIsland(view); view.UserData(*data);
         view.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
           if (auto owner = weak.get()) owner->Mounted(mounted);
+        });
+        view.LayoutMetricsChanged([weak = data->get_weak()](winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
+          if (auto owner = weak.get()) owner->LayoutChanged(sender, args);
         });
         view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
           if (auto owner = weak.get()) owner->Destroy();

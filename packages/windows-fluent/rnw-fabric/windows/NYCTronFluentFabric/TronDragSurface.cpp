@@ -59,6 +59,11 @@ struct TronDragSurfaceComponentView
     m_mounted = false;
     Cleanup();
   }
+  void LayoutChanged(winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
+    if (m_disposed) return;
+    try { m_connection.UpdateLayout(sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>(), args); }
+    catch (...) { Error("Could not update native drag input geometry"); }
+  }
   void Loaded() noexcept {
     if (m_disposed) return;
     m_loaded = true;
@@ -227,6 +232,9 @@ void RegisterTronDragSurfaceComponent(winrt::Microsoft::ReactNative::IReactPacka
         });
         view.Unmounted([weak = data->get_weak()](auto const&, auto const&) noexcept {
           if (auto owner = weak.get()) owner->Unmounted();
+        });
+        view.LayoutMetricsChanged([weak = data->get_weak()](winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
+          if (auto owner = weak.get()) owner->LayoutChanged(sender, args);
         });
         view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
           if (auto owner = weak.get()) owner->Destroy();

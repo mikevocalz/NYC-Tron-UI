@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IslandLayout.h"
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <utility>
 
@@ -15,6 +17,30 @@ class IslandConnection final {
   }
   void SetSite(winrt::Microsoft::UI::Content::ChildSiteLink const& site) noexcept {
     m_site = site;
+  }
+  void UpdateLayout(
+      winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view,
+      winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) {
+    // This event runs after ComponentView commits its own new metrics. RNW's
+    // preceding ParentLayoutChanged still used the previous own frame. Apply
+    // this correction only here: Mounted and ancestor/scroll events already
+    // compute their transform from the current own frame.
+    if (!m_site || !m_island || m_site.IsClosed() || m_island.IsClosed() ||
+        !m_island.IsConnected()) return;
+    const auto mountedSite = view.ChildSiteLink();
+    if (!mountedSite || mountedSite != m_site) return;
+    const auto previous = args.OldLayoutMetrics();
+    const auto current = args.NewLayoutMetrics();
+    if (previous.Frame.X == current.Frame.X && previous.Frame.Y == current.Frame.Y &&
+        previous.PointScaleFactor == current.PointScaleFactor) return;
+    auto transform = m_site.LocalToParentTransformMatrix();
+    const auto translation = UpdateLayoutTranslation(
+        {transform.m41, transform.m42},
+        {previous.Frame.X, previous.Frame.Y, previous.PointScaleFactor},
+        {current.Frame.X, current.Frame.Y, current.PointScaleFactor});
+    transform.m41 = translation.x;
+    transform.m42 = translation.y;
+    m_site.LocalToParentTransformMatrix(transform);
   }
   void Close() noexcept {
     // Clear ownership before either close can dispatch a native callback.
