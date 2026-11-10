@@ -119,6 +119,72 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
   });
 }
 
+// Inspect only public native window/accessibility properties. A tooltip text
+// binding on the trigger is never counted as a presented help tag.
+static NSArray *AccessibilityNodes(id root, BOOL *truncated) {
+  NSMutableArray *queue = [NSMutableArray arrayWithObject:root], *nodes = [NSMutableArray new];
+  NSHashTable *visited = [NSHashTable hashTableWithOptions:NSPointerFunctionsObjectPointerPersonality];
+  for (NSUInteger index = 0; index < queue.count; index++) {
+    id node = queue[index];
+    if ([visited containsObject:node]) continue;
+    if (nodes.count >= 512) { *truncated = YES; break; }
+    [visited addObject:node]; [nodes addObject:node];
+    NSMutableArray *children = [NSMutableArray new];
+    if ([node respondsToSelector:@selector(accessibilityChildren)]) {
+      id accessible = [node accessibilityChildren];
+      if ([accessible isKindOfClass:NSArray.class]) [children addObjectsFromArray:accessible];
+    }
+    if ([node isKindOfClass:NSView.class]) [children addObjectsFromArray:((NSView *)node).subviews];
+    if ([node isKindOfClass:NSWindow.class] && ((NSWindow *)node).contentView) [children addObject:((NSWindow *)node).contentView];
+    for (id child in children) {
+      if ([visited containsObject:child]) continue;
+      if (queue.count >= 2048) { *truncated = YES; break; }
+      [queue addObject:child];
+    }
+  }
+  return nodes;
+}
+static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated) {
+  NSMutableOrderedSet<NSString *> *strings = [NSMutableOrderedSet new];
+  for (id node in AccessibilityNodes(root, truncated)) {
+    NSMutableArray *values = [NSMutableArray new];
+    if ([node respondsToSelector:@selector(accessibilityValue)] && [node accessibilityValue]) [values addObject:[node accessibilityValue]];
+    if ([node respondsToSelector:@selector(accessibilityLabel)] && [node accessibilityLabel]) [values addObject:[node accessibilityLabel]];
+    if ([node respondsToSelector:@selector(accessibilityTitle)] && [node accessibilityTitle]) [values addObject:[node accessibilityTitle]];
+    if ([node isKindOfClass:NSTextField.class]) [values addObject:((NSTextField *)node).stringValue];
+    for (id value in values) {
+      NSString *text = [value isKindOfClass:NSAttributedString.class] ? [value string] : ([value isKindOfClass:NSString.class] ? value : nil);
+      if (text.length) [strings addObject:text];
+    }
+  }
+  return strings.array;
+}
+static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
+  BOOL truncated = NO;
+  NSMutableArray *windows = [NSMutableArray new], *helpTags = [NSMutableArray new];
+  for (NSWindow *window in NSApp.windows) {
+    if (windows.count >= 64) { truncated = YES; break; }
+    BOOL onscreen = window.visible && !window.miniaturized && window.alphaValue > 0 && (window.occlusionState & NSWindowOcclusionStateVisible);
+    NSMutableDictionary *record = [@{ @"number": @(window.windowNumber), @"class": NSStringFromClass(window.class), @"visible": @(window.visible), @"onscreen": @(onscreen), @"alpha": @(window.alphaValue), @"frame": RectDictionary(window.frame) } mutableCopy];
+    [windows addObject:record];
+    if (!onscreen) continue;
+    NSMutableOrderedSet<NSString *> *roles = [NSMutableOrderedSet new];
+    for (id node in AccessibilityNodes(window, &truncated)) {
+      NSString *role = [node respondsToSelector:@selector(accessibilityRole)] ? [node accessibilityRole] : nil;
+      if (role.length) [roles addObject:role];
+      if (![role isEqual:(__bridge NSString *)kAXHelpTagRole]) continue;
+      NSRect frame = [node respondsToSelector:@selector(accessibilityFrame)] ? [node accessibilityFrame] : NSZeroRect;
+      [helpTags addObject:@{ @"windowNumber": @(window.windowNumber), @"windowFrame": RectDictionary(window.frame), @"frame": RectDictionary(frame), @"role": [node accessibilityRole], @"strings": HelpTagStrings(node, &truncated) }];
+    }
+    record[@"roles"] = roles.array;
+  }
+  NSRect triggerFrame = [owner convertRectToScreen:[trigger convertRect:trigger.bounds toView:nil]];
+  NSPoint cursor = NSEvent.mouseLocation;
+  return @{ @"ok": @YES, @"boundary": @"public-native-help-tag-observation", @"postEventsAllowed": @(CGPreflightPostEventAccess()), @"accessibilityTrusted": @(AXIsProcessTrusted()),
+    @"ownerVisible": @(owner.visible && !owner.miniaturized), @"ownerKey": @(owner.keyWindow), @"applicationActive": @(NSApp.active), @"pointerRunning": @(PointerRunning), @"triggerFrame": RectDictionary(triggerFrame),
+    @"cursor": @{ @"x": @(cursor.x), @"y": @(cursor.y) }, @"cursorInsideTrigger": @(NSPointInRect(cursor, triggerFrame)), @"windows": windows, @"helpTags": helpTags, @"traversalTruncated": @(truncated) };
+}
+
 @interface NYCTronAcceptanceDriver : NSObject @end
 @implementation NYCTronAcceptanceDriver
 + (void)load {
@@ -154,6 +220,7 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
       result[@"hasSplitView"] = @(Control(view, NSSplitView.class) != nil);
       result[@"hasTableView"] = @(Control(view, NSTableView.class) != nil);
       result[@"hasTextField"] = @(Control(view, NSTextField.class) != nil);
+      result[@"hasNativeDragView"] = @(Control(view, RNDesktopDragView.class) != nil);
       NSTextField *field = (NSTextField *)Control(view, NSTextField.class);
       if (field) { result[@"value"] = field.stringValue; result[@"editing"] = @([field currentEditor] != nil); result[@"editorIdentity"] = field.currentEditor ? [NSString stringWithFormat:@"%p", field.currentEditor] : @""; }
       NSPopUpButton *popup = (NSPopUpButton *)Control(view, NSPopUpButton.class);
@@ -317,6 +384,44 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
         [offer.draggingPasteboard releaseGlobally]; ProtocolDrag = nil;
         reply(@{ @"ok": @YES, @"boundary": @"native-protocol" });
       } else reply(Failure(@"Unknown native protocol action"));
+    });
+    SparkTestDriverRegisterCommand(@"tron.tooltip", ^(NSDictionary *request, SparkTestDriverReply reply) {
+      NSWindow *owner = Window(request[@"window"] ?: @"main");
+      NSView *trigger = owner ? Find(owner.contentView, request[@"testID"]) : nil;
+      if (!trigger || !trigger.toolTip.length) { reply(Failure(@"Expected a native tooltip trigger")); return; }
+      NSString *action = request[@"action"] ?: @"inspect";
+      if ([action isEqual:@"inspect"]) { reply(TooltipObservation(owner, trigger)); return; }
+      if ([action isEqual:@"capture"]) {
+        NSInteger number = [request[@"windowNumber"] integerValue];
+        NSDictionary *observation = TooltipObservation(owner, trigger);
+        BOOL observed = NO;
+        for (NSDictionary *tag in observation[@"helpTags"]) if ([tag[@"windowNumber"] integerValue] == number && [tag[@"strings"] containsObject:trigger.toolTip]) observed = YES;
+        NSWindow *window = observed ? [NSApp windowWithWindowNumber:number] : nil;
+        NSView *content = window.contentView;
+        NSBitmapImageRep *bitmap = content ? [content bitmapImageRepForCachingDisplayInRect:content.bounds] : nil;
+        if (!bitmap || bitmap.pixelsWide <= 0 || bitmap.pixelsHigh <= 0 || bitmap.pixelsWide * bitmap.pixelsHigh > 4000000) { reply(Failure(@"No bounded visible native help-tag content to capture")); return; }
+        [content cacheDisplayInRect:content.bounds toBitmapImageRep:bitmap];
+        NSData *png = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+        if (!png.length || png.length > 1024 * 1024) { reply(Failure(@"Native help-tag capture is empty or exceeds the fixture limit")); return; }
+        reply(@{ @"ok": @YES, @"windowNumber": @(number), @"width": @(bitmap.pixelsWide), @"height": @(bitmap.pixelsHigh), @"pngBase64": [png base64EncodedStringWithOptions:0],
+          @"boundary": @"Visible native help-tag window content bitmap; excludes the system shadow and desktop compositor" }); return;
+      }
+      if (![action isEqual:@"enter"] && ![action isEqual:@"leave"]) { reply(Failure(@"Unknown tooltip pointer action")); return; }
+      if (!CGPreflightPostEventAccess()) { reply(Failure(@"CGPreflightPostEventAccess denied tooltip hover input; no permission prompt was attempted")); return; }
+      if (PointerRunning || ProtocolDrag || ResponderHandler) { reply(Failure(@"Another pointer or native protocol sequence is active")); return; }
+      if (!owner.visible || owner.miniaturized || !owner.keyWindow || !NSApp.active) { reply(Failure(@"The tooltip owner must be visible, key and active before pointer input")); return; }
+      NSView *target = [action isEqual:@"enter"] ? trigger : Find(owner.contentView, request[@"outsideTestID"]);
+      BOOL hidden = NO;
+      for (NSView *ancestor = target; ancestor; ancestor = ancestor.superview) if (ancestor.hidden) hidden = YES;
+      NSScreen *primary = PrimaryScreen();
+      if (!target || !primary || hidden || NSIsEmptyRect(target.bounds) || !NSContainsRect(target.visibleRect, target.bounds)) { reply(Failure(@"The native tooltip pointer target must be fully visible")); return; }
+      NSPoint point = [owner convertPointToScreen:[target convertPoint:NSMakePoint(NSMidX(target.bounds), NSMidY(target.bounds)) toView:nil]];
+      NSRect triggerFrame = [owner convertRectToScreen:[trigger convertRect:trigger.bounds toView:nil]];
+      if ([action isEqual:@"leave"] && NSPointInRect(point, triggerFrame)) { reply(Failure(@"The tooltip exit point is still inside the trigger")); return; }
+      PointerRunning = YES;
+      PostPointer(kCGEventMouseMoved, QuartzPoint(point, primary), 0);
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ PointerRunning = NO; });
+      reply(@{ @"ok": @YES, @"boundary": @"CGEvent-posted-pointer", @"action": action, @"targetPoint": @{ @"x": @(point.x), @"y": @(point.y) }, @"triggerFrame": RectDictionary(triggerFrame) });
     });
     SparkTestDriverRegisterCommand(@"tron.pointer", ^(NSDictionary *request, SparkTestDriverReply reply) {
       BOOL postEvents = CGPreflightPostEventAccess();

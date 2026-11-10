@@ -23,24 +23,34 @@ export async function connectDriver(socketPath, token, record = () => {}) {
   });
   socket.on('error', fail);
   socket.on('close', () => fail(new Error('Native driver disconnected')));
-  const read = () => {
+  const read = stage => {
     if (messages.length) return Promise.resolve(messages.shift());
     if (ended) return Promise.reject(ended);
     return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => { fail(new Error('Native driver response timed out')); socket.destroy(); }, 35000);
+      const timer = setTimeout(() => { fail(new Error(`Native driver response timed out awaiting ${stage}`)); socket.destroy(); }, 35000);
       waiting.push({ resolve: value => { clearTimeout(timer); resolve(value); }, reject: error => { clearTimeout(timer); reject(error); } });
     });
   };
+  record({ phase: 'socket-connecting', at: new Date().toISOString() });
   await new Promise((resolve, reject) => { socket.once('connect', resolve); socket.once('error', reject); });
+  record({ phase: 'socket-connected', at: new Date().toISOString() });
+  // Record the protocol stage without recording the one-time credential.
+  record({ phase: 'authentication-started', at: new Date().toISOString() });
   socket.write(JSON.stringify({ token }) + '\n');
-  const authentication = await read();
+  let authentication;
+  try { authentication = await read('authentication'); }
+  catch (error) { record({ phase: 'authentication-failed', at: new Date().toISOString(), error: error.message }); throw error; }
+  record({ phase: 'authentication-response', at: new Date().toISOString(), ok: authentication.ok, protocol: authentication.protocol });
   if (authentication.ok !== true || authentication.protocol !== 1) { socket.destroy(); throw new Error('Native driver authentication failed'); }
   return {
     async request(command, args = {}) {
       const request = { ...args, command, id: ++sequence };
+      record({ phase: 'request-started', at: new Date().toISOString(), request });
       socket.write(JSON.stringify(request) + '\n');
-      const response = await read();
-      record({ request, response });
+      let response;
+      try { response = await read(`${command} (request ${request.id})`); }
+      catch (error) { record({ phase: 'request-failed', at: new Date().toISOString(), request, error: error.message }); throw error; }
+      record({ phase: 'response', at: new Date().toISOString(), request, response });
       if (response.id !== request.id || response.ok !== true) throw new Error(`${command}: ${response.error?.message ?? 'invalid native response'}`);
       return response;
     },

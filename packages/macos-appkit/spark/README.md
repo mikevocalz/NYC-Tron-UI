@@ -216,7 +216,7 @@ application, and verifies dependency pins, lock integrity and archive file
 bytes. The native receipt records the core hash so release assembly can compare
 the tested dependency with the shipped archive. The isolated workflow compiles a real standalone
 macOS app and runs native AppKit target/action, selection, text editing,
-menus, tooltips, NSPopover geometry/focus/content lifetime and multi-window
+menus, tooltip text/help bindings, NSPopover geometry/focus/content lifetime and multi-window
 checks through Spark's authenticated test driver. Drag protocol checks use a
 real isolated NSPasteboard and the installed native source/destination methods
 to verify accepted moves, app rejection, cancellation and shared document
@@ -229,6 +229,23 @@ NSDraggingSession plus the resulting cross-window app transfer. When posting
 is denied, the report records that observed permission block; it does not
 change TCC settings, prompt for permissions or report a pointer-session pass.
 `native-pointer.json` preserves that result separately from protocol evidence.
+
+Tooltip hover has its own `tooltip-hover.json` evidence. When event posting is
+allowed, the fixture moves the pointer outside the trigger, into its native
+rectangle, and outside again. Public `NSEvent.mouseLocation` readback must
+confirm each move while the owner is visible, key and active. Bounded,
+cycle-safe traversal of `NSApp.windows` and public accessibility properties
+must observe a newly visible `AXHelpTag` with the expected text, a native frame,
+and the actual help-tag window disappearing after exit. The fixture retains
+that window's native content bitmap during hover and an owner capture after
+exit. It never counts
+`toolTip` or `accessibilityHelp` as proof that a help tag appeared, and never
+calls a private tooltip-show method or changes the system hover delay.
+Permission denial records a blocked hover result separately from the text/help
+binding. If posting is allowed but the public observations do not establish
+presentation and dismissal, the native acceptance run fails. This posted-event
+path does not test physical mouse hardware or a human gesture.
+
 The workflow records
 app-payload hashes, commands, results and native-rendered captures. A tested
 archive receipt is produced only after those checks pass.
@@ -254,5 +271,7 @@ Official references: [Spark development](https://github.com/LegendApp/legend-spa
 [AppKit NSScreen](https://developer.apple.com/documentation/appkit/nsscreen),
 [NSPopover](https://developer.apple.com/documentation/appkit/nspopover),
 [NSView.toolTip](https://developer.apple.com/documentation/appkit/nsview/tooltip),
+[NSApplication.windows](https://developer.apple.com/documentation/appkit/nsapplication/windows),
+[Accessibility help-tag role](https://developer.apple.com/documentation/applicationservices/kaxhelptagrole),
 [NSDraggingDestination](https://developer.apple.com/documentation/appkit/nsdraggingdestination),
 and [NSDraggingSession](https://developer.apple.com/documentation/appkit/nsdraggingsession).
