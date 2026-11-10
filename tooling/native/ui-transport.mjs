@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import { constants, copyFileSync, existsSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
-import { join, relative, sep } from "node:path";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, sep } from "node:path";
 
 // Recovery is restricted to the first Settings navigation, before any edit or
 // save. Maestro's completed tap is insufficient evidence of delivered input:
@@ -93,31 +93,45 @@ export async function withInitialUiTransportRecovery({ attempt, classify, recove
   }
 }
 
-/** Move, never overwrite, every original driver artifact before a fresh attempt. */
+/** Snapshot every original driver artifact before recovery; preserve live files separately. */
 export function retainInitialUiTransportFailure({ output, eligibility, error, sourceCommit, nativeArtifact }) {
   const initial = join(output, "settings"), retained = join(output, "settings-initial-transport-failure");
+  const live = join(output, "settings-initial-transport-live");
   const receipt = join(output, "transport-recovery.json"), originalLog = join(output, "settings-maestro.log");
-  if (!existsSync(initial) || existsSync(retained) || existsSync(receipt)) throw new Error("Initial UI transport evidence cannot be replaced");
+  if (!existsSync(initial) || existsSync(retained) || existsSync(live) || existsSync(receipt)) throw new Error("Initial UI transport evidence cannot be replaced");
   if (["maestro-command.log", "commands-before-recovery.jsonl", "runner-failure.txt"].some(name => existsSync(join(initial, name))))
     throw new Error("Initial UI transport evidence conflicts with retained runner metadata");
   const digest = file => createHash("sha256").update(readFileSync(file)).digest("hex");
   const path = file => relative(output, file).split(sep).join("/");
   const walk = directory => readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory()
     ? walk(join(directory, entry.name)) : [join(directory, entry.name)]);
-  const originals = walk(initial).map(file => ({ sourceFile: path(file), file: path(join(retained, relative(initial, file))), sha256: digest(file) }));
-  if (!originals.length) throw new Error("Initial UI failure has no original artifacts");
-  if (existsSync(originalLog)) originals.push({ sourceFile: path(originalLog), file: path(join(retained, "maestro-command.log")), sha256: digest(originalLog) });
-  renameSync(initial, retained);
-  if (existsSync(originalLog)) renameSync(originalLog, join(retained, "maestro-command.log"));
-  const commands = join(output, "commands.jsonl");
-  if (existsSync(commands)) {
-    const snapshot = join(retained, "commands-before-recovery.jsonl");
-    copyFileSync(commands, snapshot, constants.COPYFILE_EXCL);
-    originals.push({ sourceFile: path(commands), file: path(snapshot), sha256: digest(snapshot), snapshot: "before recovery" });
+  const files = walk(initial);
+  if (!files.length) throw new Error("Initial UI failure has no original artifacts");
+  const snapshot = { phase: "before recovery", startedAt: new Date().toISOString(), liveDirectory: path(live) };
+  // Renaming alone leaves existing driver file descriptors attached to the
+  // retained files. Keep those live inodes, then write independent snapshots.
+  renameSync(initial, live);
+  const originals = [];
+  const retainFile = (source, destination, sourceFile) => {
+    const bytes = readFileSync(source);
+    mkdirSync(dirname(destination), { recursive: true });
+    writeFileSync(destination, bytes, { flag: "wx", mode: 0o444 });
+    originals.push({ sourceFile, file: path(destination), sha256: digest(destination), snapshot: "before recovery" });
+  };
+  for (const file of files) {
+    const name = relative(initial, file);
+    retainFile(join(live, name), join(retained, name), path(file));
   }
+  if (existsSync(originalLog)) {
+    renameSync(originalLog, join(live, "maestro-command.log"));
+    retainFile(join(live, "maestro-command.log"), join(retained, "maestro-command.log"), path(originalLog));
+  }
+  const commands = join(output, "commands.jsonl");
+  if (existsSync(commands)) retainFile(commands, join(retained, "commands-before-recovery.jsonl"), path(commands));
+  snapshot.completedAt = new Date().toISOString();
   const failure = join(retained, "runner-failure.txt");
   writeFileSync(failure, String(error?.stack ?? error) + "\n", { flag: "wx" });
-  const record = { schema: 1, status: "eligible", sourceCommit, nativeArtifact, eligibility, originals,
+  const record = { schema: 1, status: "eligible", sourceCommit, nativeArtifact, eligibility, snapshot, originals,
     runnerFailure: { file: path(failure), sha256: digest(failure) } };
   writeFileSync(receipt, JSON.stringify(record, null, 2) + "\n", { flag: "wx" });
   return { file: path(receipt), sha256: digest(receipt), kind: eligibility.kind, retainedDirectory: path(retained) };

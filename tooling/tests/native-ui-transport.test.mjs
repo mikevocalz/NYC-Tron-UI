@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { closeSync, ftruncateSync, mkdirSync, mkdtempSync, openSync, readFileSync, rmSync, writeFileSync, writeSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -118,4 +118,38 @@ test("retention preserves the failed JUnit, native logs and screenshots byte for
   writeFileSync(join(output, "settings", "report.xml"), '<testcase status="SUCCESS"/>');
   assert.match(readFileSync(join(output, retained.retainedDirectory, "report.xml"), "utf8"), /status="ERROR"/);
   assert.throws(() => retain({ output }), /cannot be replaced/);
+});
+
+test("retained snapshots survive writes through an already-open driver log and include hidden debug evidence", t => {
+  const output = mkdtempSync(join(tmpdir(), "native-ui-live-log-"));
+  t.after(() => rmSync(output, { recursive: true, force: true }));
+  const relativeLog = join("debug", ".maestro", "tests", "attempt", "maestro.log");
+  mkdirSync(join(output, "settings", "debug", ".maestro", "tests", "attempt"), { recursive: true });
+  const original = "driver evidence before recovery\n";
+  writeFileSync(join(output, "settings", relativeLog), original);
+  const descriptor = openSync(join(output, "settings", relativeLog), "r+");
+  t.after(() => closeSync(descriptor));
+  const retained = retain({ output, eligibility: classify(android()), error: new Error("original"),
+    sourceCommit: "2".repeat(40), nativeArtifact: { kind: "android-apk", sha256: "1".repeat(64) } });
+  const receiptBytes = readFileSync(join(output, retained.file));
+  const receipt = JSON.parse(receiptBytes);
+  assert.equal(receipt.snapshot.phase, "before recovery");
+  assert.ok(Date.parse(receipt.snapshot.completedAt) >= Date.parse(receipt.snapshot.startedAt));
+  const [snapshot] = receipt.originals;
+  assert.equal(snapshot.sourceFile, "settings/debug/.maestro/tests/attempt/maestro.log");
+  assert.equal(snapshot.snapshot, "before recovery");
+  const checkSnapshot = () => {
+    const bytes = readFileSync(join(output, snapshot.file));
+    assert.equal(bytes.toString(), original);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), snapshot.sha256);
+    assert.deepEqual(readFileSync(join(output, retained.file)), receiptBytes);
+  };
+  writeSync(descriptor, Buffer.from("late driver output\n"), 0, 19, Buffer.byteLength(original));
+  assert.equal(readFileSync(join(output, receipt.snapshot.liveDirectory, relativeLog), "utf8"), original + "late driver output\n");
+  checkSnapshot();
+  const replacement = Buffer.from("driver rewrote its live output\n");
+  writeSync(descriptor, replacement, 0, replacement.length, 0);
+  ftruncateSync(descriptor, replacement.length);
+  assert.equal(readFileSync(join(output, receipt.snapshot.liveDirectory, relativeLog), "utf8"), replacement.toString());
+  checkSnapshot();
 });

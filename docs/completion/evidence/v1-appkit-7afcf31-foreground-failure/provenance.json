@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-compile-passed-runtime-foreground-failed",
+  "runId": 42877931766,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42877931766",
+  "nativeJobId": 130046348596,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42877931766/job/130046348596",
+  "pullRequestHead": "7afcf312d98336c7bd25e157367f711489d206c9",
+  "checkoutRevision": "f52734871c351bedef2d8fa961c15348107e148f",
+  "checkoutTree": "03648c979fb6e7841f5418edaac8f8a9d4fc89df",
+  "pullRequestHeadTree": "03648c979fb6e7841f5418edaac8f8a9d4fc89df",
+  "artifact": {
+    "id": 13794765365,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 800181,
+    "expectedSha256": "b0fb83cb7a116f9783f9d872b7155110e72231295bf38d14bff667ed21ccaca2",
+    "downloadedSha256": "b0fb83cb7a116f9783f9d872b7155110e72231295bf38d14bff667ed21ccaca2",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "appkit-toolchain/versions.txt",
+      "retainedPath": "toolchain.txt",
+      "bytes": 232,
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-artifact.json",
+      "retainedPath": "native-artifact.json",
+      "bytes": 6128,
+      "sha256": "460903547d1bfcf17a48576d5dcd82c1ecd2707914d33f15ba3f1679b605f335"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/invocation.json",
+      "retainedPath": "invocation.json",
+      "bytes": 450,
+      "sha256": "399096877ee60a819a67e50eabaed1c8d44521b2f3e37a21e7b33b421b47f6fe"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/failure.json",
+      "retainedPath": "failure.json",
+      "bytes": 191,
+      "sha256": "c0a4bf1c4ffbe7323f03d4b0319c45211c0e91c325eded1508dd09029b91d985"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/app.log",
+      "retainedPath": "app-startup.txt",
+      "bytes": 466,
+      "sha256": "972be0e10f7004a247986c657b77f255fe56f5db7f80ac5f8e2db1b147199a78"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-process-failure.json",
+      "retainedPath": "native-process-failure.json",
+      "bytes": 641,
+      "sha256": "a29f107e468eb6b302d3e2e6fbeb6dc7f3a68a5b290da247b2dfff0baf027dde"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794336407472-37f96811-82ab-4045-936a-e20e1dd1e59d-xcodebuild.log",
+      "bytes": 12299650,
+      "sha256": "6cf3ec5d487eb43bbbdcf5efcaa4b5e8776c3d5ac7366bcb48a8ab3c20f4da34",
+      "retainedExcerpt": "build-success.txt",
+      "sourceLineRanges": [
+        [
+          50925,
+          50930
+        ]
+      ]
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/commands.jsonl",
+      "bytes": 827603,
+      "sha256": "d0e32a298319cbb341b3513a1efcb90bd1ba54d2afee0ae86ad05b85ca680725",
+      "retainedExcerpt": "commands-excerpt.jsonl",
+      "sourceLineNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        693,
+        694
+      ]
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-process-sample.txt",
+      "bytes": 199848,
+      "sha256": "41cd34cbfb7dfa6523473f59036ecb94a919f099b09177f6e555ee4a3999db84",
+      "retainedExcerpt": "process-sample-excerpt.txt",
+      "sourceLineRanges": [
+        [
+          1,
+          39
+        ],
+        [
+          69,
+          95
+        ]
+      ]
+    }
+  ],
+  "observedToolchain": {
+    "xcodeVersion": "26.2",
+    "xcodeBuild": "17C52",
+    "swiftVersion": "6.2.3",
+    "architecture": "arm64",
+    "sdk": "MacOSX26.2.sdk",
+    "runtimeOS": "macOS 15.8.2 (24H232)"
+  },
+  "completedPrerequisites": [
+    "canonical-core-release-archive",
+    "native-arm64-xcode26.2-and-swift-isolated-conformance-probe",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot",
+    "standalone-native-appkit-reference-compilation"
+  ],
+  "completedReadinessStages": [
+    "socket-connected",
+    "authenticated-protocol-1",
+    "main-queue-ping",
+    "root-main-mounted",
+    "native-workspace-ready"
+  ],
+  "failedStep": "Exercise actual native controls and window lifetimes",
+  "runtimeError": "Timed out waiting for visible native owner window",
+  "completedInteractionChecks": [],
+  "launchedProcessId": 34696,
+  "executableSha256": "d4e10c51043b10c70aff7a9c0beebac1269b2e6592b5e883cd0f9e22d5d5e9f5",
+  "nativePayloadSha256": "86adff850e0e5400046fb191865e58a8bfe6c1c2d19f08153e7c3b5c55fc23c0",
+  "requestTracePresent": true,
+  "successfulCommandResponses": 345,
+  "postShowOwnerObservations": {
+    "count": 340,
+    "allVisible": true,
+    "allNonKey": true,
+    "firstAt": "2026-11-10T18:59:39.054Z",
+    "lastAt": "2026-11-10T18:59:58.421Z"
+  },
+  "processSample": {
+    "exitCode": 0,
+    "durationSeconds": 2,
+    "intervalMilliseconds": 10,
+    "mainThreadSamples": 162,
+    "observedMainThreadState": "NSApplication event-loop wait",
+    "observedJavaScriptThreadState": "CFRunLoop wait",
+    "observedDriverThreadState": "socket recv wait"
+  },
+  "unexecutedChecks": [
+    "native-control-window-popover-and-drag-acceptance",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "The fixture reached mounted real native controls, but no interaction check completed because the owner never became key.",
+    "The show command returned ok after its Regular activation-policy request succeeded, but this revision did not record actual NSApp.active, activationPolicy, canBecomeKeyWindow or the frontmost process.",
+    "The sample is a bounded observation after the foreground wait failed; it does not establish every earlier process state.",
+    "The prior a097 initial timeout had no phase trace or process sample, so this run does not prove the same cause for that prior failure.",
+    "No tooltip-hover or native-drag input-posting permission observation was reached.",
+    "The supported NSWorkspace activation follow-up still requires actual runtime proof.",
+    "Prepared archive and native payload hashes identify a successful compile and failed runtime attempt, not an accepted distribution."
+  ]
+}

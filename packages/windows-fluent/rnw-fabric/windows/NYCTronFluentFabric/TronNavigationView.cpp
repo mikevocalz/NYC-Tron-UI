@@ -5,6 +5,7 @@
 #include "TronNavigationView.h"
 
 #ifdef RNW_NEW_ARCH
+#include "IslandConnection.h"
 #include "codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -23,6 +24,20 @@ struct TronNavigationViewComponentView
     : winrt::implements<TronNavigationViewComponentView, winrt::IInspectable>,
       Codegen::BaseTronNavigationView<TronNavigationViewComponentView> {
 
+  ~TronNavigationViewComponentView() { Destroy(); }
+
+  void Destroy() noexcept {
+    if (std::exchange(m_disposed, true)) return;
+    try { if (m_xamlIsland) m_xamlIsland.Close(); } catch (...) {}
+    m_connection.Close();
+  }
+
+  void Mounted(winrt::Microsoft::ReactNative::ComponentView const& view) noexcept {
+    if (m_disposed) return;
+    try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
+    catch (...) { ReportNativeError("Could not retain the navigation connection: " + DescribeCurrentException()); }
+  }
+
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) noexcept {
     try {
@@ -36,6 +51,7 @@ struct TronNavigationViewComponentView
       m_navigation.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Stretch);
       m_navigation.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Stretch);
       m_xamlIsland.Content(m_navigation);
+      m_connection.SetIsland(m_xamlIsland.ContentIsland());
       islandView.Connect(m_xamlIsland.ContentIsland());
 
       m_itemInvoked = m_navigation.ItemInvoked(
@@ -78,6 +94,7 @@ struct TronNavigationViewComponentView
       const winrt::Microsoft::ReactNative::ComponentView& sender,
       const winrt::com_ptr<Codegen::TronNavigationViewProps>& newProps,
       const winrt::com_ptr<Codegen::TronNavigationViewProps>& oldProps) noexcept override {
+    if (m_disposed) return;
     m_props = newProps;
     if (m_navigation && newProps) ApplyProps(*newProps);
     Codegen::BaseTronNavigationView<TronNavigationViewComponentView>::UpdateProps(
@@ -85,12 +102,14 @@ struct TronNavigationViewComponentView
   }
 
   void HandleFocusSelectedCommand() noexcept override {
+    if (m_disposed) return;
     try {
       if (m_navigation && m_navigation.IsLoaded()) FocusItem(m_navigation.SelectedItem());
     } catch (...) { ReportNativeError("Could not restore navigation focus: " + DescribeCurrentException()); }
   }
 
   void HandleFocusSettingsCommand() noexcept override {
+    if (m_disposed) return;
     try {
       if (m_navigation && m_navigation.IsLoaded() && m_navigation.IsSettingsVisible()) FocusItem(m_navigation.SettingsItem());
     } catch (...) { ReportNativeError("Could not restore Settings focus: " + DescribeCurrentException()); }
@@ -158,6 +177,7 @@ struct TronNavigationViewComponentView
   }
 
   void ReportNativeError(std::string message) noexcept {
+    if (m_disposed) return;
     if (auto emitter = EventEmitter()) {
       Codegen::TronNavigationViewEventEmitter::OnNativeError payload;
       payload.message = std::move(message);
@@ -191,7 +211,7 @@ struct TronNavigationViewComponentView
   // The restore is queued so NavigationView's selection change is not
   // re-entered from its own SelectionChanged event.
   void OnSelectionChanged() {
-    if (m_updatingFromJs || m_restorePending) return;
+    if (m_disposed || m_updatingFromJs || m_restorePending) return;
     if (m_navigation.SelectedItem() == FindItem(winrt::to_hstring(m_selectedId))) return;
     // TryEnqueue fails only while the queue shuts down; then nothing is
     // pending and later selection changes must still be handled.
@@ -210,6 +230,7 @@ struct TronNavigationViewComponentView
   // silence every later selection and pane event.
   template <typename Write>
   void RunFromJs(Write&& write, char const* failure) noexcept {
+    if (m_disposed) return;
     m_updatingFromJs = true;
     try {
       write();
@@ -271,7 +292,7 @@ struct TronNavigationViewComponentView
 
   void OnItemInvoked(
       winrt::Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs const& args) {
-    if (m_updatingFromJs) return;
+    if (m_disposed || m_updatingFromJs) return;
     if (args.IsSettingsInvoked()) {
       if (auto emitter = EventEmitter()) {
         Codegen::TronNavigationViewEventEmitter::OnSettingsInvoked payload;
@@ -309,7 +330,7 @@ struct TronNavigationViewComponentView
   //   NavigationView's own pane change. A toggle while it is queued is
   //   dropped; the restore still runs.
   void OnPaneChanged(bool open) {
-    if (m_updatingFromJs || m_paneRestorePending) return;
+    if (m_disposed || m_updatingFromJs || m_paneRestorePending) return;
     if (open == m_paneOpen || m_navigation.IsPaneOpen() != open) return;
     using DisplayMode = winrt::Microsoft::UI::Xaml::Controls::NavigationViewDisplayMode;
     if (open || m_navigation.DisplayMode() == DisplayMode::Expanded) {
@@ -332,6 +353,7 @@ struct TronNavigationViewComponentView
   }
 
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
+  nyctron::islands::IslandConnection m_connection;
   winrt::Microsoft::UI::Xaml::Controls::NavigationView m_navigation{nullptr};
   winrt::com_ptr<Codegen::TronNavigationViewProps> m_props;
   winrt::event_token m_itemInvoked{};
@@ -342,6 +364,7 @@ struct TronNavigationViewComponentView
   std::string m_itemsJson;
   std::string m_footerItemsJson;
   bool m_itemsInitialized{false};
+  bool m_disposed{false};
   bool m_updatingFromJs{false};
   bool m_restorePending{false};
   // Committed by JS through the paneOpen prop. Matches the initial
@@ -368,6 +391,12 @@ void RegisterTronNavigationViewComponent(
               auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronNavigationViewComponentView>();
               data->InitializeContentIsland(islandView);
               islandView.UserData(*data);
+              islandView.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
+                if (auto owner = weak.get()) owner->Mounted(mounted);
+              });
+              islandView.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
+                if (auto owner = weak.get()) owner->Destroy();
+              });
             });
       });
 }

@@ -253,10 +253,14 @@ archive receipt is produced only after those checks pass.
 The test driver is excluded from this library's archive. The reference defaults
 to excluding it from release builds; `--native-acceptance` opts in only inside
 the generated private test application. That application is not distributed.
-Its explicit `tron.window` show command enables regular AppKit activation so
-menus, focus and popovers are tested with actual visible owner windows. Spark's
-stock capture-only driver otherwise prohibits activation. This fixture does
-not change the SDK or grant input-posting permission.
+Its explicit `tron.window` show command enables regular AppKit activation and
+requests foreground presentation through `NSWorkspace.openApplication` for the
+exact existing test bundle. The returned process must be the already launched
+acceptance process. The fixture then requires observed visible, key and active
+owner-window state, including the frontmost process identity; a successful
+activation request alone cannot pass. Spark's stock capture-only driver
+otherwise prohibits activation. This fixture does not change the SDK or grant
+input-posting permission.
 Driver target/action and protocol evidence does not prove actual pointer input;
 the separate CGEvent result must be inspected for that boundary. Even a passed
 posted-event session does not prove physical mouse hardware, human gestures,
@@ -272,6 +276,8 @@ Official references: [Spark development](https://github.com/LegendApp/legend-spa
 [NSPopover](https://developer.apple.com/documentation/appkit/nspopover),
 [NSView.toolTip](https://developer.apple.com/documentation/appkit/nsview/tooltip),
 [NSApplication.windows](https://developer.apple.com/documentation/appkit/nsapplication/windows),
+[Cooperative app activation](https://developer.apple.com/documentation/appkit/passing-control-from-one-app-to-another-with-cooperative-activation),
+[NSWorkspace application opening](https://developer.apple.com/documentation/appkit/nsworkspace/openapplication(at:configuration:completionhandler:)),
 [Accessibility help-tag role](https://developer.apple.com/documentation/applicationservices/kaxhelptagrole),
 [NSDraggingDestination](https://developer.apple.com/documentation/appkit/nsdraggingdestination),
 and [NSDraggingSession](https://developer.apple.com/documentation/appkit/nsdraggingsession).

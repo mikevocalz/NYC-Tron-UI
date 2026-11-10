@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "platform": "ios",
+  "revision": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+  "stages": [
+    {
+      "name": "settings",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "settings/report.xml",
+      "reportSha256": "af3c5176dcee57690ff7854f5ada8cbee2c1b041712d8375a2016d6af3cba03c",
+      "hierarchy": "settings-hierarchy.json",
+      "hierarchySha256": "ef55ed3e6a258860bccdd6a8272995acd8ecfcda8558740abfd64fd80bbad964",
+      "images": [
+        {
+          "file": "settings/artifacts/2026-11-10_182810/Settings native edit and save/takeScreenshot/settings-saved.png",
+          "sha256": "0bd60aa185bb002d5826abafd81c3dd3ca7a434bbb03d7e09d5cdad8bef84b00"
+        }
+      ],
+      "geometry": {
+        "host": {
+          "left": 0,
+          "top": 62,
+          "right": 402,
+          "bottom": 840
+        },
+        "header": {
+          "left": 0,
+          "top": 62,
+          "right": 402,
+          "bottom": 134
+        },
+        "tabs": {
+          "left": 0,
+          "top": 775,
+          "right": 402,
+          "bottom": 840
+        }
+      }
+    },
+    {
+      "name": "editor",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "editor/report.xml",
+      "reportSha256": "49c8a5046ba94a02b80aee1b485271f70c4572733ec8d513573d522651a02b6c",
+      "hierarchy": "editor-hierarchy.json",
+      "hierarchySha256": "d06eee2a2e89229533ee16f576558e5358d76e95455eb5f0e6d528418ca8ceb1",
+      "images": [
+        {
+          "file": "editor/artifacts/2026-11-10_183140/Editor native draft route retention and save/takeScreenshot/editor-draft.png",
+          "sha256": "1cae2162987bf0e545939aa16553f38bc6ca5c6fd36b936c31dfa353f9f74118"
+        },
+        {
+          "file": "editor/artifacts/2026-11-10_183140/Editor native draft route retention and save/takeScreenshot/editor-saved.png",
+          "sha256": "381cb9b0436709ee484a8e743262b2ee636fa0b916455eacfbf1efb6ada56853"
+        }
+      ],
+      "geometry": {
+        "host": {
+          "left": 0,
+          "top": 62,
+          "right": 402,
+          "bottom": 840
+        },
+        "header": {
+          "left": 0,
+          "top": 62,
+          "right": 402,
+          "bottom": 134
+        },
+        "tabs": {
+          "left": 0,
+          "top": 775,
+          "right": 402,
+          "bottom": 840
+        }
+      }
+    },
+    {
+      "name": "pointer",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "pointer/report.xml",
+      "reportSha256": "4226d043194e2409e4ef6036838071e330b458651a14a391752556e56ed15567",
+      "hierarchy": "pointer-hierarchy.json",
+      "hierarchySha256": "e451ef0f3bd810e9479ab382cdac8d2428d7a5d84554273882a1ce2443024f85",
+      "images": [
+        {
+          "file": "pointer/artifacts/2026-11-10_183542/Native pointer touch lifecycle/takeScreenshot/pointer-touch.png",
+          "sha256": "85e3c48f7929515e0cd4e5d3b885eb33357dfe2bf6256a36f2172c1e73f0e41f"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "udid": "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC",
+    "name": "iPhone 17 Pro",
+    "nativeArtifact": {
+      "kind": "ios-app",
+      "algorithm": "sha256-sorted-relative-app-manifest-v1",
+      "sha256": "45e0bf10ff71227b36a0f628e80a85d85502d1e0dadae2a5f84a64242c7e0d68",
+      "manifest": {
+        "file": "native-artifact.json",
+        "sha256": "45e0bf10ff71227b36a0f628e80a85d85502d1e0dadae2a5f84a64242c7e0d68"
+      }
+    },
+    "launcherSha256": "ad461128ae342c9d076d026faa19bb265ea6f2e8c45ee7cbe41e10e7e8cf10c9",
+    "sourceCommit": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+    "maestro": {
+      "version": "2.12.1",
+      "revision": "67d8a677029261fa424a45a10d08eacd6aa0deed",
+      "archiveSha256": "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7",
+      "url": "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip"
+    },
+    "installedPackages": {
+      "kind": "expo-native",
+      "sourceCommit": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+      "workspacePackages": {
+        "manifestSha256": "34335d9968c0c4baab066ef454c29d25be04f8514b9778bbc23f52c29647b4fa",
+        "checksumsSha256": "715866f9a930cef6cb64752adff5ab46213ca28738bd99064467b4b46b23736c",
+        "archiveCount": 13,
+        "sourceCommit": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+        "version": "1.0.0"
+      },
+      "packages": {
+        "@nyc-tron/core": {
+          "version": "1.0.0",
+          "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/core"
+        },
+        "@nyc-tron/expo-controls": {
+          "version": "1.0.0",
+          "sha256": "b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/expo-controls"
+        },
+        "@nyc-tron/hardware-keys": {
+          "version": "1.0.0",
+          "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/hardware-keys"
+        },
+        "@nyc-tron/native-charts": {
+          "version": "1.0.0",
+          "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-charts"
+        },
+        "@nyc-tron/native-controls": {
+          "version": "1.0.0",
+          "sha256": "2832c3ba7c33cd55c59d336ba48102f6a00e743e392ee33157831683ec1da258",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-controls"
+        },
+        "@nyc-tron/native-navigation": {
+          "version": "1.0.0",
+          "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-navigation"
+        },
+        "@nyc-tron/panes": {
+          "version": "1.0.0",
+          "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/panes"
+        },
+        "@nyc-tron/platform-services": {
+          "version": "1.0.0",
+          "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/platform-services"
+        },
+        "@nyc-tron/reserved-regions": {
+          "version": "1.0.0",
+          "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/reserved-regions"
+        },
+        "@nyc-tron/ui": {
+          "version": "1.0.0",
+          "sha256": "f48b2e1a315c34132d18c0c4cb1ceda44fcd40403fe2aeec0d1bd313720ade40",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/ui"
+        }
+      },
+      "absentPeers": []
+    },
+    "bundleWarmups": [
+      {
+        "schema": 1,
+        "phase": "metro-bundle-warmup",
+        "platform": "ios",
+        "entry": "reference",
+        "url": "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example",
+        "startedAt": "2026-11-10T18:24:47.484Z",
+        "timeoutMs": 360000,
+        "maxBytes": 67108864,
+        "status": "ready",
+        "bytes": 5402368,
+        "httpStatus": 200,
+        "contentType": "application/javascript; charset=UTF-8",
+        "sha256": "baa1dfbe99dd1baba4457132f93c2c7bb665f41365afc576097dc25eabf37736",
+        "elapsedMs": 5655,
+        "file": "bundle-warmup-reference.json",
+        "recordSha256": "d3e9c723cdec457c4a3c69d59e194480bcba94d28d8332477fd8ef962e727c27"
+      },
+      {
+        "schema": 1,
+        "phase": "metro-bundle-warmup",
+        "platform": "ios",
+        "entry": "pointer",
+        "url": "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example",
+        "startedAt": "2026-11-10T18:35:07.972Z",
+        "timeoutMs": 360000,
+        "maxBytes": 67108864,
+        "status": "ready",
+        "bytes": 4907537,
+        "httpStatus": 200,
+        "contentType": "application/javascript; charset=UTF-8",
+        "sha256": "c6cf5d895b9bb58a41110d4ea007df6edcdc8f0f46c508828ac98964fb62c78f",
+        "elapsedMs": 3636,
+        "file": "bundle-warmup-pointer.json",
+        "recordSha256": "36407b6b8932c731caeb7c35e9525edae515d3b4f60069f479bd9db210c272fc"
+      }
+    ],
+    "transportRecoveries": [
+      {
+        "file": "transport-recovery.json",
+        "sha256": "321c1aff4176bb6be7d43f056d25b4a2068fedf1274187087298b9544355279f",
+        "kind": "ios-initial-navigation-recap-cancelled",
+        "retainedDirectory": "settings-initial-transport-failure",
+        "status": "recovered",
+        "attempts": 2
+      }
+    ]
+  },
+  "input": "Maestro XCTest OS touch",
+  "manualGates": [
+    "physical pen pressure/tilt/hover",
+    "physical palm rejection",
+    "VoiceOver/TalkBack spoken output",
+    "active iOS touch cancellation by OS interruption"
+  ]
+}

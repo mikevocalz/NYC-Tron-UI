@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+  "verified": [
+    {
+      "flow": "settings",
+      "file": "ui/settings-hierarchy.json",
+      "sha256": "2f4432d03d6e6dbc5a310b116d202ce2ad3e7b24ea1cdeb4a82e637c768e0128",
+      "geometry": {
+        "host": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 616
+        },
+        "header": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 96
+        },
+        "tabs": {
+          "left": 0,
+          "top": 551,
+          "right": 320,
+          "bottom": 616
+        }
+      }
+    },
+    {
+      "flow": "editor",
+      "file": "ui/editor-hierarchy.json",
+      "sha256": "cef768cf6dee8089938eac0277e0c602008a95e187b65a57e41e9d2f6ec1d052",
+      "geometry": {
+        "host": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 616
+        },
+        "header": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 96
+        },
+        "tabs": {
+          "left": 0,
+          "top": 551,
+          "right": 320,
+          "bottom": 616
+        }
+      }
+    }
+  ]
+}

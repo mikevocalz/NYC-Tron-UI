@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "sourceRevision": "f52734871c351bedef2d8fa961c15348107e148f",
+  "checks": [],
+  "error": "Timed out waiting for visible native owner window"
+}

@@ -3,6 +3,7 @@
 #include "OverlayDismissal.h"
 #include "InspectorEditSequence.h"
 #ifdef RNW_NEW_ARCH
+#include "IslandConnection.h"
 #include "codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
@@ -25,9 +26,21 @@ using Automation = Xaml::Automation::AutomationProperties;
 struct TronOverlayAnchorComponentView
     : winrt::implements<TronOverlayAnchorComponentView, winrt::IInspectable>,
       Codegen::BaseTronOverlayAnchor<TronOverlayAnchorComponentView> {
-  ~TronOverlayAnchorComponentView() {
+  ~TronOverlayAnchorComponentView() { Destroy(); }
+  void Destroy() noexcept {
+    if (m_disposed) return;
     m_disposed = true;
-    try { HideFlyout(); if (m_tooltip) m_tooltip.IsOpen(false); if (m_island) m_island.Close(); } catch (...) {}
+    // RNW's Destroying event runs while the ComponentView is still alive.
+    // Final COM release can occur after that removal boundary.
+    try { HideFlyout(); } catch (...) {}
+    try { if (m_tooltip) m_tooltip.IsOpen(false); } catch (...) {}
+    try { if (m_island) m_island.Close(); } catch (...) {}
+    m_connection.Close();
+  }
+  void Mounted(winrt::Microsoft::ReactNative::ComponentView const& view) noexcept {
+    if (m_disposed) return;
+    try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
+    catch (...) { Error("Could not retain the native overlay connection: " + Exception()); }
   }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
@@ -45,7 +58,9 @@ struct TronOverlayAnchorComponentView
       m_anchor.Unloaded([weak = get_weak()](auto const&, auto const&) {
         if (auto self = weak.get()) self->Write([&] { self->HideFlyout(); if (self->m_tooltip) self->m_tooltip.IsOpen(false); });
       });
-      m_island.Content(m_anchor); view.Connect(m_island.ContentIsland());
+      m_island.Content(m_anchor);
+      m_connection.SetIsland(m_island.ContentIsland());
+      view.Connect(m_island.ContentIsland());
       if (m_props) Apply(*m_props);
     } catch (...) { Error("Native overlay initialization failed: " + Exception()); }
   }
@@ -56,6 +71,7 @@ struct TronOverlayAnchorComponentView
   void UpdateProps(winrt::Microsoft::ReactNative::ComponentView const& sender,
       winrt::com_ptr<Codegen::TronOverlayAnchorProps> const& props,
       winrt::com_ptr<Codegen::TronOverlayAnchorProps> const& previous) noexcept override {
+    if (m_disposed) return;
     m_props = props; if (m_anchor && props) Apply(*props);
     Codegen::BaseTronOverlayAnchor<TronOverlayAnchorComponentView>::UpdateProps(sender, props, previous);
   }
@@ -289,6 +305,7 @@ struct TronOverlayAnchorComponentView
     ApplyOpen();
   }
   Xaml::XamlIsland m_island{nullptr}; Controls::Button m_anchor{nullptr}; Controls::ToolTip m_tooltip{nullptr};
+  nyctron::islands::IslandConnection m_connection;
   Controls::Primitives::FlyoutBase m_flyout{nullptr}; Controls::MenuFlyout m_menu{nullptr}; Controls::Flyout m_popover{nullptr};
   Controls::StackPanel m_panel{nullptr}, m_fieldsPanel{nullptr}, m_actionsPanel{nullptr}; Controls::TextBlock m_title{nullptr}, m_description{nullptr};
   winrt::com_ptr<Codegen::TronOverlayAnchorProps> m_props;
@@ -304,6 +321,12 @@ void RegisterTronOverlayAnchorComponent(winrt::Microsoft::ReactNative::IReactPac
       component.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
       component.SetContentIslandComponentViewInitializer([](auto const& view) noexcept {
         auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronOverlayAnchorComponentView>(); data->InitializeContentIsland(view); view.UserData(*data);
+        view.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
+          if (auto owner = weak.get()) owner->Mounted(mounted);
+        });
+        view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
+          if (auto owner = weak.get()) owner->Destroy();
+        });
       });
     });
 }

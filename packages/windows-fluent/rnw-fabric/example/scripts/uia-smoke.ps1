@@ -84,14 +84,35 @@ function Save-Screenshot([string]$name, $target) {
   Write-Host "Saved screenshot $path"
 }
 
-function Save-Tree($root) {
-  $lines = foreach ($element in $root.FindAll($Tree::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
-    $c = $element.Current
-    "{0} | name='{1}' | id='{2}' | class='{3}'" -f $c.ControlType.ProgrammaticName, $c.Name, $c.AutomationId, $c.ClassName
+function Save-Tree($root, [string]$name = "uia-tree") {
+  # Provider teardown can race a diagnostic walk. Retain that error while the
+  # separate exact-name/visibility assertions continue to determine acceptance.
+  $lines = try {
+    foreach ($element in $root.FindAll($Tree::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
+      try {
+        $c = $element.Current
+        $identity = try { $element.GetRuntimeId() -join "," } catch { "unavailable: $($_.Exception.Message)" }
+        "{0} | name='{1}' | id='{2}' | class='{3}' | runtimeId='{4}' | process={5} | bounds='{6}' | offscreen={7}" -f $c.ControlType.ProgrammaticName, $c.Name, $c.AutomationId, $c.ClassName, $identity, $c.ProcessId, $c.BoundingRectangle, $c.IsOffscreen
+      } catch { "Provider unavailable during snapshot: $($_.Exception.Message)" }
+    }
+  } catch {
+    "UIA tree enumeration failed: $($_.Exception.Message)"
   }
-  $path = Join-Path $OutDir "uia-tree.txt"
+  $path = Join-Path $OutDir "$name.txt"
   $lines | Set-Content -Path $path -Encoding UTF8
   Write-Host "Saved UIA tree ($($lines.Count) elements) to $path"
+}
+
+function Refresh-OwnedWindow($root) {
+  $handle = [IntPtr]$root.Current.NativeWindowHandle
+  $owner = $root.Current.ProcessId
+  if ($handle -eq [IntPtr]::Zero -or $owner -ne $process.Id) { throw "Cannot reacquire an unowned top-level window" }
+  $fresh = $AE::FromHandle($handle)
+  if ($null -eq $fresh -or $fresh.Current.ProcessId -ne $owner -or [IntPtr]$fresh.Current.NativeWindowHandle -ne $handle) {
+    throw "The native top-level window changed while reacquiring its automation provider"
+  }
+  Write-Host "Reacquired owned window HWND=$handle, process=$owner, runtimeId=$($fresh.GetRuntimeId() -join ',')"
+  return $fresh
 }
 
 function Find-ByName($root, [string]$name, [int]$timeoutSec = 30) {
@@ -457,6 +478,10 @@ try {
   Invoke-Button $window "Native inspector anchor"
   $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Assert-NativeValue $field "NativeRapid123abc"
+  # Retain a later observation after a real close/reopen. The immediate
+  # rejection capture can precede repaint even after ValuePattern has updated;
+  # neither visibility nor stable bounds is a compositor completion barrier.
+  Save-PopupScreenshot "09-native-inspector-reopened" $field
   Invoke-NativeElement (Find-ProcessElement "Disable native inspector" ([System.Windows.Automation.ControlType]::Button))
   Find-ByName $window "Native inspector disabled" | Out-Null
   Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
@@ -486,7 +511,11 @@ try {
   Assert-NativeValue $vetoedField "Replacement native note"
   $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
   Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Save-Tree $window "09-before-overlay-unmount"
   Invoke-Button $window "Show lifecycle checks"
+  Save-Tree $window "09-after-overlay-unmount-retained"
+  $window = Refresh-OwnedWindow $window
+  Save-Tree $window "09-after-overlay-unmount-fresh"
   Find-ByName $window "Windows navigation acceptance" | Out-Null
   Wait-ProcessElementHidden "Native inspector anchor" ([System.Windows.Automation.ControlType]::Button)
   Invoke-Button $window "Show native overlay checks"

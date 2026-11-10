@@ -1,0 +1,63 @@
+2026-11-10T18:52:09.4318653Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T18:52:09.4318933Z   CONSUMER_AUMID: NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T18:52:09.4319173Z ##[endgroup]
+2026-11-10T18:52:13.1902397Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T18:52:13.9301498Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T18:52:14.2351290Z Native NavigationView items found by Narrator name
+2026-11-10T18:52:14.5085140Z Saved screenshot D:\a\_temp\uia-smoke\01-launched.png
+2026-11-10T18:52:14.5185329Z [initial] Home selected=True, Workspace selected=False
+2026-11-10T18:52:15.2634875Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T18:52:15.2650810Z [pending] Home selected=True, Workspace selected=False
+2026-11-10T18:52:15.6174136Z Pressed 'Reject navigation' with the keyboard (no InvokePattern)
+2026-11-10T18:52:15.6262748Z [rejected] Home selected=True, Workspace selected=False
+2026-11-10T18:52:15.8074082Z Saved screenshot D:\a\_temp\uia-smoke\02-rejected.png
+2026-11-10T18:52:16.5121193Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T18:52:16.8305298Z Pressed 'Accept navigation' with the keyboard (no InvokePattern)
+2026-11-10T18:52:16.8505717Z [accepted] Home selected=False, Workspace selected=True
+2026-11-10T18:52:17.0252765Z Saved screenshot D:\a\_temp\uia-smoke\03-accepted.png
+2026-11-10T18:52:17.0258657Z UIA smoke passed: native selection followed only the committed route
+2026-11-10T18:52:17.3614679Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T18:52:17.8004217Z Pressed 'Change shared draft' with the keyboard (no InvokePattern)
+2026-11-10T18:52:17.9972414Z Saved screenshot D:\a\_temp\uia-smoke\04-native-document.png
+2026-11-10T18:52:18.3574067Z Pressed 'Restore document' with the keyboard (no InvokePattern)
+2026-11-10T18:52:18.5669220Z Saved screenshot D:\a\_temp\uia-smoke\05-close-veto.png
+2026-11-10T18:52:18.8956734Z Pressed 'Save shared draft' with the keyboard (no InvokePattern)
+2026-11-10T18:52:19.2729607Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T18:52:19.7528736Z Saved screenshot D:\a\_temp\uia-smoke\06-native-reopened.png
+2026-11-10T18:52:19.7973319Z Saved UIA tree (14 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T18:52:20.1557650Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T18:52:20.2498529Z Invoked 'Native command menu' through InvokePattern
+2026-11-10T18:52:20.4270362Z Saved screenshot D:\a\_temp\uia-smoke\07-native-menu.png
+2026-11-10T18:52:20.7828678Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T18:52:20.9391530Z OS pointer reached (456, 347) for requested (456, 347)
+2026-11-10T18:52:21.6763274Z Pointer inside native 'Native tooltip anchor' (42,66100,4,26); bounds=336,327,240,40; foregroundProcess=6404; nativeHitIdentityMatched=False
+2026-11-10T18:52:21.6778090Z [{"controlType":"ControlType.Pane","name":"","processId":6404,"bounds":"0,23,1024,697","className":"Microsoft.UI.Content.DesktopChildSiteBridge","runtimeId":"42,262236"},{"controlType":"ControlType.Window","name":"NYCTronWindowsExample","processId":6404,"bounds":"-8,-8,1040,736","className":"Microsoft.UI.Windowing.Window","runtimeId":"42,917694"},{"controlType":"ControlType.Pane","name":"","processId":7784,"bounds":"0,0,1024,768","className":"#32769","runtimeId":"42,65548"}]
+2026-11-10T18:52:21.8187937Z Saved screenshot D:\a\_temp\uia-smoke\08-native-tooltip.png
+2026-11-10T18:52:21.8201551Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T18:52:22.8674115Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:52:23.4952609Z Saved screenshot D:\a\_temp\uia-smoke\09-native-inspector.png
+2026-11-10T18:52:23.5935859Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:52:24.3785240Z Pressed 'Enable native inspector' with the keyboard (no InvokePattern)
+2026-11-10T18:52:24.4014895Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:52:24.8081946Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:52:25.2991759Z Pressed 'Veto next inspector dismissal' with the keyboard (no InvokePattern)
+2026-11-10T18:52:25.3357309Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:52:26.0359767Z Saved UIA tree (46 elements) to D:\a\_temp\uia-smoke\09-before-overlay-unmount.txt
+2026-11-10T18:52:26.3618444Z Pressed 'Show lifecycle checks' with the keyboard (no InvokePattern)
+2026-11-10T18:52:26.4033828Z Saved UIA tree (17 elements) to D:\a\_temp\uia-smoke\09-after-overlay-unmount-retained.txt
+2026-11-10T18:52:26.4108901Z Reacquired owned window HWND=917694, process=6404, runtimeId=42,917694
+2026-11-10T18:52:26.4369131Z Saved UIA tree (17 elements) to D:\a\_temp\uia-smoke\09-after-overlay-unmount-fresh.txt
+2026-11-10T18:52:56.5941524Z UIA smoke failed: UIA element named 'Windows navigation acceptance' did not appear within 30 s
+2026-11-10T18:52:56.6210603Z Saved UIA tree (17 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T18:52:56.8144937Z Saved screenshot D:\a\_temp\uia-smoke\failure.png
+2026-11-10T18:52:56.9309170Z UIA element named 'Windows navigation acceptance' did not appear within 30 s
+2026-11-10T18:52:56.9309860Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:126 char:3
+2026-11-10T18:52:56.9310457Z +   throw "UIA element named '$name' did not appear within $timeoutSec  ...
+2026-11-10T18:52:56.9311005Z +   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T18:52:56.9311883Z     + CategoryInfo          : OperationStopped: (UIA element nam...ear within 30 s:String) [], RuntimeException
+2026-11-10T18:52:56.9312694Z     + FullyQualifiedErrorId : UIA element named 'Windows navigation acceptance' did not appear within 30 s
+2026-11-10T18:52:56.9313274Z  
+2026-11-10T18:52:57.0025873Z ##[error]Process completed with exit code 1.
+2026-11-10T18:52:57.0201145Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T18:52:57.0201481Z with:
+2026-11-10T18:52:57.0201661Z   name: winui-fabric-uia-smoke

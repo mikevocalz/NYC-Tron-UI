@@ -65,6 +65,18 @@ writeFileSync(join(output, 'invocation.json'), JSON.stringify({ sourceRevision: 
 function assertRunning() {
   if (launchError || child.exitCode !== null || child.signalCode !== null) throw new Error(`Native application exited before acceptance: ${launchError?.message ?? child.exitCode ?? child.signalCode}`);
 }
+function retainProcessFailure() {
+  const processState = { processId: child.pid, exitCode: child.exitCode, signalCode: child.signalCode, launchError: launchError?.message, observedAt: new Date().toISOString() };
+  if (Number.isInteger(child.pid) && child.exitCode === null && child.signalCode === null) {
+    // Sample only this spawned app, before closing the driver or terminating it.
+    // Denied task access is retained as a diagnostic result, never bypassed.
+    const file = join(output, 'native-process-sample.txt');
+    const sample = spawnSync('/usr/bin/sample', [String(child.pid), '2', '10', '-file', file], { encoding: 'utf8', timeout: 8000, maxBuffer: 256 * 1024 });
+    processState.sample = { durationSeconds: 2, intervalMilliseconds: 10, exitCode: sample.status, signal: sample.signal, error: sample.error?.message, stdout: sample.stdout, stderr: sample.stderr,
+      ...(existsSync(file) ? { file: 'native-process-sample.txt', sha256: hash(readFileSync(file)) } : {}) };
+  }
+  writeFileSync(join(output, 'native-process-failure.json'), JSON.stringify(processState, null, 2) + '\n');
+}
 async function waitFor(check, label, timeoutMs = 20000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
@@ -75,6 +87,18 @@ async function waitFor(check, label, timeoutMs = 20000) {
   throw new Error(`Timed out waiting for ${label}`);
 }
 const inspect = (testID, window = 'main') => driver.request('tron.inspect', { window, ...(testID ? { testID } : {}) });
+async function show(window = 'main') {
+  const request = await driver.request('tron.window', { window, action: 'show' });
+  assert.equal(request.activationPath, 'NSWorkspace.openApplication');
+  assert.equal(request.processId, child.pid, 'Workspace activation must retain the launched acceptance process');
+  return waitFor(async () => {
+    const observed = await inspect(undefined, window);
+    assert.equal(observed.processId, child.pid);
+    assert.equal(observed.activationPolicy, 0, 'Interactive acceptance requires regular AppKit activation policy');
+    assert.equal(observed.canBecomeKey, true, 'The requested owner must be able to become key');
+    return observed.visible && observed.key && observed.applicationActive && observed.frontmostProcessId === child.pid ? observed : undefined;
+  }, `visible, key and active native owner window (${window})`);
+}
 const control = (testID, action, options = {}, window = 'main') => driver.request('tron.control', { testID, action, window, ...options });
 const mounted = testID => driver.request('waitFor', { testID, timeoutMs: 20000 });
 const status = text => waitFor(async () => (await inspect('status-main')).label.includes(text), text);
@@ -114,13 +138,15 @@ async function capture(name, window = 'main') {
 try {
   await waitFor(() => existsSync(join(driverDirectory, 'driver.sock')), 'native Spark driver', 25000);
   driver = await connectDriver(join(driverDirectory, 'driver.sock'), token, step => appendFileSync(join(output, 'commands.jsonl'), JSON.stringify(step) + '\n'));
+  // Authentication runs on Spark's socket thread; ping proves the native main
+  // queue can answer before waiting for the first React component to mount.
+  await driver.request('ping');
   await mounted('root-main'); await status('Native workspace ready');
-  await driver.request('tron.window', { action: 'show' });
-  await waitFor(async () => { const window = await inspect(); return window.visible && window.key; }, 'visible native owner window');
+  await show();
   const native = await inspect();
   assert.equal(native.hasSplitView, true); assert.equal(native.hasTableView, true);
   assert.equal(native.hasButton, true); assert.equal(native.hasTextField, true);
-  assert.ok(native.classes.some(name => /DragDrop/.test(name)), 'Expected a native drag source/destination view');
+  assert.equal(native.hasNativeDragView, true, 'Expected the installed RNDesktopDragView native source/destination class');
   checks.push('native-appkit-controls-and-display-module');
 
   const applicationMenu = await driver.request('tron.menu', { itemId: 'menu-save' });
@@ -289,7 +315,7 @@ try {
 
   await control('open-main', 'press'); await mounted('root-document-1');
   await waitFor(async () => (await driver.request('tron.windows')).windows.length === 2, 'two real NSWindows');
-  await driver.request('tron.window', { window: 'document-1', action: 'show' });
+  await show('document-1');
   assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
   assert.equal((await inspect('collection-document-1', 'document-1')).selected, 1);
   const identity = (await inspect('title-document-1', 'document-1')).identity;
@@ -329,9 +355,9 @@ try {
   assert.equal((await inspect('title-document-1', 'document-1')).identity, identity);
   checks.push('native-layout-restoration');
 
-  await driver.request('tron.window', { window: 'main', action: 'show' });
+  await show();
   await control('inspect-main', 'press'); await shownPopover();
-  await driver.request('tron.window', { window: 'document-1', action: 'show' });
+  await show('document-1');
   await popover('main', 'close'); await status('Native inspector dismissed');
   await waitFor(async () => !(await popover()).shown, 'popover close after another window gained focus');
   assert.equal((await inspect(undefined, 'document-1')).key, true);
@@ -411,6 +437,8 @@ try {
   await driver.request('quit');
   console.info(`Native AppKit acceptance passed ${checks.length} checks at ${revision}; tested archive ${archive.sha256}`);
 } catch (error) {
+  try { retainProcessFailure(); }
+  catch (diagnosticError) { writeFileSync(join(output, 'native-process-diagnostic-error.txt'), String(diagnosticError) + '\n'); }
   if (tooltipEvidence?.status === 'pending') { tooltipEvidence.status = 'failed'; tooltipEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'tooltip-hover.json'), JSON.stringify(tooltipEvidence, null, 2) + '\n'); }
   if (pointerEvidence?.status === 'pending') { pointerEvidence.status = 'failed'; pointerEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
   writeFileSync(join(output, 'failure.json'), JSON.stringify({ schemaVersion: 1, status: 'failed', sourceRevision: revision, checks, error: error instanceof Error ? error.message : String(error) }, null, 2) + '\n');

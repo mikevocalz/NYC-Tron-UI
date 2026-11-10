@@ -1,0 +1,7 @@
+Error: /Users/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro failed: 
+    at run (file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:36:11)
+    at flow (file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:110:3)
+    at attempt (file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:213:20)
+    at withInitialUiTransportRecovery (file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/ui-transport.mjs:87:22)
+    at file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:212:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

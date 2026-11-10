@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-compile-passed-runtime-failed",
+  "runId": 42869608044,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42869608044",
+  "nativeJobId": 130017223725,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42869608044/job/130017223725",
+  "pullRequestHead": "a097b8bad924115a9e49a38d8ccf33ab257707cc",
+  "checkoutRevision": "fcfef4d475eb9e6f8de9f2853bc0475fcc7b08fb",
+  "checkoutTree": "4b0332559770f47520bd47417845dd316ae60e94",
+  "pullRequestHeadTree": "4b0332559770f47520bd47417845dd316ae60e94",
+  "artifact": {
+    "id": 13790029404,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 733483,
+    "expectedSha256": "648738db0fd537fcb43ef20cfb93da0f60bfaa2905c0f7a44273e122df973b73",
+    "downloadedSha256": "648738db0fd537fcb43ef20cfb93da0f60bfaa2905c0f7a44273e122df973b73",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "appkit-toolchain/versions.txt",
+      "retainedPath": "toolchain.txt",
+      "bytes": 232,
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-artifact.json",
+      "retainedPath": "native-artifact.json",
+      "bytes": 6128,
+      "sha256": "e2b5b4d81abdd6b818e46232d5e9e1032c6abd2ad1c071bc88d34e810318dbdf"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/invocation.json",
+      "retainedPath": "invocation.json",
+      "bytes": 450,
+      "sha256": "8e10dcfb0969d479dc42b1494c776375b01c47056ffb9ccfb0f7b1e40ca8c9e9"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/failure.json",
+      "retainedPath": "failure.json",
+      "bytes": 174,
+      "sha256": "66cbce9ad2a636c77596703c6cf70dfca0944487396abe321a837bf450d5df75"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/app.log",
+      "retainedPath": "app-startup.txt",
+      "bytes": 468,
+      "sha256": "abbebd0fcd524861b484582441e5299466d0b8522563290dd74fccc8fe0d5a15"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794333565998-8276289b-49a2-4e6c-b781-ff9a8825c16c-xcodebuild.log",
+      "bytes": 12299665,
+      "sha256": "c8b25a553b34c5e6e143dfc87d7f29f47ddd968ee20200c74462531c9a503cd4",
+      "retainedExcerpt": "build-success.txt",
+      "sourceLineRanges": [
+        [
+          50924,
+          50929
+        ]
+      ]
+    }
+  ],
+  "observedToolchain": {
+    "xcodeVersion": "26.2",
+    "xcodeBuild": "17C52",
+    "swiftVersion": "6.2.3",
+    "architecture": "arm64",
+    "sdk": "MacOSX26.2.sdk"
+  },
+  "completedPrerequisites": [
+    "canonical-core-release-archive",
+    "native-arm64-xcode26.2-and-swift-isolated-conformance-probe",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot",
+    "standalone-native-appkit-reference-compilation"
+  ],
+  "failedStep": "Exercise actual native controls and window lifetimes",
+  "runtimeError": "Native driver response timed out",
+  "completedInteractionChecks": [],
+  "launchedProcessId": 50122,
+  "executableSha256": "b6cc7cfc384f54a92d24f53c8e802da9c569aed6dfc29a4df3bef1b101234e70",
+  "nativePayloadSha256": "f8c75fa2f25488058a660adb1d69d9e3155d73f262a8fea704b36296b1c33ef1",
+  "requestTracePresent": false,
+  "unexecutedChecks": [
+    "native-control-window-popover-and-drag-acceptance",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "The native app compiled and launched, but no native interaction check completed.",
+    "The old client recorded requests only after responses and did not record authentication phases, so the exact timed-out request is not established.",
+    "There is no process sample or native pointer/tooltip permission result in this run.",
+    "The subsequent stage trace, main-queue ping and bounded process sampling require another native run.",
+    "The exact RNDesktopDragView assertion repair is a separate source finding; the failed run did not reach the old class assertion.",
+    "Prepared archive hashes identify the inputs to the successful compile and failed runtime, not a natively accepted release package."
+  ]
+}

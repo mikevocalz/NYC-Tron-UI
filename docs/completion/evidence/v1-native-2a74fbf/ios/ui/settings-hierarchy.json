@@ -1,0 +1,1785 @@
+{
+  "attributes": {
+    "accessibilityText": "",
+    "title": "",
+    "value": "",
+    "text": "",
+    "hintText": "",
+    "resource-id": "",
+    "bounds": "[0,0][0,0]",
+    "enabled": "false",
+    "focused": "false",
+    "selected": "false",
+    "checked": "false"
+  },
+  "children": [
+    {
+      "attributes": {
+        "accessibilityText": "NYC-Tron Instruments Demo",
+        "title": "",
+        "value": "",
+        "text": "",
+        "hintText": "",
+        "resource-id": "",
+        "bounds": "[0,0][402,874]",
+        "enabled": "true",
+        "focused": "false",
+        "selected": "false",
+        "checked": "false"
+      },
+      "children": [
+        {
+          "attributes": {
+            "accessibilityText": "",
+            "title": "",
+            "value": "",
+            "text": "",
+            "hintText": "",
+            "resource-id": "",
+            "bounds": "[0,0][402,874]",
+            "enabled": "true",
+            "focused": "false",
+            "selected": "false",
+            "checked": "false"
+          },
+          "children": [
+            {
+              "attributes": {
+                "accessibilityText": "",
+                "title": "",
+                "value": "",
+                "text": "",
+                "hintText": "",
+                "resource-id": "",
+                "bounds": "[0,0][402,874]",
+                "enabled": "true",
+                "focused": "false",
+                "selected": "false",
+                "checked": "false"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "accessibilityText": "",
+                    "title": "",
+                    "value": "",
+                    "text": "",
+                    "hintText": "",
+                    "resource-id": "",
+                    "bounds": "[0,0][402,874]",
+                    "enabled": "true",
+                    "focused": "false",
+                    "selected": "false",
+                    "checked": "false"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "accessibilityText": "",
+                        "title": "",
+                        "value": "",
+                        "text": "",
+                        "hintText": "",
+                        "resource-id": "",
+                        "bounds": "[0,0][402,874]",
+                        "enabled": "true",
+                        "focused": "false",
+                        "selected": "false",
+                        "checked": "false"
+                      },
+                      "children": [
+                        {
+                          "attributes": {
+                            "accessibilityText": "",
+                            "title": "",
+                            "value": "",
+                            "text": "",
+                            "hintText": "",
+                            "resource-id": "",
+                            "bounds": "[0,0][402,874]",
+                            "enabled": "true",
+                            "focused": "false",
+                            "selected": "false",
+                            "checked": "false"
+                          },
+                          "children": [
+                            {
+                              "attributes": {
+                                "accessibilityText": "",
+                                "title": "",
+                                "value": "",
+                                "text": "",
+                                "hintText": "",
+                                "resource-id": "",
+                                "bounds": "[0,0][402,874]",
+                                "enabled": "true",
+                                "focused": "false",
+                                "selected": "false",
+                                "checked": "false"
+                              },
+                              "children": [
+                                {
+                                  "attributes": {
+                                    "accessibilityText": "",
+                                    "title": "",
+                                    "value": "",
+                                    "text": "",
+                                    "hintText": "",
+                                    "resource-id": "",
+                                    "bounds": "[0,0][402,874]",
+                                    "enabled": "true",
+                                    "focused": "false",
+                                    "selected": "false",
+                                    "checked": "false"
+                                  },
+                                  "children": [
+                                    {
+                                      "attributes": {
+                                        "accessibilityText": "",
+                                        "title": "",
+                                        "value": "",
+                                        "text": "",
+                                        "hintText": "",
+                                        "resource-id": "",
+                                        "bounds": "[0,0][402,874]",
+                                        "enabled": "true",
+                                        "focused": "false",
+                                        "selected": "false",
+                                        "checked": "false"
+                                      },
+                                      "children": [
+                                        {
+                                          "attributes": {
+                                            "accessibilityText": "",
+                                            "title": "",
+                                            "value": "",
+                                            "text": "",
+                                            "hintText": "",
+                                            "resource-id": "reference-safe-content",
+                                            "bounds": "[0,62][402,840]",
+                                            "enabled": "true",
+                                            "focused": "false",
+                                            "selected": "false",
+                                            "checked": "false"
+                                          },
+                                          "children": [
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "reference-header",
+                                                "bounds": "[0,62][402,134]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "reference-app",
+                                                "bounds": "[0,62][402,840]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "Native UI workspace",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "reference-workspace-title",
+                                                "bounds": "[24,74][378,102]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [
+                                                {
+                                                  "attributes": {
+                                                    "accessibilityText": "Native UI workspace",
+                                                    "title": "",
+                                                    "value": "",
+                                                    "text": "",
+                                                    "hintText": "",
+                                                    "resource-id": "",
+                                                    "bounds": "[24,74][378,102]",
+                                                    "enabled": "true",
+                                                    "focused": "false",
+                                                    "selected": "false",
+                                                    "checked": "false"
+                                                  },
+                                                  "children": [],
+                                                  "enabled": true,
+                                                  "focused": false,
+                                                  "checked": false,
+                                                  "selected": false
+                                                }
+                                              ],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "A personal workspace",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "",
+                                                "bounds": "[24,105][378,121]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [
+                                                {
+                                                  "attributes": {
+                                                    "accessibilityText": "A personal workspace",
+                                                    "title": "",
+                                                    "value": "",
+                                                    "text": "",
+                                                    "hintText": "",
+                                                    "resource-id": "",
+                                                    "bounds": "[24,105][378,121]",
+                                                    "enabled": "true",
+                                                    "focused": "false",
+                                                    "selected": "false",
+                                                    "checked": "false"
+                                                  },
+                                                  "children": [],
+                                                  "enabled": true,
+                                                  "focused": false,
+                                                  "checked": false,
+                                                  "selected": false
+                                                }
+                                              ],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "reference-pane-host",
+                                                "bounds": "[0,134][402,775]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [
+                                                {
+                                                  "attributes": {
+                                                    "accessibilityText": "Detail pane",
+                                                    "title": "",
+                                                    "value": "",
+                                                    "text": "",
+                                                    "hintText": "",
+                                                    "resource-id": "",
+                                                    "bounds": "[0,134][402,775]",
+                                                    "enabled": "true",
+                                                    "focused": "false",
+                                                    "selected": "false",
+                                                    "checked": "false"
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "attributes": {
+                                                        "accessibilityText": "",
+                                                        "title": "",
+                                                        "value": "",
+                                                        "text": "",
+                                                        "hintText": "",
+                                                        "resource-id": "reference-route-host",
+                                                        "bounds": "[0,134][402,775]",
+                                                        "enabled": "true",
+                                                        "focused": "false",
+                                                        "selected": "false",
+                                                        "checked": "false"
+                                                      },
+                                                      "children": [],
+                                                      "enabled": true,
+                                                      "focused": false,
+                                                      "checked": false,
+                                                      "selected": false
+                                                    },
+                                                    {
+                                                      "attributes": {
+                                                        "accessibilityText": "",
+                                                        "title": "",
+                                                        "value": "",
+                                                        "text": "",
+                                                        "hintText": "",
+                                                        "resource-id": "reference-panel-settings",
+                                                        "bounds": "[0,134][402,775]",
+                                                        "enabled": "true",
+                                                        "focused": "false",
+                                                        "selected": "false",
+                                                        "checked": "false"
+                                                      },
+                                                      "children": [],
+                                                      "enabled": true,
+                                                      "focused": false,
+                                                      "checked": false,
+                                                      "selected": false
+                                                    },
+                                                    {
+                                                      "attributes": {
+                                                        "accessibilityText": "",
+                                                        "title": "",
+                                                        "value": "",
+                                                        "text": "",
+                                                        "hintText": "",
+                                                        "resource-id": "reference-settings",
+                                                        "bounds": "[0,134][402,775]",
+                                                        "enabled": "true",
+                                                        "focused": "false",
+                                                        "selected": "false",
+                                                        "checked": "false"
+                                                      },
+                                                      "children": [
+                                                        {
+                                                          "attributes": {
+                                                            "accessibilityText": "",
+                                                            "title": "",
+                                                            "value": "",
+                                                            "text": "",
+                                                            "hintText": "",
+                                                            "resource-id": "",
+                                                            "bounds": "[0,134][402,775]",
+                                                            "enabled": "true",
+                                                            "focused": "false",
+                                                            "selected": "false",
+                                                            "checked": "false"
+                                                          },
+                                                          "children": [
+                                                            {
+                                                              "attributes": {
+                                                                "accessibilityText": "",
+                                                                "title": "",
+                                                                "value": "",
+                                                                "text": "",
+                                                                "hintText": "",
+                                                                "resource-id": "",
+                                                                "bounds": "[0,134][402,1229]",
+                                                                "enabled": "true",
+                                                                "focused": "false",
+                                                                "selected": "false",
+                                                                "checked": "false"
+                                                              },
+                                                              "children": [
+                                                                {
+                                                                  "attributes": {
+                                                                    "accessibilityText": "",
+                                                                    "title": "",
+                                                                    "value": "",
+                                                                    "text": "",
+                                                                    "hintText": "",
+                                                                    "resource-id": "",
+                                                                    "bounds": "[0,134][402,1229]",
+                                                                    "enabled": "true",
+                                                                    "focused": "false",
+                                                                    "selected": "false",
+                                                                    "checked": "false"
+                                                                  },
+                                                                  "children": [
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "YOUR WORKSPACE",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[24,158][378,175]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "YOUR WORKSPACE",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[24,158][378,175]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Settings",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[24,185][378,221]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Settings",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[24,185][378,221]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "A few choices that make this space feel like yours.",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[24,231][378,283]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "A few choices that make this space feel like yours.",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[24,231][378,283]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[24,311][378,852]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "reference-settings-columns",
+                                                                        "bounds": "[24,311][378,1189]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Workspace preferences",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,332][357,361]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Workspace preferences",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,332][357,361]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Workspace name",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,381][357,401]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Workspace name",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,381][357,401]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,409][357,457]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[58,411][344,455]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Workspace name",
+                                                                            "title": "",
+                                                                            "value": "Native UI workspace",
+                                                                            "text": "Native UI workspace",
+                                                                            "hintText": "",
+                                                                            "resource-id": "reference-workspace-name",
+                                                                            "bounds": "[58,411][344,455]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Shown in the workspace header after you save.",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,465][357,485]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Shown in the workspace header after you save.",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,465][357,485]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,530][357,564]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,530][357,564]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [
+                                                                            {
+                                                                              "attributes": {
+                                                                                "accessibilityText": "",
+                                                                                "title": "",
+                                                                                "value": "",
+                                                                                "text": "",
+                                                                                "hintText": "",
+                                                                                "resource-id": "",
+                                                                                "bounds": "[45,530][357,564]",
+                                                                                "enabled": "true",
+                                                                                "focused": "false",
+                                                                                "selected": "false",
+                                                                                "checked": "false"
+                                                                              },
+                                                                              "children": [
+                                                                                {
+                                                                                  "attributes": {
+                                                                                    "accessibilityText": "Start in, Library",
+                                                                                    "title": "",
+                                                                                    "value": "",
+                                                                                    "text": "",
+                                                                                    "hintText": "",
+                                                                                    "resource-id": "",
+                                                                                    "bounds": "[45,530][138,564]",
+                                                                                    "enabled": "true",
+                                                                                    "focused": "false",
+                                                                                    "selected": "false",
+                                                                                    "checked": "false"
+                                                                                  },
+                                                                                  "children": [
+                                                                                    {
+                                                                                      "attributes": {
+                                                                                        "accessibilityText": "Library",
+                                                                                        "title": "",
+                                                                                        "value": "",
+                                                                                        "text": "",
+                                                                                        "hintText": "",
+                                                                                        "resource-id": "",
+                                                                                        "bounds": "[56,537][109,557]",
+                                                                                        "enabled": "true",
+                                                                                        "focused": "false",
+                                                                                        "selected": "false",
+                                                                                        "checked": "false"
+                                                                                      },
+                                                                                      "children": [],
+                                                                                      "enabled": true,
+                                                                                      "focused": false,
+                                                                                      "checked": false,
+                                                                                      "selected": false
+                                                                                    }
+                                                                                  ],
+                                                                                  "enabled": true,
+                                                                                  "focused": false,
+                                                                                  "checked": false,
+                                                                                  "selected": false
+                                                                                }
+                                                                              ],
+                                                                              "enabled": true,
+                                                                              "focused": false,
+                                                                              "checked": false,
+                                                                              "selected": false
+                                                                            }
+                                                                          ],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Appearance",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,584][357,608]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Appearance",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,584][357,608]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "System follows your device. A chosen appearance applies throughout this workspace.",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,618][357,664]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "System follows your device. A chosen appearance applies throughout this workspace.",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,618][357,664]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Workspace appearance",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,674][357,724]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "System",
+                                                                        "title": "",
+                                                                        "value": "radio button, checked",
+                                                                        "text": "radio button, checked",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[48,677][162,721]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Light",
+                                                                        "title": "",
+                                                                        "value": "radio button, unchecked",
+                                                                        "text": "radio button, unchecked",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[164,677][259,721]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Dark",
+                                                                        "title": "",
+                                                                        "value": "radio button, unchecked",
+                                                                        "text": "radio button, unchecked",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[261,677][353,721]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Save settings",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[45,744][170,788]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Reset settings",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "",
+                                                                        "bounds": "[180,744][310,788]",
+                                                                        "enabled": "false",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [],
+                                                                      "enabled": false,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    },
+                                                                    {
+                                                                      "attributes": {
+                                                                        "accessibilityText": "Preferences saved for this session.",
+                                                                        "title": "",
+                                                                        "value": "",
+                                                                        "text": "",
+                                                                        "hintText": "",
+                                                                        "resource-id": "reference-settings-status",
+                                                                        "bounds": "[45,808][357,831]",
+                                                                        "enabled": "true",
+                                                                        "focused": "false",
+                                                                        "selected": "false",
+                                                                        "checked": "false"
+                                                                      },
+                                                                      "children": [
+                                                                        {
+                                                                          "attributes": {
+                                                                            "accessibilityText": "Preferences saved for this session.",
+                                                                            "title": "",
+                                                                            "value": "",
+                                                                            "text": "",
+                                                                            "hintText": "",
+                                                                            "resource-id": "",
+                                                                            "bounds": "[45,808][357,831]",
+                                                                            "enabled": "true",
+                                                                            "focused": "false",
+                                                                            "selected": "false",
+                                                                            "checked": "false"
+                                                                          },
+                                                                          "children": [],
+                                                                          "enabled": true,
+                                                                          "focused": false,
+                                                                          "checked": false,
+                                                                          "selected": false
+                                                                        }
+                                                                      ],
+                                                                      "enabled": true,
+                                                                      "focused": false,
+                                                                      "checked": false,
+                                                                      "selected": false
+                                                                    }
+                                                                  ],
+                                                                  "enabled": true,
+                                                                  "focused": false,
+                                                                  "checked": false,
+                                                                  "selected": false
+                                                                }
+                                                              ],
+                                                              "enabled": true,
+                                                              "focused": false,
+                                                              "checked": false,
+                                                              "selected": false
+                                                            },
+                                                            {
+                                                              "attributes": {
+                                                                "accessibilityText": "Vertical scroll bar, 2 pages",
+                                                                "title": "",
+                                                                "value": "0%",
+                                                                "text": "0%",
+                                                                "hintText": "",
+                                                                "resource-id": "",
+                                                                "bounds": "[369,134][399,775]",
+                                                                "enabled": "true",
+                                                                "focused": "false",
+                                                                "selected": "false",
+                                                                "checked": "false"
+                                                              },
+                                                              "children": [
+                                                                {
+                                                                  "attributes": {
+                                                                    "accessibilityText": "",
+                                                                    "title": "",
+                                                                    "value": "",
+                                                                    "text": "",
+                                                                    "hintText": "",
+                                                                    "resource-id": "",
+                                                                    "bounds": "[396,137][399,705]",
+                                                                    "enabled": "true",
+                                                                    "focused": "false",
+                                                                    "selected": "false",
+                                                                    "checked": "false"
+                                                                  },
+                                                                  "children": [],
+                                                                  "enabled": true,
+                                                                  "focused": false,
+                                                                  "checked": false,
+                                                                  "selected": false
+                                                                }
+                                                              ],
+                                                              "enabled": true,
+                                                              "focused": false,
+                                                              "checked": false,
+                                                              "selected": false
+                                                            },
+                                                            {
+                                                              "attributes": {
+                                                                "accessibilityText": "Horizontal scroll bar, 1 page",
+                                                                "title": "",
+                                                                "value": "0%",
+                                                                "text": "0%",
+                                                                "hintText": "",
+                                                                "resource-id": "",
+                                                                "bounds": "[0,742][402,772]",
+                                                                "enabled": "true",
+                                                                "focused": "false",
+                                                                "selected": "false",
+                                                                "checked": "false"
+                                                              },
+                                                              "children": [
+                                                                {
+                                                                  "attributes": {
+                                                                    "accessibilityText": "",
+                                                                    "title": "",
+                                                                    "value": "",
+                                                                    "text": "",
+                                                                    "hintText": "",
+                                                                    "resource-id": "",
+                                                                    "bounds": "[3,769][348,772]",
+                                                                    "enabled": "true",
+                                                                    "focused": "false",
+                                                                    "selected": "false",
+                                                                    "checked": "false"
+                                                                  },
+                                                                  "children": [],
+                                                                  "enabled": true,
+                                                                  "focused": false,
+                                                                  "checked": false,
+                                                                  "selected": false
+                                                                }
+                                                              ],
+                                                              "enabled": true,
+                                                              "focused": false,
+                                                              "checked": false,
+                                                              "selected": false
+                                                            },
+                                                            {
+                                                              "attributes": {
+                                                                "accessibilityText": "Vertical scroll bar, 2 pages",
+                                                                "title": "",
+                                                                "value": "0%",
+                                                                "text": "0%",
+                                                                "hintText": "",
+                                                                "resource-id": "",
+                                                                "bounds": "[369,134][399,775]",
+                                                                "enabled": "true",
+                                                                "focused": "false",
+                                                                "selected": "false",
+                                                                "checked": "false"
+                                                              },
+                                                              "children": [
+                                                                {
+                                                                  "attributes": {
+                                                                    "accessibilityText": "",
+                                                                    "title": "",
+                                                                    "value": "",
+                                                                    "text": "",
+                                                                    "hintText": "",
+                                                                    "resource-id": "",
+                                                                    "bounds": "[396,137][399,705]",
+                                                                    "enabled": "true",
+                                                                    "focused": "false",
+                                                                    "selected": "false",
+                                                                    "checked": "false"
+                                                                  },
+                                                                  "children": [],
+                                                                  "enabled": true,
+                                                                  "focused": false,
+                                                                  "checked": false,
+                                                                  "selected": false
+                                                                }
+                                                              ],
+                                                              "enabled": true,
+                                                              "focused": false,
+                                                              "checked": false,
+                                                              "selected": false
+                                                            },
+                                                            {
+                                                              "attributes": {
+                                                                "accessibilityText": "Horizontal scroll bar, 1 page",
+                                                                "title": "",
+                                                                "value": "0%",
+                                                                "text": "0%",
+                                                                "hintText": "",
+                                                                "resource-id": "",
+                                                                "bounds": "[0,742][402,772]",
+                                                                "enabled": "true",
+                                                                "focused": "false",
+                                                                "selected": "false",
+                                                                "checked": "false"
+                                                              },
+                                                              "children": [
+                                                                {
+                                                                  "attributes": {
+                                                                    "accessibilityText": "",
+                                                                    "title": "",
+                                                                    "value": "",
+                                                                    "text": "",
+                                                                    "hintText": "",
+                                                                    "resource-id": "",
+                                                                    "bounds": "[3,769][348,772]",
+                                                                    "enabled": "true",
+                                                                    "focused": "false",
+                                                                    "selected": "false",
+                                                                    "checked": "false"
+                                                                  },
+                                                                  "children": [],
+                                                                  "enabled": true,
+                                                                  "focused": false,
+                                                                  "checked": false,
+                                                                  "selected": false
+                                                                }
+                                                              ],
+                                                              "enabled": true,
+                                                              "focused": false,
+                                                              "checked": false,
+                                                              "selected": false
+                                                            }
+                                                          ],
+                                                          "enabled": true,
+                                                          "focused": false,
+                                                          "checked": false,
+                                                          "selected": false
+                                                        }
+                                                      ],
+                                                      "enabled": true,
+                                                      "focused": false,
+                                                      "checked": false,
+                                                      "selected": false
+                                                    }
+                                                  ],
+                                                  "enabled": true,
+                                                  "focused": false,
+                                                  "checked": false,
+                                                  "selected": false
+                                                }
+                                              ],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "Workspace",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "reference-bottom-tabs",
+                                                "bounds": "[0,775][402,840]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "Library",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "",
+                                                "bounds": "[4,780][102,836]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "Editor",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "",
+                                                "bounds": "[102,780][201,836]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "Media",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "",
+                                                "bounds": "[201,780][299,836]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "false",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": false
+                                            },
+                                            {
+                                              "attributes": {
+                                                "accessibilityText": "Settings",
+                                                "title": "",
+                                                "value": "",
+                                                "text": "",
+                                                "hintText": "",
+                                                "resource-id": "",
+                                                "bounds": "[299,780][398,836]",
+                                                "enabled": "true",
+                                                "focused": "false",
+                                                "selected": "true",
+                                                "checked": "false"
+                                              },
+                                              "children": [],
+                                              "enabled": true,
+                                              "focused": false,
+                                              "checked": false,
+                                              "selected": true
+                                            }
+                                          ],
+                                          "enabled": true,
+                                          "focused": false,
+                                          "checked": false,
+                                          "selected": false
+                                        }
+                                      ],
+                                      "enabled": true,
+                                      "focused": false,
+                                      "checked": false,
+                                      "selected": false
+                                    }
+                                  ],
+                                  "enabled": true,
+                                  "focused": false,
+                                  "checked": false,
+                                  "selected": false
+                                },
+                                {
+                                  "attributes": {
+                                    "accessibilityText": "",
+                                    "title": "",
+                                    "value": "",
+                                    "text": "",
+                                    "hintText": "",
+                                    "resource-id": "",
+                                    "bounds": "[0,0][402,874]",
+                                    "enabled": "true",
+                                    "focused": "false",
+                                    "selected": "false",
+                                    "checked": "false"
+                                  },
+                                  "children": [
+                                    {
+                                      "attributes": {
+                                        "accessibilityText": "",
+                                        "title": "",
+                                        "value": "",
+                                        "text": "",
+                                        "hintText": "",
+                                        "resource-id": "",
+                                        "bounds": "[0,0][402,874]",
+                                        "enabled": "true",
+                                        "focused": "false",
+                                        "selected": "false",
+                                        "checked": "false"
+                                      },
+                                      "children": [
+                                        {
+                                          "attributes": {
+                                            "accessibilityText": "",
+                                            "title": "",
+                                            "value": "",
+                                            "text": "",
+                                            "hintText": "",
+                                            "resource-id": "",
+                                            "bounds": "[0,0][402,874]",
+                                            "enabled": "true",
+                                            "focused": "false",
+                                            "selected": "false",
+                                            "checked": "false"
+                                          },
+                                          "children": [],
+                                          "enabled": true,
+                                          "focused": false,
+                                          "checked": false,
+                                          "selected": false
+                                        }
+                                      ],
+                                      "enabled": true,
+                                      "focused": false,
+                                      "checked": false,
+                                      "selected": false
+                                    }
+                                  ],
+                                  "enabled": true,
+                                  "focused": false,
+                                  "checked": false,
+                                  "selected": false
+                                }
+                              ],
+                              "enabled": true,
+                              "focused": false,
+                              "checked": false,
+                              "selected": false
+                            }
+                          ],
+                          "enabled": true,
+                          "focused": false,
+                          "checked": false,
+                          "selected": false
+                        }
+                      ],
+                      "enabled": true,
+                      "focused": false,
+                      "checked": false,
+                      "selected": false
+                    }
+                  ],
+                  "enabled": true,
+                  "focused": false,
+                  "checked": false,
+                  "selected": false
+                }
+              ],
+              "enabled": true,
+              "focused": false,
+              "checked": false,
+              "selected": false
+            }
+          ],
+          "enabled": true,
+          "focused": false,
+          "checked": false,
+          "selected": false
+        },
+        {
+          "attributes": {
+            "accessibilityText": "",
+            "title": "",
+            "value": "",
+            "text": "",
+            "hintText": "",
+            "resource-id": "",
+            "bounds": "[0,0][402,874]",
+            "enabled": "true",
+            "focused": "false",
+            "selected": "false",
+            "checked": "false"
+          },
+          "children": [
+            {
+              "attributes": {
+                "accessibilityText": "",
+                "title": "",
+                "value": "",
+                "text": "",
+                "hintText": "",
+                "resource-id": "",
+                "bounds": "[0,0][402,874]",
+                "enabled": "true",
+                "focused": "false",
+                "selected": "false",
+                "checked": "false"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "accessibilityText": "",
+                    "title": "",
+                    "value": "",
+                    "text": "",
+                    "hintText": "",
+                    "resource-id": "",
+                    "bounds": "[0,0][402,874]",
+                    "enabled": "true",
+                    "focused": "false",
+                    "selected": "false",
+                    "checked": "false"
+                  },
+                  "children": [],
+                  "enabled": true,
+                  "focused": false,
+                  "checked": false,
+                  "selected": false
+                }
+              ],
+              "enabled": true,
+              "focused": false,
+              "checked": false,
+              "selected": false
+            }
+          ],
+          "enabled": true,
+          "focused": false,
+          "checked": false,
+          "selected": false
+        }
+      ],
+      "enabled": true,
+      "focused": false,
+      "checked": false,
+      "selected": false
+    },
+    {
+      "attributes": {
+        "accessibilityText": "",
+        "title": "",
+        "value": "",
+        "text": "",
+        "hintText": "",
+        "resource-id": "",
+        "bounds": "[0,0][0,0]",
+        "enabled": "false",
+        "focused": "false",
+        "selected": "false",
+        "checked": "false"
+      },
+      "children": [
+        {
+          "attributes": {
+            "accessibilityText": "",
+            "title": "",
+            "value": "",
+            "text": "",
+            "hintText": "",
+            "resource-id": "",
+            "bounds": "[0,0][402,54]",
+            "enabled": "true",
+            "focused": "false",
+            "selected": "false",
+            "checked": "false"
+          },
+          "children": [],
+          "enabled": true,
+          "focused": false,
+          "checked": false,
+          "selected": false
+        },
+        {
+          "attributes": {
+            "accessibilityText": "",
+            "title": "",
+            "value": "",
+            "text": "",
+            "hintText": "",
+            "resource-id": "",
+            "bounds": "[0,0][402,54]",
+            "enabled": "true",
+            "focused": "false",
+            "selected": "false",
+            "checked": "false"
+          },
+          "children": [
+            {
+              "attributes": {
+                "accessibilityText": "",
+                "title": "",
+                "value": "",
+                "text": "",
+                "hintText": "",
+                "resource-id": "",
+                "bounds": "[0,0][402,54]",
+                "enabled": "true",
+                "focused": "false",
+                "selected": "false",
+                "checked": "false"
+              },
+              "children": [
+                {
+                  "attributes": {
+                    "accessibilityText": "",
+                    "title": "",
+                    "value": "",
+                    "text": "",
+                    "hintText": "",
+                    "resource-id": "",
+                    "bounds": "[0,0][402,54]",
+                    "enabled": "true",
+                    "focused": "false",
+                    "selected": "false",
+                    "checked": "false"
+                  },
+                  "children": [
+                    {
+                      "attributes": {
+                        "accessibilityText": "6:31 PM",
+                        "title": "",
+                        "value": "",
+                        "text": "",
+                        "hintText": "",
+                        "resource-id": "",
+                        "bounds": "[56,22][91,42]",
+                        "enabled": "true",
+                        "focused": "false",
+                        "selected": "false",
+                        "checked": "false"
+                      },
+                      "children": [],
+                      "enabled": true,
+                      "focused": false,
+                      "checked": false,
+                      "selected": false
+                    },
+                    {
+                      "attributes": {
+                        "accessibilityText": "Cellular",
+                        "title": "",
+                        "value": "No signal",
+                        "text": "No signal",
+                        "hintText": "",
+                        "resource-id": "",
+                        "bounds": "[288,26][307,38]",
+                        "enabled": "true",
+                        "focused": "false",
+                        "selected": "false",
+                        "checked": "false"
+                      },
+                      "children": [],
+                      "enabled": true,
+                      "focused": false,
+                      "checked": false,
+                      "selected": false
+                    },
+                    {
+                      "attributes": {
+                        "accessibilityText": "",
+                        "title": "",
+                        "value": "SSID, 3 of 3 Wi-Fi bars",
+                        "text": "SSID, 3 of 3 Wi-Fi bars",
+                        "hintText": "",
+                        "resource-id": "3 of 3 Wi-Fi bars",
+                        "bounds": "[315,26][332,38]",
+                        "enabled": "true",
+                        "focused": "false",
+                        "selected": "false",
+                        "checked": "false"
+                      },
+                      "children": [],
+                      "enabled": true,
+                      "focused": false,
+                      "checked": false,
+                      "selected": false
+                    },
+                    {
+                      "attributes": {
+                        "accessibilityText": "100% battery power",
+                        "title": "",
+                        "value": "Not charging",
+                        "text": "Not charging",
+                        "hintText": "",
+                        "resource-id": "",
+                        "bounds": "[339,26][366,39]",
+                        "enabled": "true",
+                        "focused": "false",
+                        "selected": "false",
+                        "checked": "false"
+                      },
+                      "children": [],
+                      "enabled": true,
+                      "focused": false,
+                      "checked": false,
+                      "selected": false
+                    }
+                  ],
+                  "enabled": true,
+                  "focused": false,
+                  "checked": false,
+                  "selected": false
+                }
+              ],
+              "enabled": true,
+              "focused": false,
+              "checked": false,
+              "selected": false
+            }
+          ],
+          "enabled": true,
+          "focused": false,
+          "checked": false,
+          "selected": false
+        }
+      ],
+      "enabled": false,
+      "focused": false,
+      "checked": false,
+      "selected": false
+    }
+  ],
+  "enabled": false,
+  "focused": false,
+  "checked": false,
+  "selected": false
+}

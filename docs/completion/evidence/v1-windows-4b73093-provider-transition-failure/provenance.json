@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows",
+  "result": "native-uia-failed",
+  "runId": 42872779548,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42872779548",
+  "nativeJobId": 130028655985,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42872779548/job/130028655985",
+  "sourceJobId": 130028079980,
+  "sourceJobConclusion": "success",
+  "pullRequestHead": "4b730937b5eae8356227738bb0f422dce7bd8e47",
+  "checkoutRevision": "0de9dad88e15d99231fb3f8ba3b83db15a9aa70e",
+  "checkoutTree": "a6b2be83a900830b5ebcccf73be470445df762bd",
+  "pullRequestHeadTree": "a6b2be83a900830b5ebcccf73be470445df762bd",
+  "originalLog": {
+    "source": "GitHub Actions native job logs retrieved through the GitHub connector",
+    "encoding": "UTF-8 serialization of the original decoded job log, retaining BOM and CRLF",
+    "sha256": "2184aecc64e6ba6b1f960b5693c1afe8707bedf73660a662e7f0430c44059139",
+    "bytes": 311098,
+    "retainedInGit": false,
+    "excerpts": [
+      {
+        "retainedPath": "checkout-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            81,
+            83
+          ],
+          [
+            89,
+            91
+          ],
+          [
+            108,
+            111
+          ]
+        ]
+      },
+      {
+        "retainedPath": "toolchain-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1,
+            20
+          ],
+          [
+            502,
+            502
+          ]
+        ]
+      },
+      {
+        "retainedPath": "native-uia-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1598,
+            1650
+          ]
+        ]
+      }
+    ]
+  },
+  "observedToolchain": {
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "osVersion": "10.0.26100",
+    "runnerImage": "windows-2025-vs2026",
+    "runnerImageVersion": "20261103.298.1",
+    "msbuild": "18.11.1-1.26513.3+940033be3"
+  },
+  "failedStep": "UI Automation smoke test of the packaged consumer",
+  "failure": "UIA element named 'Windows navigation acceptance' did not appear within 30 s",
+  "completedNativePrerequisites": [
+    "Build installed native C++/WinRT Fabric package",
+    "Compile actual Windows consumer executable",
+    "Deploy the packaged consumer the way run-windows does"
+  ],
+  "observedInteractionCheckpoints": [
+    "Controlled native route selection passed pending, rejection and accepted route assertions.",
+    "Two actual native windows shared the edited document; minimize/restore, close veto, accepted close and retained-draft reopen passed.",
+    "Native MenuFlyout disabled item and approved callback, keyboard ContextFlyout callback, and real ToolTip visibility/dismissal passed.",
+    "Rapid keyboard input retained exact NativeRapid123abc in both the app-owned value and native TextBox, with unchanged native field identity.",
+    "Rejected! was rejected by the app and the native TextBox restored exact NativeRapid123abc.",
+    "Inspector close/reopen retained the exact accepted value.",
+    "Disabling the inspector dismissed the native field and disabled its anchor; reenabling restored access.",
+    "Replacing scope reset acknowledgment to zero and displayed Replacement native note.",
+    "A first Escape dismissal was vetoed without replacing the field; a later Escape dismissed it.",
+    "Keyboard activation of Show lifecycle checks rendered the lifecycle screen, as captured in failure.png, but the exact lifecycle header could not be found through the retained top-level automation element."
+  ],
+  "unexecutedInteractionChecks": [
+    "Inspector return/remount with retained draft, zero acknowledgment and accepted event one",
+    "OS cross-window drag rejection, Escape, close cancellation and accepted move",
+    "Navigation Settings focus return, resize, RTL, collapse/restore and high contrast"
+  ],
+  "skippedSteps": [
+    "Retain the exact package that passed native acceptance",
+    "Upload tested Windows distribution"
+  ],
+  "testedPackageArtifactPresent": false,
+  "uiAutomationArtifactPresent": true,
+  "uiAutomationArtifactId": 13792075070,
+  "observedProviderFailure": {
+    "renderedHeader": "Windows navigation acceptance",
+    "headerVisibleInScreenshot": true,
+    "retainedAutomationTreeElementCount": 17,
+    "treeContents": "Native NavigationView subtree followed by two entries without control type, name, ID or class; React lifecycle content absent from traversal.",
+    "evidence": [
+      "failure.png",
+      "uia-tree.txt"
+    ],
+    "traceLimit": "The failed run did not record runtime IDs or compare a fresh same-HWND automation reference. It does not establish whether the missing provider traversal is a client reference or server lifecycle problem."
+  },
+  "limitations": [
+    "This is a failed whole native acceptance gate, not a tested-package receipt.",
+    "Successful inspector checkpoints are established by the strict sequential driver reaching the later stage-transition assertion, with the accepted/rejected exact text also visible in 09-native-inspector.png.",
+    "The screenshot shows lifecycle content rendered, so this evidence must not be described as a blank or missing visual screen.",
+    "The follow-up aligns island cleanup with the pinned RNW sample Destroying event and records retained/fresh owned-HWND provider traversal. The new candidate still needs actual native validation.",
+    "Only compact excerpts, original UIA tree/pointer JSON, metadata and hashes are retained here. Full log and original PNG/ZIP bytes remain outside git and in the cited Actions artifact.",
+    "No Narrator speech, physical input hardware, mixed-DPI movement or device-disconnect acceptance is inferred."
+  ]
+}

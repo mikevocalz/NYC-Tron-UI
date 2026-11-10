@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="emulator-5554" tests="1" failures="0" time="1.465" timestamp="2026-11-10T18:25:11">
+    <testcase id="Android native pointer cancellation" name="Android native pointer cancellation" classname="Android native pointer cancellation" file="tooling/native/ui-flows/pointer-cancel.yaml" time="1.454" timestamp="2026-11-10T18:25:11" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

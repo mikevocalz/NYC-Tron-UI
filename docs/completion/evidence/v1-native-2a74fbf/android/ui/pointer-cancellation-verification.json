@@ -1,0 +1,75 @@
+{
+  "sourceCommit": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+  "commandsFile": "commands.jsonl",
+  "commandsSha256": "5b479b9c3e62abc9657f3af35396af23720c2330b9fe7fd17080ed1bf977ccbf",
+  "commands": [
+    {
+      "line": 19,
+      "receipt": {
+        "file": "/usr/local/lib/android/sdk/platform-tools/adb",
+        "args": [
+          "-s",
+          "emulator-5554",
+          "shell",
+          "input",
+          "touchscreen",
+          "motionevent",
+          "DOWN",
+          "161",
+          "433"
+        ],
+        "elapsedMs": 24,
+        "status": 0
+      }
+    },
+    {
+      "line": 21,
+      "receipt": {
+        "file": "/usr/local/lib/android/sdk/platform-tools/adb",
+        "args": [
+          "-s",
+          "emulator-5554",
+          "shell",
+          "input",
+          "keyevent",
+          "KEYCODE_HOME"
+        ],
+        "elapsedMs": 21,
+        "status": 0
+      }
+    },
+    {
+      "line": 22,
+      "receipt": {
+        "file": "/usr/local/lib/android/sdk/platform-tools/adb",
+        "args": [
+          "-s",
+          "emulator-5554",
+          "shell",
+          "am",
+          "start",
+          "-n",
+          "com.nyctron.instruments.example/.MainActivity"
+        ],
+        "elapsedMs": 60,
+        "status": 0
+      }
+    }
+  ],
+  "before": {
+    "file": "pointer-down-hierarchy.json",
+    "sha256": "5d113ef6573c4531fdd02302124f56e06f9cfbddc9a74e198430c91ef9eaa337",
+    "labels": [
+      "Input source: touch. Last event: down.",
+      "Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0."
+    ]
+  },
+  "after": {
+    "file": "pointer-cancel-hierarchy.json",
+    "sha256": "aa0a832f09aefa40d61620e41c162d44d549d3c3791887694c33b086b4c653c9",
+    "labels": [
+      "Input source: touch. Last event: cancel.",
+      "Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0."
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+1: Analysis of sampling NYCTronAppKitReference (pid 34696) every 10 milliseconds
+2: Process:         NYCTronAppKitReference [34696]
+3: Path:            /Users/USER/*/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference
+4: Load Address:    0x100174000
+5: Identifier:      org.nyctron.appkit.reference
+6: Version:         1.0.0 (1)
+7: Code Type:       ARM64
+8: Platform:        macOS
+9: Parent Process:  node [34677]
+10: Target Type:     live task
+11: 
+12: Date/Time:       2026-11-10 18:59:58.742 +0000
+13: Launch Time:     2026-11-10 18:59:36.060 +0000
+14: OS Version:      macOS 15.8.2 (24H232)
+15: Report Version:  7
+16: Analysis Tool:   /usr/bin/sample
+17: 
+18: Physical footprint:         28.2M
+19: Physical footprint (peak):  28.3M
+20: Idle exit:                  untracked
+21: ----
+22: 
+23: Call graph:
+24:     162 Thread_89047   DispatchQueue_1: com.apple.main-thread  (serial)
+25:     + 162 start  (in dyld) + 6076  [0x19154ab98]
+26:     +   162 NSApplicationMain  (in AppKit) + 880  [0x1958c52dc]
+27:     +     162 -[NSApplication run]  (in AppKit) + 480  [0x1958eebe4]
+28:     +       162 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]  (in AppKit) + 688  [0x19629a5cc]
+29:     +         162 _DPSNextEvent  (in AppKit) + 684  [0x1958fba34]
+30:     +           162 _BlockUntilNextEventMatchingListInModeWithFilter  (in HIToolbox) + 76  [0x19d611484]
+31:     +             162 ReceiveNextEventCommon  (in HIToolbox) + 676  [0x19d4864e8]
+32:     +               162 RunCurrentEventLoopInMode  (in HIToolbox) + 324  [0x19d48327c]
+33:     +                 162 CFRunLoopRunSpecific  (in CoreFoundation) + 572  [0x1919d5368]
+34:     +                   162 __CFRunLoopRun  (in CoreFoundation) + 1208  [0x1919d5ea8]
+35:     +                     162 __CFRunLoopServiceMachPort  (in CoreFoundation) + 160  [0x1919d758c]
+36:     +                       162 mach_msg  (in libsystem_kernel.dylib) + 24  [0x1918a9fa8]
+37:     +                         162 mach_msg_overwrite  (in libsystem_kernel.dylib) + 484  [0x1918b2764]
+38:     +                           162 mach_msg2_internal  (in libsystem_kernel.dylib) + 76  [0x1918bc338]
+39:     +                             162 mach_msg2_trap  (in libsystem_kernel.dylib) + 8  [0x1918a9c34]
+
+69:     162 Thread_89116
+70:     + 162 thread_start  (in libsystem_pthread.dylib) + 8  [0x1918e6b80]
+71:     +   162 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x1918ebbc8]
+72:     +     162 __NSThread__block_start__  (in Foundation) + 76  [0x19386f4b4]
+73:     +       162 ???  (in NYCTronAppKitReference)  load address 0x100174000 + 0x13f0cc  [0x1002b30cc]
+74:     +         162 ???  (in NYCTronAppKitReference)  load address 0x100174000 + 0x13f590  [0x1002b3590]
+75:     +           162 __recvfrom  (in libsystem_kernel.dylib) + 8  [0x1918ae158]
+76:     162 Thread_89190: com.facebook.react.runtime.JavaScript
+77:     + 162 thread_start  (in libsystem_pthread.dylib) + 8  [0x1918e6b80]
+78:     +   162 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x1918ebbc8]
+79:     +     162 __NSThread__start__  (in Foundation) + 732  [0x192f9fbd8]
+80:     +       162 ???  (in NYCTronAppKitReference)  load address 0x100174000 + 0x303bb4  [0x100477bb4]
+81:     +         162 CFRunLoopRunSpecific  (in CoreFoundation) + 572  [0x1919d5368]
+82:     +           162 __CFRunLoopRun  (in CoreFoundation) + 1208  [0x1919d5ea8]
+83:     +             162 __CFRunLoopServiceMachPort  (in CoreFoundation) + 160  [0x1919d758c]
+84:     +               162 mach_msg  (in libsystem_kernel.dylib) + 24  [0x1918a9fa8]
+85:     +                 162 mach_msg_overwrite  (in libsystem_kernel.dylib) + 484  [0x1918b2764]
+86:     +                   162 mach_msg2_internal  (in libsystem_kernel.dylib) + 76  [0x1918bc338]
+87:     +                     162 mach_msg2_trap  (in libsystem_kernel.dylib) + 8  [0x1918a9c34]
+88:     162 Thread_89191: hades
+89:     + 162 thread_start  (in libsystem_pthread.dylib) + 8  [0x1918e6b80]
+90:     +   162 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x1918ebbc8]
+91:     +     162 std::__thread_proxy[abi:nn190102]<std::tuple<std::unique_ptr<std::__thread_struct>, hermes::vm::HadesGC::Executor::Executor()::'lambda'()>>(void*)  (in hermesvm) + 44  [0x100f0e3dc]
+92:     +       162 hermes::vm::HadesGC::Executor::worker()  (in hermesvm) + 104  [0x100f0e468]
+93:     +         162 std::condition_variable::wait(std::unique_lock<std::mutex>&)  (in libc++.1.dylib) + 32  [0x19181c268]
+94:     +           162 _pthread_cond_wait  (in libsystem_pthread.dylib) + 984  [0x1918ec09c]
+95:     +             162 __psynch_cvwait  (in libsystem_kernel.dylib) + 8  [0x1918ad3cc]

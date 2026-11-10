@@ -1,0 +1,107 @@
+{
+  "artifactId": 13792075070,
+  "archiveBytes": 254006,
+  "archiveSha256": "47b3d8203235ab07752bef9a58463ef6fda281ca48df757b624308915a7ded87",
+  "files": [
+    {
+      "filename": "01-launched.png",
+      "bytes": 31470,
+      "sha256": "d83b217587052e0163cac0dd69e4b9159eb7a606363cdcb5bb9ee486d3d1f6c5",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "02-rejected.png",
+      "bytes": 33159,
+      "sha256": "587d86c8ea3457c7d08c0dac838a4a4ecaf7bea706b6246f96c3e30f5313d838",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "03-accepted.png",
+      "bytes": 32345,
+      "sha256": "78bd4f2c4ad7a804a8cbe2e0b304b8d3c89675c872d274c10fed52f8bafd38e0",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "04-native-document.png",
+      "bytes": 15294,
+      "sha256": "4e29a4af045ae6271fd922d12827325d3706f4435c160916d2daffd75ca42b38",
+      "dimensions": {
+        "width": 600,
+        "height": 520
+      }
+    },
+    {
+      "filename": "05-close-veto.png",
+      "bytes": 15246,
+      "sha256": "0226eb947628c6adec3cc6e5251b927ca3ba92e7f8a1b13b017865f08a0e2526",
+      "dimensions": {
+        "width": 600,
+        "height": 520
+      }
+    },
+    {
+      "filename": "06-native-reopened.png",
+      "bytes": 15209,
+      "sha256": "dd660fbca37c8587384210cb300c92a11a9bc04885efb008c62b4556e2cdfbb3",
+      "dimensions": {
+        "width": 600,
+        "height": 520
+      }
+    },
+    {
+      "filename": "07-native-menu.png",
+      "bytes": 43805,
+      "sha256": "7260db3c8acbd28de46778691e5dda526071de5a333fb4a6a7b0006f59af6f85",
+      "dimensions": {
+        "width": 1024,
+        "height": 768
+      }
+    },
+    {
+      "filename": "08-native-tooltip.png",
+      "bytes": 41670,
+      "sha256": "7023c3579ec4abdea479fb68f200a94544514bfb011143cdc4a6d2558e16ab0b",
+      "dimensions": {
+        "width": 1024,
+        "height": 768
+      }
+    },
+    {
+      "filename": "09-native-inspector.png",
+      "bytes": 48301,
+      "sha256": "8f342ed38e3ee6b3799e82a6b446ddded606d899c316925ef25259c0d796762d",
+      "dimensions": {
+        "width": 1024,
+        "height": 768
+      }
+    },
+    {
+      "filename": "failure.png",
+      "bytes": 33325,
+      "sha256": "1c1056545569e867a068a5f2eb5135c4f626b19942495a3c1588116d6a275edf",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "tooltip-pointer.json",
+      "bytes": 1651,
+      "sha256": "beae0765eb463cf524d2652ab9620ca6942f5ae461c8dedb748f3986686957a3"
+    },
+    {
+      "filename": "uia-tree.txt",
+      "bytes": 1312,
+      "sha256": "ebea3d74e88c4ff6650360a66d02d803d6d6a0446ac307c542c3b91af3daac26"
+    }
+  ]
+}

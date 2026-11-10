@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9aa8f61a2a4ef58024b7cfb98874651bc43fe193",
+  "sourceTree": "9db468c105705e66f361438872818b74025798c8",
+  "command": "corepack pnpm verify",
+  "exitCode": 0,
+  "tests": {
+    "total": 1199,
+    "passed": 1199,
+    "failed": 0,
+    "skipped": 0
+  },
+  "api": {
+    "packages": 13,
+    "subpaths": 619,
+    "reachableDeclarations": 3306
+  },
+  "sourceOwnership": {
+    "originalIds": 341,
+    "local": 332,
+    "pinnedExternal": 9,
+    "pending": 0,
+    "acceptedAcrossAllEightPlatforms": 0
+  },
+  "workspaceArchives": 13,
+  "consumerImports": 17,
+  "log": {
+    "file": "verify.log",
+    "bytes": 137384,
+    "sha256": "0fc40cba181ccbeaaa4e1f503df359b1d3adae928a46b1c4f254f8071006c388"
+  },
+  "boundary": "Local source/build/type/API/package/import verification; no native runtime or physical-device acceptance is inferred."
+}

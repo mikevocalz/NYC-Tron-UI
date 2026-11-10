@@ -1,0 +1,53 @@
+2026-11-10T18:21:47.7186185Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T18:21:48.4629444Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T18:21:48.6824639Z Native NavigationView items found by Narrator name
+2026-11-10T18:21:48.9728949Z Saved screenshot D:\a\_temp\uia-smoke\01-launched.png
+2026-11-10T18:21:48.9863674Z [initial] Home selected=True, Workspace selected=False
+2026-11-10T18:21:49.7077851Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T18:21:49.7106533Z [pending] Home selected=True, Workspace selected=False
+2026-11-10T18:21:50.0910289Z Pressed 'Reject navigation' with the keyboard (no InvokePattern)
+2026-11-10T18:21:50.1063482Z [rejected] Home selected=True, Workspace selected=False
+2026-11-10T18:21:50.3209727Z Saved screenshot D:\a\_temp\uia-smoke\02-rejected.png
+2026-11-10T18:21:51.0374081Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T18:21:51.4053733Z Pressed 'Accept navigation' with the keyboard (no InvokePattern)
+2026-11-10T18:21:51.4233917Z [accepted] Home selected=False, Workspace selected=True
+2026-11-10T18:21:51.6203828Z Saved screenshot D:\a\_temp\uia-smoke\03-accepted.png
+2026-11-10T18:21:51.6213114Z UIA smoke passed: native selection followed only the committed route
+2026-11-10T18:21:51.9825120Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T18:21:52.3942834Z Pressed 'Change shared draft' with the keyboard (no InvokePattern)
+2026-11-10T18:21:52.6013112Z Saved screenshot D:\a\_temp\uia-smoke\04-native-document.png
+2026-11-10T18:21:52.9757094Z Pressed 'Restore document' with the keyboard (no InvokePattern)
+2026-11-10T18:21:53.2358471Z Saved screenshot D:\a\_temp\uia-smoke\05-close-veto.png
+2026-11-10T18:21:53.5891346Z Pressed 'Save shared draft' with the keyboard (no InvokePattern)
+2026-11-10T18:21:54.0032643Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T18:21:54.5193193Z Saved screenshot D:\a\_temp\uia-smoke\06-native-reopened.png
+2026-11-10T18:21:54.5651340Z Saved UIA tree (14 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T18:21:54.9220368Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T18:21:55.0522917Z Invoked 'Native command menu' through InvokePattern
+2026-11-10T18:21:55.3110954Z Saved screenshot D:\a\_temp\uia-smoke\07-native-menu.png
+2026-11-10T18:21:55.7737370Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T18:21:55.9393243Z OS pointer reached (456, 347) for requested (456, 347)
+2026-11-10T18:21:56.6578484Z Pointer inside native 'Native tooltip anchor' (42,66064,4,26); bounds=336,327,240,40; foregroundProcess=7896; nativeHitIdentityMatched=False
+2026-11-10T18:21:56.6598198Z [{"controlType":"ControlType.Pane","name":"","processId":7896,"bounds":"0,23,1024,697","className":"Microsoft.UI.Content.DesktopChildSiteBridge","runtimeId":"42,262256"},{"controlType":"ControlType.Window","name":"NYCTronWindowsExample","processId":7896,"bounds":"-8,-8,1040,736","className":"Microsoft.UI.Windowing.Window","runtimeId":"42,720920"},{"controlType":"ControlType.Pane","name":"","processId":7992,"bounds":"0,0,1024,768","className":"#32769","runtimeId":"42,65548"}]
+2026-11-10T18:21:56.8186568Z Saved screenshot D:\a\_temp\uia-smoke\08-native-tooltip.png
+2026-11-10T18:21:56.8203617Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T18:21:57.9538867Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:21:58.5724933Z Saved screenshot D:\a\_temp\uia-smoke\09-native-inspector.png
+2026-11-10T18:21:58.7218272Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:21:59.5811844Z Pressed 'Enable native inspector' with the keyboard (no InvokePattern)
+2026-11-10T18:21:59.6159033Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:22:00.1121356Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:22:00.7038470Z Pressed 'Veto next inspector dismissal' with the keyboard (no InvokePattern)
+2026-11-10T18:22:00.7620533Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:22:01.8443996Z Pressed 'Show lifecycle checks' with the keyboard (no InvokePattern)
+2026-11-10T18:22:31.9039157Z UIA smoke failed: UIA element named 'Windows navigation acceptance' did not appear within 30 s
+2026-11-10T18:22:31.9402379Z Saved UIA tree (17 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T18:22:32.1339847Z Saved screenshot D:\a\_temp\uia-smoke\failure.png
+2026-11-10T18:22:32.2539289Z UIA element named 'Windows navigation acceptance' did not appear within 30 s
+2026-11-10T18:22:32.2540350Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:105 char:3
+2026-11-10T18:22:32.2541548Z +   throw "UIA element named '$name' did not appear within $timeoutSec  ...
+2026-11-10T18:22:32.2542402Z +   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T18:22:32.2543449Z     + CategoryInfo          : OperationStopped: (UIA element nam...ear within 30 s:String) [], RuntimeException
+2026-11-10T18:22:32.2545311Z     + FullyQualifiedErrorId : UIA element named 'Windows navigation acceptance' did not appear within 30 s
+2026-11-10T18:22:32.2546037Z  
+2026-11-10T18:22:32.3035177Z ##[error]Process completed with exit code 1.

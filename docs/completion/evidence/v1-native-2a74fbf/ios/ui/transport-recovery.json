@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "status": "eligible",
+  "sourceCommit": "0ce41081d56acb365c1c1cf382eeaff27aa24543",
+  "nativeArtifact": {
+    "kind": "ios-app",
+    "algorithm": "sha256-sorted-relative-app-manifest-v1",
+    "sha256": "45e0bf10ff71227b36a0f628e80a85d85502d1e0dadae2a5f84a64242c7e0d68",
+    "manifest": {
+      "file": "native-artifact.json",
+      "sha256": "45e0bf10ff71227b36a0f628e80a85d85502d1e0dadae2a5f84a64242c7e0d68"
+    }
+  },
+  "eligibility": {
+    "kind": "ios-initial-navigation-recap-cancelled",
+    "appId": "com.nyctron.instruments.example",
+    "deviceId": "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC",
+    "tap": {
+      "text": "Settings",
+      "start": 1794335254852,
+      "end": 1794335258712,
+      "sequence": 4
+    },
+    "failedSequence": 5,
+    "senderId": "0x1037596000000",
+    "pathIndex": 2,
+    "evidence": {
+      "recap": {
+        "line": 26229,
+        "at": 1794335257848,
+        "text": "2026-11-10 18:27:37.848139+0000  localhost backboardd[22073]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x1037596000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7"
+      },
+      "unknown": {
+        "line": 26242,
+        "at": 1794335257872,
+        "text": "2026-11-10 18:27:37.872610+0000  localhost backboardd[22073]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x1037596000000"
+      },
+      "cancelled": {
+        "line": 26605,
+        "at": 1794335258101,
+        "text": "2026-11-10 18:27:38.101852+0000  localhost backboardd[22073]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10a1fb560; touchScreen; builtin; senderID: 0x1037596000000; contacts: contacts: [pathIndex: 2; touchIdentifier: 1; touching; locked; destinations: ((touchStream|filterDetachedTouches); contextID: 0xC1D77856; clientPort: 0x460F, (hitTest); contextID: 0x8791BDA0; clientPort: 0x2510B; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>)]; destinations: [<BKTouchDestination: 0x10a0b9440; (hitTest); contextID: 0x7A565A4C; clientPort: 0x460F; externalReferences: 1>, <BKTouchDestination: 0x10a0bb2d0; (hitTest); contextID: 0xD9F63D8B; clientPort: 0x460F; externalReferences: 1>, <BKTouchDestination: 0x10a0bbfc0; (hitTest); contextID: 0x8791BDA0; clientPort: 0x2510B; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>; externalReferences: 1>]; latentSystemGestureDestinations: ()>"
+      },
+      "paths": {
+        "line": 26607,
+        "at": 1794335258102,
+        "text": "2026-11-10 18:27:38.102126+0000  localhost backboardd[22073]: [com.apple.BackBoard:TouchEvents] canceling paths contacts: [pathIndex: 2; touchIdentifier: 1; touching; locked; destinations: ((touchStream|filterDetachedTouches); contextID: 0xC1D77856; clientPort: 0x460F, (hitTest); contextID: 0x8791BDA0; clientPort: 0x2510B; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>)] -- HID (ts:(null))"
+      }
+    },
+    "upstreamIssue": "https://github.com/mobile-dev-inc/Maestro/issues/3686",
+    "sourceFiles": {
+      "commands": "settings/artifacts/2026-11-10_182500/Settings native edit and save/commands.json",
+      "simulatorLog": "settings/artifacts/2026-11-10_182500/Settings native edit and save/logs/device-simulator.log"
+    }
+  },
+  "originals": [
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/commands.json",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/commands.json",
+      "sha256": "e0f0de45b1266c1ac4d104f3b46be7e1fe4786cbf58ec16c110331202452d30d"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/logs/device-simulator.log",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/logs/device-simulator.log",
+      "sha256": "ab02db45cf62e3fa1f011833f55741ee8dd14615ed78d85f6799c2acfa780e68"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/logs/device-xctest.log",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/logs/device-xctest.log",
+      "sha256": "26a1b48f5e2b9e66fdb80660b9e5e87280409934f47f4cf61ca96bedecf2e3a3"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/logs/maestro.log",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/logs/maestro.log",
+      "sha256": "2416124c5e0b64a94772bd008942fd142e1862db9bb7415a658d9ac37b20e316"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/manifest.json",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/manifest.json",
+      "sha256": "f878482104c24fc25f74fe7c1a63f6034f1b2fcad719c47dfec1e7b4ac4441ec"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/screen-hierarchy/step-006-assertCondition-Workspace_preferences.json",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/screen-hierarchy/step-006-assertCondition-Workspace_preferences.json",
+      "sha256": "e2c0f2ab2da4e05d14fe6ddcaf824e23b9a3e4a48e9002074c2dc9300d8c2480"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/Settings native edit and save/screenshots/step-006-assertCondition-Workspace_preferences.png",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/Settings native edit and save/screenshots/step-006-assertCondition-Workspace_preferences.png",
+      "sha256": "36925b1b1e84dbd3e3c96100375370340e30251d38a8efb9797bf7861b2fb0b8"
+    },
+    {
+      "sourceFile": "settings/artifacts/2026-11-10_182500/xctest_runner_2026-11-10_182537.log",
+      "file": "settings-initial-transport-failure/artifacts/2026-11-10_182500/xctest_runner_2026-11-10_182537.log",
+      "sha256": "dc5328baf35fc79c7e17f88a8e67de16e84b713ee4694e7b0cf24ec1f96a84f0"
+    },
+    {
+      "sourceFile": "settings/debug/.maestro/tests/2026-11-10_182500/maestro.log",
+      "file": "settings-initial-transport-failure/debug/.maestro/tests/2026-11-10_182500/maestro.log",
+      "sha256": "0d4281d628fec1b347a867a73ba94efc103cb93440c533c22aa363daed7d7328"
+    },
+    {
+      "sourceFile": "settings/report.xml",
+      "file": "settings-initial-transport-failure/report.xml",
+      "sha256": "a729419413e66144ae0ab4ffb4d0f24f2d89efebf545899609fb16cf8e2b6626"
+    },
+    {
+      "sourceFile": "settings-maestro.log",
+      "file": "settings-initial-transport-failure/maestro-command.log",
+      "sha256": "211f6e8414203829da27c3227d87251c9d32d4f4a23649aa119420beb41b9c6b"
+    },
+    {
+      "sourceFile": "commands.jsonl",
+      "file": "settings-initial-transport-failure/commands-before-recovery.jsonl",
+      "sha256": "c246f3f01d27042c1d08a95de174a8b0e645d137ab3c349e03ddef8ce95fd581",
+      "snapshot": "before recovery"
+    }
+  ],
+  "runnerFailure": {
+    "file": "settings-initial-transport-failure/runner-failure.txt",
+    "sha256": "93af6c0bd7742f48aef08d58532bba367c65f4ba3d4fbc5c12cda5e1f4f1ac68"
+  }
+}

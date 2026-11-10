@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "sourceRevision": "fcfef4d475eb9e6f8de9f2853bc0475fcc7b08fb",
+  "checks": [],
+  "error": "Native driver response timed out"
+}
