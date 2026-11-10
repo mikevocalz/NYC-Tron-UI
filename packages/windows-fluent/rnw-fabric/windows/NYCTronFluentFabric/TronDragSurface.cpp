@@ -37,6 +37,8 @@ struct TronDragSurfaceComponentView
   ~TronDragSurfaceComponentView() { Destroy(); }
   void Destroy() noexcept {
     if (std::exchange(m_disposed, true)) return;
+    m_mounted = false;
+    m_loaded = false;
     // Release broker deferrals and the XAML island at RNW's removal boundary,
     // before UIA references can postpone the UserData object's final release.
     Cleanup();
@@ -45,8 +47,29 @@ struct TronDragSurfaceComponentView
   }
   void Mounted(winrt::Microsoft::ReactNative::ComponentView const& view) noexcept {
     if (m_disposed) return;
-    try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
+    try {
+      m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink());
+      m_mounted = true;
+      ApplyDragCapabilities();
+    }
     catch (...) { Error("Could not retain the native drag connection"); }
+  }
+  void Unmounted() noexcept {
+    if (m_disposed) return;
+    m_mounted = false;
+    Cleanup();
+  }
+  void Loaded() noexcept {
+    if (m_disposed) return;
+    m_loaded = true;
+    ApplyDragCapabilities();
+  }
+  void Unloaded() noexcept {
+    if (m_disposed) return;
+    m_loaded = false;
+    // Unregistering CanDrag also needs a live input-site registration. Once
+    // unloaded, cancel the app transfer without changing that native property.
+    Cleanup();
   }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
@@ -55,6 +78,7 @@ struct TronDragSurfaceComponentView
       m_surface.DragStarting([weak = get_weak()](auto const&, Xaml::DragStartingEventArgs const& args) { if (auto self = weak.get()) self->Starting(args); else args.Cancel(true); });
       m_surface.DropCompleted([weak = get_weak()](auto const&, Xaml::DropCompletedEventArgs const& args) {
         if (auto self = weak.get()) {
+          if (self->m_disposed || self->m_request.empty()) return;
           const auto result = args.DropResult();
           auto effect = result == Transfer::DataPackageOperation::Move ? "move" : result == Transfer::DataPackageOperation::Copy ? "copy" : result == Transfer::DataPackageOperation::Link ? "link" : result == Transfer::DataPackageOperation::None ? "none" : "unknown";
           if (auto broker = Broker::Find(self->m_owner)) broker->NativeCompleted(self->m_request, effect);
@@ -64,10 +88,11 @@ struct TronDragSurfaceComponentView
       m_surface.DragEnter([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Hover(args); });
       m_surface.DragOver([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Hover(args); });
       m_surface.DragLeave([weak = get_weak()](auto const&, Xaml::DragEventArgs const&) {
-        if (auto self = weak.get()) if (auto broker = Broker::Find(self->m_owner)) broker->Leave(self->m_window, self->m_generation);
+        if (auto self = weak.get()) if (self->InputReady()) if (auto broker = Broker::Find(self->m_owner)) broker->Leave(self->m_window, self->m_generation);
       });
       m_surface.Drop([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Drop(args); });
-      m_surface.Unloaded([weak = get_weak()](auto const&, auto const&) { if (auto self = weak.get()) self->Cleanup(); });
+      m_surface.Loaded([weak = get_weak()](auto const&, auto const&) { if (auto self = weak.get()) self->Loaded(); });
+      m_surface.Unloaded([weak = get_weak()](auto const&, auto const&) { if (auto self = weak.get()) self->Unloaded(); });
       m_island.Content(m_surface);
       m_connection.SetIsland(m_island.ContentIsland());
       view.Connect(m_island.ContentIsland()); if (m_props) Apply(*m_props);
@@ -95,6 +120,24 @@ struct TronDragSurfaceComponentView
     }
     m_request.clear();
   }
+  bool InputReady() const noexcept {
+    try {
+      if (m_disposed || !m_mounted || !m_loaded || !m_surface || !m_surface.IsLoaded() || !m_island) return false;
+      const auto island = m_island.ContentIsland();
+      return island && !island.IsClosed() && island.IsConnected();
+    } catch (...) { return false; }
+  }
+  void ApplyDragCapabilities() noexcept {
+    // RNW defers Connect until Mounted. In WinUI 1.8, setting CanDrag while
+    // this element belongs to an unconnected XAML island can fail-fast during
+    // input-site registration. Both Mounted and Loaded replay current props
+    // so either event ordering is safe; no timer or speculative retry is used.
+    if (!m_props || !InputReady()) return;
+    try {
+      m_surface.CanDrag(m_role == "source" && m_surface.IsEnabled());
+      m_surface.AllowDrop(m_role == "target" && m_surface.IsEnabled());
+    } catch (...) { Error("Could not apply native drag capabilities"); }
+  }
   void Apply(Codegen::TronDragSurfaceProps const& props) noexcept {
     try {
       if (props.scopeToken != m_scope || props.ownerToken != m_owner || props.windowId != m_window || props.generation != m_generation || props.dragRole != m_role || props.disabled.value_or(false)) Cleanup();
@@ -103,7 +146,8 @@ struct TronDragSurfaceComponentView
       if (m_role != "source" && m_role != "target") throw std::invalid_argument("Invalid native drag surface role");
       m_surface.Content(winrt::box_value(winrt::to_hstring(props.label)));
       Xaml::Automation::AutomationProperties::SetName(m_surface, winrt::to_hstring(props.label));
-      m_surface.IsEnabled(!props.disabled.value_or(false)); m_surface.CanDrag(m_role == "source" && m_surface.IsEnabled()); m_surface.AllowDrop(m_role == "target" && m_surface.IsEnabled());
+      m_surface.IsEnabled(!props.disabled.value_or(false));
+      ApplyDragCapabilities();
     } catch (...) { Error("Native drag surface properties are invalid"); }
   }
   void Starting(Xaml::DragStartingEventArgs const& args) noexcept {
@@ -124,12 +168,12 @@ struct TronDragSurfaceComponentView
         completion->Complete();
       };
       auto broker = Broker::Find(m_owner); auto emitter = EventEmitter();
-      if (m_disposed || !broker || !emitter || m_role != "source" || !m_surface.IsEnabled()) { ready(false, ""); return; }
+      if (!InputReady() || !broker || !emitter || m_role != "source" || !m_surface.IsEnabled()) { ready(false, ""); return; }
       m_request = broker->PrepareSource(m_window, m_generation, ready);
       Codegen::TronDragSurfaceEventEmitter::OnDragStarting event; event.scopeToken = m_scope; event.requestId = m_request; emitter->onDragStarting(std::move(event));
     } catch (...) {
       try { args.Cancel(true); } catch (...) {} if (completion) completion->Complete();
-      Cleanup(); Error("Native drag start was refused or its owner is unavailable");
+      if (!m_disposed) Cleanup(); Error("Native drag start was refused or its owner is unavailable");
     }
   }
   static std::string Nonce(Xaml::DragEventArgs const& args) {
@@ -141,7 +185,7 @@ struct TronDragSurfaceComponentView
     try {
       args.Handled(true); args.AcceptedOperation(Transfer::DataPackageOperation::None);
       auto broker = Broker::Find(m_owner); const auto nonce = Nonce(args);
-      if (!m_disposed && m_role == "target" && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation)) {
+      if (InputReady() && m_role == "target" && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation)) {
         args.AcceptedOperation(Transfer::DataPackageOperation::Move); broker->Hover(nonce, m_window, m_generation);
       }
     } catch (...) { /* Unrelated or malformed OS data is not an accepted app transfer. */ }
@@ -158,18 +202,18 @@ struct TronDragSurfaceComponentView
         completion->Complete();
       };
       auto broker = Broker::Find(m_owner); const auto nonce = Nonce(args);
-      if (m_disposed || m_role != "target" || !m_surface.IsEnabled() || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }
+      if (!InputReady() || m_role != "target" || !m_surface.IsEnabled() || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }
       broker->Offer(nonce, m_window, m_generation, ready);
     } catch (...) {
       try { args.AcceptedOperation(Transfer::DataPackageOperation::None); } catch (...) {} if (completion) completion->Complete();
-      Cleanup(); Error("Native drop could not reach its live application owner");
+      if (!m_disposed) Cleanup(); Error("Native drop could not reach its live application owner");
     }
   }
   Xaml::XamlIsland m_island{nullptr}; Xaml::Controls::Button m_surface{nullptr};
   nyctron::islands::IslandConnection m_connection;
   winrt::com_ptr<Codegen::TronDragSurfaceProps> m_props;
   std::string m_owner, m_window, m_generation, m_role, m_scope, m_request;
-  std::vector<std::string> m_errors; bool m_disposed{false};
+  std::vector<std::string> m_errors; bool m_disposed{false}, m_mounted{false}, m_loaded{false};
 };
 }
 void RegisterTronDragSurfaceComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const& builder) {
@@ -180,6 +224,9 @@ void RegisterTronDragSurfaceComponent(winrt::Microsoft::ReactNative::IReactPacka
         auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronDragSurfaceComponentView>(); data->InitializeContentIsland(view); view.UserData(*data);
         view.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
           if (auto owner = weak.get()) owner->Mounted(mounted);
+        });
+        view.Unmounted([weak = data->get_weak()](auto const&, auto const&) noexcept {
+          if (auto owner = weak.get()) owner->Unmounted();
         });
         view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
           if (auto owner = weak.get()) owner->Destroy();
