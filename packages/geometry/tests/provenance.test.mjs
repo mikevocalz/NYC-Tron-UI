@@ -20,7 +20,7 @@ test('geometry tarball retains both existing port licenses alongside Floating UI
   for(const [name,source] of [['NYC-MON-MIT.txt',root],['NEONBLADE-MIT.txt',root],['floating-ui-MIT.txt',pkg]]){
    assert.deepEqual(extract('licenses/'+name),readFileSync(join(source,'licenses',name)),name+' must ship verbatim');
   }
-  const entries=execFileSync('tar',['-tzf',archive],{encoding:'utf8'}).split('\n');
+  const entries=execFileSync('tar',['-tzf',archive],{encoding:'utf8'}).split(/\r?\n/);
   for(const name of ['corner-cut','overlay-placement'])assert.ok(entries.includes('package/dist/'+name+'.js'),name+' distribution');
  }finally{rmSync(out,{recursive:true,force:true});}
 });

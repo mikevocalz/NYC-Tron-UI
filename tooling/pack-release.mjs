@@ -78,7 +78,7 @@ for(const pkgName of packages){
     for(const path of staged)rmSync(path,{recursive:true,force:true});
   }
   const tarball=isAbsolute(packed.filename)?packed.filename:join(outDir,packed.filename);
-  const entries=new Set(execFileSync("tar",["-tzf",tarball],{encoding:"utf8"}).split("\n").filter(Boolean));
+  const entries=new Set(execFileSync("tar",["-tzf",tarball],{encoding:"utf8"}).split(/\r?\n/).filter(Boolean));
 
   for(const path of expectInTarball){
     if(!entries.has(path))fail(id+": tarball is missing "+path);
