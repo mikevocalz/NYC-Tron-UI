@@ -89,7 +89,7 @@
     <ClCompile Include="DesktopSession.cpp" />
     <ClCompile Include="TronDesktop.cpp" />
     <ClCompile Include="TronOverlayAnchor.cpp" />
-    <ClCompile Include="OverlayDismissalTests.cpp" />
+    <ClCompile Include="OverlayDismissalTests.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>
     <ClCompile Include="NativeDragBroker.cpp" />
     <ClCompile Include="TronDragSurface.cpp" />
     <ClCompile Include="TronNavigationView.cpp" />
