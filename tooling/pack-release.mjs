@@ -8,7 +8,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { isAbsolute, join, resolve } from "node:path";
 
 const args=process.argv.slice(2);
 const outDir=resolve(args[0]??"release-packs");
@@ -51,9 +51,17 @@ for(const pkgName of packages){
     staged.push(join(dir,"licenses"));
   }
 
-  const expectInTarball=["package/package.json"];
-  for(const name of ["README.md","LICENSE","THIRD_PARTY_NOTICES.md"]){
-    if(existsSync(join(dir,name)))expectInTarball.push("package/"+name);
+  const expectInTarball=["package/package.json","package/LICENSE"];
+  if(!existsSync(join(dir,"LICENSE")))fail(id+": LICENSE is missing");
+  if(!manifest.files.includes("LICENSE"))fail(id+": files must list LICENSE");
+  for(const name of ["README.md","THIRD_PARTY_NOTICES.md"]){
+    if(existsSync(join(dir,name))||staged.includes(join(dir,name)))expectInTarball.push("package/"+name);
+  }
+  // Every THIRD_PARTY*.md file and third-party/ tree named in "files" must ship.
+  const prefixesInTarball=[];
+  for(const entry of manifest.files){
+    if(/^THIRD_PARTY.*\.md$/.test(entry))expectInTarball.push("package/"+entry);
+    if(entry.replace(/\/$/,"")==="third-party")prefixesInTarball.push("package/third-party/");
   }
   if(!existsSync(join(dir,"README.md")))fail(id+": README.md is missing");
   if(existsSync(join(dir,"licenses"))){
@@ -63,16 +71,20 @@ for(const pkgName of packages){
   let packed;
   try{
     // --json reports the produced filename; prepack rebuilds dist.
-    const json=execFileSync("pnpm",["pack","--json","--pack-destination",outDir],{cwd:dir,encoding:"utf8",stdio:["ignore","pipe","inherit"]});
+    // pnpm is pnpm.cmd on Windows, which execFileSync only runs through a shell.
+    const json=execFileSync("pnpm",["pack","--json","--pack-destination",outDir],{cwd:dir,encoding:"utf8",stdio:["ignore","pipe","inherit"],shell:process.platform==="win32"});
     packed=JSON.parse(json.slice(json.indexOf("{")));
   }finally{
     for(const path of staged)rmSync(path,{recursive:true,force:true});
   }
-  const tarball=packed.filename.startsWith("/")?packed.filename:join(outDir,packed.filename);
+  const tarball=isAbsolute(packed.filename)?packed.filename:join(outDir,packed.filename);
   const entries=new Set(execFileSync("tar",["-tzf",tarball],{encoding:"utf8"}).split("\n").filter(Boolean));
 
   for(const path of expectInTarball){
     if(!entries.has(path))fail(id+": tarball is missing "+path);
+  }
+  for(const prefix of prefixesInTarball){
+    if(![...entries].some(e=>e.startsWith(prefix)&&!e.endsWith("/")))fail(id+": tarball has no files under "+prefix);
   }
   if(![...entries].some(e=>e.startsWith("package/dist/")))fail(id+": tarball has no dist/");
   if([...entries].some(e=>e.startsWith("package/src/")))fail(id+": tarball ships src/; exports must not need it");

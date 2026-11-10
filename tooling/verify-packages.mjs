@@ -51,6 +51,18 @@ for (const pkgName of packages) {
   const id=manifest.name;
   if(manifest.private!==true)fail(id+": must stay private (release tarballs only, no npm publish)");
   if(!manifest.files?.includes("dist"))fail(id+": files must include dist");
+  // v1 licensing (docs/V1_DECISIONS.md D2): MIT text in every tarball.
+  if(manifest.license!=="MIT")fail(id+": license must be \"MIT\", got "+JSON.stringify(manifest.license));
+  if(!existsSync(join(dir,"LICENSE")))fail(id+": LICENSE file is missing");
+  if(!manifest.files?.includes("LICENSE"))fail(id+": files must list LICENSE");
+  for(const entry of manifest.files??[]){
+    // Notices are staged from the repo root at pack time when the package has
+    // no copy of its own; third-party/ license texts must live in the package.
+    if(/^THIRD_PARTY.*\.md$/.test(entry)&&!existsSync(join(dir,entry))&&!existsSync(join(resolve("."),entry)))
+      fail(id+": files lists "+entry+" but it exists neither in the package nor at the repo root");
+    if(entry.replace(/\/$/,"")==="third-party"&&!existsSync(join(dir,"third-party")))
+      fail(id+": files lists third-party but the directory is missing");
+  }
   for(const field of ["main","types"]){
     if(manifest[field]&&!manifest[field].startsWith("./dist/"))fail(id+": "+field+" must point at ./dist, got "+manifest[field]);
   }

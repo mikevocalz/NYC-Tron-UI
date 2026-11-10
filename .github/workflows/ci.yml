@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  # release.yml calls this workflow so a tag cannot ship without these gates.
+  workflow_call:
 
 permissions:
   contents: read
@@ -20,7 +22,11 @@ jobs:
           node-version: "24.19.0"
       - name: Install source-test tooling
         run: corepack enable && corepack pnpm install --frozen-lockfile --ignore-scripts
-      - run: node --test packages/core/tests/*.test.mjs packages/geometry/tests/*.test.mjs packages/ui/tests/*.test.mjs packages/expo-controls/tests/*.test.mjs packages/native-charts/tests/*.test.mjs packages/icons/tests/*.test.js packages/windows-fluent/tests/*.test.mjs
+      # One test list for CI, release and `pnpm test`: tooling/test-files.mjs.
+      - name: Build packages the tests import
+        run: corepack pnpm build
+      - name: All unit, contract and mocked-render tests
+        run: node tooling/run-tests.mjs
 
   types:
     name: workspace TypeScript
@@ -39,22 +45,42 @@ jobs:
         run: corepack pnpm build
       - name: Typecheck packages against built peer workspaces
         run: corepack pnpm typecheck
-      - name: Render adaptive pane component contracts with mocked native hosts
-        run: node --test packages/panes/tests/*.test.mjs
-      # Uses the installed typescript to run the hooks under mocked RN/Expo.
-      - name: Reserved-regions native contracts and hook behavior
-        run: node --test packages/reserved-regions/tests/*.test.mjs
-      - name: Hardware-keys native contracts, key sources and hook behavior
-        run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
-      - name: Platform-services native contracts and service behavior
-        run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
-      - name: Render Forge control contracts with mocked native hosts
-        run: node --test packages/ui/tests/render/*.test.mjs
       - name: Verify distributable subpaths and dependency boundaries
         run: node tooling/verify-packages.mjs
+      - name: Verify the public API surface against docs/api-surface.json
+        run: node tooling/api-surface.mjs
       - name: Verify the complete component ledger and reviewed public exports
         run: node tooling/verify-component-program.mjs
       - name: Pack every package and check release tarball contents
-        run: node tooling/pack-release.mjs /tmp/nyc-tron-packs
+        run: node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
+      - name: Install the dependency-free tarballs in a fresh project and import them
+        run: node tooling/consumer-smoke.mjs "$RUNNER_TEMP/nyc-tron-packs"
       # No native targets are built on this Linux workflow. A typechecked
       # @expo/ui source import is not a device validation.
+
+  # Path-separator and shell differences only show up on Windows, so run the
+  # same test list and the same pack checks there. winui-*.yml cover the
+  # native Windows builds and are not touched.
+  windows:
+    name: tests and pack on Windows
+    runs-on: windows-2025
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install local workspace
+        run: corepack pnpm install --frozen-lockfile
+      - name: Build every package
+        run: corepack pnpm build
+      - name: All unit, contract and mocked-render tests
+        run: node tooling/run-tests.mjs
+      - name: Verify distributable subpaths and dependency boundaries
+        run: node tooling/verify-packages.mjs
+      - name: Pack every package and check release tarball contents
+        run: node tooling/pack-release.mjs "$env:RUNNER_TEMP\nyc-tron-packs"
+      - name: Install the dependency-free tarballs in a fresh project and import them
+        run: node tooling/consumer-smoke.mjs "$env:RUNNER_TEMP\nyc-tron-packs"

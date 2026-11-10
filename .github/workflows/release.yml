@@ -1,8 +1,10 @@
 name: NYC-Tron release tarballs
 
 # Builds every package, packs it, and attaches the .tgz files plus SHA256SUMS
-# to a GitHub prerelease. Consumers install them by release URL. Nothing is
-# published to npm: every package.json stays "private": true.
+# to a GitHub release. A tag with a hyphen (v1.0.0-rc.1) is a prerelease; a tag
+# without one (v1.0.0) is the latest stable release. Consumers install the
+# tarballs by release URL. Nothing is published to npm: every package.json
+# stays "private": true.
 on:
   push:
     tags: ["v*"]
@@ -21,8 +23,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # The release job needs the same gates a pull request needs: source tests,
+  # typecheck, package and API-surface checks, component ledger, pack and
+  # consumer smoke test, the Windows lane, and both Chromium acceptance suites.
+  ci:
+    name: CI gates
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+  ui-browser:
+    name: UI browser acceptance
+    uses: ./.github/workflows/ui-browser.yml
+    permissions:
+      contents: read
+  menu-browser:
+    name: overlay browser acceptance
+    uses: ./.github/workflows/menu-browser.yml
+    permissions:
+      contents: read
+
   release:
     name: build, test, pack and upload
+    needs: [ci, ui-browser, menu-browser]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -56,26 +78,23 @@ jobs:
         run: corepack pnpm install --frozen-lockfile
       - name: Build every package
         run: corepack pnpm -r build
-      - name: Unit and contract tests
-        run: |
-          corepack pnpm test
-          node --test packages/panes/tests/*.test.mjs
-          node --test packages/native-controls/tests/*.test.mjs
-          node --test packages/expo-controls/tests/*.test.mjs
-          node --test packages/windows-fluent/tests/*.test.mjs
-          node --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs
-          node --test packages/icons/tests/*.test.js
-          node --test packages/native-navigation/tests/*.test.mjs
-          node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
+      - name: All unit, contract and mocked-render tests
+        run: node tooling/run-tests.mjs
       - name: Typecheck against built packages
         run: corepack pnpm typecheck
       - name: Verify exports, dist targets and optional-peer isolation
         run: node tooling/verify-packages.mjs
+      - name: Verify the public API surface
+        run: node tooling/api-surface.mjs
+      - name: Verify the complete component ledger and reviewed public exports
+        run: node tooling/verify-component-program.mjs
 
       # Fails if any package version differs from the tag, a tarball lacks
       # dist/README/notices, ships src/, or keeps an export outside dist.
       - name: Pack and check every tarball
         run: node tooling/pack-release.mjs "$RUNNER_TEMP/release" --expect-version "${{ steps.version.outputs.version }}"
+      - name: Install the dependency-free tarballs in a fresh project and import them
+        run: node tooling/consumer-smoke.mjs "$RUNNER_TEMP/release"
 
       # @nyc-tron/windows-fluent-fabric is nested outside the pnpm workspace
       # because it pins RN 0.85 + react-native-windows 0.85, so pack-release
@@ -86,7 +105,6 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          node --test tests/*.test.mjs
           actual=$(node -p 'require("./package.json").version')
           if [ "$actual" != "$VERSION" ]; then echo "::error::windows-fluent-fabric version $actual does not match $VERSION"; exit 1; fi
           npm install --no-audit --no-fund
@@ -98,7 +116,7 @@ jobs:
           (cd "$dir" && sha256sum "$file" >> SHA256SUMS)
           cat "$dir/SHA256SUMS"
 
-      - name: Create prerelease and upload tarballs
+      - name: Create release and upload tarballs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
@@ -109,8 +127,13 @@ jobs:
             echo "::error::Release $TAG already exists; bump the package versions instead of replacing assets"
             exit 1
           fi
+          # A hyphen in the tag (v1.0.0-rc.1, v0.1.0-alpha.5) marks a prerelease.
+          case "$TAG" in
+            *-*) channel=(--prerelease); kind="Prerelease" ;;
+            *)   channel=(--latest);     kind="Release" ;;
+          esac
           {
-            echo "Install by URL, for example:"
+            echo "$kind $TAG. Install by URL, for example:"
             echo
             echo '```json'
             echo "\"@nyc-tron/ui\": \"https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/nyc-tron-ui-${TAG#v}.tgz\""
@@ -122,7 +145,8 @@ jobs:
             cat "$dir/SHA256SUMS"
             echo '```'
             echo
-            echo "Not published to npm. Licensing status: see THIRD_PARTY_NOTICES.md in the repository and in each tarball."
+            echo "Not published to npm. NYC-Tron original code is MIT. Ported code keeps its upstream license; see THIRD_PARTY_NOTICES.md in the repository and in each tarball."
+            echo "Support tiers and what is not device-verified: docs/V1_DECISIONS.md."
           } > "$dir/NOTES.md"
           target=()
           if [ "$EVENT" = "workflow_dispatch" ]; then
@@ -131,7 +155,7 @@ jobs:
             target=(--verify-tag)
           fi
           gh release create "$TAG" "${target[@]}" \
-            --prerelease \
+            "${channel[@]}" \
             --title "NYC-Tron UI $TAG" \
             --notes-file "$dir/NOTES.md" \
             "$dir"/*.tgz "$dir/SHA256SUMS"
