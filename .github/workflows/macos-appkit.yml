@@ -40,7 +40,7 @@ jobs:
           corepack pnpm install --frozen-lockfile --ignore-scripts
       - name: Build and pack core with release provenance
         run: |
-          node --test tooling/macos-appkit/shared-archives.test.mjs
+          node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs
           corepack pnpm --filter @nyc-tron/core build
           node tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core
       - uses: actions/upload-artifact@v4

@@ -68,11 +68,22 @@ function assertRunning() {
 function retainProcessFailure() {
   const processState = { processId: child.pid, exitCode: child.exitCode, signalCode: child.signalCode, launchError: launchError?.message, observedAt: new Date().toISOString() };
   if (Number.isInteger(child.pid) && child.exitCode === null && child.signalCode === null) {
+    const processSnapshot = () => {
+      const result = spawnSync('/bin/ps', ['-p', String(child.pid), '-o', 'pid=,ppid=,state=,comm='], { encoding: 'utf8', timeout: 2000, maxBuffer: 64 * 1024 });
+      return { observedAt: new Date().toISOString(), exitCode: result.status, signal: result.signal, error: result.error?.message, stdout: result.stdout, stderr: result.stderr };
+    };
     // Sample only this spawned app, before closing the driver or terminating it.
     // Denied task access is retained as a diagnostic result, never bypassed.
+    processState.beforeSample = processSnapshot();
     const file = join(output, 'native-process-sample.txt');
     const sample = spawnSync('/usr/bin/sample', [String(child.pid), '2', '10', '-file', file], { encoding: 'utf8', timeout: 8000, maxBuffer: 256 * 1024 });
+    processState.afterSample = processSnapshot();
+    const sampleText = existsSync(file) ? readFileSync(file, 'utf8') : '';
+    const callGraph = sampleText.split('Call graph:')[1]?.split('Total number in stack')[0] ?? '';
+    const threadGroups = [...callGraph.matchAll(/^\s+\d+\s+Thread_/gm)].length;
     processState.sample = { durationSeconds: 2, intervalMilliseconds: 10, exitCode: sample.status, signal: sample.signal, error: sample.error?.message, stdout: sample.stdout, stderr: sample.stderr,
+      threadGroups, hasThreadStacks: threadGroups > 0,
+      ...(threadGroups ? {} : { limitation: 'No thread stacks were captured; sampler exit status alone cannot establish process or thread state.' }),
       ...(existsSync(file) ? { file: 'native-process-sample.txt', sha256: hash(readFileSync(file)) } : {}) };
   }
   writeFileSync(join(output, 'native-process-failure.json'), JSON.stringify(processState, null, 2) + '\n');
@@ -137,7 +148,8 @@ async function capture(name, window = 'main') {
 }
 try {
   await waitFor(() => existsSync(join(driverDirectory, 'driver.sock')), 'native Spark driver', 25000);
-  driver = await connectDriver(join(driverDirectory, 'driver.sock'), token, step => appendFileSync(join(output, 'commands.jsonl'), JSON.stringify(step) + '\n'));
+  driver = connectDriver(join(driverDirectory, 'driver.sock'), token, step => appendFileSync(join(output, 'commands.jsonl'), JSON.stringify(step) + '\n'));
+  await driver.ready;
   // Authentication runs on Spark's socket thread; ping proves the native main
   // queue can answer before waiting for the first React component to mount.
   await driver.request('ping');
@@ -422,9 +434,24 @@ try {
     writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
     checks.push('native-cgevent-pointer-session-and-cross-window-document-transfer');
   }
+  const requiredNativeInteractions = [
+    'native-cgevent-tooltip-hover-presentation-and-dismissal',
+    'native-cgevent-pointer-session-and-cross-window-document-transfer',
+  ];
+  const missingNativeInteractions = requiredNativeInteractions.filter(check => !checks.includes(check));
+  if (missingNativeInteractions.length || tooltipEvidence.status !== 'passed' || pointerEvidence.status !== 'passed') {
+    const blocked = tooltipEvidence.status === 'blocked' || pointerEvidence.status === 'blocked';
+    writeFileSync(join(output, 'native-interaction-gate.json'), JSON.stringify({
+      schemaVersion: 1, status: blocked ? 'blocked' : 'failed', sourceRevision: revision,
+      requiredChecks: requiredNativeInteractions, missingChecks: missingNativeInteractions, completedChecks: checks,
+      tooltip: tooltipEvidence, pointer: pointerEvidence,
+      reason: blocked ? 'The native host denied required CGEvent interaction capability; protocol and property checks cannot satisfy native hover or NSDraggingSession acceptance.' : 'Required native interaction evidence is incomplete.',
+    }, null, 2) + '\n');
+    throw new Error(`${blocked ? 'Native OS interaction acceptance blocked by host capability' : 'Native OS interaction acceptance incomplete'}: ${missingNativeInteractions.join(', ') || 'interaction result is not passed'}`);
+  }
   const report = { schemaVersion: 1, status: 'passed', platform: 'macos', architecture: process.arch, sourceRevision: revision, processId: child.pid, packageSha256: archive.sha256, nativePayloadSha256: nativeArtifact.payloadSha256, checks, captures,
     pointer: pointerEvidence, tooltip: tooltipEvidence,
-    boundaries: ['The React responder proof delivers synthetic NSEvents to the real RCTSurfaceTouchHandler and measures Fabric/Pressability behavior; it is not physical OS pointer delivery.', 'The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', tooltipEvidence.status === 'passed' ? 'The additional tooltip hover check observed cursor readback, native help-tag text and window disappearance after CGEvent movement; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so native tooltip hover remains untested; the property and accessibility-help binding is separate evidence.', pointerEvidence.status === 'passed' ? 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so pointer-session acceptance remains blocked by the recorded host permission.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
+    boundaries: ['The React responder proof delivers synthetic NSEvents to the real RCTSurfaceTouchHandler and measures Fabric/Pressability behavior; it is not physical OS pointer delivery.', 'The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', 'The additional tooltip hover check observed cursor readback, native help-tag text and window disappearance after CGEvent movement; physical mouse hardware and human gestures were not exercised.', 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
   writeFileSync(join(output, 'result.json'), JSON.stringify(report, null, 2) + '\n');
   const tested = resolve(process.env.APPKIT_TESTED_PACKAGE ?? join(root, 'tested-package'));
   if (existsSync(tested)) throw new Error('Tested-package output already exists; refusing stale artifact reuse');
