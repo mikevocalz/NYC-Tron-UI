@@ -93,7 +93,8 @@ export async function verifyNativeMedia(): Promise<MediaAcceptanceReport> {
     const probe = await decoder.probe(uri);
     check(probe.durationUs === MEDIA_FIXTURE.durationUs && probe.video?.width === MEDIA_FIXTURE.width &&
       probe.video.height === MEDIA_FIXTURE.height && probe.audio?.sampleRate === MEDIA_FIXTURE.sampleRate &&
-      probe.audio.channels === MEDIA_FIXTURE.channels, "probe does not describe the H.264/AAC fixture");
+      probe.audio.channels === MEDIA_FIXTURE.channels,
+      `probe does not describe the H.264/AAC fixture: ${JSON.stringify(probe)}`);
     checks.push("native-probe");
 
     const zero = await decoder.decodeFrame(uri, { timeUs: 0, maxWidth: 96, maxHeight: 64 });

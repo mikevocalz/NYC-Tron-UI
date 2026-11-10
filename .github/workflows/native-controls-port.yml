@@ -17,6 +17,7 @@ on:
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
       - "tooling/tests/native-ui-acceptance.test.mjs"
+      - "tooling/tests/native-artifact.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
@@ -43,6 +44,7 @@ on:
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
       - "tooling/tests/native-ui-acceptance.test.mjs"
+      - "tooling/tests/native-artifact.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
@@ -75,6 +77,7 @@ jobs:
       - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
       - run: node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
       - run: node --test tooling/tests/native-ui-acceptance.test.mjs
+      - run: node --test tooling/tests/native-artifact.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-navigation typecheck
@@ -124,6 +127,7 @@ jobs:
                    package/android/build.gradle package/android/src/main/AndroidManifest.xml \
                    package/android/src/main/res/xml/nyctron_file_paths.xml \
                    package/android/src/main/java/com/nyctron/platformservices/NYCTronDocumentsModule.kt \
+                   package/android/src/main/java/com/nyctron/platformservices/IsoBmffTimeline.java \
                    package/expo-module.config.json package/dist/index.native.js package/dist/haptics/index.native.js; do
             echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
           done
@@ -157,6 +161,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
+      - name: Verify bounded native MP4 track timelines
+        run: node tooling/native/verify-media-timeline.mjs
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
       - name: Build and pack this candidate for a clean Expo consumer
@@ -244,8 +250,13 @@ jobs:
           trap 'kill "$nyc_tron_emulator_pid" 2>/dev/null || true' EXIT
           apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           test -n "$apk"
-          node tooling/native/run-media-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER"
-          node tooling/native/run-ui-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER"
+          # Each runner owns its app/Metro lifetime. Collect both independent
+          # results from this build even when one fails; either failure blocks CI.
+          media_status=0
+          node tooling/native/run-media-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER" || media_status=$?
+          ui_status=0
+          node tooling/native/run-ui-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER" || ui_status=$?
+          test "$media_status" -eq 0 && test "$ui_status" -eq 0
       - name: Save installed-package evidence and the Android acceptance build
         if: always()
         uses: actions/upload-artifact@v4
@@ -304,6 +315,7 @@ jobs:
           pod install
           grep -q "NYCTronCharts" Podfile.lock || { echo "NYCTronCharts pod not linked"; exit 1; }
       - name: Build iOS simulator without code signing
+        id: ios_build
         working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
           workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
@@ -351,10 +363,12 @@ jobs:
           distribution: temurin
           java-version: "17"
       - name: Install the pinned official native UI test driver
+        id: ios_ui_driver
         run: |
           node tooling/native/install-maestro.mjs "$RUNNER_TEMP/nyc-tron-maestro"
           echo "MAESTRO_BIN=$RUNNER_TEMP/nyc-tron-maestro/maestro/bin/maestro" >> "$GITHUB_ENV"
       - name: Boot one simulator for both native acceptance runners
+        id: ios_boot
         run: node tooling/native/prewarm-ios.mjs
       - name: Execute the installed native decoder on iOS
         shell: bash
@@ -364,6 +378,7 @@ jobs:
           test -n "$app"
           node tooling/native/run-media-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
       - name: Execute the reference and pointer UI through XCTest touches
+        if: ${{ !cancelled() && steps.ios_build.outcome == 'success' && steps.ios_ui_driver.outcome == 'success' && steps.ios_boot.outcome == 'success' }}
         shell: bash
         run: |
           set -euo pipefail

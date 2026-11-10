@@ -43,6 +43,34 @@ export function requireSemanticLabels(tree, labels) {
   }
 }
 
+/** Verify safe-area composition from native screen geometry, not JS layout calculations. */
+export function requireReferenceHostBounds(tree) {
+  const nodes = hierarchyNodes(tree);
+  const observed = id => {
+    const matches = nodes.filter(node => {
+      const value = node.attributes["resource-id"];
+      return value === id || typeof value === "string" && value.endsWith(":id/" + id);
+    });
+    if (matches.length !== 1) throw new Error("Native geometry needs one observed " + id);
+    const value = matches[0].attributes.bounds;
+    const match = /^\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]$/.exec(value ?? "");
+    if (!match) throw new Error("Native geometry lacks valid bounds for " + id);
+    const [left, top, right, bottom] = match.slice(1).map(Number);
+    if (![left, top, right, bottom].every(Number.isSafeInteger) || left < 0 || top < 0 || right <= left || bottom <= top) {
+      throw new Error("Native geometry has invalid bounds for " + id);
+    }
+    return { left, top, right, bottom };
+  };
+  const host = observed("reference-safe-content");
+  const header = observed("reference-header"), tabs = observed("reference-bottom-tabs");
+  for (const [name, bounds] of [["reference-header", header], ["reference-bottom-tabs", tabs]]) {
+    if (bounds.left < host.left || bounds.top < host.top || bounds.right > host.right || bounds.bottom > host.bottom) {
+      throw new Error(name + " escapes the observed native safe content: " + JSON.stringify({ host, bounds }));
+    }
+  }
+  return { host, header, tabs };
+}
+
 /** Coordinates come from the actual OS accessibility tree, never a guessed screen position. */
 export function nativeElementCenter(tree, label) {
   const node = hierarchyNodes(tree).find(node => Object.values(node.attributes).some(value => value === label));

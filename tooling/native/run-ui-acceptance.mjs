@@ -3,7 +3,8 @@ import { createHash } from "node:crypto";
 import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requireSemanticLabels } from "./ui-evidence.mjs";
+import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requireReferenceHostBounds, requireSemanticLabels } from "./ui-evidence.mjs";
+import { recordNativeArtifact } from "./native-artifact.mjs";
 
 const [platform, artifactInput, consumerInput] = process.argv.slice(2);
 if (!["ios", "android"].includes(platform) || !artifactInput || !consumerInput) {
@@ -20,7 +21,7 @@ const env = { ...process.env, CI: "1", MAESTRO_CLI_NO_ANALYTICS: "1", MAESTRO_CL
 const json = file => JSON.parse(readFileSync(file, "utf8"));
 const hash = file => createHash("sha256").update(readFileSync(file)).digest("hex");
 const bundle = "com.nyctron.instruments.example", stages = [], children = [];
-let metro, bootedSimulator, stopApp, deviceId, host, binary = artifact, capture;
+let metro, bootedSimulator, stopApp, deviceId, host, launcher, capture;
 
 function run(file, args, { optional = false, timeout = 30000, log, cwd, extraEnv } = {}) {
   const started = Date.now();
@@ -98,6 +99,7 @@ function flow(name, labels, screenshots) {
   const result = requirePassedFlow(readFileSync(junit, "utf8"));
   const tree = hierarchy(name);
   requireSemanticLabels(tree, labels);
+  const geometry = name === "settings" || name === "editor" ? requireReferenceHostBounds(tree) : undefined;
   const files = allFiles(directory);
   const images = screenshots.map(name => {
     const file = files.find(path => path.endsWith(sep + name + ".png"));
@@ -105,11 +107,13 @@ function flow(name, labels, screenshots) {
     return { file: file.slice(output.length + 1), sha256: hash(file) };
   });
   stages.push({ name, ...result, report: name + "/report.xml", reportSha256: hash(junit),
-    hierarchy: name + "-hierarchy.json", hierarchySha256: hash(join(output, name + "-hierarchy.json")), images });
+    hierarchy: name + "-hierarchy.json", hierarchySha256: hash(join(output, name + "-hierarchy.json")), images,
+    ...(geometry ? { geometry } : {}) });
   return tree;
 }
 
 try {
+  const nativeArtifact = recordNativeArtifact(platform, artifact, output);
   const revision = run("git", ["-C", repo, "rev-parse", "HEAD"]).trim();
   const plan = json(join(consumer, "consumer.json"));
   if (plan.kind !== "expo-native" || plan.sourceCommit !== revision) throw new Error("Installed UI consumer belongs to a different candidate");
@@ -157,7 +161,7 @@ try {
     if (device.state !== "Booted") { run("xcrun", ["simctl", "boot", deviceId], { timeout: 90000, log: "simulator-boot.log" }); bootedSimulator = deviceId; }
     run("xcrun", ["simctl", "bootstatus", deviceId, "-b"], { timeout: 420000, log: "simulator-bootstatus.log" });
     host = { udid: deviceId, name: device.name };
-    binary = join(artifact, run("/usr/libexec/PlistBuddy", ["-c", "Print :CFBundleExecutable", join(artifact, "Info.plist")]).trim());
+    launcher = join(artifact, run("/usr/libexec/PlistBuddy", ["-c", "Print :CFBundleExecutable", join(artifact, "Info.plist")]).trim());
     run("xcrun", ["simctl", "install", deviceId, artifact], { timeout: 120000, log: "install.log" });
     stopApp = () => { run("xcrun", ["simctl", "terminate", deviceId, bundle], { optional: true }); };
     launch = () => { run("xcrun", ["simctl", "launch", "--terminate-running-process", deviceId, bundle], { timeout: 90000 }); };
@@ -175,7 +179,7 @@ try {
   }
   const report = {
     schema: 1, status: "passed", platform, revision, stages,
-    provenance: { ...host, binarySha256: hash(binary), sourceCommit: revision, maestro: MAESTRO,
+    provenance: { ...host, nativeArtifact, ...(launcher ? { launcherSha256: hash(launcher) } : {}), sourceCommit: revision, maestro: MAESTRO,
       installedPackages: json(join(consumer, "installed-packages.json")) },
     input: platform === "android" ? "Maestro OS touch plus Android touch-down/Home cancellation" : "Maestro XCTest OS touch",
     manualGates: ["physical pen pressure/tilt/hover", "physical palm rejection", "VoiceOver/TalkBack spoken output",

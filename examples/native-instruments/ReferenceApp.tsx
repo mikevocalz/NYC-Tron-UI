@@ -95,12 +95,14 @@ function ReferenceHost({ deviceFamily = "unknown" }: NativeReferenceAppProps) {
   const usable = state.container ? resolveUsableRegions({ container: state.container, features }) : [];
   const safe = usable.length ? shell.kind === "physical-right-rail" ? resolvePhysicalRightRailRegion(usable)
     : usable.reduce((best, next) => next.width * next.height > best.width * best.height ? next : best) : null;
-  const bounded = safe && state.container ? { left: safe.x - state.container.x, top: safe.y - state.container.y, width: safe.width, height: safe.height }
+  // resolveUsableRegions already returns container-local coordinates. Subtracting
+  // the measured window origin again moves content out of its safe-area parent.
+  const bounded = safe && state.container ? { left: safe.x, top: safe.y, width: safe.width, height: safe.height }
     : { left: 0, right: 0, top: 0, bottom: 0 };
   const obscured = Boolean(state.container && !safe || features.length && !state.container);
   return <SafeAreaView style={{ flex: 1 }} {...{ className: "bg-surface-sunken" }}>
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <View ref={host} collapsable={false} onLayout={measure} style={{ flex: 1, direction: "ltr" }}>
+      <View ref={host} testID="reference-safe-content" collapsable={false} onLayout={measure} style={{ flex: 1, direction: "ltr" }}>
         <View style={{ position: "absolute", ...bounded, opacity: obscured ? 0 : 1, direction: I18nManager.isRTL ? "rtl" : "ltr" }}
           pointerEvents={obscured ? "none" : "auto"} accessibilityElementsHidden={obscured} importantForAccessibility={obscured ? "no-hide-descendants" : "auto"}>
           <ReferenceApp navigation={navigation} mediaSource={media.current.source}

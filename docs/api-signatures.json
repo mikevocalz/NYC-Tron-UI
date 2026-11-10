@@ -45101,7 +45101,7 @@
     },
     "@nyc-tron/ui/dist/components/shell/AssetBrowser.d.ts#AssetBrowser": {
       "signatures": [
-        "export declare function AssetBrowser({ locationId, revision, entries, path, selectedIds, selectionMode, onSelectionChange, onOpen, onNavigate, loading, error, height, className, unstyled, style, ...rest }: AssetBrowserProps): import(\"react\").JSX.Element;"
+        "export declare function AssetBrowser({ locationId, revision, entries, path, selectedIds, selectionMode, onSelectionChange, onOpen, onNavigate, loading, error, height, header: before, footer: after, emptyState, className, unstyled, style, ...rest }: AssetBrowserProps): import(\"react\").JSX.Element;"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/shell/AssetBrowser.d.ts#AssetBrowserProps",
@@ -45112,12 +45112,13 @@
     },
     "@nyc-tron/ui/dist/components/shell/AssetBrowser.d.ts#AssetBrowserProps": {
       "signatures": [
-        "export interface AssetBrowserProps extends Omit<ViewProps, \"children\"> {\n    readonly locationId: string;\n    readonly revision: string;\n    readonly entries: readonly AssetEntry[];\n    readonly path: readonly AssetLocation[];\n    readonly selectedIds: readonly string[];\n    readonly selectionMode?: \"single\" | \"multiple\";\n    readonly onSelectionChange: (ids: readonly string[]) => void;\n    readonly onOpen: (request: AssetRequest, signal: AbortSignal) => void | Promise<void>;\n    readonly onNavigate: (locationId: string, signal: AbortSignal) => void | Promise<void>;\n    readonly loading?: boolean;\n    readonly error?: string;\n    readonly height?: number;\n    readonly className?: string;\n    readonly unstyled?: boolean;\n}"
+        "export interface AssetBrowserProps extends Omit<ViewProps, \"children\"> {\n    readonly locationId: string;\n    readonly revision: string;\n    readonly entries: readonly AssetEntry[];\n    readonly path: readonly AssetLocation[];\n    readonly selectedIds: readonly string[];\n    readonly selectionMode?: \"single\" | \"multiple\";\n    readonly onSelectionChange: (ids: readonly string[]) => void;\n    readonly onOpen: (request: AssetRequest, signal: AbortSignal) => void | Promise<void>;\n    readonly onNavigate: (locationId: string, signal: AbortSignal) => void | Promise<void>;\n    readonly loading?: boolean;\n    readonly error?: string;\n    readonly height?: number | \"fill\";\n    readonly header?: ReactNode;\n    readonly footer?: ReactNode;\n    readonly emptyState?: ReactNode;\n    readonly className?: string;\n    readonly unstyled?: boolean;\n}"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/shell/asset-browser-model.d.ts#AssetEntry",
         "@nyc-tron/ui/dist/components/shell/asset-browser-model.d.ts#AssetLocation",
         "@nyc-tron/ui/dist/components/shell/asset-browser-model.d.ts#AssetRequest",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.dom.d.ts#AbortSignal",
         "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",

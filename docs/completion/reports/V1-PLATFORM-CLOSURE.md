@@ -16,7 +16,8 @@ in [library-progress.json](../library-progress.json). There are 332 reviewed loc
 implementations and nine pinned external implementations: all 341 original IDs
 now have reviewed source ownership. N-10 includes the actual MMKV 4.3.2 binding
 port to the pinned Nitro 120 ABI, plus Board and all-eleven-engine storage adapters.
-Its native build and process-relaunch gates remain separate evidence. This source
+Its native build and process-relaunch gates passed on both iOS and Android at
+that checkpoint; the exact receipts are linked below. This source
 inventory does not claim that 341 components have passed every required platform gate.
 
 The immutable roster is copied without changes from Forge's
@@ -33,7 +34,7 @@ ownership, and continues to require platform evidence before an accepted status.
 | N-03 LogitechMuseSpatialInk | Forge `@nitro-forge/spatial-ink`; Viro's existing ARKit + GCStylus provider | Actual tracked translation/quaternion and tip pressure; distinguishes untracked, position-only and six-DoF; tracking loss terminates input once | Logitech Muse on a supported visionOS host; headset loss and measured input latency |
 | N-04 PalmRejectionAndPrediction | NYC-Tron pure pointer router plus UIKit coalesced/predicted touches and Android API 34 MotionPredictor | Pen admission suppresses palm input; coalesced observations are committed; predictions remain temporary and separate; zero pressure remains zero | Hardware pressure/tilt, palm behavior and SDK prediction availability |
 | N-09 XRPresentationAdapter | Forge `@nitro-forge/board/xr` and optional `@nitro-forge/board/xr/viro` | One authoritative document; one render in flight; latest-revision coalescing; image leases survive until actual Viro load or detach | Viro rendering on visionOS/Quest/PICO, interaction mapping, GPU/device performance |
-| N-10 OfflineCheckpointAndAutosave | Forge `@nitro-forge/ignition/autosave`, `autosave/mmkv` and `@nitro-forge/board/offline/mmkv` | Actual MMKV 4.3.2 Nitro 120 port; all-eleven-engine storage/recovery; final queued autosave; scoped single-record checkpoint, bounds/checksum/corruption handling and retry | Installed iOS/Android binding and process termination/relaunch gates; sudden-power-loss durability remains a separate proof |
+| N-10 OfflineCheckpointAndAutosave | Forge `@nitro-forge/ignition/autosave`, `autosave/mmkv` and `@nitro-forge/board/offline/mmkv` | Actual MMKV 4.3.2 Nitro 120 port; all-eleven-engine storage/recovery; final queued autosave; scoped single-record checkpoint, bounds/checksum/corruption handling and retry | Installed iOS/Android binding and process termination/relaunch passed at `cc4893b`; sudden-power-loss durability and the remaining platform matrix need separate proof |
 | N-11 CollaborationAdapter | Forge `@nitro-forge/ignition/collaboration`, `collaboration-http`, Board `offline/yjs` and `offline/sync` | Owned request bytes, revision/ACK boundaries, all engine envelopes; real Yjs merge/reopen/reconnect using the host's existing document | Authenticated product transport, multi-device failure/reconnect and device persistence |
 | N-13 LongTaskScheduler | Generated ForgeTask and native serial queue through `@nitro-forge/ignition/nitro` | Native worker execution, FIFO ownership, cancellation and close lifetime; actual Rust/C++ workload checks | The app-launch gate exercises generated objects in Hermes; per-device latency and suspend/resume remain separate |
 | N-14 MediaCache | Generated ForgeMediaCache + bounded native ByteCache | Byte and metadata budgets, LRU/eviction, allocation-failure safety, failed-read behavior and owned bytes | App launch uses the actual native cache; product-derived preview/waveform generation and device pressure budgets |
@@ -81,7 +82,13 @@ Linux gate checks installed C++ against the actual runtime and reopens real
 MMKVCore storage in a second process. The mobile gate shares one MMKV instance
 with Board and all eleven engines, writes through `DocumentAutosave`, then requires
 OS termination and recovery from a new process before accepting the final fifteen
-checks. The source pin does not substitute for that native execution result.
+checks. Both native jobs passed at `cc4893b` in
+[Forge run 42759521341](https://github.com/mikevocalz/nitro-forge/actions/runs/42759521341),
+tested merge `aa11c3b3b3b9170a48c4ecfef8ae2a1ad3ed0533`. The retained
+[iOS](https://github.com/mikevocalz/nitro-forge/blob/codex/v1-platform-completion/docs/completion/evidence/v1-native-cc4893b/ios/provenance.json)
+and [Android](https://github.com/mikevocalz/nitro-forge/blob/codex/v1-platform-completion/docs/completion/evidence/v1-native-cc4893b/android/provenance.json)
+receipts record distinct process identities and all eleven recovered engine kinds.
+These scoped runtime passes do not promote the full eight-platform ledger.
 
 The Yjs adapter operates on the existing Y.Doc. It merges updates rather than
 pretending a CRDT merge can destructively roll back a document. A failed persistence
@@ -105,18 +112,26 @@ Logs, reports and screenshots are retained even when a gate fails.
 
 Evidence observed for the candidate:
 
-- [Tron source/exports/types](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744884) passed for head `10f3df208b549567c5084eeea91b2d5f9863fd78`.
-- [Clean installed browser consumers](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744677) passed at that head.
-- [Reference browser acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744978) passed all 29 browser checks and three model tests, with the ten new reference captures and raw render measurements. The actual tested merge was `640759da66f486e9abc70863b7707fd6023452c6`. [Retained evidence](../evidence/v1-reference-10f3df2/results.json) identifies the run and archive hash.
-- [Broad browser acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744830) passed all 686 checks at that head.
-- [WinUI native acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744692) passed source/codegen, the actual native C++ consumer build, package registration and keyboard UI Automation smoke checks. This does not establish Narrator speech or physical-device input.
-- [Installed iOS decoder runtime](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744795) compiled, launched and passed its then-current 11 checks on an iPhone 17 Pro simulator running iOS 26.5. [Retained native evidence](../evidence/v1-native-ios-10f3df2/provenance.json) includes the actual PCM results: its permissive tail assertion accepted 3,984 of 4,000 expected frames. The stricter follow-up gate requires the full duration and remains separate from this historical pass. Android compilation passed in that run; an AVD-directory mismatch prevented launch and is corrected in the next candidate.
+- [Tron source/exports/types](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760177947) and [clean installed browser consumers](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178220) passed for head `fe397c02bab746ef4ecbcae0cf9d42176a2e53df`.
+- [Reference browser acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178255) passed all 29 browser checks and three model tests. The actual tested merge was `fa1ba2dfbfa08e610ed33f5731542aa8c734af0b`. Its four editor captures are byte-identical to the retained `10f3df2` captures below; older artifacts remain labeled with their original revision.
+- [Broad browser acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760177931) passed all 686 checks at that head.
+- [WinUI native acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178261) passed source/codegen, the actual native C++ consumer build, package registration and keyboard UI Automation. This does not establish Narrator speech or physical-device input.
+- [Installed iOS decoder runtime](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178196) compiled, launched and passed all eleven strict checks at head `fe397c02`, including 32,000 full-length and 4,000 tail resampled PCM frames. [Retained native evidence](../evidence/v1-native-ios-fe397c0/provenance.json) identifies the actual merge, fixture and original artifact. The UI step failed separately; the whole job is not represented as green.
+- Android compiled and launched in that native run, but its media probe failed because the extractor exposed the encoded audio duration. The next candidate reads bounded authored per-track MP4 metadata instead of globally trimming audio or loosening the expected output counts. Its Java parser passes eight focused JVM groups; actual codec execution remains required.
+- [Forge native acceptance](https://github.com/mikevocalz/nitro-forge/actions/runs/42759521341) passed on both iOS and Android at `cc4893b`, including MMKV/Yjs process recovery, all eleven engine checkpoints, binary/cache ownership, FIFO close and task cancellation. All fourteen other Forge source/adapter/ledger workflows also passed at that checkpoint.
 - [Muse native Swift pose test](https://github.com/mikevocalz/viro/actions/runs/42753171666) and [Viro convergence](https://github.com/mikevocalz/viro/actions/runs/42753171447) passed at `e84a1a9a37168a835f7730e09016917b9d49c6ef`.
 
-The preceding `7b5b3de` reference/broad runs had one missing fixture family setter;
-`10f3df2` repaired it and the complete reruns passed. Earlier failed suites are not
-reclassified as successes. iOS/Android service/runtime results remain attached to
-the exact commits and fixtures that actually execute them.
+The actual iOS UI failure exposed two reference-host defects: double subtraction
+of the measured safe-area origin, and a virtualized Library nested in a plain
+vertical ScrollView. The follow-up uses container-local regions directly and one
+native FlatList with heading/detail slots. A new geometry gate checks the observed
+OS rectangles. These fixes require a fresh native run; no failed flow has been
+reclassified as a pass.
+
+Complete native artifact identity now fingerprints every iOS app payload file,
+including its debug dylib, and the Android APK. Historical launcher-only hashes
+remain labeled; the retained strict-iOS artifact additionally has a complete
+manifest computed after verified download and extraction.
 
 Local Forge evidence and exact commands are retained in its
 `docs/recovery/V1_INFRASTRUCTURE_ACCEPTANCE.md`. Native compile success is not

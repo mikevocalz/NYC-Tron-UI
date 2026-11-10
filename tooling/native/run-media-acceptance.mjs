@@ -5,6 +5,7 @@ import { createServer } from "node:http";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MEDIA_FIXTURE, validateMediaAcceptanceReport } from "../../examples/native-instruments/media-acceptance-contract.ts";
+import { recordNativeArtifact } from "./native-artifact.mjs";
 
 const [platform, input, consumerInput] = process.argv.slice(2);
 if (!["android", "ios"].includes(platform) || !input || !consumerInput)
@@ -85,6 +86,7 @@ receiver.requestTimeout = 15000;
 receiver.headersTimeout = 15000;
 
 try {
+  const nativeArtifact = recordNativeArtifact(platform, artifact, output);
   await new Promise((resolve, reject) => {
     receiver.once("error", reject); receiver.listen(0, "127.0.0.1", resolve);
   });
@@ -97,7 +99,7 @@ try {
       EXPO_PUBLIC_NYC_TRON_ACCEPTANCE_URL: `http://127.0.0.1:${receiptPort}${receiptPath}` },
   });
   await waitFor(metroReady, "the clean consumer's Metro server", 60000);
-  let binary = artifact, host;
+  let launcher, host;
   if (platform === "android") {
     const sdk = process.env.ANDROID_HOME ?? process.env.ANDROID_SDK_ROOT;
     if (!sdk) throw new Error("ANDROID_HOME must point to the SDK used to build this consumer");
@@ -135,7 +137,7 @@ try {
     capture = () => { run("xcrun", ["simctl", "io", device.udid, "screenshot", join(output, "screen.png")], { optional: true }); };
     stopApp = () => { run("xcrun", ["simctl", "terminate", device.udid, bundle], { optional: true }); };
     const executable = run("/usr/libexec/PlistBuddy", ["-c", "Print :CFBundleExecutable", join(artifact, "Info.plist")]).trim();
-    binary = join(artifact, executable);
+    launcher = join(artifact, executable);
     run("xcrun", ["simctl", "install", device.udid, artifact], { timeout: 120000 });
     background("xcrun", ["simctl", "launch", "--console", "--terminate-running-process", device.udid, bundle], "app.log");
   }
@@ -145,7 +147,8 @@ try {
   }, "the installed native decoder's actual result");
   writeFileSync(join(output, "result.json"), JSON.stringify({
     ...report,
-    provenance: { ...host, sourceCommit: revision, fixtureSha256: hash(fixture), binarySha256: hash(binary),
+    provenance: { ...host, sourceCommit: revision, fixtureSha256: hash(fixture), nativeArtifact,
+      ...(launcher ? { launcherSha256: hash(launcher) } : {}),
       installedPackages: json(join(consumer, "installed-packages.json")) },
   }, null, 2) + "\n");
   console.info(`Native ${platform} decoder passed ${report.checks.length} checks at ${revision}. Evidence: ${output}`);

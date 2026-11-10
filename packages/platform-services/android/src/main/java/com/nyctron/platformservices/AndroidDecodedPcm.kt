@@ -24,12 +24,14 @@ internal class AndroidDecodedPcm(private val file: File, private val startUs: Lo
   private var previousTime = Double.NaN
   private var previous = FloatArray(0)
   private val scalar = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN)
-  var endUs = startUs + durationUs
+  var endUs = (startUs + durationUs).toDouble()
     private set
 
   /** Codec packets can contain encoder padding beyond the declared track end. */
-  fun limitToTrackDuration(trackDurationUs: Long) {
+  fun limitToTrackDuration(trackDurationUs: Double) {
     check(rate == 0) { "The PCM interval must be set before accepting samples." }
+    if (!trackDurationUs.isFinite() || trackDurationUs < 0)
+      throw MediaDecodeFailure("unsupported-format", "Audio duration is invalid.")
     if (trackDurationUs <= startUs)
       throw MediaDecodeFailure("out-of-range", "Audio starts at or past the track duration.")
     endUs = minOf(endUs, trackDurationUs)
@@ -59,10 +61,8 @@ internal class AndroidDecodedPcm(private val file: File, private val startUs: Lo
       for (channel in 0 until channels) sample[channel] = if (encoding == AudioFormat.ENCODING_PCM_FLOAT) bytes.float else bytes.short / 32768f
       val time = info.presentationTimeUs + i * 1_000_000.0 / sourceRate
       if (previousTime.isNaN()) {
-        if (nextTime < time) {
-          nextFrame = ceil((time - startUs) * rate / 1_000_000.0).toLong()
-          nextTime = startUs + nextFrame * 1_000_000.0 / rate
-        }
+        if (time - nextTime > 1_500_000.0 / sourceRate)
+          throw MediaDecodeFailure("unsupported-format", "Audio starts after the requested interval.")
         previousTime = time
         sample.copyInto(previous)
       }

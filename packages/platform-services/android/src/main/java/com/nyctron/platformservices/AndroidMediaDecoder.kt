@@ -15,6 +15,7 @@ import java.io.FileNotFoundException
 import java.util.UUID
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.roundToLong
 
 /** One serial owner: no cache deletion races with a codec writing an output. */
 internal class AndroidMediaDecoder(private val context: () -> Context?) {
@@ -58,20 +59,49 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
     catch (failure: Exception) { result.release(); throw failure }
   }
 
+  private fun timeline(uri: String): IsoBmffTimeline? {
+    val ctx = context() ?: throw MediaDecodeFailure("decode-failed", "Application context is unavailable.")
+    val descriptor = ctx.contentResolver.openAssetFileDescriptor(Uri.parse(uri), "r")
+      ?: throw MediaDecodeFailure("not-found", "Media source is unavailable.")
+    descriptor.use { asset ->
+      asset.createInputStream().use { stream ->
+        val length = if (asset.declaredLength >= 0) asset.declaredLength else stream.channel.size() - asset.startOffset
+        try { return IsoBmffTimeline.read(stream.channel, asset.startOffset, length, ::checkActive) }
+        catch (_: IllegalArgumentException) {
+          throw MediaDecodeFailure("unsupported-format", "The MP4 timeline is invalid or needs an edit-aware decoder.")
+        }
+      }
+    }
+  }
+
+  private fun durationUs(format: MediaFormat, timeline: IsoBmffTimeline?): Double? {
+    if (timeline != null) {
+      if (!format.containsKey(MediaFormat.KEY_TRACK_ID))
+        throw MediaDecodeFailure("unsupported-format", "The MP4 track has no native track ID.")
+      val audio = format.getString(MediaFormat.KEY_MIME)?.startsWith("audio/") == true
+      try { timeline.durationUs(format.getInteger(MediaFormat.KEY_TRACK_ID), audio)?.let { return it } }
+      catch (_: IllegalArgumentException) {
+        throw MediaDecodeFailure("unsupported-format", "The MP4 track has an unsupported presentation timeline.")
+      }
+    }
+    return if (format.containsKey(MediaFormat.KEY_DURATION)) format.getLong(MediaFormat.KEY_DURATION).toDouble() else null
+  }
+
   fun probe(uri: String): MediaProbeRecord {
     val source = extractor(uri)
     try {
-      var video: MediaFormat? = null; var audio: MediaFormat? = null; var duration = 0L
+      val timeline = timeline(uri)
+      var video: MediaFormat? = null; var audio: MediaFormat? = null; var duration = 0.0
       for (i in 0 until source.trackCount) {
         checkActive()
         val format = source.getTrackFormat(i)
-        if (format.containsKey(MediaFormat.KEY_DURATION)) duration = maxOf(duration, format.getLong(MediaFormat.KEY_DURATION))
+        durationUs(format, timeline)?.let { duration = maxOf(duration, it) }
         val mime = format.getString(MediaFormat.KEY_MIME) ?: continue
         if (mime.startsWith("video/") && video == null) video = format
         if (mime.startsWith("audio/") && audio == null) audio = format
       }
       if (video == null && audio == null) throw MediaDecodeFailure("unsupported-format", "No audio or video track was found.")
-      return MediaProbeRecord(duration.toDouble(), video != null,
+      return MediaProbeRecord(duration, video != null,
         number(video, MediaFormat.KEY_WIDTH), number(video, MediaFormat.KEY_HEIGHT), number(video, MediaFormat.KEY_FRAME_RATE),
         video?.getString(MediaFormat.KEY_MIME) ?: "", audio != null,
         number(audio, MediaFormat.KEY_SAMPLE_RATE), number(audio, MediaFormat.KEY_CHANNEL_COUNT), audio?.getString(MediaFormat.KEY_MIME) ?: "")
@@ -86,23 +116,25 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
       throw MediaDecodeFailure("out-of-range", "maxFrames must be an integer from 1 to 200000.")
     val source = extractor(uri)
     try {
+      val timeline = timeline(uri)
       var track = -1
-      var duration = 0L
+      var duration = 0.0
       for (i in 0 until source.trackCount) {
         checkActive()
         val format = source.getTrackFormat(i)
-        if (format.containsKey(MediaFormat.KEY_DURATION)) duration = maxOf(duration, format.getLong(MediaFormat.KEY_DURATION))
+        durationUs(format, timeline)?.let { duration = maxOf(duration, it) }
         if (track < 0 && format.getString(MediaFormat.KEY_MIME)?.startsWith("video/") == true) track = i
       }
       if (track < 0 || duration <= 0 || duration > 9_007_199_254_740_991L)
         throw MediaDecodeFailure("unsupported-format", "A finite video timeline is required.")
+      val durationUs = duration.roundToLong()
       source.selectTrack(track)
       val times = ArrayList<Long>()
       while (true) {
         checkActive()
         val time = source.sampleTime
         if (time == -1L) break
-        if (time < 0 || time >= duration)
+        if (time < 0 || time >= durationUs)
           throw MediaDecodeFailure("unsupported-format", "A presentation timestamp lies outside the video duration.")
         if (source.sampleFlags and (MediaExtractor.SAMPLE_FLAG_ENCRYPTED or MediaExtractor.SAMPLE_FLAG_PARTIAL_FRAME) != 0)
           throw MediaDecodeFailure("unsupported-format", "Encrypted or partial video samples cannot be indexed.")
@@ -121,7 +153,7 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
       times.sort()
       for (i in 1 until times.size) if (times[i] <= times[i - 1])
         throw MediaDecodeFailure("unsupported-format", "The video has duplicate presentation timestamps.")
-      return PresentationIndexRecord(duration.toDouble(), times.map { it.toDouble() })
+      return PresentationIndexRecord(durationUs.toDouble(), times.map { it.toDouble() })
     } finally { source.release() }
   }
 
@@ -181,7 +213,7 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
     if (request.maxWidth !in 1.0..4096.0 || request.maxHeight !in 1.0..4096.0 || request.maxWidth % 1 != 0.0 || request.maxHeight % 1 != 0.0)
       throw MediaDecodeFailure("out-of-range", "Frame bounds must be integers from 1 to 4096.")
     var result: DecodedFrameRecord? = null
-    decode(uri, "video/", time, { format ->
+    decode(uri, "video/", time, { format, _ ->
       format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible)
     }) { codec, index, info, format ->
       if (info.size == 0 || info.presentationTimeUs < time) return@decode false
@@ -206,8 +238,8 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
     val output = output(".f32")
     try {
       AndroidDecodedPcm(output, start, duration, request.sampleRate.toInt()).use { sink ->
-        decode(uri, "audio/", start, { format ->
-          if (format.containsKey(MediaFormat.KEY_DURATION)) sink.limitToTrackDuration(format.getLong(MediaFormat.KEY_DURATION))
+        decode(uri, "audio/", start, { _, durationUs ->
+          if (durationUs != null) sink.limitToTrackDuration(durationUs)
         }) { codec, index, info, format ->
           if (info.size > 0) {
             val bytes = codec.getOutputBuffer(index) ?: throw MediaDecodeFailure("decode-failed", "Audio buffer is unavailable.")
@@ -223,15 +255,17 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
   }
 
   /** Decode from a preceding sync sample; report actual output PTS, never a guessed seek target. */
-  private fun decode(uri: String, prefix: String, start: Long, configure: (MediaFormat) -> Unit,
+  private fun decode(uri: String, prefix: String, start: Long, configure: (MediaFormat, Double?) -> Unit,
     consume: (MediaCodec, Int, MediaCodec.BufferInfo, MediaFormat) -> Boolean) {
     val source = extractor(uri)
     var codec: MediaCodec? = null
     try {
+      val timeline = timeline(uri)
       val track = (0 until source.trackCount).firstOrNull { source.getTrackFormat(it).getString(MediaFormat.KEY_MIME)?.startsWith(prefix) == true }
         ?: throw MediaDecodeFailure("unsupported-format", "The requested media track is absent.")
       val format = source.getTrackFormat(track)
-      if (format.containsKey(MediaFormat.KEY_DURATION) && start >= format.getLong(MediaFormat.KEY_DURATION))
+      val durationUs = durationUs(format, timeline)
+      if (durationUs != null && start >= durationUs)
         throw MediaDecodeFailure("out-of-range", "Media time is past the track duration.")
       if (prefix == "video/" && number(format, MediaFormat.KEY_WIDTH) * number(format, MediaFormat.KEY_HEIGHT) > 33_554_432)
         throw MediaDecodeFailure("unsupported-format", "Source frame exceeds the decoder memory budget.")
@@ -239,7 +273,7 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
       // AAC/Opus decoders need preroll; trimming begins only after decoded PTS reaches the requested interval.
       val seek = if (prefix == "audio/") maxOf(0L, start - 1_000_000) else start
       source.seekTo(seek, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
-      configure(format)
+      configure(format, durationUs)
       val mime = format.getString(MediaFormat.KEY_MIME) ?: throw MediaDecodeFailure("unsupported-format", "Track codec is absent.")
       val decoder = MediaCodec.createDecoderByType(mime); codec = decoder
       decoder.configure(format, null, null, 0); decoder.start()

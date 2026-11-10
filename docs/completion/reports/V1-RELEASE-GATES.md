@@ -10,13 +10,13 @@ blanket device-acceptance claim is created by this report.
 
 | Gate | Observed result | Evidence and limit |
 |---|---|---|
-| Source, exports, types and package checks | Passed for PR head `10f3df208b549567c5084eeea91b2d5f9863fd78` | [CI run 42755744884](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744884), including the declaration-graph gate |
+| Source, exports, types and package checks | Passed for PR head `fe397c02bab746ef4ecbcae0cf9d42176a2e53df` | [CI run 42760177947](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760177947), including the declaration-graph gate |
 | Installed basic UI consumer | Passed: one Chromium test; one Expo-only test intentionally skipped | [Consumer run 42752975794](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42752975794), job `129620702408` |
 | Installed Expo/web consumer | Passed: two Chromium tests | Same run, job `129620702182`; UI, core, panes and Expo controls came from produced tarballs |
 | Native consumer packaging | Passed locally: ten NYC-Tron archives installed in a new npm project; strict app typecheck and Expo iOS/Android exports completed | iOS: 1,142 modules; Android: 1,144 modules; approximately 2.4 MB Hermes bundle each, including the generated reference MP4. These are bundling results, not native runtime results |
-| Native iOS installed consumer | Compiled, launched and passed the then-current 11-check decoder contract at head `10f3df2` | [Native run 42755744795](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744795), job `129629586741`; [retained report and provenance](../evidence/v1-native-ios-10f3df2/provenance.json). Its permissive tail assertion accepted 3,984 of 4,000 expected frames, so this historical pass does not satisfy the newer exact-length resampling gate |
-| Native Android installed consumer | Compiled; launch blocked by an emulator-directory mismatch at head `10f3df2` | Same run, job `129629586983`. The next candidate explicitly shares `ANDROID_AVD_HOME` between AVD creation and emulator launch and asserts the named AVD exists |
-| Windows native consumer | Actual C++ consumer build, registration and keyboard UI Automation passed at head `10f3df2` | [WinUI run 42755744692](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744692). This does not establish Narrator speech or physical-device input |
+| Native iOS installed consumer | Compiled, launched and passed all 11 strict media checks at head `fe397c02`; UI interaction failed separately | [Native run 42760178196](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178196), job `129643765774`; [retained report and provenance](../evidence/v1-native-ios-fe397c0/provenance.json). Actual resampling produced 32,000 full-length and 4,000 tail frames. The safe-area coordinate fix and single-scroll-owner Library composition need the next native UI run |
+| Native Android installed consumer | Compiled and launched at head `fe397c02`; strict media probe failed | Same run, job `129643765867`. The AVD-directory issue is fixed. The next candidate reads the authored per-track MP4 timeline to handle Android 15/16 duration differences and preserves fractional PCM endpoints; strict decoder counts are unchanged |
+| Windows native consumer | Actual C++ consumer build, registration and keyboard UI Automation passed at head `fe397c02` | [WinUI run 42760178261](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178261). This does not establish Narrator speech or physical-device input |
 | Workspace public declaration snapshot | Passed locally | 13 packages, 617 typed public subpaths, 3,306 reachable project declarations, 94 external type boundaries; TypeScript 6.0.3 |
 | Isolated Windows public declaration snapshot | Passed locally after its own dependency install and build | 1 package, 1 typed public subpath, 4 reachable project declarations, 7 external type boundaries; TypeScript 5.9.3 / RN 0.85.3 |
 | Tooling regressions | Passed locally | Eight declaration-graph regressions and five tarball-integrity/dependency-boundary regressions |
@@ -32,8 +32,8 @@ artifacts; the basic narrow and Expo/web wide captures were visually inspected:
 [Expo/web wide](../evidence/v1-release-consumers-7b5b3de/expo-web-wide.png),
 [Expo/web narrow](../evidence/v1-release-consumers-7b5b3de/expo-web-narrow.png).
 The fixtures use minimal app styling to exercise package consumption. The
-[complete installed-consumer rerun](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744677)
-also passed at head `10f3df2`; the older retained images remain labeled with the
+[complete installed-consumer rerun](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178220)
+also passed at head `fe397c02`; the older retained images remain labeled with the
 revision that produced them.
 
 Local headless Chromium could not launch because the managed runtime denied
@@ -159,15 +159,21 @@ touch is cancelled when Home removes app focus. This is separate from the
 media decoder's runtime receipt.
 
 The runner retains JUnit, native accessibility trees, screenshots, command and
-Metro logs, app binary hash, installed archive hashes, source revision and the
-tool's verified release SHA-256. It rejects empty, skipped or failed reports,
+Metro logs, complete native artifact identity, installed archive hashes, source
+revision and the tool's verified release SHA-256. iOS identity hashes a sorted
+manifest of the entire app payload, including the debug dylib and frameworks;
+the launcher hash is recorded separately. Android identity hashes the APK bytes.
+The manifest is saved before installation, including when a run fails. It rejects empty, skipped or failed reports,
 missing semantic labels, missing screenshots and stale output directories.
-Both native jobs upload the evidence even on failure. The
+Media and UI run independently against the same built app, and either failure
+keeps the native job red. Both native jobs upload the evidence even on failure. The
 [native UI gate guide](../../../tooling/native/UI_ACCEPTANCE.md) records the
 pinned tool/source, commands and exact flows.
 
-Local validation passed five evidence/flow-wiring tests, native example
-typechecking and Maestro's actual parsing of all four flow files. The local
+Local validation passed fifteen focused artifact/evidence/media tests, native
+example typechecking and Maestro's actual parsing of all four flow files.
+Settings and Editor now require observed OS header/tab bounds to lie within the
+measured safe-content host; the regression uses the actual failed iOS geometry. The local
 driver found no connected devices; that result is not native interaction
 acceptance. The candidate's simulator jobs must produce their own reports.
 Physical pen/palm behavior, spoken VoiceOver/TalkBack output and active iOS
