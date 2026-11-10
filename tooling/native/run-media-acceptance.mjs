@@ -6,6 +6,7 @@ import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MEDIA_FIXTURE, validateMediaAcceptanceReport } from "../../examples/native-instruments/media-acceptance-contract.ts";
 import { recordNativeArtifact } from "./native-artifact.mjs";
+import { warmNativeBundle } from "./metro-warmup.mjs";
 
 const [platform, input, consumerInput] = process.argv.slice(2);
 if (!["android", "ios"].includes(platform) || !input || !consumerInput)
@@ -99,6 +100,7 @@ try {
       EXPO_PUBLIC_NYC_TRON_ACCEPTANCE_URL: `http://127.0.0.1:${receiptPort}${receiptPath}` },
   });
   await waitFor(metroReady, "the clean consumer's Metro server", 60000);
+  const warmedBundle = await warmNativeBundle({ platform, entry: "media", evidenceDirectory: output });
   let launcher, host;
   if (platform === "android") {
     const sdk = process.env.ANDROID_HOME ?? process.env.ANDROID_SDK_ROOT;
@@ -148,6 +150,8 @@ try {
   writeFileSync(join(output, "result.json"), JSON.stringify({
     ...report,
     provenance: { ...host, sourceCommit: revision, fixtureSha256: hash(fixture), nativeArtifact,
+      bundleWarmup: { file: "bundle-warmup-media.json", sha256: hash(join(output, "bundle-warmup-media.json")),
+        bundleSha256: warmedBundle.sha256, bytes: warmedBundle.bytes },
       ...(launcher ? { launcherSha256: hash(launcher) } : {}),
       installedPackages: json(join(consumer, "installed-packages.json")) },
   }, null, 2) + "\n");

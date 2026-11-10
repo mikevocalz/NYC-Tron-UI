@@ -10,14 +10,14 @@ blanket device-acceptance claim is created by this report.
 
 | Gate | Observed result | Evidence and limit |
 |---|---|---|
-| Source, exports, types and package checks | Passed for PR head `fe397c02bab746ef4ecbcae0cf9d42176a2e53df` | [CI run 42760177947](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760177947), including the declaration-graph gate |
-| Installed basic UI consumer | Passed: one Chromium test; one Expo-only test intentionally skipped | [Consumer run 42752975794](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42752975794), job `129620702408` |
-| Installed Expo/web consumer | Passed: two Chromium tests | Same run, job `129620702182`; UI, core, panes and Expo controls came from produced tarballs |
+| Source, exports, types and package checks | Passed for PR head `e2b65dd5e9288b193b6bfd807d6003b184b8c642`; 1,173 tests on Windows | [CI run 42770189328](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189328), including the declaration-graph gate |
+| Installed basic UI consumer | Passed: one Chromium test; one Expo-only test intentionally skipped | [Consumer run 42770189171](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189171), job `129675906719`; [original result](../evidence/v1-automated-e2b65dd5/consumers/basic/results.json) |
+| Installed Expo/web consumer | Passed: two Chromium tests | Same run, job `129675906970`; [original result](../evidence/v1-automated-e2b65dd5/consumers/expo/results.json); UI, core, panes and Expo controls came from produced tarballs |
 | Native consumer packaging | Passed locally: ten NYC-Tron archives installed in a new npm project; strict app typecheck and Expo iOS/Android exports completed | iOS: 1,142 modules; Android: 1,144 modules; approximately 2.4 MB Hermes bundle each, including the generated reference MP4. These are bundling results, not native runtime results |
-| Native iOS installed consumer | Compiled, launched and passed all 11 strict media checks at head `fe397c02`; UI interaction failed separately | [Native run 42760178196](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178196), job `129643765774`; [retained report and provenance](../evidence/v1-native-ios-fe397c0/provenance.json). Actual resampling produced 32,000 full-length and 4,000 tail frames. The safe-area coordinate fix and single-scroll-owner Library composition need the next native UI run |
-| Native Android installed consumer | Compiled and launched at head `fe397c02`; strict media probe failed | Same run, job `129643765867`. The AVD-directory issue is fixed. The next candidate reads the authored per-track MP4 timeline to handle Android 15/16 duration differences and preserves fractional PCM endpoints; strict decoder counts are unchanged |
-| Windows native consumer | Actual C++ consumer build, registration and keyboard UI Automation passed at head `fe397c02` | [WinUI run 42760178261](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178261). This does not establish Narrator speech or physical-device input |
-| Workspace public declaration snapshot | Passed locally | 13 packages, 617 typed public subpaths, 3,306 reachable project declarations, 94 external type boundaries; TypeScript 6.0.3 |
+| Native iOS installed consumer | Compiled and passed all eleven strict decoder checks at `e2b65dd5`; the UI flow failed when the simulator cancelled its first Settings contact | [Native run 42770189195](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189195), job `129675906574`; [original reports and payload verification](../evidence/v1-native-e2b65dd5/ios/provenance.json). The whole job remains failed |
+| Native Android installed consumer | Compiled and passed all eleven strict decoder checks at `e2b65dd5`; Maestro's initial app launch returned `device offline` before any UI assertion | Same run, job `129675906933`; [original reports and APK verification](../evidence/v1-native-e2b65dd5/android/provenance.json). The whole job remains failed |
+| Windows native consumer | Actual C++ consumer build, registration and keyboard UI Automation passed at head `e2b65dd5` | [WinUI run 42770189124](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189124); [retained capture](../evidence/v1-automated-e2b65dd5/windows/03-accepted.png). This does not establish Narrator speech or physical-device input |
+| Workspace public declaration snapshot | Passed locally for the follow-up's shared window-model extraction | 13 packages, 618 typed public subpaths, 3,306 reachable project declarations, 94 external type boundaries; TypeScript 6.0.3. The new core subpath is additive; the existing panes subpath re-exports the same declarations |
 | Isolated Windows public declaration snapshot | Passed locally after its own dependency install and build | 1 package, 1 typed public subpath, 4 reachable project declarations, 7 external type boundaries; TypeScript 5.9.3 / RN 0.85.3 |
 | Tooling regressions | Passed locally | Eight declaration-graph regressions and five tarball-integrity/dependency-boundary regressions |
 
@@ -32,14 +32,96 @@ artifacts; the basic narrow and Expo/web wide captures were visually inspected:
 [Expo/web wide](../evidence/v1-release-consumers-7b5b3de/expo-web-wide.png),
 [Expo/web narrow](../evidence/v1-release-consumers-7b5b3de/expo-web-narrow.png).
 The fixtures use minimal app styling to exercise package consumption. The
-[complete installed-consumer rerun](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178220)
-also passed at head `fe397c02`; the older retained images remain labeled with the
+[complete installed-consumer rerun](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42765514145)
+also passed at head `7aec1ec1`; the older retained images remain labeled with the
 revision that produced them.
 
 Local headless Chromium could not launch because the managed runtime denied
 its process socket; its attempted download also returned an invalid archive.
 No local browser pass is claimed. The browser evidence above is from GitHub's
 Chromium run using Playwright 1.62.1 and Chrome Headless Shell 151.0.7922.34.
+
+## Forge service runtime
+
+The final Forge implementation/driver candidate `f5469d03` passed actual iOS and
+Android runtime in [run 42765520077](https://github.com/mikevocalz/nitro-forge/actions/runs/42765520077).
+Original [iOS](../evidence/v1-forge-f5469d0/ios/provenance.json) and
+[Android](../evidence/v1-forge-f5469d0/android/provenance.json) receipts, process
+identities, complete payload manifests and artifact hashes are retained here.
+Each platform passed all fifteen final checks after a genuine process restart,
+including MMKV/Yjs and all eleven engine snapshots. These are service/runtime
+results for that exact Forge commit, separate from NYC-Tron's native UI gate.
+
+## Verified decoder checkpoint and UI transport follow-up
+
+At head `e2b65dd5`, all six nonmobile workflows passed. The
+[retained CI record](../evidence/v1-automated-e2b65dd5/nonmobile/ci.json) includes
+686 browser instrument cases, 29 reference cases plus three model tests,
+installed consumers and the actual WinUI executable/UI Automation run. The
+reference images were downloaded again and match the delivered images byte for
+byte. Their current artifact identity and render measurements are retained.
+
+Both native decoders passed the unchanged eleven checks in run `42770189195`:
+24,000 PCM frames, 8,000 downsampled frames, 48,000 upsampled frames, 32,000
+full-interval frames and 4,000 tail frames; the presentation index has forty
+entries. Original receipts and native payload manifests are preserved above.
+The Android APK and complete iOS app payload were independently rehashed from
+the verified downloaded archives and match the runtime identities.
+
+The UI failures are separately recorded. Android lost its ADB transport during
+Maestro's initial launch command, before an app assertion. iOS's recorded
+Settings contact was cancelled by the simulator's Recap registration race;
+the [original log lines and timestamps](../evidence/v1-native-e2b65dd5/ios/ui/delivery-evidence.json)
+bind the unknown sender and nonempty cancelled contact to that tap and app.
+The actual iPhone 17 Pro/iOS 26.5 host has correct safe-area header/tab bounds,
+and the previous SwiftUI raw-text error is absent. No successful Settings,
+Editor or pointer result is inferred from those failed attempts.
+
+The follow-up permits one transport recovery only when those initial-command
+conditions are proven. It preserves every original failed driver artifact and
+reruns the entire unchanged Settings flow. Any second failure, ordinary
+assertion failure or later interaction remains final. The
+[native UI guide](../../../tooling/native/UI_ACCEPTANCE.md) defines the limits.
+Fresh native execution remains required. Local full verification passed
+1,180 tests with no failures/skips, the API and canonical-roster gates, thirteen
+workspace packs and sixteen clean consumer imports. The isolated Windows
+archive was retained and checked, giving fourteen reviewable archives.
+
+The same follow-up moves the existing pure window model into peer-free
+`@nyc-tron/core/window-lifecycle`, retaining the panes compatibility export.
+Its behavior is unchanged and all thirty-nine lifecycle tests pass. This lets
+isolated native hosts share one lifecycle contract without adopting an
+incompatible renderer peer. The AppKit and Windows host implementations still
+require their own source review and native results before support is claimed.
+
+## Corrections leading to `e2b65dd5`
+
+The `7aec1ec1` source gate passed 1,169 Windows tests with zero failures/skips,
+and all six source/browser/consumer/WinUI workflows passed. Its actual Android
+Settings and Editor flows each executed and passed, including native labels,
+screenshots and observed safe-host geometry. The complete native workflow
+remained failed because the later pointer and media checks failed; no partial
+result is represented as a whole-job pass.
+
+The `e2b65dd5` candidate corrected those findings:
+
+- A newly selected Android audio extractor stays at its original beginning when
+  preroll reaches zero, preserving the fixture's negative-PTS AAC priming packet
+  for Codec2's existing delay trim. No output timestamps or expected counts change.
+- SwiftUI Slider labels use actual SwiftUI Text children, matching the pinned
+  Expo 58 Slot contract. The old raw string caused a real native LogBox.
+- The pointer page places live feedback above its canvas and allows the remaining
+  controls to scroll, preserving the actual touch/cancel assertions.
+- Native runners first consume the actual Metro JavaScript bundle response with
+  bounded time/bytes and retained status/hash metadata. A running `/status`
+  endpoint alone had allowed cold compilation to consume the decoder's receipt
+  deadline; the captured iOS app was still at `Bundling 76%...`. The native receipt
+  deadline and decoder assertions remain unchanged after this preparation step.
+
+The decoder corrections passed in the fresh `e2b65dd5` run recorded above.
+Its complete UI flow still failed at test input delivery. Complete platform
+acceptance, native host adapters, physical input/speech/performance and owner
+review remain bounded by [Support](../../SUPPORT.md) and the release conditions.
 
 ## What the installed-consumer gate proves
 
@@ -170,8 +252,9 @@ keeps the native job red. Both native jobs upload the evidence even on failure. 
 [native UI gate guide](../../../tooling/native/UI_ACCEPTANCE.md) records the
 pinned tool/source, commands and exact flows.
 
-Local validation passed fifteen focused artifact/evidence/media tests, native
-example typechecking and Maestro's actual parsing of all four flow files.
+Focused artifact/evidence/media, bundle preparation and native adapter regressions
+passed locally, along with native example typechecking and Maestro's actual
+parsing of all four flow files.
 Settings and Editor now require observed OS header/tab bounds to lie within the
 measured safe-content host; the regression uses the actual failed iOS geometry. The local
 driver found no connected devices; that result is not native interaction

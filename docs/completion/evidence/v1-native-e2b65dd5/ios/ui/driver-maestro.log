@@ -1,0 +1,22 @@
+07:02:57.807 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandStart: Define variables RUNNING
+07:02:57.812 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandFinished: Define variables COMPLETED
+07:02:57.814 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandStart: Apply configuration RUNNING
+07:02:57.815 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandFinished: Apply configuration COMPLETED
+07:02:57.815 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandStart: Launch app "com.nyctron.instruments.example" without stopping app RUNNING
+07:03:04.699 [ INFO] maestro.Maestro.launchApp$lambda$6: Launching app com.nyctron.instruments.example
+07:03:06.455 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandFinished: Launch app "com.nyctron.instruments.example" without stopping app COMPLETED
+07:03:06.458 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandStart: Assert that "Library" is visible RUNNING
+07:03:07.737 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandFinished: Assert that "Library" is visible COMPLETED
+07:03:07.739 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandStart: Tap on "Settings" RUNNING
+07:03:08.235 [ INFO] maestro.Maestro.tap-HgV9Ck0: Tapping on element:  UiElement(treeNode=TreeNode(attributes={accessibilityText=Settings, title=, value=, text=, hintText=, resource-id=, bounds=[299,780][398,836], enabled=true, focused=false, selected=false, checked=false}, children=[], clickable=null, enabled=true, focused=false, checked=false, selected=false), bounds=Bounds(x=299, y=780, width=99, height=56))
+07:03:08.736 [ INFO] maestro.Maestro.tap-HgV9Ck0: Tap aimed via trusted pre-wait hierarchy (null settle, no recent scroll)
+07:03:08.756 [ INFO] maestro.Maestro.screenshotBasedTap-ogj28Uc: Try tapping at (348, 808) using hierarchy based logic for wait
+07:03:08.827 [TRACE] maestro.utils.ScreenshotUtils.takeScreenshot: Taking screenshot to byte array
+07:03:08.827 [TRACE] maestro.utils.ScreenshotUtils.takeScreenshot: Taking screenshot to output sink
+07:03:11.776 [ INFO] maestro.Maestro.screenshotBasedTap-ogj28Uc: Something have changed in the UI judging by view hierarchy. Proceed.
+07:03:11.779 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandFinished: Tap on "Settings" COMPLETED
+07:03:11.780 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandStart: Assert that "Workspace preferences" is visible RUNNING
+07:03:29.234 [ERROR] maestro.orchestra.Orchestra.executeCommands: [Command execution] CommandFailed: Assertion is false: "Workspace preferences" is visible
+07:03:29.517 [ INFO] maestro.Maestro.takeScreenshot: Taking screenshot
+07:03:29.518 [TRACE] maestro.utils.ScreenshotUtils.takeScreenshot: Taking screenshot to output sink
+07:03:29.732 [ INFO] maestro.cli.runner.CliConsoleListener.onCommandFinished: Assert that "Workspace preferences" is visible FAILED

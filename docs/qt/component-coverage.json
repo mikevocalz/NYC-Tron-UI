@@ -7,13 +7,15 @@
     "repository": "mikevocalz/react-native-qnx",
     "baseRevision": "0c91be9bbb4e7cd6dabccf8cdfe441c7fa57c629",
     "sourcePath": "packages/react-native-qnx/Libraries/ReactNative/PublicAPI.js",
-    "sourceSha256": "c04c4541d8d1020246b47f72c8d4827b0ff1ff37954a1352b9369a78c81c4357",
-    "description": "RN-QNX commit d74bd9be10e90e09f532574ec3ce9207debddc5b; 28 named exports. Availability only: native providers and per-method semantics require separate validation.",
+    "sourceSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
+    "description": "RN-QNX commit 404ad9dab676ce876e8a3e367743111b7d605417; 30 named exports. Availability only: native providers and per-method semantics require separate validation.",
     "exports": [
+      "AccessibilityInfo",
       "ActivityIndicator",
       "Animated",
       "AppRegistry",
       "AppState",
+      "BackHandler",
       "Button",
       "Dimensions",
       "Easing",
@@ -39,7 +41,7 @@
       "processColor",
       "useWindowDimensions"
     ],
-    "revision": "d74bd9be10e90e09f532574ec3ce9207debddc5b"
+    "revision": "404ad9dab676ce876e8a3e367743111b7d605417"
   },
   "summary": {
     "canonical": 341,
@@ -54,14 +56,10 @@
       "qnx": {
         "classifications": {
           "pinned-external-provider": 9,
-          "requires-additional-provider": 49,
-          "requires-react-native-api": 17,
-          "shared-source-candidate": 266
+          "requires-additional-provider": 50,
+          "shared-source-candidate": 282
         },
-        "missingReactNativeExports": {
-          "AccessibilityInfo": 16,
-          "BackHandler": 1
-        },
+        "missingReactNativeExports": {},
         "additionalDependencies": {
           "@expo/ui": 7,
           "@expo/ui/jetpack-compose": 2,
@@ -77,14 +75,10 @@
       "marathon": {
         "classifications": {
           "pinned-external-provider": 9,
-          "requires-additional-provider": 49,
-          "requires-react-native-api": 17,
-          "shared-source-candidate": 266
+          "requires-additional-provider": 50,
+          "shared-source-candidate": 282
         },
-        "missingReactNativeExports": {
-          "AccessibilityInfo": 16,
-          "BackHandler": 1
-        },
+        "missingReactNativeExports": {},
         "additionalDependencies": {
           "@expo/ui": 7,
           "@expo/ui/jetpack-compose": 2,
@@ -834,9 +828,7 @@
           "View",
           "useWindowDimensions"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -866,7 +858,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -892,9 +884,7 @@
             "View",
             "useWindowDimensions"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -923,7 +913,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -949,9 +939,7 @@
             "View",
             "useWindowDimensions"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -1013,9 +1001,7 @@
           "View",
           "useWindowDimensions"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -1037,7 +1023,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -1064,9 +1050,7 @@
             "View",
             "useWindowDimensions"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -1087,7 +1071,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -1114,9 +1098,7 @@
             "View",
             "useWindowDimensions"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -4502,9 +4484,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -4516,7 +4496,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -4537,9 +4517,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -4550,7 +4528,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -4571,9 +4549,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -8350,9 +8326,7 @@
           "TextInput",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -8381,7 +8355,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -8406,9 +8380,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -8436,7 +8408,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -8461,9 +8433,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -21257,9 +21227,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -21276,7 +21244,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -21297,9 +21265,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -21315,7 +21281,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -21336,9 +21302,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -21383,9 +21347,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -21406,7 +21368,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -21429,9 +21391,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -21451,7 +21411,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -21474,9 +21434,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -22499,9 +22457,7 @@
           "TextInput",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -22546,7 +22502,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "requires-additional-provider",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -22576,9 +22532,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -22622,7 +22576,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "requires-additional-provider",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -22652,9 +22606,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -23065,9 +23017,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -23089,7 +23039,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -23112,9 +23062,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -23135,7 +23083,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -23158,9 +23106,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -23210,9 +23156,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -23232,7 +23176,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -23255,9 +23199,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -23276,7 +23218,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -23299,9 +23241,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -23623,9 +23563,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -23645,7 +23583,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -23667,9 +23605,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -23688,7 +23624,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -23710,9 +23646,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -24076,9 +24010,7 @@
           "TextInput",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -24098,7 +24030,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -24123,9 +24055,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -24144,7 +24074,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -24169,9 +24099,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -24350,9 +24278,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -24373,7 +24299,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -24397,9 +24323,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -24419,7 +24343,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -24443,9 +24367,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -26412,9 +26334,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -26438,7 +26358,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -26462,9 +26382,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -26487,7 +26405,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -26511,9 +26429,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -44477,9 +44393,7 @@
           "TextInput",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -44511,7 +44425,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -44536,9 +44450,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -44569,7 +44481,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -44594,9 +44506,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -50223,9 +50133,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -50241,7 +50149,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -50264,9 +50172,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -50281,7 +50187,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -50304,9 +50210,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -50596,9 +50500,7 @@
           "TextInput",
           "View"
         ],
-        "missingReactNativeExports": [
-          "AccessibilityInfo"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -50619,7 +50521,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -50651,9 +50553,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -50673,7 +50573,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -50705,9 +50605,7 @@
             "TextInput",
             "View"
           ],
-          "missingReactNativeExports": [
-            "AccessibilityInfo"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -50883,9 +50781,7 @@
           "Text",
           "View"
         ],
-        "missingReactNativeExports": [
-          "BackHandler"
-        ],
+        "missingReactNativeExports": [],
         "namespaceReactNativeImport": false,
         "nativeProviderCalls": [],
         "computedImports": [],
@@ -50899,7 +50795,7 @@
       },
       "targets": {
         "qnx": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -50928,9 +50824,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "BackHandler"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],
@@ -50943,7 +50837,7 @@
           ]
         },
         "marathon": {
-          "sourceClassification": "requires-react-native-api",
+          "sourceClassification": "shared-source-candidate",
           "runtimeAcceptance": "unverified",
           "selectedExports": [
             {
@@ -50972,9 +50866,7 @@
             "Text",
             "View"
           ],
-          "missingReactNativeExports": [
-            "BackHandler"
-          ],
+          "missingReactNativeExports": [],
           "namespaceReactNativeImport": false,
           "nativeProviderCalls": [],
           "computedImports": [],

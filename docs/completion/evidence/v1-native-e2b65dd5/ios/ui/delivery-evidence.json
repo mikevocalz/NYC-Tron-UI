@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "derived": true,
+  "sourceLog": "runtime-ui-ios/settings/artifacts/2026-11-10_070118/Settings native edit and save/logs/device-simulator.log",
+  "sourceLogSha256": "b1e66b52bf40da8907465f3f29b69c52e98db971d8bb4a314d33f66aa0ff2bda",
+  "sourceLogBytes": 22932678,
+  "sourceCommands": "ui/driver-commands.json",
+  "scope": "Verbatim source log lines with their original positions and timestamps; original UI/whole job remains failed.",
+  "evidence": {
+    "kind": "ios-initial-navigation-recap-cancelled",
+    "appId": "com.nyctron.instruments.example",
+    "deviceId": "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC",
+    "tap": {
+      "text": "Settings",
+      "start": 1794294187738,
+      "end": 1794294191778,
+      "sequence": 4
+    },
+    "failedSequence": 5,
+    "senderId": "0x105b61c000000",
+    "pathIndex": 2,
+    "evidence": {
+      "recap": {
+        "line": 15577,
+        "at": 1794294191002,
+        "text": "2026-11-10 07:03:11.002321+0000  localhost backboardd[27213]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x105b61c000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7"
+      },
+      "unknown": {
+        "line": 15578,
+        "at": 1794294191009,
+        "text": "2026-11-10 07:03:11.009199+0000  localhost backboardd[27213]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x105B61C000000"
+      },
+      "cancelled": {
+        "line": 15955,
+        "at": 1794294191246,
+        "text": "2026-11-10 07:03:11.246695+0000  localhost backboardd[27213]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10d1e9ea0; touchScreen; builtin; senderID: 0x105B61C000000; contacts: contacts: [pathIndex: 2; touchIdentifier: 1; touching; locked; destinations: ((hitTest); contextID: 0xDBE15D0F; clientPort: 0x3DC53; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>, (touchStream|filterDetachedTouches); contextID: 0xD449E792; clientPort: 0x500F)]; destinations: [<BKTouchDestination: 0x10d2fed60; (hitTest); contextID: 0xDBE15D0F; clientPort: 0x3DC53; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>; externalReferences: 1>, <BKTouchDestination: 0x10d2ff030; (hitTest); contextID: 0x3DBC97CC; clientPort: 0x500F; externalReferences: 1>, <BKTouchDestination: 0x10d2ff1e0; (hitTest); contextID: 0xF89E1083; clientPort: 0x500F; externalReferences: 1>]; latentSystemGestureDestinations: ()>"
+      },
+      "paths": {
+        "line": 15957,
+        "at": 1794294191246,
+        "text": "2026-11-10 07:03:11.246831+0000  localhost backboardd[27213]: [com.apple.BackBoard:TouchEvents] canceling paths contacts: [pathIndex: 2; touchIdentifier: 1; touching; locked; destinations: ((hitTest); contextID: 0xDBE15D0F; clientPort: 0x3DC53; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>, (touchStream|filterDetachedTouches); contextID: 0xD449E792; clientPort: 0x500F)] -- HID (ts:(null))"
+      }
+    },
+    "upstreamIssue": "https://github.com/mobile-dev-inc/Maestro/issues/3686"
+  }
+}

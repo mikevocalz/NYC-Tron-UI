@@ -39,16 +39,30 @@ evidence of delivered speech.
 
 ## Checks run
 
+These checks include completion base
+`e8a7efb9f0971746d01c68532540c65af502de9f`. The merge retains its keyboard
+dismissal and native transport work. Overlapping pointer, native Slider and
+AAC priming fixes preserve their behavior; the merged caption assertion also
+checks that the duplicate RN label is hidden from accessibility. The strict
+decoded-audio timeline guard remains intact.
+
+The frozen RN API profile now pins published commit
+`404ad9dab676ce876e8a3e367743111b7d605417`. Its verified PublicAPI hash and all
+30 named exports match the consumer source. Regenerated coverage has 282
+shared-source candidates, 50 rows requiring additional providers and nine
+pinned external providers on each target. Every row retains unverified runtime
+acceptance.
+
 | Check | Result | Evidence boundary |
 | --- | --- | --- |
-| Full JavaScript test discovery | 1,207 passed | Includes 27 target behavior cases and the native Slider label regression. |
+| Full JavaScript test discovery | 1,217 passed | Includes 27 target behavior cases and the native Slider label regression. |
 | UI and Expo-controls typechecks | Passed | Public type and slot compatibility. |
 | Package builds | 13 passed | TypeScript package outputs. |
-| Public API | 617 export subpaths; 3,306 declarations | Tooltip's target route and optional CommandPopover `testID` are the reviewed signature changes. |
-| Package verification | 617 conditional exports; 751 ESM files | Existing optional-peer isolation remains enforced. |
+| Public API | 618 export subpaths; 3,306 declarations | Includes the base's core window-lifecycle export, Tooltip's target route and optional CommandPopover `testID`. |
+| Package verification | 618 conditional exports; 752 ESM files | Existing optional-peer isolation remains enforced. |
 | Fresh release packs | 13 archives passed | No release was published. |
-| QNX packed Metro consumer | 1,892,842 bytes; zero warnings | Actual extracted packages and target resolver. |
-| Marathon packed Metro consumer | 1,892,894 bytes; zero warnings | Actual extracted packages and target resolver. |
+| QNX packed Metro consumer | 1,893,010 bytes; zero warnings | Actual extracted packages and target resolver. |
+| Marathon packed Metro consumer | 1,893,062 bytes; zero warnings | Actual extracted packages and target resolver. |
 | Full Qt/Fabric control interaction | Separate host workstream | JavaScript tests do not establish native delivery. |
 | Rendered browser overlay suite | Blocked before page startup | The browser process cannot create its local singleton socket in this executor (`Operation not permitted`). |
 | Physical QNX/Marathon input and screen-reader output | Not run here | Remains a device acceptance requirement. |
@@ -73,6 +87,11 @@ public package paths and registers `RNQnxQtControlsProbe`. The consumer runner's
 `rnqnx_qt_controls_consumer` driver reads its ordered steps and sends real Qt
 mouse, focus and key input. JavaScript calls only change controlled props or
 mount the next stage; they never invoke a component's event handler directly.
+The fixture exposes the actual public `Platform.OS` as `__qtProbePlatform` for
+the driver's `--expected-platform` check and rejects other RN targets. This
+target identity is separate from the operating system hosting the Qt process.
+It reads the property through `Reflect.get` so Metro cannot replace this
+runtime check with a compile-time target literal.
 
 Steps cover tooltip hover/focus/Escape, Select and dropdown selection,
 action-menu callbacks, slider bounds/steps, split primary/menu separation,
@@ -83,8 +102,8 @@ the outcomes from earlier stages. Both platform runs are required before this
 fixture is recorded as native evidence.
 
 The [prepared fixture receipt](packed-controls-probe-2026-11-10.json) records
-both bundle hashes and the fixture/theme source hashes. QNX produces 1,911,478
-bytes and Marathon produces 1,911,530 bytes, both with zero resolver warnings.
+both bundle hashes and the fixture/theme source hashes. QNX produces 1,912,103
+bytes and Marathon produces 1,912,155 bytes, both with zero resolver warnings.
 This receipt records bundling only; native execution remains separate.
 
 `tooling/qt-probe-theme.js` supplies a finite app-owned palette and maps the

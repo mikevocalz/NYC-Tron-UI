@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "checkoutRevision": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "sourceTree": "f14ee19e0c18217246f27332217bd58be5df376c",
+  "runId": 42770189195,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189195",
+  "platform": "ios",
+  "jobId": 129675906574,
+  "artifactId": 13741894753,
+  "artifactSha256": "b5f7cbb9041622b171385a753dc8e536a21ac7721c5d71e3fe10d554aa1cf38a",
+  "mediaStatus": "passed",
+  "mediaCheckCount": 11,
+  "uiStatus": "failed",
+  "wholeJobStatus": "failed",
+  "failure": "OS Recap cancelled the first Settings contact before a completed tap reached the app",
+  "nativePayloadIndependentlyRehashed": true,
+  "files": [
+    {
+      "path": "artifact-metadata.json",
+      "bytes": 750,
+      "sha256": "03e9c651ec948f65a7405ededad96da25ffbbd8dd0dcd0c64ea6c5242ac427db",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/artifact-metadata.json"
+    },
+    {
+      "path": "artifact-verification.json",
+      "bytes": 320,
+      "sha256": "4cda38d8bb92faa62168c03b2686fdca84b6c0a5bfcc0af825d187a54c9dc96f",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/artifact-verification.json"
+    },
+    {
+      "path": "inspection.json",
+      "bytes": 2497,
+      "sha256": "619f829e396ba50f4d3405823a52bc42b843c73fa6724bfdc364e9e069d9686c",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/inspection.json"
+    },
+    {
+      "path": "checkout-commit.json",
+      "bytes": 2646,
+      "sha256": "5cf435a1b682deee4a8bca712bb29214afb9f40b1db41e8ecced25fba2a5fbdb",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/checkout-commit.json"
+    },
+    {
+      "path": "consumer.json",
+      "bytes": 2491,
+      "sha256": "77293c7825263f82b56aed8a1fbd4dea6e8e242316422f8ce51ece8609a000eb",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/consumer.json"
+    },
+    {
+      "path": "installed-packages.json",
+      "bytes": 2721,
+      "sha256": "71d1ff2980ed130866045131892af4c455f02767022901f70a779c4a46b7237b",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/installed-packages.json"
+    },
+    {
+      "path": "host-device.json",
+      "bytes": 442,
+      "sha256": "5bfb42afba0dab0771ba8b86552b7b27c2378a0dab0849c7bb88a8f3cbea90ee",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/host-device.json"
+    },
+    {
+      "path": "media/result.json",
+      "bytes": 4837,
+      "sha256": "d4e53f30dd316343595effa5ee50fb489c2d59ae663296269d398c391aca5679",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ios/result.json"
+    },
+    {
+      "path": "media/native-report.json",
+      "bytes": 898,
+      "sha256": "e16dd42b17f2424a1e60dee934914b9e606c11a4ba183cf29283b9aff32fb852",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ios/native-report.json"
+    },
+    {
+      "path": "media/native-artifact.json",
+      "bytes": 47976,
+      "sha256": "5a987ff9445a5ae2850b71bca12288e44ae114388c176109d6fdd825e29c34f0",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ios/native-artifact.json"
+    },
+    {
+      "path": "media/bundle-warmup-media.json",
+      "bytes": 651,
+      "sha256": "26d2eb5718be04ed33617f3552d39fc1b52623b8d1981f941f8543cc00642710",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ios/bundle-warmup-media.json"
+    },
+    {
+      "path": "media/screen.png",
+      "bytes": 95516,
+      "sha256": "786c88a26030a9801e37e8995278ce35021b44a1fc9d7c83eb4263eaf5268763",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ios/screen.png"
+    },
+    {
+      "path": "ui/failure.txt",
+      "bytes": 473,
+      "sha256": "8d3962ba8cce29d48c7c7071267998c51fd43189dba22eeaf363482ecf84ce6e",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/failure.txt"
+    },
+    {
+      "path": "ui/bundle-warmup-reference.json",
+      "bytes": 654,
+      "sha256": "60d11f0fae686100487a09562e247319cc0c42257e71e1800edfa9edc6ecad40",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/bundle-warmup-reference.json"
+    },
+    {
+      "path": "ui/commands.jsonl",
+      "bytes": 2534,
+      "sha256": "ba3b1a0622cb4dd18fbc3e25c21edc3cadc050174cf9d34d373b33fadf08ffe9",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/commands.jsonl"
+    },
+    {
+      "path": "ui/settings-report.xml",
+      "bytes": 586,
+      "sha256": "519d519508b6be13a44f6c36083aa2b0ceb0d61a5410c8da0336ac1a54f4804b",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/settings/report.xml"
+    },
+    {
+      "path": "ui/settings-maestro.log",
+      "bytes": 154,
+      "sha256": "80453567b5c693e1d2b4ce8e85b93adccbf6ff13ea626599c44d8a7c99703e27",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/settings-maestro.log"
+    },
+    {
+      "path": "ui/screen.png",
+      "bytes": 213525,
+      "sha256": "62595378b628fd927ea17948b91f0644fbacde6b71de921be8f8c3438033e90d",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/final.png"
+    },
+    {
+      "path": "ui/failure-hierarchy.json",
+      "bytes": 114239,
+      "sha256": "a926bed7eb18b407ef3cae0e8034e0b6a681112c8bcee86aaeef68c95a5b6954",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/failure-hierarchy.json"
+    },
+    {
+      "path": "ui/driver-commands.json",
+      "bytes": 5062,
+      "sha256": "a30db97dfbee879f9d97690f7881d6c3ea60d24a70263b71a66d5224604275b1",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/settings/artifacts/2026-11-10_070118/Settings native edit and save/commands.json"
+    },
+    {
+      "path": "ui/driver-maestro.log",
+      "bytes": 2854,
+      "sha256": "2291586c1a0bb9100f9778da345409d33c1437b2633e630fc062cf1004c4d601",
+      "stagedFrom": "tron-e2b65dd5-ios-evidence/runtime-ui-ios/settings/artifacts/2026-11-10_070118/Settings native edit and save/logs/maestro.log"
+    },
+    {
+      "path": "ui/delivery-evidence.json",
+      "bytes": 3300,
+      "sha256": "dcd907985472042c771534f1c23d043e3d21d8108a513a8f5fba7358537a6756",
+      "derived": true
+    }
+  ],
+  "scope": "Original media receipts passed; these failed UI/whole-job records are not promoted. The bounded transport correction requires a fresh native run."
+}

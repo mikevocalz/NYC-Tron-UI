@@ -8,7 +8,8 @@
     "./presets/infrax",
     "./spatial",
     "./spatial-interactions",
-    "./theme"
+    "./theme",
+    "./window-lifecycle"
   ],
   "@nyc-tron/expo-controls": [
     ".",

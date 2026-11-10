@@ -1,9 +1,20 @@
 # NYC-Tron UI readiness
 
-Updated 2026-11-09 for v1.0.0. Scope and tiers: [v1.0.0 decisions](V1_DECISIONS.md)
+Updated 2026-11-10 for the v1.0.0 candidate. Scope and tiers: [v1.0.0 decisions](V1_DECISIONS.md)
 and [Support policy](SUPPORT.md).
 
-## CI at the current head
+## Current candidate
+
+The current source candidate and exact CI/runtime results are recorded in
+[candidate verification](completion/reports/V1-RELEASE-GATES.md). The complete
+341-ID inventory now has 332 local implementations plus nine pinned external
+implementations. The twelve native/service rows are included, and the earlier
+blanket deferral is superseded. Complete eight-platform acceptance and owner
+distribution review remain open; stable publication is blocked by those records.
+
+The following CI table is retained as historical evidence for its own commit.
+
+## Earlier CI checkpoint
 
 Head commit `d5207cc7` (branch `codex/complete-all-components`, PR #54). Runs
 read with `gh run list -R mikevocalz/NYC-Tron-UI -c d5207cc72d17b952d3e13f48faf00717aa31672c` on 2026-11-09:
@@ -27,25 +38,25 @@ The v1.0.0 preparation edits on `release/v1.0.0-prep` (license files, tooling,
 new paste and row-height tests) were uncommitted when this table was written,
 so no run above covers them.
 
-## Gates
+## Current gates
 
 | Gate | Status |
 | --- | --- |
-| Library-scope components | 329 of 341 ledger rows implemented (`docs/completion/library-progress.json`); 12 N-rows outside library scope |
+| Source implementation | All 341 canonical rows have reviewed owners: 332 local plus nine pinned external (`docs/completion/library-progress.json`) |
 | Device acceptance | 0 of 341 rows; every row is `acceptance: "unverified"` |
 | Core navigation / hinge / spatial contracts | Node unit tests in `ci.yml` |
 | Corner-cut and overlay-placement geometry | Node unit tests in `ci.yml` |
 | Per-component package exports | Built `dist/` ESM and declarations; every export condition checked by `tooling/verify-packages.mjs`; tarballs packed in CI |
-| iOS SwiftUI / Android Compose controls | Compile in `native-controls-port.yml` at head |
+| iOS SwiftUI / Android Compose controls | Clean installed-tarball native compile and media/UI runtime gates; see exact current receipts in the candidate report |
 | iOS / Android native overlays | 28-step scenario passed twice on an iOS target and twice on Android `emulator-5554` (`docs/completion/P04-native-overlays-proof.json`); no screen-reader speech |
-| Windows Fluent NavigationView (Fabric) | Experimental. Builds and passes a UIA smoke test on `windows-2025` (run 42158305089). Narrator speech, high contrast, RTL run, resize and pointer input **NOT RUN** |
+| Windows Fluent NavigationView (Fabric) | Actual candidate consumer compilation, deployment and keyboard UIA passed in run 42765513976. Wider Narrator/high-contrast/RTL/resize/physical-input acceptance remains unverified |
 | Windows host-shell transport | **NOT IMPLEMENTED** |
-| macOS AppKit native adapter | **NOT IMPLEMENTED**; struck for v1 |
-| Native multi-window bridge | **NOT IMPLEMENTED**; deferred |
+| macOS AppKit native adapter | **NOT IMPLEMENTED**; required target remains in the program |
+| Native multi-window bridge | **NOT IMPLEMENTED**; remains a recorded host gap |
 | Moyo / NYC-MON theme consumption | Example contracts written, **not visually tested** |
-| Forge suite real consumer and packaging | **NOT RUN** in this repository |
+| Forge suite real consumer and packaging | Actual MMKV/Yjs and generated native object receipts are retained from the owning Forge workflow; see the candidate report |
 | Surface Duo / multi-hinge hardware | **NOT RUN** |
-| Viro / PICO / visionOS / Quest panel runtime | **NOT RUN** |
+| Viro / PICO / visionOS / Quest panel runtime | Pinned XR/Muse source implemented; physical platform runtime and input acceptance **NOT RUN** |
 | npm publishing | Deferred; releases are GitHub Release tarballs with `SHA256SUMS` |
 
 Maintain this table from evidence, not from intent. If a check does not run,

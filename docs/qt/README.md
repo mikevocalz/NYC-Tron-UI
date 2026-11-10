@@ -13,6 +13,13 @@ also includes the selected source files, transitive local import paths and
 external revisions. It preserves the original roster and its eight-platform
 acceptance ledger. QNX and Marathon are assessed separately here.
 
+The [reviewed RN profile](react-native-api.json) pins published commit
+`404ad9dab676ce876e8a3e367743111b7d605417` and its 30 named exports. Both target
+graphs now classify 282 capabilities as shared-source candidates, 50 as
+requiring additional providers and nine as pinned external providers. No
+missing named RN imports remain in the selected graphs. Method behavior and
+native provider availability still require their own checks.
+
 ## What the Qt path uses
 
 The RN-QNX backend supplies the existing Qt Quick/Fabric renderer. Generic
@@ -86,8 +93,9 @@ test.
 
 ## Packed consumer evidence
 
-[The validation receipt](validation-2026-11-10.md) records the tested package
-hashes and boundaries. To repeat the actual tarball/Metro check with a selected
+[The control continuation](control-behavior-2026-11-10.md) records the current
+tested package hashes and boundaries; the [initial validation](validation-2026-11-10.md)
+remains historical evidence. To repeat the actual tarball/Metro check with a selected
 RN-QNX checkout and a fresh output directory:
 
 ```sh

@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+// Exercise the peer-free owner directly so source tests do not depend on dist.
 import {
   MAX_WINDOWS,
   createWindowRegistry,

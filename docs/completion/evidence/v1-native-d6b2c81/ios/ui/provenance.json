@@ -1,0 +1,93 @@
+{
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "pr": 57,
+  "headSha": "d6b2c817f9f92017c087a83bf5a14c3cb7e80a1a",
+  "runId": 42775216659,
+  "iosJobId": 129692005643,
+  "iosJobConclusion": "failure",
+  "artifactId": 13743564656,
+  "artifactName": "native-release-consumer-ios",
+  "artifactSizeBytes": 62400840,
+  "artifactSha256": "83d9840db4a37d3d41dc1f2f9ccff09f9007b9eb32ce74ca877dbcee26cff91b",
+  "verifiedArchive": true,
+  "failureStage": "Settings native edit and save, hideKeyboard after successful field input",
+  "retainedOriginals": [
+    "settings-report.xml",
+    "settings-commands.json",
+    "keyboard-dismissal-failed.png"
+  ],
+  "androidJobId": 129692005977,
+  "androidJobConclusion": "success",
+  "scope": "This iOS UI failure remains failed. Both native decoder steps passed; Android also passed its complete native UI job. This record does not certify a later fix.",
+  "testedConsumer": {
+    "kind": "expo-native",
+    "sourceCommit": "2f8f2b0c6256bbb8f2b24878c6439c089c3847f9",
+    "packages": {
+      "@nyc-tron/core": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-core-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "92582d65977d20815b9c6852acde0233ab6052d6ce1ba770305934eceeeadf5b"
+      },
+      "@nyc-tron/expo-controls": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-expo-controls-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "43b8105606988c7bd1748fe66aded313516437fe8ba15e3b10046d535c5ddf78"
+      },
+      "@nyc-tron/hardware-keys": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-hardware-keys-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "663e158f0feb79936b96764e2cc4271fdb67b719494cb4b33f090ca6eb90094a"
+      },
+      "@nyc-tron/native-charts": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-native-charts-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "7ff56ce71a77fafec0aff721a4e626688fbe0b533f99d73e1420f0d5876db429"
+      },
+      "@nyc-tron/native-controls": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-native-controls-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "a52e9227b477c73abddbdca6fe203f35c87104e81aa193473a39fb226d26d3a7"
+      },
+      "@nyc-tron/native-navigation": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-native-navigation-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "22b8396ac3f5be871a4e7c9d7aabaa46efd9a308042d21c99a46a7296465f943"
+      },
+      "@nyc-tron/panes": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-panes-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "5b90613a5dae8379a015595623082cd233c4ef3ba899b24415cfabba5f828f28"
+      },
+      "@nyc-tron/platform-services": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-platform-services-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "9b5868b1d6d7f1db7f70e2a6e811b513d671a43eb218c12e62d322622a0b4e34"
+      },
+      "@nyc-tron/reserved-regions": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-reserved-regions-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "7d89cae7367d6946615a58bc444dff40d9b50a93c557b40680862bca68680e77"
+      },
+      "@nyc-tron/ui": {
+        "path": "/Users/runner/work/_temp/nyc-tron-packs/nyc-tron-ui-1.0.0.tgz",
+        "version": "1.0.0",
+        "sha256": "6ff7c475247fa0143ebd2c12cb62972570eab7d4d5e2eba9bf8e8b5e867b9f21"
+      }
+    },
+    "absentPeers": []
+  },
+  "files": [
+    {
+      "path": "settings-report.xml",
+      "sha256": "644cf5b4a64ba4970352b6312942c498b1feef9a63ba43d9ab3052a016cf6d81"
+    },
+    {
+      "path": "settings-commands.json",
+      "sha256": "6ea09d8b6f3522252d6d9feeb9f165d87c0bb6c5139d2426480ca8f5c2d09445"
+    },
+    {
+      "path": "keyboard-dismissal-failed.png",
+      "sha256": "0ab93ac7bc73e339a4d4d4cc47096fd9f404b3b2436f2b5fb74979008921a402"
+    }
+  ]
+}

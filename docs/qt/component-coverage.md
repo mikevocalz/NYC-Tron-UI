@@ -15,20 +15,18 @@ The target analysis starts from ESM public imports with `qnx` or `marathon` and 
 | Source classification | QNX | Marathon |
 | --- | ---: | ---: |
 | pinned-external-provider | 9 | 9 |
-| requires-additional-provider | 49 | 49 |
-| requires-react-native-api | 17 | 17 |
-| shared-source-candidate | 266 | 266 |
+| requires-additional-provider | 50 | 50 |
+| shared-source-candidate | 282 | 282 |
 
 Every row retains `runtimeAcceptance: unverified` for both targets. `shared-source-candidate` only means this static import check found no extra package/native-provider call or missing named RN export. It does not cover RN API methods/semantics, native input, styling, engine callbacks, accessibility or physical devices.
 
 ## React Native API boundary
 
-Profile: RN-QNX commit d74bd9be10e90e09f532574ec3ce9207debddc5b; 28 named exports. Availability only: native providers and per-method semantics require separate validation.
+Profile: RN-QNX commit 404ad9dab676ce876e8a3e367743111b7d605417; 30 named exports. Availability only: native providers and per-method semantics require separate validation.
 
 | Missing named RN export | QNX rows | Marathon rows |
 | --- | ---: | ---: |
-| `AccessibilityInfo` | 16 | 16 |
-| `BackHandler` | 1 | 1 |
+| None in the reviewed profile | 0 | 0 |
 
 Counts overlap when a component needs several APIs. The checked-in API profile is a reviewable cross-repository snapshot. Recheck it against the selected RN-QNX package with `--check-rn-api /absolute/path/to/PublicAPI.js` whenever that package changes.
 
@@ -40,8 +38,8 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 
 | ID | Existing capability | Qt counterpart profile | QNX / Marathon source status |
 | --- | --- | --- | --- |
-| A-01 | [WorkspaceHost](../../packages/ui/src/components/shell/WorkspaceHost.tsx)<br>`@nyc-tron/ui/components/shell/WorkspaceHost` | [workspace](#profile-workspace) | requires-react-native-api<br>RN: AccessibilityInfo |
-| A-02 | [WorkspacePresetSwitcher](../../packages/ui/src/components/shell/WorkspacePresetSwitcher.tsx)<br>`@nyc-tron/ui/components/shell/WorkspacePresetSwitcher` | [choice](#profile-choice) | requires-react-native-api<br>RN: AccessibilityInfo |
+| A-01 | [WorkspaceHost](../../packages/ui/src/components/shell/WorkspaceHost.tsx)<br>`@nyc-tron/ui/components/shell/WorkspaceHost` | [workspace](#profile-workspace) | shared-source-candidate |
+| A-02 | [WorkspacePresetSwitcher](../../packages/ui/src/components/shell/WorkspacePresetSwitcher.tsx)<br>`@nyc-tron/ui/components/shell/WorkspacePresetSwitcher` | [choice](#profile-choice) | shared-source-candidate |
 | A-03 | [AdaptiveDock](../../packages/ui/src/components/shell/AdaptiveDock.tsx)<br>`@nyc-tron/ui/components/shell/AdaptiveDock` | [dock](#profile-dock) | shared-source-candidate |
 | A-04 | [PaneSplitter](../../packages/ui/src/components/shell/PaneSplitter.tsx)<br>`@nyc-tron/ui/components/shell/PaneSplitter` | [split](#profile-split) | shared-source-candidate |
 | A-05 | [DocumentTabBar](../../packages/ui/src/components/shell/DocumentTabBar.tsx)<br>`@nyc-tron/ui/components/shell/DocumentTabBar` | [tabs](#profile-tabs) | shared-source-candidate |
@@ -67,7 +65,7 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | A-25 | [StatusBar](../../packages/ui/src/components/shell/StatusBar.tsx)<br>`@nyc-tron/ui/components/shell/StatusBar` | [progress](#profile-progress) | shared-source-candidate |
 | A-26 | [ToastAndProgress](../../packages/ui/src/components/shell/ToastAndProgress.tsx)<br>`@nyc-tron/ui/components/shell/ToastAndProgress` | [progress](#profile-progress) | shared-source-candidate |
 | A-27 | [KeyboardShortcutHUD](../../packages/ui/src/components/shell/KeyboardShortcutHUD.tsx)<br>`@nyc-tron/ui/components/shell/KeyboardShortcutHUD` | [keyboard](#profile-keyboard) | shared-source-candidate |
-| A-28 | [FocusAndA11yLayer](../../packages/ui/src/components/shell/FocusAndA11yLayer.tsx)<br>`@nyc-tron/ui/components/shell/FocusAndA11yLayer` | [accessibility](#profile-accessibility) | requires-react-native-api<br>RN: AccessibilityInfo |
+| A-28 | [FocusAndA11yLayer](../../packages/ui/src/components/shell/FocusAndA11yLayer.tsx)<br>`@nyc-tron/ui/components/shell/FocusAndA11yLayer` | [accessibility](#profile-accessibility) | shared-source-candidate |
 | A-29 | [FindReplacePopover](../../packages/ui/src/components/shell/FindReplacePopover.tsx)<br>`@nyc-tron/expo-controls/FindReplacePopover`<br>`@nyc-tron/ui/components/shell/FindReplacePopover` | [popup](#profile-popup) | shared-source-candidate |
 | A-30 | [FileImportExportSheet](../../packages/ui/src/components/files/FileImportExportSheet.native.tsx)<br>`@nyc-tron/ui/components/files/FileImportExportSheet` | [files](#profile-files) | shared-source-candidate |
 
@@ -99,7 +97,7 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | B-22 | [ShapeBuilder](../../packages/ui/src/components/forge/vector/ShapeBuilder.tsx)<br>`@nyc-tron/ui/components/forge/vector/ShapeBuilder` | [canvas](#profile-canvas) | shared-source-candidate |
 | B-23 | [FillStrokeInspector](../../packages/ui/src/components/forge/vector/FillStrokeInspector.tsx)<br>`@nyc-tron/ui/components/forge/vector/FillStrokeInspector` | [inspector](#profile-inspector) | shared-source-candidate |
 | B-24 | [GradientOnCanvasHandles](../../packages/ui/src/components/forge/vector/GradientOnCanvasHandles.tsx)<br>`@nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles` | [gradient](#profile-gradient) | shared-source-candidate |
-| B-25 | [AlignDistributePanel](../../packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx)<br>`@nyc-tron/ui/components/forge/canvas/AlignDistributePanel` | [toolbar](#profile-toolbar) | requires-react-native-api<br>RN: AccessibilityInfo |
+| B-25 | [AlignDistributePanel](../../packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx)<br>`@nyc-tron/ui/components/forge/canvas/AlignDistributePanel` | [toolbar](#profile-toolbar) | shared-source-candidate |
 | B-26 | [GuidedCropAndStraighten](../../packages/ui/src/components/forge/canvas/GuidedCropAndStraighten.tsx)<br>`@nyc-tron/ui/components/forge/canvas/GuidedCropAndStraighten` | [transform](#profile-transform) | requires-additional-provider<br>Peers: react-native-gesture-handler |
 | B-27 | [CanvasCompareView](../../packages/ui/src/components/forge/layers/CanvasCompareView.tsx)<br>`@nyc-tron/ui/components/forge/layers/CanvasCompareView` | [split](#profile-split) | shared-source-candidate |
 | B-28 | [FloatingPaletteUndockHandle](../../packages/ui/src/components/forge/color/FloatingPaletteUndockHandle.tsx)<br>`@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle` | [dock](#profile-dock) | shared-source-candidate |
@@ -197,8 +195,8 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | E-01 | [NativeAudioTransport](../../packages/ui/src/components/forge/audio/NativeAudioTransport.tsx)<br>`@nyc-tron/ui/components/forge/audio/NativeAudioTransport` | [audio](#profile-audio) | shared-source-candidate |
 | E-02 | [WaveformLane](../../packages/ui/src/components/forge/WaveformLane.tsx)<br>`@nyc-tron/ui/components/forge/WaveformLane` | [curve](#profile-curve) | shared-source-candidate |
 | E-03 | [StereoMultichannelWaveform](../../packages/ui/src/components/forge/audio/StereoMultichannelWaveform.tsx)<br>`@nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform` | [curve](#profile-curve) | requires-additional-provider<br>Peers: react-native-gesture-handler |
-| E-04 | [LiveRecordingWaveform](../../packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx)<br>`@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform` | [curve](#profile-curve) | requires-react-native-api<br>RN: AccessibilityInfo |
-| E-05 | [SpectrogramView](../../packages/ui/src/components/forge/audio/SpectrogramView.tsx)<br>`@nyc-tron/ui/components/forge/audio/SpectrogramView` | [curve](#profile-curve) | requires-react-native-api<br>RN: AccessibilityInfo |
+| E-04 | [LiveRecordingWaveform](../../packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx)<br>`@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform` | [curve](#profile-curve) | shared-source-candidate |
+| E-05 | [SpectrogramView](../../packages/ui/src/components/forge/audio/SpectrogramView.tsx)<br>`@nyc-tron/ui/components/forge/audio/SpectrogramView` | [curve](#profile-curve) | shared-source-candidate |
 | E-06 | [RecordingArmButton](../../packages/ui/src/components/forge/audio/RecordingArmButton.tsx)<br>`@nyc-tron/ui/components/forge/audio/RecordingArmButton` | [toolbar](#profile-toolbar) | shared-source-candidate |
 | E-07 | [InputMonitorToggle](../../packages/ui/src/components/forge/audio/InputMonitorToggle.tsx)<br>`@nyc-tron/ui/components/forge/audio/InputMonitorToggle` | [toolbar](#profile-toolbar) | shared-source-candidate |
 | E-08 | [DeviceAndChannelPicker](../../packages/ui/src/components/forge/audio/DeviceAndChannelPicker.tsx)<br>`@nyc-tron/ui/components/forge/audio/DeviceAndChannelPicker` | [choice](#profile-choice) | shared-source-candidate |
@@ -206,19 +204,19 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | E-10 | [ClipGainEnvelope](../../packages/ui/src/components/forge/audio/ClipGainEnvelope.tsx)<br>`@nyc-tron/ui/components/forge/audio/ClipGainEnvelope` | [curve](#profile-curve) | shared-source-candidate |
 | E-11 | [AutomationLane](../../packages/ui/src/components/forge/audio/AutomationLane.tsx)<br>`@nyc-tron/ui/components/forge/audio/AutomationLane` | [curve](#profile-curve) | shared-source-candidate |
 | E-12 | [AutomationModePicker](../../packages/ui/src/components/forge/audio/AutomationModePicker.tsx)<br>`@nyc-tron/ui/components/forge/audio/AutomationModePicker` | [choice](#profile-choice) | shared-source-candidate |
-| E-13 | [MixingConsole](../../packages/ui/src/components/forge/audio/MixingConsole.tsx)<br>`@nyc-tron/ui/components/forge/audio/MixingConsole` | [timeline](#profile-timeline) | requires-react-native-api<br>RN: AccessibilityInfo; Peers: react-native-gesture-handler |
+| E-13 | [MixingConsole](../../packages/ui/src/components/forge/audio/MixingConsole.tsx)<br>`@nyc-tron/ui/components/forge/audio/MixingConsole` | [timeline](#profile-timeline) | requires-additional-provider<br>Peers: react-native-gesture-handler |
 | E-14 | [VerticalFader](../../packages/ui/src/components/forge/audio/VerticalFader.tsx)<br>`@nyc-tron/ui/components/forge/audio/VerticalFader` | [slider](#profile-slider) | requires-additional-provider<br>Peers: react-native-gesture-handler |
 | E-15 | [PanAndBalanceControl](../../packages/ui/src/components/forge/audio/PanAndBalanceControl.tsx)<br>`@nyc-tron/ui/components/forge/audio/PanAndBalanceControl` | [dial](#profile-dial) | requires-additional-provider<br>Peers: react-native-gesture-handler |
-| E-16 | [RealtimePeakMeter](../../packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx)<br>`@nyc-tron/ui/components/forge/audio/RealtimePeakMeter` | [curve](#profile-curve) | requires-react-native-api<br>RN: AccessibilityInfo |
-| E-17 | [LoudnessMeter](../../packages/ui/src/components/forge/audio/LoudnessMeter.tsx)<br>`@nyc-tron/ui/components/forge/audio/LoudnessMeter` | [curve](#profile-curve) | requires-react-native-api<br>RN: AccessibilityInfo |
+| E-16 | [RealtimePeakMeter](../../packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx)<br>`@nyc-tron/ui/components/forge/audio/RealtimePeakMeter` | [curve](#profile-curve) | shared-source-candidate |
+| E-17 | [LoudnessMeter](../../packages/ui/src/components/forge/audio/LoudnessMeter.tsx)<br>`@nyc-tron/ui/components/forge/audio/LoudnessMeter` | [curve](#profile-curve) | shared-source-candidate |
 | E-18 | [SoloMuteButtons](../../packages/ui/src/components/forge/audio/SoloMuteButtons.tsx)<br>`@nyc-tron/ui/components/forge/audio/SoloMuteButtons` | [toolbar](#profile-toolbar) | shared-source-candidate |
 | E-19 | [BusAndRoutingMatrix](../../packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx)<br>`@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix` | [inspector](#profile-inspector) | shared-source-candidate |
-| E-20 | [InsertEffectRack](../../packages/ui/src/components/forge/audio/InsertEffectRack.tsx)<br>`@nyc-tron/ui/components/forge/audio/InsertEffectRack` | [inspector](#profile-inspector) | requires-react-native-api<br>RN: AccessibilityInfo |
+| E-20 | [InsertEffectRack](../../packages/ui/src/components/forge/audio/InsertEffectRack.tsx)<br>`@nyc-tron/ui/components/forge/audio/InsertEffectRack` | [inspector](#profile-inspector) | shared-source-candidate |
 | E-21 | [EQFrequencyGraph](../../packages/ui/src/components/forge/audio/EQFrequencyGraph.tsx)<br>`@nyc-tron/ui/components/forge/audio/EQFrequencyGraph` | [curve](#profile-curve) | shared-source-candidate |
 | E-22 | [DynamicsTransferGraph](../../packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx)<br>`@nyc-tron/ui/components/forge/audio/DynamicsTransferGraph` | [curve](#profile-curve) | shared-source-candidate |
-| E-23 | [PluginPresetBrowser](../../packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx)<br>`@nyc-tron/ui/components/forge/audio/PluginPresetBrowser` | [collection](#profile-collection) | requires-react-native-api<br>RN: AccessibilityInfo |
+| E-23 | [PluginPresetBrowser](../../packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx)<br>`@nyc-tron/ui/components/forge/audio/PluginPresetBrowser` | [collection](#profile-collection) | shared-source-candidate |
 | E-24 | [MIDIPianoRoll](../../packages/ui/src/components/forge/midi/MIDIPianoRoll.tsx)<br>`@nyc-tron/ui/components/forge/midi/MIDIPianoRoll` | [timeline](#profile-timeline) | shared-source-candidate |
-| E-25 | [MIDIVelocityLane](../../packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx)<br>`@nyc-tron/ui/components/forge/midi/MIDIVelocityLane` | [curve](#profile-curve) | requires-react-native-api<br>RN: AccessibilityInfo |
+| E-25 | [MIDIVelocityLane](../../packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx)<br>`@nyc-tron/ui/components/forge/midi/MIDIVelocityLane` | [curve](#profile-curve) | shared-source-candidate |
 | E-26 | [StepSequencer](../../packages/ui/src/components/forge/midi/StepSequencer.tsx)<br>`@nyc-tron/ui/components/forge/midi/StepSequencer` | [timeline](#profile-timeline) | shared-source-candidate |
 | E-27 | [TempoAndMetronome](../../packages/ui/src/components/forge/audio/TempoAndMetronome.tsx)<br>`@nyc-tron/ui/components/forge/audio/TempoAndMetronome` | [inspector](#profile-inspector) | shared-source-candidate |
 | E-28 | [TakePlaylistAndComping](../../packages/ui/src/components/forge/audio/TakePlaylistAndComping.tsx)<br>`@nyc-tron/ui/components/forge/audio/TakePlaylistAndComping` | [timeline](#profile-timeline) | requires-additional-provider<br>Peers: react-native-gesture-handler |
@@ -231,7 +229,7 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | E-35 | [BeatDetectionMarkerLane](../../packages/ui/src/components/forge/audio/BeatDetectionMarkerLane.tsx)<br>`@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane` | [curve](#profile-curve) | shared-source-candidate |
 | E-36 | [SoundEffectsLibrary](../../packages/ui/src/components/forge/audio/SoundEffectsLibrary.tsx)<br>`@nyc-tron/ui/components/forge/audio/SoundEffectsLibrary` | [collection](#profile-collection) | shared-source-candidate |
 | E-37 | [SpeechTranscriptTakeReview](../../packages/ui/src/components/forge/audio/SpeechTranscriptTakeReview.tsx)<br>`@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview` | [timeline](#profile-timeline) | requires-additional-provider<br>Peers: react-native-gesture-handler |
-| E-38 | [VoiceoverCountdownAndTakeBin](../../packages/ui/src/components/forge/audio/VoiceoverCountdownAndTakeBin.tsx)<br>`@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin` | [collection](#profile-collection) | requires-react-native-api<br>RN: AccessibilityInfo |
+| E-38 | [VoiceoverCountdownAndTakeBin](../../packages/ui/src/components/forge/audio/VoiceoverCountdownAndTakeBin.tsx)<br>`@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin` | [collection](#profile-collection) | shared-source-candidate |
 | E-39 | [AudioEffectsPresetPanel](../../packages/ui/src/components/forge/audio/AudioEffectsPresetPanel.tsx)<br>`@nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel` | [inspector](#profile-inspector) | shared-source-candidate |
 | E-40 | [NoiseReductionMonitor](../../packages/ui/src/components/forge/audio/NoiseReductionMonitor.tsx)<br>`@nyc-tron/ui/components/forge/audio/NoiseReductionMonitor` | [curve](#profile-curve) | shared-source-candidate |
 | E-41 | [AutoDuckEnvelopePanel](../../packages/ui/src/components/forge/audio/AutoDuckEnvelopePanel.tsx)<br>`@nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel` | [curve](#profile-curve) | shared-source-candidate |
@@ -375,7 +373,7 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | K-16 | [PDFCompareOverlay](../../packages/ui/src/components/forge/pdf/PDFCompareOverlay.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PDFCompareOverlay` | [pdf](#profile-pdf) | shared-source-candidate |
 | K-17 | [PrintAndExportPreview](../../packages/ui/src/components/forge/pdf/PrintAndExportPreview.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PrintAndExportPreview` | [pdf](#profile-pdf) | shared-source-candidate |
 | K-18 | [PDFReadAloudTransport](../../packages/ui/src/components/forge/pdf/PDFReadAloudTransport.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport` | [speech](#profile-speech) | shared-source-candidate |
-| K-19 | [PDFVoiceNoteAttachment](../../packages/ui/src/components/forge/pdf/PDFVoiceNoteAttachment.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment` | [lifecycle](#profile-lifecycle) | requires-react-native-api<br>RN: AccessibilityInfo |
+| K-19 | [PDFVoiceNoteAttachment](../../packages/ui/src/components/forge/pdf/PDFVoiceNoteAttachment.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment` | [lifecycle](#profile-lifecycle) | shared-source-candidate |
 | K-20 | [PDFScanSession](../../packages/ui/src/components/forge/pdf/PDFScanSession.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PDFScanSession` | [capture](#profile-capture) | requires-additional-provider<br>Peers: react-native-gesture-handler |
 | K-21 | [PDFInlineTextEdit](../../packages/ui/src/components/forge/pdf/PDFInlineTextEdit.tsx)<br>`@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit` | [pdf](#profile-pdf) | requires-additional-provider<br>Peers: react-native-gesture-handler |
 
@@ -426,13 +424,13 @@ The counterpart column names comparable Qt controls or building blocks. It does 
 | ID | Existing capability | Qt counterpart profile | QNX / Marathon source status |
 | --- | --- | --- | --- |
 | N-01 | [NativePointerRouter](../../packages/native-controls/src/NativePointerInput.tsx)<br>`@nyc-tron/native-controls/NativePointerInput`<br>`@nyc-tron/native-controls/pointer-input` | [pointer](#profile-pointer) | requires-additional-provider<br>Peers: @expo/ui, expo; native-provider call |
-| N-02 | [PenPairingDialog](../../packages/ui/src/components/forge/devices/PenPairingDialog.tsx)<br>`@nyc-tron/ui/components/forge/devices/PenPairingDialog` | [pointer](#profile-pointer) | requires-react-native-api<br>RN: AccessibilityInfo |
+| N-02 | [PenPairingDialog](../../packages/ui/src/components/forge/devices/PenPairingDialog.tsx)<br>`@nyc-tron/ui/components/forge/devices/PenPairingDialog` | [pointer](#profile-pointer) | shared-source-candidate |
 | N-03 | LogitechMuseSpatialInk<br>[mikevocalz/nitro-forge@cc4893b2](https://github.com/mikevocalz/nitro-forge/tree/cc4893b29f6182c71705a64785a41f5bbf3f5507)<br>[mikevocalz/viro@e84a1a9a](https://github.com/mikevocalz/viro/tree/e84a1a9a37168a835f7730e09016917b9d49c6ef) | [pointer](#profile-pointer) | pinned-external-provider |
 | N-04 | [PalmRejectionAndPrediction](../../packages/native-controls/src/pointer-input.ts)<br>`@nyc-tron/native-controls/pointer-input` | [pointer](#profile-pointer) | shared-source-candidate |
 | N-05 | [HapticsAndFeedback](../../packages/platform-services/src/haptics/index.ts)<br>`@nyc-tron/platform-services/haptics` | [haptics](#profile-haptics) | requires-additional-provider<br>Peers: expo; native-provider call |
-| N-06 | [VoiceOverTalkBackSupport](../../packages/ui/src/components/shell/FocusAndA11yLayer.tsx)<br>`@nyc-tron/ui/components/forge/inputs/PrecisionScrubber`<br>`@nyc-tron/ui/components/shell/FocusAndA11yLayer`<br>`@nyc-tron/ui/components/shell/a11y-audit` | [accessibility](#profile-accessibility) | requires-react-native-api<br>RN: AccessibilityInfo |
+| N-06 | [VoiceOverTalkBackSupport](../../packages/ui/src/components/shell/FocusAndA11yLayer.tsx)<br>`@nyc-tron/ui/components/forge/inputs/PrecisionScrubber`<br>`@nyc-tron/ui/components/shell/FocusAndA11yLayer`<br>`@nyc-tron/ui/components/shell/a11y-audit` | [accessibility](#profile-accessibility) | shared-source-candidate |
 | N-07 | [HardwareKeyboardMap](../../packages/hardware-keys/src/index.ts)<br>`@nyc-tron/hardware-keys`<br>`@nyc-tron/ui/components/shell/keyboard-map` | [keyboard](#profile-keyboard) | requires-additional-provider<br>Peers: expo; native-provider call |
-| N-08 | [SafeAreaFoldableLayout](../../packages/panes/src/components/SafeAreaFoldableLayout.tsx)<br>`@nyc-tron/core/folds`<br>`@nyc-tron/panes/AdaptivePaneHost`<br>`@nyc-tron/panes/SafeAreaFoldableLayout` | [adaptive](#profile-adaptive) | requires-react-native-api<br>RN: BackHandler |
+| N-08 | [SafeAreaFoldableLayout](../../packages/panes/src/components/SafeAreaFoldableLayout.tsx)<br>`@nyc-tron/core/folds`<br>`@nyc-tron/panes/AdaptivePaneHost`<br>`@nyc-tron/panes/SafeAreaFoldableLayout` | [adaptive](#profile-adaptive) | shared-source-candidate |
 | N-09 | XRPresentationAdapter<br>[mikevocalz/nitro-forge@cc4893b2](https://github.com/mikevocalz/nitro-forge/tree/cc4893b29f6182c71705a64785a41f5bbf3f5507) | [xr](#profile-xr) | pinned-external-provider |
 | N-10 | OfflineCheckpointAndAutosave<br>[mikevocalz/nitro-forge@cc4893b2](https://github.com/mikevocalz/nitro-forge/tree/cc4893b29f6182c71705a64785a41f5bbf3f5507) | [storage](#profile-storage) | pinned-external-provider |
 | N-11 | CollaborationAdapter<br>[mikevocalz/nitro-forge@cc4893b2](https://github.com/mikevocalz/nitro-forge/tree/cc4893b29f6182c71705a64785a41f5bbf3f5507) | [network](#profile-network) | pinned-external-provider |

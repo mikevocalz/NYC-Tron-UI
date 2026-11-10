@@ -1,7 +1,9 @@
 # Full component completion — NYC-Tron ownership
 
-Primary library PR: [NYC-Tron #54](https://github.com/mikevocalz/NYC-Tron-UI/pull/54).
-Engine integration remains tracked separately in [Nitro-Forge #63](https://github.com/mikevocalz/nitro-forge/pull/63).
+Current v1 implementation: [NYC-Tron #57](https://github.com/mikevocalz/NYC-Tron-UI/pull/57),
+[Forge #70](https://github.com/mikevocalz/nitro-forge/pull/70), and
+[Viro #86](https://github.com/mikevocalz/viro/pull/86). Earlier component delivery
+is retained in NYC-Tron #54 and Forge #63.
 Canonical plan, all 341 IDs, phase dependencies, baseline and acceptance ledger:
 [Forge completion plan](https://github.com/mikevocalz/nitro-forge/blob/codex/complete-all-components/docs/completion/PLAN.md).
 
@@ -17,15 +19,36 @@ Preserve the existing single component owner, platform-native adapters, app-auth
 
 Implementation checkpoints are committed and pushed separately; the canonical ledger retains every requirement and acceptance gate.
 
-## Batch delivery cadence
+## Current approved completion scope — 2026-11-10
+
+The user approved the v1 completion proposal and explicitly requested all twelve
+remaining native/service rows. That approval supersedes the earlier
+implementation-first pause for this work. Source, browser, installed-consumer,
+native build/runtime and release-readiness checks are part of the approved
+candidate work.
+
+All **341 original IDs** now have reviewed source ownership: **332 local
+implementations and nine pinned external implementations**, with no pending
+source row. This retains the original phase assignments, requirements and eight
+required platforms. The twelve rows are N-01, N-03, N-04, N-09, N-10, N-11,
+N-13, N-14, N-15, N-16, N-18 and N-19. Their owners and public imports are in
+[V1 platform closure](reports/V1-PLATFORM-CLOSURE.md).
+
+The [candidate verification report](reports/V1-RELEASE-GATES.md) records exact
+source revisions, actual runtime evidence, all fourteen archives and remaining
+acceptance. Complete eight-platform acceptance and owner distribution review
+remain required for stable publication. Neither implementation counts nor a
+successful simulator flow promotes unobserved platform/device behavior.
+
+## Earlier batch delivery cadence
 
 User direction, 2026-11-06: implement related controls together and defer repeated integration checks until the batch is ready. Target 4–8 related controls per batch, adjusted for shared ownership and complexity. Do not rebuild, run the full suite, repack every package or repeat unchanged native scenarios after each individual component.
 
-Latest user direction, 2026-11-07: finish every reusable component implementation first, then let the user review before full testing. Related batches receive a combined TypeScript build and static diff/export/ledger checks, followed by commits and pushes. Source/browser/native acceptance suites, native binary rebuilds and production engine validation remain deferred to that review gate. Historical runtime evidence is preserved in its phase reports and does not certify the new components.
+Earlier user direction, 2026-11-07 (superseded for the approved v1 completion work above): finish every reusable component implementation first, then let the user review before full testing. Related batches receive a combined TypeScript build and static diff/export/ledger checks, followed by commits and pushes. Source/browser/native acceptance suites, native binary rebuilds and production engine validation remain deferred to that review gate. Historical runtime evidence is preserved in its phase reports and does not certify the new components.
 
 Apply the no-ai-slop writing skill and relevant native/domain skills. The external [Everything Claude Code verification-loop skill](https://github.com/WorldFlowAI/everything-claude-code/blob/432485ba6b92c14fb357276a98957f348bcff9ee/skills/verification-loop/SKILL.md) was inspected for build, type, test and diff review guidance. It is a reference, not an installed hook or replacement for this project's commands, Zustand requirement or evidence gates. Unrelated skills and repository-wide hook installations are unnecessary for component delivery.
 
-Current implementation checkpoint: **329 of 329 library-scope rows implemented**. All 341 canonical IDs remain tracked; the other 12 are separately scoped engine/platform integration requirements. Every acceptance field remains evidence-gated. The implementation pass is ready for user review; full testing, platform acceptance, release and consumer pins remain open.
+Earlier implementation checkpoint, before the 2026-11-10 native/service completion work: **329 of 329 then-library-scope rows implemented**. All 341 canonical IDs remain tracked; the other 12 are separately scoped engine/platform integration requirements. Every acceptance field remains evidence-gated. At that checkpoint, the implementation pass awaited user review; full testing, platform acceptance, release and consumer pins remained open. The current status is recorded above.
 
 | Phase | Library rows implemented | Latest evidence |
 | --- | --- | --- |

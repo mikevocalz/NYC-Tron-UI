@@ -1,0 +1,3 @@
+Error: Native media failed: Audio starts after the requested interval.
+    at Server.<anonymous> (file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-media-acceptance.mjs:79:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

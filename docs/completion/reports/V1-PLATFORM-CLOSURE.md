@@ -110,7 +110,7 @@ candidate/fixture-bound decoder report. Forge's native-cadence workflow likewise
 launches the generated native Factory and checks task, cache and binary ownership.
 Logs, reports and screenshots are retained even when a gate fails.
 
-Evidence observed for the candidate:
+Evidence observed for the earlier `fe397c02` checkpoint:
 
 - [Tron source/exports/types](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760177947) and [clean installed browser consumers](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178220) passed for head `fe397c02bab746ef4ecbcae0cf9d42176a2e53df`.
 - [Reference browser acceptance](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178255) passed all 29 browser checks and three model tests. The actual tested merge was `fa1ba2dfbfa08e610ed33f5731542aa8c734af0b`. Its four editor captures are byte-identical to the retained `10f3df2` captures below; older artifacts remain labeled with their original revision.
@@ -138,6 +138,70 @@ Local Forge evidence and exact commands are retained in its
 reported as runtime proof. A report from an earlier revision remains attached to
 that revision; the final candidate must rerun its required gates.
 
+## Final Forge service runtime checkpoint
+
+[Forge run 42765520077](https://github.com/mikevocalz/nitro-forge/actions/runs/42765520077)
+passed all three jobs at head `f5469d03cf2153a8f694ae61d911861264e9216d`, tested
+merge `7cc6c15805b20ae69804be9cbf526ae48a4f1a63`. Both
+[iOS](../evidence/v1-forge-f5469d0/ios/provenance.json) and
+[Android](../evidence/v1-forge-f5469d0/android/provenance.json) record three initial
+write checks, OS termination, a different process identity, and fifteen final
+checks covering all eleven engine kinds. Full native payload manifests and their
+hashes are retained with the original receipts. Native binaries were hashed by
+CI; local verification independently checked the downloaded manifest and receipt
+integrity. The iOS report artifact has no screenshot because its multi-display
+simulator rejected the optional capture command; no visual acceptance is inferred.
+All fourteen other Forge source/adapter/ledger workflows passed at this head.
+
+## The `7aec1ec1` native follow-up
+
+At source head `7aec1ec1`, all six source/browser/consumer/WinUI workflows passed:
+1,169 Windows unit/contract/render tests, 686 browser cases, 29 reference cases
+plus three model tests, clean consumers, and the actual WinUI app/UIA. The
+reference images are byte-identical to the retained editor captures.
+
+The [Android evidence](../evidence/v1-native-7aec1ec/android/provenance.json)
+records successful actual Settings and Editor flows, including header/tab
+geometry inside the measured safe host. Its later pointer status was clipped,
+and its full-start audio interval exposed a double trim after `seekTo(0)` skipped
+AAC priming data. The next candidate retains the original first packet and
+keeps all strict PCM counts and initial-gap rejection.
+
+The [iOS evidence](../evidence/v1-native-7aec1ec/ios/provenance.json) records an
+app still bundling when the media receipt timed out, followed by a real SwiftUI
+Slider raw-label error in the reference UI. The follow-up prepares the actual
+Metro bundle before launching, renders Slider labels through SwiftUI Text,
+and keeps pointer feedback visible. These failures remain failed records;
+fresh native execution is required for the corrections.
+
+[Support](../../SUPPORT.md) also retains missing AppKit/native host bridges as
+implementation gaps. Source coverage does not erase those gaps or substitute
+for the complete eight-platform release evidence.
+
+## The `e2b65dd5` decoder and browser checkpoint
+
+All six nonmobile workflows passed at `e2b65dd5`; the
+[retained record](../evidence/v1-automated-e2b65dd5/nonmobile/ci.json) names their
+exact runs, jobs and artifacts. Both native decoders also passed all eleven
+strict checks, with the same 32,000 full-interval and 4,000 tail frame counts.
+The original [iOS](../evidence/v1-native-e2b65dd5/ios/provenance.json) and
+[Android](../evidence/v1-native-e2b65dd5/android/provenance.json) records include
+verified archives and independently rehashed complete native payloads.
+
+The native UI jobs remained failed. Android's first Maestro launch lost the
+emulator transport before any app assertion. The iOS simulator cancelled the
+first Settings touch; the original log ties the cancellation to that contact,
+app and command time. These results establish the decoder corrections and
+preserve the UI failures. The next candidate adds the narrowly bounded
+[transport recovery](../../../tooling/native/UI_ACCEPTANCE.md) and still needs
+fresh successful Settings, Editor and pointer receipts.
+
+The pure window lifecycle model now has a peer-free core subpath, with its
+existing panes entry retained as a compatibility re-export. Its thirty-nine
+tests and prior signatures are preserved. Separate AppKit/Spark and supported
+Windows Fabric host work uses this same model; implementation and native
+runtime evidence must precede any new desktop support claim.
+
 ## The Exact-inspired reference and v1 release conditions
 
 [Exact native-feel guidance](../../EXACT_NATIVE_FEEL.md) remains the design contract:
@@ -148,17 +212,17 @@ loading, empty, retry and error behavior. A phone uses bottom navigation; the wi
 native/fold shell keeps its rail on the physical right, including RTL. Resizing or
 changing routes does not recreate the editor's draft input.
 
-The [performance artifact](../evidence/v1-reference-10f3df2/reference-render-timings.json)
+The [performance artifact](../evidence/v1-automated-e2b65dd5/reference/reference-render-timings.json)
 records React Profiler render-work samples and p50/p95, fixture hash, actual tested
 merge SHA, browser/Node versions and runner hardware. On Chromium 151.0.7922.34,
-Node 24.19.0 and the four-logical-CPU Xeon Platinum 8370C Linux runner, ten navigation
+Node 24.19.0 and the four-logical-CPU Xeon Platinum 8573C Linux runner, ten navigation
 repetitions produced these development-render measurements:
 
 | Route | Committed update samples | p50 | p95 |
 |---|---:|---:|---:|
-| Library |59|0.2ms|27.6ms|
-| Editor |100|0.7ms|26.6ms|
-| Settings |90|0.6ms|26.5ms|
+| Library |58|0.1ms|24.6ms|
+| Editor |100|0.7ms|18.5ms|
+| Settings |88|0.4ms|24.9ms|
 
 The raw samples and exact runtime identity are retained with the four editor captures.
 This establishes a reproducible initial measurement; it is not a production latency

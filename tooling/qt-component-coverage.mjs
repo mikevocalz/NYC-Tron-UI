@@ -256,7 +256,9 @@ export function renderQtCoverage(report) {
     `Profile: ${report.reactNativeApiProfile.description}`, "",
     "| Missing named RN export | QNX rows | Marathon rows |", "| --- | ---: | ---: |",
   );
-  for (const name of sorted(Object.values(report.summary.targets).flatMap(target => Object.keys(target.missingReactNativeExports)))) lines.push(`| \`${name}\` | ${report.summary.targets.qnx.missingReactNativeExports[name] ?? 0} | ${report.summary.targets.marathon.missingReactNativeExports[name] ?? 0} |`);
+  const missingNames = sorted(Object.values(report.summary.targets).flatMap(target => Object.keys(target.missingReactNativeExports)));
+  if (!missingNames.length) lines.push("| None in the reviewed profile | 0 | 0 |");
+  for (const name of missingNames) lines.push(`| \`${name}\` | ${report.summary.targets.qnx.missingReactNativeExports[name] ?? 0} | ${report.summary.targets.marathon.missingReactNativeExports[name] ?? 0} |`);
   lines.push("", "Counts overlap when a component needs several APIs. The checked-in API profile is a reviewable cross-repository snapshot. Recheck it against the selected RN-QNX package with `--check-rn-api /absolute/path/to/PublicAPI.js` whenever that package changes.", "",
     "## Component map", "", "The counterpart column names comparable Qt controls or building blocks. It does not replace the public RN component, automatically port a native peer, or supply a Forge engine. See the profile boundaries below and [integration requirements](README.md).", "");
   for (const [family, metadata] of Object.entries(qtFamilies)) {

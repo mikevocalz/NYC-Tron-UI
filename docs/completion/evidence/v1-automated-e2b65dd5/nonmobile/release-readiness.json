@@ -1,0 +1,5 @@
+{
+  "status": "blocked",
+  "version": "1.0.0",
+  "error": "Release readiness: stable publication blocked: 341 of 341 components lack accepted eight-platform proof; owner distribution review is pending"
+}

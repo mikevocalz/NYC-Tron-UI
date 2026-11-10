@@ -41,6 +41,29 @@ package archive hashes, simulator/emulator identity and pinned tool identity.
 Command receipts, Metro logs, screenshots and failure hierarchies are retained
 when a gate fails. An older output directory cannot be reused as a new result.
 
+The first Settings flow permits **one** evidence-bound transport recovery. On
+Android, eligibility requires the initial launch command to fail with the
+target emulator's exact `device offline` error, before any app assertion. The
+runner waits for ADB and boot readiness, restores its Metro reverse mapping,
+and observes the same installed app's resumed Activity. On iOS, eligibility
+requires the first Settings navigation tap and the immediately following
+assertion to match the recorded attempt. That tap's time window must contain a
+Recap registration, unknown sender, nonempty cancelled contact and cancelled
+path for the same sender/contact and app package. This is the observed
+[upstream simulator transport race](https://github.com/mobile-dev-inc/Maestro/issues/3686),
+not evidence that a completed tap reached the app; Maestro's
+[settled-screen comparison](https://github.com/mobile-dev-inc/Maestro/issues/3685)
+can report a change without checking one.
+
+Every original failed report, screenshot and log is moved intact into
+`settings-initial-transport-failure`, hashed, and referenced by
+`transport-recovery.json` before another attempt. The installed app payload is
+unchanged. The complete Settings flow then runs with the same semantic
+assertions, and any second failure is final. Editor, pointer, later edits,
+ordinary assertion failures and unproven cancellations are never retried.
+Only a successful full suite produces `result.json`, which records any recovery
+alongside the fresh successful flow receipts.
+
 These are simulated OS touch and accessible-label checks. They do not establish
 physical pen pressure, tilt, hover, palm rejection, hardware fold behavior or
 VoiceOver/TalkBack spoken output. Active iOS touch cancellation still needs its

@@ -1,0 +1,11 @@
+Starting project at /Users/runner/work/_temp/nyc-tron-native-consumer/app
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+1 package may need updating. Run npx expo install --check for details.
+Logs for your project will appear below.
+iOS Bundled 44253ms reference-app.js (1236 modules)
+ ERROR  Text strings must be rendered within a <Text> component.
+ ERROR  Text strings must be rendered within a <Text> component.

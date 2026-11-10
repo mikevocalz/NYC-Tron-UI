@@ -1,0 +1,5 @@
+Error: /home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro failed: 
+    at run (file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:34:11)
+    at flow (file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:93:3)
+    at file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-ui-acceptance.mjs:175:19
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

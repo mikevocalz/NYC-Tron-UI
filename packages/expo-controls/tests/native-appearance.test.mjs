@@ -136,12 +136,15 @@ test("theme changes preserve an in-progress slider preview and its commit callba
   }
 });
 
-test("iOS slider labels are native Text content for the Expo SwiftUI slot",()=>{
-  const control=find(harness("NativeSliderField.native.tsx","ios").render(slider),node=>node.type==="SwiftUISlider");
-  // Expo 58 places this ReactNode directly inside SlotView. A plain string
-  // produces the React Native 'Text strings must be rendered' runtime error.
-  assert.equal(control.props.label.type,"SwiftUIText");
-  assert.equal(control.props.label.props.children,slider.label);
+test("iOS slider provides native SwiftUI content for Expo's label Slot",()=>{
+  const tree=harness("NativeSliderField.native.tsx","ios").render(slider);
+  const label=find(tree,node=>node.type==="SwiftUISlider").props.label;
+  // SDK 58 puts this ReactNode directly in a native Slot. A bare string (or
+  // an RN Text child) is not SwiftUI text and caused the actual iOS LogBox.
+  assert.equal(label.type,"SwiftUIText");
+  assert.equal(label.props.children,"Opacity");
+  const caption=find(tree,node=>node.type==="Text"&&node.props.children==="Opacity");
+  assert.equal(caption.props.accessibilityElementsHidden,true);
 });
 
 test("theme changes retain an expanded Android split-button menu",()=>{

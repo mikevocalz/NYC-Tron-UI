@@ -272,11 +272,13 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
       source.selectTrack(track)
       // AAC/Opus decoders need preroll; trimming begins only after decoded PTS reaches the requested interval.
       val seek = if (prefix == "audio/") maxOf(0L, start - 1_000_000) else start
-      // A fresh audio extractor includes encoder-priming packets before PTS 0.
-      // Seeking to 0 applies the MP4 edit offset and can skip those packets,
-      // while MediaCodec still applies KEY_ENCODER_DELAY to its first output.
-      // Preserve the initial packet sequence when preroll reaches the start.
-      if (prefix != "audio/" || seek > 0) source.seekTo(seek, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
+      // A fresh audio track retains negative-PTS priming packets. In MP4,
+      // seekTo(0) applies the edit-list offset and can skip those packets;
+      // the codec would then trim encoder-delay from audible samples again.
+      // Keep the original beginning when preroll reaches zero, letting the
+      // codec own its delay trim and the sink keep the authored PCM timeline.
+      if (prefix != "audio/" || seek > 0L)
+        source.seekTo(seek, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
       configure(format, durationUs)
       val mime = format.getString(MediaFormat.KEY_MIME) ?: throw MediaDecodeFailure("unsupported-format", "Track codec is absent.")
       val decoder = MediaCodec.createDecoderByType(mime); codec = decoder

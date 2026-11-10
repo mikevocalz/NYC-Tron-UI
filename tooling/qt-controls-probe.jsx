@@ -2,7 +2,7 @@
 // The native runner sends QMouse/QKey events; calls below only mount stages or
 // change controlled props. No component callback is invoked by the driver.
 import React from "react";
-import {AppRegistry,Pressable,Text,View,useWindowDimensions} from "react-native";
+import {AppRegistry,Platform,Pressable,Text,View,useWindowDimensions} from "react-native";
 import {createStore} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {NativeDropdown} from "@nyc-tron/expo-controls/NativeDropdown";
@@ -15,6 +15,12 @@ import {ContextMenu} from "@nyc-tron/expo-controls/ContextMenu";
 import {FindReplacePopover} from "@nyc-tron/expo-controls/FindReplacePopover";
 import {Tooltip} from "@nyc-tron/expo-controls/Tooltip";
 import {findLiteralText,replaceLiteralText} from "@nyc-tron/ui/components/shell/find-replace-model";
+
+// Direct Platform.OS reads are folded to a target literal by Metro. Reflect
+// keeps this check attached to the actual public object loaded by the runtime.
+const runtimePlatform=Reflect.get(Platform,"OS");
+globalThis.__qtProbePlatform=runtimePlatform;
+if(runtimePlatform!=="qnx"&&runtimePlatform!=="marathon")throw new Error("Qt controls probe requires a QNX or Marathon public Platform.OS, received "+runtimePlatform);
 
 const state=createStore(()=>({stage:"tooltip",selection:"a",dropdown:"a",slider:25,
   actions:0,primary:0,split:0,context:0,popover:true,find:true,tooltipPresses:0,

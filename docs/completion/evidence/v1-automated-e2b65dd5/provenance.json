@@ -1,0 +1,40 @@
+{
+  "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "testedMergeRevision": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "recordStatus": "six nonmobile gates passed; native decoder passed on iOS and Android, whole native workflow failed in UI transport",
+  "files": {
+    "nonmobile/ci.json": "2fbcc704aec07ad482a91da08fd693de521f3aa686120f6b026f8e80f00b54a0",
+    "nonmobile/distribution-preparation.json": "bd9b5a77f2bc0353038c129f01f97c5c03885f38dee9a005a0222e836e6bac53",
+    "nonmobile/SHA256SUMS": "b8b9f19c31ad02992c7caf1bbf56d33b817f4a00a6fc0134bda387aeee70695a",
+    "nonmobile/release-readiness.json": "e7feff735ef59ff2495e5665ba70185e8727b2b21d268294d906fb47c98df14c",
+    "reference/reference-render-timings.json": "eb7fd3568828a5657ce5bd3612f806e32436e323bb9a0c60461ff0770c16cfec",
+    "reference/verified-captures.json": "886bbb23c90302747925e2bd3caa059a3adfd9f9915dad76119386d11823eb57",
+    "consumers/basic/consumer.json": "098c6c903fda08191fa1db25714ebd601fd2ca5af120e6b0f7a6f937e978a2aa",
+    "consumers/basic/installed-packages.json": "5eee378ba461b633c7c037a74bf6f4cba959711b3ccdeafe7f1b83a59a28bf48",
+    "consumers/basic/download-verification.json": "198252dbe969006b93abbf60cedf107311d2ff929257baaa90fc9346a06ad04b",
+    "consumers/basic/results.json": "f2cdb28a87187bab0def93ee7fced8742cf3480f181c13598b722fc49f43b5b2",
+    "consumers/basic/consumer-wide.png": "d03c54295147a0ca0bd58578b066f83012f0782ecad34e2ea5ad576056263258",
+    "consumers/basic/consumer-narrow.png": "b2dda655e8c9e8663da4e47fdd436e301cc97c27dbb39380f4571855df903fcd",
+    "consumers/expo/consumer.json": "403e7a0d374ffbcdd70b538ae3add25a605017c728947772d6e6773d814fc015",
+    "consumers/expo/installed-packages.json": "7ea0cc544a7dabd4e6421271549dd0f98fbb89cf35426defc14470845d78a25c",
+    "consumers/expo/download-verification.json": "c4de9b5f23d527d6d4bd1479965442f1360d1ea61b8dda6addfa0131563ec512",
+    "consumers/expo/results.json": "fd71e67e0ca5eb8524369889650b6b9823c414aecc8159fdf29d3e8f84d09f33",
+    "consumers/expo/consumer-wide.png": "bf0f864c6b876110a930c9dc873bd824a5f93ea73aafd74177661ac8991303cc",
+    "consumers/expo/consumer-narrow.png": "08acb4c3f1fa0d8995dbdcd480cbb846b75f0ef600372e00ecfa1a55efebdbb1",
+    "windows/01-launched.png": "687fced2182980a0bf4fd79f4546ced6e6cc52a7b3805d8cfc7b5ce95cff7e18",
+    "windows/02-rejected.png": "5434ecbfd521d78cf432c951cd56075358fe6e95f3bd66805356db78b8213504",
+    "windows/03-accepted.png": "e1134d1b78d846a0197151a0b04183b3cb60fa6b8eaaf8744497ecd38564a10c",
+    "windows/download-verification.json": "854f9e6227ff47f9bcbd904d97a1da7b24150a8a7eaa854659afc5778e3144e5",
+    "reference/reference-editor-desktop-light.png": "f94a9f346abf348422e7d07c238e30d7b6750a2d54355420a046006ac6e44d67",
+    "reference/reference-editor-desktop-dark.png": "9d47f1ee29e265ffbacaa9d88b9d92502aa6e51012058122d29f667cc38c83ca",
+    "reference/reference-editor-phone-light.png": "595152b284296ca4b76d13f4ce1f422f3b8d9ae47c70a57875aa0dc41a6ef249",
+    "reference/reference-editor-phone-dark.png": "9886e9e3bc1c1f1e7eea7ac171daa097e18e02e6872952fc2227fd57fc8f08d8"
+  },
+  "visualInspection": [
+    "windows/03-accepted.png",
+    "consumers/expo/consumer-narrow.png",
+    "reference editor desktop light"
+  ],
+  "scope": "Repository evidence staged from verified original GitHub archives; no stable or whole-platform acceptance.",
+  "nativeEvidence": "../v1-native-e2b65dd5/"
+}

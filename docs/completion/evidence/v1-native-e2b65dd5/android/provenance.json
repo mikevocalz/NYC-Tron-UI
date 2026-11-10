@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "checkoutRevision": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "sourceTree": "f14ee19e0c18217246f27332217bd58be5df376c",
+  "runId": 42770189195,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189195",
+  "platform": "android",
+  "jobId": 129675906933,
+  "artifactId": 13742238539,
+  "artifactSha256": "2d53ab0e550ecd16599429f4ddfba96584e616b8bafaaf7d741bcf1f7d845c00",
+  "mediaStatus": "passed",
+  "mediaCheckCount": 11,
+  "uiStatus": "failed",
+  "wholeJobStatus": "failed",
+  "failure": "Maestro initial launch transport returned device offline before any app assertion",
+  "nativePayloadIndependentlyRehashed": true,
+  "files": [
+    {
+      "path": "artifact-metadata.json",
+      "bytes": 755,
+      "sha256": "2c0d4b3a19adb32cc274a402a0adce050aef6cecba47004479bc5aafa5d89e79",
+      "stagedFrom": "tron-native-android-e2b65dd5/artifact-metadata.json"
+    },
+    {
+      "path": "receipt-verification.json",
+      "bytes": 780,
+      "sha256": "3ccd3d88f56e71034cc9ef7e2d38f6b67af24b45e486e961616b4adabfff4095",
+      "stagedFrom": "tron-native-android-e2b65dd5/receipt-verification.json"
+    },
+    {
+      "path": "consumer.json",
+      "bytes": 2481,
+      "sha256": "4d044b98eccf1196ffdaaf5631a888f82ef35f7388101638e5f4d4f6ecf9eb5c",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/consumer.json"
+    },
+    {
+      "path": "installed-packages.json",
+      "bytes": 2711,
+      "sha256": "0f30064ca8d50251a7ff2faa19d65f29e49dfc4aa3a301f6190193bdce908cf4",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/installed-packages.json"
+    },
+    {
+      "path": "media/result.json",
+      "bytes": 4685,
+      "sha256": "e4d5b694e500ab12a02fadf41f432323b64d74b837d16b841bdae46ac8f4166e",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-android/result.json"
+    },
+    {
+      "path": "media/native-report.json",
+      "bytes": 896,
+      "sha256": "c85351483c33e73c8eeedf244025f5dfec2a1964e1a63028c9d5064f32bc3d79",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-android/native-report.json"
+    },
+    {
+      "path": "media/native-artifact.json",
+      "bytes": 261,
+      "sha256": "d98af5e714575f2717fefbcb69e75fef18199c2605bf268a40cda1a0ce0942bf",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-android/native-artifact.json"
+    },
+    {
+      "path": "media/bundle-warmup-media.json",
+      "bytes": 659,
+      "sha256": "1a23196a740592e3dfcedb6383c79f2ef40a31ebc27e4fad84d0280e38823bb3",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-android/bundle-warmup-media.json"
+    },
+    {
+      "path": "media/screen.png",
+      "bytes": 43051,
+      "sha256": "ebfdde6678a605668cc449422b9220436320171f8bc1b17a2152d8060aed1cd2",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-android/screen.png"
+    },
+    {
+      "path": "ui/failure.txt",
+      "bytes": 469,
+      "sha256": "6e9b63bcf140737ac8a9f60174a83b2216cbaeda6266ee7d3f97d13189d49363",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/failure.txt"
+    },
+    {
+      "path": "ui/bundle-warmup-reference.json",
+      "bytes": 662,
+      "sha256": "b478d4a99853a61c3c1b601c515eeb906128fe62c0bae6967cf094ebe4c180c5",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/bundle-warmup-reference.json"
+    },
+    {
+      "path": "ui/commands.jsonl",
+      "bytes": 3202,
+      "sha256": "b7035ff0f3b4feff03fa62a34894d0ab7830d7a7bc98f37261ec826719be9066",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/commands.jsonl"
+    },
+    {
+      "path": "ui/settings-report.xml",
+      "bytes": 493,
+      "sha256": "7a975284fdd343ef3719ba3358e1ced592e6827a44da0cd1231cdaa03eabcb3e",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/settings/report.xml"
+    },
+    {
+      "path": "ui/settings-maestro.log",
+      "bytes": 96,
+      "sha256": "5f92aa394b812cffb2a31a947df96183785a08d4d4c74bfd8dd7f83807781be2",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/settings-maestro.log"
+    },
+    {
+      "path": "ui/screen.png",
+      "bytes": 34159,
+      "sha256": "3cb24fd2f88d1c455d4b04ee1e26cb7c68fa13dbdbcdd797dbcacce154820e70",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/final.png"
+    },
+    {
+      "path": "ui/failure-hierarchy.json",
+      "bytes": 141838,
+      "sha256": "ffccf373049a32c2fbdac4f2097f073c2b89712083ff254e13327570ed57448a",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/failure-hierarchy.json"
+    },
+    {
+      "path": "ui/driver-commands.json",
+      "bytes": 2313,
+      "sha256": "98864def0f276d482190b068ab31727eee72ce7d79dba6804eace9e2994c77db",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/settings/artifacts/2026-11-10_070307/Settings native edit and save/commands.json"
+    },
+    {
+      "path": "ui/driver-maestro.log",
+      "bytes": 4633,
+      "sha256": "19d5250adf2a6e2c0af9b501e1ebba8d39c610fe401a24ce85bc2df8c0f62fb7",
+      "stagedFrom": "tron-native-android-e2b65dd5/nyc-tron-native-consumer/runtime-ui-android/settings/artifacts/2026-11-10_070307/Settings native edit and save/logs/maestro.log"
+    }
+  ],
+  "scope": "Original media receipts passed; these failed UI/whole-job records are not promoted. The bounded transport correction requires a fresh native run."
+}

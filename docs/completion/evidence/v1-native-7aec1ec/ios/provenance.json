@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10",
+  "candidateHead": "7aec1ec1f2feca483c11f3605929e6f526133bca",
+  "testedMergeRevision": "35c11b9b91bbc03014ccc0883536510ec07a0015",
+  "workflowRun": 42765514014,
+  "artifactId": 13740567387,
+  "artifactSha256": "ccb6bc95d077e193ef68dfeeaf7be557aa424e0149cf4d9f3579a7907af13f5a",
+  "overallStatus": "failed",
+  "observedResult": "media receipt timed out while the actual app was still bundling; Settings was covered by a SwiftUI raw-label LogBox",
+  "files": [
+    {
+      "path": "media-failure.txt",
+      "sha256": "174fc46d93a24ab8aa3c5ec2722f7a98f5130bf4c8f16d916b9985a9b1f45db5",
+      "bytes": 367
+    },
+    {
+      "path": "media-metro.log",
+      "sha256": "3f0a5bd3f50eb78fee4281c5c778ecbe38f5e0b4434497c42ba7996ee1022d3e",
+      "bytes": 261
+    },
+    {
+      "path": "native-artifact.json",
+      "sha256": "563d2dca0ee6092171bdde59a341b7acb52a644306b3c555054aa40a399f6d9d",
+      "bytes": 47976
+    },
+    {
+      "path": "ui-failure.txt",
+      "sha256": "b2f5cf7545b9a0bc67f037cf79883bbcd5de080151d9e7b92fcec838e75ff8ef",
+      "bytes": 473
+    },
+    {
+      "path": "media-app.log",
+      "sha256": "6ae8971ad808e28026d1888f70b8b9788914a2e550240fd24d563592655a7dcf",
+      "bytes": 1015
+    },
+    {
+      "path": "media-bundling.png",
+      "sha256": "0e7b95ee52b4f1649ae9eb84e47e128c9bf1c0e1c699526e99c33633436d7d90",
+      "bytes": 78319
+    },
+    {
+      "path": "ui-metro.log",
+      "sha256": "8e2d8c9f2b9e44992a8751a588c4e0d47f741754003018decf16ac4abd3df3f3",
+      "bytes": 514
+    },
+    {
+      "path": "ui-slider-label-error.png",
+      "sha256": "1c7abd524ce4e29c953e1500c068d5a9bfdf8dc3af576c02f898d6ca3acf2505",
+      "bytes": 252245
+    }
+  ]
+}

@@ -536,6 +536,111 @@
             ]
           }
         }
+      ],
+      "./window-lifecycle": [
+        {
+          "target": "./dist/window-lifecycle.d.ts",
+          "conditions": {
+            "types": "./dist/window-lifecycle.d.ts",
+            "react-native": "./dist/window-lifecycle.js",
+            "default": "./dist/window-lifecycle.js"
+          },
+          "symbols": {
+            "DisplayInfo": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#DisplayInfo"
+            ],
+            "DragOffer": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#DragOffer"
+            ],
+            "DragSession": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#DragSession"
+            ],
+            "LayoutSnapshot": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#LayoutSnapshot"
+            ],
+            "MAX_WINDOWS": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#MAX_WINDOWS"
+            ],
+            "OpenWindowSpec": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#OpenWindowSpec"
+            ],
+            "Outcome": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome"
+            ],
+            "ReflowResult": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#ReflowResult"
+            ],
+            "RejectReason": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#RejectReason"
+            ],
+            "SnapshotWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#SnapshotWindow"
+            ],
+            "WindowHome": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowHome"
+            ],
+            "WindowRecord": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRecord"
+            ],
+            "WindowRegistryState": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+            ],
+            "WindowStatus": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowStatus"
+            ],
+            "beginDrag": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#beginDrag"
+            ],
+            "cancelDrag": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#cancelDrag"
+            ],
+            "closeWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#closeWindow"
+            ],
+            "createWindowRegistry": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#createWindowRegistry"
+            ],
+            "dragOver": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#dragOver"
+            ],
+            "dropDrag": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#dropDrag"
+            ],
+            "focusWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#focusWindow"
+            ],
+            "minimizeWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#minimizeWindow"
+            ],
+            "moveWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#moveWindow"
+            ],
+            "openWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#openWindow"
+            ],
+            "parseLayoutSnapshot": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#parseLayoutSnapshot"
+            ],
+            "reflowWindows": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#reflowWindows"
+            ],
+            "reservedFromFolds": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#reservedFromFolds"
+            ],
+            "resolveDrop": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#resolveDrop"
+            ],
+            "restoreLayout": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#restoreLayout"
+            ],
+            "restoreWindow": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#restoreWindow"
+            ],
+            "snapshotLayout": [
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#snapshotLayout"
+            ]
+          }
+        }
       ]
     },
     "@nyc-tron/expo-controls": {
@@ -1680,97 +1785,97 @@
           },
           "symbols": {
             "DisplayInfo": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#DisplayInfo"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#DisplayInfo"
             ],
             "DragOffer": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#DragOffer"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#DragOffer"
             ],
             "DragSession": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#DragSession"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#DragSession"
             ],
             "LayoutSnapshot": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#LayoutSnapshot"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#LayoutSnapshot"
             ],
             "MAX_WINDOWS": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#MAX_WINDOWS"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#MAX_WINDOWS"
             ],
             "OpenWindowSpec": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#OpenWindowSpec"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#OpenWindowSpec"
             ],
             "Outcome": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome"
             ],
             "ReflowResult": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#ReflowResult"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#ReflowResult"
             ],
             "RejectReason": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#RejectReason"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#RejectReason"
             ],
             "SnapshotWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#SnapshotWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#SnapshotWindow"
             ],
             "WindowHome": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowHome"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowHome"
             ],
             "WindowRecord": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRecord"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRecord"
             ],
             "WindowRegistryState": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
             ],
             "WindowStatus": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowStatus"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowStatus"
             ],
             "beginDrag": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#beginDrag"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#beginDrag"
             ],
             "cancelDrag": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#cancelDrag"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#cancelDrag"
             ],
             "closeWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#closeWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#closeWindow"
             ],
             "createWindowRegistry": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#createWindowRegistry"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#createWindowRegistry"
             ],
             "dragOver": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#dragOver"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#dragOver"
             ],
             "dropDrag": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#dropDrag"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#dropDrag"
             ],
             "focusWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#focusWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#focusWindow"
             ],
             "minimizeWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#minimizeWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#minimizeWindow"
             ],
             "moveWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#moveWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#moveWindow"
             ],
             "openWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#openWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#openWindow"
             ],
             "parseLayoutSnapshot": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#parseLayoutSnapshot"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#parseLayoutSnapshot"
             ],
             "reflowWindows": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#reflowWindows"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#reflowWindows"
             ],
             "reservedFromFolds": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#reservedFromFolds"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#reservedFromFolds"
             ],
             "resolveDrop": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#resolveDrop"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#resolveDrop"
             ],
             "restoreLayout": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#restoreLayout"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#restoreLayout"
             ],
             "restoreWindow": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#restoreWindow"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#restoreWindow"
             ],
             "snapshotLayout": [
-              "@nyc-tron/panes/dist/window-lifecycle.d.ts#snapshotLayout"
+              "@nyc-tron/core/dist/window-lifecycle.d.ts#snapshotLayout"
             ]
           }
         }
@@ -19243,6 +19348,271 @@
         "@nyc-tron/core/dist/theme.d.ts#TronThemeInput"
       ]
     },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#DisplayInfo": {
+      "signatures": [
+        "export interface DisplayInfo {\n    readonly id: string;\n    readonly bounds: Rect;\n    readonly reserved?: readonly Rect[];\n    readonly primary?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#Rect"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#DragOffer": {
+      "signatures": [
+        "export interface DragOffer {\n    readonly sourceId: string;\n    readonly targetId: string;\n    readonly payload: unknown;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#DragSession": {
+      "signatures": [
+        "export interface DragSession {\n    readonly token: string;\n    readonly sourceId: string;\n    readonly targetId: string | null;\n    readonly phase: \"dragging\" | \"dropping\";\n    readonly payload: unknown;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#LayoutSnapshot": {
+      "signatures": [
+        "export interface LayoutSnapshot {\n    readonly version: 1;\n    readonly windows: readonly SnapshotWindow[];\n    readonly focusedId: string | null;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#SnapshotWindow"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#MAX_WINDOWS": {
+      "signatures": [
+        "export declare const MAX_WINDOWS = 256;"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#OpenWindowSpec": {
+      "signatures": [
+        "export interface OpenWindowSpec {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#Rect"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome": {
+      "signatures": [
+        "export interface Outcome {\n    readonly state: WindowRegistryState;\n    readonly ok: boolean;\n    readonly reason?: RejectReason;\n    readonly token?: string;\n    readonly offer?: DragOffer;\n    readonly transfer?: DragOffer;\n    readonly accepted?: boolean;\n    readonly cancelledToken?: string;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#DragOffer",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#RejectReason",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#ReflowResult": {
+      "signatures": [
+        "export interface ReflowResult {\n    readonly state: WindowRegistryState;\n    readonly relocated: readonly string[];\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#RejectReason": {
+      "signatures": [
+        "export type RejectReason = \"invalid-id\" | \"invalid-rect\" | \"duplicate-id\" | \"budget\" | \"unknown-window\" | \"minimized\" | \"already-minimized\" | \"not-minimized\" | \"drag-active\" | \"stale-token\" | \"wrong-phase\" | \"invalid-target\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#SnapshotWindow": {
+      "signatures": [
+        "export interface SnapshotWindow {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#Rect",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowHome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowStatus"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowHome": {
+      "signatures": [
+        "export interface WindowHome {\n    readonly displayId: string;\n    readonly rect: Rect;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#Rect"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRecord": {
+      "signatures": [
+        "export interface WindowRecord {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#Rect",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowHome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowStatus"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState": {
+      "signatures": [
+        "export interface WindowRegistryState {\n    readonly windows: readonly WindowRecord[];\n    readonly focusedId: string | null;\n    readonly drag: DragSession | null;\n    readonly tokenSeq: number;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#DragSession",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRecord"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowStatus": {
+      "signatures": [
+        "export type WindowStatus = \"open\" | \"minimized\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#beginDrag": {
+      "signatures": [
+        "export declare function beginDrag(state: WindowRegistryState, input: {\n    readonly sourceId: string;\n    readonly payload: unknown;\n}): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#cancelDrag": {
+      "signatures": [
+        "export declare function cancelDrag(state: WindowRegistryState, token: string | undefined): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#closeWindow": {
+      "signatures": [
+        "export declare function closeWindow(state: WindowRegistryState, id: string): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#createWindowRegistry": {
+      "signatures": [
+        "export declare function createWindowRegistry(): WindowRegistryState;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#dragOver": {
+      "signatures": [
+        "export declare function dragOver(state: WindowRegistryState, token: string | undefined, targetId: string | null): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#dropDrag": {
+      "signatures": [
+        "export declare function dropDrag(state: WindowRegistryState, token: string | undefined, targetId: string | null): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#focusWindow": {
+      "signatures": [
+        "export declare function focusWindow(state: WindowRegistryState, id: string): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#minimizeWindow": {
+      "signatures": [
+        "export declare function minimizeWindow(state: WindowRegistryState, id: string): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#moveWindow": {
+      "signatures": [
+        "export declare function moveWindow(state: WindowRegistryState, id: string, to: {\n    readonly displayId: string;\n    readonly rect: Rect;\n}): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#Rect",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#openWindow": {
+      "signatures": [
+        "export declare function openWindow(state: WindowRegistryState, spec: OpenWindowSpec): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#OpenWindowSpec",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#parseLayoutSnapshot": {
+      "signatures": [
+        "export declare function parseLayoutSnapshot(value: unknown): LayoutSnapshot | null;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#LayoutSnapshot"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#reflowWindows": {
+      "signatures": [
+        "export declare function reflowWindows(state: WindowRegistryState, displays: readonly DisplayInfo[]): ReflowResult;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#DisplayInfo",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#ReflowResult",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#reservedFromFolds": {
+      "signatures": [
+        "export declare function reservedFromFolds(features: readonly FoldFeature[]): Rect[];"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/folds.d.ts#FoldFeature",
+        "@nyc-tron/core/dist/folds.d.ts#Rect"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#resolveDrop": {
+      "signatures": [
+        "export declare function resolveDrop(state: WindowRegistryState, token: string | undefined, accepted: boolean): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#restoreLayout": {
+      "signatures": [
+        "export declare function restoreLayout(snapshot: LayoutSnapshot, displays: readonly DisplayInfo[], previous?: WindowRegistryState): ReflowResult;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#DisplayInfo",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#LayoutSnapshot",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#ReflowResult",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#restoreWindow": {
+      "signatures": [
+        "export declare function restoreWindow(state: WindowRegistryState, id: string): Outcome;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/core/dist/window-lifecycle.d.ts#snapshotLayout": {
+      "signatures": [
+        "export declare function snapshotLayout(state: WindowRegistryState): LayoutSnapshot;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#LayoutSnapshot",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
     "@nyc-tron/expo-controls/dist/components/ContextMenu.types.d.ts#ContextMenuProps": {
       "signatures": [
         "export interface ContextMenuProps {\n    readonly accessibilityLabel: string;\n    readonly actions: readonly TronMenuAction[];\n    readonly onAction: (id: string) => void;\n    readonly children: ReactNode;\n    readonly scope?: string;\n    readonly disabled?: boolean;\n    readonly testID?: string;\n}"
@@ -20284,271 +20654,6 @@
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#style",
         "typescript@6.0.3/lib/lib.es5.d.ts#NonNullable",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#DisplayInfo": {
-      "signatures": [
-        "export interface DisplayInfo {\n    readonly id: string;\n    readonly bounds: Rect;\n    readonly reserved?: readonly Rect[];\n    readonly primary?: boolean;\n}"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#Rect"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#DragOffer": {
-      "signatures": [
-        "export interface DragOffer {\n    readonly sourceId: string;\n    readonly targetId: string;\n    readonly payload: unknown;\n}"
-      ],
-      "references": []
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#DragSession": {
-      "signatures": [
-        "export interface DragSession {\n    readonly token: string;\n    readonly sourceId: string;\n    readonly targetId: string | null;\n    readonly phase: \"dragging\" | \"dropping\";\n    readonly payload: unknown;\n}"
-      ],
-      "references": []
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#LayoutSnapshot": {
-      "signatures": [
-        "export interface LayoutSnapshot {\n    readonly version: 1;\n    readonly windows: readonly SnapshotWindow[];\n    readonly focusedId: string | null;\n}"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#SnapshotWindow"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#MAX_WINDOWS": {
-      "signatures": [
-        "export declare const MAX_WINDOWS = 256;"
-      ],
-      "references": []
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#OpenWindowSpec": {
-      "signatures": [
-        "export interface OpenWindowSpec {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n}"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#Rect"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome": {
-      "signatures": [
-        "export interface Outcome {\n    readonly state: WindowRegistryState;\n    readonly ok: boolean;\n    readonly reason?: RejectReason;\n    readonly token?: string;\n    readonly offer?: DragOffer;\n    readonly transfer?: DragOffer;\n    readonly accepted?: boolean;\n    readonly cancelledToken?: string;\n}"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#DragOffer",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#RejectReason",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#ReflowResult": {
-      "signatures": [
-        "export interface ReflowResult {\n    readonly state: WindowRegistryState;\n    readonly relocated: readonly string[];\n}"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#RejectReason": {
-      "signatures": [
-        "export type RejectReason = \"invalid-id\" | \"invalid-rect\" | \"duplicate-id\" | \"budget\" | \"unknown-window\" | \"minimized\" | \"already-minimized\" | \"not-minimized\" | \"drag-active\" | \"stale-token\" | \"wrong-phase\" | \"invalid-target\";"
-      ],
-      "references": []
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#SnapshotWindow": {
-      "signatures": [
-        "export interface SnapshotWindow {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#Rect",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowHome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowStatus"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowHome": {
-      "signatures": [
-        "export interface WindowHome {\n    readonly displayId: string;\n    readonly rect: Rect;\n}"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#Rect"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRecord": {
-      "signatures": [
-        "export interface WindowRecord {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#Rect",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowHome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowStatus"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState": {
-      "signatures": [
-        "export interface WindowRegistryState {\n    readonly windows: readonly WindowRecord[];\n    readonly focusedId: string | null;\n    readonly drag: DragSession | null;\n    readonly tokenSeq: number;\n}"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#DragSession",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRecord"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowStatus": {
-      "signatures": [
-        "export type WindowStatus = \"open\" | \"minimized\";"
-      ],
-      "references": []
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#beginDrag": {
-      "signatures": [
-        "export declare function beginDrag(state: WindowRegistryState, input: {\n    readonly sourceId: string;\n    readonly payload: unknown;\n}): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#cancelDrag": {
-      "signatures": [
-        "export declare function cancelDrag(state: WindowRegistryState, token: string | undefined): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#closeWindow": {
-      "signatures": [
-        "export declare function closeWindow(state: WindowRegistryState, id: string): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#createWindowRegistry": {
-      "signatures": [
-        "export declare function createWindowRegistry(): WindowRegistryState;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#dragOver": {
-      "signatures": [
-        "export declare function dragOver(state: WindowRegistryState, token: string | undefined, targetId: string | null): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#dropDrag": {
-      "signatures": [
-        "export declare function dropDrag(state: WindowRegistryState, token: string | undefined, targetId: string | null): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#focusWindow": {
-      "signatures": [
-        "export declare function focusWindow(state: WindowRegistryState, id: string): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#minimizeWindow": {
-      "signatures": [
-        "export declare function minimizeWindow(state: WindowRegistryState, id: string): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#moveWindow": {
-      "signatures": [
-        "export declare function moveWindow(state: WindowRegistryState, id: string, to: {\n    readonly displayId: string;\n    readonly rect: Rect;\n}): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#Rect",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#openWindow": {
-      "signatures": [
-        "export declare function openWindow(state: WindowRegistryState, spec: OpenWindowSpec): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#OpenWindowSpec",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#parseLayoutSnapshot": {
-      "signatures": [
-        "export declare function parseLayoutSnapshot(value: unknown): LayoutSnapshot | null;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#LayoutSnapshot"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#reflowWindows": {
-      "signatures": [
-        "export declare function reflowWindows(state: WindowRegistryState, displays: readonly DisplayInfo[]): ReflowResult;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#DisplayInfo",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#ReflowResult",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#reservedFromFolds": {
-      "signatures": [
-        "export declare function reservedFromFolds(features: readonly FoldFeature[]): Rect[];"
-      ],
-      "references": [
-        "@nyc-tron/core/dist/folds.d.ts#FoldFeature",
-        "@nyc-tron/core/dist/folds.d.ts#Rect"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#resolveDrop": {
-      "signatures": [
-        "export declare function resolveDrop(state: WindowRegistryState, token: string | undefined, accepted: boolean): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#restoreLayout": {
-      "signatures": [
-        "export declare function restoreLayout(snapshot: LayoutSnapshot, displays: readonly DisplayInfo[], previous?: WindowRegistryState): ReflowResult;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#DisplayInfo",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#LayoutSnapshot",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#ReflowResult",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#restoreWindow": {
-      "signatures": [
-        "export declare function restoreWindow(state: WindowRegistryState, id: string): Outcome;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
-      ]
-    },
-    "@nyc-tron/panes/dist/window-lifecycle.d.ts#snapshotLayout": {
-      "signatures": [
-        "export declare function snapshotLayout(state: WindowRegistryState): LayoutSnapshot;"
-      ],
-      "references": [
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#LayoutSnapshot",
-        "@nyc-tron/panes/dist/window-lifecycle.d.ts#WindowRegistryState"
       ]
     },
     "@nyc-tron/platform-services/dist/checkpoints/platform.web.d.ts#createPlatformCheckpointStorage": {

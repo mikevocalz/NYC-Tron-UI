@@ -5,6 +5,8 @@ import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requireReferenceHostBounds, requireSemanticLabels } from "./ui-evidence.mjs";
 import { recordNativeArtifact } from "./native-artifact.mjs";
+import { warmNativeBundle } from "./metro-warmup.mjs";
+import { classifyInitialUiTransportFailure, retainInitialUiTransportFailure, withInitialUiTransportRecovery } from "./ui-transport.mjs";
 
 const [platform, artifactInput, consumerInput] = process.argv.slice(2);
 if (!["ios", "android"].includes(platform) || !artifactInput || !consumerInput) {
@@ -20,8 +22,8 @@ if (!maestro || !existsSync(maestro)) throw new Error("MAESTRO_BIN must name the
 const env = { ...process.env, CI: "1", MAESTRO_CLI_NO_ANALYTICS: "1", MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true" };
 const json = file => JSON.parse(readFileSync(file, "utf8"));
 const hash = file => createHash("sha256").update(readFileSync(file)).digest("hex");
-const bundle = "com.nyctron.instruments.example", stages = [], children = [];
-let metro, bootedSimulator, stopApp, deviceId, host, launcher, capture;
+const bundle = "com.nyctron.instruments.example", stages = [], children = [], bundleWarmups = [], transportRecoveries = [];
+let metro, bootedSimulator, stopApp, deviceId, host, launcher, capture, recoverAndroidTransport;
 
 function run(file, args, { optional = false, timeout = 30000, log, cwd, extraEnv } = {}) {
   const started = Date.now();
@@ -74,10 +76,25 @@ async function startMetro(entry) {
   child.on("error", error => { child.launchError = error; });
   children.push(metro);
   await waitFor(metroReady, "the clean consumer's " + entry + " Metro server", 60000);
+  const warmup = await warmNativeBundle({ platform, entry, evidenceDirectory: output });
+  const file = "bundle-warmup-" + entry + ".json";
+  bundleWarmups.push({ ...warmup, file, recordSha256: hash(join(output, file)) });
 }
 function allFiles(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory()
     ? allFiles(join(directory, entry.name)) : [join(directory, entry.name)]);
+}
+function initialSettingsTransportFailure() {
+  try {
+    const files = allFiles(join(output, "settings"));
+    const commands = files.filter(file => file.endsWith(sep + "commands.json"));
+    const simulator = files.filter(file => file.endsWith(sep + "device-simulator.log"));
+    if (commands.length !== 1 || platform === "ios" && simulator.length !== 1) return null;
+    const eligibility = classifyInitialUiTransportFailure({ platform, flow: "settings", appId: bundle, deviceId,
+      commands: json(commands[0]), simulatorLog: simulator[0] ? readFileSync(simulator[0], "utf8") : undefined });
+    return eligibility ? { ...eligibility, sourceFiles: { commands: commands[0].slice(output.length + 1),
+      ...(simulator[0] ? { simulatorLog: simulator[0].slice(output.length + 1) } : {}) } } : null;
+  } catch { return null; } // Missing/ambiguous native evidence must preserve the original failure.
 }
 function hierarchy(name) {
   const raw = run(maestro, ["--device", deviceId, "--platform", platform, "--no-ansi", "hierarchy", "--no-reinstall-driver"], {
@@ -133,6 +150,29 @@ try {
     run(adb, [...args, "install", "-r", artifact], { timeout: 120000, log: "install.log" });
     stopApp = () => { run(adb, [...args, "shell", "am", "force-stop", bundle], { optional: true }); };
     launch = () => { stopApp(); run(adb, [...args, "shell", "am", "start", "-n", bundle + "/.MainActivity"]); };
+    recoverAndroidTransport = async () => {
+      await waitFor(() => run(adb, [...args, "get-state"], { optional: true, timeout: 5000 }).trim() === "device" &&
+        run(adb, [...args, "shell", "getprop", "sys.boot_completed"], { optional: true, timeout: 5000 }).trim() === "1",
+      "the same Android emulator's actual ADB transport", 60000);
+      run(adb, [...args, "reverse", "tcp:8081", "tcp:8081"]);
+      const reverse = run(adb, [...args, "reverse", "--list"]);
+      if (!/(?:^|\s)tcp:8081\s+tcp:8081(?:\s|$)/.test(reverse)) throw new Error("Android recovery did not restore the owned Metro reverse mapping");
+      // No force-stop, reinstall or data reset: the first flow never reached an
+      // app assertion. Resume the same installed candidate before the full rerun.
+      run(adb, [...args, "shell", "am", "start", "-n", bundle + "/.MainActivity"]);
+      let pid, activity;
+      await waitFor(() => {
+        pid = run(adb, [...args, "shell", "pidof", bundle], { optional: true, timeout: 5000 }).trim();
+        activity = run(adb, [...args, "shell", "dumpsys", "activity", "activities"], { optional: true, timeout: 5000 });
+        return /^\d+(?:\s+\d+)*$/.test(pid) && activity.split(/\r?\n/).some(line =>
+          /(?:topResumedActivity|mResumedActivity)/.test(line) && line.includes(bundle + "/.MainActivity"));
+      }, "the same Android candidate's resumed Activity", 30000);
+      const file = "android-transport-recovery-ready.json";
+      writeFileSync(join(output, file), JSON.stringify({ platform, deviceId, appId: bundle, pid, reverse,
+        resumedActivity: activity.split(/\r?\n/).filter(line => /(?:topResumedActivity|mResumedActivity)/.test(line)),
+        observedAt: new Date().toISOString() }, null, 2) + "\n");
+      return { file, sha256: hash(join(output, file)) };
+    };
     host.cancelPointer = tree => {
       const { x, y } = nativeElementCenter(tree, "Input drawing surface");
       run(adb, [...args, "shell", "input", "touchscreen", "motionevent", "DOWN", String(x), String(y)]);
@@ -168,7 +208,16 @@ try {
     capture = () => { run("xcrun", ["simctl", "io", deviceId, "screenshot", join(output, "final.png")], { optional: true }); };
   }
   await startMetro("reference"); launch();
-  flow("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"]);
+  let recoveryReceipt;
+  await withInitialUiTransportRecovery({
+    attempt: () => flow("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"]),
+    classify: initialSettingsTransportFailure,
+    recover: async (eligibility, error) => {
+      recoveryReceipt = retainInitialUiTransportFailure({ output, eligibility, error, sourceCommit: revision, nativeArtifact });
+      if (platform === "android") recoveryReceipt.readiness = await recoverAndroidTransport();
+    },
+  });
+  if (recoveryReceipt) transportRecoveries.push({ ...recoveryReceipt, status: "recovered", attempts: 2 });
   flow("editor", ["Cover headline"], ["editor-draft", "editor-saved"]);
   stopApp(); await stopMetro();
   await startMetro("pointer"); launch();
@@ -180,7 +229,7 @@ try {
   const report = {
     schema: 1, status: "passed", platform, revision, stages,
     provenance: { ...host, nativeArtifact, ...(launcher ? { launcherSha256: hash(launcher) } : {}), sourceCommit: revision, maestro: MAESTRO,
-      installedPackages: json(join(consumer, "installed-packages.json")) },
+      installedPackages: json(join(consumer, "installed-packages.json")), bundleWarmups, transportRecoveries },
     input: platform === "android" ? "Maestro OS touch plus Android touch-down/Home cancellation" : "Maestro XCTest OS touch",
     manualGates: ["physical pen pressure/tilt/hover", "physical palm rejection", "VoiceOver/TalkBack spoken output",
       ...(platform === "ios" ? ["active iOS touch cancellation by OS interruption"] : [])],

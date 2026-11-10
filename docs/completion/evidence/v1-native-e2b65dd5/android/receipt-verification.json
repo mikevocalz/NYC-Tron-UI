@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "artifactId": 13742238539,
+  "candidate": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "mergeRevision": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "nativeReportMatchesResult": true,
+  "provenanceFileHashesMatch": true,
+  "apkPath": "nyc-tron-native-consumer/app/android/app/build/outputs/apk/debug/app-debug.apk",
+  "apkSha256": "8c560d39ebf69648fe4c13485a849043f984f609f382c3c6e3ccd513ec8eacc7",
+  "observed": {
+    "durationUs": 2000000,
+    "frameTimeUs": 500000,
+    "indexFrames": 40,
+    "indexedTimeUs": 1050000,
+    "pcmFrames": 24000,
+    "resampledFrames": 8000,
+    "upsampledFrames": 48000,
+    "fullResampledFrames": 32000,
+    "tailFrames": 4000,
+    "pcmPeak": 0.1300048828125,
+    "pcmRms": 0.08835735995923667
+  }
+}
