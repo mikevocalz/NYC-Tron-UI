@@ -1,20 +1,23 @@
 # Changelog
 
 All notable changes to this project are recorded here. The format follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions apply to
-all 14 packages together, because `tooling/pack-release.mjs` requires one
-version per tag.
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions apply to all
+fifteen distributable packages together: thirteen workspace packages from
+`tooling/pack-release.mjs` and two isolated desktop packages retained from their
+successful native consumer jobs.
 
 ## [1.0.0] - Unreleased
 
-Built from `v0.1.0-alpha.4` plus 127 commits (`git log v0.1.0-alpha.4..HEAD`
-at `d5207cc7`: 124 commits and 3 merges, including PR #26). Scope and
-deferrals: [docs/V1_DECISIONS.md](docs/V1_DECISIONS.md).
+Changes since `v0.1.0-alpha.4`. This remains a release candidate; no v1.0.0
+tag or release is implied. Scope and release conditions are recorded in
+[docs/V1_DECISIONS.md](docs/V1_DECISIONS.md).
 
-v1.0.0 covers the library: 329 of the 341 rows in
-`docs/completion/library-progress.json` are library scope and marked
-implemented. All 341 rows keep `acceptance: "unverified"`; no row has a
-recorded device acceptance run.
+All 341 original rows now have implementation owners: 332 local implementations
+and nine pinned external implementations, including all twelve previously
+deferred native/service rows. All 341 rows keep `acceptance: "unverified"`;
+none has complete accepted evidence across the eight required platforms.
+The [candidate report](docs/completion/reports/V1-RELEASE-GATES.md) records
+actual native and browser results against their own source and archive inputs.
 
 ### Added
 
@@ -68,11 +71,26 @@ recorded device acceptance run.
 - **Geometry**: standalone overlay placement port at
   `@nyc-tron/geometry/overlay-placement`, with sources pinned to verified
   commits (PR #26).
-- **Exports**: 250 new `@nyc-tron/ui` subpaths, plus new subpaths in
-  `native-controls`, `expo-controls`, `geometry`, `panes` and
-  `platform-services`. See [docs/MIGRATION.md](docs/MIGRATION.md).
+- **Exports**: 254 new `@nyc-tron/ui` subpaths, plus new subpaths in
+  `core`, `native-controls`, `expo-controls`, `geometry`, `panes`,
+  `platform-services` and the isolated desktop adapters. See
+  [docs/MIGRATION.md](docs/MIGRATION.md).
 - **Optional peers**: `react-native-skia` on `@nyc-tron/ui`,
   `expo-file-system` on `@nyc-tron/platform-services`.
+- **Native input and service integration**: observed pointer data, palm and
+  prediction boundaries, native decoding, and pinned Forge/Viro owners for
+  Muse/XR, persistence, collaboration, scheduling, cache, transactions, binary
+  transport and telemetry. The [twelve-row report](docs/completion/reports/V1-PLATFORM-CLOSURE.md)
+  separates source coverage from each remaining platform acceptance gate.
+- **Desktop adapters**: isolated WinUI/Fabric and Spark/AppKit packages for
+  native controls, shared window lifecycle, menus, tooltips, inspectors and
+  drag/drop. Their actual native interaction gates must pass on the frozen
+  candidate before their tested archives can enter the release.
+- **Distribution evidence**: one canonical set of thirteen workspace archives,
+  installed-consumer hash and npm integrity checks, and release assembly that
+  preserves the two exact desktop archives after successful native consumption.
+  Public API gates record export keys and reachable declarations for all three
+  runtime lanes.
 
 ### Changed
 
@@ -104,25 +122,25 @@ recorded device acceptance run.
 
 ### Known limitations
 
-Carried from the `v0.1.0-alpha.4` release notes unless marked otherwise:
-
-- Android media decoding. The alpha.4 notes say "Android decoding is
-  unavailable". That was true of the alpha.4 tag. Since then `c903eba` added
-  a MediaExtractor/MediaCodec decoder and `101016b` added a `MediaPlayer`
-  video path. The platform-services and native-controls Kotlin compiled in a
-  local build on 2026-11-07, but no APK was packaged and neither path has run
-  on an emulator or device
-  (`docs/completion/reports/P03-android-native-validation.md`).
-- Browser frame timing is a seek target.
+- [iOS](docs/completion/evidence/v1-native-2a74fbf/ios/README.md) and
+  [Android](docs/completion/evidence/v1-native-2a74fbf/android/README.md) native
+  decoder and UI flows passed at the retained canonical-archive checkpoint.
+  Those receipts establish their recorded revision and inputs. Later source
+  changes require fresh native results for the frozen candidate. Physical
+  audio/output, interruptions and device performance remain separate gates.
+- Browser WebCodecs decoding reports the decoded presentation timestamp;
+  its video-element fallback reports a settled seek target.
 - WebAudio sources are limited to 60 seconds or 64 MiB.
-- iOS compilation is verified; real decoder and interruption behavior is not.
-- Screen readers and physical-device acceptance remain open.
-- Added for 1.0.0: the Windows packages are experimental. They compile and
-  pass a UI Automation smoke test on `windows-2025`; Narrator speech, high
-  contrast, an RTL run and resize are not run. They cannot be installed in an
-  app that uses the React Native 0.88 packages.
-- Added for 1.0.0: AppKit/macOS, the native multi-window bridge, visionOS,
-  Quest and PICO are not included. See [docs/SUPPORT.md](docs/SUPPORT.md).
+- Windows and AppKit native interaction gates remain active candidate work;
+  earlier compilation or lifecycle passes do not satisfy later interaction
+  assertions. Their RNW 0.85 and Spark/Expo 55 hosts are separate from the
+  Expo 58 / React Native 0.88 installation.
+- AppKit, native desktop windows, visionOS, Quest and PICO remain in the
+  approved scope. The implemented optional Forge/Viro adapters do not establish
+  headset execution, tracked physical input or GPU performance.
+- Spoken screen-reader output, physical pen/palm/fold/display behavior, the
+  remaining eight-platform acceptance records and owner distribution review
+  remain open. See [docs/SUPPORT.md](docs/SUPPORT.md) and the release conditions.
 
 ## [0.1.0-alpha.4] - 2026-11-06
 

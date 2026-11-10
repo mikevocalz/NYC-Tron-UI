@@ -6,7 +6,41 @@ rows and their platform acceptance are tracked separately in
 [V1-PLATFORM-CLOSURE.md](V1-PLATFORM-CLOSURE.md). No tag, release, npm publish or
 blanket device-acceptance claim is created by this report.
 
+## Current desktop gate boundary
+
+The latest retained desktop attempts still failed their complete native gates.
+[AppKit at `7afcf31`](../evidence/v1-appkit-7afcf31-foreground-failure/README.md)
+compiled, authenticated its driver, answered a main-queue ping and mounted the
+ready React root. All 340 owner observations then showed a visible window that
+was never key. No interaction group or input-posting permission check completed.
+
+[Windows at `4b73093`](../evidence/v1-windows-4b73093-provider-transition-failure/README.md)
+passed compilation, deployment and the strict rapid-edit/inspector assertions,
+then lost React UIA traversal after overlay removal.
+[The `c6c1826` rerun](../evidence/v1-windows-c6c1826-stale-fragment-failure/README.md)
+repeated those passes and established that a fresh reference to the same owned
+HWND still exposed the removed menu's stale fragment and omitted the React
+content. Inspector remount, OS cross-window drag and the navigation
+accessibility extension were not reached. Its immediate rejection screenshot
+is not visual proof of the restored field value; the original assertions and
+capture limitation remain documented together. Neither failed desktop gate
+retained a passed-only package artifact.
+
+The follow-up source checkpoints are AppKit `d42b4452` in
+[PR 59 run 42881937117](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42881937117)
+and Windows `988008cf` in
+[PR 60 run 42883122854](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42883122854).
+These links identify the validation attempts for the foreground-acquisition and
+native connection-lifetime corrections; they do not claim their outcomes.
+The frozen combined candidate still needs completed native results and exact
+tested archive receipts before desktop acceptance or release assembly.
+
 ## November 10 native integration
+
+The chronology below preserves each checkpoint's results and original failures.
+References to a next candidate or fresh run describe the requirement at that
+historical revision; the desktop boundary above and completed canonical mobile
+receipts below provide the later recorded status.
 
 ### Repaired mobile and browser checkpoint
 
@@ -52,8 +86,23 @@ passed at tested merge `0ce41081d56acb365c1c1cf382eeaff27aa24543` in native run
 `42871225491`. Its original ZIP, all thirteen archive hashes/sizes and embedded
 package identities were independently verified. The producer manifest hash is
 `34335d9968c0c4baab066ef454c29d25be04f8514b9778bbc23f52c29647b4fa`.
-Both native jobs passed canonical verification and installation; their actual
-runtime results require separate completed platform receipts.
+Both native jobs completed successfully with those canonical inputs. The
+[Android receipt](../evidence/v1-native-2a74fbf/android/README.md) records all
+eleven media checks and four UI flows, with zero transport recoveries. The
+[iOS receipt](../evidence/v1-native-2a74fbf/ios/README.md) records all eleven
+media checks and three final UI flows, with one evidence-qualified initial
+Settings transport recovery. Independent verification matched both consumers'
+manifest and checksum bytes, all ten installed package hashes and npm
+integrities, and the complete APK/iOS app payload identities.
+
+The original iOS evidence also records one missing hidden driver log and one
+uploaded XCTest log whose hash differs from its pre-recovery receipt. Its
+classification inputs match, but this run does not establish complete recovery
+log retention. The later independent snapshot/scoped upload correction and
+Android pointer-fixture status-bar correction remain prospective at this
+checkpoint. The frozen combined candidate must pass fresh native gates with
+its own canonical archives; the original receipts and their limitations remain
+attached to `2a74fbf`.
 
 ### Earlier mobile and desktop checkpoint
 

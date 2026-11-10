@@ -5,6 +5,12 @@ Updated 2026-11-10. The approved completion target retains every one of the orig
 blanket deferral of twelve native/service rows is superseded. The work is tracked
 across the owners that actually implement each capability.
 
+The [latest mobile and desktop report](V1-RELEASE-GATES.md) records completed
+canonical mobile receipts and the current desktop gate boundary. Older
+commit-specific sections below preserve their original outcomes and follow-up
+requirements; wording such as "next candidate" does not supersede those later
+records or establish acceptance for the frozen combined candidate.
+
 ## Candidate and immutable source
 
 - NYC-Tron candidate: [PR 57](https://github.com/mikevocalz/NYC-Tron-UI/pull/57), stacked on the Exact/native-feel reference in PR 56.
