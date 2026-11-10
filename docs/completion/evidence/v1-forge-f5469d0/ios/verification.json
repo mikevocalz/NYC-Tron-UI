@@ -1,0 +1,55 @@
+{
+  "platform": "ios",
+  "workflowRun": 42765520077,
+  "candidateHead": "f5469d03cf2153a8f694ae61d911861264e9216d",
+  "testedCommit": "7cc6c15805b20ae69804be9cbf526ae48a4f1a63",
+  "runId": "606bd184-ec18-4cb4-a7c0-df373a2333d5",
+  "artifactId": 13740794045,
+  "artifactSha256": "1d634a0c2787f38f46772e72768b96d4f45f11f4a911136457e3e965a8630647",
+  "archiveDigestVerified": true,
+  "firstProcessChecks": 3,
+  "finalProcessChecks": 15,
+  "engineCount": 11,
+  "engineKinds": [
+    "prism",
+    "cadence",
+    "splice",
+    "folio",
+    "pitch",
+    "tally",
+    "quill",
+    "photo",
+    "motion",
+    "design",
+    "draft"
+  ],
+  "launches": [
+    {
+      "launch": 1,
+      "processToken": "1794292429145-0.7160922533041553"
+    },
+    {
+      "launch": 2,
+      "processToken": "1794292445896-0.8270052411212384"
+    }
+  ],
+  "osTerminationBetweenReceipts": true,
+  "nativeArtifact": {
+    "kind": "ios-app",
+    "algorithm": "sha256-sorted-relative-app-manifest-v1",
+    "sha256": "61bff89d4e54d85cfe8039981ccf7ff4aface299a92f76a7c76c8db6ed5a0da9",
+    "manifest": {
+      "file": "native-artifact.json",
+      "sha256": "61bff89d4e54d85cfe8039981ccf7ff4aface299a92f76a7c76c8db6ed5a0da9"
+    }
+  },
+  "manifestEntries": 719,
+  "nativeImplementationEntries": 619,
+  "storage": {
+    "bindings": "react-native-mmkv@4.3.2 + Nitro 120 port",
+    "core": "MMKVCore@2.4.0"
+  },
+  "screens": [],
+  "screenshotEvidence": "No screenshots are present in the iOS success artifact; receipt validation does not imply visual inspection.",
+  "validationScope": "Downloaded receipt/provenance/manifest integrity and OS termination records verified. Native app/APK payload bytes were hashed by CI; the app binary is not included in this report artifact."
+}

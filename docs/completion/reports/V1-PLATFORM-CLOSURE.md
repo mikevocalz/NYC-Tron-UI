@@ -138,6 +138,46 @@ Local Forge evidence and exact commands are retained in its
 reported as runtime proof. A report from an earlier revision remains attached to
 that revision; the final candidate must rerun its required gates.
 
+## Final Forge service runtime checkpoint
+
+[Forge run 42765520077](https://github.com/mikevocalz/nitro-forge/actions/runs/42765520077)
+passed all three jobs at head `f5469d03cf2153a8f694ae61d911861264e9216d`, tested
+merge `7cc6c15805b20ae69804be9cbf526ae48a4f1a63`. Both
+[iOS](../evidence/v1-forge-f5469d0/ios/provenance.json) and
+[Android](../evidence/v1-forge-f5469d0/android/provenance.json) record three initial
+write checks, OS termination, a different process identity, and fifteen final
+checks covering all eleven engine kinds. Full native payload manifests and their
+hashes are retained with the original receipts. Native binaries were hashed by
+CI; local verification independently checked the downloaded manifest and receipt
+integrity. The iOS report artifact has no screenshot because its multi-display
+simulator rejected the optional capture command; no visual acceptance is inferred.
+All fourteen other Forge source/adapter/ledger workflows passed at this head.
+
+## Latest native follow-up
+
+At source head `7aec1ec1`, all six source/browser/consumer/WinUI workflows passed:
+1,169 Windows unit/contract/render tests, 686 browser cases, 29 reference cases
+plus three model tests, clean consumers, and the actual WinUI app/UIA. The
+reference images are byte-identical to the retained editor captures.
+
+The [Android evidence](../evidence/v1-native-7aec1ec/android/provenance.json)
+records successful actual Settings and Editor flows, including header/tab
+geometry inside the measured safe host. Its later pointer status was clipped,
+and its full-start audio interval exposed a double trim after `seekTo(0)` skipped
+AAC priming data. The next candidate retains the original first packet and
+keeps all strict PCM counts and initial-gap rejection.
+
+The [iOS evidence](../evidence/v1-native-7aec1ec/ios/provenance.json) records an
+app still bundling when the media receipt timed out, followed by a real SwiftUI
+Slider raw-label error in the reference UI. The follow-up prepares the actual
+Metro bundle before launching, renders Slider labels through SwiftUI Text,
+and keeps pointer feedback visible. These failures remain failed records;
+fresh native execution is required for the corrections.
+
+[Support](../../SUPPORT.md) also retains missing AppKit/native host bridges as
+implementation gaps. Source coverage does not erase those gaps or substitute
+for the complete eight-platform release evidence.
+
 ## The Exact-inspired reference and v1 release conditions
 
 [Exact native-feel guidance](../../EXACT_NATIVE_FEEL.md) remains the design contract:

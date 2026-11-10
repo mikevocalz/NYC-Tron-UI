@@ -3,7 +3,7 @@ import { Platform, Pressable, Text, View } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { Host } from "@expo/ui";
-import { Slider as SwiftUISlider } from "@expo/ui/swift-ui";
+import { Slider as SwiftUISlider, Text as SwiftUIText } from "@expo/ui/swift-ui";
 import { disabled as swiftUIDisabled } from "@expo/ui/swift-ui/modifiers";
 import { Slider as ComposeSlider } from "@expo/ui/jetpack-compose";
 import { semantics, testID as composeTestID } from "@expo/ui/jetpack-compose/modifiers";
@@ -60,7 +60,7 @@ export function NativeSliderField({
         ? <ComposeSlider value={shown} min={min} max={max} steps={composeSteps(min,max,step)} enabled={!disabled}
             onValueChange={preview_} onValueChangeFinished={finish}
             modifiers={[semantics({contentDescription:label}),...(testID?[composeTestID(testID+"-slider")]:[])]}/>
-        : <SwiftUISlider value={shown} min={min} max={max} step={step} label={label}
+        : <SwiftUISlider value={shown} min={min} max={max} step={step} label={<SwiftUIText>{label}</SwiftUIText>}
             onValueChange={preview_} onEditingChanged={editing=>{if(!editing)finish();}}
             modifiers={disabled?[swiftUIDisabled(true)]:[]}/>}
     </Host>

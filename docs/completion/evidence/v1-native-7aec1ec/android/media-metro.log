@@ -1,0 +1,10 @@
+Starting project at /home/runner/work/_temp/nyc-tron-native-consumer/app
+Metro is running in CI mode, reloads are disabled. Remove CI=true to enable watch mode.
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+Logs for your project will appear below.
+Android Bundled 17955ms media-acceptance.js (966 modules)
+ INFO  NYC_TRON_NATIVE_MEDIA_FAIL {"schema":1,"status":"failed","platform":"android","revision":"35c11b9b91bbc03014ccc0883536510ec07a0015","error":"Audio starts after the requested interval."}
+ ERROR  NYC_TRON_NATIVE_MEDIA_FAIL Error: Acceptance receiver returned 400

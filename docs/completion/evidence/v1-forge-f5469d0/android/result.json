@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "platform": "android",
+  "revision": "7cc6c15805b20ae69804be9cbf526ae48a4f1a63",
+  "runId": "ada23ddc-51e9-4b94-92e3-2fa01232978d",
+  "processToken": "1794291757897-0.8558435674489356",
+  "checks": [
+    "mmkv-v4-native-binary-ownership",
+    "mmkv-v4-yjs-roundtrip",
+    "mmkv-v4-process-reopen",
+    "mmkv-v4-scope-isolation",
+    "mmkv-v4-corruption-preserved",
+    "mmkv-v4-explicit-recovery",
+    "mmkv-v4-all-engine-snapshot-reopen",
+    "binary-input-output-ownership",
+    "restore-input-ownership",
+    "cache-copy-lru-bounds",
+    "cache-fifo-close",
+    "running-and-queued-cancellation",
+    "task-progress-result-ownership",
+    "document-fifo-close",
+    "output-survives-document-close"
+  ],
+  "engineKinds": [
+    "prism",
+    "cadence",
+    "splice",
+    "folio",
+    "pitch",
+    "tally",
+    "quill",
+    "photo",
+    "motion",
+    "design",
+    "draft"
+  ],
+  "storage": {
+    "bindings": "react-native-mmkv@4.3.2 + Nitro 120 port",
+    "core": "io.github.zhongwuzw:mmkv@2.4.1"
+  },
+  "elapsedMs": 302,
+  "phase": "complete",
+  "provenance": {
+    "serial": "emulator-5554",
+    "sourceCommit": "7cc6c15805b20ae69804be9cbf526ae48a4f1a63",
+    "nativeArtifact": {
+      "kind": "android-apk",
+      "algorithm": "sha256-raw-apk-v1",
+      "sha256": "215a41abdff1521c57034a1035abffbf91d6f884dda3249def7557effa18f72c",
+      "manifest": {
+        "file": "native-artifact.json",
+        "sha256": "99ebb8646d6c50f1d80d5fe2b8ffa7ec08abf710199c2eb88d28eb508c885480"
+      }
+    },
+    "launches": [
+      {
+        "launch": 1,
+        "pid": "2660",
+        "processToken": "1794291739032-0.4651953118560877"
+      },
+      {
+        "launch": 2,
+        "pid": "3761",
+        "processToken": "1794291757897-0.8558435674489356"
+      }
+    ]
+  }
+}

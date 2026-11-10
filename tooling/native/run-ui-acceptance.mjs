@@ -5,6 +5,7 @@ import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requireReferenceHostBounds, requireSemanticLabels } from "./ui-evidence.mjs";
 import { recordNativeArtifact } from "./native-artifact.mjs";
+import { warmNativeBundle } from "./metro-warmup.mjs";
 
 const [platform, artifactInput, consumerInput] = process.argv.slice(2);
 if (!["ios", "android"].includes(platform) || !artifactInput || !consumerInput) {
@@ -20,7 +21,7 @@ if (!maestro || !existsSync(maestro)) throw new Error("MAESTRO_BIN must name the
 const env = { ...process.env, CI: "1", MAESTRO_CLI_NO_ANALYTICS: "1", MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true" };
 const json = file => JSON.parse(readFileSync(file, "utf8"));
 const hash = file => createHash("sha256").update(readFileSync(file)).digest("hex");
-const bundle = "com.nyctron.instruments.example", stages = [], children = [];
+const bundle = "com.nyctron.instruments.example", stages = [], children = [], bundleWarmups = [];
 let metro, bootedSimulator, stopApp, deviceId, host, launcher, capture;
 
 function run(file, args, { optional = false, timeout = 30000, log, cwd, extraEnv } = {}) {
@@ -74,6 +75,9 @@ async function startMetro(entry) {
   child.on("error", error => { child.launchError = error; });
   children.push(metro);
   await waitFor(metroReady, "the clean consumer's " + entry + " Metro server", 60000);
+  const warmup = await warmNativeBundle({ platform, entry, evidenceDirectory: output });
+  const file = "bundle-warmup-" + entry + ".json";
+  bundleWarmups.push({ ...warmup, file, recordSha256: hash(join(output, file)) });
 }
 function allFiles(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory()
@@ -180,7 +184,7 @@ try {
   const report = {
     schema: 1, status: "passed", platform, revision, stages,
     provenance: { ...host, nativeArtifact, ...(launcher ? { launcherSha256: hash(launcher) } : {}), sourceCommit: revision, maestro: MAESTRO,
-      installedPackages: json(join(consumer, "installed-packages.json")) },
+      installedPackages: json(join(consumer, "installed-packages.json")), bundleWarmups },
     input: platform === "android" ? "Maestro OS touch plus Android touch-down/Home cancellation" : "Maestro XCTest OS touch",
     manualGates: ["physical pen pressure/tilt/hover", "physical palm rejection", "VoiceOver/TalkBack spoken output",
       ...(platform === "ios" ? ["active iOS touch cancellation by OS interruption"] : [])],

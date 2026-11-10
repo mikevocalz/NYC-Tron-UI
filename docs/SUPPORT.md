@@ -2,20 +2,26 @@
 
 Applies to v1.0.0. Source of the tiers: [v1.0.0 decisions](V1_DECISIONS.md) D3.
 
-## Tiers
+## Candidate scope and verified behavior
 
-| Tier | Contents | Evidence today |
-|---|---|---|
-| Supported | Web (React Native Web), iOS SwiftUI controls, Android Compose controls, shared TS packages | Node, Chromium, native compile in CI; two passing iOS and Android scenario runs for overlays |
-| Experimental | `@nyc-tron/windows-fluent` and `windows-fluent-fabric` (RN 0.85 lane), native charts, native media decoding | Compiles on `windows-2025`; UIA smoke test; no Narrator, high-contrast or resize runs |
-| Not included | AppKit/macOS adapter, multi-window native bridge, visionOS, Quest, PICO | No code or no proof |
+The completion target retains iOS/iPadOS, Android, web, macOS, Windows,
+visionOS, Quest and PICO. These are required program targets, not a claim that
+each native adapter and device scenario has already passed. Exact candidate
+results and limits are in the [verification report](completion/reports/V1-RELEASE-GATES.md).
 
-"Supported" describes what CI checks. It is not device acceptance: every row
-in `docs/completion/library-progress.json` has `acceptance: "unverified"`.
-The two overlay scenario runs per platform are recorded in
-`docs/completion/P04-native-overlays-proof.json`: 28 steps, two passes on iOS
-target `BBCC4078-E64D-4642-893B-ACF80ACB29A1` and two on Android
-`emulator-5554`. The file does not say whether the iOS target is a simulator.
+| Area | Current evidence and limits |
+|---|---|
+| Web and shared TypeScript packages | Actual installed-tarball consumers, source/type/API gates, 686 browser instrument cases, and the four-flow reference app are verified at the reported candidate. |
+| iOS SwiftUI and Android Compose | Actual clean-consumer native compilation and media/UI runtime gates are mandatory. Read their exact candidate receipts; a compile alone does not establish native behavior or physical-device acceptance. |
+| Windows Fluent/Fabric adapter | Actual native consumer compilation, deployment and keyboard UI Automation passed in the isolated RNW 0.85 lane. This does not establish the whole RN 0.88 UI package on Windows, Narrator speech or physical input. |
+| XR and Muse integration | Forge's optional Viro presentation adapter and observed Muse pose provider are implemented at pinned revisions. Their physical visionOS/Quest/PICO runtime and input/performance acceptance remain unverified. |
+| Native host work still missing | AppKit/macOS adapter, Windows host-shell transport and a native multi-window bridge remain unimplemented. They are recorded gaps; their targets have not been removed from the canonical program. |
+
+All 341 source rows are implemented by their recorded owners: 332 local and
+nine pinned external. Complete acceptance remains unverified across the eight
+required platforms. The existing overlay proof is historical evidence for its
+own targets and commits; current receipts do not certify screen-reader speech,
+physical pen/fold/headset behavior or hardware performance.
 
 ## Two runtime lanes
 
@@ -84,8 +90,10 @@ need it:
 
 The emitted `dist/` JS imports `react-native-skia` in three files:
 `GPUCanvasViewport.js`, `InkStrokePreview.js` and `InkAndLaserPointer.js`.
-This list was built with grep over `packages/ui/src` and the built `dist`;
-it was not checked by installing the package without Skia.
+The clean basic UI consumer now installs and runs without Skia and the other
+unrelated optional peers; the installed-consumer gate asserts those absences.
+The specialized paths listed above still require their declared Skia peer.
+See [installed-consumer evidence](completion/reports/V1-RELEASE-GATES.md#what-the-installed-consumer-gate-proves).
 
 ## Reporting problems
 

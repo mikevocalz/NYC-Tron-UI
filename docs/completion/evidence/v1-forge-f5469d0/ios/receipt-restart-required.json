@@ -1,0 +1,6 @@
+{
+  "message": "FORGE_NATIVE_RUNTIME_RESTART {\"schema\":1,\"platform\":\"ios\",\"revision\":\"7cc6c15805b20ae69804be9cbf526ae48a4f1a63\",\"phase\":\"restart-required\",\"runId\":\"606bd184-ec18-4cb4-a7c0-df373a2333d5\",\"processToken\":\"1794292429145-0.7160922533041553\",\"checks\":[\"mmkv-v4-native-binary-ownership\",\"mmkv-v4-yjs-roundtrip\",\"mmkv-v4-all-engine-snapshot-write\"],\"engineKinds\":[\"prism\",\"cadence\",\"splice\",\"folio\",\"pitch\",\"tally\",\"quill\",\"photo\",\"motion\",\"design\",\"draft\"]}",
+  "platform": "ios",
+  "revision": "7cc6c15805b20ae69804be9cbf526ae48a4f1a63",
+  "runId": "606bd184-ec18-4cb4-a7c0-df373a2333d5"
+}

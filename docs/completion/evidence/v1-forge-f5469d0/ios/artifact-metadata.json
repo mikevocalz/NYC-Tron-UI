@@ -1,0 +1,31 @@
+{
+  "id": 13740794045,
+  "name": "forge-native-runtime-ios",
+  "size_in_bytes": 392449,
+  "url": "https://api.github.com/repos/mikevocalz/nitro-forge/actions/artifacts/13740794045",
+  "archive_download_url": "https://api.github.com/repos/mikevocalz/nitro-forge/actions/artifacts/13740794045/zip",
+  "expired": false,
+  "created_at": "2026-11-10T06:34:19Z",
+  "expires_at": "2027-02-08T05:59:27Z",
+  "updated_at": "2026-11-10T06:34:19Z",
+  "digest": "sha256:1d634a0c2787f38f46772e72768b96d4f45f11f4a911136457e3e965a8630647",
+  "workflow_run": {
+    "id": 42765520077,
+    "repository_id": 1442983723,
+    "head_repository_id": 1442983723,
+    "head_branch": "codex/v1-platform-completion",
+    "head_sha": "f5469d03cf2153a8f694ae61d911861264e9216d"
+  },
+  "archiveDigestVerified": true,
+  "retainedFiles": [
+    "before-process-restart.json",
+    "invocation.json",
+    "native-artifact.json",
+    "receipt-complete.json",
+    "receipt-restart-required.json",
+    "result.json",
+    "selected-simulator.json",
+    "simulators.json",
+    "steps.jsonl"
+  ]
+}

@@ -171,5 +171,5 @@ test("NativeSliderField commits when the OS reports the drag ended and steps map
  assert.match(native,/onEditingChanged=\{editing=>\{if\(!editing\)finish\(\);\}\}/);
  assert.match(native,/onValueChangeFinished=\{finish\}/);
  assert.match(native,/semantics\(\{contentDescription:label\}\)/);
- assert.match(native,/label=\{label\}/);
+ assert.match(native,/label=\{<SwiftUIText>\{label\}<\/SwiftUIText>\}/);
 });
