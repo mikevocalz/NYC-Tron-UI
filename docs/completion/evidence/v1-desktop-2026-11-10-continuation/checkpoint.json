@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10 23:06:16 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "aggregateBase": {
+    "commit": "d2bcf8a0d09b47eea88d87e3bd70c6c8382e49a5",
+    "tree": "afaf0ecf9033d8a197212522bb655aec8aab6108"
+  },
+  "umbrella": {
+    "pr": 57,
+    "branch": "codex/v1-completion",
+    "commit": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "frozen": false
+  },
+  "sourceInventory": {
+    "originalIds": 341,
+    "local": 332,
+    "pinnedExternal": 9,
+    "pendingSourceRows": 0,
+    "fullyAcceptedAcrossEightPlatforms": 0
+  },
+  "appkit": {
+    "candidate": "cea75ae6e088a5638d900154b85edeb4c84b0248",
+    "tree": "63d8c600af6dd8b9c85586ac4531e166a646a285",
+    "testedMerge": "b7ededbb446cf129a30b76673afe55235fb4afe8",
+    "runId": 42916675370,
+    "sourceJobId": 130180794785,
+    "nativeJobId": 130181025913,
+    "sourceTestsPassed": 11,
+    "nativeCompile": "success",
+    "nativeInteraction": "failure",
+    "firstFailingAssertion": "uninspected",
+    "artifact": {
+      "id": 13810981867,
+      "sizeBytesReported": 834146,
+      "sha256Reported": "f9be7224c06d49c406726173dc7fb26c05a859a7f86f93525c943bd319d1c075",
+      "originalBytesRehashed": false,
+      "originalMembersInspected": false
+    }
+  },
+  "previousAppkit": {
+    "candidate": "92c7882ec7a54cd82d1289a3244bd8766ba1ecbd",
+    "testedMerge": "36e1a765428b54fe7200bb077c0c69e04eedf14c",
+    "runId": 42912189002,
+    "artifactId": 13809117349,
+    "zipBytesVerified": 833107,
+    "zipSha256Verified": "d0e7a8ed62ba34c529afc93361a4b736a37b156cfec8898d313a0f75fc0aca44",
+    "memberCountVerified": 42,
+    "originalVerificationOccurredBeforeOutage": true,
+    "receiptPublished": false,
+    "localReceiptCommit": "3b5d45116c839d8df221ee27df3512319be294d3",
+    "localReceiptTree": "6a844fa8ed682d4bfe5b7bf5240e87c38cbf603f",
+    "receiptPath": "docs/completion/evidence/v1-appkit-92c7882-menu-pass-permission-type"
+  },
+  "windows": {
+    "candidate": "5a9709d9f7c7aa819d36fd68729f11e0cf3295b8",
+    "testedMerge": "ea5f13f4ecff638c7c1d062403c62e2227fa9513",
+    "runId": 42912913242,
+    "nativeCompile": "success",
+    "nativeInteraction": "failure",
+    "traceRecords": 29,
+    "recordedTargetEvents": 0,
+    "originalEvidencePublishedIn": "d2bcf8a0d09b47eea88d87e3bd70c6c8382e49a5",
+    "nextDiagnostic": "being reconstructed from fresh exact GitHub preimages and independently reviewed"
+  },
+  "unavailableWorkspace": {
+    "localRootHead": "3b5d45116c839d8df221ee27df3512319be294d3",
+    "localRootTree": "6a844fa8ed682d4bfe5b7bf5240e87c38cbf603f",
+    "windowsRoutingReceipt": "staged; final mutation and commit unconfirmed",
+    "windowsEnvironmentDiagnostic": "original local edits uncommitted; final remote reconstruction has not inherited earlier local test results"
+  },
+  "finalValidation": {
+    "lastFullSourceCheckpoint": "9aa8f61a2a4ef58024b7cfb98874651bc43fe193",
+    "lastFullSourceTestsPassed": 1199,
+    "finalCombinedVerification": "pending",
+    "finalNativeArchives": "not available",
+    "manualWorkflowDispatch": "not performed",
+    "releaseOrTagCreated": false
+  }
+}

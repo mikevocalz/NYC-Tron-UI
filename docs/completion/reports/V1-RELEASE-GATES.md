@@ -123,7 +123,7 @@ availability and socket permissions. The original helper log and exact source
 comparison are retained. Final browser acceptance still requires the frozen
 combined candidate's CI run.
 
-### AppKit: activation reply late; menu correction still untested
+### AppKit: menu generations passed; latest native interaction gate failed
 
 [AppKit at `c0f6601`](../evidence/v1-appkit-c0f6601-live-mount-timeout/README.md)
 passed eight source checks, installed-consumer preparation/API checks and native
@@ -206,17 +206,62 @@ The app remains present before and after sampling; 29 thread groups were
 captured. The sample starts after the timeout and cannot establish the preceding
 execution state. All 42 original members, the unchanged full ZIP, complete
 source log, compiler log and exact patch/probe inputs are verified and retained.
-The menu-generation correction was not reached, so its native outcome remains
-untested. The reviewed candidate at `92c7882e` adds a bounded private-driver
-activation phase trace to distinguish the request, callback and main-continuation
-stages while preserving the activation API, operation order, deadlines and
-native assertions. Diagnostic details are evaluated inside an exception guard;
-observations cannot replace the real operation or reply. All eleven source
-checks, installed-consumer preparation/API and the actual Foundation probe
-passed in [run 42912189002](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912189002);
-native compilation and interaction outcomes remain pending. The exact tested
-merge is `36e1a765428b54fe7200bb077c0c69e04eedf14c`, whose tree matches the
-published helper tree `3a66490ec9997478e34061b5757e8fb3d8c6278d`.
+The menu-generation correction was not reached in that 8fe run. The following
+candidate at `92c7882e` adds a bounded private-driver activation phase trace
+to distinguish the request, callback and main-continuation stages while preserving
+the activation API, operation order, deadlines and native assertions. Diagnostic
+details are evaluated inside an exception guard; observations cannot replace
+the real operation or reply.
+
+[Run 42912189002](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912189002)
+passed all eleven source checks, clean installed-consumer/API checks, the actual
+Foundation/socketpair probe and native compilation. Its exact tested merge is
+`36e1a765428b54fe7200bb077c0c69e04eedf14c`, whose tree matches helper tree
+`3a66490ec9997478e34061b5757e8fb3d8c6278d`. The original trace establishes
+a successful same-process, visible/key/active/frontmost activation in about
+1.115 seconds. The off-main workspace callback, main continuation and reply
+were all observed. This successful run does not establish the cause of the
+earlier late replies or show that instrumentation corrected that cause.
+
+The actual application menu passed. Context-menu generation 1 was selected
+and ended; generation 2 was canceled and ended; React then reported
+`Native context menu dismissed`. Tooltip property and accessibility-help
+checks passed. The first failure was request 44, tooltip permission inspection:
+`postEventsAllowed: true` and `accessibilityTrusted: 1`. The strict verifier
+correctly required the latter to be a boolean. Actual tooltip hover, popover
+interaction and cross-window OS drag were not reached; the passed-distribution
+upload was skipped.
+
+Before the execution workspace disconnected, root independently verified the
+complete original 833,107-byte ZIP, all 42 member hashes and the complete source
+job log. The original ZIP SHA-256 is
+`d0e7a8ed62ba34c529afc93361a4b736a37b156cfec8898d313a0f75fc0aca44`.
+That receipt was committed locally at
+`3b5d45116c839d8df221ee27df3512319be294d3`, but its original files have not
+yet been published into the aggregate. They must be recovered and verified
+before their later retention is claimed. GitHub artifact `13809117349` remains
+available; this status paragraph does not substitute for the unpublished receipt.
+
+The reviewed correction at `cea75ae6` makes both private
+`AXIsProcessTrusted()` observations explicitly select `@YES` or `@NO`.
+Each site still queries the real API once and preserves the actual value.
+Strict JavaScript boolean assertions, actual permission requirements, activation
+ordering, deadlines and required CGEvent gestures remain unchanged; no permission
+prompt or permission change was introduced.
+
+[Run 42916675370](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42916675370),
+actual merge `b7ededbb446cf129a30b76673afe55235fb4afe8`, passed all eleven
+source checks, clean installed-consumer/API checks, the Foundation/socketpair
+probe and native compilation. The interaction step failed and the passed
+distribution upload was skipped. Its original artifact `13810981867` is
+available: metadata reports 834,146 bytes and SHA-256
+`f9be7224c06d49c406726173dc7fb26c05a859a7f86f93525c943bd319d1c075`.
+Those bytes have not yet been independently rehashed or extracted, and the
+exact first failing assertion remains uninspected. The workspace is unavailable
+and the full native-job log endpoint returns a transport error. No activation,
+permission or gesture result is inferred from the job-level failure or elapsed
+duration. The [continuation checkpoint](../evidence/v1-desktop-2026-11-10-continuation/README.md)
+records the published source and the separate evidence-recovery boundary.
 
 ### Actual gestures remain mandatory
 

@@ -217,7 +217,9 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
   }
   NSRect triggerFrame = [owner convertRectToScreen:[trigger convertRect:trigger.bounds toView:nil]];
   NSPoint cursor = NSEvent.mouseLocation;
-  return @{ @"ok": @YES, @"boundary": @"public-native-help-tag-observation", @"postEventsAllowed": @(CGPreflightPostEventAccess()), @"accessibilityTrusted": @(AXIsProcessTrusted()),
+  // AXIsProcessTrusted returns C Boolean, whose boxed value serializes as a
+  // number. Preserve its truth value with explicit JSON boolean objects.
+  return @{ @"ok": @YES, @"boundary": @"public-native-help-tag-observation", @"postEventsAllowed": @(CGPreflightPostEventAccess()), @"accessibilityTrusted": (AXIsProcessTrusted() ? @YES : @NO),
     @"ownerVisible": @(owner.visible && !owner.miniaturized), @"ownerKey": @(owner.keyWindow), @"applicationActive": @(NSApp.active), @"pointerRunning": @(PointerRunning), @"triggerFrame": RectDictionary(triggerFrame),
     @"cursor": @{ @"x": @(cursor.x), @"y": @(cursor.y) }, @"cursorInsideTrigger": @(NSPointInRect(cursor, triggerFrame)), @"windows": windows, @"helpTags": helpTags, @"traversalTruncated": @(truncated) };
 }
@@ -498,7 +500,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       BOOL postEvents = CGPreflightPostEventAccess();
       NSString *action = request[@"action"];
       if (!action || [action isEqual:@"status"]) {
-        reply(@{ @"ok": @YES, @"postEventsAllowed": @(postEvents), @"accessibilityTrusted": @(AXIsProcessTrusted()), @"running": @(PointerRunning), @"session": PointerSession ?: (id)NSNull.null }); return;
+        reply(@{ @"ok": @YES, @"postEventsAllowed": @(postEvents), @"accessibilityTrusted": (AXIsProcessTrusted() ? @YES : @NO), @"running": @(PointerRunning), @"session": PointerSession ?: (id)NSNull.null }); return;
       }
       if (!postEvents) { reply(Failure(@"CGPreflightPostEventAccess denied event posting; no permission prompt or synthetic gesture was attempted")); return; }
       if (PointerRunning || ProtocolDrag) { reply(Failure(@"Another pointer or protocol action is active")); return; }
