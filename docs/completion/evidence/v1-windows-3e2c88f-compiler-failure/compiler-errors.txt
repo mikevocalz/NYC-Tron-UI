@@ -1,0 +1,28 @@
+677: 2026-11-10T17:05:12.2671490Z   TronOverlayAnchor.cpp
+678: 2026-11-10T17:05:20.4173516Z D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\x64\Release\Generated Files\winrt\Microsoft.UI.Xaml.Controls.h(26194,14): error C2664: 'void winrt::NYCTronFluentFabric::TronOverlayAnchorComponentView::SyncFields::<lambda_2>::operator ()(const winrt::Microsoft::UI::Xaml::Controls::TextBox &,const winrt::Microsoft::UI::Xaml::Controls::TextChangedEventArgs &) const': cannot convert argument 1 from 'const winrt::Windows::Foundation::IInspectable' to 'const winrt::Microsoft::UI::Xaml::Controls::TextBox &' [D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\NYCTronFluentFabric.vcxproj]
+679: 2026-11-10T17:05:20.4195468Z   (compiling source file '/TronOverlayAnchor.cpp')
+680: 2026-11-10T17:05:20.4197239Z       D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\x64\Release\Generated Files\winrt\Microsoft.UI.Xaml.Controls.h(26194,21):
+681: 2026-11-10T17:05:20.4199712Z       Reason: cannot convert from 'const winrt::Windows::Foundation::IInspectable' to 'const winrt::Microsoft::UI::Xaml::Controls::TextBox'
+682: 2026-11-10T17:05:20.4201867Z       D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\x64\Release\Generated Files\winrt\Microsoft.UI.Xaml.Controls.h(26194,21):
+683: 2026-11-10T17:05:20.4203069Z       No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+684: 2026-11-10T17:05:20.4204146Z       D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\TronOverlayAnchor.cpp(195,142):
+685: 2026-11-10T17:05:20.4205199Z       see declaration of 'winrt::NYCTronFluentFabric::TronOverlayAnchorComponentView::SyncFields::<lambda_2>::operator ()'
+
+717: 2026-11-10T17:05:20.5407107Z   OverlayDismissalTests.cpp
+718: 2026-11-10T17:05:20.7175686Z D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\OverlayDismissalTests.cpp(3,1): error C1020: unexpected #endif [D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\NYCTronFluentFabric.vcxproj]
+719: 2026-11-10T17:05:20.7178396Z   (compiling source file '/OverlayDismissalTests.cpp')
+
+735: 2026-11-10T17:05:47.2341924Z ##[error]Process completed with exit code 1.
+
+738: 2026-11-10T17:05:47.2592875Z   name: winui-fabric-uia-smoke
+739: 2026-11-10T17:05:47.2593366Z   path: D:\a\_temp/uia-smoke
+740: 2026-11-10T17:05:47.2593981Z   if-no-files-found: warn
+741: 2026-11-10T17:05:47.2594295Z   compression-level: 6
+742: 2026-11-10T17:05:47.2594575Z   overwrite: false
+743: 2026-11-10T17:05:47.2594841Z   include-hidden-files: false
+744: 2026-11-10T17:05:47.2595152Z env:
+745: 2026-11-10T17:05:47.2595423Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+746: 2026-11-10T17:05:47.2595762Z ##[endgroup]
+747: 2026-11-10T17:05:47.4786204Z (node:3264) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+748: 2026-11-10T17:05:47.4788019Z (Use `node --trace-deprecation ...` to show where the warning was created)
+749: 2026-11-10T17:05:47.4858105Z ##[warning]No files were found with the provided path: D:\a\_temp/uia-smoke. No artifacts will be uploaded.

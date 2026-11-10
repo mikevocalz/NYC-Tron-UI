@@ -1,6 +1,3 @@
-#ifdef _WIN32
-#include "pch.h"
-#endif
 #include "OverlayDismissal.h"
 
 namespace {

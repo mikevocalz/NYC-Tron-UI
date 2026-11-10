@@ -1,0 +1,124 @@
+{
+  "files": [
+    {
+      "artifactPath": "overlays-visual-commands-r-09687-de-the-viewport-dark-phone--chromium/commands-dark-phone.png",
+      "sizeBytes": 14998,
+      "sha256": "6c746c6bb308107ef40ea73cdf80b59d1d2f7105e1550563722b407d5047aa34",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-commands-r-23f38--the-viewport-light-tablet--chromium/commands-light-tablet.png",
+      "sizeBytes": 17130,
+      "sha256": "e189308ea8952ed6070c6f0297a16559b1b2357860dea48428e66942def88fad",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-commands-r-769b9-e-the-viewport-light-phone--chromium/commands-light-phone.png",
+      "sizeBytes": 14802,
+      "sha256": "57a3d006b8f45f879fed7fafca55bc6a8d2628880fcf7b6ac26c017107dd951c",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-commands-r-7a5b8-e-the-viewport-dark-tablet--chromium/commands-dark-tablet.png",
+      "sizeBytes": 17400,
+      "sha256": "f55e22198a450ea50e73503faa05d96f667a04797543abacc4c33db263605634",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-palette-re-344c0-e-the-viewport-dark-tablet--chromium/palette-dark-tablet.png",
+      "sizeBytes": 22673,
+      "sha256": "1f8be2b568e3753d7bddb1f7f464847c75fd557019cd2476da13b7934658bc0b",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-palette-re-87e4f-de-the-viewport-dark-phone--chromium/palette-dark-phone.png",
+      "sizeBytes": 19924,
+      "sha256": "be671b169245c00c3de926d69348ca04198835414652871faf6702771bab3b23",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-palette-re-930fa--the-viewport-light-tablet--chromium/palette-light-tablet.png",
+      "sizeBytes": 22308,
+      "sha256": "97e4082670e0e4a71ec4a317f5d9aea5c38fc9a41a0a4d737531f3c63429d2a9",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-palette-re-ff6c0-e-the-viewport-light-phone--chromium/palette-light-phone.png",
+      "sizeBytes": 19602,
+      "sha256": "4adb0a25eaa4289d1b9fa859661ad445754fcdce6994e8d089b0bcc9be059c95",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-popover-re-1ef55-e-the-viewport-dark-tablet--chromium/popover-dark-tablet.png",
+      "sizeBytes": 20915,
+      "sha256": "129ced433a4da64691d9ca873b8c2b7ff1f8aff47dad1b0e7ccb51730224ab54",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-popover-re-80c74-de-the-viewport-dark-phone--chromium/popover-dark-phone.png",
+      "sizeBytes": 18266,
+      "sha256": "db9a8af922705dfcf0d916690f3a755675910d47ece38d4cc14236cd65c6d6a8",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-popover-re-cafbc--the-viewport-light-tablet--chromium/popover-light-tablet.png",
+      "sizeBytes": 20639,
+      "sha256": "b357d6f345ba03b8d2d24aa32d4bd1209aa1e0c265ed59657b710398705d8293",
+      "retainedPath": "popover-light-tablet.png"
+    },
+    {
+      "artifactPath": "overlays-visual-popover-re-e1802-e-the-viewport-light-phone--chromium/popover-light-phone.png",
+      "sizeBytes": 18044,
+      "sha256": "55a2c265ed29ddedb24f1842f2452e5921a5ac3c369ad8efb673fc933d52554f",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-tooltip-re-49551--the-viewport-light-tablet--chromium/tooltip-light-tablet.png",
+      "sizeBytes": 17539,
+      "sha256": "98e8743281a1a2b10ded6e1c177ec71544ad084b87a3a84f0a4f1d917ff56f9d",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-tooltip-re-604a9-e-the-viewport-light-phone--chromium/tooltip-light-phone.png",
+      "sizeBytes": 15432,
+      "sha256": "6c8e1199939245166256fafce6948964b08ec2317db48a4f24b67cb4b91c62ea",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-tooltip-re-7b128-de-the-viewport-dark-phone--chromium/tooltip-dark-phone.png",
+      "sizeBytes": 15713,
+      "sha256": "d931a27fee39274e51bfbfabf6f9e2ca7eb6cf7e94a95b0b04662907701e6409",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-tooltip-re-9e76e-e-the-viewport-dark-tablet--chromium/tooltip-dark-tablet.png",
+      "sizeBytes": 17865,
+      "sha256": "c77f116ff0b27c893db3ccd773b60ecbef6ace7520383bbc1210e1d73f361639",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-trigger-po-3e707--the-viewport-light-tablet--chromium/trigger-popover-light-tablet.png",
+      "sizeBytes": 17342,
+      "sha256": "8420a65c5f5d378317ba71cd1bca31ddaedbac7a3b6bbaabde87c6a5cb3eee21",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-trigger-po-59450-e-the-viewport-light-phone--chromium/trigger-popover-light-phone.png",
+      "sizeBytes": 15118,
+      "sha256": "291c6769f40a64248381c4a4f9872f3bb5a2f5856bd7373394851b181b60e555",
+      "retainedPath": null
+    },
+    {
+      "artifactPath": "overlays-visual-trigger-po-e4ad7-de-the-viewport-dark-phone--chromium/trigger-popover-dark-phone.png",
+      "sizeBytes": 15309,
+      "sha256": "59be00cfeba1265dd869ddacd07a7c5587b82da6e16087e094c519488ef88f39",
+      "retainedPath": "trigger-popover-dark-phone.png"
+    },
+    {
+      "artifactPath": "overlays-visual-trigger-po-f1d81-e-the-viewport-dark-tablet--chromium/trigger-popover-dark-tablet.png",
+      "sizeBytes": 17617,
+      "sha256": "cf2a3e3ca03801ee55291651d779d47afdebbc82a0a6f173d1d4f6855428d8bb",
+      "retainedPath": null
+    }
+  ]
+}

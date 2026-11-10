@@ -1,0 +1,88 @@
+2026-11-10T16:56:48.1040106Z ##[group]Fetching the repository
+2026-11-10T16:56:48.1045906Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0576bea35225fde1437a50263c8154aca525ec8d:refs/remotes/pull/61/merge
+2026-11-10T16:56:49.2936141Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-10T16:56:49.2938661Z  * [new ref]         0576bea35225fde1437a50263c8154aca525ec8d -> pull/61/merge
+2026-11-10T16:56:49.2942161Z ##[endgroup]
+2026-11-10T16:56:49.2943842Z ##[group]Determining the checkout info
+2026-11-10T16:56:49.3029159Z ##[endgroup]
+2026-11-10T16:56:49.3030033Z [command]/usr/bin/git sparse-checkout disable
+2026-11-10T16:56:49.3032346Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-10T16:56:49.3035694Z ##[group]Checking out the ref
+2026-11-10T16:56:49.3037097Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/61/merge
+2026-11-10T16:56:49.4107874Z Note: switching to 'refs/remotes/pull/61/merge'.
+2026-11-10T16:56:49.4108976Z 
+2026-11-10T16:56:49.4109625Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-10T16:56:49.4111197Z changes and commit them, and you can discard any commits you make in this
+2026-11-10T16:56:49.4112751Z state without impacting any branches by switching back to a branch.
+2026-11-10T16:56:49.4113654Z 
+2026-11-10T16:56:49.4114379Z If you want to create a new branch to retain commits you create, you may
+2026-11-10T16:56:49.4115816Z do so (now or later) by using -c with the switch command. Example:
+2026-11-10T16:56:49.4117127Z 
+2026-11-10T16:56:49.4117531Z   git switch -c <new-branch-name>
+2026-11-10T16:56:49.4118019Z 
+2026-11-10T16:56:49.4118506Z Or undo this operation with:
+2026-11-10T16:56:49.4119010Z 
+2026-11-10T16:56:49.4119345Z   git switch -
+2026-11-10T16:56:49.4119773Z 
+2026-11-10T16:56:49.4120578Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-10T16:56:49.4121467Z 
+2026-11-10T16:56:49.4122503Z HEAD is now at 0576bea Merge 2899ffdedf98e2a86c077f15aa1baf6401c07b80 into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-10T16:56:49.4125880Z ##[endgroup]
+2026-11-10T16:56:49.4167128Z [command]/usr/bin/git log -1 --format=%H
+2026-11-10T16:56:49.4190309Z 0576bea35225fde1437a50263c8154aca525ec8d
+
+2026-11-10T16:57:09.7050965Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+2026-11-10T16:57:11.2115790Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+2026-11-10T16:57:11.2437960Z ##[group]Run npm test
+2026-11-10T16:57:11.2438318Z [36;1mnpm test[0m
+2026-11-10T16:57:11.2481600Z shell: /usr/bin/bash -e {0}
+2026-11-10T16:57:11.2481760Z ##[endgroup]
+2026-11-10T16:57:11.3272897Z 
+2026-11-10T16:57:11.3273448Z > test
+2026-11-10T16:57:11.3273823Z > playwright test
+2026-11-10T16:57:11.3273967Z 
+2026-11-10T16:57:12.4598520Z 
+2026-11-10T16:57:12.4599171Z Running 32 tests using 2 workers
+2026-11-10T16:57:12.4599415Z 
+2026-11-10T16:57:13.4503686Z   ✓   1 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (light, phone) (427ms)
+2026-11-10T16:57:13.5436213Z   ✓   2 [chromium] › menu.spec.mjs:5:1 › keyboard opens at first item, skips disabled branches, wraps, and restores focus on Escape (517ms)
+2026-11-10T16:57:13.8500062Z   ✓   3 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (light, phone) (386ms)
+2026-11-10T16:57:13.8983373Z   ✓   4 [chromium] › menu.spec.mjs:27:1 › up arrow opens at the last item and Space activates the focused checkbox (344ms)
+2026-11-10T16:57:14.2660893Z   ✓   5 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (light, phone) (389ms)
+2026-11-10T16:57:14.3528073Z   ✓   6 [chromium] › menu.spec.mjs:38:1 › pointer cannot invoke disabled actions or descendants and enabled selection closes the menu (445ms)
+2026-11-10T16:57:14.7089695Z   ✓   8 [chromium] › menu.spec.mjs:53:1 › outside close button dismisses without invoking an action (346ms)
+2026-11-10T16:57:14.7929406Z   ✓   7 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (light, phone) (507ms)
+2026-11-10T16:57:15.1243323Z   ✓   9 [chromium] › menu.spec.mjs:61:1 › Tab and Shift+Tab stay inside the open action menu and Escape returns focus to the trigger (402ms)
+2026-11-10T16:57:15.1560164Z   ✓  10 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (light, phone) (346ms)
+2026-11-10T16:57:15.5109913Z   ✓  11 [chromium] › menu.spec.mjs:77:1 › selecting a menu item with the keyboard returns focus to the trigger (372ms)
+2026-11-10T16:57:15.5268379Z   ✓  12 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (dark, phone) (357ms)
+2026-11-10T16:57:15.8995134Z   ✓  14 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (dark, phone) (361ms)
+2026-11-10T16:57:15.9417114Z   ✓  13 [chromium] › menu.spec.mjs:85:1 › web NativePopover is placed below the anchor, cycles Tab and restores focus (403ms)
+2026-11-10T16:57:16.3347844Z   ✓  15 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (dark, phone) (407ms)
+2026-11-10T16:57:16.3479395Z   ✓  16 [chromium] › menu.spec.mjs:106:1 › CommandPopover focuses the first enabled item, skips disabled on Tab and restores focus (394ms)
+2026-11-10T16:57:16.7207806Z   ✓  18 [chromium] › menu.spec.mjs:121:1 › CommandPalette filters, moves with arrows, runs with Enter and restores focus (362ms)
+2026-11-10T16:57:16.8492996Z   ✓  17 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (dark, phone) (507ms)
+2026-11-10T16:57:17.1659478Z   ✓  19 [chromium] › menu.spec.mjs:141:1 › CommandPalette keeps Tab inside, never activates disabled commands and Escape closes (437ms)
+2026-11-10T16:57:17.2067126Z   ✓  20 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (dark, phone) (348ms)
+2026-11-10T16:57:17.5461446Z   ✓  22 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (light, tablet) (331ms)
+2026-11-10T16:57:17.8310269Z   ✓  23 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (light, tablet) (278ms)
+2026-11-10T16:57:17.9000421Z   ✓  21 [chromium] › menu.spec.mjs:164:1 › tooltip appears after the focus delay, describes the control and hides on Escape and blur (722ms)
+2026-11-10T16:57:18.2075312Z   ✓  24 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (light, tablet) (370ms)
+2026-11-10T16:57:18.4496494Z   ✓  25 [chromium] › menu.spec.mjs:178:1 › trigger-form popover anchors to its measured trigger and hands focus back (541ms)
+2026-11-10T16:57:18.6603404Z   ✓  26 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (light, tablet) (447ms)
+2026-11-10T16:57:18.9194722Z   ✓  27 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (light, tablet) (253ms)
+2026-11-10T16:57:19.1958603Z   ✓  28 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (dark, tablet) (269ms)
+2026-11-10T16:57:19.4898756Z   ✓  29 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (dark, tablet) (286ms)
+2026-11-10T16:57:19.7984003Z   ✓  30 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (dark, tablet) (301ms)
+2026-11-10T16:57:20.2223881Z   ✓  31 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (dark, tablet) (417ms)
+2026-11-10T16:57:20.5060271Z   ✓  32 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (dark, tablet) (276ms)
+2026-11-10T16:57:20.5665143Z 
+2026-11-10T16:57:20.5667864Z   32 passed (8.8s)
+
+2026-11-10T16:57:21.4118828Z Uploaded bytes 280598
+2026-11-10T16:57:21.4594081Z Finished uploading artifact content to blob storage!
+2026-11-10T16:57:21.4594688Z SHA256 digest of uploaded artifact zip is 9a1a8c5ae933ed09b164fdbcdfed27a17246ef1c05c23714315a4cfba417fd0c
+2026-11-10T16:57:21.4595537Z Finalizing artifact upload
+2026-11-10T16:57:21.8686569Z Artifact overlay-renders.zip successfully finalized. Artifact ID 13785260319
+2026-11-10T16:57:21.8687296Z Artifact overlay-renders has been successfully uploaded! Final size is 280598 bytes. Artifact ID is 13785260319
+

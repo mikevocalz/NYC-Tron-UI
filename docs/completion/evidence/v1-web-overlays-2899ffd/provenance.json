@@ -1,0 +1,54 @@
+{
+  "recordedAt": "2026-11-10",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "pullRequest": 61,
+  "headRevision": "2899ffdedf98e2a86c077f15aa1baf6401c07b80",
+  "testedRevision": "0576bea35225fde1437a50263c8154aca525ec8d",
+  "run": {
+    "id": 42858538441,
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42858538441"
+  },
+  "job": {
+    "id": 129978085474,
+    "name": "chromium",
+    "conclusion": "success",
+    "passedTests": 32,
+    "durationReported": "8.8 seconds"
+  },
+  "artifact": {
+    "id": 13785260319,
+    "name": "overlay-renders",
+    "sizeBytes": 280598,
+    "sha256": "9a1a8c5ae933ed09b164fdbcdfed27a17246ef1c05c23714315a4cfba417fd0c",
+    "independentlyDownloadedAndHashed": true,
+    "originalFileCount": 20,
+    "retainedOriginalFiles": 2,
+    "containsMachineReadableTestReport": false
+  },
+  "log": {
+    "sizeBytes": 43687,
+    "sha256": "718e476979bbea40357fc4de68c699eb4036fefb9a94d5e32998e6e195c18625",
+    "retained": "job-log-excerpt.txt",
+    "sourceLineRanges": [
+      [
+        92,
+        123
+      ],
+      [
+        365,
+        411
+      ],
+      [
+        429,
+        434
+      ]
+    ],
+    "fullLogRetainedInRepository": false
+  },
+  "bounds": [
+    "Exact PR61 merge, not the combined v1 candidate",
+    "Chromium browser fixture, not AppKit or native mobile acceptance",
+    "Two selected original captures retained; all twenty original PNG hashes recorded",
+    "Test count comes from the original successful job log; the artifact contains captures only"
+  ]
+}

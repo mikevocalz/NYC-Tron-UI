@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows",
+  "result": "native-build-failed",
+  "runId": 42859797630,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42859797630",
+  "nativeJobId": 129983179824,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42859797630/job/129983179824",
+  "sourceJobId": 129982528347,
+  "sourceJobConclusion": "success",
+  "pullRequestHead": "3e2c88f91905b23e2286659948cfcf1970292264",
+  "checkoutRevision": "c8fec3e3471d494350e4b7c993dd800dc39dd56a",
+  "checkoutTree": "d5fc2c58af6b112bc13fab355b0141b595eb3eff",
+  "pullRequestHeadTree": "d5fc2c58af6b112bc13fab355b0141b595eb3eff",
+  "originalLog": {
+    "source": "GitHub Actions native job logs retrieved through the GitHub connector",
+    "encoding": "UTF-8 serialization of the original decoded job log, retaining BOM and CRLF",
+    "sha256": "9629f4802daba15c1276a66bf41780e80f0de548ac476ef586f1115d7a08302a",
+    "bytes": 85851,
+    "retainedInGit": false,
+    "excerpts": [
+      {
+        "retainedPath": "checkout-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            81,
+            83
+          ],
+          [
+            89,
+            91
+          ],
+          [
+            108,
+            111
+          ]
+        ]
+      },
+      {
+        "retainedPath": "compiler-errors.txt",
+        "sourceLineRanges": [
+          [
+            677,
+            685
+          ],
+          [
+            717,
+            719
+          ],
+          [
+            735,
+            735
+          ],
+          [
+            738,
+            749
+          ]
+        ]
+      },
+      {
+        "retainedPath": "toolchain-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1,
+            20
+          ],
+          [
+            499,
+            499
+          ]
+        ]
+      }
+    ]
+  },
+  "observedToolchain": {
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "osVersion": "10.0.26100",
+    "runnerImage": "windows-2025-vs2026",
+    "runnerImageVersion": "20261103.298",
+    "msbuild": "18.11.1-1.26513.3+940033be3"
+  },
+  "failedStep": "Build installed native C++/WinRT Fabric package",
+  "compilerDiagnostics": [
+    {
+      "code": "C2664",
+      "file": "Generated Files/winrt/Microsoft.UI.Xaml.Controls.h",
+      "line": 26194,
+      "column": 14,
+      "applicationFile": "TronOverlayAnchor.cpp",
+      "applicationLine": 195,
+      "message": "TextChangedEventHandler cannot pass its IInspectable sender to the handler declared with TextBox const&."
+    },
+    {
+      "code": "C1020",
+      "file": "OverlayDismissalTests.cpp",
+      "line": 3,
+      "column": 1,
+      "message": "unexpected #endif"
+    }
+  ],
+  "completedPrerequisites": [
+    "Install native-codegen dependencies",
+    "Build source distribution and validate lifecycle contracts",
+    "Verify the isolated RNW public declaration snapshot",
+    "Download the canonical shared package archives",
+    "Install the fresh consumer from canonical peers and the Fabric candidate",
+    "Generate native code from the installed package",
+    "Generate official RNW application and connect native package"
+  ],
+  "unexecutedChecks": [
+    "Compile actual Windows consumer executable",
+    "Deploy the packaged consumer the way run-windows does",
+    "UI Automation smoke test of the packaged consumer",
+    "Retain the exact package that passed native acceptance",
+    "Upload tested Windows distribution"
+  ],
+  "testedPackageArtifactPresent": false,
+  "uiAutomationArtifactPresent": false,
+  "limitations": [
+    "The native library did not compile successfully; no consumer executable was built or launched in this run.",
+    "Native overlay, drag, navigation accessibility and window interaction acceptance were skipped.",
+    "The UIA upload step completed with a no-files warning and produced no UI evidence.",
+    "The only artifact is the Ubuntu canonical shared package archive set; it is not a natively tested Fabric distribution.",
+    "The preparation receipt was not retained after this failure; the actual checkout revision comes directly from the native checkout log.",
+    "The corrected 9b902a2 candidate must establish its own native result; no acceptance is transferred to it."
+  ]
+}

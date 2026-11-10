@@ -28,7 +28,10 @@ synthetic contents as the defect. [PR 61](https://github.com/mikevocalz/NYC-Tron
 head `2899ffdedf98e2a86c077f15aa1baf6401c07b80`, cancels the view's retained
 contacts before parsing a cancel event. It keeps the strict router and original
 native cancellation assertion, and also repairs the isolated browser fixture's
-missing shared overlay alias. Fresh native/browser acceptance is required.
+missing shared overlay alias. Its [fresh Chromium overlay run](../evidence/v1-web-overlays-2899ffd/README.md)
+passed all 32 tests at actual merge `0576bea35225fde1437a50263c8154aca525ec8d`;
+the original screenshot artifact was independently verified. Fresh native
+Android/iOS acceptance remains in progress for that repair.
 
 That same checkpoint's new Windows native build and deployment succeeded,
 but its screenshot driver failed on a nonfocusable top-level UIA window;
@@ -92,7 +95,12 @@ Private scope/request acknowledgements permit a subsequent dismissal after a
 veto that produces no React commit. Forty-nine isolated tests, five portable
 C++ state regressions, official code generation, a fresh archive consumer and
 the unchanged installed API snapshot passed for the same source tree. The
-actual Windows compiler and UIA results still require the new native run.
+second native build passed installation/codegen but stopped on the native
+TextChanged sender signature and a precompiled-header boundary in the portable
+assertion file. Head `9b902a2506493c0c754a34509eab17923876940d` matches the SDK's
+IInspectable sender and compiles only that assertion file without precompiled
+headers. Its five portable assertions still compile; actual Windows C++/UIA
+results require the new native run. Neither failed compiler run reached UIA.
 
 Both implementations are included in the combined candidate. Their actual
 native builds and interaction results must be recorded against the exact

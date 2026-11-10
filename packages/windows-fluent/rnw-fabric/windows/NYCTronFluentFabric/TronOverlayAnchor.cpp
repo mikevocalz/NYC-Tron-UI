@@ -192,8 +192,8 @@ struct TronOverlayAnchorComponentView
       else {
         if (acknowledged != 0) throw std::invalid_argument("A newly mounted inspector field starts at event count zero");
         field.id = id; field.input = Controls::TextBox{}; field.input.MaxLength(4096);
-        field.input.TextChanged([weak = get_weak(), scope = m_scope](Controls::TextBox const& sender, Controls::TextChangedEventArgs const&) {
-          if (auto self = weak.get(); self && self->m_scope == scope) self->TextChanged(sender, scope);
+        field.input.TextChanged([weak = get_weak(), scope = m_scope](winrt::Windows::Foundation::IInspectable const& sender, Controls::TextChangedEventArgs const&) {
+          if (auto self = weak.get(); self && self->m_scope == scope) self->TextChanged(sender.as<Controls::TextBox>(), scope);
         });
       }
       if (acknowledged > field.eventCount) throw std::invalid_argument("Inspector acknowledgment is newer than its native edit");
