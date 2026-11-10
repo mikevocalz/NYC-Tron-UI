@@ -21,6 +21,7 @@ export function SettingsScreen({ model }: { model: ReferenceModel }) {
           <Text accessibilityRole="header" {...{ className: "text-lg font-semibold text-text" }}>Workspace preferences</Text>
           <TextField id="reference-workspace-name" testID="reference-workspace-name" label="Workspace name" value={state.preferences.name}
             onChangeText={name => model.editPreferences({ name })} errorText={state.preferenceError}
+            returnKeyType="done" submitBehavior="blurAndSubmit"
             helperText="Shown in the workspace header after you save." onSubmitEditing={model.savePreferences} />
           <NativeDropdown label="Start in" value={state.preferences.start} colorScheme={scheme} options={routes}
             onValueChange={start => model.editPreferences({ start: start as ReferenceRoute })} />

@@ -48,6 +48,7 @@ export function EditorInspectorScreen({ model }: { model: ReferenceModel }) {
               onExpandedChange={typographyExpanded => model.store.setState({ typographyExpanded })}>
               <PropertyRow label="Headline" stackBelow={600}>
                 {({ disabled }) => <TextField id="reference-headline" testID="reference-headline" label="Cover headline" value={state.document.headline} maxLength={100}
+                  returnKeyType="done" submitBehavior="blurAndSubmit"
                   editable={!disabled} onChangeText={headline => model.editDocument({ headline })} errorText={state.documentError} />}
               </PropertyRow>
               <PropertyRow label="Supporting text" keywords={["subtitle"]} stackBelow={600}>

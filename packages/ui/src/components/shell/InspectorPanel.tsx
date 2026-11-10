@@ -63,7 +63,7 @@ export function InspectorPanel({
     </View>
     {selection.kind==="none"
       ?<View style={{padding:16}}><Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>{emptyMessage}</Text></View>
-      :<ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{paddingBottom:16}}>
+      :<ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={{paddingBottom:16}}>
         <InspectorPanelContext.Provider key={selectionScope} value={context}>{children}</InspectorPanelContext.Provider>
         {searching&&matches===0?<View style={{padding:16,gap:4}}>
           <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>{`Nothing matches "${query.trim()}".`}</Text>

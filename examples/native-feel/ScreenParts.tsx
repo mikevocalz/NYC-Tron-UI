@@ -18,7 +18,7 @@ export function ReferenceHeading({ title, description, eyebrow, actions }: Refer
 export function ReferencePage({ children, testID, ...heading }: ReferenceHeadingProps & {
   children: ReactNode; testID: string;
 }) {
-  return <ScrollView testID={testID} keyboardShouldPersistTaps="handled" style={{ flex: 1, minWidth: 0 }}
+  return <ScrollView testID={testID} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" style={{ flex: 1, minWidth: 0 }}
     contentContainerStyle={{ padding: 24, paddingBottom: 40, flexGrow: 1 }}>
     <ContentFrame maxWidth={1120} style={{ gap: 28 }}>
       <ReferenceHeading {...heading} />
