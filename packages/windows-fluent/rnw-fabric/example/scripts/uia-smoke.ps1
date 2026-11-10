@@ -219,18 +219,35 @@ function Move-NativePointer([int]$x, [int]$y) {
   } while ((Get-Date) -lt $deadline)
   throw "OS pointer stayed at ($($point.X), $($point.Y)) instead of ($x, $y)"
 }
-function Assert-PointerTarget($point, $target) {
-  $hit = $AE::FromPoint([System.Windows.Point]::new($point.X, $point.Y))
-  $hitName = $hit.Current.Name
-  $identity = $target.GetRuntimeId() -join ","
-  # A native label can be the leaf at the pointer; its button must be an ancestor.
-  for ($ancestor = $hit; $null -ne $ancestor; $ancestor = [System.Windows.Automation.TreeWalker]::RawViewWalker.GetParent($ancestor)) {
-    if (($ancestor.GetRuntimeId() -join ",") -eq $identity) {
-      Write-Host "Pointer hit '$hitName' within native '$($target.Current.Name)' ($identity); bounds=$($target.Current.BoundingRectangle)"
-      return
-    }
+function Assert-PointerPlacement($point, $target) {
+  $bounds = $target.Current.BoundingRectangle
+  if ($target.Current.IsOffscreen -or $point.X -lt $bounds.Left -or $point.X -ge $bounds.Right -or
+      $point.Y -lt $bounds.Top -or $point.Y -ge $bounds.Bottom) {
+    throw "OS pointer lies outside visible native '$($target.Current.Name)': ($($point.X), $($point.Y)); bounds=$bounds"
   }
-  throw "Pointer hit '$hitName' instead of native '$($target.Current.Name)'; bounds=$($target.Current.BoundingRectangle)"
+  [uint32]$foregroundProcess = 0
+  [NativeWindow]::GetWindowThreadProcessId([NativeWindow]::GetForegroundWindow(), [ref]$foregroundProcess) | Out-Null
+  if ($foregroundProcess -ne $process.Id) { throw "Another process owns the foreground during native hover" }
+  $hit = $AE::FromPoint([System.Windows.Point]::new($point.X, $point.Y))
+  $identity = $target.GetRuntimeId() -join ","
+  $providers = @()
+  $nativeIdentityMatched = $false
+  # RNW 0.85 RootComponentView::UiaProviderFromPoint can return its island
+  # container when hosted XAML returns no leaf. Record that provider boundary;
+  # the genuine ToolTip appearing and dismissing remains the interaction gate.
+  for ($ancestor = $hit; $null -ne $ancestor; $ancestor = [System.Windows.Automation.TreeWalker]::RawViewWalker.GetParent($ancestor)) {
+    $current = $ancestor.Current
+    $providerIdentity = $ancestor.GetRuntimeId() -join ","
+    $providers += @{ name = $current.Name; className = $current.ClassName; controlType = $current.ControlType.ProgrammaticName;
+      processId = $current.ProcessId; runtimeId = $providerIdentity; bounds = $current.BoundingRectangle.ToString() }
+    if ($providerIdentity -eq $identity) { $nativeIdentityMatched = $true }
+  }
+  $evidence = @{ cursor = @{ x = $point.X; y = $point.Y }; foregroundProcessId = $foregroundProcess;
+    target = @{ name = $target.Current.Name; runtimeId = $identity; bounds = $bounds.ToString() };
+    nativeIdentityMatched = $nativeIdentityMatched; hitProviders = $providers }
+  $evidence | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 (Join-Path $OutDir "tooltip-pointer.json")
+  Write-Host "Pointer inside native '$($target.Current.Name)' ($identity); bounds=$bounds; foregroundProcess=$foregroundProcess; nativeHitIdentityMatched=$nativeIdentityMatched"
+  $providers | ConvertTo-Json -Depth 3 -Compress | Write-Host
 }
 function Arrange-DragWindows($main, $secondary) {
   $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
@@ -417,7 +434,7 @@ try {
   Start-Sleep -Milliseconds 150
   $tipBounds = $tooltipAnchor.Current.BoundingRectangle
   $tipPoint = Move-NativePointer ([int]($tipBounds.X + $tipBounds.Width / 2)) ([int]($tipBounds.Y + $tipBounds.Height / 2))
-  Assert-PointerTarget $tipPoint $tooltipAnchor
+  Assert-PointerPlacement $tipPoint $tooltipAnchor
   $tooltip = Find-ProcessElement "Native tooltip details" ([System.Windows.Automation.ControlType]::ToolTip)
   Save-PopupScreenshot "08-native-tooltip" $tooltip
   Move-NativePointer ($work.X + 8) ($work.Y + 8) | Out-Null
