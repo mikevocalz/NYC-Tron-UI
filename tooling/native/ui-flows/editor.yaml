@@ -15,7 +15,7 @@ name: Editor native draft route retention and save
     id: "reference-headline"
 - eraseText: 100
 - inputText: "Retained cover draft"
-- hideKeyboard
+- runFlow: subflows/dismiss-text-keyboard.yaml
 - takeScreenshot: editor-draft
 - tapOn: "Settings"
 - assertVisible: "Workspace name"

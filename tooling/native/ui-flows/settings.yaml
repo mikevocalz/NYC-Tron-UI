@@ -13,7 +13,7 @@ name: Settings native edit and save
     id: "reference-workspace-name"
 - eraseText: 100
 - inputText: "Native UI workspace"
-- hideKeyboard
+- runFlow: subflows/dismiss-text-keyboard.yaml
 - scrollUntilVisible:
     element:
       text: "Save settings"
