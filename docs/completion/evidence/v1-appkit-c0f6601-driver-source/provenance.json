@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:01:08.539940+00:00",
+  "runId": 42890131895,
+  "jobId": 130088762960,
+  "pullRequestHead": "c0f660128772f79f08f03d9025f011af94e2ab46",
+  "actualCheckout": "29044e62ed43e440f3771ff5bff03fcdb30a8e94",
+  "headTree": "f061f63b35e056c4b560795974225dd1750bc246",
+  "status": "passed",
+  "tests": {
+    "realIpcSocketRegressions": 4,
+    "sharedArchiveContracts": 4,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0
+  },
+  "runtime": "Node 24.19.0 on the Ubuntu CI source runner",
+  "log": {
+    "filename": "original-source-job.log",
+    "bytes": 18803,
+    "sha256": "419a1aaf2eecfec132aae665a5a0fb3bf6a9376b74517eb0368888540f0e506e"
+  },
+  "scope": "Source-driver IPC and canonical core packing only; native AppKit runtime acceptance is separate."
+}

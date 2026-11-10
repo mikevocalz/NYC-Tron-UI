@@ -1,0 +1,25 @@
+Saved UIA tree (1 descendants) to /workspace/scratch/4137c61be495/windows-diagnostics-regression-output/replace-tree.txt
+Saved UIA tree (0 descendants) to /workspace/scratch/4137c61be495/windows-diagnostics-regression-output/replace-tree.txt
+Saved UIA tree (unavailable descendants) to /workspace/scratch/4137c61be495/windows-diagnostics-regression-output/throwing-tree.txt
+PASS: populated, empty and unavailable trees preserve identity and overwrite correctly
+Failure process observation: process=30, exited=True, exitCode=7, HWND=1234, exists=False, windowProcess=0
+PASS: actual terminated child retains PID, start time, exit code and primary error
+Installed Windows App Runtime packages:
+Matching Application Error/WER records: 2
+NYCTronWindowsExample.exe crashed
+NYCTronWindowsExample.exe crashed
+Installed Windows App Runtime packages:
+Matching Application Error/WER records: 0
+Installed Windows App Runtime packages:
+Matching Application Error/WER records: 0
+PASS: bounded app/PID/time filtering retains PID-less WER with an explicit limitation
+UIA smoke failed: strict original drag header failure
+Could not retain process/window failure status: secondary status failure
+Could not retain Application Error/WER records: secondary events failure
+Could not retain failure tree: secondary tree failure
+Owned-window failure capture unavailable: secondary capture failure
+Desktop failure capture unavailable: secondary capture failure
+WER setting restoration unavailable: secondary restoration failure
+Could not retain crash-dump receipt: secondary receipt failure
+PASS: all secondary diagnostics may fail without replacing the strict primary failure
+All four portable diagnostic regressions passed; Windows integration remains untested here.

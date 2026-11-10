@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-compile-passed-initial-mount-request-timeout",
+  "runId": 42881937117,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42881937117",
+  "nativeJobId": 130060431296,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42881937117/job/130060431296",
+  "pullRequestHead": "d42b44529887b17976ff18b1f4084b22f1a932ee",
+  "checkoutRevision": "70252f011f9f1a72b82f649434c02fbd5e6339e9",
+  "checkoutTree": "2602bb632bee522784b8918baab11587a3ca8686",
+  "pullRequestHeadTree": "2602bb632bee522784b8918baab11587a3ca8686",
+  "artifact": {
+    "id": 13796685852,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 788039,
+    "expectedSha256": "b453d25ba365e8459a2034722f6affb517f3ac176c6e5d1363d3ca9292eb760c",
+    "downloadedSha256": "b453d25ba365e8459a2034722f6affb517f3ac176c6e5d1363d3ca9292eb760c",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "appkit-toolchain/versions.txt",
+      "retainedPath": "toolchain.txt",
+      "bytes": 232,
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-artifact.json",
+      "retainedPath": "native-artifact.json",
+      "bytes": 6128,
+      "sha256": "421124304845420d00a01e7a1fc8fb323be810c8535961976162659fd9a6f673"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/invocation.json",
+      "retainedPath": "invocation.json",
+      "bytes": 450,
+      "sha256": "49bea9a5f28ae2ea68552453cfb37bbc27d3747613438a27e36f21d2dd8c45ee"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/failure.json",
+      "retainedPath": "failure.json",
+      "bytes": 203,
+      "sha256": "eb7b6a90844810b6140b6883fc74dd820281663f42fa5b347afa427240cc609a"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/app.log",
+      "retainedPath": "app-startup.txt",
+      "bytes": 468,
+      "sha256": "fb03ddb1ef44b46f1b80bff50cbe03ebebe908194bd506eed38bb8959943da10"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-process-failure.json",
+      "retainedPath": "native-process-failure.json",
+      "bytes": 641,
+      "sha256": "72ab7eb21a69ffca1d28e02726079e8883ff8645d19f1096ea35652d46416082"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/commands.jsonl",
+      "retainedPath": "commands.jsonl",
+      "bytes": 843,
+      "sha256": "cc8314f17f7cc2c4165ffca1f1683173a0a435106459acc2ceeaf5c84682f6b3"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794338188526-61006984-58ca-4316-a1e0-45cc91fd217e-xcodebuild.log",
+      "bytes": 12299647,
+      "sha256": "e667bc84a820c2b7321cb074538088b44b6f8d85e748b7e5c238c1cb558cc415",
+      "retainedExcerpt": "build-success.txt",
+      "sourceLineRanges": [
+        [
+          50921,
+          50926
+        ]
+      ]
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-process-sample.txt",
+      "bytes": 185343,
+      "sha256": "ac9d3606ada3be94431e53120867c8eafac4a729b7005d3e2e14b5705755f1ef",
+      "retainedExcerpt": "empty-process-sample-excerpt.txt",
+      "sourceLineRanges": [
+        [
+          1,
+          26
+        ]
+      ]
+    }
+  ],
+  "observedToolchain": {
+    "xcodeVersion": "26.2",
+    "xcodeBuild": "17C52",
+    "swiftVersion": "6.2.3",
+    "architecture": "arm64",
+    "sdk": "MacOSX26.2.sdk",
+    "runtimeOS": "macOS 15.8.2 (24H232)"
+  },
+  "completedPrerequisites": [
+    "canonical-core-release-archive",
+    "native-arm64-xcode26.2-and-swift-isolated-conformance-probe",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot",
+    "standalone-native-appkit-reference-compilation"
+  ],
+  "completedReadinessStages": [
+    "socket-connected",
+    "authenticated-protocol-1",
+    "main-queue-ping"
+  ],
+  "failedStep": "Exercise actual native controls and window lifetimes",
+  "runtimeError": "Native driver response timed out awaiting waitFor (request 2)",
+  "failedRequest": {
+    "testID": "root-main",
+    "timeoutMs": 20000,
+    "command": "waitFor",
+    "id": 2
+  },
+  "requestTimeoutMilliseconds": 35000,
+  "completedInteractionChecks": [],
+  "launchedProcessId": 41856,
+  "executableSha256": "2b1d33d9e209b760cde9d5f63c9a2cb668f93168980227526382fae936510c6d",
+  "nativePayloadSha256": "013f2d1c769f8434a3ff76410fff05d78e11d0fd979e7899845c97f7adf9744b",
+  "requestTracePresent": true,
+  "requestTraceRecords": 8,
+  "processSample": {
+    "exitCode": 0,
+    "durationSeconds": 2,
+    "intervalMilliseconds": 10,
+    "hasThreadStacks": false,
+    "threadGroups": 0,
+    "callGraphEmpty": true
+  },
+  "activationRequestReached": false,
+  "unexecutedChecks": [
+    "foreground-activation",
+    "native-control-window-popover-and-drag-acceptance",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "Authentication and ping completed, but the initial root-main waitFor request received no response before the client deadline.",
+    "The sampler exited0 but produced no thread stacks. It cannot establish main-thread, JavaScript-thread, driver-thread or process-termination state.",
+    "This revision destroys the socket in its local timeout callback before failure capture; Spark couples application lifetime to session disconnection, so the sampler is not guaranteed to observe a live target.",
+    "The recorded child.exitCode/signalCode were null before synchronous sampling; this is not proof that the process stayed alive during capture.",
+    "No NSWorkspace activation request was reached, so this run neither validates nor disproves the preceding foreground correction.",
+    "The initial mount timeout cause remains unestablished. Fixing capture lifetime is a diagnostic repair, not a demonstrated startup repair.",
+    "No tooltip-hover or native-drag permission observation was reached.",
+    "Prepared archive and native payload hashes identify a successful compile and failed runtime attempt, not an accepted distribution."
+  ]
+}

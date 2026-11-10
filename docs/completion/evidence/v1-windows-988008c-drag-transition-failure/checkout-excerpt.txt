@@ -1,0 +1,10 @@
+2026-11-10T19:14:35.4937047Z Or undo this operation with:
+2026-11-10T19:14:35.4937387Z 
+2026-11-10T19:14:35.4937543Z   git switch -
+2026-11-10T19:14:35.4937841Z 
+2026-11-10T19:14:35.4939350Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-10T19:14:35.4940246Z 
+2026-11-10T19:14:35.4940930Z HEAD is now at 231edc1 Merge 988008cff4e757423967adfe349c1b632efc161b into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-10T19:14:35.5100278Z ##[endgroup]
+2026-11-10T19:14:35.5655048Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-10T19:14:35.6076302Z 231edc1c36e8665a9265d1e5d982650debfaedd3

@@ -1,0 +1,4 @@
+2026-11-10 19:32:07.393 NYCTronAppKitReference[41856:104627] _setUpFeatureFlags called with release level 2
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1110 19:32:07.405474 1874096128 ReactInstance.cpp:256] ReactInstance: evaluateJavaScript() with JS bundle
+2026-11-10 19:32:07.425 NYCTronAppKitReference[41856:104703] Expo is being initialized from the deprecated ExpoBridgeModule, make sure to migrate to ExpoReactNativeFactory in your project

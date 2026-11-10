@@ -1,0 +1,8 @@
+{"phase":"socket-connecting","at":"2026-11-10T19:32:05.280Z"}
+{"phase":"socket-connected","at":"2026-11-10T19:32:05.281Z"}
+{"phase":"authentication-started","at":"2026-11-10T19:32:05.281Z"}
+{"phase":"authentication-response","at":"2026-11-10T19:32:06.136Z","ok":true,"protocol":1}
+{"phase":"request-started","at":"2026-11-10T19:32:06.137Z","request":{"command":"ping","id":1}}
+{"phase":"response","at":"2026-11-10T19:32:07.422Z","request":{"command":"ping","id":1},"response":{"id":1,"ok":true}}
+{"phase":"request-started","at":"2026-11-10T19:32:07.422Z","request":{"testID":"root-main","timeoutMs":20000,"command":"waitFor","id":2}}
+{"phase":"request-failed","at":"2026-11-10T19:32:42.447Z","request":{"testID":"root-main","timeoutMs":20000,"command":"waitFor","id":2},"error":"Native driver response timed out awaiting waitFor (request 2)"}

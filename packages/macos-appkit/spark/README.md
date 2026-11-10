@@ -246,6 +246,13 @@ binding. If posting is allowed but the public observations do not establish
 presentation and dismissal, the native acceptance run fails. This posted-event
 path does not test physical mouse hardware or a human gesture.
 
+Both actual CGEvent tooltip hover and the AppKit-provided NSDraggingSession with
+cross-window document transfer are required for native acceptance. A blocked
+host capability retains the completed protocol/property checks and an explicit
+`native-interaction-gate.json` diagnosis, fails the overall native gate, and
+prevents a passed report or tested-package receipt. Native protocol calls alone
+cannot satisfy these interaction requirements.
+
 The workflow records
 app-payload hashes, commands, results and native-rendered captures. A tested
 archive receipt is produced only after those checks pass.

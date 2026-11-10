@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "01-launched.png",
+      "bytes": 31470,
+      "sha256": "d83b217587052e0163cac0dd69e4b9159eb7a606363cdcb5bb9ee486d3d1f6c5",
+      "retainedInOriginalZip": true,
+      "retainedPath": "01-launched.png"
+    },
+    {
+      "path": "02-rejected.png",
+      "bytes": 33159,
+      "sha256": "587d86c8ea3457c7d08c0dac838a4a4ecaf7bea706b6246f96c3e30f5313d838",
+      "retainedInOriginalZip": true,
+      "retainedPath": "02-rejected.png"
+    },
+    {
+      "path": "03-accepted.png",
+      "bytes": 32345,
+      "sha256": "78bd4f2c4ad7a804a8cbe2e0b304b8d3c89675c872d274c10fed52f8bafd38e0",
+      "retainedInOriginalZip": true,
+      "retainedPath": "03-accepted.png"
+    },
+    {
+      "path": "04-native-document.png",
+      "bytes": 15294,
+      "sha256": "4e29a4af045ae6271fd922d12827325d3706f4435c160916d2daffd75ca42b38",
+      "retainedInOriginalZip": true,
+      "retainedPath": "04-native-document.png"
+    },
+    {
+      "path": "05-close-veto.png",
+      "bytes": 15246,
+      "sha256": "0226eb947628c6adec3cc6e5251b927ca3ba92e7f8a1b13b017865f08a0e2526",
+      "retainedInOriginalZip": true,
+      "retainedPath": "05-close-veto.png"
+    },
+    {
+      "path": "06-document-tree.txt",
+      "bytes": 2398,
+      "sha256": "40e3d7b6c4fc21d2bbf29b807fa0d84c3cf39c6d18fececbc9086cfe7c1e7798",
+      "retainedInOriginalZip": true,
+      "retainedPath": "06-document-tree.txt"
+    },
+    {
+      "path": "06-native-reopened.png",
+      "bytes": 15209,
+      "sha256": "dd660fbca37c8587384210cb300c92a11a9bc04885efb008c62b4556e2cdfbb3",
+      "retainedInOriginalZip": true,
+      "retainedPath": "06-native-reopened.png"
+    },
+    {
+      "path": "07-native-menu.png",
+      "bytes": 43813,
+      "sha256": "618b850c3ca3c39861c24af11116f44a2d588e25766ae27e6cad69f316ed0b48",
+      "retainedInOriginalZip": true,
+      "retainedPath": "07-native-menu.png"
+    },
+    {
+      "path": "08-native-tooltip.png",
+      "bytes": 42920,
+      "sha256": "e59617dc107b4f37990d109b4f2861df468e37a5df730f74e5b93763c6aaddb8",
+      "retainedInOriginalZip": true,
+      "retainedPath": "08-native-tooltip.png"
+    },
+    {
+      "path": "09-after-overlay-unmount-fresh.txt",
+      "bytes": 8000,
+      "sha256": "7ef082b79f9baaf14c54e80142e1b6066475f4daaf31ad8a463c453e395ccc65",
+      "retainedInOriginalZip": true,
+      "retainedPath": "09-after-overlay-unmount-fresh.txt"
+    },
+    {
+      "path": "09-after-overlay-unmount-retained.txt",
+      "bytes": 8000,
+      "sha256": "0c4a8e0375a0bb2a00882764987310f7f2497ce510e8fb16a8af74a458461e93",
+      "retainedInOriginalZip": true,
+      "retainedPath": "09-after-overlay-unmount-retained.txt"
+    },
+    {
+      "path": "09-before-overlay-unmount.txt",
+      "bytes": 7623,
+      "sha256": "b39c7fc56886ec0744f878f750edeff6c18ef5931e4c354c7418ae2a405a5b62",
+      "retainedInOriginalZip": true,
+      "retainedPath": "09-before-overlay-unmount.txt"
+    },
+    {
+      "path": "09-native-inspector-reopened.png",
+      "bytes": 48374,
+      "sha256": "ddda7709d037d0a18b97aa54281d2c00716b5550b8b7d2219faf248eb916ea78",
+      "retainedInOriginalZip": true,
+      "retainedPath": "09-native-inspector-reopened.png"
+    },
+    {
+      "path": "09-native-inspector.png",
+      "bytes": 48333,
+      "sha256": "4a937ceb64afd9a88072173a1ce2c4cd8790429fd99ca2079492dd528a6bacd2",
+      "retainedInOriginalZip": true,
+      "retainedPath": "09-native-inspector.png"
+    },
+    {
+      "path": "application-error-events.json",
+      "bytes": 3567,
+      "sha256": "6c395f1107498331321f85c903e36d8fed09f2dac8fbf81ce776a580eed98f0e",
+      "retainedInOriginalZip": true,
+      "retainedPath": "application-error-events.json"
+    },
+    {
+      "path": "application-error-query.json",
+      "bytes": 354,
+      "sha256": "63f551507adc92df02b76468dc9922cb3ce1f8651ace22210498d271c1e0f031",
+      "retainedInOriginalZip": true,
+      "retainedPath": "application-error-query.json"
+    },
+    {
+      "path": "crash-capture.json",
+      "bytes": 517,
+      "sha256": "3d18fd83d85cd188305d8d59b42c3cc33b64bf2639b8bae9f5a79b7806ae0e62",
+      "retainedInOriginalZip": true,
+      "retainedPath": "crash-capture.json"
+    },
+    {
+      "path": "crash-dumps/NYCTronWindowsExample.exe.8280.dmp",
+      "bytes": 4937072,
+      "sha256": "57a3f44abcfaf498c6c609f4f5bdf79d812276530318dc79be19da3917b75618",
+      "retainedInOriginalZip": true
+    },
+    {
+      "path": "failure-desktop.png",
+      "bytes": 260557,
+      "sha256": "b58619d24f23ba502de421ab650f217045dc6cd846adc92dd882e2854c09c5b9",
+      "retainedInOriginalZip": true,
+      "retainedPath": "failure-desktop.png"
+    },
+    {
+      "path": "failure-status.json",
+      "bytes": 1467,
+      "sha256": "13447b4bb989fe3d6d67825bf5dc95d85ab714b5010f3aa159db78f2498662ed",
+      "retainedInOriginalZip": true,
+      "retainedPath": "failure-status.json"
+    },
+    {
+      "path": "tooltip-pointer.json",
+      "bytes": 1651,
+      "sha256": "a931c8b9a3c9cbbfdfac2a84b09b6e49123a64a2bcd23e1b7ee162ca0bf21b35",
+      "retainedInOriginalZip": true,
+      "retainedPath": "tooltip-pointer.json"
+    },
+    {
+      "path": "uia-tree.txt",
+      "bytes": 115,
+      "sha256": "d260986d69df1878512e8747e074c48733b7725606c50e7405bff63bde71c6e0",
+      "retainedInOriginalZip": true,
+      "retainedPath": "uia-tree.txt"
+    }
+  ]
+}

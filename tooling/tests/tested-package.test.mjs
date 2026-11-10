@@ -29,8 +29,11 @@ function fixture(t, platform = "macos") {
     const peerHash = createHash("sha256").update(readFileSync(join(output, peerFilename))).digest("hex");
     dependencies.push({ packageName: name, filename: peerFilename, sha256: peerHash });
   }
+  const checks = platform === "macos" ? ["native-window-open-close",
+    "native-cgevent-tooltip-hover-presentation-and-dismissal",
+    "native-cgevent-pointer-session-and-cross-window-document-transfer"] : ["native-window-open-close"];
   const receipt = { schemaVersion: 1, status: "passed", platform, packageName, version, filename, sha256,
-    sourceRevision: revision, dependencies, checks: ["native-window-open-close"] };
+    sourceRevision: revision, dependencies, checks };
   writeFileSync(join(input, "tested-package.json"), JSON.stringify(receipt));
   writeFileSync(join(input, "SHA256SUMS"), sha256 + "  " + filename + "\n");
   const previous = dependencies.map(peer => peer.sha256 + "  " + peer.filename + "\n").join("");
@@ -59,6 +62,37 @@ test("failed, stale, incomplete or mismatched native receipts cannot contribute 
     assert.throws(f.merge, /native receipt/);
     assert.equal(readFileSync(join(f.output, "SHA256SUMS"), "utf8"), f.previous);
   }
+});
+
+test("AppKit requires both observed tooltip hover and an actual cross-window OS dragging session", t => {
+  const f = fixture(t);
+  const hover = "native-cgevent-tooltip-hover-presentation-and-dismissal";
+  const drag = "native-cgevent-pointer-session-and-cross-window-document-transfer";
+  for (const omitted of [hover, drag]) {
+    const checks = f.receipt.checks.filter(check => check !== omitted);
+    writeFileSync(join(f.input, "tested-package.json"), JSON.stringify({ ...f.receipt, checks }));
+    assert.throws(f.merge, error => error.message.includes("lacks completed OS gesture checks") && error.message.includes(omitted));
+    assert.equal(readFileSync(join(f.output, "SHA256SUMS"), "utf8"), f.previous);
+    assert.throws(() => readFileSync(join(f.output, f.receipt.filename)), { code: "ENOENT" });
+    assert.throws(() => readFileSync(join(f.output, "macos-tested-package.json")), { code: "ENOENT" });
+  }
+});
+
+test("AppKit permission observation and native protocol checks cannot substitute for blocked OS gestures", t => {
+  const f = fixture(t);
+  // This fixture represents the verifier's permission-denied branch: property
+  // and protocol checks exist, but hover and NSDraggingSession checks do not.
+  // Keep its former unconditional passed status so assembly must reject that
+  // receipt independently; this is not evidence from an actual native host.
+  const checks = ["native-appkit-controls-and-display-module", "native-application-and-context-menu-commands",
+    "native-tooltip-property-and-accessibility-help", "native-tooltip-hover-permission-observed",
+    "native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership",
+    "native-pointer-posting-permission-observed"];
+  writeFileSync(join(f.input, "tested-package.json"), JSON.stringify({ ...f.receipt, checks }));
+  assert.throws(f.merge, /lacks completed OS gesture checks/);
+  assert.equal(readFileSync(join(f.output, "SHA256SUMS"), "utf8"), f.previous);
+  assert.throws(() => readFileSync(join(f.output, f.receipt.filename)), { code: "ENOENT" });
+  assert.throws(() => readFileSync(join(f.output, "macos-tested-package.json")), { code: "ENOENT" });
 });
 
 test("changed archive bytes cannot be released under the successful native job's checksum", t => {

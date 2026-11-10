@@ -6,7 +6,10 @@ import { releaseChecksums, verifyArchiveHash } from "./consumer-model.mjs";
 
 const desktopPackages = new Map([
   ["@nyc-tron/windows-fluent-fabric", { platform: "windows", dependencies: ["@nyc-tron/core", "@nyc-tron/windows-fluent"] }],
-  ["@nyc-tron/macos-appkit", { platform: "macos", dependencies: ["@nyc-tron/core"] }],
+  ["@nyc-tron/macos-appkit", { platform: "macos", dependencies: ["@nyc-tron/core"], requiredChecks: [
+    "native-cgevent-tooltip-hover-presentation-and-dismissal",
+    "native-cgevent-pointer-session-and-cross-window-document-transfer",
+  ] }],
 ]);
 const fail = message => { throw new Error("Tested desktop package: " + message); };
 
@@ -16,7 +19,7 @@ export function mergeTestedPackage(input, output, { packageName, version, revisi
   if (!desktop || !/^[a-f0-9]{40}$/.test(revision ?? "") || typeof version !== "string") {
     fail("an expected desktop package, version and full candidate revision are required");
   }
-  const { platform, dependencies } = desktop;
+  const { platform, dependencies, requiredChecks = [] } = desktop;
   const source = realpathSync(resolve(input));
   const destination = realpathSync(resolve(output));
   const receipt = JSON.parse(readFileSync(join(source, "tested-package.json"), "utf8"));
@@ -27,6 +30,11 @@ export function mergeTestedPackage(input, output, { packageName, version, revisi
       !Array.isArray(receipt.checks) || !receipt.checks.length || receipt.checks.some(value => typeof value !== "string" || !value.trim())) {
     fail("native receipt does not identify a passed run for this package and candidate");
   }
+  // Permission observation, tooltip properties and native drag-protocol calls
+  // do not establish actual hover or an OS dragging session. A blocked host
+  // cannot contribute a passed AppKit archive by omitting those checks.
+  const missingChecks = requiredChecks.filter(check => !receipt.checks.includes(check));
+  if (missingChecks.length) fail("native receipt lacks completed OS gesture checks: " + missingChecks.join(", "));
   const hashes = releaseChecksums(readFileSync(join(source, "SHA256SUMS"), "utf8"));
   const archives = readdirSync(source).filter(file => file.endsWith(".tgz"));
   if (hashes.size !== 1 || hashes.get(filename) !== receipt.sha256 || archives.length !== 1 || archives[0] !== filename) {

@@ -1,0 +1,67 @@
+2026-11-10T19:23:04.1066942Z ##[group]Run & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+2026-11-10T19:23:04.1068013Z [36;1m& .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"[0m
+2026-11-10T19:23:04.1133346Z shell: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -command ". '{0}'"
+2026-11-10T19:23:04.1133871Z env:
+2026-11-10T19:23:04.1134132Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T19:23:04.1134501Z   CONSUMER_AUMID: NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T19:23:04.1134812Z ##[endgroup]
+2026-11-10T19:23:07.0493311Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T19:23:07.8207941Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T19:23:08.0236440Z Native NavigationView items found by Narrator name
+2026-11-10T19:23:08.3262834Z Saved screenshot D:\a\_temp\uia-smoke\01-launched.png
+2026-11-10T19:23:08.3403253Z [initial] Home selected=True, Workspace selected=False
+2026-11-10T19:23:09.0801867Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T19:23:09.0835120Z [pending] Home selected=True, Workspace selected=False
+2026-11-10T19:23:09.4482129Z Pressed 'Reject navigation' with the keyboard (no InvokePattern)
+2026-11-10T19:23:09.4643787Z [rejected] Home selected=True, Workspace selected=False
+2026-11-10T19:23:09.6566755Z Saved screenshot D:\a\_temp\uia-smoke\02-rejected.png
+2026-11-10T19:23:10.3447423Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T19:23:10.6982756Z Pressed 'Accept navigation' with the keyboard (no InvokePattern)
+2026-11-10T19:23:10.7159399Z [accepted] Home selected=False, Workspace selected=True
+2026-11-10T19:23:10.9088846Z Saved screenshot D:\a\_temp\uia-smoke\03-accepted.png
+2026-11-10T19:23:10.9100473Z UIA smoke passed: native selection followed only the committed route
+2026-11-10T19:23:11.2788818Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T19:23:11.7147976Z Pressed 'Change shared draft' with the keyboard (no InvokePattern)
+2026-11-10T19:23:11.9154193Z Saved screenshot D:\a\_temp\uia-smoke\04-native-document.png
+2026-11-10T19:23:12.2896432Z Pressed 'Restore document' with the keyboard (no InvokePattern)
+2026-11-10T19:23:12.5640126Z Saved screenshot D:\a\_temp\uia-smoke\05-close-veto.png
+2026-11-10T19:23:12.8911021Z Pressed 'Save shared draft' with the keyboard (no InvokePattern)
+2026-11-10T19:23:13.2868365Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T19:23:13.7703150Z Saved screenshot D:\a\_temp\uia-smoke\06-native-reopened.png
+2026-11-10T19:23:13.8301548Z Saved UIA tree (14 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T19:23:14.1766500Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T19:23:14.2863770Z Invoked 'Native command menu' through InvokePattern
+2026-11-10T19:23:14.4974605Z Saved screenshot D:\a\_temp\uia-smoke\07-native-menu.png
+2026-11-10T19:23:14.9495454Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T19:23:15.1074117Z OS pointer reached (456, 347) for requested (456, 347)
+2026-11-10T19:23:15.8235564Z Pointer inside native 'Native tooltip anchor' (42,66102,4,26); bounds=336,327,240,40; foregroundProcess=7572; nativeHitIdentityMatched=False
+2026-11-10T19:23:15.8260016Z [{"controlType":"ControlType.Pane","name":"","processId":7572,"bounds":"0,23,1024,697","className":"Microsoft.UI.Content.DesktopChildSiteBridge","runtimeId":"42,131588"},{"controlType":"ControlType.Window","name":"NYCTronWindowsExample","processId":7572,"bounds":"-8,-8,1040,736","className":"Microsoft.UI.Windowing.Window","runtimeId":"42,589966"},{"controlType":"ControlType.Pane","name":"","processId":8052,"bounds":"0,0,1024,768","className":"#32769","runtimeId":"42,65548"}]
+2026-11-10T19:23:16.1755218Z Saved screenshot D:\a\_temp\uia-smoke\08-native-tooltip.png
+2026-11-10T19:23:16.1773318Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T19:23:17.0614630Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T19:23:17.7746382Z Saved screenshot D:\a\_temp\uia-smoke\09-native-inspector.png
+2026-11-10T19:23:17.9083569Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T19:23:18.0117931Z Saved screenshot D:\a\_temp\uia-smoke\09-native-inspector-reopened.png
+2026-11-10T19:23:18.8009484Z Pressed 'Enable native inspector' with the keyboard (no InvokePattern)
+2026-11-10T19:23:18.8347646Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T19:23:19.3067566Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T19:23:19.9085411Z Pressed 'Veto next inspector dismissal' with the keyboard (no InvokePattern)
+2026-11-10T19:23:19.9601306Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T19:23:20.7534193Z Saved UIA tree (46 elements) to D:\a\_temp\uia-smoke\09-before-overlay-unmount.txt
+2026-11-10T19:23:21.1178332Z Pressed 'Show lifecycle checks' with the keyboard (no InvokePattern)
+2026-11-10T19:23:21.2154294Z Saved UIA tree (49 elements) to D:\a\_temp\uia-smoke\09-after-overlay-unmount-retained.txt
+2026-11-10T19:23:21.2259889Z Reacquired owned window HWND=589966, process=7572, runtimeId=42,589966
+2026-11-10T19:23:21.3051720Z Saved UIA tree (49 elements) to D:\a\_temp\uia-smoke\09-after-overlay-unmount-fresh.txt
+2026-11-10T19:23:21.7048872Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T19:23:21.8266131Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T19:23:22.4480175Z Pressed 'Show native drag checks' with the keyboard (no InvokePattern)
+2026-11-10T19:23:52.5831323Z UIA smoke failed: UIA element named 'Native cross-window drag acceptance' did not appear within 30 s
+2026-11-10T19:23:52.5878758Z Saved UIA tree (0 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T19:23:57.8583185Z Screenshot target never became the stable foreground window: failure
+2026-11-10T19:23:57.8584096Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:76 char:24
+2026-11-10T19:23:57.8584899Z + ... t $ready) { throw "Screenshot target never became the stable foregrou ...
+2026-11-10T19:23:57.8585613Z +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T19:23:57.8586481Z     + CategoryInfo          : OperationStopped: (Screenshot targ...window: failure:String) [], RuntimeException
+2026-11-10T19:23:57.8587639Z     + FullyQualifiedErrorId : Screenshot target never became the stable foreground window: failure
+2026-11-10T19:23:57.8588638Z  
+2026-11-10T19:23:57.9142667Z ##[error]Process completed with exit code 1.

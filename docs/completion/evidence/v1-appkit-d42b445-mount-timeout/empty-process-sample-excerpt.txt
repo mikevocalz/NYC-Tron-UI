@@ -1,0 +1,26 @@
+1: Analysis of sampling NYCTronAppKitReference (pid 41856) every 10 milliseconds
+2: Process:         NYCTronAppKitReference [41856]
+3: Path:            /Users/USER/*/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference
+4: Load Address:    0x100714000
+5: Identifier:      org.nyctron.appkit.reference
+6: Version:         1.0.0 (1)
+7: Code Type:       ARM64
+8: Platform:        macOS
+9: Parent Process:  node [41853]
+10: Target Type:     live task
+11: 
+12: Date/Time:       2026-11-10 19:32:42.741 +0000
+13: Launch Time:     2026-11-10 19:32:04.766 +0000
+14: OS Version:      macOS 15.8.2 (24H232)
+15: Report Version:  7
+16: Analysis Tool:   /usr/bin/sample
+17: ----
+18: 
+19: Call graph:
+20: 
+21: Total number in stack (recursive counted multiple, when >=5):
+22: 
+23: Sort by top of stack, same collapsed (when >= 5):
+24: 
+25: Binary Images:
+26:        0x100714000 -        0x100bfdca7 +org.nyctron.appkit.reference (1.0.0 - 1) <D67E0794-0EE6-31FF-BDE3-0F042A73CE50> /Users/*/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T19:48:18.638119+00:00",
+  "nativeCandidate": "0ae548a01fabd7bfcddefc55ed53e3a637e39fc8",
+  "nativeCandidateTree": "81c0f37c0836650b00b6c17f3df90b91aac4301a",
+  "sourceCommit": "2e9d050b19114c8bba6564ef097ce37affceb1dd",
+  "rootIntegrationCommit": "b7df505a827428fe62eebb4f80d8dd61b3ac8c12",
+  "runtime": "PowerShell 7.5.4 Linux x64",
+  "tests": {
+    "passed": 4,
+    "failed": 0,
+    "scope": "Actual production functions/catch/finally extracted through AST. Mocked Windows providers; real Linux child process exit."
+  },
+  "sourceFiles": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+      "bytes": 43210,
+      "sha256": "88160e92edb7a29cc830d3623e8758c3bf6ab7ea1c106a1a76b35028685315c2",
+      "gitBlob": "859899a2ea4643cb224b9f26dbffca900d6e26f2"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-crash-dumps.ps1",
+      "bytes": 3862,
+      "sha256": "d1d593aca5dd8f61f1b6fcb56527fd1540b4505e0445612781faab7115560b4d",
+      "gitBlob": "07a85797a23f29ad2f825fc0b3bdad09404d92ca"
+    }
+  ],
+  "originalHarnessContainsHistoricalAbsolutePaths": true,
+  "windowsIntegrationEstablished": false,
+  "sourceAndToolArchiveHashesRechecked": true,
+  "retainedFiles": [
+    {
+      "path": "original-regressions.ps1",
+      "bytes": 8870,
+      "sha256": "1dc7a805cac22d579e02821421e07acbe555fec5f515931d8ecc77c3bf529ae5"
+    },
+    {
+      "path": "original-root-verification.log",
+      "bytes": 1744,
+      "sha256": "6654283eba3de063ea3e2271bc68cf2985b8de087616972a013dff48e277e871"
+    },
+    {
+      "path": "powershell-provenance.json",
+      "bytes": 1052,
+      "sha256": "d95f18d3eff54cf9fcf9398401b94efc74e7b1ab93be2d4f0ad61054b2c33185"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+﻿Captured UTC: 2026-11-10T19:51:32.0208994Z
+Root: HWND=590164; process=; runtimeId=42,590164
+Descendants: 0
+

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows",
+  "result": "native-build-and-inspector-remount-passed-drag-scene-transition-failed",
+  "runId": 42883122854,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42883122854",
+  "sourceJobId": 130064337824,
+  "nativeJobId": 130064783865,
+  "pullRequestHead": "988008cff4e757423967adfe349c1b632efc161b",
+  "checkoutRevision": "231edc1c36e8665a9265d1e5d982650debfaedd3",
+  "checkoutTree": "c66a9abcf7072f6cfeac1f76264f54b013e96c96",
+  "headTree": "c66a9abcf7072f6cfeac1f76264f54b013e96c96",
+  "independentlyFetchedAndTreeCompared": true,
+  "artifactId": 13796255494,
+  "artifactZipBytes": 275132,
+  "artifactZipSha256": "4ace67ff7d7eefff1b74119f20f724fe06072a340b81d34fa4fd681da3ac4a92",
+  "retainedOriginalMembers": 15,
+  "allOriginalMembersIndependentlyMatched": true,
+  "nativeJobLog": {
+    "bytes": 311950,
+    "sha256": "f951f83ddd28f0c5eb9e868b554608f0888631593e19077411c4fed558699704",
+    "excerpts": {
+      "checkout-excerpt.txt": [
+        [
+          102,
+          111
+        ]
+      ],
+      "build-success-excerpt.txt": [
+        [
+          917,
+          930
+        ]
+      ],
+      "native-uia-excerpt.txt": [
+        [
+          1592,
+          1658
+        ]
+      ]
+    }
+  },
+  "observedProcessId": 7572,
+  "observedPrimaryHwnd": 589966,
+  "firstOverlayRemoval": {
+    "beforeDescendants": 46,
+    "afterRetainedDescendants": 49,
+    "afterFreshSameOwnedHwndDescendants": 49,
+    "lifecycleHeaderObserved": true,
+    "oldInspectorAnchorHidden": true
+  },
+  "strictRemountAssertionsCompletedBeforeNextCommand": [
+    "retained-draft",
+    "initial-native-edit-count-zero",
+    "accepted-new-edit",
+    "new-native-edit-count-one",
+    "accepted-value-pattern",
+    "committed-inspector-close"
+  ],
+  "inspectorCaptures": {
+    "immediateAndReopenedText": "NativeRapid123abc",
+    "visuallyInspected": true,
+    "priorC6ImageUnchanged": true
+  },
+  "primaryFailure": {
+    "at": "2026-11-10T19:23:52.5831323Z",
+    "message": "UIA element named 'Native cross-window drag acceptance' did not appear within 30 s",
+    "sceneCommandAt": "2026-11-10T19:23:22.4480175Z"
+  },
+  "failureDiagnostics": {
+    "finalEnumerationLogCount": 0,
+    "finalTreeFileIsCurrent": false,
+    "retainedTreeFileDescription": "Earlier document-window tree with14descendants, written at19:23:13.830; empty-pipeline final write did not replace its bytes.",
+    "failureScreenshotPresent": false,
+    "secondaryCaptureError": "Screenshot target never became the stable foreground window: failure",
+    "processExitStatusRecorded": false,
+    "crashEvidenceRecorded": false,
+    "primaryErrorMaskedByCaptureException": true
+  },
+  "notReached": [
+    "drag-window-arrangement",
+    "rejected-native-os-drag",
+    "escape-cancelled-native-os-drag",
+    "close-during-approval-native-os-drag",
+    "accepted-native-os-drag",
+    "navigation-accessibility-extension",
+    "passed-only-package-retention"
+  ],
+  "limits": [
+    "The full native gate failed; no tested desktop archive was emitted.",
+    "Zero descendants in the final log plus failed foreground acquisition do not establish process exit or a specific provider failure.",
+    "The retained uia-tree.txt is deliberately unchanged historical content, not a final-state tree.",
+    "Earlier c6 paint-timing hypothesis is not proved by the two accepted-value images in this run."
+  ]
+}

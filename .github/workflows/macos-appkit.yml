@@ -49,8 +49,8 @@ jobs:
         run: |
           corepack enable
           corepack pnpm install --frozen-lockfile --ignore-scripts
-      - name: Check shared archive import contracts
-        run: node --test tooling/macos-appkit/shared-archives.test.mjs
+      - name: Check shared archive and native driver contracts
+        run: node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs
       - name: Build and pack core with release provenance
         if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         run: |

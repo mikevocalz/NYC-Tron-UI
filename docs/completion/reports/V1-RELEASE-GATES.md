@@ -8,32 +8,51 @@ blanket device-acceptance claim is created by this report.
 
 ## Current desktop gate boundary
 
-The latest retained desktop attempts still failed their complete native gates.
-[AppKit at `7afcf31`](../evidence/v1-appkit-7afcf31-foreground-failure/README.md)
-compiled, authenticated its driver, answered a main-queue ping and mounted the
-ready React root. All 340 owner observations then showed a visible window that
-was never key. No interaction group or input-posting permission check completed.
+The latest completed desktop attempts still failed their complete native gates.
+[AppKit at `d42b445`](../evidence/v1-appkit-d42b445-mount-timeout/README.md)
+compiled, authenticated its driver and answered a main-queue ping, then timed
+out on the initial root-mount request before activation or any interaction
+check. Its sampler exited zero but produced no thread stacks. Review found
+that the timeout closed Spark's app-owned session before sampling; this
+capture-order defect does not establish the original startup cause.
 
-[Windows at `4b73093`](../evidence/v1-windows-4b73093-provider-transition-failure/README.md)
-passed compilation, deployment and the strict rapid-edit/inspector assertions,
-then lost React UIA traversal after overlay removal.
-[The `c6c1826` rerun](../evidence/v1-windows-c6c1826-stale-fragment-failure/README.md)
-repeated those passes and established that a fresh reference to the same owned
-HWND still exposed the removed menu's stale fragment and omitted the React
-content. Inspector remount, OS cross-window drag and the navigation
-accessibility extension were not reached. Its immediate rejection screenshot
-is not visual proof of the restored field value; the original assertions and
-capture limitation remain documented together. Neither failed desktop gate
-retained a passed-only package artifact.
+The current AppKit source candidate `c0f66012` preserves the failed session
+through capture, rejects later commands before writes and explicitly owns
+handshake cleanup. Its [eight CI source checks](../evidence/v1-appkit-c0f6601-driver-source/README.md),
+including four real IPC socket regressions, passed at actual checkout
+`29044e62ed43e440f3771ff5bff03fcdb30a8e94` in
+[run 42890131895](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42890131895).
+The separate native job is still required to establish startup and interaction
+results. The earlier [visible-but-non-key `7afcf31` attempt](../evidence/v1-appkit-7afcf31-foreground-failure/README.md)
+remains preserved at its own checkout.
 
-The follow-up source checkpoints are AppKit `d42b4452` in
-[PR 59 run 42881937117](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42881937117)
-and Windows `988008cf` in
-[PR 60 run 42883122854](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42883122854).
-These links identify the validation attempts for the foreground-acquisition and
-native connection-lifetime corrections; they do not claim their outcomes.
+[Windows at `988008c`](../evidence/v1-windows-988008c-drag-transition-failure/README.md)
+compiled and deployed, passed the original overlay-removal traversal and strict
+inspector remount/draft/new-edit assertions, then failed during the drag-scene
+transition. Its missing final process evidence left the cause unresolved.
+The [diagnostic run at `0ae548a`](../evidence/v1-windows-0ae548a-native-crash/README.md)
+repeated those passes and established an actual process crash before any OS
+drag: the owned PID exited with `0xC0000409`, its HWND disappeared, and a matching
+Application Error record identifies `Microsoft.UI.Xaml.dll` version `3.1.8.0`
+at RVA `0x41c066`. The complete original artifact, minidump and native job log
+are retained. The primary assertion, explicit empty tree and restored WER
+settings are now observed; a production cause still requires exact-symbol
+stack analysis. No passed-only Windows archive was produced.
+
+A separate review closed an acceptance gap: AppKit previously could produce a
+passed archive after observing denied CGEvent permission and omitting actual
+hover/drag checks. The current native verifier requires both completed
+CGEvent tooltip-hover and NSDraggingSession/cross-window-transfer results
+before any passed report or archive receipt. Permission denial retains a
+clear blocked diagnosis and fails the native gate. The aggregate archive
+merger independently requires both check identifiers; eight focused merger
+regressions passed, including omitted and permission-blocked gesture cases.
+
 The frozen combined candidate still needs completed native results and exact
-tested archive receipts before desktop acceptance or release assembly.
+tested archive receipts before desktop acceptance or release assembly. The
+source inventory remains 332 local plus nine pinned external rows; full
+acceptance across all eight required platforms is not inferred from these
+individual component or diagnostic results.
 
 ## November 10 native integration
 
@@ -166,9 +185,10 @@ content, and anchored inspectors. Popover placement is checked against the
 observed native window frame and selected usable region; resizing preserves the
 active native field editor. Its driver requires native controls and lifecycle,
 menu invocation, inspector edits, dismissal/focus return, constrained placement,
-and the document drag protocol. An OS-posted drag is required when the host
-grants input-posting access; a denied TCC capability remains explicitly missing
-gesture evidence. The workflow selects and verifies Xcode 26.2 for the pinned
+and the document drag protocol. At that checkpoint, an OS-posted drag was required when the host
+granted input-posting access, while denied TCC capability was recorded as missing
+gesture evidence. The current stricter gate above requires actual gestures for
+any passed native receipt. The workflow selects and verifies Xcode 26.2 for the pinned
 Expo 55 runtime before compiling.
 
 The [actual Xcode 26.2 build at fd86](../evidence/v1-appkit-fd86-compiler-failure/README.md)
@@ -193,8 +213,9 @@ the visible trigger, a new `AXHelpTag` must expose the expected text and native
 frame, and its window must disappear after exit. A native help-tag content bitmap
 is retained during hover; owner capture follows dismissal. Permission denial
 records blocked hover evidence separately. A permitted but unobserved hover fails
-the run. This adds a sixteenth mandatory permission-observation group, with
-actual hover and drag-session groups conditional on observed host capability.
+the run. Those earlier revisions made the sixteenth permission-observation group
+mandatory while leaving actual gesture groups conditional on host capability.
+The current native and archive gates above close that conditional-pass gap.
 
 The Windows follow-up is [PR 60](https://github.com/mikevocalz/NYC-Tron-UI/pull/60),
 with source checkpoint `fc85173985e7e7a2a9d37e2562151b6a70092278`. It adds actual

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:00:03.001564+00:00",
+  "runId": 42887781630,
+  "sourceJob": 130080579107,
+  "nativeJob": 130081095705,
+  "sourceAndCompileDeploy": "passed",
+  "nativeAcceptance": "failed",
+  "nativePassedPackageProduced": false,
+  "artifact": {
+    "id": 13797831773,
+    "bytes": 955452,
+    "sha256": "21c729d3b1537f703017eed7f25aaea952e06e4cadbcafc0c6ef17441a245e02",
+    "retainedOriginal": "original-uia-artifact.zip",
+    "allOriginalMembersVerified": 22
+  },
+  "jobLog": {
+    "file": "original-native-job.log",
+    "bytes": 314113,
+    "sha256": "f01574b8ee4f22e5c3f0584c37e51989021af7ff99fb5ffa9a3e1663ba6212eb"
+  },
+  "observations": {
+    "pid": 8280,
+    "hwnd": 590164,
+    "firstOverlayRemovalDescendants": 49,
+    "inspectorRemountAssertions": "passed",
+    "dragSceneRequestedAt": "2026-11-10T19:51:01.3701090Z",
+    "matchingCrashEventAt": "2026-11-10T19:51:01.6449344Z",
+    "processExited": true,
+    "exitCodeHex": "C0000409",
+    "originalWindowExists": false,
+    "faultModule": "Microsoft.UI.Xaml.dll",
+    "faultModuleVersion": "3.1.8.0",
+    "faultRva": "0x41c066",
+    "originalAssertionRetained": true,
+    "finalTreeExplicitlyOverwritten": true,
+    "werSettingsRestored": true,
+    "realOsDragReached": false
+  },
+  "dump": {
+    "path": "crash-dumps/NYCTronWindowsExample.exe.8280.dmp",
+    "bytes": 4937072,
+    "sha256": "57a3f44abcfaf498c6c609f4f5bdf79d812276530318dc79be19da3917b75618",
+    "retainedInOriginalZip": true
+  },
+  "limits": [
+    "The original module and exit code alone do not establish the originating API or production cause.",
+    "The exception and native stack require interpretation with matching symbols; no causal finding is asserted by this original receipt.",
+    "Desktop failure capture is a whole-desktop image, not an app-window screenshot.",
+    "No passed native archive, navigation-accessibility extension or eight-platform acceptance follows from this failed run."
+  ]
+}

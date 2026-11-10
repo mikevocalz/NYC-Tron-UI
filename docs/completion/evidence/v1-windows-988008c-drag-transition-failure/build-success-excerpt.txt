@@ -1,0 +1,14 @@
+2026-11-10T19:22:12.5439418Z   Building solution configuration "Release|x64".
+2026-11-10T19:22:12.8351309Z _GetAllRestoreProjectPathItems:
+2026-11-10T19:22:12.8351735Z   Determining projects to restore...
+2026-11-10T19:22:13.1382206Z Restore:
+2026-11-10T19:22:13.1382834Z   X.509 certificate chain validation will use the default trust store selected by .NET for code signing.
+2026-11-10T19:22:13.1384306Z   X.509 certificate chain validation will use the default trust store selected by .NET for timestamping.
+2026-11-10T19:22:13.2284581Z Done Building Project "D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample.sln" (Restore target(s)).
+2026-11-10T19:22:13.2352458Z 
+2026-11-10T19:22:13.2352981Z Build succeeded.
+2026-11-10T19:22:13.2353355Z     0 Warning(s)
+2026-11-10T19:22:13.2353625Z     0 Error(s)
+2026-11-10T19:22:13.2353801Z 
+2026-11-10T19:22:13.2354116Z Time Elapsed 00:00:00.75
+2026-11-10T19:22:13.2590766Z ✔ Restoring NuGet packages 

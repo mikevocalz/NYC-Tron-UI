@@ -1,0 +1,20 @@
+{
+  "sourceApi": "https://api.github.com/repos/PowerShell/PowerShell/releases/tags/v7.5.4",
+  "sourceRelease": "https://github.com/PowerShell/PowerShell/releases/tag/v7.5.4",
+  "releaseTag": "v7.5.4",
+  "releaseId": 255171832,
+  "asset": {
+    "id": 305232425,
+    "name": "powershell-7.5.4-linux-x64.tar.gz",
+    "size": 75396784,
+    "browser_download_url": "https://github.com/PowerShell/PowerShell/releases/download/v7.5.4/powershell-7.5.4-linux-x64.tar.gz",
+    "digest": "sha256:1fd7983fe56ca9e6233f126925edb24bf6b6b33e356b69996d925c4db94e2fef",
+    "created_at": "2025-10-16T23:16:49Z",
+    "updated_at": "2025-10-16T23:16:53Z"
+  },
+  "verifiedAt": "2026-11-10T19:47:02.076580+00:00",
+  "localArchive": "/workspace/scratch/4137c61be495/windows-diagnostic-powershell-7.5.4/powershell.tar.gz",
+  "localSha256": "1fd7983fe56ca9e6233f126925edb24bf6b6b33e356b69996d925c4db94e2fef",
+  "localBytes": 75396784,
+  "scope": "PowerShell 7.5.4 Linux x64 parser and portable diagnostics only; not Windows PowerShell 5.1, UIA, registry or WER integration."
+}

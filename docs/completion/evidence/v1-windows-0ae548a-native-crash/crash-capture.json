@@ -1,0 +1,17 @@
+﻿{
+    "dumps":  [
+                  {
+                      "sha256":  "57a3f44abcfaf498c6c609f4f5bdf79d812276530318dc79be19da3917b75618",
+                      "filename":  "NYCTronWindowsExample.exe.8280.dmp",
+                      "bytes":  4937072
+                  }
+              ],
+    "processId":  8280,
+    "enabled":  true,
+    "setupError":  null,
+    "restored":  true,
+    "dumpType":  1,
+    "dumpCount":  1,
+    "restoreError":  null,
+    "appName":  "NYCTronWindowsExample.exe"
+}
