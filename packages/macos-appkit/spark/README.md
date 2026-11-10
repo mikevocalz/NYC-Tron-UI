@@ -260,14 +260,22 @@ archive receipt is produced only after those checks pass.
 The test driver is excluded from this library's archive. The reference defaults
 to excluding it from release builds; `--native-acceptance` opts in only inside
 the generated private test application. That application is not distributed.
+For that private consumer only, preparation applies an exact-preimage transport
+patch to Spark 0.0.2's test driver. It records original/patched source and hashes,
+rejects silent JSON serialization failures, and adds bounded native command-stage
+diagnostics. A real Foundation/socketpair probe must pass before the app builds.
+The patch changes neither distribution archives nor ordinary Spark consumers;
+it preserves authentication, one-session behavior, deadlines and every native
+interaction assertion. See `tooling/macos-appkit/TRANSPORT_DIAGNOSTICS.md` in the
+repository for the exact provenance and probe boundary.
 Its explicit `tron.window` show command enables regular AppKit activation and
 requests foreground presentation through `NSWorkspace.openApplication` for the
 exact existing test bundle. The returned process must be the already launched
 acceptance process. The fixture then requires observed visible, key and active
 owner-window state, including the frontmost process identity; a successful
 activation request alone cannot pass. Spark's stock capture-only driver
-otherwise prohibits activation. This fixture does not change the SDK or grant
-input-posting permission.
+otherwise prohibits activation. Activation uses public AppKit APIs and grants
+no input-posting permission.
 Driver target/action and protocol evidence does not prove actual pointer input;
 the separate CGEvent result must be inspected for that boundary. Even a passed
 posted-event session does not prove physical mouse hardware, human gestures,

@@ -5,8 +5,14 @@ import { createHash } from 'node:crypto';
 import { dirname, resolve, join, relative, isAbsolute, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { copySharedCore } from './shared-archives.mjs';
+import { patchDriverTransport } from './patch-driver-transport.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const revision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' });
+const sourceRevision = revision.stdout?.trim();
+if (revision.status !== 0 || !/^[a-f0-9]{40}$/.test(sourceRevision ?? '')) throw new Error('Cannot determine the consumer source revision');
+if (process.env.GITHUB_SHA && process.env.GITHUB_SHA !== sourceRevision) throw new Error('Workflow and checked out source revisions differ');
+const nativeAcceptance = process.argv.includes('--native-acceptance');
 const destination = process.argv[2] && resolve(process.argv[2]);
 const sharedIndex = process.argv.indexOf('--shared-archives');
 if (sharedIndex < 0 || !process.argv[sharedIndex + 1] || process.argv[sharedIndex + 1].startsWith('--')) throw new Error('Supply --shared-archives with the canonical release package directory.');
@@ -21,7 +27,7 @@ const run = (command, args, cwd = destination) => {
 const copySource = (source, target) => cp(source, target, { recursive: true, filter: source => !/(?:^|[/\\])(?:node_modules|\.spark|dist|macos-build|vendor|adapter-source)(?:[/\\]|$)/.test(source) });
 await mkdir(destination, { recursive: true });
 await copySource(join(repo, 'examples/macos-appkit/spark'), destination);
-if (process.argv.includes('--native-acceptance')) {
+if (nativeAcceptance) {
   const path = join(destination, 'desktop.config.json');
   const config = JSON.parse(await readFile(path, 'utf8'));
   config.macos.testDriverInRelease = true;
@@ -55,6 +61,9 @@ run('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', 
 run('npm', ['ci', '--no-audit', '--no-fund']);
 run(process.execPath, ['node_modules/typescript/bin/tsc', '--noEmit']);
 run(process.execPath, [join(repo, 'tooling/macos-appkit/initialize-spark-project.mjs'), destination]);
+// This diagnosed transport repair is private to the generated acceptance app.
+// The adapter/core archives and the installed SDK in ordinary references stay intact.
+const acceptanceTransport = nativeAcceptance ? await patchDriverTransport(destination, sourceRevision) : undefined;
 // Execute Spark's native patch-provenance and Metro graph gates before Xcode.
 run(process.execPath, ['node_modules/@legendapp/spark/bin/spark.cjs', 'analyze']);
 const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': '1.0.0', '@nyc-tron/macos-appkit': '1.0.0' };
@@ -91,10 +100,6 @@ for (const file of (await readdir(join(destination, 'vendor'))).filter(f => f.en
 }
 await rm(join(destination, '.archive-verification'), { recursive: true });
 if (archives.find(archive => archive.packageName === sharedCore.packageName)?.sha256 !== sharedCore.sha256) throw new Error('The tested core archive differs from the canonical shared input');
-const revision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' });
-const sourceRevision = revision.stdout?.trim();
-if (revision.status !== 0 || !/^[a-f0-9]{40}$/.test(sourceRevision ?? '')) throw new Error('Cannot determine the consumer source revision');
-if (process.env.GITHUB_SHA && process.env.GITHUB_SHA !== sourceRevision) throw new Error('Workflow and checked out source revisions differ');
-const preparation = { schema: 1, sourceRevision, installedFromArchives: true, sharedCore, pins, archives };
+const preparation = { schema: 1, sourceRevision, installedFromArchives: true, sharedCore, pins, archives, ...(acceptanceTransport ? { acceptanceTransport } : {}) };
 await writeFile(join(destination, 'package-preparation.json'), JSON.stringify(preparation, null, 2) + '\n');
 console.log(`Prepared installed AppKit consumer at ${destination}`);
