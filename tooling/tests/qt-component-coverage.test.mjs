@@ -4,7 +4,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildQtCoverage, checkReactNativeApi, createSourceAuditor, renderQtCoverage, selectRuntimeExport, validateQtRows } from "../qt-component-coverage.mjs";
+import { buildQtCoverage, checkReactNativeApi, createSourceAuditor, renderQtCoverage, selectRuntimeExport, validateQtRows, verifyGeneratedReport } from "../qt-component-coverage.mjs";
 import { parseCanonicalBaseline } from "../verify-component-program.mjs";
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
@@ -37,10 +37,32 @@ test("the checked-in map covers the exact frozen roster and matches current sour
   assert.equal(report.summary.local + report.summary.external, 341);
   assert.deepEqual(report.components.map(({ id, name }) => ({ id, name })), canonical);
   assert.deepEqual(report, JSON.parse(readFileSync(join(root, "docs/qt/component-coverage.json"), "utf8")));
-  assert.equal(renderQtCoverage(report), readFileSync(join(root, "docs/qt/component-coverage.md"), "utf8"));
+  verifyGeneratedReport(join(root, "docs/qt/component-coverage.md"), renderQtCoverage(report));
   for (const target of ["qnx", "marathon"]) {
     assert.equal(Object.values(report.summary.targets[target].classifications).reduce((sum, count) => sum + count, 0), 341);
     assert.equal(report.summary.targets[target].runtimeAccepted, 0);
+  }
+});
+
+test("generated-report validation accepts Windows checkouts but rejects stale content and whitespace", t => {
+  const directory = mkdtempSync(join(tmpdir(), "nyc-tron-qt-newlines-"));
+  t.after(() => rmSync(directory, { force: true, recursive: true }));
+  for (const name of ["component-coverage.json", "component-coverage.md"]) {
+    const path = join(directory, name);
+    const canonical = readFileSync(join(root, "docs/qt", name), "utf8").replace(/\r\n/g, "\n");
+    const windows = canonical.replace(/\n/g, "\r\n");
+    assert.notEqual(windows, canonical, "the fixture must exercise CRLF conversion");
+    writeFileSync(path, windows);
+    assert.doesNotThrow(() => verifyGeneratedReport(path, canonical));
+    writeFileSync(path, canonical);
+    assert.doesNotThrow(() => verifyGeneratedReport(path, windows));
+    for (const changed of [windows.replace("341", "340"), windows + " ", windows.replace(/\r\n$/, "")]) {
+      assert.notEqual(changed, windows, "the stale fixture must change the report");
+      writeFileSync(path, changed);
+      assert.throws(() => verifyGeneratedReport(path, canonical), /is stale/);
+    }
+    rmSync(path);
+    assert.throws(() => verifyGeneratedReport(path, canonical), /is stale/);
   }
 });
 

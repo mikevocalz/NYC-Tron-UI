@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { dirname, extname, join, relative, resolve } from "node:path";
+import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { CANONICAL_BASELINE_SHA256, parseCanonicalBaseline } from "./verify-component-program.mjs";
@@ -289,6 +289,14 @@ export function checkReactNativeApi(path, profile) {
   return getters.length;
 }
 
+/** Git may check text reports out as CRLF on Windows; their content must still match exactly. */
+export function verifyGeneratedReport(path, contents) {
+  const normalizeNewlines = text => text.replace(/\r\n/g, "\n");
+  if (!existsSync(path) || normalizeNewlines(readFileSync(path, "utf8")) !== normalizeNewlines(contents)) {
+    fail(`${basename(path)} is stale; review the change and run with --write`);
+  }
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   const report = buildQtCoverage();
@@ -300,7 +308,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   for (const [name, contents] of [["component-coverage.json", json(report)], ["component-coverage.md", renderQtCoverage(report)]]) {
     const path = join(repositoryRoot, "docs/qt", name);
     if (args.includes("--write")) writeFileSync(path, contents);
-    else if (!existsSync(path) || readFileSync(path, "utf8") !== contents) fail(`${name} is stale; review the change and run with --write`);
+    else verifyGeneratedReport(path, contents);
   }
   console.log(json(report.summary));
 }

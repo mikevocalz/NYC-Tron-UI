@@ -28,7 +28,7 @@ preserves the dropdown's existing caption-styling contract.
 
 | Check | Result | Boundary |
 | --- | --- | --- |
-| Full JavaScript suite after review fixes | 1,191 passed | Includes nine coverage-checker tests and 32 Expo-controls tests. Local JavaScript evidence only. |
+| Full JavaScript suite after review fixes | 1,192 passed | Includes ten coverage-checker tests and 32 Expo-controls tests. Local JavaScript evidence only. |
 | UI and Expo-controls type checks | Passed | Public prop/type compatibility. |
 | Fresh package builds | 13 passed | TypeScript outputs were built in the isolated worktree. |
 | API surface | 617 subpaths passed | Existing public subpaths retained. |
@@ -65,6 +65,12 @@ platform suffixes; only extensionless imports try target/native variants.
 Import and require edges now select their corresponding package condition
 instead of asserting both. Regression tests cover both cases. The fixes leave
 all current component counts unchanged.
+
+Hosted Windows CI then exposed LF/CRLF differences in generated report
+comparisons. The verifier now accepts those checkout line endings while still
+rejecting changed counts, trailing whitespace, removed final newlines and
+missing files. The full local suite passes with that regression included.
+Reviewed API source hashes and packed artifact hashes remain exact.
 
 The map now compares surround panning to Qt Spatial Audio and links its
 backend limit to the Qt QNX matrix. Audio and PDF profiles link their platform
