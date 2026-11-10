@@ -3,7 +3,7 @@
 React Native Windows (RNW) v0.85.0 targets RN0.85.3, uses Windows App SDK
 1.8 and Visual Studio 2026. Shared NYC-Tron Expo58/mobile targets RN0.88.
 Therefore the native Windows control is **optional** and isolated in
-`@nyc-tron/windows-fluent`; do not downgrade mobile dependencies or import
+`@nyc-tron/windows-fluent-fabric`; do not downgrade mobile dependencies or import
 WinUI into generic `@nyc-tron/ui`.
 
 ## Why host-level native XAML
@@ -23,9 +23,11 @@ There are two Windows implementations:
    `packages/windows-fluent/windows/NYCTron.Fluent.WinUI3`, configured at
    runtime for Auto, Left, LeftCompact and LeftMinimal, with native
    invocation and pane state events. The typed controller in
-   `src/controller.ts` validates selection IDs. No RNW transport implements
-   `WindowsNativeNavigationTransport` yet, so this package is not wired to a
-   live RNW app. Merged in PRs #12 and #46.
+   `src/controller.ts` validates selection IDs. The separate Fabric package
+   now implements `WindowsNativeNavigationTransport` and binds its controlled
+   snapshots/events to a native NavigationView. The original C# shell remains
+   standalone; it does not host a Fabric Composition root. Shell source was
+   merged in PRs #12 and #46.
 2. **Fabric adapter** (`@nyc-tron/windows-fluent-fabric`, in
    `packages/windows-fluent/rnw-fabric`): a C++/WinRT component
    (`windows/NYCTronFluentFabric/TronNavigationView.cpp`) that hosts the
@@ -33,10 +35,16 @@ There are two Windows implementations:
    from `src/TronNavigationViewNativeComponent.ts`. Merged in PRs #14 and
    #50.
 
+The Fabric package also owns native desktop windows using the app's existing
+ReactNativeHost. Its controller maps observed OS lifecycle/display geometry to
+`@nyc-tron/core/window-lifecycle`; the consuming app retains its document store,
+route selection and close/drop decisions. Its independent exports keep this
+runtime outside the Expo 58 UI dependency lane.
+
 ## Fabric adapter evidence
 
 `.github/workflows/winui-fabric.yml` runs on `windows-2025` with Visual
-Studio 2026. The latest run is
+Studio 2026. The earlier retained run is
 [42158305089](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42158305089)
 (2026-11-06, commit `e95f2be1`, success). Its steps run RNW codegen, build the
 C++/WinRT library, compile a generated `cpp-app` consumer, deploy it packaged
@@ -45,9 +53,12 @@ their UIA names, checks that Home is selected at launch, and checks that a
 rejected request keeps Home while an accepted one moves the selection.
 Details and screenshot hashes: [Windows UIA smoke evidence](completion/evidence/windows/README.md).
 
-No file under `packages/windows-fluent` has changed between `e95f2be1` and
-the current head (`d5207cc7`), and the workflow's path filter did not trigger
-a later run.
+That evidence predates the navigation transport and native window additions.
+Their updated workflow installs an actual archive, compiles/deploys its
+consumer, and records the exact archive hash only after the native checks pass.
+The release preserves those tested bytes rather than rebuilding its desktop
+archive afterward. Current run identities and limits belong in the
+[candidate report](completion/reports/V1-RELEASE-GATES.md).
 
 ## Still unverified
 
@@ -58,7 +69,8 @@ a later run.
 - Pointer input, Settings focus return and `onNativeError` delivery.
 - Any machine other than one GitHub-hosted `windows-2025` runner; no signed
   build.
-- A host-shell transport for `@nyc-tron/windows-fluent`.
+- Physical cross-window drag/drop and hardware display changes beyond the
+  controller's verified state transitions.
 - Consumer Moyo workspace theme adapter; no global Fluent palette or app route
   migration from Expo Router.
 

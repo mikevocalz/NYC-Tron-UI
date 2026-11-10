@@ -174,9 +174,10 @@ Metro bundle before launching, renders Slider labels through SwiftUI Text,
 and keeps pointer feedback visible. These failures remain failed records;
 fresh native execution is required for the corrections.
 
-[Support](../../SUPPORT.md) also retains missing AppKit/native host bridges as
-implementation gaps. Source coverage does not erase those gaps or substitute
-for the complete eight-platform release evidence.
+At that checkpoint, AppKit/native host bridges were still implementation gaps.
+The subsequent desktop follow-up implements those owners in isolated runtime
+packages. [Support](../../SUPPORT.md) records their current evidence and limits;
+source coverage does not substitute for the complete eight-platform proof.
 
 ## The `e2b65dd5` decoder and browser checkpoint
 

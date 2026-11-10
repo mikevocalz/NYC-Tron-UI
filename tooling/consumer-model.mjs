@@ -9,6 +9,9 @@ export function consumerDependencies(dependencies, archives, required = []) {
     if (name === "@nyc-tron/windows-fluent-fabric") {
       throw new Error("The RNW 0.85 adapter cannot enter an Expo 58 consumer");
     }
+    if (name === "@nyc-tron/macos-appkit") {
+      throw new Error("The Spark / Expo 55 AppKit adapter cannot enter an Expo 58 consumer");
+    }
     const archive = archives.get(name);
     if (!archive) throw new Error("Missing release tarball for consumer dependency " + name);
     result[name] = "file:" + archive.path;

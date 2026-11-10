@@ -1,18 +1,26 @@
-name: WinUI 3 NavigationView in RNW Fabric
+name: WinUI 3 navigation and native desktop in RNW Fabric
 
 on:
   pull_request:
     paths:
-      - "packages/windows-fluent/rnw-fabric/**"
+      - "packages/windows-fluent/**"
+      - "packages/core/**"
       - "tooling/api-signatures.mjs"
+      - "tooling/pack-release.mjs"
+      - "THIRD_PARTY_NOTICES.md"
+      - "licenses/**"
       - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
   push:
     branches:
       - "feat/winui-fabric-xaml-navigation-20261105"
     paths:
-      - "packages/windows-fluent/rnw-fabric/**"
+      - "packages/windows-fluent/**"
+      - "packages/core/**"
       - "tooling/api-signatures.mjs"
+      - "tooling/pack-release.mjs"
+      - "THIRD_PARTY_NOTICES.md"
+      - "licenses/**"
       - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
   workflow_dispatch:
@@ -40,7 +48,10 @@ jobs:
         run: node --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs
       - name: Install isolated RNW 0.85 dependencies
         working-directory: packages/windows-fluent/rnw-fabric
-        run: npm install --no-audit --no-fund
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build peer-free shared contracts
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: node scripts/build-peers.mjs
       - name: Validate Windows-only TypeScript
         working-directory: packages/windows-fluent/rnw-fabric
         run: npm run typecheck
@@ -48,19 +59,33 @@ jobs:
         working-directory: packages/windows-fluent/rnw-fabric
         run: |
           npm run build
+          npm test
           listing=$(npm pack --dry-run --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].files.map(f=>f.path).join("\n")))')
           for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts windows/NYCTronFluentFabric/TronNavigationView.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
           done
       - name: Verify the isolated RNW public declaration snapshot
         run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
+      - name: Build canonical shared release packages with the root compiler
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+          corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/windows-fluent build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/windows-shared" --packages core,windows-fluent
+      - name: Retain canonical shared archives for the native consumer
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-fabric-shared-packages
+          path: ${{ runner.temp }}/windows-shared
+          if-no-files-found: error
       # RNW 'codegen-windows' invokes dotnet.exe and Windows-only tools.
       # Keep the Linux lane to TS/source checks; generate C++ on Windows.
 
   native:
     name: VS 2026 RNW 0.85 XAML Fabric native C++ compile
+    needs: contracts
     runs-on: windows-2025
-    timeout-minutes: 55
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -68,26 +93,39 @@ jobs:
           node-version: "24.19.0"
       - name: Install native-codegen dependencies
         working-directory: packages/windows-fluent/rnw-fabric
-        run: npm install --no-audit --no-fund
-      - name: Run official RNW Fabric codegen and verify generated component
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build source distribution and validate lifecycle contracts
         working-directory: packages/windows-fluent/rnw-fabric
+        run: |
+          npm run build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify the isolated RNW public declaration snapshot
+        run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
+      - name: Download the canonical shared package archives
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-fabric-shared-packages
+          path: ${{ runner.temp }}/windows-shared
+      - name: Install the fresh consumer from canonical peers and the Fabric candidate
+        shell: pwsh
+        run: |
+          $consumer = Join-Path $env:RUNNER_TEMP "tron-windows-consumer"
+          node packages/windows-fluent/rnw-fabric/scripts/prepare-consumer.mjs $consumer "$env:RUNNER_TEMP/windows-shared"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "WIN_CONSUMER=$consumer" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Generate native code from the installed package
+        working-directory: ${{ env.WIN_CONSUMER }}/node_modules/@nyc-tron/windows-fluent-fabric
         shell: pwsh
         run: |
           npm run codegen
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $header = "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h"
-          if (-not (Test-Path $header)) { throw "Missing generated XAML Fabric component header: $header" }
-      # The consumer links this package with file:.., and its exports point at dist.
-      - name: Build package dist for the consumer
-        working-directory: packages/windows-fluent/rnw-fabric
-        run: npm run build
-      - name: Verify the isolated RNW public declaration snapshot
-        run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
-      - name: Install isolated Windows consumer
-        working-directory: packages/windows-fluent/rnw-fabric/example
-        run: npm install --no-audit --no-fund
+          foreach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h")) {
+            if (-not (Test-Path $header)) { throw "Missing generated native header: $header" }
+          }
       - name: Generate official RNW application and connect native package
-        working-directory: packages/windows-fluent/rnw-fabric/example
+        working-directory: ${{ env.WIN_CONSUMER }}
         shell: pwsh
         run: |
           npm run init:windows
@@ -98,8 +136,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           npm test
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Build native C++/WinRT Fabric XAML component
-        working-directory: packages/windows-fluent/rnw-fabric
+      - name: Build installed native C++/WinRT Fabric package
+        working-directory: ${{ env.WIN_CONSUMER }}/node_modules/@nyc-tron/windows-fluent-fabric
         shell: pwsh
         run: |
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -118,7 +156,7 @@ jobs:
       # speech, high contrast, pointer input or an RTL locale.
 
       - name: Compile actual Windows consumer executable
-        working-directory: packages/windows-fluent/rnw-fabric/example
+        working-directory: ${{ env.WIN_CONSUMER }}
         shell: pwsh
         run: |
           $vswhere = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Microsoft Visual Studio\Installer\vswhere.exe"
@@ -141,7 +179,7 @@ jobs:
           node scripts/check-bundle-singletons.mjs $map.FullName
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Deploy the packaged consumer the way run-windows does
-        working-directory: packages/windows-fluent/rnw-fabric/example
+        working-directory: ${{ env.WIN_CONSUMER }}
         shell: pwsh
         run: |
           # RNW apps run with package identity; the bare executable exits
@@ -156,10 +194,21 @@ jobs:
           Write-Host "Registered $($package.PackageFullName)"
           "CONSUMER_AUMID=$($package.PackageFamilyName)!App" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
       - name: UI Automation smoke test of the packaged consumer
-        working-directory: packages/windows-fluent/rnw-fabric/example
+        working-directory: ${{ env.WIN_CONSUMER }}
         shell: powershell
         run: |
           & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+      - name: Retain the exact package that passed native acceptance
+        shell: pwsh
+        run: |
+          node packages/windows-fluent/rnw-fabric/scripts/retain-tested-package.mjs "$env:WIN_CONSUMER" "$env:RUNNER_TEMP\uia-smoke" "$env:RUNNER_TEMP\windows-fabric-tested-package"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload tested Windows distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-fabric-tested-package
+          path: ${{ runner.temp }}/windows-fabric-tested-package
+          if-no-files-found: error
       - name: Upload UI Automation screenshots
         if: always()
         uses: actions/upload-artifact@v4

@@ -1,0 +1,5 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": { "strict": true, "allowImportingTsExtensions": true, "moduleSuffixes": [".macos", ""], "types": ["react"] },
+  "include": ["*.ts", "*.tsx"]
+}

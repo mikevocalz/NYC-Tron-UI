@@ -5,11 +5,13 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 #include "TronNavigationView.h"
+#include "TronDesktop.h"
 using namespace winrt::Microsoft::ReactNative;
 namespace winrt::NYCTronFluentFabric::implementation {
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& builder) noexcept {
 #ifdef RNW_NEW_ARCH
   RegisterTronNavigationViewComponent(builder);
+  AddAttributedModules(builder, true);
 #endif
 }
 }

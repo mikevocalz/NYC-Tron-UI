@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "platform": "android",
+  "revision": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+  "stages": [
+    {
+      "name": "settings",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "settings/report.xml",
+      "reportSha256": "abda4a4b009d37572248720c0531a12603c789c6fe35f459fe79be8778e8698a",
+      "hierarchy": "settings-hierarchy.json",
+      "hierarchySha256": "608489eb764dc80740f335d516c1c250abd0a6f14eba48522f174d8bf85bdbbc",
+      "images": [
+        {
+          "file": "settings/artifacts/2026-11-10_144307/Settings native edit and save/takeScreenshot/settings-saved.png",
+          "sha256": "135afa304f405ae90faaa5a7804de4bce98e5423404c9320a85df37a2f6a11a2"
+        }
+      ],
+      "geometry": {
+        "host": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 616
+        },
+        "header": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 96
+        },
+        "tabs": {
+          "left": 0,
+          "top": 551,
+          "right": 320,
+          "bottom": 616
+        }
+      }
+    },
+    {
+      "name": "editor",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "editor/report.xml",
+      "reportSha256": "ebe158c62b67c303893ceca18c0de6093205326a1fc31ff75a4c5c560a229561",
+      "hierarchy": "editor-hierarchy.json",
+      "hierarchySha256": "6f65245ed58aa3cf99f6133eebaf3158d62269eac4467ed08fb5b486fa67ec39",
+      "images": [
+        {
+          "file": "editor/artifacts/2026-11-10_144354/Editor native draft route retention and save/takeScreenshot/editor-draft.png",
+          "sha256": "f39e50eed978a2e96bc41a24be76d68c03a020baac9b45fe8985b13bb63f9a9b"
+        },
+        {
+          "file": "editor/artifacts/2026-11-10_144354/Editor native draft route retention and save/takeScreenshot/editor-saved.png",
+          "sha256": "0f1a3e0f2ca5a5179c2b45eca48df2844b4e432a559f266cbe13ecc2c40cbaf5"
+        }
+      ],
+      "geometry": {
+        "host": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 616
+        },
+        "header": {
+          "left": 0,
+          "top": 24,
+          "right": 320,
+          "bottom": 96
+        },
+        "tabs": {
+          "left": 0,
+          "top": 551,
+          "right": 320,
+          "bottom": 616
+        }
+      }
+    },
+    {
+      "name": "pointer",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "pointer/report.xml",
+      "reportSha256": "550816392970fd8e08a6b7675f89e965440bd36c07b07dc0718fab92844b1534",
+      "hierarchy": "pointer-hierarchy.json",
+      "hierarchySha256": "1609a7a02418e98077a20eb85360f980d64317fdaff9a3386152b01a0797d594",
+      "images": [
+        {
+          "file": "pointer/artifacts/2026-11-10_144452/Native pointer touch lifecycle/takeScreenshot/pointer-touch.png",
+          "sha256": "f82b82bb2bd2c0723e20e2da2c0fb6192c4d7a74aa918d539165d5d9f4b78629"
+        }
+      ]
+    },
+    {
+      "name": "pointer-cancel",
+      "executed": 1,
+      "failures": 0,
+      "skipped": 0,
+      "report": "pointer-cancel/report.xml",
+      "reportSha256": "e12b5bf5ab8c5bb42650db3a1bfc3050b4ccc61dd877daa8220ded31ae15db16",
+      "hierarchy": "pointer-cancel-hierarchy.json",
+      "hierarchySha256": "6785b6d29ff2fb5470cc287882a1f681f6cff0df73e99d2acf1910c333eaa96f",
+      "images": [
+        {
+          "file": "pointer-cancel/artifacts/2026-11-10_144512/Android native pointer cancellation/takeScreenshot/pointer-cancel.png",
+          "sha256": "6b4b3633103311f83952b45edfc69b5b8881a50160c645162c9b4c463cd5f430"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "serial": "emulator-5554",
+    "sdk": "35",
+    "nativeArtifact": {
+      "kind": "android-apk",
+      "algorithm": "sha256-raw-apk-v1",
+      "sha256": "13581f958cfc457b4644dcf485febd6230b125de8c20fe17df7bbd99bf2a0df8",
+      "manifest": {
+        "file": "native-artifact.json",
+        "sha256": "7518994f8d9e399d91e676e693e08722803cf69f803de4c5d91aeb6d27c4031d"
+      }
+    },
+    "sourceCommit": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+    "maestro": {
+      "version": "2.12.1",
+      "revision": "67d8a677029261fa424a45a10d08eacd6aa0deed",
+      "archiveSha256": "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7",
+      "url": "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip"
+    },
+    "installedPackages": {
+      "kind": "expo-native",
+      "sourceCommit": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+      "packages": {
+        "@nyc-tron/core": {
+          "version": "1.0.0",
+          "sha256": "25e41cd6cfddfd93a75cd24da2dea740f117cafe5043edc9c0dc7c852b4490a0",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/core"
+        },
+        "@nyc-tron/expo-controls": {
+          "version": "1.0.0",
+          "sha256": "24db24d50dfc136ea9f9d85df6269612bf5f0f518f444b4192af58d54715fffd",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/expo-controls"
+        },
+        "@nyc-tron/hardware-keys": {
+          "version": "1.0.0",
+          "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/hardware-keys"
+        },
+        "@nyc-tron/native-charts": {
+          "version": "1.0.0",
+          "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-charts"
+        },
+        "@nyc-tron/native-controls": {
+          "version": "1.0.0",
+          "sha256": "0756629d2ee99eca9ada1293d23b780a88470f7b2729c1611be623608b6fe23b",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-controls"
+        },
+        "@nyc-tron/native-navigation": {
+          "version": "1.0.0",
+          "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-navigation"
+        },
+        "@nyc-tron/panes": {
+          "version": "1.0.0",
+          "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/panes"
+        },
+        "@nyc-tron/platform-services": {
+          "version": "1.0.0",
+          "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/platform-services"
+        },
+        "@nyc-tron/reserved-regions": {
+          "version": "1.0.0",
+          "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/reserved-regions"
+        },
+        "@nyc-tron/ui": {
+          "version": "1.0.0",
+          "sha256": "c888260e10844d5a1d4f8efe1c4799dcf7325f7071edb47582ba6056d584fba0",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/ui"
+        }
+      },
+      "absentPeers": []
+    },
+    "bundleWarmups": [
+      {
+        "schema": 1,
+        "phase": "metro-bundle-warmup",
+        "platform": "android",
+        "entry": "reference",
+        "url": "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=android&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example",
+        "startedAt": "2026-11-10T14:43:00.634Z",
+        "timeoutMs": 360000,
+        "maxBytes": 67108864,
+        "status": "ready",
+        "bytes": 5427525,
+        "httpStatus": 200,
+        "contentType": "application/javascript; charset=UTF-8",
+        "sha256": "7e6dbb33a61fb9abd5427fa5651993f469a40c6812b7e6133e33c8d02679ea5b",
+        "elapsedMs": 4713,
+        "file": "bundle-warmup-reference.json",
+        "recordSha256": "f26aec18353ea8f3ba382917cdda49e8699cb217ebd44cd966edd635102c838c"
+      },
+      {
+        "schema": 1,
+        "phase": "metro-bundle-warmup",
+        "platform": "android",
+        "entry": "pointer",
+        "url": "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=android&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example",
+        "startedAt": "2026-11-10T14:44:49.978Z",
+        "timeoutMs": 360000,
+        "maxBytes": 67108864,
+        "status": "ready",
+        "bytes": 4875675,
+        "httpStatus": 200,
+        "contentType": "application/javascript; charset=UTF-8",
+        "sha256": "ee26be2e063a7f0796788722c96d614e48267344f1e67fa90d9b27b417b0dbf9",
+        "elapsedMs": 1036,
+        "file": "bundle-warmup-pointer.json",
+        "recordSha256": "6350f28ef1e7728735f4f75cc8e6d252fcd8f549cc0d0319b29532c068b260ec"
+      }
+    ],
+    "transportRecoveries": []
+  },
+  "input": "Maestro OS touch plus Android touch-down/Home cancellation",
+  "manualGates": [
+    "physical pen pressure/tilt/hover",
+    "physical palm rejection",
+    "VoiceOver/TalkBack spoken output"
+  ]
+}

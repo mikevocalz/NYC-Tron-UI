@@ -22,9 +22,9 @@ function fixture(t) {
   const artifacts = join(rootDir, "artifacts");
   mkdirSync(artifacts);
   const checksums = [];
-  for (let index = 0; index < 14; index++) {
-    const relative = index === 13 ? "windows-fluent/rnw-fabric" : "example" + index;
-    const name = index === 13 ? "windows-fluent-fabric" : "example" + index;
+  for (let index = 0; index < 15; index++) {
+    const relative = index === 13 ? "windows-fluent/rnw-fabric" : index === 14 ? "macos-appkit/spark" : "example" + index;
+    const name = index === 13 ? "windows-fluent-fabric" : index === 14 ? "macos-appkit" : "example" + index;
     const directory = join(rootDir, "packages", relative);
     mkdirSync(join(directory, "src"), { recursive: true });
     writeFileSync(join(directory, "package.json"), JSON.stringify({
@@ -126,17 +126,25 @@ test("stable owner approval must authenticate the exact author, repository, stat
   await assert.rejects(f.validate({}, async () => { throw new Error("GitHub unavailable"); }), /GitHub unavailable/);
 });
 
-test("stable requires and verifies the exact fourteen archive hashes, including the isolated Windows package", async t => {
+test("stable requires and verifies all fifteen archive hashes, including both isolated desktop packages", async t => {
   const f = fixture(t);
-  assert.equal(verifyReleaseInventory(f.artifacts, "1.0.0", { rootDir: f.rootDir }).archiveCount, 14);
-  await assert.rejects(f.validate({ artifacts: undefined }), /fourteen actual release archives/);
+  assert.equal(verifyReleaseInventory(f.artifacts, "1.0.0", { rootDir: f.rootDir }).archiveCount, 15);
+  await assert.rejects(f.validate({ artifacts: undefined }), /fifteen actual release archives/);
   const windows = join(f.artifacts, "nyc-tron-windows-fluent-fabric-1.0.0.tgz");
   writeFileSync(windows, "changed native archive");
   await assert.rejects(f.validate(), /checksum mismatch/);
   rmSync(windows);
   const sums = join(f.artifacts, "SHA256SUMS");
   writeFileSync(sums, readFileSync(sums, "utf8").split("\n").filter(line => !line.includes("windows-fluent-fabric")).join("\n"));
-  await assert.rejects(f.validate(), /exact fourteen/);
+  await assert.rejects(f.validate(), /exact fifteen/);
+});
+
+test("omitting the AppKit archive cannot silently restore the older fourteen-package inventory", async t => {
+  const f = fixture(t);
+  rmSync(join(f.artifacts, "nyc-tron-macos-appkit-1.0.0.tgz"));
+  const sums = join(f.artifacts, "SHA256SUMS");
+  writeFileSync(sums, readFileSync(sums, "utf8").split("\n").filter(line => !line.includes("macos-appkit")).join("\n"));
+  await assert.rejects(f.validate(), /exact fifteen/);
 });
 
 test("an authenticated approval for prior checksums cannot authorize a later artifact inventory", async t => {
@@ -156,20 +164,24 @@ test("only complete platform acceptance and a live exact owner approval can make
     return f.response;
   });
   assert.equal(requests, 1); assert.equal(result.status, "ready");
-  assert.equal(result.program.accepted, 341); assert.equal(result.inventory.archiveCount, 14);
+  assert.equal(result.program.accepted, 341); assert.equal(result.inventory.archiveCount, 15);
   assert.equal(JSON.stringify({ ledger: f.ledger, review: f.review }), before);
 });
 
-test("release retains candidate archives before readiness and requires native Windows plus reference evidence", () => {
+test("release retains candidate archives before readiness and requires both native desktop hosts plus reference evidence", () => {
   const workflow = readFileSync(new URL("../../.github/workflows/release.yml", import.meta.url), "utf8");
   const needs = workflow.match(/needs: \[([^\]]+)\]/)?.[1].split(",").map(value => value.trim());
-  assert.ok(needs?.includes("windows-native")); assert.ok(needs?.includes("native-feel"));
+  assert.ok(needs?.includes("windows-native")); assert.ok(needs?.includes("macos-appkit")); assert.ok(needs?.includes("native-feel"));
   const archiveStep = workflow.indexOf("name: Retain the candidate archives and checksums");
   const readiness = workflow.indexOf("run: node tooling/release-readiness.mjs");
   assert.ok(archiveStep > 0 && archiveStep < readiness && readiness < workflow.indexOf("gh release create"));
   assert.match(workflow, /name: Retain the readiness result[\s\S]*?if: always\(\)/);
-  for (const name of ["winui-fabric", "native-feel-preview"]) {
+  for (const name of ["winui-fabric", "macos-appkit", "native-feel-preview"]) {
     const reusable = readFileSync(new URL("../../.github/workflows/" + name + ".yml", import.meta.url), "utf8");
     assert.match(reusable, /^  workflow_call:/m);
   }
+  assert.match(workflow, /name: windows-fabric-tested-package/);
+  assert.match(workflow, /name: macos-appkit-tested-package/);
+  assert.match(workflow, /merge-tested-package\.mjs[^\n]+windows-fluent-fabric/);
+  assert.match(workflow, /merge-tested-package\.mjs[^\n]+macos-appkit/);
 });

@@ -60,6 +60,11 @@ jobs:
     uses: ./.github/workflows/winui-fabric.yml
     permissions:
       contents: read
+  macos-appkit:
+    name: AppKit native controls and window lifecycle
+    uses: ./.github/workflows/macos-appkit.yml
+    permissions:
+      contents: read
   native-feel:
     name: reference flows, captures and render measurements
     uses: ./.github/workflows/native-feel-preview.yml
@@ -68,7 +73,7 @@ jobs:
 
   release:
     name: build, test, pack and upload
-    needs: [ci, ui-browser, menu-browser, native-controls, release-consumers, windows-native, native-feel]
+    needs: [ci, ui-browser, menu-browser, native-controls, release-consumers, windows-native, macos-appkit, native-feel]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -122,28 +127,26 @@ jobs:
       - name: Install the dependency-free tarballs in a fresh project and import them
         run: node tooling/consumer-smoke.mjs "$RUNNER_TEMP/release"
 
-      # @nyc-tron/windows-fluent-fabric is nested outside the pnpm workspace
-      # because it pins RN 0.85 + react-native-windows 0.85, so pack-release
-      # does not discover it. It ships src/ on purpose: RNW codegen reads the
-      # typed spec through codegenConfig.jsSrcsDir when the consumer builds.
-      - name: Pack the Windows Fabric NavigationView adapter
-        working-directory: packages/windows-fluent/rnw-fabric
+      # Desktop runtime versions remain isolated. Reuse the exact archives
+      # installed by the successful native jobs; never repack after acceptance.
+      - name: Download the tested Windows package
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-fabric-tested-package
+          path: ${{ runner.temp }}/tested-windows
+      - name: Download the tested AppKit package
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-appkit-tested-package
+          path: ${{ runner.temp }}/tested-macos
+      - name: Verify and retain the exact tested desktop archives
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          actual=$(node -p 'require("./package.json").version')
-          if [ "$actual" != "$VERSION" ]; then echo "::error::windows-fluent-fabric version $actual does not match $VERSION"; exit 1; fi
-          npm install --no-audit --no-fund
-          npm run typecheck
-          npm run build
-          node ../../../tooling/api-signatures.mjs --package . --snapshot ../../../docs/api-signatures-windows.json
-          dir="$RUNNER_TEMP/release"
-          file=$(npm pack --pack-destination "$dir" --silent | tail -n1)
-          tar -tzf "$dir/$file" | grep -qx 'package/dist/index.js' || { echo "::error::dist missing from $file"; exit 1; }
-          (cd "$dir" && sha256sum "$file" >> SHA256SUMS)
-          cat "$dir/SHA256SUMS"
+          node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-windows" "$RUNNER_TEMP/release" @nyc-tron/windows-fluent-fabric "$VERSION" "$GITHUB_SHA"
+          node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-macos" "$RUNNER_TEMP/release" @nyc-tron/macos-appkit "$VERSION" "$GITHUB_SHA"
 
-      # Preserve the concrete fourteen-archive candidate before D2/D3 can block
+      # Preserve the concrete fifteen-archive candidate before D2/D3 can block
       # stable publication. The owner reviews these exact checksums, not a
       # hypothetical package inventory. This action does not create a release.
       - name: Retain the candidate archives and checksums for distribution review
@@ -153,6 +156,7 @@ jobs:
           path: |
             ${{ runner.temp }}/release/*.tgz
             ${{ runner.temp }}/release/SHA256SUMS
+            ${{ runner.temp }}/release/*-tested-package.json
           if-no-files-found: error
           retention-days: 30
       - name: Require actual stable-release acceptance and owner distribution review

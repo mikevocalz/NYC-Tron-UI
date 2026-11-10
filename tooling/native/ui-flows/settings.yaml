@@ -13,7 +13,22 @@ name: Settings native edit and save
     id: "reference-workspace-name"
 - eraseText: 100
 - inputText: "Native UI workspace"
-- hideKeyboard
+# iOS hideKeyboard swipes at screen center, inside this focused input on the
+# observed iPhone. Tap the static heading without submitting/saving the draft.
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - assertVisible:
+          id: "delete"
+      - tapOn: "Workspace preferences"
+      - assertNotVisible:
+          id: "delete"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
 - scrollUntilVisible:
     element:
       text: "Save settings"

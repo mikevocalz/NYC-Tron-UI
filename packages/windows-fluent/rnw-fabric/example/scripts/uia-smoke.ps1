@@ -144,6 +144,8 @@ try {
   }
   if ($null -eq $window) { throw "No top-level window for process $($process.Id) within 90 s" }
   Write-Host "Window '$($window.Current.Name)' class '$($window.Current.ClassName)'"
+  # Keep the complete acceptance controls inside the runner's work area.
+  $window.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Maximized)
 
   $homeItem = Find-ByName $window "Home" 60
   $workspace = Find-ByName $window "Workspace"
@@ -165,6 +167,70 @@ try {
   Assert-Selection $homeItem $workspace "workspace" "accepted"
   Save-Screenshot "03-accepted" $window.Current.BoundingRectangle
   Write-Host "UIA smoke passed: native selection followed only the committed route"
+
+  Find-ByName $window "Native desktop connected" | Out-Null
+  Invoke-Button $window "Open document window"
+  $documentCondition = New-Object System.Windows.Automation.AndCondition(
+    $processCondition,
+    (New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, "NYC-Tron Document")))
+  function Find-DocumentWindow {
+    $deadline = (Get-Date).AddSeconds(30)
+    do {
+      $native = $AE::RootElement.FindFirst($Tree::Children, $documentCondition)
+      if ($null -ne $native) { return $native }
+      Start-Sleep -Milliseconds 200
+    } while ((Get-Date) -lt $deadline)
+    throw "The secondary native document window did not appear"
+  }
+  $document = Find-DocumentWindow
+  Find-ByName $window "Native windows: 2" | Out-Null
+  Find-ByName $document "Window identity: document" | Out-Null
+  Find-ByName $document "Shared draft: A shared draft" | Out-Null
+  Invoke-Button $window "Change shared draft"
+  Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
+  Find-ByName $window "Shared draft: Edited once, shared everywhere" | Out-Null
+  Save-Screenshot "04-native-document" $document.Current.BoundingRectangle
+
+  $nativeWindow = $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern)
+  $nativeWindow.SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
+  Find-ByName $window "Minimized windows: 1" | Out-Null
+  Invoke-Button $window "Restore document"
+  Find-ByName $window "Minimized windows: 0" | Out-Null
+  Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
+
+  # WindowPattern.Close calls the real OS close path. The app veto must keep
+  # both the native surface and its shared draft alive.
+  $nativeWindow.Close()
+  Find-ByName $window "Native close vetoed: unsaved draft retained" | Out-Null
+  Find-ByName $window "Native windows: 2" | Out-Null
+  $document = Find-DocumentWindow
+  Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
+  Save-Screenshot "05-close-veto" $document.Current.BoundingRectangle
+  Invoke-Button $window "Save shared draft"
+  # Button invocation and JS dispatch are asynchronous; close only after the
+  # document owner has visibly committed the save policy.
+  Find-ByName $window "Shared draft saved in this session" | Out-Null
+  $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close()
+  Find-ByName $window "Native close accepted" | Out-Null
+  Find-ByName $window "Native windows: 1" | Out-Null
+  if ($null -ne $AE::RootElement.FindFirst($Tree::Children, $documentCondition)) { throw "Accepted close left the native surface alive" }
+  Invoke-Button $window "Open document window"
+  $document = Find-DocumentWindow
+  Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
+  Find-ByName $window "Native windows: 2" | Out-Null
+  Save-Screenshot "06-native-reopened" $document.Current.BoundingRectangle
+  Save-Tree $document
+  $result = @{
+    schemaVersion = 1
+    status = "passed"
+    platform = "windows"
+    sourceRevision = $env:GITHUB_SHA
+    processId = $process.Id
+    executableSha256 = (Get-FileHash -Algorithm SHA256 $process.Path).Hash.ToLowerInvariant()
+    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen")
+  }
+  $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
+  Write-Host "Native desktop acceptance passed: shared runtime, close policy and minimize/restore"
 } catch {
   Write-Host "UIA smoke failed: $($_.Exception.Message)"
   if ($null -ne $window) {

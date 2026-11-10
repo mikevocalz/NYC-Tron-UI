@@ -1,4 +1,11 @@
 import {readFileSync,writeFileSync} from "node:fs";
+import {createRequire} from "node:module";
+import {dirname,relative,resolve} from "node:path";
+import {fileURLToPath} from "node:url";
+const require=createRequire(import.meta.url);
+const library=dirname(require.resolve("@nyc-tron/windows-fluent-fabric/package.json"));
+const libraryProject=resolve(library,"windows/NYCTronFluentFabric/NYCTronFluentFabric.vcxproj");
+const windowsPath=value=>value.split("/").join("\\");
 const root=new URL("../",import.meta.url);
 function edit(path,transform){
  const url=new URL(path,root);
@@ -8,7 +15,7 @@ edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.vcxproj",source=>{
  if(source.includes("NYCTronFluentFabric.vcxproj"))return source;
  const reference=[
   "<ItemGroup>",
-  '<ProjectReference Include="..\\..\\..\\windows\\NYCTronFluentFabric\\NYCTronFluentFabric.vcxproj">',
+  '<ProjectReference Include="'+windowsPath(relative(fileURLToPath(new URL("windows/NYCTronWindowsExample/",root)),libraryProject))+'">',
   "<Project>{8C8B9277-3013-47BD-A3E4-F6B2D83DF641}</Project>",
   "</ProjectReference>",
   "</ItemGroup>"
@@ -25,7 +32,7 @@ edit("windows/NYCTronWindowsExample.sln",source=>{
  if(source.includes(libraryGuid))return source;
  const eol=source.includes("\r\n")?"\r\n":"\n";
  const project=[
-  'Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NYCTronFluentFabric", "..\\..\\windows\\NYCTronFluentFabric\\NYCTronFluentFabric.vcxproj", "'+libraryGuid+'"',
+  'Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NYCTronFluentFabric", "'+windowsPath(relative(fileURLToPath(new URL("windows/",root)),libraryProject))+'", "'+libraryGuid+'"',
   "EndProject",
  ].join(eol);
  const configs=["Debug","Release"].flatMap(cfg=>[
@@ -47,10 +54,7 @@ edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
  return source.replace('#include "pch.h"','#include "pch.h"\n#include <winrt/NYCTronFluentFabric.h>')
   .replace(marker,marker+"\n  settings.PackageProviders().Append(winrt::NYCTronFluentFabric::ReactPackageProvider());");
 });
-// The linked library keeps its own node_modules because its native build
-// needs react-native-windows there. Without this resolver Metro follows the
-// symlink and bundles a second React and react-native-windows from the
-// library's node_modules; the window then opens with nothing rendered.
+// The installed tarballs must resolve the consumer's one React runtime.
 // A project resolveRequest replaces the CLI's out-of-tree platform resolver
 // (framework defaults are merged under the project config), so this one
 // also performs its react-native -> react-native-windows redirect.
@@ -73,8 +77,8 @@ edit("metro.config.js",source=>{
  const marker="const config = {";
  const resolverMarker="  resolver: {";
  if(!source.includes(marker)||!source.includes(resolverMarker))throw new Error("Official Metro template changed");
- if(!source.includes("watchFolders: [path.resolve(__dirname, '..')]"))
-  source=source.replace(marker,marker+"\n  watchFolders: [path.resolve(__dirname, '..')],");
+ if(!source.includes("watchFolders: []"))
+  source=source.replace(marker,marker+"\n  watchFolders: [],");
  if(!source.includes("const singleton = "))
   source=source.replace(resolverMarker,resolverMarker+"\n"+singletonResolver);
  return source;

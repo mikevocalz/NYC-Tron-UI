@@ -18,6 +18,7 @@ test("consumer peers resolve to artifacts, including undeclared additional packa
 test("missing tarballs and incompatible runtime lanes cannot silently install from npm", () => {
   assert.throws(() => consumerDependencies({ "@nyc-tron/ui": "^1.0.0" }, new Map()), /Missing release tarball/);
   assert.throws(() => consumerDependencies({ "@nyc-tron/windows-fluent-fabric": "1.0.0" }, new Map()), /RNW 0.85/);
+  assert.throws(() => consumerDependencies({ "@nyc-tron/macos-appkit": "1.0.0" }, new Map()), /Spark \/ Expo 55/);
   assert.throws(() => consumerDependencies({ other: "workspace:*" }, new Map()), /Unresolved consumer dependency/);
 });
 
