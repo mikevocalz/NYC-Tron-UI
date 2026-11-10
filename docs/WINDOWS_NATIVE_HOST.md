@@ -17,32 +17,52 @@ RNW v0.85 includes a tested C++/WinRT XAML ComboBox example using
 `ContentIslandComponentView`, `XamlIsland` and
 `SetContentIslandComponentViewInitializer`.
 
-Our first implementation remains a genuine WinUI `NavigationView` at the
-Windows app **host shell** boundary, but we can now implement a separately
-version-pinned **Fabric native component adapter**. We must not claim that
-adapter works before native compilation and a live RNW host test.
+There are two Windows implementations:
 
-The source in `packages/windows-fluent/windows/NYCTron.Fluent.WinUI3`
-provides a real XAML NavigationView, configured at runtime for Auto,
-Left, LeftCompact and LeftMinimal, and native invocation/pane state
-events. A typed controlled JS controller prepares changes and validates
-selection IDs before any future native transport implementation.
+1. **Host shell** (`@nyc-tron/windows-fluent`): a WinUI `NavigationView` in
+   `packages/windows-fluent/windows/NYCTron.Fluent.WinUI3`, configured at
+   runtime for Auto, Left, LeftCompact and LeftMinimal, with native
+   invocation and pane state events. The typed controller in
+   `src/controller.ts` validates selection IDs. No RNW transport implements
+   `WindowsNativeNavigationTransport` yet, so this package is not wired to a
+   live RNW app. Merged in PRs #12 and #46.
+2. **Fabric adapter** (`@nyc-tron/windows-fluent-fabric`, in
+   `packages/windows-fluent/rnw-fabric`): a C++/WinRT component
+   (`windows/NYCTronFluentFabric/TronNavigationView.cpp`) that hosts the
+   NavigationView in a `ContentIslandComponentView`, with RNW Fabric codegen
+   from `src/TronNavigationViewNativeComponent.ts`. Merged in PRs #14 and
+   #50.
 
-## Next blocking integrations
+## Fabric adapter evidence
 
-- RNW 0.85 compatible host app with WinUI root/Composition island in a
-  **supported** native hosting configuration; no direct Fabric-to-XAML
-  component construction assumed.
-- Actual RNW TurboModule or host IPC transport implementing the TS interface
-  `WindowsNativeNavigationTransport`, with native events.
-- Signed Windows build evidence and interactions for Narrator,
-  high-contrast, resizing, keyboard focus, menus, selection and RTL labels.
-- Consumer Moyo workspace theme adapter; no global Fluent palette or
-  app route migration from Expo Router.
-- Windows tests must distinguish successful WinUI control source compile
-  from a fully working React Native Windows renderer.
+`.github/workflows/winui-fabric.yml` runs on `windows-2025` with Visual
+Studio 2026. The latest run is
+[42158305089](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42158305089)
+(2026-11-06, commit `e95f2be1`, success). Its steps run RNW codegen, build the
+C++/WinRT library, compile a generated `cpp-app` consumer, deploy it packaged
+and run a UI Automation smoke test. The smoke test finds the native items by
+their UIA names, checks that Home is selected at launch, and checks that a
+rejected request keeps Home while an accepted one moves the selection.
+Details and screenshot hashes: [Windows UIA smoke evidence](completion/evidence/windows/README.md).
 
-### Current implementation path
+No file under `packages/windows-fluent` has changed between `e95f2be1` and
+the current head (`d5207cc7`), and the workflow's path filter did not trigger
+a later run.
+
+## Still unverified
+
+- Narrator speech. The smoke test reads UIA names; nothing is spoken.
+- High contrast themes.
+- An RTL run. The `isRTL` prop is compiled and wired but not exercised.
+- Window resize, pane collapse and compact mode.
+- Pointer input, Settings focus return and `onNativeError` delivery.
+- Any machine other than one GitHub-hosted `windows-2025` runner; no signed
+  build.
+- A host-shell transport for `@nyc-tron/windows-fluent`.
+- Consumer Moyo workspace theme adapter; no global Fluent palette or app route
+  migration from Expo Router.
+
+### Implementation references
 
 - Official new support: https://devblogs.microsoft.com/react-native/%F0%9F%9A%80react-native-windows-v0-82-is-here/
 - 0.85 official upstream XAML Fabric example:
