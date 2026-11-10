@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TronOverlayAnchor.h"
 #include "OverlayDismissal.h"
+#include "InspectorEditSequence.h"
 #ifdef RNW_NEW_ARCH
 #include "codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -68,7 +69,7 @@ struct TronOverlayAnchorComponentView
  private:
   struct Field {
     std::string id, value, text; Controls::TextBox input{nullptr};
-    int32_t eventCount{0}, acknowledged{0};
+    nyctron::overlays::InspectorEditSequence edits;
   };
   static std::string Exception() {
     try { throw; } catch (winrt::hresult_error const& error) { return winrt::to_string(error.message()); }
@@ -192,20 +193,23 @@ struct TronOverlayAnchorComponentView
       else {
         if (acknowledged != 0) throw std::invalid_argument("A newly mounted inspector field starts at event count zero");
         field.id = id; field.input = Controls::TextBox{}; field.input.MaxLength(4096);
-        field.input.TextChanged([weak = get_weak(), scope = m_scope](winrt::Windows::Foundation::IInspectable const& sender, Controls::TextChangedEventArgs const&) {
-          if (auto self = weak.get(); self && self->m_scope == scope) self->TextChanged(sender.as<Controls::TextBox>(), scope);
+        // TextChanged is asynchronous: a prior JS acknowledgment could arrive
+        // after another text mutation but before its count advanced. Observe in
+        // TextChanging, while Text already contains that mutation. This handler
+        // only snapshots text/count and queues the existing JS event.
+        field.input.TextChanging([weak = get_weak(), scope = m_scope](auto const& sender, Controls::TextBoxTextChangingEventArgs const&) {
+          if (auto self = weak.get(); self && self->m_scope == scope) self->TextChanging(sender, scope);
         });
       }
-      if (acknowledged > field.eventCount) throw std::invalid_argument("Inspector acknowledgment is newer than its native edit");
+      const auto acknowledgment = field.edits.Commit(acknowledged);
+      if (acknowledgment == nyctron::overlays::InspectorAcknowledgment::Invalid) throw std::invalid_argument("Inspector acknowledgment is newer than its native edit");
       field.input.Header(winrt::box_value(value.GetNamedString(L"label"))); Automation::SetName(field.input, value.GetNamedString(L"label"));
       field.input.IsReadOnly(value.GetNamedBoolean(L"readOnly", false)); field.input.IsEnabled(m_anchor.IsEnabled());
       // An older JS commit must never replace text from a newer native edit.
-      if (acknowledged >= field.acknowledged) {
-        field.value = winrt::to_string(text); field.acknowledged = acknowledged;
-      }
+      if (acknowledgment != nyctron::overlays::InspectorAcknowledgment::Ignore) field.value = winrt::to_string(text);
       // Disabling editing discards any unacknowledged display draft without
       // manufacturing an app acknowledgment or reusing its event counts.
-      if ((acknowledged == field.eventCount && acknowledged >= field.acknowledged) || !m_anchor.IsEnabled() || field.input.IsReadOnly()) {
+      if (acknowledgment == nyctron::overlays::InspectorAcknowledgment::Apply || !m_anchor.IsEnabled() || field.input.IsReadOnly()) {
         const auto committed = winrt::to_hstring(field.value); field.text = field.value;
         if (field.input.Text() != committed) {
           const auto caret = field.input.SelectionStart(), length = field.input.SelectionLength(); field.input.Text(committed);
@@ -225,15 +229,15 @@ struct TronOverlayAnchorComponentView
     }
     m_fieldsJson = json;
   }
-  void TextChanged(Controls::TextBox const& input, std::string const& scope) {
+  void TextChanging(Controls::TextBox const& input, std::string const& scope) {
     if (m_applying || m_disposed || scope != m_scope || !m_anchor.IsEnabled() || input.IsReadOnly()) return;
     auto found = std::find_if(m_fields.begin(), m_fields.end(), [&](auto const& f) { return f.input == input; });
     if (found == m_fields.end() || found->text == winrt::to_string(input.Text())) return;
-    if (found->eventCount == std::numeric_limits<int32_t>::max()) { Error("Inspector edit count is exhausted; start a new scope"); return; }
-    found->text = winrt::to_string(input.Text()); ++found->eventCount;
+    if (!found->edits.ObserveChange()) { Error("Inspector edit count is exhausted; start a new scope"); return; }
+    found->text = winrt::to_string(input.Text());
     if (auto emitter = EventEmitter()) {
       Codegen::TronOverlayAnchorEventEmitter::OnFieldChanged payload; payload.scopeToken = scope;
-      payload.id = found->id; payload.value = winrt::to_string(input.Text()); payload.eventCount = found->eventCount;
+      payload.id = found->id; payload.value = found->text; payload.eventCount = found->edits.EventCount();
       emitter->onFieldChanged(std::move(payload));
     }
   }

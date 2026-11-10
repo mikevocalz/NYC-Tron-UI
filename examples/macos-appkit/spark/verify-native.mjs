@@ -60,7 +60,7 @@ closeSync(descriptor);
 let launchError, driver;
 child.on('error', error => { launchError = error; });
 const checks = [], captures = [], popovers = [], dragProtocols = [], responderEvents = [];
-let pointerEvidence;
+let pointerEvidence, tooltipEvidence;
 writeFileSync(join(output, 'invocation.json'), JSON.stringify({ sourceRevision: revision, app, executable, processId: child.pid, startedAt: new Date().toISOString(), driverProtocol: 1 }, null, 2) + '\n');
 function assertRunning() {
   if (launchError || child.exitCode !== null || child.signalCode !== null) throw new Error(`Native application exited before acceptance: ${launchError?.message ?? child.exitCode ?? child.signalCode}`);
@@ -149,6 +149,61 @@ try {
   assert.equal(tooltip.tooltip, "Save this document's local checkpoint");
   assert.equal(tooltip.help, "Save this document's local checkpoint");
   checks.push('native-tooltip-property-and-accessibility-help');
+
+  const tooltipRequest = options => driver.request('tron.tooltip', { window: 'main', testID: 'tooltip-main', ...options });
+  const tooltipInitial = await tooltipRequest({ action: 'inspect' });
+  assert.equal(typeof tooltipInitial.postEventsAllowed, 'boolean');
+  assert.equal(typeof tooltipInitial.accessibilityTrusted, 'boolean');
+  tooltipEvidence = { schemaVersion: 1, status: tooltipInitial.postEventsAllowed ? 'pending' : 'blocked',
+    boundary: 'CGEvent-posted mouse movement followed by public NSApp.windows and NSAccessibility help-tag observation; no physical mouse hardware or human gesture.',
+    coordinates: 'AppKit global screen logical points, with a bottom-left origin on the primary display.',
+    permission: { postEventsAllowed: tooltipInitial.postEventsAllowed, accessibilityTrusted: tooltipInitial.accessibilityTrusted }, initial: tooltipInitial,
+    ...(tooltipInitial.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process. Native hover presentation and dismissal remain untested; no TCC change or permission prompt was attempted.' }) };
+  const retainTooltip = () => writeFileSync(join(output, 'tooltip-hover.json'), JSON.stringify(tooltipEvidence, null, 2) + '\n');
+  retainTooltip();
+  checks.push('native-tooltip-hover-permission-observed');
+  if (tooltipInitial.postEventsAllowed) {
+    const observeTooltip = async phase => {
+      const observation = await tooltipRequest({ action: 'inspect' });
+      tooltipEvidence.lastObservation = { phase, ...observation }; retainTooltip();
+      assert.equal(observation.boundary, 'public-native-help-tag-observation');
+      assert.equal(observation.traversalTruncated, false, 'The bounded native accessibility traversal could not establish tooltip visibility');
+      assert.equal(observation.ownerVisible, true); assert.equal(observation.ownerKey, true); assert.equal(observation.applicationActive, true);
+      return observation;
+    };
+    const matchingTags = observation => observation.helpTags.filter(tag => tag.strings.includes(tooltip.tooltip));
+    tooltipEvidence.initialExit = await tooltipRequest({ action: 'leave', outsideTestID: 'title-main' });
+    tooltipEvidence.baseline = await waitFor(async () => {
+      const observation = await observeTooltip('outside-before-hover');
+      return !observation.cursorInsideTrigger && !observation.pointerRunning && matchingTags(observation).length === 0 ? observation : undefined;
+    }, 'actual cursor outside the tooltip trigger and no matching native help tag');
+    tooltipEvidence.enter = await tooltipRequest({ action: 'enter' }); retainTooltip();
+    tooltipEvidence.shown = await waitFor(async () => {
+      const observation = await observeTooltip('hover');
+      const tag = matchingTags(observation).find(candidate => candidate.role === 'AXHelpTag' && candidate.frame.width > 0 && candidate.frame.height > 0 && candidate.windowFrame.width > 0 && candidate.windowFrame.height > 0);
+      return observation.cursorInsideTrigger && !observation.pointerRunning && tag ? { observation, tag } : undefined;
+    }, 'new visible native help-tag text after the posted pointer reaches the trigger');
+    const image = await tooltipRequest({ action: 'capture', windowNumber: tooltipEvidence.shown.tag.windowNumber });
+    const png = Buffer.from(image.pngBase64, 'base64');
+    assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+    assert.ok(image.width > 0 && image.height > 0);
+    assert.equal(png.readUInt32BE(16), image.width); assert.equal(png.readUInt32BE(20), image.height);
+    const tooltipCapture = { file: 'native-tooltip-visible.png', width: image.width, height: image.height, sha256: hash(png), boundary: image.boundary, windowNumber: image.windowNumber };
+    writeFileSync(join(output, tooltipCapture.file), png); captures.push(tooltipCapture); tooltipEvidence.capture = tooltipCapture;
+    tooltipEvidence.beforeExit = await observeTooltip('before-exit');
+    assert.ok(matchingTags(tooltipEvidence.beforeExit).some(tag => tag.windowNumber === tooltipEvidence.shown.tag.windowNumber), 'The native help tag disappeared before the tested exit movement');
+    tooltipEvidence.exit = await tooltipRequest({ action: 'leave', outsideTestID: 'title-main' }); retainTooltip();
+    tooltipEvidence.dismissed = await waitFor(async () => {
+      const observation = await observeTooltip('outside-after-hover');
+      const stillVisible = observation.windows.some(window => window.number === tooltipEvidence.shown.tag.windowNumber && window.onscreen);
+      return !observation.cursorInsideTrigger && !observation.pointerRunning && matchingTags(observation).length === 0 && !stillVisible ? observation : undefined;
+    }, 'actual native help-tag window disappearance after pointer exit');
+    // Spark capture waits for Fabric to settle and forces owner layout/display.
+    // Keep that context capture outside the hover/exit observation interval.
+    await capture('tooltip-hover-owner-after-exit');
+    tooltipEvidence.status = 'passed'; retainTooltip();
+    checks.push('native-cgevent-tooltip-hover-presentation-and-dismissal');
+  }
 
   await control('title-main', 'text', { value: 'Opening the native inspector' });
   await status('Unsaved document changes');
@@ -317,7 +372,7 @@ try {
     ...(permission.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process; no TCC changes or permission prompt was attempted.' }) };
   writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
   checks.push('native-pointer-posting-permission-observed');
-  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-react-responder-in-popover-coordinate-boundary', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-pointer-posting-permission-observed'];
+  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-tooltip-hover-permission-observed', ...(tooltipEvidence.status === 'passed' ? ['native-cgevent-tooltip-hover-presentation-and-dismissal'] : []), 'native-react-responder-in-popover-coordinate-boundary', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-pointer-posting-permission-observed'];
   assert.deepEqual(checks, required);
   if (permission.postEventsAllowed) {
     pointerEvidence.arrangement = await driver.request('tron.pointer', { action: 'arrange', source: 'main', target: 'document-1' });
@@ -342,8 +397,8 @@ try {
     checks.push('native-cgevent-pointer-session-and-cross-window-document-transfer');
   }
   const report = { schemaVersion: 1, status: 'passed', platform: 'macos', architecture: process.arch, sourceRevision: revision, processId: child.pid, packageSha256: archive.sha256, nativePayloadSha256: nativeArtifact.payloadSha256, checks, captures,
-    pointer: pointerEvidence,
-    boundaries: ['The React responder proof delivers synthetic NSEvents to the real RCTSurfaceTouchHandler and measures Fabric/Pressability behavior; it is not physical OS pointer delivery.', 'The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', pointerEvidence.status === 'passed' ? 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so pointer-session acceptance remains blocked by the recorded host permission.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
+    pointer: pointerEvidence, tooltip: tooltipEvidence,
+    boundaries: ['The React responder proof delivers synthetic NSEvents to the real RCTSurfaceTouchHandler and measures Fabric/Pressability behavior; it is not physical OS pointer delivery.', 'The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', tooltipEvidence.status === 'passed' ? 'The additional tooltip hover check observed cursor readback, native help-tag text and window disappearance after CGEvent movement; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so native tooltip hover remains untested; the property and accessibility-help binding is separate evidence.', pointerEvidence.status === 'passed' ? 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so pointer-session acceptance remains blocked by the recorded host permission.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
   writeFileSync(join(output, 'result.json'), JSON.stringify(report, null, 2) + '\n');
   const tested = resolve(process.env.APPKIT_TESTED_PACKAGE ?? join(root, 'tested-package'));
   if (existsSync(tested)) throw new Error('Tested-package output already exists; refusing stale artifact reuse');
@@ -356,6 +411,7 @@ try {
   await driver.request('quit');
   console.info(`Native AppKit acceptance passed ${checks.length} checks at ${revision}; tested archive ${archive.sha256}`);
 } catch (error) {
+  if (tooltipEvidence?.status === 'pending') { tooltipEvidence.status = 'failed'; tooltipEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'tooltip-hover.json'), JSON.stringify(tooltipEvidence, null, 2) + '\n'); }
   if (pointerEvidence?.status === 'pending') { pointerEvidence.status = 'failed'; pointerEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
   writeFileSync(join(output, 'failure.json'), JSON.stringify({ schemaVersion: 1, status: 'failed', sourceRevision: revision, checks, error: error instanceof Error ? error.message : String(error) }, null, 2) + '\n');
   throw error;

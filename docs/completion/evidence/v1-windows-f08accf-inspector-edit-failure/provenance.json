@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows",
+  "result": "native-uia-failed",
+  "runId": 42869763341,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42869763341",
+  "nativeJobId": 130018159866,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42869763341/job/130018159866",
+  "sourceJobId": 130017550703,
+  "sourceJobConclusion": "success",
+  "pullRequestHead": "f08accf14f5d23936000b815694947f784552e28",
+  "checkoutRevision": "e025d1ae634423605f96a65e6302a8242573f567",
+  "checkoutTree": "c867566665676413d590601bd563e7c60f71cbee",
+  "pullRequestHeadTree": "c867566665676413d590601bd563e7c60f71cbee",
+  "originalLog": {
+    "source": "GitHub Actions native job logs retrieved through the GitHub connector",
+    "encoding": "UTF-8 serialization of the original decoded job log, retaining BOM and CRLF",
+    "sha256": "cba2c05cff1ec6b1f5e2d4d46f6349ba678449d073471badca8767ace2f042b0",
+    "bytes": 310040,
+    "retainedInGit": false,
+    "excerpts": [
+      {
+        "retainedPath": "checkout-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            81,
+            83
+          ],
+          [
+            89,
+            91
+          ],
+          [
+            108,
+            111
+          ]
+        ]
+      },
+      {
+        "retainedPath": "native-uia-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1595,
+            1639
+          ]
+        ]
+      },
+      {
+        "retainedPath": "toolchain-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1,
+            20
+          ],
+          [
+            500,
+            500
+          ]
+        ]
+      }
+    ]
+  },
+  "observedToolchain": {
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "osVersion": "10.0.26100",
+    "runnerImage": "windows-2025-vs2026",
+    "runnerImageVersion": "20261103.298.1",
+    "msbuild": "18.11.1-1.26513.3+940033be3"
+  },
+  "failedStep": "UI Automation smoke test of the packaged consumer",
+  "failure": "UIA element named 'Committed native note: NativeRapid123abc' did not appear within 30 s",
+  "completedNativePrerequisites": [
+    "Build installed native C++/WinRT Fabric package",
+    "Compile actual Windows consumer executable",
+    "Deploy the packaged consumer the way run-windows does"
+  ],
+  "observedInteractionCheckpoints": [
+    "Native route selection retained the committed route while pending and after rejection, then changed after app acceptance.",
+    "Two actual native windows displayed the same edited document store.",
+    "Minimize and restore updated the application registry.",
+    "Native close veto retained the unsaved shared draft; accepted close destroyed the window; reopening displayed the retained draft.",
+    "Native MenuFlyout exposed a disabled item and committed the enabled approve callback.",
+    "Native ContextFlyout opened through Shift+F10 and committed the inspect callback.",
+    "Verified off-anchor and on-anchor SendInput, actual cursor inside native bounds, and foreground application ownership.",
+    "UIA.FromPoint returned Microsoft.UI.Content.DesktopChildSiteBridge with the application process ID; its full provider chain is retained.",
+    "A real WinUI ToolTip with the expected accessible name became visible and was captured in 08-native-tooltip.png. Moving outside the anchor satisfied the strict native tooltip disappearance wait.",
+    "A genuine native inspector TextBox appeared and received rapid keyboard input. Its final text and the app-owned value lost one character."
+  ],
+  "unexecutedInteractionChecks": [
+    "Successful exact rapid inspector value with retained native field identity",
+    "Rejected native inspector edit and exact value after close/reopen",
+    "Inspector disable and scope replacement",
+    "Inspector dismissal veto followed by accepted retry",
+    "Inspector leave/remount with retained draft, zero acknowledgment and accepted event one",
+    "OS cross-window drag rejection, Escape, close cancellation and accepted move",
+    "Navigation Settings focus return, resize, RTL, collapse/restore and high contrast"
+  ],
+  "skippedSteps": [
+    "Retain the exact package that passed native acceptance",
+    "Upload tested Windows distribution"
+  ],
+  "testedPackageArtifactPresent": false,
+  "uiAutomationArtifactPresent": true,
+  "uiAutomationArtifactId": 13788698640,
+  "limitations": [
+    "This is a failed whole native acceptance gate, not a release receipt.",
+    "Tooltip visibility and dismissal are observed checkpoints for this exact checkout; they do not promote inspector, OS drag or other unexecuted acceptance.",
+    "The original native and app text both omit d. No driver delay or expected-value relaxation is used to hide that failure.",
+    "WinUI documents TextChanged as asynchronous and TextChanging as synchronous with the new Text value already available. Advancing the edit sequence in TextChanged permits an earlier acknowledgment to race an unobserved mutation.",
+    "The source correction observes text/count in TextChanging and queues JS delivery without visual-tree mutation. Portable C++ regressions verify its acknowledgment state machine; actual rapid native typing must still pass on the corrected candidate.",
+    "All eleven original UIA files, including the nine PNG captures, are retained here unchanged with their hashes. Full job log and ZIP remain outside git and in the referenced Actions artifact.",
+    "Tested-package retention and upload were skipped.",
+    "No Narrator speech, physical input hardware, mixed-DPI movement or device-disconnect acceptance is inferred.",
+    "The original run has no per-mutation native trace; its exact callback interleaving cannot be reconstructed from the captured field and app values."
+  ],
+  "observedInspectorFailure": {
+    "requestedText": "NativeRapid123abc",
+    "nativeAndAppText": "NativeRapi123abc",
+    "appAcknowledgedEventCount": 15,
+    "evidence": [
+      "failure.png",
+      "uia-tree.txt"
+    ],
+    "traceLimit": "The per-mutation native event trace was not recorded, so the exact historical interleaving cannot be reconstructed."
+  }
+}

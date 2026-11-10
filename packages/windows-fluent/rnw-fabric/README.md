@@ -287,7 +287,11 @@ function handleNativeEdit(request: WindowsInspectorEditRequest) {
 ```
 
 Native typing stays visible while an acknowledgment is pending. An older
-response cannot reset a newer draft. When the latest edit is acknowledged,
+response cannot reset a newer draft. The native edit count advances in WinUI's
+synchronous `TextChanging` event, before rendering; an older acknowledgment
+cannot race a mutation that is waiting for asynchronous `TextChanged` delivery.
+That handler records text/count and queues the JS event without changing the
+native visual tree. When the latest edit is acknowledged,
 the native field applies the app's committed value; if it already equals
 the typed value, the field and caret are untouched. The app must acknowledge
 rejected requests too: simply retaining an old value without the new count

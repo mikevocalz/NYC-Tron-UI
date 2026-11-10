@@ -1,0 +1,10 @@
+{
+  "jobLogUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130022710856/logs",
+  "decodedLogSha256": "27d04b328c061c9ad6a37f79d1847ff39029fe8ff37b4330e80efa61e9e8ae6a",
+  "decodedLogBytes": 58046,
+  "excerptStartLine": 611,
+  "excerptEndLine": 620,
+  "verbatimExcerpt": "2026-11-10T18:04:41.6097829Z ##[group]Run node tooling/workspace-pack-artifact.mjs record \"$RUNNER_TEMP/nyc-tron-packs\"\n2026-11-10T18:04:41.6098564Z \u001b[36;1mnode tooling/workspace-pack-artifact.mjs record \"$RUNNER_TEMP/nyc-tron-packs\"\u001b[0m\n2026-11-10T18:04:41.6140357Z shell: /usr/bin/bash -e {0}\n2026-11-10T18:04:41.6140580Z ##[endgroup]\n2026-11-10T18:04:41.7295651Z {\n2026-11-10T18:04:41.7296216Z   \"sourceCommit\": \"0ce41081d56acb365c1c1cf382eeaff27aa24543\",\n2026-11-10T18:04:41.7296643Z   \"version\": \"1.0.0\",\n2026-11-10T18:04:41.7296925Z   \"archiveCount\": 13,\n2026-11-10T18:04:41.7297459Z   \"manifestSha256\": \"34335d9968c0c4baab066ef454c29d25be04f8514b9778bbc23f52c29647b4fa\"\n2026-11-10T18:04:41.7297978Z }\n",
+  "excerptSha256": "afdbffab79b839f36c672a819e3c13424a79f0b6f01d82a250f3881d587cf7e9",
+  "publishedOutputLine": "2026-11-10T18:04:43.0874600Z Set output 'workspace_manifest_sha256'\n"
+}

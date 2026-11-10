@@ -47,6 +47,14 @@ release handoff. Seventeen focused checks passed in that mobile source tree,
 including actual offline npm installation and rejection of stale source,
 tampering, wrong versions and same-version repacking.
 
+The [fresh canonical producer](../evidence/v1-native-2a74fbf/workspace/README.md)
+passed at tested merge `0ce41081d56acb365c1c1cf382eeaff27aa24543` in native run
+`42871225491`. Its original ZIP, all thirteen archive hashes/sizes and embedded
+package identities were independently verified. The producer manifest hash is
+`34335d9968c0c4baab066ef454c29d25be04f8514b9778bbc23f52c29647b4fa`.
+Both native jobs passed canonical verification and installation; their actual
+runtime results require separate completed platform receipts.
+
 ### Earlier mobile and desktop checkpoint
 
 At the earlier source checkpoint `0edd5f302e99877191ba9a412c5c060571a5f6c9`,
@@ -130,6 +138,14 @@ and renames the private driver's `Rect` helper to avoid Apple's typedef. That
 failed build did not reach the acceptance driver's compilation or any native
 interaction. All fifteen required native groups still need the fresh run. The
 tooltip property/help check is explicitly separate from actual hover visibility.
+The aggregate also adds public native help-tag observation when the actual
+process allows Core Graphics event posting. Cursor readback must reach and leave
+the visible trigger, a new `AXHelpTag` must expose the expected text and native
+frame, and its window must disappear after exit. A native help-tag content bitmap
+is retained during hover; owner capture follows dismissal. Permission denial
+records blocked hover evidence separately. A permitted but unobserved hover fails
+the run. This adds a sixteenth mandatory permission-observation group, with
+actual hover and drag-session groups conditional on observed host capability.
 
 The Windows follow-up is [PR 60](https://github.com/mikevocalz/NYC-Tron-UI/pull/60),
 with source checkpoint `fc85173985e7e7a2a9d37e2562151b6a70092278`. It adds actual
@@ -176,6 +192,20 @@ the original trace does not establish which unnamed provider it returned. Head
 requires actual cursor placement and app foreground ownership, and keeps genuine
 ToolTip visibility and dismissal as the blocking interaction assertions. Fresh
 runtime evidence remains required.
+
+The [actual f08accf run](../evidence/v1-windows-f08accf-inspector-edit-failure/README.md)
+passed genuine ToolTip visibility/capture and dismissal, while recording the
+outer `DesktopChildSiteBridge` point provider. It then failed the strict rapid
+inspector test: both the native field and app state show `NativeRapi123abc`,
+missing the requested `d`, with acknowledgement 15. The original captures do
+not record per-mutation callback interleaving. Source review found that advancing
+the native counter in asynchronous `TextChanged` permitted an older app response
+to replace a newer mutation before its event was observed. Head
+`4b730937b5eae8356227738bb0f422dce7bd8e47` observes text/count synchronously in
+`TextChanging` and queues the existing event without changing the native visual
+tree. Three focused portable C++ regressions and all 49 isolated package tests
+passed. The unchanged rapid-input test and later native groups require a fresh
+run; no tested desktop archive was retained from the failed f08accf gate.
 
 The assembled Windows reference fixture also gives each remounted inspector a
 new native mount key and edit-count domain while preserving its draft. Old-mount

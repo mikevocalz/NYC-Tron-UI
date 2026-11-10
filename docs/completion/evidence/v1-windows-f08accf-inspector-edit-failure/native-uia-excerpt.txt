@@ -1,0 +1,45 @@
+2026-11-10T18:04:00.3684560Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T18:04:05.7496954Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T18:04:12.6286496Z Native NavigationView items found by Narrator name
+2026-11-10T18:04:17.3405989Z Saved screenshot D:\a\_temp\uia-smoke\01-launched.png
+2026-11-10T18:04:17.3589790Z [initial] Home selected=True, Workspace selected=False
+2026-11-10T18:04:18.2304475Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T18:04:18.2332359Z [pending] Home selected=True, Workspace selected=False
+2026-11-10T18:04:18.6120784Z Pressed 'Reject navigation' with the keyboard (no InvokePattern)
+2026-11-10T18:04:18.6280861Z [rejected] Home selected=True, Workspace selected=False
+2026-11-10T18:04:18.8241136Z Saved screenshot D:\a\_temp\uia-smoke\02-rejected.png
+2026-11-10T18:04:19.4969621Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T18:04:19.8389921Z Pressed 'Accept navigation' with the keyboard (no InvokePattern)
+2026-11-10T18:04:20.0352219Z [accepted] Home selected=False, Workspace selected=True
+2026-11-10T18:04:20.2204890Z Saved screenshot D:\a\_temp\uia-smoke\03-accepted.png
+2026-11-10T18:04:20.2214360Z UIA smoke passed: native selection followed only the committed route
+2026-11-10T18:04:20.6210869Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T18:04:21.0378239Z Pressed 'Change shared draft' with the keyboard (no InvokePattern)
+2026-11-10T18:04:21.2712572Z Saved screenshot D:\a\_temp\uia-smoke\04-native-document.png
+2026-11-10T18:04:21.6665589Z Pressed 'Restore document' with the keyboard (no InvokePattern)
+2026-11-10T18:04:21.9218181Z Saved screenshot D:\a\_temp\uia-smoke\05-close-veto.png
+2026-11-10T18:04:22.2750586Z Pressed 'Save shared draft' with the keyboard (no InvokePattern)
+2026-11-10T18:04:22.7072449Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T18:04:22.9368902Z Saved screenshot D:\a\_temp\uia-smoke\06-native-reopened.png
+2026-11-10T18:04:23.5319368Z Saved UIA tree (14 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T18:04:23.8948432Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T18:04:24.2438930Z Invoked 'Native command menu' through InvokePattern
+2026-11-10T18:04:27.4532803Z Saved screenshot D:\a\_temp\uia-smoke\07-native-menu.png
+2026-11-10T18:04:28.0022000Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T18:04:28.1674952Z OS pointer reached (456, 347) for requested (456, 347)
+2026-11-10T18:04:37.1690052Z Pointer inside native 'Native tooltip anchor' (42,131344,4,26); bounds=336,327,240,40; foregroundProcess=9140; nativeHitIdentityMatched=False
+2026-11-10T18:04:37.1707200Z [{"controlType":"ControlType.Pane","name":"","processId":9140,"bounds":"0,23,1024,697","className":"Microsoft.UI.Content.DesktopChildSiteBridge","runtimeId":"42,131432"},{"controlType":"ControlType.Window","name":"NYCTronWindowsExample","processId":9140,"bounds":"-8,-8,1040,736","className":"Microsoft.UI.Windowing.Window","runtimeId":"42,720928"},{"controlType":"ControlType.Pane","name":"","processId":6480,"bounds":"0,0,1024,768","className":"#32769","runtimeId":"42,65548"}]
+2026-11-10T18:04:37.5196834Z Saved screenshot D:\a\_temp\uia-smoke\08-native-tooltip.png
+2026-11-10T18:04:37.5215601Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T18:04:38.1938059Z Invoked 'Native inspector anchor' through InvokePattern
+2026-11-10T18:05:08.8492203Z UIA smoke failed: UIA element named 'Committed native note: NativeRapid123abc' did not appear within 30 s
+2026-11-10T18:05:08.9459360Z Saved UIA tree (59 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T18:05:09.1520886Z Saved screenshot D:\a\_temp\uia-smoke\failure.png
+2026-11-10T18:05:09.2594967Z UIA element named 'Committed native note: NativeRapid123abc' did not appear within 30 s
+2026-11-10T18:05:09.2596054Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:105 char:3
+2026-11-10T18:05:09.2596775Z +   throw "UIA element named '$name' did not appear within $timeoutSec  ...
+2026-11-10T18:05:09.2597346Z +   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T18:05:09.2597947Z     + CategoryInfo          : OperationStopped: (UIA element nam...ear within 30 s:String) [], RuntimeException
+2026-11-10T18:05:09.2598749Z     + FullyQualifiedErrorId : UIA element named 'Committed native note: NativeRapid123abc' did not appear within 30 s
+2026-11-10T18:05:09.2599298Z  
+2026-11-10T18:05:09.3323989Z ##[error]Process completed with exit code 1.
