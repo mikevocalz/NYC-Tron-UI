@@ -10,16 +10,18 @@ blanket device-acceptance claim is created by this report.
 
 | Gate | Observed result | Evidence and limit |
 |---|---|---|
-| Source, exports, types and Windows package checks | Passed for PR head `7b5b3deca420dcc9c7986ff93996f1f3a0a9b1df` | [CI run 42752976035](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42752976035); this run predates the new declaration-graph gate |
+| Source, exports, types and package checks | Passed for PR head `10f3df208b549567c5084eeea91b2d5f9863fd78` | [CI run 42755744884](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744884), including the declaration-graph gate |
 | Installed basic UI consumer | Passed: one Chromium test; one Expo-only test intentionally skipped | [Consumer run 42752975794](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42752975794), job `129620702408` |
 | Installed Expo/web consumer | Passed: two Chromium tests | Same run, job `129620702182`; UI, core, panes and Expo controls came from produced tarballs |
 | Native consumer packaging | Passed locally: ten NYC-Tron archives installed in a new npm project; strict app typecheck and Expo iOS/Android exports completed | iOS: 1,142 modules; Android: 1,144 modules; approximately 2.4 MB Hermes bundle each, including the generated reference MP4. These are bundling results, not native runtime results |
-| Native compilation for the candidate | Running at this report's initial checkpoint | [Native run 42752975924](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42752975924); source job passed. Final native/runtime evidence belongs with the platform report |
+| Native iOS installed consumer | Compiled, launched and passed the then-current 11-check decoder contract at head `10f3df2` | [Native run 42755744795](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744795), job `129629586741`; [retained report and provenance](../evidence/v1-native-ios-10f3df2/provenance.json). Its permissive tail assertion accepted 3,984 of 4,000 expected frames, so this historical pass does not satisfy the newer exact-length resampling gate |
+| Native Android installed consumer | Compiled; launch blocked by an emulator-directory mismatch at head `10f3df2` | Same run, job `129629586983`. The next candidate explicitly shares `ANDROID_AVD_HOME` between AVD creation and emulator launch and asserts the named AVD exists |
+| Windows native consumer | Actual C++ consumer build, registration and keyboard UI Automation passed at head `10f3df2` | [WinUI run 42755744692](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744692). This does not establish Narrator speech or physical-device input |
 | Workspace public declaration snapshot | Passed locally | 13 packages, 617 typed public subpaths, 3,306 reachable project declarations, 94 external type boundaries; TypeScript 6.0.3 |
 | Isolated Windows public declaration snapshot | Passed locally after its own dependency install and build | 1 package, 1 typed public subpath, 4 reachable project declarations, 7 external type boundaries; TypeScript 5.9.3 / RN 0.85.3 |
 | Tooling regressions | Passed locally | Eight declaration-graph regressions and five tarball-integrity/dependency-boundary regressions |
 
-The consumer run is associated with PR head `7b5b3de`; GitHub checked out its
+The retained installed-consumer captures below are associated with PR head `7b5b3de`; GitHub checked out its
 merge commit `1a5e0ad8033b51b9aefb16178158249a60291016`. Both consumers recorded
 that exact checkout. The retained
 [results, archive hashes and runtime pins](../evidence/v1-release-consumers-7b5b3de/results.json)
@@ -29,7 +31,10 @@ artifacts; the basic narrow and Expo/web wide captures were visually inspected:
 [basic narrow](../evidence/v1-release-consumers-7b5b3de/basic-narrow.png),
 [Expo/web wide](../evidence/v1-release-consumers-7b5b3de/expo-web-wide.png),
 [Expo/web narrow](../evidence/v1-release-consumers-7b5b3de/expo-web-narrow.png).
-The fixtures use minimal app styling to exercise package consumption.
+The fixtures use minimal app styling to exercise package consumption. The
+[complete installed-consumer rerun](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744677)
+also passed at head `10f3df2`; the older retained images remain labeled with the
+revision that produced them.
 
 Local headless Chromium could not launch because the managed runtime denied
 its process socket; its attempted download also returned an invalid archive.
@@ -143,6 +148,94 @@ notices. The inventory and pack checks do not constitute an owner compliance
 attestation. The previously documented owner distribution-review requirement
 remains in [D2](../../V1_DECISIONS.md#d2-licensing-and-provenance) until an actual
 record is provided; none was invented here.
+
+## Native UI interaction gate
+
+The required native jobs now run the built clean-tarball app through pinned
+official Maestro 2.12.1. Settings editing/save and Editor draft retention/save
+use actual OS taps, text input and scrolling. A separate native pointer entry
+requires one real touch/up stroke; Android additionally verifies an active
+touch is cancelled when Home removes app focus. This is separate from the
+media decoder's runtime receipt.
+
+The runner retains JUnit, native accessibility trees, screenshots, command and
+Metro logs, app binary hash, installed archive hashes, source revision and the
+tool's verified release SHA-256. It rejects empty, skipped or failed reports,
+missing semantic labels, missing screenshots and stale output directories.
+Both native jobs upload the evidence even on failure. The
+[native UI gate guide](../../../tooling/native/UI_ACCEPTANCE.md) records the
+pinned tool/source, commands and exact flows.
+
+Local validation passed five evidence/flow-wiring tests, native example
+typechecking and Maestro's actual parsing of all four flow files. The local
+driver found no connected devices; that result is not native interaction
+acceptance. The candidate's simulator jobs must produce their own reports.
+Physical pen/palm behavior, spoken VoiceOver/TalkBack output and active iOS
+touch cancellation remain separately recorded device checks.
+
+## Stable publication gate
+
+The release now requires the reusable actual Windows C++/WinRT compile and UI
+Automation workflow, in addition to the generic Windows package lane. It also
+requires the reference browser workflow's authored flows, screenshots and
+render measurements. These are required jobs on the release candidate itself;
+older green runs do not satisfy them. This wiring is separate from a claim that
+the new candidate has already passed those native jobs.
+
+After building all fourteen archives, the release uploads
+`release-candidate-v<version>` with every `.tgz` and `SHA256SUMS`. It then runs
+[`release-readiness.mjs`](../../../tooling/release-readiness.mjs). The retained
+archives remain reviewable if stable publication is blocked. A separate
+`release-readiness-v<version>` artifact records the decision and blockers.
+
+Stable publication requires both conditions:
+
+1. All 341 canonical rows are accepted. The existing component validator still
+   requires completed local or pinned external implementation and an existing
+   passed evidence reference for each of the eight required platforms. The gate
+   never writes acceptance statuses.
+2. The owner distribution review in
+   [`distribution-review.json`](../distribution-review.json) is approved for
+   this version and this exact fourteen-archive checksum manifest. The gate
+   hashes the actual archives, checks the complete inventory and version, then
+   reads the linked comment through GitHub's API. The response must identify
+   `mikevocalz` as the repository owner and contain the exact approval statement.
+   A pending record, missing author/evidence, different hashes, deleted comment
+   or unavailable API cannot authorize stable publication.
+
+The tracked review remains `pending`. When the owner has reviewed the retained
+archives and their included notices, the comment body must contain exactly:
+
+```text
+NYC-Tron distribution approval
+Version: 1.0.0
+SHA256SUMS-SHA256: <sha256 of the exact SHA256SUMS file>
+I approve distribution of these NYC-Tron release archives with their included licenses and source notices.
+```
+
+The reviewed record can then set `status: "approved"` and name
+`approval.reviewer`, `approval.manifestSha256`, and `approval.commentUrl` (the
+owner's `https://github.com/mikevocalz/NYC-Tron-UI/pull/<number>#issuecomment-<id>`
+URL). The gate performs a read-only
+[GitHub comment lookup](https://docs.github.com/en/rest/issues/comments#get-an-issue-comment);
+it never submits an approval comment. Using an owner comment also works when
+the owner authored the PR and cannot approve their own pull-request review.
+
+For a local readiness check:
+
+```sh
+node tooling/release-readiness.mjs --version 1.0.0-rc.1
+node tooling/release-readiness.mjs --version 1.0.0 --artifacts /path/to/fourteen-archive-candidate
+node --test tooling/tests/release-readiness.test.mjs
+```
+
+The first command validates the canonical scope and tracked review while
+allowing candidate work to remain pending. The second is expected to block
+today: the platform ledger is unverified and no owner approval has been
+recorded. Packing a candidate does not promote it to stable or change any row.
+Nine regression tests cover forged approval records, wrong owner/statement,
+missing platform evidence, altered archives, API failure, immutable statuses,
+and release job dependencies/artifact ordering.
 
 ## Acceptance boundary
 

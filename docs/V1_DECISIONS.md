@@ -16,7 +16,9 @@ packages are produced by `tooling/pack-release.mjs`. The fourteenth,
 `private: true`, has version `1.0.0`, declares `MIT`, and includes `LICENSE`.
 
 The release job requires the source/package checks, browser suites, installed
-tarball consumers, and iOS/Android native build jobs from the same candidate.
+tarball consumers, iOS/Android native build/runtime jobs, actual Windows native
+compilation and UI Automation, and reference captures/render measurements from
+the same candidate.
 It rejects mismatched package versions and an existing release instead of
 replacing its assets. No tag or release has been created as part of this
 candidate work.
@@ -42,8 +44,15 @@ with the exact npm archive, upstream commit, and integrity value. See
 [the dependency notice](../packages/platform-services/THIRD_PARTY.md) and
 [release evidence](completion/reports/V1-RELEASE-GATES.md#licensing-and-distribution-review).
 These are verifiable packaging facts. They do not establish an owner distribution
-sign-off. The previously required owner distribution review must be recorded
-before the stable tag; no such attestation is added or inferred by this change.
+sign-off. The previously required owner distribution review is tracked in
+[distribution-review.json](completion/distribution-review.json) and remains
+`pending`. Stable publication checks an actual comment by the repository owner
+through GitHub's API, approving the exact version and SHA-256 of the produced
+fourteen-archive `SHA256SUMS`. Changing a local status field cannot satisfy this
+gate. The archives are retained as a CI artifact before the check, so they can
+be reviewed even when stable publication is blocked. The
+[release evidence report](completion/reports/V1-RELEASE-GATES.md#stable-publication-gate)
+documents the record and approval statement; none is submitted or inferred here.
 
 ## D3. Scope: finish the complete component program with its proper owners
 
@@ -73,11 +82,18 @@ approved work, and a successful compile is not a replacement for its runtime
 checks. Support claims remain bounded by [SUPPORT.md](SUPPORT.md) and the
 candidate's actual evidence.
 
+`tooling/release-readiness.mjs` enforces this boundary before stable publication:
+every one of the immutable 341 rows must be `accepted`, and the component
+validator requires completed implementation plus existing passed evidence on
+all eight required platforms. Prerelease packaging can retain pending work and
+the pending owner review. It does not promote either status or claim stable
+readiness.
+
 ## D4. Conditions for the candidate
 
 | Area | Required evidence |
 |---|---|
-| Release and native compilation | Reusable native iOS/Android jobs consume this candidate's tarballs; release waits for them |
+| Release and native compilation | Reusable iOS/Android jobs consume this candidate's tarballs; release also waits for actual Windows native compilation/UIA and reference captures/render measurements |
 | Clean consumers | A basic UI app without unrelated optional peers, an Expo/web app, and the native reference app install actual archives outside the checkout |
 | Reference flows | Settings, library/detail, editor/inspector and media flows preserve authored state through adaptive layout |
 | Native interaction and accessibility | Actual platform interaction reports, cancellation/lifecycle behavior, keyboard and assistive-technology checks for the claimed targets |

@@ -68,7 +68,8 @@ export interface PointerRouter {
 }
 
 function validSample(sample: PointerSample): boolean {
-  return Number.isSafeInteger(sample.pointerId) && ['touch','pen','mouse'].includes(sample.kind)
+  return sample !== null && typeof sample === 'object'
+    && Number.isSafeInteger(sample.pointerId) && ['touch','pen','mouse'].includes(sample.kind)
     && [sample.x, sample.y, sample.timestampMs].every(Number.isFinite) && sample.timestampMs >= 0
     && (sample.pressure === null || Number.isFinite(sample.pressure) && sample.pressure >= 0 && sample.pressure <= 1)
     && [sample.tiltX, sample.tiltY].every(value => value === null || Number.isFinite(value) && Math.abs(value) <= 90)
@@ -101,7 +102,9 @@ export function createPointerRouter(options: PointerRouterOptions): PointerRoute
   }
   return {
     handleBatch(batch) {
-      if (disposed || !['down','move','up','cancel','hover','hover-exit'].includes(batch.phase)) return;
+      if (disposed || batch === null || typeof batch !== 'object'
+        || !Array.isArray(batch.samples) || !Array.isArray(batch.predicted)
+        || !['down','move','up','cancel','hover','hover-exit'].includes(batch.phase)) return;
       if (!batch.samples.length || batch.samples.length > 512 || batch.predicted.length > 128) return;
       if (!batch.samples.every(validSample) || !batch.predicted.every(validSample)) return;
       const first = batch.samples[0]!;

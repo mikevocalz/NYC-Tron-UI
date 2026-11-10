@@ -82,6 +82,9 @@ export function PointerInputDemo() {
     <Text testID="pointer-summary" role="status" accessibilityLiveRegion="polite" {...{ className: "text-sm text-text" }}>
       Committed strokes: {state.committed}. Cancelled strokes: {state.cancelled}. Prediction samples: {state.predicted.length}.
     </Text>
+    <Text testID="pointer-last-event" {...{ className: "text-sm text-text" }}>
+      Input source: {point?.kind ?? "none"}. Last event: {state.lastBatch?.phase ?? "none"}.
+    </Text>
     <Text selectable testID="pointer-observation" accessibilityLabel="Reported input values" {...{ className: "text-xs leading-relaxed text-text-muted" }}>
       {JSON.stringify(observation)}
     </Text>

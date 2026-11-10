@@ -1,0 +1,6 @@
+appId: com.nyctron.instruments.example
+name: Android native pointer cancellation
+---
+- assertVisible: "Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0."
+- assertVisible: "Input source: touch. Last event: cancel."
+- takeScreenshot: pointer-cancel

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "platform": "ios",
+  "platformVersion": "26.5",
+  "revision": "640759da66f486e9abc70863b7707fd6023452c6",
+  "fixtureMd5": "f3124067a1a9bb9c06b1283c673cef39",
+  "checks": [
+    "fixture-bytes",
+    "native-probe",
+    "frame-presentation-and-jpeg",
+    "bounded-frame-scaling",
+    "pcm-bytes-and-signal",
+    "pcm-resampling-and-tail",
+    "complete-presentation-index",
+    "indexed-frame-and-rejection",
+    "normalized-errors",
+    "cancelled-consumer",
+    "cache-deletion-and-recovery"
+  ],
+  "elapsedMs": 12228,
+  "observed": {
+    "durationUs": 2000000,
+    "frameTimeUs": 500000,
+    "indexFrames": 40,
+    "indexedTimeUs": 1050000,
+    "pcmFrames": 24000,
+    "resampledFrames": 8000,
+    "tailFrames": 3984,
+    "pcmPeak": 0.12998878955841064,
+    "pcmRms": 0.08835971083538909
+  }
+}

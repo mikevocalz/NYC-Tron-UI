@@ -16,6 +16,8 @@ on:
       - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
   workflow_dispatch:
+  # The release requires the actual Windows executable and UIA roundtrip.
+  workflow_call:
 
 permissions:
   contents: read

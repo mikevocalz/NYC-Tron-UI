@@ -16,6 +16,7 @@ on:
       - "tooling/pack-release.mjs"
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
+      - "tooling/tests/native-ui-acceptance.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
@@ -41,6 +42,7 @@ on:
       - "tooling/pack-release.mjs"
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
+      - "tooling/tests/native-ui-acceptance.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
@@ -72,6 +74,7 @@ jobs:
       - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
       - run: node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
+      - run: node --test tooling/tests/native-ui-acceptance.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-navigation typecheck
@@ -138,9 +141,9 @@ jobs:
           done
 
   android:
-    name: Android installed-tarball compile and media runtime
+    name: Android installed-tarball compile, media and native UI
     runs-on: ubuntu-latest
-    timeout-minutes: 70
+    timeout-minutes: 90
     env:
       NYC_TRON_ACCEPTANCE: reference
     steps:
@@ -221,12 +224,20 @@ jobs:
           ./gradlew :nyc-tron-native-charts:dependencies --configuration debugRuntimeClasspath --no-daemon \
             | tee /tmp/charts-deps.txt
           grep -q 'com.patrykandpatrick.vico:compose-m3:3.2.3' /tmp/charts-deps.txt
-      - name: Execute the installed native decoder on Android
+      - name: Install the pinned official native UI test driver
+        run: |
+          node tooling/native/install-maestro.mjs "$RUNNER_TEMP/nyc-tron-maestro"
+          echo "MAESTRO_BIN=$RUNNER_TEMP/nyc-tron-maestro/maestro/bin/maestro" >> "$GITHUB_ENV"
+      - name: Execute the installed decoder and OS-driven UI on Android
         shell: bash
         run: |
           set -euo pipefail
+          export ANDROID_USER_HOME="$RUNNER_TEMP/nyc-tron-android-user"
+          export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
+          mkdir -p "$ANDROID_AVD_HOME"
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "system-images;android-35;google_apis;x86_64" "emulator" "platform-tools"
-          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force -n NYCTronMediaAcceptance -k "system-images;android-35;google_apis;x86_64"
+          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force -n NYCTronMediaAcceptance -k "system-images;android-35;google_apis;x86_64" --path "$ANDROID_AVD_HOME/NYCTronMediaAcceptance.avd"
+          "$ANDROID_HOME/emulator/emulator" -list-avds | grep -Fx 'NYCTronMediaAcceptance'
           if [[ -e /dev/kvm ]]; then sudo chmod 666 /dev/kvm; fi
           "$ANDROID_HOME/emulator/emulator" -avd NYCTronMediaAcceptance -port 5554 -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 3072 > "$RUNNER_TEMP/nyc-tron-media-emulator.log" 2>&1 &
           nyc_tron_emulator_pid=$!
@@ -234,6 +245,7 @@ jobs:
           apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           test -n "$apk"
           node tooling/native/run-media-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER"
+          node tooling/native/run-ui-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER"
       - name: Save installed-package evidence and the Android acceptance build
         if: always()
         uses: actions/upload-artifact@v4
@@ -246,13 +258,15 @@ jobs:
             ${{ runner.temp }}/nyc-tron-native-consumer/app/android/app/build/outputs/apk/debug/*.apk
             ${{ runner.temp }}/nyc-tron-android-js/metadata.json
             ${{ runner.temp }}/nyc-tron-native-consumer/runtime-android
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-android
+            ${{ runner.temp }}/nyc-tron-maestro/provenance.json
             ${{ runner.temp }}/nyc-tron-media-emulator.log
           retention-days: 7
 
   ios:
-    name: iOS installed-tarball compile and media runtime
+    name: iOS installed-tarball compile, media and native UI
     runs-on: macos-latest
-    timeout-minutes: 70
+    timeout-minutes: 90
     env:
       NYC_TRON_ACCEPTANCE: reference
     steps:
@@ -332,6 +346,16 @@ jobs:
           app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
           test -n "$app"
           ditto -c -k --keepParent "$app" "$RUNNER_TEMP/nyc-tron-ios-simulator.zip"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Install the pinned official native UI test driver
+        run: |
+          node tooling/native/install-maestro.mjs "$RUNNER_TEMP/nyc-tron-maestro"
+          echo "MAESTRO_BIN=$RUNNER_TEMP/nyc-tron-maestro/maestro/bin/maestro" >> "$GITHUB_ENV"
+      - name: Boot one simulator for both native acceptance runners
+        run: node tooling/native/prewarm-ios.mjs
       - name: Execute the installed native decoder on iOS
         shell: bash
         run: |
@@ -339,6 +363,13 @@ jobs:
           app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
           test -n "$app"
           node tooling/native/run-media-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
+      - name: Execute the reference and pointer UI through XCTest touches
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          test -n "$app"
+          node tooling/native/run-ui-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
       - name: Save installed-package evidence and the iOS acceptance build
         if: always()
         uses: actions/upload-artifact@v4
@@ -351,5 +382,8 @@ jobs:
             ${{ runner.temp }}/nyc-tron-ios-js/metadata.json
             ${{ runner.temp }}/nyc-tron-ios-simulator.zip
             ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ios
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-ios
+            ${{ runner.temp }}/nyc-tron-ios-boot
+            ${{ runner.temp }}/nyc-tron-maestro/provenance.json
             /tmp/xcodebuild.log
           retention-days: 7

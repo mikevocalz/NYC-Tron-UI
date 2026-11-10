@@ -1,0 +1,58 @@
+appId: com.nyctron.instruments.example
+name: Editor native draft route retention and save
+---
+- launchApp:
+    stopApp: false
+- tapOn: "Editor"
+- assertVisible: "Quiet forms"
+- scrollUntilVisible:
+    element:
+      id: "reference-headline"
+    direction: DOWN
+    timeout: 30000
+- assertVisible: "Cover headline"
+- tapOn:
+    id: "reference-headline"
+- eraseText: 100
+- inputText: "Retained cover draft"
+- hideKeyboard
+- takeScreenshot: editor-draft
+- tapOn: "Settings"
+- assertVisible: "Workspace name"
+- tapOn: "Editor"
+- scrollUntilVisible:
+    element:
+      id: "reference-headline"
+    direction: DOWN
+    timeout: 30000
+- assertVisible: "Cover headline"
+- scrollUntilVisible:
+    element:
+      id: "reference-cover-headline"
+    direction: UP
+    timeout: 30000
+- assertVisible:
+    id: "reference-cover-headline"
+    text: "Retained cover draft"
+- scrollUntilVisible:
+    element:
+      text: "Save cover"
+    direction: UP
+    timeout: 20000
+- tapOn: "Save cover"
+- scrollUntilVisible:
+    element:
+      id: "reference-cover-status"
+    direction: DOWN
+    timeout: 20000
+- assertVisible: "Cover saved for this session."
+- assertVisible:
+    id: "reference-cover-headline"
+    text: "Retained cover draft"
+- takeScreenshot: editor-saved
+- scrollUntilVisible:
+    element:
+      id: "reference-headline"
+    direction: DOWN
+    timeout: 20000
+- assertVisible: "Cover headline"

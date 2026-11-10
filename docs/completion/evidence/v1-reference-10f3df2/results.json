@@ -1,0 +1,18 @@
+{
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "headRevision": "10f3df208b549567c5084eeea91b2d5f9863fd78",
+  "testedMergeRevision": "640759da66f486e9abc70863b7707fd6023452c6",
+  "workflowRun": 42755744978,
+  "workflowUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744978",
+  "artifactId": 13735482051,
+  "artifactSha256": "54cd9f6a84d4a9ebcc8cf971063c84834779f3e02e96e13e9ea556da77e845c6",
+  "result": "success",
+  "browserTests": 29,
+  "modelTests": 3,
+  "evidenceType": "actual_chromium_browser",
+  "limits": [
+    "Native geometry fixture is not physical foldable evidence",
+    "Synthetic pen event test is not hardware stylus evidence",
+    "React Profiler development render work is not end-to-end input or native frame latency"
+  ]
+}

@@ -1,0 +1,1540 @@
+{
+  "metric": "React Profiler actualDuration per committed update",
+  "build": "development",
+  "browser": "Chromium",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "provenance": {
+    "revision": "640759da66f486e9abc70863b7707fd6023452c6",
+    "fixtureSha256": "cf7fe226e4ba9cd89a8ab6056bd83000cac952d2ee3c274e4e2000e81012239c",
+    "workflowRun": "42755744978",
+    "browserVersion": "151.0.7922.34",
+    "nodeVersion": "v24.19.0",
+    "os": {
+      "platform": "linux",
+      "release": "7.0.0-1019-azure"
+    },
+    "hardware": {
+      "cpuModel": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+      "logicalCpus": 4,
+      "memoryBytes": 16758403072
+    }
+  },
+  "repetitions": 10,
+  "interpretation": "React render work only; excludes native GPU presentation, production startup and physical-device performance.",
+  "summary": {
+    "library": {
+      "sampleCount": 59,
+      "p50Ms": 0.20000000001164153,
+      "p95Ms": 27.60000000000582
+    },
+    "editor": {
+      "sampleCount": 100,
+      "p50Ms": 0.6999999999970896,
+      "p95Ms": 26.600000000034925
+    },
+    "settings": {
+      "sampleCount": 90,
+      "p50Ms": 0.5999999999912689,
+      "p95Ms": 26.499999999970896
+    }
+  },
+  "samples": [
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1082.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 1087.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 1088
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1088.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 30.90000000000873,
+      "commitTime": 1120.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.8000000000029104,
+      "commitTime": 1133
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.1999999999970896,
+      "commitTime": 1135.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.1999999999970896,
+      "commitTime": 1138.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.6999999999970896,
+      "commitTime": 1141.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 5,
+      "commitTime": 1147.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1172.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.3000000000174623,
+      "commitTime": 1190
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 1190.3999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1191.0999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 27.600000000020373,
+      "commitTime": 1219.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 1230
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 1231.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.3000000000029104,
+      "commitTime": 1233.3999999999942
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.6999999999970896,
+      "commitTime": 1235.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1282.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 1287.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 1287.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1288.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 28.30000000000291,
+      "commitTime": 1317.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 5.2999999999883585,
+      "commitTime": 1332.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1382.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 1387.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 1388
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1388.5999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 29.70000000001164,
+      "commitTime": 1419.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.5,
+      "commitTime": 1431.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.1000000000058208,
+      "commitTime": 1433.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.3999999999941792,
+      "commitTime": 1435.5999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 4.600000000005821,
+      "commitTime": 1441.3999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 5.30000000000291,
+      "commitTime": 1447.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 1471.8999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 1486.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 1487.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1487.8999999999942
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 27.799999999973807,
+      "commitTime": 1516.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.1999999999970896,
+      "commitTime": 1527.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 1529.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.2000000000116415,
+      "commitTime": 1530.8999999999942
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.9000000000087311,
+      "commitTime": 1533.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1582.3999999999942
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.39999999999417923,
+      "commitTime": 1587.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 1588
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 1588.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 32.30000000000291,
+      "commitTime": 1621.8999999999942
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 8.299999999988358,
+      "commitTime": 1644.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1682.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 1703.800000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 1704.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1705
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 18.80000000000291,
+      "commitTime": 1725.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.6999999999970896,
+      "commitTime": 1739.3999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.39999999999417923,
+      "commitTime": 1741.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.6000000000058208,
+      "commitTime": 1742.8999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.6999999999970896,
+      "commitTime": 1744.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 2.400000000008731,
+      "commitTime": 1748.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1777.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 1786.8999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 1787.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1787.8999999999942
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 10.000000000014552,
+      "commitTime": 1798.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.6000000000058208,
+      "commitTime": 1808.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 1809.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 1810.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.6999999999970896,
+      "commitTime": 1811.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1865.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 1870.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1871.0999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1871.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 10.5,
+      "commitTime": 1882.8999999999942
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 2.3000000000029104,
+      "commitTime": 1896.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1949.0999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 1954
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 1954.3999999999942
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 1954.8999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 10.60000000000582,
+      "commitTime": 1965.8999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.6999999999970896,
+      "commitTime": 1977
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 1978.5999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 1980.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.8999999999941792,
+      "commitTime": 1982.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 2,
+      "commitTime": 1985
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2018.3999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 2019.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2019.8999999999942
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2020.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 10.100000000020373,
+      "commitTime": 2031.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 2041.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.5999999999912689,
+      "commitTime": 2044.3999999999942
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 2.1000000000058208,
+      "commitTime": 2047.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 2.8000000000029104,
+      "commitTime": 2050.899999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2098.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 2103.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 2104
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2104.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 27.30000000000291,
+      "commitTime": 2132.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 8.5,
+      "commitTime": 2150.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2199
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 2204.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.20000000001164153,
+      "commitTime": 2204.899999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2205.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 28.19999999999709,
+      "commitTime": 2234.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.7000000000116415,
+      "commitTime": 2246.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.8999999999941792,
+      "commitTime": 2249.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 2,
+      "commitTime": 2253.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 2.900000000008731,
+      "commitTime": 2258.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 7.100000000005821,
+      "commitTime": 2270.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2287.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 2303
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 2303.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2304
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 27.70000000001164,
+      "commitTime": 2332.399999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.1000000000203727,
+      "commitTime": 2343.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 2345.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.8000000000029104,
+      "commitTime": 2348
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 2,
+      "commitTime": 2350.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2398.899999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 2404.0999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2404.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2405
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 27.60000000000582,
+      "commitTime": 2433.199999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 5.600000000005821,
+      "commitTime": 2451.899999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2498.899999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 2504.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.20000000001164153,
+      "commitTime": 2504.800000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2505.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 27.90000000000873,
+      "commitTime": 2534.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.1999999999970896,
+      "commitTime": 2545.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 2547.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.2000000000116415,
+      "commitTime": 2549.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.8000000000029104,
+      "commitTime": 2552.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 5.5,
+      "commitTime": 2559.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2598.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 2627.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 2628.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2628.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 28.59999999999127,
+      "commitTime": 2658.0999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.2999999999883585,
+      "commitTime": 2670.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 2672.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.6000000000058208,
+      "commitTime": 2674.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.6999999999970896,
+      "commitTime": 2676.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2715.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 2737.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 2737.899999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2738.399999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 16.400000000023283,
+      "commitTime": 2755.699999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 2.3000000000029104,
+      "commitTime": 2766.800000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 2803.199999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 2803.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2804.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 13.300000000017462,
+      "commitTime": 2818
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 2827.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.39999999999417923,
+      "commitTime": 2829.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 2830.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.6999999999970896,
+      "commitTime": 2832.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.8000000000029104,
+      "commitTime": 2835.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2843.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2869.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2869.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2870.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 10.099999999991269,
+      "commitTime": 2880.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.6000000000058208,
+      "commitTime": 2890.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.29999999998835847,
+      "commitTime": 2891.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.5,
+      "commitTime": 2892
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.5999999999912689,
+      "commitTime": 2893.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 2948.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 2953.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 2954.0999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 2954.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 11.499999999985448,
+      "commitTime": 2966.399999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 2.1999999999970896,
+      "commitTime": 2977.5999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3032.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 3037.399999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 3037.699999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3038.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 10.999999999985448,
+      "commitTime": 3049.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 3061
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 3063
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.1999999999970896,
+      "commitTime": 3065.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.6999999999970896,
+      "commitTime": 3068.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 5.399999999994179,
+      "commitTime": 3075
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3102.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.40000000000873115,
+      "commitTime": 3137.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 3137.5999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3138.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 26.499999999970896,
+      "commitTime": 3165.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 3176.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.9000000000087311,
+      "commitTime": 3177.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.0999999999912689,
+      "commitTime": 3179.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.8000000000029104,
+      "commitTime": 3181.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3232.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 3237.399999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.20000000001164153,
+      "commitTime": 3237.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3238.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 26.300000000017462,
+      "commitTime": 3265.199999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 5.5,
+      "commitTime": 3280.300000000003
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3332.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 3337.5
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 3337.899999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3338.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 26.600000000034925,
+      "commitTime": 3365.800000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 3377.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.6999999999970896,
+      "commitTime": 3380.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 5,
+      "commitTime": 3387.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 3,
+      "commitTime": 3393
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 6.399999999994179,
+      "commitTime": 3400.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3418.300000000003
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 3436.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 3436.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3437.5
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 25.800000000017462,
+      "commitTime": 3464.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.6000000000058208,
+      "commitTime": 3475.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1.5999999999912689,
+      "commitTime": 3477.899999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 2.099999999991269,
+      "commitTime": 3480.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 3,
+      "commitTime": 3484.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3533.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 3538.800000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.19999999999708962,
+      "commitTime": 3539.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3539.699999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 27.59999999999127,
+      "commitTime": 3568.0999999999913
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 8.69999999999709,
+      "commitTime": 3586.199999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3632.199999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 3637
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 3637.399999999994
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3638.199999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 28.5,
+      "commitTime": 3667.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.4000000000087311,
+      "commitTime": 3679.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 3681.5
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.2000000000116415,
+      "commitTime": 3683.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 1.7000000000116415,
+      "commitTime": 3686.899999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 6.5,
+      "commitTime": 3694.399999999994
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3721
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.3000000000029104,
+      "commitTime": 3753.699999999997
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0.09999999999126885,
+      "commitTime": 3754.0999999999913
+    },
+    {
+      "route": "editor",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3754.5999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 13.200000000011642,
+      "commitTime": 3768.899999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.6000000000058208,
+      "commitTime": 3779.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.5999999999912689,
+      "commitTime": 3780.399999999994
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.8000000000029104,
+      "commitTime": 3782.199999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 1,
+      "commitTime": 3784.0999999999913
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3832.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.20000000001164153,
+      "commitTime": 3837.300000000003
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0.10000000000582077,
+      "commitTime": 3837.699999999997
+    },
+    {
+      "route": "settings",
+      "phase": "update",
+      "durationMs": 0,
+      "commitTime": 3838.199999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 9.899999999979627,
+      "commitTime": 3848.699999999997
+    },
+    {
+      "route": "library",
+      "phase": "update",
+      "durationMs": 3.3999999999941792,
+      "commitTime": 3861.0999999999913
+    }
+  ]
+}

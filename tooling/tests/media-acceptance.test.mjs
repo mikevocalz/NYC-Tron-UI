@@ -9,7 +9,8 @@ const revision = "a".repeat(40);
 const valid = () => ({ schema: 1, status: "passed", platform: "ios", platformVersion: "26.0", revision,
   fixtureMd5: MEDIA_FIXTURE.md5, checks: [...MEDIA_ACCEPTANCE_CHECKS], elapsedMs: 100,
   observed: { durationUs: 2_000_000, frameTimeUs: 500_000, indexFrames: 40, indexedTimeUs: 1_050_000,
-    pcmFrames: 24_000, resampledFrames: 8_000, tailFrames: 4_000, pcmPeak: 0.13, pcmRms: 0.09 } });
+    pcmFrames: 24_000, resampledFrames: 8_000, upsampledFrames: 48_000, fullResampledFrames: 32_000,
+    tailFrames: 4_000, pcmPeak: 0.13, pcmRms: 0.09 } });
 
 test("the runtime contract identifies the actual bundled video bytes", () => {
   const bytes = readFileSync(new URL("../../examples/native-instruments/assets/reference.mp4", import.meta.url));
@@ -26,7 +27,9 @@ test("runtime acceptance rejects stale provenance, omitted checks and fabricated
     report => { report.checks.pop(); }, report => { report.checks[0] = report.checks[1]; },
     report => { report.observed.indexedTimeUs = 1_050_001; }, report => { report.observed.pcmPeak = 0; },
     report => { report.observed.pcmRms = Number.NaN; }, report => { report.observed.pcmFrames = 24_001; },
-    report => { report.observed.tailFrames = 8_000; }, report => { report.observed.indexFrames = 10; },
+    report => { report.observed.tailFrames = 8_000; }, report => { report.observed.tailFrames = 3_999; },
+    report => { report.observed.upsampledFrames = 47_999; }, report => { report.observed.indexFrames = 10; },
+    report => { report.observed.fullResampledFrames = 31_984; }, report => { report.observed.fullResampledFrames = 32_001; },
   ];
   for (const mutate of mutations) {
     const report = valid(); mutate(report);

@@ -61,3 +61,23 @@ test('hardware keys and mouse hover route without fabricating force',()=>{
  router.handleKey(event);router.handleBatch(batch('hover',sample('mouse',3,1,{pressure:null,tiltX:null,tiltY:null})));
  assert.deepEqual(keys,[event]);assert.equal(hovers[0].pressure,null);
 });
+test('one pen leaving does not admit a palm while another pen is still hovering',()=>{
+ const strokes=[];const router=createPointerRouter({onStroke:s=>strokes.push(s)});
+ router.handleBatch(batch('hover',sample('pen',11,1)));
+ router.handleBatch(batch('hover',sample('pen',12,2)));
+ router.handleBatch(batch('hover-exit',sample('pen',11,3)));
+ router.handleBatch(batch('down',sample('touch',2,4)));
+ assert.equal(strokes.length,0);
+ router.handleBatch(batch('hover-exit',sample('pen',12,5)));
+ router.handleBatch(batch('down',sample('touch',2,6)));
+ assert.deepEqual(strokes.map(s=>s.phase),['down']);
+});
+test('malformed native payloads are rejected without breaking the active stroke',()=>{
+ const strokes=[];const router=createPointerRouter({onStroke:s=>strokes.push(s)});
+ router.handleBatch(batch('down',sample()));
+ for(const malformed of [null,undefined,{}, {phase:'move',samples:null,predicted:[]},batch('move',[null]),batch('move',[{}])]){
+  assert.doesNotThrow(()=>router.handleBatch(malformed));
+ }
+ router.handleBatch(batch('up',sample('pen',1,2)));
+ assert.deepEqual(strokes.map(s=>s.phase),['down','up']);
+});

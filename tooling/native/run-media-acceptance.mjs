@@ -90,7 +90,7 @@ try {
   });
   const receiptPort = receiver.address().port;
   if (await metroReady()) throw new Error("Port 8081 already hosts a Metro server; refusing to use another app's source");
-  background("npx", ["--no-install", "expo", "start", "--localhost", "--port", "8081"], "metro.log", {
+  background("npx", ["--no-install", "expo", "start", "--localhost", "--port", "8081", "--max-workers", "1"], "metro.log", {
     cwd: app,
     env: { ...process.env, CI: "1", EXPO_NO_TELEMETRY: "1", NYC_TRON_ACCEPTANCE: "media",
       EXPO_PUBLIC_NYC_TRON_REVISION: revision,
@@ -121,14 +121,16 @@ try {
     run(adb, [...args, "shell", "am", "force-stop", bundle]);
     run(adb, [...args, "shell", "am", "start", "-n", `${bundle}/.MainActivity`]);
   } else {
-    const devices = Object.entries(jsonFrom(run("xcrun", ["simctl", "list", "devices", "available", "--json"])).devices)
+    const devices = Object.entries(jsonFrom(run("xcrun", ["simctl", "list", "devices", "available", "--json"], { timeout: 90000 })).devices)
       .sort(([left], [right]) => right.localeCompare(left, undefined, { numeric: true })).flatMap(([, list]) => list);
-    const device = devices.find(device => device.isAvailable && device.name.startsWith("iPhone") && device.state === "Booted") ??
+    const requested = process.env.NYC_TRON_IOS_UDID;
+    const device = requested ? devices.find(device => device.isAvailable && device.udid === requested) :
+      devices.find(device => device.isAvailable && device.name.startsWith("iPhone") && device.state === "Booted") ??
       devices.find(device => device.isAvailable && device.name.startsWith("iPhone"));
     if (!device) throw new Error("No available iPhone simulator runtime is installed");
     const bundle = "com.nyctron.instruments.example";
-    if (device.state !== "Booted") { run("xcrun", ["simctl", "boot", device.udid]); bootedSimulator = device.udid; }
-    run("xcrun", ["simctl", "bootstatus", device.udid, "-b"], { timeout: 180000 });
+    if (device.state !== "Booted") { run("xcrun", ["simctl", "boot", device.udid], { timeout: 90000 }); bootedSimulator = device.udid; }
+    run("xcrun", ["simctl", "bootstatus", device.udid, "-b"], { timeout: 420000 });
     host = { udid: device.udid, name: device.name };
     capture = () => { run("xcrun", ["simctl", "io", device.udid, "screenshot", join(output, "screen.png")], { optional: true }); };
     stopApp = () => { run("xcrun", ["simctl", "terminate", device.udid, bundle], { optional: true }); };

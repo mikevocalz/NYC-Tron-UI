@@ -16,6 +16,7 @@ on:
       - "packages/ui/tests/browser/theme.css"
       - ".github/workflows/native-feel-preview.yml"
       - "pnpm-lock.yaml"
+  workflow_call:
 
 permissions:
   contents: read

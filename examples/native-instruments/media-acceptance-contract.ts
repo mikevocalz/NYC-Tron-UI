@@ -35,6 +35,8 @@ export interface MediaAcceptanceReport {
     readonly indexedTimeUs: number;
     readonly pcmFrames: number;
     readonly resampledFrames: number;
+    readonly upsampledFrames: number;
+    readonly fullResampledFrames: number;
     readonly tailFrames: number;
     readonly pcmPeak: number;
     readonly pcmRms: number;
@@ -56,8 +58,8 @@ export function validateMediaAcceptanceReport(value: unknown, platform: string, 
   const observed = report.observed;
   if (!observed || observed.durationUs !== MEDIA_FIXTURE.durationUs || observed.frameTimeUs !== 500_000 ||
       observed.indexFrames !== MEDIA_FIXTURE.frames || observed.indexedTimeUs !== 1_050_000 ||
-      observed.pcmFrames !== 24_000 || observed.resampledFrames !== 8_000 ||
-      !Number.isInteger(observed.tailFrames) || observed.tailFrames < 1 || observed.tailFrames > 4_000 ||
+      observed.pcmFrames !== 24_000 || observed.resampledFrames !== 8_000 || observed.upsampledFrames !== 48_000 ||
+      observed.fullResampledFrames !== 32_000 || observed.tailFrames !== 4_000 ||
       !Number.isFinite(observed.pcmPeak) || observed.pcmPeak <= 0.01 || observed.pcmPeak > 1.01 ||
       !Number.isFinite(observed.pcmRms) || observed.pcmRms <= 0.005 || observed.pcmRms > observed.pcmPeak) {
     throw new Error("Native media acceptance did not observe the fixture's decoded timestamps and PCM");

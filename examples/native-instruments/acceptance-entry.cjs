@@ -6,6 +6,7 @@ function withAcceptanceEntry(config, directory) {
     library: 'library-acceptance',
     reference: 'reference-app',
     media: 'media-acceptance',
+    pointer: 'pointer-acceptance',
   }[process.env.NYC_TRON_ACCEPTANCE];
   if (!entry) return config;
   const rewrite = config.server?.rewriteRequestUrl;

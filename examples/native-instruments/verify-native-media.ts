@@ -51,7 +51,8 @@ async function jpeg(frame: DecodedFrame, width: number, height: number): Promise
 async function pcm(audio: DecodedAudio, rate: number, maximumFrames: number, expectedFrames?: number) {
   check(audio.sampleRate === rate && audio.channels === MEDIA_FIXTURE.channels, "PCM format differs from the requested rate/source channels");
   check(audio.frames > 0 && audio.frames <= maximumFrames &&
-    (expectedFrames === undefined || audio.frames === expectedFrames), "PCM does not cover its requested bounded interval");
+    (expectedFrames === undefined || audio.frames === expectedFrames),
+    `PCM produced ${audio.frames} frames at ${rate} Hz; expected ${expectedFrames ?? `1–${maximumFrames}`} for the bounded interval`);
   check(audio.pcm.kind === "file" && audio.pcm.uri.startsWith("file://"), "native PCM used a fallback or a sample-array bridge");
   const file = new File(audio.pcm.uri), bytes = await file.bytes();
   check(file.exists && file.size === bytes.length && bytes.length === audio.pcm.byteLength &&
@@ -118,9 +119,15 @@ export async function verifyNativeMedia(): Promise<MediaAcceptanceReport> {
     const resampled = await decoder.decodeAudio(uri, { startUs: 250_000, durationUs: 500_000, sampleRate: 16_000 });
     if (resampled.pcm.kind === "file") outputUris.push(resampled.pcm.uri);
     await pcm(resampled, 16_000, 8_000, 8_000);
+    const upsampled = await decoder.decodeAudio(uri, { startUs: 250_000, durationUs: 500_000, sampleRate: 96_000 });
+    if (upsampled.pcm.kind === "file") outputUris.push(upsampled.pcm.uri);
+    await pcm(upsampled, 96_000, 48_000, 48_000);
+    const fullResampled = await decoder.decodeAudio(uri, { startUs: 0, durationUs: MEDIA_FIXTURE.durationUs, sampleRate: 16_000 });
+    if (fullResampled.pcm.kind === "file") outputUris.push(fullResampled.pcm.uri);
+    await pcm(fullResampled, 16_000, 32_000, 32_000);
     const tail = await decoder.decodeAudio(uri, { startUs: 1_750_000, durationUs: 500_000, sampleRate: 16_000 });
     if (tail.pcm.kind === "file") outputUris.push(tail.pcm.uri);
-    await pcm(tail, 16_000, 4_000);
+    await pcm(tail, 16_000, 4_000, 4_000);
     checks.push("pcm-resampling-and-tail");
 
     const index = await decoder.presentationIndex(uri, { maxFrames: MEDIA_FIXTURE.frames });
@@ -171,8 +178,8 @@ export async function verifyNativeMedia(): Promise<MediaAcceptanceReport> {
       revision: process.env.EXPO_PUBLIC_NYC_TRON_REVISION ?? "local",
       fixtureMd5: identity.md5!, checks, elapsedMs: Math.round(performance.now() - started),
       observed: { durationUs: probe.durationUs, frameTimeUs: frame.actualTimeUs, indexFrames: index.timesUs.length,
-        indexedTimeUs: indexed.actualTimeUs, pcmFrames: audio.frames, resampledFrames: resampled.frames,
-        tailFrames: tail.frames, pcmPeak: signal.peak, pcmRms: signal.rms },
+        indexedTimeUs: indexed.actualTimeUs, pcmFrames: audio.frames, resampledFrames: resampled.frames, upsampledFrames: upsampled.frames,
+        fullResampledFrames: fullResampled.frames, tailFrames: tail.frames, pcmPeak: signal.peak, pcmRms: signal.rms },
     };
   } catch (error) { failures.push(error); }
   finally {

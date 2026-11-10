@@ -1,0 +1,38 @@
+appId: com.nyctron.instruments.example
+name: Settings native edit and save
+---
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "Library"
+    timeout: 90000
+- tapOn: "Settings"
+- assertVisible: "Workspace preferences"
+- assertVisible: "Workspace name"
+- tapOn:
+    id: "reference-workspace-name"
+- eraseText: 100
+- inputText: "Native UI workspace"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Save settings"
+    direction: DOWN
+    timeout: 20000
+- tapOn: "Save settings"
+- scrollUntilVisible:
+    element:
+      text: "Preferences saved for this session."
+    direction: DOWN
+    timeout: 20000
+- assertVisible: "Preferences saved for this session."
+- assertVisible:
+    id: "reference-workspace-title"
+    text: "Native UI workspace"
+- takeScreenshot: settings-saved
+- scrollUntilVisible:
+    element:
+      id: "reference-workspace-name"
+    direction: UP
+    timeout: 20000
+- assertVisible: "Workspace name"

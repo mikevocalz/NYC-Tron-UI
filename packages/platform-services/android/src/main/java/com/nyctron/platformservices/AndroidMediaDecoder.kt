@@ -206,12 +206,14 @@ internal class AndroidMediaDecoder(private val context: () -> Context?) {
     val output = output(".f32")
     try {
       AndroidDecodedPcm(output, start, duration, request.sampleRate.toInt()).use { sink ->
-        decode(uri, "audio/", start, {}) { codec, index, info, format ->
+        decode(uri, "audio/", start, { format ->
+          if (format.containsKey(MediaFormat.KEY_DURATION)) sink.limitToTrackDuration(format.getLong(MediaFormat.KEY_DURATION))
+        }) { codec, index, info, format ->
           if (info.size > 0) {
             val bytes = codec.getOutputBuffer(index) ?: throw MediaDecodeFailure("decode-failed", "Audio buffer is unavailable.")
             sink.accept(bytes, info, format, ::checkActive)
           }
-          info.presentationTimeUs >= start + duration
+          info.presentationTimeUs >= sink.endUs
         }
         val record = sink.record()
         trim(output)
