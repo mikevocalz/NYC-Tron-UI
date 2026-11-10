@@ -76,6 +76,9 @@
     <ClInclude Include="DesktopGeometry.h" />
     <ClInclude Include="DesktopSession.h" />
     <ClInclude Include="TronDesktop.h" />
+    <ClInclude Include="TronOverlayAnchor.h" />
+    <ClInclude Include="NativeDragBroker.h" />
+    <ClInclude Include="TronDragSurface.h" />
     <ClInclude Include="TronNavigationView.h" />
     <ClInclude Include="ReactPackageProvider.h"><DependentUpon>ReactPackageProvider.idl</DependentUpon></ClInclude>
   </ItemGroup>
@@ -84,6 +87,9 @@
     <ClCompile Include="DesktopGeometry.cpp" />
     <ClCompile Include="DesktopSession.cpp" />
     <ClCompile Include="TronDesktop.cpp" />
+    <ClCompile Include="TronOverlayAnchor.cpp" />
+    <ClCompile Include="NativeDragBroker.cpp" />
+    <ClCompile Include="TronDragSurface.cpp" />
     <ClCompile Include="TronNavigationView.cpp" />
     <ClCompile Include="ReactPackageProvider.cpp"><DependentUpon>ReactPackageProvider.idl</DependentUpon></ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />

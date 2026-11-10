@@ -54,6 +54,13 @@ export interface WindowsDesktopLayout {
   /** The existing core version-one snapshot, without native tokens or document data. */
   readonly layout: LayoutSnapshot;
 }
+export interface WindowsNativeDragResult {
+  /** Actual WinUI DropCompleted effect; unknown means the native lifetime ended before completion was observed. */
+  readonly effect: "none" | "move" | "copy" | "link" | "unknown";
+  readonly reason: string;
+  /** Apply document state only from outcome.transfer, after both app approval and native completion. */
+  readonly outcome: Outcome;
+}
 export interface WindowsWindowHost {
   snapshot(): WindowsDesktopSnapshot;
   refresh(): Promise<WindowsDesktopSnapshot>;
@@ -76,6 +83,10 @@ export interface WindowsWindowHost {
   drop(token: string, targetId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): Promise<Outcome>;
   /** Invalidate a transfer when the app's input stream ends or cancels. */
   cancelDrag(token: string): Outcome;
+  /** Used by WindowsDragSource after a real native DragStarting request; never synthesizes an OS gesture. */
+  startNativeDrag(requestId: string, sourceId: string, payload: unknown): Promise<WindowsNativeDragResult>;
+  /** One mounted native drop surface per window. The callback decides; it must not apply the document move. */
+  bindNativeDropTarget(windowId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): () => void;
   /** Closes owned secondary surfaces, detaches the primary observer, and leaves the JS/document owner alive. */
   dispose(): Promise<void>;
 }

@@ -6,7 +6,11 @@ if (!input || !evidenceInput || !output) throw new Error("Usage: retain-tested-p
 const consumer = resolve(input), evidence = resolve(evidenceInput), destination = resolve(output);
 const preparation = JSON.parse(readFileSync(join(consumer, "package-preparation.json"), "utf8"));
 const acceptance = JSON.parse(readFileSync(join(evidence, "result.json"), "utf8").replace(/^\uFEFF/, ""));
-const required = ["controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen"];
+const navigation = JSON.parse(readFileSync(join(evidence, "navigation-accessibility-result.json"), "utf8").replace(/^\uFEFF/, ""));
+const navigationChecks = ["settings-focus-return", "resize-retains-selection-and-focus", "native-rtl-and-physical-left-pane", "native-pane-collapse-and-restore", "high-contrast-native-repaint-and-input"];
+if (navigation.status !== "passed" || navigation.sourceRevision !== preparation.sourceRevision || navigation.processId !== acceptance.processId || navigationChecks.some(name => !navigation.checks?.some(check => check.name === name))) throw new Error("Native navigation focus, geometry and contrast acceptance is incomplete or came from another app/revision");
+const required = ["controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted"];
+required.push("native-navigation-accessibility");
 if (acceptance.status !== "passed" || acceptance.sourceRevision !== preparation.sourceRevision || required.some(check => !acceptance.checks?.includes(check))) throw new Error("Native Windows acceptance is incomplete or came from a different revision");
 const archive = preparation.archives.find(a => a.name === "@nyc-tron/windows-fluent-fabric");
 if (!archive || !preparation.installedFromArchives) throw new Error("Missing actual installed package identity");

@@ -6,12 +6,17 @@ import type {
 /** Mount this binding in WindowsNavigationHost to connect the peer-free controller to WinUI. */
 export interface WindowsNavigationBinding {
   readonly transport: WindowsNativeNavigationTransport;
+  /** Returns false without a mounted host. True means dispatched; native focus is observed separately. */
+  focusSelected(): boolean;
+  /** Restore the native Settings opener after the app closes its own Settings surface. */
+  focusSettings(): boolean;
   /** Detaches native event delivery and removes the mounted native view. Idempotent. */
   dispose(): void;
 }
 
 interface Snapshot extends WindowsNavigationState { readonly disposed: boolean }
 type Listener = () => void;
+type FocusTarget = "selected" | "settings";
 
 class NavigationBindingOwner {
   private snapshot: Snapshot = {
@@ -20,7 +25,7 @@ class NavigationBindingOwner {
   };
   private readonly changes = new Set<Listener>();
   private readonly events = new Set<(event: WindowsNativeNavigationEvent) => void>();
-  private attached: object | null = null;
+  private attached: { token: object; focus?: (target: FocusTarget) => boolean } | null = null;
 
   readonly getSnapshot = (): Snapshot => this.snapshot;
   readonly subscribe = (listener: Listener): (() => void) => {
@@ -78,15 +83,20 @@ class NavigationBindingOwner {
     },
   };
 
-  attach(token: object): () => void {
+  attach(token: object, focus?: (target: FocusTarget) => boolean): () => void {
     this.requireLive();
-    if (this.attached !== null && this.attached !== token)
+    if (this.attached !== null && this.attached.token !== token)
       throw new Error("A Windows navigation binding can own only one mounted native view");
-    this.attached = token;
-    return () => { if (this.attached === token) this.attached = null; };
+    const lease = { token, focus };
+    this.attached = lease;
+    return () => { if (this.attached === lease) this.attached = null; };
+  }
+  focus(target: FocusTarget): boolean {
+    this.requireLive();
+    return this.attached?.focus?.(target) ?? false;
   }
   emit(token: object, event: WindowsNativeNavigationEvent): void {
-    if (this.snapshot.disposed || this.attached !== token) return;
+    if (this.snapshot.disposed || this.attached?.token !== token) return;
     for (const listener of [...this.events]) listener(event);
   }
   dispose(): void {
@@ -103,7 +113,12 @@ const owners = new WeakMap<WindowsNavigationBinding, NavigationBindingOwner>();
 /** The transport drives the existing Fabric NavigationView; it does not create an RN view fallback. */
 export function createWindowsNavigationBinding(): WindowsNavigationBinding {
   const owner = new NavigationBindingOwner();
-  const binding: WindowsNavigationBinding = { transport: owner.transport, dispose: () => owner.dispose() };
+  const binding: WindowsNavigationBinding = {
+    transport: owner.transport,
+    focusSelected: () => owner.focus("selected"),
+    focusSettings: () => owner.focus("settings"),
+    dispose: () => owner.dispose(),
+  };
   owners.set(binding, owner);
   return binding;
 }

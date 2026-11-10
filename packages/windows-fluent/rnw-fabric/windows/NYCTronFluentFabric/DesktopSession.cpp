@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DesktopSession.h"
 #include "DesktopGeometry.h"
+#include "NativeDragBroker.h"
 #include <commctrl.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.interop.h>
@@ -22,8 +23,8 @@ struct DesktopSession::Window {
   UI::Windowing::AppWindow app{nullptr};
   winrt::event_token changed{}, closing{}, destroying{};
 };
-DesktopSession::DesktopSession(RN::ReactContext context, std::function<void(std::string)> changed, std::function<void(std::string)> error)
-  : m_context(std::move(context)), m_changed(std::move(changed)), m_error(std::move(error)), m_owner(NewToken()) {}
+DesktopSession::DesktopSession(RN::ReactContext context, std::function<void(std::string)> changed, std::function<void(std::string)> error, std::function<void(std::string)> nativeDrag)
+  : m_context(std::move(context)), m_changed(std::move(changed)), m_error(std::move(error)), m_nativeDrag(std::move(nativeDrag)), m_owner(NewToken()) {}
 DesktopSession::~DesktopSession() { Dispose(); }
 void DesktopSession::RequireOwner(std::string const& owner) const {
   if (m_disposed || owner != m_owner) throw std::runtime_error("Stale or disposed native desktop connection");
@@ -45,6 +46,9 @@ void DesktopSession::Connect(std::string const& primaryId, std::string const& co
   window->id = m_primary; window->generation = NewToken(); window->primary = true; window->hwnd = hwnd;
   window->app = UI::Windowing::AppWindow::GetFromWindowId(UI::GetWindowIdFromWindow(hwnd));
   Observe(std::move(window));
+  m_drag = NativeDragBroker::Create(m_owner, [weak = weak_from_this()](auto const& id, auto const& generation) {
+    auto self = weak.lock(); return self && self->DragWindowIsLive(id, generation);
+  }, m_nativeDrag);
 }
 void DesktopSession::Observe(std::unique_ptr<Window> window) {
   auto id = window->id, generation = window->generation;
@@ -78,12 +82,27 @@ LRESULT CALLBACK DesktopSession::WindowMessage(HWND hwnd, UINT message, WPARAM w
   return result;
 }
 void DesktopSession::Changed() noexcept {
-  if (m_disposed || !m_windows.count(m_primary)) return;
+  if (m_disposed) return;
+  if (m_drag) m_drag->ObserveWindows();
+  if (!m_windows.count(m_primary)) return;
   try { m_changed(Snapshot()); }
   catch (std::exception const& error) { m_error(error.what()); }
   catch (winrt::hresult_error const& error) { m_error(winrt::to_string(error.message())); }
   catch (...) { m_error("Native desktop observation failed"); }
 }
+bool DesktopSession::DragWindowIsLive(std::string const& id, std::string const& generation) const noexcept {
+  auto found = m_windows.find(id);
+  return !m_disposed && found != m_windows.end() && found->second->generation == generation && IsWindow(found->second->hwnd) && !IsIconic(found->second->hwnd);
+}
+void DesktopSession::StartNativeDrag(std::string const& source, std::string const& token, std::string const& request, std::function<void(std::string)> completed) {
+  if (!m_drag) throw std::runtime_error("Native drag host is unavailable");
+  m_drag->Start(source, token, request, std::move(completed));
+}
+bool DesktopSession::ResolveNativeDrop(std::string const& token, std::string const& request, bool accepted) {
+  if (!m_drag) throw std::runtime_error("Native drag host is unavailable");
+  return m_drag->Resolve(token, request, accepted);
+}
+void DesktopSession::CancelNativeDrag(std::string const& request) { if (m_drag) m_drag->Cancel(request); }
 void DesktopSession::CloseRequest(std::string const& id, std::string const& generation) {
   auto iterator = m_windows.find(id);
   if (m_disposed || iterator == m_windows.end() || iterator->second->generation != generation) return;
@@ -194,10 +213,11 @@ void DesktopSession::ResolveClose(std::string const& id, std::string const& gene
 }
 void DesktopSession::Dispose() noexcept {
   if (m_disposed) return; m_disposed = true;
+  if (m_drag) { m_drag->Dispose(); m_drag.reset(); }
   for (auto const& [id, window] : m_windows) Detach(*window);
   for (auto const& [id, window] : m_windows) {
     if (!window->primary) { try { window->surface.Close(); } catch (...) {} }
   }
-  m_windows.clear(); m_changed = nullptr; m_error = nullptr;
+  m_windows.clear(); m_changed = nullptr; m_error = nullptr; m_nativeDrag = nullptr;
 }
 }

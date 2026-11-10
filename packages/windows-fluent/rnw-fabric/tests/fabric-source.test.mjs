@@ -91,9 +91,9 @@ test("native failures reach JS through onNativeError instead of being swallowed"
  const tsx=read("src/TronNavigationView.windows.tsx");
  assert.match(tsx,/console\.error\(error\)/);
 });
-test("RTL layout follows I18nManager through the isRTL prop",()=>{
+test("RTL layout passes authored direction with the host locale as fallback",()=>{
  assert.match(read("src/TronNavigationViewNativeComponent.ts"),/isRTL\?: boolean/);
- assert.match(read("src/TronNavigationView.windows.tsx"),/isRTL=\{I18nManager\.isRTL\}/);
+ assert.match(read("src/TronNavigationView.windows.tsx"),/isRTL=\{nativeIsRTL\(style\)\}/);
  assert.match(read("windows/NYCTronFluentFabric/TronNavigationView.cpp"),/FlowDirection::RightToLeft/);
 });
 test("registration asks RNW to create its XamlApplication for the island",()=>{
