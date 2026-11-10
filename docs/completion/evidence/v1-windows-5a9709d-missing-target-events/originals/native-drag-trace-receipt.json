@@ -1,0 +1,78 @@
+﻿{
+    "schemaVersion":  1,
+    "capturedAt":  "2026-11-10T22:25:41.9006556Z",
+    "sourceRevision":  "ea5f13f4ecff638c7c1d062403c62e2227fa9513",
+    "processId":  8940,
+    "processStopped":  true,
+    "status":  "copied",
+    "recordLimit":  512,
+    "byteLimit":  262144,
+    "originalRemoved":  true,
+    "headerVerified":  true,
+    "bytes":  14142,
+    "filename":  "native-drag-trace.jsonl",
+    "originalSha256Before":  "f6bf187299c5fe826e0e0d1821e00c17c74096f8562313a069be05923b34f358",
+    "originalSha256After":  "f6bf187299c5fe826e0e0d1821e00c17c74096f8562313a069be05923b34f358",
+    "sha256":  "f6bf187299c5fe826e0e0d1821e00c17c74096f8562313a069be05923b34f358",
+    "records":  29,
+    "truncated":  false,
+    "recordError":  false,
+    "stages":  [
+                   {
+                       "stage":  "trace-enabled",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "broker-diagnostics-enabled",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "capabilities-deferred",
+                       "count":  6
+                   },
+                   {
+                       "stage":  "surface-mounted",
+                       "count":  3
+                   },
+                   {
+                       "stage":  "capabilities-applied",
+                       "count":  7
+                   },
+                   {
+                       "stage":  "surface-loaded",
+                       "count":  3
+                   },
+                   {
+                       "stage":  "surface-unmounted",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "surface-destroying",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "source-starting",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "broker-source-prepared",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "broker-source-started",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "source-data-prepared",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "source-drop-completed",
+                       "count":  1
+                   },
+                   {
+                       "stage":  "broker-native-completed",
+                       "count":  1
+                   }
+               ]
+}

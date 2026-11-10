@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "sourceJob": 130147820533,
+  "nativeJob": 130148065670,
+  "sourceTests": {
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "nativeFoundationProbe": "passed",
+  "nativeCompile": "passed",
+  "nativeGate": "failed",
+  "firstFailure": {
+    "schemaVersion": 1,
+    "status": "failed",
+    "sourceRevision": "44c46345761e6d15f847458dc85bb3cf2cc0810d",
+    "checks": [],
+    "error": "Native driver response timed out awaiting tron.window (request 2)"
+  },
+  "nativeProcess": {
+    "processId": 37118,
+    "exitCode": null,
+    "signalCode": null,
+    "observedAt": "2026-11-10T21:58:22.114Z",
+    "beforeSample": {
+      "observedAt": "2026-11-10T21:58:22.123Z",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "37118 37115 S<   /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/products/macos-arm64/release/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference\n",
+      "stderr": ""
+    },
+    "afterSample": {
+      "observedAt": "2026-11-10T21:58:26.337Z",
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "37118 37115 S<   /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/products/macos-arm64/release/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference\n",
+      "stderr": ""
+    },
+    "sample": {
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "exitCode": 0,
+      "signal": null,
+      "stdout": "",
+      "stderr": "Sampling process 37118 for 2 seconds with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 37118 written to file /Users/runner/work/_temp/nyc-tron-appkit-evidence/native-process-sample.txt\n",
+      "threadGroups": 29,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "50e2a86844b56968a73d111ba8172f471f7a9a780d47d24b725d7886b70e542e"
+    }
+  },
+  "originalZip": {
+    "bytes": 838076,
+    "sha256": "66f320c5e5ff4d1009c5f2ab8a989808f990cce17fdc257bdafd4de6a9b2e6f5",
+    "membersVerified": 42,
+    "directOriginalMembers": 41
+  },
+  "completeCompilerLog": {
+    "path": "nyc-tron-appkit-consumer/.spark/logs/1794347023282-f67c3b98-03b9-4d76-a951-860e99387680-xcodebuild.log",
+    "bytes": 12299645,
+    "sha256": "d615fa261cd2e552bbd7b8abed5b364a845a6348843fe16c528b3b3abe82e2ee",
+    "retainedIn": "original-native-artifact.zip"
+  },
+  "sourceLog": {
+    "bytes": 19322,
+    "sha256": "3b4eef0e10223bc881ddd67342de53ac483a5e2004a758ee48fbbcdcc9ea692c",
+    "independentlyComparedToConnector": true
+  },
+  "transportSequence2": {
+    "request-received": {
+      "phase": "request-received",
+      "at": 1794347867.107557,
+      "mainThread": false,
+      "sequence": 2,
+      "details": {
+        "parsed": true
+      },
+      "command": "tron.window"
+    },
+    "main-dispatched": {
+      "phase": "main-dispatched",
+      "at": 1794347867.110777,
+      "mainThread": true,
+      "sequence": 2,
+      "details": {},
+      "command": "tron.window"
+    },
+    "main-replied": {
+      "phase": "main-replied",
+      "at": 1794347902.597055,
+      "mainThread": true,
+      "sequence": 2,
+      "details": {
+        "dictionary": true,
+        "nilResponse": false
+      },
+      "command": "tron.window"
+    },
+    "serialized": {
+      "phase": "serialized",
+      "at": 1794347902.597495,
+      "mainThread": false,
+      "sequence": 2,
+      "details": {
+        "bytes": 157,
+        "replacedWithFailure": false
+      },
+      "command": "tron.window"
+    },
+    "send-completed": {
+      "phase": "send-completed",
+      "at": 1794347902.597548,
+      "mainThread": false,
+      "sequence": 2,
+      "details": {
+        "bytes": 158,
+        "replacedWithFailure": false
+      },
+      "command": "tron.window"
+    }
+  },
+  "mainDispatchToReplySeconds": 35.48627805709839,
+  "independentVerification": {
+    "headAndMergeTreeAndParents": true,
+    "allMemberAndExtractedBytes": true,
+    "allFourPatchInputsAgainstActualCheckout": true,
+    "sourceAndProbeHashesAndCases": true
+  },
+  "limitations": [
+    "The late response payload was discarded; byte count does not establish success/error fields or window state.",
+    "No stage trace inside the activation command distinguishes openApplication request, callback arrival, main continuation or final show.",
+    "The process sample begins after timeout; it does not establish thread state during the preceding 35 seconds.",
+    "This run reaches no menu generation or native interaction group; the menu correction remains untested.",
+    "App payload/probe executable hashes are producer-reported because binaries are not included in this artifact."
+  ],
+  "testedPackageCreated": false
+}

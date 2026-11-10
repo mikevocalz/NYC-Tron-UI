@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "result": "native-compiled-deployed-UIA-failed",
+  "checkout": {
+    "pullRequest": 60,
+    "head": "5a9709d9f7c7aa819d36fd68729f11e0cf3295b8",
+    "actualCheckout": "ea5f13f4ecff638c7c1d062403c62e2227fa9513",
+    "tree": "7562beb4363bbc54797b75a41f6d9525eb008faf",
+    "parents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "5a9709d9f7c7aa819d36fd68729f11e0cf3295b8"
+    ],
+    "rootVerifiedGitObjects": true,
+    "runId": 42912913242,
+    "sourceJob": 130167879999,
+    "nativeJob": 130168331913
+  },
+  "sourceChecks": "passed",
+  "nativeLibraryCompile": "passed",
+  "consumerCompile": "passed",
+  "deployment": "passed",
+  "failedAssertion": "UIA element named 'Native drag result: none/rejected' did not appear within 30 s",
+  "actualUIResult": {
+    "effect": "none",
+    "reason": "cancelled",
+    "completedDrags": 1,
+    "authorizedTransfers": 0,
+    "documentOwner": "main",
+    "rootViewedOriginalFailurePNG": true
+  },
+  "artifactId": 13808318395,
+  "originalZIP": {
+    "path": "original-native-artifact.zip",
+    "bytes": 319338,
+    "sha256": "88d9b1d5e950ebb0aaddb0da82289268cd36232126ad8b9d8382189a081b8789",
+    "verifiedMembers": 24
+  },
+  "originalJobLog": {
+    "path": "original-native-job.log",
+    "bytes": 316213,
+    "decodedCharacters": 314698,
+    "sha256": "605228ff8ddd8a218cb3f6a8e944a7734782495e629f126d89ec18fe09b5cedb",
+    "rootIndependentConnectorFullDecodedEquality": true
+  },
+  "trace": {
+    "path": "originals/native-drag-trace.jsonl",
+    "bytes": 14142,
+    "sha256": "f6bf187299c5fe826e0e0d1821e00c17c74096f8562313a069be05923b34f358",
+    "records": 29,
+    "sequenceComplete": true,
+    "truncated": false,
+    "recordError": false,
+    "copiedBeforeAfterHashesEqual": true,
+    "stages": {
+      "trace-enabled": 1,
+      "broker-diagnostics-enabled": 1,
+      "capabilities-deferred": 6,
+      "surface-mounted": 3,
+      "capabilities-applied": 7,
+      "surface-loaded": 3,
+      "surface-unmounted": 1,
+      "surface-destroying": 1,
+      "source-starting": 1,
+      "broker-source-prepared": 1,
+      "broker-source-started": 1,
+      "source-data-prepared": 1,
+      "source-drop-completed": 1,
+      "broker-native-completed": 1
+    },
+    "lastTargetCapabilityObservation": {
+      "stage": "capabilities-applied",
+      "role": "target",
+      "surface": 2,
+      "disposed": false,
+      "mounted": true,
+      "loadedEvent": true,
+      "inputReady": true,
+      "isLoaded": true,
+      "enabled": true,
+      "canDrag": false,
+      "allowDrop": true,
+      "actualWidth": 260,
+      "actualHeight": 56,
+      "islandPresent": true,
+      "islandClosed": false,
+      "islandConnected": true,
+      "brokerPresent": true,
+      "brokerDisposed": false,
+      "activePresent": false,
+      "evaluatedWindowLive": true,
+      "noncePresent": false,
+      "canTarget": false,
+      "sequence": 22,
+      "processId": 8940,
+      "threadId": 916,
+      "timestampUnixMs": 1794349509488
+    },
+    "sourceStartSequence": 23,
+    "sourceDataPreparedSequence": 26,
+    "sourceCompletedSequence": 27,
+    "brokerCompletedSequence": 28,
+    "observedEffect": "none",
+    "observedTargetRoutedEvents": 0,
+    "observedBrokerOffers": 0
+  },
+  "process": {
+    "pid": 8940,
+    "aliveAtFailure": true,
+    "mainHWND": 655738,
+    "targetHWND": 131622,
+    "matchedApplicationErrorEvents": 0
+  },
+  "pointer": {
+    "actualOverTarget": {
+      "x": 726,
+      "y": 240
+    },
+    "leftButtonDownAtTarget": true,
+    "hitRootHWND": 131622,
+    "hitPID": 8940,
+    "buttonUp": "inserted"
+  },
+  "limits": [
+    "The latest target readiness record precedes source start; it is not an independent continuous state measurement.",
+    "No target event handler was observed, so this trace does not establish a nonce extraction failure, target CanTarget rejection, or drop approval.",
+    "Broker targetLive=false in source-only records reflects the unassigned active target; it does not prove that the real target window was unavailable.",
+    "No root cause for the missing routed events is asserted here.",
+    "No accepted move, explicit cancellation case, passed desktop archive, or eight-platform acceptance follows from this failed run."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "command": "npm test",
+  "cwd": "/workspace/scratch/4137c61be495/nyc-tron-web-overlay-receipt/packages/expo-controls/tests/browser",
+  "checkoutRevision": "4be2f08c11cb2d68e3d4991f960ddd15a1b06f5f",
+  "startedAt": "2026-11-10T22:23:48Z",
+  "exitCode": 1,
+  "node": "v24.22.1",
+  "log": "aggregate-local-existing-browser-test.log",
+  "logBytes": 76009,
+  "logSha256": "73ca17faaec3a7ea436b9aebe3d95627d855be7ba1102219f806ae3402ccfc3b",
+  "dependencySource": "Existing aggregate isolated-browser node_modules reused through a temporary worktree symlink; identical package-lock.json SHA-256 4696cc2b3dcfa4edfe09408b37ceb8dcfdd619e3813a61471950f2411aa40b2d; no dependencies or browser installed."
+}

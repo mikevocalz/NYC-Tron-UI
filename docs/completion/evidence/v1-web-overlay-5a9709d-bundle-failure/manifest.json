@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "hashAlgorithm": "sha256",
+  "scope": "Every retained file in this evidence directory except manifest.json itself; raw logs remain unchanged.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4460,
+      "sha256": "0a3b6fec865ae6056408b4146031c246257aef71843b1435e6671daecfb5a236"
+    },
+    {
+      "path": "artifact-metadata.json",
+      "bytes": 22,
+      "sha256": "fb09a9699b26ad536855bb4263ff01baa31a107d9af48b348e96cb4a9eb2b8d9"
+    },
+    {
+      "path": "checkout.json",
+      "bytes": 483,
+      "sha256": "f5423e53b68bfc64f33c4c2300631f368566b3ce71c2f22cf077374ecb465a37"
+    },
+    {
+      "path": "local-validation/aggregate-local-existing-browser-test.log",
+      "bytes": 76009,
+      "sha256": "73ca17faaec3a7ea436b9aebe3d95627d855be7ba1102219f806ae3402ccfc3b"
+    },
+    {
+      "path": "local-validation/aggregate-local-system-chromium.log",
+      "bytes": 202921,
+      "sha256": "e2dc786ec7153f489a3c5cf29092bec8c22a5011b137a7052a74b0034fccba08"
+    },
+    {
+      "path": "local-validation/aggregate-local-validation.json",
+      "bytes": 699,
+      "sha256": "977465bc37152385ca06a2feb74f4cc14452edac05bf08d57b0ff1c5250a47e2"
+    },
+    {
+      "path": "local-validation/aggregate-system-chromium-validation.json",
+      "bytes": 1161,
+      "sha256": "54c1451943b968cbca8fb7c2338e18bb2f1a8e16142c2b7b97ad99b6b8bd9d10"
+    },
+    {
+      "path": "local-validation/aggregate-system-chromium.config.mjs",
+      "bytes": 566,
+      "sha256": "c8877a647d0fa017558f1eb487d4ba6b170f462c4b62b9848b271feb9a7c52b6"
+    },
+    {
+      "path": "original-job.log",
+      "bytes": 41610,
+      "sha256": "25171340aa6e592d943d242c4a744e99e318617e70d14187d40858771bd7b866"
+    },
+    {
+      "path": "provenance.json",
+      "bytes": 6205,
+      "sha256": "ef7047323fc44be41462035717d930653eb4427c2eae218d32389fd774ad1f56"
+    },
+    {
+      "path": "workflow-jobs.json",
+      "bytes": 2004,
+      "sha256": "0b28ede299bec9be63d6c87b2464907698f8519ac766fff38180cfe2f27314af"
+    },
+    {
+      "path": "workflow-run.json",
+      "bytes": 599,
+      "sha256": "788a31e0bc719d56cd5f2c5589090e300dc6e94a9cb315b2f48ad4678c70af20"
+    }
+  ]
+}

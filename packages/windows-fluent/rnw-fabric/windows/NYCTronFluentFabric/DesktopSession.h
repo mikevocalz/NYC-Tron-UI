@@ -28,6 +28,7 @@ class DesktopSession : public std::enable_shared_from_this<DesktopSession> {
   void StartNativeDrag(std::string const& source, std::string const& token, std::string const& request, std::function<void(std::string)> completed);
   bool ResolveNativeDrop(std::string const& token, std::string const& request, bool accepted);
   void CancelNativeDrag(std::string const& request);
+  void EnableNativeDragDiagnostics();
   void Dispose() noexcept;
   bool IsDisposed() const noexcept { return m_disposed; }
  private:

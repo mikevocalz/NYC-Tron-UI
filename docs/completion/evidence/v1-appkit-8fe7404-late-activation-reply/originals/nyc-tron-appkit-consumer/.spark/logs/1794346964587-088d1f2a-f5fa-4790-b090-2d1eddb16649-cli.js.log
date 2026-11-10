@@ -1,0 +1,10 @@
+
+🏎️  Running expo-desktop prebuild.
+- Clearing macos
+✔ Cleared macos code
+- Creating native directory (./macos)
+✔ Created native directory
+- Updating package.json
+✔ Updated package.json
+- Running prebuild
+✔ Finished prebuild

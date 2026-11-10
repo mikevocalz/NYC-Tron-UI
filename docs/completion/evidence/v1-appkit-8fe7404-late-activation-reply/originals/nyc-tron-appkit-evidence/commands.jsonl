@@ -1,0 +1,8 @@
+{"phase":"socket-connecting","at":"2026-11-10T21:57:46.443Z"}
+{"phase":"socket-connected","at":"2026-11-10T21:57:46.446Z"}
+{"phase":"authentication-started","at":"2026-11-10T21:57:46.446Z"}
+{"phase":"authentication-response","at":"2026-11-10T21:57:46.450Z","ok":true,"protocol":1}
+{"phase":"request-started","at":"2026-11-10T21:57:46.450Z","request":{"command":"ping","id":1}}
+{"phase":"response","at":"2026-11-10T21:57:47.106Z","request":{"command":"ping","id":1},"response":{"id":1,"ok":true}}
+{"phase":"request-started","at":"2026-11-10T21:57:47.107Z","request":{"window":"main","action":"show","command":"tron.window","id":2}}
+{"phase":"request-failed","at":"2026-11-10T21:58:22.111Z","request":{"window":"main","action":"show","command":"tron.window","id":2},"error":"Native driver response timed out awaiting tron.window (request 2)"}

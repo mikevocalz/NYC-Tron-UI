@@ -1,0 +1,21 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/4137c61be495/nyc-tron-web-overlay-receipt/packages/expo-controls/tests/browser/node_modules/playwright/cli.js",
+    "test",
+    "--config",
+    "/workspace/scratch/4137c61be495/web-overlay-pr60-5a9709-run42912913105/aggregate-system-chromium.config.mjs"
+  ],
+  "checkoutRevision": "4be2f08c11cb2d68e3d4991f960ddd15a1b06f5f",
+  "startedAt": "2026-11-10T22:24:55Z",
+  "exitCode": 1,
+  "node": "v24.22.1",
+  "browser": "Chromium 156.0.8078.79 (system executable /usr/bin/chromium)",
+  "ciBrowser": "Chrome for Testing/Headless Shell 151.0.7922.34 (Playwright chromium revision 1234)",
+  "config": "aggregate-system-chromium.config.mjs",
+  "configSha256": "c8877a647d0fa017558f1eb487d4ba6b170f462c4b62b9848b271feb9a7c52b6",
+  "log": "aggregate-local-system-chromium.log",
+  "logBytes": 202921,
+  "logSha256": "e2dc786ec7153f489a3c5cf29092bec8c22a5011b137a7052a74b0034fccba08",
+  "changes": "Temporary external configuration selects the existing system Chromium and separate artifact output, retaining the original test files, assertions, retries=0 and server command. Dependencies unchanged; no installation."
+}

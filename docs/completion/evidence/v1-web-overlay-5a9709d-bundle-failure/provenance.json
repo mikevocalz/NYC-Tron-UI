@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "platform": "web",
+  "result": "fixture-bundle-failed",
+  "runId": 42912913105,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912913105",
+  "jobId": 130167879355,
+  "jobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912913105/job/130167879355",
+  "pullRequestHead": "5a9709d9f7c7aa819d36fd68729f11e0cf3295b8",
+  "checkoutRevision": "ea5f13f4ecff638c7c1d062403c62e2227fa9513",
+  "checkoutTree": "7562beb4363bbc54797b75a41f6d9525eb008faf",
+  "failedStep": "Exercise the rendered RN web menu, popover, command palette and tooltip",
+  "firstFailure": {
+    "phase": "Playwright webServer esbuild",
+    "file": "packages/ui/src/components/overlays/popover-position.ts",
+    "line": 2,
+    "column": 61,
+    "message": "Could not resolve \"@nyc-tron/core/overlays\"",
+    "observedAt": "2026-11-10T22:16:22.1729217Z"
+  },
+  "completedPrerequisites": [
+    "Repository checkout",
+    "Node 24.19.0 setup",
+    "Isolated npm ci",
+    "Playwright Chromium and OS dependency installation"
+  ],
+  "browserAssertionsReached": false,
+  "artifacts": [],
+  "originalLog": {
+    "file": "original-job.log",
+    "source": "GitHub connector fetch_workflow_job_logs decoded content",
+    "encoding": "UTF-8 serialization without line-ending normalization, preserving the leading BOM",
+    "bytes": 41610,
+    "decodedCharacters": 38962,
+    "sha256": "25171340aa6e592d943d242c4a744e99e318617e70d14187d40858771bd7b866",
+    "leadingUtf8Bom": true,
+    "crlfPairs": 0,
+    "lfBytes": 448,
+    "independentRootVerification": "Root separately fetched the full decoded job log through the GitHub connector and reported exact equality with this retained file."
+  },
+  "aggregateComparison": {
+    "revision": "4be2f08c11cb2d68e3d4991f960ddd15a1b06f5f",
+    "tree": "86695a555951af39b1896f4a061fc30d0d32571e",
+    "fixturePath": "packages/expo-controls/tests/browser/server.mjs",
+    "testedHelperBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+    "aggregateBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+    "existingCorrectionCommit": "2899ffdedf98e2a86c077f15aa1baf6401c07b80",
+    "exactAlias": {
+      "specifier": "@nyc-tron/core/overlays",
+      "target": "../../../core/src/overlays.ts"
+    },
+    "newSourceCorrectionCreated": false,
+    "conclusion": "The aggregate already contains the exact source alias missing from the failed helper checkout."
+  },
+  "aggregateLocalValidation": {
+    "revision": "4be2f08c11cb2d68e3d4991f960ddd15a1b06f5f",
+    "inputs": [
+      {
+        "path": "packages/expo-controls/tests/browser/server.mjs",
+        "gitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+        "sha256": "c959c3cafca4f1ab7b62088fffb673b485e54035594f3d4ac3e57b7fa126a819",
+        "bytes": 5021
+      },
+      {
+        "path": "packages/expo-controls/tests/browser/fixture.tsx",
+        "gitBlob": "3cac84067cc3d3f65dce310180a66d7b0ee952ff",
+        "sha256": "fd7cce2148e04a52ad5ce514740f233b42f6e8021bbbe851928cebeca6e9621c",
+        "bytes": 5364
+      },
+      {
+        "path": "packages/expo-controls/tests/browser/playwright.config.mjs",
+        "gitBlob": "416df25920c338c0c25bf81104123311f4235888",
+        "sha256": "c40ea3921307df2755de388ebb7f107e7bc9bb622a059f21f8d00cf1c8912eb8",
+        "bytes": 411
+      },
+      {
+        "path": "packages/expo-controls/tests/browser/menu.spec.mjs",
+        "gitBlob": "7273c93c05deee25eb94eb7d814ef180c0148f83",
+        "sha256": "0efa29613e55bcead1bad713305d6ea8df377be72c304621f9f5765bd114cbfb",
+        "bytes": 10723
+      },
+      {
+        "path": "packages/expo-controls/tests/browser/overlays-visual.spec.mjs",
+        "gitBlob": "4251eef34ee7c17a9e1fbff5aa6b694fc07a03b4",
+        "sha256": "3ec22dfe01a00e121294a0076e0054eb48aec06df593c6de6a257939ddad0434",
+        "bytes": 2057
+      },
+      {
+        "path": "packages/expo-controls/tests/browser/package-lock.json",
+        "gitBlob": "e0605851b02e2dbf9f7f7457b49d6aeca021bba2",
+        "sha256": "4696cc2b3dcfa4edfe09408b37ceb8dcfdd619e3813a61471950f2411aa40b2d",
+        "bytes": 26557
+      },
+      {
+        "path": "packages/ui/src/components/overlays/popover-position.ts",
+        "gitBlob": "87ebb8a3be0b03438d91e414ce08abd32f230fd6",
+        "sha256": "fd5a170643c10482050baa10cde1011fe4bd6adc161f6fa89baf0f076293ff69",
+        "bytes": 239
+      },
+      {
+        "path": "packages/core/src/overlays.ts",
+        "gitBlob": "00421bd97f041ce69a7b7071a1ba7810d5e68a48",
+        "sha256": "3f602db3a0fac639a941fff8488e5c2692c64e772c008b7ce158c71e5692a839",
+        "bytes": 2573
+      }
+    ],
+    "node": "24.22.1",
+    "dependencyReuse": "Temporary symlink to existing aggregate browser node_modules; identical lockfile SHA-256; installed versions verified; no installation.",
+    "webServerBuildAndStartup": "passed: both existing Playwright invocations reached test scheduling after webServer readiness",
+    "renderedAcceptance": "not executed: browser creation failed before test assertions",
+    "originalCommandAttempt": {
+      "result": "blocked",
+      "reason": "Pinned Playwright chromium_headless_shell-1234 executable absent",
+      "scheduledTests": 32,
+      "passedTests": 0,
+      "details": "local-validation/aggregate-local-validation.json"
+    },
+    "existingSystemBrowserAttempt": {
+      "result": "blocked",
+      "browser": "Chromium 156.0.8078.79",
+      "reason": "process_singleton_posix.cc:297 socket() failed with EPERM, followed by crashpad ptrace EPERM",
+      "scheduledTests": 32,
+      "passedTests": 0,
+      "details": "local-validation/aggregate-system-chromium-validation.json",
+      "configuration": "External temporary config selects existing system executable/output paths; test files, assertions, retries=0 and server command unchanged."
+    }
+  },
+  "limitations": [
+    "No rendered browser assertion passed in these local attempts.",
+    "Local Node and system Chromium differ from CI; no CI acceptance is transferred.",
+    "No source edit, helper publication, workflow rerun, dependency installation, permission change or sandbox escalation was performed.",
+    "The failed helper run and aggregate source have distinct revisions and fixture blobs."
+  ]
+}

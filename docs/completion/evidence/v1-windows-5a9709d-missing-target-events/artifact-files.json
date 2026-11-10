@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "archive": "original-native-artifact.zip",
+  "archiveBytes": 319338,
+  "archiveSHA256": "88d9b1d5e950ebb0aaddb0da82289268cd36232126ad8b9d8382189a081b8789",
+  "files": [
+    {
+      "path": "01-launched.png",
+      "bytes": 31470,
+      "sha256": "d83b217587052e0163cac0dd69e4b9159eb7a606363cdcb5bb9ee486d3d1f6c5",
+      "retained": "originals/01-launched.png"
+    },
+    {
+      "path": "03-accepted.png",
+      "bytes": 32345,
+      "sha256": "78bd4f2c4ad7a804a8cbe2e0b304b8d3c89675c872d274c10fed52f8bafd38e0",
+      "retained": "originals/03-accepted.png"
+    },
+    {
+      "path": "02-rejected.png",
+      "bytes": 33159,
+      "sha256": "587d86c8ea3457c7d08c0dac838a4a4ecaf7bea706b6246f96c3e30f5313d838",
+      "retained": "originals/02-rejected.png"
+    },
+    {
+      "path": "04-native-document.png",
+      "bytes": 14938,
+      "sha256": "a26b90ffd681dfa49d6d183b177ebfa7f11502680ba12804ffa4a8423b0a2cbc",
+      "retained": "originals/04-native-document.png"
+    },
+    {
+      "path": "05-close-veto.png",
+      "bytes": 14890,
+      "sha256": "c874280cecf4346c8ad5aa5d94179b7bc29efd8dc45d4298881eabc4117250b6",
+      "retained": "originals/05-close-veto.png"
+    },
+    {
+      "path": "06-document-tree.txt",
+      "bytes": 2409,
+      "sha256": "e90af67d338408ca662ab53bd6a12ea3cf3662d6b04811b45f748eca40523ad8",
+      "retained": "originals/06-document-tree.txt"
+    },
+    {
+      "path": "06-native-reopened.png",
+      "bytes": 14851,
+      "sha256": "f57e1b922e00759290803d064275aa26b4cdbbc564e331d2fc098d7fa985c923",
+      "retained": "originals/06-native-reopened.png"
+    },
+    {
+      "path": "07-native-menu.png",
+      "bytes": 43839,
+      "sha256": "aca87829e86c4db19e9e5e4f2487a9a3f6d62d183f196c53e586d2474eec6385",
+      "retained": "originals/07-native-menu.png"
+    },
+    {
+      "path": "08-native-tooltip.png",
+      "bytes": 42948,
+      "sha256": "4a6fdd7da46134ca97d20b31f95e4c953fe064517a514dd434694b679a3781c1",
+      "retained": "originals/08-native-tooltip.png"
+    },
+    {
+      "path": "09-after-overlay-unmount-fresh.txt",
+      "bytes": 7987,
+      "sha256": "4155391002e1a3818a5330373eb1222bce566d916bbb026b7390cb281f2784f4",
+      "retained": "originals/09-after-overlay-unmount-fresh.txt"
+    },
+    {
+      "path": "09-after-overlay-unmount-retained.txt",
+      "bytes": 7987,
+      "sha256": "f64c3c11ceb29f93a00152b75dde2143b3e7da46dde4b2df717056ef4b961ece",
+      "retained": "originals/09-after-overlay-unmount-retained.txt"
+    },
+    {
+      "path": "09-before-overlay-unmount.txt",
+      "bytes": 7610,
+      "sha256": "0b0cf5c4d43da22781f780e433a28662da4e8a1e59fa7a3c4a71adaf5588a732",
+      "retained": "originals/09-before-overlay-unmount.txt"
+    },
+    {
+      "path": "09-native-inspector-reopened.png",
+      "bytes": 48443,
+      "sha256": "e734af0791182ade9ac4ee17a74e1770732bdd75c8943cd0bffd2b2ce6130d26",
+      "retained": "originals/09-native-inspector-reopened.png"
+    },
+    {
+      "path": "09-native-inspector.png",
+      "bytes": 48328,
+      "sha256": "af354ee6a9cf8d6dc178bc37c860d7316df934fbde8c00ef9e6b983dd24f784e",
+      "retained": "originals/09-native-inspector.png"
+    },
+    {
+      "path": "application-error-events.json",
+      "bytes": 11,
+      "sha256": "84b1c14e68260082e3e79edff0a78f4ebf1942cfd6c593246044ec2149cbb87d",
+      "retained": "originals/application-error-events.json"
+    },
+    {
+      "path": "application-error-query.json",
+      "bytes": 354,
+      "sha256": "dd2f2a50bd6e94909724311471bf7eb5db1bd87e17121aa902b8674937d0f529",
+      "retained": "originals/application-error-query.json"
+    },
+    {
+      "path": "crash-capture.json",
+      "bytes": 260,
+      "sha256": "827fe893b6c1abef0613ffd71f1813c2775149f14a8d3997ec248fb3134c8739",
+      "retained": "originals/crash-capture.json"
+    },
+    {
+      "path": "drag-input-01.json",
+      "bytes": 36265,
+      "sha256": "c71ea5b21001dfcd702cdc73416a3d3f7831475fd8f1ee0c26351aec8bb402a0",
+      "retained": "originals/drag-input-01.json"
+    },
+    {
+      "path": "failure-status.json",
+      "bytes": 1427,
+      "sha256": "977f9d543049d548509bf72cc0f15bc99b483d3eff942ee0621f6ff11a805f56",
+      "retained": "originals/failure-status.json"
+    },
+    {
+      "path": "failure.png",
+      "bytes": 42463,
+      "sha256": "d5348c5a33722f0cf93340af72eb7b27ac4c32e2d5c01d79f3e4fd6929103768",
+      "retained": "originals/failure.png"
+    },
+    {
+      "path": "native-drag-trace-receipt.json",
+      "bytes": 2738,
+      "sha256": "f51399f51234d6bf79bc1d912d39a269eec7bdf83e684fb1b4ea17eb0e662ed4",
+      "retained": "originals/native-drag-trace-receipt.json"
+    },
+    {
+      "path": "native-drag-trace.jsonl",
+      "bytes": 14142,
+      "sha256": "f6bf187299c5fe826e0e0d1821e00c17c74096f8562313a069be05923b34f358",
+      "retained": "originals/native-drag-trace.jsonl"
+    },
+    {
+      "path": "tooltip-pointer.json",
+      "bytes": 1651,
+      "sha256": "dee32153d287514b0beab47484bd8ec9cbced9ef41a237ba887a939104abdaf6",
+      "retained": "originals/tooltip-pointer.json"
+    },
+    {
+      "path": "uia-tree.txt",
+      "bytes": 8139,
+      "sha256": "525f1083120533fd28678369a8535b46f86765b7f79ea9024a7f58b94ea50790",
+      "retained": "originals/uia-tree.txt"
+    }
+  ]
+}

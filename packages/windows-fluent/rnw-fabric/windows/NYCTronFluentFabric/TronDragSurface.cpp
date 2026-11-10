@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TronDragSurface.h"
 #include "NativeDragBroker.h"
+#include "NativeDragTrace.h"
 #ifdef RNW_NEW_ARCH
 #include "IslandConnection.h"
 #include "codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h"
@@ -13,14 +14,22 @@
 #include <winrt/Windows.UI.h>
 #include <stdexcept>
 #include <utility>
+#include <cmath>
 
 namespace winrt::NYCTronFluentFabric {
 namespace Xaml = winrt::Microsoft::UI::Xaml;
 namespace Peers = Xaml::Automation::Peers;
 namespace Transfer = winrt::Windows::ApplicationModel::DataTransfer;
+namespace Json = winrt::Windows::Data::Json;
 using Broker = nyctron::desktop::NativeDragBroker;
 static constexpr wchar_t NonceProperty[] = L"NYCTron.NativeWindowDrag.Nonce";
 static constexpr wchar_t PrivateFormat[] = L"application/x-nyc-tron-window-transfer";
+static uint64_t NextDiagnosticSurface() noexcept { static uint64_t ordinal = 0; return ++ordinal; }
+struct DragDataObservation {
+  bool propertiesRead{false}, formatRead{false}, formatPresent{false};
+  bool noncePropertyRead{false}, noncePropertyPresent{false}, nonceStringRead{false}, nonceValid{false};
+  bool failed{false}, hresultKnown{false}; int32_t hresult{0};
+};
 struct NativeDragRegionAutomationPeer : Peers::FrameworkElementAutomationPeerT<NativeDragRegionAutomationPeer> {
   explicit NativeDragRegionAutomationPeer(Xaml::FrameworkElement const& owner) : FrameworkElementAutomationPeerT(owner) {}
   winrt::hstring GetClassNameCore() const { return L"NYCTronDragRegion"; }
@@ -61,6 +70,7 @@ struct TronDragSurfaceComponentView
     if (std::exchange(m_disposed, true)) return;
     m_mounted = false;
     m_loaded = false;
+    Trace("surface-destroying");
     // Release broker deferrals and the XAML island at RNW's removal boundary,
     // before UIA references can postpone the UserData object's final release.
     Cleanup();
@@ -73,12 +83,14 @@ struct TronDragSurfaceComponentView
       m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink());
       m_mounted = true;
       ApplyDragCapabilities();
+      Trace("surface-mounted");
     }
     catch (...) { Error("Could not retain the native drag connection"); }
   }
   void Unmounted() noexcept {
     if (m_disposed) return;
     m_mounted = false;
+    Trace("surface-unmounted");
     Cleanup();
   }
   void LayoutChanged(winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
@@ -90,10 +102,12 @@ struct TronDragSurfaceComponentView
     if (m_disposed) return;
     m_loaded = true;
     ApplyDragCapabilities();
+    Trace("surface-loaded");
   }
   void Unloaded() noexcept {
     if (m_disposed) return;
     m_loaded = false;
+    Trace("surface-unloaded");
     // Unregistering CanDrag also needs a live input-site registration. Once
     // unloaded, cancel the app transfer without changing that native property.
     Cleanup();
@@ -118,15 +132,19 @@ struct TronDragSurfaceComponentView
         if (auto self = weak.get()) {
           if (self->m_disposed || self->m_request.empty()) return;
           const auto result = args.DropResult();
+          self->Trace("source-drop-completed");
           auto effect = result == Transfer::DataPackageOperation::Move ? "move" : result == Transfer::DataPackageOperation::Copy ? "copy" : result == Transfer::DataPackageOperation::Link ? "link" : result == Transfer::DataPackageOperation::None ? "none" : "unknown";
           if (auto broker = Broker::Find(self->m_owner)) broker->NativeCompleted(self->m_request, effect);
           self->m_request.clear();
         }
       });
-      m_surface.DragEnter([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Hover(args); });
-      m_surface.DragOver([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Hover(args); });
+      m_surface.DragEnter([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Hover(args, "target-enter"); });
+      m_surface.DragOver([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Hover(args, "target-over"); });
       m_surface.DragLeave([weak = get_weak()](auto const&, Xaml::DragEventArgs const&) {
-        if (auto self = weak.get()) if (self->InputReady()) if (auto broker = Broker::Find(self->m_owner)) broker->Leave(self->m_window, self->m_generation);
+        if (auto self = weak.get()) {
+          self->Trace("target-leave");
+          if (self->InputReady()) if (auto broker = Broker::Find(self->m_owner)) broker->Leave(self->m_window, self->m_generation);
+        }
       });
       m_surface.Drop([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Drop(args); });
       m_surface.Loaded([weak = get_weak()](auto const&, auto const&) { if (auto self = weak.get()) self->Loaded(); });
@@ -146,6 +164,56 @@ struct TronDragSurfaceComponentView
     auto pending = std::move(m_errors); m_errors.clear(); for (auto const& message : pending) Error(message);
   }
  private:
+  void Trace(char const* stage, DragDataObservation const* data = nullptr, std::string const* nonce = nullptr, Xaml::DragEventArgs const& args = nullptr) const noexcept {
+    if (!nyctron::desktop::NativeDragTrace::Enabled(m_owner)) return;
+    try {
+      Json::JsonObject record;
+      auto boolean = [&](wchar_t const* key, bool value) { record.SetNamedValue(key, Json::JsonValue::CreateBooleanValue(value)); };
+      auto number = [&](wchar_t const* key, double value) { if (std::isfinite(value)) record.SetNamedValue(key, Json::JsonValue::CreateNumberValue(value)); };
+      record.SetNamedValue(L"stage", Json::JsonValue::CreateStringValue(winrt::to_hstring(stage)));
+      record.SetNamedValue(L"role", Json::JsonValue::CreateStringValue(m_role == "source" ? L"source" : m_role == "target" ? L"target" : L"unknown"));
+      number(L"surface", static_cast<double>(m_diagnosticSurface));
+      boolean(L"disposed", m_disposed); boolean(L"mounted", m_mounted); boolean(L"loadedEvent", m_loaded);
+      boolean(L"inputReady", InputReady());
+      try {
+        if (m_surface) {
+          boolean(L"isLoaded", m_surface.IsLoaded()); boolean(L"enabled", m_surface.IsEnabled());
+          boolean(L"canDrag", m_surface.CanDrag()); boolean(L"allowDrop", m_surface.AllowDrop());
+          number(L"actualWidth", m_surface.ActualWidth()); number(L"actualHeight", m_surface.ActualHeight());
+        }
+        if (m_island) {
+          const auto island = m_island.ContentIsland();
+          boolean(L"islandPresent", !!island);
+          if (island) { boolean(L"islandClosed", island.IsClosed()); if (!island.IsClosed()) boolean(L"islandConnected", island.IsConnected()); }
+        }
+      } catch (winrt::hresult_error const& error) { boolean(L"stateReadFailed", true); number(L"stateHresult", error.code().value); }
+      catch (...) { boolean(L"stateReadFailed", true); }
+      auto broker = Broker::Find(m_owner);
+      boolean(L"brokerPresent", !!broker);
+      if (broker) broker->DiagnosticState(record, nonce ? *nonce : "", m_window, m_generation);
+      if (data) {
+        boolean(L"propertiesRead", data->propertiesRead); boolean(L"formatRead", data->formatRead);
+        if (data->formatRead) boolean(L"formatPresent", data->formatPresent);
+        boolean(L"noncePropertyRead", data->noncePropertyRead);
+        if (data->noncePropertyRead) boolean(L"noncePropertyPresent", data->noncePropertyPresent);
+        boolean(L"nonceStringRead", data->nonceStringRead);
+        if (data->nonceStringRead) boolean(L"nonceValid", data->nonceValid);
+        boolean(L"eventOperationFailed", data->failed);
+        if (data->failed) {
+          boolean(L"operationHresultKnown", data->hresultKnown);
+          if (data->hresultKnown) number(L"operationHresult", data->hresult);
+        }
+      }
+      if (args) try {
+        const auto position = args.GetPosition(m_surface);
+        number(L"eventX", position.X); number(L"eventY", position.Y);
+        number(L"acceptedOperation", static_cast<int32_t>(args.AcceptedOperation()));
+        boolean(L"originalSourceIsSurface", args.OriginalSource() == m_surface);
+      } catch (winrt::hresult_error const& error) { boolean(L"eventReadFailed", true); number(L"eventHresult", error.code().value); }
+      catch (...) { boolean(L"eventReadFailed", true); }
+      nyctron::desktop::NativeDragTrace::Record(m_owner, record);
+    } catch (...) { /* Diagnostic allocation/read failures cannot affect input. */ }
+  }
   void Error(std::string const& message) noexcept {
     if (m_disposed) return;
     if (auto emitter = EventEmitter()) { Codegen::TronDragSurfaceEventEmitter::OnNativeError error; error.message = message; emitter->onNativeError(std::move(error)); }
@@ -170,10 +238,11 @@ struct TronDragSurfaceComponentView
     // this element belongs to an unconnected XAML island can fail-fast during
     // input-site registration. Both Mounted and Loaded replay current props
     // so either event ordering is safe; no timer or speculative retry is used.
-    if (!m_props || !InputReady()) return;
+    if (!m_props || !InputReady()) { Trace("capabilities-deferred"); return; }
     try {
       m_surface.CanDrag(m_role == "source" && m_surface.IsEnabled());
       m_surface.AllowDrop(m_role == "target" && m_surface.IsEnabled());
+      Trace("capabilities-applied");
     } catch (...) { Error("Could not apply native drag capabilities"); }
   }
   void Apply(Codegen::TronDragSurfaceProps const& props) noexcept {
@@ -189,10 +258,11 @@ struct TronDragSurfaceComponentView
     } catch (...) { Error("Native drag surface properties are invalid"); }
   }
   void Starting(Xaml::DragStartingEventArgs const& args) noexcept {
+    Trace("source-starting");
     std::shared_ptr<DragDeferral> completion;
     try {
       completion = std::make_shared<DragDeferral>(); completion->Set(args.GetDeferral());
-      auto ready = [args, completion](bool allowed, std::string const& nonce) {
+      auto ready = [args, completion, weak = get_weak()](bool allowed, std::string const& nonce) {
         if (!completion->Claim()) return;
         try {
           args.Cancel(!allowed);
@@ -201,6 +271,7 @@ struct TronDragSurfaceComponentView
             args.Data().SetData(PrivateFormat, winrt::box_value(winrt::to_hstring(nonce)));
             args.Data().Properties().Insert(NonceProperty, winrt::box_value(winrt::to_hstring(nonce)));
             args.Data().RequestedOperation(Transfer::DataPackageOperation::Move);
+            if (auto self = weak.get()) self->Trace("source-data-prepared");
           }
         } catch (...) { try { args.Cancel(true); } catch (...) {} completion->Complete(); throw; }
         completion->Complete();
@@ -214,35 +285,52 @@ struct TronDragSurfaceComponentView
       if (!m_disposed) Cleanup(); Error("Native drag start was refused or its owner is unavailable");
     }
   }
-  static std::string Nonce(Xaml::DragEventArgs const& args) {
+  static std::string Nonce(Xaml::DragEventArgs const& args, DragDataObservation& observation) {
     auto properties = args.DataView().Properties();
-    if (!args.DataView().Contains(PrivateFormat) || !properties.HasKey(NonceProperty)) return "";
-    auto value = winrt::unbox_value<winrt::hstring>(properties.Lookup(NonceProperty)); return value.size() > 256 ? "" : winrt::to_string(value);
+    observation.propertiesRead = true;
+    observation.formatPresent = args.DataView().Contains(PrivateFormat); observation.formatRead = true;
+    if (!observation.formatPresent) return "";
+    observation.noncePropertyPresent = properties.HasKey(NonceProperty); observation.noncePropertyRead = true;
+    if (!observation.noncePropertyPresent) return "";
+    auto value = winrt::unbox_value<winrt::hstring>(properties.Lookup(NonceProperty));
+    observation.nonceStringRead = true; observation.nonceValid = !value.empty() && value.size() <= 256;
+    return value.size() > 256 ? "" : winrt::to_string(value);
   }
-  void Hover(Xaml::DragEventArgs const& args) noexcept {
+  void Hover(Xaml::DragEventArgs const& args, char const* stage) noexcept {
+    DragDataObservation observation; std::string nonce;
     try {
       args.Handled(true); args.AcceptedOperation(Transfer::DataPackageOperation::None);
-      auto broker = Broker::Find(m_owner); const auto nonce = Nonce(args);
+      auto broker = Broker::Find(m_owner); nonce = Nonce(args, observation);
       if (InputReady() && m_role == "target" && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation)) {
         args.AcceptedOperation(Transfer::DataPackageOperation::Move); broker->Hover(nonce, m_window, m_generation);
       }
-    } catch (...) { /* Unrelated or malformed OS data is not an accepted app transfer. */ }
+    } catch (winrt::hresult_error const& error) { observation.failed = true; observation.hresultKnown = true; observation.hresult = error.code().value; }
+    catch (...) { observation.failed = true; }
+    // Unrelated or malformed OS data is still refused. Observe only booleans
+    // from the existing reads, never copy either nonce or a document value.
+    Trace(stage, &observation, &nonce, args);
   }
   void Drop(Xaml::DragEventArgs const& args) noexcept {
     std::shared_ptr<DragDeferral> completion;
+    DragDataObservation observation; std::string nonce;
     try {
       args.Handled(true); args.AcceptedOperation(Transfer::DataPackageOperation::None);
       completion = std::make_shared<DragDeferral>(); completion->Set(args.GetDeferral());
-      auto ready = [args, completion](bool accepted) {
+      auto ready = [args, completion, weak = get_weak()](bool accepted) {
         if (!completion->Claim()) return;
         try { args.AcceptedOperation(accepted ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None); }
         catch (...) { try { args.AcceptedOperation(Transfer::DataPackageOperation::None); } catch (...) {} completion->Complete(); throw; }
+        if (auto self = weak.get()) self->Trace("target-decision-completed", nullptr, nullptr, args);
         completion->Complete();
       };
-      auto broker = Broker::Find(m_owner); const auto nonce = Nonce(args);
+      auto broker = Broker::Find(m_owner); nonce = Nonce(args, observation);
+      Trace("target-drop", &observation, &nonce, args);
       if (!InputReady() || m_role != "target" || !m_surface.IsEnabled() || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }
       broker->Offer(nonce, m_window, m_generation, ready);
     } catch (...) {
+      observation.failed = true;
+      try { throw; } catch (winrt::hresult_error const& error) { observation.hresultKnown = true; observation.hresult = error.code().value; } catch (...) {}
+      Trace("target-drop-failed", &observation, &nonce, args);
       try { args.AcceptedOperation(Transfer::DataPackageOperation::None); } catch (...) {} if (completion) completion->Complete();
       if (!m_disposed) Cleanup(); Error("Native drop could not reach its live application owner");
     }
@@ -252,6 +340,7 @@ struct TronDragSurfaceComponentView
   winrt::com_ptr<Codegen::TronDragSurfaceProps> m_props;
   std::string m_owner, m_window, m_generation, m_role, m_scope, m_request;
   std::vector<std::string> m_errors; bool m_disposed{false}, m_mounted{false}, m_loaded{false};
+  const uint64_t m_diagnosticSurface{NextDiagnosticSurface()};
 };
 }
 void RegisterTronDragSurfaceComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const& builder) {

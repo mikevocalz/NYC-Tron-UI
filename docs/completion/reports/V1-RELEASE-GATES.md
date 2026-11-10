@@ -94,7 +94,36 @@ Strict transfer and cancellation outcomes remain required. Portable checks had
 not compiled the failed e37 peer implementation; the successful 8eff native
 compiler result is recorded separately.
 
-### AppKit: startup passed, exact native menu tracking under validation
+The reviewed diagnostic candidate at `5a9709d9` preserves the native gesture,
+nonce transport, target checks, broker decisions and strict outcome assertions.
+An opt-in private hook records bounded lifecycle, target-event, data-read and
+broker phases without storing document content, owner tokens or nonce values.
+The runner retains the original trace with verified copy hashes. Source checks,
+fresh installed-consumer preparation, generated bindings and fixture typechecks
+passed in [run 42912913242](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912913242).
+The native library, consumer executable and deployment also passed. The
+[completed native result](../evidence/v1-windows-5a9709d-missing-target-events/README.md)
+again failed the required `none/rejected` assertion after a real source drag.
+The target's last capability observation records it loaded, connected, enabled
+and ready with `AllowDrop: true`. The trace then records source start, data
+preparation and completion with effect `none`, but no target enter/over/drop/leave
+or broker hover/offer. It contains 29 consecutive records without truncation or
+a record-error marker. This narrows investigation to native target event
+delivery; nonce validation was not observed. All 24 original artifact members,
+the complete ZIP and complete native log are independently verified and retained.
+The exact tested merge is `ea5f13f4ecff638c7c1d062403c62e2227fa9513`, whose
+tree matches the published helper tree `7562beb4363bbc54797b75a41f6d9525eb008faf`.
+
+The helper's separate [browser overlay failure](../evidence/v1-web-overlay-5a9709d-bundle-failure/README.md)
+occurred before browser assertions: its source fixture lacked the exact
+`@nyc-tron/core/overlays` alias. The aggregate already contains that one-line
+correction from `2899ffde`. Its actual fixture bundles and starts with the
+existing dependencies; local rendered assertions remain blocked by browser
+availability and socket permissions. The original helper log and exact source
+comparison are retained. Final browser acceptance still requires the frozen
+combined candidate's CI run.
+
+### AppKit: activation reply late; menu correction still untested
 
 [AppKit at `c0f6601`](../evidence/v1-appkit-c0f6601-live-mount-timeout/README.md)
 passed eight source checks, installed-consumer preparation/API checks and native
@@ -164,9 +193,30 @@ actual NSMenu begin/end notifications. Actions require the exact live generation
 the verifier observes the first native end before reopening, requires a newer
 second generation and observes its end after cancellation. The existing native
 cancelTracking operation, save/title and canceled/dismissed assertions remain.
-[The new native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42907095248)
-has passed all eleven source checks and is building the native app. Its actual
-tracking, callback and complete interaction results remain required.
+Its [completed native run](../evidence/v1-appkit-8fe7404-late-activation-reply/README.md)
+passed all eleven source checks, installed consumer/API, actual Foundation probe
+and native compilation, then timed out on the initial `tron.window` show request
+before root-mount inspection or any menu operation. The native trace dispatches
+the command promptly but records its reply about 35.486 seconds later, after the
+unchanged client deadline. It serializes 157 bytes and sends 158 successfully,
+without replacement or serialization failure. The discarded late payload's
+length does not establish activation state or success/error fields.
+
+The app remains present before and after sampling; 29 thread groups were
+captured. The sample starts after the timeout and cannot establish the preceding
+execution state. All 42 original members, the unchanged full ZIP, complete
+source log, compiler log and exact patch/probe inputs are verified and retained.
+The menu-generation correction was not reached, so its native outcome remains
+untested. The reviewed candidate at `92c7882e` adds a bounded private-driver
+activation phase trace to distinguish the request, callback and main-continuation
+stages while preserving the activation API, operation order, deadlines and
+native assertions. Diagnostic details are evaluated inside an exception guard;
+observations cannot replace the real operation or reply. All eleven source
+checks, installed-consumer preparation/API and the actual Foundation probe
+passed in [run 42912189002](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912189002);
+native compilation and interaction outcomes remain pending. The exact tested
+merge is `36e1a765428b54fe7200bb077c0c69e04eedf14c`, whose tree matches the
+published helper tree `3a66490ec9997478e34061b5757e8fb3d8c6278d`.
 
 ### Actual gestures remain mandatory
 

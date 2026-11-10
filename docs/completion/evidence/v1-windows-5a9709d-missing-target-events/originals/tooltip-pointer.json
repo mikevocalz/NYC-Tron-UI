@@ -1,0 +1,39 @@
+﻿{
+    "hitProviders":  [
+                         {
+                             "controlType":  "ControlType.Pane",
+                             "name":  "",
+                             "processId":  8940,
+                             "bounds":  "0,23,1024,697",
+                             "className":  "Microsoft.UI.Content.DesktopChildSiteBridge",
+                             "runtimeId":  "42,131592"
+                         },
+                         {
+                             "controlType":  "ControlType.Window",
+                             "name":  "NYCTronWindowsExample",
+                             "processId":  8940,
+                             "bounds":  "-8,-8,1040,736",
+                             "className":  "Microsoft.UI.Windowing.Window",
+                             "runtimeId":  "42,655738"
+                         },
+                         {
+                             "controlType":  "ControlType.Pane",
+                             "name":  "",
+                             "processId":  7972,
+                             "bounds":  "0,0,1024,768",
+                             "className":  "#32769",
+                             "runtimeId":  "42,65548"
+                         }
+                     ],
+    "cursor":  {
+                   "y":  347,
+                   "x":  456
+               },
+    "target":  {
+                   "name":  "Native tooltip anchor",
+                   "bounds":  "336,327,240,40",
+                   "runtimeId":  "42,66100,4,26"
+               },
+    "foregroundProcessId":  8940,
+    "nativeIdentityMatched":  false
+}

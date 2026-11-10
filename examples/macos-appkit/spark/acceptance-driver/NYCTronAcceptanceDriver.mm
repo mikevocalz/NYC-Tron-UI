@@ -1,4 +1,5 @@
 #import <AppKit/AppKit.h>
+#include <atomic>
 #include <math.h>
 #import <RNDesktopApp/SparkTestDriver.h>
 #import <NYCTronAppKit/NYCTronPopover.h>
@@ -59,6 +60,33 @@ static void TraceContextMenu(NSString *phase, NSUInteger generation) {
   // timestamp. An operation returning is separate from its end notification.
   NSLog(@"NYCTronContextMenu phase=%@ generation=%lu active=%lu ended=%lu", phase,
     (unsigned long)generation, (unsigned long)TrackedContextMenuGeneration, (unsigned long)EndedContextMenuGeneration);
+}
+static NSUInteger ActivationSequence;
+static std::atomic<unsigned int> ActivationTraceEvents{0};
+static void TraceActivation(NSString *phase, NSUInteger operation, NSDictionary *(^details)(void)) {
+  if (ActivationTraceEvents.fetch_add(1) >= 128) return;
+  // Call sites supply fixed phase labels and boolean/enum classifications.
+  // Details run inside the guard so observations cannot replace the operation
+  // or reply. Completion-queue details read no application/window objects.
+  // No paths, error reasons or callback payloads are logged.
+  @try {
+    NSDictionary *record = @{ @"phase": phase, @"operation": @(operation), @"at": @(NSDate.date.timeIntervalSince1970),
+      @"mainThread": @(NSThread.isMainThread), @"details": details ? details() : @{} };
+    NSData *data = [NSJSONSerialization dataWithJSONObject:record options:0 error:nil];
+    if (data && data.length <= 2048) NSLog(@"NYCTronActivation %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    else NSLog(@"NYCTronActivation trace-encoding-failed");
+  } @catch (NSException *exception) {
+    (void)exception;
+    @try { NSLog(@"NYCTronActivation trace-encoding-threw"); }
+    @catch (NSException *loggingException) { (void)loggingException; }
+  }
+}
+static NSDictionary *ActivationWindowState(NSWindow *window) {
+  // Main-thread local state only. Additional LaunchServices queries could
+  // disturb the activation phase that this diagnostic needs to distinguish.
+  return @{ @"policy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active),
+    @"visible": @(window.visible), @"key": @(window.keyWindow), @"miniaturized": @(window.miniaturized),
+    @"canBecomeKey": @(window.canBecomeKeyWindow) };
 }
 static NSMenuItem *FindMenuItem(NSMenu *menu, NSString *identifier) {
   for (NSMenuItem *item in menu.itemArray) {
@@ -552,7 +580,11 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       // acceptance. Spark's stock capture driver starts with Prohibited
       // activation policy; screenshots alone do not need a visible owner.
       else if ([action isEqual:@"show"]) {
-        if (![NSApp setActivationPolicy:NSApplicationActivationPolicyRegular]) { reply(Failure(@"The native test host refused interactive activation policy")); return; }
+        NSUInteger operation = ++ActivationSequence;
+        TraceActivation(@"policy-entered", operation, ^{ return ActivationWindowState(window); });
+        BOOL policyAccepted = [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+        TraceActivation(@"policy-returned", operation, ^{ return @{ @"accepted": @(policyAccepted), @"state": ActivationWindowState(window) }; });
+        if (!policyAccepted) { reply(Failure(@"The native test host refused interactive activation policy")); return; }
         // Sonoma ignores activateIgnoringOtherApps' old force flag. Use the
         // public workspace-opening activation context, targeting only this
         // already running test bundle. An activation request is not a pass:
@@ -567,19 +599,38 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
         configuration.hides = NO;
         configuration.hidesOthers = NO;
         configuration.promptsUserIfNeeded = NO;
+        TraceActivation(@"workspace-request-entered", operation, nil);
         [NSWorkspace.sharedWorkspace openApplicationAtURL:bundleURL configuration:configuration completionHandler:^(NSRunningApplication *application, NSError *error) {
+          TraceActivation(@"workspace-completion-received", operation, ^{ return @{ @"hasApplication": @(application != nil), @"hasError": @(error != nil) }; });
           // NSWorkspace completes on a concurrent queue; window operations and
           // the observed activation state must return to AppKit's main queue.
           dispatch_async(dispatch_get_main_queue(), ^{
-            if (error || !application) { reply(Failure([NSString stringWithFormat:@"Workspace activation failed: %@", error.localizedDescription ?: @"No running application returned"])); return; }
-            if (application.processIdentifier != processId || ![application.bundleURL.URLByResolvingSymlinksInPath isEqual:bundleURL.URLByResolvingSymlinksInPath]) {
+            TraceActivation(@"workspace-main-continuation", operation, ^{ return ActivationWindowState(window); });
+            if (error || !application) {
+              TraceActivation(@"workspace-rejected", operation, ^{ return @{ @"hasApplication": @(application != nil), @"hasError": @(error != nil) }; });
+              reply(Failure([NSString stringWithFormat:@"Workspace activation failed: %@", error.localizedDescription ?: @"No running application returned"])); return;
+            }
+            BOOL sameProcess = application.processIdentifier == processId;
+            BOOL sameBundle = sameProcess && [application.bundleURL.URLByResolvingSymlinksInPath isEqual:bundleURL.URLByResolvingSymlinksInPath];
+            TraceActivation(@"identity-checked", operation, ^{ return @{ @"sameProcess": @(sameProcess), @"sameBundle": @(sameBundle) }; });
+            if (!sameProcess || !sameBundle) {
               reply(Failure(@"Workspace activation did not return the existing acceptance process and bundle")); return;
             }
-            if (window.miniaturized) [window deminiaturize:nil];
+            if (window.miniaturized) {
+              TraceActivation(@"deminiaturize-entered", operation, ^{ return ActivationWindowState(window); });
+              [window deminiaturize:nil];
+              TraceActivation(@"deminiaturize-returned", operation, ^{ return ActivationWindowState(window); });
+            }
+            TraceActivation(@"order-front-entered", operation, ^{ return ActivationWindowState(window); });
             [window makeKeyAndOrderFront:nil];
-            reply(@{ @"ok": @YES, @"activationPath": @"NSWorkspace.openApplication", @"processId": @(processId), @"activationPolicy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active), @"key": @(window.keyWindow), @"visible": @(window.visible) });
+            TraceActivation(@"order-front-returned", operation, nil);
+            NSDictionary *result = @{ @"ok": @YES, @"activationPath": @"NSWorkspace.openApplication", @"processId": @(processId), @"activationPolicy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active), @"key": @(window.keyWindow), @"visible": @(window.visible) };
+            TraceActivation(@"reply-prepared", operation, ^{ return @{ @"ok": result[@"ok"], @"policy": result[@"activationPolicy"],
+              @"applicationActive": result[@"applicationActive"], @"key": result[@"key"], @"visible": result[@"visible"] }; });
+            reply(result);
           });
         }];
+        TraceActivation(@"workspace-request-returned", operation, nil);
         return;
       }
       else { reply(Failure(@"Unknown native window action")); return; }

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "source": "GitHub Actions run API via GitHub connector",
+  "id": 42912913105,
+  "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42912913105",
+  "name": "NYC-Tron rendered web overlay acceptance",
+  "path": ".github/workflows/menu-browser.yml",
+  "runNumber": 290,
+  "runAttempt": 1,
+  "event": "pull_request",
+  "headBranch": "codex/v1-windows-interactions-nov10",
+  "headRevision": "5a9709d9f7c7aa819d36fd68729f11e0cf3295b8",
+  "status": "completed",
+  "conclusion": "failure",
+  "createdAt": "2026-11-10T22:15:49Z",
+  "updatedAt": "2026-11-10T22:16:25Z"
+}
