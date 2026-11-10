@@ -22,12 +22,32 @@ public static class NativeWindow {
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetWindowPos(IntPtr window, IntPtr after, int x, int y, int width, int height, uint flags);
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetCursorPos(int x, int y);
+  [DllImport("user32.dll", SetLastError=true)] static extern bool GetCursorPos(out POINT point);
+  [DllImport("user32.dll")] static extern int GetSystemMetrics(int index);
   [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
   [DllImport("user32.dll", SetLastError=true)] static extern uint SendInput(uint count, INPUT[] inputs, int size);
+  [StructLayout(LayoutKind.Sequential)] public struct POINT { public int X, Y; }
   [StructLayout(LayoutKind.Sequential)] struct INPUT { public uint type; public MOUSEINPUT mouse; }
   [StructLayout(LayoutKind.Sequential)] struct MOUSEINPUT { public int dx, dy; public uint mouseData, flags, time; public UIntPtr extraInfo; }
   public static void Mouse(uint flags) {
     var input = new INPUT { type = 0, mouse = new MOUSEINPUT { flags = flags } };
+    if (SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT))) != 1) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+  }
+  public static POINT CursorPosition() {
+    POINT point;
+    if (!GetCursorPos(out point)) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+    return point;
+  }
+  public static void MoveMouse(int x, int y) {
+    int left = GetSystemMetrics(76), top = GetSystemMetrics(77);
+    int width = GetSystemMetrics(78), height = GetSystemMetrics(79);
+    if (width < 2 || height < 2 || x < left || y < top || x >= left + width || y >= top + height)
+      throw new ArgumentOutOfRangeException("Pointer destination lies outside the virtual desktop");
+    var input = new INPUT { type = 0, mouse = new MOUSEINPUT {
+      dx = (int)Math.Round((x - left) * 65535.0 / (width - 1)),
+      dy = (int)Math.Round((y - top) * 65535.0 / (height - 1)),
+      flags = 0xC001 // MOVE | ABSOLUTE | VIRTUALDESK
+    } };
     if (SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT))) != 1) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
   }
 }
@@ -185,6 +205,32 @@ function Save-PopupScreenshot([string]$name, $popup) {
   # Focusing the root would dismiss a native popup. Capture the current desktop
   # after proving the popup is visible in the application's foreground process.
   Save-Screenshot $name $null
+}
+function Move-NativePointer([int]$x, [int]$y) {
+  [NativeWindow]::MoveMouse($x, $y)
+  $deadline = (Get-Date).AddSeconds(5)
+  do {
+    $point = [NativeWindow]::CursorPosition()
+    if ([Math]::Abs($point.X - $x) -le 1 -and [Math]::Abs($point.Y - $y) -le 1) {
+      Write-Host "OS pointer reached ($($point.X), $($point.Y)) for requested ($x, $y)"
+      return $point
+    }
+    Start-Sleep -Milliseconds 20
+  } while ((Get-Date) -lt $deadline)
+  throw "OS pointer stayed at ($($point.X), $($point.Y)) instead of ($x, $y)"
+}
+function Assert-PointerTarget($point, $target) {
+  $hit = $AE::FromPoint([System.Windows.Point]::new($point.X, $point.Y))
+  $hitName = $hit.Current.Name
+  $identity = $target.GetRuntimeId() -join ","
+  # A native label can be the leaf at the pointer; its button must be an ancestor.
+  for ($ancestor = $hit; $null -ne $ancestor; $ancestor = [System.Windows.Automation.TreeWalker]::RawViewWalker.GetParent($ancestor)) {
+    if (($ancestor.GetRuntimeId() -join ",") -eq $identity) {
+      Write-Host "Pointer hit '$hitName' within native '$($target.Current.Name)' ($identity); bounds=$($target.Current.BoundingRectangle)"
+      return
+    }
+  }
+  throw "Pointer hit '$hitName' instead of native '$($target.Current.Name)'; bounds=$($target.Current.BoundingRectangle)"
 }
 function Arrange-DragWindows($main, $secondary) {
   $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
@@ -353,19 +399,29 @@ try {
   Save-PopupScreenshot "07-native-menu" $command
   Invoke-NativeElement $command
   Find-ByName $window "Native menu action: approve" | Out-Null
+  Wait-ProcessElementHidden "Approve native command" ([System.Windows.Automation.ControlType]::MenuItem)
 
   $context = Find-ProcessElement "Native context anchor" ([System.Windows.Automation.ControlType]::Button)
   $context.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("+{F10}")
   $contextCommand = Find-ProcessElement "Inspect native selection" ([System.Windows.Automation.ControlType]::MenuItem)
   Invoke-NativeElement $contextCommand
   Find-ByName $window "Native context action: inspect" | Out-Null
+  Wait-ProcessElementHidden "Inspect native selection" ([System.Windows.Automation.ControlType]::MenuItem)
 
   $tooltipAnchor = Find-ProcessElement "Native tooltip anchor" ([System.Windows.Automation.ControlType]::Button)
+  # The app callback can commit before the context popup finishes closing.
+  # Enter from outside the anchor only after its native popup has disappeared,
+  # and prove actual OS pointer delivery instead of trusting one SetCursorPos.
+  $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
+  Move-NativePointer ($work.X + 8) ($work.Y + 8) | Out-Null
+  Start-Sleep -Milliseconds 150
   $tipBounds = $tooltipAnchor.Current.BoundingRectangle
-  [NativeWindow]::SetCursorPos([int]($tipBounds.X + $tipBounds.Width / 2), [int]($tipBounds.Y + $tipBounds.Height / 2)) | Out-Null
+  $tipPoint = Move-NativePointer ([int]($tipBounds.X + $tipBounds.Width / 2)) ([int]($tipBounds.Y + $tipBounds.Height / 2))
+  Assert-PointerTarget $tipPoint $tooltipAnchor
   $tooltip = Find-ProcessElement "Native tooltip details" ([System.Windows.Automation.ControlType]::ToolTip)
   Save-PopupScreenshot "08-native-tooltip" $tooltip
-  [NativeWindow]::SetCursorPos(0, 0) | Out-Null
+  Move-NativePointer ($work.X + 8) ($work.Y + 8) | Out-Null
+  Wait-ProcessElementHidden "Native tooltip details" ([System.Windows.Automation.ControlType]::ToolTip)
 
   Invoke-Button $window "Native inspector anchor"
   $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
@@ -412,6 +468,21 @@ try {
   if (($vetoedField.GetRuntimeId() -join ",") -ne $vetoedIdentity) { throw "Dismissal veto replaced the native field" }
   Assert-NativeValue $vetoedField "Replacement native note"
   $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Invoke-Button $window "Show lifecycle checks"
+  Find-ByName $window "Windows navigation acceptance" | Out-Null
+  Wait-ProcessElementHidden "Native inspector anchor" ([System.Windows.Automation.ControlType]::Button)
+  Invoke-Button $window "Show native overlay checks"
+  Find-ByName $window "Native edit acknowledgment: 0" | Out-Null
+  Find-ByName $window "Committed native note: Replacement native note" | Out-Null
+  Invoke-Button $window "Native inspector anchor"
+  $remountedField = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Assert-NativeValue $remountedField "Replacement native note"
+  $remountedField.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue("Remounted native note")
+  Find-ByName $window "Committed native note: Remounted native note" | Out-Null
+  Find-ByName $window "Native edit acknowledgment: 1" | Out-Null
+  Assert-NativeValue $remountedField "Remounted native note"
+  Invoke-NativeElement (Find-ProcessElement "Close native inspector" ([System.Windows.Automation.ControlType]::Button))
   Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
 
   Invoke-Button $window "Show native drag checks"
@@ -470,7 +541,7 @@ try {
     sourceRevision = $env:GITHUB_SHA
     processId = $process.Id
     executableSha256 = (Get-FileHash -Algorithm SHA256 $process.Path).Hash.ToLowerInvariant()
-    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
+    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
   }
   $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
   Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"

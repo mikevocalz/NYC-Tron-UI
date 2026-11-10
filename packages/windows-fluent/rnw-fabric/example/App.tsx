@@ -1,10 +1,11 @@
 import {useEffect,useRef,useLayoutEffect} from "react";
 import {Button,Text,View} from "react-native";
 import {useStore} from "zustand";
-import {createStore} from "zustand/vanilla";
+import {createAcceptanceStore} from "./acceptance-store";
+import {beginInspectorMount} from "./overlay-store";
 import {NativeOverlays} from "./NativeOverlays";
 import {NativeDragSourcePanel,NativeDragTargetPanel} from "./NativeDrag";
-const acceptance=createStore(()=>({stage:"lifecycle" as "lifecycle"|"overlays"|"drag"|"navigation"}));
+const acceptance=createAcceptanceStore(beginInspectorMount);
 import {WindowsNavigationHost,createWindowsNavigationBinding} from "@nyc-tron/windows-fluent-fabric/navigation-host";
 import {createWindowsNavigationController} from "@nyc-tron/windows-fluent/controller";
 import {createNavigationStore,destinations} from "./route-store";
@@ -49,18 +50,18 @@ export function App(){
  if(!ref.current)ref.current=createNavigationStore();
  const state=useStore(ref.current);
  const document=useStore(desktop);
- const stage=useStore(acceptance).stage;
+ const {stage,overlayMountKey}=useStore(acceptance);
  useEffect(()=>{void connectDesktop().catch(failDesktop);},[]);
  return <View style={{flex:1,flexDirection:"row",direction:"ltr"}}>
   <Navigation store={ref.current}/>
   <View style={{flex:1,padding:16,gap:10}}>
    <View style={{flexDirection:"row",gap:8,flexWrap:"wrap"}}>
-    <Button title="Show lifecycle checks" accessibilityLabel="Show lifecycle checks" onPress={()=>acceptance.setState({stage:"lifecycle"})}/>
-    <Button title="Show native overlay checks" accessibilityLabel="Show native overlay checks" onPress={()=>acceptance.setState({stage:"overlays"})}/>
-    <Button title="Show native drag checks" accessibilityLabel="Show native drag checks" onPress={()=>{state.setPaneOpen(false);acceptance.setState({stage:"drag"});}}/>
-    <Button title="Show native navigation checks" accessibilityLabel="Show native navigation checks" onPress={()=>{state.setPaneOpen(true);acceptance.setState({stage:"navigation"});}}/>
+    <Button title="Show lifecycle checks" accessibilityLabel="Show lifecycle checks" onPress={()=>acceptance.getState().showStage("lifecycle")}/>
+    <Button title="Show native overlay checks" accessibilityLabel="Show native overlay checks" onPress={()=>acceptance.getState().showStage("overlays")}/>
+    <Button title="Show native drag checks" accessibilityLabel="Show native drag checks" onPress={()=>{state.setPaneOpen(false);acceptance.getState().showStage("drag");}}/>
+    <Button title="Show native navigation checks" accessibilityLabel="Show native navigation checks" onPress={()=>{state.setPaneOpen(true);acceptance.getState().showStage("navigation");}}/>
    </View>
-   {stage==="overlays"&&<NativeOverlays/>}
+   {stage==="overlays"&&<NativeOverlays key={overlayMountKey} mountKey={overlayMountKey}/>}
    {stage==="drag"&&<NativeDragSourcePanel/>}
    {stage==="navigation"&&<View style={{gap:12}}>
     <Text accessibilityRole="header">Native navigation accessibility</Text>
