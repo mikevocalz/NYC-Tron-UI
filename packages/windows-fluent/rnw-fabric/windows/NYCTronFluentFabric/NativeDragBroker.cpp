@@ -94,9 +94,13 @@ std::string NativeDragBroker::Result(Active const& active, std::string const& ef
 }
 void NativeDragBroker::NativeCompleted(std::string const& request, std::string const& effect) {
   if (!m_active || m_active->startRequest != request) return;
-  auto active = std::move(m_active); if (active->timer) active->timer.Stop();
-  if (active->dropReady) active->dropReady(false);
-  if (active->sourceReady) active->sourceReady(false, "");
+  auto active = std::move(m_active);
+  // Cancellation can invalidate the framework's event properties before a
+  // pending deferral is released. A cleanup failure must not strand the JS
+  // completion after this lease and its deadline have already been removed.
+  try { if (active->timer) active->timer.Stop(); } catch (...) {}
+  try { if (active->dropReady) active->dropReady(false); } catch (...) {}
+  try { if (active->sourceReady) active->sourceReady(false, ""); } catch (...) {}
   if (active->completed) active->completed(Result(*active, effect, effect == "move" && active->approved ? "accepted" : active->dropRequest.empty() ? "cancelled" : "rejected"));
 }
 void NativeDragBroker::Cancel(std::string const& request, std::string const& reason) noexcept {

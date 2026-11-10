@@ -253,7 +253,12 @@ field reorder restores the focused field and selection where available.
 
 A popover's `open` comes from its app owner. Clicking the native anchor or
 native dismissal raises `onOpenRequested`; the app commits the resulting
-value. `title`, `description`, up to 32 fields, and up to 128 actions form a
+value. WinUI Closing cancellation holds the popup open without closing and
+reopening it. Native duplicates are coalesced until a private, scope/request-bound
+acknowledgment confirms callback delivery. That acknowledgment never changes
+`open`: keeping `open=true` vetoes the dismissal, even without a React render,
+and a later Escape or light-dismiss gesture can request again. Disable, unmount
+and scope replacement always permit native teardown. `title`, `description`, up to 32 fields, and up to 128 actions form a
 native inspector; arbitrary React children are not reparented into the
 WinUI popup. Use one app-owned field model for both the inspector and any
 other editor surface.

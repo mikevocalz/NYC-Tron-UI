@@ -77,6 +77,7 @@
     <ClInclude Include="DesktopSession.h" />
     <ClInclude Include="TronDesktop.h" />
     <ClInclude Include="TronOverlayAnchor.h" />
+    <ClInclude Include="OverlayDismissal.h" />
     <ClInclude Include="NativeDragBroker.h" />
     <ClInclude Include="TronDragSurface.h" />
     <ClInclude Include="TronNavigationView.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="DesktopSession.cpp" />
     <ClCompile Include="TronDesktop.cpp" />
     <ClCompile Include="TronOverlayAnchor.cpp" />
+    <ClCompile Include="OverlayDismissalTests.cpp" />
     <ClCompile Include="NativeDragBroker.cpp" />
     <ClCompile Include="TronDragSurface.cpp" />
     <ClCompile Include="TronNavigationView.cpp" />

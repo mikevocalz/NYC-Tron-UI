@@ -1,4 +1,4 @@
-import type { WindowsOverlayAnchorProps } from "./overlay-types.ts";
+import type { WindowsOverlayAnchorProps, WindowsPopoverProps } from "./overlay-types.ts";
 
 let sequence = 0;
 export const newOverlayScopeToken = () => `windows-overlay-${++sequence}`;
@@ -14,4 +14,18 @@ export function createOverlayBinding<P extends WindowsOverlayAnchorProps>() {
       return committed?.token === token && (includeDisabled || !committed.props.disabled) ? committed.props : undefined;
     },
   };
+}
+
+/** Acknowledge delivery even when the app vetoes without rendering or its callback throws. */
+export function deliverPopoverOpenRequest(
+  binding: ReturnType<typeof createOverlayBinding<WindowsPopoverProps>>,
+  event: Readonly<{ scopeToken: string; open: boolean; requestId: string }>,
+  acknowledge: (scopeToken: string, requestId: string) => void,
+) {
+  try {
+    const current = binding.current(event.scopeToken);
+    if (current && event.open !== current.open) current.onOpenRequested(event.open);
+  } finally {
+    if (event.requestId) acknowledge(event.scopeToken, event.requestId);
+  }
 }

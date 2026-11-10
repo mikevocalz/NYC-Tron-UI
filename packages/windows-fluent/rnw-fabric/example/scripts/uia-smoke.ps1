@@ -135,13 +135,17 @@ function Request-Workspace($window, $homeItem) {
   Write-Host "Keyboard Down+Enter produced a pending Workspace request"
 }
 
-function Find-ProcessElement([string]$name, $controlType = $null, [int]$timeoutSec = 15) {
+function Process-ElementCondition([string]$name, $controlType = $null) {
   $conditions = New-Object 'System.Collections.Generic.List[System.Windows.Automation.Condition]'
   $conditions.Add($processCondition)
   $conditions.Add((New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, $name)))
   $conditions.Add((New-Object System.Windows.Automation.PropertyCondition($AE::IsOffscreenProperty, $false)))
   if ($null -ne $controlType) { $conditions.Add((New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, $controlType))) }
   $condition = New-Object System.Windows.Automation.AndCondition -ArgumentList (, $conditions.ToArray())
+  return $condition
+}
+function Find-ProcessElement([string]$name, $controlType = $null, [int]$timeoutSec = 15) {
+  $condition = Process-ElementCondition $name $controlType
   $deadline = (Get-Date).AddSeconds($timeoutSec)
   do {
     $element = $AE::RootElement.FindFirst($Tree::Descendants, $condition)
@@ -149,6 +153,15 @@ function Find-ProcessElement([string]$name, $controlType = $null, [int]$timeoutS
     Start-Sleep -Milliseconds 100
   } while ((Get-Date) -lt $deadline)
   throw "Visible native element '$name' did not appear"
+}
+function Wait-ProcessElementHidden([string]$name, $controlType) {
+  $condition = Process-ElementCondition $name $controlType
+  $deadline = (Get-Date).AddSeconds(15)
+  do {
+    if ($null -eq $AE::RootElement.FindFirst($Tree::Descendants, $condition)) { return }
+    Start-Sleep -Milliseconds 100
+  } while ((Get-Date) -lt $deadline)
+  throw "Native element '$name' remained visible after the committed dismissal"
 }
 function Invoke-NativeElement($element) {
   $invoke = $null
@@ -367,11 +380,13 @@ try {
   Assert-NativeValue $field "NativeRapid123abc"
   Save-PopupScreenshot "09-native-inspector" $field
   Invoke-NativeElement (Find-ProcessElement "Close native inspector" ([System.Windows.Automation.ControlType]::Button))
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Invoke-Button $window "Native inspector anchor"
   $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Assert-NativeValue $field "NativeRapid123abc"
   Invoke-NativeElement (Find-ProcessElement "Disable native inspector" ([System.Windows.Automation.ControlType]::Button))
   Find-ByName $window "Native inspector disabled" | Out-Null
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   $anchor = Find-ProcessElement "Native inspector anchor" ([System.Windows.Automation.ControlType]::Button)
   if ($anchor.Current.IsEnabled) { throw "Disabled inspector anchor remained enabled" }
   Invoke-Button $window "Enable native inspector"
@@ -379,11 +394,25 @@ try {
   Invoke-NativeElement (Find-ProcessElement "Replace inspector scope" ([System.Windows.Automation.ControlType]::Button))
   Find-ByName $window "Native inspector scope: draft-2" | Out-Null
   Find-ByName $window "Native edit acknowledgment: 0" | Out-Null
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Invoke-Button $window "Native inspector anchor"
   $replacement = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Assert-NativeValue $replacement "Replacement native note"
   $replacement.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Find-ByName $window "Committed native note: Replacement native note" | Out-Null
+  Invoke-Button $window "Veto next inspector dismissal"
+  Find-ByName $window "Native inspector dismissal veto armed" | Out-Null
+  Invoke-Button $window "Native inspector anchor"
+  $vetoedField = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  $vetoedIdentity = $vetoedField.GetRuntimeId() -join ","
+  $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Start-Sleep -Milliseconds 500
+  $vetoedField = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  if (($vetoedField.GetRuntimeId() -join ",") -ne $vetoedIdentity) { throw "Dismissal veto replaced the native field" }
+  Assert-NativeValue $vetoedField "Replacement native note"
+  $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
 
   Invoke-Button $window "Show native drag checks"
   Find-ByName $window "Native cross-window drag acceptance" | Out-Null
@@ -441,7 +470,7 @@ try {
     sourceRevision = $env:GITHUB_SHA
     processId = $process.Id
     executableSha256 = (Get-FileHash -Algorithm SHA256 $process.Path).Hash.ToLowerInvariant()
-    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
+    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
   }
   $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
   Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"

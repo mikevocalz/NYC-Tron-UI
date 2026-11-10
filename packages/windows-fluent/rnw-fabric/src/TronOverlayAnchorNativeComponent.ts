@@ -1,5 +1,6 @@
-import { codegenNativeComponent } from "react-native";
-import type { ViewProps } from "react-native";
+import { codegenNativeComponent, codegenNativeCommands } from "react-native";
+import type { HostComponent, ViewProps } from "react-native";
+import type React from "react";
 import type { DirectEventHandler, Int32 } from "react-native/Libraries/Types/CodegenTypes";
 
 export interface NativeProps extends ViewProps {
@@ -18,7 +19,11 @@ export interface NativeProps extends ViewProps {
   isRTL?: boolean;
   onAction?: DirectEventHandler<Readonly<{ scopeToken: string; id: string }>>;
   onFieldChanged?: DirectEventHandler<Readonly<{ scopeToken: string; id: string; value: string; eventCount: Int32 }>>;
-  onOpenChanged?: DirectEventHandler<Readonly<{ scopeToken: string; open: boolean }>>;
+  onOpenChanged?: DirectEventHandler<Readonly<{ scopeToken: string; open: boolean; requestId: string }>>;
   onNativeError?: DirectEventHandler<Readonly<{ scopeToken: string; message: string }>>;
 }
+interface NativeCommands {
+  acknowledgeDismissal: (viewRef: React.ElementRef<HostComponent<NativeProps>>, scopeToken: string, requestId: string) => void;
+}
+export const Commands = codegenNativeCommands<NativeCommands>({ supportedCommands: ["acknowledgeDismissal"] });
 export default codegenNativeComponent<NativeProps>("TronOverlayAnchor");

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TronOverlayAnchor.h"
+#include "OverlayDismissal.h"
 #ifdef RNW_NEW_ARCH
 #include "codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -25,12 +26,11 @@ struct TronOverlayAnchorComponentView
       Codegen::BaseTronOverlayAnchor<TronOverlayAnchorComponentView> {
   ~TronOverlayAnchorComponentView() {
     m_disposed = true;
-    try { if (m_flyout) m_flyout.Hide(); if (m_tooltip) m_tooltip.IsOpen(false); if (m_island) m_island.Close(); } catch (...) {}
+    try { HideFlyout(); if (m_tooltip) m_tooltip.IsOpen(false); if (m_island) m_island.Close(); } catch (...) {}
   }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
       m_island = Xaml::XamlIsland{};
-      m_island.ShouldConstrainPopupsToWorkArea(true);
       m_anchor = Controls::Button{};
       m_anchor.HorizontalAlignment(Xaml::HorizontalAlignment::Stretch);
       m_anchor.VerticalAlignment(Xaml::VerticalAlignment::Stretch);
@@ -42,7 +42,7 @@ struct TronOverlayAnchorComponentView
       });
       m_anchor.Loaded([weak = get_weak()](auto const&, auto const&) { if (auto self = weak.get()) self->ApplyOpen(); });
       m_anchor.Unloaded([weak = get_weak()](auto const&, auto const&) {
-        if (auto self = weak.get()) self->Write([&] { if (self->m_flyout) self->m_flyout.Hide(); if (self->m_tooltip) self->m_tooltip.IsOpen(false); });
+        if (auto self = weak.get()) self->Write([&] { self->HideFlyout(); if (self->m_tooltip) self->m_tooltip.IsOpen(false); });
       });
       m_island.Content(m_anchor); view.Connect(m_island.ContentIsland());
       if (m_props) Apply(*m_props);
@@ -57,6 +57,13 @@ struct TronOverlayAnchorComponentView
       winrt::com_ptr<Codegen::TronOverlayAnchorProps> const& previous) noexcept override {
     m_props = props; if (m_anchor && props) Apply(*props);
     Codegen::BaseTronOverlayAnchor<TronOverlayAnchorComponentView>::UpdateProps(sender, props, previous);
+  }
+  void HandleAcknowledgeDismissalCommand(std::string scopeToken, std::string requestId) noexcept override {
+    if (m_disposed || scopeToken != m_scope || requestId.empty()) return;
+    try {
+      const auto pending = m_dismissal.PendingRequestId();
+      if (pending && requestId == std::to_string(pending)) m_dismissal.Acknowledge(pending);
+    } catch (...) { Error("Native dismissal acknowledgment failed: " + Exception()); }
   }
  private:
   struct Field {
@@ -81,9 +88,9 @@ struct TronOverlayAnchorComponentView
     if (m_disposed || m_applying || scope != m_scope || !m_anchor.IsEnabled()) return;
     if (auto emitter = EventEmitter()) { Codegen::TronOverlayAnchorEventEmitter::OnAction payload; payload.scopeToken = scope; payload.id = id; emitter->onAction(std::move(payload)); }
   }
-  void OpenRequested(bool open, std::string const& scope) {
+  void OpenRequested(bool open, std::string const& scope, std::string const& requestId = {}) {
     if (m_disposed || m_applying || scope != m_scope || !m_anchor.IsEnabled()) return;
-    if (auto emitter = EventEmitter()) { Codegen::TronOverlayAnchorEventEmitter::OnOpenChanged payload; payload.scopeToken = scope; payload.open = open; emitter->onOpenChanged(std::move(payload)); }
+    if (auto emitter = EventEmitter()) { Codegen::TronOverlayAnchorEventEmitter::OnOpenChanged payload; payload.scopeToken = scope; payload.open = open; payload.requestId = requestId; emitter->onOpenChanged(std::move(payload)); }
   }
   static Json::JsonArray Data(std::string const& json, uint32_t budget) {
     if (json.size() > 262144) throw std::invalid_argument("Native overlay data exceeds its budget");
@@ -101,10 +108,12 @@ struct TronOverlayAnchorComponentView
     auto text = item.GetNamedString(L"description", L"");
     return item.GetNamedBoolean(L"danger", false) ? winrt::hstring(L"Destructive action. ") + text : text;
   }
+  void HideFlyout() { if (m_flyout) { m_dismissal.AllowClose(); m_flyout.Hide(); } }
   void CreateFlyout(std::string const& kind) {
-    if (m_flyout) m_flyout.Hide();
+    HideFlyout();
     m_anchor.Flyout(nullptr); m_anchor.ContextFlyout(nullptr);
     m_flyout = nullptr; m_menu = nullptr; m_popover = nullptr; m_fields.clear(); m_nativeOpen = false; m_kind = kind;
+    m_dismissal.Reset();
     const auto scope = m_scope;
     if (kind == "menu" || kind == "context") {
       m_menu = Controls::MenuFlyout{}; m_flyout = m_menu;
@@ -126,10 +135,21 @@ struct TronOverlayAnchorComponentView
       // Islands are anchor-sized; native popup windows must extend beyond that root.
       m_flyout.ShouldConstrainToRootBounds(false);
       m_flyout.Opened([weak = get_weak(), scope](auto const&, auto const&) { if (auto self = weak.get(); self && self->m_scope == scope) { self->m_nativeOpen = true; if (self->m_kind != "popover") self->OpenRequested(true, scope); } });
+      m_flyout.Closing([weak = get_weak(), scope](auto const&, Controls::Primitives::FlyoutBaseClosingEventArgs const& args) {
+        if (auto self = weak.get(); self && self->m_scope == scope && self->m_kind == "popover") {
+          const auto decision = self->m_dismissal.Closing(self->m_open, self->m_disposed || self->m_applying || !self->m_anchor.IsLoaded() || !self->m_anchor.IsEnabled());
+          if (decision != nyctron::overlays::ClosingDecision::Allow) args.Cancel(true);
+          if (decision == nyctron::overlays::ClosingDecision::Request)
+            self->OpenRequested(false, scope, std::to_string(self->m_dismissal.PendingRequestId()));
+        }
+      });
       m_flyout.Closed([weak = get_weak(), scope](auto const&, auto const&) {
         if (auto self = weak.get(); self && self->m_scope == scope) {
-          self->m_nativeOpen = false; self->OpenRequested(false, scope);
-          if (self->m_kind == "popover" && self->m_open && !self->m_applying && !self->m_disposed)
+          const bool allowed = self->m_dismissal.Closed(); self->m_nativeOpen = false;
+          if (self->m_kind != "popover") self->OpenRequested(false, scope);
+          // A newer committed open can arrive during an allowed close animation.
+          // A user request never closes/reopens while waiting for JS approval.
+          if (allowed && self->m_kind == "popover" && self->m_open && !self->m_disposed)
             self->m_anchor.DispatcherQueue().TryEnqueue([weak, scope] { if (auto live = weak.get(); live && live->m_scope == scope) live->ApplyOpen(); });
         }
       });
@@ -235,7 +255,7 @@ struct TronOverlayAnchorComponentView
   }
   void ApplyOpen() noexcept {
     if (m_disposed || m_kind != "popover" || !m_flyout || !m_anchor.IsLoaded()) return;
-    Write([&] { if (m_open && m_anchor.IsEnabled() && !m_nativeOpen) m_flyout.ShowAt(m_anchor); else if ((!m_open || !m_anchor.IsEnabled()) && m_nativeOpen) m_flyout.Hide(); });
+    Write([&] { if (m_open && m_anchor.IsEnabled() && !m_nativeOpen) { m_dismissal.Reset(); m_flyout.ShowAt(m_anchor); } else if ((!m_open || !m_anchor.IsEnabled()) && m_nativeOpen) HideFlyout(); });
   }
   void Apply(Codegen::TronOverlayAnchorProps const& props) noexcept {
     Write([&] {
@@ -243,7 +263,7 @@ struct TronOverlayAnchorComponentView
       if (m_kind != props.kind || m_scope != props.scopeToken) { m_scope = props.scopeToken; CreateFlyout(props.kind); }
       m_anchor.Content(winrt::box_value(winrt::to_hstring(props.label))); Automation::SetName(m_anchor, winrt::to_hstring(props.label));
       m_anchor.IsEnabled(!props.disabled.value_or(false));
-      if (!m_anchor.IsEnabled() && m_flyout) m_flyout.Hide();
+      if (!m_anchor.IsEnabled()) HideFlyout();
       const auto theme = props.theme.value_or("system");
       m_anchor.RequestedTheme(theme == "dark" ? Xaml::ElementTheme::Dark : theme == "light" ? Xaml::ElementTheme::Light : Xaml::ElementTheme::Default);
       m_anchor.FlowDirection(props.isRTL.value_or(false) ? Xaml::FlowDirection::RightToLeft : Xaml::FlowDirection::LeftToRight);
@@ -260,6 +280,7 @@ struct TronOverlayAnchorComponentView
         SyncFields(props.fieldsJson); SyncActions(props.actionsJson);
       }
       m_open = props.open.value_or(false);
+      m_dismissal.Commit(m_open);
     });
     ApplyOpen();
   }
@@ -267,6 +288,7 @@ struct TronOverlayAnchorComponentView
   Controls::Primitives::FlyoutBase m_flyout{nullptr}; Controls::MenuFlyout m_menu{nullptr}; Controls::Flyout m_popover{nullptr};
   Controls::StackPanel m_panel{nullptr}, m_fieldsPanel{nullptr}, m_actionsPanel{nullptr}; Controls::TextBlock m_title{nullptr}, m_description{nullptr};
   winrt::com_ptr<Codegen::TronOverlayAnchorProps> m_props;
+  nyctron::overlays::OverlayDismissal m_dismissal;
   std::string m_kind, m_scope, m_itemsJson, m_fieldsJson, m_actionsJson;
   std::vector<Field> m_fields; std::vector<std::string> m_errors;
   bool m_applying{false}, m_disposed{false}, m_open{false}, m_nativeOpen{false};

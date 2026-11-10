@@ -1,7 +1,7 @@
 import { Button, Text, View } from "react-native";
 import { useStore } from "zustand";
 import { WindowsMenuButton, WindowsContextMenu, WindowsInspector, WindowsTooltip } from "@nyc-tron/windows-fluent-fabric/overlays";
-import { overlays, requestInspectorEdit, inspectorAction } from "./overlay-store";
+import { overlays, requestInspectorEdit, requestInspectorOpen, inspectorAction, vetoNextInspectorDismissal } from "./overlay-store";
 import { failDesktop } from "./desktop-store";
 
 export function NativeOverlays() {
@@ -24,11 +24,12 @@ export function NativeOverlays() {
         { id: "note", label: "Native inspector note", value: state.value, acknowledgedEventCount: state.acknowledgedEventCount },
       ]} actions={[
         { id: "close", label: "Close native inspector" }, { id: "disable", label: "Disable native inspector" }, { id: "replace", label: "Replace inspector scope" },
-      ]} onOpenRequested={open => overlays.setState({ open })} onFieldChangeRequested={requestInspectorEdit} onActionRequested={inspectorAction}/>
+      ]} onOpenRequested={requestInspectorOpen} onFieldChangeRequested={requestInspectorEdit} onActionRequested={inspectorAction}/>
     <Text accessibilityLiveRegion="polite">{state.status}</Text>
     <Text>Committed native note: {state.value}</Text>
     <Text>Native edit acknowledgment: {state.acknowledgedEventCount}</Text>
     <Text>Native inspector scope: {state.scopeId}</Text>
     <Button title="Enable native inspector" accessibilityLabel="Enable native inspector" onPress={() => overlays.setState({ disabled: false })}/>
+    <Button title="Veto next inspector dismissal" accessibilityLabel="Veto next inspector dismissal" onPress={vetoNextInspectorDismissal}/>
   </View>;
 }

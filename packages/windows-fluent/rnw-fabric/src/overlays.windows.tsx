@@ -1,8 +1,8 @@
-import { useLayoutEffect, useMemo } from "react";
+import { useLayoutEffect, useMemo, useRef, type ComponentRef } from "react";
 import { Platform } from "react-native";
 import { nativeIsRTL } from "./native-direction.ts";
-import NativeAnchor from "./TronOverlayAnchorNativeComponent.ts";
-import { createOverlayBinding, newOverlayScopeToken } from "./overlay-binding.ts";
+import NativeAnchor, { Commands } from "./TronOverlayAnchorNativeComponent.ts";
+import { createOverlayBinding, deliverPopoverOpenRequest, newOverlayScopeToken } from "./overlay-binding.ts";
 import { validateOverlayItems, validateInspectorFields } from "./overlay-model.ts";
 import type { WindowsOverlayAnchorProps, WindowsMenuProps, WindowsPopoverProps, WindowsTooltipProps } from "./overlay-types.ts";
 export type * from "./overlay-types.ts";
@@ -37,12 +37,15 @@ export function WindowsMenuButton(props: WindowsMenuProps) { return <Menu {...pr
 export function WindowsContextMenu(props: WindowsMenuProps) { return <Menu {...props} kind="context" />; }
 /** An app-controlled WinUI Flyout with real native inspector fields and actions. */
 export function WindowsPopover(props: WindowsPopoverProps) {
+  const nativeRef = useRef<ComponentRef<typeof NativeAnchor>>(null);
   const fields = props.fields ?? [], actions = props.actions ?? [];
   validateInspectorFields(fields); validateOverlayItems(actions); const { native, binding } = useAnchor(props);
   if (typeof props.title !== "string" || props.title.length > 1024 || (props.description !== undefined && (typeof props.description !== "string" || props.description.length > 8192))) throw new TypeError("Native popover text exceeds its budget");
-  return <NativeAnchor {...native} kind="popover" itemsJson="[]" fieldsJson={JSON.stringify(fields)} actionsJson={JSON.stringify(actions)}
+  return <NativeAnchor {...native} ref={nativeRef} kind="popover" itemsJson="[]" fieldsJson={JSON.stringify(fields)} actionsJson={JSON.stringify(actions)}
     title={props.title} description={props.description} open={props.open}
-    onOpenChanged={({ nativeEvent: event }) => { const current = binding.current(event.scopeToken); if (current && event.open !== current.open) current.onOpenRequested(event.open); }}
+    onOpenChanged={({ nativeEvent: event }) => deliverPopoverOpenRequest(binding, event, (scopeToken, requestId) => {
+      if (nativeRef.current) Commands.acknowledgeDismissal(nativeRef.current, scopeToken, requestId);
+    })}
     onAction={({ nativeEvent: event }) => { const current = binding.current(event.scopeToken); if (current?.actions?.some(i => i.id === event.id && !i.disabled)) current.onActionRequested?.(event.id); }}
     onFieldChanged={({ nativeEvent: event }) => {
       const current = binding.current(event.scopeToken), field = current?.fields?.find(f => f.id === event.id && !f.readOnly);

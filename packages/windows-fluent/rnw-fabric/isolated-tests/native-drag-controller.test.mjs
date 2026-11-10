@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createWindowRegistry, openWindow, closeWindow, minimizeWindow } from "@nyc-tron/core/window-lifecycle";
 import { createNativeDragController } from "../dist/native-drag-controller.js";
-import { createOverlayBinding, newOverlayScopeToken } from "../dist/overlay-binding.js";
+import { createOverlayBinding, deliverPopoverOpenRequest, newOverlayScopeToken } from "../dist/overlay-binding.js";
 import { validateInspectorFields, validateOverlayItems } from "../dist/overlay-model.js";
 
 const deferred = () => { let resolve; const promise = new Promise(r => { resolve = r; }); return { promise, resolve }; };
@@ -108,6 +108,32 @@ test("overlay events consult only the live committed scope and disabled state", 
   binding.commit(next, { ...b, disabled: true }); releaseB();
   assert.equal(binding.current(next), undefined); assert.equal(binding.current(next, true).disabled, true);
   const release = binding.commit(next, b); release(); assert.equal(binding.current(next), undefined);
+});
+test("a dismissal veto without a React commit is acknowledged and a later request reaches the app", () => {
+  const binding = createOverlayBinding(), scope = newOverlayScopeToken(), calls = [], acknowledgments = [];
+  const props = { scopeId: "document", label: "Inspector", open: true, onOpenRequested: open => calls.push(open) };
+  binding.commit(scope, props);
+  const acknowledge = (token, id) => acknowledgments.push([token, id]);
+  deliverPopoverOpenRequest(binding, { scopeToken: scope, open: false, requestId: "1" }, acknowledge);
+  assert.equal(binding.current(scope), props);
+  assert.equal(props.open, true);
+  binding.commit(scope, { ...props, onOpenRequested: open => {
+    calls.push(open); binding.commit(scope, { ...props, open });
+  } });
+  deliverPopoverOpenRequest(binding, { scopeToken: scope, open: false, requestId: "2" }, acknowledge);
+  assert.deepEqual(calls, [false, false]); assert.equal(binding.current(scope).open, false);
+  assert.deepEqual(acknowledgments, [[scope, "1"], [scope, "2"]]);
+});
+test("delivery acknowledges exceptions and stale scopes without invoking a replacement owner", () => {
+  const binding = createOverlayBinding(), scope = newOverlayScopeToken(), next = newOverlayScopeToken(), acknowledgments = [];
+  const props = { scopeId: "document", label: "Inspector", open: true, onOpenRequested: () => { throw new Error("app callback"); } };
+  const acknowledge = (token, id) => acknowledgments.push([token, id]);
+  binding.commit(scope, props);
+  assert.throws(() => deliverPopoverOpenRequest(binding, { scopeToken: scope, open: false, requestId: "1" }, acknowledge), /app callback/);
+  binding.commit(next, { ...props, disabled: true });
+  deliverPopoverOpenRequest(binding, { scopeToken: scope, open: false, requestId: "2" }, acknowledge);
+  deliverPopoverOpenRequest(binding, { scopeToken: next, open: false, requestId: "3" }, acknowledge);
+  assert.deepEqual(acknowledgments, [[scope, "1"], [scope, "2"], [next, "3"]]);
 });
 test("inspector acknowledgments are bounded nonnegative integer counts", () => {
   const field = { id: "name", label: "Name", value: "Native draft" };
