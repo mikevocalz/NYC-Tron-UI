@@ -21,6 +21,10 @@ public static class NativeWindow {
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
   [DllImport("user32.dll")] public static extern bool IsWindow(IntPtr window);
+  [DllImport("user32.dll")] public static extern IntPtr WindowFromPoint(POINT point);
+  [DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr window, uint flags);
+  [DllImport("user32.dll")] public static extern short GetAsyncKeyState(int key);
+  [DllImport("user32.dll", SetLastError=true)] static extern bool GetGUIThreadInfo(uint thread, ref GUITHREADINFO info);
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetWindowPos(IntPtr window, IntPtr after, int x, int y, int width, int height, uint flags);
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetCursorPos(int x, int y);
   [DllImport("user32.dll", SetLastError=true)] static extern bool GetCursorPos(out POINT point);
@@ -28,6 +32,12 @@ public static class NativeWindow {
   [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
   [DllImport("user32.dll", SetLastError=true)] static extern uint SendInput(uint count, INPUT[] inputs, int size);
   [StructLayout(LayoutKind.Sequential)] public struct POINT { public int X, Y; }
+  [StructLayout(LayoutKind.Sequential)] public struct RECT { public int Left, Top, Right, Bottom; }
+  [StructLayout(LayoutKind.Sequential)] public struct GUITHREADINFO {
+    public uint size, flags;
+    public IntPtr active, focus, capture, menuOwner, moveSize, caret;
+    public RECT caretRect;
+  }
   [StructLayout(LayoutKind.Sequential)] struct INPUT { public uint type; public MOUSEINPUT mouse; }
   [StructLayout(LayoutKind.Sequential)] struct MOUSEINPUT { public int dx, dy; public uint mouseData, flags, time; public UIntPtr extraInfo; }
   public static void Mouse(uint flags) {
@@ -39,6 +49,12 @@ public static class NativeWindow {
     if (!GetCursorPos(out point)) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
     return point;
   }
+  public static GUITHREADINFO ThreadInputState(uint thread) {
+    var info = new GUITHREADINFO { size = (uint)Marshal.SizeOf(typeof(GUITHREADINFO)) };
+    if (!GetGUIThreadInfo(thread, ref info)) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+    return info;
+  }
+  public static POINT DragMetrics() { return new POINT { X = GetSystemMetrics(68), Y = GetSystemMetrics(69) }; }
   public static void MoveMouse(int x, int y) {
     int left = GetSystemMetrics(76), top = GetSystemMetrics(77);
     int width = GetSystemMetrics(78), height = GetSystemMetrics(79);
@@ -57,6 +73,7 @@ New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 . "$PSScriptRoot\uia-crash-dumps.ps1"
 $AE = [System.Windows.Automation.AutomationElement]
 $Tree = [System.Windows.Automation.TreeScope]
+. "$PSScriptRoot\uia-drag-input.ps1"
 
 function Save-Screenshot([string]$name, $target) {
   $rect = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
@@ -301,27 +318,6 @@ function Arrange-DragWindows($main, $secondary) {
   } while ((Get-Date) -lt $deadline)
   throw "Owned native windows overlap or cannot fit the desktop for OS drag input"
 }
-function Invoke-NativeDrag($main, $secondary, [bool]$cancel = $false) {
-  [NativeWindow]::SetForegroundWindow([IntPtr]$main.Current.NativeWindowHandle) | Out-Null
-  $source = Find-ProcessElement "Drag shared native draft" ([System.Windows.Automation.ControlType]::Button)
-  $target = Find-ProcessElement "Drop shared native draft" ([System.Windows.Automation.ControlType]::Button)
-  $s = $source.Current.BoundingRectangle; $t = $target.Current.BoundingRectangle
-  $sx = [int]($s.X + $s.Width / 2); $sy = [int]($s.Y + $s.Height / 2)
-  $tx = [int]($t.X + $t.Width / 2); $ty = [int]($t.Y + $t.Height / 2)
-  if ($s.Width -lt 30 -or $t.Width -lt 30) { throw "Native drag surface has no usable pointer bounds" }
-  [NativeWindow]::SetCursorPos($sx, $sy) | Out-Null
-  [NativeWindow]::Mouse(0x0002)
-  try {
-    [NativeWindow]::SetCursorPos(($sx + 24), $sy) | Out-Null
-    Find-ByName $main "Native drag phase: dragging" 10 | Out-Null
-    for ($step = 1; $step -le 24; $step++) {
-      [NativeWindow]::SetCursorPos([int]($sx + ($tx - $sx) * $step / 24), [int]($sy + ($ty - $sy) * $step / 24)) | Out-Null
-      Start-Sleep -Milliseconds 20
-    }
-    if ($cancel) { [System.Windows.Forms.SendKeys]::SendWait("{ESC}") }
-  } finally { [NativeWindow]::Mouse(0x0004) }
-}
-
 # Startup-crash evidence: installed Windows App Runtime packages and the
 # Application event log entries written since launch.
 function Write-Diagnostics($since, [int]$expectedProcessId = 0) {

@@ -6,17 +6,39 @@
 #include "codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
+#include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include <winrt/Windows.UI.h>
 #include <stdexcept>
 #include <utility>
 
 namespace winrt::NYCTronFluentFabric {
 namespace Xaml = winrt::Microsoft::UI::Xaml;
+namespace Peers = Xaml::Automation::Peers;
 namespace Transfer = winrt::Windows::ApplicationModel::DataTransfer;
 using Broker = nyctron::desktop::NativeDragBroker;
 static constexpr wchar_t NonceProperty[] = L"NYCTron.NativeWindowDrag.Nonce";
 static constexpr wchar_t PrivateFormat[] = L"application/x-nyc-tron-window-transfer";
+struct NativeDragRegionAutomationPeer : Peers::FrameworkElementAutomationPeerT<NativeDragRegionAutomationPeer> {
+  explicit NativeDragRegionAutomationPeer(Xaml::FrameworkElement const& owner) : FrameworkElementAutomationPeerT(owner) {}
+  winrt::hstring GetClassNameCore() const { return L"NYCTronDragRegion"; }
+  Peers::AutomationControlType GetAutomationControlTypeCore() const { return Peers::AutomationControlType::Custom; }
+};
+struct NativeDragRegion : Xaml::Controls::ContentControlT<NativeDragRegion> {
+  NativeDragRegion() {
+    HorizontalContentAlignment(Xaml::HorizontalAlignment::Stretch);
+    VerticalContentAlignment(Xaml::VerticalAlignment::Stretch);
+    IsTabStop(true);
+    UseSystemFocusVisuals(true);
+  }
+  Peers::AutomationPeer OnCreateAutomationPeer() {
+    // ContentControl has no built-in peer. Reuse native owner name, geometry,
+    // enabled state and focus support, with an explicit non-Button identity.
+    return winrt::make<NativeDragRegionAutomationPeer>(this->as<Xaml::FrameworkElement>());
+  }
+};
 // Acquired and completed on the UI dispatcher. Every exit, including exceptions in
 // property setters, releases the framework deferral once; no nested message pump.
 class DragDeferral final {
@@ -78,8 +100,19 @@ struct TronDragSurfaceComponentView
   }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
-      m_island = Xaml::XamlIsland{}; m_surface = Xaml::Controls::Button{};
+      m_island = Xaml::XamlIsland{};
+      // ButtonBase consumes PointerPressed before WinUI's automatic drag helper.
+      // A real ContentControl region leaves that input to the built-in helper,
+      // retaining its mouse/touch/pen recognition and native drag event flow.
+      m_surface = winrt::make<NativeDragRegion>().as<Xaml::Controls::ContentControl>();
       m_surface.HorizontalAlignment(Xaml::HorizontalAlignment::Stretch); m_surface.VerticalAlignment(Xaml::VerticalAlignment::Stretch);
+      auto background = Xaml::Controls::Border{};
+      background.Background(Xaml::Media::SolidColorBrush{winrt::Windows::UI::Colors::Transparent()});
+      m_label = Xaml::Controls::TextBlock{};
+      m_label.HorizontalAlignment(Xaml::HorizontalAlignment::Center); m_label.VerticalAlignment(Xaml::VerticalAlignment::Center);
+      m_label.IsHitTestVisible(false);
+      Xaml::Automation::AutomationProperties::SetAccessibilityView(m_label, Peers::AccessibilityView::Raw);
+      background.Child(m_label); m_surface.Content(background);
       m_surface.DragStarting([weak = get_weak()](auto const&, Xaml::DragStartingEventArgs const& args) { if (auto self = weak.get()) self->Starting(args); else args.Cancel(true); });
       m_surface.DropCompleted([weak = get_weak()](auto const&, Xaml::DropCompletedEventArgs const& args) {
         if (auto self = weak.get()) {
@@ -149,7 +182,7 @@ struct TronDragSurfaceComponentView
       m_scope = props.scopeToken;
       m_owner = props.ownerToken; m_window = props.windowId; m_generation = props.generation; m_role = props.dragRole;
       if (m_role != "source" && m_role != "target") throw std::invalid_argument("Invalid native drag surface role");
-      m_surface.Content(winrt::box_value(winrt::to_hstring(props.label)));
+      m_label.Text(winrt::to_hstring(props.label));
       Xaml::Automation::AutomationProperties::SetName(m_surface, winrt::to_hstring(props.label));
       m_surface.IsEnabled(!props.disabled.value_or(false));
       ApplyDragCapabilities();
@@ -214,7 +247,7 @@ struct TronDragSurfaceComponentView
       if (!m_disposed) Cleanup(); Error("Native drop could not reach its live application owner");
     }
   }
-  Xaml::XamlIsland m_island{nullptr}; Xaml::Controls::Button m_surface{nullptr};
+  Xaml::XamlIsland m_island{nullptr}; Xaml::Controls::ContentControl m_surface{nullptr}; Xaml::Controls::TextBlock m_label{nullptr};
   nyctron::islands::IslandConnection m_connection;
   winrt::com_ptr<Codegen::TronDragSurfaceProps> m_props;
   std::string m_owner, m_window, m_generation, m_role, m_scope, m_request;
