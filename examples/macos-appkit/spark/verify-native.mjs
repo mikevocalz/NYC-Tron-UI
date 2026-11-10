@@ -193,13 +193,33 @@ try {
   await control('context-main', 'press');
   const contextMenu = await waitFor(async () => { const menu = await driver.request('tron.context-menu', {}); return menu.shown ? menu : undefined; }, 'native context-menu tracking');
   assert.equal(contextMenu.nativeMenu, true);
+  assert.ok(Number.isSafeInteger(contextMenu.generation) && contextMenu.generation > 0);
   assert.equal(contextMenu.items.find(item => item.id === 'context-disabled').enabled, false);
-  await driver.request('tron.context-menu', { action: 'select', itemId: 'context-save' });
+  const selectedContextMenu = await driver.request('tron.context-menu', { action: 'select', itemId: 'context-save', generation: contextMenu.generation });
+  assert.equal(selectedContextMenu.actedOnGeneration, contextMenu.generation);
+  // React's selection result does not establish that AppKit finished tracking.
+  // Observe the native end before opening another menu, then target its newer
+  // begin-tracking generation explicitly for cancellation.
+  await waitFor(async () => {
+    const menu = await driver.request('tron.context-menu', {});
+    return !menu.shown && menu.endedGeneration === contextMenu.generation;
+  }, 'selected native context menu tracking ended');
   await status('Saved in this local reference session');
   assert.ok((await inspect('saved-main')).labels.includes('Checkpoint from the context menu'));
   await control('context-main', 'press');
-  await waitFor(async () => (await driver.request('tron.context-menu', {})).shown, 'second native context menu');
-  await driver.request('tron.context-menu', { action: 'cancel' }); await status('Native context menu dismissed');
+  const cancelContextMenu = await waitFor(async () => {
+    const menu = await driver.request('tron.context-menu', {});
+    return menu.shown && menu.generation > contextMenu.generation ? menu : undefined;
+  }, 'new native context menu tracking generation');
+  assert.equal(cancelContextMenu.nativeMenu, true);
+  assert.ok(Number.isSafeInteger(cancelContextMenu.generation));
+  const canceledContextMenu = await driver.request('tron.context-menu', { action: 'cancel', generation: cancelContextMenu.generation });
+  assert.equal(canceledContextMenu.actedOnGeneration, cancelContextMenu.generation);
+  await waitFor(async () => {
+    const menu = await driver.request('tron.context-menu', {});
+    return !menu.shown && menu.endedGeneration === cancelContextMenu.generation;
+  }, 'canceled native context menu tracking ended');
+  await status('Native context menu dismissed');
   checks.push('native-application-and-context-menu-commands');
   const tooltip = await inspect('tooltip-main');
   assert.equal(tooltip.tooltip, "Save this document's local checkpoint");
