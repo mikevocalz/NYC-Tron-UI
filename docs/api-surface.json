@@ -566,6 +566,8 @@
     "./components/gestures/drag-controller",
     "./components/gestures/drag-transport",
     "./components/html",
+    "./components/layout/AdaptiveColumns",
+    "./components/layout/ContentFrame",
     "./components/navigation/CollapsibleDrawer",
     "./components/navigation/drawer-model",
     "./components/overlays/AnchoredPopover",

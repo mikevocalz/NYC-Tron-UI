@@ -1,8 +1,10 @@
+import type { NativeAppearanceProps } from "./native-appearance.ts";
+
 /**
  * Props shared by every platform's {@linkcode NativeSliderField}. The value
  * is controlled: a drag previews through `onPreview` and commits once.
  */
-export interface NativeSliderFieldProps {
+export interface NativeSliderFieldProps extends NativeAppearanceProps {
   readonly label:string;
   readonly value:number;
   readonly min:number;

@@ -15,6 +15,40 @@ importers:
         specifier: ~6.0.3
         version: 6.0.3
 
+  examples/native-feel:
+    dependencies:
+      '@expo/ui':
+        specifier: 58.0.27
+        version: 58.0.27(@babel/core@7.29.13)(expo@58.0.23)(react-dom@19.3.1(react@19.3.0))(react-native@0.88.1(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+      '@nyc-tron/expo-controls':
+        specifier: workspace:*
+        version: link:../../packages/expo-controls
+      '@nyc-tron/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      expo:
+        specifier: 58.0.23
+        version: 58.0.23(@babel/core@7.29.13)(@expo/dom-webview@58.0.2)(react-dom@19.3.1(react@19.3.0))(react-native@0.88.1(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)(typescript@6.0.3)
+      react:
+        specifier: 19.3.0
+        version: 19.3.0
+      react-native:
+        specifier: 0.88.1
+        version: 0.88.1(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0)
+      uniwind:
+        specifier: 1.13.2
+        version: 1.13.2(@expo/metro-config@58.0.21(expo@58.0.23)(typescript@6.0.3))(metro-cache@0.87.3)(metro-transform-worker@0.87.3)(metro@0.87.3)(react-native@0.88.1(@babel/core@7.29.13)(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)(tailwindcss@4.3.3)
+      zustand:
+        specifier: 5.0.16
+        version: 5.0.16(@types/react@19.3.0)(react@19.3.0)(use-sync-external-store@1.7.0(react@19.3.0))
+    devDependencies:
+      '@types/react':
+        specifier: ~19.3.0
+        version: 19.3.0
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+
   examples/native-instruments:
     dependencies:
       '@expo/ui':

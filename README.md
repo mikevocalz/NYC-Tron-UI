@@ -20,6 +20,12 @@ and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
 ## Use only the parts you need
 
+For the Expo Exact-inspired presentation direction, read
+[Native feel and adaptive content](docs/EXACT_NATIVE_FEEL.md). The
+[account screen reference](examples/native-feel/README.md) demonstrates bounded
+forms, wrapping columns, live appearance choices and retained drafts using
+the same component tree on small and large web containers.
+
 ```tsx
 import { Button } from "@nyc-tron/ui/components/Button";
 import { Card } from "@nyc-tron/ui/components/Card";

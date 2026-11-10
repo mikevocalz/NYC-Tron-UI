@@ -6,6 +6,7 @@
 @source "./fixture.tsx";
 @source "./primitives.tsx";
 @source "./fixtures";
+@source "../../../../examples/native-feel";
 
 @source "./spreadsheet.tsx";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));

@@ -1,6 +1,7 @@
 import type {
   PopoverAnchorProps, PopoverProps, PopoverTriggerProps, PopoverTriggerState,
 } from "@nyc-tron/ui/components/overlays/anchored-popover-types";
+import type { NativeAppearanceProps } from "./native-appearance.ts";
 export type { Rect2D } from "@nyc-tron/ui/components/overlays/popover-position";
 
 /**
@@ -18,11 +19,11 @@ export type { Rect2D } from "@nyc-tron/ui/components/overlays/popover-position";
  * Pass the nonoccluded regions from the foldable layout owner; never infer a
  * hinge from width.
  */
-export type NativePopoverProps=PopoverProps;
+export type NativePopoverProps=PopoverProps&NativeAppearanceProps;
 /** The rect form of {@linkcode NativePopoverProps}. */
-export type NativePopoverAnchorProps=PopoverAnchorProps;
+export type NativePopoverAnchorProps=PopoverAnchorProps&NativeAppearanceProps;
 /** The trigger form of {@linkcode NativePopoverProps}. */
-export type NativePopoverTriggerProps=PopoverTriggerProps;
+export type NativePopoverTriggerProps=PopoverTriggerProps&NativeAppearanceProps;
 /** What a {@linkcode NativePopoverTriggerProps.trigger} render function receives. */
 export type NativePopoverTriggerState=PopoverTriggerState;
 

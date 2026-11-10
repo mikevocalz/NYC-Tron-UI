@@ -1,4 +1,5 @@
 import type { ViewProps } from "react-native";
+import type { NativeAppearanceProps } from "./native-appearance.ts";
 import {
   flattenOptionGroups, validateOptionGroups, type OptionGroup,
 } from "@nyc-tron/ui/components/forms/option-groups";
@@ -25,7 +26,7 @@ export interface NativeDropdownGroupsChoice {
   readonly options?: undefined;
 }
 /** Props shared by both choice shapes of {@linkcode NativeDropdown}. */
-export interface NativeDropdownBaseProps extends Omit<ViewProps,"children"> {
+export interface NativeDropdownBaseProps extends Omit<ViewProps,"children">,NativeAppearanceProps {
   /** Visible caption; also the name screen readers announce for the picker. */
   readonly label: string;
   readonly value: string;

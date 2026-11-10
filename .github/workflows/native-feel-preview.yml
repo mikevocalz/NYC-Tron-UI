@@ -1,0 +1,42 @@
+name: NYC-Tron native feel reference
+
+on:
+  pull_request:
+    paths:
+      - "examples/native-feel/**"
+      - "packages/ui/src/components/layout/**"
+      - "packages/expo-controls/**"
+      - "packages/ui/tests/browser/native-feel.spec.mjs"
+      - "packages/ui/tests/browser/fixtures/native-feel.tsx"
+      - "packages/ui/tests/browser/theme.css"
+      - ".github/workflows/native-feel-preview.yml"
+      - "pnpm-lock.yaml"
+
+permissions:
+  contents: read
+
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Install pinned workspace and compile public components
+        run: corepack enable && corepack pnpm install --frozen-lockfile --ignore-scripts && corepack pnpm build
+      - name: Install browser harness and Chromium
+        working-directory: packages/ui/tests/browser
+        run: npm ci --ignore-scripts --no-audit --no-fund && npx --no-install playwright install --with-deps chromium
+      - name: Exercise the reference screen and capture desktop and phone layouts
+        working-directory: packages/ui/tests/browser
+        run: npx --no-install playwright test native-feel.spec.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-feel-reference-captures
+          path: |
+            packages/ui/tests/browser/shots/native-feel-*.png
+            packages/ui/tests/browser/test-results/
+          retention-days: 14

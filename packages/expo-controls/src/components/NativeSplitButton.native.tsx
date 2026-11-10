@@ -21,7 +21,7 @@ export type { NativeSplitButtonProps } from "./NativeSplitButton.types.ts";
  * actions on one target (tap and long press), and this control's contract is
  * two separate hit targets.
  */
-export function NativeSplitButton({label,onPress,actions,onAction,menuLabel,disabled=false,testID}:NativeSplitButtonProps){
+export function NativeSplitButton({label,onPress,actions,onAction,menuLabel,disabled=false,testID,colorScheme}:NativeSplitButtonProps){
   normalizeMenuActions(actions);
   const leaves=enabledMenuLeaves(actions);
   const local=useRef<StoreApi<{expanded:boolean}>|null>(null);
@@ -34,7 +34,7 @@ export function NativeSplitButton({label,onPress,actions,onAction,menuLabel,disa
     if(!disabled&&findEnabledMenuAction(actions,id))onAction(id);
   };
   if(Platform.OS==="android"){
-    return <Host matchContents testID={testID}>
+    return <Host colorScheme={colorScheme} matchContents testID={testID}>
       <SplitButtonLayout>
         <SplitButtonLayout.LeadingButton>
           <SplitButtonLeadingButton enabled={!disabled} onClick={onPress}><ComposeText>{label}</ComposeText></SplitButtonLeadingButton>
@@ -58,7 +58,7 @@ export function NativeSplitButton({label,onPress,actions,onAction,menuLabel,disa
       </SplitButtonLayout>
     </Host>;
   }
-  return <Host matchContents testID={testID}>
+  return <Host colorScheme={colorScheme} matchContents testID={testID}>
     <HStack spacing={2}>
       <SwiftUIButton label={label} onPress={onPress} modifiers={[buttonStyle("bordered"),swiftUIDisabled(disabled)]}/>
       <SwiftUIMenu label={more} systemImage="chevron.down"

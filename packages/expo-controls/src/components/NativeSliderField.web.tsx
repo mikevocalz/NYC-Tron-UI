@@ -7,6 +7,6 @@ export type { NativeSliderFieldProps } from "./NativeSliderField.types.ts";
  * browser has no OS slider that reports the end of a drag, which the
  * commit-once contract needs.
  */
-export function NativeSliderField({testID,...props}:NativeSliderFieldProps){
+export function NativeSliderField({testID,colorScheme:_colorScheme,...props}:NativeSliderFieldProps){
   return <SliderField {...props} testID={testID}/>;
 }

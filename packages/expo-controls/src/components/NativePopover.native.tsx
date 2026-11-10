@@ -16,6 +16,7 @@ import {
 import {
   swiftUIPopoverEdges, type NativePopoverProps, type NativePopoverTriggerProps,
 } from "./NativePopover.types.ts";
+import type { NativeAppearanceProps } from "./native-appearance.ts";
 export type {
   NativePopoverProps, NativePopoverAnchorProps, NativePopoverTriggerProps, NativePopoverTriggerState,
 } from "./NativePopover.types.ts";
@@ -74,7 +75,7 @@ function TriggeredNativePopover(props:NativePopoverTriggerProps){
   </View>;
 }
 
-type SurfaceProps={
+type SurfaceProps=NativeAppearanceProps&{
   readonly scope?:string;
   readonly open:boolean;
   readonly onOpenChange:(open:boolean)=>void;
@@ -88,7 +89,7 @@ type SurfaceProps={
   readonly contentHeight:number;
 };
 function NativeSurface({
-  scope="native-popover",open,onOpenChange,accessibilityLabel,children,testID,frame:anchor,side,contentWidth,contentHeight,
+  scope="native-popover",open,onOpenChange,accessibilityLabel,children,testID,frame:anchor,side,contentWidth,contentHeight,colorScheme,
 }:SurfaceProps){
   const token=useMemo(()=>({}),[scope,open]);
   const committed=useRef<{token:object;onOpenChange:typeof onOpenChange}|null>(null);
@@ -101,7 +102,7 @@ function NativeSurface({
     style={{width:contentWidth,maxHeight:contentHeight}}>{children}</View>;
   return <View pointerEvents="none" style={{position:"absolute",left:anchor.x,top:anchor.y,
       width:anchorWidth,height:anchorHeight}}>
-    <Host key={`${scope}:${open}`} style={{width:anchorWidth,height:anchorHeight}}>
+    <Host key={`${scope}:${open}`} colorScheme={colorScheme} style={{width:anchorWidth,height:anchorHeight}}>
       {Platform.OS==="android"
         ? <DropdownMenu expanded={open} onDismissRequest={()=>change(false)}>
             <DropdownMenu.Trigger><Box modifiers={[size(anchorWidth,anchorHeight)]}/></DropdownMenu.Trigger>
