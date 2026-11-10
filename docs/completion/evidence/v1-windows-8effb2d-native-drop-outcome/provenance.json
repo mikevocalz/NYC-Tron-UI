@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "sourceJobId": 130144183486,
+  "nativeJobId": 130144671225,
+  "sourceConclusion": "success",
+  "nativeConclusion": "failure",
+  "nativeLibraryCompile": "passed",
+  "consumerExecutableCompile": "passed",
+  "deployment": "passed",
+  "firstRealDragStart": "passed",
+  "completedDragCount": 1,
+  "observedResult": "none/cancelled",
+  "expectedResult": "none/rejected",
+  "authorizedTransfers": 0,
+  "documentOwner": "main",
+  "originalLog": {
+    "bytes": 315152,
+    "sha256": "afe35185ccb7b8e0e7f243fb8526292b53b4fbc3af5e6400ba8eb233b42c854c",
+    "independentlyComparedToConnector": true
+  },
+  "originalArtifact": {
+    "id": 13805133393,
+    "bytes": 317911,
+    "sha256": "643ac530442e18498e30fae0ce221a5c8e62f531d6fbdbb71dbeca3d612f4122",
+    "membersVerified": 22
+  },
+  "process": {
+    "schemaVersion": 1,
+    "status": "failed",
+    "sourceRevision": "34729eaa4989ccd6385c0da2ba4a36f08d31794c",
+    "capturedAt": "2026-11-10T21:44:15.2906974Z",
+    "primaryFailure": {
+      "position": "At D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1:155 char:3\r\n+   throw \"UIA element named '$name' did not appear within $timeoutSec  ...\r\n+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "message": "UIA element named 'Native drag result: none/rejected' did not appear within 30 s",
+      "type": "System.Management.Automation.RuntimeException",
+      "scriptStack": "at Find-ByName, D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1: line 155\r\nat <ScriptBlock>, D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1: line 612\r\nat <ScriptBlock>, D:\\a\\_temp\\3181c956-e87c-47b5-868e-5f47a4ffa3b6.ps1: line 2\r\nat <ScriptBlock>, <No file>: line 1"
+    },
+    "processId": 6600,
+    "processStartedAt": "2026-11-10T21:43:28.1655063Z",
+    "hasExited": false,
+    "exitCode": null,
+    "originalWindowHandle": 458890,
+    "windowExists": true,
+    "windowProcessId": 6600,
+    "foregroundWindowHandle": 458890,
+    "foregroundProcessId": 6600
+  },
+  "sourceBounds": {
+    "x": 72,
+    "y": 311,
+    "width": 260,
+    "height": 56
+  },
+  "targetBounds": {
+    "x": 596,
+    "y": 212,
+    "width": 260,
+    "height": 56
+  },
+  "overTarget": {
+    "actualCursor": {
+      "y": 240,
+      "x": 726
+    },
+    "leftButtonDown": true,
+    "nativeRoot": 131602,
+    "processId": 6600
+  },
+  "eventQuery": {
+    "scannedCount": 0,
+    "errors": [],
+    "capturedAt": "2026-11-10T21:44:15.7200886Z",
+    "retainedLimit": 20,
+    "expectedProcessId": 6600,
+    "retainedCount": 0,
+    "since": "2026-11-10T21:42:50.9081047Z",
+    "status": "completed",
+    "scannedLimit": 50,
+    "appName": "NYCTronWindowsExample"
+  },
+  "applicationErrorEvents": [],
+  "limitations": [
+    "The UIA DragPattern is unavailable; this is not a readback of native CanDrag.",
+    "No native target event, nonce extraction or broker-offer trace exists in this original artifact; the missing rejection result has not been assigned a cause.",
+    "Accepted transfer and explicit cancellation cases were not reached.",
+    "Actual OS-injected input is not physical device or assistive-technology speech evidence."
+  ],
+  "testedPackageCreated": false
+}

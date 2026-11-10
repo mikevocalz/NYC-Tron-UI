@@ -1,0 +1,117 @@
+{
+  "artifactId": 13805133393,
+  "zipBytes": 317911,
+  "zipSha256": "643ac530442e18498e30fae0ce221a5c8e62f531d6fbdbb71dbeca3d612f4122",
+  "files": [
+    {
+      "path": "01-launched.png",
+      "bytes": 31470,
+      "sha256": "d83b217587052e0163cac0dd69e4b9159eb7a606363cdcb5bb9ee486d3d1f6c5"
+    },
+    {
+      "path": "03-accepted.png",
+      "bytes": 32345,
+      "sha256": "78bd4f2c4ad7a804a8cbe2e0b304b8d3c89675c872d274c10fed52f8bafd38e0"
+    },
+    {
+      "path": "02-rejected.png",
+      "bytes": 33159,
+      "sha256": "587d86c8ea3457c7d08c0dac838a4a4ecaf7bea706b6246f96c3e30f5313d838"
+    },
+    {
+      "path": "04-native-document.png",
+      "bytes": 14938,
+      "sha256": "a26b90ffd681dfa49d6d183b177ebfa7f11502680ba12804ffa4a8423b0a2cbc"
+    },
+    {
+      "path": "05-close-veto.png",
+      "bytes": 14890,
+      "sha256": "c874280cecf4346c8ad5aa5d94179b7bc29efd8dc45d4298881eabc4117250b6"
+    },
+    {
+      "path": "06-native-reopened.png",
+      "bytes": 14851,
+      "sha256": "f57e1b922e00759290803d064275aa26b4cdbbc564e331d2fc098d7fa985c923"
+    },
+    {
+      "path": "06-document-tree.txt",
+      "bytes": 2409,
+      "sha256": "adfb540e705549bb18c109869ae77ca50f910314cc8004426ea38032809fd287"
+    },
+    {
+      "path": "07-native-menu.png",
+      "bytes": 43847,
+      "sha256": "be38ba7f9b967256e58805a4fdf9955890bc03a5f9b0b34db84aceda000d4350"
+    },
+    {
+      "path": "08-native-tooltip.png",
+      "bytes": 42956,
+      "sha256": "58153fefaf0ac7bb80183885134701fe7e59cea8f2d5575b808c53d98670067f"
+    },
+    {
+      "path": "09-after-overlay-unmount-fresh.txt",
+      "bytes": 8000,
+      "sha256": "79cea0bcc5e5829f527cf9c1201324528c25000b43ff3145b47b5d7c9bfdb1e1"
+    },
+    {
+      "path": "09-after-overlay-unmount-retained.txt",
+      "bytes": 8000,
+      "sha256": "36013ed75b5b37cc313cc43f2b1c4fb8ebd79bc0ee4c21b21ee316bd365ef24e"
+    },
+    {
+      "path": "09-before-overlay-unmount.txt",
+      "bytes": 7623,
+      "sha256": "f4a7f5478b91fc72a474892f5e2bc59ad11c2aaf8be5b21061b9a60ccd93b19d"
+    },
+    {
+      "path": "09-native-inspector-reopened.png",
+      "bytes": 48407,
+      "sha256": "dd9c2fdbd3decd21b7dfd2ccc2700281ac7d606090ad51053bbea9dee4aad921"
+    },
+    {
+      "path": "09-native-inspector.png",
+      "bytes": 48344,
+      "sha256": "9438b0589b46ffd6cc295611a53fd440cce160cdd46f72cd73600c020c67c43b"
+    },
+    {
+      "path": "application-error-events.json",
+      "bytes": 11,
+      "sha256": "84b1c14e68260082e3e79edff0a78f4ebf1942cfd6c593246044ec2149cbb87d"
+    },
+    {
+      "path": "application-error-query.json",
+      "bytes": 354,
+      "sha256": "c792bdde412cbd1860bd022ca5b943707f3005db83472c0151f08917bad314a9"
+    },
+    {
+      "path": "crash-capture.json",
+      "bytes": 260,
+      "sha256": "491e03142109190aa45d9efdc98a53f9facca7bf39bf1908d1025f1353a342c4"
+    },
+    {
+      "path": "drag-input-01.json",
+      "bytes": 36269,
+      "sha256": "4ae1fbe642a34eeda1baf492058c5a7f8053938375501704dd6770a2b53f46b8"
+    },
+    {
+      "path": "failure-status.json",
+      "bytes": 1427,
+      "sha256": "66907202888fa167ec42d2bfcdae4720730e837108834f67e8c7e7a399156bd0"
+    },
+    {
+      "path": "failure.png",
+      "bytes": 42421,
+      "sha256": "1e67d9cb8cdf1f6bdbffb26bf6c00a4c1f0994f565042010227d02d1eadd51a5"
+    },
+    {
+      "path": "tooltip-pointer.json",
+      "bytes": 1651,
+      "sha256": "23694fc8ab49d913ab5c7ed7547adcdf10809a77f8582cb81c4bee0aed5fb095"
+    },
+    {
+      "path": "uia-tree.txt",
+      "bytes": 8151,
+      "sha256": "ca7e81ae1e44765ab9282009372749d5ff0901384c93e57af5ee9b2a1ff1e821"
+    }
+  ]
+}

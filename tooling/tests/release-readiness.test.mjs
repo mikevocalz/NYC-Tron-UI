@@ -4,6 +4,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSy
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { runInNewContext } from "node:vm";
 import test from "node:test";
 import { CANONICAL_BASELINE_SHA256, REQUIRED_PLATFORMS, parseCanonicalBaseline } from "../verify-component-program.mjs";
 import { distributionApprovalStatement, releaseChannel, validateReleaseReadiness, verifyReleaseInventory } from "../release-readiness.mjs";
@@ -175,6 +176,10 @@ test("release retains candidate archives before readiness and requires both nati
   const archiveStep = workflow.indexOf("name: Retain the candidate archives and checksums");
   const readiness = workflow.indexOf("run: node tooling/release-readiness.mjs");
   assert.ok(archiveStep > 0 && archiveStep < readiness && readiness < workflow.indexOf("gh release create"));
+  const readinessStep = workflow.split(/^      - name: /m).find(step => step.startsWith("Require actual stable-release acceptance"));
+  assert.ok(readinessStep);
+  assert.doesNotMatch(readinessStep, /^        (?:if|continue-on-error):/m);
+  assert.doesNotMatch(workflow, /^\s+continue-on-error:/m);
   assert.match(workflow, /name: Retain the readiness result[\s\S]*?if: always\(\)/);
   for (const name of ["winui-fabric", "macos-appkit", "native-feel-preview"]) {
     const reusable = readFileSync(new URL("../../.github/workflows/" + name + ".yml", import.meta.url), "utf8");
@@ -184,4 +189,37 @@ test("release retains candidate archives before readiness and requires both nati
   assert.match(workflow, /name: macos-appkit-tested-package/);
   assert.match(workflow, /merge-tested-package\.mjs[^\n]+windows-fluent-fabric/);
   assert.match(workflow, /merge-tested-package\.mjs[^\n]+macos-appkit/);
+});
+
+test("manual candidate runs cannot publish without explicit opt-in, even when every gate passes", () => {
+  const workflow = readFileSync(new URL("../../.github/workflows/release.yml", import.meta.url), "utf8");
+  const dispatch = workflow.slice(workflow.indexOf("  workflow_dispatch:"), workflow.indexOf("\npermissions:"));
+  const input = dispatch.match(/^      publish:\n((?:        .*\n)+)/m)?.[1];
+  assert.ok(input, "manual publication must have an explicit input");
+  assert.match(input, /^        type: boolean$/m);
+  assert.match(input, /^        default: false$/m);
+
+  const publishingSteps = workflow.split(/(?=^      - (?:name|uses|run):)/m)
+    .filter(step => /\bgh release create\b/.test(step));
+  assert.equal(publishingSteps.length, 1);
+  const condition = publishingSteps[0].match(/^        if: (.+)$/m)?.[1];
+  assert.ok(condition, "the release/tag mutation step must be guarded");
+  // Evaluate the actual workflow's boolean expression. These operators have
+  // the same behavior in Actions and JavaScript for the typed inputs below;
+  // actionlint separately validates its GitHub Actions syntax and contexts.
+  for (const [event, publish, gatesPassed, expected] of [
+    ["workflow_dispatch", undefined, true, false],
+    ["workflow_dispatch", false, true, false],
+    ["workflow_dispatch", true, true, true],
+    ["workflow_dispatch", true, false, false],
+    ["workflow_dispatch", false, false, false],
+    ["push", undefined, true, true],
+    ["push", undefined, false, false],
+    ["pull_request", true, true, false],
+  ]) {
+    const actual = runInNewContext(condition, {
+      github: { event_name: event }, inputs: publish === undefined ? {} : { publish }, success: () => gatesPassed,
+    });
+    assert.equal(actual, expected, `${event}, publish=${publish}, gatesPassed=${gatesPassed}`);
+  }
 });

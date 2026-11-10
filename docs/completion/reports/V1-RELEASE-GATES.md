@@ -12,7 +12,7 @@ The latest completed desktop attempts still failed their complete native gates.
 The original failures, supported corrections and new native runs have separate
 receipts; a source or compiler pass does not substitute for interaction results.
 
-### Windows: corrected native region compiled, OS drag under validation
+### Windows: OS drag starts, rejected-drop result still failing
 
 [Windows at `988008c`](../evidence/v1-windows-988008c-drag-transition-failure/README.md)
 compiled and deployed, passed overlay-removal traversal and strict inspector
@@ -75,11 +75,24 @@ deployment and native interactions were skipped in that run.
 
 The independently reviewed one-line correction at `8effb2db` uses the pinned
 C++/WinRT composable base's `static_cast<Xaml::FrameworkElement>(*this)`
-conversion. [Its native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42906047583)
-has passed source, native library and executable compilation. Strict drag-start,
-transfer and cancellation outcomes remain required. Portable checks had not
-compiled the failed native peer implementation; the new native compiler result
-is recorded separately.
+conversion. [Its completed native run](../evidence/v1-windows-8effb2d-native-drop-outcome/README.md)
+passed source, native library and executable compilation, deployment and the
+previous overlay/edit/remount assertions. The first real OS drag-start phase
+now passed. All 24 checked pointer steps reached the owned target window, the
+button-up insertion succeeded and completed-drag count became one. The next
+strict assertion failed: the final result was `none/cancelled` instead of the
+required `none/rejected`. The app/window remained alive with 51 descendants and
+zero matched crash events; document ownership remained main and transfers zero.
+Accepted move and explicit cancellation cases were not reached.
+
+All 22 original artifact members, the complete original ZIP and the complete
+native job log are independently verified and retained. The new receipt proves
+native endpoint bounds and the actual held cursor over the owned target before
+release. It does not record target event delivery, extracted nonce or broker
+offer acceptance, so the missing rejection result's cause remains under review.
+Strict transfer and cancellation outcomes remain required. Portable checks had
+not compiled the failed e37 peer implementation; the successful 8eff native
+compiler result is recorded separately.
 
 ### AppKit: startup passed, exact native menu tracking under validation
 
@@ -599,6 +612,27 @@ run at the selected release candidate. See
 [`release.yml`](../../../.github/workflows/release.yml),
 [`release-consumer.yml`](../../../.github/workflows/release-consumer.yml), and
 [`native-controls-port.yml`](../../../.github/workflows/native-controls-port.yml).
+
+## Candidate assembly and explicit publication
+
+The common thirteen-workspace-plus-two-desktop archive path remains in the
+existing release workflow. Manual runs now have an explicit boolean `publish`
+input whose default is `false`. The sole release/tag creation step requires
+successful prior gates and either the existing tag-push event or a manual
+`publish: true` input. A manual candidate run cannot create a release or tag
+even if all acceptance and owner-review checks later pass.
+
+The source/native/archive and stable-readiness checks are unchanged. The exact
+fifteen-archive candidate uploads before readiness; an unmet stable acceptance
+or owner-review requirement still fails that check and retains its blocked
+readiness report. There is no `continue-on-error` or fabricated approval. All
+thirty focused readiness/archive regressions passed; the two workflow guard
+tests and actionlint also passed independently on the combined source.
+
+Any final candidate invocation must explicitly select the frozen
+`codex/v1-completion` revision, `version: 1.0.0` and `publish: false`. The current
+default branch has an earlier release workflow and is not the reviewed common
+archive candidate. No release workflow was dispatched for this guard change.
 
 ## Public API gate
 

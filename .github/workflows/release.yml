@@ -11,9 +11,14 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Package version to release, without the v (tag v<version> is created at the selected ref)"
+        description: "Package version to assemble, without the v (publication requires publish=true)"
         required: true
         type: string
+      publish:
+        description: "Create the tag and GitHub release after all acceptance and owner-review gates pass"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -200,6 +205,7 @@ jobs:
           retention-days: 30
 
       - name: Create release and upload tarballs
+        if: success() && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.publish == true))
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}

@@ -1,0 +1,532 @@
+﻿{
+    "schemaVersion":  1,
+    "sourceRevision":  "34729eaa4989ccd6385c0da2ba4a36f08d31794c",
+    "attempt":  1,
+    "cancelRequested":  false,
+    "status":  "dragging",
+    "observations":  [
+                         {
+                             "stage":  "before-down",
+                             "capturedAt":  "2026-11-10T21:43:44.2027802Z",
+                             "requestedCursor":  {
+                                                     "y":  339,
+                                                     "x":  202
+                                                 },
+                             "actualCursor":  {
+                                                  "y":  339,
+                                                  "x":  202
+                                              },
+                             "leftButtonDown":  false,
+                             "foregroundWindowHandle":  458890,
+                             "foregroundProcessId":  6600,
+                             "hitWindowHandle":  196998,
+                             "hitRootHandle":  458890,
+                             "hitProcessId":  6600,
+                             "endpoints":  [
+                                               {
+                                                   "name":  "NYCTronWindowsExample",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,458890",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  458890,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  true,
+                                                   "bounds":  {
+                                                                  "x":  0,
+                                                                  "y":  0,
+                                                                  "width":  552,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "NYC-Tron Document",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131602",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  131602,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  564,
+                                                                  "y":  0,
+                                                                  "width":  460,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drag shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,66144,4,85",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  72,
+                                                                  "y":  311,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drop shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131612,4,20",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  596,
+                                                                  "y":  212,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               }
+                                           ],
+                             "guiThread":  {
+                                               "flags":  0,
+                                               "capture":  0,
+                                               "threadId":  7924,
+                                               "processId":  6600,
+                                               "active":  458890,
+                                               "focus":  131458
+                                           },
+                             "hitProvider":  {
+                                                 "name":  "",
+                                                 "processId":  6600,
+                                                 "runtimeId":  "42,196998",
+                                                 "className":  "Microsoft.UI.Content.DesktopChildSiteBridge",
+                                                 "windowHandle":  196998,
+                                                 "enabled":  true,
+                                                 "offscreen":  false,
+                                                 "controlType":  "ControlType.Pane",
+                                                 "keyboardFocusable":  false,
+                                                 "keyboardFocused":  true,
+                                                 "bounds":  {
+                                                                "x":  8,
+                                                                "y":  31,
+                                                                "width":  536,
+                                                                "height":  681
+                                                            }
+                                             },
+                             "sourcePatterns":  [
+                                                    {
+                                                        "id":  10017,
+                                                        "name":  "ScrollItemPatternIdentifiers.Pattern"
+                                                    }
+                                                ],
+                             "dragPattern":  {
+                                                 "status":  "unavailable",
+                                                 "nativeCanDrag":  "not-observed"
+                                             }
+                         },
+                         {
+                             "stage":  "after-down",
+                             "capturedAt":  "2026-11-10T21:43:44.2937015Z",
+                             "requestedCursor":  {
+                                                     "y":  339,
+                                                     "x":  202
+                                                 },
+                             "actualCursor":  {
+                                                  "y":  339,
+                                                  "x":  202
+                                              },
+                             "leftButtonDown":  true,
+                             "foregroundWindowHandle":  458890,
+                             "foregroundProcessId":  6600,
+                             "hitWindowHandle":  196998,
+                             "hitRootHandle":  458890,
+                             "hitProcessId":  6600,
+                             "endpoints":  [
+                                               {
+                                                   "name":  "NYCTronWindowsExample",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,458890",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  458890,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  true,
+                                                   "bounds":  {
+                                                                  "x":  0,
+                                                                  "y":  0,
+                                                                  "width":  552,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "NYC-Tron Document",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131602",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  131602,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  564,
+                                                                  "y":  0,
+                                                                  "width":  460,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drag shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,66144,4,85",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  72,
+                                                                  "y":  311,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drop shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131612,4,20",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  596,
+                                                                  "y":  212,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               }
+                                           ],
+                             "guiThread":  {
+                                               "flags":  0,
+                                               "capture":  0,
+                                               "threadId":  7924,
+                                               "processId":  6600,
+                                               "active":  458890,
+                                               "focus":  131458
+                                           },
+                             "hitProvider":  {
+                                                 "name":  "",
+                                                 "processId":  6600,
+                                                 "runtimeId":  "42,196998",
+                                                 "className":  "Microsoft.UI.Content.DesktopChildSiteBridge",
+                                                 "windowHandle":  196998,
+                                                 "enabled":  true,
+                                                 "offscreen":  false,
+                                                 "controlType":  "ControlType.Pane",
+                                                 "keyboardFocusable":  false,
+                                                 "keyboardFocused":  true,
+                                                 "bounds":  {
+                                                                "x":  8,
+                                                                "y":  31,
+                                                                "width":  536,
+                                                                "height":  681
+                                                            }
+                                             },
+                             "sourcePatterns":  [
+                                                    {
+                                                        "id":  10017,
+                                                        "name":  "ScrollItemPatternIdentifiers.Pattern"
+                                                    }
+                                                ],
+                             "dragPattern":  {
+                                                 "status":  "unavailable",
+                                                 "nativeCanDrag":  "not-observed"
+                                             }
+                         },
+                         {
+                             "stage":  "threshold",
+                             "capturedAt":  "2026-11-10T21:43:44.3887919Z",
+                             "requestedCursor":  {
+                                                     "y":  339,
+                                                     "x":  226
+                                                 },
+                             "actualCursor":  {
+                                                  "y":  339,
+                                                  "x":  226
+                                              },
+                             "leftButtonDown":  true,
+                             "foregroundWindowHandle":  458890,
+                             "foregroundProcessId":  6600,
+                             "hitWindowHandle":  196998,
+                             "hitRootHandle":  458890,
+                             "hitProcessId":  6600,
+                             "endpoints":  [
+                                               {
+                                                   "name":  "NYCTronWindowsExample",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,458890",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  458890,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  true,
+                                                   "bounds":  {
+                                                                  "x":  0,
+                                                                  "y":  0,
+                                                                  "width":  552,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "NYC-Tron Document",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131602",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  131602,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  564,
+                                                                  "y":  0,
+                                                                  "width":  460,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drag shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,66144,4,85",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  72,
+                                                                  "y":  311,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drop shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131612,4,20",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  596,
+                                                                  "y":  212,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               }
+                                           ],
+                             "guiThread":  {
+                                               "flags":  0,
+                                               "capture":  0,
+                                               "threadId":  7924,
+                                               "processId":  6600,
+                                               "active":  458890,
+                                               "focus":  131458
+                                           },
+                             "hitProvider":  {
+                                                 "name":  "",
+                                                 "processId":  6600,
+                                                 "runtimeId":  "42,196998",
+                                                 "className":  "Microsoft.UI.Content.DesktopChildSiteBridge",
+                                                 "windowHandle":  196998,
+                                                 "enabled":  true,
+                                                 "offscreen":  false,
+                                                 "controlType":  "ControlType.Pane",
+                                                 "keyboardFocusable":  false,
+                                                 "keyboardFocused":  true,
+                                                 "bounds":  {
+                                                                "x":  8,
+                                                                "y":  31,
+                                                                "width":  536,
+                                                                "height":  681
+                                                            }
+                                             },
+                             "sourcePatterns":  [
+                                                    {
+                                                        "id":  10017,
+                                                        "name":  "ScrollItemPatternIdentifiers.Pattern"
+                                                    }
+                                                ],
+                             "dragPattern":  {
+                                                 "status":  "unavailable",
+                                                 "nativeCanDrag":  "not-observed"
+                                             }
+                         },
+                         {
+                             "stage":  "over-target",
+                             "capturedAt":  "2026-11-10T21:43:45.1938435Z",
+                             "requestedCursor":  {
+                                                     "y":  240,
+                                                     "x":  726
+                                                 },
+                             "actualCursor":  {
+                                                  "y":  240,
+                                                  "x":  726
+                                              },
+                             "leftButtonDown":  true,
+                             "foregroundWindowHandle":  458890,
+                             "foregroundProcessId":  6600,
+                             "hitWindowHandle":  131608,
+                             "hitRootHandle":  131602,
+                             "hitProcessId":  6600,
+                             "endpoints":  [
+                                               {
+                                                   "name":  "NYCTronWindowsExample",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,458890",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  458890,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  true,
+                                                   "bounds":  {
+                                                                  "x":  0,
+                                                                  "y":  0,
+                                                                  "width":  552,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "NYC-Tron Document",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131602",
+                                                   "className":  "Microsoft.UI.Windowing.Window",
+                                                   "windowHandle":  131602,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Window",
+                                                   "keyboardFocusable":  false,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  564,
+                                                                  "y":  0,
+                                                                  "width":  460,
+                                                                  "height":  720
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drag shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,66144,4,85",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  72,
+                                                                  "y":  311,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               },
+                                               {
+                                                   "name":  "Drop shared native draft",
+                                                   "processId":  6600,
+                                                   "runtimeId":  "42,131612,4,20",
+                                                   "className":  "NYCTronDragRegion",
+                                                   "windowHandle":  0,
+                                                   "enabled":  true,
+                                                   "offscreen":  false,
+                                                   "controlType":  "ControlType.Custom",
+                                                   "keyboardFocusable":  true,
+                                                   "keyboardFocused":  false,
+                                                   "bounds":  {
+                                                                  "x":  596,
+                                                                  "y":  212,
+                                                                  "width":  260,
+                                                                  "height":  56
+                                                              }
+                                               }
+                                           ],
+                             "guiThread":  {
+                                               "flags":  0,
+                                               "capture":  0,
+                                               "threadId":  7924,
+                                               "processId":  6600,
+                                               "active":  458890,
+                                               "focus":  66144
+                                           },
+                             "hitProvider":  {
+                                                 "name":  "",
+                                                 "processId":  6600,
+                                                 "runtimeId":  "42,131608",
+                                                 "className":  "Microsoft.UI.Content.DesktopChildSiteBridge",
+                                                 "windowHandle":  131608,
+                                                 "enabled":  true,
+                                                 "offscreen":  false,
+                                                 "controlType":  "ControlType.Pane",
+                                                 "keyboardFocusable":  false,
+                                                 "keyboardFocused":  false,
+                                                 "bounds":  {
+                                                                "x":  572,
+                                                                "y":  31,
+                                                                "width":  444,
+                                                                "height":  681
+                                                            }
+                                             },
+                             "sourcePatterns":  [
+                                                    {
+                                                        "id":  10017,
+                                                        "name":  "ScrollItemPatternIdentifiers.Pattern"
+                                                    }
+                                                ],
+                             "dragPattern":  {
+                                                 "status":  "unavailable",
+                                                 "nativeCanDrag":  "not-observed"
+                                             }
+                         }
+                     ],
+    "foregroundRequestAccepted":  true,
+    "stability":  {
+                      "observations":  3,
+                      "intervalMs":  100,
+                      "requiredConsecutive":  3
+                  },
+    "systemDragMetrics":  {
+                              "y":  4,
+                              "x":  4
+                          },
+    "buttonUp":  "inserted"
+}
