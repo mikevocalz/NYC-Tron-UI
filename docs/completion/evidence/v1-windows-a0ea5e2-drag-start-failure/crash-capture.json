@@ -1,0 +1,13 @@
+﻿{
+    "dumps":  [
+
+              ],
+    "processId":  7052,
+    "enabled":  true,
+    "setupError":  null,
+    "restored":  true,
+    "dumpType":  1,
+    "dumpCount":  1,
+    "restoreError":  null,
+    "appName":  "NYCTronWindowsExample.exe"
+}

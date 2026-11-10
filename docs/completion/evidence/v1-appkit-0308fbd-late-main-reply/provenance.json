@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T21:21:29.498389+00:00",
+  "runId": 42898902137,
+  "sourceJob": 130119282324,
+  "nativeJob": 130120593681,
+  "sourceTests": {
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "nativeProbe": "passed on macOS ARM64",
+  "nativeCompile": "passed",
+  "nativeApplicationAcceptance": "failed initial root wait before activation",
+  "nativePassedPackageProduced": false,
+  "artifact": {
+    "id": 13802619126,
+    "bytes": 837416,
+    "sha256": "d767b238933e0a2445672a24abab21ff776a77c2465ee53bbbe61579a9e580c5",
+    "originalMembersIndependentlyVerified": 42,
+    "retainedOriginal": "original-native-artifact.zip"
+  },
+  "compilerLog": {
+    "path": "nyc-tron-appkit-consumer/.spark/logs/1794344092549-960de564-7b49-4bfe-8dd9-c1bc9be6c000-xcodebuild.log",
+    "bytes": 12299645,
+    "sha256": "f1f0950a6c7961899632a1cb5f68391f50f270978ae87e29519f1f35a69ad6f2",
+    "retainedInOriginalZip": true,
+    "retainedPath": null
+  },
+  "originalSourceLog": {
+    "bytes": 19411,
+    "sha256": "3df05fb9d49a6f4abbecaf61ca96251007073c84cbfc0e16aa8438e533ac18cb"
+  },
+  "probeVerification": {
+    "sourceInputsMatchExactCheckout": true,
+    "beforeAfterAndExtractedFunctionHashesVerified": true,
+    "traceAndProbeSourceHashesVerified": true,
+    "fixtureConstructed": true,
+    "finiteResponse": "both preserved 94 bytes",
+    "sixInvalidOriginalCases": "exception escaped; zero bytes",
+    "sixInvalidPatchedCases": "structured E_SERIALIZATION failure",
+    "tracePrivacy": "passed",
+    "closedPeer": "explicit failure",
+    "executableHash": "recorded by native wrapper; executable not included in original artifact"
+  },
+  "nativeObservation": {
+    "pid": 31896,
+    "nativeWaitMilliseconds": 20000,
+    "clientWaitMilliseconds": 35000,
+    "clientRequest": "2026-11-10T21:07:00.993Z",
+    "clientTimeout": "2026-11-10T21:07:35.998Z",
+    "requestReceivedUnix": 1794344820.993462,
+    "mainDispatchedUnix": 1794344820.9938579,
+    "mainRepliedUnix": 1794344856.275315,
+    "mainReplyDelaySeconds": 35.281457,
+    "serializedBytes": 90,
+    "sentBytes": 91,
+    "serializationFailure": false,
+    "lateReplyPayload": "not retained; byte length does not establish success or error fields",
+    "sampleThreadGroups": 27,
+    "processPresentBeforeAndAfterSample": true,
+    "activationReached": false,
+    "nativeInteractionChecksCompleted": 0
+  },
+  "limits": [
+    "This run localizes the delay before reply, not in JSON serialization or sending.",
+    "The sample begins after the client timeout and cannot establish the complete preceding 35-second execution state.",
+    "The controlled probe observed exceptions for invalid inputs; no case demonstrated silent nil-return output.",
+    "Neither the probe nor this failed app run establishes the historical c0 timeout cause, native gesture permission or platform acceptance."
+  ]
+}

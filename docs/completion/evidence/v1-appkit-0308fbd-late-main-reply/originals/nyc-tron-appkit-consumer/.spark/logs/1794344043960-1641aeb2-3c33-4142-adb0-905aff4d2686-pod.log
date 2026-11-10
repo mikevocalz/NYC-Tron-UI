@@ -1,0 +1,372 @@
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+[Expo] Enabling modular headers for pod React-RCTAppDelegate
+[Expo] Enabling modular headers for pod React-RCTFabric
+[Expo] Enabling modular headers for pod ReactAppDependencyProvider
+[Expo] Enabling modular headers for pod React-Core
+[Expo] Enabling modular headers for pod ReactCodegen
+[Expo] Enabling modular headers for pod RCTRequired
+[Expo] Enabling modular headers for pod RCTTypeSafety
+[Expo] Enabling modular headers for pod ReactCommon
+[Expo] Enabling modular headers for pod React-NativeModulesApple
+[Expo] Enabling modular headers for pod Yoga
+[Expo] Enabling modular headers for pod React-Fabric
+[Expo] Enabling modular headers for pod React-graphics
+[Expo] Enabling modular headers for pod React-utils
+[Expo] Enabling modular headers for pod React-featureflags
+[Expo] Enabling modular headers for pod React-debug
+[Expo] Enabling modular headers for pod React-ImageManager
+[Expo] Enabling modular headers for pod React-rendererdebug
+[Expo] Enabling modular headers for pod React-jsi
+[Expo] Enabling modular headers for pod React-renderercss
+[Expo] Enabling modular headers for pod hermes-engine
+[Expo] Enabling modular headers for pod glog
+[Expo] Enabling modular headers for pod boost
+[Expo] Enabling modular headers for pod DoubleConversion
+[Expo] Enabling modular headers for pod fast_float
+[Expo] Enabling modular headers for pod fmt
+[Expo] Enabling modular headers for pod RCT-Folly
+[Expo] Enabling modular headers for pod SocketRocket
+[NitroModules] 🔥 Your app is boosted by nitro modules!
+[NitroModules] Found react-native 0.83.10 (83) in /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/react-native!
+Found 11 modules for target `NYCTronAppKitReference-macOS`
+link_native_modules! {:ios_packages=>[{:configurations=>[], :name=>"@legendapp/spark-context-menu", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-context-menu", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-context-menu", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-context-menu/RNContextMenu.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@legendapp/spark-desktop-app", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app/RNDesktopApp.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@legendapp/spark-desktop-windows", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-windows", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-windows", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-windows/RNDesktopWindows.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@legendapp/spark-drag-drop", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-drag-drop", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-drag-drop", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-drag-drop/RNDesktopDrag.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@legendapp/spark-native-menu", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-native-menu", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-native-menu", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-native-menu/RNNativeMenu.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@legendapp/spark-system", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-system", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-system", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-system/RNDesktopSystem.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@legendapp/spark-ui", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-ui", :path=>"../node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-ui", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-ui/RNSparkUI.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@nyc-tron/appkit-acceptance-driver", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-driver", :path=>"../acceptance-driver", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-driver/NYCTronAcceptanceDriver.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"expo", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo", :path=>"../node_modules/expo", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo/Expo.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"@nyc-tron/macos-appkit", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit", :path=>"../node_modules/@nyc-tron/macos-appkit", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/NYCTronAppKit.podspec", :script_phases=>[]}, {:configurations=>[], :name=>"react-native-nitro-modules", :root=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/react-native-nitro-modules", :path=>"../node_modules/react-native-nitro-modules", :podspec_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/react-native-nitro-modules/NitroModules.podspec", :script_phases=>[]}], :ios_project_root_path=>"/Users/runner/work/_temp/nyc-tron-appkit-consumer/ios", :react_native_path=>"../node_modules/react-native"}
+[NitroModules] 🔥 Your app is boosted by nitro modules!
+get_default_flags is deprecated. Please remove the keys from the `use_react_native!` function
+if you are using the default already and pass the value you need in case you don't want the default
+[NitroModules] Found react-native 0.83.10 (83) in /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/react-native!
+Auto-linking React Native modules for target `NYCTronAppKitReference-macOS`: NYCTronAcceptanceDriver, NYCTronAppKit, NitroModules, RNContextMenu, RNDesktopApp, RNDesktopDrag, RNDesktopSystem, RNDesktopWindows, RNNativeMenu, and RNSparkUI
+Framework build type is static library
+[ReactNativeDependencies] Setting up ReactNativeDependencies...
+[ReactNativeDependencies] Building from source: true
+[ReactNativeDependencies] Source: 
+[ReactNativeCore] Setting up ReactNativeCore...
+[ReactNativeCore] Building from source: true
+Configuring the target with the New Architecture
+[36m[1m[Codegen][0m Analyzing /Users/runner/work/_temp/nyc-tron-appkit-consumer/package.json[0m
+[36m[1m[Codegen][0m Could not find generated autolinking output at: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/autolinking/autolinking.json[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the app.[0m
+[36m[1m[Codegen][0m [33mThe "codegenConfig" field is not defined in package.json. Assuming there is nothing to generate at the app level.[0m
+[36m[1m[Codegen][0m Could not find generated autolinking output at: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/autolinking/autolinking.json[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the project dependencies.[0m
+[36m[1m[Codegen][0m Found react-native[0m
+[36m[1m[Codegen][0m CodegenConfig Deprecated Setup for react-native.
+    The configuration file still contains the codegen in the libraries array.
+    If possible, replace it with a single object.
+  [0m
+[36m[1m[Codegen][0m BEFORE:
+    {
+      // ...
+      "codegenConfig": {
+        "libraries": [
+          {
+            "name": "libName1",
+            "type": "all|components|modules",
+            "jsSrcsRoot": "libName1/js"
+          },
+          {
+            "name": "libName2",
+            "type": "all|components|modules",
+            "jsSrcsRoot": "libName2/src"
+          }
+        ]
+      }
+    }
+
+    AFTER:
+    {
+      "codegenConfig": {
+        "name": "libraries",
+        "type": "all",
+        "jsSrcsRoot": "."
+      }
+    }
+  [0m
+[36m[1m[Codegen][0m Found react-native-macos[0m
+[36m[1m[Codegen][0m Found @nyc-tron/macos-appkit[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in react-native.config.js[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-context-menu[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-desktop-app[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-desktop-windows[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-drag-drop[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-native-menu[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-system[0m
+[36m[1m[Codegen][0m Found @legendapp/spark-ui[0m
+[36m[1m[Codegen][0m Found @nyc-tron/macos-appkit[0m
+[36m[1m[Codegen][0m Found expo-desktop-modules-core[0m
+[36m[1m[Codegen][0m Found expo-desktop-stubs[0m
+[36m[1m[Codegen][0m Found react-native[0m
+[36m[1m[Codegen][0m CodegenConfig Deprecated Setup for react-native.
+    The configuration file still contains the codegen in the libraries array.
+    If possible, replace it with a single object.
+  [0m
+[36m[1m[Codegen][0m BEFORE:
+    {
+      // ...
+      "codegenConfig": {
+        "libraries": [
+          {
+            "name": "libName1",
+            "type": "all|components|modules",
+            "jsSrcsRoot": "libName1/js"
+          },
+          {
+            "name": "libName2",
+            "type": "all|components|modules",
+            "jsSrcsRoot": "libName2/src"
+          }
+        ]
+      }
+    }
+
+    AFTER:
+    {
+      "codegenConfig": {
+        "name": "libraries",
+        "type": "all",
+        "jsSrcsRoot": "."
+      }
+    }
+  [0m
+[36m[1m[Codegen][0m Found react-native-macos[0m
+[36m[1m[Codegen][0m Found react-native-nitro-modules[0m
+[36m[1m[Codegen][0m Processing FBReactNativeSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Processing FBReactNativeSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Processing NYCTronAppKitSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for NYCTronAppKitSpec[0m
+[36m[1m[Codegen][0m Processing RNContextMenuSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for RNContextMenuSpec[0m
+[36m[1m[Codegen][0m Processing RNDesktopAppSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for RNDesktopAppSpec[0m
+[36m[1m[Codegen][0m Processing RNDesktopWindowsSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for RNDesktopWindowsSpec[0m
+[36m[1m[Codegen][0m Processing RNDesktopDragSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for RNDesktopDragSpec[0m
+[36m[1m[Codegen][0m Processing RNNativeMenuSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos for RNNativeMenuSpec[0m
+[36m[1m[Codegen][0m Processing RNDesktopSystemSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for RNDesktopSystemSpec[0m
+[36m[1m[Codegen][0m Processing RNSparkUISpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for RNSparkUISpec[0m
+[36m[1m[Codegen][0m Processing NYCTronAppKitSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: macos for NYCTronAppKitSpec[0m
+[36m[1m[Codegen][0m Processing ExpoDesktopModulesCoreSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Processing ExpoDesktopStubsSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Processing FBReactNativeSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Processing FBReactNativeSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Processing NitroModulesSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m [33m[Codegen - FBReactNativeSpec] Skipping iOS code generation for FBReactNativeSpec as it has been generated already.[0m
+[36m[1m[Codegen][0m [33m[Codegen - FBReactNativeSpec] Skipping iOS code generation for FBReactNativeSpec as it has been generated already.[0m
+[36m[1m[Codegen][0m Generating Native Code for NYCTronAppKitSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNContextMenuSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNDesktopAppSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNDesktopWindowsSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNDesktopDragSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNNativeMenuSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNDesktopSystemSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for RNSparkUISpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for NYCTronAppKitSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for ExpoDesktopModulesCoreSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for ExpoDesktopStubsSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m [33m[Codegen - FBReactNativeSpec] Skipping iOS code generation for FBReactNativeSpec as it has been generated already.[0m
+[36m[1m[Codegen][0m [33m[Codegen - FBReactNativeSpec] Skipping iOS code generation for FBReactNativeSpec as it has been generated already.[0m
+[36m[1m[Codegen][0m Generating Native Code for NitroModulesSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generating RCTModulesProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen/RCTModuleProviders.h[0m
+[36m[1m[Codegen][0m Generating RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen/RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generating RCTAppDependencyProvider[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.mm[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactAppDependencyProvider/ReactAppDependencyProvider.podspec[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/ReactCodegen/ReactCodegen.podspec[0m
+[36m[1m[Codegen][0m Generating Package.swift[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/build/generated/ios/Package.swift[0m
+[36m[1m[Codegen][0m [33mDone.[0m
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native-macos/third-party-podspecs/DoubleConversion.podspec`
+[NitroModules] 🔥 Your app is boosted by nitro modules!
+[NitroModules] Found react-native 0.83.10 (83) in /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/react-native!
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native-macos/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native-macos/third-party-podspecs/boost.podspec`
+Fetching podspec for `fast_float` from `../node_modules/react-native-macos/third-party-podspecs/fast_float.podspec`
+Fetching podspec for `fmt` from `../node_modules/react-native-macos/third-party-podspecs/fmt.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native-macos/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native-macos/sdks/hermes-engine/hermes-engine.podspec`
+[Hermes] Using release tarball from URL: https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/0.14.1/hermes-ios-0.14.1-hermes-ios-debug.tar.gz
+[Hermes] Cache miss: downloading hermes-ios-0.14.1-debug.tar.gz from https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/0.14.1/hermes-ios-0.14.1-hermes-ios-debug.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   167    0   167    0     0   3564      0 --:--:-- --:--:-- --:--:--  3630
+100 29.0M  100 29.0M    0     0  82.4M      0 --:--:-- --:--:-- --:--:-- 82.4M
+[Hermes] Saved hermes-ios-0.14.1-debug.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)
+[Hermes] Cache miss: downloading hermes-ios-0.14.1-release.tar.gz from https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/0.14.1/hermes-ios-0.14.1-hermes-ios-release.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   167    0   167    0     0   3820      0 --:--:-- --:--:-- --:--:--  3883
+  0 20.7M    0  7578    0     0  70326      0  0:05:09 --:--:--  0:05:09 70326100 20.7M  100 20.7M    0     0  72.5M      0 --:--:-- --:--:-- --:--:--  116M
+[Hermes] Saved hermes-ios-0.14.1-release.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)
+Adding spec repo `trunk` with CDN `https://cdn.cocoapods.org/`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXConstants (55.0.17)
+Installing Expo (55.0.32)
+Installing ExpoAsset (55.0.20)
+Installing ExpoFileSystem (55.0.26)
+Installing ExpoFont (55.0.8)
+Installing ExpoKeepAwake (55.0.8)
+Installing ExpoLogBox (55.0.13)
+Installing ExpoModulesCore (55.0.27)
+Installing ExpoModulesJSI (55.0.27)
+Installing FBLazyVector (0.83.0)
+Installing NYCTronAcceptanceDriver (1.0.0)
+Installing NYCTronAppKit (1.0.0)
+Installing NitroModules (0.37.0)
+Installing RCT-Folly (2024.11.18.00)
+Installing RCTDeprecation (0.83.0)
+Installing RCTRequired (0.83.0)
+Installing RCTSwiftUI (0.83.0)
+Installing RCTSwiftUIWrapper (0.83.0)
+Installing RCTTypeSafety (0.83.0)
+Installing RNContextMenu (0.0.2)
+Installing RNDesktopApp (0.0.2)
+Installing RNDesktopDrag (0.0.2)
+Installing RNDesktopSystem (0.0.2)
+Installing RNDesktopWindows (0.0.2)
+Installing RNNativeMenu (0.0.2)
+Installing RNSparkUI (0.0.2)
+Installing React (0.83.0)
+Installing React-Core (0.83.0)
+Installing React-CoreModules (0.83.0)
+Installing React-Fabric (0.83.0)
+Installing React-FabricComponents (0.83.0)
+Installing React-FabricImage (0.83.0)
+Installing React-ImageManager (0.83.0)
+Installing React-Mapbuffer (0.83.0)
+Installing React-NativeModulesApple (0.83.0)
+Installing React-RCTActionSheet (0.83.0)
+Installing React-RCTAnimation (0.83.0)
+Installing React-RCTAppDelegate (0.83.0)
+Installing React-RCTBlob (0.83.0)
+Installing React-RCTFBReactNativeSpec (0.83.0)
+Installing React-RCTFabric (0.83.0)
+Installing React-RCTImage (0.83.0)
+Installing React-RCTLinking (0.83.0)
+Installing React-RCTNetwork (0.83.0)
+Installing React-RCTRuntime (0.83.0)
+Installing React-RCTSettings (0.83.0)
+Installing React-RCTText (0.83.0)
+Installing React-RCTUIKit (0.83.0)
+Installing React-RCTVibration (0.83.0)
+Installing React-RuntimeApple (0.83.0)
+Installing React-RuntimeCore (0.83.0)
+Installing React-RuntimeHermes (0.83.0)
+Installing React-callinvoker (0.83.0)
+Installing React-cxxreact (0.83.0)
+Installing React-debug (0.83.0)
+Installing React-defaultsnativemodule (0.83.0)
+Installing React-domnativemodule (0.83.0)
+Installing React-featureflags (0.83.0)
+Installing React-featureflagsnativemodule (0.83.0)
+Installing React-graphics (0.83.0)
+Installing React-hermes (0.83.0)
+Installing React-idlecallbacksnativemodule (0.83.0)
+Installing React-intersectionobservernativemodule (0.83.0)
+Installing React-jserrorhandler (0.83.0)
+Installing React-jsi (0.83.0)
+Installing React-jsiexecutor (0.83.0)
+Installing React-jsinspector (0.83.0)
+Installing React-jsinspectorcdp (0.83.0)
+Installing React-jsinspectornetwork (0.83.0)
+Installing React-jsinspectortracing (0.83.0)
+Installing React-jsitooling (0.83.0)
+Installing React-jsitracing (0.83.0)
+Installing React-logger (0.83.0)
+Installing React-microtasksnativemodule (0.83.0)
+Installing React-mutationobservernativemodule (0.83.0)
+Installing React-networking (0.83.0)
+Installing React-oscompat (0.83.0)
+Installing React-perflogger (0.83.0)
+Installing React-performancecdpmetrics (0.83.0)
+Installing React-performancetimeline (0.83.0)
+Installing React-rendererconsistency (0.83.0)
+Installing React-renderercss (0.83.0)
+Installing React-rendererdebug (0.83.0)
+Installing React-runtimeexecutor (0.83.0)
+Installing React-runtimescheduler (0.83.0)
+Installing React-timing (0.83.0)
+Installing React-utils (0.83.0)
+Installing React-webperformancenativemodule (0.83.0)
+Installing ReactAppDependencyProvider (0.83.0)
+Installing ReactCodegen (0.83.0)
+Installing ReactCommon (0.83.0)
+Installing SocketRocket (0.7.1)
+Installing Yoga (0.0.0)
+Installing boost (1.84.0)
+Installing fast_float (8.0.0)
+Installing fmt (12.1.0)
+Installing glog (0.3.5)
+Installing hermes-engine (0.14.1)
+Generating Pods project
+Setting USE_HERMES build settings
+Setting REACT_NATIVE_PATH build settings
+Setting SWIFT_ACTIVE_COMPILATION_CONDITIONS build settings
+[Ccache]: Removing Ccache from CC, LD, CXX & LDPLUSPLUS build settings
+[SPM] Cleaning old SPM dependencies from Pods project
+[SPM] Adding SPM dependencies to Pods project
+[Privacy Manifest Aggregation] No existing PrivacyInfo.xcprivacy file found, creating a new one.
+[Privacy Manifest Aggregation] Reading .xcprivacy files to aggregate all used Required Reason APIs.
+file_root: #<Xcodeproj::Project> path:`/Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/NYCTronAppKitReference.xcodeproj` UUID:`83CBB9F71A601CBA00E9B192`
+Setting CLANG_CXX_LANGUAGE_STANDARD to c++20 on /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/NYCTronAppKitReference.xcodeproj
+
+==================== DEPRECATION NOTICE =====================
+Calling `pod install` directly is deprecated in React Native
+because we are moving away from Cocoapods toward alternative
+solutions to build the project.
+* If you are using Expo, please run:
+`npx expo run:ios`
+* If you are using the Community CLI, please run:
+`yarn ios`
+=============================================================
+
+Pod install took 46 [s] to run
+Integrating client project
+
+[!] Please close any current Xcode sessions and use `NYCTronAppKitReference.xcworkspace` for this project from now on.
+[Expo] Installing the build script for target NYCTronAppKitReference-macOS
+Pod installation complete! There are 100 dependencies from the Podfile and 99 total pods installed.
+[Expo] Adding '[Expo Autolinking] Run Codegen with autolinking' build phase to ReactCodegen
+
+[!] hermes-engine has added 1 script phase. Please inspect before executing a build. See `https://guides.cocoapods.org/syntax/podspec.html#script_phases` for more information.

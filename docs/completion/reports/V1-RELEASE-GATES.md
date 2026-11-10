@@ -49,11 +49,29 @@ are committed. It refreshes only the retained live ChildSiteLink translation,
 replacing the old own-origin contribution while preserving the current ancestor
 and scroll offset and accounting for scale changes. No SDK source, driver
 coordinate or native assertion changes. The focused portable C++17 regression
-and all 49 existing isolated checks passed independently; the
-[new native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42898545855)
-must establish actual geometry and OS input.
+and all 49 existing isolated checks passed independently. Its
+[completed native run](../evidence/v1-windows-a0ea5e2-drag-start-failure/README.md)
+compiled and deployed, then again failed the first drag-start phase. The final
+native bounds now match the button's painted position, closing the observed
+45-pixel discrepancy in that final state. Initial pointer coordinates/readiness
+and direct WinUI DragStarting delivery were not recorded; the failed label
+reflects JS state.
 
-### AppKit: live process, missing initial reply
+Further review of the exact WinUI source found a separate reachable blocker:
+[ButtonBase handles the press](https://github.com/microsoft/microsoft-ui-xaml/blob/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/dxaml/lib/ButtonBase_Partial.cpp)
+before the [automatic drag helper's ordinary handler](https://github.com/microsoft/microsoft-ui-xaml/blob/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/dxaml/lib/AutomaticDragHelper.cpp).
+The reviewed follow-up at `e37b1873` uses a real ContentControl drag region with
+an explicit native Custom/NYCTronDragRegion peer, inherited name/enabled/focus
+semantics and a complete hit-test background. WinUI still owns recognition,
+DragStarting, DropCompleted and the existing data/broker lifecycle. The driver
+now requires stable owned native endpoints, checked ordered SendInput moves
+and retained pointer/window/provider observations. Seven portable mocked-provider
+regressions and all 49 isolated checks passed; actual Win32 input is separate.
+The [new native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42903675797)
+has passed source checks and is compiling the candidate. Its strict drag-start,
+transfer and cancellation outcomes remain required.
+
+### AppKit: initial reply arrives after the client deadline
 
 [AppKit at `c0f6601`](../evidence/v1-appkit-c0f6601-live-mount-timeout/README.md)
 passed eight source checks, installed-consumer preparation/API checks and native
@@ -80,11 +98,31 @@ consumer. It records bounded request/execution/reply/serialization/send stages
 and returns explicit failure for invalid or throwing serialization. Original
 and patched source, license and input hashes are retained. Three filesystem
 guards, JavaScript syntax and aggregate workflow lint passed. The
-[new Mac run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42898902137)
-first executes a real Foundation/socketpair probe against the actual original
-and patched sender functions; the complete app/native gesture gate remains
-separate and unchanged. Local source checks do not establish either native
-probe success or the cause of c0's unanswered request.
+[completed Mac run](../evidence/v1-appkit-0308fbd-late-main-reply/README.md)
+passed eleven source checks, the real Foundation/socketpair probe and native
+compilation, then again failed the initial root wait before activation. Its
+trace places the delay before reply: the main reply arrived about 35.281 seconds
+after dispatch, after the client deadline, then serialized and sent successfully.
+No serialization failure or replacement occurred. The late payload was discarded;
+its byte length cannot establish its success/error fields. All 42 original files,
+complete original ZIP, source-job log and exact patch/probe inputs are retained
+and independently verified.
+
+On the actual Mac probe, both senders preserved the finite response. All six
+invalid original inputs threw without sending bytes; each patched input produced
+an explicit failure. No probe case demonstrated silent nil-return output. These
+controlled results do not establish the earlier c0 timeout's cause. The live
+sample has 27 thread groups but begins after timeout, so it does not describe
+the complete preceding execution state.
+
+The verifier-only follow-up at `3b1d6745` moves its existing strict owned-window
+show/activation before the unchanged root mount and JS-ready waits. The pinned
+host creates its exact main window and native placeholder before React, and the
+command/inspection path does not require Fabric mount. This corrects the
+interactive test's startup ordering without assigning a historical cause.
+[The next native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42903677542)
+has passed all eleven source checks; exact owner, activation, mount and actual
+gesture assertions still require their completed native result.
 
 ### Actual gestures remain mandatory
 

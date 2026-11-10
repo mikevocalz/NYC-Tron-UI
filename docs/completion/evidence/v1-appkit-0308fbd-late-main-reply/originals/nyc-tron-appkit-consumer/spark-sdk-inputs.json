@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "version": "0.0.2",
+  "upstreamRevision": "d3a7eead32459f8f6baf29ef868ea732c5081e47",
+  "packages": {
+    "@react-native-runtimes/core": {
+      "url": "https://github.com/LegendApp/legend-spark/releases/download/v0.0.2/runtimes-4df45cb5ea74.tgz",
+      "size": 54050,
+      "sha256": "3a04e0455ac44b0bc11cfa315943ad84509c445111a2b3974ca85c8ed489827c"
+    },
+    "react-native-nitro-modules": {
+      "url": "https://github.com/LegendApp/legend-spark/releases/download/v0.0.2/react-native-nitro-modules-0.37.0-5df8774796c4.tgz",
+      "size": 145600,
+      "sha256": "5df8774796c48ed54d238f3fada01b64d710b14077983c37f639607eb805e066"
+    },
+    "@op-engineering/op-sqlite": {
+      "url": "https://github.com/LegendApp/legend-spark/releases/download/v0.0.2/op-engineering-op-sqlite-18.2.1-a14b99ecf491.tgz",
+      "size": 5847607,
+      "sha256": "a14b99ecf4911b55f586b2c5d1f58ac48b0a9d8fe4b84fa6edef1a167630646b"
+    },
+    "react-native-webview": {
+      "url": "https://github.com/LegendApp/legend-spark/releases/download/v0.0.2/react-native-webview-16.0.0-333e421ad38b.tgz",
+      "size": 116285,
+      "sha256": "333e421ad38b0da2b1dc7b3306de019f257e31bfd6cdb0272d97b1bb2b129354"
+    },
+    "expo-audio": {
+      "url": "https://github.com/LegendApp/legend-spark/releases/download/v0.0.2/expo-audio-55.0.18-a8d70b5b39bd.tgz",
+      "size": 610139,
+      "sha256": "a8d70b5b39bd3b69d95528011f14aa93a0fdf7ff1e6c89e0f7489329230be060"
+    }
+  }
+}

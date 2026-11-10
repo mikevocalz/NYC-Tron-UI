@@ -166,8 +166,13 @@ try {
   // Authentication runs on Spark's socket thread; ping proves the native main
   // queue can answer before waiting for the first React component to mount.
   await driver.request('ping');
-  await mounted('root-main'); await status('Native workspace ready');
+  // The pinned host creates spark.main before starting React. Opt into the
+  // visible, active owner required by this interactive acceptance suite before
+  // waiting for its React content; Spark's stock driver leaves it hidden with
+  // prohibited activation for offscreen capture. show() still requires this
+  // exact process/bundle and observed key/active/frontmost state.
   await show();
+  await mounted('root-main'); await status('Native workspace ready');
   const native = await inspect();
   assert.equal(native.hasSplitView, true); assert.equal(native.hasTableView, true);
   assert.equal(native.hasButton, true); assert.equal(native.hasTextField, true);

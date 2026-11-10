@@ -1,0 +1,122 @@
+{
+  "status" : "passed",
+  "schemaVersion" : 1,
+  "cases" : [
+    {
+      "original" : {
+        "outcome" : "finite-response-preserved",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 94
+      },
+      "case" : "finite-frame",
+      "patched" : {
+        "outcome" : "finite-response-preserved",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 94
+      }
+    },
+    {
+      "original" : {
+        "outcome" : "exception-escaped",
+        "returned" : false,
+        "threw" : true,
+        "bytes" : 0
+      },
+      "case" : "nan-frame",
+      "patched" : {
+        "outcome" : "structured-failure",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 115
+      }
+    },
+    {
+      "original" : {
+        "outcome" : "exception-escaped",
+        "returned" : false,
+        "threw" : true,
+        "bytes" : 0
+      },
+      "case" : "positive-infinite-frame",
+      "patched" : {
+        "outcome" : "structured-failure",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 115
+      }
+    },
+    {
+      "original" : {
+        "outcome" : "exception-escaped",
+        "returned" : false,
+        "threw" : true,
+        "bytes" : 0
+      },
+      "case" : "negative-infinite-frame",
+      "patched" : {
+        "outcome" : "structured-failure",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 115
+      }
+    },
+    {
+      "original" : {
+        "outcome" : "exception-escaped",
+        "returned" : false,
+        "threw" : true,
+        "bytes" : 0
+      },
+      "case" : "unsupported-object",
+      "patched" : {
+        "outcome" : "structured-failure",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 115
+      }
+    },
+    {
+      "original" : {
+        "outcome" : "exception-escaped",
+        "returned" : false,
+        "threw" : true,
+        "bytes" : 0
+      },
+      "case" : "nil-response",
+      "patched" : {
+        "outcome" : "structured-failure",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 115
+      }
+    },
+    {
+      "original" : {
+        "outcome" : "exception-escaped",
+        "returned" : false,
+        "threw" : true,
+        "bytes" : 0
+      },
+      "case" : "throwing-container",
+      "patched" : {
+        "outcome" : "structured-failure",
+        "returned" : true,
+        "threw" : false,
+        "bytes" : 115
+      }
+    }
+  ],
+  "scope" : "foundation-socketpair-probe",
+  "nativeInteractionsAccepted" : false,
+  "limitation" : "Controlled serializer inputs test transport behavior; they do not establish the cause of the preceding native mount timeout.",
+  "throwingFixtureConstructed" : true,
+  "closedPeer" : "explicit-failure",
+  "privacyCase" : {
+    "outcome" : "structured-failure",
+    "returned" : true,
+    "threw" : false,
+    "bytes" : 131
+  }
+}

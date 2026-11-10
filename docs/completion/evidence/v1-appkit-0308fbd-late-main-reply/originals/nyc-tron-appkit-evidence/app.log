@@ -1,0 +1,14 @@
+2026-11-10 21:06:59.881 NYCTronAppKitReference[31896:82696] NYCTronDriverTransport {"phase":"request-received","at":1794344819.881407,"mainThread":false,"sequence":1,"details":{"parsed":true},"command":"ping"}
+2026-11-10 21:07:00.919 NYCTronAppKitReference[31896:82661] _setUpFeatureFlags called with release level 2
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1110 21:07:00.943862 1868623872 ReactInstance.cpp:256] ReactInstance: evaluateJavaScript() with JS bundle
+2026-11-10 21:07:00.989 NYCTronAppKitReference[31896:82661] NYCTronDriverTransport {"phase":"main-dispatched","at":1794344820.9893699,"mainThread":true,"sequence":1,"details":{},"command":"ping"}
+2026-11-10 21:07:00.989 NYCTronAppKitReference[31896:82661] NYCTronDriverTransport {"phase":"main-replied","at":1794344820.9896522,"mainThread":true,"sequence":1,"details":{"dictionary":true,"nilResponse":false},"command":"ping"}
+2026-11-10 21:07:00.989 NYCTronAppKitReference[31896:82696] NYCTronDriverTransport {"phase":"serialized","at":1794344820.989784,"mainThread":false,"sequence":1,"details":{"bytes":18,"replacedWithFailure":false},"command":"ping"}
+2026-11-10 21:07:00.989 NYCTronAppKitReference[31896:82696] NYCTronDriverTransport {"phase":"send-completed","at":1794344820.989887,"mainThread":false,"sequence":1,"details":{"bytes":19,"replacedWithFailure":false},"command":"ping"}
+2026-11-10 21:07:00.993 NYCTronAppKitReference[31896:82696] NYCTronDriverTransport {"phase":"request-received","at":1794344820.9934621,"mainThread":false,"sequence":2,"details":{"parsed":true},"command":"waitFor"}
+2026-11-10 21:07:00.993 NYCTronAppKitReference[31896:82661] NYCTronDriverTransport {"phase":"main-dispatched","at":1794344820.9938579,"mainThread":true,"sequence":2,"details":{},"command":"waitFor"}
+2026-11-10 21:07:00.995 NYCTronAppKitReference[31896:82717] Expo is being initialized from the deprecated ExpoBridgeModule, make sure to migrate to ExpoReactNativeFactory in your project
+2026-11-10 21:07:36.275 NYCTronAppKitReference[31896:82661] NYCTronDriverTransport {"phase":"main-replied","at":1794344856.275315,"mainThread":true,"sequence":2,"details":{"dictionary":true,"nilResponse":false},"command":"waitFor"}
+2026-11-10 21:07:36.275 NYCTronAppKitReference[31896:82696] NYCTronDriverTransport {"phase":"serialized","at":1794344856.2756629,"mainThread":false,"sequence":2,"details":{"bytes":90,"replacedWithFailure":false},"command":"waitFor"}
+2026-11-10 21:07:36.275 NYCTronAppKitReference[31896:82696] NYCTronDriverTransport {"phase":"send-completed","at":1794344856.2757301,"mainThread":false,"sequence":2,"details":{"bytes":91,"replacedWithFailure":false},"command":"waitFor"}

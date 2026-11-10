@@ -1,0 +1,32 @@
+{
+  "processId": 31896,
+  "exitCode": null,
+  "signalCode": null,
+  "observedAt": "2026-11-10T21:07:36.000Z",
+  "beforeSample": {
+    "observedAt": "2026-11-10T21:07:36.004Z",
+    "exitCode": 0,
+    "signal": null,
+    "stdout": "31896 31890 S<   /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/products/macos-arm64/release/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference\n",
+    "stderr": ""
+  },
+  "afterSample": {
+    "observedAt": "2026-11-10T21:07:40.837Z",
+    "exitCode": 0,
+    "signal": null,
+    "stdout": "31896 31890 S<   /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/products/macos-arm64/release/NYCTronAppKitReference.app/Contents/MacOS/NYCTronAppKitReference\n",
+    "stderr": ""
+  },
+  "sample": {
+    "durationSeconds": 2,
+    "intervalMilliseconds": 10,
+    "exitCode": 0,
+    "signal": null,
+    "stdout": "",
+    "stderr": "Sampling process 31896 for 2 seconds with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 31896 written to file /Users/runner/work/_temp/nyc-tron-appkit-evidence/native-process-sample.txt\n",
+    "threadGroups": 27,
+    "hasThreadStacks": true,
+    "file": "native-process-sample.txt",
+    "sha256": "9cf9f5afc242c11141e0ce78ac42dee29d9c9a88e1f0cf674ff53e70f242404f"
+  }
+}

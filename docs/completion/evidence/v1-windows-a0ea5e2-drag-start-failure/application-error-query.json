@@ -1,0 +1,14 @@
+﻿{
+    "scannedCount":  0,
+    "errors":  [
+
+               ],
+    "capturedAt":  "2026-11-10T20:55:36.1472166Z",
+    "retainedLimit":  20,
+    "expectedProcessId":  7052,
+    "retainedCount":  0,
+    "since":  "2026-11-10T20:55:09.9968230Z",
+    "status":  "completed",
+    "scannedLimit":  50,
+    "appName":  "NYCTronWindowsExample"
+}

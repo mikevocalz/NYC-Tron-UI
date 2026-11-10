@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T21:02:02.666011+00:00",
+  "runId": 42898545855,
+  "sourceJob": 130118038686,
+  "nativeJob": 130118629272,
+  "sourceCompileExecutableDeploy": "passed",
+  "nativeAcceptance": "failed",
+  "nativePassedPackageProduced": false,
+  "artifact": {
+    "id": 13801668160,
+    "bytes": 316635,
+    "sha256": "fb3f08472c53148bfdd8c4f3b3851433b9b984797a64b4396196309e1e74e35b",
+    "retainedOriginal": "original-uia-artifact.zip",
+    "allOriginalMembersVerified": 21
+  },
+  "jobLog": {
+    "file": "original-native-job.log",
+    "bytes": 313610,
+    "sha256": "afed2981569420ed8d97221670cf64b3e25e31ae246d10759b21c1dd14747bf2"
+  },
+  "observations": {
+    "pid": 7052,
+    "hwnd": 524688,
+    "firstOverlayRemovalDescendants": 49,
+    "inspectorRemountAssertions": "passed",
+    "dragSceneHeader": "passed",
+    "windowArrangement": "passed",
+    "firstRealDragStart": "failed: JS phase dragging not observed within unchanged 10-second deadline",
+    "processExited": false,
+    "originalWindowExists": true,
+    "matchingApplicationErrorRecords": 0,
+    "applicationErrorQuery": "completed without errors",
+    "finalTreeDescendants": 51,
+    "finalSourceButtonUiaBounds": [
+      72,
+      311,
+      260,
+      56
+    ],
+    "renderedSourceTopApproximate": 311,
+    "finalNativeGeometryDiscrepancy": "not observed; bounds and painting now match",
+    "originalAssertionRetained": true
+  },
+  "limits": [
+    "Final bounds match the painted button but initial pointer coordinates and their timing were not recorded.",
+    "The failed dragging label reflects JS owner state, not a direct WinUI DragStarting observation.",
+    "Native readiness, actual pointer delivery and native-to-JS handoff remain unseparated by this original evidence.",
+    "No drag completion, transfer, cancellation, navigation accessibility extension or passed-only package follows."
+  ]
+}

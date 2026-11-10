@@ -1,0 +1,21 @@
+﻿{
+    "schemaVersion":  1,
+    "status":  "failed",
+    "sourceRevision":  "e7ff60c23bdeb35517dd9d59cf223c8116590dee",
+    "capturedAt":  "2026-11-10T20:55:35.7315965Z",
+    "primaryFailure":  {
+                           "position":  "At D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1:138 char:3\r\n+   throw \"UIA element named \u0027$name\u0027 did not appear within $timeoutSec  ...\r\n+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+                           "message":  "UIA element named \u0027Native drag phase: dragging\u0027 did not appear within 10 s",
+                           "type":  "System.Management.Automation.RuntimeException",
+                           "scriptStack":  "at Find-ByName, D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1: line 138\r\nat Invoke-NativeDrag, D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1: line 316\r\nat \u003cScriptBlock\u003e, D:\\a\\_temp\\tron-windows-consumer\\scripts\\uia-smoke.ps1: line 614\r\nat \u003cScriptBlock\u003e, D:\\a\\_temp\\d441e7b6-4570-42bb-a431-4662923562dc.ps1: line 2\r\nat \u003cScriptBlock\u003e, \u003cNo file\u003e: line 1"
+                       },
+    "processId":  7052,
+    "processStartedAt":  "2026-11-10T20:55:10.9758692Z",
+    "hasExited":  false,
+    "exitCode":  null,
+    "originalWindowHandle":  524688,
+    "windowExists":  true,
+    "windowProcessId":  7052,
+    "foregroundWindowHandle":  524688,
+    "foregroundProcessId":  7052
+}

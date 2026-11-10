@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "scope": "private-native-acceptance-consumer-only",
+  "patch": "nyc-tron-spark-0.0.2-response-transport-v1",
+  "sourceRevision": "1afc900939903a5f1abb8b7144f5ad8543e9939d",
+  "packageName": "@legendapp/spark",
+  "version": "0.0.2",
+  "file": "node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app/macos/SparkTestDriver.mm",
+  "before": {
+    "file": "SparkTestDriver.original.mm",
+    "sha256": "c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc"
+  },
+  "after": {
+    "file": "SparkTestDriver.patched.mm",
+    "sha256": "f89ab25a6ef5a3cf0a41e83f18fccd85ddb09bcbdecfc17db002110f3b763cb2"
+  },
+  "extractedFunctions": {
+    "original": {
+      "file": "SparkSend.original.inc.mm",
+      "sha256": "166c8855a97ba2ce331930ca82a0b85c45ab56c6b6899638b62b3c25052e8e91",
+      "sourceFunctionSha256": "97570a7c0b7fe2b94d7a826fe4beb1937ce9adc750baf6968dba8d295af0e2ef"
+    },
+    "patched": {
+      "file": "SparkSend.patched.inc.mm",
+      "sha256": "f1340cd58cc0f1f569a838049a15d7cf9133f412b2660c3ca4ee14fb6b21170f"
+    }
+  },
+  "inputs": [
+    {
+      "path": "tooling/macos-appkit/patch-driver-transport.mjs",
+      "sha256": "74e0c2c93c5b3e00be4ce490934071cbcc7f2d4ff5fa919f5fee1499a1895ef7"
+    },
+    {
+      "path": "tooling/macos-appkit/driver-transport.inc.mm",
+      "sha256": "f1340cd58cc0f1f569a838049a15d7cf9133f412b2660c3ca4ee14fb6b21170f"
+    },
+    {
+      "path": "tooling/macos-appkit/driver-transport-probe.mm",
+      "sha256": "e0549f3e15490a65b930726dc9b12538f30df5e130f07b9dcbf07a6b146e1c53"
+    },
+    {
+      "path": "tooling/macos-appkit/probe-driver-transport.mjs",
+      "sha256": "9b89b21e9077173b0d0381bba9e759997a3e419acff7e00678a4d4c08a1482bb"
+    }
+  ],
+  "patchSha256": "6b1f071f9aeb580fe3a0b84b3ee8d36d82343334a4cd49098ef85a0025be8444",
+  "boundaries": [
+    "No modification to the shipped NYC-Tron adapter, core archive or Spark distribution archive.",
+    "No command retry, deadline change, geometry normalization or synthesized successful response.",
+    "Trace contains fixed command labels, local sequence, stage, byte counts and fixed field-path classifications; no credentials, raw protocol IDs or payload values."
+  ]
+}

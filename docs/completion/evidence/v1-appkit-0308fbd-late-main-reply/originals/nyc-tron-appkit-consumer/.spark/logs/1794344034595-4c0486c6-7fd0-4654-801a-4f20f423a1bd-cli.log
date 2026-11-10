@@ -1,0 +1,9 @@
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+macos ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+macos Bundled 634ms index.ts (662 modules)
+Writing bundle output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.js
+Writing sourcemap output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.map
+Done writing bundle output
+Done writing sourcemap output

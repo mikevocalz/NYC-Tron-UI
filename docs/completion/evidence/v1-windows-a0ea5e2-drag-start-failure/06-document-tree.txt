@@ -1,0 +1,18 @@
+﻿Captured UTC: 2026-11-10T20:55:17.3319658Z
+Root: HWND=131624; process=7052; runtimeId=42,131624
+Descendants: 14
+
+ControlType.Pane | name='' | id='' | class='Microsoft.UI.Content.DesktopChildSiteBridge' | runtimeId='42,131626' | process=7052 | bounds='88,111,584,481' | offscreen=False
+ControlType.Group | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,131628' | process=7052 | bounds='88,111,584,481' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,131634' | process=7052 | bounds='112,273,260,56' | offscreen=False
+ControlType.Button | name='Drop shared native draft' | id='' | class='Button' | runtimeId='42,131634,4,20' | process=7052 | bounds='112,273,260,56' | offscreen=False
+ControlType.Text | name='Native document window' | id='' | class='' | runtimeId='42,131628,4,270' | process=7052 | bounds='112,135,536,19' | offscreen=False
+ControlType.Text | name='Window identity: document' | id='' | class='' | runtimeId='42,131628,4,276' | process=7052 | bounds='112,169,536,20' | offscreen=False
+ControlType.Text | name='Shared draft: Edited once, shared everywhere' | id='' | class='' | runtimeId='42,131628,4,282' | process=7052 | bounds='112,204,536,19' | offscreen=False
+ControlType.Text | name='The document store and undo owner stay above both native surfaces.' | id='' | class='' | runtimeId='42,131628,4,286' | process=7052 | bounds='112,238,536,20' | offscreen=False
+ControlType.Text | name='Native drag idle' | id='' | class='' | runtimeId='42,131628,4,292' | process=7052 | bounds='112,341,536,20' | offscreen=False
+ControlType.Text | name='Document owner: main' | id='' | class='' | runtimeId='42,131628,4,298' | process=7052 | bounds='112,367,536,19' | offscreen=False
+ControlType.Text | name='Authorized transfers: 0' | id='' | class='' | runtimeId='42,131628,4,304' | process=7052 | bounds='112,394,536,20' | offscreen=False
+ControlType.Text | name='Completed native drags: 0' | id='' | class='' | runtimeId='42,131628,4,310' | process=7052 | bounds='112,420,536,19' | offscreen=False
+ControlType.Button | name='Save shared draft' | id='' | class='' | runtimeId='42,131628,4,324' | process=7052 | bounds='112,456,536,37' | offscreen=False
+ControlType.Text | name='Save shared draft' | id='' | class='' | runtimeId='42,131628,4,318' | process=7052 | bounds='121,465,518,20' | offscreen=False

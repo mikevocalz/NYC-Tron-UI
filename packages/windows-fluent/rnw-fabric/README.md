@@ -309,6 +309,15 @@ an `approve(offer)` callback. One live drop target is allowed per observed
 window. Target approval decides whether the offer is allowed; it must not
 move or delete document state.
 
+Each surface is a native `ContentControl` region with a full transparent hit
+area and a native text label. Its `FrameworkElementAutomationPeer` exposes the
+app's label, the `Custom` control type, class `NYCTronDragRegion`, and the actual
+control's enabled state and keyboard focus support. The label is decorative in
+the accessibility tree. This uses a region because
+[WinUI ButtonBase handles the initial pointer press](https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.uielement.pointerpressed?view=windows-app-sdk-1.8),
+which prevents the pinned automatic drag helper's ordinary press handler from
+receiving it. The adapter does not implement another gesture recognizer.
+
 WinUI `CanDrag` starts the actual OS pointer gesture. Its
 `DragStartingEventArgs.GetDeferral()` keeps the event alive while the JS
 owner creates a core token. The Windows `DataPackage` carries only an
