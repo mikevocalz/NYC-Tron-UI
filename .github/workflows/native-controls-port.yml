@@ -14,6 +14,8 @@ on:
       - "tooling/consumer*"
       - "tooling/consumer-fixtures/**"
       - "tooling/pack-release.mjs"
+      - "tooling/native/**"
+      - "tooling/tests/media-acceptance.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
@@ -37,6 +39,8 @@ on:
       - "tooling/consumer*"
       - "tooling/consumer-fixtures/**"
       - "tooling/pack-release.mjs"
+      - "tooling/native/**"
+      - "tooling/tests/media-acceptance.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
@@ -67,6 +71,7 @@ jobs:
       - run: node --test packages/reserved-regions/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
+      - run: node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-navigation typecheck
@@ -133,9 +138,9 @@ jobs:
           done
 
   android:
-    name: Android installed-tarball Compose compile
+    name: Android installed-tarball compile and media runtime
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 70
     env:
       NYC_TRON_ACCEPTANCE: reference
     steps:
@@ -181,7 +186,7 @@ jobs:
           apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' -d /tmp/instruments-dex
           for cls in NYCTronInstrumentsModule TronPointerCaptureView TronVideoOwner; do
-            cat /tmp/instruments-dex/classes*.dex | grep -aq "com/nyctron/instruments/$cls" \
+            grep -aq "com/nyctron/instruments/$cls" /tmp/instruments-dex/classes*.dex \
               || { echo "$cls not compiled into the APK"; exit 1; }
           done
       - name: Reserved-regions v2 module is in the APK
@@ -189,14 +194,14 @@ jobs:
           apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' -d /tmp/regions-dex
           # grep -c over a single dex prints a bare count, so test the bytes directly.
-          cat /tmp/regions-dex/classes*.dex | grep -aq 'com/nyctron/reservedregions/NYCTronReservedRegionsModule' \
+          grep -aq 'com/nyctron/reservedregions/NYCTronReservedRegionsModule' /tmp/regions-dex/classes*.dex \
             || { echo "NYCTronReservedRegionsModule not compiled into the APK"; exit 1; }
       - name: Hardware-keys v2 module is in the APK
         run: |
           apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' -d /tmp/keys-dex
           for cls in NYCTronHardwareKeysModule UnhandledKeyAttacher; do
-            cat /tmp/keys-dex/classes*.dex | grep -aq "com/nyctron/hardwarekeys/$cls" \
+            grep -aq "com/nyctron/hardwarekeys/$cls" /tmp/keys-dex/classes*.dex \
               || { echo "$cls not compiled into the APK"; exit 1; }
           done
       - name: Platform-services v2 modules, media decoder and FileProvider are in the APK
@@ -204,7 +209,7 @@ jobs:
           apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' AndroidManifest.xml -d /tmp/services-apk
           for cls in NYCTronHapticsModule NYCTronDocumentsModule NYCTronPlaybackSessionModule NYCTronMediaDecoderModule NYCTronFileProvider; do
-            cat /tmp/services-apk/classes*.dex | grep -aq "com/nyctron/platformservices/$cls" \
+            grep -aq "com/nyctron/platformservices/$cls" /tmp/services-apk/classes*.dex \
               || { echo "$cls not compiled into the APK"; exit 1; }
           done
           # The binary manifest stores strings as UTF-16LE; strip the zero bytes to read them.
@@ -216,6 +221,19 @@ jobs:
           ./gradlew :nyc-tron-native-charts:dependencies --configuration debugRuntimeClasspath --no-daemon \
             | tee /tmp/charts-deps.txt
           grep -q 'com.patrykandpatrick.vico:compose-m3:3.2.3' /tmp/charts-deps.txt
+      - name: Execute the installed native decoder on Android
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "system-images;android-35;google_apis;x86_64" "emulator" "platform-tools"
+          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force -n NYCTronMediaAcceptance -k "system-images;android-35;google_apis;x86_64"
+          if [[ -e /dev/kvm ]]; then sudo chmod 666 /dev/kvm; fi
+          "$ANDROID_HOME/emulator/emulator" -avd NYCTronMediaAcceptance -port 5554 -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 3072 > "$RUNNER_TEMP/nyc-tron-media-emulator.log" 2>&1 &
+          nyc_tron_emulator_pid=$!
+          trap 'kill "$nyc_tron_emulator_pid" 2>/dev/null || true' EXIT
+          apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
+          test -n "$apk"
+          node tooling/native/run-media-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER"
       - name: Save installed-package evidence and the Android acceptance build
         if: always()
         uses: actions/upload-artifact@v4
@@ -227,10 +245,12 @@ jobs:
             ${{ runner.temp }}/nyc-tron-native-consumer/app/package-lock.json
             ${{ runner.temp }}/nyc-tron-native-consumer/app/android/app/build/outputs/apk/debug/*.apk
             ${{ runner.temp }}/nyc-tron-android-js/metadata.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-android
+            ${{ runner.temp }}/nyc-tron-media-emulator.log
           retention-days: 7
 
   ios:
-    name: iOS installed-tarball SwiftUI simulator compile
+    name: iOS installed-tarball compile and media runtime
     runs-on: macos-latest
     timeout-minutes: 70
     env:
@@ -312,6 +332,13 @@ jobs:
           app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
           test -n "$app"
           ditto -c -k --keepParent "$app" "$RUNNER_TEMP/nyc-tron-ios-simulator.zip"
+      - name: Execute the installed native decoder on iOS
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          test -n "$app"
+          node tooling/native/run-media-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
       - name: Save installed-package evidence and the iOS acceptance build
         if: always()
         uses: actions/upload-artifact@v4
@@ -323,5 +350,6 @@ jobs:
             ${{ runner.temp }}/nyc-tron-native-consumer/app/package-lock.json
             ${{ runner.temp }}/nyc-tron-ios-js/metadata.json
             ${{ runner.temp }}/nyc-tron-ios-simulator.zip
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ios
             /tmp/xcodebuild.log
           retention-days: 7

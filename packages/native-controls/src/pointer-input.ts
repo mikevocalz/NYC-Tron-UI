@@ -83,7 +83,7 @@ function validSample(sample: PointerSample): boolean {
  */
 export function createPointerRouter(options: PointerRouterOptions): PointerRouter {
   let active: PointerSample | undefined;
-  let penHover = false;
+  const penHover = new Set<number>();
   let disposed = false;
   let generation = 0;
   const clearPrediction = () => options.onPrediction?.([]);
@@ -95,7 +95,7 @@ export function createPointerRouter(options: PointerRouterOptions): PointerRoute
     if (previous) options.onStroke({phase: 'cancel', samples: [previous]});
   }
   function cancel() {
-    penHover = false;
+    penHover.clear();
     cancelStroke();
     options.onHover?.(null);
   }
@@ -109,12 +109,12 @@ export function createPointerRouter(options: PointerRouterOptions): PointerRoute
       if (batch.samples.some((point, i) => i > 0 && point.timestampMs < batch.samples[i-1]!.timestampMs)) return;
       const last = batch.samples[batch.samples.length-1]!;
       if (first.kind === 'pen') {
-        if (batch.phase === 'hover') penHover = true;
-        if (batch.phase === 'hover-exit' || batch.phase === 'cancel') penHover = false;
+        if (batch.phase === 'hover') penHover.add(first.pointerId);
+        if (batch.phase === 'hover-exit' || batch.phase === 'cancel') penHover.delete(first.pointerId);
         if (options.palmRejection !== false && (batch.phase === 'down' || batch.phase === 'hover') && active?.kind === 'touch') cancelStroke();
         if (disposed) return;
       }
-      if (first.kind === 'touch' && (penHover || active?.kind === 'pen') && options.palmRejection !== false) return;
+      if (first.kind === 'touch' && (penHover.size > 0 || active?.kind === 'pen') && options.palmRejection !== false) return;
       if (batch.phase === 'hover' || batch.phase === 'hover-exit') {
         if (!active) options.onHover?.(batch.phase === 'hover-exit' ? null : last);
         return;

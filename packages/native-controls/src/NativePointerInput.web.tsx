@@ -1,7 +1,7 @@
 import {useEffect, useRef, type ComponentRef} from 'react';
 import {View} from 'react-native';
 import type {NativePointerInputProps} from './NativePointerInput.types.js';
-import type {PointerBatch, PointerSample} from './pointer-input.js';
+import type {PointerBatch, PointerSample, PointerKeyEvent} from './pointer-input.js';
 export type {NativePointerInputProps} from './NativePointerInput.types.js';
 
 /** Browser Pointer Events adapter. The surface is RNW; native DOM listeners preserve event history. */
@@ -14,7 +14,8 @@ export function NativePointerInput({width,height,label,onBatch,onKey}: NativePoi
     const previousTouchAction = node.style.touchAction;
     node.style.touchAction = 'none';
     const active = new Map<number, PointerSample>();
-    let hover: PointerSample | undefined;
+    const hovering = new Map<number, PointerSample>();
+    const heldKeys = new Map<string, PointerKeyEvent>();
     function sample(event: PointerEvent): PointerSample {
       const bounds = node.getBoundingClientRect();
       return {pointerId:event.pointerId, kind:event.pointerType === 'pen' ? 'pen' : event.pointerType === 'touch' ? 'touch' : 'mouse', x:event.clientX-bounds.left, y:event.clientY-bounds.top, timestampMs:event.timeStamp, pressure:event.pointerType === 'pen' || event.pointerType === 'touch' ? event.pressure : null, tiltX:event.pointerType === 'pen' ? event.tiltX : null, tiltY:event.pointerType === 'pen' ? event.tiltY : null, buttons:event.buttons};
@@ -29,16 +30,22 @@ export function NativePointerInput({width,height,label,onBatch,onKey}: NativePoi
       else phase=active.has(event.pointerId) ? 'move' : 'hover';
       if (phase === 'up' || phase === 'cancel') active.delete(event.pointerId);
       else if (phase === 'move') active.set(event.pointerId,point);
-      if (phase === 'hover') hover=point;
-      else if (phase === 'hover-exit') hover=undefined;
+      if (phase === 'hover') hovering.set(point.pointerId,point);
+      else if (phase === 'hover-exit') hovering.delete(point.pointerId);
       const history = phase === 'move' ? event.getCoalescedEvents?.() ?? [] : [];
       const samples = history.length ? history.map(sample) : [point];
       if (history.length && (history.at(-1)!.timeStamp !== event.timeStamp || history.at(-1)!.clientX !== event.clientX || history.at(-1)!.clientY !== event.clientY)) samples.push(point);
       const predicted = phase === 'move' ? (event.getPredictedEvents?.() ?? []).map(sample) : [];
       callbacks.current.onBatch({phase,samples,predicted});
     }
-    function key(event: KeyboardEvent) { callbacks.current.onKey?.({phase:event.type==='keydown'?'down':'up',key:event.key,code:event.code,shift:event.shiftKey,alt:event.altKey,control:event.ctrlKey,meta:event.metaKey,repeat:event.repeat}); }
-    function cancel() { const pending=[...active.values()]; const previousHover=hover; active.clear(); hover=undefined; for (const point of pending) callbacks.current.onBatch({phase:'cancel',samples:[point],predicted:[]}); if(previousHover)callbacks.current.onBatch({phase:'hover-exit',samples:[previousHover],predicted:[]}); }
+    function key(event: KeyboardEvent) { const value:PointerKeyEvent={phase:event.type==='keydown'?'down':'up',key:event.key,code:event.code,shift:event.shiftKey,alt:event.altKey,control:event.ctrlKey,meta:event.metaKey,repeat:event.repeat}; if(value.phase==='down')heldKeys.set(value.code,value);else heldKeys.delete(value.code); callbacks.current.onKey?.(value); }
+    function cancel() {
+      const pending=[...active.values()], previousHover=[...hovering.values()], keys=[...heldKeys.values()];
+      active.clear();hovering.clear();heldKeys.clear();
+      for (const point of pending) callbacks.current.onBatch({phase:'cancel',samples:[point],predicted:[]});
+      for (const point of previousHover) callbacks.current.onBatch({phase:'hover-exit',samples:[point],predicted:[]});
+      for (const value of keys) callbacks.current.onKey?.({...value,phase:'up',repeat:false});
+    }
     const events = ['pointerdown','pointermove','pointerup','pointercancel','pointerleave','lostpointercapture'] as const;
     events.forEach(type => node.addEventListener(type,handle));
     node.addEventListener('keydown',key); node.addEventListener('keyup',key); node.addEventListener('blur',cancel);

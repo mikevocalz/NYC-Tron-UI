@@ -1,5 +1,9 @@
 import { test, expect } from "playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import { cpus, platform, release, totalmem } from "node:os";
 
 const routeTitle = { library: "Library", editor: "Quiet forms", media: "Motion study", settings: "Settings" };
 const ready = async (page, route = "library") => {
@@ -209,7 +213,13 @@ test.describe("Complete native feel reference", () => {
       const percentile = p => values[Math.max(0, Math.ceil(values.length * p) - 1)];
       return [route, { sampleCount: values.length, p50Ms: percentile(0.5), p95Ms: percentile(0.95) }];
     }));
+    const revision = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+    const fixtureSha256 = createHash("sha256").update(readFileSync(new URL("./fixtures/reference-app.tsx", import.meta.url))).digest("hex");
     const report = { metric: "React Profiler actualDuration per committed update", build: "development", browser: "Chromium", viewport: { width: 1440, height: 1000 },
+      provenance: { revision, fixtureSha256, workflowRun: process.env.GITHUB_RUN_ID ?? null,
+        browserVersion: page.context().browser()?.version() ?? null, nodeVersion: process.version,
+        os: { platform: platform(), release: release() },
+        hardware: { cpuModel: cpus()[0]?.model ?? "unreported", logicalCpus: cpus().length, memoryBytes: totalmem() } },
       repetitions: 10, interpretation: "React render work only; excludes native GPU presentation, production startup and physical-device performance.", summary, samples };
     await mkdir("shots", { recursive: true });
     await writeFile("shots/reference-render-timings.json", JSON.stringify(report, null, 2) + "\n");

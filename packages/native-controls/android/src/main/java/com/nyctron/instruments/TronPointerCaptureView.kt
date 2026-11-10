@@ -18,7 +18,8 @@ class TronPointerCaptureView(context:Context):View(context){
   var emitKey:((TronPointerKey)->Unit)?=null
   private val latest=mutableMapOf<Double,TronPointerSample>()
   private val predictors=mutableMapOf<Int,MotionPredictor>()
-  private var hover:TronPointerSample?=null
+  private val hovering=mutableMapOf<Double,TronPointerSample>()
+  private val heldKeys=mutableMapOf<Int,TronPointerKey>()
   init { isFocusable=true;isFocusableInTouchMode=true;importantForAccessibility=IMPORTANT_FOR_ACCESSIBILITY_YES }
 
   private fun sample(event:MotionEvent,index:Int,history:Int?=null):TronPointerSample {
@@ -69,13 +70,15 @@ class TronPointerCaptureView(context:Context):View(context){
   override fun onHoverEvent(event:MotionEvent):Boolean {
     val point=sample(event,0)
     val phase=if(event.actionMasked==MotionEvent.ACTION_HOVER_EXIT)"hover-exit" else "hover"
-    hover=if(phase=="hover-exit")null else point
+    if(phase=="hover-exit")hovering.remove(point.pointerId) else hovering[point.pointerId]=point
     emitBatch?.invoke(TronPointerBatch(phase,listOf(point),emptyList()));return true
   }
   override fun dispatchKeyEvent(event:KeyEvent):Boolean {
     if(event.action==KeyEvent.ACTION_DOWN||event.action==KeyEvent.ACTION_UP){
       val unicode=event.unicodeChar
-      emitKey?.invoke(TronPointerKey(if(event.action==KeyEvent.ACTION_DOWN)"down" else "up",if(unicode>0)String(Character.toChars(unicode)) else KeyEvent.keyCodeToString(event.keyCode),KeyEvent.keyCodeToString(event.keyCode),event.isShiftPressed,event.isAltPressed,event.isCtrlPressed,event.isMetaPressed,event.repeatCount>0))
+      val value=TronPointerKey(if(event.action==KeyEvent.ACTION_DOWN)"down" else "up",if(unicode>0)String(Character.toChars(unicode)) else KeyEvent.keyCodeToString(event.keyCode),KeyEvent.keyCodeToString(event.keyCode),event.isShiftPressed,event.isAltPressed,event.isCtrlPressed,event.isMetaPressed,event.repeatCount>0)
+      if(event.action==KeyEvent.ACTION_DOWN)heldKeys[event.keyCode]=value else heldKeys.remove(event.keyCode)
+      emitKey?.invoke(value)
     }
     return super.dispatchKeyEvent(event)
   }
@@ -86,7 +89,9 @@ class TronPointerCaptureView(context:Context):View(context){
     val pending=latest.values.toList();latest.clear();predictors.clear()
     parent?.requestDisallowInterceptTouchEvent(false)
     pending.forEach{emitBatch?.invoke(TronPointerBatch("cancel",listOf(it),emptyList()))}
-    hover?.let{emitBatch?.invoke(TronPointerBatch("hover-exit",listOf(it),emptyList()))};hover=null
+    val hovers=hovering.values.toList();hovering.clear()
+    hovers.forEach{emitBatch?.invoke(TronPointerBatch("hover-exit",listOf(it),emptyList()))}
+    val keys=heldKeys.values.toList();heldKeys.clear();keys.forEach{emitKey?.invoke(it.copy(phase="up",repeat=false))}
   }
   fun close(){cancelInput();emitBatch=null;emitKey=null}
 }

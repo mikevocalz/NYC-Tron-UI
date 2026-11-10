@@ -1,4 +1,7 @@
 import { AppRegistry, View, useWindowDimensions } from "react-native";
+import { createStore } from "zustand/vanilla";
+import { useStore } from "zustand";
+import type { DeviceFamily } from "@nyc-tron/core/navigation";
 import { ReferenceApp, type ReferenceRenderSample } from "../../../../../examples/native-feel/ReferenceApp";
 import { referenceLibrary, type LibraryItem, type ReferenceMediaSource, type ReferenceRoute } from "../../../../../examples/native-feel/reference-model";
 import { createPlatformMediaDecoder } from "../../../../platform-services/src/media/platform.web";
@@ -15,8 +18,11 @@ let frameAttempt = 0;
 const fixture = window as unknown as {
   referenceRenderSamples: ReferenceRenderSample[];
   completeReferenceLibrary?: () => void;
+  setReferenceFamily: (family: DeviceFamily) => void;
 };
 fixture.referenceRenderSamples = [];
+const familyStore = createStore<{ family: DeviceFamily }>(() => ({ family: "phone" }));
+fixture.setReferenceFamily = family => familyStore.setState({ family });
 const mediaSource: ReferenceMediaSource = {
   label: "Generated motion study",
   async loadFrame(timeUs, signal) {
@@ -29,9 +35,12 @@ const mediaSource: ReferenceMediaSource = {
 };
 function Reference() {
   const { height } = useWindowDimensions();
+  const family = useStore(familyStore, value => value.family);
   return <View testID="reference-fixture" style={{ width: query.has("nested") ? 390 : "100%", height, minWidth: 0 }}>
     <ReferenceApp initialAppearance={initialAppearance} initialRoute={(query.get("route") ?? "library") as ReferenceRoute}
-      mediaSource={mediaSource} navigation={{ runtime: "web", family: "unknown", isRTL: query.get("dir") === "rtl" }}
+      mediaSource={mediaSource} navigation={query.has("native-shell")
+        ? { runtime: "native", platform: "android", family, isRTL: query.get("dir") === "rtl" }
+        : { runtime: "web", family: "unknown", isRTL: query.get("dir") === "rtl" }}
       onRenderSample={sample => fixture.referenceRenderSamples.push(sample)}
       loadLibrary={async signal => {
         const attempt = libraryAttempt++;

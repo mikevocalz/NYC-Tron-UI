@@ -1,0 +1,133 @@
+{
+  "format": 1,
+  "typescript": "5.9.3",
+  "packages": {
+    "@nyc-tron/windows-fluent-fabric": {
+      ".": [
+        {
+          "target": "./dist/index.d.ts",
+          "conditions": {
+            "types": "./dist/index.d.ts",
+            "react-native": "./src/index.ts",
+            "default": "./dist/index.js"
+          },
+          "symbols": {
+            "Destination": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination"
+            ],
+            "TronNavigationView": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationView"
+            ],
+            "TronNavigationViewProps": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationViewProps"
+            ],
+            "validateDestinations": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#validateDestinations"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "declarations": {
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination": {
+      "signatures": [
+        "export interface Destination {\n    readonly id: string;\n    readonly label: string;\n    readonly glyph?: string;\n    readonly disabled?: boolean;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationView": {
+      "signatures": [
+        "export declare function TronNavigationView({ items, footerItems, selectedId, paneMode, paneOpen, paneTitle, settingsVisible, onSelectionRequested, onPaneOpenRequested, onSettingsRequested, onNativeError, style }: TronNavigationViewProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationViewProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationViewProps": {
+      "signatures": [
+        "export interface TronNavigationViewProps {\n    readonly items: readonly Destination[];\n    readonly footerItems?: readonly Destination[];\n    readonly selectedId: string | null;\n    readonly paneMode?: \"auto\" | \"expanded\" | \"compact\" | \"minimal\";\n    readonly paneOpen: boolean;\n    readonly paneTitle?: string;\n    readonly settingsVisible?: boolean;\n    readonly onSelectionRequested: (id: string) => void;\n    readonly onPaneOpenRequested: (open: boolean) => void;\n    readonly onSettingsRequested?: () => void;\n    readonly onNativeError?: (error: Error) => void;\n    readonly style?: StyleProp<ViewStyle>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination",
+        "react-native@0.85.3/Libraries/StyleSheet/StyleSheet.d.ts#StyleProp",
+        "react-native@0.85.3/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@5.9.3/lib/lib.es2022.error.d.ts#Error",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Error"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#validateDestinations": {
+      "signatures": [
+        "export declare function validateDestinations(items: readonly Destination[], footer: readonly Destination[], selectedId: string | null): void;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination"
+      ]
+    }
+  },
+  "externalTypes": {
+    "@types/react@19.3.0/index.d.ts#$module": {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "file": "index.d.ts",
+      "symbol": "$module",
+      "signatures": []
+    },
+    "@types/react@19.3.0/index.d.ts#React.JSX": {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "file": "index.d.ts",
+      "symbol": "React.JSX",
+      "signatures": []
+    },
+    "@types/react@19.3.0/index.d.ts#React.JSX.Element": {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "file": "index.d.ts",
+      "symbol": "React.JSX.Element",
+      "signatures": [
+        "interface Element extends React.ReactElement<any, any> {\n}"
+      ]
+    },
+    "react-native@0.85.3/Libraries/StyleSheet/StyleSheet.d.ts#StyleProp": {
+      "package": "react-native",
+      "version": "0.85.3",
+      "file": "Libraries/StyleSheet/StyleSheet.d.ts",
+      "symbol": "StyleProp",
+      "signatures": [
+        "export type StyleProp<T> = T | RecursiveArray<T | Falsy> | Falsy;"
+      ]
+    },
+    "react-native@0.85.3/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle": {
+      "package": "react-native",
+      "version": "0.85.3",
+      "file": "Libraries/StyleSheet/StyleSheetTypes.d.ts",
+      "symbol": "ViewStyle",
+      "signatures": [
+        "export interface ViewStyle extends FlexStyle, ShadowStyleIOS, TransformsStyle {\n    backfaceVisibility?: 'visible' | 'hidden' | undefined;\n    backgroundColor?: ColorValue | undefined;\n    borderBlockColor?: ColorValue | undefined;\n    borderBlockEndColor?: ColorValue | undefined;\n    borderBlockStartColor?: ColorValue | undefined;\n    borderBottomColor?: ColorValue | undefined;\n    borderBottomEndRadius?: AnimatableNumericValue | string | undefined;\n    borderBottomLeftRadius?: AnimatableNumericValue | string | undefined;\n    borderBottomRightRadius?: AnimatableNumericValue | string | undefined;\n    borderBottomStartRadius?: AnimatableNumericValue | string | undefined;\n    borderColor?: ColorValue | undefined;\n    borderCurve?: 'circular' | 'continuous' | undefined;\n    borderEndColor?: ColorValue | undefined;\n    borderEndEndRadius?: AnimatableNumericValue | string | undefined;\n    borderEndStartRadius?: AnimatableNumericValue | string | undefined;\n    borderLeftColor?: ColorValue | undefined;\n    borderRadius?: AnimatableNumericValue | string | undefined;\n    borderRightColor?: ColorValue | undefined;\n    borderStartColor?: ColorValue | undefined;\n    borderStartEndRadius?: AnimatableNumericValue | string | undefined;\n    borderStartStartRadius?: AnimatableNumericValue | string | undefined;\n    borderStyle?: 'solid' | 'dotted' | 'dashed' | undefined;\n    borderTopColor?: ColorValue | undefined;\n    borderTopEndRadius?: AnimatableNumericValue | string | undefined;\n    borderTopLeftRadius?: AnimatableNumericValue | string | undefined;\n    borderTopRightRadius?: AnimatableNumericValue | string | undefined;\n    borderTopStartRadius?: AnimatableNumericValue | string | undefined;\n    outlineColor?: ColorValue | undefined;\n    outlineOffset?: AnimatableNumericValue | undefined;\n    outlineStyle?: 'solid' | 'dotted' | 'dashed' | undefined;\n    outlineWidth?: AnimatableNumericValue | undefined;\n    opacity?: AnimatableNumericValue | undefined;\n    elevation?: number | undefined;\n    pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto' | undefined;\n    isolation?: 'auto' | 'isolate' | undefined;\n    cursor?: CursorValue | undefined;\n    boxShadow?: ReadonlyArray<BoxShadowValue> | string | undefined;\n    filter?: ReadonlyArray<FilterFunction> | string | undefined;\n    mixBlendMode?: BlendMode | undefined;\n    experimental_backgroundImage?: ReadonlyArray<BackgroundImageValue> | string | undefined;\n    experimental_backgroundSize?: ReadonlyArray<BackgroundSizeValue> | string | undefined;\n    experimental_backgroundPosition?: ReadonlyArray<BackgroundPositionValue> | string | undefined;\n    experimental_backgroundRepeat?: ReadonlyArray<BackgroundRepeatValue> | string | undefined;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2022.error.d.ts#Error": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2022.error.d.ts",
+      "symbol": "Error",
+      "signatures": [
+        "interface Error {\n    cause?: unknown;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es5.d.ts#Error": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es5.d.ts",
+      "symbol": "Error",
+      "signatures": [
+        "interface Error {\n    name: string;\n    message: string;\n    stack?: string;\n}",
+        "Error: ErrorConstructor"
+      ]
+    }
+  }
+}

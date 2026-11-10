@@ -175,8 +175,9 @@ Consumers that bundle its executable code must retain its notices and this
 source-availability statement. The dependency closure also installs
 `@types/dom-mediacapture-transform` 0.1.12 and `@types/dom-webcodecs` 0.1.13
 (MIT, Copyright Microsoft Corporation; declaration packages). Full detail:
-`packages/platform-services/THIRD_PARTY.md`. The repository owner confirms MPL
-compliance for tarball distribution (see `docs/V1_DECISIONS.md`, D2).
+`packages/platform-services/THIRD_PARTY.md`. Owner distribution-review status is
+tracked in `docs/V1_DECISIONS.md`, D2; this notice records provenance and source
+availability, not an owner compliance attestation.
 
 ## React Native Windows sample pattern
 

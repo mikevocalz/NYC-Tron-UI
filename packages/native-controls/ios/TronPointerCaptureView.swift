@@ -7,7 +7,7 @@ final class TronPointerCaptureView: UIView {
   private var identifiers: [ObjectIdentifier: Int] = [:]
   private var latest: [Int: [String: Any]] = [:]
   private var nextIdentifier = 1
-  private var hover: [String: Any]?
+  private var hovering: [Int: [String: Any]] = [:]
   private var heldKeys: [Int: [String: Any]] = [:]
   override var canBecomeFirstResponder: Bool { true }
 
@@ -68,7 +68,7 @@ final class TronPointerCaptureView: UIView {
       "x": Double(point.x), "y": Double(point.y), "timestampMs": ProcessInfo.processInfo.systemUptime * 1000,
       "pressure": NSNull(), "tiltX": NSNull(), "tiltY": NSNull(), "buttons": 0]
     let ended = recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed
-    hover = ended ? nil : sample
+    if ended { hovering.removeValue(forKey: isPen ? -1 : -2) } else { hovering[isPen ? -1 : -2] = sample }
     emitBatch?(["phase": ended ? "hover-exit" : "hover", "samples": [sample], "predicted": []])
   }
   private func keys(_ presses: Set<UIPress>, phase: String) {
@@ -91,7 +91,9 @@ final class TronPointerCaptureView: UIView {
     let pending = Array(latest.values)
     latest.removeAll(); identifiers.removeAll()
     for point in pending { emitBatch?(["phase":"cancel","samples":[point],"predicted":[]]) }
-    if let point = hover { hover = nil; emitBatch?(["phase":"hover-exit","samples":[point],"predicted":[]]) }
+    let hovers = Array(hovering.values)
+    hovering.removeAll()
+    for point in hovers { emitBatch?(["phase":"hover-exit","samples":[point],"predicted":[]]) }
     let keys = Array(heldKeys.values)
     heldKeys.removeAll()
     for var key in keys { key["phase"] = "up"; key["repeat"] = false; emitKey?(key) }

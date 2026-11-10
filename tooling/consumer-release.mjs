@@ -145,7 +145,8 @@ function copyNativeHost(project) {
   writeFileSync(join(project, "metro.config.js"), [
     "const {getDefaultConfig} = require('expo/metro-config');",
     "const {withUniwindConfig} = require('uniwind/metro');",
-    "module.exports = withUniwindConfig(getDefaultConfig(__dirname), {cssEntryFile: './reference.css', dtsFile: './uniwind-types.d.ts'});",
+    "const {withAcceptanceEntry} = require('./acceptance-entry.cjs');",
+    "module.exports = withUniwindConfig(withAcceptanceEntry(getDefaultConfig(__dirname), __dirname), {cssEntryFile: './reference.css', dtsFile: './uniwind-types.d.ts'});",
   ].join("\n") + "\n");
 }
 

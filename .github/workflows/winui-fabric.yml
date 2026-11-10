@@ -4,12 +4,16 @@ on:
   pull_request:
     paths:
       - "packages/windows-fluent/rnw-fabric/**"
+      - "tooling/api-signatures.mjs"
+      - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
   push:
     branches:
       - "feat/winui-fabric-xaml-navigation-20261105"
     paths:
       - "packages/windows-fluent/rnw-fabric/**"
+      - "tooling/api-signatures.mjs"
+      - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
   workflow_dispatch:
 
@@ -46,6 +50,8 @@ jobs:
           for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts windows/NYCTronFluentFabric/TronNavigationView.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
           done
+      - name: Verify the isolated RNW public declaration snapshot
+        run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
       # RNW 'codegen-windows' invokes dotnet.exe and Windows-only tools.
       # Keep the Linux lane to TS/source checks; generate C++ on Windows.
 
@@ -73,6 +79,8 @@ jobs:
       - name: Build package dist for the consumer
         working-directory: packages/windows-fluent/rnw-fabric
         run: npm run build
+      - name: Verify the isolated RNW public declaration snapshot
+        run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
       - name: Install isolated Windows consumer
         working-directory: packages/windows-fluent/rnw-fabric/example
         run: npm install --no-audit --no-fund

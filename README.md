@@ -7,24 +7,22 @@ independent layout work in NYC-MON, Moyo Learn, the universal spatial starter an
 Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavior
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
-> **Status: v1.0.0, library scope.** v1.0.0 ships as 14 GitHub Release
-> tarballs plus `SHA256SUMS`; see [Installing from a release](#installing-from-a-release).
-> Nothing is published to npm. Of the 341 rows in
-> `docs/completion/library-progress.json`, 329 are library scope and marked
-> implemented; the other 12 (N-rows owned by Forge) are outside the library.
-> All 341 rows keep `acceptance: "unverified"`: CI runs Node, mocked-render
-> and Chromium tests and compiles the iOS SwiftUI, Android Compose and
-> Windows sources, but no row has a recorded device acceptance run. Support
-> tiers, struck items and deferrals are in [v1.0.0 decisions](docs/V1_DECISIONS.md)
-> and [Support policy](docs/SUPPORT.md).
+> **Status: v1.0.0 release candidate.** The planned distribution is 14 GitHub
+> Release tarballs plus `SHA256SUMS`; package versions do not imply that a v1
+> release has been published. Nothing is published to npm. The completion target
+> includes all 341 canonical rows, including the twelve N rows previously
+> deferred to native/Forge integration. Implementation ownership and platform
+> acceptance are recorded separately. See [v1.0.0 decisions](docs/V1_DECISIONS.md),
+> [release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md), and
+> [Support policy](docs/SUPPORT.md) for the actual scope and verified targets.
 
 ## Use only the parts you need
 
 For the Expo Exact-inspired presentation direction, read
 [Native feel and adaptive content](docs/EXACT_NATIVE_FEEL.md). The
-[account screen reference](examples/native-feel/README.md) demonstrates bounded
-forms, wrapping columns, live appearance choices and retained drafts using
-the same component tree on small and large web containers.
+[reference app](examples/native-feel/README.md) includes settings,
+library/detail, editor/inspector and media flows with bounded forms, wrapping
+columns, live appearance choices and retained drafts.
 
 ```tsx
 import { Button } from "@nyc-tron/ui/components/Button";
@@ -147,7 +145,7 @@ https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<version>/nyc-tron-
 `nyc-tron-reserved-regions-1.0.0.tgz` and
 `nyc-tron-windows-fluent-fabric-1.0.0.tgz`.
 
-For v1.0.0:
+For a published v1.0.0 release (these candidate URLs become usable after release):
 
 ```json
 {
@@ -161,9 +159,10 @@ For v1.0.0:
 
 Install only the packages you import. Sibling packages are peer dependencies,
 because a tarball cannot fetch `@nyc-tron/*` from a registry: `@nyc-tron/panes`
-needs `@nyc-tron/core` from the same release listed next to it. Every
-`exports` condition (`types`, `react-native`, `default`) points at compiled
-`dist/*.js` and `dist/*.d.ts`; no tarball ships `src/`.
+needs `@nyc-tron/core` from the same release listed next to it. Workspace package
+exports point at compiled `dist/*.js` and `dist/*.d.ts`. The isolated Windows
+Fabric adapter also ships its typed native codegen source, which RNW needs when
+building its host; it belongs in an RNW 0.85 app, separate from Expo 58.
 
 Peers: `react` and `react-native` are required by `ui`, `panes` and
 `native-controls`. `panes` also needs `zustand`. `native-controls` needs
@@ -195,22 +194,24 @@ Upgrading from `v0.1.0-alpha.4`: see [Migration](docs/MIGRATION.md).
 NYC-Tron's original code is MIT, `Copyright (c) 2026 NYC-Tron UI
 contributors` ([LICENSE](LICENSE)). Ported files keep their upstream license
 and header; [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) lists them, and
-upstream license texts ship in each tarball's `licenses/` directory.
+upstream license texts ship with the affected package under `licenses/` or
+`third-party/`, as listed by its manifest.
 
 `@nyc-tron/platform-services` depends on `mediabunny` 1.65.2, unmodified,
 which is MPL-2.0. Its license text ships at
 `packages/platform-services/third-party/mediabunny/LICENSE`, and
-THIRD_PARTY_NOTICES.md gives the source location. An app that bundles
-`@nyc-tron/platform-services` must keep that notice. The owner's sign-off that
+THIRD_PARTY_NOTICES.md gives the source location. An app that distributes
+Mediabunny code must retain its notices and source-availability statement. The owner's sign-off that
 this satisfies MPL-2.0 for tarball distribution is a release gate in
 [v1.0.0 decisions](docs/V1_DECISIONS.md) D2.
 
-Maintainers: `pnpm pack:release` builds and packs everything into
-`release-packs/` with the same checks the release workflow runs. To cut a
-release, set every package version, merge, then push tag `v<version>` (or run
-the "NYC-Tron release tarballs" workflow with that version). The workflow
-refuses a tag that does not match the package versions and never replaces an
-existing release.
+Maintainers: `pnpm pack:release` builds and packs the thirteen workspace
+packages into `release-packs/`. The release workflow separately builds and packs
+the Windows Fabric adapter with its own pinned runtime. It waits for the source,
+browser, installed-tarball consumer, and iOS/Android native gates at the same
+candidate, refuses mismatched versions, and never replaces an existing release.
+Complete the recorded conditions in [v1.0.0 decisions](docs/V1_DECISIONS.md)
+before tagging or running the release workflow.
 
 ## Development
 
@@ -224,12 +225,17 @@ corepack pnpm packcheck
 
 TypeScript now emits ESM and declarations under each package's `dist/`, and
 `packcheck` verifies every subpath resolves to compiled output and that no
-package root imports an optional peer. `verify` also packs every package and
-checks the tarball contents.
+package root imports an optional peer. `verify` also checks export keys and the
+reachable public declaration graph, packs the workspace packages, and checks
+the tarball contents. Intentional API changes require an explicit, reviewed
+snapshot update; the normal check never rewrites a baseline. Commands for both
+the workspace and isolated Windows snapshots are in
+[release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md#public-api-gate).
 
-These are package, source and unit gates. Native compiles run in separate
-workflows (`native-controls-port.yml`, `winui-native.yml`,
-`winui-fabric.yml`). None of them is a device acceptance run, and no signed
-distribution exists.
+The installed-consumer workflow also exercises real React Native Web against
+freshly installed archives. Native compile and runtime evidence is tracked
+separately in `native-controls-port.yml`, `winui-native.yml`, `winui-fabric.yml`
+and the linked reports. A package or compile result only proves that named gate;
+it does not establish complete device or screen-reader acceptance.
 
 Repository tooling needs Node `>=24.19.0` (root `package.json` `engines`).
