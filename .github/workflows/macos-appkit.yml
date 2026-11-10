@@ -60,6 +60,9 @@ jobs:
       CI: '1'
       EXPO_NO_TELEMETRY: '1'
       SPARK_XCODEBUILD_JOBS: '3'
+      # Expo 55 requires Xcode 26.2+. macos-15 defaults to 16.4, whose
+      # Swift compiler cannot parse Expo's isolated protocol conformances.
+      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -67,10 +70,23 @@ jobs:
           node-version: '24.19.0'
       - name: Verify native ARM64 host and Apple build tools
         run: |
+          set -euo pipefail
           test "$(uname -m)" = arm64
           node -e 'if(process.platform!=="darwin"||process.arch!=="arm64")throw Error("Expected native macOS ARM64 Node")'
-          xcodebuild -version
-          xcrun --sdk macosx --show-sdk-path
+          test -d "$DEVELOPER_DIR"
+          mkdir -p "$RUNNER_TEMP/appkit-toolchain"
+          xcodebuild -version > "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          xcrun swift --version >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          xcrun --sdk macosx --show-sdk-path >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          cat "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          node -e 'const fs=require("node:fs"); const text=fs.readFileSync(process.env.RUNNER_TEMP+"/appkit-toolchain/versions.txt","utf8"); if(!/^Xcode 26\.2\n/m.test(text))throw Error("Expected selected Xcode 26.2")'
+          cat > "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" <<'SWIFT'
+          protocol AppKitHostProbe { func update() }
+          @MainActor final class AppKitHost: @MainActor AppKitHostProbe {
+            func update() {}
+          }
+          SWIFT
+          xcrun swiftc -typecheck -swift-version 6 "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" 2>&1 | tee "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.log"
           pod --version
       - uses: actions/download-artifact@v4
         with:
@@ -106,6 +122,7 @@ jobs:
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/commands.jsonl
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/selection-report.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/version
+            ${{ runner.temp }}/appkit-toolchain/
       - name: Retain the exact natively tested distribution
         if: success() && steps.native.outcome == 'success'
         uses: actions/upload-artifact@v4

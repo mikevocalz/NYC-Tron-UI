@@ -8,7 +8,7 @@ or resizing a window does not create a new document or editing session.
 ## Supported host
 
 This package is isolated from the Expo 58 mobile workspace. Install it in the
-Spark desktop application with these exact tested dependency inputs:
+Spark desktop application with these pinned dependency inputs:
 
 | Dependency | Version |
 | --- | --- |
@@ -20,7 +20,11 @@ Spark desktop application with these exact tested dependency inputs:
 | `react-native-nitro-modules` | `0.37.0` |
 | `@nyc-tron/core` | `1.0.0` |
 
-Use Node 24.19 or later, full Xcode and CocoaPods. Spark's published macOS target
+Use Node 24.19 or later, full Xcode 26.2 or later and CocoaPods. The isolated
+workflow selects Xcode 26.2 explicitly: the macOS 15 runner's default Xcode
+16.4 cannot compile the isolated protocol conformances in Expo 55's Swift
+sources. A real Swift compiler probe runs before dependency preparation, and
+the workflow retains the selected compiler and SDK versions. Spark's published macOS target
 is ARM64. This adapter does not establish Intel, iOS, Android, Windows or headset
 support. Do not put its dependencies in the Expo 58 workspace or substitute
 Nitro v1 for Spark's tested Nitro 0.37 ABI.
