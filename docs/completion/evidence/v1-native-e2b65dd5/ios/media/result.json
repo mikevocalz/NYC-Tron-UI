@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "platform": "ios",
+  "platformVersion": "26.5",
+  "revision": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "fixtureMd5": "f3124067a1a9bb9c06b1283c673cef39",
+  "checks": [
+    "fixture-bytes",
+    "native-probe",
+    "frame-presentation-and-jpeg",
+    "bounded-frame-scaling",
+    "pcm-bytes-and-signal",
+    "pcm-resampling-and-tail",
+    "complete-presentation-index",
+    "indexed-frame-and-rejection",
+    "normalized-errors",
+    "cancelled-consumer",
+    "cache-deletion-and-recovery"
+  ],
+  "elapsedMs": 6092,
+  "observed": {
+    "durationUs": 2000000,
+    "frameTimeUs": 500000,
+    "indexFrames": 40,
+    "indexedTimeUs": 1050000,
+    "pcmFrames": 24000,
+    "resampledFrames": 8000,
+    "upsampledFrames": 48000,
+    "fullResampledFrames": 32000,
+    "tailFrames": 4000,
+    "pcmPeak": 0.12998878955841064,
+    "pcmRms": 0.08835971083538909
+  },
+  "provenance": {
+    "udid": "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC",
+    "name": "iPhone 17 Pro",
+    "sourceCommit": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+    "fixtureSha256": "4c9905522ec7710bbe0a7f02404cc2a957b037c2de3c67c4469df904b7207b0a",
+    "nativeArtifact": {
+      "kind": "ios-app",
+      "algorithm": "sha256-sorted-relative-app-manifest-v1",
+      "sha256": "5a987ff9445a5ae2850b71bca12288e44ae114388c176109d6fdd825e29c34f0",
+      "manifest": {
+        "file": "native-artifact.json",
+        "sha256": "5a987ff9445a5ae2850b71bca12288e44ae114388c176109d6fdd825e29c34f0"
+      }
+    },
+    "bundleWarmup": {
+      "file": "bundle-warmup-media.json",
+      "sha256": "26d2eb5718be04ed33617f3552d39fc1b52623b8d1981f941f8543cc00642710",
+      "bundleSha256": "b1419d660e6ae8466728ad9412e5ce02c78d7f8bce727314beb13b0372b8de29",
+      "bytes": 4626330
+    },
+    "launcherSha256": "ad461128ae342c9d076d026faa19bb265ea6f2e8c45ee7cbe41e10e7e8cf10c9",
+    "installedPackages": {
+      "kind": "expo-native",
+      "sourceCommit": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+      "packages": {
+        "@nyc-tron/core": {
+          "version": "1.0.0",
+          "sha256": "1fdb4f4390043413eb8c2a9e667fafafb6ed371f369b844a33b9b45049332d17",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/core"
+        },
+        "@nyc-tron/expo-controls": {
+          "version": "1.0.0",
+          "sha256": "43b8105606988c7bd1748fe66aded313516437fe8ba15e3b10046d535c5ddf78",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/expo-controls"
+        },
+        "@nyc-tron/hardware-keys": {
+          "version": "1.0.0",
+          "sha256": "663e158f0feb79936b96764e2cc4271fdb67b719494cb4b33f090ca6eb90094a",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/hardware-keys"
+        },
+        "@nyc-tron/native-charts": {
+          "version": "1.0.0",
+          "sha256": "7ff56ce71a77fafec0aff721a4e626688fbe0b533f99d73e1420f0d5876db429",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-charts"
+        },
+        "@nyc-tron/native-controls": {
+          "version": "1.0.0",
+          "sha256": "a52e9227b477c73abddbdca6fe203f35c87104e81aa193473a39fb226d26d3a7",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-controls"
+        },
+        "@nyc-tron/native-navigation": {
+          "version": "1.0.0",
+          "sha256": "22b8396ac3f5be871a4e7c9d7aabaa46efd9a308042d21c99a46a7296465f943",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-navigation"
+        },
+        "@nyc-tron/panes": {
+          "version": "1.0.0",
+          "sha256": "e3cde0b7f04d088ce882e6ec8a26f2b29a25b7c90ec7fcf82e66ffca46dacb5f",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/panes"
+        },
+        "@nyc-tron/platform-services": {
+          "version": "1.0.0",
+          "sha256": "9b5868b1d6d7f1db7f70e2a6e811b513d671a43eb218c12e62d322622a0b4e34",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/platform-services"
+        },
+        "@nyc-tron/reserved-regions": {
+          "version": "1.0.0",
+          "sha256": "7d89cae7367d6946615a58bc444dff40d9b50a93c557b40680862bca68680e77",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/reserved-regions"
+        },
+        "@nyc-tron/ui": {
+          "version": "1.0.0",
+          "sha256": "6ff7c475247fa0143ebd2c12cb62972570eab7d4d5e2eba9bf8e8b5e867b9f21",
+          "directory": "/Users/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/ui"
+        }
+      },
+      "absentPeers": []
+    }
+  }
+}

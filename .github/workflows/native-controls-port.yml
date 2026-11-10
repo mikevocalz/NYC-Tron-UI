@@ -17,6 +17,7 @@ on:
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
       - "tooling/tests/native-ui-acceptance.test.mjs"
+      - "tooling/tests/native-ui-transport.test.mjs"
       - "tooling/tests/native-artifact.test.mjs"
       - "tooling/tests/metro-warmup.test.mjs"
       - ".github/workflows/native-controls-port.yml"
@@ -45,6 +46,7 @@ on:
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
       - "tooling/tests/native-ui-acceptance.test.mjs"
+      - "tooling/tests/native-ui-transport.test.mjs"
       - "tooling/tests/native-artifact.test.mjs"
       - "tooling/tests/metro-warmup.test.mjs"
       - ".github/workflows/native-controls-port.yml"
@@ -79,6 +81,7 @@ jobs:
       - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
       - run: node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
       - run: node --test tooling/tests/native-ui-acceptance.test.mjs
+      - run: node --test tooling/tests/native-ui-transport.test.mjs
       - run: node --test tooling/tests/native-artifact.test.mjs
       - run: node --test tooling/tests/metro-warmup.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs

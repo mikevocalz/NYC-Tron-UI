@@ -1,0 +1,22 @@
+{
+  "kind": "basic",
+  "sourceCommit": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "packages": {
+    "@nyc-tron/ui": {
+      "version": "1.0.0",
+      "sha256": "e3479dcd2f05194dc65fb4aa912be1200be2f5749e1aa7d066b782bbabc9e7a5",
+      "directory": "/home/runner/work/_temp/nyc-tron-release-consumer/app/node_modules/@nyc-tron/ui"
+    }
+  },
+  "absentPeers": [
+    "@nyc-tron/core",
+    "@expo/ui",
+    "expo",
+    "react-native-skia",
+    "react-native-gesture-handler",
+    "@tanstack/react-table",
+    "expo-drag-drop-content-view",
+    "expo-linear-gradient",
+    "uniwind"
+  ]
+}

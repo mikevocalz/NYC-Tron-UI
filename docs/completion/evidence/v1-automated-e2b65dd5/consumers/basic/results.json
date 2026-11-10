@@ -1,0 +1,203 @@
+{
+  "config": {
+    "argv": [
+      "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+      "/home/runner/work/_temp/nyc-tron-release-consumer/app/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/home/runner/work/_temp/nyc-tron-release-consumer/app/playwright.config.mjs",
+    "rootDir": "/home/runner/work/_temp/nyc-tron-release-consumer/app",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/mikevocalz/NYC-Tron-UI/commit/cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+        "commitHash": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+        "prHref": "https://github.com/mikevocalz/NYC-Tron-UI/pull/57",
+        "prTitle": "Complete v1 reference flows, native input, and release acceptance gates",
+        "prBaseHash": "0b0b45d6ddd0e32428f72e7372e89cb3acc86c54",
+        "buildHref": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189171"
+      },
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/_temp/nyc-tron-release-consumer/app/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/mikevocalz/NYC-Tron-UI/commit/cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+            "commitHash": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+            "prHref": "https://github.com/mikevocalz/NYC-Tron-UI/pull/57",
+            "prTitle": "Complete v1 reference flows, native input, and release acceptance gates",
+            "prBaseHash": "0b0b45d6ddd0e32428f72e7372e89cb3acc86c54",
+            "buildHref": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42770189171"
+          },
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/_temp/nyc-tron-release-consumer/app",
+        "testIgnore": [],
+        "testMatch": [
+          "consumer.spec.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "artifacts/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node server.mjs",
+      "url": "http://127.0.0.1:4187",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "consumer.spec.mjs",
+      "file": "consumer.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "installed UI works without workspace sources and keeps the field through reflow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 561,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T06:42:47.796Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7aa5685dd440706a9387-865e471f8eab1b64463e",
+          "file": "consumer.spec.mjs",
+          "line": 3,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "Expo browser exports",
+          "file": "consumer.spec.mjs",
+          "line": 31,
+          "column": 6,
+          "specs": [
+            {
+              "title": "installed picker and panes work through the browser export conditions",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "The basic consumer deliberately omits Expo",
+                      "location": {
+                        "file": "/home/runner/work/_temp/nyc-tron-release-consumer/app/consumer.spec.mjs",
+                        "line": 32,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T06:42:48.577Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "The basic consumer deliberately omits Expo",
+                          "location": {
+                            "file": "/home/runner/work/_temp/nyc-tron-release-consumer/app/consumer.spec.mjs",
+                            "line": 32,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7aa5685dd440706a9387-d759b01f875272cde12f",
+              "file": "consumer.spec.mjs",
+              "line": 33,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T06:42:47.351Z",
+    "duration": 1270.6080000000002,
+    "expected": 1,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
