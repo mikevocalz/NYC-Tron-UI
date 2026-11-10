@@ -90,6 +90,25 @@ test.describe("Complete native feel reference", () => {
     await expect(page.getByRole("slider", { name: "Text opacity", exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Clear search", exact: true }).click();
     await expect(input).toBeVisible();
+    // Shared shell continuity with an explicit capability input. This is a
+    // browser geometry check, not evidence of a native foldable adapter.
+    await page.goto("/reference-app?route=editor&native-shell=1&dir=rtl");
+    await ready(page, "editor");
+    const retained = await input.elementHandle();
+    await input.fill("Keep the same editor.");
+    await input.focus();
+    await page.evaluate(() => window.setReferenceFamily("foldable"));
+    await expect(page.getByTestId("reference-right-rail")).toBeVisible();
+    await expect(input).toBeFocused();
+    expect(await input.evaluate((node, before) => node === before, retained)).toBe(true);
+    await page.setViewportSize({ width: 390, height: 1000 });
+    const rail = await page.getByTestId("reference-right-rail").boundingBox();
+    const app = await page.getByTestId("reference-app").boundingBox();
+    expect(Math.abs(rail.x + rail.width - app.x - app.width)).toBeLessThanOrEqual(1);
+    await expect(input).toHaveValue("Keep the same editor.");
+    await page.evaluate(() => window.setReferenceFamily("phone"));
+    await expect(page.getByTestId("reference-bottom-tabs")).toBeVisible();
+    expect(await input.evaluate((node, before) => node === before, retained)).toBe(true);
   });
 
   test("settings validate, save, restore and carry appearance through navigation", async ({ page }) => {

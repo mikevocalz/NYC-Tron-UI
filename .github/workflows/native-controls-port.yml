@@ -137,10 +137,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      NYC_TRON_CONSUMER: ${{ runner.temp }}/nyc-tron-native-consumer
       NYC_TRON_ACCEPTANCE: reference
     steps:
       - uses: actions/checkout@v4
+      - name: Set the consumer location on this runner
+        run: echo "NYC_TRON_CONSUMER=$RUNNER_TEMP/nyc-tron-native-consumer" >> "$GITHUB_ENV"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -233,10 +234,11 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 70
     env:
-      NYC_TRON_CONSUMER: ${{ runner.temp }}/nyc-tron-native-consumer
       NYC_TRON_ACCEPTANCE: reference
     steps:
       - uses: actions/checkout@v4
+      - name: Set the consumer location on this runner
+        run: echo "NYC_TRON_CONSUMER=$RUNNER_TEMP/nyc-tron-native-consumer" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"

@@ -78,11 +78,11 @@ export function ReferenceApp({ navigation, onRenderSample, onAppearanceChange, r
         </View>
         {!rightRail && !bottomTabs ? <TabBar aria-label="Workspace" tabs={tabs} density="compact" /> : null}
       </View>
-      {rightRail ? <NavigationShell edge="right" isRTL={rtl} style={{ minHeight: 0 }}
-        rail={renderNativeRail?.({ selectedId: route, onSelect: model.navigate }) ?? <NavigationRail testID="reference-right-rail" edge="right" items={destinations} selectedId={route}
-          onSelectionChange={id => model.navigate(id as ReferenceRoute)} style={{ width: 104 }} />}>
+      <NavigationShell edge="right" isRTL={rtl} style={{ minHeight: 0 }}
+        rail={rightRail ? renderNativeRail?.({ selectedId: route, onSelect: model.navigate }) ?? <NavigationRail testID="reference-right-rail" edge="right" items={destinations} selectedId={route}
+          onSelectionChange={id => model.navigate(id as ReferenceRoute)} style={{ width: 104 }} /> : null}>
         {content}
-      </NavigationShell> : content}
+      </NavigationShell>
       {bottomTabs ? <TabBar testID="reference-bottom-tabs" aria-label="Workspace" tabs={tabs} /> : null}
       {(shell.kind === "windows-drawer" || shell.kind === "macos-sidebar") ?
         <Text {...{ className: "p-3 text-sm text-text-muted" }}>This reference requires the host's native desktop navigation adapter.</Text> : null}

@@ -18,10 +18,10 @@ jobs:
       fail-fast: false
       matrix:
         kind: [basic, expo-web]
-    env:
-      NYC_TRON_CONSUMER: ${{ runner.temp }}/nyc-tron-release-consumer
     steps:
       - uses: actions/checkout@v4
+      - name: Set the consumer location on this runner
+        run: echo "NYC_TRON_CONSUMER=$RUNNER_TEMP/nyc-tron-release-consumer" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"

@@ -8,6 +8,9 @@ on:
       - "packages/expo-controls/**"
       - "packages/ui/tests/browser/native-feel.spec.mjs"
       - "packages/ui/tests/browser/reference-app.spec.mjs"
+      - "packages/ui/tests/browser/pointer-input.spec.mjs"
+      - "packages/ui/tests/browser/fixtures/pointer-input.tsx"
+      - "packages/native-controls/**"
       - "packages/ui/tests/browser/fixtures/reference-app.tsx"
       - "packages/ui/tests/browser/fixtures/native-feel.tsx"
       - "packages/ui/tests/browser/theme.css"
@@ -35,7 +38,7 @@ jobs:
         run: node --test examples/native-feel/tests/reference-model.test.mjs
       - name: Exercise the reference screen and capture desktop and phone layouts
         working-directory: packages/ui/tests/browser
-        run: npx --no-install playwright test native-feel.spec.mjs reference-app.spec.mjs
+        run: npx --no-install playwright test native-feel.spec.mjs reference-app.spec.mjs pointer-input.spec.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
