@@ -42,7 +42,7 @@ export function Popover({ scope = 'popover', open, onOpenChange, onPresentationR
   const committed = useRef<{ scopeToken: string; presentationToken: string; open: boolean; available: boolean; onOpenChange: typeof onOpenChange; onPresentationRejected: typeof onPresentationRejected } | null>(null);
   useLayoutEffect(() => { committed.current = { scopeToken, presentationToken, open, available, onOpenChange, onPresentationRejected }; });
   useLayoutEffect(() => () => { committed.current = null; }, []);
-  return <NativePopover testID={testID} accessibilityLabel={accessibilityLabel} collapsable={false}
+  return <NativePopover testID={testID} accessibilityLabel={accessibilityLabel} collapsable={false} pointerEvents="box-none"
     style={{ position: 'absolute', left: 0, top: 0, width: 1, height: 1 }}
     visible={open && available} scopeToken={scopeToken} presentationToken={presentationToken} animated={animated}
     anchorX={anchor.x} anchorY={anchor.y} anchorWidth={anchor.width} anchorHeight={anchor.height}

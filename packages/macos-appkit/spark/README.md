@@ -108,6 +108,37 @@ restores the previous responder when it still belongs to the owner and does
 not take focus away from a newly focused window. Motion follows the supplied
 `animated` value and the system's Reduce Motion preference.
 
+The detached popover content has its own `RCTSurfaceTouchHandler`. In the
+pinned RNmacOS 0.83 implementation, that handler hit-tests the retained Fabric
+children, reads their `touchEventEmitterAtPoint`, and dispatches through each
+child's existing event emitter. Its `EventTarget` retains the original Fabric
+surface identifier; routing does not discover a new surface through native
+view ancestry. The native descriptor uses the same `RootNodeKind` measurement
+boundary as React Native's modal host. Native state supplies the actual content
+origin inside the popover window, including the border and arrow. Fabric
+measurements and RNmacOS responder `pageX`/`pageY` consequently use that window's
+top-left logical coordinates, independent of the popover's declaration site.
+The native content bounds subtract the inset once, preserving the children's
+visible positions and original React ownership. Initial reveal waits for this
+layout; safe updates keep existing content and its native field editor visible.
+
+For a native content rectangle `(x, y, width, height)` in AppKit's bottom-left
+window coordinates and outer window height `H`, the state records content
+origin `(x, H - y - height)`. That measured origin becomes Yoga's left/top
+padding and the native content view's bounds origin. The first adds the inset
+to Fabric page measurements; the second removes it from native drawing. No
+fixed border size or zero content origin is assumed. This popover-window
+coordinate boundary is separate from the public anchor and safe-region
+coordinates, which remain in the owning window's content view.
+
+The acceptance fixture separately sends synthetic `NSEvent` down/move/up input
+through the installed `RCTSurfaceTouchHandler` to an ordinary React `Pressable`,
+declared under an offset ancestor. It records the actual native bounds, Fabric
+measurements, content insets and responder transitions in `responder-events.json`.
+Both the target and its report must be fully within their native visible rects.
+This path
+uses no Spark target/action callback and makes no physical OS pointer claim.
+
 ## Window ownership
 
 Register each component with React Native's `AppRegistry`. Construct one host

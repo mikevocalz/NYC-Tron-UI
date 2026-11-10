@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
-for (const file of ['README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'NYCTronAppKit.podspec', 'macos/NYCTronDisplays.mm', 'macos/NYCTronDisplays.h', 'src/NativeNYCTronDisplays.ts', 'macos/NYCTronPopover.mm', 'macos/NYCTronPopover.h', 'src/NYCTronPopoverNativeComponent.ts', 'react-native.config.cjs']) {
+for (const file of ['README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'NYCTronAppKit.podspec', 'macos/NYCTronDisplays.mm', 'macos/NYCTronDisplays.h', 'src/NativeNYCTronDisplays.ts', 'macos/NYCTronPopover.mm', 'macos/NYCTronPopover.h', 'macos/NYCTronPopoverComponentDescriptor.h', 'src/NYCTronPopoverNativeComponent.ts', 'react-native.config.cjs']) {
   assert.ok(existsSync(join(root, file)), `Required package file missing: ${file}`);
 }
 for (const [subpath, condition] of Object.entries(pkg.exports)) {
