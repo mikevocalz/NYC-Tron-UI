@@ -20,6 +20,19 @@ if (process.env.GITHUB_SHA) assert.equal(revision, process.env.GITHUB_SHA, 'Cons
 const archive = preparation.archives.find(a => a.packageName === '@nyc-tron/macos-appkit');
 assert.ok(archive?.files.length, 'Missing installed AppKit archive receipt');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const transportDirectory = join(root, 'acceptance-transport');
+const transportReceipt = JSON.parse(readFileSync(join(transportDirectory, 'patch-receipt.json'), 'utf8'));
+assert.deepEqual(transportReceipt, preparation.acceptanceTransport, 'The private transport patch differs from preparation');
+assert.equal(transportReceipt.scope, 'private-native-acceptance-consumer-only');
+assert.equal(transportReceipt.sourceRevision, revision);
+assert.equal(transportReceipt.before.sha256, 'c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc');
+assert.equal(transportReceipt.file, 'node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app/macos/SparkTestDriver.mm');
+assert.equal(hash(readFileSync(join(root, transportReceipt.file))), transportReceipt.after.sha256, 'Compiled private driver input changed after preparation');
+const transportProbe = JSON.parse(readFileSync(join(transportDirectory, 'probe-result.json'), 'utf8'));
+assert.equal(transportProbe.status, 'passed'); assert.equal(transportProbe.scope, 'foundation-socketpair-probe');
+assert.equal(transportProbe.nativeInteractionsAccepted, false); assert.equal(transportProbe.sourceRevision, revision);
+assert.equal(transportProbe.patchSha256, transportReceipt.patchSha256); assert.equal(transportProbe.afterSha256, transportReceipt.after.sha256);
+for (const file of ['patch-receipt.json', 'probe-result.json', 'probe-trace.log']) copyFileSync(join(transportDirectory, file), join(output, file));
 for (const packed of preparation.archives) {
   assert.equal(hash(readFileSync(join(root, 'vendor', packed.file))), packed.sha256, 'Candidate archive changed after installation');
   const installed = join(root, 'node_modules', packed.packageName);

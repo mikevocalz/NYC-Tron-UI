@@ -44,6 +44,15 @@ no arbitrary gesture offset or weakened assertion is used. All 21 original
 artifact files and the complete log are retained. No passed Windows archive
 or completed OS-drag/navigation result follows from this failed run.
 
+The follow-up at `a0ea5e2e` uses RNW's public own-layout event after new metrics
+are committed. It refreshes only the retained live ChildSiteLink translation,
+replacing the old own-origin contribution while preserving the current ancestor
+and scroll offset and accounting for scale changes. No SDK source, driver
+coordinate or native assertion changes. The focused portable C++17 regression
+and all 49 existing isolated checks passed independently; the
+[new native run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42898545855)
+must establish actual geometry and OS input.
+
 ### AppKit: live process, missing initial reply
 
 [AppKit at `c0f6601`](../evidence/v1-appkit-c0f6601-live-mount-timeout/README.md)
@@ -58,12 +67,24 @@ actual process was present before and after capture; 25 thread groups show
 ordinary AppKit loop/layout activity, mostly idle JavaScript with some microtasks,
 and a native thread in `recv` beneath unsymbolicated app frames. The sample is
 not evidence of a startup deadlock and does not establish whether the missing
-reply was serialized or sent. A bounded acceptance-driver transport trace is
-being prepared; nonfinite geometry remains an unproved hypothesis. The complete
-original artifact is retained alongside the trace and process evidence. The
+reply was serialized or sent. Nonfinite geometry remains an unproved hypothesis.
+The complete original artifact is retained alongside the trace and process
+evidence. The
 preceding [d42 empty sample](../evidence/v1-appkit-d42b445-mount-timeout/README.md)
 and [7af visible-but-non-key attempt](../evidence/v1-appkit-7afcf31-foreground-failure/README.md)
 remain attached to their own checkouts.
+
+The follow-up at `0308fbdb` applies an independently reviewed, exact-preimage
+Spark 0.0.2 test-driver patch only in the generated private native-acceptance
+consumer. It records bounded request/execution/reply/serialization/send stages
+and returns explicit failure for invalid or throwing serialization. Original
+and patched source, license and input hashes are retained. Three filesystem
+guards, JavaScript syntax and aggregate workflow lint passed. The
+[new Mac run](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42898902137)
+first executes a real Foundation/socketpair probe against the actual original
+and patched sender functions; the complete app/native gesture gate remains
+separate and unchanged. Local source checks do not establish either native
+probe success or the cause of c0's unanswered request.
 
 ### Actual gestures remain mandatory
 

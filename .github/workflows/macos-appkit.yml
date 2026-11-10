@@ -50,7 +50,7 @@ jobs:
           corepack enable
           corepack pnpm install --frozen-lockfile --ignore-scripts
       - name: Check shared archive and native driver contracts
-        run: node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs
+        run: node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs
       - name: Build and pack core with release provenance
         if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         run: |
@@ -115,6 +115,8 @@ jobs:
         run: node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
       - name: Verify the installed AppKit public declaration snapshot
         run: node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+      - name: Verify the private Spark transport with native Foundation and socketpair
+        run: node tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"
       - name: Compile a standalone native AppKit reference
         working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
         run: npm run build
@@ -139,6 +141,10 @@ jobs:
             ${{ runner.temp }}/appkit-shared/SHA256SUMS
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.mm
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.log
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/logs/
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/commands.jsonl
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/selection-report.json
