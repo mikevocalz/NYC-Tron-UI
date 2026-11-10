@@ -35,7 +35,7 @@ acceptance still requires exactly 32,000 output frames for the complete
 two-second fixture at 16 kHz, finite PCM with a real signal, requested-rate
 resampling and the bounded tail interval.
 
-## Local validation
+## Initial local validation
 
 | Check | Result |
 | --- | --- |
@@ -46,7 +46,7 @@ resampling and the bounded tail interval.
 | Changed JS entry/browser test syntax and diff whitespace | Passed |
 | Pointer browser acceptance, including the new 320×640 visibility case | Blocked before page startup: Chromium's local socket returned `Operation not permitted`; the environment rejected an elevated retry |
 | Entire native example TypeScript check | Blocked by missing local React Native, Zustand and installed component dependencies |
-| Corrected iOS/Android compile and simulator interaction | Pending the hosted native jobs |
+| Corrected iOS/Android compile and simulator interaction | Pending at initial validation; the Android follow-up is recorded below |
 
 The browser case asserts the exact touch/up receipt, its full viewport
 visibility and reachable clear/remove controls. It is a browser layout check;
@@ -66,3 +66,47 @@ and `expo-native-ui` skills read on November 10. The decisions preserve native
 SwiftUI ownership, scrollable content, the existing state owner and strict
 decoded-media bounds. Physical device input and screen-reader output remain
 separate gates.
+
+## Hosted Android result and cancellation correction
+
+[Native controls run 42840807450](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42840807450),
+Android job `129916136357`, tested PR head
+`1a7fc0d4fb561913a79ad3377b9a9b9f44201e4c`. The installed-consumer report
+identifies source revision `a0e5e277032f4a0cd50e62b3ac448b4da09567f3`.
+The job built and installed the packed Kotlin/Compose modules on Android API
+35. Its artifact `13777745956`, `native-release-consumer-android`, has SHA-256
+`f987e3b2c4a2c61ba7eadc7e717bfdf022e06f01eb1d1b44e13f1fbb6b0ff126`.
+
+| Hosted gate | Result |
+| --- | --- |
+| Native media decoder | All 11 checks passed, including 24,000 requested PCM frames, 32,000 complete resampled frames and the 4,000-frame tail. The strict first-sample and continuity guards remain enabled. |
+| Settings and Editor UI | Both Maestro flows passed. |
+| Pointer touch UI | Passed, with exactly one committed stroke and the visible touch/up receipt. |
+| Pointer cancellation after Home | Failed: one committed stroke and zero cancelled strokes; the raw event was `cancel`, while the last routed stroke was still `down`. |
+
+The cancellation failure has a separate native cause. The captured observation
+contains a cancel sample at `(0, 0)`. AndroidX
+[`PointerInteropFilter.onCancel`](https://github.com/androidx/androidx/blob/androidx-main/compose/ui/ui/src/androidMain/kotlin/androidx/compose/ui/input/pointer/PointerInteropFilter.android.kt)
+can invoke
+[`emptyCancelMotionEventScope`](https://github.com/androidx/androidx/blob/androidx-main/compose/ui/ui/src/androidMain/kotlin/androidx/compose/ui/input/pointer/PointerInteropUtils.android.kt),
+which creates a minimal event with unknown input source instead of the
+original contact identity. Sampling that event as a new observed contact
+does not preserve the identity required by the stroke router.
+
+`TronPointerCaptureView` now handles `ACTION_CANCEL` before ordinary sampling
+and prediction. It snapshots and clears all retained active contacts and
+predictors, releases parent interception, then emits one cancellation per
+retained contact with its original ID, input type, coordinates and latest
+observed timestamp. No prediction is promoted to an observed sample.
+Focus loss and detach share this contact cleanup and still clear hover and
+held keys. Repeated cancellation has no retained contacts to emit again.
+Touch cancellation alone leaves observed hover and key state intact.
+
+The existing OS-driven Home-interruption flow still requires exactly one
+cancelled stroke, one committed stroke and zero predictions. Its assertions,
+the JS identity/time validation and the media bounds are unchanged. Local
+verification after this correction passed all 22 native-controls JS/source
+tests, the package TypeScript check and the package build. These checks do
+not compile or run the changed Kotlin; a fresh installed APK must pass the
+existing Android cancellation flow before this follow-up has native runtime
+acceptance.
