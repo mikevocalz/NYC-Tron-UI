@@ -29,8 +29,9 @@ from the executed installed app, not a JavaScript host mock.
 Both [Settings](../../examples/native-feel/SettingsScreen.tsx) and
 [Editor](../../examples/native-feel/EditorInspectorScreen.tsx) already declare
 `returnKeyType="done"` and `submitBehavior="blurAndSubmit"`. The acceptance
-flows now share a small native keyboard subflow. On iOS it taps that observed
-system Done key and asserts that the key disappears. On Android it retains the
+flows now share a small native keyboard subflow. On iOS it first confirms that
+the keyboard's delete key is visible, taps the observed system Done key, then
+asserts that both keys disappear. On Android it retains the
 existing `hideKeyboard` action. Every original content, save, draft-retention
 and screenshot assertion remains in place, as do the original route actions.
 

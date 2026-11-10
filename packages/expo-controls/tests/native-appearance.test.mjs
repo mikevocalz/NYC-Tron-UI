@@ -5,6 +5,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import ts from "typescript";
+import * as sharedOverlays from "../../core/src/overlays.ts";
 
 // Execute the exported components with mocked native hosts. These checks
 // prove appearance forwarding and retained JS state, not OS pixels or a11y.
@@ -17,6 +18,8 @@ function harness(file,os){
   const element=(type,props,key)=>({type,props,key});
   const modifier=new Proxy({}, {get:(_,name)=>(...args)=>({name,args})});
   const mocks={
+    // Resolve the real peer-free implementation after its shared-owner extraction.
+    "@nyc-tron/core/overlays": sharedOverlays,
     react:{
       useRef:value=>refs[cursor++]??(refs[cursor-1]={current:value}),
       useEffect:()=>{},useLayoutEffect:()=>{},useMemo:fn=>fn(),

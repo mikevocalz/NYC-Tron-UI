@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-11-10",
+  "prHead": "0a4f34b9334814f5bfd9b1568402a2a131faedd8",
+  "testedMerge": "aa68e5ceb6875e02f73ee48dbdfa1c22641540d1",
+  "workflowRunId": 42841109661,
+  "nativeJobId": 129916824833,
+  "nativeJobConclusion": "success",
+  "artifacts": [
+    {
+      "id": 13776542379,
+      "name": "windows-fabric-tested-package",
+      "sha256": "2903b254f601fd6cb3f60f8186fed23ede96e5cec3e56d155b01231e628951ad"
+    },
+    {
+      "id": 13775917885,
+      "name": "winui-fabric-uia-smoke",
+      "sha256": "83d105ca9871c010737799f8bab92ab93d411844ca4146edf8987a38814c3c80"
+    }
+  ],
+  "checks": [
+    "downloaded ZIP digests match GitHub",
+    "tested archive matches native receipt",
+    "all UIA evidence hashes match the receipt",
+    "native acceptance identifies the same tested merge",
+    "shared core and Windows contracts match canonical release archive bytes",
+    "release merger accepts original tested archive and shared dependencies without repacking"
+  ],
+  "limits": [
+    "executable hash is reported by the native runner, not independently rehashed from a retained executable",
+    "04-native-document and 05-close-veto capture occluded desktop pixels; UIA assertions establish window state, these captures do not establish visible document content",
+    "no native overlay, OS drag/drop, physical multi-display, Narrator speech, or complete eight-platform claim"
+  ]
+}

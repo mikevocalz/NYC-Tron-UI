@@ -1,0 +1,8 @@
+﻿ControlType.Pane | name='' | id='' | class='Microsoft.UI.Content.DesktopChildSiteBridge'
+ControlType.Group | name='' | id='' | class='InputSiteWindowClass'
+ControlType.Text | name='Native document window' | id='' | class=''
+ControlType.Text | name='Window identity: document' | id='' | class=''
+ControlType.Text | name='Shared draft: Edited once, shared everywhere' | id='' | class=''
+ControlType.Text | name='The document store and undo owner stay above both native surfaces.' | id='' | class=''
+ControlType.Button | name='Save shared draft' | id='' | class=''
+ControlType.Text | name='Save shared draft' | id='' | class=''

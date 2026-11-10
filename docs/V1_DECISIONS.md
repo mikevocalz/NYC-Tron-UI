@@ -8,16 +8,20 @@ separate.
 
 ## D1. Distribution: GitHub Release tarballs
 
-The distribution channel remains fourteen GitHub Release tarballs with
+The distribution channel is fifteen GitHub Release tarballs with
 `SHA256SUMS`, installed by immutable release URL. The thirteen workspace
-packages are produced by `tooling/pack-release.mjs`. The fourteenth,
-`@nyc-tron/windows-fluent-fabric`, is built and packed separately in its RNW
-0.85 lane by `.github/workflows/release.yml`. Every distributable manifest is
+packages are produced by `tooling/pack-release.mjs`. The two desktop packages,
+`@nyc-tron/windows-fluent-fabric` and `@nyc-tron/macos-appkit`, are built and
+tested separately in their RNW 0.85 and Spark / Expo 55 lanes. The release
+downloads the exact archives installed by those native consumer jobs and
+verifies their checksums, package identities and candidate revision before
+including them. It does not repack either archive after its native test.
+Every distributable manifest is
 `private: true`, has version `1.0.0`, declares `MIT`, and includes `LICENSE`.
 
 The release job requires the source/package checks, browser suites, installed
 tarball consumers, iOS/Android native build/runtime jobs, actual Windows native
-compilation and UI Automation, and reference captures/render measurements from
+compilation and UI Automation, AppKit native controls/window lifecycle, and reference captures/render measurements from
 the same candidate.
 It rejects mismatched package versions and an existing release instead of
 replacing its assets. No tag or release has been created as part of this
@@ -32,7 +36,7 @@ every matching runtime.
 ## D2. Licensing and provenance
 
 MIT metadata and the original-code license are present at the repository root
-and in all fourteen packages. Ported code retains the upstream terms recorded
+and in all fifteen packages. Ported code retains the upstream terms recorded
 in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), package notices, and
 their accompanying license texts. The pack gate verifies declared notices and
 license files are actually present in the produced archives. Exact is a design
@@ -48,7 +52,7 @@ sign-off. The previously required owner distribution review is tracked in
 [distribution-review.json](completion/distribution-review.json) and remains
 `pending`. Stable publication checks an actual comment by the repository owner
 through GitHub's API, approving the exact version and SHA-256 of the produced
-fourteen-archive `SHA256SUMS`. Changing a local status field cannot satisfy this
+fifteen-archive `SHA256SUMS`. Changing a local status field cannot satisfy this
 gate. The archives are retained as a CI artifact before the check, so they can
 be reviewed even when stable publication is blocked. The
 [release evidence report](completion/reports/V1-RELEASE-GATES.md#stable-publication-gate)
@@ -93,11 +97,11 @@ readiness.
 
 | Area | Required evidence |
 |---|---|
-| Release and native compilation | Reusable iOS/Android jobs consume this candidate's tarballs; release also waits for actual Windows native compilation/UIA and reference captures/render measurements |
+| Release and native compilation | Reusable iOS/Android jobs consume this candidate's tarballs; release also waits for Windows native compilation/UIA, AppKit controls/window lifecycle, and reference captures/render measurements. Both desktop archives are preserved from the successful native consumer jobs. |
 | Clean consumers | A basic UI app without unrelated optional peers, an Expo/web app, and the native reference app install actual archives outside the checkout |
 | Reference flows | Settings, library/detail, editor/inspector and media flows preserve authored state through adaptive layout |
 | Native interaction and accessibility | Actual platform interaction reports, cancellation/lifecycle behavior, keyboard and assistive-technology checks for the claimed targets |
-| Public API stability | Export-key snapshot, reachable declaration/type graph, ordered export conditions, and a separate RNW declaration snapshot |
+| Public API stability | Export-key snapshot, reachable declaration/type graph, ordered export conditions, and separate RNW and AppKit declaration snapshots |
 | Performance | Reproducible measurements with fixture, runtime, hardware, sample count and limits; no inherited Exact speed claim |
 | Documentation and distribution | Accurate candidate/support status, bundled licenses/notices, migration instructions, verified archive contents, and the recorded owner distribution review |
 

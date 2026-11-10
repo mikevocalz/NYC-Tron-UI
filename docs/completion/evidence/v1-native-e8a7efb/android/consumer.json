@@ -1,0 +1,57 @@
+{
+  "kind": "expo-native",
+  "sourceCommit": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+  "packages": {
+    "@nyc-tron/core": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-core-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "25e41cd6cfddfd93a75cd24da2dea740f117cafe5043edc9c0dc7c852b4490a0"
+    },
+    "@nyc-tron/expo-controls": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-expo-controls-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "24db24d50dfc136ea9f9d85df6269612bf5f0f518f444b4192af58d54715fffd"
+    },
+    "@nyc-tron/hardware-keys": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-hardware-keys-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912"
+    },
+    "@nyc-tron/native-charts": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-native-charts-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76"
+    },
+    "@nyc-tron/native-controls": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-native-controls-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "0756629d2ee99eca9ada1293d23b780a88470f7b2729c1611be623608b6fe23b"
+    },
+    "@nyc-tron/native-navigation": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-native-navigation-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85"
+    },
+    "@nyc-tron/panes": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-panes-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9"
+    },
+    "@nyc-tron/platform-services": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-platform-services-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650"
+    },
+    "@nyc-tron/reserved-regions": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-reserved-regions-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2"
+    },
+    "@nyc-tron/ui": {
+      "path": "/home/runner/work/_temp/nyc-tron-packs/nyc-tron-ui-1.0.0.tgz",
+      "version": "1.0.0",
+      "sha256": "c888260e10844d5a1d4f8efe1c4799dcf7325f7071edb47582ba6056d584fba0"
+    }
+  },
+  "absentPeers": []
+}

@@ -1,5 +1,31 @@
 # v1.0.0 status of issues #4, #7 and #11
 
+## Current completion work — November 10, 2026
+
+The November 9 dispositions below are a historical snapshot. The subsequent
+user approval includes all twelve remaining service rows and feasible desktop
+host work; the earlier AppKit and native-window deferrals no longer describe
+the approved scope. Current source ownership covers all 341 original IDs:
+332 local and nine pinned external implementations.
+
+[PR #57](https://github.com/mikevocalz/NYC-Tron-UI/pull/57) contains the four
+reference flows, native pointer/media work, clean consumers and release gates.
+The peer-free window lifecycle model is committed under
+`@nyc-tron/core/window-lifecycle`; the panes export remains compatible.
+The [keyboard follow-up](reports/V1-NATIVE-KEYBOARD.md) records the exact
+failed iOS interaction and its repair without promoting the failure.
+
+Desktop integration adds the isolated AppKit/Spark and Windows Fabric host
+adapters, with actual native window ownership and dedicated consumer gates.
+Their native results belong to their tested commits; read
+[the current support table](../SUPPORT.md) and
+[candidate evidence](reports/V1-RELEASE-GATES.md) before claiming acceptance.
+Issues #4, #7 and #11 retain their remaining platform-specific interaction,
+accessibility and hardware requirements. A source implementation or passing
+unit suite does not close those requirements.
+
+## Historical snapshot — November 9, 2026
+
 Recorded 2026-11-09 against commit `d5207cc7` plus the uncommitted v1.0.0
 preparation working tree on `release/v1.0.0-prep`. Dispositions follow
 [v1.0.0 decisions](../V1_DECISIONS.md).

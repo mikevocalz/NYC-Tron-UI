@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
   },
-  "description": "RNW 0.85 Windows XAML Fabric NavigationView island",
+  "description": "RNW 0.85 native WinUI navigation and shared-runtime desktop window hosting",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -21,7 +21,32 @@
       "react-native": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./navigation-binding": {
+      "types": "./dist/navigation-binding.d.ts",
+      "react-native": "./src/navigation-binding.ts",
+      "default": "./dist/navigation-binding.js"
+    },
+    "./navigation-host": {
+      "types": "./dist/navigation-host.windows.d.ts",
+      "react-native": "./src/navigation-host.windows.tsx",
+      "default": "./dist/navigation-host.windows.js"
+    },
+    "./windows": {
+      "types": "./dist/windows.d.ts",
+      "react-native": "./src/windows.ts",
+      "default": "./dist/windows.js"
+    },
+    "./window-controller": {
+      "types": "./dist/window-controller.d.ts",
+      "react-native": "./src/window-controller.ts",
+      "default": "./dist/window-controller.js"
+    },
+    "./window-types": {
+      "types": "./dist/window-types.d.ts",
+      "react-native": "./src/window-types.ts",
+      "default": "./dist/window-types.js"
+    }
   },
   "files": [
     "dist",
@@ -42,7 +67,8 @@
     "jsSrcsDir": "src",
     "windows": {
       "generators": [
-        "componentsWindows"
+        "componentsWindows",
+        "modulesWindows"
       ],
       "namespace": "winrt::NYCTronFluentFabric::Codegen",
       "outputDirectory": "windows/NYCTronFluentFabric/codegen"
@@ -50,15 +76,17 @@
   },
   "scripts": {
     "codegen": "react-native codegen-windows",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node scripts/build-peers.mjs && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test tests/*.test.mjs isolated-tests/*.test.mjs",
     "prepack": "npm run build"
   },
   "peerDependencies": {
     "react-native": "0.85.3",
     "react-native-windows": "0.85.0",
-    "react": ">=19.2.0"
+    "react": ">=19.2.0",
+    "@nyc-tron/core": "1.0.0",
+    "@nyc-tron/windows-fluent": "1.0.0"
   },
   "devDependencies": {
     "react-native": "0.85.3",
@@ -66,6 +94,8 @@
     "react": "19.2.3",
     "@types/react": "^19.2.0",
     "@react-native-community/cli": "20.0.0",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "@nyc-tron/core": "file:../../core",
+    "@nyc-tron/windows-fluent": "file:.."
   }
 }

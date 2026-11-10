@@ -6,7 +6,69 @@ rows and their platform acceptance are tracked separately in
 [V1-PLATFORM-CLOSURE.md](V1-PLATFORM-CLOSURE.md). No tag, release, npm publish or
 blanket device-acceptance claim is created by this report.
 
-## Observed CI and local results
+## November 10 desktop integration
+
+The first combined head `0a4f34b9334814f5bfd9b1568402a2a131faedd8` produced
+the following actual native checkpoint:
+
+| Target | Observed result | Evidence |
+|---|---|---|
+| Android | Native compilation, all eleven strict media checks and four OS UI flows passed; no transport recovery | [Original reports and APK verification](../evidence/v1-native-0a4f34b/android/README.md) |
+| Windows | Installed C++ library and app compiled; packaged navigation and seven desktop lifecycle check groups passed | [Original reports, tested archive and capture limitations](../evidence/v1-native-0a4f34b/windows/README.md) |
+| iOS | No runner was assigned; GitHub canceled the queued job after repeated allocation attempts | [Original capacity annotations](../evidence/v1-native-0a4f34b/ios/README.md). No app execution or UI result exists for this head |
+| AppKit | Clean archive installation, official Spark analysis and installed API checks passed; native build stopped before Xcode because new-project migration initialization was missing | [Run 42841109849](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42841109849). The follow-up invokes Spark's official template/migration initialization and requires a fresh native run |
+
+The follow-up also shares the existing popup geometry and command-item types
+through `@nyc-tron/core/overlays`, with compatible UI re-exports. All prior public
+declaration signatures and external type boundaries are preserved; the shared
+API now has 619 subpaths and 3,306 reachable declarations. Native desktop menus,
+popovers/tooltips and cross-window drag/drop remain explicit implementation and
+interaction work, separate from the successful Windows lifecycle checkpoint.
+
+The source candidate now includes both isolated desktop implementations:
+`@nyc-tron/windows-fluent-fabric` binds native WinUI navigation and shared-runtime
+secondary windows, and `@nyc-tron/macos-appkit` binds actual Spark AppKit controls,
+display enumeration and the shared window lifecycle. Their runtime pins stay
+separate from the Expo 58 application lane. Their platform workflows must still
+compile and exercise the installed archives before a native pass is recorded.
+
+The complete distribution inventory is now **fifteen archives**: thirteen
+workspace packages plus the two isolated desktop packages. The release workflow
+requires both native desktop jobs, downloads their passed-only package artifacts,
+checks the exact candidate revision, package identity and SHA-256, and copies
+those same archive bytes into the candidate. It does not rebuild a desktop
+package after native acceptance. Both native receipts remain with the candidate.
+Shared peer archives are produced by the standard release packer in Ubuntu
+jobs, including staged licenses and notices. The desktop jobs install those
+archives without repacking, and the merger also requires their hashes to match
+the shared packages in the release candidate.
+
+Local integration verification passed 1,187 tests with no failures or skips,
+workspace builds and types, 618 shared public subpaths, 3,306 reachable
+declarations, thirteen workspace archive checks and sixteen clean consumer
+imports. The isolated installed APIs have separate TypeScript 5.9.3 baselines:
+Windows has six typed subpaths and 24 reachable declarations; AppKit has ten
+typed subpaths and 24 reachable declarations. The full and subset release
+packers produced byte-identical core and Windows contract archives.
+
+The twelve integration rows remain implemented at source level. This change does
+not promote the canonical acceptance ledger: the requirement remains 341 rows
+with actual accepted evidence on each of the eight specified platforms. Physical
+pen/palm behavior, assistive-technology speech, headset execution, multi-display
+interaction and performance still require the applicable device evidence.
+
+The keyboard correction at `e8a7efb9f0971746d01c68532540c65af502de9f` preserves
+the native interaction assertions and driver commands. It enables drag dismissal
+on existing scroll surfaces and Done submission on the two single-line reference
+fields. Its evidence and original failure are recorded in
+[V1-NATIVE-KEYBOARD.md](V1-NATIVE-KEYBOARD.md). Later native execution results must
+be bound to their own run and app identity.
+
+## Earlier observed CI and local results
+
+The following tables and retained artifacts are historical checkpoints. Their
+fourteen-package counts and earlier Windows API shape describe those revisions;
+they are not the current fifteen-package desktop inventory.
 
 | Gate | Observed result | Evidence and limit |
 |---|---|---|
@@ -128,8 +190,8 @@ review remain bounded by [Support](../../SUPPORT.md) and the release conditions.
 [`consumer-release.mjs`](../../../tooling/consumer-release.mjs) verifies each
 archive against `SHA256SUMS`, prepares a new directory outside the repository,
 and installs `file:` tarballs with the existing exact runtime pins. Missing
-NYC-Tron artifacts fail instead of falling back to npm. The RNW adapter is
-rejected from the Expo dependency lane. Installed versions and locations are
+NYC-Tron artifacts fail instead of falling back to npm. Both isolated desktop
+adapters are rejected from the Expo dependency lane. Installed versions and locations are
 recorded, and the browser bundle must resolve only inside the new app and use
 the installed UI distribution.
 
@@ -184,8 +246,8 @@ unions, callbacks, generics and return values; this gate detects changes and
 does not decide their semver compatibility automatically. An export-key change
 also needs the existing explicit `api-surface.mjs --update` workflow.
 
-The fourteenth package has an isolated baseline and uses its own installed
-compiler, preserving the RNW 0.85 / TypeScript 5.9 lane:
+The Windows package has an isolated baseline and uses its own installed compiler,
+preserving the RNW 0.85 / TypeScript 5.9 lane:
 
 ```sh
 npm --prefix packages/windows-fluent/rnw-fabric install --package-lock=false --no-audit --no-fund
@@ -195,23 +257,27 @@ node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --s
 
 Append `--write` to the last command only for a reviewed update to
 [`api-signatures-windows.json`](../../api-signatures-windows.json). The isolated
-Windows workflow and the release's Windows pack step both run this check.
+Windows workflow runs this check before it tests and retains the native archive.
+The AppKit workflow likewise checks its separate
+[`api-signatures-macos.json`](../../api-signatures-macos.json) against the clean
+installed Spark consumer. Its compiler and runtime dependencies stay in that
+consumer rather than entering the Expo 58 workspace.
 The metadata export `./package.json` is not a typed component subpath.
 
 ## Licensing and distribution review
 
-The repository and all fourteen distributable packages carry the original-code
+The repository and all fifteen distributable packages carry the original-code
 MIT license. Each package is `private: true`, has version `1.0.0`, declares
 `license: "MIT"`, and includes `LICENSE` in its `files` list. This inventory was
-checked directly, including the nested Windows package. The thirteen workspace
+checked directly, including both nested desktop packages. The thirteen workspace
 archives were produced successfully with the pack gate's notice, license,
 declaration, compiled-export and workspace-specifier checks.
 
-The Windows Fabric adapter is intentionally different: its archive includes
-typed `src/` for native codegen as well as compiled `dist/`. It is packed in the
-separate RNW lane. README and release notes now describe this exception and the
+The desktop adapters are intentionally different: their archives include
+typed `src/` for native codegen as well as compiled `dist/`. They are packed in the
+separate runtime lanes. README and release notes describe this exception and the
 different notice locations accurately; `pnpm pack:release` alone produces the
-thirteen workspace archives, not the nested Windows package.
+thirteen workspace archives; the native desktop jobs supply the other two.
 
 The [root provenance inventory](../../../THIRD_PARTY_NOTICES.md) records
 NYC-MON/NeonBlade, ArtCraft-family ports, Floating UI, AudioKit, optional Skia,
@@ -264,14 +330,15 @@ touch cancellation remain separately recorded device checks.
 
 ## Stable publication gate
 
-The release now requires the reusable actual Windows C++/WinRT compile and UI
-Automation workflow, in addition to the generic Windows package lane. It also
+The release requires the reusable actual Windows C++/WinRT compile and UI
+Automation workflow, the AppKit native compile and lifecycle workflow, and the
+generic Windows package lane. It also
 requires the reference browser workflow's authored flows, screenshots and
 render measurements. These are required jobs on the release candidate itself;
 older green runs do not satisfy them. This wiring is separate from a claim that
 the new candidate has already passed those native jobs.
 
-After building all fourteen archives, the release uploads
+After collecting all fifteen archives, the release uploads
 `release-candidate-v<version>` with every `.tgz` and `SHA256SUMS`. It then runs
 [`release-readiness.mjs`](../../../tooling/release-readiness.mjs). The retained
 archives remain reviewable if stable publication is blocked. A separate
@@ -285,7 +352,7 @@ Stable publication requires both conditions:
    never writes acceptance statuses.
 2. The owner distribution review in
    [`distribution-review.json`](../distribution-review.json) is approved for
-   this version and this exact fourteen-archive checksum manifest. The gate
+   this version and this exact fifteen-archive checksum manifest. The gate
    hashes the actual archives, checks the complete inventory and version, then
    reads the linked comment through GitHub's API. The response must identify
    `mikevocalz` as the repository owner and contain the exact approval statement.
@@ -314,7 +381,7 @@ For a local readiness check:
 
 ```sh
 node tooling/release-readiness.mjs --version 1.0.0-rc.1
-node tooling/release-readiness.mjs --version 1.0.0 --artifacts /path/to/fourteen-archive-candidate
+node tooling/release-readiness.mjs --version 1.0.0 --artifacts /path/to/fifteen-archive-candidate
 node --test tooling/tests/release-readiness.test.mjs
 ```
 

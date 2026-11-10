@@ -366,6 +366,36 @@
           }
         }
       ],
+      "./overlays": [
+        {
+          "target": "./dist/overlays.d.ts",
+          "conditions": {
+            "types": "./dist/overlays.d.ts",
+            "react-native": "./dist/overlays.js",
+            "default": "./dist/overlays.js"
+          },
+          "symbols": {
+            "CommandMenuItem": [
+              "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem"
+            ],
+            "PopupPosition": [
+              "@nyc-tron/core/dist/overlays.d.ts#PopupPosition"
+            ],
+            "Rect2D": [
+              "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
+            ],
+            "hasUsableRegion": [
+              "@nyc-tron/core/dist/overlays.d.ts#hasUsableRegion"
+            ],
+            "placePopover": [
+              "@nyc-tron/core/dist/overlays.d.ts#placePopover"
+            ],
+            "placementSide": [
+              "@nyc-tron/core/dist/overlays.d.ts#placementSide"
+            ]
+          }
+        }
+      ],
       "./pane-plan": [
         {
           "target": "./dist/pane-plan.d.ts",
@@ -693,7 +723,7 @@
               "@nyc-tron/expo-controls/dist/components/NativeSplitButton.types.d.ts#NativeSplitButtonProps"
             ],
             "Rect2D": [
-              "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+              "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
             ],
             "TooltipProps": [
               "@nyc-tron/expo-controls/dist/components/Tooltip.types.d.ts#TooltipProps"
@@ -16833,7 +16863,7 @@
           },
           "symbols": {
             "CommandMenuItem": [
-              "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem"
+              "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem"
             ],
             "CommandPopover": [
               "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandPopover"
@@ -16974,19 +17004,19 @@
           },
           "symbols": {
             "PopupPosition": [
-              "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#PopupPosition"
+              "@nyc-tron/core/dist/overlays.d.ts#PopupPosition"
             ],
             "Rect2D": [
-              "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+              "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
             ],
             "hasUsableRegion": [
-              "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#hasUsableRegion"
+              "@nyc-tron/core/dist/overlays.d.ts#hasUsableRegion"
             ],
             "placePopover": [
-              "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#placePopover"
+              "@nyc-tron/core/dist/overlays.d.ts#placePopover"
             ],
             "placementSide": [
-              "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#placementSide"
+              "@nyc-tron/core/dist/overlays.d.ts#placementSide"
             ]
           }
         }
@@ -17085,7 +17115,7 @@
           },
           "symbols": {
             "CommandMenuItem": [
-              "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem"
+              "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem"
             ],
             "ContextMenu": [
               "@nyc-tron/ui/dist/components/shell/ContextMenu.d.ts#ContextMenu"
@@ -17376,7 +17406,7 @@
           },
           "symbols": {
             "CommandMenuItem": [
-              "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem"
+              "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem"
             ],
             "MenuButton": [
               "@nyc-tron/ui/dist/components/shell/MenuButton.d.ts#MenuButton"
@@ -19047,6 +19077,57 @@
         "export declare function windowsPaneMode(width: number, thresholds: {\n    readonly compact: number;\n    readonly expanded: number;\n}): \"minimal\" | \"compact\" | \"expanded\";"
       ],
       "references": []
+    },
+    "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem": {
+      "signatures": [
+        "export type CommandMenuItem = Readonly<{\n    id: string;\n    label: string;\n    description?: string;\n    disabled?: boolean;\n    danger?: boolean;\n}>;"
+      ],
+      "references": [
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
+      ]
+    },
+    "@nyc-tron/core/dist/overlays.d.ts#PopupPosition": {
+      "signatures": [
+        "export type PopupPosition = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n    region: Rect2D;\n}>;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
+      ]
+    },
+    "@nyc-tron/core/dist/overlays.d.ts#Rect2D": {
+      "signatures": [
+        "export type Rect2D = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n}>;"
+      ],
+      "references": [
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
+      ]
+    },
+    "@nyc-tron/core/dist/overlays.d.ts#hasUsableRegion": {
+      "signatures": [
+        "export declare function hasUsableRegion(regions: readonly Rect2D[]): boolean;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
+      ]
+    },
+    "@nyc-tron/core/dist/overlays.d.ts#placePopover": {
+      "signatures": [
+        "export declare function placePopover(anchor: Rect2D, regions: readonly Rect2D[], desiredWidth: number, desiredHeight: number, padding?: number): PopupPosition;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#PopupPosition",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
+      ]
+    },
+    "@nyc-tron/core/dist/overlays.d.ts#placementSide": {
+      "signatures": [
+        "export declare function placementSide(anchor: Rect2D, position: PopupPosition): \"below\" | \"above\" | \"overlap\";"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#PopupPosition",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
+      ]
     },
     "@nyc-tron/core/dist/pane-plan.d.ts#InspectorPlacement": {
       "signatures": [
@@ -22183,6 +22264,7 @@
         "export interface FileImportExportSheetProps {\n    readonly scope?: string;\n    readonly usableRegions?: readonly Rect2D[];\n    readonly visible: boolean;\n    readonly mode: 'import' | 'export';\n    readonly title?: string;\n    readonly formats: readonly ExportFormat[];\n    readonly importFormats?: readonly ImportFormat[];\n    readonly destinations: readonly ExportDestination[];\n    readonly settings: ExportSettings;\n    readonly onSettingsChange: (settings: ExportSettings) => void;\n    readonly onExport: (request: ExportRequest) => void | Promise<unknown>;\n    readonly status: TransferStatus;\n    readonly onClose: () => void;\n    readonly onCancel?: () => void;\n    readonly picker?: Omit<FilePickerProps, 'label' | 'accept' | 'disabled'>;\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/files/FilePicker.types.d.ts#FilePickerProps",
         "@nyc-tron/ui/dist/components/files/file-transfer-model.d.ts#ExportDestination",
         "@nyc-tron/ui/dist/components/files/file-transfer-model.d.ts#ExportFormat",
@@ -22190,7 +22272,6 @@
         "@nyc-tron/ui/dist/components/files/file-transfer-model.d.ts#ExportSettings",
         "@nyc-tron/ui/dist/components/files/file-transfer-model.d.ts#ImportFormat",
         "@nyc-tron/ui/dist/components/files/file-transfer-model.d.ts#TransferStatus",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
@@ -26821,9 +26902,9 @@
         "export interface CanvasPanZoomProps extends Omit<ViewProps, 'children'> {\n    scope: string;\n    revision?: string | number;\n    viewport: CanvasViewport;\n    onPreview?: (viewport: CanvasViewport) => void;\n    onCommit: (viewport: CanvasViewport) => void;\n    children: (viewport: CanvasViewport) => ReactNode;\n    minZoom?: number;\n    maxZoom?: number;\n    contentBounds?: DocRect;\n    fitPadding?: number;\n    keyboardStep?: number;\n    panWithOnePointer?: boolean;\n    usableRegions?: readonly Rect2D[];\n    disabled?: boolean;\n    label?: string;\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/forge/canvas/canvas-viewport.d.ts#CanvasViewport",
         "@nyc-tron/ui/dist/components/forge/canvas/canvas-viewport.d.ts#DocRect",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
@@ -37478,11 +37559,11 @@
         "export interface SelectionBoundsProps extends Omit<ViewProps, 'children'> {\n    scope: string;\n    revision?: string | number;\n    frame: SelectionFrame;\n    viewport: CanvasViewport;\n    onPreview?: (frame: SelectionFrame | undefined) => void;\n    onCommit: (frame: SelectionFrame, detail: {\n        handle: SelectionHandle;\n        source: 'pointer' | 'keyboard' | 'accessibility';\n    }) => void;\n    limits?: SelectionEditLimits;\n    disabled?: boolean;\n    usableRegions?: readonly Rect2D[];\n    renderHandle?: (handle: SelectionHandle, editing: boolean) => ReactNode;\n    className?: string;\n    handleClassName?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/forge/canvas/canvas-viewport.d.ts#CanvasViewport",
         "@nyc-tron/ui/dist/components/forge/selection/selection-bounds-model.d.ts#SelectionEditLimits",
         "@nyc-tron/ui/dist/components/forge/selection/selection-bounds-model.d.ts#SelectionFrame",
         "@nyc-tron/ui/dist/components/forge/selection/selection-bounds-model.d.ts#SelectionHandle",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
@@ -37504,12 +37585,12 @@
         "export interface SelectionMarqueeProps extends Omit<ViewProps, \"children\"> {\n    scope?: string;\n    revision?: string | number;\n    usableRegions?: readonly Rect2D[];\n    renderToolbar?: (controls: ReactNode) => ReactNode;\n    tool: SelectionTool;\n    onToolChange: (tool: SelectionTool) => void;\n    mode: SelectionMode;\n    onModeChange: (mode: SelectionMode) => void;\n    feather: number;\n    width: number;\n    height: number;\n    documentWidth: number;\n    documentHeight: number;\n    selectionBounds?: DocRect | undefined;\n    onSelectRegion: (request: SelectRegionRequest, signal?: AbortSignal) => void | Promise<unknown>;\n    onPreview?: (shape: SelectionShape | undefined) => void;\n    onSelectAll: (signal?: AbortSignal) => void | Promise<unknown>;\n    onDeselect: (signal?: AbortSignal) => void | Promise<unknown>;\n    onInvertSelection: (signal?: AbortSignal) => void | Promise<unknown>;\n    disabledReason?: string;\n    children?: ReactNode;\n    label?: string;\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/forge/selection/selection-model.d.ts#DocRect",
         "@nyc-tron/ui/dist/components/forge/selection/selection-model.d.ts#SelectRegionRequest",
         "@nyc-tron/ui/dist/components/forge/selection/selection-model.d.ts#SelectionMode",
         "@nyc-tron/ui/dist/components/forge/selection/selection-model.d.ts#SelectionShape",
         "@nyc-tron/ui/dist/components/forge/selection/selection-model.d.ts#SelectionTool",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.dom.d.ts#AbortSignal",
@@ -39949,10 +40030,10 @@
         "export interface SortFilterHeaderProps extends Omit<ViewProps, 'children'>, ScopedControlProps {\n    columns: readonly {\n        id: string;\n        label: string;\n    }[];\n    sorts: readonly SheetSort[];\n    filters: readonly SheetFilter[];\n    activeFilterId: string | null;\n    visibleRows: number;\n    totalRows: number;\n    usableRegions?: readonly Rect2D[];\n    onSortCommit: (sorts: readonly SheetSort[], signal?: AbortSignal) => unknown;\n    onFilterCommit: (filter: SheetFilter, signal?: AbortSignal) => unknown;\n    onOpenFilter: (columnId: string) => void;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/forge/inputs/useScopedControl.d.ts#ScopedControlProps",
         "@nyc-tron/ui/dist/components/forge/spreadsheet/SortFilterHeader.d.ts#SheetFilter",
         "@nyc-tron/ui/dist/components/forge/spreadsheet/SortFilterHeader.d.ts#SheetSort",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.dom.d.ts#AbortSignal",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
@@ -41130,10 +41211,10 @@
         "export interface MotionTrackingOverlayProps extends Omit<ViewProps, 'children'>, ScopedControlProps {\n    frame: number;\n    playing: boolean;\n    viewport: CanvasViewport;\n    usableRegions?: readonly Rect2D[];\n    surface: ReactNode;\n    seed: SelectionFrame;\n    measurement: {\n        frame: number;\n        bounds: SelectionFrame;\n        confidence: number;\n    } | null;\n    tracking: {\n        status: 'idle' | 'running' | 'ready' | 'lost' | 'error';\n        progress?: number;\n        error?: string;\n    };\n    onPreview?: (frame: number, bounds: SelectionFrame | undefined) => void;\n    onCorrect: (frame: number, bounds: SelectionFrame, signal?: AbortSignal) => void | Promise<unknown>;\n    onTrack: (direction: 'forward' | 'backward', frame: number, seed: SelectionFrame, signal?: AbortSignal) => void | Promise<unknown>;\n    onStop: () => void;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/forge/canvas/canvas-viewport.d.ts#CanvasViewport",
         "@nyc-tron/ui/dist/components/forge/inputs/useScopedControl.d.ts#ScopedControlProps",
         "@nyc-tron/ui/dist/components/forge/selection/selection-bounds-model.d.ts#SelectionFrame",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.dom.d.ts#AbortSignal",
@@ -44935,16 +45016,8 @@
         "export interface CommandPaletteProps {\n    scope?: string;\n    revision?: string | number;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    onSelect: (id: string) => void;\n    commands: readonly PaletteCommand[];\n    anchor: Rect2D;\n    usableRegions: readonly Rect2D[];\n    label?: string;\n    placeholder?: string;\n    emptyText?: string;\n    width?: number;\n    maxHeight?: number;\n    className?: string;\n    unstyled?: boolean;\n    testID?: string;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/command-filter.d.ts#PaletteCommand",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem": {
-      "signatures": [
-        "export type CommandMenuItem = Readonly<{\n    id: string;\n    label: string;\n    description?: string;\n    disabled?: boolean;\n    danger?: boolean;\n}>;"
-      ],
-      "references": [
-        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
+        "@nyc-tron/ui/dist/components/overlays/command-filter.d.ts#PaletteCommand"
       ]
     },
     "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandPopover": {
@@ -44963,8 +45036,8 @@
         "export interface CommandPopoverProps {\n    scope?: string;\n    visible: boolean;\n    onDismiss: () => void;\n    onSelect: (id: string) => void;\n    anchor: Rect2D;\n    usableRegions: readonly Rect2D[];\n    items: readonly CommandMenuItem[];\n    width?: number;\n    maxHeight?: number;\n    className?: string;\n    unstyled?: boolean;\n    surfaceColor?: string;\n    borderColor?: string;\n    textColor?: string;\n    mutedTextColor?: string;\n    dangerColor?: string;\n    accessibilityLabel?: string;\n    testID?: string;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverAnchorProps": {
@@ -44972,8 +45045,8 @@
         "export interface PopoverAnchorProps extends PopoverBaseProps {\n    readonly anchor: Rect2D;\n    readonly usableRegions: readonly Rect2D[];\n    readonly trigger?: undefined;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverBaseProps",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
+        "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverBaseProps"
       ]
     },
     "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverBaseProps": {
@@ -44998,9 +45071,9 @@
         "export interface PopoverTriggerProps extends PopoverBaseProps {\n    readonly trigger: ReactNode | ((state: PopoverTriggerState) => ReactNode);\n    readonly usableRegions?: readonly Rect2D[];\n    readonly anchor?: undefined;\n}"
       ],
       "references": [
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverBaseProps",
         "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverTriggerState",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ReactNode"
       ]
     },
@@ -45042,7 +45115,7 @@
         "export type PaletteCommand = CommandMenuItem & Readonly<{\n    keywords?: readonly string[];\n    group?: string;\n}>;"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem",
+        "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
         "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
       ]
     },
@@ -45113,7 +45186,7 @@
         "export declare function measureAnchor(node: unknown): Promise<Rect2D | undefined>;"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
@@ -45126,50 +45199,7 @@
         "export declare function windowRegions(width: number, height: number): readonly Rect2D[];"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#PopupPosition": {
-      "signatures": [
-        "export type PopupPosition = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n    region: Rect2D;\n}>;"
-      ],
-      "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
-        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D": {
-      "signatures": [
-        "export type Rect2D = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n}>;"
-      ],
-      "references": [
-        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#hasUsableRegion": {
-      "signatures": [
-        "export declare function hasUsableRegion(regions: readonly Rect2D[]): boolean;"
-      ],
-      "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#placePopover": {
-      "signatures": [
-        "export declare function placePopover(anchor: Rect2D, regions: readonly Rect2D[], desiredWidth: number, desiredHeight: number, padding?: number): PopupPosition;"
-      ],
-      "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#PopupPosition",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#placementSide": {
-      "signatures": [
-        "export declare function placementSide(anchor: Rect2D, position: PopupPosition): \"below\" | \"above\" | \"overlap\";"
-      ],
-      "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#PopupPosition",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/ui/dist/components/overlays/useTriggerAnchor.d.ts#TriggerAnchor": {
@@ -45177,7 +45207,7 @@
         "export interface TriggerAnchor {\n    readonly ref: RefObject<ComponentRef<typeof View> | null>;\n    readonly anchor: Rect2D | undefined;\n    readonly measured: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ComponentRef",
         "@types/react@19.3.0/index.d.ts#React.RefObject",
         "react-native@0.88.0/types_generated/Libraries/Components/View/View.d.ts#$$View"
@@ -45208,7 +45238,7 @@
       ],
       "references": [
         "@nyc-tron/core/dist/folds.d.ts#FoldFeature",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/AdaptiveDock.d.ts#DockPanel",
         "@nyc-tron/ui/dist/components/shell/dock-model.d.ts#DockDefaults",
         "@nyc-tron/ui/dist/components/shell/dock-model.d.ts#DockLayout",
@@ -45272,8 +45302,8 @@
         "export interface ContextMenuProps extends Omit<PressableProps, \"children\" | \"onLongPress\" | \"onContextMenu\"> {\n    scope?: string;\n    revision?: string | number;\n    label: string;\n    items: readonly CommandMenuItem[];\n    onSelect: (id: string) => void;\n    children: ReactNode;\n    onOpen?: (source: ContextMenuSource) => void;\n    disabled?: boolean;\n    usableRegions?: readonly Rect2D[];\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/ContextMenu.d.ts#ContextMenuSource",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/Pressable/Pressable.d.ts#PressableProps",
@@ -45297,7 +45327,7 @@
         "export declare function pointAnchor(x: number, y: number): Rect2D;"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/ui/dist/components/shell/ContextualToolbar.d.ts#ContextualToolbar": {
@@ -45546,7 +45576,7 @@
         "export interface KeyboardShortcutHUDProps {\n    scope?: string;\n    revision?: string | number;\n    usableRegions?: readonly Rect2D[];\n    visible: boolean;\n    onDismiss: () => void;\n    commands: readonly ShortcutCommand[];\n    onRebind?: (id: string, binding: Binding | undefined) => void;\n    recorder?: ChordRecorder;\n    apple?: boolean;\n    title?: string;\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/shortcut-model.d.ts#Binding",
         "@nyc-tron/ui/dist/components/shell/shortcut-model.d.ts#ChordRecorder",
         "@nyc-tron/ui/dist/components/shell/shortcut-model.d.ts#ShortcutCommand"
@@ -45574,8 +45604,8 @@
         "export interface MenuButtonProps extends Omit<PressableProps, \"children\" | \"onPress\" | \"accessibilityLabel\" | \"aria-label\"> {\n    label: string;\n    editScope?: string;\n    items: readonly CommandMenuItem[];\n    onSelect: (id: string) => void;\n    children: ReactNode;\n    usableRegions?: readonly Rect2D[];\n    menuWidth?: number;\n    disabled?: boolean;\n    className?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof Pressable>>;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ComponentRef",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "@types/react@19.3.0/index.d.ts#React.Ref",
@@ -45714,7 +45744,7 @@
         "export interface RibbonTabsProps extends Omit<ViewProps, \"children\"> {\n    scope?: string;\n    revision?: string | number;\n    disabled?: boolean;\n    tabs: readonly RibbonTab[];\n    activeTabId: string;\n    onTabChange: (id: string) => void;\n    onCommand: (commandId: string, itemId?: string) => void;\n    collapsed?: boolean;\n    onCollapsedChange?: (collapsed: boolean) => void;\n    label?: string;\n    usableRegions?: readonly Rect2D[];\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/ribbon-model.d.ts#RibbonTab",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
@@ -45789,8 +45819,8 @@
         "export interface SplitButtonProps extends Omit<ViewProps, \"children\"> {\n    editScope?: string;\n    label: string;\n    onPress: () => void;\n    items: readonly CommandMenuItem[];\n    onSelect: (id: string) => void;\n    menuLabel?: string;\n    icon?: ReactNode;\n    variant?: \"primary\" | \"secondary\";\n    disabled?: boolean;\n    usableRegions?: readonly Rect2D[];\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
@@ -45812,7 +45842,7 @@
         "export interface StatusBarProps extends Omit<ViewProps, \"children\"> {\n    scope?: string;\n    revision?: string | number;\n    disabled?: boolean;\n    zoom?: StatusZoom;\n    units?: StatusUnits;\n    selection?: {\n        readonly count: number;\n        readonly noun?: SelectionNoun;\n    };\n    activity?: StatusActivity;\n    children?: ReactNode;\n    usableRegions?: readonly Rect2D[];\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/StatusBar.d.ts#StatusUnits",
         "@nyc-tron/ui/dist/components/shell/StatusBar.d.ts#StatusZoom",
         "@nyc-tron/ui/dist/components/shell/status-model.d.ts#SelectionNoun",
@@ -45879,7 +45909,7 @@
         "export interface ToolRailProps extends Omit<ViewProps, \"children\"> {\n    scope?: string;\n    revision?: string | number;\n    disabled?: boolean;\n    tools: readonly RailTool[];\n    activeToolId: string | undefined;\n    onSelectTool: (id: string) => void;\n    groupSelection?: Readonly<Record<string, string>>;\n    label?: string;\n    edge?: \"left\" | \"right\" | \"bottom\";\n    expanded?: boolean;\n    usableRegions?: readonly Rect2D[];\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/tool-rail-model.d.ts#RailTool",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit",
@@ -45935,7 +45965,7 @@
       ],
       "references": [
         "@nyc-tron/core/dist/folds.d.ts#FoldFeature",
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/AdaptiveDock.d.ts#DockPanel",
         "@nyc-tron/ui/dist/components/shell/WorkspaceHost.d.ts#WorkspaceHostMode",
         "@nyc-tron/ui/dist/components/shell/dock-model.d.ts#DockDefaults",
@@ -45965,7 +45995,7 @@
         "export interface WorkspacePresetSwitcherProps extends Omit<ViewProps, \"children\"> {\n    scope?: string;\n    disabled?: boolean;\n    revision?: string | number;\n    presets: readonly WorkspacePreset[];\n    activeId?: string;\n    onSelect: (id: string) => void;\n    onSaveAs: (name: string) => void;\n    onRename: (id: string, name: string) => void;\n    onDuplicate: (id: string) => void;\n    onDelete: (id: string) => void;\n    onReset: (id: string) => void;\n    recentlyDeleted?: {\n        readonly id: string;\n        readonly name: string;\n    };\n    onUndoDelete?: (id: string) => void;\n    usableRegions?: readonly Rect2D[];\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D",
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/ui/dist/components/shell/workspace-preset-model.d.ts#WorkspacePreset",
         "react-native@0.88.0/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
@@ -46199,7 +46229,7 @@
         "export interface DockDefaults {\n    readonly edgeSize: number;\n    readonly floatingRect: Rect2D;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/ui/dist/components/shell/dock-model.d.ts#DockEdge": {
@@ -46236,7 +46266,7 @@
         "export interface FloatingPanel {\n    readonly id: string;\n    readonly rect: Rect2D;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/ui/dist/components/shell/dock-model.d.ts#activatePanel": {
@@ -46252,7 +46282,7 @@
         "export declare function clampFloatingRect(rect: Rect2D, regions: readonly Rect2D[]): Rect2D;"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/popover-position.d.ts#Rect2D"
+        "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/ui/dist/components/shell/dock-model.d.ts#closePanel": {
@@ -46761,7 +46791,7 @@
         "export interface RibbonSplit {\n    readonly kind: \"split\";\n    readonly id: string;\n    readonly label: string;\n    readonly icon?: ReactNode;\n    readonly items: readonly CommandMenuItem[];\n    readonly disabled?: boolean;\n}"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandMenuItem",
+        "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
         "@types/react@19.3.0/index.d.ts#React.ReactNode"
       ]
     },

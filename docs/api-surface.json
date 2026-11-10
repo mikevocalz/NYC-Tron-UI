@@ -4,6 +4,7 @@
     "./advanced-catalog",
     "./folds",
     "./navigation",
+    "./overlays",
     "./pane-plan",
     "./presets/infrax",
     "./spatial",

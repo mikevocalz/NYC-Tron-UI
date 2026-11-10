@@ -3,6 +3,8 @@ import test from "node:test";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { spawnSync } from "node:child_process";
 import { collectApiSignatures, diffApiSignatures } from "../api-signatures.mjs";
 
 function fixture(t) {
@@ -109,4 +111,17 @@ test("installed external prop declarations and their exact package versions are 
   assert.ok(diffApiSignatures(before, files.collect()).includes("externalTypes: changed host-types@1.0.0/index.d.ts#HostProps"));
   manifest("1.0.1");
   assert.ok(diffApiSignatures(before, files.collect()).includes("externalTypes: added host-types@1.0.1/index.d.ts#HostProps"));
+});
+
+test("an archive consumer can explicitly supply its compiler without a nested tooling install", t => {
+  const files = fixture(t), root = fileURLToPath(new URL("../..", import.meta.url));
+  const snapshot = join(files.directory, "api.json");
+  const script = join(root, "tooling/api-signatures.mjs");
+  const args = [script, "--package", files.directory, "--snapshot", snapshot, "--write"];
+  const missing = spawnSync(process.execPath, args, { encoding: "utf8" });
+  assert.notEqual(missing.status, 0);
+  assert.match(missing.stderr, /Install the isolated package's own TypeScript tooling/);
+  const explicit = spawnSync(process.execPath, [...args, "--compiler-root", root], { encoding: "utf8" });
+  assert.equal(explicit.status, 0, explicit.stderr);
+  assert.deepEqual(JSON.parse(readFileSync(snapshot, "utf8")), files.collect());
 });

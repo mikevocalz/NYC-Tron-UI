@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "status": "ui-failed-media-passed",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "pullRequest": 57,
+  "pullRequestHead": "e8a7efb9f0971746d01c68532540c65af502de9f",
+  "testedMergeCommit": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+  "workflowRun": 42834403759,
+  "jobId": 129892655905,
+  "artifactId": 13774678339,
+  "artifactName": "native-release-consumer-ios",
+  "archiveSha256": "a8f0ef06351605b971a076c2e4932ff4d045a9d620414c88a626174f84ade693",
+  "archiveBytes": 74305678,
+  "nativeManifestSha256": "2708776d48c304df31cd124a457d69b5898be85421415538d36259ee7ebeb934",
+  "checks": {
+    "consumerSourceAgreement": true,
+    "uiAndMediaManifestAgreement": true,
+    "originalRecoveryReceiptHashes": true,
+    "retainedFilesMatchOriginalArtifactBytes": true,
+    "archivedAppPayloadMatchesInstalledManifest": true
+  },
+  "originalFiles": [
+    {
+      "file": "consumer.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/consumer.json",
+      "bytes": 2491,
+      "sha256": "3e4018312e633e4018b75afc650c237610cc6927140bebc07901294a892d0749"
+    },
+    {
+      "file": "installed-packages.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/installed-packages.json",
+      "bytes": 2721,
+      "sha256": "188467ed5cbe68e9693b2e2f7d1ea661a2a2bc0967afff3b58244d9215eafc81"
+    },
+    {
+      "file": "media/result.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ios/result.json",
+      "bytes": 4837,
+      "sha256": "46615c2b0cd150c2768b4ad80e173c710dd2f32dc998ff6544d0a21c35958979"
+    },
+    {
+      "file": "media/native-artifact.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ios/native-artifact.json",
+      "bytes": 47976,
+      "sha256": "2708776d48c304df31cd124a457d69b5898be85421415538d36259ee7ebeb934"
+    },
+    {
+      "file": "ui/native-artifact.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/native-artifact.json",
+      "bytes": 47976,
+      "sha256": "2708776d48c304df31cd124a457d69b5898be85421415538d36259ee7ebeb934"
+    },
+    {
+      "file": "ui/transport-recovery.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/transport-recovery.json",
+      "bytes": 7516,
+      "sha256": "2708265744edfb5b28bef796422f4322a2d91c4474014f38348c073e4265d856"
+    },
+    {
+      "file": "ui/commands.jsonl",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/commands.jsonl",
+      "bytes": 3166,
+      "sha256": "39b17063ddaff316dce30e06fae093689cca9b6d4229152822cca45eec0a7aa8"
+    },
+    {
+      "file": "ui/failure.txt",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/failure.txt",
+      "bytes": 719,
+      "sha256": "20517d1b05544c91d1a76c88b9d5b574d28bfe346eb05296725f5d8c083af684"
+    },
+    {
+      "file": "ui/settings/report.xml",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings/report.xml",
+      "bytes": 653,
+      "sha256": "4610b4284085dae8edd930721baca9acac638cfd061d1e82ad699af2ccd4cf33"
+    },
+    {
+      "file": "ui/settings/commands.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings/artifacts/2026-11-10_145227/Settings native edit and save/commands.json",
+      "bytes": 7311,
+      "sha256": "eff2cf2145ed3129c3638d8a80355f2446ce1150ff032b9ff572457e763db109"
+    },
+    {
+      "file": "ui/settings/hierarchy.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings/artifacts/2026-11-10_145227/Settings native edit and save/screen-hierarchy/step-011-hideKeyboard.json",
+      "bytes": 84517,
+      "sha256": "fd61d70c16a3f3706e4229a42ad40c8a773078601fd4cb6b62d60dddd390afca"
+    },
+    {
+      "file": "ui/settings/failure.png",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings/artifacts/2026-11-10_145227/Settings native edit and save/screenshots/step-011-hideKeyboard.png",
+      "bytes": 221552,
+      "sha256": "a7e855845639cbfbefcb263fcf8a06c2aa33604d920bec4ef1b6c0410caf0790"
+    },
+    {
+      "file": "ui/initial-transport-failure/report.xml",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings-initial-transport-failure/report.xml",
+      "bytes": 588,
+      "sha256": "601a9fe56579d76725cc3e2b4c1e7d6608d97f9256309c7a2c6ff97769b41bfd"
+    },
+    {
+      "file": "ui/initial-transport-failure/commands.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings-initial-transport-failure/artifacts/2026-11-10_144901/Settings native edit and save/commands.json",
+      "bytes": 5064,
+      "sha256": "3291d58eba0d6d82bc118379761973116373086ee36db3bbe36000a10531549b"
+    },
+    {
+      "file": "ui/initial-transport-failure/hierarchy.json",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings-initial-transport-failure/artifacts/2026-11-10_144901/Settings native edit and save/screen-hierarchy/step-006-assertCondition-Workspace_preferences.json",
+      "bytes": 51144,
+      "sha256": "9e0eb886a29133aab5e56e24180a682fdc6242fcf58d7b22f3085466acb19f02"
+    },
+    {
+      "file": "ui/initial-transport-failure/failure.png",
+      "artifactEntry": "Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-ios/settings-initial-transport-failure/artifacts/2026-11-10_144901/Settings native edit and save/screenshots/step-006-assertCondition-Workspace_preferences.png",
+      "bytes": 186957,
+      "sha256": "1e05b5130ee4f84917faa5a8d4ad58129e77164821825c0dcede9c59d76f1a33"
+    }
+  ],
+  "omitted": "App ZIP and full simulator/XCTest log bundles remain in the original workflow artifact. No native UI acceptance result exists because Settings failed.",
+  "verifiedAppPayloadEntries": 226
+}

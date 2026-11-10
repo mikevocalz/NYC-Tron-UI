@@ -10,8 +10,10 @@ import ts from "typescript";
 
 const packageRoot=resolve(dirname(fileURLToPath(import.meta.url)),"..");
 const uiRoot=resolve(packageRoot,"../ui");
+const coreRoot=resolve(packageRoot,"../core");
 const manifest=JSON.parse(readFileSync(resolve(packageRoot,"package.json"),"utf8"));
 const uiManifest=JSON.parse(readFileSync(resolve(uiRoot,"package.json"),"utf8"));
+const coreManifest=JSON.parse(readFileSync(resolve(coreRoot,"package.json"),"utf8"));
 const leaves=["NativeDropdown","Select","NativeActionMenu","NativePopover","NativeSliderField","NativeSplitButton","ContextMenu","FindReplacePopover","Tooltip"];
 
 function sourcePath(root,target){
@@ -106,10 +108,11 @@ function harness(os,{deferMeasurement=false,accessibilityInfo={}}={}){
     runInNewContext(code,{exports,AbortController,setTimeout:setTimer,clearTimeout:id=>timers.delete(id),require:name=>{
       imports.add(name);
       if(name in mocks)return mocks[name];
-      if(name.startsWith("@nyc-tron/ui/")){
-        const entry=uiManifest.exports["./"+name.slice("@nyc-tron/ui/".length)];
-        assert.ok(entry,`Missing public UI export ${name}`);
-        return load(sourcePath(uiRoot,typeof entry==="string"?entry:entry[os]??entry["react-native"]??entry.default));
+      for(const [prefix,root,publicManifest] of [["@nyc-tron/ui/",uiRoot,uiManifest],["@nyc-tron/core/",coreRoot,coreManifest]]){
+        if(!name.startsWith(prefix))continue;
+        const entry=publicManifest.exports["./"+name.slice(prefix.length)];
+        assert.ok(entry,`Missing public shared export ${name}`);
+        return load(sourcePath(root,typeof entry==="string"?entry:entry[os]??entry["react-native"]??entry.default));
       }
       assert.ok(name.startsWith("."),`Unexpected optional dependency ${name}`);
       return load(resolve(dirname(path),name));

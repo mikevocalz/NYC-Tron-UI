@@ -1,0 +1,116 @@
+name: NYC-Tron AppKit native host
+
+on:
+  pull_request:
+    paths:
+      - 'packages/macos-appkit/**'
+      - 'packages/core/**'
+      - 'examples/macos-appkit/**'
+      - 'tooling/macos-appkit/**'
+      - 'tooling/pack-release.mjs'
+      - 'tooling/api-signatures.mjs'
+      - 'docs/api-signatures-macos.json'
+      - 'THIRD_PARTY_NOTICES.md'
+      - 'licenses/**'
+      - '.github/workflows/macos-appkit.yml'
+      - 'pnpm-lock.yaml'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appkit-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  packages:
+    name: Canonical core release archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Install the pinned workspace compiler
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+      - name: Build and pack core with release provenance
+        run: |
+          node --test tooling/macos-appkit/shared-archives.test.mjs
+          corepack pnpm --filter @nyc-tron/core build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-appkit-shared-packages
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/appkit-shared/
+  native:
+    name: Spark 0.0.2 ARM64 AppKit compile and native acceptance
+    needs: packages
+    # GitHub's macos-15 label is ARM64; macos-15-intel is a different lane.
+    # Assert the actual architecture below rather than treating the label as proof.
+    runs-on: macos-15
+    timeout-minutes: 55
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      SPARK_XCODEBUILD_JOBS: '3'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Verify native ARM64 host and Apple build tools
+        run: |
+          test "$(uname -m)" = arm64
+          node -e 'if(process.platform!=="darwin"||process.arch!=="arm64")throw Error("Expected native macOS ARM64 Node")'
+          xcodebuild -version
+          xcrun --sdk macosx --show-sdk-path
+          pod --version
+      - uses: actions/download-artifact@v4
+        with:
+          name: macos-appkit-shared-packages
+          path: ${{ runner.temp }}/appkit-shared
+      - name: Build and install archive consumer outside the monorepo
+        run: node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
+      - name: Verify the installed AppKit public declaration snapshot
+        run: node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+      - name: Compile a standalone native AppKit reference
+        working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
+        run: npm run build
+      - name: Exercise actual native controls and window lifetimes
+        id: native
+        working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
+        env:
+          APPKIT_EVIDENCE: ${{ runner.temp }}/nyc-tron-appkit-evidence
+          APPKIT_TESTED_PACKAGE: ${{ runner.temp }}/nyc-tron-appkit-tested-package
+        run: npm run verify:native
+      - name: Retain build and native evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-appkit-native-evidence
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/nyc-tron-appkit-evidence/
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/package-preparation.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/logs/
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/commands.jsonl
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/selection-report.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/version
+      - name: Retain the exact natively tested distribution
+        if: success() && steps.native.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-appkit-tested-package
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/nyc-tron-appkit-tested-package/

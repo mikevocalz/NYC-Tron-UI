@@ -1,13 +1,13 @@
 # NYC-Tron UI
 
-**Themeable, independently maintained UI for React Native and Expo on iOS, Android and web, with an experimental Windows adapter.**
+**Themeable, independently maintained UI for React Native and Expo on iOS, Android and web, with isolated Windows and macOS adapters under native acceptance.**
 
 This library is extracted from the NYC-MON / NeonBlade UI work and the
 independent layout work in NYC-MON, Moyo Learn, the universal spatial starter and
 Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavior
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
-> **Status: v1.0.0 release candidate.** The planned distribution is 14 GitHub
+> **Status: v1.0.0 release candidate.** The planned distribution is 15 GitHub
 > Release tarballs plus `SHA256SUMS`; package versions do not imply that a v1
 > release has been published. Nothing is published to npm. The completion target
 > includes all 341 canonical rows, including the twelve N rows previously

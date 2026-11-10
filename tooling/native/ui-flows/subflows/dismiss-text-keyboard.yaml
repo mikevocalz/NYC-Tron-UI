@@ -9,8 +9,12 @@ name: Dismiss native text keyboard
     when:
       platform: iOS
     commands:
+      - assertVisible:
+          id: "delete"
       - tapOn:
           id: "Done"
+      - assertNotVisible:
+          id: "delete"
       - assertNotVisible:
           id: "Done"
 - runFlow:

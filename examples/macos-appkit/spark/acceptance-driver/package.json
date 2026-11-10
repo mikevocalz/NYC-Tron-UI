@@ -1,0 +1,8 @@
+{
+  "name": "@nyc-tron/appkit-acceptance-driver",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "spark": { "pod": "NYCTronAcceptanceDriver", "platforms": ["macos"] },
+  "peerDependencies": { "@legendapp/spark": "0.0.2", "react-native": "0.83.10" }
+}

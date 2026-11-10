@@ -54,7 +54,7 @@ export function distributionApprovalStatement(version, manifestSha256) {
   ].join("\n");
 }
 
-/** Verify all fourteen produced archives before binding an approval to SHA256SUMS. */
+/** Verify every workspace and isolated desktop archive before binding an approval to SHA256SUMS. */
 export function verifyReleaseInventory(artifacts, version, { rootDir = root } = {}) {
   const directory = realpathSync(resolve(artifacts));
   const manifestBytes = readFileSync(join(directory, "SHA256SUMS"));
@@ -64,6 +64,7 @@ export function verifyReleaseInventory(artifacts, version, { rootDir = root } = 
     .filter(entry => entry.isDirectory() && existsSync(join(packages, entry.name, "package.json")))
     .map(entry => join(packages, entry.name, "package.json"));
   manifests.push(join(packages, "windows-fluent/rnw-fabric/package.json"));
+  manifests.push(join(packages, "macos-appkit/spark/package.json"));
   const expected = new Set(manifests.map(path => {
     const manifest = json(path);
     if (!/^@nyc-tron\/[a-z0-9-]+$/.test(manifest.name ?? "") || manifest.version !== version || manifest.private !== true) {
@@ -71,8 +72,8 @@ export function verifyReleaseInventory(artifacts, version, { rootDir = root } = 
     }
     return manifest.name.slice(1).replace("/", "-") + "-" + version + ".tgz";
   }));
-  if (expected.size !== 14 || manifests.length !== 14 || hashes.size !== expected.size || [...hashes.keys()].some(file => !expected.has(file))) {
-    fail("SHA256SUMS must identify the exact fourteen candidate archives");
+  if (expected.size !== 15 || manifests.length !== 15 || hashes.size !== expected.size || [...hashes.keys()].some(file => !expected.has(file))) {
+    fail("SHA256SUMS must identify the exact fifteen candidate archives");
   }
   const archiveFiles = readdirSync(directory).filter(file => file.endsWith(".tgz"));
   if (archiveFiles.length !== expected.size || archiveFiles.some(file => !expected.has(file))) fail("candidate archive directory and SHA256SUMS differ");
@@ -127,7 +128,7 @@ export async function validateReleaseReadiness({ version, ledger, review, artifa
   const blockers = [];
   if (program.accepted !== program.canonical) blockers.push((program.canonical - program.accepted) + " of 341 components lack accepted eight-platform proof");
   if (review.status !== "approved") blockers.push("owner distribution review is pending");
-  if (!inventory) blockers.push("the fourteen actual release archives and SHA256SUMS are required");
+  if (!inventory) blockers.push("the fifteen actual release archives and SHA256SUMS are required");
   if (blockers.length) fail("stable publication blocked: " + blockers.join("; "));
   if (review.releaseVersion !== version || review.approval.manifestSha256 !== inventory.manifestSha256) fail("owner distribution approval is for different version/archive bytes");
   const response = await loadApproval(approvalLocation(review.approval.commentUrl).apiUrl);

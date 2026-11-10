@@ -1,7 +1,20 @@
 {
-  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": [
+      "react"
+    ]
+  },
   "include": [
     "App.tsx",
-    "route-store.ts"
+    "route-store.ts",
+    "desktop-store.ts"
   ]
 }

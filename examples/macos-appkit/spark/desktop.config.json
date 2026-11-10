@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/@legendapp/spark/schema.json",
+  "name": "NYCTronAppKitReference",
+  "version": "1.0.0",
+  "window": {
+    "size": {
+      "width": 1040,
+      "height": 760
+    },
+    "restoreBounds": false
+  },
+  "macos": {
+    "bundleIdentifier": "org.nyctron.appkit.reference",
+    "testDriverInRelease": false
+  },
+  "platforms": [
+    "macos"
+  ],
+  "expo": {
+    "autolinking": {
+      "exclude": ["react-native-windows"]
+    }
+  },
+  "projectId": "B72DE147-FD50-4CF0-BC6A-2982C501E865"
+}

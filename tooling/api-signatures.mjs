@@ -2,6 +2,7 @@
 //   node tooling/api-signatures.mjs
 //   node tooling/api-signatures.mjs --write     explicit reviewed baseline update
 // An isolated runtime can use --package <dir> --snapshot <file>.
+// For an installed archive, --compiler-root <consumer> selects its own tooling.
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, relative, resolve, sep } from "node:path";
@@ -9,7 +10,9 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const packageArgument = process.argv.indexOf("--package");
-const compilerRoot = packageArgument >= 0 && process.argv[packageArgument + 1] ? resolve(process.argv[packageArgument + 1]) : root;
+const compilerArgument = process.argv.indexOf("--compiler-root");
+const compilerLocation = compilerArgument >= 0 ? compilerArgument : packageArgument;
+const compilerRoot = compilerLocation >= 0 && process.argv[compilerLocation + 1] ? resolve(process.argv[compilerLocation + 1]) : root;
 if (compilerRoot !== root && !existsSync(join(compilerRoot, "node_modules/typescript/package.json"))) {
   throw new Error("Install the isolated package's own TypeScript tooling first: " + compilerRoot);
 }
@@ -222,6 +225,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--write") write = true;
     else if (args[i] === "--package" && args[i + 1]) directories.push(resolve(args[++i]));
+    else if (args[i] === "--compiler-root" && args[i + 1]) i++;
     else if (args[i] === "--snapshot" && args[i + 1]) output = resolve(args[++i]);
     else throw new Error("Unknown/incomplete api-signatures argument: " + args[i]);
   }

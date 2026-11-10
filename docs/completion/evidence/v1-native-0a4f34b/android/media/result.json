@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "platform": "android",
+  "platformVersion": "35",
+  "revision": "aa68e5ceb6875e02f73ee48dbdfa1c22641540d1",
+  "fixtureMd5": "f3124067a1a9bb9c06b1283c673cef39",
+  "checks": [
+    "fixture-bytes",
+    "native-probe",
+    "frame-presentation-and-jpeg",
+    "bounded-frame-scaling",
+    "pcm-bytes-and-signal",
+    "pcm-resampling-and-tail",
+    "complete-presentation-index",
+    "indexed-frame-and-rejection",
+    "normalized-errors",
+    "cancelled-consumer",
+    "cache-deletion-and-recovery"
+  ],
+  "elapsedMs": 2521,
+  "observed": {
+    "durationUs": 2000000,
+    "frameTimeUs": 500000,
+    "indexFrames": 40,
+    "indexedTimeUs": 1050000,
+    "pcmFrames": 24000,
+    "resampledFrames": 8000,
+    "upsampledFrames": 48000,
+    "fullResampledFrames": 32000,
+    "tailFrames": 4000,
+    "pcmPeak": 0.1300048828125,
+    "pcmRms": 0.08835735995923667
+  },
+  "provenance": {
+    "serial": "emulator-5554",
+    "sdk": "35",
+    "sourceCommit": "aa68e5ceb6875e02f73ee48dbdfa1c22641540d1",
+    "fixtureSha256": "4c9905522ec7710bbe0a7f02404cc2a957b037c2de3c67c4469df904b7207b0a",
+    "nativeArtifact": {
+      "kind": "android-apk",
+      "algorithm": "sha256-raw-apk-v1",
+      "sha256": "9c31840f654d2fe9693ec49e95feae2f5bc587bc1a6c89a585fd15d533a71fba",
+      "manifest": {
+        "file": "native-artifact.json",
+        "sha256": "e4d025c7f05a82a00179b603200767fe1e4de08640fe1150e3a7c28f1b6a12c5"
+      }
+    },
+    "bundleWarmup": {
+      "file": "bundle-warmup-media.json",
+      "sha256": "16c0db63d6904b22bfea4962c093a684bfcb64e1d0dca8431c3a06d4ca20a05b",
+      "bundleSha256": "fea6fde5b2706f41c2b23b20e57b2222f61c3e7b3be97c1ed6fc3bf4e23306a9",
+      "bytes": 4633276
+    },
+    "installedPackages": {
+      "kind": "expo-native",
+      "sourceCommit": "aa68e5ceb6875e02f73ee48dbdfa1c22641540d1",
+      "packages": {
+        "@nyc-tron/core": {
+          "version": "1.0.0",
+          "sha256": "7da37c7b4eb32abbc380a2e74e5c0560fe001da31e9f957e093117c6973b9771",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/core"
+        },
+        "@nyc-tron/expo-controls": {
+          "version": "1.0.0",
+          "sha256": "b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/expo-controls"
+        },
+        "@nyc-tron/hardware-keys": {
+          "version": "1.0.0",
+          "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/hardware-keys"
+        },
+        "@nyc-tron/native-charts": {
+          "version": "1.0.0",
+          "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-charts"
+        },
+        "@nyc-tron/native-controls": {
+          "version": "1.0.0",
+          "sha256": "0756629d2ee99eca9ada1293d23b780a88470f7b2729c1611be623608b6fe23b",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-controls"
+        },
+        "@nyc-tron/native-navigation": {
+          "version": "1.0.0",
+          "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-navigation"
+        },
+        "@nyc-tron/panes": {
+          "version": "1.0.0",
+          "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/panes"
+        },
+        "@nyc-tron/platform-services": {
+          "version": "1.0.0",
+          "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/platform-services"
+        },
+        "@nyc-tron/reserved-regions": {
+          "version": "1.0.0",
+          "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/reserved-regions"
+        },
+        "@nyc-tron/ui": {
+          "version": "1.0.0",
+          "sha256": "97cfb762a4ad5648c2b7eb3f3dcf3a45f90c7c858b0847db5f37ace56d22ecc8",
+          "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/ui"
+        }
+      },
+      "absentPeers": []
+    }
+  }
+}

@@ -50,9 +50,9 @@ so no run above covers them.
 | iOS SwiftUI / Android Compose controls | Clean installed-tarball native compile and media/UI runtime gates; see exact current receipts in the candidate report |
 | iOS / Android native overlays | 28-step scenario passed twice on an iOS target and twice on Android `emulator-5554` (`docs/completion/P04-native-overlays-proof.json`); no screen-reader speech |
 | Windows Fluent NavigationView (Fabric) | Actual candidate consumer compilation, deployment and keyboard UIA passed in run 42765513976. Wider Narrator/high-contrast/RTL/resize/physical-input acceptance remains unverified |
-| Windows host-shell transport | **NOT IMPLEMENTED** |
-| macOS AppKit native adapter | **NOT IMPLEMENTED**; required target remains in the program |
-| Native multi-window bridge | **NOT IMPLEMENTED**; remains a recorded host gap |
+| Windows host-shell transport | RNW Fabric navigation binding implemented in the isolated Windows package; new native consumer evidence required for this revision |
+| macOS AppKit native adapter | Spark/AppKit package and clean consumer implemented in a separate Expo 55 / RN macOS lane; native control/window evidence required for this revision |
+| Native multi-window bridge | Native desktop adapters connect window ownership, display geometry and lifecycle to the shared registry; physical cross-window dragging/display changes retain separate acceptance |
 | Moyo / NYC-MON theme consumption | Example contracts written, **not visually tested** |
 | Forge suite real consumer and packaging | Actual MMKV/Yjs and generated native object receipts are retained from the owning Forge workflow; see the candidate report |
 | Surface Duo / multi-hinge hardware | **NOT RUN** |
