@@ -33,7 +33,14 @@ class DragDeferral final {
 struct TronDragSurfaceComponentView
     : winrt::implements<TronDragSurfaceComponentView, winrt::IInspectable>,
       Codegen::BaseTronDragSurface<TronDragSurfaceComponentView> {
-  ~TronDragSurfaceComponentView() { Cleanup(); m_disposed = true; try { if (m_island) m_island.Close(); } catch (...) {} }
+  ~TronDragSurfaceComponentView() { Destroy(); }
+  void Destroy() noexcept {
+    if (std::exchange(m_disposed, true)) return;
+    // Release broker deferrals and the XAML island at RNW's removal boundary,
+    // before UIA references can postpone the UserData object's final release.
+    Cleanup();
+    try { if (m_island) m_island.Close(); } catch (...) {}
+  }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
       m_island = Xaml::XamlIsland{}; m_surface = Xaml::Controls::Button{};
@@ -107,7 +114,7 @@ struct TronDragSurfaceComponentView
         completion->Complete();
       };
       auto broker = Broker::Find(m_owner); auto emitter = EventEmitter();
-      if (!broker || !emitter || m_role != "source" || !m_surface.IsEnabled()) { ready(false, ""); return; }
+      if (m_disposed || !broker || !emitter || m_role != "source" || !m_surface.IsEnabled()) { ready(false, ""); return; }
       m_request = broker->PrepareSource(m_window, m_generation, ready);
       Codegen::TronDragSurfaceEventEmitter::OnDragStarting event; event.scopeToken = m_scope; event.requestId = m_request; emitter->onDragStarting(std::move(event));
     } catch (...) {
@@ -124,7 +131,7 @@ struct TronDragSurfaceComponentView
     try {
       args.Handled(true); args.AcceptedOperation(Transfer::DataPackageOperation::None);
       auto broker = Broker::Find(m_owner); const auto nonce = Nonce(args);
-      if (m_role == "target" && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation)) {
+      if (!m_disposed && m_role == "target" && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation)) {
         args.AcceptedOperation(Transfer::DataPackageOperation::Move); broker->Hover(nonce, m_window, m_generation);
       }
     } catch (...) { /* Unrelated or malformed OS data is not an accepted app transfer. */ }
@@ -141,7 +148,7 @@ struct TronDragSurfaceComponentView
         completion->Complete();
       };
       auto broker = Broker::Find(m_owner); const auto nonce = Nonce(args);
-      if (m_role != "target" || !m_surface.IsEnabled() || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }
+      if (m_disposed || m_role != "target" || !m_surface.IsEnabled() || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }
       broker->Offer(nonce, m_window, m_generation, ready);
     } catch (...) {
       try { args.AcceptedOperation(Transfer::DataPackageOperation::None); } catch (...) {} if (completion) completion->Complete();
@@ -160,6 +167,9 @@ void RegisterTronDragSurfaceComponent(winrt::Microsoft::ReactNative::IReactPacka
       component.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
       component.SetContentIslandComponentViewInitializer([](auto const& view) noexcept {
         auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronDragSurfaceComponentView>(); data->InitializeContentIsland(view); view.UserData(*data);
+        view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
+          if (auto owner = weak.get()) owner->Destroy();
+        });
       });
     });
 }

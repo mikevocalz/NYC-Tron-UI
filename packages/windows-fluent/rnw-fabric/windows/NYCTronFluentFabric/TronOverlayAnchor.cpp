@@ -25,9 +25,15 @@ using Automation = Xaml::Automation::AutomationProperties;
 struct TronOverlayAnchorComponentView
     : winrt::implements<TronOverlayAnchorComponentView, winrt::IInspectable>,
       Codegen::BaseTronOverlayAnchor<TronOverlayAnchorComponentView> {
-  ~TronOverlayAnchorComponentView() {
+  ~TronOverlayAnchorComponentView() { Destroy(); }
+  void Destroy() noexcept {
+    if (m_disposed) return;
     m_disposed = true;
-    try { HideFlyout(); if (m_tooltip) m_tooltip.IsOpen(false); if (m_island) m_island.Close(); } catch (...) {}
+    // RNW's Destroying event runs while the ComponentView is still alive.
+    // Final COM release can occur after that removal boundary.
+    try { HideFlyout(); } catch (...) {}
+    try { if (m_tooltip) m_tooltip.IsOpen(false); } catch (...) {}
+    try { if (m_island) m_island.Close(); } catch (...) {}
   }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
@@ -304,6 +310,9 @@ void RegisterTronOverlayAnchorComponent(winrt::Microsoft::ReactNative::IReactPac
       component.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
       component.SetContentIslandComponentViewInitializer([](auto const& view) noexcept {
         auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronOverlayAnchorComponentView>(); data->InitializeContentIsland(view); view.UserData(*data);
+        view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
+          if (auto owner = weak.get()) owner->Destroy();
+        });
       });
     });
 }
