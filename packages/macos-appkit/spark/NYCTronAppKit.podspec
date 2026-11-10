@@ -11,6 +11,8 @@ Pod::Spec.new do |s|
   s.platforms = { :osx => '14.0' }
   s.source_files = 'macos/**/*.{h,mm}'
   s.dependency 'React-Core'
+  s.dependency 'React-RCTFabric'
   s.dependency 'ReactCodegen'
+  s.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '"$(PODS_ROOT)/Headers/Private/Yoga"' }
   s.osx.frameworks = 'AppKit', 'CoreGraphics'
 end

@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { Text as NativeText, View, ScrollView, useColorScheme } from 'react-native';
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
@@ -10,10 +10,18 @@ import { Select } from '@nyc-tron/macos-appkit/select';
 import { SegmentedControl } from '@nyc-tron/macos-appkit/segmented-control';
 import { DragDropView } from '@nyc-tron/macos-appkit/drag-drop';
 import { createMacOSWindowHost } from '@nyc-tron/macos-appkit/windows';
+import { createMenu } from '@nyc-tron/macos-appkit/menus';
+import { showContextMenu } from '@nyc-tron/macos-appkit/context-menu';
+import { Tooltip } from '@nyc-tron/macos-appkit/tooltip';
+import { AnchoredInspector } from '@nyc-tron/macos-appkit/anchored-inspector';
+import type { ControlRef } from '@legendapp/spark/ui';
 import type { LayoutSnapshot } from '@nyc-tron/core/window-lifecycle';
+import type { Rect2D } from '@nyc-tron/core/overlays';
 
 type Appearance = 'system' | 'light' | 'dark';
 interface Document { title: string; savedTitle: string; collection: string }
+interface InspectorState { open: boolean; anchor: Rect2D; region: Rect2D }
+const closedInspector: InspectorState = { open: false, anchor: { x: 0, y: 0, width: 0, height: 0 }, region: { x: 0, y: 0, width: 0, height: 0 } };
 interface AppState {
   documents: Record<string, Document>;
   selected: string;
@@ -21,13 +29,14 @@ interface AppState {
   status: string;
   ready: boolean;
   owner: string;
+  inspectors: Record<string, InspectorState>;
   layout?: LayoutSnapshot;
 }
 // One app-owned document store shared by every registered React root. Window
 // props carry identity, never a second document copy or a new undo session.
 const store = createStore<AppState>(() => ({
   documents: { welcome: { title: 'A place for focused work', savedTitle: 'A place for focused work', collection: 'studio' } },
-  selected: 'document', appearance: 'system', status: 'Opening native workspace', ready: false, owner: 'main',
+  selected: 'document', appearance: 'system', status: 'Opening native workspace', ready: false, owner: 'main', inspectors: {},
 }));
 const fail = (error: unknown) => store.setState({ status: `Error: ${error instanceof Error ? error.message : String(error)}` });
 const host = createMacOSWindowHost({
@@ -41,10 +50,20 @@ const host = createMacOSWindowHost({
 });
 let boot: Promise<void> | undefined;
 const start = () => {
-  if (!boot) boot = host.attach('main').then(() => { store.setState({ ready: true, status: 'Native workspace ready' }); });
+  if (!boot) boot = host.attach('main').then(async () => {
+    await createMenu({ id: 'nyc-tron-reference', items: [{ type: 'submenu', id: 'workspace-menu', label: 'Workspace', items: [
+      { type: 'action', id: 'menu-save', label: 'Save local changes', shortcut: 'Cmd+S' },
+      { type: 'action', id: 'menu-open', label: 'Open document window' },
+      { type: 'action', id: 'menu-disabled', label: 'Unavailable command', disabled: true },
+    ] }], onAction: action => {
+      if (action.itemId === 'menu-save') save();
+      else if (action.itemId === 'menu-open') void openDocument().catch(fail);
+    } });
+    store.setState({ ready: true, status: 'Native workspace ready' });
+  });
   return boot;
 };
-const dragType = 'org.nyctron.appkit.document-reference';
+const dragType = 'application/x-nyctron-document-reference';
 // Native drag payload is an app-scoped reference. Document truth stays here.
 const dragNonce = `reference-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
@@ -74,6 +93,10 @@ function save() {
   if (!document.title.trim()) { store.setState({ status: 'Enter a document title before saving' }); return; }
   store.setState({ documents: { welcome: { ...document, savedTitle: document.title } }, status: 'Saved in this local reference session' });
 }
+function updateInspector(windowId: string, patch: Partial<InspectorState>) {
+  const inspectors = store.getState().inspectors;
+  store.setState({ inspectors: { ...inspectors, [windowId]: { ...(inspectors[windowId] ?? closedInspector), ...patch } } });
+}
 async function openDocument() {
   const id = 'document-1';
   if (host.getSnapshot().windows.some(w => w.id === id)) { await host.focus(id); return; }
@@ -84,35 +107,73 @@ function NativeDrop({ windowId }: { windowId: string }) {
   const owner = useStore(store, s => s.owner);
   return <DragDropView testID={`drop-${windowId}`} accessibilityLabel={`Move document to ${windowId}`}
     style={{ padding: 16, borderWidth: 1, borderColor: '#9b9b95', borderRadius: 4 }}
-    source={{ data: { [dragType]: JSON.stringify({ nonce: dragNonce, sourceId: windowId, documentId: 'welcome' }) } }}
+    source={owner === windowId ? { data: { [dragType]: JSON.stringify({ nonce: dragNonce, sourceId: windowId, documentId: 'welcome' }) } } : undefined}
     sourceOperations={['move']} acceptedTypes={[dragType]} acceptedOperations={['move']} onError={fail}
     onDragEnter={event => {
       let value: { nonce?: string; sourceId?: string; documentId?: string };
       try { value = JSON.parse(event.data?.[dragType] ?? 'null'); } catch { return; }
-      if (!value || value.nonce !== dragNonce || value.documentId !== 'welcome' || !value.sourceId || value.sourceId === windowId) return;
+      if (!value || value.nonce !== dragNonce || value.documentId !== 'welcome' || !value.sourceId || value.sourceId === windowId || store.getState().owner !== value.sourceId) return;
       const active = host.getSnapshot().drag;
       const token = active?.sourceId === value.sourceId ? active.token : host.beginDrag(value.sourceId, { documentId: 'welcome' }).token;
-      if (token) host.dragOver(token, windowId);
+      if (token) { host.dragOver(token, windowId); store.setState({ status: `Document move offered to ${windowId}` }); }
     }}
     onDragLeave={() => { const drag = host.getSnapshot().drag; if (drag?.targetId === windowId) host.dragOver(drag.token, null); }}
     onDrop={async event => {
       let value: { nonce?: string; sourceId?: string; documentId?: string };
       try { value = JSON.parse(event.data?.[dragType] ?? 'null'); } catch { return; }
       const drag = host.getSnapshot().drag;
-      if (!value || value.nonce !== dragNonce || !drag || drag.sourceId !== value.sourceId || value.documentId !== 'welcome') return;
-      const result = await host.drop(drag.token, windowId, offer => offer.targetId !== offer.sourceId);
+      if (!value || value.nonce !== dragNonce || !drag || drag.sourceId !== value.sourceId || value.documentId !== 'welcome' || store.getState().owner !== value.sourceId) return;
+      const result = await host.drop(drag.token, windowId, offer => {
+        const { documents, owner } = store.getState();
+        return offer.targetId !== offer.sourceId && owner === offer.sourceId && documents.welcome.title === documents.welcome.savedTitle;
+      });
       if (result.transfer) store.setState({ owner: result.transfer.targetId, status: `Document moved to ${result.transfer.targetId}` });
+      else store.setState({ status: 'Move blocked: save the document before moving ownership' });
     }}
     onDragEnd={event => {
       const drag = host.getSnapshot().drag;
-      if (drag?.sourceId === windowId && (!event.accepted || drag.phase === 'dragging')) host.cancelDrag(drag.token);
+      if (drag?.sourceId === windowId && (!event.accepted || (drag.phase === 'dragging' && !drag.targetId))) {
+        host.cancelDrag(drag.token); store.setState({ status: 'Native document drag canceled' });
+      }
     }}>
-    <Text selectable>Drag this document between its native windows. Current owner: {owner}.</Text>
+    <Text testID={`owner-${windowId}`} accessibilityLabel={`Document owner: ${owner}`} selectable>Drag the saved document from its owner window. Current owner: {owner}.</Text>
   </DragDropView>;
 }
 
 function DocumentEditor({ windowId }: { windowId: string }) {
   const document = useStore(store, s => s.documents.welcome);
+  const contextTrigger = useRef<ControlRef | null>(null);
+  const contextGeneration = useRef(0);
+  const inspectorTrigger = useRef<ControlRef | null>(null);
+  const inspectorGeneration = useRef(0);
+  const inspector = useStore(store, state => state.inspectors[windowId] ?? closedInspector);
+  useEffect(() => () => { contextGeneration.current++; }, []);
+  useEffect(() => () => { inspectorGeneration.current++; updateInspector(windowId, { open: false }); }, [windowId]);
+  const measureInspector = (opening: boolean) => {
+    const generation = ++inspectorGeneration.current;
+    inspectorTrigger.current?.measureInWindow((x, y, width, height) => {
+      if (generation !== inspectorGeneration.current || ![x, y, width, height].every(Number.isFinite)) return;
+      updateInspector(windowId, { anchor: { x, y, width, height }, ...(opening ? { open: true } : {}) });
+      if (opening) store.setState({ status: 'Native inspector opened' });
+    });
+  };
+  useEffect(() => {
+    if (inspector.open) measureInspector(false);
+  }, [windowId, inspector.open, inspector.region.x, inspector.region.y, inspector.region.width, inspector.region.height]);
+  const openContextMenu = () => {
+    const generation = ++contextGeneration.current;
+    contextTrigger.current?.measureInWindow((x, y, width, height) => {
+      if (generation !== contextGeneration.current || ![x, y, width, height].every(Number.isFinite)) return;
+      void showContextMenu({ windowId, position: { x, y: y + height }, items: [
+        { type: 'action', id: 'context-save', label: 'Save local changes' },
+        { type: 'action', id: 'context-disabled', label: 'Unavailable command', disabled: true },
+      ] }).then(result => {
+        if (generation !== contextGeneration.current) return;
+        if (result.canceled) store.setState({ status: 'Native context menu dismissed' });
+        else if (result.itemId === 'context-save') save();
+      }).catch(fail);
+    });
+  };
   return <View style={{ gap: 14, maxWidth: 560 }}>
     <Text accessibilityRole="header" style={{ fontSize: 26, fontWeight: '600' }}>A familiar place to work</Text>
     <Text selectable>Keep one document open in two native windows. Edits, selection and the local save checkpoint stay with the app while you resize.</Text>
@@ -123,9 +184,26 @@ function DocumentEditor({ windowId }: { windowId: string }) {
       options={[{ label: 'Studio', value: 'studio' }, { label: 'Library', value: 'library' }, { label: 'Projects', value: 'projects' }]}
       onValueChange={collection => store.setState({ documents: { welcome: { ...store.getState().documents.welcome, collection } } })} onError={fail} />
     <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-      <Button testID={`save-${windowId}`} onPress={save} onError={fail}>Save local changes</Button>
+      <Tooltip testID={`tooltip-${windowId}`} label="Save this document's local checkpoint">
+        <Button testID={`save-${windowId}`} onPress={save} onError={fail}>Save local changes</Button>
+      </Tooltip>
       <Button testID={`open-${windowId}`} onPress={() => { void openDocument().catch(fail); }} onError={fail}>Open document window</Button>
+      <Button ref={contextTrigger} testID={`context-${windowId}`} onPress={openContextMenu} onError={fail}>Document actions</Button>
+      <Button ref={inspectorTrigger} testID={`inspect-${windowId}`} onPress={() => measureInspector(true)} onError={fail}>Inspect document</Button>
     </View>
+    <AnchoredInspector testID={`inspector-${windowId}`} scope={`welcome:${windowId}`} open={inspector.open}
+      onOpenChange={open => { updateInspector(windowId, { open }); store.setState({ status: open ? 'Native inspector opened' : 'Native inspector dismissed' }); }}
+      onPresentationRejected={() => store.setState({ status: 'Inspector cannot fit in the available area; resize the window and try again' })}
+      accessibilityLabel="Document inspector" anchor={inspector.anchor} usableRegions={[inspector.region]} width={320} maxHeight={240}>
+      <View style={{ padding: 18, gap: 14 }}>
+        <Text accessibilityRole="header" style={{ fontSize: 18, fontWeight: '600' }}>Document inspector</Text>
+        <Text>This is the same app-owned document.</Text>
+        <TextField testID={`inspector-title-${windowId}`} accessibilityLabel="Inspector document title" value={document.title}
+          style={{ width: '100%', height: 34 }} onChangeText={setTitle} onError={fail} />
+        <Button testID={`inspector-save-${windowId}`} onPress={save} onError={fail}>Save local changes</Button>
+        <Button testID={`inspector-close-${windowId}`} onPress={() => { updateInspector(windowId, { open: false }); store.setState({ status: 'Inspector closed' }); }} onError={fail}>Close inspector</Button>
+      </View>
+    </AnchoredInspector>
     <View testID={`saved-${windowId}`} style={{ padding: 16, borderRadius: 4, borderWidth: 1, borderColor: '#9b9b95', gap: 8 }}>
       <Text style={{ fontWeight: '600' }}>Local checkpoint</Text><Text selectable>{document.savedTitle}</Text>
       <Text selectable>{document.title === document.savedTitle ? 'All changes saved' : 'Unsaved changes protect this window from closing'}</Text>
@@ -134,6 +212,10 @@ function DocumentEditor({ windowId }: { windowId: string }) {
   </View>;
 }
 function Surface({ windowId, main }: { windowId: string; main: boolean }) {
+  const root = useRef<View | null>(null);
+  const measureRegion = () => root.current?.measureInWindow((x, y, width, height) => {
+    if ([x, y, width, height].every(Number.isFinite)) updateInspector(windowId, { region: { x, y, width, height } });
+  });
   const selected = useStore(store, s => s.selected);
   const appearance = useStore(store, s => s.appearance);
   const status = useStore(store, s => s.status);
@@ -167,7 +249,7 @@ function Surface({ windowId, main }: { windowId: string; main: boolean }) {
       </View>}
     </View>
   </ScrollView>;
-  return <View testID={`root-${windowId}`} style={{ flex: 1 }}>
+  return <View ref={root} testID={`root-${windowId}`} onLayout={measureRegion} style={{ flex: 1 }}>
     {main ? <SplitView style={{ flex: 1 }} appearance={appearance} sidebarWidth={220} sidebarMinWidth={180} contentMinWidth={320}
       sidebar={<Sidebar testID="navigation" accessibilityLabel="Workspace navigation" style={{ flex: 1 }} selectedId={selected}
         items={[{ id: 'document', label: 'Document' }, { id: 'preferences', label: 'Preferences' }, { id: 'locked', label: 'Protected destination' }]}
