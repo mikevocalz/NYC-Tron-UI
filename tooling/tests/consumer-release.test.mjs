@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { consumerDependencies, exactPin, releaseChecksums, verifyArchiveHash } from "../consumer-model.mjs";
+import { consumerDependencies, exactPin, releaseChecksums, verifyArchiveHash, verifyInstalledArchive } from "../consumer-model.mjs";
 
 test("consumer peers resolve to artifacts, including undeclared additional package coverage", () => {
   const archives = new Map([
@@ -46,4 +46,19 @@ test("clean consumer runtime dependencies use existing exact pins", () => {
   for (const value of ["latest", "^19.3.0", "~19.3.0", "workspace:*", undefined]) {
     assert.throws(() => exactPin("react", value), /existing exact pin/);
   }
+});
+
+test("installed npm lock identifies the exact canonical file bytes instead of a same-version registry package", () => {
+  const bytes = Buffer.from("canonical archive");
+  const archive = { path: "/candidate/ui.tgz", version: "1.0.0", sha256: createHash("sha256").update(bytes).digest("hex") };
+  const entry = { version: archive.version, resolved: "file:../../candidate/ui.tgz",
+    integrity: "sha512-" + createHash("sha512").update(bytes).digest("base64") };
+  const check = value => verifyInstalledArchive("@nyc-tron/ui", archive, bytes, value, "/consumer/app");
+  assert.doesNotThrow(() => check(entry));
+  for (const mutation of [{ version: "0.9.0" }, { resolved: "https://registry.example/ui.tgz" },
+    { resolved: "file:../../other/ui.tgz" }, { link: true }, { integrity: "sha512-wrong" }]) {
+    assert.throws(() => check({ ...entry, ...mutation }), /lock differs from the canonical archive/);
+  }
+  assert.throws(() => check(undefined), /lock differs from the canonical archive/);
+  assert.throws(() => verifyInstalledArchive("@nyc-tron/ui", archive, Buffer.from("repacked archive"), entry, "/consumer/app"), /checksum mismatch/);
 });

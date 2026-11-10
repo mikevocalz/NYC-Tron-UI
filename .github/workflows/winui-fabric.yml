@@ -7,6 +7,7 @@ on:
       - "packages/core/**"
       - "tooling/api-signatures.mjs"
       - "tooling/pack-release.mjs"
+      - "tooling/workspace-pack-artifact.mjs"
       - "THIRD_PARTY_NOTICES.md"
       - "licenses/**"
       - "docs/api-signatures-windows.json"
@@ -19,6 +20,7 @@ on:
       - "packages/core/**"
       - "tooling/api-signatures.mjs"
       - "tooling/pack-release.mjs"
+      - "tooling/workspace-pack-artifact.mjs"
       - "THIRD_PARTY_NOTICES.md"
       - "licenses/**"
       - "docs/api-signatures-windows.json"
@@ -26,6 +28,15 @@ on:
   workflow_dispatch:
   # The release requires the actual Windows executable and UIA roundtrip.
   workflow_call:
+    inputs:
+      workspace_artifact:
+        description: Canonical workspace archive artifact from this release run
+        type: string
+        default: ""
+      workspace_manifest_sha256:
+        description: Manifest SHA-256 emitted by the canonical producer
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -67,12 +78,14 @@ jobs:
       - name: Verify the isolated RNW public declaration snapshot
         run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
       - name: Build canonical shared release packages with the root compiler
+        if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         run: |
           corepack enable
           corepack pnpm install --frozen-lockfile --ignore-scripts
           corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/windows-fluent build
           node tooling/pack-release.mjs "$RUNNER_TEMP/windows-shared" --packages core,windows-fluent
       - name: Retain canonical shared archives for the native consumer
+        if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         uses: actions/upload-artifact@v4
         with:
           name: windows-fabric-shared-packages
@@ -106,8 +119,15 @@ jobs:
       - name: Download the canonical shared package archives
         uses: actions/download-artifact@v4
         with:
-          name: windows-fabric-shared-packages
+          name: ${{ inputs.workspace_artifact || 'windows-fabric-shared-packages' }}
           path: ${{ runner.temp }}/windows-shared
+      - name: Verify the release producer's exact workspace archives
+        if: inputs.workspace_artifact != '' || inputs.workspace_manifest_sha256 != ''
+        env:
+          WORKSPACE_MANIFEST_SHA256: ${{ inputs.workspace_manifest_sha256 }}
+        run: |
+          node tooling/workspace-pack-artifact.mjs verify "$env:RUNNER_TEMP/windows-shared" "$env:WORKSPACE_MANIFEST_SHA256"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Install the fresh consumer from canonical peers and the Fabric candidate
         shell: pwsh
         run: |
@@ -215,5 +235,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: winui-fabric-uia-smoke
-          path: ${{ runner.temp }}/uia-smoke
+          path: |
+            ${{ runner.temp }}/uia-smoke/
+            ${{ runner.temp }}/windows-shared/workspace-packages.json
+            ${{ runner.temp }}/windows-shared/SHA256SUMS
           if-no-files-found: warn

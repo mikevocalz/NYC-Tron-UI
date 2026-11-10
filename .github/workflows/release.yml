@@ -52,17 +52,29 @@ jobs:
       contents: read
   release-consumers:
     name: installed tarball consumers
+    needs: native-controls
     uses: ./.github/workflows/release-consumer.yml
+    with:
+      workspace_artifact: native-workspace-packages
+      workspace_manifest_sha256: ${{ needs.native-controls.outputs.workspace_manifest_sha256 }}
     permissions:
       contents: read
   windows-native:
     name: Windows native compilation and UI Automation
+    needs: native-controls
     uses: ./.github/workflows/winui-fabric.yml
+    with:
+      workspace_artifact: native-workspace-packages
+      workspace_manifest_sha256: ${{ needs.native-controls.outputs.workspace_manifest_sha256 }}
     permissions:
       contents: read
   macos-appkit:
     name: AppKit native controls and window lifecycle
+    needs: native-controls
     uses: ./.github/workflows/macos-appkit.yml
+    with:
+      workspace_artifact: native-workspace-packages
+      workspace_manifest_sha256: ${{ needs.native-controls.outputs.workspace_manifest_sha256 }}
     permissions:
       contents: read
   native-feel:
@@ -120,10 +132,20 @@ jobs:
       - name: Verify the complete component ledger and reviewed public exports
         run: node tooling/verify-component-program.mjs
 
-      # Fails if any package version differs from the tag, a tarball lacks
-      # dist/README/notices, ships src/, or keeps an export outside dist.
-      - name: Pack and check every tarball
-        run: node tooling/pack-release.mjs "$RUNNER_TEMP/release" --expect-version "${{ steps.version.outputs.version }}"
+      # Reuse the exact workspace bytes already installed by every release
+      # consumer. The Ubuntu producer ran the standard contents/license gate.
+      - name: Download the tested canonical workspace archives
+        uses: actions/download-artifact@v4
+        with:
+          name: native-workspace-packages
+          path: ${{ runner.temp }}/release
+      - name: Verify the canonical archives, source revision and release version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          WORKSPACE_MANIFEST_SHA256: ${{ needs.native-controls.outputs.workspace_manifest_sha256 }}
+        run: |
+          node tooling/workspace-pack-artifact.mjs verify "$RUNNER_TEMP/release" "$WORKSPACE_MANIFEST_SHA256" --expect-version "$VERSION"
+          cp "$RUNNER_TEMP/release/SHA256SUMS" "$RUNNER_TEMP/release/workspace-SHA256SUMS"
       - name: Install the dependency-free tarballs in a fresh project and import them
         run: node tooling/consumer-smoke.mjs "$RUNNER_TEMP/release"
 
@@ -142,9 +164,11 @@ jobs:
       - name: Verify and retain the exact tested desktop archives
         env:
           VERSION: ${{ steps.version.outputs.version }}
+          WORKSPACE_MANIFEST_SHA256: ${{ needs.native-controls.outputs.workspace_manifest_sha256 }}
         run: |
           node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-windows" "$RUNNER_TEMP/release" @nyc-tron/windows-fluent-fabric "$VERSION" "$GITHUB_SHA"
           node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-macos" "$RUNNER_TEMP/release" @nyc-tron/macos-appkit "$VERSION" "$GITHUB_SHA"
+          node tooling/workspace-pack-artifact.mjs verify "$RUNNER_TEMP/release" "$WORKSPACE_MANIFEST_SHA256" --expect-version "$VERSION" --release
 
       # Preserve the concrete fifteen-archive candidate before D2/D3 can block
       # stable publication. The owner reviews these exact checksums, not a
@@ -156,6 +180,8 @@ jobs:
           path: |
             ${{ runner.temp }}/release/*.tgz
             ${{ runner.temp }}/release/SHA256SUMS
+            ${{ runner.temp }}/release/workspace-packages.json
+            ${{ runner.temp }}/release/workspace-SHA256SUMS
             ${{ runner.temp }}/release/*-tested-package.json
           if-no-files-found: error
           retention-days: 30

@@ -8,6 +8,7 @@ on:
       - 'examples/macos-appkit/**'
       - 'tooling/macos-appkit/**'
       - 'tooling/pack-release.mjs'
+      - 'tooling/workspace-pack-artifact.mjs'
       - 'tooling/api-signatures.mjs'
       - 'docs/api-signatures-macos.json'
       - 'THIRD_PARTY_NOTICES.md'
@@ -16,6 +17,15 @@ on:
       - 'pnpm-lock.yaml'
   workflow_dispatch:
   workflow_call:
+    inputs:
+      workspace_artifact:
+        description: Canonical workspace archive artifact from this release run
+        type: string
+        default: ''
+      workspace_manifest_sha256:
+        description: Manifest SHA-256 emitted by the canonical producer
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -35,15 +45,19 @@ jobs:
         with:
           node-version: '24.19.0'
       - name: Install the pinned workspace compiler
+        if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         run: |
           corepack enable
           corepack pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check shared archive import contracts
+        run: node --test tooling/macos-appkit/shared-archives.test.mjs
       - name: Build and pack core with release provenance
+        if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         run: |
-          node --test tooling/macos-appkit/shared-archives.test.mjs
           corepack pnpm --filter @nyc-tron/core build
           node tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core
       - uses: actions/upload-artifact@v4
+        if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         with:
           name: macos-appkit-shared-packages
           if-no-files-found: error
@@ -90,8 +104,13 @@ jobs:
           pod --version
       - uses: actions/download-artifact@v4
         with:
-          name: macos-appkit-shared-packages
+          name: ${{ inputs.workspace_artifact || 'macos-appkit-shared-packages' }}
           path: ${{ runner.temp }}/appkit-shared
+      - name: Verify the release producer's exact workspace archives
+        if: inputs.workspace_artifact != '' || inputs.workspace_manifest_sha256 != ''
+        env:
+          WORKSPACE_MANIFEST_SHA256: ${{ inputs.workspace_manifest_sha256 }}
+        run: node tooling/workspace-pack-artifact.mjs verify "$RUNNER_TEMP/appkit-shared" "$WORKSPACE_MANIFEST_SHA256"
       - name: Build and install archive consumer outside the monorepo
         run: node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
       - name: Verify the installed AppKit public declaration snapshot
@@ -116,6 +135,8 @@ jobs:
           path: |
             ${{ runner.temp }}/nyc-tron-appkit-evidence/
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-preparation.json
+            ${{ runner.temp }}/appkit-shared/workspace-packages.json
+            ${{ runner.temp }}/appkit-shared/SHA256SUMS
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/logs/

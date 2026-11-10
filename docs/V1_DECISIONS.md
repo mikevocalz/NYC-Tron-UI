@@ -10,7 +10,18 @@ separate.
 
 The distribution channel is fifteen GitHub Release tarballs with
 `SHA256SUMS`, installed by immutable release URL. The thirteen workspace
-packages are produced by `tooling/pack-release.mjs`. The two desktop packages,
+packages are produced once by `tooling/pack-release.mjs` in the native workflow's
+Ubuntu source job. Both mobile consumers install that same archive set. During
+a release, the installed browser consumers and desktop shared dependencies also
+use it, and release assembly retains those exact thirteen files. A producer
+manifest binds the archive hashes, package versions and actual checked out
+source commit; downstream jobs verify its hash against the producer's job
+output before installation. Standalone browser and desktop pull request jobs
+keep their own pack lanes. Existing native passes from independently packed
+archives remain evidence for their recorded revisions; the canonical handoff
+requires fresh native runs.
+
+The two desktop packages,
 `@nyc-tron/windows-fluent-fabric` and `@nyc-tron/macos-appkit`, are built and
 tested separately in their RNW 0.85 and Spark / Expo 55 lanes. The release
 downloads the exact archives installed by those native consumer jobs and

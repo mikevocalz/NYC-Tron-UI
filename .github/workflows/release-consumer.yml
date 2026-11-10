@@ -5,6 +5,15 @@ on:
   push:
     branches: [main]
   workflow_call:
+    inputs:
+      workspace_artifact:
+        description: Canonical workspace archive artifact from this release run
+        type: string
+        default: ""
+      workspace_manifest_sha256:
+        description: Manifest SHA-256 emitted by the canonical producer
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -25,15 +34,31 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
-      - name: Install and build the candidate
+      - name: Install the pinned consumer tooling
         run: |
           corepack enable
           corepack pnpm install --frozen-lockfile
+      - name: Build and pack the standalone pull request candidate
+        if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
+        run: |
           corepack pnpm build
           node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
+      - name: Download the release producer's canonical archives
+        if: inputs.workspace_artifact != '' || inputs.workspace_manifest_sha256 != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.workspace_artifact }}
+          path: ${{ runner.temp }}/nyc-tron-packs
       - name: Install actual release tarballs in a project outside the repository
+        env:
+          WORKSPACE_ARTIFACT: ${{ inputs.workspace_artifact }}
+          WORKSPACE_MANIFEST_SHA256: ${{ inputs.workspace_manifest_sha256 }}
         run: |
-          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" "${{ matrix.kind }}"
+          canonical=()
+          if [ -n "$WORKSPACE_ARTIFACT$WORKSPACE_MANIFEST_SHA256" ]; then
+            canonical=(--workspace-manifest "$WORKSPACE_MANIFEST_SHA256")
+          fi
+          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" "${{ matrix.kind }}" "${canonical[@]}"
           node tooling/consumer-release.mjs install "$NYC_TRON_CONSUMER"
           node tooling/consumer-release.mjs build-web "$NYC_TRON_CONSUMER"
       - name: Install Chromium
@@ -49,6 +74,8 @@ jobs:
           path: |
             ${{ runner.temp }}/nyc-tron-release-consumer/consumer.json
             ${{ runner.temp }}/nyc-tron-release-consumer/installed-packages.json
+            ${{ runner.temp }}/nyc-tron-release-consumer/workspace-packages.json
+            ${{ runner.temp }}/nyc-tron-release-consumer/workspace-SHA256SUMS
             ${{ runner.temp }}/nyc-tron-release-consumer/app/package-lock.json
             ${{ runner.temp }}/nyc-tron-release-consumer/app/artifacts/
             ${{ runner.temp }}/nyc-tron-release-consumer/app/test-results/

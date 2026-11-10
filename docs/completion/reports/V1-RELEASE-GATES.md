@@ -33,9 +33,19 @@ differ. The original workflow artifacts did not retain those input `.tgz` files,
 so the receipts cannot establish whether their payload content or only archive
 metadata differs. Both runtime passes remain valid for their recorded inputs;
 they do not establish that both platforms tested one exact release archive set.
-The follow-up must produce the thirteen workspace archives once, verify their
-source identity, package versions and hashes in every consumer, and retain those
-same bytes through candidate assembly. Fresh installed-consumer runs are required.
+The follow-up now produces the thirteen workspace archives once in the existing
+Ubuntu source job. Its manifest records the actual checkout, package identities,
+versions, byte counts and hashes. Both mobile consumers verify that manifest
+against the producer's job output and verify npm's installed file resolution and
+integrity. The aggregate release workflow passes that same artifact to browser
+and desktop consumers, then retains and rechecks the thirteen workspace archives
+after adding the two tested desktop archives. The producer manifest and original
+workspace checksum file remain with the fifteen-archive candidate. Fresh installed
+native runs are required; PR 61 head `2a74fbf5bc5f3be5137af73d9590ce05abaaf0b0`
+contains the narrow mobile/provenance changes while the aggregate includes the
+release handoff. Seventeen focused checks passed in that mobile source tree,
+including actual offline npm installation and rejection of stale source,
+tampering, wrong versions and same-version repacking.
 
 ### Earlier mobile and desktop checkpoint
 
@@ -93,7 +103,7 @@ Windows lifecycle checkpoint does not establish its native interaction results.
 ### Desktop interaction implementation
 
 The AppKit follow-up is [PR 59](https://github.com/mikevocalz/NYC-Tron-UI/pull/59),
-with source checkpoint `4c96008d313deb371fa9f7e62399dbb75fd908be`. It adds real
+with source checkpoint `a097b8bad924115a9e49a38d8ccf33ab257707cc`. It adds real
 NSMenu/context menus, NSView tooltips, a Fabric NSPopover with retained React
 content, and anchored inspectors. Popover placement is checked against the
 observed native window frame and selected usable region; resizing preserves the
@@ -113,7 +123,13 @@ boundary, preserving React child ownership while aligning responder page
 coordinates with Fabric measurements. A fully visible ordinary Pressable must
 pass synthetic NSEvent down/move/up through the actual RCTSurfaceTouchHandler;
 that check is separate from native control target/action and OS gesture proof.
-All fifteen required native groups still need this head's fresh run.
+The [next actual native build at 4c96008](../evidence/v1-appkit-4c96008-compiler-failure/README.md)
+reached the AppKit adapter, then stopped because Apple and React Native both
+declare `Point` and `Size`. The current head qualifies those React Native types
+and renames the private driver's `Rect` helper to avoid Apple's typedef. That
+failed build did not reach the acceptance driver's compilation or any native
+interaction. All fifteen required native groups still need the fresh run. The
+tooltip property/help check is explicitly separate from actual hover visibility.
 
 The Windows follow-up is [PR 60](https://github.com/mikevocalz/NYC-Tron-UI/pull/60),
 with source checkpoint `fc85173985e7e7a2a9d37e2562151b6a70092278`. It adds actual
@@ -151,7 +167,15 @@ Head `b19b76078476c0945c7b942e43fceaa5ad7b3feb` observes popup closure, sends a
 fresh off-anchor/on-anchor mouse movement, and verifies actual cursor position
 and native hit identity before requiring the genuine tooltip and its dismissal.
 The production tooltip remains unchanged; the original trace does not establish
-the cause of its absence. The new native run must establish the interaction result.
+the cause of its absence. The [b19b760 rerun](../evidence/v1-windows-b19b760-hit-provider-failure/README.md)
+again compiled and deployed the app, then observed the cursor inside the visible
+anchor. Its new leaf-provider identity assertion stopped the run before the
+tooltip wait. The pinned RNW source permits an island/container provider fallback;
+the original trace does not establish which unnamed provider it returned. Head
+`f08accf14f5d23936000b815694947f784552e28` records the complete provider chain,
+requires actual cursor placement and app foreground ownership, and keeps genuine
+ToolTip visibility and dismissal as the blocking interaction assertions. Fresh
+runtime evidence remains required.
 
 The assembled Windows reference fixture also gives each remounted inspector a
 new native mount key and edit-count domain while preserving its draft. Old-mount
@@ -180,12 +204,14 @@ requires both native desktop jobs, downloads their passed-only package artifacts
 checks the exact candidate revision, package identity and SHA-256, and copies
 those same archive bytes into the candidate. It does not rebuild a desktop
 package after native acceptance. Both native receipts remain with the candidate.
-Shared peer archives are produced by the standard release packer in Ubuntu
-jobs, including staged licenses and notices. The desktop jobs install those
-archives without repacking, and the merger also requires their hashes to match
-the shared packages in the release candidate.
+Release consumers now share the standard packer's single Ubuntu-produced set of
+thirteen workspace archives, including staged licenses and notices. Each native
+desktop job imports its peers from that artifact, and the merger requires their
+hashes to match the retained release packages. Standalone desktop PR workflows
+retain their existing Ubuntu peer producer; those receipts identify their own
+inputs and do not establish the release workflow's shared-artifact handoff.
 
-Local integration verification passed 1,187 tests with no failures or skips,
+Local integration verification at source `54002b8a` passed 1,199 tests with no failures or skips,
 workspace builds and types, 619 shared public subpaths, 3,306 reachable
 declarations, thirteen workspace archive checks and seventeen clean consumer
 imports. The isolated installed APIs have separate TypeScript 5.9.3 baselines:
