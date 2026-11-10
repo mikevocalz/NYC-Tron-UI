@@ -6,6 +6,8 @@ the source checks separately from Qt/Fabric and device acceptance.
 
 The subsequent [browser pointer follow-up](pointer-ci-followup-2026-11-10.md)
 records the narrow-screen CI failure and its focused adapter correction.
+The [executed Qt/Fabric host report](qt-fabric-host-2026-11-10.md) records the
+final packaged controls passing 39 input/check steps on each target resolver.
 
 ## Implemented behavior
 
@@ -23,6 +25,10 @@ Select now attaches its existing keyboard model on QNX and Marathon. Queued
 key events read current state, disabled choices are skipped, and Enter/Space
 commit once. A following keyup press cannot reopen the list. Its pointer
 options leave keyboard focus on the trigger.
+The native list uses RN's supported `list` role, while the web retains its
+`listbox` contract. Qt exposes the named list container and its option children.
+Checked action-menu items retain the supported native `menuitem` role and their
+checked state; the web keeps `menuitemcheckbox`.
 
 Action and command menus handle Enter/Space, arrows, Home/End, Tab and Escape
 through their existing model and host refs. A settled command cannot dispatch
@@ -43,11 +49,13 @@ evidence of delivered speech.
 ## Checks run
 
 These checks include completion base
-`e8a7efb9f0971746d01c68532540c65af502de9f`. The merge retains its keyboard
-dismissal and native transport work. Overlapping pointer, native Slider and
-AAC priming fixes preserve their behavior; the merged caption assertion also
-checks that the duplicate RN label is hidden from accessibility. The strict
-decoded-audio timeline guard remains intact.
+`0edd5f302e99877191ba9a412c5c060571a5f6c9`, incorporated into published source
+`eb1f473d910b0b13854778e60c6e7c41b41ff228`. Pure popup placement now comes from
+the real `@nyc-tron/core/overlays` public entry. The merge retains the direct
+iOS Done-key flow, its keyboard presence/dismissal assertions, Android's
+retained-contact cancellation fix, the native Slider label correction and the
+strict decoded-audio timeline guard. All thirteen archives were rebuilt with
+the merged source and current third-party notices.
 
 The frozen RN API profile now pins published commit
 `404ad9dab676ce876e8a3e367743111b7d605417`. Its verified PublicAPI hash and all
@@ -58,23 +66,24 @@ acceptance.
 
 | Check | Result | Evidence boundary |
 | --- | --- | --- |
-| Full JavaScript test discovery | 1,217 passed | Includes 27 target behavior cases and the native Slider label regression. |
-| UI and Expo-controls typechecks | Passed | Public type and slot compatibility. |
+| Full JavaScript test discovery | 1,227 passed | Complete merged-source suite, including 27 target behavior cases and native evidence gates. |
+| Focused role/control checks | 57 passed; merged target/map checks 37 passed | Real shared source with modeled RN refs/effects; separate from native execution. |
 | Package builds | 13 passed | TypeScript package outputs. |
-| Public API | 618 export subpaths; 3,306 declarations | Includes the base's core window-lifecycle export, Tooltip's target route and optional CommandPopover `testID`. |
-| Package verification | 618 conditional exports; 752 ESM files | Existing optional-peer isolation remains enforced. |
+| Public API | 619 export subpaths; 3,306 declarations | Includes the base's core overlays and window-lifecycle entries, Tooltip's target route and optional CommandPopover `testID`. |
+| Package verification | 619 conditional exports; 753 ESM files | Existing optional-peer isolation remains enforced. |
 | Fresh release packs | 13 archives passed | No release was published. |
-| QNX packed Metro consumer | 1,893,010 bytes; zero warnings | Actual extracted packages and target resolver. |
-| Marathon packed Metro consumer | 1,893,062 bytes; zero warnings | Actual extracted packages and target resolver. |
-| Full Qt/Fabric control interaction | Separate host workstream | JavaScript tests do not establish native delivery. |
-| Rendered browser overlay suite | Blocked before page startup | The browser process cannot create its local singleton socket in this executor (`Operation not permitted`). |
+| QNX packed Metro consumer | 1,894,261 bytes; zero warnings | Actual extracted packages and target resolver. |
+| Marathon packed Metro consumer | 1,894,313 bytes; zero warnings | Actual extracted packages and target resolver. |
+| Qt/Fabric packaged control interaction | 39/39 passed for QNX and 39/39 for Marathon | Linux host, Hermes, native Qt event delivery, automatic modal focus and native accessibility assertions. |
+| Browser CI on prior published head `1a7fc0d` | All browser workflows passed | Instruments 687/687; native-feel reference 30/30; overlay workflow passed. Merged-source CI is separate. |
 | Physical QNX/Marathon input and screen-reader output | Not run here | Remains a device acceptance requirement. |
 
 The bundle receipt is [packed-controls-2026-11-10.json](packed-controls-2026-11-10.json).
 It records every selected control file, the exact reviewed RN PublicAPI hash,
 archive hashes and bundle hashes. Both targets select `Tooltip.qt.js`, with
-no selected Expo mobile provider. The earlier bundle-only receipt remains as
-historical evidence for the initial PR revision.
+no selected Expo mobile provider. The [release cohort](packed-release-cohort-2026-11-10.json)
+binds all thirteen rebuilt archives to the same published source tree. Earlier
+receipts remain in Git history as evidence for their original revisions.
 
 The source tests model RN host refs and event handlers. They cover delayed
 tooltip cleanup and positioning, supported/unavailable accessibility services,
@@ -101,13 +110,19 @@ action-menu callbacks, slider bounds/steps, split primary/menu separation,
 context actions, popover dismissal and find/replace mounting/dismissal. The
 search fixture uses the existing short-document literal provider. Stable
 native item IDs guard asynchronous overlay mounting; final state checks retain
-the outcomes from earlier stages. Both platform runs are required before this
-fixture is recorded as native evidence.
+the outcomes from earlier stages. Modal-open steps also wait for the focus
+requested by each real `onShow` handler before sending the next key. The driver
+does not force that focus. Native accessibility checks inspect the exposed list
+role and the action item's menu role and checked state.
 
-The [prepared fixture receipt](packed-controls-probe-2026-11-10.json) records
-both bundle hashes and the fixture/theme source hashes. QNX produces 1,912,103
-bytes and Marathon produces 1,912,155 bytes, both with zero resolver warnings.
-This receipt records bundling only; native execution remains separate.
+The [fixture bundle receipt](packed-controls-probe-2026-11-10.json) records
+both bundle hashes and the fixture/theme source hashes. QNX produces 1,913,740
+bytes and Marathon produces 1,913,792 bytes, both with zero resolver warnings.
+This generated receipt records bundling only. The separate
+[host execution receipt](evidence/qt-fabric-host-2026-11-10/receipt.json)
+binds the same bundle and archive hashes to the completed 39-step runs, native
+binary and RN implementation source. Complete logs and selected screenshots
+are retained alongside it.
 
 `tooling/qt-probe-theme.js` supplies a finite app-owned palette and maps the
 fixture's layout/typography tokens into actual RN primitive styles. Explicit

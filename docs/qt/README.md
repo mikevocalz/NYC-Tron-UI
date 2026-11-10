@@ -65,6 +65,23 @@ Every report row starts with `runtimeAcceptance: unverified` for both targets.
 A successful import check, bundle, host test or engine probe records only that
 specific result. It cannot promote the entire roster to device acceptance.
 
+## Executed Qt controls on a Linux host
+
+The [packaged control host report](qt-fabric-host-2026-11-10.md) records nine
+public controls passing 39 ordered input/check steps for QNX and another 39
+for Marathon. The actual production Metro bundles execute in Hermes through
+Qt Quick/Fabric. The driver sends native Qt mouse/key events, checks visible
+surfaces and automatic focus, and queries Qt's accessibility interfaces for
+the named list and checked menu item. It verifies the public RN target identity
+separately from the Linux host operating system.
+
+The report retains complete logs, screenshots, native binary/source identity
+and the final package and bundle hashes. Its finite app-owned fixture styles
+and literal find/replace provider define the tested scope. Physical target
+input, spoken accessibility output, broad app themes and optional engines keep
+their own acceptance requirements. Both catalog runtime-accepted totals remain
+zero.
+
 ## Regenerate and check
 
 After changing a public export, source dependency, counterpart assignment or

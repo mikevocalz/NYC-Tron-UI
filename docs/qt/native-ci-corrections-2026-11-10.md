@@ -107,6 +107,46 @@ cancelled stroke, one committed stroke and zero predictions. Its assertions,
 the JS identity/time validation and the media bounds are unchanged. Local
 verification after this correction passed all 22 native-controls JS/source
 tests, the package TypeScript check and the package build. These checks do
-not compile or run the changed Kotlin; a fresh installed APK must pass the
-existing Android cancellation flow before this follow-up has native runtime
-acceptance.
+not compile or run the changed Kotlin. The hosted follow-up below supplies
+that native runtime result.
+
+## Corrected Android installed-app acceptance
+
+[Native controls run 42850172457](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42850172457),
+[Android job 129948360293](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42850172457/job/129948360293),
+passed for PR source head `eb1f473d910b0b13854778e60c6e7c41b41ff228`.
+The installed consumer records checkout
+`34ed0569e54b2dee4ba8f7eacef402a86c647ee7`; its Git tree is
+`e70358de4d140ac78ee3a75ca1567af39442548e`, exactly the reviewed source tree.
+
+The Android API 35 emulator executed the freshly built Kotlin/Compose APK.
+The unchanged strict media receipt passed all 11 checks. All four OS-driven
+UI flows passed with one executed case, zero failures and zero skips each:
+Settings, Editor, pointer touch and pointer cancellation after Home. The
+cancellation hierarchy contains both exact receipts:
+
+```text
+Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0.
+Input source: touch. Last event: cancel.
+```
+
+The downloaded `native-release-consumer-android` artifact, ID `13783650052`,
+matched GitHub's ZIP SHA-256:
+
+```text
+6d26dc879b4cfb56a4f503a1051248e9ea7cb5f60701cae72e8a1156fe15baaf
+```
+
+All 65 ZIP entries passed path and CRC checks. The APK bytes match the same
+fingerprint in both media and UI receipts:
+
+```text
+2d1453cfbd92700ed8a12e630109210f2c58f7375b8fc9723c631f23e45e0ee9
+```
+
+All ten installed package versions and archive hashes match the consumer
+plan, with no absent peers. The existing media and UI evidence validators
+accepted the retained results, JUnit reports, semantic labels and safe-area
+geometry; every reported hierarchy and screenshot hash was also checked.
+This closes the recorded Android emulator failure without changing the
+original assertions. Physical input and spoken-output gates remain separate.

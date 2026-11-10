@@ -9,27 +9,27 @@
       "name": "@nyc-tron/core",
       "version": "1.0.0",
       "archive": "nyc-tron-core-1.0.0.tgz",
-      "sha256": "25e41cd6cfddfd93a75cd24da2dea740f117cafe5043edc9c0dc7c852b4490a0"
+      "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
     },
     {
       "name": "@nyc-tron/ui",
       "version": "1.0.0",
       "archive": "nyc-tron-ui-1.0.0.tgz",
-      "sha256": "7dba95ee6d2663d419e60f57baa5f6186646ba1cb23b131b623d1518de238acd"
+      "sha256": "2920da3bc1b0786b2e6a3ed5ec029cf5b83c7ad9b237d8a488193fe326453c65"
     },
     {
       "name": "@nyc-tron/expo-controls",
       "version": "1.0.0",
       "archive": "nyc-tron-expo-controls-1.0.0.tgz",
-      "sha256": "cf03a98d12e5fc20650080dd5610d18430dd63fe57d909cdee987801a43b0bfb"
+      "sha256": "ba87e60796dcf3ba2824f33eaf95ba49c6614e2ca6e7ff614fda2f78126d57c2"
     }
   ],
   "results": [
     {
       "platform": "qnx",
       "status": "bundled",
-      "bytes": 1893010,
-      "sha256": "f10ca3a7f93d48a6bf2d341e2bd06c7257ec1c02deddc1f4f8f41d5bd4824d6c",
+      "bytes": 1894261,
+      "sha256": "d1e477e4173bc346b5817e28442886f420a587885177c99d45f18b21abae8323",
       "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
       "selectedControlFiles": [
         "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
@@ -53,8 +53,8 @@
     {
       "platform": "marathon",
       "status": "bundled",
-      "bytes": 1893062,
-      "sha256": "553c0e324b3348d63a69ca1a13cfe5c122f229616ad33f1cb959337c288c4a5a",
+      "bytes": 1894313,
+      "sha256": "fefe6bcb88a709b245a061b1faf8e970d37c04c3e5d192a4f4bdf11206acd773",
       "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
       "selectedControlFiles": [
         "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",

@@ -9,27 +9,27 @@
       "name": "@nyc-tron/core",
       "version": "1.0.0",
       "archive": "nyc-tron-core-1.0.0.tgz",
-      "sha256": "25e41cd6cfddfd93a75cd24da2dea740f117cafe5043edc9c0dc7c852b4490a0"
+      "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
     },
     {
       "name": "@nyc-tron/ui",
       "version": "1.0.0",
       "archive": "nyc-tron-ui-1.0.0.tgz",
-      "sha256": "7dba95ee6d2663d419e60f57baa5f6186646ba1cb23b131b623d1518de238acd"
+      "sha256": "2920da3bc1b0786b2e6a3ed5ec029cf5b83c7ad9b237d8a488193fe326453c65"
     },
     {
       "name": "@nyc-tron/expo-controls",
       "version": "1.0.0",
       "archive": "nyc-tron-expo-controls-1.0.0.tgz",
-      "sha256": "cf03a98d12e5fc20650080dd5610d18430dd63fe57d909cdee987801a43b0bfb"
+      "sha256": "ba87e60796dcf3ba2824f33eaf95ba49c6614e2ca6e7ff614fda2f78126d57c2"
     }
   ],
   "results": [
     {
       "platform": "qnx",
       "status": "bundled",
-      "bytes": 1912103,
-      "sha256": "a7ad4b3f450f8553cefe01a65f5429a2fef060743c03f28c1d705f4268c2b43a",
+      "bytes": 1913740,
+      "sha256": "c2c352e33bd2c6756be2f3fd757271466dfe1e8d5f2d2cb312a12225ef08a93a",
       "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
       "selectedControlFiles": [
         "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
@@ -52,8 +52,8 @@
     {
       "platform": "marathon",
       "status": "bundled",
-      "bytes": 1912155,
-      "sha256": "819dab3e940de1b266de11717123dd19c82224d727ae9bcd1fe42eaaceecbdd9",
+      "bytes": 1913792,
+      "sha256": "2af1fd7c121596983492760065e988beaecc410c98564194b45bb09c67458d3d",
       "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
       "selectedControlFiles": [
         "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
@@ -76,7 +76,7 @@
   ],
   "fixture": {
     "appName": "RNQnxQtControlsProbe",
-    "sourceSha256": "ec520096ee7f4cb8e751c016b0f7d8c9b68a9e186996d873f26aebf688678623",
+    "sourceSha256": "bc077deb41dd1d96818d3fe62c42c4d98b725616ce9497c853043ebe7c43b5f8",
     "themeSha256": "263979125478f7c5bb6712136598c6d9cfac4a990fcb8d1113a4f93244aa3c20",
     "styling": "Finite app-owned token-to-native-style mapping; real RN primitives and public controls, no event mocks.",
     "input": "Prepared for the RN-QNX Qt/Fabric native event driver; bundling alone does not execute it."
