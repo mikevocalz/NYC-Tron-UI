@@ -214,6 +214,11 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       result[@"contentBounds"] = RectDictionary(window.contentView.bounds);
       result[@"visible"] = @(window.visible);
       result[@"key"] = @(window.keyWindow);
+      result[@"canBecomeKey"] = @(window.canBecomeKeyWindow);
+      result[@"applicationActive"] = @(NSApp.active);
+      result[@"activationPolicy"] = @(NSApp.activationPolicy);
+      result[@"processId"] = @(NSProcessInfo.processInfo.processIdentifier);
+      result[@"frontmostProcessId"] = @(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
       result[@"firstResponderIdentity"] = window.firstResponder ? [NSString stringWithFormat:@"%p", window.firstResponder] : @"";
       result[@"appearance"] = [window.effectiveAppearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]] ?: @"";
       result[@"hasButton"] = @(Control(view, NSButton.class) != nil);
@@ -510,7 +515,34 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       // activation policy; screenshots alone do not need a visible owner.
       else if ([action isEqual:@"show"]) {
         if (![NSApp setActivationPolicy:NSApplicationActivationPolicyRegular]) { reply(Failure(@"The native test host refused interactive activation policy")); return; }
-        [NSApp activateIgnoringOtherApps:YES]; [window makeKeyAndOrderFront:nil];
+        // Sonoma ignores activateIgnoringOtherApps' old force flag. Use the
+        // public workspace-opening activation context, targeting only this
+        // already running test bundle. An activation request is not a pass:
+        // the caller still observes actual active/key/visible native state.
+        NSURL *bundleURL = NSBundle.mainBundle.bundleURL;
+        pid_t processId = NSProcessInfo.processInfo.processIdentifier;
+        NSWorkspaceOpenConfiguration *configuration = [NSWorkspaceOpenConfiguration configuration];
+        configuration.activates = YES;
+        configuration.createsNewApplicationInstance = NO;
+        configuration.allowsRunningApplicationSubstitution = NO;
+        configuration.addsToRecentItems = NO;
+        configuration.hides = NO;
+        configuration.hidesOthers = NO;
+        configuration.promptsUserIfNeeded = NO;
+        [NSWorkspace.sharedWorkspace openApplicationAtURL:bundleURL configuration:configuration completionHandler:^(NSRunningApplication *application, NSError *error) {
+          // NSWorkspace completes on a concurrent queue; window operations and
+          // the observed activation state must return to AppKit's main queue.
+          dispatch_async(dispatch_get_main_queue(), ^{
+            if (error || !application) { reply(Failure([NSString stringWithFormat:@"Workspace activation failed: %@", error.localizedDescription ?: @"No running application returned"])); return; }
+            if (application.processIdentifier != processId || ![application.bundleURL.URLByResolvingSymlinksInPath isEqual:bundleURL.URLByResolvingSymlinksInPath]) {
+              reply(Failure(@"Workspace activation did not return the existing acceptance process and bundle")); return;
+            }
+            if (window.miniaturized) [window deminiaturize:nil];
+            [window makeKeyAndOrderFront:nil];
+            reply(@{ @"ok": @YES, @"activationPath": @"NSWorkspace.openApplication", @"processId": @(processId), @"activationPolicy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active), @"key": @(window.keyWindow), @"visible": @(window.visible) });
+          });
+        }];
+        return;
       }
       else { reply(Failure(@"Unknown native window action")); return; }
       reply(@{ @"ok": @YES });
