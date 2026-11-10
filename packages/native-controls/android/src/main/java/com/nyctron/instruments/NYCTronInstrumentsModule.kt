@@ -8,6 +8,11 @@ import expo.modules.ui.ExpoUIView
 class NYCTronInstrumentsModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("NYCTronInstruments")
+    ExpoUIView<TronPointerInputProps>("TronPointerInputView") {
+      val onBatch by Event<TronPointerBatch>()
+      val onKey by Event<TronPointerKey>()
+      Content { props -> TronPointerInputContent(props, { onBatch(it) }, { onKey(it) }) }
+    }
     ExpoUIView<TronVideoPlayerProps>("TronVideoPlayerView") {
       val onStatus by Event<TronVideoStatusPayload>()
       Content { props -> TronVideoPlayerContent(props) { onStatus(it) } }

@@ -50,8 +50,10 @@
     ".",
     "./ArcKnob",
     "./DisplayP3DiscLayer",
+    "./NativePointerInput",
     "./NativeVideoPlayer",
-    "./XYPad"
+    "./XYPad",
+    "./pointer-input"
   ],
   "@nyc-tron/native-navigation": [
     ".",

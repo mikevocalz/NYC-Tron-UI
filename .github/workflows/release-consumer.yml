@@ -1,0 +1,55 @@
+name: NYC-Tron installed release consumers
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  consumer:
+    name: ${{ matrix.kind }} installed tarball consumer
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [basic, expo-web]
+    env:
+      NYC_TRON_CONSUMER: ${{ runner.temp }}/nyc-tron-release-consumer
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Install and build the candidate
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile
+          corepack pnpm build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
+      - name: Install actual release tarballs in a project outside the repository
+        run: |
+          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" "${{ matrix.kind }}"
+          node tooling/consumer-release.mjs install "$NYC_TRON_CONSUMER"
+          node tooling/consumer-release.mjs build-web "$NYC_TRON_CONSUMER"
+      - name: Install Chromium
+        working-directory: ${{ runner.temp }}/nyc-tron-release-consumer/app
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Exercise the installed components in React Native Web
+        run: node tooling/consumer-release.mjs test-web "$NYC_TRON_CONSUMER"
+      - name: Save the dependency evidence, results and captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-consumer-${{ matrix.kind }}
+          path: |
+            ${{ runner.temp }}/nyc-tron-release-consumer/consumer.json
+            ${{ runner.temp }}/nyc-tron-release-consumer/installed-packages.json
+            ${{ runner.temp }}/nyc-tron-release-consumer/app/package-lock.json
+            ${{ runner.temp }}/nyc-tron-release-consumer/app/artifacts/
+            ${{ runner.temp }}/nyc-tron-release-consumer/app/test-results/
+          retention-days: 7

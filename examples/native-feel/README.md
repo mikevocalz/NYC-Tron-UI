@@ -1,4 +1,89 @@
-# Account screen reference
+# Native feel references
+
+## Workspace app
+
+`ReferenceApp.tsx` composes four working screens from the public NYC-Tron package
+subpaths. It is a small local workspace, with one Zustand owner above its routes
+and adaptive pane. Switching routes hides existing children; resizing does not
+replace an input, its selection, or a decoder owner.
+
+| Screen | Working interactions |
+| --- | --- |
+| Library and detail | Load and retry a catalog; distinguish loading, failed and empty reads; search and select; keep or remove saved items; open the related editor or media review. |
+| Editor and inspector | Edit a cover's headline and subtitle; filter properties; change alignment and opacity; save a valid draft or restore its saved state. Slider preview is separate from the committed document. |
+| Media detail | Request a real decoded frame, recover from a failed read, change review position, and save a note against the decoder's reported timestamp. |
+| Settings | Validate a workspace name, choose a starting route, preview System/Light/Dark, save locally and restore saved preferences. |
+
+The default library contains three local sample records. Hosts can pass
+`loadLibrary(signal)` to read their own source. Errors remain errors, and a late
+completion from an aborted or disposed request cannot replace current data.
+`mediaSource` supplies `loadFrame(timeUs, signal)` and owns the actual decoder.
+The shared recipe does not import an engine. Without a source, the media screen
+shows a recoverable error instead of inventing decoded frames or playback.
+
+```tsx
+import { ReferenceApp } from "./ReferenceApp";
+
+<ReferenceApp
+  initialAppearance="system"
+  navigation={{ runtime: "web", family: "unknown" }}
+  loadLibrary={readCatalog}
+  mediaSource={reviewSource}
+/>
+```
+
+The app owns tokens and supplies a usable container. Web keeps a header and
+adds bottom tabs at the app's compact breakpoint. Native navigation takes a
+verified `NavigationInput`, never a family inferred from live window width.
+The optional `renderNativeRail` lets a host supply its real platform rail.
+Windows and macOS need their own native navigation adapter; this recipe does
+not turn shared RN navigation into AppKit or WinUI.
+
+### Native entry
+
+The same screens are mounted by `examples/native-instruments/reference-app.js`.
+Run that Expo SDK 58 host with `NYC_TRON_ACCEPTANCE=reference`. Metro selects
+`reference.css`, and the app config allows automatic system appearance for this
+entry. Its public native dropdown and slider use SwiftUI/Compose adapters. The
+native rail uses `@nyc-tron/native-navigation` when verified capability chooses
+a physical-right rail.
+
+The standalone entry explicitly selects the ordinary-phone acceptance host.
+A tablet or headset runner must pass its verified family into
+`NativeReferenceApp`; the example does not infer it from width. Reported folds
+are retained as a capability and current reserved regions determine safe
+placement. This reference uses one safe region for the whole workspace. The
+physical-right region selector keeps a foldable rail on the right in RTL and
+tabletop arrangements; it does not claim a multi-pane spanning editor.
+
+The native media host uses Expo Asset for the bundled generated MP4 and the
+public platform-services decoder. The browser fixture uses the existing
+generated WebM. The screen displays decoder-reported frame timing, including
+the distinction between native presentation time and a browser seek target.
+There is no synthetic playback clock. Native cache cleanup waits for the
+owner's outstanding work and does not run over a renewed effect lifetime.
+
+### Repeatable checks
+
+Run `node --test examples/native-feel/tests/reference-model.test.mjs` for request
+ownership and recovery. The browser fixture is `/reference-app`, with tests in
+`packages/ui/tests/browser/reference-app.spec.mjs`. It covers real interactions,
+input identity, resize, nested containers, RTL, large text, decoded frames,
+validation and theme changes, and captures desktop and phone appearances.
+
+The optional `onRenderSample` reports React Profiler `actualDuration`.
+The browser suite records ten warm route cycles and writes per-route p50/p95
+and raw samples to `shots/reference-render-timings.json`. These numbers measure
+React render work in a development Chromium build. They do not measure native
+presentation, production startup, decoder performance, or physical-device UX.
+There is no guessed performance threshold.
+
+Browser interaction, packaged consumer bundling, native compilation and native
+device interaction are separate results. Device checks must still exercise
+keyboard dismissal, narration, native picker/slider behavior, physical input,
+fold changes and route continuity on the intended hardware.
+
+## Account screen
 
 `AccountScreen.tsx` is a shared React Native recipe for NYC-Tron's native-feel
 direction. It uses the same mounted form and preview on small and large

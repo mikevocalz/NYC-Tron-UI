@@ -11,6 +11,7 @@ public final class NYCTronInstrumentsModule: Module {
     View(TronArcKnobView.self)
     View(TronXYPadView.self)
     View(TronVideoPlayerView.self)
+    View(TronPointerInputView.self)
     View(TronDisplayP3DiscView.self)
   }
 }
