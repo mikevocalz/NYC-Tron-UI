@@ -83,7 +83,7 @@ test("native failures reach JS through onNativeError instead of being swallowed"
  const spec=read("src/TronNavigationViewNativeComponent.ts");
  assert.match(spec,/onNativeError\?: DirectEventHandler<NativeError>/);
  const cpp=read("windows/NYCTronFluentFabric/TronNavigationView.cpp");
- const catches=[...cpp.matchAll(/catch \(\.\.\.\) \{\n([^}]*)\}/g)].map(m=>m[1]);
+ const catches=[...cpp.matchAll(/catch \(\.\.\.\) \{\r?\n([^}]*)\}/g)].map(m=>m[1]);
  const reporting=catches.filter(body=>body.includes("ReportNativeError("));
  assert.ok(reporting.length>=2,"initialization and props catch blocks report");
  assert.match(cpp,/m_pendingErrors/);

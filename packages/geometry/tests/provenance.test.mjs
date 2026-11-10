@@ -11,7 +11,7 @@ const root=resolve(pkg,'../..');
 test('geometry tarball retains both existing port licenses alongside Floating UI',()=>{
  const out=mkdtempSync(join(tmpdir(),'geometry-provenance-'));
  try{
-  const packed=execFileSync('pnpm',['pack','--json','--pack-destination',out],{cwd:pkg,encoding:'utf8',stdio:['ignore','pipe','pipe']});
+  const packed=execFileSync('pnpm',['pack','--json','--pack-destination',out],{cwd:pkg,encoding:'utf8',stdio:['ignore','pipe','pipe'],shell:process.platform==='win32'});
   const name=JSON.parse(packed.slice(packed.indexOf('{'))).filename;
   const archive=resolve(out,name);
   const extract=path=>execFileSync('tar',['-xOf',archive,'package/'+path]);
