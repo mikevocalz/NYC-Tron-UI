@@ -47,6 +47,26 @@ async function expectArrangement(page) {
   return g;
 }
 
+async function expectSurfaceCoverage(page) {
+  const bounds = await page.getByTestId("native-feel-surface").evaluate(surface => {
+    const host = surface.closest('[data-testid="native-feel-host"]');
+    const s = surface.getBoundingClientRect(), h = host.getBoundingClientRect();
+    return {
+      surface: { top: s.top, bottom: s.bottom, left: s.left, right: s.right },
+      host: { top: h.top, bottom: h.bottom, left: h.left, right: h.right },
+      viewportHeight: window.innerHeight,
+      backgroundColor: getComputedStyle(surface).backgroundColor,
+    };
+  });
+  expect(bounds.surface.bottom, "the themed surface reaches the viewport bottom even when content is short")
+    .toBeGreaterThanOrEqual(bounds.viewportHeight - 1);
+  expect(bounds.surface.top).toBeLessThanOrEqual(bounds.host.top + 1);
+  expect(bounds.surface.bottom).toBeGreaterThanOrEqual(bounds.host.bottom - 1);
+  expect(Math.abs(bounds.surface.left - bounds.host.left)).toBeLessThanOrEqual(1);
+  expect(Math.abs(bounds.surface.right - bounds.host.right)).toBeLessThanOrEqual(1);
+  expect(bounds.backgroundColor, "the surface itself paints the app theme").not.toBe("rgba(0, 0, 0, 0)");
+}
+
 test.describe("Native feel reference", () => {
 
 test("account content fits intermediate widths and changes arrangement at its measured content boundary", async ({ page }) => {
@@ -67,6 +87,7 @@ test("a narrow pane in a desktop window keeps its single-column arrangement", as
   const g = await expectArrangement(page);
   expect(g.columns.width).toBeLessThan(632);
   expect(g.preview.y).toBeGreaterThan(g.profile.bottom);
+  await expectSurfaceCoverage(page);
 });
 
 test("resizing retains the actual input element, focus and an unsaved draft", async ({ page }) => {
@@ -193,6 +214,7 @@ for (const [size, viewport] of [
     await page.goto(`/native-feel?theme=${theme}`);
     await ready(page);
     await expectArrangement(page);
+    await expectSurfaceCoverage(page);
     await page.screenshot({ path: `shots/native-feel-${size}-${theme}.png`, fullPage: true });
   });
 }
