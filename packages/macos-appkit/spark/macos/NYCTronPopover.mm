@@ -80,8 +80,8 @@ using namespace facebook::react;
   NSSize windowSize = _content.window.frame.size;
   // RNmacOS touch.page coordinates use the NSWindow frame's top-left, rather
   // than the popover's inner content origin. Include the actual border/arrow.
-  Point origin{(Float)NSMinX(contentRect), (Float)(windowSize.height - NSMaxY(contentRect))};
-  Size size{(Float)windowSize.width, (Float)windowSize.height};
+  facebook::react::Point origin{(Float)NSMinX(contentRect), (Float)(windowSize.height - NSMaxY(contentRect))};
+  facebook::react::Size size{(Float)windowSize.width, (Float)windowSize.height};
   const auto &data = _state->getData();
   if (data.contentOrigin != origin || data.viewportSize != size) {
     _state->updateState(NYCTronPopoverRootStateData(origin, size));
