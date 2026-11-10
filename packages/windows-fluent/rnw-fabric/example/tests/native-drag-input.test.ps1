@@ -69,6 +69,8 @@ function Find-ByName($root, [string]$name, [int]$timeoutSec) {
   if ($script:failPhase) { throw "strict native drag phase timeout" }
 }
 
+function Save-DragEnvironmentRecord { throw "secondary environment diagnostic failure" }
+
 # The first two observations still precede resize. Geometry and then native
 # identity change, so neither earlier pair may satisfy the stable endpoint gate.
 $script:samples = @((Endpoints 266), (Endpoints 266), (Endpoints), (Endpoints 311 "42,102,4,86"), (Endpoints 311 "42,102,4,86"), (Endpoints 311 "42,102,4,86"))
@@ -112,6 +114,7 @@ Assert ($null -ne $caught -and $caught.Exception.Message -eq "strict native drag
 Assert (([NativeWindow]::Inputs -join ",") -eq "2,4") "Failed drag did not attempt button-up exactly once"
 $receipt = Get-Content -Raw (Join-Path $OutDir "drag-input-03.json") | ConvertFrom-Json
 Assert ($receipt.primaryFailure.message -eq "strict native drag phase timeout" -and $receipt.buttonUp -eq "failed") "Receipt lost primary or cleanup failure"
+Assert ($receipt.environmentCaptureErrorType -eq "System.Management.Automation.RuntimeException") "Environment diagnostic failure was not isolated from the primary drag assertion"
 Assert (($receipt.observations.stage -join ",") -eq "before-down,after-down,threshold,failure-before-release") "Missing pre-release pointer observation"
 $before=$receipt.observations[0]; $threshold=$receipt.observations[2]
 Assert ($before.actualCursor.x -eq 202 -and $before.actualCursor.y -eq 339 -and $threshold.actualCursor.x -eq 226 -and $threshold.leftButtonDown) "Requested/actual threshold observation changed"

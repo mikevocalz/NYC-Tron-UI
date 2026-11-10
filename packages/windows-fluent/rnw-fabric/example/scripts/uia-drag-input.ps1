@@ -122,6 +122,8 @@ function Invoke-NativeDrag($main, $secondary, [bool]$cancel = $false) {
     $record.foregroundRequestAccepted = [NativeWindow]::SetForegroundWindow([IntPtr]$main.Current.NativeWindowHandle)
     $endpoints = Wait-DragEndpoints $main $secondary
     $record.stability = @{ intervalMs = 100; requiredConsecutive = 3; observations = $endpoints.stabilityObservations }
+    try { Save-DragEnvironmentRecord $script:nativeDragAttempt $endpoints $process $OutDir $ownedProcessStartTime }
+    catch { $record.environmentCaptureErrorType = $_.Exception.GetType().FullName }
     $metrics = [NativeWindow]::DragMetrics(); $record.systemDragMetrics = @{ x = $metrics.X; y = $metrics.Y }
     $s = $endpoints.source.bounds; $t = $endpoints.target.bounds
     $sx = [int]($s.x + $s.width / 2); $sy = [int]($s.y + $s.height / 2)

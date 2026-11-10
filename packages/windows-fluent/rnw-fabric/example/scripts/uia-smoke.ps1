@@ -72,6 +72,7 @@ public static class NativeWindow {
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 . "$PSScriptRoot\uia-crash-dumps.ps1"
 . "$PSScriptRoot\uia-native-drag-trace.ps1"
+. "$PSScriptRoot\uia-drag-environment.ps1"
 $AE = [System.Windows.Automation.AutomationElement]
 $Tree = [System.Windows.Automation.TreeScope]
 . "$PSScriptRoot\uia-drag-input.ps1"
