@@ -1,0 +1,29 @@
+{
+  "module": {
+    "index": 306,
+    "stream": 296,
+    "symbolBytes": 738768,
+    "c11Bytes": 0,
+    "c13Bytes": 176044,
+    "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\InputServices.obj",
+    "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\Input.lib"
+  },
+  "sourceChecksums": [
+    {
+      "offset": 4120,
+      "name": "C:\\__w\\1\\s\\dxaml\\xcp\\core\\input\\InputServices.cpp",
+      "kind": 3,
+      "checksum": "d452759b32222fed2f6e3aa075a7aa0df43f5d32899b524f44d3e87a9846c816"
+    }
+  ],
+  "lineSectionsForException": [
+    {
+      "subsectionOffset": 862932,
+      "codeOffset": "0x41b01c",
+      "segment": 1,
+      "flags": 0,
+      "codeSize": 81,
+      "rawHex": "1cb04100010000005100000018100000040000002c00000000000000cc0000800c000000cd00008032000000dc0000804b000000df000080"
+    }
+  ]
+}

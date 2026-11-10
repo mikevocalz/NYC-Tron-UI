@@ -1,0 +1,527 @@
+{
+  "source": "Exact matching Microsoft.ui.xaml.pdb; procedure extent records do not themselves verify the unwind sequence.",
+  "lookups": [
+    {
+      "rva": "0x3a52d9",
+      "containedProcedures": [
+        {
+          "name": "wil::details::WilDynamicLoadRaiseFailFastException",
+          "startRva": "0x3a5290",
+          "endRvaExclusive": "0x3a52e9",
+          "displacement": "0x49",
+          "recordType": "0x1110",
+          "module": {
+            "index": 146,
+            "stream": 91,
+            "symbolBytes": 67028,
+            "c11Bytes": 0,
+            "c13Bytes": 63236,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj"
+          },
+          "recordOffset": 57240
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x3a5290",
+          "name": "?WilDynamicLoadRaiseFailFastException@details@wil@@YAXPEAU_EXCEPTION_RECORD@@PEAU_CONTEXT@@K@Z",
+          "displacement": "0x49"
+        }
+      ]
+    },
+    {
+      "rva": "0x3a53b0",
+      "containedProcedures": [
+        {
+          "name": "wil::details::WilRaiseFailFastException",
+          "startRva": "0x3a5398",
+          "endRvaExclusive": "0x3a53bc",
+          "displacement": "0x18",
+          "recordType": "0x1110",
+          "module": {
+            "index": 146,
+            "stream": 91,
+            "symbolBytes": 67028,
+            "c11Bytes": 0,
+            "c13Bytes": 63236,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj"
+          },
+          "recordOffset": 58136
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x3a5398",
+          "name": "?WilRaiseFailFastException@details@wil@@YAXPEAU_EXCEPTION_RECORD@@PEAU_CONTEXT@@K@Z",
+          "displacement": "0x18"
+        }
+      ]
+    },
+    {
+      "rva": "0x3a5394",
+      "containedProcedures": [
+        {
+          "name": "wil::details::WilFailFast",
+          "startRva": "0x3a52ec",
+          "endRvaExclusive": "0x3a5395",
+          "displacement": "0xa8",
+          "recordType": "0x1110",
+          "module": {
+            "index": 146,
+            "stream": 91,
+            "symbolBytes": 67028,
+            "c11Bytes": 0,
+            "c13Bytes": 63236,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj"
+          },
+          "recordOffset": 57724
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x3a52ec",
+          "name": "?WilFailFast@details@wil@@YAXAEBUFailureInfo@2@@Z",
+          "displacement": "0xa8"
+        }
+      ]
+    },
+    {
+      "rva": "0x3a2809",
+      "containedProcedures": [
+        {
+          "name": "wil::details::ReportFailure_NoReturn<3>",
+          "startRva": "0x3a25bc",
+          "endRvaExclusive": "0x3a280a",
+          "displacement": "0x24d",
+          "recordType": "0x1110",
+          "module": {
+            "index": 146,
+            "stream": 91,
+            "symbolBytes": 67028,
+            "c11Bytes": 0,
+            "c13Bytes": 63236,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj"
+          },
+          "recordOffset": 5876
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x3a25bc",
+          "name": "??$ReportFailure_NoReturn@$02@details@wil@@YAXPEAXIPEBD110AEBUResultStatus@01@PEBGW4ReportFailureOptions@01@@Z",
+          "displacement": "0x24d"
+        }
+      ]
+    },
+    {
+      "rva": "0x3a23e8",
+      "containedProcedures": [
+        {
+          "name": "wil::details::ReportFailure_Base<3,0>",
+          "startRva": "0x3a23b8",
+          "endRvaExclusive": "0x3a23e9",
+          "displacement": "0x30",
+          "recordType": "0x1110",
+          "module": {
+            "index": 146,
+            "stream": 91,
+            "symbolBytes": 67028,
+            "c11Bytes": 0,
+            "c13Bytes": 63236,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj"
+          },
+          "recordOffset": 1620
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x3a23b8",
+          "name": "??$ReportFailure_Base@$02$0A@@details@wil@@YAXPEAXIPEBD110AEBUResultStatus@01@PEBGW4ReportFailureOptions@01@@Z",
+          "displacement": "0x30"
+        }
+      ]
+    },
+    {
+      "rva": "0x3a25bb",
+      "containedProcedures": [
+        {
+          "name": "wil::details::ReportFailure_Hr<3>",
+          "startRva": "0x3a2570",
+          "endRvaExclusive": "0x3a25bc",
+          "displacement": "0x4b",
+          "recordType": "0x1110",
+          "module": {
+            "index": 146,
+            "stream": 91,
+            "symbolBytes": 67028,
+            "c11Bytes": 0,
+            "c13Bytes": 63236,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\precomp.obj"
+          },
+          "recordOffset": 5192
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x3a2570",
+          "name": "??$ReportFailure_Hr@$02@details@wil@@YAXPEAXIPEBD110J@Z",
+          "displacement": "0x4b"
+        }
+      ]
+    },
+    {
+      "rva": "0x28d8cb",
+      "containedProcedures": [
+        {
+          "name": "wil::details::in1diag0::_FailFast_Unexpected",
+          "startRva": "0x28d8b0",
+          "endRvaExclusive": "0x28d8cc",
+          "displacement": "0x1b",
+          "recordType": "0x1110",
+          "module": {
+            "index": 216,
+            "stream": 120,
+            "symbolBytes": 629928,
+            "c11Bytes": 0,
+            "c13Bytes": 155728,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\uielement.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\elements.lib"
+          },
+          "recordOffset": 612480
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x28d8b0",
+          "name": "?_FailFast_Unexpected@in1diag0@details@wil@@YAXPEAX@Z",
+          "displacement": "0x1b"
+        }
+      ]
+    },
+    {
+      "rva": "0x41c066",
+      "containedProcedures": [
+        {
+          "name": "CInputServices::GetIslandInputSiteRegistrationForUIElement",
+          "startRva": "0x41c01c",
+          "endRvaExclusive": "0x41c06d",
+          "displacement": "0x4a",
+          "recordType": "0x1110",
+          "module": {
+            "index": 306,
+            "stream": 296,
+            "symbolBytes": 738768,
+            "c11Bytes": 0,
+            "c13Bytes": 176044,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\InputServices.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\Input.lib"
+          },
+          "recordOffset": 448420
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x41c01c",
+          "name": "?GetIslandInputSiteRegistrationForUIElement@CInputServices@@AEAAAEAUIslandInputSiteRegistration@1@PEAVCUIElement@@@Z",
+          "displacement": "0x4a"
+        }
+      ]
+    },
+    {
+      "rva": "0x4220ab",
+      "containedProcedures": [
+        {
+          "name": "CInputServices::RegisterDirectManipulationCrossSlideContainer",
+          "startRva": "0x421fa8",
+          "endRvaExclusive": "0x4221d2",
+          "displacement": "0x103",
+          "recordType": "0x1110",
+          "module": {
+            "index": 306,
+            "stream": 296,
+            "symbolBytes": 738768,
+            "c11Bytes": 0,
+            "c13Bytes": 176044,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\InputServices.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\Input.lib"
+          },
+          "recordOffset": 589756
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x421fa8",
+          "name": "?RegisterDirectManipulationCrossSlideContainer@CInputServices@@QEAAJPEAVCUIElement@@_N@Z",
+          "displacement": "0x103"
+        }
+      ]
+    },
+    {
+      "rva": "0x791601",
+      "containedProcedures": [
+        {
+          "name": "DirectUI::UIElement::put_IsDirectManipulationCrossSlideContainer",
+          "startRva": "0x7915b8",
+          "endRvaExclusive": "0x79161d",
+          "displacement": "0x49",
+          "recordType": "0x1110",
+          "module": {
+            "index": 821,
+            "stream": 623,
+            "symbolBytes": 233436,
+            "c11Bytes": 0,
+            "c13Bytes": 60556,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtfoundation\\UIElement_Partial.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtfoundation\\wrtdxamlfoundation.lib"
+          },
+          "recordOffset": 230700
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x7915b8",
+          "name": "?put_IsDirectManipulationCrossSlideContainer@UIElement@DirectUI@@IEAAJE@Z",
+          "displacement": "0x49"
+        }
+      ]
+    },
+    {
+      "rva": "0x7a53f9",
+      "containedProcedures": [
+        {
+          "name": "DirectUI::UIElement::ConfigureAutomaticDragHelper",
+          "startRva": "0x7a5304",
+          "endRvaExclusive": "0x7a5486",
+          "displacement": "0xf5",
+          "recordType": "0x1110",
+          "module": {
+            "index": 846,
+            "stream": 635,
+            "symbolBytes": 54732,
+            "c11Bytes": 0,
+            "c13Bytes": 16252,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtfoundation\\UIElement_Partial_DragDrop.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtfoundation\\wrtdxamlfoundation.lib"
+          },
+          "recordOffset": 24368
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x7a5304",
+          "name": "?ConfigureAutomaticDragHelper@UIElement@DirectUI@@IEAAJ_N@Z",
+          "displacement": "0xf5"
+        }
+      ]
+    },
+    {
+      "rva": "0x7a573a",
+      "containedProcedures": [
+        {
+          "name": "DirectUI::UIElement::NotifyCanDragChanged",
+          "startRva": "0x7a56d0",
+          "endRvaExclusive": "0x7a579c",
+          "displacement": "0x6a",
+          "recordType": "0x1110",
+          "module": {
+            "index": 846,
+            "stream": 635,
+            "symbolBytes": 54732,
+            "c11Bytes": 0,
+            "c13Bytes": 16252,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtfoundation\\UIElement_Partial_DragDrop.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtfoundation\\wrtdxamlfoundation.lib"
+          },
+          "recordOffset": 33104
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x7a56d0",
+          "name": "?NotifyCanDragChanged@UIElement@DirectUI@@SAJPEAVCUIElement@@_N@Z",
+          "displacement": "0x6a"
+        }
+      ]
+    },
+    {
+      "rva": "0x1f318",
+      "containedProcedures": [
+        {
+          "name": "CUIElement::SetValue",
+          "startRva": "0x1ec70",
+          "endRvaExclusive": "0x1f744",
+          "displacement": "0x6a8",
+          "recordType": "0x1110",
+          "module": {
+            "index": 216,
+            "stream": 120,
+            "symbolBytes": 629928,
+            "c11Bytes": 0,
+            "c13Bytes": 155728,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\uielement.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\elements.lib"
+          },
+          "recordOffset": 541256
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x1ec70",
+          "name": "?SetValue@CUIElement@@UEAAJAEBUSetValueParams@@@Z",
+          "displacement": "0x6a8"
+        }
+      ]
+    },
+    {
+      "rva": "0x1fa62",
+      "containedProcedures": [
+        {
+          "name": "CFrameworkElement::SetValue",
+          "startRva": "0x1f9c0",
+          "endRvaExclusive": "0x202c3",
+          "displacement": "0xa2",
+          "recordType": "0x1110",
+          "module": {
+            "index": 222,
+            "stream": 74,
+            "symbolBytes": 194684,
+            "c11Bytes": 0,
+            "c13Bytes": 48132,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\framework.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\elements.lib"
+          },
+          "recordOffset": 169976
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x1f9c0",
+          "name": "?SetValue@CFrameworkElement@@UEAAJAEBUSetValueParams@@@Z",
+          "displacement": "0xa2"
+        }
+      ]
+    },
+    {
+      "rva": "0x1eb31",
+      "containedProcedures": [
+        {
+          "name": "CControl::SetValue",
+          "startRva": "0x1eaf0",
+          "endRvaExclusive": "0x1ec46",
+          "displacement": "0x41",
+          "recordType": "0x1110",
+          "module": {
+            "index": 234,
+            "stream": 208,
+            "symbolBytes": 108468,
+            "c11Bytes": 0,
+            "c13Bytes": 29792,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\control.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib\\elements.lib"
+          },
+          "recordOffset": 98700
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x1eaf0",
+          "name": "?SetValue@CControl@@UEAAJAEBUSetValueParams@@@Z",
+          "displacement": "0x41"
+        }
+      ]
+    },
+    {
+      "rva": "0x1e900",
+      "containedProcedures": [
+        {
+          "name": "CContentControl::SetValue",
+          "startRva": "0x1e890",
+          "endRvaExclusive": "0x1eaef",
+          "displacement": "0x70",
+          "recordType": "0x1110",
+          "module": {
+            "index": 270,
+            "stream": 109,
+            "symbolBytes": 36548,
+            "c11Bytes": 0,
+            "c13Bytes": 11892,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib2\\contentcontrol.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\core\\elements\\lib2\\elements2.lib"
+          },
+          "recordOffset": 33584
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0x1e890",
+          "name": "?SetValue@CContentControl@@UEAAJAEBUSetValueParams@@@Z",
+          "displacement": "0x70"
+        }
+      ]
+    },
+    {
+      "rva": "0xa701b",
+      "containedProcedures": [
+        {
+          "name": "CoreImports::DependencyObject_SetValue",
+          "startRva": "0xa6fe0",
+          "endRvaExclusive": "0xa7042",
+          "displacement": "0x3b",
+          "recordType": "0x1110",
+          "module": {
+            "index": 1488,
+            "stream": 1332,
+            "symbolBytes": 153076,
+            "c11Bytes": 0,
+            "c13Bytes": 46456,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\CoreImports.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\xcpcore.lib"
+          },
+          "recordOffset": 108280
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0xa6fe0",
+          "name": "?DependencyObject_SetValue@CoreImports@@YAJPEAVCDependencyObject@@AEBUSetValueParams@@@Z",
+          "displacement": "0x3b"
+        }
+      ]
+    },
+    {
+      "rva": "0xa66d2",
+      "containedProcedures": [
+        {
+          "name": "DirectUI::DependencyObject::SetValueByKnownIndex<unsigned char>",
+          "startRva": "0xa6570",
+          "endRvaExclusive": "0xa6a7c",
+          "displacement": "0x162",
+          "recordType": "0x1110",
+          "module": {
+            "index": 604,
+            "stream": 854,
+            "symbolBytes": 17550520,
+            "c11Bytes": 0,
+            "c13Bytes": 3196204,
+            "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtgeneratedclasses\\Aggregate.g.obj",
+            "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\lib\\winrtgeneratedclasses\\wrtdxamlgeneratedclasses.lib"
+          },
+          "recordOffset": 3398108
+        }
+      ],
+      "nearestPublicSymbols": [
+        {
+          "rva": "0xa6570",
+          "name": "??$SetValueByKnownIndex@E@DependencyObject@DirectUI@@QEAAJW4KnownPropertyIndex@@E@Z",
+          "displacement": "0x162"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "threadId": 6576,
+  "exceptionCode": "0xc0000409",
+  "parameters": [
+    "0x7",
+    "0xffffffff8000ffff",
+    "0x0"
+  ],
+  "context": {
+    "Rax": "0x2759cfbbe0",
+    "Rcx": "0x2759cfbbe0",
+    "Rdx": "0x2759cfc090",
+    "Rbx": "0x2759cfc160",
+    "Rsp": "0x2759cfbb00",
+    "Rbp": "0x2759cfbc00",
+    "Rsi": "0x2759cfc160",
+    "Rdi": "0x2759cfbbe0",
+    "R8": "0x0",
+    "R9": "0x2759cfc040",
+    "R10": "0x582",
+    "R11": "0x582",
+    "R12": "0x1",
+    "R13": "0x0",
+    "R14": "0x1",
+    "R15": "0x0",
+    "Rip": "0x7ffbc934f0d8"
+  }
+}

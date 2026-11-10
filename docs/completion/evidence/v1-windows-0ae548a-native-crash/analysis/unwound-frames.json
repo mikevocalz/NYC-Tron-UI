@@ -1,0 +1,1559 @@
+{
+  "schemaVersion": 1,
+  "sourceHead": "0ae548a01fabd7bfcddefc55ed53e3a637e39fc8",
+  "testedMerge": "5171c0a4e3944fd4d7faf4caa238a016c7c80398",
+  "sourceTree": "81c0f37c0836650b00b6c17f3df90b91aac4301a",
+  "runId": 42887781630,
+  "nativeJobId": 130081095705,
+  "originalDump": {
+    "filename": "NYCTronWindowsExample.exe.8280.dmp",
+    "bytes": 4937072,
+    "sha256": "57a3f44abcfaf498c6c609f4f5bdf79d812276530318dc79be19da3917b75618"
+  },
+  "exception": {
+    "threadId": 6576,
+    "code": "0xc0000409",
+    "flags": 1,
+    "reportedAddress": "0x7ffb8331c066",
+    "capturedRip": "0x7ffbc934f0d8",
+    "contextDescriptor": {
+      "rva": 64490,
+      "bytes": 1232
+    },
+    "parameters": [
+      "0x7",
+      "0xffffffff8000ffff",
+      "0x0"
+    ]
+  },
+  "method": {
+    "host": "Linux offline analysis; not DbgHelp/WinDbg execution",
+    "startingPoint": "AMD64 CONTEXT from original MINIDUMP_EXCEPTION_STREAM",
+    "stack": "Original dump memory only; no guessed/raw-scan return addresses",
+    "unwindMetadata": "Exact matching KERNELBASE PE .pdata/.xdata, then XAML PDB Pdata/Xdata; both XAML streams byte-match the exact matching PE regions",
+    "xamlPdata": {
+      "rva": "0xd2f000",
+      "bytes": 593052,
+      "matchesPe": true
+    },
+    "xamlXdata": {
+      "rva": "0xcc0578",
+      "bytes": 356832,
+      "matchesPe": true
+    },
+    "unwindVersionsSeen": [
+      1
+    ],
+    "chainedUnwindEntries": 3,
+    "instructionValidation": "Every retained KERNELBASE/XAML PC is at an exact instruction boundary immediately after a real call. None has executed part of an x64 unwind epilog. The paired exact PE instruction windows are retained separately.",
+    "symbols": "Every XAML PC lies within an exact procedure extent in the matching PDB; not predecessor-only naming.",
+    "registerValidity": "Only nonvolatile integer registers and RSP are retained for caller frames. Volatile registers are not recoverable caller values and have been omitted. XMM restores do not affect this RIP/RSP path.",
+    "stop": "Stop at first caller in NYCTronFluentFabric.dll+0x342b3: its matching binary/PDB is not retained. No name/source-line attribution or further unwind is claimed for that module."
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "rip": "0x7ffbc934f0d8",
+      "rsp": "0x2759cfbb00",
+      "module": "C:\\Windows\\System32\\KERNELBASE.dll",
+      "rva": "0x10f0d8",
+      "runtimeFunction": [
+        "0x10ef50",
+        "0x10f121",
+        "0x367118"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0x367118",
+          "version": 1,
+          "flags": 3,
+          "prolog": 47,
+          "count": 9,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "1e74bf001e34be001e01b8000ff00de00b50",
+          "operations": [
+            {
+              "offset": 30,
+              "op": 4,
+              "info": 7,
+              "stackOffset": 1528,
+              "applied": true
+            },
+            {
+              "offset": 30,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 1520,
+              "applied": true
+            },
+            {
+              "offset": 30,
+              "op": 1,
+              "info": 0,
+              "bytes": 1472,
+              "applied": true
+            },
+            {
+              "offset": 15,
+              "op": 0,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 13,
+              "op": 0,
+              "info": 14,
+              "applied": true
+            },
+            {
+              "offset": 11,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfc0d8",
+      "callerRip": "0x7ffb832a52d9",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfc160",
+        "Rsp": "0x2759cfbb00",
+        "Rbp": "0x2759cfbc00",
+        "Rsi": "0x2759cfc160",
+        "Rdi": "0x2759cfbbe0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1",
+        "R15": "0x0"
+      },
+      "procedure": {
+        "name": "KERNELBASE!RaiseFailFastException",
+        "startRva": "0x10ef50",
+        "displacement": "0x188",
+        "evidence": "Exact PE export and runtime-function extent"
+      }
+    },
+    {
+      "frame": 1,
+      "rip": "0x7ffb832a52d9",
+      "rsp": "0x2759cfc0e0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x3a52d9",
+      "runtimeFunction": [
+        "0x3a5290",
+        "0x3a52e9",
+        "0xcc09a8"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc09a8",
+          "version": 1,
+          "flags": 0,
+          "prolog": 15,
+          "count": 6,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "0f6407000f3406000f320b70",
+          "operations": [
+            {
+              "offset": 15,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 56,
+              "applied": true
+            },
+            {
+              "offset": 15,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 48,
+              "applied": true
+            },
+            {
+              "offset": 15,
+              "op": 2,
+              "info": 3,
+              "applied": true
+            },
+            {
+              "offset": 11,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfc108",
+      "callerRip": "0x7ffb832a53b0",
+      "nonvolatileRegisters": {
+        "Rbx": "0x0",
+        "Rsp": "0x2759cfc0e0",
+        "Rbp": "0x2759cfc310",
+        "Rsi": "0x2759cfc160",
+        "Rdi": "0x0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1",
+        "R15": "0x0"
+      },
+      "procedure": {
+        "name": "wil::details::WilDynamicLoadRaiseFailFastException",
+        "startRva": "0x3a5290",
+        "endRvaExclusive": "0x3a52e9",
+        "displacement": "0x49",
+        "recordType": "0x1110",
+        "recordOffset": 57240,
+        "pdbModuleStream": 91
+      }
+    },
+    {
+      "frame": 2,
+      "rip": "0x7ffb832a53b0",
+      "rsp": "0x2759cfc110",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x3a53b0",
+      "runtimeFunction": [
+        "0x3a5398",
+        "0x3a53bc",
+        "0xcc08a0"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc08a0",
+          "version": 1,
+          "flags": 0,
+          "prolog": 4,
+          "count": 1,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "0442",
+          "operations": [
+            {
+              "offset": 4,
+              "op": 2,
+              "info": 4,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfc138",
+      "callerRip": "0x7ffb832a5394",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfc230",
+        "Rsp": "0x2759cfc110",
+        "Rbp": "0x2759cfc310",
+        "Rsi": "0x7ffb8331c066",
+        "Rdi": "0x7ffb833220ab",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1",
+        "R15": "0x0"
+      },
+      "procedure": {
+        "name": "wil::details::WilRaiseFailFastException",
+        "startRva": "0x3a5398",
+        "endRvaExclusive": "0x3a53bc",
+        "displacement": "0x18",
+        "recordType": "0x1110",
+        "recordOffset": 58136,
+        "pdbModuleStream": 91
+      }
+    },
+    {
+      "frame": 3,
+      "rip": "0x7ffb832a5394",
+      "rsp": "0x2759cfc140",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x3a5394",
+      "runtimeFunction": [
+        "0x3a52ec",
+        "0x3a5395",
+        "0xd0340c"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xd0340c",
+          "version": 1,
+          "flags": 0,
+          "prolog": 9,
+          "count": 3,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "090118000230",
+          "operations": [
+            {
+              "offset": 9,
+              "op": 1,
+              "info": 0,
+              "bytes": 192,
+              "applied": true
+            },
+            {
+              "offset": 2,
+              "op": 0,
+              "info": 3,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfc208",
+      "callerRip": "0x7ffb832a2809",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfc230",
+        "Rsp": "0x2759cfc140",
+        "Rbp": "0x2759cfc310",
+        "Rsi": "0x7ffb8331c066",
+        "Rdi": "0x7ffb833220ab",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1",
+        "R15": "0x0"
+      },
+      "procedure": {
+        "name": "wil::details::WilFailFast",
+        "startRva": "0x3a52ec",
+        "endRvaExclusive": "0x3a5395",
+        "displacement": "0xa8",
+        "recordType": "0x1110",
+        "recordOffset": 57724,
+        "pdbModuleStream": 91
+      }
+    },
+    {
+      "frame": 4,
+      "rip": "0x7ffb832a2809",
+      "rsp": "0x2759cfc210",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x3a2809",
+      "runtimeFunction": [
+        "0x3a25bc",
+        "0x3a280a",
+        "0xd032f8"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xd032f8",
+          "version": 1,
+          "flags": 2,
+          "prolog": 40,
+          "count": 11,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "28749f0228649e0228349d022801980214f012e01050",
+          "operations": [
+            {
+              "offset": 40,
+              "op": 4,
+              "info": 7,
+              "stackOffset": 5368,
+              "applied": true
+            },
+            {
+              "offset": 40,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 5360,
+              "applied": true
+            },
+            {
+              "offset": 40,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 5352,
+              "applied": true
+            },
+            {
+              "offset": 40,
+              "op": 1,
+              "info": 0,
+              "bytes": 5312,
+              "applied": true
+            },
+            {
+              "offset": 20,
+              "op": 0,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 18,
+              "op": 0,
+              "info": 14,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd6e8",
+      "callerRip": "0x7ffb832a23e8",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfd7a0",
+        "Rsp": "0x2759cfc210",
+        "Rbp": "0x2759cfc310",
+        "Rsi": "0x7ffb8331c066",
+        "Rdi": "0x7ffb833220ab",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1",
+        "R15": "0x0"
+      },
+      "procedure": {
+        "name": "wil::details::ReportFailure_NoReturn<3>",
+        "startRva": "0x3a25bc",
+        "endRvaExclusive": "0x3a280a",
+        "displacement": "0x24d",
+        "recordType": "0x1110",
+        "recordOffset": 5876,
+        "pdbModuleStream": 91
+      }
+    },
+    {
+      "frame": 5,
+      "rip": "0x7ffb832a23e8",
+      "rsp": "0x2759cfd6f0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x3a23e8",
+      "runtimeFunction": [
+        "0x3a23b8",
+        "0x3a23e9",
+        "0xcd85cc"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcd85cc",
+          "version": 1,
+          "flags": 0,
+          "prolog": 4,
+          "count": 1,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "04a2",
+          "operations": [
+            {
+              "offset": 4,
+              "op": 2,
+              "info": 10,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd748",
+      "callerRip": "0x7ffb832a25bb",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f48de22fa0",
+        "Rsp": "0x2759cfd6f0",
+        "Rbp": "0x2759cfd880",
+        "Rsi": "0x1f48de22fa0",
+        "Rdi": "0x0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1f499dc6810",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "wil::details::ReportFailure_Base<3,0>",
+        "startRva": "0x3a23b8",
+        "endRvaExclusive": "0x3a23e9",
+        "displacement": "0x30",
+        "recordType": "0x1110",
+        "recordOffset": 1620,
+        "pdbModuleStream": 91
+      }
+    },
+    {
+      "frame": 6,
+      "rip": "0x7ffb832a25bb",
+      "rsp": "0x2759cfd750",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x3a25bb",
+      "runtimeFunction": [
+        "0x3a2570",
+        "0x3a25bc",
+        "0xce7934"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xce7934",
+          "version": 1,
+          "flags": 0,
+          "prolog": 4,
+          "count": 1,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "04c2",
+          "operations": [
+            {
+              "offset": 4,
+              "op": 2,
+              "info": 12,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd7b8",
+      "callerRip": "0x7ffb8318d8cb",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f48de22fa0",
+        "Rsp": "0x2759cfd750",
+        "Rbp": "0x2759cfd880",
+        "Rsi": "0x1f48de22fa0",
+        "Rdi": "0x0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1f499dc6810",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "wil::details::ReportFailure_Hr<3>",
+        "startRva": "0x3a2570",
+        "endRvaExclusive": "0x3a25bc",
+        "displacement": "0x4b",
+        "recordType": "0x1110",
+        "recordOffset": 5192,
+        "pdbModuleStream": 91
+      }
+    },
+    {
+      "frame": 7,
+      "rip": "0x7ffb8318d8cb",
+      "rsp": "0x2759cfd7c0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x28d8cb",
+      "runtimeFunction": [
+        "0x28d8b0",
+        "0x28d8cc",
+        "0xcc6c3c"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc6c3c",
+          "version": 1,
+          "flags": 0,
+          "prolog": 4,
+          "count": 1,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "0482",
+          "operations": [
+            {
+              "offset": 4,
+              "op": 2,
+              "info": 8,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd808",
+      "callerRip": "0x7ffb8331c066",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f48de22fa0",
+        "Rsp": "0x2759cfd7c0",
+        "Rbp": "0x2759cfd880",
+        "Rsi": "0x1f48de22fa0",
+        "Rdi": "0x0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1f499dc6810",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "wil::details::in1diag0::_FailFast_Unexpected",
+        "startRva": "0x28d8b0",
+        "endRvaExclusive": "0x28d8cc",
+        "displacement": "0x1b",
+        "recordType": "0x1110",
+        "recordOffset": 612480,
+        "pdbModuleStream": 120
+      }
+    },
+    {
+      "frame": 8,
+      "rip": "0x7ffb8331c066",
+      "rsp": "0x2759cfd810",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x41c066",
+      "runtimeFunction": [
+        "0x41c01c",
+        "0x41c06d",
+        "0xcc1438"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc1438",
+          "version": 1,
+          "flags": 0,
+          "prolog": 12,
+          "count": 2,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "0c320830",
+          "operations": [
+            {
+              "offset": 12,
+              "op": 2,
+              "info": 3,
+              "applied": true
+            },
+            {
+              "offset": 8,
+              "op": 0,
+              "info": 3,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd838",
+      "callerRip": "0x7ffb833220ab",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f48de22fa0",
+        "Rsp": "0x2759cfd810",
+        "Rbp": "0x2759cfd880",
+        "Rsi": "0x1f48de22fa0",
+        "Rdi": "0x0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1f499dc6810",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "CInputServices::GetIslandInputSiteRegistrationForUIElement",
+        "startRva": "0x41c01c",
+        "endRvaExclusive": "0x41c06d",
+        "displacement": "0x4a",
+        "recordType": "0x1110",
+        "recordOffset": 448420,
+        "pdbModuleStream": 296
+      }
+    },
+    {
+      "frame": 9,
+      "rip": "0x7ffb833220ab",
+      "rsp": "0x2759cfd840",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x4220ab",
+      "runtimeFunction": [
+        "0x421fa8",
+        "0x4221d2",
+        "0xd0599c"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xd0599c",
+          "version": 1,
+          "flags": 0,
+          "prolog": 25,
+          "count": 10,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "1964110019341000197212f010e00ec00c700b50",
+          "operations": [
+            {
+              "offset": 25,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 136,
+              "applied": true
+            },
+            {
+              "offset": 25,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 128,
+              "applied": true
+            },
+            {
+              "offset": 25,
+              "op": 2,
+              "info": 7,
+              "applied": true
+            },
+            {
+              "offset": 18,
+              "op": 0,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 0,
+              "info": 14,
+              "applied": true
+            },
+            {
+              "offset": 14,
+              "op": 0,
+              "info": 12,
+              "applied": true
+            },
+            {
+              "offset": 12,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            },
+            {
+              "offset": 11,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd8a8",
+      "callerRip": "0x7ffb83691601",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1",
+        "Rsp": "0x2759cfd840",
+        "Rbp": "0x2759cfd880",
+        "Rsi": "0x1f48de22fa0",
+        "Rdi": "0x0",
+        "R12": "0x1",
+        "R13": "0x0",
+        "R14": "0x1f499dc6810",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "CInputServices::RegisterDirectManipulationCrossSlideContainer",
+        "startRva": "0x421fa8",
+        "endRvaExclusive": "0x4221d2",
+        "displacement": "0x103",
+        "recordType": "0x1110",
+        "recordOffset": 589756,
+        "pdbModuleStream": 296
+      }
+    },
+    {
+      "frame": 10,
+      "rip": "0x7ffb83691601",
+      "rsp": "0x2759cfd8b0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x791601",
+      "runtimeFunction": [
+        "0x7915b8",
+        "0x79161d",
+        "0xcc08e0"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc08e0",
+          "version": 1,
+          "flags": 0,
+          "prolog": 6,
+          "count": 2,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "06320230",
+          "operations": [
+            {
+              "offset": 6,
+              "op": 2,
+              "info": 3,
+              "applied": true
+            },
+            {
+              "offset": 2,
+              "op": 0,
+              "info": 3,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd8d8",
+      "callerRip": "0x7ffb836a53f9",
+      "nonvolatileRegisters": {
+        "Rbx": "0x0",
+        "Rsp": "0x2759cfd8b0",
+        "Rbp": "0x2759cfda70",
+        "Rsi": "0x1f4976a0c80",
+        "Rdi": "0x1f49735ef80",
+        "R12": "0x0",
+        "R13": "0x0",
+        "R14": "0x48b00",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "DirectUI::UIElement::put_IsDirectManipulationCrossSlideContainer",
+        "startRva": "0x7915b8",
+        "endRvaExclusive": "0x79161d",
+        "displacement": "0x49",
+        "recordType": "0x1110",
+        "recordOffset": 230700,
+        "pdbModuleStream": 623
+      }
+    },
+    {
+      "frame": 11,
+      "rip": "0x7ffb836a53f9",
+      "rsp": "0x2759cfd8e0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x7a53f9",
+      "runtimeFunction": [
+        "0x7a5304",
+        "0x7a5486",
+        "0xcc70e0"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc70e0",
+          "version": 1,
+          "flags": 0,
+          "prolog": 16,
+          "count": 6,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "106407001034060010320c70",
+          "operations": [
+            {
+              "offset": 16,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 56,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 48,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 2,
+              "info": 3,
+              "applied": true
+            },
+            {
+              "offset": 12,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd908",
+      "callerRip": "0x7ffb836a573a",
+      "nonvolatileRegisters": {
+        "Rbx": "0x0",
+        "Rsp": "0x2759cfd8e0",
+        "Rbp": "0x2759cfda70",
+        "Rsi": "0x1f4976a0c80",
+        "Rdi": "0x1f49735ef80",
+        "R12": "0x0",
+        "R13": "0x0",
+        "R14": "0x48b00",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "DirectUI::UIElement::ConfigureAutomaticDragHelper",
+        "startRva": "0x7a5304",
+        "endRvaExclusive": "0x7a5486",
+        "displacement": "0xf5",
+        "recordType": "0x1110",
+        "recordOffset": 24368,
+        "pdbModuleStream": 635
+      }
+    },
+    {
+      "frame": 12,
+      "rip": "0x7ffb836a573a",
+      "rsp": "0x2759cfd910",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x7a573a",
+      "runtimeFunction": [
+        "0x7a56d0",
+        "0x7a579c",
+        "0xcd03ac"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcd03ac",
+          "version": 1,
+          "flags": 0,
+          "prolog": 16,
+          "count": 6,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "10640e0010340d0010920c70",
+          "operations": [
+            {
+              "offset": 16,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 112,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 104,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 2,
+              "info": 9,
+              "applied": true
+            },
+            {
+              "offset": 12,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfd968",
+      "callerRip": "0x7ffb82f1f318",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f4976a0c80",
+        "Rsp": "0x2759cfd910",
+        "Rbp": "0x2759cfda70",
+        "Rsi": "0x2759cfdc01",
+        "Rdi": "0x0",
+        "R12": "0x0",
+        "R13": "0x0",
+        "R14": "0x48b00",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "DirectUI::UIElement::NotifyCanDragChanged",
+        "startRva": "0x7a56d0",
+        "endRvaExclusive": "0x7a579c",
+        "displacement": "0x6a",
+        "recordType": "0x1110",
+        "recordOffset": 33104,
+        "pdbModuleStream": 635
+      }
+    },
+    {
+      "frame": 13,
+      "rip": "0x7ffb82f1f318",
+      "rsp": "0x2759cfd970",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x1f318",
+      "runtimeFunction": [
+        "0x1ec70",
+        "0x1f744",
+        "0xcc44f0"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc44f0",
+          "version": 1,
+          "flags": 3,
+          "prolog": 42,
+          "count": 11,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "1c342c001c01220010f00ee00cd00ac0087007600650",
+          "operations": [
+            {
+              "offset": 28,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 352,
+              "applied": true
+            },
+            {
+              "offset": 28,
+              "op": 1,
+              "info": 0,
+              "bytes": 272,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 0,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 14,
+              "op": 0,
+              "info": 14,
+              "applied": true
+            },
+            {
+              "offset": 12,
+              "op": 0,
+              "info": 13,
+              "applied": true
+            },
+            {
+              "offset": 10,
+              "op": 0,
+              "info": 12,
+              "applied": true
+            },
+            {
+              "offset": 8,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            },
+            {
+              "offset": 7,
+              "op": 0,
+              "info": 6,
+              "applied": true
+            },
+            {
+              "offset": 6,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfdab8",
+      "callerRip": "0x7ffb82f1fa62",
+      "nonvolatileRegisters": {
+        "Rbx": "0x0",
+        "Rsp": "0x2759cfd970",
+        "Rbp": "0x2759cfda70",
+        "Rsi": "0x2759cfdcf8",
+        "Rdi": "0x1f499dc6810",
+        "R12": "0x0",
+        "R13": "0x0",
+        "R14": "0x48b00",
+        "R15": "0x1f48de1d420"
+      },
+      "procedure": {
+        "name": "CUIElement::SetValue",
+        "startRva": "0x1ec70",
+        "endRvaExclusive": "0x1f744",
+        "displacement": "0x6a8",
+        "recordType": "0x1110",
+        "recordOffset": 541256,
+        "pdbModuleStream": 120
+      }
+    },
+    {
+      "frame": 14,
+      "rip": "0x7ffb82f1fa62",
+      "rsp": "0x2759cfdac0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x1fa62",
+      "runtimeFunction": [
+        "0x1f9c0",
+        "0x202c3",
+        "0xcc454c"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc454c",
+          "version": 1,
+          "flags": 3,
+          "prolog": 42,
+          "count": 11,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "1c341e001c01140010f00ee00cd00ac0087007600650",
+          "operations": [
+            {
+              "offset": 28,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 240,
+              "applied": true
+            },
+            {
+              "offset": 28,
+              "op": 1,
+              "info": 0,
+              "bytes": 160,
+              "applied": true
+            },
+            {
+              "offset": 16,
+              "op": 0,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 14,
+              "op": 0,
+              "info": 14,
+              "applied": true
+            },
+            {
+              "offset": 12,
+              "op": 0,
+              "info": 13,
+              "applied": true
+            },
+            {
+              "offset": 10,
+              "op": 0,
+              "info": 12,
+              "applied": true
+            },
+            {
+              "offset": 8,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            },
+            {
+              "offset": 7,
+              "op": 0,
+              "info": 6,
+              "applied": true
+            },
+            {
+              "offset": 6,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfdb98",
+      "callerRip": "0x7ffb82f1eb31",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfdcf8",
+        "Rsp": "0x2759cfdac0",
+        "Rbp": "0x2759cfdb39",
+        "Rsi": "0x2759cfdcf8",
+        "Rdi": "0x1f499dc6810",
+        "R12": "0x0",
+        "R13": "0x0",
+        "R14": "0x0",
+        "R15": "0x1f499dc6810"
+      },
+      "procedure": {
+        "name": "CFrameworkElement::SetValue",
+        "startRva": "0x1f9c0",
+        "endRvaExclusive": "0x202c3",
+        "displacement": "0xa2",
+        "recordType": "0x1110",
+        "recordOffset": 169976,
+        "pdbModuleStream": 74
+      }
+    },
+    {
+      "frame": 15,
+      "rip": "0x7ffb82f1eb31",
+      "rsp": "0x2759cfdba0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x1eb31",
+      "runtimeFunction": [
+        "0x1eaf0",
+        "0x1ec46",
+        "0xcc44c8"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc44c8",
+          "version": 1,
+          "flags": 3,
+          "prolog": 30,
+          "count": 6,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "0f6413000f3412000fd20b70",
+          "operations": [
+            {
+              "offset": 15,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 152,
+              "applied": true
+            },
+            {
+              "offset": 15,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 144,
+              "applied": true
+            },
+            {
+              "offset": 15,
+              "op": 2,
+              "info": 13,
+              "applied": true
+            },
+            {
+              "offset": 11,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfdc18",
+      "callerRip": "0x7ffb82f1e900",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfdcf8",
+        "Rsp": "0x2759cfdba0",
+        "Rbp": "0x2759cfdd40",
+        "Rsi": "0x1f4995f6f30",
+        "Rdi": "0x1f499dc6810",
+        "R12": "0x780",
+        "R13": "0x0",
+        "R14": "0x181",
+        "R15": "0x1"
+      },
+      "procedure": {
+        "name": "CControl::SetValue",
+        "startRva": "0x1eaf0",
+        "endRvaExclusive": "0x1ec46",
+        "displacement": "0x41",
+        "recordType": "0x1110",
+        "recordOffset": 98700,
+        "pdbModuleStream": 208
+      }
+    },
+    {
+      "frame": 16,
+      "rip": "0x7ffb82f1e900",
+      "rsp": "0x2759cfdc20",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0x1e900",
+      "runtimeFunction": [
+        "0x1e890",
+        "0x1eaef",
+        "0xcc44a0"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcc44a0",
+          "version": 1,
+          "flags": 3,
+          "prolog": 27,
+          "count": 6,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "0c3410000c92087007600650",
+          "operations": [
+            {
+              "offset": 12,
+              "op": 4,
+              "info": 3,
+              "stackOffset": 128,
+              "applied": true
+            },
+            {
+              "offset": 12,
+              "op": 2,
+              "info": 9,
+              "applied": true
+            },
+            {
+              "offset": 8,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            },
+            {
+              "offset": 7,
+              "op": 0,
+              "info": 6,
+              "applied": true
+            },
+            {
+              "offset": 6,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfdc88",
+      "callerRip": "0x7ffb82fa701b",
+      "nonvolatileRegisters": {
+        "Rbx": "0x2759cfdcf8",
+        "Rsp": "0x2759cfdc20",
+        "Rbp": "0x2759cfdd40",
+        "Rsi": "0x1f4995f6f30",
+        "Rdi": "0x1f499dc6810",
+        "R12": "0x780",
+        "R13": "0x0",
+        "R14": "0x181",
+        "R15": "0x1"
+      },
+      "procedure": {
+        "name": "CContentControl::SetValue",
+        "startRva": "0x1e890",
+        "endRvaExclusive": "0x1eaef",
+        "displacement": "0x70",
+        "recordType": "0x1110",
+        "recordOffset": 33584,
+        "pdbModuleStream": 109
+      }
+    },
+    {
+      "frame": 17,
+      "rip": "0x7ffb82fa701b",
+      "rsp": "0x2759cfdc90",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0xa701b",
+      "runtimeFunction": [
+        "0xa6ffb",
+        "0xa7035",
+        "0xcd6090"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcd6090",
+          "version": 1,
+          "flags": 4,
+          "prolog": 5,
+          "count": 2,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "05740700",
+          "operations": [
+            {
+              "offset": 5,
+              "op": 4,
+              "info": 7,
+              "stackOffset": 56,
+              "applied": true
+            }
+          ],
+          "chain": [
+            "0xa6ff6",
+            "0xa6ffb",
+            "0xcd607c"
+          ]
+        },
+        {
+          "unwindRva": "0xcd607c",
+          "version": 1,
+          "flags": 4,
+          "prolog": 5,
+          "count": 2,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "05640600",
+          "operations": [
+            {
+              "offset": 5,
+              "op": 4,
+              "info": 6,
+              "stackOffset": 48,
+              "applied": true
+            }
+          ],
+          "chain": [
+            "0xa6fe0",
+            "0xa6ff6",
+            "0xcd6074"
+          ]
+        },
+        {
+          "unwindRva": "0xcd6074",
+          "version": 1,
+          "flags": 0,
+          "prolog": 6,
+          "count": 2,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "06320230",
+          "operations": [
+            {
+              "offset": 6,
+              "op": 2,
+              "info": 3,
+              "applied": true
+            },
+            {
+              "offset": 2,
+              "op": 0,
+              "info": 3,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfdcb8",
+      "callerRip": "0x7ffb82fa66d2",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f499dc6810",
+        "Rsp": "0x2759cfdc90",
+        "Rbp": "0x2759cfdd40",
+        "Rsi": "0x1f4995f6f30",
+        "Rdi": "0x0",
+        "R12": "0x780",
+        "R13": "0x0",
+        "R14": "0x181",
+        "R15": "0x1"
+      },
+      "procedure": {
+        "name": "CoreImports::DependencyObject_SetValue",
+        "startRva": "0xa6fe0",
+        "endRvaExclusive": "0xa7042",
+        "displacement": "0x3b",
+        "recordType": "0x1110",
+        "recordOffset": 108280,
+        "pdbModuleStream": 1332
+      }
+    },
+    {
+      "frame": 18,
+      "rip": "0x7ffb82fa66d2",
+      "rsp": "0x2759cfdcc0",
+      "module": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+      "rva": "0xa66d2",
+      "runtimeFunction": [
+        "0xa65c7",
+        "0xa6a7c",
+        "0xcd5f64"
+      ],
+      "unwind": [
+        {
+          "unwindRva": "0xcd5f64",
+          "version": 1,
+          "flags": 4,
+          "prolog": 8,
+          "count": 2,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "08c41a00",
+          "operations": [
+            {
+              "offset": 8,
+              "op": 4,
+              "info": 12,
+              "stackOffset": 208,
+              "applied": true
+            }
+          ],
+          "chain": [
+            "0xa6570",
+            "0xa65c7",
+            "0xcd5f48"
+          ]
+        },
+        {
+          "unwindRva": "0xcd5f48",
+          "version": 1,
+          "flags": 3,
+          "prolog": 35,
+          "count": 8,
+          "frameRegister": null,
+          "frameOffset": 0,
+          "codesHex": "15f20bf009e007d00570046003300250",
+          "operations": [
+            {
+              "offset": 21,
+              "op": 2,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 11,
+              "op": 0,
+              "info": 15,
+              "applied": true
+            },
+            {
+              "offset": 9,
+              "op": 0,
+              "info": 14,
+              "applied": true
+            },
+            {
+              "offset": 7,
+              "op": 0,
+              "info": 13,
+              "applied": true
+            },
+            {
+              "offset": 5,
+              "op": 0,
+              "info": 7,
+              "applied": true
+            },
+            {
+              "offset": 4,
+              "op": 0,
+              "info": 6,
+              "applied": true
+            },
+            {
+              "offset": 3,
+              "op": 0,
+              "info": 3,
+              "applied": true
+            },
+            {
+              "offset": 2,
+              "op": 0,
+              "info": 5,
+              "applied": true
+            }
+          ]
+        }
+      ],
+      "returnAddressSlot": "0x2759cfdd78",
+      "callerRip": "0x7ffba4cc42b3",
+      "nonvolatileRegisters": {
+        "Rbx": "0x0",
+        "Rsp": "0x2759cfdcc0",
+        "Rbp": "0x2759cfdd40",
+        "Rsi": "0x1f4995f6f30",
+        "Rdi": "0x1f4976a0c80",
+        "R12": "0x780",
+        "R13": "0x0",
+        "R14": "0x181",
+        "R15": "0x1"
+      },
+      "procedure": {
+        "name": "DirectUI::DependencyObject::SetValueByKnownIndex<unsigned char>",
+        "startRva": "0xa6570",
+        "endRvaExclusive": "0xa6a7c",
+        "displacement": "0x162",
+        "recordType": "0x1110",
+        "recordOffset": 3398108,
+        "pdbModuleStream": 854
+      }
+    },
+    {
+      "frame": 19,
+      "rip": "0x7ffba4cc42b3",
+      "rsp": "0x2759cfdd80",
+      "module": "D:\\a\\_temp\\tron-windows-consumer\\windows\\NYCTronWindowsExample.Package\\bin\\x64\\Release\\AppX\\NYCTronWindowsExample\\NYCTronFluentFabric.dll",
+      "rva": "0x342b3",
+      "stop": "No matched unwind metadata; do not continue as leaf",
+      "nonvolatileRegisters": {
+        "Rbx": "0x1f499cad901",
+        "Rsp": "0x2759cfdd80",
+        "Rbp": "0x2759cfdef9",
+        "Rsi": "0x1f4995f6f30",
+        "Rdi": "0x1f4995f6e70",
+        "R12": "0x1f4995f6eb0",
+        "R13": "0x2",
+        "R14": "0x1f4976a0d30",
+        "R15": "0x7ffba4ce7ae0"
+      },
+      "procedure": null
+    }
+  ]
+}

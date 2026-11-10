@@ -1,0 +1,1090 @@
+[
+  {
+    "frame": 0,
+    "module": "KERNELBASE.dll",
+    "rva": "0x10f0d8",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x10f0cc",
+        "bytes": "415e",
+        "mnemonic": "pop",
+        "opStr": "r14"
+      },
+      {
+        "rva": "0x10f0ce",
+        "bytes": "5d",
+        "mnemonic": "pop",
+        "opStr": "rbp"
+      },
+      {
+        "rva": "0x10f0cf",
+        "bytes": "c3",
+        "mnemonic": "ret",
+        "opStr": ""
+      },
+      {
+        "rva": "0x10f0d0",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      },
+      {
+        "rva": "0x10f0d1",
+        "bytes": "48ff15d0fe1700",
+        "mnemonic": "call",
+        "opStr": "qword ptr [rip + 0x17fed0]"
+      },
+      {
+        "rva": "0x10f0d8",
+        "bytes": "0f1f440000",
+        "mnemonic": "nop",
+        "opStr": "dword ptr [rax + rax]"
+      },
+      {
+        "rva": "0x10f0dd",
+        "bytes": "ebc9",
+        "mnemonic": "jmp",
+        "opStr": "0x10f0a8"
+      },
+      {
+        "rva": "0x10f0df",
+        "bytes": "834b0401",
+        "mnemonic": "or",
+        "opStr": "dword ptr [rbx + 4], 1"
+      },
+      {
+        "rva": "0x10f0e3",
+        "bytes": "41f6c701",
+        "mnemonic": "test",
+        "opStr": "r15b, 1"
+      }
+    ]
+  },
+  {
+    "frame": 1,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x3a52d9",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x3a52c8",
+        "bytes": "740f",
+        "mnemonic": "je",
+        "opStr": "0x3a52d9"
+      },
+      {
+        "rva": "0x3a52ca",
+        "bytes": "448bc3",
+        "mnemonic": "mov",
+        "opStr": "r8d, ebx"
+      },
+      {
+        "rva": "0x3a52cd",
+        "bytes": "488bd7",
+        "mnemonic": "mov",
+        "opStr": "rdx, rdi"
+      },
+      {
+        "rva": "0x3a52d0",
+        "bytes": "488bce",
+        "mnemonic": "mov",
+        "opStr": "rcx, rsi"
+      },
+      {
+        "rva": "0x3a52d3",
+        "bytes": "ff1587ae6300",
+        "mnemonic": "call",
+        "opStr": "qword ptr [rip + 0x63ae87]"
+      },
+      {
+        "rva": "0x3a52d9",
+        "bytes": "488b5c2430",
+        "mnemonic": "mov",
+        "opStr": "rbx, qword ptr [rsp + 0x30]"
+      },
+      {
+        "rva": "0x3a52de",
+        "bytes": "488b742438",
+        "mnemonic": "mov",
+        "opStr": "rsi, qword ptr [rsp + 0x38]"
+      },
+      {
+        "rva": "0x3a52e3",
+        "bytes": "4883c420",
+        "mnemonic": "add",
+        "opStr": "rsp, 0x20"
+      },
+      {
+        "rva": "0x3a52e7",
+        "bytes": "5f",
+        "mnemonic": "pop",
+        "opStr": "rdi"
+      }
+    ]
+  },
+  {
+    "frame": 2,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x3a53b0",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x3a539c",
+        "bytes": "488b0585689800",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rip + 0x986885]"
+      },
+      {
+        "rva": "0x3a53a3",
+        "bytes": "4885c0",
+        "mnemonic": "test",
+        "opStr": "rax, rax"
+      },
+      {
+        "rva": "0x3a53a6",
+        "bytes": "7408",
+        "mnemonic": "je",
+        "opStr": "0x3a53b0"
+      },
+      {
+        "rva": "0x3a53a8",
+        "bytes": "33d2",
+        "mnemonic": "xor",
+        "opStr": "edx, edx"
+      },
+      {
+        "rva": "0x3a53aa",
+        "bytes": "ff15b0ad6300",
+        "mnemonic": "call",
+        "opStr": "qword ptr [rip + 0x63adb0]"
+      },
+      {
+        "rva": "0x3a53b0",
+        "bytes": "b907000000",
+        "mnemonic": "mov",
+        "opStr": "ecx, 7"
+      },
+      {
+        "rva": "0x3a53b5",
+        "bytes": "cd29",
+        "mnemonic": "int",
+        "opStr": "0x29"
+      },
+      {
+        "rva": "0x3a53b7",
+        "bytes": "4883c428",
+        "mnemonic": "add",
+        "opStr": "rsp, 0x28"
+      },
+      {
+        "rva": "0x3a53bb",
+        "bytes": "c3",
+        "mnemonic": "ret",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 3,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x3a5394",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x3a5378",
+        "bytes": "48894c2430",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x30], rcx"
+      },
+      {
+        "rva": "0x3a537d",
+        "bytes": "488d4c2420",
+        "mnemonic": "lea",
+        "opStr": "rcx, [rsp + 0x20]"
+      },
+      {
+        "rva": "0x3a5382",
+        "bytes": "4889442450",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x50], rax"
+      },
+      {
+        "rva": "0x3a5387",
+        "bytes": "c744243803000000",
+        "mnemonic": "mov",
+        "opStr": "dword ptr [rsp + 0x38], 3"
+      },
+      {
+        "rva": "0x3a538f",
+        "bytes": "e804000000",
+        "mnemonic": "call",
+        "opStr": "0x3a5398"
+      },
+      {
+        "rva": "0x3a5394",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 4,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x3a2809",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x3a27f6",
+        "bytes": "7407",
+        "mnemonic": "je",
+        "opStr": "0x3a27ff"
+      },
+      {
+        "rva": "0x3a27f8",
+        "bytes": "ff1562d96300",
+        "mnemonic": "call",
+        "opStr": "qword ptr [rip + 0x63d962]"
+      },
+      {
+        "rva": "0x3a27fe",
+        "bytes": "90",
+        "mnemonic": "nop",
+        "opStr": ""
+      },
+      {
+        "rva": "0x3a27ff",
+        "bytes": "488d4c2420",
+        "mnemonic": "lea",
+        "opStr": "rcx, [rsp + 0x20]"
+      },
+      {
+        "rva": "0x3a2804",
+        "bytes": "e8e32a0000",
+        "mnemonic": "call",
+        "opStr": "0x3a52ec"
+      },
+      {
+        "rva": "0x3a2809",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 5,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x3a23e8",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x3a23c9",
+        "bytes": "488b842490000000",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rsp + 0x90]"
+      },
+      {
+        "rva": "0x3a23d1",
+        "bytes": "4889442430",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x30], rax"
+      },
+      {
+        "rva": "0x3a23d6",
+        "bytes": "488b842488000000",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rsp + 0x88]"
+      },
+      {
+        "rva": "0x3a23de",
+        "bytes": "4889442428",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x28], rax"
+      },
+      {
+        "rva": "0x3a23e3",
+        "bytes": "e8d4010000",
+        "mnemonic": "call",
+        "opStr": "0x3a25bc"
+      },
+      {
+        "rva": "0x3a23e8",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 6,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x3a25bb",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x3a259c",
+        "bytes": "4889442430",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x30], rax"
+      },
+      {
+        "rva": "0x3a25a1",
+        "bytes": "488b842498000000",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rsp + 0x98]"
+      },
+      {
+        "rva": "0x3a25a9",
+        "bytes": "4889442428",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x28], rax"
+      },
+      {
+        "rva": "0x3a25ae",
+        "bytes": "c744245800000000",
+        "mnemonic": "mov",
+        "opStr": "dword ptr [rsp + 0x58], 0"
+      },
+      {
+        "rva": "0x3a25b6",
+        "bytes": "e8fdfdffff",
+        "mnemonic": "call",
+        "opStr": "0x3a23b8"
+      },
+      {
+        "rva": "0x3a25bb",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 7,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x28d8cb",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x28d8b0",
+        "bytes": "4883ec48",
+        "mnemonic": "sub",
+        "opStr": "rsp, 0x48"
+      },
+      {
+        "rva": "0x28d8b4",
+        "bytes": "488b442448",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rsp + 0x48]"
+      },
+      {
+        "rva": "0x28d8b9",
+        "bytes": "c7442430ffff0080",
+        "mnemonic": "mov",
+        "opStr": "dword ptr [rsp + 0x30], 0x8000ffff"
+      },
+      {
+        "rva": "0x28d8c1",
+        "bytes": "4889442428",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rsp + 0x28], rax"
+      },
+      {
+        "rva": "0x28d8c6",
+        "bytes": "e8a54c1100",
+        "mnemonic": "call",
+        "opStr": "0x3a2570"
+      },
+      {
+        "rva": "0x28d8cb",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 8,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x41c066",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x41c04e",
+        "bytes": "488b442430",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rsp + 0x30]"
+      },
+      {
+        "rva": "0x41c053",
+        "bytes": "483b83c8010000",
+        "mnemonic": "cmp",
+        "opStr": "rax, qword ptr [rbx + 0x1c8]"
+      },
+      {
+        "rva": "0x41c05a",
+        "bytes": "750b",
+        "mnemonic": "jne",
+        "opStr": "0x41c067"
+      },
+      {
+        "rva": "0x41c05c",
+        "bytes": "488b4c2428",
+        "mnemonic": "mov",
+        "opStr": "rcx, qword ptr [rsp + 0x28]"
+      },
+      {
+        "rva": "0x41c061",
+        "bytes": "e84a18e7ff",
+        "mnemonic": "call",
+        "opStr": "0x28d8b0"
+      },
+      {
+        "rva": "0x41c066",
+        "bytes": "cc",
+        "mnemonic": "int3",
+        "opStr": ""
+      },
+      {
+        "rva": "0x41c067",
+        "bytes": "4883c420",
+        "mnemonic": "add",
+        "opStr": "rsp, 0x20"
+      },
+      {
+        "rva": "0x41c06b",
+        "bytes": "5b",
+        "mnemonic": "pop",
+        "opStr": "rbx"
+      },
+      {
+        "rva": "0x41c06c",
+        "bytes": "c3",
+        "mnemonic": "ret",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 9,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x4220ab",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x422098",
+        "bytes": "e905010000",
+        "mnemonic": "jmp",
+        "opStr": "0x4221a2"
+      },
+      {
+        "rva": "0x42209d",
+        "bytes": "0faee8",
+        "mnemonic": "lfence",
+        "opStr": ""
+      },
+      {
+        "rva": "0x4220a0",
+        "bytes": "498bd6",
+        "mnemonic": "mov",
+        "opStr": "rdx, r14"
+      },
+      {
+        "rva": "0x4220a3",
+        "bytes": "488bce",
+        "mnemonic": "mov",
+        "opStr": "rcx, rsi"
+      },
+      {
+        "rva": "0x4220a6",
+        "bytes": "e8719fffff",
+        "mnemonic": "call",
+        "opStr": "0x41c01c"
+      },
+      {
+        "rva": "0x4220ab",
+        "bytes": "4c8bf8",
+        "mnemonic": "mov",
+        "opStr": "r15, rax"
+      },
+      {
+        "rva": "0x4220ae",
+        "bytes": "84db",
+        "mnemonic": "test",
+        "opStr": "bl, bl"
+      },
+      {
+        "rva": "0x4220b0",
+        "bytes": "7489",
+        "mnemonic": "je",
+        "opStr": "0x42203b"
+      },
+      {
+        "rva": "0x4220b2",
+        "bytes": "80781000",
+        "mnemonic": "cmp",
+        "opStr": "byte ptr [rax + 0x10], 0"
+      }
+    ]
+  },
+  {
+    "frame": 10,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x791601",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x7915e9",
+        "bytes": "eb07",
+        "mnemonic": "jmp",
+        "opStr": "0x7915f2"
+      },
+      {
+        "rva": "0x7915eb",
+        "bytes": "498b9088000000",
+        "mnemonic": "mov",
+        "opStr": "rdx, qword ptr [r8 + 0x88]"
+      },
+      {
+        "rva": "0x7915f2",
+        "bytes": "488b89e8000000",
+        "mnemonic": "mov",
+        "opStr": "rcx, qword ptr [rcx + 0xe8]"
+      },
+      {
+        "rva": "0x7915f9",
+        "bytes": "448ac0",
+        "mnemonic": "mov",
+        "opStr": "r8b, al"
+      },
+      {
+        "rva": "0x7915fc",
+        "bytes": "e8a709c9ff",
+        "mnemonic": "call",
+        "opStr": "0x421fa8"
+      },
+      {
+        "rva": "0x791601",
+        "bytes": "8bd8",
+        "mnemonic": "mov",
+        "opStr": "ebx, eax"
+      },
+      {
+        "rva": "0x791603",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x791605",
+        "bytes": "7804",
+        "mnemonic": "js",
+        "opStr": "0x79160b"
+      },
+      {
+        "rva": "0x791607",
+        "bytes": "33c0",
+        "mnemonic": "xor",
+        "opStr": "eax, eax"
+      }
+    ]
+  },
+  {
+    "frame": 11,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x7a53f9",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x7a53eb",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x7a53ed",
+        "bytes": "781c",
+        "mnemonic": "js",
+        "opStr": "0x7a540b"
+      },
+      {
+        "rva": "0x7a53ef",
+        "bytes": "b201",
+        "mnemonic": "mov",
+        "opStr": "dl, 1"
+      },
+      {
+        "rva": "0x7a53f1",
+        "bytes": "488bce",
+        "mnemonic": "mov",
+        "opStr": "rcx, rsi"
+      },
+      {
+        "rva": "0x7a53f4",
+        "bytes": "e8bfc1feff",
+        "mnemonic": "call",
+        "opStr": "0x7915b8"
+      },
+      {
+        "rva": "0x7a53f9",
+        "bytes": "8bd8",
+        "mnemonic": "mov",
+        "opStr": "ebx, eax"
+      },
+      {
+        "rva": "0x7a53fb",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x7a53fd",
+        "bytes": "7975",
+        "mnemonic": "jns",
+        "opStr": "0x7a5474"
+      },
+      {
+        "rva": "0x7a53ff",
+        "bytes": "0faee8",
+        "mnemonic": "lfence",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 12,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x7a573a",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x7a5728",
+        "bytes": "7826",
+        "mnemonic": "js",
+        "opStr": "0x7a5750"
+      },
+      {
+        "rva": "0x7a572a",
+        "bytes": "488b5c2440",
+        "mnemonic": "mov",
+        "opStr": "rbx, qword ptr [rsp + 0x40]"
+      },
+      {
+        "rva": "0x7a572f",
+        "bytes": "408ad6",
+        "mnemonic": "mov",
+        "opStr": "dl, sil"
+      },
+      {
+        "rva": "0x7a5732",
+        "bytes": "488bcb",
+        "mnemonic": "mov",
+        "opStr": "rcx, rbx"
+      },
+      {
+        "rva": "0x7a5735",
+        "bytes": "e8cafbffff",
+        "mnemonic": "call",
+        "opStr": "0x7a5304"
+      },
+      {
+        "rva": "0x7a573a",
+        "bytes": "8bf8",
+        "mnemonic": "mov",
+        "opStr": "edi, eax"
+      },
+      {
+        "rva": "0x7a573c",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x7a573e",
+        "bytes": "7804",
+        "mnemonic": "js",
+        "opStr": "0x7a5744"
+      },
+      {
+        "rva": "0x7a5740",
+        "bytes": "33ff",
+        "mnemonic": "xor",
+        "opStr": "edi, edi"
+      }
+    ]
+  },
+  {
+    "frame": 13,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x1f318",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x1f304",
+        "bytes": "488b4e08",
+        "mnemonic": "mov",
+        "opStr": "rcx, qword ptr [rsi + 8]"
+      },
+      {
+        "rva": "0x1f308",
+        "bytes": "e8cb1f3800",
+        "mnemonic": "call",
+        "opStr": "0x3a12d8"
+      },
+      {
+        "rva": "0x1f30d",
+        "bytes": "0fb6d0",
+        "mnemonic": "movzx",
+        "opStr": "edx, al"
+      },
+      {
+        "rva": "0x1f310",
+        "bytes": "488bcf",
+        "mnemonic": "mov",
+        "opStr": "rcx, rdi"
+      },
+      {
+        "rva": "0x1f313",
+        "bytes": "e890197600",
+        "mnemonic": "call",
+        "opStr": "0x780ca8"
+      },
+      {
+        "rva": "0x1f318",
+        "bytes": "8bd8",
+        "mnemonic": "mov",
+        "opStr": "ebx, eax"
+      },
+      {
+        "rva": "0x1f31a",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x1f31c",
+        "bytes": "0f89df020000",
+        "mnemonic": "jns",
+        "opStr": "0x1f601"
+      },
+      {
+        "rva": "0x1f322",
+        "bytes": "0faee8",
+        "mnemonic": "lfence",
+        "opStr": ""
+      }
+    ]
+  },
+  {
+    "frame": 14,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x1fa62",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x1fa4b",
+        "bytes": "81fa09050000",
+        "mnemonic": "cmp",
+        "opStr": "edx, 0x509"
+      },
+      {
+        "rva": "0x1fa51",
+        "bytes": "0f8334010000",
+        "mnemonic": "jae",
+        "opStr": "0x1fb8b"
+      },
+      {
+        "rva": "0x1fa57",
+        "bytes": "488bd6",
+        "mnemonic": "mov",
+        "opStr": "rdx, rsi"
+      },
+      {
+        "rva": "0x1fa5a",
+        "bytes": "498bcf",
+        "mnemonic": "mov",
+        "opStr": "rcx, r15"
+      },
+      {
+        "rva": "0x1fa5d",
+        "bytes": "e80ef2ffff",
+        "mnemonic": "call",
+        "opStr": "0x1ec70"
+      },
+      {
+        "rva": "0x1fa62",
+        "bytes": "8bf8",
+        "mnemonic": "mov",
+        "opStr": "edi, eax"
+      },
+      {
+        "rva": "0x1fa64",
+        "bytes": "0faee8",
+        "mnemonic": "lfence",
+        "opStr": ""
+      },
+      {
+        "rva": "0x1fa67",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x1fa69",
+        "bytes": "0f88f21a2b00",
+        "mnemonic": "js",
+        "opStr": "0x2d1561"
+      }
+    ]
+  },
+  {
+    "frame": 15,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x1eb31",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x1eb1f",
+        "bytes": "3d38030000",
+        "mnemonic": "cmp",
+        "opStr": "eax, 0x338"
+      },
+      {
+        "rva": "0x1eb24",
+        "bytes": "7336",
+        "mnemonic": "jae",
+        "opStr": "0x1eb5c"
+      },
+      {
+        "rva": "0x1eb26",
+        "bytes": "488bd3",
+        "mnemonic": "mov",
+        "opStr": "rdx, rbx"
+      },
+      {
+        "rva": "0x1eb29",
+        "bytes": "488bcf",
+        "mnemonic": "mov",
+        "opStr": "rcx, rdi"
+      },
+      {
+        "rva": "0x1eb2c",
+        "bytes": "e88f0e0000",
+        "mnemonic": "call",
+        "opStr": "0x1f9c0"
+      },
+      {
+        "rva": "0x1eb31",
+        "bytes": "8bd8",
+        "mnemonic": "mov",
+        "opStr": "ebx, eax"
+      },
+      {
+        "rva": "0x1eb33",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x1eb35",
+        "bytes": "0f8883262b00",
+        "mnemonic": "js",
+        "opStr": "0x2d11be"
+      },
+      {
+        "rva": "0x1eb3b",
+        "bytes": "33c0",
+        "mnemonic": "xor",
+        "opStr": "eax, eax"
+      }
+    ]
+  },
+  {
+    "frame": 16,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0x1e900",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0x1e8ec",
+        "bytes": "663bc1",
+        "mnemonic": "cmp",
+        "opStr": "ax, cx"
+      },
+      {
+        "rva": "0x1e8ef",
+        "bytes": "0f84b0010000",
+        "mnemonic": "je",
+        "opStr": "0x1eaa5"
+      },
+      {
+        "rva": "0x1e8f5",
+        "bytes": "488bd3",
+        "mnemonic": "mov",
+        "opStr": "rdx, rbx"
+      },
+      {
+        "rva": "0x1e8f8",
+        "bytes": "488bcf",
+        "mnemonic": "mov",
+        "opStr": "rcx, rdi"
+      },
+      {
+        "rva": "0x1e8fb",
+        "bytes": "e8f0010000",
+        "mnemonic": "call",
+        "opStr": "0x1eaf0"
+      },
+      {
+        "rva": "0x1e900",
+        "bytes": "8bd8",
+        "mnemonic": "mov",
+        "opStr": "ebx, eax"
+      },
+      {
+        "rva": "0x1e902",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0x1e904",
+        "bytes": "0f8895272b00",
+        "mnemonic": "js",
+        "opStr": "0x2d109f"
+      },
+      {
+        "rva": "0x1e90a",
+        "bytes": "33c0",
+        "mnemonic": "xor",
+        "opStr": "eax, eax"
+      }
+    ]
+  },
+  {
+    "frame": 17,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0xa701b",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0xa7007",
+        "bytes": "48895970",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rcx + 0x70], rbx"
+      },
+      {
+        "rva": "0xa700b",
+        "bytes": "488bcb",
+        "mnemonic": "mov",
+        "opStr": "rcx, rbx"
+      },
+      {
+        "rva": "0xa700e",
+        "bytes": "488b03",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rbx]"
+      },
+      {
+        "rva": "0xa7011",
+        "bytes": "488b4028",
+        "mnemonic": "mov",
+        "opStr": "rax, qword ptr [rax + 0x28]"
+      },
+      {
+        "rva": "0xa7015",
+        "bytes": "ff1545919300",
+        "mnemonic": "call",
+        "opStr": "qword ptr [rip + 0x939145]"
+      },
+      {
+        "rva": "0xa701b",
+        "bytes": "488b4b08",
+        "mnemonic": "mov",
+        "opStr": "rcx, qword ptr [rbx + 8]"
+      },
+      {
+        "rva": "0xa701f",
+        "bytes": "8bf0",
+        "mnemonic": "mov",
+        "opStr": "esi, eax"
+      },
+      {
+        "rva": "0xa7021",
+        "bytes": "488b11",
+        "mnemonic": "mov",
+        "opStr": "rdx, qword ptr [rcx]"
+      },
+      {
+        "rva": "0xa7024",
+        "bytes": "48897a70",
+        "mnemonic": "mov",
+        "opStr": "qword ptr [rdx + 0x70], rdi"
+      }
+    ]
+  },
+  {
+    "frame": 18,
+    "module": "Microsoft.UI.Xaml.dll",
+    "rva": "0xa66d2",
+    "atInstructionBoundary": true,
+    "instructions": [
+      {
+        "rva": "0xa66b8",
+        "bytes": "f6474602",
+        "mnemonic": "test",
+        "opStr": "byte ptr [rdi + 0x46], 2"
+      },
+      {
+        "rva": "0xa66bc",
+        "bytes": "0f855e1f2500",
+        "mnemonic": "jne",
+        "opStr": "0x2f8620"
+      },
+      {
+        "rva": "0xa66c2",
+        "bytes": "488b8f88000000",
+        "mnemonic": "mov",
+        "opStr": "rcx, qword ptr [rdi + 0x88]"
+      },
+      {
+        "rva": "0xa66c9",
+        "bytes": "488d55b8",
+        "mnemonic": "lea",
+        "opStr": "rdx, [rbp - 0x48]"
+      },
+      {
+        "rva": "0xa66cd",
+        "bytes": "e80e090000",
+        "mnemonic": "call",
+        "opStr": "0xa6fe0"
+      },
+      {
+        "rva": "0xa66d2",
+        "bytes": "8bd8",
+        "mnemonic": "mov",
+        "opStr": "ebx, eax"
+      },
+      {
+        "rva": "0xa66d4",
+        "bytes": "85c0",
+        "mnemonic": "test",
+        "opStr": "eax, eax"
+      },
+      {
+        "rva": "0xa66d6",
+        "bytes": "0f884c1f2500",
+        "mnemonic": "js",
+        "opStr": "0x2f8628"
+      },
+      {
+        "rva": "0xa66dc",
+        "bytes": "488b4db0",
+        "mnemonic": "mov",
+        "opStr": "rcx, qword ptr [rbp - 0x50]"
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+172: 2026-11-10T19:55:57.1556828Z ✔ request timeout keeps the real session connected until its owner closes it (223.623675ms)
+173: 2026-11-10T19:55:57.3298492Z ✔ authentication timeout retains an immediately owned handle and rejects commands (174.043065ms)
+174: 2026-11-10T19:55:57.3310752Z ✔ explicit close settles a pending handshake and disconnects its owned socket (2.496778ms)
+175: 2026-11-10T19:55:57.3326589Z ✔ initial connection failure still returns a cleanup handle (2.05834ms)
+176: 2026-11-10T19:55:57.3399563Z ✔ copies only the requested core archive and preserves its bytes (20.492652ms)
+177: 2026-11-10T19:55:57.3401333Z ✔ rejects a changed archive before installing or copying it (8.217301ms)
+178: 2026-11-10T19:55:57.3402524Z ✔ rejects a valid hash for the wrong package identity (11.163669ms)
+179: 2026-11-10T19:55:57.3403692Z ✔ rejects duplicate checksums and archive source links (9.57578ms)
+180: 2026-11-10T19:55:57.3404423Z ℹ tests 8
+181: 2026-11-10T19:55:57.3404828Z ℹ suites 0
+182: 2026-11-10T19:55:57.3405255Z ℹ pass 8
+183: 2026-11-10T19:55:57.3405637Z ℹ fail 0
+184: 2026-11-10T19:55:57.3406017Z ℹ cancelled 0
+185: 2026-11-10T19:55:57.3406425Z ℹ skipped 0
+186: 2026-11-10T19:55:57.3406810Z ℹ todo 0
+187: 2026-11-10T19:55:57.3407277Z ℹ duration_ms 463.914052

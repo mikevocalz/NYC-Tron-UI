@@ -1,0 +1,55 @@
+﻿Captured UTC: 2026-11-10T20:30:41.4335105Z
+Root: HWND=589990; process=5968; runtimeId=42,589990
+Descendants: 51
+
+ControlType.Pane | name='' | id='' | class='Microsoft.UI.Content.DesktopChildSiteBridge' | runtimeId='42,197124' | process=5968 | bounds='8,31,536,681' | offscreen=False
+ControlType.Group | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,262358' | process=5968 | bounds='8,31,536,681' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66068' | process=5968 | bounds='8,31,48,681' | offscreen=False
+ControlType.Custom | name='NYC-Tron' | id='' | class='' | runtimeId='42,66068,4,6' | process=5968 | bounds='12,37,40,36' | offscreen=False
+ControlType.Button | name='Open Navigation' | id='TogglePaneButton' | class='Button' | runtimeId='42,66068,4,2' | process=5968 | bounds='12,37,40,36' | offscreen=False
+ControlType.Window | name='' | id='PaneRoot' | class='SplitViewPane' | runtimeId='42,66068,4,16' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.Pane | name='' | id='MenuItemsScrollViewer' | class='ScrollViewer' | runtimeId='42,66068,4,11' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.Group | name='NYC-Tron' | id='MenuItemsHost' | class='' | runtimeId='42,66068,4,10' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.ListItem | name='Home' | id='' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,3' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.ListItem | name='Workspace' | id='' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,5' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.ListItem | name='Unavailable' | id='' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,9' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.Pane | name='' | id='FooterItemsScrollViewer' | class='ScrollViewer' | runtimeId='42,66068,4,15' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.Group | name='' | id='FooterMenuItemsHost' | class='' | runtimeId='42,66068,4,14' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.ListItem | name='Settings' | id='SettingsItem' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,13' | process=5968 | bounds='Empty' | offscreen=True
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,262668' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66094' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66096' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66098' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,197210' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66140' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66142' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66144' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66160' | process=5968 | bounds='72,266,260,56' | offscreen=False
+ControlType.Button | name='Drag shared native draft' | id='' | class='Button' | runtimeId='42,66160,4,85' | process=5968 | bounds='72,266,260,56' | offscreen=False
+ControlType.Button | name='Show lifecycle checks' | id='' | class='' | runtimeId='42,262358,4,12' | process=5968 | bounds='72,47,149,37' | offscreen=False
+ControlType.Text | name='Show lifecycle checks' | id='' | class='' | runtimeId='42,262358,4,6' | process=5968 | bounds='81,56,132,19' | offscreen=False
+ControlType.Button | name='Show native overlay checks' | id='' | class='' | runtimeId='42,262358,4,22' | process=5968 | bounds='229,47,186,37' | offscreen=False
+ControlType.Text | name='Show native overlay checks' | id='' | class='' | runtimeId='42,262358,4,16' | process=5968 | bounds='238,56,169,19' | offscreen=False
+ControlType.Button | name='Show native drag checks' | id='' | class='' | runtimeId='42,262358,4,32' | process=5968 | bounds='72,92,170,37' | offscreen=False
+ControlType.Text | name='Show native drag checks' | id='' | class='' | runtimeId='42,262358,4,26' | process=5968 | bounds='81,101,153,19' | offscreen=False
+ControlType.Button | name='Show native navigation checks' | id='' | class='' | runtimeId='42,262358,4,42' | process=5968 | bounds='250,92,206,37' | offscreen=False
+ControlType.Text | name='Show native navigation checks' | id='' | class='' | runtimeId='42,262358,4,36' | process=5968 | bounds='259,101,189,19' | offscreen=False
+ControlType.Text | name='Native cross-window drag acceptance' | id='' | class='' | runtimeId='42,262358,4,602' | process=5968 | bounds='72,139,456,19' | offscreen=False
+ControlType.Text | name='Native drag idle' | id='' | class='' | runtimeId='42,262358,4,606' | process=5968 | bounds='72,170,456,20' | offscreen=False
+ControlType.Text | name='Document owner: main' | id='' | class='' | runtimeId='42,262358,4,612' | process=5968 | bounds='72,196,456,20' | offscreen=False
+ControlType.Text | name='Authorized transfers: 0' | id='' | class='' | runtimeId='42,262358,4,618' | process=5968 | bounds='72,223,456,19' | offscreen=False
+ControlType.Text | name='Completed native drags: 0' | id='' | class='' | runtimeId='42,262358,4,624' | process=5968 | bounds='72,249,456,20' | offscreen=False
+ControlType.Text | name='Native drag phase: idle' | id='' | class='' | runtimeId='42,262358,4,632' | process=5968 | bounds='72,280,456,19' | offscreen=False
+ControlType.Text | name='Native drop policy: reject' | id='' | class='' | runtimeId='42,262358,4,640' | process=5968 | bounds='72,378,456,20' | offscreen=False
+ControlType.Button | name='Reject native drops' | id='' | class='' | runtimeId='42,262358,4,650' | process=5968 | bounds='72,409,456,37' | offscreen=False
+ControlType.Text | name='Reject native drops' | id='' | class='' | runtimeId='42,262358,4,644' | process=5968 | bounds='81,418,438,20' | offscreen=False
+ControlType.Button | name='Accept native drops' | id='' | class='' | runtimeId='42,262358,4,660' | process=5968 | bounds='72,458,456,37' | offscreen=False
+ControlType.Text | name='Accept native drops' | id='' | class='' | runtimeId='42,262358,4,654' | process=5968 | bounds='81,467,438,20' | offscreen=False
+ControlType.Button | name='Delay native drop approval' | id='' | class='' | runtimeId='42,262358,4,670' | process=5968 | bounds='72,508,456,37' | offscreen=False
+ControlType.Text | name='Delay native drop approval' | id='' | class='' | runtimeId='42,262358,4,664' | process=5968 | bounds='81,517,438,20' | offscreen=False
+ControlType.Button | name='Resolve delayed native approval' | id='' | class='' | runtimeId='42,262358,4,680' | process=5968 | bounds='72,557,456,37' | offscreen=False
+ControlType.Text | name='Resolve delayed native approval' | id='' | class='' | runtimeId='42,262358,4,674' | process=5968 | bounds='81,566,438,20' | offscreen=False
+ControlType.Text | name='Native document window opened' | id='' | class='' | runtimeId='42,262358,4,574' | process=5968 | bounds='72,604,456,19' | offscreen=False
+ControlType.Text | name='Native windows: 2' | id='' | class='' | runtimeId='42,262358,4,580' | process=5968 | bounds='72,630,456,20' | offscreen=False
+ControlType.Button | name='Open document window' | id='' | class='' | runtimeId='42,262358,4,590' | process=5968 | bounds='72,657,456,37' | offscreen=False
+ControlType.Text | name='Open document window' | id='' | class='' | runtimeId='42,262358,4,584' | process=5968 | bounds='81,666,438,19' | offscreen=False

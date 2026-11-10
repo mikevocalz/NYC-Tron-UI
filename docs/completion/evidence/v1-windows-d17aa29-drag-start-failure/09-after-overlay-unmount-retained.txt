@@ -1,0 +1,53 @@
+﻿Captured UTC: 2026-11-10T20:30:23.6248823Z
+Root: HWND=589990; process=5968; runtimeId=42,589990
+Descendants: 49
+
+ControlType.Pane | name='' | id='' | class='Microsoft.UI.Content.DesktopChildSiteBridge' | runtimeId='42,197124' | process=5968 | bounds='0,23,1024,697' | offscreen=False
+ControlType.Group | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,262358' | process=5968 | bounds='0,23,1024,697' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66068' | process=5968 | bounds='0,23,320,697' | offscreen=False
+ControlType.Custom | name='NYC-Tron' | id='' | class='' | runtimeId='42,66068,4,6' | process=5968 | bounds='0,23,320,697' | offscreen=False
+ControlType.Button | name='Close Navigation' | id='TogglePaneButton' | class='Button' | runtimeId='42,66068,4,2' | process=5968 | bounds='4,29,312,36' | offscreen=False
+ControlType.Text | name='NYC-Tron' | id='PaneTitleTextBlock' | class='TextBlock' | runtimeId='42,66068,4,1' | process=5968 | bounds='48,37,61,19' | offscreen=False
+ControlType.Window | name='' | id='PaneRoot' | class='SplitViewPane' | runtimeId='42,66068,4,16' | process=5968 | bounds='0,23,320,697' | offscreen=False
+ControlType.Pane | name='' | id='MenuItemsScrollViewer' | class='ScrollViewer' | runtimeId='42,66068,4,11' | process=5968 | bounds='0,67,320,605' | offscreen=False
+ControlType.Group | name='NYC-Tron' | id='MenuItemsHost' | class='' | runtimeId='42,66068,4,10' | process=5968 | bounds='4,69,312,116' | offscreen=False
+ControlType.ListItem | name='Home' | id='' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,3' | process=5968 | bounds='4,69,312,36' | offscreen=False
+ControlType.ListItem | name='Workspace' | id='' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,5' | process=5968 | bounds='4,109,312,36' | offscreen=False
+ControlType.ListItem | name='Unavailable' | id='' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,9' | process=5968 | bounds='4,149,312,36' | offscreen=False
+ControlType.Pane | name='' | id='FooterItemsScrollViewer' | class='ScrollViewer' | runtimeId='42,66068,4,15' | process=5968 | bounds='0,676,320,40' | offscreen=False
+ControlType.Group | name='' | id='FooterMenuItemsHost' | class='' | runtimeId='42,66068,4,14' | process=5968 | bounds='4,678,312,36' | offscreen=False
+ControlType.ListItem | name='Settings' | id='SettingsItem' | class='Microsoft.UI.Xaml.Controls.NavigationViewItem' | runtimeId='42,66068,4,13' | process=5968 | bounds='4,678,312,36' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,262668' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66094' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66096' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Pane | name='' | id='' | class='InputSiteWindowClass' | runtimeId='42,66098' | process=5968 | bounds='Empty' | offscreen=False
+ControlType.Button | name='Show lifecycle checks' | id='' | class='' | runtimeId='42,262358,4,12' | process=5968 | bounds='336,39,149,37' | offscreen=False
+ControlType.Text | name='Show lifecycle checks' | id='' | class='' | runtimeId='42,262358,4,6' | process=5968 | bounds='345,48,132,19' | offscreen=False
+ControlType.Button | name='Show native overlay checks' | id='' | class='' | runtimeId='42,262358,4,22' | process=5968 | bounds='493,39,186,37' | offscreen=False
+ControlType.Text | name='Show native overlay checks' | id='' | class='' | runtimeId='42,262358,4,16' | process=5968 | bounds='502,48,169,19' | offscreen=False
+ControlType.Button | name='Show native drag checks' | id='' | class='' | runtimeId='42,262358,4,32' | process=5968 | bounds='687,39,170,37' | offscreen=False
+ControlType.Text | name='Show native drag checks' | id='' | class='' | runtimeId='42,262358,4,26' | process=5968 | bounds='696,48,153,19' | offscreen=False
+ControlType.Button | name='Show native navigation checks' | id='' | class='' | runtimeId='42,262358,4,42' | process=5968 | bounds='336,84,206,37' | offscreen=False
+ControlType.Text | name='Show native navigation checks' | id='' | class='' | runtimeId='42,262358,4,36' | process=5968 | bounds='345,93,189,19' | offscreen=False
+ControlType.Text | name='Windows navigation acceptance' | id='' | class='' | runtimeId='42,262358,4,48' | process=5968 | bounds='336,131,672,19' | offscreen=False
+ControlType.Text | name='Committed route: workspace' | id='' | class='' | runtimeId='42,262358,4,52' | process=5968 | bounds='336,159,672,20' | offscreen=False
+ControlType.Text | name='Committed route: workspace' | id='' | class='' | runtimeId='42,262358,4,58' | process=5968 | bounds='336,188,672,20' | offscreen=False
+ControlType.Text | name='Choose Workspace, then accept or reject the request. Native selection should follow only the committed route.' | id='' | class='' | runtimeId='42,262358,4,62' | process=5968 | bounds='336,216,672,38' | offscreen=False
+ControlType.Button | name='Accept navigation' | id='' | class='' | runtimeId='42,262358,4,72' | process=5968 | bounds='336,264,672,37' | offscreen=False
+ControlType.Text | name='Accept navigation' | id='' | class='' | runtimeId='42,262358,4,66' | process=5968 | bounds='345,273,654,19' | offscreen=False
+ControlType.Button | name='Reject navigation' | id='' | class='' | runtimeId='42,262358,4,82' | process=5968 | bounds='336,311,672,38' | offscreen=False
+ControlType.Text | name='Reject navigation' | id='' | class='' | runtimeId='42,262358,4,76' | process=5968 | bounds='345,320,654,20' | offscreen=False
+ControlType.Button | name='Close pane' | id='' | class='' | runtimeId='42,262358,4,92' | process=5968 | bounds='336,358,672,37' | offscreen=False
+ControlType.Text | name='Close pane' | id='' | class='' | runtimeId='42,262358,4,86' | process=5968 | bounds='345,367,654,20' | offscreen=False
+ControlType.Text | name='Native document window opened' | id='' | class='' | runtimeId='42,262358,4,96' | process=5968 | bounds='336,405,672,20' | offscreen=False
+ControlType.Text | name='Native windows: 2' | id='' | class='' | runtimeId='42,262358,4,102' | process=5968 | bounds='336,434,672,19' | offscreen=False
+ControlType.Text | name='Minimized windows: 1' | id='' | class='' | runtimeId='42,262358,4,108' | process=5968 | bounds='336,462,672,20' | offscreen=False
+ControlType.Text | name='Shared draft: Edited once, shared everywhere' | id='' | class='' | runtimeId='42,262358,4,114' | process=5968 | bounds='336,491,672,20' | offscreen=False
+ControlType.Button | name='Open document window' | id='' | class='' | runtimeId='42,262358,4,124' | process=5968 | bounds='336,520,672,37' | offscreen=False
+ControlType.Text | name='Open document window' | id='' | class='' | runtimeId='42,262358,4,118' | process=5968 | bounds='345,529,654,19' | offscreen=False
+ControlType.Button | name='Change shared draft' | id='' | class='' | runtimeId='42,262358,4,134' | process=5968 | bounds='336,567,672,37' | offscreen=False
+ControlType.Text | name='Change shared draft' | id='' | class='' | runtimeId='42,262358,4,128' | process=5968 | bounds='345,576,654,19' | offscreen=False
+ControlType.Button | name='Save shared draft' | id='' | class='' | runtimeId='42,262358,4,144' | process=5968 | bounds='336,614,672,38' | offscreen=False
+ControlType.Text | name='Save shared draft' | id='' | class='' | runtimeId='42,262358,4,138' | process=5968 | bounds='345,623,654,20' | offscreen=False
+ControlType.Button | name='Restore document' | id='' | class='' | runtimeId='42,262358,4,154' | process=5968 | bounds='336,661,672,37' | offscreen=False
+ControlType.Text | name='Restore document' | id='' | class='' | runtimeId='42,262358,4,148' | process=5968 | bounds='345,670,654,20' | offscreen=False

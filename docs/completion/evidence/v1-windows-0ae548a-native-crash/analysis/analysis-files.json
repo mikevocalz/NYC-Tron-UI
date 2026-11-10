@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "scope": "Derived analysis records only; original crash receipt and ZIP are unchanged.",
+  "records": [
+    {
+      "file": "binary-provenance.json",
+      "source": "Independent native unwind analysis",
+      "bytes": 1985,
+      "sha256": "918218c90ece7292dabc3748b26d60f79b59285d7c13389acd2a99500d06edcc"
+    },
+    {
+      "file": "exception-context.json",
+      "source": "Independent native unwind analysis",
+      "bytes": 545,
+      "sha256": "2838d9c6f2187db882f68aecee6c44bb485fd3250f5a805bb7b07abe9526352f"
+    },
+    {
+      "file": "unwound-frames.json",
+      "source": "Independent native unwind analysis",
+      "bytes": 41105,
+      "sha256": "8d1eb602b4d6a52d7b1fc5d44cc45d920ff7e1dce09fa333b5090447d8adc702"
+    },
+    {
+      "file": "unwind-instruction-validation.json",
+      "source": "Independent native unwind analysis",
+      "bytes": 23307,
+      "sha256": "cd5fcfb4aae43d3922e2f6d63f4aac93e981d42565530f7467229d3a27522b33"
+    },
+    {
+      "file": "unwind.py",
+      "source": "Independent native unwind analysis",
+      "bytes": 5190,
+      "sha256": "2451a95b105a84ded2b29e88ad51d4f2cf5568551046c807a19f46c9a81dd81c"
+    },
+    {
+      "file": "symbol-provenance.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 4140,
+      "sha256": "97fc6dd3e7ac4a1a66265cf0503eebcd59bf514e8c2828cdd6adff111730fd94"
+    },
+    {
+      "file": "exact-source-provenance.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 2961,
+      "sha256": "ff4c602c09fbafe7a3c3ae321cd0cb284b70f2f8d04bc141051c44705b931652"
+    },
+    {
+      "file": "pdb-source-checksum.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 869,
+      "sha256": "175a9b94acf4c363aa5c0206d7a728b97c632ccf3672b0a5541d665023b07206"
+    },
+    {
+      "file": "pdb-procedure-lookup.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 2262,
+      "sha256": "2f62cbb4eeea5e504addfa3a22b4423406fcae9a28c9df1a14bc533263bd7909"
+    },
+    {
+      "file": "pdb-unwind-rva-lookups.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 17684,
+      "sha256": "9a5ac05461b95b99f7fdd1bcd32119486d0e4eeeb2a283424aa9c53c59846763"
+    },
+    {
+      "file": "pdb-extracted-streams.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 972,
+      "sha256": "47c98025c74131797987d34e4135ab355920352e86ebd15388a9d8dbae28f4b0"
+    },
+    {
+      "file": "independent-input-verification.json",
+      "source": "Independent PDB, source and input verification",
+      "bytes": 2086,
+      "sha256": "582df4826d2f0b1677afb09e7fd19f2719cc07efd7e49269385521118bf1c3d3"
+    },
+    {
+      "file": "README.md",
+      "source": "Combined diagnosis and evidence index",
+      "bytes": 8625,
+      "sha256": "56ac448321dd21f9ce2df23c613d34092bfe388a1350422ef8522030d7fb8ab7"
+    }
+  ]
+}

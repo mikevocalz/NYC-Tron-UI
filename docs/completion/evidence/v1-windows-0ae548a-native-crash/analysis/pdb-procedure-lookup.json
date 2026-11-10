@@ -1,0 +1,38 @@
+[
+  {
+    "referenceType": "0x1127",
+    "referenceName": "std::find_if<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<CInputServices::IslandInputSiteRegistration> > >,`CInputServices::GetIslandInputSiteRegistrationForUIElement'::`2'::<lambda_1> >",
+    "symbolOffset": 284504,
+    "module": {
+      "moduleIndex": 306,
+      "stream": 296,
+      "symbolBytes": 738768,
+      "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\InputServices.obj",
+      "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\Input.lib"
+    },
+    "procedureType": "0x110f",
+    "recordHex": "ee000f1100000000145e040000000000610100002900000061010000abcb0a00606741000100807374643a3a66696e645f69663c7374643a3a5f566563746f725f6974657261746f723c7374643a3a5f566563746f725f76616c3c7374643a3a5f53696d706c655f74797065733c43496e70757453657276696365733a3a49736c616e64496e70757453697465526567697374726174696f6e3e203e203e2c6043496e70757453657276696365733a3a47657449736c616e64496e70757453697465526567697374726174696f6e466f725549456c656d656e74273a3a6032273a3a3c6c616d6264615f313e203e0000",
+    "codeSize": 353,
+    "codeOffset": 4286304,
+    "segment": 1,
+    "procedureName": "std::find_if<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<CInputServices::IslandInputSiteRegistration> > >,`CInputServices::GetIslandInputSiteRegistrationForUIElement'::`2'::<lambda_1> >"
+  },
+  {
+    "referenceType": "0x1125",
+    "referenceName": "CInputServices::GetIslandInputSiteRegistrationForUIElement",
+    "symbolOffset": 448420,
+    "module": {
+      "moduleIndex": 306,
+      "stream": 296,
+      "symbolBytes": 738768,
+      "name": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\InputServices.obj",
+      "object": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\Input.lib"
+    },
+    "procedureType": "0x1110",
+    "recordHex": "620010110000000030da060000000000510000000c000000510000004c7a03001cb0410001008043496e70757453657276696365733a3a47657449736c616e64496e70757453697465526567697374726174696f6e466f725549456c656d656e74000000",
+    "codeSize": 81,
+    "codeOffset": 4304924,
+    "segment": 1,
+    "procedureName": "CInputServices::GetIslandInputSiteRegistrationForUIElement"
+  }
+]

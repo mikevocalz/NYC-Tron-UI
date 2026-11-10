@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-10T20:00:53.100895+00:00",
+  "originalDump": {
+    "file": "/workspace/scratch/4137c61be495/windows-pr60-0ae548-uia/crash-dumps/NYCTronWindowsExample.exe.8280.dmp",
+    "bytes": 4937072,
+    "sha256": "57a3f44abcfaf498c6c609f4f5bdf79d812276530318dc79be19da3917b75618"
+  },
+  "module": {
+    "name": "C:\\Program Files\\WindowsApps\\Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe\\Microsoft.UI.Xaml.dll",
+    "baseAddress": "0x7ffb82f00000",
+    "imageSize": "0xe68000",
+    "timestamp": "0xcfcb3205",
+    "checksum": "0xe707fa",
+    "codeView": {
+      "recordRva": "0x1909e",
+      "recordBytes": 118,
+      "recordSha256": "1237b48ffa70b8992f95122458b29c4c288513aebd0fce6caefb1d630e072f0b",
+      "format": "RSDS",
+      "guid": "b67e2c8f-9cb0-bb7c-a4ba-bf5e9b4d41d0",
+      "age": 2,
+      "pdbPath": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\dxaml\\dllsrv\\winrt\\native\\Microsoft.ui.xaml.pdb"
+    }
+  },
+  "officialPdb": {
+    "sourceUrl": "https://msdl.microsoft.com/download/symbols/Microsoft.ui.xaml.pdb/B67E2C8F9CB0BB7CA4BABF5E9B4D41D02/Microsoft.ui.xaml.pdb",
+    "httpStatus": 200,
+    "finalHost": "vsblobprodscussu5shard54.blob.core.windows.net",
+    "bytes": 301977600,
+    "sha256": "67849090687683533dfc2d4bf5646e0d2246cbda34410ce5c61d0f2ffd05de3f",
+    "lastModified": "Tue, 12 May 2026 22:34:49 GMT",
+    "etag": "\"0x8DEB076ADACC442\"",
+    "downloadSeconds": 17.06
+  },
+  "identityValidation": {
+    "guidMatches": true,
+    "imageAge": 2,
+    "pdbInfoAge": 4,
+    "dbiAge": 2,
+    "pdbInfoAgeAtLeastImageAge": true,
+    "dbiAgeMatchesImageAge": true,
+    "ruleSource": "https://github.com/microsoft/microsoft-pdb/blob/master/PDB/dbi/pdb.cpp",
+    "method": "Compared actual MSF PDB header and DBI ages against the minidump RSDS identity using the Microsoft OpenValidate5 matching rule; no DbgHelp execution was performed."
+  },
+  "exceptionLocation": {
+    "reportedVirtualAddress": "0x7ffb8331c066",
+    "rva": "0x41c066",
+    "procedure": "CInputServices::GetIslandInputSiteRegistrationForUIElement",
+    "procedureStartRva": "0x41c01c",
+    "procedureEndRvaExclusive": "0x41c06d",
+    "displacement": "0x4a",
+    "codeSize": "0x51",
+    "recordType": "0x1110",
+    "moduleIndex": 306,
+    "moduleSymbolStream": 296,
+    "recordOffset": 448420,
+    "objectFile": "C:\\__w\\1\\s\\BuildOutput\\obj\\amd64fre\\dxaml\\xcp\\core\\input\\InputServices.obj",
+    "omapPresent": false
+  },
+  "derivedStreams": [
+    {
+      "stream": 9,
+      "file": "Microsoft.ui.xaml.pdata.bin",
+      "bytes": 593084,
+      "sha256": "b50a6eeb5fade50fe913dfcf32eb94ebafef94688d77f082bcbc0ef8a07fac60",
+      "prefixHex": "01000000200000009c0c090000f0d2000000008001000000000000000000000000100000711000001037d000741000004e110000d447d0005011000070110000"
+    },
+    {
+      "stream": 10,
+      "file": "Microsoft.ui.xaml.xdata.bin",
+      "bytes": 356864,
+      "sha256": "ab2cdbe177636f464ece34400f752e2bf50353dbd0ebc513915dde7e9e381e3f",
+      "prefixHex": "0100000020000000e07105007805cc000000008001000000000000000000000019230800156413001534110015b20ee00c700b50b4b228005800000021000000"
+    },
+    {
+      "stream": 12,
+      "file": "Microsoft.ui.xaml.section-headers.bin",
+      "bytes": 280,
+      "sha256": "d05444641cdeac7a28900ea3c0bd03d91b5ba015a7510f96dbded3150ff2ffb4",
+      "prefixHex": "2e746578740000004fda9d000010000000dc9d0000040000000000000000000000000000200000602e7264617461000094d3330000f09d0000d4330000e09d00"
+    }
+  ],
+  "limitations": [
+    "This location is the reported ExceptionRecord address, not a statement about the captured machine RIP.",
+    "Public-symbol lookup and procedure containment do not establish a verified call stack or the cause of the native failure.",
+    "No original dump, installed binary or source worktree was modified."
+  ],
+  "formatReferences": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module",
+    "https://llvm.org/docs/PDB/MsfFile.html",
+    "https://llvm.org/docs/PDB/PdbStream.html",
+    "https://llvm.org/docs/PDB/DbiStream.html"
+  ]
+}

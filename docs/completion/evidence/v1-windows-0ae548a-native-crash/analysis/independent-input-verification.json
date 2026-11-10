@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "originalDumpSha256": "57a3f44abcfaf498c6c609f4f5bdf79d812276530318dc79be19da3917b75618",
+  "exceptionFromOriginalDump": {
+    "streamRva": "0x660",
+    "threadId": 6576,
+    "code": "0xc0000409",
+    "flags": 1,
+    "reportedAddress": "0x7ffb8331c066",
+    "parameters": [
+      "0x7",
+      "0xffffffff8000ffff",
+      "0x0"
+    ],
+    "contextRva": "0xfbea",
+    "contextBytes": 1232,
+    "capturedRip": "0x7ffbc934f0d8",
+    "capturedRsp": "0x2759cfbb00"
+  },
+  "checkedBinaries": [
+    {
+      "name": "ntdll.dll",
+      "bytes": 2541720,
+      "sha256": "160ef9b82e2895ef48fa031cb1cf683a8b123febf7cf7d5590cd3104864424b3",
+      "peTimestamp": "0x64d8ddf5",
+      "peSizeOfImage": "0x264000"
+    },
+    {
+      "name": "KERNELBASE.dll",
+      "bytes": 4171392,
+      "sha256": "96c0459f0d73d728e5c13a10d83d840f56913ef7281d17370a5e1eb197faa450",
+      "peTimestamp": "0x3ddf2783",
+      "peSizeOfImage": "0x3ed000"
+    },
+    {
+      "name": "Microsoft.UI.Xaml.dll",
+      "bytes": 15083832,
+      "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+      "peTimestamp": "0xcfcb3205",
+      "peSizeOfImage": "0xe68000"
+    }
+  ],
+  "pdbUnwindStreamPayloads": [
+    {
+      "file": "Microsoft.ui.xaml.pdata.bin",
+      "streamSha256": "b50a6eeb5fade50fe913dfcf32eb94ebafef94688d77f082bcbc0ef8a07fac60",
+      "payloadRva": "0xd2f000",
+      "payloadBytes": 593052,
+      "payloadSha256": "35a49b7d1eaa541557fdb082d66001a354c8c5070ac86a2a4fcf4d83f1a8eb42",
+      "exactlyMatchesPeBytes": true
+    },
+    {
+      "file": "Microsoft.ui.xaml.xdata.bin",
+      "streamSha256": "ab2cdbe177636f464ece34400f752e2bf50353dbd0ebc513915dde7e9e381e3f",
+      "payloadRva": "0xcc0578",
+      "payloadBytes": 356832,
+      "payloadSha256": "87685c0460227401c43db03ea637991e622ef885923513419d363d53b044b5b8",
+      "exactlyMatchesPeBytes": true
+    }
+  ],
+  "method": "Independent Python stdlib MINIDUMP_EXCEPTION_STREAM decode plus pefile 2024.8.26 PE identity and byte-range comparison. This is input verification, not a second stack unwind."
+}

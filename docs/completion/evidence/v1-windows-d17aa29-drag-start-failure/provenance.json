@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10T20:39:35.841797+00:00",
+  "runId": 42894410312,
+  "sourceJob": 130103601456,
+  "nativeJob": 130104051037,
+  "sourceCompileExecutableDeploy": "passed",
+  "nativeAcceptance": "failed",
+  "nativePassedPackageProduced": false,
+  "artifact": {
+    "id": 13800816419,
+    "bytes": 316854,
+    "sha256": "fec59e58c828363904348e9d37478837d83192235821498c9a36526e13d8bd00",
+    "retainedOriginal": "original-uia-artifact.zip",
+    "allOriginalMembersVerified": 21
+  },
+  "jobLog": {
+    "file": "original-native-job.log",
+    "bytes": 312731,
+    "sha256": "dac7ccd77420def7027f77b43ecdde8227b84d01cd7e6ecf30c700cc37790d04"
+  },
+  "observations": {
+    "pid": 5968,
+    "hwnd": 589990,
+    "firstOverlayRemovalDescendants": 49,
+    "inspectorRemountAssertions": "passed",
+    "dragSceneHeader": "passed",
+    "windowArrangement": "passed",
+    "firstRealDragStart": "failed: phase dragging not observed within unchanged 10-second deadline",
+    "processExited": false,
+    "originalWindowExists": true,
+    "matchingApplicationErrorRecords": 0,
+    "applicationErrorQuery": "completed without errors",
+    "finalTreeDescendants": 51,
+    "sourceButtonUiaBounds": [
+      72,
+      266,
+      260,
+      56
+    ],
+    "nativePhaseTextUiaBounds": [
+      72,
+      280,
+      456,
+      19
+    ],
+    "renderedSourceTopApproximate": 311,
+    "approximateNativeGeometryDisplacement": 45,
+    "originalAssertionRetained": true
+  },
+  "limits": [
+    "The executed transition did not reproduce the earlier crash; this does not establish all lifecycle cases.",
+    "The original bounds and screenshot expose a native geometry discrepancy. They do not alone prove every reason the drag failed to start.",
+    "No native drag completion, transfer, cancellation or navigation accessibility extension was reached.",
+    "No passed desktop archive or eight-platform acceptance follows from this failed run."
+  ]
+}

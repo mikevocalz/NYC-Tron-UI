@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-compile-passed-mount-request-timeout-with-live-sample",
+  "runId": 42890131895,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42890131895",
+  "nativeJobId": 130089081033,
+  "sourceJobId": 130088762960,
+  "pullRequestHead": "c0f660128772f79f08f03d9025f011af94e2ab46",
+  "checkoutRevision": "29044e62ed43e440f3771ff5bff03fcdb30a8e94",
+  "pullRequestHeadTree": "f061f63b35e056c4b560795974225dd1750bc246",
+  "checkoutTree": "f061f63b35e056c4b560795974225dd1750bc246",
+  "checkoutParents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "c0f660128772f79f08f03d9025f011af94e2ab46"
+  ],
+  "artifact": {
+    "id": 13799501902,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 802141,
+    "expectedSha256": "9dd758b97b80ab011c8f887ac1833249765e9fe8430d5293ba4db85f741d83cd",
+    "downloadedSha256": "9dd758b97b80ab011c8f887ac1833249765e9fe8430d5293ba4db85f741d83cd",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "appkit-toolchain/versions.txt",
+      "retainedPath": "toolchain.txt",
+      "bytes": 232,
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-artifact.json",
+      "retainedPath": "native-artifact.json",
+      "bytes": 6128,
+      "sha256": "315fc4ed86824fbbbb0b5c30c4e2ce1b008d2113f7484f4aac1b3b6c8e281e4a"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/invocation.json",
+      "retainedPath": "invocation.json",
+      "bytes": 450,
+      "sha256": "ef4536aba9c919602396ef082f2587bd0dbfaa9cd11f977da928e22d505b1113"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/failure.json",
+      "retainedPath": "failure.json",
+      "bytes": 203,
+      "sha256": "674f513a04b1d88305206909fd5fab817b75ab723d606fecbc1e4d17a73edc75"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/app.log",
+      "retainedPath": "app-startup.txt",
+      "bytes": 466,
+      "sha256": "fd1b9c8fa30d2e336195cd10864273059f1062e29260b1f315ccbcf0e81ce9bb"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-process-failure.json",
+      "retainedPath": "native-process-failure.json",
+      "bytes": 1321,
+      "sha256": "9a6406ef2aeb81db329bd2be7cf4cff2c1be86fd4277bfb9bd7ae016df425da1"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/commands.jsonl",
+      "retainedPath": "commands.jsonl",
+      "bytes": 843,
+      "sha256": "aa5a765a0ef599282878061bc85bfc6013ee70111823885c5f1dc9d0a077b3a4"
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/native-process-sample.txt",
+      "bytes": 252123,
+      "sha256": "e75f8e01ac2611016ff3221a92208f522e801ee9b53618c087e9e4deea9274eb",
+      "retainedExcerpt": "live-process-sample-excerpt.txt",
+      "sourceLineRanges": [
+        [
+          1,
+          519
+        ]
+      ]
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794340792571-cd9246f9-e29e-442f-89c7-a5e2ffe58138-xcodebuild.log",
+      "bytes": 12299646,
+      "sha256": "18bf80d74612d0a6be21d6ba78bff78999db1a98548d0a0ce3411346cdd1e600",
+      "retainedExcerpt": "build-success.txt",
+      "sourceLineRanges": [
+        [
+          50922,
+          50926
+        ]
+      ]
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-evidence/package-preparation.json",
+      "bytes": 24235,
+      "sha256": "c1f8d4ea7de4e8556f83e5e07d0ca6b232c11ef3aa18ca544fc745cfb0506d24",
+      "retainedSummary": "package-preparation-summary.json"
+    }
+  ],
+  "sourceJobLog": {
+    "jobId": 130088762960,
+    "bytes": 18803,
+    "sha256": "419a1aaf2eecfec132aae665a5a0fb3bf6a9376b74517eb0368888540f0e506e",
+    "retainedExcerpt": "source-tests-excerpt.txt",
+    "sourceLineRanges": [
+      [
+        172,
+        187
+      ]
+    ],
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0
+  },
+  "observedToolchain": {
+    "xcodeVersion": "26.2",
+    "xcodeBuild": "17C52",
+    "swiftVersion": "6.2.3",
+    "architecture": "arm64",
+    "sdk": "MacOSX26.2.sdk",
+    "runtimeOS": "macOS 15.8.2 (24H232)"
+  },
+  "completedPrerequisites": [
+    "four-real-socket-client-regressions",
+    "four-shared-archive-checks",
+    "canonical-core-release-archive",
+    "native-arm64-xcode26.2-and-swift-isolated-conformance-probe",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot",
+    "standalone-native-appkit-reference-compilation"
+  ],
+  "completedReadinessStages": [
+    "socket-connected",
+    "authenticated-protocol-1",
+    "main-queue-ping"
+  ],
+  "failedStep": "Exercise actual native controls and window lifetimes",
+  "runtimeError": "Native driver response timed out awaiting waitFor (request 2)",
+  "failedRequest": {
+    "testID": "root-main",
+    "timeoutMs": 20000,
+    "command": "waitFor",
+    "id": 2
+  },
+  "requestTimeoutMilliseconds": 35000,
+  "completedInteractionChecks": [],
+  "launchedProcessId": 35347,
+  "executableSha256": "3746a63e35bdb28c415cfdc1e8447c843f3e2a2560807fe08cd55b146dfd61b3",
+  "nativePayloadSha256": "d20a6f048c73c92c34dbd4d02067ababb41b450477fb9750238ed57b2791bce6",
+  "requestTracePresent": true,
+  "requestTraceRecords": 8,
+  "processSample": {
+    "exitCode": 0,
+    "durationSeconds": 2,
+    "intervalMilliseconds": 10,
+    "hasThreadStacks": true,
+    "threadGroups": 25,
+    "processListedBeforeAndAfter": true,
+    "nativeApplicationUUID": "CE1163A3-F859-30E0-A9A7-7A9192CE41E3",
+    "applicationLoadAddress": "0x100298000",
+    "socketReadApplicationOffsets": [
+      "0x13f900",
+      "0x13fdc4"
+    ]
+  },
+  "activationRequestReached": false,
+  "gesturePermissionObserved": false,
+  "unexecutedChecks": [
+    "foreground-activation",
+    "native-control-window-popover-and-drag-acceptance",
+    "actual-tooltip-hover-presentation-and-dismissal",
+    "actual-cgevent-pointer-session-and-cross-window-document-transfer",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "The initial root-main waitFor request received no response before the client deadline, despite successful authentication and main-queue ping.",
+    "The corrected client retains its failed session through process capture; ps lists the launched PID both before and after this sample.",
+    "The sampled main thread services an AppKit event loop, timers and layout. The JavaScript thread is largely idle; no startup deadlock is established.",
+    "Thread 91078 sits in recvfrom beneath two unsymbolicated application offsets for all 101 samples. The artifact does not establish the exact application functions or whether the missing response was serialized or sent.",
+    "This sample observes the process after the timeout; it does not establish its state throughout the preceding 35 seconds.",
+    "The native timeout cause remains unestablished by these original artifacts. No nonfinite native geometry or serialization failure was captured.",
+    "No NSWorkspace activation or native tooltip/drag permission observation was reached.",
+    "The strict native gesture gate remains required. No passed report or tested-package receipt was emitted.",
+    "Prepared archive and native payload hashes identify a successful compile and failed runtime attempt, not an accepted distribution."
+  ]
+}

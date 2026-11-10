@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+  "repository": "microsoft/microsoft-ui-xaml",
+  "binding": "The matching runtime PDB srcsrv stream maps this file to the immutable revision; its C13 checksum independently matches the reconstructed Windows compiler input.",
+  "sourceServerStream": {
+    "streamIndex": 1737,
+    "bytes": 1395405,
+    "sha256": "3032a443265c65785525755313f725831c592c352ccd45141ea687cf550a10b4",
+    "retainedOriginal": "/workspace/scratch/4137c61be495/windows-pr60-0ae548-symbols/pdb-source-stream-1737.txt",
+    "selectedOriginalLines": [
+      {
+        "line": 8,
+        "text": "GITHUB_COMMIT=eb74b62692d9cdef17575bc11ebd3514ec6cd5b6"
+      },
+      {
+        "line": 9,
+        "text": "GITHUB_REPOSITORY_NAME=microsoft/microsoft-ui-xaml"
+      },
+      {
+        "line": 10,
+        "text": "GITHUB_BASE_URL=https://raw.githubusercontent.com/%GITHUB_REPOSITORY_NAME%/%GITHUB_COMMIT%"
+      },
+      {
+        "line": 1225,
+        "text": "C:\\__w\\1\\s\\dxaml\\xcp\\core\\input\\InputServices.cpp*GITHUB*TFS_TEAM_PROJECT*TFS_REPO*TFS_COMMIT*TFS_SHORT_COMMIT*/src/dxaml/xcp/core/input/InputServices.cpp*TFS_APPLY_FILTERS*GITHUB_EXTRACT_CMD"
+      }
+    ]
+  },
+  "sourceFile": {
+    "url": "https://raw.githubusercontent.com/microsoft/microsoft-ui-xaml/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/core/input/InputServices.cpp",
+    "retainedOriginal": "/workspace/scratch/4137c61be495/windows-pr60-0ae548-symbols/source-eb74b626/InputServices.cpp",
+    "originalGitHubBytes": 626514,
+    "originalGitHubSha256": "6ab47408d7c96932dfb20219ec41db14a5a7084c385b43529dc533a79984dfa0",
+    "compilerInputReconstruction": {
+      "transformation": "Replace every LF line ending with CRLF; the downloaded original has no CR bytes. No other bytes are changed.",
+      "bytes": 641626,
+      "sha256": "d452759b32222fed2f6e3aa075a7aa0df43f5d32899b524f44d3e87a9846c816",
+      "c13ChecksumKind": 3,
+      "c13Checksum": "d452759b32222fed2f6e3aa075a7aa0df43f5d32899b524f44d3e87a9846c816",
+      "matchesC13Checksum": true,
+      "sourceOriginalUnchanged": true
+    }
+  },
+  "sourceLineMapping": {
+    "reportedExceptionRva": "0x41c066",
+    "moduleSymbolStream": 296,
+    "lineSubsectionOffset": 862932,
+    "checksumRecordOffset": 4120,
+    "procedureRelativeOffset": "0x4a",
+    "sourceLine": 220,
+    "lineEntries": [
+      {
+        "codeOffset": 0,
+        "sourceLine": 204
+      },
+      {
+        "codeOffset": 12,
+        "sourceLine": 205
+      },
+      {
+        "codeOffset": 50,
+        "sourceLine": 220
+      },
+      {
+        "codeOffset": 75,
+        "sourceLine": 223
+      }
+    ]
+  },
+  "limitations": [
+    "These symbol/source records do not themselves establish an unwind or production caller.",
+    "The full original PDB and fetched third-party source are retained as intermediate inputs; the compact receipt can be retained with the crash evidence."
+  ]
+}

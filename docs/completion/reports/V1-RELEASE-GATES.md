@@ -9,35 +9,63 @@ blanket device-acceptance claim is created by this report.
 ## Current desktop gate boundary
 
 The latest completed desktop attempts still failed their complete native gates.
-[AppKit at `d42b445`](../evidence/v1-appkit-d42b445-mount-timeout/README.md)
-compiled, authenticated its driver and answered a main-queue ping, then timed
-out on the initial root-mount request before activation or any interaction
-check. Its sampler exited zero but produced no thread stacks. Review found
-that the timeout closed Spark's app-owned session before sampling; this
-capture-order defect does not establish the original startup cause.
+The original failures, supported corrections and new native runs have separate
+receipts; a source or compiler pass does not substitute for interaction results.
 
-The current AppKit source candidate `c0f66012` preserves the failed session
-through capture, rejects later commands before writes and explicitly owns
-handshake cleanup. Its [eight CI source checks](../evidence/v1-appkit-c0f6601-driver-source/README.md),
-including four real IPC socket regressions, passed at actual checkout
-`29044e62ed43e440f3771ff5bff03fcdb30a8e94` in
-[run 42890131895](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42890131895).
-The separate native job is still required to establish startup and interaction
-results. The earlier [visible-but-non-key `7afcf31` attempt](../evidence/v1-appkit-7afcf31-foreground-failure/README.md)
-remains preserved at its own checkout.
+### Windows: crash point passed, native drag start still failing
 
 [Windows at `988008c`](../evidence/v1-windows-988008c-drag-transition-failure/README.md)
-compiled and deployed, passed the original overlay-removal traversal and strict
-inspector remount/draft/new-edit assertions, then failed during the drag-scene
-transition. Its missing final process evidence left the cause unresolved.
+compiled and deployed, passed overlay-removal traversal and strict inspector
+remount/draft/new-edit assertions, then failed during the drag-scene transition.
 The [diagnostic run at `0ae548a`](../evidence/v1-windows-0ae548a-native-crash/README.md)
-repeated those passes and established an actual process crash before any OS
-drag: the owned PID exited with `0xC0000409`, its HWND disappeared, and a matching
-Application Error record identifies `Microsoft.UI.Xaml.dll` version `3.1.8.0`
-at RVA `0x41c066`. The complete original artifact, minidump and native job log
-are retained. The primary assertion, explicit empty tree and restored WER
-settings are now observed; a production cause still requires exact-symbol
-stack analysis. No passed-only Windows archive was produced.
+repeated those passes and captured an actual process crash before any OS drag.
+The complete original ZIP, minidump and native job log remain unchanged.
+
+[Exact binary, symbol, source and unwind analysis](../evidence/v1-windows-0ae548a-native-crash/analysis/README.md)
+identifies the enabling-CanDrag path through WinUI cross-slide registration to
+an unmatched island input-site failure. The calculation stops at the unsymbolized
+NYC-Tron library frame; it does not invent an own-library source line. The exact
+upstream source is bound by the PDB source-server revision and compiler checksum.
+
+The reviewed correction at `d17aa297` waits for actual RNW mounting, WinUI
+loading and a live connected owned island before enabling drag capabilities.
+It replays current properties, cancels on readiness loss, rejects late events
+and prevents disposed callbacks from cancelling a replacement surface. All
+49 source/controller checks passed in the prepared isolated workspace. Its
+[completed native run](../evidence/v1-windows-d17aa29-drag-start-failure/README.md)
+passed source, native library and executable compilation, deployment, overlay
+removal and strict inspector remount. It reached the drag scene and arranged
+the two windows without the earlier crash, then failed the first real drag-start
+phase. The owned process/window remained alive; the crash-event query completed
+with no matching records. The original screenshot and automation tree show
+the native source button's reported bounds approximately 45 pixels above its
+rendered position after resizing. The adapter layout path is under review;
+no arbitrary gesture offset or weakened assertion is used. All 21 original
+artifact files and the complete log are retained. No passed Windows archive
+or completed OS-drag/navigation result follows from this failed run.
+
+### AppKit: live process, missing initial reply
+
+[AppKit at `c0f6601`](../evidence/v1-appkit-c0f6601-live-mount-timeout/README.md)
+passed eight source checks, installed-consumer preparation/API checks and native
+compilation, then timed out on initial `waitFor(root-main)` request 2 before
+activation or any interaction group. The unchanged native/client deadlines were
+20/35 seconds. The [real socket source gate](../evidence/v1-appkit-c0f6601-driver-source/README.md)
+is separate from that failed native result.
+
+The corrected client retained the failed session until sampling finished. The
+actual process was present before and after capture; 25 thread groups show
+ordinary AppKit loop/layout activity, mostly idle JavaScript with some microtasks,
+and a native thread in `recv` beneath unsymbolicated app frames. The sample is
+not evidence of a startup deadlock and does not establish whether the missing
+reply was serialized or sent. A bounded acceptance-driver transport trace is
+being prepared; nonfinite geometry remains an unproved hypothesis. The complete
+original artifact is retained alongside the trace and process evidence. The
+preceding [d42 empty sample](../evidence/v1-appkit-d42b445-mount-timeout/README.md)
+and [7af visible-but-non-key attempt](../evidence/v1-appkit-7afcf31-foreground-failure/README.md)
+remain attached to their own checkouts.
+
+### Actual gestures remain mandatory
 
 A separate review closed an acceptance gap: AppKit previously could produce a
 passed archive after observing denied CGEvent permission and omitting actual

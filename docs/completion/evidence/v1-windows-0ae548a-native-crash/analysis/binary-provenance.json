@@ -1,0 +1,47 @@
+[
+  {
+    "name": "ntdll.dll",
+    "url": "https://msdl.microsoft.com/download/symbols/ntdll.dll/64D8DDF5264000/ntdll.dll",
+    "path": "/workspace/scratch/4137c61be495/windows-pr60-0ae548-analysis/binaries/ntdll.dll",
+    "bytes": 2541720,
+    "sha256": "160ef9b82e2895ef48fa031cb1cf683a8b123febf7cf7d5590cd3104864424b3",
+    "timestamp": "0x64d8ddf5",
+    "sizeOfImage": "0x264000"
+  },
+  {
+    "name": "KERNELBASE.dll",
+    "url": "https://msdl.microsoft.com/download/symbols/KERNELBASE.dll/3DDF27833ed000/KERNELBASE.dll",
+    "path": "/workspace/scratch/4137c61be495/windows-pr60-0ae548-analysis/binaries/KERNELBASE.dll",
+    "bytes": 4171392,
+    "sha256": "96c0459f0d73d728e5c13a10d83d840f56913ef7281d17370a5e1eb197faa450",
+    "timestamp": "0x3ddf2783",
+    "sizeOfImage": "0x3ed000"
+  },
+  {
+    "name": "Microsoft.UI.Xaml.dll",
+    "url": "https://msdl.microsoft.com/download/symbols/Microsoft.UI.Xaml.dll/CFCB3205e68000/Microsoft.UI.Xaml.dll",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "Microsoft.UI.Xaml.dll",
+    "source": "Official pinned NuGet dependency of Microsoft.WindowsAppSDK1.8.260508005",
+    "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windowsappsdk.winui/1.8.260505002/microsoft.windowsappsdk.winui.1.8.260505002.nupkg",
+    "package": {
+      "name": "Microsoft.WindowsAppSDK.WinUI",
+      "version": "1.8.260505002",
+      "bytes": 58675970,
+      "sha256": "13be52f64aad3e8d0226d3d728a7e2054f56bb6f0731b0bb2b9ede93d345f5b6"
+    },
+    "archiveMember": "runtimes-framework/win-x64/native/Microsoft.ui.xaml.dll",
+    "path": "/workspace/scratch/4137c61be495/windows-pr60-0ae548-analysis/binaries/Microsoft.UI.Xaml.dll",
+    "bytes": 15083832,
+    "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+    "timestamp": "0xcfcb3205",
+    "sizeOfImage": "0xe68000",
+    "codeView": {
+      "guid": "b67e2c8f-9cb0-bb7c-a4ba-bf5e9b4d41d0",
+      "age": 2
+    },
+    "identityMatchesOriginalDump": true
+  }
+]
