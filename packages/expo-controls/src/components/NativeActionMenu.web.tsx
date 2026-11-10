@@ -89,8 +89,9 @@ export function NativeActionMenu({
       </>:<Pressable accessibilityRole="menuitem"
         testID={testID?`${testID}-action-${action.id}`:undefined}
         ref={node=>{if(node)itemRefs.current.set(action.id,node);else itemRefs.current.delete(action.id);}}
-        // RN web forwards the ARIA role; core RN's Role union omits menuitemcheckbox.
-        {...{role:(action.checked===undefined?"menuitem":"menuitemcheckbox") as PressableProps["role"],
+        // Only RN web accepts menuitemcheckbox. Native menus retain the
+        // supported menuitem role and expose the checked accessibility state.
+        {...{role:(Platform.OS==="web"&&action.checked!==undefined?"menuitemcheckbox":"menuitem") as PressableProps["role"],
           onKeyDown:(event:MenuKeyEvent)=>onMenuKey(event,action.id)}}
         aria-checked={action.checked}
         accessibilityLabel={action.title}

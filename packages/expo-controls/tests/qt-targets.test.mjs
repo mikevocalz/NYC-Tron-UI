@@ -180,6 +180,9 @@ for(const os of ["qnx","marathon"]){
     assert.equal(tree.props.appearance,undefined);
     find(tree,node=>node.props.testID==="workspace").props.onPress();
     tree=h.render(NativeDropdown,props);
+    const list=find(tree,node=>node.props.testID==="workspace-list");
+    assert.equal(list.props.role,"list","native RN accepts list with option children, not the web-only listbox role");
+    assert.equal(list.props.accessible,true,"Qt exposes the named list container without flattening its options");
     assert.ok(find(tree,node=>node.type==="Text"&&node.props.children==="Saved"));
     find(tree,node=>node.props.role==="option"&&find(node,text=>text.props.children==="Beta")).props.onPress();
     assert.deepEqual(changes,["b"]);
@@ -208,6 +211,7 @@ for(const os of ["qnx","marathon"]){
     trigger=find(tree,node=>node.props.testID==="select");
     trigger.props.onKeyDown(key("ArrowDown"));
     tree=h.render(Select,{...props,value:"b"});
+    assert.equal(find(tree,node=>node.props.testID==="select-list").props.role,"list");
     const option=find(tree,node=>node.props.role==="option"&&!node.props.disabled);
     assert.equal(option.props.focusable,false,"pointer options keep keyboard focus on the trigger");
     let stopped=0;
@@ -359,7 +363,7 @@ for(const os of ["qnx","marathon"]){
 
   test(`${os}: action menu dispatches enabled leaves once and restores its trigger`,()=>{
     const h=harness(os),actions=[],NativeActionMenu=h.leaf("NativeActionMenu").NativeActionMenu;
-    const props={trigger:"Actions",accessibilityLabel:"Document actions",actions:[{id:"open",title:"Open"},{id:"locked",title:"Locked",disabled:true}],onAction:id=>actions.push(id)};
+    const props={trigger:"Actions",accessibilityLabel:"Document actions",actions:[{id:"open",title:"Open",checked:true},{id:"locked",title:"Locked",disabled:true}],onAction:id=>actions.push(id)};
     let tree=h.render(NativeActionMenu,props);
     find(tree,node=>node.props.accessibilityLabel==="Document actions"&&node.type==="Pressable").props.onPress();
     tree=h.render(NativeActionMenu,props);
@@ -367,6 +371,8 @@ for(const os of ["qnx","marathon"]){
     find(tree,node=>node.props.accessibilityLabel==="Locked").props.onPress();
     assert.deepEqual(actions,[]);
     const item=find(tree,node=>node.props.accessibilityLabel==="Open");
+    assert.equal(item.props.role,"menuitem","native RN does not accept the web-only menuitemcheckbox role");
+    assert.equal(item.props.accessibilityState.checked,true,"the supported native menu item keeps its checked state");
     item.props.onKeyDown({nativeEvent:{key:"Enter"}});item.props.onPress();
     assert.deepEqual(actions,["open"]);
     h.render(NativeActionMenu,props);

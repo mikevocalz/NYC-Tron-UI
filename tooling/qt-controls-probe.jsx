@@ -26,12 +26,12 @@ const state=createStore(()=>({stage:"tooltip",selection:"a",dropdown:"a",slider:
   actions:0,primary:0,split:0,context:0,popover:true,find:true,tooltipPresses:0,
   document:{id:"qt-probe-document",revision:"1",text:"Alpha document"},findCalls:0}));
 const choices=[{value:"a",label:"Alpha"},{value:"locked",label:"Locked",disabled:true},{value:"b",label:"Beta"}];
-const actions=[{id:"save",title:"Save"},{id:"locked",title:"Locked",disabled:true}];
+const actions=[{id:"save",title:"Save",checked:true},{id:"locked",title:"Locked",disabled:true}];
 const change=patch=>state.setState(patch);
 const inc=key=>change({[key]:state.getState()[key]+1});
 const steps=[],checks=[],calls=[];
 const add=(step,check=()=>true,call)=>{steps.push(step);checks.push(check);calls.push(call);};
-const mount=(stage,visible)=>add({action:"call",label:"Mount "+stage,visible},()=>state.getState().stage===stage,()=>change({stage}));
+const mount=(stage,visible,focused)=>add({action:"call",label:"Mount "+stage,visible,...(focused?{focused}:{})},()=>state.getState().stage===stage,()=>change({stage}));
 
 add({action:"assert",label:"Fixture mounted",visible:"qt-root"});
 add({action:"hover",target:"qt-tooltip-anchor",label:"Tooltip opens from native hover",visible:"qt-tooltip-body"});
@@ -42,7 +42,7 @@ add({action:"focus",target:"qt-tooltip-anchor",label:"Tooltip opens from native 
 add({action:"key",key:"Escape",label:"Escape dismisses focused tooltip",hidden:"qt-tooltip-body"});
 
 mount("select","qt-select");
-add({action:"key",target:"qt-select",key:"ArrowDown",label:"Select opens from arrow key",visible:"qt-select-list"});
+add({action:"key",target:"qt-select",key:"ArrowDown",label:"Select opens from arrow key",visible:"qt-select-list",accessibleTarget:"qt-select-list",accessibleRole:"list"});
 add({action:"key",target:"qt-select",key:"ArrowDown",label:"Select skips disabled option"});
 add({action:"key",target:"qt-select",key:"Enter",label:"Select commits enabled choice",hidden:"qt-select-list"},()=>state.getState().selection==="b");
 add({action:"key",target:"qt-select",key:"ArrowDown",label:"Select reopens",visible:"qt-select-list"});
@@ -54,7 +54,7 @@ add({action:"key",target:"qt-dropdown",key:"End",label:"Dropdown moves to final 
 add({action:"key",target:"qt-dropdown",key:"Enter",label:"Dropdown commits final choice",hidden:"qt-dropdown-list"},()=>state.getState().dropdown==="b");
 
 mount("actions","qt-actions-trigger");
-add({action:"click",target:"qt-actions-trigger",label:"Action menu opens",visible:"qt-actions-surface"});
+add({action:"click",target:"qt-actions-trigger",label:"Action menu opens",visible:"qt-actions-surface",focused:"qt-actions-action-save",accessibleTarget:"qt-actions-action-save",accessibleRole:"menuitem",accessibleChecked:true});
 add({action:"key",key:"Enter",label:"Action menu selects once",hidden:"qt-actions-surface"},()=>state.getState().actions===1);
 
 mount("slider","qt-slider-track");
@@ -64,21 +64,21 @@ add({action:"key",target:"qt-slider-track",key:"End",label:"Slider End commits u
 
 mount("split","qt-split-primary");
 add({action:"click",target:"qt-split-primary",label:"Split primary action remains separate"},()=>state.getState().primary===1&&state.getState().split===0);
-add({action:"key",target:"qt-split-menu",key:"ArrowDown",label:"Split menu opens by keyboard",visible:"qt-split-menu-popover"});
+add({action:"key",target:"qt-split-menu",key:"ArrowDown",label:"Split menu opens by keyboard",visible:"qt-split-menu-popover",focused:"qt-split-menu-popover-item-save"});
 add({action:"key",key:"Enter",label:"Split menu selects once",hidden:"qt-split-menu-popover"},()=>state.getState().primary===1&&state.getState().split===1);
 
 mount("context","qt-context");
-add({action:"key",target:"qt-context",key:"ContextMenu",label:"Context menu opens by Menu key",visible:"qt-context-menu"});
+add({action:"key",target:"qt-context",key:"ContextMenu",label:"Context menu opens by Menu key",visible:"qt-context-menu",focused:"qt-context-menu-item-save"});
 add({action:"key",key:"Enter",label:"Context action commits once",hidden:"qt-context-menu"},()=>state.getState().context===1);
 
-mount("popover","qt-popover");
-add({action:"key",target:"qt-popover",key:"Escape",label:"Popover Escape requests close",hidden:"qt-popover"},()=>!state.getState().popover);
-add({action:"call",label:"Reopen controlled popover",visible:"qt-popover-close"},()=>state.getState().popover,()=>change({popover:true}));
+mount("popover","qt-popover","qt-popover");
+add({action:"key",key:"Escape",label:"Popover Escape requests close",hidden:"qt-popover"},()=>!state.getState().popover);
+add({action:"call",label:"Reopen controlled popover",visible:"qt-popover-close",focused:"qt-popover"},()=>state.getState().popover,()=>change({popover:true}));
 add({action:"click",target:"qt-popover-close",label:"Popover close control works",hidden:"qt-popover"},()=>!state.getState().popover);
 
-mount("find","qt-find");
+mount("find","qt-find","qt-find");
 add({action:"assert",label:"Find uses the actual literal document provider"},()=>state.getState().findCalls>0);
-add({action:"key",target:"qt-find",key:"Escape",label:"Find and replace closes",hidden:"qt-find"},()=>!state.getState().find);
+add({action:"key",key:"Escape",label:"Find and replace closes",hidden:"qt-find"},()=>!state.getState().find);
 add({action:"assert",label:"All controlled outcomes retained"},()=>{
   const s=state.getState();return s.selection==="b"&&s.dropdown==="b"&&s.slider===100&&s.actions===1&&s.primary===1&&s.split===1&&s.context===1&&!s.popover&&!s.find;
 });

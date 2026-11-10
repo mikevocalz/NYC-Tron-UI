@@ -77,7 +77,8 @@ export function Select(props:SelectProps){
   }=props;
   const options=selectOptions(props);
   const styled=!unstyled,web=Platform.OS==="web";
-  const keyboard=web||String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon";
+  const qt=String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon";
+  const keyboard=web||qt;
   const id=useId().replace(/:/g,"");
   const local=useRef<StoreApi<OpenState>|null>(null);
   if(!local.current)local.current=createStore<OpenState>(()=>({open:false,active:-1}));
@@ -154,7 +155,10 @@ export function Select(props:SelectProps){
         styled&&(isSelected?"text-on-primary font-semibold":"text-text"))}}>{optionLabel(o)}</Text>
     </Pressable>;
   };
-  const list=<View {...(testID?{testID:`${testID}-list`}:{})} role={"listbox" as never} nativeID={listId} aria-label={label}
+  // RN's native Role enum has list/option, but no listbox. Qt preserves the
+  // named accessible container and its option children; mobile grouping stays
+  // with the host. Web retains the APG listbox relationship above.
+  const list=<View {...(testID?{testID:`${testID}-list`}:{})} role={web?("listbox" as never):"list"} accessible={qt||undefined} nativeID={listId} aria-label={label}
     {...{className:joinClasses("w-full",
       web?"absolute left-0 right-0 top-full z-50 mt-1":"mt-1",
       styled&&"overflow-hidden rounded-control border border-border bg-surface-raised shadow-md")}}>
