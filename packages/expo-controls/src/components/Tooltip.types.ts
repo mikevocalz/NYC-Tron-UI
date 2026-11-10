@@ -12,13 +12,15 @@ import type { NativeAppearanceProps } from "./native-appearance.ts";
  *   users need.
  * - Web: shown after a hover or keyboard-focus delay, hidden on leave, blur
  *   or Escape, and linked to the anchor with `aria-describedby`.
- * - QNX/Marathon: unavailable; importing is safe, but rendering throws.
+ * - QNX/Marathon: a measured RN tooltip after hover, keyboard focus or a
+ *   stationary touch delay. Escape, leaving the anchor or moving the touch
+ *   dismisses it. The full text also becomes the anchor's accessibility hint.
  */
 export interface TooltipProps extends NativeAppearanceProps {
   readonly label: string;
   /** One control element; the tooltip text is attached to it. */
   readonly children: ReactElement;
-  /** Web: hover/focus delay before showing, in ms. */
+  /** Web and Qt: hover/focus delay before showing, in ms. Qt also uses it for touch. */
   readonly delayMs?: number;
   readonly disabled?: boolean;
   readonly testID?: string;

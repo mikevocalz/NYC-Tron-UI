@@ -1,8 +1,8 @@
 /**
  * Keyboard helpers shared by the studio shell controls. React Native Web
- * delivers a browser KeyboardEvent as `nativeEvent`; native platforms never
- * fire `onKeyDown` on these views, so every rule here is web-only input with
- * a native screen-reader action alongside it.
+ * delivers a browser KeyboardEvent as `nativeEvent`; desktop hosts can
+ * deliver the same fields. Hosts without key events use the native
+ * screen-reader actions alongside these rules.
  *
  * Horizontal arrows follow reading direction: in RTL, ArrowLeft moves to the
  * next item. Vertical arrows never flip.
@@ -18,10 +18,10 @@ export interface ShellKey {
   readonly target:unknown;
 }
 
-/** Read the key data from an RN web keydown event. */
+/** Read the key data from an RN web or desktop keydown event. */
 export function shellKey(event:unknown):ShellKey{
-  const e=event as {nativeEvent?:Record<string,unknown>;preventDefault?:()=>void;stopPropagation?:()=>void;currentTarget?:unknown;target?:unknown};
-  const n=e.nativeEvent??{};
+  const e=event as Record<string,unknown>&{nativeEvent?:Record<string,unknown>;preventDefault?:()=>void;stopPropagation?:()=>void;currentTarget?:unknown;target?:unknown};
+  const n=e.nativeEvent??e;
   return {
     key:String(n.key??""),altKey:!!n.altKey,ctrlKey:!!n.ctrlKey,metaKey:!!n.metaKey,shiftKey:!!n.shiftKey,
     preventDefault:()=>e.preventDefault?.(),stopPropagation:()=>e.stopPropagation?.(),

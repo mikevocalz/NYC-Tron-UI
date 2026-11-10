@@ -66,7 +66,7 @@ export function NativeActionMenu({
       event.preventDefault?.();event.stopPropagation?.();close();return;
     }
     // RN web's Pressable only synthesizes Space for button roles, not menu items.
-    if(key===" "||key==="Spacebar"){
+    if(key==="Enter"||key===" "||key==="Spacebar"){
       event.preventDefault?.();event.stopPropagation?.();run(id);return;
     }
     if(menuFocusTarget(actions,id,key)){
@@ -87,6 +87,7 @@ export function NativeActionMenu({
         </Text>
         {render(action.subactions,depth+1,groupDisabled||!!action.disabled)}
       </>:<Pressable accessibilityRole="menuitem"
+        testID={testID?`${testID}-action-${action.id}`:undefined}
         ref={node=>{if(node)itemRefs.current.set(action.id,node);else itemRefs.current.delete(action.id);}}
         // RN web forwards the ARIA role; core RN's Role union omits menuitemcheckbox.
         {...{role:(action.checked===undefined?"menuitem":"menuitemcheckbox") as PressableProps["role"],
@@ -103,7 +104,7 @@ export function NativeActionMenu({
       </Pressable>}
     </View>);
   return <View testID={testID}>
-    <Pressable ref={triggerRef} style={{minWidth:44,minHeight:44,justifyContent:"center"}} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+    <Pressable ref={triggerRef} testID={testID?`${testID}-trigger`:undefined} style={{minWidth:44,minHeight:44,justifyContent:"center"}} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
       aria-expanded={open}
       {...{"aria-haspopup":"menu" as const,onKeyDown:(event:MenuKeyEvent)=>{
         const {key,altKey,ctrlKey,metaKey}=keyData(event);
@@ -130,7 +131,7 @@ export function NativeActionMenu({
           // Pointer-only: Escape closes from the keyboard, so Tab never lands here.
           focusable={false}
           {...{className:"bg-text/30"}} style={{position:"absolute",left:0,right:0,top:0,bottom:0}}/>
-        <View {...{className:"rounded-control bg-surface-raised border border-border"}}
+        <View testID={testID?`${testID}-surface`:undefined} {...{className:"rounded-control bg-surface-raised border border-border"}}
           style={{maxHeight:"75%",overflow:"hidden",minWidth:220}}>
           <ScrollView accessibilityRole="menu" accessibilityLabel={accessibilityLabel}
             keyboardShouldPersistTaps="handled">

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "scope": "Actual extracted NYC-Tron tarballs, real Metro target/public-entry resolver, provisioned RN checkout peers. Bundle-only; no Hermes/Qt rendering, gesture, accessibility or device acceptance.",
+  "node": "v24.22.1",
+  "reactNative": "0.88.1",
+  "metro": "0.87.1",
+  "artifacts": [
+    {
+      "name": "@nyc-tron/core",
+      "version": "1.0.0",
+      "archive": "nyc-tron-core-1.0.0.tgz",
+      "sha256": "c43612d9586e60652566dc337d43754a5ee64505442cf59f21432c944c98da11"
+    },
+    {
+      "name": "@nyc-tron/ui",
+      "version": "1.0.0",
+      "archive": "nyc-tron-ui-1.0.0.tgz",
+      "sha256": "f2457e5226d5684ce8043f6d3e021d24b87cd90e1e596189505ab790c6843f17"
+    },
+    {
+      "name": "@nyc-tron/expo-controls",
+      "version": "1.0.0",
+      "archive": "nyc-tron-expo-controls-1.0.0.tgz",
+      "sha256": "cf03a98d12e5fc20650080dd5610d18430dd63fe57d909cdee987801a43b0bfb"
+    }
+  ],
+  "results": [
+    {
+      "platform": "qnx",
+      "status": "bundled",
+      "bytes": 1911478,
+      "sha256": "25e90a46fd2c5aa1db49b7f65c425e7f6a7c4af0fe99a555db993d8f4032fa04",
+      "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
+      "selectedControlFiles": [
+        "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/FindReplacePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeActionMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.shared.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSliderField.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSplitButton.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Select.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.qt.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/menu-model.js"
+      ],
+      "resolverWarnings": [],
+      "nativeExecution": "not-run",
+      "deviceAcceptance": "unverified"
+    },
+    {
+      "platform": "marathon",
+      "status": "bundled",
+      "bytes": 1911530,
+      "sha256": "ffe3eb2ea74b5741c79924b8bf525674ceb2c8b31c0110642b8c1c8f19c1ef57",
+      "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
+      "selectedControlFiles": [
+        "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/FindReplacePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeActionMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.shared.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSliderField.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSplitButton.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Select.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.qt.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/menu-model.js"
+      ],
+      "resolverWarnings": [],
+      "nativeExecution": "not-run",
+      "deviceAcceptance": "unverified"
+    }
+  ],
+  "fixture": {
+    "appName": "RNQnxQtControlsProbe",
+    "sourceSha256": "338fc62d42c1b53c113261a122f2fd6cae01d10fa13b01937cdc368737349151",
+    "themeSha256": "263979125478f7c5bb6712136598c6d9cfac4a990fcb8d1113a4f93244aa3c20",
+    "styling": "Finite app-owned token-to-native-style mapping; real RN primitives and public controls, no event mocks.",
+    "input": "Prepared for the RN-QNX Qt/Fabric native event driver; bundling alone does not execute it."
+  }
+}

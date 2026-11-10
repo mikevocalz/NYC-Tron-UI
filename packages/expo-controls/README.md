@@ -17,7 +17,7 @@ the compatible React Native target, Zustand and `@nyc-tron/ui`. Expo and
 | Import from `@nyc-tron/expo-controls/` | QNX / Marathon implementation |
 | --- | --- |
 | `NativeDropdown` | Shared `Select`; controlled flat or grouped choices, in-flow scrolling list, disabled state and app caption classes. |
-| `Select` | The existing shared selector, including placeholder and disabled-option behavior. |
+| `Select` | Shared selector with placeholder, disabled options, arrows/Home/End/typeahead, Enter/Space selection and Escape/Tab dismissal. |
 | `NativeActionMenu` | RN Modal menu with action groups, checked and disabled items, dismissal and focus requests to host refs. |
 | `NativePopover` | Shared anchored RN Modal, with explicit usable regions or a measured trigger. |
 | `NativeSliderField` | Shared precision slider with drag preview, commit/cancel, value entry and reset. |
@@ -25,7 +25,7 @@ the compatible React Native target, Zustand and `@nyc-tron/ui`. Expo and
 | `ContextMenu` | Shared context menu with long-press, pointer, keyboard and accessibility action handlers. |
 | `FindReplacePopover` | Shared search/replace UI; the app still supplies the document search and mutation callbacks. |
 | `menu-model` | Pure menu validation and traversal helpers. |
-| `Tooltip` | No target implementation yet. Import is safe; rendering throws a descriptive error. Use persistent help text beside the control. |
+| `Tooltip` | Measured RN surface after hover, keyboard focus or stationary touch; Escape/leave/blur/touch movement dismisses it. App tokens supply appearance; the child keeps its own handlers and receives the full accessibility hint. |
 
 The root entry preserves its existing API: the `NativeDropdown` value and the
 existing prop types. Other controls remain independent subpath imports. Some
@@ -42,6 +42,22 @@ use the app's token theme. The upstream I18nManager fallback is fixed LTR
 without a target native RTL manager. Tests cover conditional resolution,
 import isolation and JavaScript interactions. Qt keyboard delivery, focus,
 screen-reader output, RTL and device rendering still need native acceptance.
+
+Desktop input requires the host's generic pointer-enter/leave, focus/blur and
+key events. Menus request focus through real host refs, and the shared popover
+leaves native Tab traversal to the host instead of querying a DOM. Tooltip
+uses native measurements, clamps its body to the window and never opens a
+Modal or takes focus. It remains inside its parent tree, so an ancestor with
+clipping can constrain the visible bubble. Use persistent help text for
+essential information and test tooltips inside the consuming app's scroll and
+overlay containers.
+
+The shared accessibility layer preserves app-supplied preferences when the Qt
+provider explicitly reports an unsupported preference or unavailable bridge.
+Supported screen-reader/client and high-contrast signals still subscribe
+independently. Qt announcements use low priority without the iOS-only queue
+request. None of these source paths is a spoken-output or device acceptance
+claim.
 
 ## Expo-backed platforms
 

@@ -1,5 +1,9 @@
 # Qt correspondence and packaged controls validation — 2026-11-10
 
+This records the initial PR #58 revision. The
+[control behavior continuation](control-behavior-2026-11-10.md) replaces the
+Tooltip limitation and records later source checks and fresh packed bundles.
+
 ## Sources and scope
 
 Initial NYC-Tron base: `fe397c02bab746ef4ecbcae0cf9d42176a2e53df`.

@@ -50,8 +50,8 @@
     },
     "./Tooltip": {
       "types": "./dist/components/Tooltip.web.d.ts",
-      "qnx": "./dist/components/Tooltip.unavailable.js",
-      "marathon": "./dist/components/Tooltip.unavailable.js",
+      "qnx": "./dist/components/Tooltip.qt.js",
+      "marathon": "./dist/components/Tooltip.qt.js",
       "browser": "./dist/components/Tooltip.web.js",
       "react-native": "./dist/components/Tooltip.native.js",
       "default": "./dist/components/Tooltip.web.js"

@@ -62,7 +62,7 @@ internal class AndroidDecodedPcm(private val file: File, private val startUs: Lo
       val time = info.presentationTimeUs + i * 1_000_000.0 / sourceRate
       if (previousTime.isNaN()) {
         if (time - nextTime > 1_500_000.0 / sourceRate)
-          throw MediaDecodeFailure("unsupported-format", "Audio starts after the requested interval.")
+          throw MediaDecodeFailure("unsupported-format", "Audio starts after the requested interval (firstUs=$time, requestedStartUs=$startUs, sampleRate=$sourceRate).")
         previousTime = time
         sample.copyInto(previous)
       }

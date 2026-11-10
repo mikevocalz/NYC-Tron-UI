@@ -60,6 +60,12 @@ export function PointerInputDemo() {
     <Text {...{ className: "text-sm leading-relaxed text-text-muted" }}>
       Draw with touch, mouse or a pen. Press Escape to cancel a stroke. Pressure and tilt stay unavailable when this device does not report them.
     </Text>
+    <Text testID="pointer-summary" role="status" accessibilityLiveRegion="polite" {...{ className: "text-sm text-text" }}>
+      Committed strokes: {state.committed}. Cancelled strokes: {state.cancelled}. Prediction samples: {state.predicted.length}.
+    </Text>
+    <Text testID="pointer-last-event" {...{ className: "text-sm text-text" }}>
+      Input source: {point?.kind ?? "none"}. Last event: {state.lastBatch?.phase ?? "none"}.
+    </Text>
     <View testID="pointer-surface" onLayout={event => {
       const width = event.nativeEvent.layout.width;
       if (Number.isFinite(width) && width > 0 && width !== store.getState().width) store.setState({ width });
@@ -79,12 +85,6 @@ export function PointerInputDemo() {
       <Button title={state.mounted ? "Remove input surface" : "Mount input surface"} variant="secondary"
         onPress={() => store.setState(current => ({ mounted: !current.mounted }))} />
     </View>
-    <Text testID="pointer-summary" role="status" accessibilityLiveRegion="polite" {...{ className: "text-sm text-text" }}>
-      Committed strokes: {state.committed}. Cancelled strokes: {state.cancelled}. Prediction samples: {state.predicted.length}.
-    </Text>
-    <Text testID="pointer-last-event" {...{ className: "text-sm text-text" }}>
-      Input source: {point?.kind ?? "none"}. Last event: {state.lastBatch?.phase ?? "none"}.
-    </Text>
     <Text selectable testID="pointer-observation" accessibilityLabel="Reported input values" {...{ className: "text-xs leading-relaxed text-text-muted" }}>
       {JSON.stringify(observation)}
     </Text>

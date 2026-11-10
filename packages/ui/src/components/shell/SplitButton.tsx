@@ -49,7 +49,7 @@ export function SplitButton({
   return <View {...rest} {...{role:"group",className:joinClasses("flex-row self-start overflow-hidden",
     styled&&"rounded-control border",styled&&(primary?"border-primary bg-primary":"border-border bg-surface-raised"),className)}}
     accessibilityLabel={label} style={[{opacity:disabled?0.5:1},style]}>
-    <Pressable accessibilityRole="button" accessibilityLabel={label} disabled={disabled} onPress={press}
+    <Pressable testID={rest.testID?`${rest.testID}-primary`:undefined} accessibilityRole="button" accessibilityLabel={label} disabled={disabled} onPress={press}
       {...{className:joinClasses("min-h-11 min-w-11 flex-row items-center gap-2 px-3",hover,
         styled&&"focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus")}}>
       {icon?<View pointerEvents="none">{icon}</View>:null}
@@ -57,7 +57,7 @@ export function SplitButton({
     </Pressable>
     <View pointerEvents="none" {...{className:joinClasses(styled&&(primary?"border-on-primary":"border-border"))}}
       style={{width:0,borderLeftWidth:1,opacity:primary?0.4:1}}/>
-    <MenuButton editScope={boundary} label={menuLabel??`More ${label} options`} items={items} onSelect={onSelect} disabled={disabled}
+    <MenuButton testID={rest.testID?`${rest.testID}-menu`:undefined} editScope={boundary} label={menuLabel??`More ${label} options`} items={items} onSelect={onSelect} disabled={disabled}
       usableRegions={usableRegions} unstyled
       {...{className:joinClasses(hover,styled&&"focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus")}}>
       <View pointerEvents="none" {...{className:chevron}}

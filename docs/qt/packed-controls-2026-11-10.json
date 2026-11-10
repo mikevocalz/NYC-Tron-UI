@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "scope": "Actual extracted NYC-Tron tarballs, real Metro target/public-entry resolver, provisioned RN checkout peers. Bundle-only; no Hermes/Qt rendering, gesture, accessibility or device acceptance.",
+  "node": "v24.22.1",
+  "reactNative": "0.88.1",
+  "metro": "0.87.1",
+  "artifacts": [
+    {
+      "name": "@nyc-tron/core",
+      "version": "1.0.0",
+      "archive": "nyc-tron-core-1.0.0.tgz",
+      "sha256": "c43612d9586e60652566dc337d43754a5ee64505442cf59f21432c944c98da11"
+    },
+    {
+      "name": "@nyc-tron/ui",
+      "version": "1.0.0",
+      "archive": "nyc-tron-ui-1.0.0.tgz",
+      "sha256": "f2457e5226d5684ce8043f6d3e021d24b87cd90e1e596189505ab790c6843f17"
+    },
+    {
+      "name": "@nyc-tron/expo-controls",
+      "version": "1.0.0",
+      "archive": "nyc-tron-expo-controls-1.0.0.tgz",
+      "sha256": "cf03a98d12e5fc20650080dd5610d18430dd63fe57d909cdee987801a43b0bfb"
+    }
+  ],
+  "results": [
+    {
+      "platform": "qnx",
+      "status": "bundled",
+      "bytes": 1892842,
+      "sha256": "243f5692381418bf99a46c5f8b70fc0a5fcdb3edb5e7e04ff9348a0f1c24ad46",
+      "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
+      "selectedControlFiles": [
+        "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/FindReplacePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeActionMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.shared.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSliderField.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSplitButton.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Select.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.qt.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/menu-model.js",
+        "node_modules/@nyc-tron/expo-controls/dist/index.shared.js"
+      ],
+      "resolverWarnings": [],
+      "nativeExecution": "not-run",
+      "deviceAcceptance": "unverified"
+    },
+    {
+      "platform": "marathon",
+      "status": "bundled",
+      "bytes": 1892894,
+      "sha256": "a324a1a6c973a18a1a64c62bfce763c8d72f0121c3f42f8da2fe46bff0cdba39",
+      "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
+      "selectedControlFiles": [
+        "node_modules/@nyc-tron/expo-controls/dist/components/ContextMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/FindReplacePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeActionMenu.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.shared.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeDropdown.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativePopover.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSliderField.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/NativeSplitButton.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Select.web.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.qt.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/Tooltip.types.js",
+        "node_modules/@nyc-tron/expo-controls/dist/components/menu-model.js",
+        "node_modules/@nyc-tron/expo-controls/dist/index.shared.js"
+      ],
+      "resolverWarnings": [],
+      "nativeExecution": "not-run",
+      "deviceAcceptance": "unverified"
+    }
+  ]
+}

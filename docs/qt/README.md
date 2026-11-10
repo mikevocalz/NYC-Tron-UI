@@ -28,7 +28,9 @@ implementations for supported controls. The platform-specific condition must
 be asserted before the generic native condition can select an Apple/Android
 entry. The public index and independently imported control entries must remain
 import-safe when Expo's mobile providers are absent. See that package's README
-for the exact exports and its explicit Tooltip limitation.
+for the exact exports, the measured Tooltip implementation and native input
+requirements. The source tests distinguish key/hover handling from the host
+event delivery that must be exercised in a Qt/Fabric run.
 
 ## Requirements beyond source reuse
 
