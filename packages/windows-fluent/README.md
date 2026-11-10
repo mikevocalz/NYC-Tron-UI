@@ -1,8 +1,11 @@
-# @nyc-tron/windows-fluent — native WinUI 3 NavigationView host
+# @nyc-tron/windows-fluent: native WinUI 3 NavigationView host
 
 Native **WinUI 3 XAML control** plus a small independently testable TypeScript
-state/transport contract. This is **not** a React Native Windows Fabric custom
-component yet; it deliberately lives at the Windows app host boundary.
+state/transport contract, used at the Windows app host boundary. The React
+Native Windows Fabric component is the separate nested package
+`@nyc-tron/windows-fluent-fabric` in [`rnw-fabric/`](rnw-fabric/README.md).
+
+Tier: experimental in v1.0.0 (see [Support policy](../../docs/SUPPORT.md)).
 
 ## Supported now
 
@@ -36,25 +39,24 @@ component yet; it deliberately lives at the Windows app host boundary.
   a rejected pane back even when the app state is unchanged.
 - The native shell can embed a **XAML UIElement** from an app that supplies one.
 
-## Explicitly not connected yet
+## Fabric adapter and host-shell transport
 
-**React Native Windows 0.85 uses Composition/Fabric.** RNW v0.82
-introduced XAML hosting for native Fabric community controls. The official
-RNW v0.85 `sample-custom-component` package includes working
-`ContentIslandComponentView` examples for native XAML ComboBox and
-CalendarView. This means a native WinUI NavigationView Fabric adapter is
-possible, though still not implemented in this host-shell package.
+The Fabric adapter is implemented in
+[`rnw-fabric/`](rnw-fabric/README.md): `TronNavigationView.cpp` hosts the
+NavigationView in an RNW 0.85 `ContentIslandComponentView`.
+`winui-fabric.yml` builds it on `windows-2025` and runs a UI Automation
+smoke test of a packaged consumer; the latest run is
+[42158305089](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42158305089)
+(2026-11-06, commit `e95f2be1`, success). Apps that render React Native
+Windows should use that package.
 
-The WinUI source here is native, but `WindowsNativeNavigationTransport`
-is not yet connected to a live RNW host. A Fabric Composition root still
-cannot simply be passed to the XAML `SetHostedContent` slot. Do not claim
-end-to-end React Native navigation until the native view bridge compiles,
-events roundtrip and layout/focus pass on a Windows host.
+This host-shell package is a different path. Its
+`WindowsNativeNavigationTransport` has no RNW implementation, so the
+controller below is not connected to a live RNW host. A Fabric Composition
+root cannot be passed to the XAML `SetHostedContent` slot.
 
-A host integration follow-up must either embed a verified compatible
-WinUI 3 root around the RNW Composition island or use a validated
-platform-native hosting API to connect transport callbacks. That requires
-a Windows host project, Visual Studio 2026 and native build/test evidence.
+Unverified for both packages: Narrator speech, high contrast, an RTL run,
+window resize, pointer input and Settings focus return.
 
 ### Consumer-facing controller (nonvisual)
 
