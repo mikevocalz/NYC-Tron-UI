@@ -26,7 +26,12 @@ export function NativePointerInput({width,height,label,onBatch,onKey}: NativePoi
       if (event.type === 'pointerdown') { phase='down'; active.set(event.pointerId,point); node.setPointerCapture(event.pointerId); node.focus({preventScroll:true}); }
       else if (event.type === 'pointerup') phase='up';
       else if (event.type === 'pointercancel' || event.type === 'lostpointercapture') { if (!active.has(event.pointerId)) return; phase='cancel'; }
-      else if (event.type === 'pointerleave') { if (active.has(event.pointerId)) return; phase='hover-exit'; }
+      else if (event.type === 'pointerleave') {
+        // Non-hovering pointers also leave after release. End only a hover
+        // that this adapter observed, preserving the terminal contact event.
+        if (active.has(event.pointerId) || !hovering.has(event.pointerId)) return;
+        phase='hover-exit';
+      }
       else phase=active.has(event.pointerId) ? 'move' : 'hover';
       if (phase === 'up' || phase === 'cancel') active.delete(event.pointerId);
       else if (phase === 'move') active.set(event.pointerId,point);

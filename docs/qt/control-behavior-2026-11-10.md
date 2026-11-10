@@ -4,6 +4,9 @@ This continues PR #58 after the initial import and bundle work. It replaces
 the unavailable Tooltip target, fixes desktop control handlers and records
 the source checks separately from Qt/Fabric and device acceptance.
 
+The subsequent [browser pointer follow-up](pointer-ci-followup-2026-11-10.md)
+records the narrow-screen CI failure and its focused adapter correction.
+
 ## Implemented behavior
 
 The QNX and Marathon Tooltip entries use React Native View/Text, native
