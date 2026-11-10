@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "sourceRevision": "0c97bf7f6c3ddf9cac2ae25864c298580d62df76",
+  "installedFromArchives": true,
+  "sharedCore": {
+    "packageName": "@nyc-tron/core",
+    "filename": "nyc-tron-core-1.0.0.tgz",
+    "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
+  },
+  "pins": {
+    "@legendapp/spark": "0.0.2",
+    "react-native": "0.83.10",
+    "react-native-macos": "0.83.0",
+    "react": "19.2.0",
+    "expo": "55.0.32",
+    "react-native-nitro-modules": "0.37.0",
+    "@nyc-tron/core": "1.0.0",
+    "@nyc-tron/macos-appkit": "1.0.0"
+  },
+  "archives": [
+    {
+      "file": "nyc-tron-core-1.0.0.tgz",
+      "packageName": "@nyc-tron/core",
+      "bytes": 51185,
+      "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
+    },
+    {
+      "file": "nyc-tron-macos-appkit-1.0.0.tgz",
+      "packageName": "@nyc-tron/macos-appkit",
+      "bytes": 30383,
+      "sha256": "e012fd72774e630972d158758336c17b5a113526d304eef39e247d95a3ebce97"
+    }
+  ],
+  "sourceReceiptSha256": "ab47a3ebe9cabf8a949f96c7cfba0695dbb5a1b7ab6f2b9b76d287534dc99037"
+}

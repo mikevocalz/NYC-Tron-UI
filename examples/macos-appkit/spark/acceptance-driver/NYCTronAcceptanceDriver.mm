@@ -5,6 +5,7 @@
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <ApplicationServices/ApplicationServices.h>
 #import <RNDesktopDrag/RNDesktopDragView.h>
+#import <React/RCTSurfaceTouchHandler.h>
 
 #if SPARK_TEST_DRIVER
 static NSView *Find(NSView *view, NSString *identifier) {
@@ -85,6 +86,17 @@ static NYCTronProtocolDrag *ProtocolDrag;
 static NSInteger NextProtocolDrag;
 static NSDictionary *PointerSession;
 static BOOL PointerRunning;
+static __weak RCTSurfaceTouchHandler *ResponderHandler;
+static __weak NSView *ResponderTarget;
+static __weak NSWindow *ResponderWindow;
+static NSPoint ResponderStart, ResponderPoint;
+static NSInteger ResponderToken, NextResponderToken;
+static void ClearResponder(void) {
+  // Reset the recognizer between synthetic sequences. An unfinished sequence
+  // follows RN's actual cancellation path; no JS callback is invoked directly.
+  ResponderHandler.enabled = NO; ResponderHandler.enabled = YES;
+  ResponderHandler = nil; ResponderTarget = nil; ResponderWindow = nil; ResponderToken = 0;
+}
 
 // Spark 0.0.2 does not implement this optional observer. Adding it only to the
 // private acceptance app records the real NSDraggingSession AppKit supplies,
@@ -131,6 +143,8 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
       result[@"help"] = view.accessibilityHelp ?: @"";
       result[@"windowClass"] = NSStringFromClass(window.class);
       result[@"viewBounds"] = Rect(view.bounds);
+      result[@"visibleRect"] = Rect(view.visibleRect);
+      result[@"fullyVisible"] = @(![view isHiddenOrHasHiddenAncestor] && NSContainsRect(view.visibleRect, view.bounds));
       result[@"contentBounds"] = Rect(window.contentView.bounds);
       result[@"visible"] = @(window.visible);
       result[@"key"] = @(window.keyWindow);
@@ -162,6 +176,68 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
       NSMutableArray *classes = [NSMutableArray new]; Classes(content, classes);
       NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": Rect(component.nativeAllowedRegion) } mutableCopy];
       if (popover.shown && content.window) result[@"frame"] = Rect(OwnerCoordinates(owner, content.window.frame));
+      reply(result);
+    });
+    SparkTestDriverRegisterCommand(@"tron.react-responder", ^(NSDictionary *request, SparkTestDriverReply reply) {
+      // Synthetic NSEvents enter the installed RCTSurfaceTouchHandler. Its
+      // actual hit-test/emitter/responder path reaches an ordinary Pressable;
+      // this is neither Spark target/action nor a physical OS mouse gesture.
+      NSString *action = request[@"action"];
+      if ([action isEqual:@"down"]) {
+        if (ResponderToken || PointerRunning) { reply(Failure(@"Another native acceptance gesture is active")); return; }
+        NSWindow *owner = Window(request[@"window"] ?: @"main");
+        NSView *target = owner ? Find(owner.contentView, request[@"testID"]) : nil;
+        RCTSurfaceTouchHandler *handler = nil;
+        for (NSView *ancestor = target; ancestor && !handler; ancestor = ancestor.superview) {
+          for (NSGestureRecognizer *recognizer in ancestor.gestureRecognizers) {
+            if ([recognizer isKindOfClass:RCTSurfaceTouchHandler.class]) { handler = (RCTSurfaceTouchHandler *)recognizer; break; }
+          }
+        }
+        if (!target || !handler || !target.window.visible || [target isHiddenOrHasHiddenAncestor] || !NSContainsRect(target.visibleRect, target.bounds) || Control(target, NSControl.class)) {
+          reply(Failure(@"Expected a visible ordinary Fabric view with its installed surface touch handler")); return;
+        }
+        ResponderTarget = target; ResponderHandler = handler; ResponderWindow = target.window;
+        ResponderToken = ++NextResponderToken;
+        ResponderStart = [target convertPoint:NSMakePoint(NSMinX(target.bounds) + NSWidth(target.bounds) / 4, NSMidY(target.bounds)) toView:nil];
+        ResponderPoint = ResponderStart;
+      } else {
+        if (!ResponderToken || ![request[@"token"] isKindOfClass:NSNumber.class] || [request[@"token"] integerValue] != ResponderToken) {
+          reply(Failure(@"Stale native responder sequence")); return;
+        }
+        if ([action isEqual:@"cancel"]) { ClearResponder(); reply(@{ @"ok": @YES, @"boundary": @"synthetic-native-responder", @"cancelled": @YES }); return; }
+        if (![action isEqual:@"move"] && ![action isEqual:@"up"]) { reply(Failure(@"Unknown native responder action")); return; }
+      }
+      NSView *target = ResponderTarget;
+      RCTSurfaceTouchHandler *handler = ResponderHandler;
+      NSWindow *window = ResponderWindow;
+      if (!target || !handler || !window.visible || target.window != window || [target isHiddenOrHasHiddenAncestor] || !NSContainsRect(target.visibleRect, target.bounds) || ![target isDescendantOf:handler.view]) {
+        ClearResponder(); reply(Failure(@"Native responder target lifetime ended")); return;
+      }
+      if ([action isEqual:@"move"]) {
+        double dx = request[@"dx"] ? [request[@"dx"] doubleValue] : 4;
+        double dy = request[@"dy"] ? [request[@"dy"] doubleValue] : 1;
+        if (!isfinite(dx) || !isfinite(dy) || fabs(dx) > 20 || fabs(dy) > 20) { reply(Failure(@"Responder movement exceeded its local acceptance bounds")); return; }
+        ResponderPoint = NSMakePoint(ResponderStart.x + dx, ResponderStart.y - dy);
+      }
+      if (!NSPointInRect([target convertPoint:ResponderPoint fromView:nil], target.bounds)) {
+        ClearResponder(); reply(Failure(@"Responder acceptance point left the actual native target bounds")); return;
+      }
+      NSEventType type = [action isEqual:@"down"] ? NSEventTypeLeftMouseDown : [action isEqual:@"move"] ? NSEventTypeLeftMouseDragged : NSEventTypeLeftMouseUp;
+      NSEvent *event = [NSEvent mouseEventWithType:type location:ResponderPoint modifierFlags:0 timestamp:NSProcessInfo.processInfo.systemUptime
+          windowNumber:window.windowNumber context:nil eventNumber:100000 + ResponderToken clickCount:1 pressure:type == NSEventTypeLeftMouseUp ? 0 : 1];
+      if (!event) { ClearResponder(); reply(Failure(@"Cannot construct the native responder event")); return; }
+      NSRect bounds = [target convertRect:target.bounds toView:nil];
+      bounds.origin.y = NSHeight(window.frame) - NSMaxY(bounds);
+      NSRect handlerBounds = [handler.view convertRect:handler.view.bounds toView:nil];
+      handlerBounds.origin.y = NSHeight(window.frame) - NSMaxY(handlerBounds);
+      NSDictionary *result = @{ @"ok": @YES, @"boundary": @"synthetic-native-responder", @"token": @(ResponderToken),
+        @"handlerClass": NSStringFromClass(handler.class), @"targetClass": NSStringFromClass(target.class),
+        @"point": @{ @"x": @(ResponderPoint.x), @"y": @(NSHeight(window.frame) - ResponderPoint.y) }, @"nativeBounds": Rect(bounds),
+        @"handlerBounds": Rect(handler.view.bounds), @"handlerWindowBounds": Rect(handlerBounds),
+        @"windowViewport": @{ @"width": @(NSWidth(window.frame)), @"height": @(NSHeight(window.frame)) } };
+      if (type == NSEventTypeLeftMouseDown) [handler mouseDown:event];
+      else if (type == NSEventTypeLeftMouseDragged) [handler mouseDragged:event];
+      else { [handler mouseUp:event]; ClearResponder(); }
       reply(result);
     });
     SparkTestDriverRegisterCommand(@"tron.menu", ^(NSDictionary *request, SparkTestDriverReply reply) {

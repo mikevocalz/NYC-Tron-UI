@@ -413,6 +413,21 @@ try {
   Assert-NativeValue $vetoedField "Replacement native note"
   $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
   Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Invoke-Button $window "Show lifecycle checks"
+  Find-ByName $window "Windows navigation acceptance" | Out-Null
+  Wait-ProcessElementHidden "Native inspector anchor" ([System.Windows.Automation.ControlType]::Button)
+  Invoke-Button $window "Show native overlay checks"
+  Find-ByName $window "Native edit acknowledgment: 0" | Out-Null
+  Find-ByName $window "Committed native note: Replacement native note" | Out-Null
+  Invoke-Button $window "Native inspector anchor"
+  $remountedField = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Assert-NativeValue $remountedField "Replacement native note"
+  $remountedField.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue("Remounted native note")
+  Find-ByName $window "Committed native note: Remounted native note" | Out-Null
+  Find-ByName $window "Native edit acknowledgment: 1" | Out-Null
+  Assert-NativeValue $remountedField "Remounted native note"
+  Invoke-NativeElement (Find-ProcessElement "Close native inspector" ([System.Windows.Automation.ControlType]::Button))
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
 
   Invoke-Button $window "Show native drag checks"
   Find-ByName $window "Native cross-window drag acceptance" | Out-Null
@@ -470,7 +485,7 @@ try {
     sourceRevision = $env:GITHUB_SHA
     processId = $process.Id
     executableSha256 = (Get-FileHash -Algorithm SHA256 $process.Path).Hash.ToLowerInvariant()
-    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
+    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
   }
   $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
   Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"

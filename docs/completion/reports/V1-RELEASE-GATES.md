@@ -6,9 +6,29 @@ rows and their platform acceptance are tracked separately in
 [V1-PLATFORM-CLOSURE.md](V1-PLATFORM-CLOSURE.md). No tag, release, npm publish or
 blanket device-acceptance claim is created by this report.
 
-## November 10 desktop integration
+## November 10 native integration
 
-At the later source checkpoint `0edd5f302e99877191ba9a412c5c060571a5f6c9`,
+### Repaired mobile and browser checkpoint
+
+PR 61 head `2899ffdedf98e2a86c077f15aa1baf6401c07b80`, tested through merge
+`0576bea35225fde1437a50263c8154aca525ec8d`, passed all six of its
+[source, native, browser, reference and installed-consumer workflows](../evidence/v1-native-2899ffd/workflow-runs.json).
+The original downloaded mobile artifacts were independently checked against
+their reports, package identities and complete native payloads.
+
+| Target | Actual result at this checkout | Retained evidence |
+|---|---|---|
+| Android | Native compilation, eleven media checks and all four UI flows passed, with zero recoveries. The unchanged Home/resume cancellation test records one committed stroke, one cancellation, zero predictions and final phase cancel | [Original reports, captures and independently verified APK](../evidence/v1-native-2899ffd/android/README.md) |
+| iOS | Native compilation, eleven media checks and all three UI flows passed, with zero recoveries. All 226 app payload entries match the manifest; both native keyboard-dismissal branches completed | [Original reports, captures and complete payload verification](../evidence/v1-native-2899ffd/ios/README.md) |
+| Browser overlays | All 32 Chromium tests passed after fixing the shared overlay source alias; the original screenshot artifact was independently verified | [Original result and selected captures](../evidence/v1-web-overlays-2899ffd/README.md) |
+
+These passes establish the repaired mobile/browser checkpoint. The assembled
+candidate, including the later desktop corrections, needs its own exact-revision
+native gates. The source and full eight-platform acceptance counts are unchanged.
+
+### Earlier mobile and desktop checkpoint
+
+At the earlier source checkpoint `0edd5f302e99877191ba9a412c5c060571a5f6c9`,
 the [iOS installed consumer](../evidence/v1-native-0edd5f3/ios/README.md)
 passed native compilation, all eleven media checks and all three native UI
 flows with no transport recovery. The complete 226-file app payload matches
@@ -29,9 +49,9 @@ head `2899ffdedf98e2a86c077f15aa1baf6401c07b80`, cancels the view's retained
 contacts before parsing a cancel event. It keeps the strict router and original
 native cancellation assertion, and also repairs the isolated browser fixture's
 missing shared overlay alias. Its [fresh Chromium overlay run](../evidence/v1-web-overlays-2899ffd/README.md)
-passed all 32 tests at actual merge `0576bea35225fde1437a50263c8154aca525ec8d`;
-the original screenshot artifact was independently verified. Fresh native
-Android/iOS acceptance remains in progress for that repair.
+passed all 32 tests at actual merge `0576bea35225fde1437a50263c8154aca525ec8d`.
+Both fresh native jobs also passed as recorded above; the original failed
+cancellation result remains attached to its own checkout.
 
 That same checkpoint's new Windows native build and deployment succeeded,
 but its screenshot driver failed on a nonfocusable top-level UIA window;
@@ -62,7 +82,7 @@ Windows lifecycle checkpoint does not establish its native interaction results.
 ### Desktop interaction implementation
 
 The AppKit follow-up is [PR 59](https://github.com/mikevocalz/NYC-Tron-UI/pull/59),
-with source checkpoint `fd86e17369c68b7b6d1a588ceee8349a6f248dd3`. It adds real
+with source checkpoint `4c96008d313deb371fa9f7e62399dbb75fd908be`. It adds real
 NSMenu/context menus, NSView tooltips, a Fabric NSPopover with retained React
 content, and anchored inspectors. Popover placement is checked against the
 observed native window frame and selected usable region; resizing preserves the
@@ -72,6 +92,17 @@ and the document drag protocol. An OS-posted drag is required when the host
 grants input-posting access; a denied TCC capability remains explicitly missing
 gesture evidence. The workflow selects and verifies Xcode 26.2 for the pinned
 Expo 55 runtime before compiling.
+
+The [actual Xcode 26.2 build at fd86](../evidence/v1-appkit-fd86-compiler-failure/README.md)
+passed the toolchain probe, clean installation and installed API check, then
+failed on the private acceptance driver's missing Yoga header path. The current
+head uses the pinned React Native Fabric dependency helper for both native
+pods. It also gives detached popovers the actual native window measurement
+boundary, preserving React child ownership while aligning responder page
+coordinates with Fabric measurements. A fully visible ordinary Pressable must
+pass synthetic NSEvent down/move/up through the actual RCTSurfaceTouchHandler;
+that check is separate from native control target/action and OS gesture proof.
+All fifteen required native groups still need this head's fresh run.
 
 The Windows follow-up is [PR 60](https://github.com/mikevocalz/NYC-Tron-UI/pull/60),
 with source checkpoint `fc85173985e7e7a2a9d37e2562151b6a70092278`. It adds actual
@@ -95,12 +126,20 @@ Private scope/request acknowledgements permit a subsequent dismissal after a
 veto that produces no React commit. Forty-nine isolated tests, five portable
 C++ state regressions, official code generation, a fresh archive consumer and
 the unchanged installed API snapshot passed for the same source tree. The
-second native build passed installation/codegen but stopped on the native
+[second native build](../evidence/v1-windows-3e2c88f-compiler-failure/README.md)
+passed installation/codegen but stopped on the native
 TextChanged sender signature and a precompiled-header boundary in the portable
 assertion file. Head `9b902a2506493c0c754a34509eab17923876940d` matches the SDK's
 IInspectable sender and compiles only that assertion file without precompiled
 headers. Its five portable assertions still compile; actual Windows C++/UIA
 results require the new native run. Neither failed compiler run reached UIA.
+
+The assembled Windows reference fixture also gives each remounted inspector a
+new native mount key and edit-count domain while preserving its draft. Old-mount
+callbacks cannot repopulate that domain. Same-stage selection retains the live
+field and its count. Five owner tests pass, including coalesced leave/return;
+the combined candidate's UIA additionally requires observed unmount, draft
+restoration, a zero initial count and the first accepted new edit.
 
 Both implementations are included in the combined candidate. Their actual
 native builds and interaction results must be recorded against the exact

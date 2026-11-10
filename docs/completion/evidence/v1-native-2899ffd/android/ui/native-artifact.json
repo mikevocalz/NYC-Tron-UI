@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "kind": "android-apk",
+  "algorithm": "sha256-raw-apk-v1",
+  "entries": [
+    {
+      "path": ".",
+      "type": "file",
+      "bytes": 364067365,
+      "sha256": "16a9d93049f6eb23bcad59cadea52c06bbec98a537995656b254cec5c02952bb"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "phase": "metro-bundle-warmup",
+  "platform": "ios",
+  "entry": "media",
+  "url": "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example",
+  "startedAt": "2026-11-10T17:06:03.198Z",
+  "timeoutMs": 360000,
+  "maxBytes": 67108864,
+  "status": "ready",
+  "bytes": 4626330,
+  "httpStatus": 200,
+  "contentType": "application/javascript; charset=UTF-8",
+  "sha256": "10a63e3c13a52bba2bcfa118258020a0c0f1f65bb59878363804a4692f25b042",
+  "elapsedMs": 8005
+}

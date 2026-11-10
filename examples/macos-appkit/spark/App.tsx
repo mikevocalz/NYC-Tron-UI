@@ -1,5 +1,5 @@
-import { useEffect, useRef, useSyncExternalStore } from 'react';
-import { Text as NativeText, View, ScrollView, useColorScheme } from 'react-native';
+import { useEffect, useRef, useSyncExternalStore, type ComponentRef } from 'react';
+import { Text as NativeText, View, ScrollView, Pressable, useColorScheme, type GestureResponderEvent } from 'react-native';
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
 import { Sidebar } from '@nyc-tron/macos-appkit/sidebar';
@@ -20,8 +20,13 @@ import type { Rect2D } from '@nyc-tron/core/overlays';
 
 type Appearance = 'system' | 'light' | 'dark';
 interface Document { title: string; savedTitle: string; collection: string }
-interface InspectorState { open: boolean; anchor: Rect2D; region: Rect2D }
-const closedInspector: InspectorState = { open: false, anchor: { x: 0, y: 0, width: 0, height: 0 }, region: { x: 0, y: 0, width: 0, height: 0 } };
+interface ResponderProbe {
+  ins: number; moves: number; outs: number; presses: number; active: boolean;
+  point?: { x: number; y: number }; measured?: Rect2D;
+}
+const emptyProbe: ResponderProbe = { ins: 0, moves: 0, outs: 0, presses: 0, active: false };
+interface InspectorState { open: boolean; anchor: Rect2D; region: Rect2D; responder: ResponderProbe }
+const closedInspector: InspectorState = { open: false, anchor: { x: 0, y: 0, width: 0, height: 0 }, region: { x: 0, y: 0, width: 0, height: 0 }, responder: emptyProbe };
 interface AppState {
   documents: Record<string, Document>;
   selected: string;
@@ -145,8 +150,26 @@ function DocumentEditor({ windowId }: { windowId: string }) {
   const contextTrigger = useRef<ControlRef | null>(null);
   const contextGeneration = useRef(0);
   const inspectorTrigger = useRef<ControlRef | null>(null);
+  const responderTarget = useRef<ComponentRef<typeof Pressable> | null>(null);
   const inspectorGeneration = useRef(0);
   const inspector = useStore(store, state => state.inspectors[windowId] ?? closedInspector);
+  const recordResponder = (phase: 'in' | 'move' | 'out' | 'press', event: GestureResponderEvent) => {
+    const previous = store.getState().inspectors[windowId]?.responder ?? emptyProbe;
+    const next = { ...previous, point: { x: event.nativeEvent.pageX, y: event.nativeEvent.pageY } };
+    if (phase === 'in') { next.ins++; next.active = true; }
+    else if (phase === 'move') next.moves++;
+    else if (phase === 'out') { next.outs++; next.active = false; }
+    else next.presses++;
+    updateInspector(windowId, { responder: next });
+    if (phase === 'in') {
+      const generation = inspectorGeneration.current;
+      responderTarget.current?.measure((_x, _y, width, height, x, y) => {
+        if (generation !== inspectorGeneration.current || !store.getState().inspectors[windowId]?.open) return;
+        const current = store.getState().inspectors[windowId]?.responder ?? emptyProbe;
+        updateInspector(windowId, { responder: { ...current, measured: { x, y, width, height } } });
+      });
+    }
+  };
   useEffect(() => () => { contextGeneration.current++; }, []);
   useEffect(() => () => { inspectorGeneration.current++; updateInspector(windowId, { open: false }); }, [windowId]);
   const measureInspector = (opening: boolean) => {
@@ -191,19 +214,31 @@ function DocumentEditor({ windowId }: { windowId: string }) {
       <Button ref={contextTrigger} testID={`context-${windowId}`} onPress={openContextMenu} onError={fail}>Document actions</Button>
       <Button ref={inspectorTrigger} testID={`inspect-${windowId}`} onPress={() => measureInspector(true)} onError={fail}>Inspect document</Button>
     </View>
+    {/* The native popover must not inherit this declaration site's page offset. */}
+    <View pointerEvents="box-none" style={{ position: 'absolute', left: 160, top: 96, width: 1, height: 1 }}>
     <AnchoredInspector testID={`inspector-${windowId}`} scope={`welcome:${windowId}`} open={inspector.open}
       onOpenChange={open => { updateInspector(windowId, { open }); store.setState({ status: open ? 'Native inspector opened' : 'Native inspector dismissed' }); }}
       onPresentationRejected={() => store.setState({ status: 'Inspector cannot fit in the available area; resize the window and try again' })}
-      accessibilityLabel="Document inspector" anchor={inspector.anchor} usableRegions={[inspector.region]} width={320} maxHeight={240}>
-      <View style={{ padding: 18, gap: 14 }}>
+      accessibilityLabel="Document inspector" anchor={inspector.anchor} usableRegions={[inspector.region]} width={320} maxHeight={300}>
+      <View style={{ padding: 12, gap: 8 }}>
         <Text accessibilityRole="header" style={{ fontSize: 18, fontWeight: '600' }}>Document inspector</Text>
-        <Text>This is the same app-owned document.</Text>
         <TextField testID={`inspector-title-${windowId}`} accessibilityLabel="Inspector document title" value={document.title}
           style={{ width: '100%', height: 34 }} onChangeText={setTitle} onError={fail} />
         <Button testID={`inspector-save-${windowId}`} onPress={save} onError={fail}>Save local changes</Button>
         <Button testID={`inspector-close-${windowId}`} onPress={() => { updateInspector(windowId, { open: false }); store.setState({ status: 'Inspector closed' }); }} onError={fail}>Close inspector</Button>
+        <View onTouchMove={event => recordResponder('move', event)}>
+          <Pressable ref={responderTarget} testID={`inspector-react-${windowId}`} accessibilityRole="button" accessibilityLabel="Confirm inspector action"
+            onPressIn={event => recordResponder('in', event)} onPressOut={event => recordResponder('out', event)} onPress={event => recordResponder('press', event)}
+            style={{ height: 36, borderWidth: 1, borderColor: '#9b9b95', alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Confirm inspector action</Text>
+          </Pressable>
+        </View>
+        <Text testID={`inspector-react-report-${windowId}`} accessibilityLabel={JSON.stringify(inspector.responder)} style={{ fontSize: 11 }}>
+          React action confirmed {inspector.responder.presses} times
+        </Text>
       </View>
     </AnchoredInspector>
+    </View>
     <View testID={`saved-${windowId}`} style={{ padding: 16, borderRadius: 4, borderWidth: 1, borderColor: '#9b9b95', gap: 8 }}>
       <Text style={{ fontWeight: '600' }}>Local checkpoint</Text><Text selectable>{document.savedTitle}</Text>
       <Text selectable>{document.title === document.savedTitle ? 'All changes saved' : 'Unsaved changes protect this window from closing'}</Text>

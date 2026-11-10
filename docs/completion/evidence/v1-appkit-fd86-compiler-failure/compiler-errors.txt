@@ -1,0 +1,29 @@
+Source: nyc-tron-appkit-consumer/.spark/logs/1794330490570-df60178b-10ab-45ba-84b6-a976aeaa7b3c-xcodebuild.log
+Numbered source lines follow. Omitted ranges are not reproduced.
+
+--- source lines 26798-26798 ---
+26798: CompileC /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/DerivedData/macos-arm64/Build/Intermediates.noindex/Pods.build/Release/NYCTronAcceptanceDriver.build/Objects-normal/arm64/NYCTronAcceptanceDriver.o /Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-driver/NYCTronAcceptanceDriver.mm normal arm64 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'NYCTronAcceptanceDriver' from project 'Pods')
+
+--- source lines 26804-26825 ---
+26804: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-driver/NYCTronAcceptanceDriver.mm:4:
+26805: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/NYCTronAppKit/NYCTronPopover.h:2:
+26806: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-RCTFabric/React/RCTViewComponentView.h:14:
+26807: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/ViewEventEmitter.h:10:
+26808: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/HostPlatformViewEventEmitter.h:19:
+26809: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/platform/macos/react/renderer/components/view/HostPlatformViewEventEmitter.h:14:
+26810: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/MouseEvent.h:12:
+26811: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/platform/macos/react/renderer/components/view/MouseEvent.h:10:
+26812: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-graphics/react/renderer/graphics/Geometry.h:18:2: warning: "The Geometry.h file is deprecated and will be removed in the next version of React Native. Please update your #include and #import statements to use the specific files. For example, if you imported Geometry.h to use Float.h, replase the #include <react/renderer/graphics/Geometry.h> with #include <react/renderer/graphics/Float.h>" [-W#warnings]
+26813:    18 | #warning \
+26814:       |  ^
+26815: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-driver/NYCTronAcceptanceDriver.mm:4:
+26816: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/NYCTronAppKit/NYCTronPopover.h:2:
+26817: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-RCTFabric/React/RCTViewComponentView.h:15:
+26818: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/ViewProps.h:10:
+26819: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/HostPlatformViewProps.h:19:
+26820: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/platform/macos/react/renderer/components/view/HostPlatformViewProps.h:15:
+26821: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/BaseViewProps.h:11:
+26822: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/YogaStylableProps.h:10:10: fatal error: 'yoga/style/Style.h' file not found
+26823:    10 | #include <yoga/style/Style.h>
+26824:       |          ^~~~~~~~~~~~~~~~~~~~
+26825: 1 warning and 1 error generated.

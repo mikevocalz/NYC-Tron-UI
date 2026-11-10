@@ -1,0 +1,42 @@
+{
+  "artifacts": [
+    {
+      "id": 13785568135,
+      "name": "macos-appkit-native-evidence",
+      "size_in_bytes": 715234,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13785568135",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13785568135/zip",
+      "expired": false,
+      "created_at": "2026-11-10T17:18:11Z",
+      "expires_at": "2026-11-24T17:18:09Z",
+      "updated_at": "2026-11-10T17:18:11Z",
+      "digest": "sha256:38a2f37c7fd81db64874dcb3bda460640f907946638311ba53f487c78e7ee7fe",
+      "workflow_run": {
+        "id": 42854433102,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-appkit-interactions-nov10",
+        "head_sha": "fd86e17369c68b7b6d1a588ceee8349a6f248dd3"
+      }
+    },
+    {
+      "id": 13784695980,
+      "name": "macos-appkit-shared-packages",
+      "size_in_bytes": 51323,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13784695980",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13784695980/zip",
+      "expired": false,
+      "created_at": "2026-11-10T16:52:04Z",
+      "expires_at": "2026-11-24T16:52:03Z",
+      "updated_at": "2026-11-10T16:52:04Z",
+      "digest": "sha256:46b45a5510a294677ee1c0829967bd5e7732e0ac097b73c7cd719d0d74aff24a",
+      "workflow_run": {
+        "id": 42854433102,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-appkit-interactions-nov10",
+        "head_sha": "fd86e17369c68b7b6d1a588ceee8349a6f248dd3"
+      }
+    }
+  ]
+}

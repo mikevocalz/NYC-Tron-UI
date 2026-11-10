@@ -59,7 +59,7 @@ const child = spawn(executable, [], { cwd: root, env: { ...process.env, SPARK_TE
 closeSync(descriptor);
 let launchError, driver;
 child.on('error', error => { launchError = error; });
-const checks = [], captures = [], popovers = [], dragProtocols = [];
+const checks = [], captures = [], popovers = [], dragProtocols = [], responderEvents = [];
 let pointerEvidence;
 writeFileSync(join(output, 'invocation.json'), JSON.stringify({ sourceRevision: revision, app, executable, processId: child.pid, startedAt: new Date().toISOString(), driverProtocol: 1 }, null, 2) + '\n');
 function assertRunning() {
@@ -95,6 +95,14 @@ async function dragProtocol(action, source, target) {
   dragProtocols.push({ action, source, target, ...result });
   writeFileSync(join(output, 'drag-protocol.json'), JSON.stringify({ boundary: 'Native NSDraggingSource/NSDraggingDestination methods with a real NSPasteboard; no physical pointer gesture or NSDraggingSession', commands: dragProtocols }, null, 2) + '\n');
   return result;
+}
+function retainResponder(action, native, react) {
+  responderEvents.push({ action, native, react });
+  writeFileSync(join(output, 'responder-events.json'), JSON.stringify({
+    boundary: 'Synthetic NSEvent down/move/up delivered to the installed RCTSurfaceTouchHandler, followed by Fabric dispatch and ordinary React Pressability. No Spark target/action or physical OS pointer delivery.',
+    coordinates: 'Top-left NSWindow.frame logical points, including the actual popover content inset.',
+    declarationAncestorOffset: { x: 160, y: 96 }, events: responderEvents,
+  }, null, 2) + '\n');
 }
 async function capture(name, window = 'main') {
   const result = await driver.request('capture', { window: window === 'main' ? 'main' : `id:${window}`, name, timeoutMs: 10000 });
@@ -148,6 +156,36 @@ try {
   assert.ok(opener);
   await control('inspect-main', 'press');
   const firstPopover = await shownPopover();
+  assert.equal((await inspect('inspector-react-main')).fullyVisible, true, 'The React press target is clipped');
+  assert.equal((await inspect('inspector-react-report-main')).fullyVisible, true, 'The responder evidence label is clipped');
+  const responder = async () => JSON.parse((await inspect('inspector-react-report-main')).label);
+  const initialResponder = await responder();
+  const down = await driver.request('tron.react-responder', { action: 'down', window: 'main', testID: 'inspector-react-main' });
+  assert.equal(down.boundary, 'synthetic-native-responder');
+  assert.equal(down.handlerClass, 'RCTSurfaceTouchHandler');
+  const pressedResponder = await waitFor(async () => {
+    const current = await responder(); return current.ins === initialResponder.ins + 1 && current.measured && current.active ? current : undefined;
+  }, 'ordinary React responder grant and Fabric measurement');
+  retainResponder('down', down, pressedResponder);
+  for (const key of ['x', 'y']) assert.ok(Math.abs(down.handlerBounds[key] - down.handlerWindowBounds[key]) <= 1, 'The content bounds origin omits native popover chrome');
+  for (const key of ['x', 'y', 'width', 'height']) {
+    assert.ok(Math.abs(pressedResponder.measured[key] - down.nativeBounds[key]) <= 1, `Fabric measure ${key} does not match the detached native window`);
+  }
+  assert.ok(Math.abs(pressedResponder.point.x - down.point.x) <= 1 && Math.abs(pressedResponder.point.y - down.point.y) <= 1);
+  const move = await driver.request('tron.react-responder', { action: 'move', token: down.token, dx: 4, dy: 1 });
+  await waitFor(async () => (await responder()).moves === initialResponder.moves + 1, 'real RN responder move');
+  // Allow Pressability's minimum press duration to expire so a false leave
+  // cannot be hidden by its delayed onPressOut callback.
+  await pause(170);
+  const movedResponder = await responder(); retainResponder('move', move, movedResponder);
+  assert.equal(movedResponder.active, true, 'Moving within the actual popover target left its Fabric press region');
+  assert.equal(movedResponder.outs, initialResponder.outs);
+  const up = await driver.request('tron.react-responder', { action: 'up', token: down.token });
+  const completedResponder = await waitFor(async () => {
+    const current = await responder(); return current.presses === initialResponder.presses + 1 && current.outs === initialResponder.outs + 1 && !current.active ? current : undefined;
+  }, 'one ordinary React press from native responder release');
+  retainResponder('up', up, completedResponder);
+  checks.push('native-react-responder-in-popover-coordinate-boundary');
   const inspectorIdentity = (await inspect('inspector-title-main')).identity;
   await control('inspector-title-main', 'text', { value: 'Edited inside the actual NSPopover' });
   await waitFor(async () => (await inspect('title-main')).value === 'Edited inside the actual NSPopover', 'shared document edits from NSPopover');
@@ -279,7 +317,7 @@ try {
     ...(permission.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process; no TCC changes or permission prompt was attempted.' }) };
   writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
   checks.push('native-pointer-posting-permission-observed');
-  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-pointer-posting-permission-observed'];
+  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-react-responder-in-popover-coordinate-boundary', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-pointer-posting-permission-observed'];
   assert.deepEqual(checks, required);
   if (permission.postEventsAllowed) {
     pointerEvidence.arrangement = await driver.request('tron.pointer', { action: 'arrange', source: 'main', target: 'document-1' });
@@ -305,7 +343,7 @@ try {
   }
   const report = { schemaVersion: 1, status: 'passed', platform: 'macos', architecture: process.arch, sourceRevision: revision, processId: child.pid, packageSha256: archive.sha256, nativePayloadSha256: nativeArtifact.payloadSha256, checks, captures,
     pointer: pointerEvidence,
-    boundaries: ['The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', pointerEvidence.status === 'passed' ? 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so pointer-session acceptance remains blocked by the recorded host permission.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
+    boundaries: ['The React responder proof delivers synthetic NSEvents to the real RCTSurfaceTouchHandler and measures Fabric/Pressability behavior; it is not physical OS pointer delivery.', 'The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', pointerEvidence.status === 'passed' ? 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so pointer-session acceptance remains blocked by the recorded host permission.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
   writeFileSync(join(output, 'result.json'), JSON.stringify(report, null, 2) + '\n');
   const tested = resolve(process.env.APPKIT_TESTED_PACKAGE ?? join(root, 'tested-package'));
   if (existsSync(tested)) throw new Error('Tested-package output already exists; refusing stale artifact reuse');

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-build-failed",
+  "runId": 42854433102,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42854433102",
+  "nativeJobId": 129979564422,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42854433102/job/129979564422",
+  "pullRequestHead": "fd86e17369c68b7b6d1a588ceee8349a6f248dd3",
+  "checkoutRevision": "0c97bf7f6c3ddf9cac2ae25864c298580d62df76",
+  "checkoutTree": "ff49f2a345c781741cce3257686b4379aa43d85e",
+  "pullRequestHeadTree": "ff49f2a345c781741cce3257686b4379aa43d85e",
+  "artifact": {
+    "id": 13785568135,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 715234,
+    "expectedSha256": "38a2f37c7fd81db64874dcb3bda460640f907946638311ba53f487c78e7ee7fe",
+    "downloadedSha256": "38a2f37c7fd81db64874dcb3bda460640f907946638311ba53f487c78e7ee7fe",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "appkit-toolchain/versions.txt",
+      "retainedPath": "toolchain.txt",
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b",
+      "bytes": 232
+    },
+    {
+      "artifactPath": "appkit-toolchain/isolated-conformance.swift",
+      "retainedPath": "isolated-conformance.swift",
+      "sha256": "280b0a7db2f70bd1315b78045628472cbc632ef15d83c888b98b3bf7c4aeb3ce",
+      "bytes": 128
+    },
+    {
+      "artifactPath": "appkit-toolchain/isolated-conformance.log",
+      "retainedPath": "isolated-conformance-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794330490570-df60178b-10ab-45ba-84b6-a976aeaa7b3c-xcodebuild.log",
+      "bytes": 8651655,
+      "sha256": "82416a430997cd9e6f716803a167bba14d5d7520707ac30759be2891bbfb81d3",
+      "retainedExcerpt": "compiler-errors.txt",
+      "sourceLineRanges": [
+        [
+          26798,
+          26798
+        ],
+        [
+          26804,
+          26825
+        ]
+      ]
+    }
+  ],
+  "observedToolchain": {
+    "xcodeVersion": "26.2",
+    "xcodeBuild": "17C52",
+    "swiftVersion": "6.2.3",
+    "swiftTarget": "arm64-apple-macosx15.0",
+    "sdk": "MacOSX26.2.sdk",
+    "isolatedConformanceProbe": "passed"
+  },
+  "completedPrerequisites": [
+    "canonical-core-release-archive",
+    "native-arm64-xcode26.2-and-swift-isolated-conformance-probe",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot"
+  ],
+  "failedStep": "Compile a standalone native AppKit reference",
+  "failedTarget": "NYCTronAcceptanceDriver",
+  "diagnostics": [
+    {
+      "line": 26822,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/components/view/YogaStylableProps.h:10:10: fatal error: 'yoga/style/Style.h' file not found"
+    }
+  ],
+  "unexecutedChecks": [
+    "native-control-and-window-acceptance",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "The pinned Xcode26.2 toolchain and Swift feature probe passed, but the native build did not complete.",
+    "The missing Yoga header is in the private acceptance-driver compilation; no reference app was launched.",
+    "Prepared package hashes are build inputs and do not represent a natively tested package.",
+    "The separate responder geometry change and Fabric dependency-helper repair require a later native run."
+  ]
+}

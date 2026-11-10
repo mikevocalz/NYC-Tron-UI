@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="emulator-5554" tests="1" failures="0" time="35.793" timestamp="2026-11-10T17:18:37">
+    <testcase id="Settings native edit and save" name="Settings native edit and save" classname="Settings native edit and save" file="tooling/native/ui-flows/settings.yaml" time="35.766" timestamp="2026-11-10T17:18:37" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

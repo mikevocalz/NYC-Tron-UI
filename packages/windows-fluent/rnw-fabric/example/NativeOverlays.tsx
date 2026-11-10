@@ -4,7 +4,7 @@ import { WindowsMenuButton, WindowsContextMenu, WindowsInspector, WindowsTooltip
 import { overlays, requestInspectorEdit, requestInspectorOpen, inspectorAction, vetoNextInspectorDismissal } from "./overlay-store";
 import { failDesktop } from "./desktop-store";
 
-export function NativeOverlays() {
+export function NativeOverlays({ mountKey }: { mountKey: number }) {
   const state = useStore(overlays);
   const common = { scopeId: state.scopeId, onNativeError: failDesktop };
   return <View style={{ gap: 12 }}>
@@ -24,7 +24,7 @@ export function NativeOverlays() {
         { id: "note", label: "Native inspector note", value: state.value, acknowledgedEventCount: state.acknowledgedEventCount },
       ]} actions={[
         { id: "close", label: "Close native inspector" }, { id: "disable", label: "Disable native inspector" }, { id: "replace", label: "Replace inspector scope" },
-      ]} onOpenRequested={requestInspectorOpen} onFieldChangeRequested={requestInspectorEdit} onActionRequested={inspectorAction}/>
+      ]} onOpenRequested={requestInspectorOpen} onFieldChangeRequested={request => requestInspectorEdit(request, mountKey)} onActionRequested={inspectorAction}/>
     <Text accessibilityLiveRegion="polite">{state.status}</Text>
     <Text>Committed native note: {state.value}</Text>
     <Text>Native edit acknowledgment: {state.acknowledgedEventCount}</Text>

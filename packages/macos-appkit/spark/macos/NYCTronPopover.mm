@@ -1,6 +1,6 @@
 #import "NYCTronPopover.h"
+#import "NYCTronPopoverComponentDescriptor.h"
 #import <React/RCTSurfaceTouchHandler.h>
-#import <react/renderer/components/NYCTronAppKitSpec/ComponentDescriptors.h>
 #import <react/renderer/components/NYCTronAppKitSpec/EventEmitters.h>
 #import <react/renderer/components/NYCTronAppKitSpec/Props.h>
 
@@ -23,6 +23,7 @@ using namespace facebook::react;
   NSPopover *_popover;
   NYCTronPopoverContent *_content;
   RCTSurfaceTouchHandler *_touchHandler;
+  NYCTronPopoverRootShadowNode::ConcreteState::Shared _state;
   __weak NSWindow *_owner;
   __weak NSResponder *_opener;
   NSString *_scopeToken;
@@ -73,6 +74,24 @@ using namespace facebook::react;
     if (view && view->_generation == generation) [view synchronizePresentation];
   });
 }
+- (BOOL)synchronizeContentCoordinates {
+  if (!_state || !_content.window) return NO;
+  NSRect contentRect = [_content convertRect:_content.bounds toView:nil];
+  NSSize windowSize = _content.window.frame.size;
+  // RNmacOS touch.page coordinates use the NSWindow frame's top-left, rather
+  // than the popover's inner content origin. Include the actual border/arrow.
+  Point origin{(Float)NSMinX(contentRect), (Float)(windowSize.height - NSMaxY(contentRect))};
+  Size size{(Float)windowSize.width, (Float)windowSize.height};
+  const auto &data = _state->getData();
+  if (data.contentOrigin != origin || data.viewportSize != size) {
+    _state->updateState(NYCTronPopoverRootStateData(origin, size));
+    return NO;
+  }
+  // Yoga includes that origin for Fabric measurement. Subtract it exactly
+  // once in native drawing, keeping the retained children at the same place.
+  [_content setBoundsOrigin:NSMakePoint(origin.x, origin.y)];
+  return YES;
+}
 - (void)synchronizePresentation {
   if (_closing) return;
   if (!_visible || !_owner || !_content.subviews.count) { [self closeSilently]; return; }
@@ -100,7 +119,11 @@ using namespace facebook::react;
     NSRect screenRect = _content.window.frame;
     NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];
     if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);
-    if (NSContainsRect(_allowedRegion, actual)) { if (presenting) _content.hidden = NO; }
+    if (NSContainsRect(_allowedRegion, actual)) {
+      // Initial controls remain hidden until the matching Fabric layout has
+      // committed. A shown field stays visible through safe geometry changes.
+      if ([self synchronizeContentCoordinates]) _content.hidden = NO;
+    }
     else {
       _rejectedPresentationToken = [_presentationToken copy];
       [self closeSilently];
@@ -135,6 +158,15 @@ using namespace facebook::react;
 }
 - (void)ownerChanged:(NSNotification *)note { [self schedulePresentation]; }
 - (void)ownerClosing:(NSNotification *)note { ++_generation; [self closeSilently]; }
+- (void)updateState:(State::Shared const &)state oldState:(State::Shared const &)oldState {
+  _state = std::static_pointer_cast<const NYCTronPopoverRootShadowNode::ConcreteState>(state);
+  [super updateState:state oldState:oldState];
+  [self schedulePresentation];
+}
+- (void)updateLayoutMetrics:(LayoutMetrics const &)layoutMetrics oldLayoutMetrics:(LayoutMetrics const &)oldLayoutMetrics {
+  [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
+  [self schedulePresentation];
+}
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps {
   const auto &value = *std::static_pointer_cast<const NYCTronPopoverProps>(props);
   NSString *token = [NSString stringWithUTF8String:value.scopeToken.c_str()];
@@ -187,6 +219,7 @@ using namespace facebook::react;
   ++_generation; _visible = NO; [self closeSilently];
   [NSNotificationCenter.defaultCenter removeObserver:self];
   _owner = nil; _opener = nil; _scopeToken = nil; _presentationToken = nil; _presentedToken = nil; _dismissedToken = nil; _rejectedPresentationToken = nil;
+  _state.reset(); [_content setBoundsOrigin:NSZeroPoint];
   [super prepareForRecycle];
 }
 - (void)dealloc {
@@ -194,5 +227,5 @@ using namespace facebook::react;
   _popover.delegate = nil; [_popover close];
   [_touchHandler detachFromView:_content];
 }
-+ (ComponentDescriptorProvider)componentDescriptorProvider { return concreteComponentDescriptorProvider<NYCTronPopoverComponentDescriptor>(); }
++ (ComponentDescriptorProvider)componentDescriptorProvider { return concreteComponentDescriptorProvider<NYCTronPopoverRootComponentDescriptor>(); }
 @end

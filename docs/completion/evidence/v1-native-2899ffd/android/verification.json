@@ -1,0 +1,338 @@
+{
+  "archiveSha256": "459a093e437c9eac55185b97b24cfe1649a3dfbaabc295bdd4e6108485130522",
+  "headSha": "2899ffdedf98e2a86c077f15aa1baf6401c07b80",
+  "testedMergeSha": "0576bea35225fde1437a50263c8154aca525ec8d",
+  "runId": 42858538373,
+  "jobId": 129978087026,
+  "artifactId": 13786226974,
+  "apkSha256": "16a9d93049f6eb23bcad59cadea52c06bbec98a537995656b254cec5c02952bb",
+  "apkBytes": 364067365,
+  "mediaChecks": 11,
+  "uiFlows": [
+    "settings",
+    "editor",
+    "pointer",
+    "pointer-cancel"
+  ],
+  "keyboardActions": [],
+  "verifiedReceiptHashes": true,
+  "verifiedHierarchyHashes": true,
+  "verifiedScreenshotHashes": true,
+  "verifiedNativePayload": true,
+  "transportRecoveries": [],
+  "originalFiles": [
+    {
+      "file": "consumer.json",
+      "artifactEntry": "nyc-tron-native-consumer/consumer.json",
+      "bytes": 2481,
+      "sha256": "ff3e89df52c20669b6568c04d080adb66388265831efa6b08a4edb2c59d0ae78"
+    },
+    {
+      "file": "installed-packages.json",
+      "artifactEntry": "nyc-tron-native-consumer/installed-packages.json",
+      "bytes": 2711,
+      "sha256": "a0f7907fcd6b41a7055d0deeded6c92e840c675091603a600e345ae4c4109405"
+    },
+    {
+      "file": "media/bundle-warmup-media.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-android/bundle-warmup-media.json",
+      "bytes": 659,
+      "sha256": "dd14e5cecb5a185506609d4a1dcf5226fb861210af6404c11b07fa6ecd89e36e"
+    },
+    {
+      "file": "media/native-artifact.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-android/native-artifact.json",
+      "bytes": 261,
+      "sha256": "f023f965ec9292b6df4bcca00918710d531238fa6bc1c640efa93a04a6ec233f"
+    },
+    {
+      "file": "media/native-report.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-android/native-report.json",
+      "bytes": 896,
+      "sha256": "02c9a66a4c9b34450075d38d3b67d4ee9d9e81ae0addb1a88dfd051af6f26657"
+    },
+    {
+      "file": "media/result.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-android/result.json",
+      "bytes": 4685,
+      "sha256": "1f6516fa86863e013d4498fffeefad209164e554b051ac226adc649a16ec936b"
+    },
+    {
+      "file": "media/screen.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-android/screen.png",
+      "bytes": 42101,
+      "sha256": "62e270b62b9a32970f18ccd9a202b8c03ba21d1616213c604271182a7fa265e8"
+    },
+    {
+      "file": "media/screen.xml",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-android/screen.xml",
+      "bytes": 5671,
+      "sha256": "a935ef5e1bc6ac8a94efbb7f05077dcc83e4a9d76b8470f35169014480e24053"
+    },
+    {
+      "file": "ui/bundle-warmup-pointer.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/bundle-warmup-pointer.json",
+      "bytes": 660,
+      "sha256": "e17b9fb01f7c26a4a71ec459ae8a5f0947bc70e370bd4ed3b8decac6966478f4"
+    },
+    {
+      "file": "ui/bundle-warmup-reference.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/bundle-warmup-reference.json",
+      "bytes": 662,
+      "sha256": "1cb63342d85c975efc4c3a618f9dd818de6e64c6f7405818e20d713717905b1b"
+    },
+    {
+      "file": "ui/commands.jsonl",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/commands.jsonl",
+      "bytes": 6940,
+      "sha256": "aea74e9be9e1f248ec5e3f274ac744dbadba330d61dd4ff3f7ae68a5a0441ba5"
+    },
+    {
+      "file": "ui/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/commands.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/commands.json",
+      "bytes": 21686,
+      "sha256": "d5c83c3f02cf0edb9fa9b1636b9b008d0034bd83a3e32ce3f4711d94483be80e"
+    },
+    {
+      "file": "ui/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/manifest.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/manifest.json",
+      "bytes": 663,
+      "sha256": "af0792a90d6c6a34076efeb9c037e6a9e273ab0b0f5ffd09cc6a8a0c90eb3947"
+    },
+    {
+      "file": "ui/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/takeScreenshot/editor-draft.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/takeScreenshot/editor-draft.png",
+      "bytes": 31328,
+      "sha256": "714ed0dca2e6e50feddee6d19961a605a0180e176e78d94489fb7c5a49477ead"
+    },
+    {
+      "file": "ui/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/takeScreenshot/editor-saved.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/editor/artifacts/2026-11-10_171919/Editor native draft route retention and save/takeScreenshot/editor-saved.png",
+      "bytes": 29662,
+      "sha256": "52027f8c84a9d2da5e819641864e3235ccc8c11259f62eac5b04bb2c2e8505f6"
+    },
+    {
+      "file": "ui/editor/report.xml",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/editor/report.xml",
+      "bytes": 486,
+      "sha256": "bff640aef2dd2d8072fab44c65e9df69c8b089fe657200c6e2c62e2b24c0b31e"
+    },
+    {
+      "file": "ui/editor-hierarchy.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/editor-hierarchy.json",
+      "bytes": 151951,
+      "sha256": "8bb8ba244c547b58e123db686daf46594f5bb62dbdebf2a2edb34ba29d391772"
+    },
+    {
+      "file": "ui/final.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/final.png",
+      "bytes": 22222,
+      "sha256": "2f6a5495ed485c23cdb4519b23b6c49b4a34ef1f3f4f7bd7c2b6b22a53f80cd0"
+    },
+    {
+      "file": "ui/native-artifact.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/native-artifact.json",
+      "bytes": 261,
+      "sha256": "f023f965ec9292b6df4bcca00918710d531238fa6bc1c640efa93a04a6ec233f"
+    },
+    {
+      "file": "ui/pointer/artifacts/2026-11-10_172021/Native pointer touch lifecycle/commands.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer/artifacts/2026-11-10_172021/Native pointer touch lifecycle/commands.json",
+      "bytes": 6266,
+      "sha256": "a0f5dd804198bb4ba6866a45fc8647a58030fec72b3e32602f096e444ff137a3"
+    },
+    {
+      "file": "ui/pointer/artifacts/2026-11-10_172021/Native pointer touch lifecycle/manifest.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer/artifacts/2026-11-10_172021/Native pointer touch lifecycle/manifest.json",
+      "bytes": 659,
+      "sha256": "e0f663cc0f33d5912320c436b2a349b143eb79df0b8c51ae7f36ac2afc3990bf"
+    },
+    {
+      "file": "ui/pointer/artifacts/2026-11-10_172021/Native pointer touch lifecycle/takeScreenshot/pointer-touch.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer/artifacts/2026-11-10_172021/Native pointer touch lifecycle/takeScreenshot/pointer-touch.png",
+      "bytes": 20335,
+      "sha256": "e3551a95c62989341aac2d20378feb285842f096870bb2813f736b20888991bd"
+    },
+    {
+      "file": "ui/pointer/report.xml",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer/report.xml",
+      "bytes": 443,
+      "sha256": "f746c75234b314c59d528fd0bebe247f6fcc1177f6baecb2a2703929212d6a89"
+    },
+    {
+      "file": "ui/pointer-cancel/artifacts/2026-11-10_172047/Android native pointer cancellation/commands.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-cancel/artifacts/2026-11-10_172047/Android native pointer cancellation/commands.json",
+      "bytes": 3668,
+      "sha256": "d1c83e706d7d4f07d8760f14ac047a98525c4bae2f0e0762418dbf601512b72d"
+    },
+    {
+      "file": "ui/pointer-cancel/artifacts/2026-11-10_172047/Android native pointer cancellation/manifest.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-cancel/artifacts/2026-11-10_172047/Android native pointer cancellation/manifest.json",
+      "bytes": 659,
+      "sha256": "4cdda0a8f516105c01ca75a767073a13f239debe112ede887e78dbf878e02f65"
+    },
+    {
+      "file": "ui/pointer-cancel/artifacts/2026-11-10_172047/Android native pointer cancellation/takeScreenshot/pointer-cancel.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-cancel/artifacts/2026-11-10_172047/Android native pointer cancellation/takeScreenshot/pointer-cancel.png",
+      "bytes": 20397,
+      "sha256": "0cae03dee20e29dffe7687d091f920ae7601a03e242da96acb9db4fcc226dde8"
+    },
+    {
+      "file": "ui/pointer-cancel/report.xml",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-cancel/report.xml",
+      "bytes": 465,
+      "sha256": "65cc0499f5b48306941c65b4f0f8b3698c4308d58ceacb107b58d118bc2d6031"
+    },
+    {
+      "file": "ui/pointer-cancel-hierarchy.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-cancel-hierarchy.json",
+      "bytes": 235154,
+      "sha256": "2268cf4dd28abe27373f6fc0fed72d5ec9a606792db7ab1b011b8ba4ef2f22ff"
+    },
+    {
+      "file": "ui/pointer-down-hierarchy.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-down-hierarchy.json",
+      "bytes": 237108,
+      "sha256": "fc60f7c6651d13e6a8875acf40f9845e806aaf29bd74339b441e93c338727839"
+    },
+    {
+      "file": "ui/pointer-hierarchy.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/pointer-hierarchy.json",
+      "bytes": 235149,
+      "sha256": "9b20aee49269ace77445b23b615f088469ea5fcf1a0fda214c18b09ee01eb9e2"
+    },
+    {
+      "file": "ui/result.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/result.json",
+      "bytes": 9478,
+      "sha256": "a7e2534bf79f72a1d990732a8b8ec091038653b54636c9484c75b675782461af"
+    },
+    {
+      "file": "ui/settings/artifacts/2026-11-10_171820/Settings native edit and save/commands.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/settings/artifacts/2026-11-10_171820/Settings native edit and save/commands.json",
+      "bytes": 15856,
+      "sha256": "baaaa79dc7dae3c101f38237371454f680cd91441cd9b96effbe29d32b326405"
+    },
+    {
+      "file": "ui/settings/artifacts/2026-11-10_171820/Settings native edit and save/manifest.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/settings/artifacts/2026-11-10_171820/Settings native edit and save/manifest.json",
+      "bytes": 663,
+      "sha256": "e199be74350c79e5e8342f0065777e3b5f496a0b89b921a30cf1c181ee230479"
+    },
+    {
+      "file": "ui/settings/artifacts/2026-11-10_171820/Settings native edit and save/takeScreenshot/settings-saved.png",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/settings/artifacts/2026-11-10_171820/Settings native edit and save/takeScreenshot/settings-saved.png",
+      "bytes": 31270,
+      "sha256": "d7097193bd20b12de8b626f7e3726d7dae5aa7f2d2e34a28050112a1274e2267"
+    },
+    {
+      "file": "ui/settings/report.xml",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/settings/report.xml",
+      "bytes": 443,
+      "sha256": "874fe564bdec2bb1d1dafa9dfe6b3a1993343dae3c0423e7a01f1d3ef5bb5c19"
+    },
+    {
+      "file": "ui/settings-hierarchy.json",
+      "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/settings-hierarchy.json",
+      "bytes": 124661,
+      "sha256": "769f316dfdaa1bf45b48ab5be9e42e151225dceb0ef888e15027b29de146cb58"
+    }
+  ],
+  "githubResponses": [
+    {
+      "file": "github-job.json",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/129978087026",
+      "sha256": "04b63ba668afca4a32843f62a7bedaf96977ee2a853e254a81dd18956c319fb4"
+    },
+    {
+      "file": "github-artifact.json",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13786226974",
+      "sha256": "484676622e8124b12d38e3e8599a9a43b009a850d36c3e0f84ebc61f42728024"
+    }
+  ],
+  "verifiedNativeGeometry": true,
+  "verifiedSemanticLabels": true,
+  "settingsSavedConfirmation": "COMPLETED before the original final scroll to Workspace name",
+  "statusBarVisualReview": {
+    "settings": "dark icons readable on light reference background",
+    "editor": "dark icons readable on light reference background"
+  },
+  "nativeCancelActions": [
+    {
+      "file": "/usr/local/lib/android/sdk/platform-tools/adb",
+      "args": [
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "touchscreen",
+        "motionevent",
+        "DOWN",
+        "161",
+        "433"
+      ],
+      "elapsedMs": 36,
+      "status": 0
+    },
+    {
+      "file": "/usr/local/lib/android/sdk/platform-tools/adb",
+      "args": [
+        "-s",
+        "emulator-5554",
+        "shell",
+        "input",
+        "keyevent",
+        "KEYCODE_HOME"
+      ],
+      "elapsedMs": 24,
+      "status": 0
+    },
+    {
+      "file": "/usr/local/lib/android/sdk/platform-tools/adb",
+      "args": [
+        "-s",
+        "emulator-5554",
+        "shell",
+        "am",
+        "start",
+        "-n",
+        "com.nyctron.instruments.example/.MainActivity"
+      ],
+      "elapsedMs": 69,
+      "status": 0
+    }
+  ],
+  "pointerCancellation": {
+    "before": {
+      "committed": 1,
+      "cancelled": 0,
+      "lastEvent": "down"
+    },
+    "after": {
+      "committed": 1,
+      "cancelled": 1,
+      "predictions": 0,
+      "lastEvent": "cancel"
+    },
+    "nativeActionCoordinatesFromObservedBounds": true
+  },
+  "diagnostics": [
+    {
+      "phase": "cancel",
+      "lastStrokePhase": "cancel",
+      "kind": "touch",
+      "x": 140,
+      "y": 140,
+      "pressure": null,
+      "tiltX": null,
+      "tiltY": null,
+      "observedSamples": 1,
+      "predictions": 0,
+      "hover": null,
+      "committed": 1,
+      "cancelled": 1,
+      "key": null,
+      "mounted": true
+    }
+  ]
+}
