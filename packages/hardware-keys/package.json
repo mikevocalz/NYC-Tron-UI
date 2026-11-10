@@ -1,7 +1,17 @@
 {
   "name": "@nyc-tron/hardware-keys",
-  "version": "0.1.0-alpha.4",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
+    "directory": "packages/hardware-keys"
+  },
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI/tree/main/packages/hardware-keys#readme",
+  "bugs": {
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "description": "Hardware keyboard shortcuts for NYC-Tron UI: UIKeyCommand and UIPress capture on iOS, unhandled KeyEvent listeners on Android, document keydown on web",
@@ -48,6 +58,7 @@
     "expo-module.config.json",
     "README.md",
     "LICENSE",
-    "Package.swift"
+    "Package.swift",
+    "THIRD_PARTY_NOTICES.md"
   ]
 }

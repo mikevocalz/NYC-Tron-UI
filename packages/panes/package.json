@@ -1,7 +1,17 @@
 {
   "name": "@nyc-tron/panes",
-  "version": "0.1.0-alpha.4",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
+    "directory": "packages/panes"
+  },
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI/tree/main/packages/panes#readme",
+  "bugs": {
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "description": "Adaptive Master Detail Inspector React Native layout independently installable from NYC-Tron",
@@ -20,6 +30,11 @@
       "types": "./dist/components/SafeAreaFoldableLayout.d.ts",
       "react-native": "./dist/components/SafeAreaFoldableLayout.js",
       "default": "./dist/components/SafeAreaFoldableLayout.js"
+    },
+    "./window-lifecycle": {
+      "types": "./dist/window-lifecycle.d.ts",
+      "react-native": "./dist/window-lifecycle.js",
+      "default": "./dist/window-lifecycle.js"
     }
   },
   "main": "./dist/index.js",
@@ -28,7 +43,8 @@
     "dist",
     "README.md",
     "THIRD_PARTY_NOTICES.md",
-    "licenses"
+    "licenses",
+    "LICENSE"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",

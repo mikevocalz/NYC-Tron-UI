@@ -1,7 +1,17 @@
 {
   "name": "@nyc-tron/native-controls",
-  "version": "0.1.0-alpha.4",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
+    "directory": "packages/native-controls"
+  },
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI/tree/main/packages/native-controls#readme",
+  "bugs": {
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "description": "Installable SwiftUI and Jetpack Compose instruments for NYC-Tron UI",
