@@ -42,7 +42,7 @@ static void Labels(NSView *view, NSMutableArray *labels) {
   for (NSView *child in view.subviews) Labels(child, labels);
   if ([view isKindOfClass:NYCTronPopoverComponentView.class]) Labels(((NYCTronPopoverComponentView *)view).nativePopover.contentViewController.view, labels);
 }
-static NSDictionary *Rect(NSRect rect) { return @{ @"x": @(rect.origin.x), @"y": @(rect.origin.y), @"width": @(rect.size.width), @"height": @(rect.size.height) }; }
+static NSDictionary *RectDictionary(NSRect rect) { return @{ @"x": @(rect.origin.x), @"y": @(rect.origin.y), @"width": @(rect.size.width), @"height": @(rect.size.height) }; }
 static NSRect OwnerCoordinates(NSWindow *owner, NSRect screenRect) {
   NSView *content = owner.contentView;
   NSRect result = [content convertRect:[owner convertRectFromScreen:screenRect] fromView:nil];
@@ -142,10 +142,10 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
       result[@"tooltip"] = view.toolTip ?: @"";
       result[@"help"] = view.accessibilityHelp ?: @"";
       result[@"windowClass"] = NSStringFromClass(window.class);
-      result[@"viewBounds"] = Rect(view.bounds);
-      result[@"visibleRect"] = Rect(view.visibleRect);
+      result[@"viewBounds"] = RectDictionary(view.bounds);
+      result[@"visibleRect"] = RectDictionary(view.visibleRect);
       result[@"fullyVisible"] = @(![view isHiddenOrHasHiddenAncestor] && NSContainsRect(view.visibleRect, view.bounds));
-      result[@"contentBounds"] = Rect(window.contentView.bounds);
+      result[@"contentBounds"] = RectDictionary(window.contentView.bounds);
       result[@"visible"] = @(window.visible);
       result[@"key"] = @(window.keyWindow);
       result[@"firstResponderIdentity"] = window.firstResponder ? [NSString stringWithFormat:@"%p", window.firstResponder] : @"";
@@ -174,8 +174,8 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
       if ([request[@"action"] isEqual:@"escape"]) [popover.contentViewController tryToPerform:@selector(cancelOperation:) with:nil];
       else if ([request[@"action"] isEqual:@"close"]) [popover performClose:nil];
       NSMutableArray *classes = [NSMutableArray new]; Classes(content, classes);
-      NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": Rect(component.nativeAllowedRegion) } mutableCopy];
-      if (popover.shown && content.window) result[@"frame"] = Rect(OwnerCoordinates(owner, content.window.frame));
+      NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": RectDictionary(component.nativeAllowedRegion) } mutableCopy];
+      if (popover.shown && content.window) result[@"frame"] = RectDictionary(OwnerCoordinates(owner, content.window.frame));
       reply(result);
     });
     SparkTestDriverRegisterCommand(@"tron.react-responder", ^(NSDictionary *request, SparkTestDriverReply reply) {
@@ -232,8 +232,8 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
       handlerBounds.origin.y = NSHeight(window.frame) - NSMaxY(handlerBounds);
       NSDictionary *result = @{ @"ok": @YES, @"boundary": @"synthetic-native-responder", @"token": @(ResponderToken),
         @"handlerClass": NSStringFromClass(handler.class), @"targetClass": NSStringFromClass(target.class),
-        @"point": @{ @"x": @(ResponderPoint.x), @"y": @(NSHeight(window.frame) - ResponderPoint.y) }, @"nativeBounds": Rect(bounds),
-        @"handlerBounds": Rect(handler.view.bounds), @"handlerWindowBounds": Rect(handlerBounds),
+        @"point": @{ @"x": @(ResponderPoint.x), @"y": @(NSHeight(window.frame) - ResponderPoint.y) }, @"nativeBounds": RectDictionary(bounds),
+        @"handlerBounds": RectDictionary(handler.view.bounds), @"handlerWindowBounds": RectDictionary(handlerBounds),
         @"windowViewport": @{ @"width": @(NSWidth(window.frame)), @"height": @(NSHeight(window.frame)) } };
       if (type == NSEventTypeLeftMouseDown) [handler mouseDown:event];
       else if (type == NSEventTypeLeftMouseDragged) [handler mouseDragged:event];
@@ -336,7 +336,7 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
         [sourceWindow setFrame:NSMakeRect(NSMinX(area) + 8, NSMinY(area) + 8, width, height) display:YES];
         [targetWindow setFrame:NSMakeRect(NSMaxX(area) - width - 8, NSMinY(area) + 8, width, height) display:YES];
         [NSApp activateIgnoringOtherApps:YES]; [targetWindow orderFront:nil]; [sourceWindow makeKeyAndOrderFront:nil];
-        reply(@{ @"ok": @YES, @"sourceFrame": Rect(sourceWindow.frame), @"targetFrame": Rect(targetWindow.frame), @"display": Rect(area) }); return;
+        reply(@{ @"ok": @YES, @"sourceFrame": RectDictionary(sourceWindow.frame), @"targetFrame": RectDictionary(targetWindow.frame), @"display": RectDictionary(area) }); return;
       }
       if (![action isEqual:@"drag"]) { reply(Failure(@"Unknown pointer action")); return; }
       NSView *source = Find(sourceWindow.contentView, [@"drop-" stringByAppendingString:request[@"source"]]);

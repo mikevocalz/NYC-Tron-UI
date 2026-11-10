@@ -22,12 +22,32 @@ public static class NativeWindow {
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetWindowPos(IntPtr window, IntPtr after, int x, int y, int width, int height, uint flags);
   [DllImport("user32.dll", SetLastError=true)] public static extern bool SetCursorPos(int x, int y);
+  [DllImport("user32.dll", SetLastError=true)] static extern bool GetCursorPos(out POINT point);
+  [DllImport("user32.dll")] static extern int GetSystemMetrics(int index);
   [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
   [DllImport("user32.dll", SetLastError=true)] static extern uint SendInput(uint count, INPUT[] inputs, int size);
+  [StructLayout(LayoutKind.Sequential)] public struct POINT { public int X, Y; }
   [StructLayout(LayoutKind.Sequential)] struct INPUT { public uint type; public MOUSEINPUT mouse; }
   [StructLayout(LayoutKind.Sequential)] struct MOUSEINPUT { public int dx, dy; public uint mouseData, flags, time; public UIntPtr extraInfo; }
   public static void Mouse(uint flags) {
     var input = new INPUT { type = 0, mouse = new MOUSEINPUT { flags = flags } };
+    if (SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT))) != 1) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+  }
+  public static POINT CursorPosition() {
+    POINT point;
+    if (!GetCursorPos(out point)) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+    return point;
+  }
+  public static void MoveMouse(int x, int y) {
+    int left = GetSystemMetrics(76), top = GetSystemMetrics(77);
+    int width = GetSystemMetrics(78), height = GetSystemMetrics(79);
+    if (width < 2 || height < 2 || x < left || y < top || x >= left + width || y >= top + height)
+      throw new ArgumentOutOfRangeException("Pointer destination lies outside the virtual desktop");
+    var input = new INPUT { type = 0, mouse = new MOUSEINPUT {
+      dx = (int)Math.Round((x - left) * 65535.0 / (width - 1)),
+      dy = (int)Math.Round((y - top) * 65535.0 / (height - 1)),
+      flags = 0xC001 // MOVE | ABSOLUTE | VIRTUALDESK
+    } };
     if (SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT))) != 1) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
   }
 }
@@ -185,6 +205,49 @@ function Save-PopupScreenshot([string]$name, $popup) {
   # Focusing the root would dismiss a native popup. Capture the current desktop
   # after proving the popup is visible in the application's foreground process.
   Save-Screenshot $name $null
+}
+function Move-NativePointer([int]$x, [int]$y) {
+  [NativeWindow]::MoveMouse($x, $y)
+  $deadline = (Get-Date).AddSeconds(5)
+  do {
+    $point = [NativeWindow]::CursorPosition()
+    if ([Math]::Abs($point.X - $x) -le 1 -and [Math]::Abs($point.Y - $y) -le 1) {
+      Write-Host "OS pointer reached ($($point.X), $($point.Y)) for requested ($x, $y)"
+      return $point
+    }
+    Start-Sleep -Milliseconds 20
+  } while ((Get-Date) -lt $deadline)
+  throw "OS pointer stayed at ($($point.X), $($point.Y)) instead of ($x, $y)"
+}
+function Assert-PointerPlacement($point, $target) {
+  $bounds = $target.Current.BoundingRectangle
+  if ($target.Current.IsOffscreen -or $point.X -lt $bounds.Left -or $point.X -ge $bounds.Right -or
+      $point.Y -lt $bounds.Top -or $point.Y -ge $bounds.Bottom) {
+    throw "OS pointer lies outside visible native '$($target.Current.Name)': ($($point.X), $($point.Y)); bounds=$bounds"
+  }
+  [uint32]$foregroundProcess = 0
+  [NativeWindow]::GetWindowThreadProcessId([NativeWindow]::GetForegroundWindow(), [ref]$foregroundProcess) | Out-Null
+  if ($foregroundProcess -ne $process.Id) { throw "Another process owns the foreground during native hover" }
+  $hit = $AE::FromPoint([System.Windows.Point]::new($point.X, $point.Y))
+  $identity = $target.GetRuntimeId() -join ","
+  $providers = @()
+  $nativeIdentityMatched = $false
+  # RNW 0.85 RootComponentView::UiaProviderFromPoint can return its island
+  # container when hosted XAML returns no leaf. Record that provider boundary;
+  # the genuine ToolTip appearing and dismissing remains the interaction gate.
+  for ($ancestor = $hit; $null -ne $ancestor; $ancestor = [System.Windows.Automation.TreeWalker]::RawViewWalker.GetParent($ancestor)) {
+    $current = $ancestor.Current
+    $providerIdentity = $ancestor.GetRuntimeId() -join ","
+    $providers += @{ name = $current.Name; className = $current.ClassName; controlType = $current.ControlType.ProgrammaticName;
+      processId = $current.ProcessId; runtimeId = $providerIdentity; bounds = $current.BoundingRectangle.ToString() }
+    if ($providerIdentity -eq $identity) { $nativeIdentityMatched = $true }
+  }
+  $evidence = @{ cursor = @{ x = $point.X; y = $point.Y }; foregroundProcessId = $foregroundProcess;
+    target = @{ name = $target.Current.Name; runtimeId = $identity; bounds = $bounds.ToString() };
+    nativeIdentityMatched = $nativeIdentityMatched; hitProviders = $providers }
+  $evidence | ConvertTo-Json -Depth 6 | Set-Content -Encoding UTF8 (Join-Path $OutDir "tooltip-pointer.json")
+  Write-Host "Pointer inside native '$($target.Current.Name)' ($identity); bounds=$bounds; foregroundProcess=$foregroundProcess; nativeHitIdentityMatched=$nativeIdentityMatched"
+  $providers | ConvertTo-Json -Depth 3 -Compress | Write-Host
 }
 function Arrange-DragWindows($main, $secondary) {
   $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
@@ -353,19 +416,29 @@ try {
   Save-PopupScreenshot "07-native-menu" $command
   Invoke-NativeElement $command
   Find-ByName $window "Native menu action: approve" | Out-Null
+  Wait-ProcessElementHidden "Approve native command" ([System.Windows.Automation.ControlType]::MenuItem)
 
   $context = Find-ProcessElement "Native context anchor" ([System.Windows.Automation.ControlType]::Button)
   $context.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("+{F10}")
   $contextCommand = Find-ProcessElement "Inspect native selection" ([System.Windows.Automation.ControlType]::MenuItem)
   Invoke-NativeElement $contextCommand
   Find-ByName $window "Native context action: inspect" | Out-Null
+  Wait-ProcessElementHidden "Inspect native selection" ([System.Windows.Automation.ControlType]::MenuItem)
 
   $tooltipAnchor = Find-ProcessElement "Native tooltip anchor" ([System.Windows.Automation.ControlType]::Button)
+  # The app callback can commit before the context popup finishes closing.
+  # Enter from outside the anchor only after its native popup has disappeared,
+  # and prove actual OS pointer delivery instead of trusting one SetCursorPos.
+  $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
+  Move-NativePointer ($work.X + 8) ($work.Y + 8) | Out-Null
+  Start-Sleep -Milliseconds 150
   $tipBounds = $tooltipAnchor.Current.BoundingRectangle
-  [NativeWindow]::SetCursorPos([int]($tipBounds.X + $tipBounds.Width / 2), [int]($tipBounds.Y + $tipBounds.Height / 2)) | Out-Null
+  $tipPoint = Move-NativePointer ([int]($tipBounds.X + $tipBounds.Width / 2)) ([int]($tipBounds.Y + $tipBounds.Height / 2))
+  Assert-PointerPlacement $tipPoint $tooltipAnchor
   $tooltip = Find-ProcessElement "Native tooltip details" ([System.Windows.Automation.ControlType]::ToolTip)
   Save-PopupScreenshot "08-native-tooltip" $tooltip
-  [NativeWindow]::SetCursorPos(0, 0) | Out-Null
+  Move-NativePointer ($work.X + 8) ($work.Y + 8) | Out-Null
+  Wait-ProcessElementHidden "Native tooltip details" ([System.Windows.Automation.ControlType]::ToolTip)
 
   Invoke-Button $window "Native inspector anchor"
   $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)

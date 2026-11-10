@@ -1,0 +1,22 @@
+﻿2026-11-10T17:23:18.5848738Z Current runner version: '2.338.2'
+2026-11-10T17:23:18.5874419Z ##[group]Runner Image Provisioner
+2026-11-10T17:23:18.5875181Z Hosted Compute Agent
+2026-11-10T17:23:18.5875855Z Version: 20261103.629
+2026-11-10T17:23:18.5876528Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-10T17:23:18.5877259Z Build Date: 2026-11-03T17:26:59Z
+2026-11-10T17:23:18.5877901Z Worker ID: {96a1eb3c-1012-46d0-8c3a-f69422ccc89e}
+2026-11-10T17:23:18.5878584Z Region: northcentralus
+2026-11-10T17:23:18.5879143Z Cloud: Azure
+2026-11-10T17:23:18.5879684Z ##[endgroup]
+2026-11-10T17:23:18.5881285Z ##[group]Operating System
+2026-11-10T17:23:18.5882042Z Microsoft Windows Server 2025
+2026-11-10T17:23:18.5882613Z 10.0.26100
+2026-11-10T17:23:18.5883150Z Datacenter
+2026-11-10T17:23:18.5883637Z ##[endgroup]
+2026-11-10T17:23:18.5884168Z ##[group]Runner Image
+2026-11-10T17:23:18.5884730Z Image: windows-2025-vs2026
+2026-11-10T17:23:18.5885304Z Version: 20261103.298.1
+2026-11-10T17:23:18.5886925Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261103.298/images/windows/Windows2025-VS2026-Readme.md
+2026-11-10T17:23:18.5888587Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261103.298
+
+2026-11-10T17:24:58.4216454Z MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework

@@ -1,0 +1,84 @@
+{
+  "artifactId": 13787072023,
+  "archiveBytes": 177016,
+  "archiveSha256": "3120295d97ebe218f972f1ce25cd42d174bd45f3a6c3563c02d05c5bf2f7dba9",
+  "files": [
+    {
+      "filename": "01-launched.png",
+      "bytes": 31470,
+      "sha256": "d83b217587052e0163cac0dd69e4b9159eb7a606363cdcb5bb9ee486d3d1f6c5",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "02-rejected.png",
+      "bytes": 33159,
+      "sha256": "587d86c8ea3457c7d08c0dac838a4a4ecaf7bea706b6246f96c3e30f5313d838",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "03-accepted.png",
+      "bytes": 32345,
+      "sha256": "78bd4f2c4ad7a804a8cbe2e0b304b8d3c89675c872d274c10fed52f8bafd38e0",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "04-native-document.png",
+      "bytes": 15294,
+      "sha256": "4e29a4af045ae6271fd922d12827325d3706f4435c160916d2daffd75ca42b38",
+      "dimensions": {
+        "width": 600,
+        "height": 520
+      }
+    },
+    {
+      "filename": "05-close-veto.png",
+      "bytes": 15246,
+      "sha256": "0226eb947628c6adec3cc6e5251b927ca3ba92e7f8a1b13b017865f08a0e2526",
+      "dimensions": {
+        "width": 600,
+        "height": 520
+      }
+    },
+    {
+      "filename": "06-native-reopened.png",
+      "bytes": 15209,
+      "sha256": "dd660fbca37c8587384210cb300c92a11a9bc04885efb008c62b4556e2cdfbb3",
+      "dimensions": {
+        "width": 600,
+        "height": 520
+      }
+    },
+    {
+      "filename": "07-native-menu.png",
+      "bytes": 43791,
+      "sha256": "44884776b38cd3f585000e21dfc377f5cf39e5030a8a3cf18e5ed6ba02ef4303",
+      "dimensions": {
+        "width": 1024,
+        "height": 768
+      }
+    },
+    {
+      "filename": "failure.png",
+      "bytes": 33305,
+      "sha256": "a9b441483759dc0922dd80501efc240ac13675a18b5c9145811510849fd00451",
+      "dimensions": {
+        "width": 1040,
+        "height": 736
+      }
+    },
+    {
+      "filename": "uia-tree.txt",
+      "bytes": 3510,
+      "sha256": "ee12aa3a532341e56ecfade3d408eaf6ca5fae12152c1a08b76596488e1b7f7d"
+    }
+  ]
+}

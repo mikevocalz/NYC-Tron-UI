@@ -1,0 +1,63 @@
+26785: CompileC /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/DerivedData/macos-arm64/Build/Intermediates.noindex/Pods.build/Release/NYCTronAppKit.build/Objects-normal/arm64/NYCTronPopover.o /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm normal arm64 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'NYCTronAppKit' from project 'Pods')
+
+26802: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:83:3: error: reference to 'Point' is ambiguous
+26803:    83 |   Point origin{(Float)NSMinX(contentRect), (Float)(windowSize.height - NSMaxY(contentRect))};
+26804:       |   ^
+26805: In file included from <built-in>:1:
+26806: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Target Support Files/NYCTronAppKit/NYCTronAppKit-prefix.pch:2:
+26807: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h:12:
+26808: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h:6:
+26809: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CoreFoundation.h:54:
+26810: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFBase.h:80:
+26811: /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include/MacTypes.h:548:41: note: candidate found by name lookup is 'Point'
+26812:   548 | typedef struct Point                    Point;
+26813:       |                                         ^
+26814: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:1:
+26815: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.h:2:
+26816: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-RCTFabric/React/RCTViewComponentView.h:10:
+26817: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-RCTFabric/React/RCTComponentViewProtocol.h:12:
+26818: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/core/LayoutMetrics.h:13:
+26819: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-graphics/react/renderer/graphics/Rect.h:14:
+26820: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-graphics/react/renderer/graphics/Point.h:18:8: note: candidate found by name lookup is 'facebook::react::Point'
+26821:    18 | struct Point {
+26822:       |        ^
+26823: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:84:3: error: reference to 'Size' is ambiguous
+26824:    84 |   Size size{(Float)windowSize.width, (Float)windowSize.height};
+26825:       |   ^
+26826: In file included from <built-in>:1:
+26827: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Target Support Files/NYCTronAppKit/NYCTronAppKit-prefix.pch:2:
+26828: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h:12:
+26829: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h:6:
+26830: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CoreFoundation.h:54:
+26831: In file included from /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFBase.h:80:
+26832: /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include/MacTypes.h:252:41: note: candidate found by name lookup is 'Size'
+26833:   252 | typedef long                            Size;
+26834:       |                                         ^
+26835: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:1:
+26836: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.h:2:
+26837: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-RCTFabric/React/RCTViewComponentView.h:10:
+26838: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-RCTFabric/React/RCTComponentViewProtocol.h:12:
+26839: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-Fabric/react/renderer/core/LayoutMetrics.h:13:
+26840: In file included from /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-graphics/react/renderer/graphics/Rect.h:15:
+26841: /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods/Headers/Public/React-graphics/react/renderer/graphics/Size.h:21:8: note: candidate found by name lookup is 'facebook::react::Size'
+26842:    21 | struct Size {
+26843:       |        ^
+26844: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:86:29: error: use of undeclared identifier 'origin'
+26845:    86 |   if (data.contentOrigin != origin || data.viewportSize != size) {
+26846:       |                             ^
+26847: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:86:60: error: use of undeclared identifier 'size'
+26848:    86 |   if (data.contentOrigin != origin || data.viewportSize != size) {
+26849:       |                                                            ^
+26850: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:87:53: error: use of undeclared identifier 'origin'
+26851:    87 |     _state->updateState(NYCTronPopoverRootStateData(origin, size));
+26852:       |                                                     ^
+26853: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:87:61: error: use of undeclared identifier 'size'
+26854:    87 |     _state->updateState(NYCTronPopoverRootStateData(origin, size));
+26855:       |                                                             ^
+26856: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:92:41: error: use of undeclared identifier 'origin'
+26857:    92 |   [_content setBoundsOrigin:NSMakePoint(origin.x, origin.y)];
+26858:       |                                         ^
+26859: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:92:51: error: use of undeclared identifier 'origin'
+26860:    92 |   [_content setBoundsOrigin:NSMakePoint(origin.x, origin.y)];
+26861:       |                                                   ^
+26862: 1 warning and 8 errors generated.

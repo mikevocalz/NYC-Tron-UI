@@ -1,0 +1,12 @@
+2026-11-10T17:23:23.4502662Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +797e42663d745aacb2d3d92d302f3ca32121f146:refs/remotes/pull/60/merge
+2026-11-10T17:23:25.1677513Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-10T17:23:25.1678495Z  * [new ref]         797e42663d745aacb2d3d92d302f3ca32121f146 -> pull/60/merge
+
+2026-11-10T17:23:25.2709659Z ##[group]Checking out the ref
+2026-11-10T17:23:25.2710578Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/60/merge
+2026-11-10T17:23:25.9047306Z Note: switching to 'refs/remotes/pull/60/merge'.
+
+2026-11-10T17:23:25.9054286Z HEAD is now at 797e426 Merge 9b902a2506493c0c754a34509eab17923876940d into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-10T17:23:25.9196490Z ##[endgroup]
+2026-11-10T17:23:25.9676930Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-10T17:23:26.0015290Z 797e42663d745aacb2d3d92d302f3ca32121f146

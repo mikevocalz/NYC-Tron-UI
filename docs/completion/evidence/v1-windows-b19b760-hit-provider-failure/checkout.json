@@ -1,0 +1,9 @@
+{
+  "revision": "659d796cbfe94868f30d282bda751bee0c842fd3",
+  "tree": "f310c1bb4d628565dd6ace1275604e43d255d056",
+  "parents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "b19b76078476c0945c7b942e43fceaa5ad7b3feb"
+  ],
+  "source": "Native checkout log and git commit object"
+}

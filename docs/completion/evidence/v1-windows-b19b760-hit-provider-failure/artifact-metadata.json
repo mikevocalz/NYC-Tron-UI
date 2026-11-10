@@ -1,0 +1,42 @@
+{
+  "artifacts": [
+    {
+      "id": 13788138400,
+      "name": "winui-fabric-uia-smoke",
+      "size_in_bytes": 177211,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13788138400",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13788138400/zip",
+      "expired": false,
+      "created_at": "2026-11-10T17:49:55Z",
+      "expires_at": "2027-02-08T17:41:15Z",
+      "updated_at": "2026-11-10T17:49:55Z",
+      "digest": "sha256:7e87e433c865cf94d04cd448ab2323c52739813f4d2bd3110f13996aacd8b8a8",
+      "workflow_run": {
+        "id": 42867482309,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-interactions-nov10",
+        "head_sha": "b19b76078476c0945c7b942e43fceaa5ad7b3feb"
+      }
+    },
+    {
+      "id": 13787573057,
+      "name": "windows-fabric-shared-packages",
+      "size_in_bytes": 62822,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13787573057",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13787573057/zip",
+      "expired": false,
+      "created_at": "2026-11-10T17:42:08Z",
+      "expires_at": "2027-02-08T17:41:15Z",
+      "updated_at": "2026-11-10T17:42:08Z",
+      "digest": "sha256:f4718b073adb8a817bae6c28274b61896807254845c9f31196fc140df2c891c6",
+      "workflow_run": {
+        "id": 42867482309,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-interactions-nov10",
+        "head_sha": "b19b76078476c0945c7b942e43fceaa5ad7b3feb"
+      }
+    }
+  ]
+}

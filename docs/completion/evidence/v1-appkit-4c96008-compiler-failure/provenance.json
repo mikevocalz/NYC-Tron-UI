@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-build-failed",
+  "runId": 42864533576,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42864533576",
+  "nativeJobId": 130004095372,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42864533576/job/130004095372",
+  "pullRequestHead": "4c96008d313deb371fa9f7e62399dbb75fd908be",
+  "checkoutRevision": "fdca922cbde782481f086aa58928da03d6d6aba0",
+  "checkoutTree": "a81d31683021fd2047acdb60aefca77b7191069f",
+  "pullRequestHeadTree": "a81d31683021fd2047acdb60aefca77b7191069f",
+  "artifact": {
+    "id": 13788885973,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 711157,
+    "expectedSha256": "979468281e04d122c6bcd1279c056727dcf7475a1fd4220b1049d7b73b0bc45b",
+    "downloadedSha256": "979468281e04d122c6bcd1279c056727dcf7475a1fd4220b1049d7b73b0bc45b",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "appkit-toolchain/versions.txt",
+      "retainedPath": "toolchain.txt",
+      "sha256": "83a9f4fb29fe656cd695aebe12aafa8a8073cae044796f9f88ddd21f0b55d52b",
+      "bytes": 232
+    },
+    {
+      "artifactPath": "appkit-toolchain/isolated-conformance.swift",
+      "retainedPath": "isolated-conformance.swift",
+      "sha256": "280b0a7db2f70bd1315b78045628472cbc632ef15d83c888b98b3bf7c4aeb3ce",
+      "bytes": 128
+    },
+    {
+      "artifactPath": "appkit-toolchain/isolated-conformance.log",
+      "retainedPath": "isolated-conformance-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794332172265-1993863e-0097-4be2-9677-3cce6bf4c797-xcodebuild.log",
+      "bytes": 8595690,
+      "sha256": "fac6e52eaa4b9dfcabb8377b5a3b439614203d2959d6fc8acdba3c76567d11eb",
+      "retainedExcerpt": "compiler-errors.txt",
+      "sourceLineRanges": [
+        [
+          26785,
+          26785
+        ],
+        [
+          26802,
+          26862
+        ]
+      ]
+    }
+  ],
+  "observedToolchain": {
+    "xcodeVersion": "26.2",
+    "xcodeBuild": "17C52",
+    "swiftVersion": "6.2.3",
+    "swiftTarget": "arm64-apple-macosx15.0",
+    "sdk": "MacOSX26.2.sdk",
+    "isolatedConformanceProbe": "passed"
+  },
+  "completedPrerequisites": [
+    "canonical-core-release-archive",
+    "native-arm64-xcode26.2-and-swift-isolated-conformance-probe",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot"
+  ],
+  "failedStep": "Compile a standalone native AppKit reference",
+  "failedTarget": "NYCTronAppKit",
+  "diagnostics": [
+    {
+      "line": 26802,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:83:3: error: reference to 'Point' is ambiguous"
+    },
+    {
+      "line": 26823,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:84:3: error: reference to 'Size' is ambiguous"
+    },
+    {
+      "line": 26844,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:86:29: error: use of undeclared identifier 'origin'"
+    },
+    {
+      "line": 26847,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:86:60: error: use of undeclared identifier 'size'"
+    },
+    {
+      "line": 26850,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:87:53: error: use of undeclared identifier 'origin'"
+    },
+    {
+      "line": 26853,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:87:61: error: use of undeclared identifier 'size'"
+    },
+    {
+      "line": 26856,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:92:41: error: use of undeclared identifier 'origin'"
+    },
+    {
+      "line": 26859,
+      "text": "/Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit/macos/NYCTronPopover.mm:92:51: error: use of undeclared identifier 'origin'"
+    }
+  ],
+  "unexecutedChecks": [
+    "native-control-and-window-acceptance",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "The actual compiler found ambiguous Point and Size declarations; the remaining six errors derive from their missing variables.",
+    "The native acceptance driver had not reached compilation in this build, so this run does not verify the prior Yoga dependency repair for that target.",
+    "Prepared package hashes identify build inputs, not natively tested packages.",
+    "The subsequent explicit React Native type qualification and private RectDictionary helper rename require another native build and interaction run."
+  ]
+}

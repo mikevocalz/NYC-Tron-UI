@@ -1,0 +1,38 @@
+2026-11-10T17:31:12.5986839Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T17:31:13.3325587Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T17:31:13.5393348Z Native NavigationView items found by Narrator name
+2026-11-10T17:31:13.8497469Z Saved screenshot D:\a\_temp\uia-smoke\01-launched.png
+2026-11-10T17:31:13.8629146Z [initial] Home selected=True, Workspace selected=False
+2026-11-10T17:31:14.6138462Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T17:31:14.6159575Z [pending] Home selected=True, Workspace selected=False
+2026-11-10T17:31:14.9718696Z Pressed 'Reject navigation' with the keyboard (no InvokePattern)
+2026-11-10T17:31:14.9857730Z [rejected] Home selected=True, Workspace selected=False
+2026-11-10T17:31:15.1763438Z Saved screenshot D:\a\_temp\uia-smoke\02-rejected.png
+2026-11-10T17:31:15.8655531Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T17:31:16.2194552Z Pressed 'Accept navigation' with the keyboard (no InvokePattern)
+2026-11-10T17:31:16.2456998Z [accepted] Home selected=False, Workspace selected=True
+2026-11-10T17:31:16.4272105Z Saved screenshot D:\a\_temp\uia-smoke\03-accepted.png
+2026-11-10T17:31:16.4280486Z UIA smoke passed: native selection followed only the committed route
+2026-11-10T17:31:16.7598088Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T17:31:17.2335161Z Pressed 'Change shared draft' with the keyboard (no InvokePattern)
+2026-11-10T17:31:17.4307773Z Saved screenshot D:\a\_temp\uia-smoke\04-native-document.png
+2026-11-10T17:31:17.7893464Z Pressed 'Restore document' with the keyboard (no InvokePattern)
+2026-11-10T17:31:18.3171769Z Saved screenshot D:\a\_temp\uia-smoke\05-close-veto.png
+2026-11-10T17:31:18.6737043Z Pressed 'Save shared draft' with the keyboard (no InvokePattern)
+2026-11-10T17:31:19.0886534Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T17:31:19.5555843Z Saved screenshot D:\a\_temp\uia-smoke\06-native-reopened.png
+2026-11-10T17:31:19.5985071Z Saved UIA tree (14 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T17:31:19.9541356Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T17:31:20.0443186Z Invoked 'Native command menu' through InvokePattern
+2026-11-10T17:31:20.2613723Z Saved screenshot D:\a\_temp\uia-smoke\07-native-menu.png
+2026-11-10T17:31:36.0912871Z UIA smoke failed: Visible native element 'Native tooltip details' did not appear
+2026-11-10T17:31:36.1666494Z Saved UIA tree (46 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T17:31:36.3589416Z Saved screenshot D:\a\_temp\uia-smoke\failure.png
+2026-11-10T17:31:37.1604618Z Visible native element 'Native tooltip details' did not appear
+2026-11-10T17:31:37.1607451Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:155 char:3
+2026-11-10T17:31:37.1608474Z +   throw "Visible native element '$name' did not appear"
+2026-11-10T17:31:37.1610749Z +   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T17:31:37.1612522Z     + CategoryInfo          : OperationStopped: (Visible native ... did not appear:String) [], RuntimeException
+2026-11-10T17:31:37.1613830Z     + FullyQualifiedErrorId : Visible native element 'Native tooltip details' did not appear
+2026-11-10T17:31:37.1617614Z  
+2026-11-10T17:31:37.7237776Z ##[error]Process completed with exit code 1.

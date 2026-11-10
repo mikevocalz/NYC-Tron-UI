@@ -1,0 +1,18 @@
+{
+  "package": "react-native-windows",
+  "version": "0.85.0",
+  "installedArchiveIntegrity": "sha512-OoXCQBIvN2Gv+nC7XHKY8dAKzuhqfzOOmWuvS4F1ijooGg+QEKjkST1mSWdIZnv5AhceguT3lWZuCxle/tUkkQ==",
+  "sourcePath": "Microsoft.ReactNative/Fabric/Composition/RootComponentView.cpp",
+  "sourceBytes": 18084,
+  "sourceSha256": "bbe6f5afce3f158fff65b5e76022b857d244b4ddce5885e6e2d0b8c779d7fc25",
+  "license": "MIT, copyright Microsoft Corporation",
+  "retainedExcerpt": "rnw-hit-test-excerpt.cpp",
+  "sourceLineRanges": [
+    [
+      327,
+      358
+    ]
+  ],
+  "meaning": "When the hosted XAML provider has no returned leaf, UiaProviderFromPoint returns the RNW container provider. A native Button ancestor match is not guaranteed by this implementation.",
+  "limits": "This local installed source explains the supported fallback; the b19 driver did not retain class, type or runtime ID for its unnamed point provider, so this evidence does not establish which provider was returned in that run."
+}

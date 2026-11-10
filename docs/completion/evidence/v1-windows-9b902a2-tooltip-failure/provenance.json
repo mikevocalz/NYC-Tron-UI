@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows",
+  "result": "native-uia-failed",
+  "runId": 42861976128,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42861976128",
+  "nativeJobId": 129998284241,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42861976128/job/129998284241",
+  "sourceJobId": 129990233139,
+  "sourceJobConclusion": "success",
+  "pullRequestHead": "9b902a2506493c0c754a34509eab17923876940d",
+  "checkoutRevision": "797e42663d745aacb2d3d92d302f3ca32121f146",
+  "checkoutTree": "69d5e39ca0b421b0702020c80a8300ea633d46b3",
+  "pullRequestHeadTree": "69d5e39ca0b421b0702020c80a8300ea633d46b3",
+  "originalLog": {
+    "source": "GitHub Actions native job logs retrieved through the GitHub connector",
+    "encoding": "UTF-8 serialization of the original decoded job log, retaining BOM and CRLF",
+    "sha256": "2afa8cffea44ab143b365d0b74354b2277fbd9b7b4240d87b0284433a85320e0",
+    "bytes": 308967,
+    "retainedInGit": false,
+    "excerpts": [
+      {
+        "retainedPath": "checkout-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            81,
+            83
+          ],
+          [
+            89,
+            91
+          ],
+          [
+            108,
+            111
+          ]
+        ]
+      },
+      {
+        "retainedPath": "native-uia-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1595,
+            1632
+          ]
+        ]
+      },
+      {
+        "retainedPath": "toolchain-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1,
+            20
+          ],
+          [
+            499,
+            499
+          ]
+        ]
+      }
+    ]
+  },
+  "observedToolchain": {
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "osVersion": "10.0.26100",
+    "runnerImage": "windows-2025-vs2026",
+    "runnerImageVersion": "20261103.298.1",
+    "msbuild": "18.11.1-1.26513.3+940033be3"
+  },
+  "failedStep": "UI Automation smoke test of the packaged consumer",
+  "failure": "Visible native element 'Native tooltip details' did not appear",
+  "completedNativePrerequisites": [
+    "Build installed native C++/WinRT Fabric package",
+    "Compile actual Windows consumer executable",
+    "Deploy the packaged consumer the way run-windows does"
+  ],
+  "observedInteractionCheckpoints": [
+    "Native route selection retained the committed route while pending and after rejection, then changed after app acceptance.",
+    "Two actual native windows displayed the same edited document store.",
+    "Minimize and restore updated the application registry.",
+    "Native close veto retained the unsaved shared draft; accepted close destroyed the window; reopening displayed the retained draft.",
+    "Native MenuFlyout exposed a disabled item and committed the enabled approve callback.",
+    "Native ContextFlyout opened through Shift+F10 and committed the inspect callback."
+  ],
+  "unexecutedInteractionChecks": [
+    "Native tooltip visibility and dismissal",
+    "Rapid controlled inspector typing, rejected edits, and scope replacement",
+    "Native inspector dismissal veto followed by accepted retry",
+    "OS cross-window drag rejection, Escape, close cancellation, and accepted move",
+    "Native navigation Settings focus return, resize, RTL, collapse/restore, and high-contrast checks"
+  ],
+  "skippedSteps": [
+    "Retain the exact package that passed native acceptance",
+    "Upload tested Windows distribution"
+  ],
+  "testedPackageArtifactPresent": false,
+  "uiAutomationArtifactPresent": true,
+  "uiAutomationArtifactId": 13787072023,
+  "limitations": [
+    "This is a failed whole native acceptance gate, not a release receipt.",
+    "The failure capture and tree show no visible tooltip after the hover timeout. The original driver did not record the actual pointer position or hit target.",
+    "The driver invoked the context command and moved the pointer immediately after the app callback, without waiting for the native context popup to disappear. This is a concrete unobserved transition, but the original artifact alone cannot prove it caused the missing tooltip.",
+    "The follow-up driver verifies popup disappearance and actual off-anchor-to-on-anchor OS input and hit identity; that candidate must establish its own native result.",
+    "Text excerpts, metadata, hashes and all nine original UIA artifact files are retained here, including the eight unchanged PNG captures. Full log and ZIP remain outside git and in the referenced Actions artifact.",
+    "The inspector remount regression was added in later source commits and was not present in this tested checkout.",
+    "No Narrator speech, physical input hardware, mixed-DPI movement or device-disconnect acceptance is inferred."
+  ]
+}

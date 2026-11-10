@@ -26,6 +26,17 @@ These passes establish the repaired mobile/browser checkpoint. The assembled
 candidate, including the later desktop corrections, needs its own exact-revision
 native gates. The source and full eight-platform acceptance counts are unchanged.
 
+The retained [installed-package hash comparison](../evidence/v1-native-2899ffd/workspace-archive-comparison.json)
+also exposes a distribution gap at this checkpoint: iOS and Android independently
+packed the same source on their runners, and all ten installed archive hashes
+differ. The original workflow artifacts did not retain those input `.tgz` files,
+so the receipts cannot establish whether their payload content or only archive
+metadata differs. Both runtime passes remain valid for their recorded inputs;
+they do not establish that both platforms tested one exact release archive set.
+The follow-up must produce the thirteen workspace archives once, verify their
+source identity, package versions and hashes in every consumer, and retain those
+same bytes through candidate assembly. Fresh installed-consumer runs are required.
+
 ### Earlier mobile and desktop checkpoint
 
 At the earlier source checkpoint `0edd5f302e99877191ba9a412c5c060571a5f6c9`,
@@ -131,8 +142,16 @@ passed installation/codegen but stopped on the native
 TextChanged sender signature and a precompiled-header boundary in the portable
 assertion file. Head `9b902a2506493c0c754a34509eab17923876940d` matches the SDK's
 IInspectable sender and compiles only that assertion file without precompiled
-headers. Its five portable assertions still compile; actual Windows C++/UIA
-results require the new native run. Neither failed compiler run reached UIA.
+headers. Neither failed compiler run reached UIA. The
+[subsequent 9b902a2 native run](../evidence/v1-windows-9b902a2-tooltip-failure/README.md)
+passed the library, consumer executable and deployment, then progressed through
+window lifecycle and native menu/context actions. It failed on the missing
+hover tooltip before inspector, drag or navigation-accessibility acceptance.
+Head `b19b76078476c0945c7b942e43fceaa5ad7b3feb` observes popup closure, sends a
+fresh off-anchor/on-anchor mouse movement, and verifies actual cursor position
+and native hit identity before requiring the genuine tooltip and its dismissal.
+The production tooltip remains unchanged; the original trace does not establish
+the cause of its absence. The new native run must establish the interaction result.
 
 The assembled Windows reference fixture also gives each remounted inspector a
 new native mount key and edit-count domain while preserving its draft. Old-mount

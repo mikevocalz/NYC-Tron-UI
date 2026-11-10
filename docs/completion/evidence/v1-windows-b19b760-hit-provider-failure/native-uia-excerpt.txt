@@ -1,0 +1,40 @@
+2026-11-10T17:49:46.2268037Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T17:49:46.9238567Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T17:49:47.1253547Z Native NavigationView items found by Narrator name
+2026-11-10T17:49:47.4196203Z Saved screenshot D:\a\_temp\uia-smoke\01-launched.png
+2026-11-10T17:49:47.4299572Z [initial] Home selected=True, Workspace selected=False
+2026-11-10T17:49:48.1579681Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T17:49:48.1597436Z [pending] Home selected=True, Workspace selected=False
+2026-11-10T17:49:48.5128718Z Pressed 'Reject navigation' with the keyboard (no InvokePattern)
+2026-11-10T17:49:48.5224901Z [rejected] Home selected=True, Workspace selected=False
+2026-11-10T17:49:48.7190332Z Saved screenshot D:\a\_temp\uia-smoke\02-rejected.png
+2026-11-10T17:49:49.4233143Z Keyboard Down+Enter produced a pending Workspace request
+2026-11-10T17:49:49.8120424Z Pressed 'Accept navigation' with the keyboard (no InvokePattern)
+2026-11-10T17:49:49.8333613Z [accepted] Home selected=False, Workspace selected=True
+2026-11-10T17:49:50.0315048Z Saved screenshot D:\a\_temp\uia-smoke\03-accepted.png
+2026-11-10T17:49:50.0321355Z UIA smoke passed: native selection followed only the committed route
+2026-11-10T17:49:50.3672641Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T17:49:50.7588804Z Pressed 'Change shared draft' with the keyboard (no InvokePattern)
+2026-11-10T17:49:50.9569881Z Saved screenshot D:\a\_temp\uia-smoke\04-native-document.png
+2026-11-10T17:49:51.3464616Z Pressed 'Restore document' with the keyboard (no InvokePattern)
+2026-11-10T17:49:51.5739928Z Saved screenshot D:\a\_temp\uia-smoke\05-close-veto.png
+2026-11-10T17:49:51.9287694Z Pressed 'Save shared draft' with the keyboard (no InvokePattern)
+2026-11-10T17:49:52.3092430Z Pressed 'Open document window' with the keyboard (no InvokePattern)
+2026-11-10T17:49:52.7744108Z Saved screenshot D:\a\_temp\uia-smoke\06-native-reopened.png
+2026-11-10T17:49:52.8066833Z Saved UIA tree (14 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T17:49:53.1623594Z Pressed 'Show native overlay checks' with the keyboard (no InvokePattern)
+2026-11-10T17:49:53.2351675Z Invoked 'Native command menu' through InvokePattern
+2026-11-10T17:49:53.4182971Z Saved screenshot D:\a\_temp\uia-smoke\07-native-menu.png
+2026-11-10T17:49:53.7823869Z OS pointer reached (8, 8) for requested (8, 8)
+2026-11-10T17:49:53.9488609Z OS pointer reached (456, 347) for requested (456, 347)
+2026-11-10T17:49:53.9970773Z UIA smoke failed: Pointer hit '' instead of native 'Native tooltip anchor'; bounds=336,327,240,40
+2026-11-10T17:49:54.0456122Z Saved UIA tree (46 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T17:49:54.2378934Z Saved screenshot D:\a\_temp\uia-smoke\failure.png
+2026-11-10T17:49:54.3084064Z Pointer hit '' instead of native 'Native tooltip anchor'; bounds=336,327,240,40
+2026-11-10T17:49:54.3085108Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:233 char:3
+2026-11-10T17:49:54.3086167Z +   throw "Pointer hit '$hitName' instead of native '$($target.Current. ...
+2026-11-10T17:49:54.3086558Z +   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T17:49:54.3090180Z     + CategoryInfo          : OperationStopped: (Pointer hit '' ...=336,327,240,40:String) [], RuntimeException
+2026-11-10T17:49:54.3091286Z     + FullyQualifiedErrorId : Pointer hit '' instead of native 'Native tooltip anchor'; bounds=336,327,240,40
+2026-11-10T17:49:54.3091919Z  
+2026-11-10T17:49:54.3461892Z ##[error]Process completed with exit code 1.
