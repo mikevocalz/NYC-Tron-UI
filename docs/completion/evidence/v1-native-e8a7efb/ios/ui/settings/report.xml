@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="iPhone 17 Pro - iOS 26.5 - FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC" tests="1" failures="1" time="176.714" timestamp="2026-11-10T14:53:29">
+    <testcase id="Settings native edit and save" name="Settings native edit and save" classname="Settings native edit and save" file="tooling/native/ui-flows/settings.yaml" time="176.434" timestamp="2026-11-10T14:53:29" status="ERROR">
+      <failure>Couldn't hide the keyboard. This can happen if the app uses a custom input or doesn't expose a standard dismiss action.</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

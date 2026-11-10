@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "platform": "windows",
+  "packageName": "@nyc-tron/windows-fluent-fabric",
+  "version": "1.0.0",
+  "filename": "nyc-tron-windows-fluent-fabric-1.0.0.tgz",
+  "sha256": "a5c22ea5cfa8f936f1078257d3cd72b4df350e2aeece3326d577e36606f91c69",
+  "sourceRevision": "aa68e5ceb6875e02f73ee48dbdfa1c22641540d1",
+  "checks": [
+    "controlled-native-navigation",
+    "shared-runtime-two-windows",
+    "shared-document-state",
+    "native-minimize-restore",
+    "native-close-veto",
+    "native-close-accept",
+    "native-window-reopen"
+  ],
+  "dependencies": [
+    {
+      "packageName": "@nyc-tron/core",
+      "filename": "nyc-tron-core-1.0.0.tgz",
+      "sha256": "7da37c7b4eb32abbc380a2e74e5c0560fe001da31e9f957e093117c6973b9771"
+    },
+    {
+      "packageName": "@nyc-tron/windows-fluent",
+      "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+      "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73"
+    }
+  ],
+  "evidenceHashes": {
+    "01-launched.png": "cbcffdbae48117fcbcc46ee69b0a1b0a04d94fa9d5758159920da1678d9b18a2",
+    "02-rejected.png": "b20d3b89b7a79dc5931a1c58a888e578d7266cbe793711d54dc6d98dac8ac75d",
+    "03-accepted.png": "bf5144a0c5f188de9b3ff6b6d3c7a6bdfeaccc87731bc11cca79425b8a05b01d",
+    "04-native-document.png": "f1998f746d7b4561a295981ca4a8d1013d1ea7676faa3dfcd773206251f4c98c",
+    "05-close-veto.png": "ca2714afaeb66195b754c8269f10d98fbdca013c1adb073461b7fd39df40151c",
+    "06-native-reopened.png": "208c1683b92b390e376dd66e6f04232a0b42fbd35c3d58f4d04c839198790f99",
+    "result.json": "9ad5c91abdbed511420de04205121ebec301d895ab2e6b64e491ad33925d5db9",
+    "uia-tree.txt": "c97a161c349d407a09fb830543350d4d9987ebaf8523775e28c4dd1e3722bc82"
+  }
+}

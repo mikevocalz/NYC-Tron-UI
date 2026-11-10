@@ -20,15 +20,16 @@ The failed screenshot shows the correct draft and an open native keyboard.
 This failure happened after editing, so the initial transport-recovery rule
 correctly refused to retry it. The iOS job remains failed in this record.
 
-## Correction
+## First source correction
 
 The pinned Maestro
 [iOS driver](https://github.com/mobile-dev-inc/Maestro/blob/67d8a677029261fa424a45a10d08eacd6aa0deed/maestro-client/src/main/java/maestro/drivers/IOSDriver.kt)
 implements keyboard dismissal with small swipe gestures. React Native's
 [`keyboardDismissMode`](https://reactnative.dev/docs/scrollview#keyboarddismissmode)
 defaults to `none`. Both the reference form's ScrollView and the Inspector's
-nested ScrollView omitted that setting, so the keyboard remained open during
-those drags.
+nested ScrollView omitted that setting. The first correction therefore enabled
+scroll-based dismissal. The follow-up below shows why the driver's particular
+gestures still did not dismiss this field.
 
 Both existing scroll owners now use `keyboardDismissMode="on-drag"`, preserving
 `keyboardShouldPersistTaps="handled"`. Dragging the form or property list
@@ -43,7 +44,7 @@ All native flow commands, save/retention assertions, receipt deadlines and
 transport-recovery conditions remain unchanged. No failure is ignored or
 converted into a pass.
 
-## Verification
+## Verification of the first correction
 
 - 25 existing Inspector and native evidence/transport tests passed.
 - All three reference-model tests passed.
@@ -68,7 +69,8 @@ strict media checks, then failed Settings `hideKeyboard` again. An earlier
 initial navigation transport failure qualified for the existing single
 recovery; the editing failure on the recovered attempt remained final.
 
-Artifact `13774678339` has independently verified ZIP SHA-256
+The [original failures, receipts and screenshots](../evidence/v1-native-e8a7efb/ios/)
+are retained. Artifact `13774678339` has independently verified ZIP SHA-256
 `a8f0ef06351605b971a076c2e4932ff4d045a9d620414c88a626174f84ade693`.
 Its failed native hierarchy records a 402 × 874-point screen and the edited
 workspace input at `[58,398][344,442]`. The pinned iOS driver's gestures start
@@ -96,6 +98,6 @@ there are no app scripts, optional steps, additional retries or relaxed deadline
 Android retains its existing system Back dismissal.
 
 Focused verification: 25 existing native evidence/transport and Inspector tests
-pass, both YAML flows parse, and `git diff --check` passes. The next installed
+and three reference-model tests pass, both YAML flows parse, and `git diff --check` passes. The next installed
 iOS run must still prove the changed actions and all subsequent assertions;
 this source follow-up does not convert either failed run into acceptance.

@@ -54,6 +54,7 @@ await rm(join(destination, 'package-lock.json'));
 run('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund']);
 run('npm', ['ci', '--no-audit', '--no-fund']);
 run(process.execPath, ['node_modules/typescript/bin/tsc', '--noEmit']);
+run(process.execPath, [join(repo, 'tooling/macos-appkit/initialize-spark-project.mjs'), destination]);
 // Execute Spark's native patch-provenance and Metro graph gates before Xcode.
 run(process.execPath, ['node_modules/@legendapp/spark/bin/spark.cjs', 'analyze']);
 const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': '1.0.0', '@nyc-tron/macos-appkit': '1.0.0' };

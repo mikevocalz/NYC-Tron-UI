@@ -1,5 +1,5 @@
 import { Profiler, useEffect, useRef, type ProfilerOnRenderCallback, type ReactNode } from "react";
-import { I18nManager, Platform, Text, View, useColorScheme, useWindowDimensions } from "react-native";
+import { I18nManager, Platform, StatusBar, Text, View, useColorScheme, useWindowDimensions } from "react-native";
 import { useStore } from "zustand";
 import { resolveNavigationShell, type NavigationInput } from "@nyc-tron/core/navigation";
 import { AdaptivePaneHost } from "@nyc-tron/panes/AdaptivePaneHost";
@@ -69,6 +69,8 @@ export function ReferenceApp({ navigation, onRenderSample, onAppearanceChange, r
   const rightRail = shell.kind === "physical-right-rail";
   const bottomTabs = shell.kind === "bottom-tabs" || shell.kind === "web-header" && shell.compactTabs;
   return <NightScope scheme={scheme}><Profiler id="reference-workspace" onRender={profile}>
+    {(Platform.OS === "ios" || Platform.OS === "android") ?
+      <StatusBar barStyle={scheme === "dark" ? "light-content" : "dark-content"} /> : null}
     <View testID="reference-app" style={{ flex: 1, minWidth: 0, minHeight: 0 }} {...{ className: "bg-surface-sunken" }}>
       <View testID="reference-header" style={{ minHeight: 72, paddingHorizontal: 24, paddingVertical: 12, gap: 16, flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}
         {...{ className: "border-b border-border bg-surface-raised" }}>

@@ -11,7 +11,7 @@
   "scripts": {
     "test": "node tooling/run-tests.mjs",
     "typecheck": "pnpm -r --if-present typecheck",
-    "verify": "pnpm test && pnpm build && pnpm typecheck && node tooling/verify-packages.mjs && node tooling/api-surface.mjs && node tooling/api-signatures.mjs && node tooling/verify-component-program.mjs && node tooling/pack-release.mjs release-packs && node tooling/consumer-smoke.mjs release-packs",
+    "verify": "pnpm build && pnpm test && pnpm typecheck && node tooling/verify-packages.mjs && node tooling/api-surface.mjs && node tooling/api-signatures.mjs && node tooling/verify-component-program.mjs && node tooling/pack-release.mjs release-packs && node tooling/consumer-smoke.mjs release-packs",
     "build": "pnpm -r --if-present build",
     "packcheck": "pnpm build && node tooling/verify-packages.mjs",
     "pack:release": "pnpm build && node tooling/pack-release.mjs release-packs",

@@ -8,6 +8,23 @@ blanket device-acceptance claim is created by this report.
 
 ## November 10 desktop integration
 
+The first combined head `0a4f34b9334814f5bfd9b1568402a2a131faedd8` produced
+the following actual native checkpoint:
+
+| Target | Observed result | Evidence |
+|---|---|---|
+| Android | Native compilation, all eleven strict media checks and four OS UI flows passed; no transport recovery | [Original reports and APK verification](../evidence/v1-native-0a4f34b/android/README.md) |
+| Windows | Installed C++ library and app compiled; packaged navigation and seven desktop lifecycle check groups passed | [Original reports, tested archive and capture limitations](../evidence/v1-native-0a4f34b/windows/README.md) |
+| iOS | No runner was assigned; GitHub canceled the queued job after repeated allocation attempts | [Original capacity annotations](../evidence/v1-native-0a4f34b/ios/README.md). No app execution or UI result exists for this head |
+| AppKit | Clean archive installation, official Spark analysis and installed API checks passed; native build stopped before Xcode because new-project migration initialization was missing | [Run 42841109849](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42841109849). The follow-up invokes Spark's official template/migration initialization and requires a fresh native run |
+
+The follow-up also shares the existing popup geometry and command-item types
+through `@nyc-tron/core/overlays`, with compatible UI re-exports. All prior public
+declaration signatures and external type boundaries are preserved; the shared
+API now has 619 subpaths and 3,306 reachable declarations. Native desktop menus,
+popovers/tooltips and cross-window drag/drop remain explicit implementation and
+interaction work, separate from the successful Windows lifecycle checkpoint.
+
 The source candidate now includes both isolated desktop implementations:
 `@nyc-tron/windows-fluent-fabric` binds native WinUI navigation and shared-runtime
 secondary windows, and `@nyc-tron/macos-appkit` binds actual Spark AppKit controls,

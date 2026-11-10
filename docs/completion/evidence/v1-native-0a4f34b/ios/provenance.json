@@ -1,0 +1,21 @@
+{
+  "capturedAt": "2026-11-10T15:30:22.959664+00:00",
+  "headSha": "0a4f34b9334814f5bfd9b1568402a2a131faedd8",
+  "runId": 42841109908,
+  "jobId": 129916254993,
+  "status": "runner-allocation-failed",
+  "files": [
+    {
+      "file": "job.json",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/129916254993",
+      "sha256": "12c416f984b400f99b2f40184bedf170fd55ab132d086627729158aaf1b27819",
+      "bytes": 920
+    },
+    {
+      "file": "annotations.json",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/check-runs/129916254993/annotations",
+      "sha256": "259baa222dbc2f43cdbf6986b960893092d0b8df7d5dab95ae17f318ff1adc98",
+      "bytes": 1430
+    }
+  ]
+}

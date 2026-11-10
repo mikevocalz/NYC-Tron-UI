@@ -105,6 +105,7 @@ jobs:
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/logs/
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/commands.jsonl
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/selection-report.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/version
       - name: Retain the exact natively tested distribution
         if: success() && steps.native.outcome == 'success'
         uses: actions/upload-artifact@v4

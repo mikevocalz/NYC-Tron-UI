@@ -19,14 +19,33 @@ using System;
 using System.Runtime.InteropServices;
 public static class NativeWindow {
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
+  [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
 }
 "@
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 $AE = [System.Windows.Automation.AutomationElement]
 $Tree = [System.Windows.Automation.TreeScope]
 
-function Save-Screenshot([string]$name, $rect) {
-  if ($null -eq $rect -or $rect.Width -le 0) { $rect = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds }
+function Save-Screenshot([string]$name, $target) {
+  $rect = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+  if ($null -ne $target) {
+    $handle = [IntPtr]$target.Current.NativeWindowHandle
+    if ($handle -eq [IntPtr]::Zero) { throw "Screenshot target has no native top-level window" }
+    [NativeWindow]::SetForegroundWindow($handle) | Out-Null
+    $target.SetFocus()
+    $deadline = (Get-Date).AddSeconds(5)
+    $ready = $false
+    while ((Get-Date) -lt $deadline) {
+      $before = $target.Current.BoundingRectangle
+      Start-Sleep -Milliseconds 150
+      $rect = $target.Current.BoundingRectangle
+      if ([NativeWindow]::GetForegroundWindow() -eq $handle -and $rect.Width -gt 0 -and $rect.Height -gt 0 -and
+          $before.X -eq $rect.X -and $before.Y -eq $rect.Y -and $before.Width -eq $rect.Width -and $before.Height -eq $rect.Height) {
+        $ready = $true; break
+      }
+    }
+    if (-not $ready) { throw "Screenshot target never became the stable foreground window: $name" }
+  }
   $bitmap = New-Object System.Drawing.Bitmap ([int]$rect.Width), ([int]$rect.Height)
   $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
   $graphics.CopyFromScreen([int]$rect.X, [int]$rect.Y, 0, 0, $bitmap.Size)
@@ -151,7 +170,7 @@ try {
   $workspace = Find-ByName $window "Workspace"
   Find-ByName $window "NYC-Tron" | Out-Null
   Write-Host "Native NavigationView items found by Narrator name"
-  Save-Screenshot "01-launched" $window.Current.BoundingRectangle
+  Save-Screenshot "01-launched" $window
   Assert-Selection $homeItem $workspace "home" "initial"
 
   Request-Workspace $window $homeItem
@@ -159,13 +178,13 @@ try {
   Invoke-Button $window "Reject navigation"
   Find-ByName $window "Navigation rejected; current route retained" | Out-Null
   Assert-Selection $homeItem $workspace "home" "rejected"
-  Save-Screenshot "02-rejected" $window.Current.BoundingRectangle
+  Save-Screenshot "02-rejected" $window
 
   Request-Workspace $window $homeItem
   Invoke-Button $window "Accept navigation"
   Find-ByName $window "Committed route: workspace" | Out-Null
   Assert-Selection $homeItem $workspace "workspace" "accepted"
-  Save-Screenshot "03-accepted" $window.Current.BoundingRectangle
+  Save-Screenshot "03-accepted" $window
   Write-Host "UIA smoke passed: native selection followed only the committed route"
 
   Find-ByName $window "Native desktop connected" | Out-Null
@@ -189,7 +208,7 @@ try {
   Invoke-Button $window "Change shared draft"
   Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
   Find-ByName $window "Shared draft: Edited once, shared everywhere" | Out-Null
-  Save-Screenshot "04-native-document" $document.Current.BoundingRectangle
+  Save-Screenshot "04-native-document" $document
 
   $nativeWindow = $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern)
   $nativeWindow.SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
@@ -205,7 +224,7 @@ try {
   Find-ByName $window "Native windows: 2" | Out-Null
   $document = Find-DocumentWindow
   Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
-  Save-Screenshot "05-close-veto" $document.Current.BoundingRectangle
+  Save-Screenshot "05-close-veto" $document
   Invoke-Button $window "Save shared draft"
   # Button invocation and JS dispatch are asynchronous; close only after the
   # document owner has visibly committed the save policy.
@@ -218,7 +237,7 @@ try {
   $document = Find-DocumentWindow
   Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
   Find-ByName $window "Native windows: 2" | Out-Null
-  Save-Screenshot "06-native-reopened" $document.Current.BoundingRectangle
+  Save-Screenshot "06-native-reopened" $document
   Save-Tree $document
   $result = @{
     schemaVersion = 1
@@ -235,7 +254,7 @@ try {
   Write-Host "UIA smoke failed: $($_.Exception.Message)"
   if ($null -ne $window) {
     Save-Tree $window
-    Save-Screenshot "failure" $window.Current.BoundingRectangle
+    Save-Screenshot "failure" $window
   } else {
     Save-Screenshot "failure-desktop" $null
   }
