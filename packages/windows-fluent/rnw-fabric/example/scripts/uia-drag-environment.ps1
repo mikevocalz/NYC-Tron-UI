@@ -108,14 +108,20 @@ public static class NativeDragEnvironment {
   static TokenField ReadTokenField(IntPtr token,int informationClass,bool integrity) {
     var result=new TokenField(); IntPtr buffer=IntPtr.Zero;
     try {
-      uint needed;
-      SetLastError(0);
-      bool sized=GetTokenInformation(token,informationClass,IntPtr.Zero,0,out needed);
-      int error=Marshal.GetLastWin32Error();
-      if (!sized && error!=122) { result.status="query-failed"; result.win32Error=error; return result; }
-      if (needed<4 || needed>4096) { result.status="invalid-size"; return result; }
+      // The scalar classes used here return a DWORD-sized structure or enum.
+      // Query their documented layout directly instead of requiring a sizing
+      // probe to return ERROR_INSUFFICIENT_BUFFER. Only the SID label varies.
+      uint needed=4;
+      if (integrity) {
+        SetLastError(0);
+        bool sized=GetTokenInformation(token,informationClass,IntPtr.Zero,0,out needed);
+        int error=Marshal.GetLastWin32Error();
+        if (!sized && error!=122) { result.status="query-failed"; result.win32Error=error; return result; }
+        if (needed<4 || needed>4096) { result.status="invalid-size"; return result; }
+      }
       buffer=Marshal.AllocHGlobal((int)needed);
       uint actual;
+      SetLastError(0);
       if (!GetTokenInformation(token,informationClass,buffer,needed,out actual)) {
         result.status="query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result;
       }
