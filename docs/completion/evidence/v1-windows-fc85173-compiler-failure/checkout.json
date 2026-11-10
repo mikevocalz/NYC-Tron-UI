@@ -1,0 +1,13 @@
+{
+  "pullRequestHead": "fc85173985e7e7a2a9d37e2562151b6a70092278",
+  "checkoutRevision": "99bb0c171ec404559578b36fd615f1fc5cc66399",
+  "checkoutTree": "b8c8e1e8409746b5d8290c6d398b2c6a130d0506",
+  "pullRequestHeadTree": "b8c8e1e8409746b5d8290c6d398b2c6a130d0506",
+  "checkoutParents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "fc85173985e7e7a2a9d37e2562151b6a70092278"
+  ],
+  "checkoutSource": "checkout-excerpt.txt, native job git log -1 --format=%H output",
+  "treeVerification": "Content-addressed local git objects, independently resolving both tree IDs and merge parents",
+  "commitUrl": "https://github.com/mikevocalz/NYC-Tron-UI/commit/99bb0c171ec404559578b36fd615f1fc5cc66399"
+}

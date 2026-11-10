@@ -35,7 +35,7 @@ N-13, N-14, N-15, N-16, N-18 and N-19. Their owners and public imports are in
 [V1 platform closure](reports/V1-PLATFORM-CLOSURE.md).
 
 The [candidate verification report](reports/V1-RELEASE-GATES.md) records exact
-source revisions, actual runtime evidence, all fourteen archives and remaining
+source revisions, actual runtime evidence, all fifteen archives and remaining
 acceptance. Complete eight-platform acceptance and owner distribution review
 remain required for stable publication. Neither implementation counts nor a
 successful simulator flow promotes unobserved platform/device behavior.

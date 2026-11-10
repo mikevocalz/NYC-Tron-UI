@@ -1,0 +1,104 @@
+[ {
+  "command" : {
+    "defineVariablesCommand" : {
+      "env" : {
+        "MAESTRO_BIN" : "/home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro",
+        "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED" : "true",
+        "MAESTRO_CLI_NO_ANALYTICS" : "1",
+        "MAESTRO_FILENAME" : "pointer-cancel",
+        "MAESTRO_DEVICE_UDID" : "emulator-5554",
+        "MAESTRO_SHARD_ID" : "1",
+        "MAESTRO_SHARD_INDEX" : "0"
+      },
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "COMPLETED",
+    "timestamp" : 1794328605253,
+    "duration" : 4,
+    "sequenceNumber" : 0,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "defineVariablesCommand" : {
+        "env" : {
+          "MAESTRO_BIN" : "/home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro",
+          "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED" : "true",
+          "MAESTRO_CLI_NO_ANALYTICS" : "1",
+          "MAESTRO_FILENAME" : "pointer-cancel",
+          "MAESTRO_DEVICE_UDID" : "emulator-5554",
+          "MAESTRO_SHARD_ID" : "1",
+          "MAESTRO_SHARD_INDEX" : "0"
+        },
+        "optional" : false
+      }
+    }
+  }
+}, {
+  "command" : {
+    "applyConfigurationCommand" : {
+      "config" : {
+        "appId" : "com.nyctron.instruments.example",
+        "name" : "Android native pointer cancellation"
+      },
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "COMPLETED",
+    "timestamp" : 1794328605258,
+    "duration" : 1,
+    "sequenceNumber" : 1,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "applyConfigurationCommand" : {
+        "config" : {
+          "appId" : "com.nyctron.instruments.example",
+          "name" : "Android native pointer cancellation"
+        },
+        "optional" : false
+      }
+    }
+  }
+}, {
+  "command" : {
+    "assertConditionCommand" : {
+      "condition" : {
+        "visible" : {
+          "textRegex" : "Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0.",
+          "optional" : false
+        }
+      },
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "FAILED",
+    "timestamp" : 1794328605259,
+    "duration" : 16946,
+    "error" : {
+      "message" : "Assertion is false: \"Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0.\" is visible",
+      "debugMessage" : "Assertion '\"Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0.\" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state\n- This could be a real regression that needs to be addressed"
+    },
+    "sequenceNumber" : 2,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "assertConditionCommand" : {
+        "condition" : {
+          "visible" : {
+            "textRegex" : "Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0.",
+            "optional" : false
+          }
+        },
+        "optional" : false
+      }
+    },
+    "artifacts" : [ {
+      "type" : "SCREEN_HIERARCHY",
+      "path" : "screen-hierarchy/step-003-assertCondition-Committed_strokes_1._Can.json"
+    }, {
+      "type" : "SCREENSHOT",
+      "path" : "screenshots/step-003-assertCondition-Committed_strokes_1._Can.png"
+    } ]
+  }
+} ]

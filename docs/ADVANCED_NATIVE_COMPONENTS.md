@@ -1,5 +1,11 @@
 # Advanced native instruments + portability program
 
+This is the historical design and source-admission register. The dated status
+below and the public `advanced-catalog` stage values retain that earlier review.
+Current implementation ownership is in
+[the canonical ledger](completion/library-progress.json), with native/runtime
+results in [the candidate report](completion/reports/V1-RELEASE-GATES.md).
+
 ## Status as of 2026-11-04
 
 - NYC-Tron PR #2 is stacked on PR #1; neither is a production release.

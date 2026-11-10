@@ -57,6 +57,15 @@ coalesced samples and Android historical MotionEvents preserve observed timing.
 UIKit predicted touches and Android's supported MotionPredictor samples go to a
 separate temporary-preview callback and never enter committed document strokes.
 
+Android ACTION_CANCEL terminates the view's retained contacts before event
+sampling or prediction. Android can synthesize cancellation without the active
+contacts' original data; the adapter therefore uses their last observed
+identities and samples, clears ownership before callbacks, and never commits a
+fabricated terminal point. Contact cancellation leaves unrelated hover and
+held keys intact; focus loss and unmount perform the complete cleanup. The
+original failed cancellation trace and the fresh-run requirement are recorded
+in [the candidate report](V1-RELEASE-GATES.md).
+
 Android prediction is capability-checked on API 34 and later. The display refresh
 interval determines the requested prediction horizon. A platform without prediction
 still provides observed input. Browser coalesced/predicted events are consumed only

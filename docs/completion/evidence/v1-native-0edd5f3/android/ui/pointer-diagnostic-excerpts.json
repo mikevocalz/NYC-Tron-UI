@@ -1,0 +1,15 @@
+{
+  "kind": "derived-verbatim-excerpts",
+  "artifactEntry": "nyc-tron-native-consumer/runtime-ui-android/logcat.log",
+  "sourceSha256": "cea86a3cad1c52058af95dea9c8cc7c8d0c021c45ec1f4f85e4d7f51126647e9",
+  "sourceBytes": 728730,
+  "lineNumberBase": 1,
+  "excerpts": [
+    {
+      "lineNumber": 8,
+      "lineSha256": "7a50e4dd0b23af08c6fc63ae4302e2ff50d2aed511fbca43bf5ba0286b6e713a",
+      "byteOffsetInLine": 334,
+      "verbatimDiagnostic": "{\"phase\":\"cancel\",\"lastStrokePhase\":\"down\",\"kind\":\"touch\",\"x\":0,\"y\":0,\"pressure\":null,\"tiltX\":null,\"tiltY\":null,\"observedSamples\":1,\"predictions\":0,\"hover\":null,\"committed\":1,\"cancelled\":0,\"key\":null,\"mounted\":true}"
+    }
+  ]
+}

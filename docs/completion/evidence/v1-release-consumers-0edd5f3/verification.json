@@ -1,0 +1,322 @@
+{
+  "runId": 42847218857,
+  "headSha": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+  "testedMerge": "e597d73757911e9a58005d577b3c2bf2496bd798",
+  "jobs": [
+    {
+      "id": 129960948924,
+      "name": "expo-web installed tarball consumer",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42847218857,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set the consumer location on this runner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install and build the candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install actual release tarballs in a project outside the repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Exercise the installed components in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Save the dependency evidence, results and captures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    },
+    {
+      "id": 129960953650,
+      "name": "basic installed tarball consumer",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42847218857,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set the consumer location on this runner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install and build the candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install actual release tarballs in a project outside the repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Exercise the installed components in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Save the dependency evidence, results and captures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13781694581,
+      "name": "release-consumer-expo-web",
+      "size_in_bytes": 117396,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13781694581",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13781694581/zip",
+      "expired": false,
+      "created_at": "2026-11-10T16:31:31Z",
+      "expires_at": "2026-11-17T16:31:30Z",
+      "updated_at": "2026-11-10T16:31:31Z",
+      "digest": "sha256:6dc946a3941e67b5c5d80c3d67a49f96b02b3ee582c44419e8bd6e0c815a7497",
+      "workflow_run": {
+        "id": 42847218857,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-completion",
+        "head_sha": "0edd5f302e99877191ba9a412c5c060571a5f6c9"
+      }
+    },
+    {
+      "id": 13780085424,
+      "name": "release-consumer-basic",
+      "size_in_bytes": 64098,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13780085424",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13780085424/zip",
+      "expired": false,
+      "created_at": "2026-11-10T15:52:22Z",
+      "expires_at": "2026-11-17T15:52:21Z",
+      "updated_at": "2026-11-10T15:52:22Z",
+      "digest": "sha256:5c2fb842ef1b9a7cc5e7fc4061c60f10975e669a92a1cf35ff776dc758fb5459",
+      "workflow_run": {
+        "id": 42847218857,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-completion",
+        "head_sha": "0edd5f302e99877191ba9a412c5c060571a5f6c9"
+      }
+    }
+  ],
+  "originalFailedJob": 129937843015,
+  "originalFailureExcerpt": {
+    "startLine": 145,
+    "endLine": 209
+  },
+  "verification": {
+    "artifactDigestsIndependentlyMatched": true,
+    "reportsMatchTestedMerge": true,
+    "bundleUsesInstalledInputs": true,
+    "wideCapturesVisuallyInspected": true,
+    "consumers": [
+      {
+        "consumer": "basic",
+        "sourceCommit": "e597d73757911e9a58005d577b3c2bf2496bd798",
+        "stats": {
+          "startTime": "2026-11-10T15:52:19.712Z",
+          "duration": 1990.495,
+          "expected": 1,
+          "skipped": 1,
+          "unexpected": 0,
+          "flaky": 0
+        },
+        "files": [
+          {
+            "path": "basic/app/artifacts/bundle-inputs.json",
+            "sha256": "4613ac2e6f316952a28ef7e0ee16fbd1f4611327a1fa814d83a83a8e1948158c",
+            "bytes": 193019
+          },
+          {
+            "path": "basic/app/artifacts/consumer-narrow.png",
+            "sha256": "b2dda655e8c9e8663da4e47fdd436e301cc97c27dbb39380f4571855df903fcd",
+            "bytes": 13903
+          },
+          {
+            "path": "basic/app/artifacts/consumer-wide.png",
+            "sha256": "d03c54295147a0ca0bd58578b066f83012f0782ecad34e2ea5ad576056263258",
+            "bytes": 16102
+          },
+          {
+            "path": "basic/app/artifacts/results.json",
+            "sha256": "7a24ff4e9664db73a8c466b8ebfad9cacdc65756d57311616bc151d1b6fee54b",
+            "bytes": 6508
+          },
+          {
+            "path": "basic/app/package-lock.json",
+            "sha256": "a0ed26b4646d10fae0818e13c2c50d1d849ad3d9c791d9a04bce3806103f6db0",
+            "bytes": 120443
+          },
+          {
+            "path": "basic/consumer.json",
+            "sha256": "1945d5470376e913af703214ac7d1b7fc93cfc02835bf1cb431e1cd895917eb2",
+            "bytes": 561
+          },
+          {
+            "path": "basic/installed-packages.json",
+            "sha256": "20be454035306c8779965948b79949927d72837d9b65a3b4940404f4aa801fa4",
+            "bytes": 585
+          }
+        ]
+      },
+      {
+        "consumer": "expo-web",
+        "sourceCommit": "e597d73757911e9a58005d577b3c2bf2496bd798",
+        "stats": {
+          "startTime": "2026-11-10T16:31:27.815Z",
+          "duration": 2148.06,
+          "expected": 2,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        },
+        "files": [
+          {
+            "path": "expo-web/app/artifacts/bundle-inputs.json",
+            "sha256": "95f4183727c613ebd9eaad916dd05cb49a16e48c4873a369dc741cd1cd200471",
+            "bytes": 235066
+          },
+          {
+            "path": "expo-web/app/artifacts/consumer-narrow.png",
+            "sha256": "831cbcfb4d7aa447fde32eb5206f43cef4bb4c600657dd6dbac5ef42dac5ed3c",
+            "bytes": 23594
+          },
+          {
+            "path": "expo-web/app/artifacts/consumer-wide.png",
+            "sha256": "bf0f864c6b876110a930c9dc873bd824a5f93ea73aafd74177661ac8991303cc",
+            "bytes": 27289
+          },
+          {
+            "path": "expo-web/app/artifacts/results.json",
+            "sha256": "ae75aac4a5ea1a96cb05ab44e4d6017f3c2fd5125e5aeac7148cef6e8c910dd9",
+            "bytes": 5622
+          },
+          {
+            "path": "expo-web/app/package-lock.json",
+            "sha256": "f69510ad707d57b71983236d122fe532922a26cc31d5cda57524301b9b1c50e6",
+            "bytes": 258865
+          },
+          {
+            "path": "expo-web/consumer.json",
+            "sha256": "b9e658d30cf26f918e75a6fe49e896e8daa10db2b14bc7c1bdd7769a02fa81c1",
+            "bytes": 1024
+          },
+          {
+            "path": "expo-web/installed-packages.json",
+            "sha256": "7c61466c40e6c51be2ff0e7ab2c5fddfeedae50310bf3ea404f42023fba99062",
+            "bytes": 1120
+          }
+        ]
+      }
+    ]
+  }
+}

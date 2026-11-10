@@ -59,7 +59,8 @@ const child = spawn(executable, [], { cwd: root, env: { ...process.env, SPARK_TE
 closeSync(descriptor);
 let launchError, driver;
 child.on('error', error => { launchError = error; });
-const checks = [], captures = [];
+const checks = [], captures = [], popovers = [], dragProtocols = [];
+let pointerEvidence;
 writeFileSync(join(output, 'invocation.json'), JSON.stringify({ sourceRevision: revision, app, executable, processId: child.pid, startedAt: new Date().toISOString(), driverProtocol: 1 }, null, 2) + '\n');
 function assertRunning() {
   if (launchError || child.exitCode !== null || child.signalCode !== null) throw new Error(`Native application exited before acceptance: ${launchError?.message ?? child.exitCode ?? child.signalCode}`);
@@ -77,6 +78,24 @@ const inspect = (testID, window = 'main') => driver.request('tron.inspect', { wi
 const control = (testID, action, options = {}, window = 'main') => driver.request('tron.control', { testID, action, window, ...options });
 const mounted = testID => driver.request('waitFor', { testID, timeoutMs: 20000 });
 const status = text => waitFor(async () => (await inspect('status-main')).label.includes(text), text);
+const popover = (window = 'main', action) => driver.request('tron.popover', { window, testID: `inspector-${window}`, ...(action ? { action } : {}) });
+async function shownPopover(window = 'main') {
+  const value = await waitFor(async () => { const current = await popover(window); return current.shown && current.contentVisible ? current : undefined; }, 'shown native NSPopover');
+  assert.equal(value.nativePopover, true);
+  assert.ok(value.frame.width > 0 && value.frame.height > 0);
+  assert.ok(value.frame.x >= value.region.x && value.frame.y >= value.region.y, 'Native popover chrome crossed the start of its usable region');
+  assert.ok(value.frame.x + value.frame.width <= value.region.x + value.region.width && value.frame.y + value.frame.height <= value.region.y + value.region.height, 'Native popover chrome crossed the end of its usable region');
+  popovers.push({ window, ...value });
+  writeFileSync(join(output, 'popovers.json'), JSON.stringify(popovers, null, 2) + '\n');
+  return value;
+}
+async function dragProtocol(action, source, target) {
+  const result = await driver.request('tron.drag-protocol', { action, ...(source ? { source, target } : {}) });
+  assert.equal(result.boundary, 'native-protocol');
+  dragProtocols.push({ action, source, target, ...result });
+  writeFileSync(join(output, 'drag-protocol.json'), JSON.stringify({ boundary: 'Native NSDraggingSource/NSDraggingDestination methods with a real NSPasteboard; no physical pointer gesture or NSDraggingSession', commands: dragProtocols }, null, 2) + '\n');
+  return result;
+}
 async function capture(name, window = 'main') {
   const result = await driver.request('capture', { window: window === 'main' ? 'main' : `id:${window}`, name, timeoutMs: 10000 });
   const file = join(driverDirectory, result.file);
@@ -88,11 +107,71 @@ try {
   await waitFor(() => existsSync(join(driverDirectory, 'driver.sock')), 'native Spark driver', 25000);
   driver = await connectDriver(join(driverDirectory, 'driver.sock'), token, step => appendFileSync(join(output, 'commands.jsonl'), JSON.stringify(step) + '\n'));
   await mounted('root-main'); await status('Native workspace ready');
+  await driver.request('tron.window', { action: 'show' });
+  await waitFor(async () => { const window = await inspect(); return window.visible && window.key; }, 'visible native owner window');
   const native = await inspect();
   assert.equal(native.hasSplitView, true); assert.equal(native.hasTableView, true);
   assert.equal(native.hasButton, true); assert.equal(native.hasTextField, true);
   assert.ok(native.classes.some(name => /DragDrop/.test(name)), 'Expected a native drag source/destination view');
   checks.push('native-appkit-controls-and-display-module');
+
+  const applicationMenu = await driver.request('tron.menu', { itemId: 'menu-save' });
+  assert.equal(applicationMenu.nativeMenu, true); assert.equal(applicationMenu.enabled, true);
+  assert.equal(applicationMenu.keyEquivalent.toLowerCase(), 's');
+  assert.equal((await driver.request('tron.menu', { itemId: 'menu-disabled' })).enabled, false);
+  await control('title-main', 'text', { value: 'Checkpoint from the application menu' });
+  await status('Unsaved document changes');
+  await driver.request('tron.menu', { itemId: 'menu-save', action: 'select' });
+  await status('Saved in this local reference session');
+  assert.ok((await inspect('saved-main')).labels.includes('Checkpoint from the application menu'));
+  await control('title-main', 'text', { value: 'Checkpoint from the context menu' });
+  await status('Unsaved document changes');
+  await control('context-main', 'press');
+  const contextMenu = await waitFor(async () => { const menu = await driver.request('tron.context-menu', {}); return menu.shown ? menu : undefined; }, 'native context-menu tracking');
+  assert.equal(contextMenu.nativeMenu, true);
+  assert.equal(contextMenu.items.find(item => item.id === 'context-disabled').enabled, false);
+  await driver.request('tron.context-menu', { action: 'select', itemId: 'context-save' });
+  await status('Saved in this local reference session');
+  assert.ok((await inspect('saved-main')).labels.includes('Checkpoint from the context menu'));
+  await control('context-main', 'press');
+  await waitFor(async () => (await driver.request('tron.context-menu', {})).shown, 'second native context menu');
+  await driver.request('tron.context-menu', { action: 'cancel' }); await status('Native context menu dismissed');
+  checks.push('native-application-and-context-menu-commands');
+  const tooltip = await inspect('tooltip-main');
+  assert.equal(tooltip.tooltip, "Save this document's local checkpoint");
+  assert.equal(tooltip.help, "Save this document's local checkpoint");
+  checks.push('native-tooltip-property-and-accessibility-help');
+
+  await control('title-main', 'text', { value: 'Opening the native inspector' });
+  await status('Unsaved document changes');
+  const opener = (await inspect()).firstResponderIdentity;
+  assert.ok(opener);
+  await control('inspect-main', 'press');
+  const firstPopover = await shownPopover();
+  const inspectorIdentity = (await inspect('inspector-title-main')).identity;
+  await control('inspector-title-main', 'text', { value: 'Edited inside the actual NSPopover' });
+  await waitFor(async () => (await inspect('title-main')).value === 'Edited inside the actual NSPopover', 'shared document edits from NSPopover');
+  const editingPopover = await inspect('inspector-title-main');
+  assert.equal(editingPopover.editing, true); assert.ok(editingPopover.editorIdentity);
+  const mainFrameBeforePopoverResize = await inspect();
+  await driver.request('tron.window', { window: 'main', action: 'resize', width: mainFrameBeforePopoverResize.width + 80, height: mainFrameBeforePopoverResize.height + 40 });
+  await waitFor(async () => { const root = await inspect('root-main'); return root.width === mainFrameBeforePopoverResize.width + 80 && root.viewBounds.width === root.contentBounds.width; }, 'owner and React root resize with an active popover field editor');
+  const resizedPopover = await shownPopover();
+  assert.equal(resizedPopover.contentIdentity, firstPopover.contentIdentity);
+  assert.equal((await inspect('inspector-title-main')).editorIdentity, editingPopover.editorIdentity);
+  assert.equal((await inspect('inspector-title-main')).editing, true, 'Safe popover reposition interrupted native field editing');
+  await popover('main', 'escape'); await status('Native inspector dismissed');
+  await waitFor(async () => !(await popover()).shown, 'native Escape dismissal');
+  assert.equal((await inspect()).firstResponderIdentity, opener, 'Closing NSPopover did not restore its original native responder');
+  await control('inspect-main', 'press');
+  const reopenedPopover = await shownPopover();
+  assert.equal(reopenedPopover.contentIdentity, firstPopover.contentIdentity);
+  assert.equal((await inspect('inspector-title-main')).identity, inspectorIdentity);
+  assert.equal((await inspect('inspector-title-main')).value, 'Edited inside the actual NSPopover');
+  await control('inspector-close-main', 'press'); await status('Inspector closed');
+  await waitFor(async () => !(await popover()).shown, 'controlled native popover close');
+  await driver.request('tron.window', { window: 'main', action: 'resize', width: mainFrameBeforePopoverResize.width, height: mainFrameBeforePopoverResize.height });
+  checks.push('native-popover-safe-region-shared-content-retained-identity-and-focus');
   await capture('workspace-light');
 
   await control('navigation', 'select', { index: 2 });
@@ -117,6 +196,7 @@ try {
 
   await control('open-main', 'press'); await mounted('root-document-1');
   await waitFor(async () => (await driver.request('tron.windows')).windows.length === 2, 'two real NSWindows');
+  await driver.request('tron.window', { window: 'document-1', action: 'show' });
   assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
   assert.equal((await inspect('collection-document-1', 'document-1')).selected, 1);
   const identity = (await inspect('title-document-1', 'document-1')).identity;
@@ -127,19 +207,61 @@ try {
   assert.equal((await inspect('title-document-1', 'document-1')).identity, identity);
   assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
   checks.push('shared-document-and-resize-identity');
+
+  let offer = await dragProtocol('enter', 'main', 'document-1');
+  assert.ok(offer.operation > 0); assert.equal(offer.operation, offer.sourceMask); assert.ok(offer.pasteboardTypes.length);
+  await status('Document move offered to document-1');
+  await dragProtocol('cancel'); await status('Native document drag canceled');
+  assert.equal((await inspect('owner-main')).label, 'Document owner: main');
+  await dragProtocol('enter', 'main', 'document-1'); await status('Document move offered to document-1');
+  assert.equal((await dragProtocol('drop')).nativeAccepted, true);
+  await status('Move blocked');
+  assert.equal((await inspect('owner-main')).label, 'Document owner: main');
+  await control('title-main', 'text', { value: 'Native drag checkpoint' });
+  await waitFor(async () => (await inspect('title-document-1', 'document-1')).value === 'Native drag checkpoint', 'shared title before document move');
+  await control('save-main', 'press'); await status('Saved in this local reference session');
+  await dragProtocol('enter', 'main', 'document-1'); await status('Document move offered to document-1');
+  await dragProtocol('drop'); await status('Document moved to document-1');
+  assert.equal((await inspect('owner-main')).label, 'Document owner: document-1');
+  await dragProtocol('enter', 'document-1', 'main'); await status('Document move offered to main');
+  await dragProtocol('drop'); await status('Document moved to main');
+  assert.equal((await inspect('owner-main')).label, 'Document owner: main');
+  assert.equal((await inspect('title-document-1', 'document-1')).identity, identity);
+  await control('title-main', 'text', { value: 'Draft shared across native windows' }); await status('Unsaved document changes');
+  checks.push('native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership');
+
   await control('restore-layout', 'press'); await status('layout restored');
   const restored = await inspect(undefined, 'document-1');
   assert.equal(restored.width, frame.width); assert.equal(restored.height, frame.height);
   assert.equal((await inspect('title-document-1', 'document-1')).identity, identity);
   checks.push('native-layout-restoration');
 
+  await driver.request('tron.window', { window: 'main', action: 'show' });
+  await control('inspect-main', 'press'); await shownPopover();
+  await driver.request('tron.window', { window: 'document-1', action: 'show' });
+  await popover('main', 'close'); await status('Native inspector dismissed');
+  await waitFor(async () => !(await popover()).shown, 'popover close after another window gained focus');
+  assert.equal((await inspect(undefined, 'document-1')).key, true);
+  assert.equal((await inspect()).key, false);
+  checks.push('native-popover-dismissal-preserves-newer-window-focus');
+
   await driver.request('tron.window', { window: 'document-1', action: 'close' }); await status('Close blocked');
   assert.equal((await driver.request('tron.windows')).windows.length, 2);
   await control('save-document-1', 'press', {}, 'document-1'); await status('Saved in this local reference session');
+  await control('inspect-document-1', 'press', {}, 'document-1');
+  const beforeMinimizePopover = await shownPopover('document-1');
+  const beforeMinimizeContent = (await inspect('inspector-title-document-1', 'document-1')).identity;
   await control('minimize-document', 'press', {}, 'document-1');
   await waitFor(async () => (await inspect(undefined, 'document-1')).minimized, 'native minimization');
+  await waitFor(async () => !(await popover('document-1')).shown, 'popover dismissed with its minimized owner');
   await control('restore-document', 'press');
   await waitFor(async () => !(await inspect(undefined, 'document-1')).minimized, 'native deminiaturization');
+  await control('inspect-document-1', 'press', {}, 'document-1');
+  assert.equal((await shownPopover('document-1')).contentIdentity, beforeMinimizePopover.contentIdentity);
+  assert.equal((await inspect('inspector-title-document-1', 'document-1')).identity, beforeMinimizeContent);
+  await control('inspector-close-document-1', 'press', {}, 'document-1');
+  await waitFor(async () => !(await popover('document-1')).shown, 'restored owner popover close');
+  checks.push('native-popover-owner-minimize-retains-content');
   assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
   checks.push('native-close-veto-and-minimize-restore');
   await capture('document-window', 'document-1');
@@ -149,10 +271,41 @@ try {
   assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
   checks.push('native-reopen-keeps-app-document');
 
-  const required = ['native-appkit-controls-and-display-module', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-layout-restoration', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document'];
+  const permission = await driver.request('tron.pointer', { action: 'status' });
+  assert.equal(typeof permission.postEventsAllowed, 'boolean');
+  assert.equal(typeof permission.accessibilityTrusted, 'boolean');
+  pointerEvidence = { schemaVersion: 1, permission, status: permission.postEventsAllowed ? 'pending' : 'blocked',
+    boundary: 'CGEvent-posted pointer path and actual NSDraggingSession; physical mouse hardware and human gestures are not tested',
+    ...(permission.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process; no TCC changes or permission prompt was attempted.' }) };
+  writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
+  checks.push('native-pointer-posting-permission-observed');
+  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-pointer-posting-permission-observed'];
   assert.deepEqual(checks, required);
+  if (permission.postEventsAllowed) {
+    pointerEvidence.arrangement = await driver.request('tron.pointer', { action: 'arrange', source: 'main', target: 'document-1' });
+    await waitFor(async () => {
+      const [main, document] = await Promise.all([inspect('root-main'), inspect('root-document-1', 'document-1')]);
+      return main.viewBounds.width === main.contentBounds.width && document.viewBounds.width === document.contentBounds.width;
+    }, 'resized native React roots before pointer input');
+    pointerEvidence.invocation = await driver.request('tron.pointer', { action: 'drag', source: 'main', target: 'document-1' });
+    writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
+    const session = await waitFor(async () => {
+      const state = await driver.request('tron.pointer', { action: 'status' });
+      if (state.session?.nativeSession) { pointerEvidence.session = state.session; writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
+      return state.session?.nativeSession && !state.running ? state.session : undefined;
+    }, 'actual AppKit NSDraggingSession from posted mouse events');
+    assert.equal(session.source, 'drop-main');
+    assert.ok(session.pasteboardTypes.length);
+    await status('Document moved to document-1');
+    assert.equal((await inspect('owner-main')).label, 'Document owner: document-1');
+    assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
+    pointerEvidence.status = 'passed';
+    writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
+    checks.push('native-cgevent-pointer-session-and-cross-window-document-transfer');
+  }
   const report = { schemaVersion: 1, status: 'passed', platform: 'macos', architecture: process.arch, sourceRevision: revision, processId: child.pid, packageSha256: archive.sha256, nativePayloadSha256: nativeArtifact.payloadSha256, checks, captures,
-    boundaries: ['Native AppKit target/action tests; physical pointer/keyboard gestures were not exercised.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
+    pointer: pointerEvidence,
+    boundaries: ['The required drag proof uses native source/destination protocol methods and a real NSPasteboard. It does not by itself create an NSDraggingSession.', pointerEvidence.status === 'passed' ? 'The additional CGEvent check observed an actual AppKit NSDraggingSession and cross-window app transfer; physical mouse hardware and human gestures were not exercised.' : 'The actual process denied CGEvent posting, so pointer-session acceptance remains blocked by the recorded host permission.', 'No physical multi-display, VoiceOver speech, headset or eight-platform acceptance claim.'] };
   writeFileSync(join(output, 'result.json'), JSON.stringify(report, null, 2) + '\n');
   const tested = resolve(process.env.APPKIT_TESTED_PACKAGE ?? join(root, 'tested-package'));
   if (existsSync(tested)) throw new Error('Tested-package output already exists; refusing stale artifact reuse');
@@ -165,6 +318,7 @@ try {
   await driver.request('quit');
   console.info(`Native AppKit acceptance passed ${checks.length} checks at ${revision}; tested archive ${archive.sha256}`);
 } catch (error) {
+  if (pointerEvidence?.status === 'pending') { pointerEvidence.status = 'failed'; pointerEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
   writeFileSync(join(output, 'failure.json'), JSON.stringify({ schemaVersion: 1, status: 'failed', sourceRevision: revision, checks, error: error instanceof Error ? error.message : String(error) }, null, 2) + '\n');
   throw error;
 } finally {

@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows",
+  "result": "native-build-failed",
+  "runId": 42853882887,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42853882887",
+  "nativeJobId": 129969887609,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42853882887/job/129969887609",
+  "sourceJobId": 129961543655,
+  "sourceJobConclusion": "success",
+  "pullRequestHead": "fc85173985e7e7a2a9d37e2562151b6a70092278",
+  "checkoutRevision": "99bb0c171ec404559578b36fd615f1fc5cc66399",
+  "checkoutTree": "b8c8e1e8409746b5d8290c6d398b2c6a130d0506",
+  "pullRequestHeadTree": "b8c8e1e8409746b5d8290c6d398b2c6a130d0506",
+  "originalLog": {
+    "source": "GitHub Actions native job logs retrieved through the GitHub connector",
+    "encoding": "UTF-8 serialization of the original decoded job log, retaining BOM and CRLF",
+    "sha256": "4634cd0efc92324e0d641223bebfc0fb29cd0b5d27ed38c2112dba594eeb8ee8",
+    "bytes": 80072,
+    "retainedInGit": false,
+    "excerpts": [
+      {
+        "retainedPath": "checkout-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            81,
+            83
+          ],
+          [
+            89,
+            91
+          ],
+          [
+            108,
+            111
+          ]
+        ]
+      },
+      {
+        "retainedPath": "compiler-errors.txt",
+        "sourceLineRanges": [
+          [
+            670,
+            678
+          ],
+          [
+            693,
+            693
+          ],
+          [
+            694,
+            707
+          ]
+        ]
+      },
+      {
+        "retainedPath": "toolchain-excerpt.txt",
+        "sourceLineRanges": [
+          [
+            1,
+            20
+          ],
+          [
+            495,
+            495
+          ]
+        ]
+      }
+    ]
+  },
+  "observedToolchain": {
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "osVersion": "10.0.26100",
+    "runnerImage": "windows-2025-vs2026",
+    "runnerImageVersion": "20261103.298",
+    "msbuild": "18.11.1-1.26513.3+940033be3"
+  },
+  "failedStep": "Build installed native C++/WinRT Fabric package",
+  "compilerDiagnostic": {
+    "code": "C2039",
+    "file": "TronOverlayAnchor.cpp",
+    "line": 33,
+    "column": 16,
+    "message": "'ShouldConstrainPopupsToWorkArea': is not a member of 'winrt::Microsoft::UI::Xaml::XamlIsland'"
+  },
+  "completedPrerequisites": [
+    "Install native-codegen dependencies",
+    "Build source distribution and validate lifecycle contracts",
+    "Verify the isolated RNW public declaration snapshot",
+    "Download the canonical shared package archives",
+    "Install the fresh consumer from canonical peers and the Fabric candidate",
+    "Generate native code from the installed package",
+    "Generate official RNW application and connect native package"
+  ],
+  "unexecutedChecks": [
+    "Compile actual Windows consumer executable",
+    "Deploy the packaged consumer the way run-windows does",
+    "UI Automation smoke test of the packaged consumer",
+    "Retain the exact package that passed native acceptance",
+    "Upload tested Windows distribution"
+  ],
+  "testedPackageArtifactPresent": false,
+  "uiAutomationArtifactPresent": false,
+  "limitations": [
+    "The native library did not compile successfully. No consumer executable was built or launched in this run.",
+    "Native overlay, drag, navigation accessibility and window interaction acceptance were skipped.",
+    "The UIA artifact upload step completed with a no-files warning; it produced no UI evidence.",
+    "The only retained workflow artifact is the Ubuntu canonical shared package archive set. It is not a natively tested Fabric distribution.",
+    "The preparation receipt was not retained after this failure. The actual checkout revision is evidenced directly by the native checkout log.",
+    "The corrected 3e2c88f candidate must establish its own native result; no acceptance is transferred to it."
+  ]
+}

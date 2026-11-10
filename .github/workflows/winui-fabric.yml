@@ -61,7 +61,7 @@ jobs:
           npm run build
           npm test
           listing=$(npm pack --dry-run --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].files.map(f=>f.path).join("\n")))')
-          for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts windows/NYCTronFluentFabric/TronNavigationView.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
+          for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts src/TronOverlayAnchorNativeComponent.ts src/TronDragSurfaceNativeComponent.ts dist/overlays.windows.js dist/drag-drop.windows.js windows/NYCTronFluentFabric/TronNavigationView.cpp windows/NYCTronFluentFabric/TronOverlayAnchor.cpp windows/NYCTronFluentFabric/TronDragSurface.cpp windows/NYCTronFluentFabric/NativeDragBroker.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
           done
       - name: Verify the isolated RNW public declaration snapshot
@@ -121,7 +121,7 @@ jobs:
         run: |
           npm run codegen
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          foreach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h")) {
+          foreach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h")) {
             if (-not (Test-Path $header)) { throw "Missing generated native header: $header" }
           }
       - name: Generate official RNW application and connect native package
@@ -153,7 +153,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       # The UIA smoke step below launches the packaged app and checks the
       # route roundtrip with keyboard input. It does not cover Narrator
-      # speech, high contrast, pointer input or an RTL locale.
+      # speech, high contrast or an RTL locale. Native popup and OS mouse
+      # drag checks are required below, including rejected/cancelled offers.
 
       - name: Compile actual Windows consumer executable
         working-directory: ${{ env.WIN_CONSUMER }}

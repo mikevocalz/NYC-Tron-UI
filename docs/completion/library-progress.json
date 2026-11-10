@@ -297,7 +297,10 @@
       "sourceCandidates": [
         "packages/ui/src/components/shell/ContextMenu.tsx",
         "packages/expo-controls/src/components/ContextMenu.native.tsx",
-        "packages/expo-controls/src/components/ContextMenu.web.tsx"
+        "packages/expo-controls/src/components/ContextMenu.web.tsx",
+        "packages/windows-fluent/rnw-fabric/src/overlays.windows.tsx",
+        "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronOverlayAnchor.cpp",
+        "packages/macos-appkit/spark/src/context-menu.ts"
       ],
       "implementationReview": "implemented",
       "acceptance": "unverified",
@@ -305,7 +308,8 @@
       "evidence": [
         "P04-overlays-and-transfer.md",
         "P04-native-overlays.md",
-        "P04-native-overlays-proof.json"
+        "P04-native-overlays-proof.json",
+        "reports/V1-RELEASE-GATES.md"
       ]
     },
     {
@@ -315,7 +319,11 @@
       "libraryScope": true,
       "sourceCandidates": [
         "packages/expo-controls/src/components/NativePopover.native.tsx",
-        "packages/expo-controls/src/components/NativePopover.web.tsx"
+        "packages/expo-controls/src/components/NativePopover.web.tsx",
+        "packages/windows-fluent/rnw-fabric/src/overlays.windows.tsx",
+        "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronOverlayAnchor.cpp",
+        "packages/macos-appkit/spark/src/popover.tsx",
+        "packages/macos-appkit/spark/macos/NYCTronPopover.mm"
       ],
       "implementationReview": "implemented",
       "acceptance": "unverified",
@@ -323,7 +331,8 @@
       "evidence": [
         "P04-overlays-and-transfer.md",
         "P04-native-overlays.md",
-        "P04-native-overlays-proof.json"
+        "P04-native-overlays-proof.json",
+        "reports/V1-RELEASE-GATES.md"
       ]
     },
     {

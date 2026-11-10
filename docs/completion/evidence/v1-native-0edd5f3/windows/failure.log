@@ -1,0 +1,71 @@
+2026-11-10T16:02:02.0317203Z - Verifying loopbackExempt
+2026-11-10T16:02:02.1015540Z OK.
+2026-11-10T16:02:02.1034766Z ✔ Verifying loopbackExempt
+2026-11-10T16:02:02.1036928Z - Skip the step to start the app
+2026-11-10T16:02:02.1037457Z ℹ Skip the step to start the app
+2026-11-10T16:02:02.4035037Z Registered NYCTronWindowsExample_1.0.0.0_x64__0505czgxka2we
+2026-11-10T16:02:02.4663564Z ##[group]Run & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+2026-11-10T16:02:02.4664673Z [36;1m& .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"[0m
+2026-11-10T16:02:02.4742946Z shell: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -command ". '{0}'"
+2026-11-10T16:02:02.4743394Z env:
+2026-11-10T16:02:02.4743652Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T16:02:02.4744028Z   CONSUMER_AUMID: NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T16:02:02.4744339Z ##[endgroup]
+2026-11-10T16:02:10.8417399Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T16:02:11.7313845Z Window 'NYCTronWindowsExample' class 'Microsoft.UI.Windowing.Window'
+2026-11-10T16:02:11.9859986Z Native NavigationView items found by Narrator name
+2026-11-10T16:02:12.0663346Z UIA smoke failed: Exception calling "SetFocus" with "0" argument(s): "Target element cannot receive focus."
+2026-11-10T16:02:12.3580927Z Saved UIA tree (37 elements) to D:\a\_temp\uia-smoke\uia-tree.txt
+2026-11-10T16:02:12.4798515Z D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1 : Exception calling "SetFocus" with "0" argument(s): "Target 
+2026-11-10T16:02:12.4799410Z element cannot receive focus."
+2026-11-10T16:02:12.4820193Z At D:\a\_temp\3cdc20a6-5100-47f4-a4c4-42948da5580a.ps1:2 char:1
+2026-11-10T16:02:12.4821166Z + & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -Proces ...
+2026-11-10T16:02:12.4821843Z + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-10T16:02:12.4823428Z     + CategoryInfo          : NotSpecified: (:) [uia-smoke.ps1], MethodInvocationException
+2026-11-10T16:02:12.4824529Z     + FullyQualifiedErrorId : InvalidOperationException,uia-smoke.ps1
+2026-11-10T16:02:12.4825203Z  
+2026-11-10T16:02:12.5240339Z ##[error]Process completed with exit code 1.
+2026-11-10T16:02:12.5466809Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T16:02:12.5467182Z with:
+2026-11-10T16:02:12.5467402Z   name: winui-fabric-uia-smoke
+2026-11-10T16:02:12.5467672Z   path: D:\a\_temp/uia-smoke
+2026-11-10T16:02:12.5467934Z   if-no-files-found: warn
+2026-11-10T16:02:12.5468175Z   compression-level: 6
+2026-11-10T16:02:12.5468410Z   overwrite: false
+2026-11-10T16:02:12.5468616Z   include-hidden-files: false
+2026-11-10T16:02:12.5468847Z env:
+2026-11-10T16:02:12.5469073Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-10T16:02:12.5469412Z   CONSUMER_AUMID: NYCTronWindowsExample_0505czgxka2we!App
+2026-11-10T16:02:12.5469720Z ##[endgroup]
+2026-11-10T16:02:12.7787727Z (node:7272) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T16:02:12.7788537Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T16:02:12.7862480Z With the provided path, there will be 1 file uploaded
+2026-11-10T16:02:12.7866853Z Artifact name is valid!
+2026-11-10T16:02:12.7868751Z Root directory input is valid!
+2026-11-10T16:02:13.0057630Z Beginning upload of artifact content to blob storage
+2026-11-10T16:02:13.0273738Z (node:7272) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-10T16:02:13.0540381Z Uploaded bytes 692
+2026-11-10T16:02:13.0706746Z Finished uploading artifact content to blob storage!
+2026-11-10T16:02:13.0709148Z SHA256 digest of uploaded artifact zip is 44b17729d739cb49942537a63a9f19f64abbd149b92f2f7b63b782c650c44e08
+2026-11-10T16:02:13.0710521Z Finalizing artifact upload
+2026-11-10T16:02:13.4782302Z Artifact winui-fabric-uia-smoke.zip successfully finalized. Artifact ID 13779728067
+2026-11-10T16:02:13.4784398Z Artifact winui-fabric-uia-smoke has been successfully uploaded! Final size is 692 bytes. Artifact ID is 13779728067
+2026-11-10T16:02:13.4789448Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42847218074/artifacts/13779728067
+2026-11-10T16:02:13.7439522Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-10T16:02:13.8044828Z Temporarily overriding HOME='D:\a\_temp\aea7c3f6-b5b6-42fd-98a9-9b0642fc4844' before making global git config changes
+2026-11-10T16:02:13.8046721Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-10T16:02:13.8058510Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-10T16:02:13.8555170Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-10T16:02:13.9015570Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-10T16:02:14.5120383Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-10T16:02:14.5476828Z http.https://github.com/.extraheader
+2026-11-10T16:02:14.5532581Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-10T16:02:14.6012944Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-10T16:02:15.2101751Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-10T16:02:15.2493312Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-10T16:02:15.8502469Z Cleaning up orphan processes
+2026-11-10T16:02:15.8677378Z Terminate orphan process: pid (7460) (vctip)
+2026-11-10T16:02:15.8780158Z Terminate orphan process: pid (7008) (mspdbsrv)
+2026-11-10T16:02:15.9022666Z Terminate orphan process: pid (4044) (MSBuild)
+2026-11-10T16:02:15.9220426Z Terminate orphan process: pid (6008) (MSBuild)
+2026-11-10T16:02:15.9307160Z Terminate orphan process: pid (5936) (conhost)

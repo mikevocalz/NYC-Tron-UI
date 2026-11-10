@@ -17,6 +17,12 @@ failed iOS interaction and its repair without promoting the failure.
 
 Desktop integration adds the isolated AppKit/Spark and Windows Fabric host
 adapters, with actual native window ownership and dedicated consumer gates.
+[PR 59](https://github.com/mikevocalz/NYC-Tron-UI/pull/59) and
+[PR 60](https://github.com/mikevocalz/NYC-Tron-UI/pull/60) implement their native
+menus, context menus, popovers/inspectors, tooltips and cross-window drag/drop.
+Windows also has native focus commands and UIA stages for resize, RTL,
+collapse/reopen and high contrast. These sources and required native gates
+supersede the corresponding implementation deferrals in the historical table.
 Their native results belong to their tested commits; read
 [the current support table](../SUPPORT.md) and
 [candidate evidence](reports/V1-RELEASE-GATES.md) before claiming acceptance.

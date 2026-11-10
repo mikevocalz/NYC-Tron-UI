@@ -1,0 +1,26 @@
+670: 2026-11-10T16:41:55.6784440Z   DesktopGeometry.cpp
+671: 2026-11-10T16:41:56.0312309Z   DesktopSession.cpp
+672: 2026-11-10T16:41:57.1049594Z   TronDesktop.cpp
+673: 2026-11-10T16:41:58.4662254Z   TronOverlayAnchor.cpp
+674: 2026-11-10T16:42:03.9589955Z D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\TronOverlayAnchor.cpp(33,16): error C2039: 'ShouldConstrainPopupsToWorkArea': is not a member of 'winrt::Microsoft::UI::Xaml::XamlIsland' [D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\NYCTronFluentFabric.vcxproj]
+675: 2026-11-10T16:42:03.9610506Z   (compiling source file '/TronOverlayAnchor.cpp')
+676: 2026-11-10T16:42:03.9611790Z       D:\a\_temp\tron-windows-consumer\node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric\x64\Release\Generated Files\winrt\impl\Microsoft.UI.Xaml.2.h(891,35):
+677: 2026-11-10T16:42:03.9612996Z       see declaration of 'winrt::Microsoft::UI::Xaml::XamlIsland'
+678: 2026-11-10T16:42:03.9613492Z   
+
+693: 2026-11-10T16:42:23.3140952Z ##[error]Process completed with exit code 1.
+
+694: 2026-11-10T16:42:23.3344362Z ##[group]Run actions/upload-artifact@v4
+695: 2026-11-10T16:42:23.3344818Z with:
+696: 2026-11-10T16:42:23.3345068Z   name: winui-fabric-uia-smoke
+697: 2026-11-10T16:42:23.3345346Z   path: D:\a\_temp/uia-smoke
+698: 2026-11-10T16:42:23.3345617Z   if-no-files-found: warn
+699: 2026-11-10T16:42:23.3345867Z   compression-level: 6
+700: 2026-11-10T16:42:23.3346134Z   overwrite: false
+701: 2026-11-10T16:42:23.3346394Z   include-hidden-files: false
+702: 2026-11-10T16:42:23.3346648Z env:
+703: 2026-11-10T16:42:23.3346897Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+704: 2026-11-10T16:42:23.3347212Z ##[endgroup]
+705: 2026-11-10T16:42:23.5636338Z (node:3504) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+706: 2026-11-10T16:42:23.5637061Z (Use `node --trace-deprecation ...` to show where the warning was created)
+707: 2026-11-10T16:42:23.5681258Z ##[warning]No files were found with the provided path: D:\a\_temp/uia-smoke. No artifacts will be uploaded.

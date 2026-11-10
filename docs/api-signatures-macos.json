@@ -44,6 +44,24 @@
           }
         }
       ],
+      "./anchored-inspector": [
+        {
+          "target": "./dist/anchored-inspector.d.ts",
+          "conditions": {
+            "types": "./dist/anchored-inspector.d.ts",
+            "react-native": "./src/anchored-inspector.tsx",
+            "default": "./dist/anchored-inspector.js"
+          },
+          "symbols": {
+            "AnchoredInspector": [
+              "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspector"
+            ],
+            "AnchoredInspectorProps": [
+              "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspectorProps"
+            ]
+          }
+        }
+      ],
       "./button": [
         {
           "target": "./dist/button.d.ts",
@@ -58,6 +76,33 @@
             ],
             "ButtonProps": [
               "@nyc-tron/macos-appkit/dist/button.d.ts#ButtonProps"
+            ]
+          }
+        }
+      ],
+      "./context-menu": [
+        {
+          "target": "./dist/context-menu.d.ts",
+          "conditions": {
+            "types": "./dist/context-menu.d.ts",
+            "react-native": "./src/context-menu.ts",
+            "default": "./dist/context-menu.js"
+          },
+          "symbols": {
+            "ContextMenuOptions": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions"
+            ],
+            "ContextMenuResult": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult"
+            ],
+            "MenuAction": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuAction"
+            ],
+            "MenuItem": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuItem"
+            ],
+            "showContextMenu": [
+              "@nyc-tron/macos-appkit/dist/context-menu.d.ts#showContextMenu"
             ]
           }
         }
@@ -88,6 +133,78 @@
             ],
             "DropEvent": [
               "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DropEvent"
+            ]
+          }
+        }
+      ],
+      "./menus": [
+        {
+          "target": "./dist/menus.d.ts",
+          "conditions": {
+            "types": "./dist/menus.d.ts",
+            "react-native": "./src/menus.ts",
+            "default": "./dist/menus.js"
+          },
+          "symbols": {
+            "Menu": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu"
+            ],
+            "MenuAction": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuAction"
+            ],
+            "MenuIcon": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuIcon"
+            ],
+            "MenuItem": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuItem"
+            ],
+            "MenuLifecycleEvent": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuLifecycleEvent"
+            ],
+            "MenuLocation": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuLocation"
+            ],
+            "MenuOptions": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions"
+            ],
+            "MenuPlacement": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuPlacement"
+            ],
+            "MenuRole": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuRole"
+            ],
+            "MenuRootItem": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuRootItem"
+            ],
+            "MenuTarget": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuTarget"
+            ],
+            "MenuUpdate": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuUpdate"
+            ],
+            "createMenu": [
+              "@nyc-tron/macos-appkit/dist/menus.d.ts#createMenu"
+            ]
+          }
+        }
+      ],
+      "./popover": [
+        {
+          "target": "./dist/popover.d.ts",
+          "conditions": {
+            "types": "./dist/popover.d.ts",
+            "react-native": "./src/popover.tsx",
+            "default": "./dist/popover.js"
+          },
+          "symbols": {
+            "Popover": [
+              "@nyc-tron/macos-appkit/dist/popover.d.ts#Popover"
+            ],
+            "PopoverPresentationRejection": [
+              "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection"
+            ],
+            "PopoverProps": [
+              "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps"
             ]
           }
         }
@@ -197,6 +314,24 @@
           }
         }
       ],
+      "./tooltip": [
+        {
+          "target": "./dist/tooltip.d.ts",
+          "conditions": {
+            "types": "./dist/tooltip.d.ts",
+            "react-native": "./src/tooltip.tsx",
+            "default": "./dist/tooltip.js"
+          },
+          "symbols": {
+            "Tooltip": [
+              "@nyc-tron/macos-appkit/dist/tooltip.d.ts#Tooltip"
+            ],
+            "TooltipProps": [
+              "@nyc-tron/macos-appkit/dist/tooltip.d.ts#TooltipProps"
+            ]
+          }
+        }
+      ],
       "./window-controller": [
         {
           "target": "./dist/window-controller.d.ts",
@@ -274,6 +409,25 @@
     }
   },
   "declarations": {
+    "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspector": {
+      "signatures": [
+        "export declare function AnchoredInspector(props: AnchoredInspectorProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspectorProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspectorProps": {
+      "signatures": [
+        "export type AnchoredInspectorProps = PopoverProps;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps"
+      ]
+    },
     "@nyc-tron/macos-appkit/dist/button.d.ts#Button": {
       "signatures": [
         "export declare function Button(props: ButtonProps): import(\"react\").JSX.Element;"
@@ -293,6 +447,20 @@
         "@legendapp/spark-ui@0.0.2/src/types.ts#ButtonProps"
       ]
     },
+    "@nyc-tron/macos-appkit/dist/context-menu.d.ts#showContextMenu": {
+      "signatures": [
+        "export declare function showContextMenu(options: ContextMenuOptions): Promise<ContextMenuResult>;"
+      ],
+      "references": [
+        "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions",
+        "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
     "@nyc-tron/macos-appkit/dist/drag-drop.d.ts#DragDropView": {
       "signatures": [
         "export declare function DragDropView(props: DragDropViewProps): import(\"react\").JSX.Element;"
@@ -302,6 +470,49 @@
         "@types/react@19.2.18/index.d.ts#$module",
         "@types/react@19.2.18/index.d.ts#React.JSX",
         "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/menus.d.ts#createMenu": {
+      "signatures": [
+        "export declare function createMenu(options: MenuOptions): Promise<Menu>;"
+      ],
+      "references": [
+        "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu",
+        "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/popover.d.ts#Popover": {
+      "signatures": [
+        "export declare function Popover({ scope, open, onOpenChange, onPresentationRejected, accessibilityLabel, anchor, usableRegions, children, width, maxHeight, animated, testID }: PopoverProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection": {
+      "signatures": [
+        "export interface PopoverPresentationRejection {\n    reason: 'outside-usable-region';\n    bounds: Rect2D;\n    region: Rect2D;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/overlays.d.ts#Rect2D"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps": {
+      "signatures": [
+        "export interface PopoverProps {\n    scope?: string;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    onPresentationRejected?: (rejection: PopoverPresentationRejection) => void;\n    accessibilityLabel: string;\n    anchor: Rect2D;\n    usableRegions: readonly Rect2D[];\n    children: ReactNode;\n    width?: number;\n    maxHeight?: number;\n    animated?: boolean;\n    testID?: string;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/overlays.d.ts#Rect2D",
+        "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection",
+        "@types/react@19.2.18/index.d.ts#React.ReactNode"
       ]
     },
     "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControl": {
@@ -400,6 +611,25 @@
       ],
       "references": [
         "@legendapp/spark-ui@0.0.2/src/types.ts#TextInputProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/tooltip.d.ts#Tooltip": {
+      "signatures": [
+        "export declare function Tooltip({ label, disabled, accessibilityHint, ...props }: TooltipProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/tooltip.d.ts#TooltipProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/tooltip.d.ts#TooltipProps": {
+      "signatures": [
+        "export interface TooltipProps extends ViewProps {\n    label: string;\n    disabled?: boolean;\n}"
+      ],
+      "references": [
+        "react-native@0.83.10/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps"
       ]
     },
     "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay": {
@@ -547,6 +777,87 @@
     }
   },
   "externalTypes": {
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "ContextMenuOptions",
+      "signatures": [
+        "export interface ContextMenuOptions {\n    items: readonly MenuItem[];\n    windowId: string;\n    position: {\n        x: number;\n        y: number;\n    };\n}"
+      ]
+    },
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "ContextMenuResult",
+      "signatures": [
+        "export type ContextMenuResult = {\n    canceled: true;\n} | {\n    canceled: false;\n    itemId: string;\n};"
+      ]
+    },
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuAction": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "MenuAction",
+      "signatures": [
+        "export type MenuAction = Extract<SharedMenuAction, {\n    type: \"action\";\n}>;"
+      ]
+    },
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuItem": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "MenuItem",
+      "signatures": [
+        "export type MenuItem = {\n    type: \"separator\";\n} | (ContextMenuEntry & {\n    type: \"action\";\n}) | (ContextMenuEntry & {\n    type: \"checkbox\";\n    checked: boolean;\n});"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuIcon": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuIcon",
+      "signatures": [
+        "export type MenuIcon = {\n    type: \"symbol\";\n    name: string;\n} | {\n    type: \"image\";\n    path: string;\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuLocation": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuLocation",
+      "signatures": [
+        "export type MenuLocation = \"app\" | \"file\" | \"edit\" | \"view\" | \"window\" | \"help\";"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuPlacement": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuPlacement",
+      "signatures": [
+        "export type MenuPlacement = {\n    before: MenuTarget;\n    after?: never;\n} | {\n    after: MenuTarget;\n    before?: never;\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuRole": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuRole",
+      "signatures": [
+        "export type MenuRole = \"new\" | \"open\" | \"save\" | \"saveAs\" | \"clearRecentDocuments\" | \"about\" | \"settings\" | \"services\" | \"hide\" | \"hideOthers\" | \"showAll\" | \"quit\" | \"undo\" | \"redo\" | \"cut\" | \"copy\" | \"paste\" | \"selectAll\" | \"minimize\" | \"zoom\" | \"close\" | \"toggleFullscreen\";"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuTarget": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuTarget",
+      "signatures": [
+        "export type MenuTarget = {\n    id: string;\n} | {\n    role: MenuRole;\n} | {\n    menu: MenuLocation;\n};"
+      ]
+    },
     "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult": {
       "package": "@legendapp/spark-desktop-windows",
       "version": "0.0.2",
@@ -635,6 +946,69 @@
       "symbol": "DragDropViewProps",
       "signatures": [
         "export interface DragDropViewProps extends ViewProps, DragOptions {\n    disabled?: boolean;\n    source?: DragPayload;\n    onDrop?: (event: DropEvent) => void;\n    onDragEnter?: (event: DropEvent) => void;\n    onDragOver?: (event: DragOverEvent) => void;\n    onDragLeave?: () => void;\n    onDragEnd?: (event: DragEndEvent) => void;\n    onError?: (error: SparkError) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "Menu",
+      "signatures": [
+        "export interface Menu extends AsyncRegistration {\n    readonly id: string;\n    update(options: MenuUpdate): Promise<void>;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuAction": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuAction",
+      "signatures": [
+        "export type MenuAction = Extract<SharedMenuAction, {\n    type: \"action\";\n}>;"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuItem": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuItem",
+      "signatures": [
+        "export type MenuItem = MenuLeaf | (Omit<Extract<MenuInputItem, {\n    type: \"submenu\";\n}>, \"items\"> & {\n    items: readonly MenuItem[];\n});"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuLifecycleEvent": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuLifecycleEvent",
+      "signatures": [
+        "export interface MenuLifecycleEvent {\n    menuId: string;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuOptions",
+      "signatures": [
+        "export interface MenuOptions extends MenuUpdate {\n    id: string;\n    onAction?: (action: MenuAction) => void;\n    onOpen?: (event: MenuLifecycleEvent) => void;\n    onClose?: (event: MenuLifecycleEvent) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuRootItem": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuRootItem",
+      "signatures": [
+        "export type MenuRootItem = Extract<MenuItem, {\n    type: \"submenu\";\n}>;"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuUpdate": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuUpdate",
+      "signatures": [
+        "export interface MenuUpdate {\n    items: readonly MenuRootItem[];\n}"
       ]
     },
     "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewProps": {
@@ -750,6 +1124,15 @@
         "export interface Rect {\n    readonly x: number;\n    readonly y: number;\n    readonly width: number;\n    readonly height: number;\n}"
       ]
     },
+    "@nyc-tron/core@1.0.0/dist/overlays.d.ts#Rect2D": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/overlays.d.ts",
+      "symbol": "Rect2D",
+      "signatures": [
+        "export type Rect2D = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n}>;"
+      ]
+    },
     "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#$module": {
       "package": "@nyc-tron/core",
       "version": "1.0.0",
@@ -823,6 +1206,24 @@
       "symbol": "React.JSX.Element",
       "signatures": [
         "interface Element extends React.ReactElement<any, any> {\n}"
+      ]
+    },
+    "@types/react@19.2.18/index.d.ts#React.ReactNode": {
+      "package": "@types/react",
+      "version": "19.2.18",
+      "file": "index.d.ts",
+      "symbol": "React.ReactNode",
+      "signatures": [
+        "type ReactNode = ReactElement | string | number | bigint | Iterable<ReactNode> | ReactPortal | boolean | null | undefined | DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES[keyof DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES] | Promise<AwaitedReactNode>;"
+      ]
+    },
+    "react-native@0.83.10/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps": {
+      "package": "react-native",
+      "version": "0.83.10",
+      "file": "Libraries/Components/View/ViewPropTypes.d.ts",
+      "symbol": "ViewProps",
+      "signatures": [
+        "export interface ViewProps extends ViewPropsAndroid, ViewPropsIOS, GestureResponderHandlers, Touchable, PointerEvents, AccessibilityProps {\n    children?: React.ReactNode | undefined;\n    hitSlop?: null | Insets | number | undefined;\n    id?: string | undefined;\n    needsOffscreenAlphaCompositing?: boolean | undefined;\n    onLayout?: ((event: LayoutChangeEvent) => void) | undefined;\n    pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto' | undefined;\n    removeClippedSubviews?: boolean | undefined;\n    style?: StyleProp<ViewStyle> | undefined;\n    testID?: string | undefined;\n    nativeID?: string | undefined;\n    collapsable?: boolean | undefined;\n    collapsableChildren?: boolean | undefined;\n}"
       ]
     },
     "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise": {

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "head": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+  "testedMerge": "e597d73757911e9a58005d577b3c2bf2496bd798",
+  "runId": 42847218074,
+  "nativeJobId": 129944358989,
+  "artifactId": 13779728067,
+  "artifactSha256": "44b17729d739cb49942537a63a9f19f64abbd149b92f2f7b63b782c650c44e08",
+  "artifactSha256IndependentlyVerified": true,
+  "conclusion": "failure",
+  "passedStages": [
+    "source-and-codegen-contracts",
+    "native-library-compile",
+    "installed-consumer-compile",
+    "packaged-app-deployment"
+  ],
+  "failure": "First capture tried UIA SetFocus on a nonfocusable top-level window; no navigation/lifecycle assertion completed in this attempt.",
+  "retainedLog": "failure.log is an exact excerpt of original job lines timestamped 16:02; it is not the full job log.",
+  "uiTreeSha256": "780d04144d67285bfdbac78a01d350df9c169d5f48460d751200c1da6a4cb214",
+  "nativePayloadIndependentlyHashed": false,
+  "testedPackageArtifactProduced": false
+}

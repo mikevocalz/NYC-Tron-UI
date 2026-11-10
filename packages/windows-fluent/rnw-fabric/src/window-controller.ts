@@ -4,6 +4,7 @@ import {
   beginDrag, dragOver, dropDrag, resolveDrop, cancelDrag, type Outcome,
 } from "@nyc-tron/core/window-lifecycle";
 import type { Rect } from "@nyc-tron/core/folds";
+import { createNativeDragController, type WindowsNativeDragTransport } from "./native-drag-controller.ts";
 import { parseDesktopSnapshot, validWindowId, validWindowRect, convertDesktopLayout } from "./window-protocol.ts";
 import type {
   WindowsCloseRequest, WindowsDesktopSnapshot, WindowsWindowHost,
@@ -11,7 +12,7 @@ import type {
 } from "./window-types.ts";
 
 /** Native transport injected by the real RNW adapter; also used by lifecycle tests. */
-export interface WindowsDesktopTransport {
+export interface WindowsDesktopTransport extends WindowsNativeDragTransport {
   connect(primaryWindowId: string, componentName: string): Promise<string>;
   read(ownerToken: string): Promise<string>;
   open(ownerToken: string, request: string): Promise<string>;
@@ -47,6 +48,7 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
     if (!current) throw new Error("Windows window host is not connected");
     return current;
   };
+  const nativeDrag = createNativeDragController(transport, { snapshot, getState: () => options.owner.getState(), commit: state => options.owner.commit(state), isLive: () => !disposed && !disposing, report });
   const sameGeometry = (a: { displayId: string; rect: Rect }, b: { displayId: string; rect: Rect }) =>
     a.displayId === b.displayId && a.rect.x === b.rect.x && a.rect.y === b.rect.y && a.rect.width === b.rect.width && a.rect.height === b.rect.height;
   function observe(next: WindowsDesktopSnapshot) {
@@ -90,7 +92,7 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
     for (const next of early) observe(next);
     early.length = 0;
   } catch (error) {
-    updates.remove(); errors.remove(); disposed = true;
+    updates.remove(); errors.remove(); nativeDrag.detach(); disposed = true;
     if (current) await transport.dispose(current.ownerToken).catch(report);
     throw error;
   }
@@ -145,7 +147,8 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
       await command(async () => {
         // Restoring layout invalidates transfers issued before that restore, even if an OS move later fails.
         const before = options.owner.getState();
-        options.owner.commit({ ...before, drag: null });
+        if (before.drag) await nativeDrag.cancel(before.drag.token);
+        options.owner.commit({ ...options.owner.getState(), drag: null });
         for (const window of plan.windows) {
           observe(parseDesktopSnapshot(await transport.move(token(), known(window.id), JSON.stringify({ displayId: window.displayId, rect: window.rect, raise: true }))));
           if (window.home) {
@@ -177,13 +180,16 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
       if (disposed || disposing) return { state: options.owner.getState(), ok: false, reason: "stale-token" };
       return apply(resolveDrop(options.owner.getState(), dragToken, accepted));
     },
-    cancelDrag(dragToken) { requireLive(); return apply(cancelDrag(options.owner.getState(), dragToken)); },
+    cancelDrag(dragToken) { requireLive(); const result = apply(cancelDrag(options.owner.getState(), dragToken)); if (result.ok) void nativeDrag.cancel(dragToken).catch(report); return result; },
+    startNativeDrag: nativeDrag.start,
+    bindNativeDropTarget: nativeDrag.bindTarget,
     dispose() {
       if (disposing) return disposing;
       disposing = queued.then(async () => {
         if (disposed) return;
+        await nativeDrag.cancelCurrent();
         await transport.dispose(token());
-        disposed = true; updates.remove(); errors.remove(); seenCloses.clear();
+        disposed = true; updates.remove(); errors.remove(); nativeDrag.detach(); seenCloses.clear();
         let state = options.owner.getState();
         for (const window of state.windows) state = closeWindow(state, window.id).state;
         options.owner.commit(state);

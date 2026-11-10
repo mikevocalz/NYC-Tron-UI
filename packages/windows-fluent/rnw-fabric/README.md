@@ -1,4 +1,4 @@
-# Native WinUI 3 navigation and Windows surfaces in RNW 0.85 Fabric
+# Native WinUI 3 navigation, overlays and Windows surfaces in RNW 0.85 Fabric
 
 **Independent Windows-only adapter.** This nested package implements a
 genuine WinUI 3 `NavigationView` using RNW 0.85's native XAML
@@ -67,7 +67,11 @@ CI validates, on `windows-2025` with Visual Studio 2026:
    `winui-fabric-uia-smoke` artifact. The test also opens a real second
    top-level window, verifies both roots observe one document owner,
    minimizes/restores it, vetoes an unsaved OS close, accepts a saved OS
-   close, and reopens the ID with the document state retained.
+   close, and reopens the ID with the document state retained. The P0 extension
+   requires actual MenuFlyout/ContextFlyout invocation, ToolTip display,
+   rapid native inspector typing/rejection/reopen, and OS cross-window mouse
+   drags that reject, cancel with Escape, lose a target during approval, and
+   accept one authorized Move. These added cases require their own green run.
 5. Only after those native checks pass, CI retains the original installed
    Fabric tarball, its SHA256SUMS and `tested-package.json` receipt as
    `windows-fabric-tested-package`. Its lockfile integrity must still match
@@ -75,8 +79,11 @@ CI validates, on `windows-2025` with Visual Studio 2026:
 
 Not covered by this UIA consumer: Narrator speech output, high contrast, an RTL locale
 (the `isRTL` prop is compiled and wired but not exercised), resizing,
-pointer input, Settings focus return, `onNativeError` delivery, physical
-monitor disconnect/reconnect, mixed-DPI hardware, and OS drag-and-drop.
+Settings focus return, `onNativeError` delivery, physical
+monitor disconnect/reconnect and mixed-DPI hardware. The P0 fixture adds
+synthetic OS mouse drag input; it does not establish physical pointer, touch
+or pen acceptance. The native P0 checks are pending until their matching
+Windows workflow and archive receipt pass.
 
 ## Build
 
@@ -206,8 +213,9 @@ their reference DPI so the next connection can convert them correctly.
 application-input transfer protocol. Only a live, app-approved drop
 returns a transfer; the application applies it to its own document state.
 Close, minimizing an involved window, restoring layout, or disposal
-invalidates pending transfers. These methods do not implement a Win32 OLE
-drag transport or claim physical cross-window dragging acceptance.
+invalidates pending transfers. Mount the `/drag-drop` native surfaces below
+to obtain actual WinUI/Windows gesture transport; the lower-level methods
+remain available for application-authored input integrations.
 
 `dispose()` drains accepted commands, closes owned secondary surfaces,
 detaches the primary observer and subscriptions, and leaves the runtime
@@ -215,3 +223,121 @@ and application document owner alive. Reconnect using an empty registry.
 The `/window-controller` export accepts a transport for deterministic
 contract tests; shipping apps should use `/windows`, which requires the
 registered native module and has no simulated fallback.
+
+
+## Native menus, tooltips and anchored inspectors
+
+The `/overlays` subpath exports `WindowsMenuButton`, `WindowsContextMenu`,
+`WindowsTooltip`, `WindowsPopover` and `WindowsInspector`. Each mounts a
+real WinUI Button in RNW's XAML island. Menus use `MenuFlyout`, context menus
+use `ContextFlyout`, tooltips use `ToolTipService`, and popovers/inspectors
+use a native `Flyout`, `TextBox` fields and native action Buttons.
+`CommandMenuItem` is the unchanged shared contract from
+`@nyc-tron/core/overlays`. Native popups may extend beyond their anchor-sized
+island and remain constrained to the monitor work area.
+
+Pass a nonempty `scopeId` identifying the current document or selection.
+A changed scope or new mount starts a distinct native lifetime: the old
+popup closes, counts reset, and queued actions or edits cannot reach the
+replacement's callback. Handlers consult only committed React props.
+Disabled anchors close their popup and reject queued actions/edits; disabled
+commands and read-only fields retain the native corresponding state.
+
+The app supplies `label`, command labels/descriptions, optional tooltip,
+and supported `theme` (`system`, `light`, `dark`). Unspecified appearance uses
+WinUI defaults. The anchor's explicit `style.direction` takes precedence
+over the host locale; all popup content inherits that direction. The app
+continues to own surrounding layout, density and colors. Popover fields and
+actions preserve native control objects while their IDs remain present;
+field reorder restores the focused field and selection where available.
+
+A popover's `open` comes from its app owner. Clicking the native anchor or
+native dismissal raises `onOpenRequested`; the app commits the resulting
+value. WinUI Closing cancellation holds the popup open without closing and
+reopening it. Native duplicates are coalesced until a private, scope/request-bound
+acknowledgment confirms callback delivery. That acknowledgment never changes
+`open`: keeping `open=true` vetoes the dismissal, even without a React render,
+and a later Escape or light-dismiss gesture can request again. Disable, unmount
+and scope replacement always permit native teardown. `title`, `description`, up to 32 fields, and up to 128 actions form a
+native inspector; arbitrary React children are not reparented into the
+WinUI popup. Use one app-owned field model for both the inspector and any
+other editor surface.
+
+### Acknowledge inspector edits
+
+Every new scope/mount begins with `acknowledgedEventCount: 0` (or omitted).
+`onFieldChangeRequested` receives `{scopeId, id, value, eventCount}`. Commit
+the requested value **and** that count to accept the edit. Commit the prior
+value **and** that count to reject it. Counts are integers from zero through
+2,147,483,647. Discard an asynchronous response if its scope changed or its
+count is older than an already committed acknowledgment.
+
+```ts
+function handleNativeEdit(request: WindowsInspectorEditRequest) {
+  editor.setState(previous => {
+    if (request.scopeId !== previous.scopeId ||
+        request.eventCount <= previous.acknowledgedEventCount) return previous;
+    return {
+      ...previous,
+      value: isAllowed(request.value) ? request.value : previous.value,
+      acknowledgedEventCount: request.eventCount,
+    };
+  });
+}
+```
+
+Native typing stays visible while an acknowledgment is pending. An older
+response cannot reset a newer draft. When the latest edit is acknowledged,
+the native field applies the app's committed value; if it already equals
+the typed value, the field and caret are untouched. The app must acknowledge
+rejected requests too: simply retaining an old value without the new count
+does not resolve the edit. Reset counts to zero when replacing `scopeId`
+or remounting the field. The consumer demonstrates both decisions and
+checks the exact rapid-typed value after blur and reopen.
+
+## Native cross-window drag and drop
+
+Mount `WindowsDragSource` and `WindowsDropTarget` from `/drag-drop` inside
+observed roots of the same connected `WindowsWindowHost`. Supply `host`,
+`windowId`, a document/selection `scopeId`, and an accessible `label`.
+The source takes an opaque `payload` and `onCompleted`; the target takes
+an `approve(offer)` callback. One live drop target is allowed per observed
+window. Target approval decides whether the offer is allowed; it must not
+move or delete document state.
+
+WinUI `CanDrag` starts the actual OS pointer gesture. Its
+`DragStartingEventArgs.GetDeferral()` keeps the event alive while the JS
+owner creates a core token. The Windows `DataPackage` carries only an
+unpredictable native nonce, never the payload or document. A native
+`AllowDrop` target uses `DragEventArgs.GetDeferral()` to await app approval.
+All acquired deferrals complete once, including native property failures,
+owner disposal and deadline expiry. Start/approval waits are bounded to
+30 seconds; no custom message pump blocks the UI or JS dispatcher.
+
+Only a live matching source/target generation, a live approved core token,
+and the source's actual WinUI `DropCompleted` **Move** result produce
+`result.outcome.transfer`. Apply that transfer to the existing app owner.
+The example keeps its document/undo payload in the shared store and changes
+its owning window only at this final step. Rejection, Escape, target/source
+close or minimize, scope replacement, target unmount, layout restore and
+disposal invalidate the offer. Late approval cannot resurrect it.
+
+`result.effect` reports the observed Windows result (`none`, `move`, `copy`,
+`link`) or `unknown` when cancellation ends a started native gesture before
+an OS completion can be observed. An unknown/copy/link result does not
+authorize a move. Removing a source/target cannot manufacture a Windows
+cancellation receipt; the broker releases its app ownership and deferrals,
+and ignores any later completion. External applications cannot obtain the
+app-owned document from this private nonce format.
+
+These APIs implement same-runtime app-owned cross-window transfer. External
+file/text import, export to another process, touch/pen behavior and Narrator
+speech require their own explicit integration and acceptance.
+
+Microsoft API references:
+
+- [WinUI drag and drop](https://learn.microsoft.com/en-us/windows/apps/develop/data/drag-and-drop)
+- [DragStartingEventArgs.GetDeferral](https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.dragstartingeventargs.getdeferral?view=windows-app-sdk-1.8)
+- [DragEventArgs.GetDeferral](https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.drageventargs.getdeferral?view=windows-app-sdk-1.8)
+- [Flyouts](https://learn.microsoft.com/en-us/windows/apps/design/controls/dialogs-and-flyouts/flyouts)
+- [Tooltips](https://learn.microsoft.com/en-us/windows/apps/design/controls/tooltips)

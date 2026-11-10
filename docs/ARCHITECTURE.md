@@ -50,10 +50,12 @@ differ; NYC-Tron receives semantic classes at the consuming app boundary.
   `codegenConfig` field) points its `react-native` condition at typed
   `src`, because `@react-native/babel-preset` builds the static view config
   from the spec's `NativeProps` and fails on compiled JS. Its `types` and
-  `default` conditions still target `dist`. The only such package today is
-  `@nyc-tron/windows-fluent-fabric`, nested at
-  `packages/windows-fluent/rnw-fabric` outside the tooling's
-  `packages/*` scan; release.yml packs and checks it separately.
+  `default` conditions still target `dist`. The isolated
+  `@nyc-tron/windows-fluent-fabric` and `@nyc-tron/macos-appkit` packages follow
+  this rule. They live at `packages/windows-fluent/rnw-fabric` and
+  `packages/macos-appkit/spark`, outside the workspace package scan. Their
+  native jobs install and verify actual archives; release assembly retains
+  those tested bytes with the shared peer hashes and native receipts.
 
 ### Component API
 
@@ -129,7 +131,11 @@ layout transition using the product's existing Zustand store or engine session.
 
 ## No false platform claims
 
-The only presentational implementations initially authored are RN Views and
-select Expo 58 @expo/ui controls; no native WinUI NavigationView is included.
-Windows preview and Spark macOS integration require their own adapters before
-they can be marked implemented. See ROSTER.
+RN/Expo presentation, the RNW Fabric adapter and the Spark/AppKit adapter are
+separate implementations with separate runtime pins. Native desktop controls,
+menus, inspectors, tooltips, window lifecycles and drag protocols now have
+source owners and installed-consumer gates. Their native execution, physical
+input and assistive-technology results must be read at the tested revision in
+[SUPPORT.md](SUPPORT.md) and [the candidate report](completion/reports/V1-RELEASE-GATES.md).
+An implemented binding or successful compiler result does not establish all
+interaction or device acceptance.

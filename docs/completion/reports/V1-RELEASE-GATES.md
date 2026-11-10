@@ -8,6 +8,37 @@ blanket device-acceptance claim is created by this report.
 
 ## November 10 desktop integration
 
+At the later source checkpoint `0edd5f302e99877191ba9a412c5c060571a5f6c9`,
+the [iOS installed consumer](../evidence/v1-native-0edd5f3/ios/README.md)
+passed native compilation, all eleven media checks and all three native UI
+flows with no transport recovery. The complete 226-file app payload matches
+the retained manifest. Both [installed browser consumers](../evidence/v1-release-consumers-0edd5f3/README.md)
+also passed, with the Expo/web job succeeding after one registry-transport
+retry. These receipts name actual tested merge
+`e597d73757911e9a58005d577b3c2bf2496bd798`.
+
+Android at that same checkpoint compiled and passed all eleven media checks,
+Settings, Editor and the normal pointer lifecycle. Its final pointer-cancel
+assertion failed: the diagnostic recorded a cancel at 0,0 while the accepted
+stroke remained down. The [original Android evidence](../evidence/v1-native-0edd5f3/android/README.md)
+retains that failed result and the independently verified APK. The capture
+does not contain the incoming device/pointer IDs; the Android platform's
+synthetic-cancel contract and adapter source identify reliance on those
+synthetic contents as the defect. [PR 61](https://github.com/mikevocalz/NYC-Tron-UI/pull/61),
+head `2899ffdedf98e2a86c077f15aa1baf6401c07b80`, cancels the view's retained
+contacts before parsing a cancel event. It keeps the strict router and original
+native cancellation assertion, and also repairs the isolated browser fixture's
+missing shared overlay alias. Fresh native/browser acceptance is required.
+
+That same checkpoint's new Windows native build and deployment succeeded,
+but its screenshot driver failed on a nonfocusable top-level UIA window;
+the whole job remains failed. AppKit's actual build stopped in Expo's Swift
+source under Xcode 16.4, before native adapter acceptance. The original
+[Windows](../evidence/v1-native-0edd5f3/windows/README.md) and
+[AppKit](../evidence/v1-appkit-0edd5f3-compiler-failure/README.md)
+failures remain attached to their own revision. Their corrections are part of
+the desktop interaction follow-ups below.
+
 The first combined head `0a4f34b9334814f5bfd9b1568402a2a131faedd8` produced
 the following actual native checkpoint:
 
@@ -21,9 +52,54 @@ the following actual native checkpoint:
 The follow-up also shares the existing popup geometry and command-item types
 through `@nyc-tron/core/overlays`, with compatible UI re-exports. All prior public
 declaration signatures and external type boundaries are preserved; the shared
-API now has 619 subpaths and 3,306 reachable declarations. Native desktop menus,
-popovers/tooltips and cross-window drag/drop remain explicit implementation and
-interaction work, separate from the successful Windows lifecycle checkpoint.
+API now has 619 subpaths and 3,306 reachable declarations. The subsequent
+desktop interaction implementation is recorded below; the earlier successful
+Windows lifecycle checkpoint does not establish its native interaction results.
+
+### Desktop interaction implementation
+
+The AppKit follow-up is [PR 59](https://github.com/mikevocalz/NYC-Tron-UI/pull/59),
+with source checkpoint `fd86e17369c68b7b6d1a588ceee8349a6f248dd3`. It adds real
+NSMenu/context menus, NSView tooltips, a Fabric NSPopover with retained React
+content, and anchored inspectors. Popover placement is checked against the
+observed native window frame and selected usable region; resizing preserves the
+active native field editor. Its driver requires native controls and lifecycle,
+menu invocation, inspector edits, dismissal/focus return, constrained placement,
+and the document drag protocol. An OS-posted drag is required when the host
+grants input-posting access; a denied TCC capability remains explicitly missing
+gesture evidence. The workflow selects and verifies Xcode 26.2 for the pinned
+Expo 55 runtime before compiling.
+
+The Windows follow-up is [PR 60](https://github.com/mikevocalz/NYC-Tron-UI/pull/60),
+with source checkpoint `fc85173985e7e7a2a9d37e2562151b6a70092278`. It adds actual
+WinUI MenuFlyout, ContextFlyout, Flyout inspectors, ToolTipService, and native
+cross-window DataPackage drag/drop. Inspector event acknowledgements preserve
+newer native typing until the app accepts or rejects the corresponding edit.
+Native drag deferrals retain one app-owned transfer decision and require both
+that decision and an observed OS Move completion before reporting a transfer.
+The native driver covers rejected, cancelled, close-during-approval and accepted
+gestures. A separate UIA stage checks Settings focus return, real window resize,
+explicit RTL, drawer collapse/reopen and an actual high-contrast setting change;
+it restores and verifies the original OS/window state afterward.
+
+The [first Windows interaction build](../evidence/v1-windows-fc85173-compiler-failure/README.md)
+reached the installed C++ library but failed on a `XamlIsland` member absent
+from the pinned SDK. Follow-up head
+`3e2c88f91905b23e2286659948cfcf1970292264` removes that unsupported setter and
+retains the supported native Flyout constraint. It also guarantees drag
+completion after cleanup errors and waits for app-committed popup dismissal.
+Private scope/request acknowledgements permit a subsequent dismissal after a
+veto that produces no React commit. Forty-nine isolated tests, five portable
+C++ state regressions, official code generation, a fresh archive consumer and
+the unchanged installed API snapshot passed for the same source tree. The
+actual Windows compiler and UIA results still require the new native run.
+
+Both implementations are included in the combined candidate. Their actual
+native builds and interaction results must be recorded against the exact
+tested revision before acceptance or a tested archive is claimed. The Windows
+follow-up also removes the failed top-level UIA SetFocus call from screenshot
+capture; it retains foreground-window and stable-bounds checks. The original
+failure is preserved in [the 0edd5f3 evidence](../evidence/v1-native-0edd5f3/windows/README.md).
 
 The source candidate now includes both isolated desktop implementations:
 `@nyc-tron/windows-fluent-fabric` binds native WinUI navigation and shared-runtime
@@ -44,11 +120,12 @@ archives without repacking, and the merger also requires their hashes to match
 the shared packages in the release candidate.
 
 Local integration verification passed 1,187 tests with no failures or skips,
-workspace builds and types, 618 shared public subpaths, 3,306 reachable
-declarations, thirteen workspace archive checks and sixteen clean consumer
+workspace builds and types, 619 shared public subpaths, 3,306 reachable
+declarations, thirteen workspace archive checks and seventeen clean consumer
 imports. The isolated installed APIs have separate TypeScript 5.9.3 baselines:
-Windows has six typed subpaths and 24 reachable declarations; AppKit has ten
-typed subpaths and 24 reachable declarations. The full and subset release
+Windows has eight typed subpaths and 44 reachable declarations; AppKit has
+fifteen typed subpaths and 33 reachable declarations. Their external type
+boundaries number 24 and 57 respectively. The full and subset release
 packers produced byte-identical core and Windows contract archives.
 
 The twelve integration rows remain implemented at source level. This change does

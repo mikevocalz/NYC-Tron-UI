@@ -15,6 +15,10 @@
   "include": [
     "App.tsx",
     "route-store.ts",
-    "desktop-store.ts"
+    "desktop-store.ts",
+    "NativeOverlays.tsx",
+    "overlay-store.ts",
+    "NativeDrag.tsx",
+    "drag-store.ts"
   ]
 }

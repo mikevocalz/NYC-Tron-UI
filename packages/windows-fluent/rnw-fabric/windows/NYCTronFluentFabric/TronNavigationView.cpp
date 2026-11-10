@@ -84,7 +84,23 @@ struct TronNavigationViewComponentView
         sender, newProps, oldProps);
   }
 
+  void HandleFocusSelectedCommand() noexcept override {
+    try {
+      if (m_navigation && m_navigation.IsLoaded()) FocusItem(m_navigation.SelectedItem());
+    } catch (...) { ReportNativeError("Could not restore navigation focus: " + DescribeCurrentException()); }
+  }
+
+  void HandleFocusSettingsCommand() noexcept override {
+    try {
+      if (m_navigation && m_navigation.IsLoaded() && m_navigation.IsSettingsVisible()) FocusItem(m_navigation.SettingsItem());
+    } catch (...) { ReportNativeError("Could not restore Settings focus: " + DescribeCurrentException()); }
+  }
+
  private:
+  static void FocusItem(winrt::IInspectable const& value) {
+    auto item = value.try_as<winrt::Microsoft::UI::Xaml::Controls::Control>();
+    if (item && item.IsEnabled()) item.Focus(winrt::Microsoft::UI::Xaml::FocusState::Programmatic);
+  }
   static winrt::Microsoft::UI::Xaml::Controls::NavigationViewItem MakeItem(
       winrt::Windows::Data::Json::JsonObject const& data) {
     const auto id = data.GetNamedString(L"id", L"");

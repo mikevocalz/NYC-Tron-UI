@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="emulator-5554" tests="1" failures="0" time="6.397" timestamp="2026-11-10T16:36:22">
+    <testcase id="Native pointer touch lifecycle" name="Native pointer touch lifecycle" classname="Native pointer touch lifecycle" file="tooling/native/ui-flows/pointer.yaml" time="6.382" timestamp="2026-11-10T16:36:22" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

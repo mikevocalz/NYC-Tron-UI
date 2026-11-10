@@ -1,0 +1,68 @@
+Source: nyc-tron-appkit-consumer/.spark/logs/1794326255333-7c6cd7ec-2293-4c90-93a8-bc69c03ca4ed-xcodebuild.log
+Numbered source lines follow. Omitted ranges are not reproduced.
+
+--- source lines 27480-27487 ---
+27480: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/ReactDelegates/ExpoReactDelegate.swift:41:39: error: call to main actor-isolated initializer 'init()' in a synchronous nonisolated context
+27481:       .first(where: { _ in true }) ?? UIViewController()
+27482:                                       ^
+27483: /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSResponder.h:23:1: note: calls to initializer 'init()' from outside of its actor context are implicitly asynchronous
+27484: - (instancetype)init NS_DESIGNATED_INITIALIZER;
+27485: ^
+27486: /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSResponder.h:23:1: note: main actor isolation inferred from inheritance from class 'NSResponder'
+27487: - (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+--- source lines 27558-27561 ---
+27558: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Logging/PersistentFileLog.swift:79:54: error: capture of 'filter' with non-sendable type 'PersistentFileLogFilter' (aka '(String) -> Bool') in an isolated closure
+27559:         let newcontents = contents.filter { entry in filter(entry) }
+27560:                                                      ^
+27561: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Logging/PersistentFileLog.swift:79:54: note: a function type must be marked '@Sendable' to conform to 'Sendable'
+
+--- source lines 27576-27593 ---
+27576: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIHostingView.swift:45:89: error: unknown attribute 'MainActor'
+27577:   public final class HostingView<Props: ViewProps, ContentView: View<Props>>: ExpoView, @MainActor AnyExpoSwiftUIHostingView {
+27578:                                                                                         ^
+27579: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIHostingView.swift:113:26: error: main actor-isolated instance method 'updateProps' cannot be used to satisfy nonisolated requirement from protocol 'AnyExpoSwiftUIHostingView'
+27580:     public override func updateProps(_ rawProps: [String: Any]) {
+27581:                          ^
+27582: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIHostingView.swift:113:26: note: add 'nonisolated' to 'updateProps' to make this instance method not isolated to the actor
+27583:     public override func updateProps(_ rawProps: [String: Any]) {
+27584:                          ^
+27585:     nonisolated 
+27586: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIHostingView.swift:45:100: note: add '@preconcurrency' to the 'AnyExpoSwiftUIHostingView' conformance to defer isolation checking to run time
+27587:   public final class HostingView<Props: ViewProps, ContentView: View<Props>>: ExpoView, @MainActor AnyExpoSwiftUIHostingView {
+27588:                                                                                                    ^
+27589:                                                                                                    @preconcurrency 
+27590: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIHostingView.swift:9:8: note: mark the protocol requirement 'updateProps' 'async' to allow actor-isolated conformances
+27591:   func updateProps(_ rawProps: [String: Any])
+27592:        ^
+27593:                                               async
+
+--- source lines 27622-27639 ---
+27622: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift:196:43: error: unknown attribute 'MainActor'
+27623: extension ExpoSwiftUI.SwiftUIVirtualView: @MainActor ExpoSwiftUI.ViewWrapper {
+27624:                                           ^
+27625: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift:197:8: error: main actor-isolated instance method 'getWrappedView()' cannot be used to satisfy nonisolated requirement from protocol 'ViewWrapper'
+27626:   func getWrappedView() -> Any {
+27627:        ^
+27628: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift:197:8: note: add 'nonisolated' to 'getWrappedView()' to make this instance method not isolated to the actor
+27629:   func getWrappedView() -> Any {
+27630:        ^
+27631:   nonisolated 
+27632: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift:196:66: note: add '@preconcurrency' to the 'ViewWrapper' conformance to defer isolation checking to run time
+27633: extension ExpoSwiftUI.SwiftUIVirtualView: @MainActor ExpoSwiftUI.ViewWrapper {
+27634:                                                                  ^
+27635:                                                                  @preconcurrency 
+27636: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/ExpoSwiftUI.swift:27:10: note: mark the protocol requirement 'getWrappedView()' 'async' to allow actor-isolated conformances
+27637:     func getWrappedView() -> Any
+27638:          ^
+27639:                           async
+
+--- source lines 27746-27753 ---
+27746: /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/expo-modules-core/ios/Core/Views/ViewDefinition.swift:121:19: error: unknown attribute 'MainActor'
+27747: extension UIView: @MainActor AnyArgument {
+27748:                   ^
+27749: 
+27750: CompileC /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/DerivedData/macos-arm64/Build/Intermediates.noindex/Pods.build/Release/RNSparkUI.build/Objects-normal/arm64/RNTextInputSearch.o /Users/runner/work/_temp/nyc-tron-appkit-consumer/node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-ui/macos/text-input-search/RNTextInputSearch.mm normal arm64 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'RNSparkUI' from project 'Pods')
+27751:     cd /Users/runner/work/_temp/nyc-tron-appkit-consumer/macos/Pods
+27752:     
+27753:     Using response file: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/DerivedData/macos-arm64/Build/Intermediates.noindex/Pods.build/Release/RNSparkUI.build/Objects-normal/arm64/af3fcb34312c57c0f52879cdce924b91-common-args.resp

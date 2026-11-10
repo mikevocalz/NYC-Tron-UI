@@ -13,6 +13,7 @@ struct TronDesktop : std::enable_shared_from_this<TronDesktop> {
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const& context) noexcept;
   REACT_EVENT(onSnapshot) std::function<void(std::string)> onSnapshot;
   REACT_EVENT(onError) std::function<void(std::string)> onError;
+  REACT_EVENT(onNativeDrag) std::function<void(std::string)> onNativeDrag;
   REACT_METHOD(connect) void connect(std::string primaryId, std::string component, Promise&& promise) noexcept;
   REACT_METHOD(read) void read(std::string owner, Promise&& promise) noexcept;
   REACT_METHOD(open) void open(std::string owner, std::string request, Promise&& promise) noexcept;
@@ -23,6 +24,9 @@ struct TronDesktop : std::enable_shared_from_this<TronDesktop> {
   REACT_METHOD(requestClose) void requestClose(std::string owner, std::string id, Promise&& promise) noexcept;
   REACT_METHOD(resolveClose) void resolveClose(std::string owner, std::string id, std::string generation, std::string token, bool accepted, Promise&& promise) noexcept;
   REACT_METHOD(dispose) void dispose(std::string owner, winrt::Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept;
+  REACT_METHOD(startNativeDrag) void startNativeDrag(std::string owner, std::string source, std::string token, std::string request, Promise&& promise) noexcept;
+  REACT_METHOD(resolveNativeDrop) void resolveNativeDrop(std::string owner, std::string token, std::string request, bool accepted, winrt::Microsoft::ReactNative::ReactPromise<bool>&& promise) noexcept;
+  REACT_METHOD(cancelNativeDrag) void cancelNativeDrag(std::string owner, std::string request, winrt::Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept;
  private:
   void Run(std::string owner, Promise promise, std::function<void(nyctron::desktop::DesktopSession&)> work) noexcept;
   winrt::Microsoft::ReactNative::ReactContext m_context;

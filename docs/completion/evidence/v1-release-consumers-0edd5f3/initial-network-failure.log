@@ -1,0 +1,65 @@
+2026-11-10T15:52:34.5481021Z node: v24.19.0
+2026-11-10T15:52:34.5481528Z npm: 11.17.0
+2026-11-10T15:52:34.5481767Z yarn: 1.22.22
+2026-11-10T15:52:34.5482475Z ##[endgroup]
+2026-11-10T15:52:34.5664087Z ##[group]Run corepack enable
+2026-11-10T15:52:34.5664375Z [36;1mcorepack enable[0m
+2026-11-10T15:52:34.5664618Z [36;1mcorepack pnpm install --frozen-lockfile[0m
+2026-11-10T15:52:34.5665120Z [36;1mcorepack pnpm build[0m
+2026-11-10T15:52:34.5665428Z [36;1mnode tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"[0m
+2026-11-10T15:52:34.5714040Z shell: /usr/bin/bash -e {0}
+2026-11-10T15:52:34.5714274Z env:
+2026-11-10T15:52:34.5714540Z   NYC_TRON_CONSUMER: /home/runner/work/_temp/nyc-tron-release-consumer
+2026-11-10T15:52:34.5714841Z ##[endgroup]
+2026-11-10T15:52:35.3699992Z /opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:12951
+2026-11-10T15:52:35.3700506Z     throw new Error(
+2026-11-10T15:52:35.3700704Z           ^
+2026-11-10T15:52:35.3700808Z 
+2026-11-10T15:52:35.3701391Z Error: Error when performing the request to https://registry.npmjs.org/pnpm/10.32.1; for troubleshooting help, see https://github.com/nodejs/corepack#troubleshooting
+2026-11-10T15:52:35.3702219Z     at fetch (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:12951:11)
+2026-11-10T15:52:35.3702841Z     at async fetchAsJson (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:12965:20)
+2026-11-10T15:52:35.3703554Z     at async fetchTarballURLAndSignature (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:12914:27)
+2026-11-10T15:52:35.3704584Z     at async installVersion (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:13256:38)
+2026-11-10T15:52:35.3705727Z     at async Engine.ensurePackageManager (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:13744:32)
+2026-11-10T15:52:35.3706786Z     at async Engine.executePackageManagerRequest (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:13855:25)
+2026-11-10T15:52:35.3707542Z     at async Object.runMain (/opt/hostedtoolcache/node/24.19.0/x64/lib/node_modules/corepack/dist/lib/corepack.cjs:14566:7) {
+2026-11-10T15:52:35.3708040Z   [cause]: [TypeError: fetch failed] {
+2026-11-10T15:52:35.3708293Z     [cause]: Error: read ECONNRESET
+2026-11-10T15:52:35.3708635Z         at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+2026-11-10T15:52:35.3708953Z       errno: -104,
+2026-11-10T15:52:35.3709152Z       code: 'ECONNRESET',
+2026-11-10T15:52:35.3709350Z       syscall: 'read'
+2026-11-10T15:52:35.3709532Z     }
+2026-11-10T15:52:35.3709689Z   }
+2026-11-10T15:52:35.3709843Z }
+2026-11-10T15:52:35.3709941Z 
+2026-11-10T15:52:35.3710026Z Node.js v24.19.0
+2026-11-10T15:52:35.3777694Z ##[error]Process completed with exit code 1.
+2026-11-10T15:52:35.3875589Z ##[group]Run actions/upload-artifact@v4
+2026-11-10T15:52:35.3875861Z with:
+2026-11-10T15:52:35.3876048Z   name: release-consumer-expo-web
+2026-11-10T15:52:35.3877090Z   path: /home/runner/work/_temp/nyc-tron-release-consumer/consumer.json
+/home/runner/work/_temp/nyc-tron-release-consumer/installed-packages.json
+/home/runner/work/_temp/nyc-tron-release-consumer/app/package-lock.json
+/home/runner/work/_temp/nyc-tron-release-consumer/app/artifacts/
+/home/runner/work/_temp/nyc-tron-release-consumer/app/test-results/
+
+2026-11-10T15:52:35.3878103Z   retention-days: 7
+2026-11-10T15:52:35.3878293Z   if-no-files-found: warn
+2026-11-10T15:52:35.3878492Z   compression-level: 6
+2026-11-10T15:52:35.3878701Z   overwrite: false
+2026-11-10T15:52:35.3878881Z   include-hidden-files: false
+2026-11-10T15:52:35.3879079Z env:
+2026-11-10T15:52:35.3879323Z   NYC_TRON_CONSUMER: /home/runner/work/_temp/nyc-tron-release-consumer
+2026-11-10T15:52:35.3879614Z ##[endgroup]
+2026-11-10T15:52:35.5282109Z (node:2259) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-10T15:52:35.5283345Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-10T15:52:35.5386111Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-10T15:52:35.5388255Z The least common ancestor is /home/runner/work/_temp/nyc-tron-release-consumer. This will be the root directory of the artifact
+2026-11-10T15:52:35.5403277Z ##[warning]No files were found with the provided path: /home/runner/work/_temp/nyc-tron-release-consumer/consumer.json
+/home/runner/work/_temp/nyc-tron-release-consumer/installed-packages.json
+/home/runner/work/_temp/nyc-tron-release-consumer/app/package-lock.json
+/home/runner/work/_temp/nyc-tron-release-consumer/app/artifacts/
+/home/runner/work/_temp/nyc-tron-release-consumer/app/test-results/. No artifacts will be uploaded.
+2026-11-10T15:52:35.5630052Z Post job cleanup.
+2026-11-10T15:52:35.6334040Z [command]/usr/bin/git version

@@ -20,6 +20,16 @@ using System.Runtime.InteropServices;
 public static class NativeWindow {
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+  [DllImport("user32.dll", SetLastError=true)] public static extern bool SetWindowPos(IntPtr window, IntPtr after, int x, int y, int width, int height, uint flags);
+  [DllImport("user32.dll", SetLastError=true)] public static extern bool SetCursorPos(int x, int y);
+  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
+  [DllImport("user32.dll", SetLastError=true)] static extern uint SendInput(uint count, INPUT[] inputs, int size);
+  [StructLayout(LayoutKind.Sequential)] struct INPUT { public uint type; public MOUSEINPUT mouse; }
+  [StructLayout(LayoutKind.Sequential)] struct MOUSEINPUT { public int dx, dy; public uint mouseData, flags, time; public UIntPtr extraInfo; }
+  public static void Mouse(uint flags) {
+    var input = new INPUT { type = 0, mouse = new MOUSEINPUT { flags = flags } };
+    if (SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT))) != 1) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
+  }
 }
 "@
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
@@ -32,7 +42,6 @@ function Save-Screenshot([string]$name, $target) {
     $handle = [IntPtr]$target.Current.NativeWindowHandle
     if ($handle -eq [IntPtr]::Zero) { throw "Screenshot target has no native top-level window" }
     [NativeWindow]::SetForegroundWindow($handle) | Out-Null
-    $target.SetFocus()
     $deadline = (Get-Date).AddSeconds(5)
     $ready = $false
     while ((Get-Date) -lt $deadline) {
@@ -95,9 +104,10 @@ function Assert-Selection($homeItem, $workspace, [string]$expected, [string]$sta
 
 function Invoke-Button($root, [string]$name) {
   # Match the Button itself: RN draws the title as a child Text with the same name.
-  $condition = New-Object System.Windows.Automation.AndCondition(
+  $condition = [System.Windows.Automation.AndCondition]::new([System.Windows.Automation.Condition[]]@(
     (New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, $name)),
-    (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button)))
+    (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button)),
+    (New-Object System.Windows.Automation.PropertyCondition($AE::IsOffscreenProperty, $false))))
   $button = $root.FindFirst($Tree::Descendants, $condition)
   if ($null -eq $button) { throw "No Button named '$name' (Narrator would announce it unnamed)" }
   $invoke = $null
@@ -123,6 +133,97 @@ function Request-Workspace($window, $homeItem) {
   [System.Windows.Forms.SendKeys]::SendWait("{ENTER}")
   Find-ByName $window "Awaiting app approval: Workspace" 15 | Out-Null
   Write-Host "Keyboard Down+Enter produced a pending Workspace request"
+}
+
+function Process-ElementCondition([string]$name, $controlType = $null) {
+  $conditions = New-Object 'System.Collections.Generic.List[System.Windows.Automation.Condition]'
+  $conditions.Add($processCondition)
+  $conditions.Add((New-Object System.Windows.Automation.PropertyCondition($AE::NameProperty, $name)))
+  $conditions.Add((New-Object System.Windows.Automation.PropertyCondition($AE::IsOffscreenProperty, $false)))
+  if ($null -ne $controlType) { $conditions.Add((New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, $controlType))) }
+  $condition = New-Object System.Windows.Automation.AndCondition -ArgumentList (, $conditions.ToArray())
+  return $condition
+}
+function Find-ProcessElement([string]$name, $controlType = $null, [int]$timeoutSec = 15) {
+  $condition = Process-ElementCondition $name $controlType
+  $deadline = (Get-Date).AddSeconds($timeoutSec)
+  do {
+    $element = $AE::RootElement.FindFirst($Tree::Descendants, $condition)
+    if ($null -ne $element) { return $element }
+    Start-Sleep -Milliseconds 100
+  } while ((Get-Date) -lt $deadline)
+  throw "Visible native element '$name' did not appear"
+}
+function Wait-ProcessElementHidden([string]$name, $controlType) {
+  $condition = Process-ElementCondition $name $controlType
+  $deadline = (Get-Date).AddSeconds(15)
+  do {
+    if ($null -eq $AE::RootElement.FindFirst($Tree::Descendants, $condition)) { return }
+    Start-Sleep -Milliseconds 100
+  } while ((Get-Date) -lt $deadline)
+  throw "Native element '$name' remained visible after the committed dismissal"
+}
+function Invoke-NativeElement($element) {
+  $invoke = $null
+  if ($element.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$invoke)) { $invoke.Invoke() }
+  else { $element.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ENTER}") }
+}
+function Assert-NativeValue($field, [string]$expected) {
+  $deadline = (Get-Date).AddSeconds(10)
+  do {
+    $actual = $field.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value
+    if ($actual -eq $expected) { return }
+    Start-Sleep -Milliseconds 100
+  } while ((Get-Date) -lt $deadline)
+  throw "Native field value '$actual' differs from '$expected'"
+}
+function Save-PopupScreenshot([string]$name, $popup) {
+  if ($popup.Current.IsOffscreen) { throw "Native popup is offscreen: $name" }
+  [uint32]$foregroundProcess = 0
+  [NativeWindow]::GetWindowThreadProcessId([NativeWindow]::GetForegroundWindow(), [ref]$foregroundProcess) | Out-Null
+  if ($foregroundProcess -ne $process.Id) { throw "Another process occludes the native popup: $name" }
+  # Focusing the root would dismiss a native popup. Capture the current desktop
+  # after proving the popup is visible in the application's foreground process.
+  Save-Screenshot $name $null
+}
+function Arrange-DragWindows($main, $secondary) {
+  $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
+  $main.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Normal)
+  $secondary.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Normal)
+  $leftWidth = [int][Math]::Floor($work.Width * 0.54)
+  $rightWidth = $work.Width - $leftWidth - 12
+  foreach ($placement in @(@($main, $work.X, $leftWidth), @($secondary, ($work.X + $leftWidth + 12), $rightWidth))) {
+    if (-not [NativeWindow]::SetWindowPos([IntPtr]$placement[0].Current.NativeWindowHandle, [IntPtr]::Zero, [int]$placement[1], $work.Y, [int]$placement[2], $work.Height, 0x0014)) {
+      throw "Could not arrange both owned windows for actual OS input"
+    }
+  }
+  $deadline = (Get-Date).AddSeconds(10)
+  do {
+    $a = $main.Current.BoundingRectangle; $b = $secondary.Current.BoundingRectangle
+    if ($a.Right -le $b.Left -and $a.Width -gt 350 -and $b.Width -gt 300) { return }
+    Start-Sleep -Milliseconds 100
+  } while ((Get-Date) -lt $deadline)
+  throw "Owned native windows overlap or cannot fit the desktop for OS drag input"
+}
+function Invoke-NativeDrag($main, $secondary, [bool]$cancel = $false) {
+  [NativeWindow]::SetForegroundWindow([IntPtr]$main.Current.NativeWindowHandle) | Out-Null
+  $source = Find-ProcessElement "Drag shared native draft" ([System.Windows.Automation.ControlType]::Button)
+  $target = Find-ProcessElement "Drop shared native draft" ([System.Windows.Automation.ControlType]::Button)
+  $s = $source.Current.BoundingRectangle; $t = $target.Current.BoundingRectangle
+  $sx = [int]($s.X + $s.Width / 2); $sy = [int]($s.Y + $s.Height / 2)
+  $tx = [int]($t.X + $t.Width / 2); $ty = [int]($t.Y + $t.Height / 2)
+  if ($s.Width -lt 30 -or $t.Width -lt 30) { throw "Native drag surface has no usable pointer bounds" }
+  [NativeWindow]::SetCursorPos($sx, $sy) | Out-Null
+  [NativeWindow]::Mouse(0x0002)
+  try {
+    [NativeWindow]::SetCursorPos(($sx + 24), $sy) | Out-Null
+    Find-ByName $main "Native drag phase: dragging" 10 | Out-Null
+    for ($step = 1; $step -le 24; $step++) {
+      [NativeWindow]::SetCursorPos([int]($sx + ($tx - $sx) * $step / 24), [int]($sy + ($ty - $sy) * $step / 24)) | Out-Null
+      Start-Sleep -Milliseconds 20
+    }
+    if ($cancel) { [System.Windows.Forms.SendKeys]::SendWait("{ESC}") }
+  } finally { [NativeWindow]::Mouse(0x0004) }
 }
 
 # Startup-crash evidence: installed Windows App Runtime packages and the
@@ -239,6 +340,129 @@ try {
   Find-ByName $window "Native windows: 2" | Out-Null
   Save-Screenshot "06-native-reopened" $document
   Save-Tree $document
+  # The menu/flyout controls below are real WinUI popup trees. Native UIA
+  # patterns and OS keyboard input exercise their application-owned callbacks.
+  $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
+  [NativeWindow]::SetForegroundWindow([IntPtr]$window.Current.NativeWindowHandle) | Out-Null
+  Invoke-Button $window "Show native overlay checks"
+  Find-ByName $window "Native overlay acceptance" | Out-Null
+  Invoke-Button $window "Native command menu"
+  $disabledCommand = Find-ProcessElement "Unavailable native command" ([System.Windows.Automation.ControlType]::MenuItem)
+  if ($disabledCommand.Current.IsEnabled) { throw "Disabled native command is enabled" }
+  $command = Find-ProcessElement "Approve native command" ([System.Windows.Automation.ControlType]::MenuItem)
+  Save-PopupScreenshot "07-native-menu" $command
+  Invoke-NativeElement $command
+  Find-ByName $window "Native menu action: approve" | Out-Null
+
+  $context = Find-ProcessElement "Native context anchor" ([System.Windows.Automation.ControlType]::Button)
+  $context.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("+{F10}")
+  $contextCommand = Find-ProcessElement "Inspect native selection" ([System.Windows.Automation.ControlType]::MenuItem)
+  Invoke-NativeElement $contextCommand
+  Find-ByName $window "Native context action: inspect" | Out-Null
+
+  $tooltipAnchor = Find-ProcessElement "Native tooltip anchor" ([System.Windows.Automation.ControlType]::Button)
+  $tipBounds = $tooltipAnchor.Current.BoundingRectangle
+  [NativeWindow]::SetCursorPos([int]($tipBounds.X + $tipBounds.Width / 2), [int]($tipBounds.Y + $tipBounds.Height / 2)) | Out-Null
+  $tooltip = Find-ProcessElement "Native tooltip details" ([System.Windows.Automation.ControlType]::ToolTip)
+  Save-PopupScreenshot "08-native-tooltip" $tooltip
+  [NativeWindow]::SetCursorPos(0, 0) | Out-Null
+
+  Invoke-Button $window "Native inspector anchor"
+  $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  $fieldIdentity = $field.GetRuntimeId() -join ","
+  $field.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("^a"); [System.Windows.Forms.SendKeys]::SendWait("NativeRapid123abc")
+  Find-ByName $window "Committed native note: NativeRapid123abc" | Out-Null
+  Assert-NativeValue $field "NativeRapid123abc"
+  $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  if (($field.GetRuntimeId() -join ",") -ne $fieldIdentity) { throw "Typing replaced the native inspector field" }
+  $field.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue("Rejected!")
+  Find-ByName $window "Native edit rejected; committed note retained" | Out-Null
+  Assert-NativeValue $field "NativeRapid123abc"
+  Save-PopupScreenshot "09-native-inspector" $field
+  Invoke-NativeElement (Find-ProcessElement "Close native inspector" ([System.Windows.Automation.ControlType]::Button))
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Invoke-Button $window "Native inspector anchor"
+  $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Assert-NativeValue $field "NativeRapid123abc"
+  Invoke-NativeElement (Find-ProcessElement "Disable native inspector" ([System.Windows.Automation.ControlType]::Button))
+  Find-ByName $window "Native inspector disabled" | Out-Null
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  $anchor = Find-ProcessElement "Native inspector anchor" ([System.Windows.Automation.ControlType]::Button)
+  if ($anchor.Current.IsEnabled) { throw "Disabled inspector anchor remained enabled" }
+  Invoke-Button $window "Enable native inspector"
+  Invoke-Button $window "Native inspector anchor"
+  Invoke-NativeElement (Find-ProcessElement "Replace inspector scope" ([System.Windows.Automation.ControlType]::Button))
+  Find-ByName $window "Native inspector scope: draft-2" | Out-Null
+  Find-ByName $window "Native edit acknowledgment: 0" | Out-Null
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Invoke-Button $window "Native inspector anchor"
+  $replacement = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Assert-NativeValue $replacement "Replacement native note"
+  $replacement.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  Find-ByName $window "Committed native note: Replacement native note" | Out-Null
+  Invoke-Button $window "Veto next inspector dismissal"
+  Find-ByName $window "Native inspector dismissal veto armed" | Out-Null
+  Invoke-Button $window "Native inspector anchor"
+  $vetoedField = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  $vetoedIdentity = $vetoedField.GetRuntimeId() -join ","
+  $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Start-Sleep -Milliseconds 500
+  $vetoedField = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+  if (($vetoedField.GetRuntimeId() -join ",") -ne $vetoedIdentity) { throw "Dismissal veto replaced the native field" }
+  Assert-NativeValue $vetoedField "Replacement native note"
+  $vetoedField.SetFocus(); [System.Windows.Forms.SendKeys]::SendWait("{ESC}")
+  Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
+
+  Invoke-Button $window "Show native drag checks"
+  Find-ByName $window "Native cross-window drag acceptance" | Out-Null
+  Arrange-DragWindows $window $document
+  Invoke-NativeDrag $window $document
+  Find-ByName $window "Completed native drags: 1" | Out-Null
+  Find-ByName $window "Native drag result: none/rejected" | Out-Null
+  Find-ByName $window "Document owner: main" | Out-Null
+  Find-ByName $window "Authorized transfers: 0" | Out-Null
+  Save-Screenshot "10-native-drag-rejected" $window
+
+  Invoke-Button $window "Accept native drops"
+  Find-ByName $window "Native drop policy: accept" | Out-Null
+  Invoke-NativeDrag $window $document $true
+  Find-ByName $window "Completed native drags: 2" | Out-Null
+  Find-ByName $window "Native drag result: none/cancelled" | Out-Null
+  Find-ByName $window "Document owner: main" | Out-Null
+  Find-ByName $window "Authorized transfers: 0" | Out-Null
+
+  Invoke-Button $window "Delay native drop approval"
+  Find-ByName $window "Native drop policy: delay" | Out-Null
+  Invoke-NativeDrag $window $document
+  Find-ByName $window "Native drop awaiting app approval" | Out-Null
+  $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close()
+  Find-ByName $window "Native windows: 1" | Out-Null
+  Find-ByName $window "Completed native drags: 3" | Out-Null
+  Invoke-Button $window "Resolve delayed native approval"
+  Find-ByName $window "Document owner: main" | Out-Null
+  Find-ByName $window "Authorized transfers: 0" | Out-Null
+  Invoke-Button $window "Open document window"
+  $document = Find-DocumentWindow
+  Find-ByName $window "Native windows: 2" | Out-Null
+  Arrange-DragWindows $window $document
+  Invoke-Button $window "Accept native drops"
+  Find-ByName $window "Native drop policy: accept" | Out-Null
+  Invoke-NativeDrag $window $document
+  Find-ByName $window "Completed native drags: 4" | Out-Null
+  Find-ByName $window "Native drag result: move/accepted" | Out-Null
+  Find-ByName $window "Document owner: document" | Out-Null
+  Find-ByName $document "Document owner: document" | Out-Null
+  Find-ByName $window "Authorized transfers: 1" | Out-Null
+  Save-Screenshot "11-native-drag-accepted" $document
+  $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
+  [NativeWindow]::SetForegroundWindow([IntPtr]$window.Current.NativeWindowHandle) | Out-Null
+  Invoke-Button $window "Show native navigation checks"
+  Find-ByName $window "Native navigation accessibility" | Out-Null
+  & "$PSScriptRoot\uia-navigation-accessibility.ps1" -Window $window -OutDir $OutDir
+  $navigationResult = Get-Content -Raw (Join-Path $OutDir "navigation-accessibility-result.json") | ConvertFrom-Json
+  if ($navigationResult.status -ne "passed") { throw "Native navigation accessibility did not pass" }
+  Save-Tree $window
   $result = @{
     schemaVersion = 1
     status = "passed"
@@ -246,10 +470,10 @@ try {
     sourceRevision = $env:GITHUB_SHA
     processId = $process.Id
     executableSha256 = (Get-FileHash -Algorithm SHA256 $process.Path).Hash.ToLowerInvariant()
-    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen")
+    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
   }
   $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
-  Write-Host "Native desktop acceptance passed: shared runtime, close policy and minimize/restore"
+  Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"
 } catch {
   Write-Host "UIA smoke failed: $($_.Exception.Message)"
   if ($null -ne $window) {

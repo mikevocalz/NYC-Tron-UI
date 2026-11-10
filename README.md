@@ -125,10 +125,13 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 | `@nyc-tron/reserved-regions` | Supported | Fold and hinge geometry: Jetpack WindowManager on Android, `UIView.reservedRegions` on iOS 27.1+, Viewport Segments on web |
 | `@nyc-tron/native-charts` | Experimental | Line, column and area charts: Swift Charts on iOS, Vico on Android |
 | `@nyc-tron/windows-fluent` | Experimental | WinUI 3 NavigationView host-shell source plus a typed controller contract |
-| `@nyc-tron/windows-fluent-fabric` | Experimental | WinUI 3 NavigationView as an RNW 0.85 Fabric XAML island (`TronNavigationView`) |
+| `@nyc-tron/windows-fluent-fabric` | Experimental | RNW 0.85 WinUI NavigationView, native menus/inspectors/tooltips, shared native windows and cross-window drag/drop |
+| `@nyc-tron/macos-appkit` | Experimental | Spark 0.0.2 AppKit controls, native menus/popovers/tooltips, shared native windows and document drag/drop |
 
-The two Windows packages sit on the React Native 0.85 lane and cannot be
-installed in the same app as the React Native 0.88 packages. See
+The Windows Fabric adapter uses the React Native 0.85 lane; the AppKit adapter
+uses Spark's separate Expo 55 / React Native 0.83 lane. They cannot share the
+Expo 58 / React Native 0.88 application installation. The peer-free
+`windows-fluent` contracts can be consumed independently. See
 [Support policy](docs/SUPPORT.md).
 
 ## Installing from a release
@@ -162,7 +165,9 @@ because a tarball cannot fetch `@nyc-tron/*` from a registry: `@nyc-tron/panes`
 needs `@nyc-tron/core` from the same release listed next to it. Workspace package
 exports point at compiled `dist/*.js` and `dist/*.d.ts`. The isolated Windows
 Fabric adapter also ships its typed native codegen source, which RNW needs when
-building its host; it belongs in an RNW 0.85 app, separate from Expo 58.
+building its host; it belongs in an RNW 0.85 app, separate from Expo 58. The
+[AppKit adapter](packages/macos-appkit/spark/README.md) likewise ships its native
+specs and requires a custom Spark host build using its pinned SDK archives.
 
 Peers: `react` and `react-native` are required by `ui`, `panes` and
 `native-controls`. `panes` also needs `zustand`. `native-controls` needs
@@ -206,10 +211,12 @@ this satisfies MPL-2.0 for tarball distribution is a release gate in
 [v1.0.0 decisions](docs/V1_DECISIONS.md) D2.
 
 Maintainers: `pnpm pack:release` builds and packs the thirteen workspace
-packages into `release-packs/`. The release workflow separately builds and packs
-the Windows Fabric adapter with its own pinned runtime. It waits for the source,
-browser, installed-tarball consumer, and iOS/Android native gates at the same
-candidate, refuses mismatched versions, and never replaces an existing release.
+packages into `release-packs/`. The release workflow consumes the Windows Fabric
+and AppKit archives retained by their successful isolated native consumer jobs.
+It verifies and preserves those exact bytes and their canonical shared peers.
+It waits for source, browser, installed-tarball consumers, iOS/Android native
+runtime and both desktop native interaction gates at the same candidate,
+refuses mismatched versions, and never replaces an existing release.
 Complete the recorded conditions in [v1.0.0 decisions](docs/V1_DECISIONS.md)
 before tagging or running the release workflow.
 
@@ -229,7 +236,7 @@ package root imports an optional peer. `verify` also checks export keys and the
 reachable public declaration graph, packs the workspace packages, and checks
 the tarball contents. Intentional API changes require an explicit, reviewed
 snapshot update; the normal check never rewrites a baseline. Commands for both
-the workspace and isolated Windows snapshots are in
+the workspace and isolated Windows/AppKit snapshots are in
 [release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md#public-api-gate).
 
 The installed-consumer workflow also exercises real React Native Web against

@@ -101,3 +101,29 @@ Focused verification: 25 existing native evidence/transport and Inspector tests
 and three reference-model tests pass, both YAML flows parse, and `git diff --check` passes. The next installed
 iOS run must still prove the changed actions and all subsequent assertions;
 this source follow-up does not convert either failed run into acceptance.
+
+## Verified iOS interaction result at 0edd5f3
+
+[Workflow 42847217952](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42847217952)
+passed the iOS installed-consumer job at PR head
+`0edd5f302e99877191ba9a412c5c060571a5f6c9`, tested merge
+`e597d73757911e9a58005d577b3c2bf2496bd798`. The native build, all eleven media
+checks and all three UI cases passed, with no failed or skipped test cases
+and zero transport recoveries.
+
+The [original successful evidence](../evidence/v1-native-0edd5f3/ios/README.md)
+confirms both keyboard-present assertions, both native dismissal actions and
+both keyboard-absent assertions actually completed. Settings then saved its
+workspace name. Editor retained its draft through route changes and saved
+the cover. Pointer touch/up also completed. The screenshots show the closed
+keyboard, saved workspace name, retained cover preview and final touch stroke.
+
+Artifact `13780478895` matched its published ZIP digest. All 226 archived app
+entries matched the installed native manifest, and all report, hierarchy and
+screenshot hashes matched their receipts. Native semantic labels and safe
+header/tab geometry were independently rechecked against the retained trees.
+
+The original d6/e8 UI failures remain failed evidence. The intervening
+0a4f34b attempt never acquired an iOS runner and produced no app execution.
+This successful simulator run closes the observed keyboard interaction gap;
+the physical-device and spoken-accessibility gates retain their own scope.

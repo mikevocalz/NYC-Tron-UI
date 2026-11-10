@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "platform": "macos",
+  "result": "native-build-failed",
+  "runId": 42847217965,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42847217965",
+  "nativeJobId": 129943101237,
+  "nativeJobUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42847217965/job/129943101237",
+  "pullRequestHead": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+  "checkoutRevision": "e597d73757911e9a58005d577b3c2bf2496bd798",
+  "checkoutTree": "5f97d6cf40b3e49112cf5559a2a912fcb83740d3",
+  "pullRequestHeadTree": "5f97d6cf40b3e49112cf5559a2a912fcb83740d3",
+  "artifact": {
+    "id": 13779849301,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 731642,
+    "expectedSha256": "87143cd8c1754462026ff58713a6746c2f9d2a4c2ed382b5d239a6df50a37cd3",
+    "downloadedSha256": "87143cd8c1754462026ff58713a6746c2f9d2a4c2ed382b5d239a6df50a37cd3",
+    "digestVerified": true
+  },
+  "originalFiles": [
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794326182777-9e061b19-0460-4862-8177-184d4965ca65-xcodebuild.log",
+      "retainedPath": "xcode-version.txt",
+      "sha256": "a8be4f9af0a29137fe7e59b9928056d4a0df297bb46ba40f80eaa6b0ae982f12",
+      "bytes": 30
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794326183368-341d7acf-01c4-4c22-815e-8ace6962c55e-xcrun.log",
+      "retainedPath": "sdk-path.txt",
+      "sha256": "b965d7d8db9e3bfddbe97a5d44090aab2003ae49d0abf441beee55cca9162e2f",
+      "bytes": 104
+    },
+    {
+      "artifactPath": "nyc-tron-appkit-consumer/.spark/logs/1794326255333-7c6cd7ec-2293-4c90-93a8-bc69c03ca4ed-xcodebuild.log",
+      "sha256": "703b3c68538cba37739ee400261cdc5f160b540ab383613350f162a887575083",
+      "bytes": 8505856,
+      "retainedExcerpt": "compiler-errors.txt",
+      "sourceLineRanges": [
+        [
+          27480,
+          27487
+        ],
+        [
+          27558,
+          27561
+        ],
+        [
+          27576,
+          27593
+        ],
+        [
+          27622,
+          27639
+        ],
+        [
+          27746,
+          27753
+        ]
+      ]
+    }
+  ],
+  "observedToolchain": {
+    "xcodeVersion": "16.4",
+    "xcodeBuild": "16F6",
+    "sdkPath": "/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk"
+  },
+  "completedPrerequisites": [
+    "native-arm64-host-verification",
+    "canonical-core-release-archive",
+    "clean-installed-consumer",
+    "installed-public-api-snapshot"
+  ],
+  "failedStep": "Compile a standalone native AppKit reference",
+  "unexecutedChecks": [
+    "native-control-and-window-acceptance",
+    "success-only-tested-package-retention"
+  ],
+  "limitations": [
+    "This run did not launch the reference app or exercise native interactions.",
+    "The compiler failure occurs in ExpoModulesCore; it does not establish whether all adapter and acceptance-driver native sources compile.",
+    "The retained archive identities establish prepared inputs, not a natively tested distribution.",
+    "The Xcode26.2 correction is a later candidate whose native result must be recorded separately."
+  ]
+}

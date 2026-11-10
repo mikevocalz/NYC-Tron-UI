@@ -9,6 +9,8 @@ Pod::Spec.new do |s|
   s.platforms = { :osx => '14.0' }
   s.source_files = '*.{mm}'
   s.dependency 'RNDesktopApp'
-  s.osx.frameworks = 'AppKit'
+  s.dependency 'NYCTronAppKit'
+  s.dependency 'RNDesktopDrag'
+  s.osx.frameworks = 'AppKit', 'UniformTypeIdentifiers', 'ApplicationServices'
   s.pod_target_xcconfig = { 'SPARK_TEST_DRIVER' => ENV['SPARK_TEST_DRIVER_RELEASE'] == '1' ? '1' : '0', 'SPARK_TEST_DRIVER[config=Debug]' => '1', 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) SPARK_TEST_DRIVER=$(SPARK_TEST_DRIVER)' }
 end

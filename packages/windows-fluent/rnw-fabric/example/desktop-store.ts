@@ -15,6 +15,7 @@ export const desktop = createStore<DesktopState>(() => ({
 }));
 let native: WindowsWindowHost | undefined;
 let connecting: Promise<void> | undefined;
+export const getNativeHost = () => native;
 export const failDesktop = (error: unknown) => desktop.setState({ status: `Native desktop error: ${error instanceof Error ? error.message : String(error)}` });
 export function connectDesktop() {
   return connecting ??= createWindowsWindowHost({

@@ -21,7 +21,8 @@ Every distributable manifest is
 
 The release job requires the source/package checks, browser suites, installed
 tarball consumers, iOS/Android native build/runtime jobs, actual Windows native
-compilation and UI Automation, AppKit native controls/window lifecycle, and reference captures/render measurements from
+compilation and UI Automation, AppKit native controls/window lifecycle,
+desktop menus/inspectors/drag interactions, and reference captures/render measurements from
 the same candidate.
 It rejects mismatched package versions and an existing release instead of
 replacing its assets. No tag or release has been created as part of this
@@ -97,7 +98,7 @@ readiness.
 
 | Area | Required evidence |
 |---|---|
-| Release and native compilation | Reusable iOS/Android jobs consume this candidate's tarballs; release also waits for Windows native compilation/UIA, AppKit controls/window lifecycle, and reference captures/render measurements. Both desktop archives are preserved from the successful native consumer jobs. |
+| Release and native compilation | Reusable iOS/Android jobs consume this candidate's tarballs; release also waits for Windows native compilation/UIA, AppKit controls/window lifecycle and desktop interaction checks, and reference captures/render measurements. Both desktop archives are preserved from the successful native consumer jobs. |
 | Clean consumers | A basic UI app without unrelated optional peers, an Expo/web app, and the native reference app install actual archives outside the checkout |
 | Reference flows | Settings, library/detail, editor/inspector and media flows preserve authored state through adaptive layout |
 | Native interaction and accessibility | Actual platform interaction reports, cancellation/lifecycle behavior, keyboard and assistive-technology checks for the claimed targets |

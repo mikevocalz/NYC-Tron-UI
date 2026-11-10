@@ -8,7 +8,7 @@ or resizing a window does not create a new document or editing session.
 ## Supported host
 
 This package is isolated from the Expo 58 mobile workspace. Install it in the
-Spark desktop application with these exact tested dependency inputs:
+Spark desktop application with these pinned dependency inputs:
 
 | Dependency | Version |
 | --- | --- |
@@ -20,7 +20,11 @@ Spark desktop application with these exact tested dependency inputs:
 | `react-native-nitro-modules` | `0.37.0` |
 | `@nyc-tron/core` | `1.0.0` |
 
-Use Node 24.19 or later, full Xcode and CocoaPods. Spark's published macOS target
+Use Node 24.19 or later, full Xcode 26.2 or later and CocoaPods. The isolated
+workflow selects Xcode 26.2 explicitly: the macOS 15 runner's default Xcode
+16.4 cannot compile the isolated protocol conformances in Expo 55's Swift
+sources. A real Swift compiler probe runs before dependency preparation, and
+the workflow retains the selected compiler and SDK versions. Spark's published macOS target
 is ARM64. This adapter does not establish Intel, iOS, Android, Windows or headset
 support. Do not put its dependencies in the Expo 58 workspace or substitute
 Nitro v1 for Spark's tested Nitro 0.37 ABI.
@@ -36,8 +40,9 @@ Expo autolinking.
 
 Packages are distributed as GitHub Release tarballs. Install the matching core
 and AppKit archives, then use the application's installed `spark build` command
-for a custom native build. The AppKit package includes an NSScreen TurboModule;
-the prebuilt Spark Runner does not include that module. The native pod is
+for a custom native build. The AppKit package includes an NSScreen TurboModule
+and an NSPopover Fabric component; the prebuilt Spark Runner does not include
+those bindings. The native pod is
 selected only when Spark's macOS autolinker sets `SPARK_DESKTOP_AUTOLINK=macos`.
 
 ## Controls
@@ -59,6 +64,58 @@ button, text field, pop-up menu and segmented control. Availability checks fail
 explicitly when the native host or module is missing. Values and selection
 remain controlled by the app. Spark's documented props and supported frame
 styles apply; native appearance follows the app's system/light/dark choice.
+
+## Menus, tooltips and anchored inspectors
+
+| Import | Native surface | Application ownership |
+| --- | --- | --- |
+| `@nyc-tron/macos-appkit/menus` | Spark's `NSMenu` and `NSMenuItem` registration | Command IDs, enabled states, shortcuts, action decisions and registration disposal |
+| `@nyc-tron/macos-appkit/context-menu` | Spark's tracked native context `NSMenu` | Measured owner-window position, command IDs and the selected/canceled result |
+| `@nyc-tron/macos-appkit/tooltip` | React Native macOS `NSView.toolTip` | Hint text and view style; the accessible hint defaults to the same text |
+| `@nyc-tron/macos-appkit/popover` | The adapter's real `NSPopover` containing existing Fabric children | Controlled visibility, measured anchor, usable regions and document state |
+| `@nyc-tron/macos-appkit/anchored-inspector` | The same `NSPopover` binding | Existing app inspector content; no second inspector model or pane tree |
+
+`createMenu` and `showContextMenu` retain Spark's typed contracts. Menu actions
+return the app's IDs; the adapter does not execute document commands. Keep the
+menu registration for its owner lifetime and call `remove()` during disposal.
+Context-menu cancellation returns a canceled result. The reference checks its
+owner generation before applying an asynchronous menu result.
+
+`Popover` and `AnchoredInspector` use the measured-anchor form: `anchor` and
+`usableRegions` are top-left coordinates in the owning native window's content
+view, measured in logical points. The app supplies nonoccluded regions and
+remeasures its trigger after layout changes. Regions may extend beyond the
+owner window only when the app explicitly approves that space; this adapter
+does not infer external safe space from display size. The reference uses the
+actual bounds of each root independently, including in secondary windows.
+
+The shared `@nyc-tron/core/overlays` placement selects the region, preferred
+content size and above/below preference. AppKit chooses the final x/y position.
+Before revealing controls, the adapter checks the actual popover window frame
+against the selected region. That frame includes AppKit's border and arrow;
+the system's noninteractive window shadow is outside the frame. If the frame
+does not fit, the adapter closes it, calls `onOpenChange(false)`, and reports
+`onPresentationRejected({ reason: 'outside-usable-region', bounds, region })`.
+The app can then choose another anchor, region or presentation. This is a safe
+region gate, not exact replay of the shared placement's x/y coordinates.
+
+Native close and Escape requests call `onOpenChange(false)`. The app remains
+responsible for updating that controlled value. Changing `scope` discards
+callbacks from a replaced document or target, and stale placement rejection
+events cannot close a newer geometry request. Children and their native views
+remain mounted across closing, reopening and resizing. The native binding
+restores the previous responder when it still belongs to the owner and does
+not take focus away from a newly focused window. Motion follows the supplied
+`animated` value and the system's Reduce Motion preference.
+
+The detached popover content has its own `RCTSurfaceTouchHandler`. In the
+pinned RNmacOS 0.83 implementation, that handler hit-tests the retained Fabric
+children, reads their `touchEventEmitterAtPoint`, and dispatches through each
+child's existing event emitter. Its `EventTarget` retains the original Fabric
+surface identifier; routing does not discover a new surface through native
+view ancestry. Reparenting therefore keeps the original React event ownership
+as well as the child views. This implementation path is distinct from the
+native-control target/action checks recorded by the acceptance fixture.
 
 ## Window ownership
 
@@ -111,10 +168,19 @@ repeated disposal returns the same completion promise.
 
 `DragDropView` supplies native drag source/destination events. Route an app-owned
 reference through `beginDrag`, `dragOver` and `drop(token, targetId, approve)`.
+Custom data keys must be MIME types, such as
+`application/x-nyctron-document-reference`, as required by Spark's parser.
 Only a returned `transfer` authorizes the app to move the document reference.
 Closing/minimizing a participating window, restoring layout, canceling or
 disposing invalidates late approvals. Opaque payloads are never applied to a
 second document model by this package.
+
+The reference enables a source only in the current owner window. It rejects
+foreign references and refuses an ownership move while the document has
+unsaved changes. The native destination's acceptance is an offer; an AppKit
+`move` result alone never changes app ownership. A canceled source invalidates
+the controller token. An accepted source end does not prematurely cancel a
+valid target while its app decision is still pending.
 
 ## Verification and limits
 
@@ -127,15 +193,35 @@ archive hash and package identity before installing it in a fresh external
 application, and verifies dependency pins, lock integrity and archive file
 bytes. The native receipt records the core hash so release assembly can compare
 the tested dependency with the shipped archive. The isolated workflow compiles a real standalone
-macOS app and runs native AppKit target/action, selection, text editing and
-multi-window checks through Spark's authenticated test driver. It records
+macOS app and runs native AppKit target/action, selection, text editing,
+menus, tooltips, NSPopover geometry/focus/content lifetime and multi-window
+checks through Spark's authenticated test driver. Drag protocol checks use a
+real isolated NSPasteboard and the installed native source/destination methods
+to verify accepted moves, app rejection, cancellation and shared document
+identity. These protocol calls do not create an NSDraggingSession.
+
+The driver also records the actual process's `CGPreflightPostEventAccess` and
+accessibility trust results. When event posting is allowed, it posts a mouse
+down/drag/up path through Core Graphics and requires an actual AppKit-provided
+NSDraggingSession plus the resulting cross-window app transfer. When posting
+is denied, the report records that observed permission block; it does not
+change TCC settings, prompt for permissions or report a pointer-session pass.
+`native-pointer.json` preserves that result separately from protocol evidence.
+The workflow records
 app-payload hashes, commands, results and native-rendered captures. A tested
 archive receipt is produced only after those checks pass.
 
 The test driver is excluded from this library's archive. The reference defaults
 to excluding it from release builds; `--native-acceptance` opts in only inside
-the generated private test application. That application is not distributed. Driver target/action evidence does not
-prove physical pointer/keyboard behavior, VoiceOver speech, multiple physical
+the generated private test application. That application is not distributed.
+Its explicit `tron.window` show command enables regular AppKit activation so
+menus, focus and popovers are tested with actual visible owner windows. Spark's
+stock capture-only driver otherwise prohibits activation. This fixture does
+not change the SDK or grant input-posting permission.
+Driver target/action and protocol evidence does not prove actual pointer input;
+the separate CGEvent result must be inspected for that boundary. Even a passed
+posted-event session does not prove physical mouse hardware, human gestures,
+physical keyboard behavior, VoiceOver speech, multiple physical
 screens, device performance or the complete eight-platform release matrix.
 The example's save checkpoint is intentionally session-local, and does not
 claim disk persistence. Application persistence and undo stay with the app.
@@ -143,4 +229,8 @@ claim disk persistence. Application persistence and undo stay with the app.
 Official references: [Spark development](https://github.com/LegendApp/legend-spark/blob/main/docs/development.md),
 [Spark test driver](https://github.com/LegendApp/legend-spark/blob/main/docs/test-driver.md),
 [React Native macOS](https://github.com/microsoft/react-native-macos), and
-[AppKit NSScreen](https://developer.apple.com/documentation/appkit/nsscreen).
+[AppKit NSScreen](https://developer.apple.com/documentation/appkit/nsscreen),
+[NSPopover](https://developer.apple.com/documentation/appkit/nspopover),
+[NSView.toolTip](https://developer.apple.com/documentation/appkit/nsview/tooltip),
+[NSDraggingDestination](https://developer.apple.com/documentation/appkit/nsdraggingdestination),
+and [NSDraggingSession](https://developer.apple.com/documentation/appkit/nsdraggingsession).

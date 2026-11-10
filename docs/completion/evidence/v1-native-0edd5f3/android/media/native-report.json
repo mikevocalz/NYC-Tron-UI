@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "platform": "android",
+  "platformVersion": "35",
+  "revision": "e597d73757911e9a58005d577b3c2bf2496bd798",
+  "fixtureMd5": "f3124067a1a9bb9c06b1283c673cef39",
+  "checks": [
+    "fixture-bytes",
+    "native-probe",
+    "frame-presentation-and-jpeg",
+    "bounded-frame-scaling",
+    "pcm-bytes-and-signal",
+    "pcm-resampling-and-tail",
+    "complete-presentation-index",
+    "indexed-frame-and-rejection",
+    "normalized-errors",
+    "cancelled-consumer",
+    "cache-deletion-and-recovery"
+  ],
+  "elapsedMs": 3998,
+  "observed": {
+    "durationUs": 2000000,
+    "frameTimeUs": 500000,
+    "indexFrames": 40,
+    "indexedTimeUs": 1050000,
+    "pcmFrames": 24000,
+    "resampledFrames": 8000,
+    "upsampledFrames": 48000,
+    "fullResampledFrames": 32000,
+    "tailFrames": 4000,
+    "pcmPeak": 0.1300048828125,
+    "pcmRms": 0.08835735995923667
+  }
+}
