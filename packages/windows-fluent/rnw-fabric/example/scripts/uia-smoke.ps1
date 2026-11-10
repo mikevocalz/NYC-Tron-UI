@@ -478,6 +478,10 @@ try {
   Invoke-Button $window "Native inspector anchor"
   $field = Find-ProcessElement "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)
   Assert-NativeValue $field "NativeRapid123abc"
+  # Retain a later observation after a real close/reopen. The immediate
+  # rejection capture can precede repaint even after ValuePattern has updated;
+  # neither visibility nor stable bounds is a compositor completion barrier.
+  Save-PopupScreenshot "09-native-inspector-reopened" $field
   Invoke-NativeElement (Find-ProcessElement "Disable native inspector" ([System.Windows.Automation.ControlType]::Button))
   Find-ByName $window "Native inspector disabled" | Out-Null
   Wait-ProcessElementHidden "Native inspector note" ([System.Windows.Automation.ControlType]::Edit)

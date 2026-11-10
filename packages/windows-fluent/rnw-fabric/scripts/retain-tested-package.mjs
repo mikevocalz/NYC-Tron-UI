@@ -30,6 +30,7 @@ if (resolved.link || resolved.integrity !== "sha512-" + createHash("sha512").upd
 mkdirSync(destination, { recursive: true });
 cpSync(source, join(destination, archive.filename));
 cpSync(join(consumer, "package-preparation.json"), join(destination, "package-preparation.json"));
+cpSync(join(consumer, "package-lock.json"), join(destination, "package-lock.json"));
 cpSync(join(evidence, "result.json"), join(destination, "native-acceptance.json"));
 const evidenceHashes = Object.fromEntries(readdirSync(evidence).filter(name => /\.(?:json|png|txt)$/.test(name)).map(name => [name, sha(readFileSync(join(evidence, name)))]));
 writeFileSync(join(destination, "SHA256SUMS"), `${archive.sha256}  ${archive.filename}\n`);

@@ -79,6 +79,7 @@
     <ClInclude Include="TronOverlayAnchor.h" />
     <ClInclude Include="OverlayDismissal.h" />
     <ClInclude Include="InspectorEditSequence.h" />
+    <ClInclude Include="IslandConnection.h" />
     <ClInclude Include="NativeDragBroker.h" />
     <ClInclude Include="TronDragSurface.h" />
     <ClInclude Include="TronNavigationView.h" />

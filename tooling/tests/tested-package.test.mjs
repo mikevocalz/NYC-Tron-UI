@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import test from "node:test";
 import { mergeTestedPackage } from "../merge-tested-package.mjs";
 
@@ -79,4 +80,43 @@ test("native acceptance binds the release's shared dependencies as well as the d
   writeFileSync(join(f.output, f.receipt.dependencies[0].filename), "changed shared package");
   assert.throws(f.merge, /checksum mismatch/);
   assert.equal(readFileSync(join(f.output, "SHA256SUMS"), "utf8"), f.previous);
+});
+
+test("the passed Windows artifact preserves the exact installed npm lock for independent archive verification", t => {
+  const f = fixture(t, "windows"), consumer = join(f.input, "consumer"), evidence = join(f.input, "uia"), retained = join(f.input, "retained");
+  const vendor = join(consumer, "vendor");
+  mkdirSync(vendor, { recursive: true });
+  mkdirSync(evidence);
+  const archives = [], packages = {};
+  for (const item of [f.receipt, ...f.receipt.dependencies]) {
+    const from = item === f.receipt ? f.input : f.output, archive = join(from, item.filename);
+    cpSync(archive, join(vendor, item.filename));
+    const manifest = execFileSync("tar", ["-xzOf", archive, "package/package.json"]);
+    const installed = join(consumer, "node_modules", item.packageName);
+    mkdirSync(installed, { recursive: true });
+    writeFileSync(join(installed, "package.json"), manifest);
+    archives.push({ name: item.packageName, filename: item.filename, sha256: item.sha256,
+      files: [{ path: "package.json", sha256: createHash("sha256").update(manifest).digest("hex") }] });
+    packages["node_modules/" + item.packageName] = { version: f.receipt.version, resolved: "file:vendor/" + item.filename,
+      integrity: "sha512-" + createHash("sha512").update(readFileSync(archive)).digest("base64") };
+  }
+  writeFileSync(join(consumer, "package-preparation.json"), JSON.stringify({ sourceRevision: f.receipt.sourceRevision, installedFromArchives: true, archives }));
+  // Non-default formatting makes a parse-and-rewrite fail byte preservation.
+  const originalLock = Buffer.from(JSON.stringify({ name: "native-consumer", lockfileVersion: 3, packages }, null, 3).replaceAll("\n", "\r\n") + "\r\n");
+  writeFileSync(join(consumer, "package-lock.json"), originalLock);
+  const checks = ["controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility"];
+  const acceptance = { status: "passed", sourceRevision: f.receipt.sourceRevision, processId: 4242, checks };
+  writeFileSync(join(evidence, "result.json"), JSON.stringify(acceptance));
+  writeFileSync(join(evidence, "navigation-accessibility-result.json"), JSON.stringify({ ...acceptance,
+    checks: ["settings-focus-return", "resize-retains-selection-and-focus", "native-rtl-and-physical-left-pane", "native-pane-collapse-and-restore", "high-contrast-native-repaint-and-input"].map(name => ({ name })) }));
+  const script = fileURLToPath(new URL("../../packages/windows-fluent/rnw-fabric/scripts/retain-tested-package.mjs", import.meta.url));
+  execFileSync(process.execPath, [script, consumer, evidence, retained]);
+  const retainedLock = readFileSync(join(retained, "package-lock.json"));
+  assert.deepEqual(retainedLock, originalLock);
+  const proof = JSON.parse(retainedLock);
+  for (const item of [f.receipt, ...f.receipt.dependencies]) {
+    const entry = proof.packages["node_modules/" + item.packageName];
+    assert.equal(entry.resolved, "file:vendor/" + item.filename);
+    assert.equal(entry.integrity, "sha512-" + createHash("sha512").update(readFileSync(join(vendor, item.filename))).digest("base64"));
+  }
 });

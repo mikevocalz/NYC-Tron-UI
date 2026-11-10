@@ -2,6 +2,7 @@
 #include "TronDragSurface.h"
 #include "NativeDragBroker.h"
 #ifdef RNW_NEW_ARCH
+#include "IslandConnection.h"
 #include "codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
@@ -40,6 +41,12 @@ struct TronDragSurfaceComponentView
     // before UIA references can postpone the UserData object's final release.
     Cleanup();
     try { if (m_island) m_island.Close(); } catch (...) {}
+    m_connection.Close();
+  }
+  void Mounted(winrt::Microsoft::ReactNative::ComponentView const& view) noexcept {
+    if (m_disposed) return;
+    try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
+    catch (...) { Error("Could not retain the native drag connection"); }
   }
   void InitializeContentIsland(winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView const& view) noexcept {
     try {
@@ -61,10 +68,13 @@ struct TronDragSurfaceComponentView
       });
       m_surface.Drop([weak = get_weak()](auto const&, Xaml::DragEventArgs const& args) { if (auto self = weak.get()) self->Drop(args); });
       m_surface.Unloaded([weak = get_weak()](auto const&, auto const&) { if (auto self = weak.get()) self->Cleanup(); });
-      m_island.Content(m_surface); view.Connect(m_island.ContentIsland()); if (m_props) Apply(*m_props);
+      m_island.Content(m_surface);
+      m_connection.SetIsland(m_island.ContentIsland());
+      view.Connect(m_island.ContentIsland()); if (m_props) Apply(*m_props);
     } catch (...) { Error("Could not initialize the native WinUI drag surface"); }
   }
   void UpdateProps(winrt::Microsoft::ReactNative::ComponentView const& view, winrt::com_ptr<Codegen::TronDragSurfaceProps> const& props, winrt::com_ptr<Codegen::TronDragSurfaceProps> const& old) noexcept override {
+    if (m_disposed) return;
     m_props = props; if (m_surface && props) Apply(*props);
     Codegen::BaseTronDragSurface<TronDragSurfaceComponentView>::UpdateProps(view, props, old);
   }
@@ -156,6 +166,7 @@ struct TronDragSurfaceComponentView
     }
   }
   Xaml::XamlIsland m_island{nullptr}; Xaml::Controls::Button m_surface{nullptr};
+  nyctron::islands::IslandConnection m_connection;
   winrt::com_ptr<Codegen::TronDragSurfaceProps> m_props;
   std::string m_owner, m_window, m_generation, m_role, m_scope, m_request;
   std::vector<std::string> m_errors; bool m_disposed{false};
@@ -167,6 +178,9 @@ void RegisterTronDragSurfaceComponent(winrt::Microsoft::ReactNative::IReactPacka
       component.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
       component.SetContentIslandComponentViewInitializer([](auto const& view) noexcept {
         auto data = winrt::make_self<winrt::NYCTronFluentFabric::TronDragSurfaceComponentView>(); data->InitializeContentIsland(view); view.UserData(*data);
+        view.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
+          if (auto owner = weak.get()) owner->Mounted(mounted);
+        });
         view.Destroying([weak = data->get_weak()](auto const&, auto const&) noexcept {
           if (auto owner = weak.get()) owner->Destroy();
         });
