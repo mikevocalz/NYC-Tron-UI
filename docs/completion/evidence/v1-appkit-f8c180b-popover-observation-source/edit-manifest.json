@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "kind": "bounded-existing-popover-response-diagnostic-edit-manifest",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourcePath": "examples/macos-appkit/spark/verify-native.mjs",
+  "preimage": {
+    "gitBlob": "8c3176f220c5b038b2f1c7d1bbbc41dc693606f2",
+    "bytes": 120831,
+    "sha256": "2c897c7d380611e5b7eac73e7f4c7a70c7169dc86c16c48351e48a600f6785f9"
+  },
+  "candidate": {
+    "gitBlob": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+    "bytes": 128984,
+    "sha256": "06da9207bda3fec1b8b599d1de1517c64e124683ba2718800078ef5b2b24b298"
+  },
+  "preparedHelper": {
+    "commit": "f8c180be8af630886274f71313fa229ea6074001",
+    "tree": "d6e3e01f3cc6dd3ea913f1135654bb08491211fb",
+    "parents": [
+      "bd3ba9af7bba06ab2653806a3acf2525e28927a7"
+    ],
+    "published": false
+  },
+  "transformCount": 2,
+  "transforms": [
+    {
+      "name": "insert bounded typed response-observation helpers",
+      "before": "async function shownPopover(window = 'main') {\n",
+      "after": "function projectPopoverResponse(value, firstIdentity = null) {\n  const read = (object, name) => {\n    if (!object || typeof object !== 'object' || Array.isArray(object)) return undefined;\n    const descriptor = Object.getOwnPropertyDescriptor(object, name);\n    return descriptor && Object.prototype.hasOwnProperty.call(descriptor, 'value') ? descriptor.value : undefined;\n  };\n  const boolean = item => typeof item === 'boolean' ? item : null;\n  const rectangle = item => {\n    const values = ['x', 'y', 'width', 'height'].map(name => read(item, name));\n    const fields = Object.fromEntries(['x', 'y', 'width', 'height'].map((name, index) =>\n      [name, typeof values[index] === 'number' && Number.isFinite(values[index]) ? values[index] : null]));\n    return { status: item == null ? 'missing' : values.every(field => typeof field === 'number' && Number.isFinite(field)) ? 'observed' : 'invalid', ...fields };\n  };\n  const frame = rectangle(read(value, 'frame')), region = rectangle(read(value, 'region'));\n  const nonempty = rect => rect.status === 'observed' ? rect.width > 0 && rect.height > 0 : null;\n  const frameNonempty = nonempty(frame), regionNonempty = nonempty(region);\n  const extents = [frame.x + frame.width, frame.y + frame.height, region.x + region.width, region.y + region.height];\n  const frameInsideRegion = frameNonempty === true && regionNonempty === true && extents.every(Number.isFinite)\n    ? frame.x >= region.x && frame.y >= region.y && extents[0] <= extents[2] && extents[1] <= extents[3] : null;\n  const rawIdentity = read(value, 'contentIdentity');\n  const identity = typeof rawIdentity === 'string' && rawIdentity.length > 0 && rawIdentity.length <= 128 ? rawIdentity : null;\n  return {\n    // The bounded identity string stays private. Presence is a string-shape\n    // observation, not proof that its represented native object is nonnull/live.\n    identity,\n    state: {\n      nativePopover: boolean(read(value, 'nativePopover')),\n      conjunction: { shown: boolean(read(value, 'shown')), contentVisible: boolean(read(value, 'contentVisible')) },\n      identity: {\n        stringPresent: typeof rawIdentity === 'string' && rawIdentity.length <= 128 ? rawIdentity.length > 0 : null,\n        matchesFirstObserved: identity !== null && firstIdentity !== null ? identity === firstIdentity : null,\n      },\n      frame, region, geometry: { frameNonempty, regionNonempty, frameInsideRegion },\n    },\n  };\n}\nfunction createPopoverObservation(window) {\n  return { owner: window === 'main' || window === 'document-1' ? window : null,\n    returnedResponses: 0, stateChanges: 0, retained: [], last: null, lastSignature: null,\n    firstIdentity: null, identityBaselineResponse: null, captureFailed: false, countOverflow: false };\n}\nfunction capturePopoverResponse(observation, value) {\n  try {\n    const increment = name => {\n      if (Number.isSafeInteger(observation[name]) && observation[name] < Number.MAX_SAFE_INTEGER) observation[name]++;\n      else { observation[name] = null; observation.countOverflow = true; }\n    };\n    increment('returnedResponses');\n    let projected;\n    try { projected = projectPopoverResponse(value, observation.firstIdentity); }\n    catch { observation.captureFailed = true; projected = projectPopoverResponse(null, observation.firstIdentity); }\n    if (observation.firstIdentity === null && projected.identity !== null) {\n      observation.firstIdentity = projected.identity;\n      observation.identityBaselineResponse = observation.returnedResponses;\n      projected.state.identity.matchesFirstObserved = true;\n    }\n    const signature = JSON.stringify(projected.state);\n    const changed = observation.last !== null && signature !== observation.lastSignature;\n    if (changed) increment('stateChanges');\n    const record = { response: observation.returnedResponses, changed, state: projected.state };\n    if (observation.last === null || changed) {\n      observation.retained.push(record);\n      // First response + latest six projected changes; eighth slot is last.\n      if (observation.retained.length > 7) observation.retained.splice(1, observation.retained.length - 7);\n    }\n    observation.last = record; observation.lastSignature = signature;\n  } catch { observation.captureFailed = true; }\n}\nfunction popoverObservationSummary(observation) {\n  const selected = observation.retained.slice();\n  if (observation.last && selected.at(-1) !== observation.last) selected.push(observation.last);\n  const retainedChanges = selected.filter(record => record.changed).length;\n  return {\n    schemaVersion: 1, status: 'failed-popover-poll', diagnosticOnly: true,\n    sourceRevision: typeof revision === 'string' && /^[a-f0-9]{40}$/.test(revision) ? revision : null,\n    owner: observation.owner, scope: 'already-returned-shown-popover-responses',\n    recordLimit: 8, consoleByteLimit: 8192, identityStringLimit: 128,\n    selection: 'first-and-last-response-plus-latest-projected-state-changes',\n    identityComparison: 'bounded-string-equality-not-native-liveness',\n    identityBaselineResponse: observation.identityBaselineResponse,\n    returnedResponses: observation.returnedResponses, stateChanges: observation.stateChanges,\n    selectedRecords: selected.length,\n    omittedResponses: Number.isSafeInteger(observation.returnedResponses) ? observation.returnedResponses - selected.length : null,\n    omittedStateChanges: Number.isSafeInteger(observation.stateChanges) ? observation.stateChanges - retainedChanges : null,\n    recordsOmittedForByteLimit: 0,\n    captureFailed: observation.captureFailed, countOverflow: observation.countOverflow,\n    records: selected.map(record => ({\n      response: record.response, first: record === observation.retained[0], last: record === observation.last,\n      stateChange: record.changed, ...record.state,\n    })),\n  };\n}\nfunction reportPopoverFailure(observation) {\n  try {\n    const summary = popoverObservationSummary(observation);\n    const filename = 'popover-show-failure.json';\n    const original = { filename, writeStatus: 'not-attempted', writeErrorCode: null };\n    const report = { ...summary, original };\n    const encode = () => {\n      report.selectedRecords = report.records.length;\n      report.omittedResponses = Number.isSafeInteger(report.returnedResponses) ? report.returnedResponses - report.selectedRecords : null;\n      report.omittedStateChanges = Number.isSafeInteger(report.stateChanges) ? report.stateChanges - report.records.filter(record => record.stateChange).length : null;\n      return 'NYCTRON_POPOVER_SHOW_EVIDENCE_BEGIN\\n' + JSON.stringify(report) + '\\nNYCTRON_POPOVER_SHOW_EVIDENCE_END\\n';\n    };\n    while (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit && report.records.length > 2) {\n      report.records.splice(1, 1); report.recordsOmittedForByteLimit++;\n    }\n    if (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit) {\n      report.recordsOmittedForByteLimit += report.records.length;\n      report.records = []; report.status = 'failed-popover-poll-details-omitted';\n    }\n    if (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit) return;\n    // Preserve the first observation file. Write status is separate console\n    // metadata; an unsuccessful duplicate write cannot replace its bytes.\n    const { original: omittedWriteStatus, ...fileRecord } = report;\n    try {\n      writeFileSync(join(output, filename), JSON.stringify(fileRecord) + '\\n', { flag: 'wx' });\n      original.writeStatus = 'retained';\n    } catch (error) {\n      original.writeStatus = 'failed';\n      original.writeErrorCode = ['EACCES', 'EPERM', 'EEXIST', 'ENOSPC', 'EIO', 'ENOENT'].includes(error?.code) ? error.code : 'other';\n    }\n    const envelope = encode();\n    if (Buffer.byteLength(envelope, 'utf8') <= summary.consoleByteLimit) console.info(envelope.slice(0, -1));\n  } catch {\n    // Diagnostics never replace the original request rejection or timeout.\n  }\n}\n\nasync function shownPopover(window = 'main') {\n"
+    },
+    {
+      "name": "observe existing presentation-poll responses and preserve the original failure",
+      "before": "  const value = await waitFor(async () => { const current = await popover(window); return current.shown && current.contentVisible ? current : undefined; }, 'shown native NSPopover');",
+      "after": "  const observation = createPopoverObservation(window);\n  let value;\n  try {\n    value = await waitFor(async () => {\n      const current = await popover(window);\n      capturePopoverResponse(observation, current);\n      return current.shown && current.contentVisible ? current : undefined;\n    }, 'shown native NSPopover');\n  } catch (error) {\n    reportPopoverFailure(observation);\n    throw error;\n  }"
+    }
+  ],
+  "inverseRule": "Apply the two uniquely occurring forward replacements in listed order. Replacing each after with before in reverse order reproduces the complete exact preimage.",
+  "preserved": [
+    "The actual current.shown && current.contentVisible predicate and its existing wait label.",
+    "The byte-identical waitFor function with its existing 20-second deadline and 50-ms pause.",
+    "The byte-identical tron.popover request helper; no new native, driver, focus, owner-selection or UI request.",
+    "All post-wait native-type/geometry assertions in their original order and all later popovers retention/runtime/error/cleanup source.",
+    "Original request, process-state, predicate-access and timeout Error objects.",
+    "Existing shipping/native/workflow/host/security code."
+  ],
+  "diagnostic": {
+    "scope": "Only already-returned values from the existing shownPopover polling call; report only if that wait rejects.",
+    "fields": "Typed nativePopover, shown/contentVisible; finite frame/region fields and guarded positive/containment facts; identity string-shape presence and equality to the first bounded observed string.",
+    "identity": "At most128 code units retained privately for equality. No raw identity, arbitrary class/token/status/error text is emitted. Presence/equality is not a native-object liveness claim.",
+    "records": "First and last responses plus latest projected state changes, at most8, with safe counts and explicit omissions/overflow.",
+    "output": "Fixed popover-show-failure.json under existing output; exclusive wx preserves first file. Marker-inclusive console envelope <=8192 UTF-8 bytes; trim intermediate detail records and recalculate omissions if needed.",
+    "errors": "Write outcomes use fixed codes; projection/file/console errors remain secondary and cannot replace the original error. No postfailure RPC."
+  },
+  "executedChecks": {
+    "status": "passed",
+    "scope": "Exact extracted verifier functions in V8 with mocked driver, clock, assertions and IO; no Node filesystem or native execution.",
+    "designCount": 8,
+    "groups": [
+      {
+        "name": "exact identities, two-edit inverse, original wait/request/predicate/assertion/runtime suffix and V8 parse only",
+        "status": "passed"
+      },
+      {
+        "name": "typed false-versus-unknown predicates, finite geometry/overflow, bounded identity shape and own-data-only projection",
+        "status": "passed"
+      },
+      {
+        "name": "first/last/change accounting, private identity baseline, owner allowlist and safe-counter overflow",
+        "status": "passed"
+      },
+      {
+        "name": "same successful three-response polling, original response/assertion order and popovers retention",
+        "status": "passed"
+      },
+      {
+        "name": "same 20-second timeout/Error identity and 400-command sequence for false shown, hidden content and unknowns",
+        "status": "passed"
+      },
+      {
+        "name": "request/process/predicate errors keep exact objects without extra requests or getter calls",
+        "status": "passed"
+      },
+      {
+        "name": "exclusive first-file preservation and secondary file/console errors with unchanged primary timeout",
+        "status": "passed"
+      },
+      {
+        "name": "eight-record finite-numeric envelope bound/omissions and unchanged postpoll native/geometry assertions",
+        "status": "passed"
+      }
+    ],
+    "metrics": {
+      "timeoutPolls": 400,
+      "timeoutMilliseconds": 20000,
+      "timeoutNativeRequests": 400,
+      "delayedSuccessPolls": 3,
+      "delayedSuccessMilliseconds": 100,
+      "normalEnvelopeBytes": 1631,
+      "maximumNumericEightRecordEnvelopeBytes": 4951
+    },
+    "nativeExecution": false,
+    "nodeFilesystemExecution": false
+  },
+  "harness": {
+    "gitBlob": "31ce5ea4b79c145464d9e87f0349557a37152149",
+    "bytes": 25211,
+    "sha256": "be894bbdc4650b38d5094f22504104d33ad32fd8965b96d3a541168e59cd7b65",
+    "path": "review-checks.js"
+  },
+  "limits": [
+    "Pure V8/static/mock checks only; no Node filesystem, AppKit or native execution.",
+    "The bd3 failed popover's separate predicate values and cause remain unknown.",
+    "Prepared child is unreferenced; root plans combined-candidate integration and ordinary native CI, not a duplicate PR62 run."
+  ]
+}

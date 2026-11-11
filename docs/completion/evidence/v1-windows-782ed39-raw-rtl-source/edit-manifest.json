@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "kind": "strict-owned-raw-uia-rtl-icon-witness",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+  "before": {
+    "bytes": 15321,
+    "sha256": "aecc1110691d7acc833bca9cef42f38027dd7a014ba319a7979d66983f673147",
+    "gitBlob": "8c7632eeea23671646721ec7e96ecc386486e610"
+  },
+  "after": {
+    "bytes": 33096,
+    "sha256": "2786f4a63776ec3e1bbd6fcd3af0313c967228a188a50a49cba68f99bc3f1074",
+    "gitBlob": "877c51ea1e16918968a6929e389c1f61f4a4e23d"
+  },
+  "edits": [
+    {
+      "id": "initialize-bounded-rtl-evidence",
+      "before": "$failure = $null\n",
+      "after": "$failure = $null\n$rtlWitness = @{\n  schemaVersion=1; method=\"uia-raw-icon-physical-screen\"; status=\"not-started\"; failure=$null\n  limits=@{ nodes=512; depth=24; runtimeIdIntegers=32; pollSeconds=10; pollSleepMilliseconds=100 }\n  deadlineScope=\"retry-window; synchronous UIA calls are not cancellable by it\"\n  binding=$null; discovery=@{ initial=$null; final=$null }; pollAttempts=0; ltr=$null; latest=$null\n}\n"
+    },
+    {
+      "id": "add-owned-raw-view-witness-helpers",
+      "before": "try {\n  $windowPattern.SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Maximized)\n",
+      "after": "function Write-RawRtlWitnessSummary {\n  # This projection reads only the captured hashtables. It performs no UIA\n  # calls, and reporting failures cannot replace the original test outcome.\n  try {\n    function Rtl-SummaryEnum($value, [string[]]$allowed) {\n      if ($value -is [string] -and $allowed -ccontains $value) { return $value }\n      return $null\n    }\n    function Rtl-SummaryNumber($value) {\n      if (($value -is [int] -or $value -is [long] -or $value -is [double] -or $value -is [uint32]) -and\n          -not [double]::IsNaN([double]$value) -and -not [double]::IsInfinity([double]$value)) { return $value }\n      return $null\n    }\n    function Rtl-SummaryCount($value, [int]$maximum) {\n      $number = Rtl-SummaryNumber $value\n      if ($null -ne $number -and $number -ge 0 -and $number -le $maximum -and [Math]::Floor($number) -eq $number) { return $number }\n      return $null\n    }\n    function Rtl-SummaryRuntimeId($value) {\n      if ($value -isnot [int[]] -or $value.Count -eq 0 -or $value.Count -gt 32) { return $null }\n      return ,$value\n    }\n    function Rtl-SummaryRect($value) {\n      if ($value -isnot [hashtable]) { return $null }\n      $copy = @{}\n      foreach ($key in @(\"x\",\"y\",\"left\",\"top\",\"width\",\"height\",\"right\",\"bottom\")) { $copy[$key] = Rtl-SummaryNumber $value[$key] }\n      return $copy\n    }\n    function Rtl-SummarySnapshot($value) {\n      if ($value -isnot [hashtable]) { return $null }\n      $copy = @{ phase=(Rtl-SummaryEnum $value.phase @(\"ltr\",\"rtl\",\"rtl-final\")); stable=$(if ($value.stable -is [bool]) { $value.stable } else { $null }) }\n      foreach ($role in @(\"owner\",\"navigation\",\"toggle\",\"icon\")) { $copy[$role] = Rtl-SummaryRect $value[$role] }\n      return $copy\n    }\n    function Rtl-SummaryCounts($value) {\n      if ($value -isnot [hashtable]) { return $null }\n      $copy = @{ complete=$(if ($value.complete -is [bool]) { $value.complete } else { $null }) }\n      foreach ($key in @(\"nodesDiscovered\",\"nodesRead\",\"toggles\",\"icons\",\"namedAncestors\")) { $copy[$key] = Rtl-SummaryCount $value[$key] 512 }\n      $copy.maxDepth = Rtl-SummaryCount $value.maxDepth 24\n      return $copy\n    }\n    $binding = $null\n    if ($rtlWitness.binding -is [hashtable]) {\n      $binding = @{ processId=(Rtl-SummaryCount $rtlWitness.binding.processId 2147483647); hwnd=(Rtl-SummaryNumber $rtlWitness.binding.hwnd) }\n      foreach ($key in @(\"ownerRuntimeId\",\"navigationRuntimeId\",\"toggleRuntimeId\",\"iconRuntimeId\")) { $binding[$key] = Rtl-SummaryRuntimeId $rtlWitness.binding[$key] }\n    }\n    $failureSummary = $null\n    if ($rtlWitness.failure -is [hashtable]) {\n      $failureSummary = @{\n        code=(Rtl-SummaryEnum $rtlWitness.failure.code @(\"runtime-id-unavailable-or-over-limit\",\"runtime-id-malformed\",\"empty-offscreen-or-nonpositive-bounds\",\"nonfinite-bounds\",\"owner-hwnd-or-process-mismatch\",\"owner-identity-changed\",\"ancestry-missing\",\"duplicate-runtime-id\",\"foreign-process-in-ancestry\",\"ancestry-depth-limit\",\"retained-role-identity-changed\",\"retained-role-label-changed\",\"foreign-process-in-tree\",\"tree-identity-changed\",\"tree-depth-limit\",\"tree-node-limit\",\"toggle-peer-missing\",\"toggle-peer-ambiguous\",\"named-navigation-ancestor-missing\",\"named-navigation-ancestor-ambiguous\",\"icon-peer-unavailable\",\"icon-peer-ambiguous\",\"bounds-outside-owned-container\",\"provider-read-failed\",\"ltr-icon-not-stably-left\",\"rtl-icon-not-stably-right\"))\n        role=(Rtl-SummaryEnum $rtlWitness.failure.role @(\"tree\",\"owner\",\"navigation\",\"toggle\",\"icon\",\"geometry\"))\n      }\n    }\n    $revision = if ($env:GITHUB_SHA -is [string] -and $env:GITHUB_SHA -cmatch '\\A[a-f0-9]{40}\\z') { $env:GITHUB_SHA } else { $null }\n    $summary = @{\n      schemaVersion=1; summaryStatus=\"captured-state\"; sourceRevision=$revision; method=\"uia-raw-icon-physical-screen\"\n      status=(Rtl-SummaryEnum $rtlWitness.status @(\"not-started\",\"binding-ltr\",\"waiting-for-right\",\"geometry-observed\",\"failed\"))\n      failure=$failureSummary; binding=$binding; pollAttempts=(Rtl-SummaryCount $rtlWitness.pollAttempts 2147483647)\n      limits=@{ nodes=512; depth=24; runtimeIdIntegers=32; outputUtf8Bytes=8192; pollSeconds=10; pollSleepMilliseconds=100 }\n      deadlineScope=\"retry-window; synchronous UIA calls are not cancellable by it\"\n      byteScope=\"UTF-8 envelope including its trailing newline; excludes runner timestamps\"\n      discovery=@{ initial=(Rtl-SummaryCounts $rtlWitness.discovery.initial); final=(Rtl-SummaryCounts $rtlWitness.discovery.final) }\n      ltr=(Rtl-SummarySnapshot $rtlWitness.ltr); latest=(Rtl-SummarySnapshot $rtlWitness.latest)\n    }\n    $json = $summary | ConvertTo-Json -Depth 8 -Compress\n    $envelope = \"NYCTRON_RTL_WITNESS_BEGIN\" + [Environment]::NewLine + $json + [Environment]::NewLine + \"NYCTRON_RTL_WITNESS_END\"\n    if ([Text.Encoding]::UTF8.GetByteCount($envelope + [Environment]::NewLine) -gt 8192) {\n      $json = @{ schemaVersion=1; summaryStatus=\"output-limit\"; sourceRevision=$revision; outputByteLimit=8192 } | ConvertTo-Json -Compress\n      $envelope = \"NYCTRON_RTL_WITNESS_BEGIN\" + [Environment]::NewLine + $json + [Environment]::NewLine + \"NYCTRON_RTL_WITNESS_END\"\n    }\n    if ([Text.Encoding]::UTF8.GetByteCount($envelope + [Environment]::NewLine) -le 8192) { Write-Host $envelope }\n  } catch {}\n}\n\n# Read only the retained owner's Raw UIA subtree. Counts/depth bound the walk;\n# synchronous provider calls cannot be cancelled by the existing poll deadline.\n# AutomationId is optional: an absent Icon peer is a failure, never inferred.\nfunction Fail-RawRtlWitness([string]$code, [string]$role = \"tree\") {\n  $rtlWitness.status = \"failed\"\n  $rtlWitness.failure = @{ code=$code; role=$role }\n  throw \"Native RTL witness: $code ($role)\"\n}\nfunction Raw-RuntimeId($element, [string]$role) {\n  $values = @($element.GetRuntimeId())\n  if ($values.Count -eq 0 -or $values.Count -gt 32) { Fail-RawRtlWitness \"runtime-id-unavailable-or-over-limit\" $role }\n  foreach ($value in $values) {\n    if ($value -isnot [int]) { Fail-RawRtlWitness \"runtime-id-malformed\" $role }\n  }\n  return ,([int[]]$values)\n}\nfunction Raw-IdentityKey($element, [string]$role) {\n  return [string]::Join(\",\", (Raw-RuntimeId $element $role))\n}\nfunction Raw-Rect($element, [string]$role) {\n  $current = $element.Current\n  $rect = $current.BoundingRectangle\n  if ($rect.IsEmpty -or $current.IsOffscreen -or $rect.Width -le 0 -or $rect.Height -le 0) {\n    Fail-RawRtlWitness \"empty-offscreen-or-nonpositive-bounds\" $role\n  }\n  foreach ($coordinate in @($rect.X,$rect.Y,$rect.Width,$rect.Height,$rect.Right,$rect.Bottom)) {\n    if ([double]::IsNaN($coordinate) -or [double]::IsInfinity($coordinate)) {\n      Fail-RawRtlWitness \"nonfinite-bounds\" $role\n    }\n  }\n  return @{ x=[double]$rect.X; y=[double]$rect.Y; left=[double]$rect.Left; top=[double]$rect.Top; width=[double]$rect.Width; height=[double]$rect.Height; right=[double]$rect.Right; bottom=[double]$rect.Bottom }\n}\nfunction Same-RawRect($a, $b) {\n  return $a.x -eq $b.x -and $a.y -eq $b.y -and $a.width -eq $b.width -and $a.height -eq $b.height -and $a.right -eq $b.right -and $a.bottom -eq $b.bottom\n}\nfunction Contains-RawRect($outer, $inner) {\n  return $inner.x -ge $outer.x -and $inner.y -ge $outer.y -and $inner.right -le $outer.right -and $inner.bottom -le $outer.bottom\n}\nfunction Assert-RawOwner($expected) {\n  $current = $Window.Current\n  $observedHandle = [IntPtr]$current.NativeWindowHandle\n  [uint32]$observedProcessId = 0\n  $ownerThread = [NativeWindow]::GetWindowThreadProcessId($handle, [ref]$observedProcessId)\n  if ($handle -eq [IntPtr]::Zero -or $observedHandle -ne $handle -or -not [NativeWindow]::IsWindow($handle) -or\n      $ownerThread -eq 0 -or $observedProcessId -eq 0 -or $current.ProcessId -ne $observedProcessId) {\n    Fail-RawRtlWitness \"owner-hwnd-or-process-mismatch\" \"owner\"\n  }\n  $identity = Raw-RuntimeId $Window \"owner\"\n  $key = [string]::Join(\",\", $identity)\n  if ($null -ne $expected -and ($expected.processId -ne $observedProcessId -or $expected.hwnd -ne $handle.ToInt64() -or $expected.key -cne $key)) {\n    Fail-RawRtlWitness \"owner-identity-changed\" \"owner\"\n  }\n  return @{ processId=[int]$observedProcessId; hwnd=$handle.ToInt64(); runtimeId=$identity; key=$key }\n}\nfunction Assert-RawAncestry($element, [string]$ancestorKey, [int]$ownerProcessId, [string]$role) {\n  $seen = New-Object 'System.Collections.Generic.HashSet[string]'\n  $node = $element\n  for ($depth = 0; $depth -le 24; $depth++) {\n    if ($null -eq $node) { Fail-RawRtlWitness \"ancestry-missing\" $role }\n    $key = Raw-IdentityKey $node $role\n    if (-not $seen.Add($key)) { Fail-RawRtlWitness \"duplicate-runtime-id\" $role }\n    if ($node.Current.ProcessId -ne $ownerProcessId) { Fail-RawRtlWitness \"foreign-process-in-ancestry\" $role }\n    if ($key -ceq $ancestorKey) { return }\n    if ($depth -eq 24) { Fail-RawRtlWitness \"ancestry-depth-limit\" $role }\n    $node = [System.Windows.Automation.TreeWalker]::RawViewWalker.GetParent($node)\n  }\n}\nfunction Assert-RawRole($entry, [int]$ownerProcessId, [string]$role) {\n  $current = $entry.element.Current\n  if ((Raw-IdentityKey $entry.element $role) -cne $entry.key -or $current.ProcessId -ne $ownerProcessId) {\n    Fail-RawRtlWitness \"retained-role-identity-changed\" $role\n  }\n  if (($role -ceq \"navigation\" -and $current.Name -cne \"NYC-Tron\") -or\n      ($role -ceq \"toggle\" -and $current.AutomationId -cne \"TogglePaneButton\") -or\n      ($role -ceq \"icon\" -and $current.AutomationId -cne \"Icon\")) {\n    Fail-RawRtlWitness \"retained-role-label-changed\" $role\n  }\n}\nfunction Bind-RawRtlWitness($expected, [string]$phase) {\n  $counts = @{ nodesDiscovered=0; nodesRead=0; maxDepth=0; toggles=0; icons=0; namedAncestors=0; complete=$false }\n  $rtlWitness.discovery[$phase] = $counts\n  try {\n    $owner = Assert-RawOwner $(if ($null -eq $expected) { $null } else { $expected.owner })\n    $walker = [System.Windows.Automation.TreeWalker]::RawViewWalker\n    $seen = New-Object 'System.Collections.Generic.HashSet[string]'\n    $nodes = New-Object 'System.Collections.Generic.List[object]'\n    [void]$seen.Add($owner.key)\n    $nodes.Add(@{ element=$Window; parent=-1; depth=0; key=$owner.key; runtimeId=$owner.runtimeId; navigation=$false; toggle=$false; icon=$false })\n    $counts.nodesDiscovered = 1\n    for ($index = 0; $index -lt $nodes.Count; $index++) {\n      $entry = $nodes[$index]; $current = $entry.element.Current\n      if ($current.ProcessId -ne $owner.processId) { Fail-RawRtlWitness \"foreign-process-in-tree\" \"tree\" }\n      if ((Raw-IdentityKey $entry.element \"tree\") -cne $entry.key) { Fail-RawRtlWitness \"tree-identity-changed\" \"tree\" }\n      $entry.navigation = $current.Name -ceq \"NYC-Tron\"\n      $automationId = $current.AutomationId\n      $entry.toggle = $automationId -ceq \"TogglePaneButton\"\n      $entry.icon = $automationId -ceq \"Icon\"\n      $counts.nodesRead++\n      $counts.maxDepth = [Math]::Max($counts.maxDepth, $entry.depth)\n      $child = $walker.GetFirstChild($entry.element)\n      if ($null -ne $child -and $entry.depth -ge 24) { Fail-RawRtlWitness \"tree-depth-limit\" \"tree\" }\n      while ($null -ne $child) {\n        if ($nodes.Count -ge 512) { Fail-RawRtlWitness \"tree-node-limit\" \"tree\" }\n        $childIdentity = Raw-RuntimeId $child \"tree\"\n        $key = [string]::Join(\",\", $childIdentity)\n        if (-not $seen.Add($key)) { Fail-RawRtlWitness \"duplicate-runtime-id\" \"tree\" }\n        $nodes.Add(@{ element=$child; parent=$index; depth=$entry.depth+1; key=$key; runtimeId=$childIdentity; navigation=$false; toggle=$false; icon=$false })\n        $counts.nodesDiscovered = $nodes.Count\n        $child = $walker.GetNextSibling($child)\n      }\n    }\n    $counts.complete = $true\n    $toggleIndices = @()\n    for ($index = 1; $index -lt $nodes.Count; $index++) { if ($nodes[$index].toggle) { $toggleIndices += $index } }\n    $counts.toggles = $toggleIndices.Count\n    if ($toggleIndices.Count -eq 0) { Fail-RawRtlWitness \"toggle-peer-missing\" \"toggle\" }\n    if ($toggleIndices.Count -ne 1) { Fail-RawRtlWitness \"toggle-peer-ambiguous\" \"toggle\" }\n    $toggleIndex = $toggleIndices[0]\n    $navigationIndices = @()\n    for ($parent = $nodes[$toggleIndex].parent; $parent -gt 0; $parent = $nodes[$parent].parent) {\n      if ($nodes[$parent].navigation) { $navigationIndices += $parent }\n    }\n    $counts.namedAncestors = $navigationIndices.Count\n    if ($navigationIndices.Count -eq 0) { Fail-RawRtlWitness \"named-navigation-ancestor-missing\" \"navigation\" }\n    if ($navigationIndices.Count -ne 1) { Fail-RawRtlWitness \"named-navigation-ancestor-ambiguous\" \"navigation\" }\n    $iconIndices = @()\n    for ($index = 1; $index -lt $nodes.Count; $index++) {\n      if (-not $nodes[$index].icon) { continue }\n      for ($parent = $nodes[$index].parent; $parent -gt 0; $parent = $nodes[$parent].parent) {\n        if ($parent -eq $toggleIndex) { $iconIndices += $index; break }\n      }\n    }\n    $counts.icons = $iconIndices.Count\n    if ($iconIndices.Count -eq 0) { Fail-RawRtlWitness \"icon-peer-unavailable\" \"icon\" }\n    if ($iconIndices.Count -ne 1) { Fail-RawRtlWitness \"icon-peer-ambiguous\" \"icon\" }\n    $roles = @{ owner=$nodes[0]; navigation=$nodes[$navigationIndices[0]]; toggle=$nodes[$toggleIndex]; icon=$nodes[$iconIndices[0]] }\n    foreach ($role in @(\"owner\",\"navigation\",\"toggle\",\"icon\")) {\n      if ($null -ne $expected -and $roles[$role].key -cne $expected.roles[$role].key) { Fail-RawRtlWitness \"retained-role-identity-changed\" $role }\n      if ((Raw-IdentityKey $roles[$role].element $role) -cne $roles[$role].key) { Fail-RawRtlWitness \"tree-identity-changed\" $role }\n    }\n    Assert-RawOwner $owner | Out-Null\n    return @{ owner=$owner; roles=$roles }\n  } catch {\n    if ($null -eq $rtlWitness.failure) { $rtlWitness.status=\"failed\"; $rtlWitness.failure=@{ code=\"provider-read-failed\"; role=\"tree\" } }\n    throw\n  }\n}\nfunction Read-RawRtlSnapshot($binding, [string]$phase) {\n  $snapshot = @{ phase=$phase; stable=$false; owner=$null; navigation=$null; toggle=$null; icon=$null }\n  $rtlWitness.latest = $snapshot\n  try {\n    Assert-RawOwner $binding.owner | Out-Null\n    foreach ($role in @(\"owner\",\"navigation\",\"toggle\",\"icon\")) {\n      $entry = $binding.roles[$role]\n      Assert-RawRole $entry $binding.owner.processId $role\n      $snapshot[$role] = Raw-Rect $entry.element $role\n    }\n    Assert-RawAncestry $binding.roles.icon.element $binding.roles.toggle.key $binding.owner.processId \"icon\"\n    Assert-RawAncestry $binding.roles.toggle.element $binding.roles.navigation.key $binding.owner.processId \"toggle\"\n    Assert-RawAncestry $binding.roles.navigation.element $binding.owner.key $binding.owner.processId \"navigation\"\n    $stable = $true\n    foreach ($role in @(\"owner\",\"navigation\",\"toggle\",\"icon\")) {\n      $entry = $binding.roles[$role]\n      Assert-RawRole $entry $binding.owner.processId $role\n      if (-not (Same-RawRect $snapshot[$role] (Raw-Rect $entry.element $role))) { $stable = $false }\n    }\n    Assert-RawOwner $binding.owner | Out-Null\n    if (-not (Contains-RawRect $snapshot.owner $snapshot.navigation) -or -not (Contains-RawRect $snapshot.navigation $snapshot.toggle) -or -not (Contains-RawRect $snapshot.toggle $snapshot.icon)) {\n      Fail-RawRtlWitness \"bounds-outside-owned-container\" \"geometry\"\n    }\n    $snapshot.stable = $stable\n    return $snapshot\n  } catch {\n    if ($null -eq $rtlWitness.failure) { $rtlWitness.status=\"failed\"; $rtlWitness.failure=@{ code=\"provider-read-failed\"; role=\"geometry\" } }\n    throw\n  }\n}\nfunction Test-RawRtlMirrored($ltrSnapshot, $rtlSnapshot) {\n  if (-not $ltrSnapshot.stable -or -not $rtlSnapshot.stable) { return $false }\n  foreach ($role in @(\"owner\",\"navigation\",\"toggle\")) {\n    if (-not (Same-RawRect $ltrSnapshot[$role] $rtlSnapshot[$role])) { return $false }\n  }\n  if ($ltrSnapshot.icon.width -ne $rtlSnapshot.icon.width -or $ltrSnapshot.icon.height -ne $rtlSnapshot.icon.height -or $ltrSnapshot.icon.y -ne $rtlSnapshot.icon.y) { return $false }\n  return $ltrSnapshot.icon.right -le $ltrSnapshot.toggle.x+$ltrSnapshot.toggle.width/2 -and\n    $rtlSnapshot.icon.x -ge $rtlSnapshot.toggle.x+$rtlSnapshot.toggle.width/2\n}\ntry {\n  $windowPattern.SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Maximized)\n"
+    },
+    {
+      "id": "bind-actual-toggle-and-navigation-ancestor",
+      "before": "  $stage = \"native-rtl-and-physical-left-pane\"\n  $pane = Native-Pane\n  $ltr = (Find-Id \"TogglePaneButton\").Current.BoundingRectangle\n",
+      "after": "  $stage = \"native-rtl-and-physical-left-pane\"\n  $rtlWitness.status = \"binding-ltr\"\n  $rawBinding = Bind-RawRtlWitness $null \"initial\"\n  $rtlWitness.binding = @{\n    processId=$rawBinding.owner.processId; hwnd=$rawBinding.owner.hwnd\n    ownerRuntimeId=$rawBinding.roles.owner.runtimeId\n    navigationRuntimeId=$rawBinding.roles.navigation.runtimeId\n    toggleRuntimeId=$rawBinding.roles.toggle.runtimeId\n    iconRuntimeId=$rawBinding.roles.icon.runtimeId\n  }\n  $ltrSnapshot = Read-RawRtlSnapshot $rawBinding \"ltr\"\n  $rtlWitness.ltr = $ltrSnapshot\n  if (-not $ltrSnapshot.stable -or $ltrSnapshot.icon.right -gt $ltrSnapshot.toggle.x+$ltrSnapshot.toggle.width/2) {\n    Fail-RawRtlWitness \"ltr-icon-not-stably-left\" \"geometry\"\n  }\n  $ltr = $ltrSnapshot.toggle\n"
+    },
+    {
+      "id": "poll-retained-icon-physical-geometry",
+      "before": "  $deadline = (Get-Date).AddSeconds(10)\n  do {\n    Start-Sleep -Milliseconds 100\n    $rtl = (Find-Id \"TogglePaneButton\").Current.BoundingRectangle\n  } while ($rtl.X -le $ltr.X+20 -and (Get-Date) -lt $deadline)\n",
+      "after": "  $deadline = (Get-Date).AddSeconds(10)\n  $rtlWitness.status = \"waiting-for-right\"\n  do {\n    Start-Sleep -Milliseconds 100\n    $rtlWitness.pollAttempts++\n    $rtlSnapshot = Read-RawRtlSnapshot $rawBinding \"rtl\"\n    $rtlMirrored = Test-RawRtlMirrored $ltrSnapshot $rtlSnapshot\n  } while (-not $rtlMirrored -and (Get-Date) -lt $deadline)\n  # Recheck uniqueness after a matching observation, without replacing any\n  # retained provider reference or obscuring an already exhausted poll.\n  if ($rtlMirrored) {\n    Bind-RawRtlWitness $rawBinding \"final\" | Out-Null\n    $rtlSnapshot = Read-RawRtlSnapshot $rawBinding \"rtl-final\"\n    $rtlMirrored = Test-RawRtlMirrored $ltrSnapshot $rtlSnapshot\n  }\n  $rtl = $rtlSnapshot.toggle\n"
+    },
+    {
+      "id": "use-validated-navigation-frame",
+      "before": "  $paneRect = $pane.Current.BoundingRectangle\n",
+      "after": "  $paneRect = $rtlSnapshot.navigation\n"
+    },
+    {
+      "id": "use-same-validated-owner-frame",
+      "before": "  $hostRect = $Window.Current.BoundingRectangle\n  Write-NavigationCheckpoint \"rtl-host-bounds-returned\"\n",
+      "after": "  $hostRect = $rtlSnapshot.owner\n  Write-NavigationCheckpoint \"rtl-host-bounds-returned\"\n"
+    },
+    {
+      "id": "assert-actual-icon-mirroring",
+      "before": "  if ($rtl.X -le $ltr.X+20) { throw \"The actual native pane toggle did not mirror for RTL\" }\n",
+      "after": "  if (-not $rtlMirrored) {\n    $rtlWitness.status=\"failed\"; $rtlWitness.failure=@{ code=\"rtl-icon-not-stably-right\"; role=\"geometry\" }\n    throw \"The actual native pane toggle did not mirror for RTL\"\n  }\n  $rtlWitness.status = \"geometry-observed\"\n"
+    },
+    {
+      "id": "retain-bounded-witness-with-original-result",
+      "before": "error=$failure; checks=$checks.ToArray(); completedAt=",
+      "after": "error=$failure; checks=$checks.ToArray(); rtlWitness=$rtlWitness; completedAt="
+    },
+    {
+      "id": "emit-secondary-captured-witness-envelope",
+      "before": "  Write-NavigationCheckpoint \"navigation-finally-entered\"\n",
+      "after": "  Write-NavigationCheckpoint \"navigation-finally-entered\"\n  Write-RawRtlWitnessSummary\n"
+    }
+  ],
+  "limits": {
+    "nodesPerCompleteRawWalk": 512,
+    "maxDepthInclusive": 24,
+    "runtimeIdIntegers": 32,
+    "pollSeconds": 10,
+    "pollSleepMilliseconds": 100,
+    "retainedGeometrySnapshots": "LTR plus latest; no snapshot history",
+    "retainedDiscoveryCounters": "initial plus final only",
+    "scope": "Counts and depth bound traversal; the poll is a retry window and does not cancel synchronous UIA calls.",
+    "consoleUtf8Bytes": 8192,
+    "consoleByteScope": "Full envelope plus trailing Environment.NewLine, excluding runner-added timestamp prefixes."
+  },
+  "semantics": {
+    "owner": "The original Window and handle are retained. Native IsWindow/GetWindowThreadProcessId and UIA PID/HWND/runtime ID agree before and after observations.",
+    "uniqueness": "Complete RawViewWalker searches count every discovered node. Missing, ambiguous, duplicate-ID, foreign-process or truncated trees fail; no candidate is selected from an incomplete search.",
+    "navigation": "The single NYC-Tron named ancestor is established from actual ancestry of the unique toggle, never from the largest same-name MenuItemsHost.",
+    "icon": "An actual descendant with exact AutomationId Icon is required. Its existence is unproved until CI. No fallback to FlowDirection or guessed geometry exists.",
+    "retention": "Original selected UIA providers remain bound during polling. The final uniqueness walk checks their identities without substituting newly obtained wrappers.",
+    "geometry": "Every accepted rectangle is a finite, positive, non-offscreen physical UIA BoundingRectangle. Snapshots bracket bounds reads and verify ancestry and owner identity. Final mirroring requires unchanged owner/navigation/toggle bounds and unchanged icon size/Y, with LTR icon wholly left and RTL icon wholly right of the button midpoint.",
+    "pane": "The existing physical-left predicate reads the same validated navigation/owner snapshot as the icon witness.",
+    "timeout": "The 10-second/100-ms settings and native action order are retained. A failed poll is not obscured by an additional final discovery walk.",
+    "output": "The existing result file retains typed bounded state. A separate secondary console projector allowlists every status/reason/role, caps runtime ID arrays, preserves null unknowns, selects only finite numbers and fixed fields, and caps the full UTF-8 message at 8 KiB. It reads no UIA provider and cannot change success or the original error.",
+    "consoleFailure": "Formatting/write exceptions are swallowed only inside the secondary reporting helper; an over-limit projection emits a fixed output-limit envelope. Main native/UIA failures are never swallowed.",
+    "stability": "stable means matching sequential identity and rectangle observations within the retained provider set. It is not an atomic snapshot, a render-completion witness or proof of an unchanged tree between reads."
+  },
+  "preserved": [
+    "The native action order and every shipping layout/source file",
+    "The composed borrowed-GET ownership correction and owned-SET cleanup",
+    "All 20 fixed secondary console checkpoints",
+    "Physical-left, selection, capture, later drawer and high-contrast assertions",
+    "Existing finally restoration and error handling except the added typed rtlWitness result field"
+  ],
+  "validation": {
+    "exactForwardAndInverse": true,
+    "powershellParserExecuted": false,
+    "powershellRuntimeExecuted": false,
+    "nativeExecution": false,
+    "focusedV8Checks": {
+      "harness": {
+        "bytes": 20055,
+        "sha256": "040e0050188cde8d29ebb3ccbcb44de29c79cc50df96fe082dd1f8f0317ba20c",
+        "gitBlob": "1e2a01484083aad3085dcadc2fff543644ebe6f9"
+      },
+      "entryPoint": "reviewRawRtlWitness({source,preimage,manifest})",
+      "result": {
+        "schemaVersion": 1,
+        "groups": [
+          {
+            "name": "exact-source-and-preservation",
+            "passed": true,
+            "edits": 9,
+            "checkpointCalls": 20
+          },
+          {
+            "name": "bounded-source-contracts",
+            "passed": true,
+            "scope": "static inspection of exact PowerShell source"
+          },
+          {
+            "name": "missing-ambiguous-and-owned-tree-model",
+            "passed": true,
+            "rejectionCases": 19,
+            "positiveCases": 1
+          },
+          {
+            "name": "finite-physical-geometry-model",
+            "passed": true,
+            "cases": 17
+          },
+          {
+            "name": "typed-secondary-projection-model-and-source",
+            "passed": true,
+            "ordinaryEnvelopeBytes": 1746,
+            "maximumWidthEnvelopeBytes": 4680,
+            "capBytes": 8192
+          }
+        ],
+        "scope": "Exact source/inverse review and independent V8 data-model checks only. No PowerShell parsing, .NET/UIA/provider calls, filesystem IO or native execution.",
+        "powershellParserExecuted": false,
+        "powershellRuntimeExecuted": false,
+        "nativeExecuted": false
+      }
+    },
+    "literalReplacementRule": "Apply each before/after as literal text; for JavaScript use replace(before, () => after), and reverse in reverse order."
+  },
+  "primarySources": [
+    "https://learn.microsoft.com/en-us/dotnet/framework/ui-automation/obtaining-ui-automation-elements",
+    "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-automation-element-propids",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.getruntimeid?view=windowsdesktop-10.0"
+  ],
+  "evidenceLimits": [
+    "AutomationId is optional. The pinned x:Name Icon and Raw annotation do not prove that this running provider exposes an Icon peer.",
+    "Runtime IDs are treated only as opaque comparison values. The observations do not claim lifetime uniqueness outside the retained elements.",
+    "IsOffscreen=false and a bounding rectangle do not prove absence of occlusion or inspected pixels.",
+    "No host, security, workflow, ref, PR or CI mutation is included.",
+    "The original script has no separate rendered-title assertion. This change preserves the shipping title layout and the named navigation-ancestor check, without claiming inspected title pixels or a new title pass.",
+    "Stable sequential observations do not establish atomicity, render completion or continuous geometry between observations."
+  ]
+}

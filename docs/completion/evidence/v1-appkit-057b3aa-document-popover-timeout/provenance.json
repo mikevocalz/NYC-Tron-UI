@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "title": "AppKit 057: document popover presentation timed out",
+  "recordedAt": "2026-11-11 09:46:16 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "candidate": {
+    "head": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+    "tree": "da0cbf6c7dedd2505a963db67d53d8f2810f23d2",
+    "parents": [
+      "0bee669639a5d9ffaa7c456343344ccd42283c04"
+    ]
+  },
+  "execution": {
+    "run": 42990107157,
+    "attempt": 1,
+    "checkout": "69eb1c504c105b57844181c1e27c1a430fc888cd",
+    "tree": "da0cbf6c7dedd2505a963db67d53d8f2810f23d2",
+    "parents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "057b3aa7a28c12594f26dd4bc9baf9bc636610e8"
+    ],
+    "runMetadataHead": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+    "nativeJob": 130420839031,
+    "coreJob": 130420608185,
+    "coreConclusion": "success",
+    "nativeConclusion": "failure",
+    "completeNativeAcceptance": false
+  },
+  "source": {
+    "verifier": {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "gitBlob": "f21e9349b35922ad689a2f6320ed651b5557de64",
+      "bytes": 108899,
+      "sha256": "066e1f55509f9e8cde7564c37a47b77e9f904f4d8ee34b381d1ce8cc8673ca8f"
+    },
+    "shippingPopover": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+    "fullTreeVerification": {
+      "leaves": 2050,
+      "directoryHashes": 284,
+      "complete": true
+    }
+  },
+  "failure": {
+    "message": "Timed out waiting for shown native NSPopover",
+    "gate": "shownPopover(document-1): shown && contentVisible",
+    "verifierLine": 1265,
+    "nativeLog": {
+      "errorLine": 535,
+      "stackLine": 538,
+      "exitLine": 543,
+      "exitCode": 1
+    },
+    "whichPredicateWasFalse": "unknown; late returned state values not present in retained projection"
+  },
+  "build": {
+    "reported": {
+      "schemaVersion": 1,
+      "sourceRevision": "69eb1c504c105b57844181c1e27c1a430fc888cd",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "outcome": "success",
+      "transcript": {
+        "filename": "build-console.log",
+        "bytes": 12329230,
+        "sha256": "5abb66b73b2f2a9671fd8b9c4ecac42a169160d9f39a7064a5216dc6d3cda214",
+        "complete": true,
+        "normalized": false
+      }
+    },
+    "compilerTranscriptIndependentlyInspected": false
+  },
+  "extractions": {
+    "APPKIT_BUILD_RESULT": {
+      "beginLine": 509,
+      "endLine": 511,
+      "jsonLine": 510,
+      "interleavedNonJsonLines": 0,
+      "method": "Remove exactly the timestamp prefix from the one JSON record; preserve its original newline. Retain complete selected envelope bytes including interleaved stderr.",
+      "originalJob": 130420839031
+    },
+    "TOOLTIP_EVIDENCE": {
+      "beginLine": 527,
+      "endLine": 529,
+      "jsonLine": 528,
+      "interleavedNonJsonLines": 0,
+      "method": "Remove exactly the timestamp prefix from the one JSON record; preserve its original newline. Retain complete selected envelope bytes including interleaved stderr.",
+      "originalJob": 130420839031
+    },
+    "STARTUP_EVIDENCE": {
+      "beginLine": 530,
+      "endLine": 542,
+      "jsonLine": 541,
+      "interleavedNonJsonLines": 10,
+      "method": "Remove exactly the timestamp prefix from the one JSON record; preserve its original newline. Retain complete selected envelope bytes including interleaved stderr.",
+      "originalJob": 130420839031
+    }
+  },
+  "projectionLimits": {
+    "inputs": {
+      "appLog": {
+        "filename": "app.log",
+        "status": "snapshot-retained",
+        "readByteLimit": 1048576,
+        "readBytes": 715947,
+        "sourceLive": true,
+        "sourceBytesBefore": 715947,
+        "sourceBytesAfter": 715947,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": false,
+        "laterAppendsPossible": true,
+        "unreadBytesObserved": 0,
+        "snapshot": {
+          "filename": "startup-app-log-snapshot.log",
+          "kind": "read-time-prefix-from-live-app-log",
+          "offset": 0,
+          "bytes": 715947,
+          "sha256": "74640b4ef6bebf803754a852ff764e4565664836be4fe36c770ac3e4c1944b81",
+          "retained": true,
+          "eventualAppLogHash": false
+        }
+      },
+      "commands": {
+        "filename": "commands.jsonl",
+        "status": "incomplete-or-changing-read",
+        "readByteLimit": 262145,
+        "readBytes": 262145,
+        "sourceLive": false,
+        "sourceBytesBefore": 508756,
+        "sourceBytesAfter": 508756,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": false,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": true,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 246611,
+        "snapshot": null
+      },
+      "processFailure": {
+        "filename": "native-process-failure.json",
+        "status": "complete-stable-read",
+        "readByteLimit": 262145,
+        "readBytes": 1320,
+        "sourceLive": false,
+        "sourceBytesBefore": 1320,
+        "sourceBytesAfter": 1320,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": true,
+        "originalSha256": "4d02c33bc03ea85757263db5dffb1ae96f30696de7b96fcab4c586840cf15776",
+        "truncated": false,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 0,
+        "snapshot": null,
+        "jsonStatus": "parsed"
+      }
+    },
+    "activation": {
+      "matched": 40,
+      "selected": 32,
+      "omitted": 8
+    },
+    "commands": {
+      "matched": 530,
+      "selected": 32,
+      "omitted": 498,
+      "partialTrailingLine": true
+    },
+    "completeCommandFileInspected": false,
+    "appLogSnapshotIndependentlyInspected": false,
+    "sampleStacksInspected": false
+  },
+  "artifacts": [
+    {
+      "id": 13842122841,
+      "name": "macos-appkit-native-evidence",
+      "bytes": 1739270,
+      "producerOrApiSha256": "sha256:092d9b9fd14581b909f76eb6fd93405e86b1e83950f004936dccde71282b414e",
+      "expired": false,
+      "originalZipBytesInspected": false,
+      "downloadUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13842122841/zip"
+    },
+    {
+      "id": 13841236971,
+      "name": "macos-appkit-shared-packages",
+      "bytes": 51323,
+      "producerOrApiSha256": "sha256:da51996e175fc175451bc96a779cf6660e61dfa57084cccb806d63c94cbc1fda",
+      "expired": false,
+      "originalZipBytesInspected": false,
+      "downloadUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13841236971/zip"
+    }
+  ],
+  "files": {
+    "native-job.log": {
+      "gitBlob": "f5b20289953a87106df369db6969ab2ac3c3b088",
+      "bytes": 87659,
+      "sha256": "c864224a91bdf91483453da256832f29a27a593cb79173e05cae61a110f36675"
+    },
+    "core-job.log": {
+      "gitBlob": "63d7e697b0c80bd8b901b8d4df35141499e788f0",
+      "bytes": 19701,
+      "sha256": "b017ba201e7908421b8a3a2bc1c61873e62a1f3d3321fe7bef1aa62ee11ab5ac"
+    },
+    "build-summary.json": {
+      "gitBlob": "c9ab504f1706c26f3549dd52d1670a9587dcfcce",
+      "bytes": 319,
+      "sha256": "a30bf0e4c0c365283407a9196a9fb469987de7256acede6b73911de3e76a4de0"
+    },
+    "tooltip-summary.json": {
+      "gitBlob": "7c16a8edb76dee93638b24b7f764555ff3679d89",
+      "bytes": 2800,
+      "sha256": "b1c36c096f49cd80bb91db4fcf81fabf3c98c212751dd4523fcaa8bedad9ab56"
+    },
+    "tooltip-envelope.log": {
+      "gitBlob": "74dac1d745d6ecaa6358f43bedd2c6023f5a2640",
+      "bytes": 2947,
+      "sha256": "9ee59f42fd0fec32f6b4c0fb3be10c7f58ff2eb8227bdfad082a7fd6945cb8f1"
+    },
+    "startup-summary.json": {
+      "gitBlob": "4b52145858022d980b6f9eb0d0aaa7350e20c8f1",
+      "bytes": 31132,
+      "sha256": "395e052daa67ec770366079debad49bdf1d0b7de8b9674de11e601b509d88dc6"
+    },
+    "startup-envelope.log": {
+      "gitBlob": "b8b3bea500a3f16e5b94514eb21083342d6b0216",
+      "bytes": 32086,
+      "sha256": "61b14466bcab72fa2451520cf6fc1537a00450ca33da7142c94e73458c4d8862"
+    },
+    "metadata.json": {
+      "gitBlob": "136da0a18cd8db8d519c1f77057eb0209844fed6",
+      "bytes": 28210,
+      "sha256": "b8902f201e5dc04fff67bdc96ca4b9e7d79d92781a7a602f97312cfc2fc35137"
+    }
+  },
+  "scope": {
+    "sourceImplementationCount": 341,
+    "local": 332,
+    "pinnedExternal": 9,
+    "requestedTwelveImplemented": true,
+    "sourcePending": 0,
+    "fullEightPlatformAcceptance": 0,
+    "physicalSpeechPerformanceAccepted": false,
+    "releaseOrMergeAuthorizedByThisReceipt": false,
+    "ownerOriginalManifestApproval": false
+  },
+  "controlFlow": {
+    "returnedBeforeFailure": [
+      "earlier Escape/status/opener-focus assertions",
+      "retained-content reopening",
+      "document activation",
+      "native drag-protocol rejection/cancellation/transfers",
+      "layout restoration",
+      "main popover dismissal preserving newer document focus"
+    ],
+    "notReached": [
+      "document popover positive-frame and usable-region assertions",
+      "owner minimize",
+      "later real pointer/drag gates"
+    ],
+    "basis": "Exact executed verifier control flow; not independent inspection of every original native evidence file"
+  }
+}

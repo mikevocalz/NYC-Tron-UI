@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "scope": "Published source-only checkpoint. Native compilation and runtime for e086 were not inspected by this receipt.",
+  "checkpointUtc": "2026-11-11T09:09:06Z",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "folder": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source",
+  "publication": {
+    "status": "published branch and open draft PR independently observed",
+    "pullRequest": 62,
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/pull/62",
+    "draft": true,
+    "state": "open",
+    "merged": false,
+    "createdAt": "2026-11-11T09:04:54Z",
+    "head": {
+      "ref": "codex/v1-appkit-reviewed-acceptance-nov11",
+      "sha": "e08679769e471aba5403cd864c8a2fa2310b9086"
+    },
+    "base": {
+      "ref": "codex/v1-completion",
+      "sha": "ac5d69585a52a6e945dc996ea08030e190574699"
+    },
+    "mergeMetadata": {
+      "reportedSha": "001763090bc16a9e72143022bf04543c5acd39b6",
+      "treeAndParentsVerifiedForThisReceipt": false,
+      "scope": "PR metadata at the 09:09:06 checkpoint. Subsequent root verification is recorded separately below."
+    },
+    "separateFromExistingPr59": true,
+    "noWorkflowDispatchByReceiptAuthor": true,
+    "postCheckpointRootVerification": {
+      "mergeCommit": "001763090bc16a9e72143022bf04543c5acd39b6",
+      "tree": "b4f409fbf1af7a5de5c4d2eab0c73bd55806d6de",
+      "orderedParents": [
+        "ac5d69585a52a6e945dc996ea08030e190574699",
+        "e08679769e471aba5403cd864c8a2fa2310b9086"
+      ],
+      "provenance": "Root independently verified generated merge and exact equality with the fully reviewed tree after the initial PR metadata checkpoint.",
+      "sourceJob": {
+        "id": 130427396629,
+        "status": "completed as reported by root; no test count or conclusion asserted here"
+      },
+      "nativeJob": {
+        "id": 130427608864,
+        "status": "compiling as reported by root; completed original checkout/runtime log not yet inspected for this receipt"
+      },
+      "nativeActualCheckoutVerified": false
+    }
+  },
+  "candidate": {
+    "commit": "e08679769e471aba5403cd864c8a2fa2310b9086",
+    "tree": "b4f409fbf1af7a5de5c4d2eab0c73bd55806d6de",
+    "orderedParents": [
+      "057b3aa7a28c12594f26dd4bc9baf9bc636610e8"
+    ],
+    "parentTree": "da0cbf6c7dedd2505a963db67d53d8f2810f23d2",
+    "leaves": 2050,
+    "directoryHashes": 284,
+    "changedPathCount": 3,
+    "unchangedLeafCount": 2047,
+    "files": [
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "mode": "100644",
+        "preimage": "353fa05f0f2e0e939538c7fbaacdcdb449f44bd8",
+        "gitBlob": "bdd64d6becb859622bd024fce036482fc668a91f",
+        "identity": {
+          "gitBlob": "bdd64d6becb859622bd024fce036482fc668a91f",
+          "bytes": 75735,
+          "sha256": "ec39ba4ba9321f5ba9e5c94c2c652b3c578352a7889e83c82d8e0c333095cc0d"
+        }
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "mode": "100644",
+        "preimage": "f21e9349b35922ad689a2f6320ed651b5557de64",
+        "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+        "identity": {
+          "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+          "bytes": 114435,
+          "sha256": "71714864b1f10d975b640b6bfa09b203509f419d1441469700e32b9074be98ae"
+        }
+      },
+      {
+        "path": "packages/macos-appkit/spark/README.md",
+        "mode": "100644",
+        "preimage": "5978122a5d665c27ffeffe865e0fbae61b64a7ab",
+        "gitBlob": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+        "identity": {
+          "gitBlob": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+          "bytes": 19469,
+          "sha256": "75beb83db383c90dea906e43c7b5a0618c6504453e472c10f15fb51335145094"
+        }
+      }
+    ],
+    "unchangedShippingPopover": {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "gitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177"
+    },
+    "allOtherSourcesModesWorkflowsAndDependenciesUnchanged": true
+  },
+  "changes": {
+    "tooltip": {
+      "scope": "Previously reviewed private acceptance-source correction; no shipping tooltip API change.",
+      "publicCollection": "Original current getter call order/counts, normalization, traversal and ordered-set behavior remain outside the added private diagnostic guards.",
+      "privateSource": "Exact object_getClass runtime class NSCustomToolTipDrawView and its checked _attributedString ivar, bound before and after the read to the selected help-tag window and its content subtree.",
+      "eligibility": "Same selected window, onscreen/visible state, descendant relationship and finite nonempty clipped view geometry; missing/ineligible/exceptional values contribute no accepted string.",
+      "accounting": "Public retained strings, private unique additions and combined retained total are separate.",
+      "privateNodeLimit": 8,
+      "privateDetailLimit": 4,
+      "console": "Typed shownObservation plus last/final observation within the same 16384-byte envelope; detail omissions and fallback stay explicit.",
+      "requiredPredicatesPreserved": [
+        "exact expected text",
+        "new visible AXHelpTag role and nonempty frame",
+        "cursor/trigger and owner predicates",
+        "tooltip dismissal",
+        "existing permissions",
+        "existing deadlines"
+      ],
+      "limitation": "Private host/version-specific layout evidence; not a public AX/VoiceOver text guarantee or independent pixel-content proof."
+    },
+    "closeCompletion": {
+      "scope": "Private fixture observation and stronger completion ordering; no shipping close or focus implementation change.",
+      "armedScenarios": [
+        "Escape: armed while the same first inspector presentation is shown, before the original Escape command",
+        "Newer-window focus: armed while the same main popover is shown, before show(document-1) can auto-close it"
+      ],
+      "nativeBinding": "Weak owner/component/popover objects, exact object-specific will/didClose registrations, current-observation generation and live identity checks.",
+      "armLimit": 2,
+      "notificationCounterLimit": 8,
+      "cleanupExpirySeconds": 60,
+      "cleanup": "Observer tokens removed on didClose, invalid identity/error, rearm/release, deallocation, or expiry; delayed cleanup captures weak observation and does not retain the native objects.",
+      "threadBoundary": "Off-main notification observation becomes unavailable after handoff; it cannot satisfy the completion predicate.",
+      "completion": "Same nonempty content identity and arm generation, same native objects, observed didClose on main, a later owned main-queue turn, shown=false, and no expiry/release/thread/counter failure.",
+      "willCloseRequiredForCompletion": false,
+      "observerOrderLimitation": "The later main turn is not itself a claim about delegate focus. Existing exact responder/key-window assertions still determine the focus result.",
+      "waitDeadlineMs": 20000,
+      "originalStatusWaitErrorCommandsAndFocusAssertionsPreserved": true,
+      "noArbitrarySleepOrTimeoutExtension": true,
+      "limitation": "Addresses a source-level ordering gap; no completed native run establishes this witness as a runtime repair."
+    },
+    "inheritedActivation": {
+      "externalCommit": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+      "preimage": "6f119bca252082f18f573370e853bf2e86128934",
+      "externalNative": "353fa05f0f2e0e939538c7fbaacdcdb449f44bd8",
+      "finalNative": "bdd64d6becb859622bd024fce036482fc668a91f",
+      "fullTronWindowRegistrationThroughEndPreservedVerbatim": true,
+      "semantics": "The setter is conditional on current policy. policyAccepted and its trace field represent the resulting Regular-policy readback, not the setter return Boolean.",
+      "qualification": "The inherited comment attributing the previous false return to a no-op remains source prose; this receipt does not establish that causal explanation.",
+      "desktopD83CorrectionNotApplied": true
+    }
+  },
+  "review": {
+    "priorPrivateTooltip": {
+      "native": "7dc176162c59c879a90fb12d9ebdf070eae62125",
+      "verifier": "94a5582ed63893b00b165d9ae93e580fb9e52bc9",
+      "readme": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+      "scope": "Prior independently reviewed correction carried through exact transforms; no new runtime result is inferred."
+    },
+    "originalCloseHarness": {
+      "gitBlob": "18b6d60c24d99fcc45a323e1e4a891dd98a0bd0d",
+      "bytes": 53088,
+      "sha256": "718eaa37e5bce7137851885a51483058e11ed907de10861ea29d01d022c05eaa",
+      "filename": "review-checks.js",
+      "inputs": {
+        "native": "06c9494f7448efdc3af93216806411f67191956f",
+        "verifier": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+        "nativePreimage": "6f119bca252082f18f573370e853bf2e86128934",
+        "verifierPreimage": "f21e9349b35922ad689a2f6320ed651b5557de64"
+      },
+      "authorDesignCount": 8,
+      "authorResult": {
+        "status": "passed",
+        "groups": [
+          {
+            "name": "exact source identities, full inverses and preserved inherited regions",
+            "status": "passed"
+          },
+          {
+            "name": "native ownership, generation, observer cleanup and ordering source invariants",
+            "status": "passed"
+          },
+          {
+            "name": "arming uses one request and rejects changed or unavailable native identity",
+            "status": "passed"
+          },
+          {
+            "name": "completion requires same presentation and a later main turn, with strict unknowns",
+            "status": "passed"
+          },
+          {
+            "name": "Escape sequence keeps invocation once and waits past entry-only snapshots",
+            "status": "passed"
+          },
+          {
+            "name": "original status rejection remains identical with no later diagnostic or focus request",
+            "status": "passed"
+          },
+          {
+            "name": "newer-window witness is armed before transient auto-close and preserves exact key assertions",
+            "status": "passed"
+          },
+          {
+            "name": "existing close timeout and exact focus failure remain required",
+            "status": "passed"
+          }
+        ],
+        "metrics": {
+          "escapePolls": 3,
+          "escapeMockElapsedMs": 100,
+          "noCompletionMockDeadlineMs": 20000
+        },
+        "scope": "Eight V8/extracted-source/mock-command designs. Native observer lifecycle is statically reviewed only; no Objective-C++, Node IO, AppKit or native runtime execution."
+      },
+      "rootReproduction": "Root reproduced the same eight designs; reproduction is not eight additional independent designs.",
+      "nativeReview": "Forge independently approved the 06c native source, exact inverse to6f and inherited private-tooltip composition; source/static only.",
+      "currentPackaging": "Original harness bytes retained unchanged; not rerun during this composition-only checkpoint."
+    },
+    "finalComposition": {
+      "gitBlob": "4829444f7f12634bf0d329f7ebc15087542bee90",
+      "bytes": 10369,
+      "sha256": "271d67ccb9fb257e8d1b73ff9c87fb3aaf4934dccd7658736057b9cd966d2280",
+      "filename": "composition-checks.js",
+      "result": {
+        "status": "passed",
+        "groups": [
+          {
+            "name": "published 057 composition, exact three-file inverses and inherited activation preservation",
+            "status": "passed"
+          }
+        ],
+        "metrics": {
+          "editCounts": {
+            "native": 10,
+            "verifier": 8,
+            "readme": 1
+          },
+          "externalActivationDeltaBytes": 372,
+          "finalNativeBytes": 75735,
+          "finalVerifierBytes": 114435,
+          "finalReadmeBytes": 19469
+        },
+        "preservedEarlierHarness": "18b6d60c24d99fcc45a323e1e4a891dd98a0bd0d",
+        "scope": "Composition-only V8 source/hash checks. The original eight static/mock-command designs are retained separately and not rerun by this script. No Node, Objective-C++, AppKit or native execution."
+      },
+      "requiredInputIdentities": {
+        "native": {
+          "gitBlob": "bdd64d6becb859622bd024fce036482fc668a91f",
+          "bytes": 75735,
+          "sha256": "ec39ba4ba9321f5ba9e5c94c2c652b3c578352a7889e83c82d8e0c333095cc0d"
+        },
+        "verifier": {
+          "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+          "bytes": 114435,
+          "sha256": "71714864b1f10d975b640b6bfa09b203509f419d1441469700e32b9074be98ae"
+        },
+        "readme": {
+          "gitBlob": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+          "bytes": 19469,
+          "sha256": "75beb83db383c90dea906e43c7b5a0618c6504453e472c10f15fb51335145094"
+        },
+        "nativePreimage": {
+          "gitBlob": "353fa05f0f2e0e939538c7fbaacdcdb449f44bd8",
+          "bytes": 60640,
+          "sha256": "82da7f8af04c8d5681e0ab51b781b5b856b16be6964d23b9d8dd8c5976ec73e9"
+        },
+        "verifierPreimage": {
+          "gitBlob": "f21e9349b35922ad689a2f6320ed651b5557de64",
+          "bytes": 108899,
+          "sha256": "066e1f55509f9e8cde7564c37a47b77e9f904f4d8ee34b381d1ce8cc8673ca8f"
+        },
+        "readmePreimage": {
+          "gitBlob": "5978122a5d665c27ffeffe865e0fbae61b64a7ab",
+          "bytes": 18487,
+          "sha256": "6c5f944e748f38b27e2f3cdb4f4f1d85b7d494cbb1d2fb5275e2bf2a1e528ae1"
+        },
+        "legacyNativePreimage": {
+          "gitBlob": "6f119bca252082f18f573370e853bf2e86128934",
+          "bytes": 60268,
+          "sha256": "83d8569de1b6e4fe1c895b51bf3c3292364d09c657acaef07be3e19ff9bf163f"
+        },
+        "legacyNative": {
+          "gitBlob": "06c9494f7448efdc3af93216806411f67191956f",
+          "bytes": 75363,
+          "sha256": "fb067201b7af0c2dd641b48eea3e324ebce919f0e24a178c706f4c1b41ea3224"
+        },
+        "manifest": {
+          "gitBlob": "9fb47225df6f3e82b7a40c8e48f3f2dc08284009",
+          "bytes": 40941,
+          "sha256": "8326c18166f8ab1f7cf7db860aa489040640df8da248c58335197c7bf6f6e526"
+        }
+      },
+      "sourceManifest": {
+        "gitBlob": "9fb47225df6f3e82b7a40c8e48f3f2dc08284009",
+        "bytes": 40941,
+        "sha256": "8326c18166f8ab1f7cf7db860aa489040640df8da248c58335197c7bf6f6e526",
+        "filename": "source-edits.json"
+      },
+      "rootAndIndependentGate": "Root and final-gate reviewer independently verified remote e086/057 parent and full trees, exact three changed paths and final native readback.",
+      "finalVerifierSyntax": "Complete d21 verifier parsed in V8 after import removal and import.meta.url literal substitution; script body not executed.",
+      "rootReproduction": "Root subsequently reproduced this same one composition-only group with all exact source/manifest identities and matching10/8/1 transforms and372-byte delta. It is not an additional independent design."
+    },
+    "countBoundary": "These source checks and reproductions are not added to native acceptance counts. The new group checks composition only."
+  },
+  "reproducibility": {
+    "historicalManifest": {
+      "gitBlob": "2f70151b66e93b4db8bf6ee3f25da6b96edb401d",
+      "bytes": 36247,
+      "sha256": "79eab64df7aacf4f2cca4bf812c0058bd984751abdfc6479afb3c959a190e21f",
+      "scope": "Targets6f to06c, retained by provenance. source-edits.json reuses its edit stages with final057 bindings."
+    },
+    "compositionInverses": {
+      "nativeEditCount": 10,
+      "verifierEditCount": 8,
+      "readmeEditCount": 1,
+      "externalActivationDeltaBytes": 372
+    },
+    "exactExternalComposition": "6f plus the single057 activation transform equals353;06c plus that same transform equalsbdd. Reversing restores6f and06c respectively.",
+    "artifacts": [
+      {
+        "filename": "review-checks.js",
+        "gitBlob": "18b6d60c24d99fcc45a323e1e4a891dd98a0bd0d",
+        "bytes": 53088,
+        "sha256": "718eaa37e5bce7137851885a51483058e11ed907de10861ea29d01d022c05eaa"
+      },
+      {
+        "filename": "source-edits.json",
+        "gitBlob": "9fb47225df6f3e82b7a40c8e48f3f2dc08284009",
+        "bytes": 40941,
+        "sha256": "8326c18166f8ab1f7cf7db860aa489040640df8da248c58335197c7bf6f6e526"
+      },
+      {
+        "filename": "composition-checks.js",
+        "gitBlob": "4829444f7f12634bf0d329f7ebc15087542bee90",
+        "bytes": 10369,
+        "sha256": "271d67ccb9fb257e8d1b73ff9c87fb3aaf4934dccd7658736057b9cd966d2280"
+      }
+    ]
+  },
+  "boundaries": {
+    "actualE086NativeCompilation": "not inspected at this checkpoint",
+    "actualE086Runtime": "not inspected at this checkpoint",
+    "nodeIoExecution": false,
+    "objectiveCppExecution": false,
+    "appKitExecution": false,
+    "newAcceptancePass": false,
+    "noSourceOrRuntimeOutcomeBorrowedFromOlderRuns": true,
+    "deferred": [
+      "App counter e9d39b7b778425967ce5226da0a739cc6f18ff1b",
+      "post-status-failure snapshot/reporting"
+    ],
+    "supersededUnpublished": [
+      {
+        "commit": "448e3c5baff88f2846ec08d75689803c8c1ae1c4",
+        "reason": "Old0bee-based composition with Desktop policy correction; superseded before publication by preserved057."
+      }
+    ],
+    "receiptAuthorWrites": "Immutable blobs/readbacks only; no tree, commit, ref, PR or CI mutation."
+  },
+  "primaryReferences": [
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nspopover/didclosenotification.md",
+      "supports": "didClose occurs after offscreen animation"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nspopover/isshown.md",
+      "supports": "shown state can report closed when close/performClose is invoked"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nspopoverdelegate/popoverdidclose(_:).md",
+      "supports": "delegate is notified when didClose notification is sent; no ordering among observers is assumed"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/foundation/notificationcenter/addobserver%28forname%3Aobject%3Aqueue%3Ausing%3A%29",
+      "supports": "object-specific observer, nil queue posting-thread delivery, explicit observer-token removal"
+    }
+  ]
+}

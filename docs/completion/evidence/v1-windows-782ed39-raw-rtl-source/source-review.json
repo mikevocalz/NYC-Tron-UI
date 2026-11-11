@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "kind": "windows-raw-rtl-fixture-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "receiptPath": "docs/completion/evidence/v1-windows-782ed39-raw-rtl-source",
+  "scope": "Source/static and independent V8 data-model checks only. Publication metadata is a separate reported checkpoint; completed CI execution is not part of this receipt.",
+  "preparedChild": {
+    "commit": "782ed3911dd35950797f7417fed813f5fa669c4e",
+    "tree": "7eb00e6b03fdec748227d03db04b232eb93a28d8",
+    "orderedParents": [
+      "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+    ],
+    "parentTree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+    "changedPath": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+    "parentBlob": {
+      "bytes": 12691,
+      "sha256": "ef15eda3eda4e2846e45352a3ca83cdc0f371926ed70eb7b2ad530bed1ea1187",
+      "gitBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975"
+    },
+    "source": {
+      "bytes": 33096,
+      "sha256": "2786f4a63776ec3e1bbd6fcd3af0313c967228a188a50a49cba68f99bc3f1074",
+      "gitBlob": "877c51ea1e16918968a6929e389c1f61f4a4e23d"
+    },
+    "changedLeaves": 1,
+    "leafCount": 3152,
+    "treeObjectCount": 513,
+    "completeTreeProofScope": "Root and independent final reviewer each reported complete tree/hash/parent verification; this receipt author freshly fetched and checked immutable child/parent commit metadata and source bytes."
+  },
+  "composition": {
+    "actualParentToComposedBase": {
+      "manifestBlob": "52365ada61c9a299a64f0655dfc77f8d6333e3df",
+      "before": {
+        "bytes": 12691,
+        "sha256": "ef15eda3eda4e2846e45352a3ca83cdc0f371926ed70eb7b2ad530bed1ea1187",
+        "gitBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975"
+      },
+      "after": {
+        "bytes": 15321,
+        "sha256": "aecc1110691d7acc833bca9cef42f38027dd7a014ba319a7979d66983f673147",
+        "gitBlob": "8c7632eeea23671646721ec7e96ecc386486e610"
+      },
+      "scope": "Previously reviewed finite visible-pane guard, twenty fixed checkpoints and borrowed GET scheme ownership correction; SET allocation/free preserved."
+    },
+    "thisManifest": {
+      "identity": {
+        "bytes": 27994,
+        "sha256": "822ed256a862f576d16e7826b99cbbd96c63562a8e1876c039db5916a0117f05",
+        "gitBlob": "8be3831b6ded27855a2217bff29d55ee3fb56ba2"
+      },
+      "before": {
+        "bytes": 15321,
+        "sha256": "aecc1110691d7acc833bca9cef42f38027dd7a014ba319a7979d66983f673147",
+        "gitBlob": "8c7632eeea23671646721ec7e96ecc386486e610"
+      },
+      "after": {
+        "bytes": 33096,
+        "sha256": "2786f4a63776ec3e1bbd6fcd3af0313c967228a188a50a49cba68f99bc3f1074",
+        "gitBlob": "877c51ea1e16918968a6929e389c1f61f4a4e23d"
+      },
+      "editCount": 9,
+      "editIds": [
+        "initialize-bounded-rtl-evidence",
+        "add-owned-raw-view-witness-helpers",
+        "bind-actual-toggle-and-navigation-ancestor",
+        "poll-retained-icon-physical-geometry",
+        "use-validated-navigation-frame",
+        "use-same-validated-owner-frame",
+        "assert-actual-icon-mirroring",
+        "retain-bounded-witness-with-original-result",
+        "emit-secondary-captured-witness-envelope"
+      ],
+      "uniqueForward": true,
+      "reverseOrderInverse": true,
+      "literalReplacementRule": "Apply each before/after as literal text; for JavaScript use replace(before, () => after), and reverse in reverse order."
+    }
+  },
+  "reviewChecks": {
+    "harness": {
+      "bytes": 20055,
+      "sha256": "040e0050188cde8d29ebb3ccbcb44de29c79cc50df96fe082dd1f8f0317ba20c",
+      "gitBlob": "1e2a01484083aad3085dcadc2fff543644ebe6f9"
+    },
+    "entryPoint": "reviewRawRtlWitness({source,preimage,manifest})",
+    "inputs": {
+      "source": "877c51ea1e16918968a6929e389c1f61f4a4e23d",
+      "preimage": "8c7632eeea23671646721ec7e96ecc386486e610",
+      "manifest": "8be3831b6ded27855a2217bff29d55ee3fb56ba2"
+    },
+    "authorResult": {
+      "schemaVersion": 1,
+      "groups": [
+        {
+          "name": "exact-source-and-preservation",
+          "passed": true,
+          "edits": 9,
+          "checkpointCalls": 20
+        },
+        {
+          "name": "bounded-source-contracts",
+          "passed": true,
+          "scope": "static inspection of exact PowerShell source"
+        },
+        {
+          "name": "missing-ambiguous-and-owned-tree-model",
+          "passed": true,
+          "rejectionCases": 19,
+          "positiveCases": 1
+        },
+        {
+          "name": "finite-physical-geometry-model",
+          "passed": true,
+          "cases": 17
+        },
+        {
+          "name": "typed-secondary-projection-model-and-source",
+          "passed": true,
+          "ordinaryEnvelopeBytes": 1746,
+          "maximumWidthEnvelopeBytes": 4680,
+          "capBytes": 8192
+        }
+      ],
+      "scope": "Exact source/inverse review and independent V8 data-model checks only. No PowerShell parsing, .NET/UIA/provider calls, filesystem IO or native execution.",
+      "powershellParserExecuted": false,
+      "powershellRuntimeExecuted": false,
+      "nativeExecuted": false
+    },
+    "independentReview": {
+      "source": "Root and final reviewer approved the complete source; final reviewer verified the single fallback-key source delta and exact final harness/manifest identity changes.",
+      "sameHarnessReproducedBy": "independent final reviewer",
+      "additionalNativeTests": 0
+    },
+    "harnessConsistencyCorrection": {
+      "before": "ae6925f006b342fdaa08b29485f469180440eaa7",
+      "after": "1e2a01484083aad3085dcadc2fff543644ebe6f9",
+      "change": "Only the modeled report() overflow fallback key changes from outputUtf8Bytes to outputByteLimit; project().limits.outputUtf8Bytes and final PowerShell source remain unchanged."
+    }
+  },
+  "limits": {
+    "nodesPerCompleteRawWalk": 512,
+    "maxDepthInclusive": 24,
+    "runtimeIdIntegers": 32,
+    "pollSeconds": 10,
+    "pollSleepMilliseconds": 100,
+    "retainedGeometrySnapshots": "LTR plus latest; no snapshot history",
+    "retainedDiscoveryCounters": "initial plus final only",
+    "scope": "Counts and depth bound traversal; the poll is a retry window and does not cancel synchronous UIA calls.",
+    "consoleUtf8Bytes": 8192,
+    "consoleByteScope": "Full envelope plus trailing Environment.NewLine, excluding runner-added timestamp prefixes."
+  },
+  "semantics": {
+    "owner": "The original Window and handle are retained. Native IsWindow/GetWindowThreadProcessId and UIA PID/HWND/runtime ID agree before and after observations.",
+    "uniqueness": "Complete RawViewWalker searches count every discovered node. Missing, ambiguous, duplicate-ID, foreign-process or truncated trees fail; no candidate is selected from an incomplete search.",
+    "navigation": "The single NYC-Tron named ancestor is established from actual ancestry of the unique toggle, never from the largest same-name MenuItemsHost.",
+    "icon": "An actual descendant with exact AutomationId Icon is required. Its existence is unproved until CI. No fallback to FlowDirection or guessed geometry exists.",
+    "retention": "Original selected UIA providers remain bound during polling. The final uniqueness walk checks their identities without substituting newly obtained wrappers.",
+    "geometry": "Every accepted rectangle is a finite, positive, non-offscreen physical UIA BoundingRectangle. Snapshots bracket bounds reads and verify ancestry and owner identity. Final mirroring requires unchanged owner/navigation/toggle bounds and unchanged icon size/Y, with LTR icon wholly left and RTL icon wholly right of the button midpoint.",
+    "pane": "The existing physical-left predicate reads the same validated navigation/owner snapshot as the icon witness.",
+    "timeout": "The 10-second/100-ms settings and native action order are retained. A failed poll is not obscured by an additional final discovery walk.",
+    "output": "The existing result file retains typed bounded state. A separate secondary console projector allowlists every status/reason/role, caps runtime ID arrays, preserves null unknowns, selects only finite numbers and fixed fields, and caps the full UTF-8 message at 8 KiB. It reads no UIA provider and cannot change success or the original error.",
+    "consoleFailure": "Formatting/write exceptions are swallowed only inside the secondary reporting helper; an over-limit projection emits a fixed output-limit envelope. Main native/UIA failures are never swallowed.",
+    "stability": "stable means matching sequential identity and rectangle observations within the retained provider set. It is not an atomic snapshot, a render-completion witness or proof of an unchanged tree between reads."
+  },
+  "preserved": [
+    "The native action order and every shipping layout/source file",
+    "The composed borrowed-GET ownership correction and owned-SET cleanup",
+    "All 20 fixed secondary console checkpoints",
+    "Physical-left, selection, capture, later drawer and high-contrast assertions",
+    "Existing finally restoration and error handling except the added typed rtlWitness result field"
+  ],
+  "execution": {
+    "powershellParserExecuted": false,
+    "powershellRuntimeExecuted": false,
+    "dotNetUiaExecuted": false,
+    "nativeExecuted": false,
+    "originalArtifactZipInspected": false,
+    "renderedImagesInspected": false,
+    "testedPackageProduced": false
+  },
+  "evidenceLimits": [
+    "AutomationId is optional. The pinned x:Name Icon and Raw annotation do not prove that this running provider exposes an Icon peer.",
+    "Runtime IDs are treated only as opaque comparison values. The observations do not claim lifetime uniqueness outside the retained elements.",
+    "IsOffscreen=false and a bounding rectangle do not prove absence of occlusion or inspected pixels.",
+    "No host, security, workflow, ref, PR or CI mutation is included.",
+    "The original script has no separate rendered-title assertion. This change preserves the shipping title layout and the named navigation-ancestor check, without claiming inspected title pixels or a new title pass.",
+    "Stable sequential observations do not establish atomicity, render completion or continuous geometry between observations.",
+    "The source review does not establish Raw Icon peer availability or actual rendered mirroring.",
+    "No earlier runtime failure cause, host eligibility, elevated-host support or release acceptance is inferred.",
+    "Model checks execute JavaScript data models and inspect source; they do not execute PowerShell or emulate a real provider."
+  ],
+  "authorActions": {
+    "immutableBlobsCreatedAndReadBack": true,
+    "treeWrites": false,
+    "refWrites": false,
+    "prWrites": false,
+    "workflowWrites": false,
+    "ciDispatches": false,
+    "reruns": false,
+    "hostOrSecurityChanges": false
+  },
+  "primarySources": [
+    "https://learn.microsoft.com/en-us/dotnet/framework/ui-automation/obtaining-ui-automation-elements",
+    "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-automation-element-propids",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.getruntimeid?view=windowsdesktop-10.0",
+    "https://learn.microsoft.com/en-us/dotnet/api/system.windows.rect.empty?view=windowsdesktop-10.0"
+  ],
+  "publicationCheckpoint": {
+    "reportedBy": "root after independently verified ref/PR postread and generated merge",
+    "publishedAt": "2026-11-11T11:21:50Z",
+    "head": "782ed3911dd35950797f7417fed813f5fa669c4e",
+    "generatedMerge": "dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b",
+    "mergeTree": "7eb00e6b03fdec748227d03db04b232eb93a28d8",
+    "mergeOrderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "782ed3911dd35950797f7417fed813f5fa669c4e"
+    ],
+    "sourceWorkflowRun": 43011337381,
+    "nativeWorkflowRun": 43011337384,
+    "attempt": 1,
+    "completedOutcomeIncluded": false
+  }
+}

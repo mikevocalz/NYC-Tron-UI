@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "kind": "appkit-window-show-observation-source-checkpoint",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "checkpoint": {
+    "status": "prepared-source-only",
+    "commit": "c4d4148c6135b9e3054255d9e35a950bef959b71",
+    "tree": "34309184ac033c77f891ff18880d55f34dfbbcd8",
+    "orderedParents": [
+      "e08679769e471aba5403cd864c8a2fa2310b9086"
+    ],
+    "sourceCheckpointPublicationObserved": false,
+    "nativeExecutionObserved": false,
+    "completeLeafCount": 2050,
+    "treeObjectCount": 284,
+    "changedLeafCount": 1,
+    "unchangedLeafCount": 2049,
+    "fullTreeVerification": "Root and independent reviewer verified all leaf IDs/modes and recomputed every directory tree hash.",
+    "commitVerification": "Receipt author independently fetched immutable commit metadata and matched the tree and sole ordered parent."
+  },
+  "source": {
+    "path": "examples/macos-appkit/spark/verify-native.mjs",
+    "preimage": {
+      "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+      "bytes": 114435,
+      "sha256": "71714864b1f10d975b640b6bfa09b203509f419d1441469700e32b9074be98ae"
+    },
+    "candidate": {
+      "gitBlob": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+      "bytes": 120419,
+      "sha256": "3339553afe83907490dd8daac094cceedf967f3359deada250330b6882b5c9db"
+    },
+    "exactReversibleTransformCount": 2,
+    "byteDelta": 5984
+  },
+  "reviewArtifacts": {
+    "editManifest": {
+      "file": "edit-manifest.json",
+      "gitBlob": "f694d94172236c1726a6cbf430354df4891bdff3",
+      "bytes": 12990,
+      "sha256": "b8fdaa62629d27bdc430bba54e30dbf075ad1807a633c516c12c9afdd238288f",
+      "unchanged": true
+    },
+    "reviewScript": {
+      "file": "review-checks.js",
+      "gitBlob": "d2a1f054cf5b21e9dbdb96c163a0e88a704f7900",
+      "bytes": 18998,
+      "sha256": "efe354725af8a215a30d1c33b3a376246e7774efbabe261ea48dcc45100fbd6b",
+      "unchanged": true
+    }
+  },
+  "observedBackground": {
+    "failedRunId": 42992156557,
+    "attempt": 1,
+    "helper": "e08679769e471aba5403cd864c8a2fa2310b9086",
+    "failedGate": "visible, key and active native owner window (document-1)",
+    "executedVerifier": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+    "boundary": "The existing late inspection values were not exposed in the retained bounded command projection. Source control flow places the failure at the second document-window show. No failed field or cause is established.",
+    "separatePriorFailure": "External 057's later shown-popover timeout remains a separate completed outcome; this source checkpoint neither resolves nor reclassifies it."
+  },
+  "behavior": {
+    "captureSource": "Only responses already returned by existing tron.inspect calls in show's polling loop.",
+    "additionalRequests": 0,
+    "postFailureRequests": 0,
+    "assertionFacts": [
+      "processIdMatches",
+      "activationPolicyRegular",
+      "canBecomeKey"
+    ],
+    "conjunctionFacts": [
+      "visible",
+      "key",
+      "applicationActive",
+      "frontmostProcessMatches"
+    ],
+    "missingOrInvalid": "null unknown, not observed false",
+    "ownerLabels": [
+      "main",
+      "document-1",
+      null
+    ],
+    "recordLimit": 8,
+    "selection": "First response plus latest six state changes and final response; duplicate final is not repeated.",
+    "omissionFields": [
+      "omittedResponses",
+      "omittedStateChanges"
+    ],
+    "overflow": "Counts become null with countOverflow true; no wrapping.",
+    "captureFailure": "Projection errors set captureFailed and an all-null state; capture/reporting failures do not replace the original poll failure.",
+    "success": "No new file or console envelope.",
+    "file": {
+      "name": "window-show-failure.json",
+      "parent": "existing output directory from APPKIT_EVIDENCE",
+      "creationFlag": "wx",
+      "replacementAllowed": false,
+      "hashClaim": false,
+      "readbackClaim": false
+    },
+    "console": {
+      "markers": [
+        "NYCTRON_WINDOW_SHOW_EVIDENCE_BEGIN",
+        "NYCTRON_WINDOW_SHOW_EVIDENCE_END"
+      ],
+      "byteLimit": 8192,
+      "byteLimitIncludes": "Both fixed delimiter lines, complete JSON line and their newlines",
+      "completeJSON": true,
+      "writeErrorCategories": [
+        "EACCES",
+        "EPERM",
+        "EEXIST",
+        "ENOSPC",
+        "EIO",
+        "ENOENT",
+        "other"
+      ]
+    },
+    "privateDataExcluded": [
+      "arbitrary native labels",
+      "tokens",
+      "raw error messages",
+      "raw paths"
+    ],
+    "failureBeforePolling": "Initial activation request/identity failures retain the existing diagnostic path."
+  },
+  "preserved": {
+    "waitForSourceByteIdentical": true,
+    "deadlineMs": 20000,
+    "pollDelayMs": 50,
+    "activationRequestAndIdentityChecks": true,
+    "processPolicyAndCanBecomeKeyAssertions": true,
+    "visibleKeyApplicationActiveAndFrontmostConjunction": true,
+    "originalThrownErrorIdentity": true,
+    "sourceFromConstControlThroughEOFByteIdentical": true,
+    "outerFailureCollectorAndFinallyByteIdentical": true,
+    "shippingNativeSourceAndObservers": true,
+    "workflowsHostSecurityAndPermissions": true
+  },
+  "collectorProof": {
+    "status": "source-inclusion-verified",
+    "runtimeWriteOrUploadObserved": false,
+    "verifier": {
+      "gitBlob": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+      "outputBindingLine": 13,
+      "writeLine": 1067,
+      "outputBinding": "resolve(process.env.APPKIT_EVIDENCE ?? join(root, 'native-evidence'))",
+      "writeTarget": "join(output, 'window-show-failure.json')"
+    },
+    "workflows": [
+      {
+        "role": "helper",
+        "path": ".github/workflows/macos-appkit.yml",
+        "gitBlob": "c46871c2e8b065b478da8ed1946432a2d05502b9",
+        "bytes": 9889,
+        "sha256": "a593e9575d0d4f24eb7ca047317e2bfd5f2e18eed7c3762fb5f37f7d0bba591c",
+        "evidenceEnvLine": 158,
+        "uploadAlwaysLine": 162,
+        "wholeEvidenceDirectoryLine": 169
+      },
+      {
+        "role": "aggregate",
+        "path": ".github/workflows/macos-appkit.yml",
+        "gitBlob": "73a526c3768fa21b3d8a0b071db47ebfa9cc5bf8",
+        "bytes": 11091,
+        "sha256": "c1f7e3ec874a916c27aefb9164ae695505af349ab7c1f5297b8d3fac2491b6f3",
+        "evidenceEnvLine": 177,
+        "uploadAlwaysLine": 181,
+        "wholeEvidenceDirectoryLine": 188
+      }
+    ],
+    "envValue": "${{ runner.temp }}/nyc-tron-appkit-evidence",
+    "uploadPath": "${{ runner.temp }}/nyc-tron-appkit-evidence/",
+    "artifactName": "macos-appkit-native-evidence",
+    "uploadAction": "actions/upload-artifact@v4",
+    "unchanged": true,
+    "passedPackageBoundary": "The separate macos-appkit-tested-package upload still requires success() and steps.native.outcome == 'success'."
+  },
+  "validation": {
+    "status": "passed-source-and-mocks",
+    "scope": "pure V8 source parsing and mocked IO/clock/driver; no Node filesystem or AppKit execution",
+    "designCount": 8,
+    "designs": [
+      "exact source identities, two inverses, syntax and unchanged acceptance predicates",
+      "typed false key, false active, unknowns and closed projection privacy",
+      "bounded first/last/state-change selection and explicit omissions",
+      "original 20-second timeout identity and identical command sequence",
+      "successful polling keeps commands, return value and no diagnostic artifact",
+      "assertion facts and inspect rejection preserve their original errors",
+      "file and console failures are secondary; first receipt cannot be replaced",
+      "maximum valid record/count widths remain inside the complete 8-KiB envelope"
+    ],
+    "reproductions": [
+      {
+        "reviewer": "author",
+        "sameEightDesigns": true
+      },
+      {
+        "reviewer": "root",
+        "sameEightDesigns": true
+      },
+      {
+        "reviewer": "independent-final-reviewer",
+        "sameEightDesigns": true
+      }
+    ],
+    "doNotSumReproductionCounts": true,
+    "mockMetrics": {
+      "timeoutPolls": 400,
+      "totalCommands": 401,
+      "timeoutMilliseconds": 20000,
+      "successPolls": 3,
+      "successMilliseconds": 100,
+      "ordinaryEnvelopeBytes": 1160,
+      "maximumValidEnvelopeBytes": 2844
+    },
+    "exactTwoTransformForwardAndInverse": true,
+    "completeVerifierV8ParseOnly": true,
+    "originalTimeoutAndAssertionErrorIdentityPreservedInMocks": true,
+    "originalAndCandidateCommandSequencesEqualInMocks": true,
+    "independentSourceAndWholeTreeReview": "approved",
+    "actualNodeFilesystemExecution": false,
+    "actualNativeExecution": false
+  },
+  "limitations": [
+    "Prepared immutable source identity is separate from ref publication, actual generated merge and future CI results.",
+    "The eight designs run exact extracted functions with mocked IO, driver, assertions and clock; reviewer reproductions are not additional designs.",
+    "Sequential native observations are not atomic and cannot establish callback, focus or activation causation.",
+    "The unchanged deadline and mock command sequence do not measure the runtime overhead of the added synchronous projection.",
+    "File write and artifact upload can still fail; source configuration alone is not evidence of successful retention.",
+    "This receipt does not authorize or report any ref, PR, CI, host or security mutation."
+  ]
+}

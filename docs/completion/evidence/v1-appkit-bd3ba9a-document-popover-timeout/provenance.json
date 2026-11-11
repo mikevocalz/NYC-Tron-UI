@@ -1,0 +1,687 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-appkit-document-popover-timeout",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "helper": "bd3ba9af7bba06ab2653806a3acf2525e28927a7",
+    "helperParent": "c4d4148c6135b9e3054255d9e35a950bef959b71",
+    "actualCheckout": "2c20b0ea6a2670a744b4199202bbb902de2270a8",
+    "tree": "21b26dbe190f534212be5f546c9f5ac0ebb1a2c6",
+    "actualCheckoutParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "bd3ba9af7bba06ab2653806a3acf2525e28927a7"
+    ],
+    "verification": "Actual checkout is printed by both original completed logs; immutable merge metadata has the exact helper tree and ordered parents.",
+    "driver": {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7"
+    },
+    "verifier": {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "gitBlob": "8c3176f220c5b038b2f1c7d1bbbc41dc693606f2"
+    },
+    "sourceReceipt": "../v1-appkit-bd3ba9a-active-owner-source/",
+    "shippingPopover": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+    "external395PopoverAdopted": false
+  },
+  "originalFiles": [
+    {
+      "path": "source-job.log",
+      "gitBlob": "003508eaae7c8442e8231a84d997d46ca60ac058",
+      "bytes": 19531,
+      "sha256": "996c90c6d72e67e2a04870159b3ef7916da2f010165b2f541ebee69158e76bf9",
+      "origin": "complete original core job 130477637727 text",
+      "hashScope": "independently computed from the complete retrieved log or its exact extracted original line/block; immutable readback matched"
+    },
+    {
+      "path": "native-job.log",
+      "gitBlob": "5d455a3b30800cd43b6c5e0a2fe48e13cb3f16c9",
+      "bytes": 91624,
+      "sha256": "e07f5be39209295cc9ad60410f373ff9e25e390c40ef5b0152abd80b04cf7e58",
+      "origin": "complete original native job 130477798290 text",
+      "hashScope": "independently computed from the complete retrieved log or its exact extracted original line/block; immutable readback matched"
+    },
+    {
+      "path": "build-summary.json",
+      "gitBlob": "f047ec585f1f7a921ef64ed3c764c18514791113",
+      "bytes": 318,
+      "sha256": "63a79130eb33c5f13743416cb8d6ef63ce7c3a1104254ce744436e7f8dba9062",
+      "origin": "unique timestamp-stripped build JSON line from native job log",
+      "hashScope": "independently computed from the complete retrieved log or its exact extracted original line/block; immutable readback matched"
+    },
+    {
+      "path": "startup-summary.json",
+      "gitBlob": "88a201b2142225abacf3da60ab5cea10c5d8caa1",
+      "bytes": 28898,
+      "sha256": "5c7343a55751d5d9a1dd0974f9b8a799276bc2ddd1a9c80073dbd8eb67334dc9",
+      "origin": "unique timestamp-stripped startup JSON line from native job log",
+      "hashScope": "independently computed from the complete retrieved log or its exact extracted original line/block; immutable readback matched"
+    },
+    {
+      "path": "startup-envelope.log",
+      "gitBlob": "d1083f296f6bbb6aee504db2740435e6af668c65",
+      "bytes": 29856,
+      "sha256": "e4755ab6f5b87cdcd461bedfab2a36b6a38edcf695b7a1894942ab5ab2fd501f",
+      "origin": "original timestamped startup marker block including all ten interleaved stderr lines",
+      "hashScope": "independently computed from the complete retrieved log or its exact extracted original line/block; immutable readback matched"
+    },
+    {
+      "path": "tooltip-summary.json",
+      "gitBlob": "63801dd2a38cb5b2b0926d7eb76eab1f9703c43d",
+      "bytes": 9152,
+      "sha256": "b50f84e835277efe417623caf30deb3970c72fa5c7b3461bb678a45c4c44dcd6",
+      "origin": "unique timestamp-stripped tooltip JSON line from native job log",
+      "hashScope": "independently computed from the complete retrieved log or its exact extracted original line/block; immutable readback matched"
+    }
+  ],
+  "failure": {
+    "runId": 43007235899,
+    "attempt": 1,
+    "nativeJobId": 130477798290,
+    "completedAt": "2026-11-11T11:14:26Z",
+    "error": "Timed out waiting for shown native NSPopover",
+    "originalLogLines": [
+      532,
+      533,
+      536,
+      537,
+      538,
+      539
+    ],
+    "verifierLines": {
+      "waitForThrow": 1088,
+      "shownPopoverWait": 1148,
+      "caller": 1440
+    },
+    "invocation": "const beforeMinimizePopover = await shownPopover('document-1');",
+    "predicate": "current.shown && current.contentVisible",
+    "deadlineMilliseconds": 20000,
+    "observedLimit": "The conjunction did not become truthy before the existing deadline. The retained console projection does not expose either predicate input for this presentation attempt.",
+    "shown": null,
+    "contentVisible": null,
+    "nativePopover": null,
+    "presentationCause": null,
+    "geometryAssertionsReached": false,
+    "geometryAssertionsScope": "shownPopover assertions at lines1149–1152 follow the timed-out wait and were not reached for this attempt."
+  },
+  "controlFlow": {
+    "completedCheckLabelsSourceDerived": [
+      {
+        "line": 1197,
+        "check": "native-appkit-controls-and-display-module"
+      },
+      {
+        "line": 1240,
+        "check": "native-application-and-context-menu-commands"
+      },
+      {
+        "line": 1244,
+        "check": "native-tooltip-property-and-accessibility-help"
+      },
+      {
+        "line": 1257,
+        "check": "native-tooltip-hover-permission-observed"
+      },
+      {
+        "line": 1298,
+        "check": "native-cgevent-tooltip-hover-presentation-and-dismissal"
+      },
+      {
+        "line": 1336,
+        "check": "native-react-responder-in-popover-coordinate-boundary"
+      },
+      {
+        "line": 1361,
+        "check": "native-popover-safe-region-shared-content-retained-identity-and-focus"
+      },
+      {
+        "line": 1373,
+        "check": "controlled-sidebar-and-native-appearance"
+      },
+      {
+        "line": 1382,
+        "check": "controlled-native-text-and-selection"
+      },
+      {
+        "line": 1396,
+        "check": "shared-document-and-resize-identity"
+      },
+      {
+        "line": 1418,
+        "check": "native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership"
+      },
+      {
+        "line": 1424,
+        "check": "native-layout-restoration"
+      },
+      {
+        "line": 1434,
+        "check": "native-popover-dismissal-preserves-newer-window-focus"
+      }
+    ],
+    "derivation": "These preceding check labels and assertions are established by the exact executed verifier reaching line1440. The original failure.json/check array and popovers.json have not been inspected.",
+    "observedProgress": [
+      "Initial main show and the first inspector Escape/didClose/main-turn/focus gate returned.",
+      "First document-1 show, shared controlled title/selection, native resize and retained title identity returned.",
+      "Native drag-protocol cancellation, rejected transfer, accepted main-to-document and document-to-main transfer checks returned using the protocol/pasteboard path.",
+      "Layout restoration and retained title identity returned.",
+      "Later main show and document-1 show returned; the main-popover close witness completed, then document.key===true and main.key===false assertions returned.",
+      "Document close veto, two-window count, save-document status and inspect-document-1 press returned before the failed presentation wait."
+    ],
+    "laterUnreached": [
+      "Read before-minimize inspector-content identity at line1441.",
+      "Minimize/restore and retained document-popover content checks.",
+      "Allowed close/reopen and subsequent document checks.",
+      "CGEvent drag/actual NSDraggingSession and its cross-window transfer.",
+      "Final interaction gate, result.json and passed-only tested-distribution retention."
+    ],
+    "noWindowShowFailureEnvelope": true,
+    "noWindowShowEnvelopeScope": "No standalone window-show failure marker appears in the completed original log; all existing show calls before line1440 returned according to control flow.",
+    "protocolBoundary": "The earlier drag-protocol checks use native source/destination methods and a real NSPasteboard; they are not the later real posted-pointer/NSDraggingSession acceptance."
+  },
+  "stages": {
+    "core": {
+      "jobId": 130477637727,
+      "status": "passed",
+      "tests": 13,
+      "pass": 13,
+      "fail": 0,
+      "skipped": 0
+    },
+    "consumer": {
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "skipped": 0
+    },
+    "publicAPI": {
+      "packages": 1,
+      "subpaths": 15,
+      "reachableDeclarations": 33,
+      "status": "matched"
+    },
+    "transportProbe": {
+      "cases": 7,
+      "status": "passed",
+      "scope": "Original/patched native Foundation/socketpair cases; separate from application acceptance."
+    },
+    "standaloneCompile": {
+      "status": "success",
+      "completedAt": "2026-11-11T11:13:26Z"
+    },
+    "nativeExercise": {
+      "status": "failure",
+      "completedAt": "2026-11-11T11:14:04Z"
+    },
+    "testedDistribution": "skipped"
+  },
+  "tooltip": {
+    "status": "passed",
+    "permission": {
+      "postEventsAllowed": true,
+      "accessibilityTrusted": true
+    },
+    "shownWindowNumber": 41,
+    "role": "AXHelpTag",
+    "textMatchesExpected": true,
+    "matchesShownTagPredicate": true,
+    "publicCurrentRetainedStrings": 0,
+    "privateUniqueStringsAdded": 1,
+    "privateSource": "private-appkit-draw-view",
+    "privateBinding": "One accepted attributed-string read was bound before and after to the selected visible help-tag window and its content subtree/finite visible geometry.",
+    "dismissedObserved": true,
+    "boundary": "The corrected private collector's typed producer output and successful preceding verifier control flow were inspected. The original tooltip artifact and screenshot pixels remain uninspected."
+  },
+  "activation": {
+    "matchedRecords": 28,
+    "selectedRecords": 28,
+    "omittedRecords": 0,
+    "operations": [
+      {
+        "operation": 1,
+        "records": 10,
+        "phases": [
+          "policy-entered",
+          "policy-returned",
+          "workspace-request-entered",
+          "workspace-request-returned",
+          "workspace-completion-received",
+          "workspace-main-continuation",
+          "identity-checked",
+          "order-front-entered",
+          "order-front-returned",
+          "reply-prepared"
+        ],
+        "first": {
+          "line": 11,
+          "phase": "policy-entered",
+          "atEpochSeconds": 1794395610.188401,
+          "mainThread": true,
+          "operation": 1,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": null
+          },
+          "state": {
+            "policy": 2,
+            "applicationActive": false,
+            "visible": false,
+            "key": false,
+            "miniaturized": false,
+            "canBecomeKey": true
+          }
+        },
+        "last": {
+          "line": 21,
+          "phase": "reply-prepared",
+          "atEpochSeconds": 1794395610.959197,
+          "mainThread": true,
+          "operation": 1,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": true
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": true,
+            "key": true,
+            "miniaturized": null,
+            "canBecomeKey": null
+          }
+        }
+      },
+      {
+        "operation": 2,
+        "records": 6,
+        "phases": [
+          "policy-entered",
+          "policy-returned",
+          "identity-checked",
+          "order-front-entered",
+          "order-front-returned",
+          "reply-prepared"
+        ],
+        "first": {
+          "line": 835,
+          "phase": "policy-entered",
+          "atEpochSeconds": 1794395617.4521441,
+          "mainThread": true,
+          "operation": 2,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": null
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": false,
+            "key": false,
+            "miniaturized": false,
+            "canBecomeKey": true
+          }
+        },
+        "last": {
+          "line": 840,
+          "phase": "reply-prepared",
+          "atEpochSeconds": 1794395617.46296,
+          "mainThread": true,
+          "operation": 2,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": true
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": true,
+            "key": true,
+            "miniaturized": null,
+            "canBecomeKey": null
+          }
+        }
+      },
+      {
+        "operation": 3,
+        "records": 6,
+        "phases": [
+          "policy-entered",
+          "policy-returned",
+          "identity-checked",
+          "order-front-entered",
+          "order-front-returned",
+          "reply-prepared"
+        ],
+        "first": {
+          "line": 1121,
+          "phase": "policy-entered",
+          "atEpochSeconds": 1794395618.644452,
+          "mainThread": true,
+          "operation": 3,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": null
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": true,
+            "key": false,
+            "miniaturized": false,
+            "canBecomeKey": true
+          }
+        },
+        "last": {
+          "line": 1126,
+          "phase": "reply-prepared",
+          "atEpochSeconds": 1794395618.6520371,
+          "mainThread": true,
+          "operation": 3,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": true
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": true,
+            "key": true,
+            "miniaturized": null,
+            "canBecomeKey": null
+          }
+        }
+      },
+      {
+        "operation": 4,
+        "records": 6,
+        "phases": [
+          "policy-entered",
+          "policy-returned",
+          "identity-checked",
+          "order-front-entered",
+          "order-front-returned",
+          "reply-prepared"
+        ],
+        "first": {
+          "line": 1157,
+          "phase": "policy-entered",
+          "atEpochSeconds": 1794395618.742824,
+          "mainThread": true,
+          "operation": 4,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": null
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": true,
+            "key": false,
+            "miniaturized": false,
+            "canBecomeKey": true
+          }
+        },
+        "last": {
+          "line": 1162,
+          "phase": "reply-prepared",
+          "atEpochSeconds": 1794395618.750811,
+          "mainThread": true,
+          "operation": 4,
+          "details": {
+            "accepted": null,
+            "hasApplication": null,
+            "hasError": null,
+            "sameProcess": null,
+            "sameBundle": null,
+            "ok": true
+          },
+          "state": {
+            "policy": 0,
+            "applicationActive": true,
+            "visible": true,
+            "key": true,
+            "miniaturized": null,
+            "canBecomeKey": null
+          }
+        }
+      }
+    ],
+    "interpretation": "Initial operation1 includes the original Workspace phases. Operations2–4 each retain six phases through key/visible/active reply-prepared, consistent with the reviewed direct path. This phase pattern is not a general inference from missing logs, and the earlier c4 reopen-cause hypothesis remains unproved.",
+    "noHistoricalCauseClaim": true
+  },
+  "availableProjection": {
+    "processId": 42608,
+    "activation": {
+      "coverage": "retained-live-log-prefix",
+      "completeAtRead": true,
+      "finalAppLogClaim": false,
+      "matched": 28,
+      "selected": 28,
+      "omitted": 0
+    },
+    "transport": {
+      "coverage": "retained-live-log-prefix",
+      "matched": 3020,
+      "selected": 32,
+      "omitted": 2988,
+      "lastRequestId": 604,
+      "lastCommand": "tron.popover",
+      "scope": "Late dictionary responses/serialization are recorded, but the popover payload fields are not projected."
+    },
+    "commands": {
+      "sourceBytes": 630040,
+      "readBytes": 262145,
+      "completeAtRead": false,
+      "partialTrailingLine": true,
+      "matched": 495,
+      "selected": 32,
+      "omitted": 463,
+      "lastSelectedRequestId": 246,
+      "lastSelectedPhase": "request-started",
+      "scope": "A bounded original-file prefix; raw response values and the remaining tail are uninspected."
+    },
+    "process": {
+      "appChildExitCode": null,
+      "appChildSignal": null,
+      "observedAt": "2026-11-11T11:13:59.253Z",
+      "psBeforeExitCode": 0,
+      "psAfterExitCode": 0,
+      "samplerExitCode": 0,
+      "sampleThreadGroups": 8,
+      "scope": "The zero before/after codes belong to the ps diagnostic commands, not the app. Postfailure sample stacks remain uninspected and do not establish health or cause."
+    }
+  },
+  "envelopes": {
+    "BUILD": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0,
+      "rawJson": {
+        "bytes": 318,
+        "gitBlob": "f047ec585f1f7a921ef64ed3c764c18514791113",
+        "sha256": "63a79130eb33c5f13743416cb8d6ef63ce7c3a1104254ce744436e7f8dba9062"
+      },
+      "rawTimestampedEnvelope": {
+        "bytes": 472,
+        "gitBlob": "d6994d755a6eff53ab6fff9406b80b0772eecd42",
+        "sha256": "87b7390313270c1a800e082f91aff8b4ff22fec2c0748756a5eaf14989709916"
+      }
+    },
+    "STARTUP": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 10,
+      "rawJson": {
+        "bytes": 28898,
+        "gitBlob": "88a201b2142225abacf3da60ab5cea10c5d8caa1",
+        "sha256": "5c7343a55751d5d9a1dd0974f9b8a799276bc2ddd1a9c80073dbd8eb67334dc9"
+      },
+      "rawTimestampedEnvelope": {
+        "bytes": 29856,
+        "gitBlob": "d1083f296f6bbb6aee504db2740435e6af668c65",
+        "sha256": "e4755ab6f5b87cdcd461bedfab2a36b6a38edcf695b7a1894942ab5ab2fd501f"
+      }
+    },
+    "TOOLTIP": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0,
+      "rawJson": {
+        "bytes": 9152,
+        "gitBlob": "63801dd2a38cb5b2b0926d7eb76eab1f9703c43d",
+        "sha256": "b50f84e835277efe417623caf30deb3970c72fa5c7b3461bb678a45c4c44dcd6"
+      },
+      "rawTimestampedEnvelope": {
+        "bytes": 9300,
+        "gitBlob": "d264f5f514ea23f61d6ce4e59132df28c2e57032",
+        "sha256": "5e127f2967341c6cf8923d65cbd9783353bfee1ac2661978caf82044eb655866"
+      }
+    }
+  },
+  "producerOnlyOriginals": {
+    "buildTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329230,
+      "sha256": "6c2a11b66e6edcafa59175837c80647110dc11d05d29dc4b4ad7c3c0c6965802",
+      "complete": true,
+      "normalized": false
+    },
+    "startupInputs": {
+      "appLog": {
+        "filename": "app.log",
+        "status": "snapshot-retained",
+        "readByteLimit": 1048576,
+        "readBytes": 709688,
+        "sourceLive": true,
+        "sourceBytesBefore": 709688,
+        "sourceBytesAfter": 709688,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": false,
+        "laterAppendsPossible": true,
+        "unreadBytesObserved": 0,
+        "snapshot": {
+          "filename": "startup-app-log-snapshot.log",
+          "kind": "read-time-prefix-from-live-app-log",
+          "offset": 0,
+          "bytes": 709688,
+          "sha256": "b5920116c965834bf5d72f024b2415f927c580e91cf8ec58ae4d5cb6ba3520f5",
+          "retained": true,
+          "eventualAppLogHash": false
+        }
+      },
+      "commands": {
+        "filename": "commands.jsonl",
+        "status": "incomplete-or-changing-read",
+        "readByteLimit": 262145,
+        "readBytes": 262145,
+        "sourceLive": false,
+        "sourceBytesBefore": 630040,
+        "sourceBytesAfter": 630040,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": false,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": true,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 367895,
+        "snapshot": null
+      },
+      "processFailure": {
+        "filename": "native-process-failure.json",
+        "status": "complete-stable-read",
+        "readByteLimit": 262145,
+        "readBytes": 1320,
+        "sourceLive": false,
+        "sourceBytesBefore": 1320,
+        "sourceBytesAfter": 1320,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": true,
+        "originalSha256": "8c009f0a63388338a59ba79789eb134f6a9950de4742d1ee31e82aba9e23692b",
+        "truncated": false,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 0,
+        "snapshot": null,
+        "jsonStatus": "parsed"
+      }
+    },
+    "originalTooltip": {
+      "filename": "tooltip-hover.json",
+      "bytes": 43485,
+      "sha256": "4a97f17c6689828f6ae146b959243afd3028d522058997b339ca83e2e0878d64",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    },
+    "postFailureSample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 8,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "e0584e82c4cd9e5c0996534af3fa3223a314fc43a0281b6630c2bad23e90487d",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true
+    },
+    "scope": "All these original-file/snapshot/compiler/sample hashes are producer-reported in inspected console JSON; the underlying original bytes were not retrieved. A live app-log snapshot hash is not a final app.log hash."
+  },
+  "artifact": {
+    "id": 13850116951,
+    "name": "macos-appkit-native-evidence",
+    "size_in_bytes": 1731629,
+    "digest": "sha256:99f366a9723c7c80e66235520dcbc4c68bad0ee97fa47c9c920d9ed4684f48a6",
+    "uploadedFiles": 54,
+    "zipInspected": false,
+    "pixelsInspected": false
+  },
+  "limits": [
+    "This is a completed failed native run, with meaningful earlier progress; no full AppKit acceptance or tested-archive claim.",
+    "The remaining presentation predicate's separate values, actual frame/usable-region relationship and cause are unknown.",
+    "No source, native observer, deadline, assertion, host/security setting, ref or CI retry changed while retaining this outcome.",
+    "Original job text and extracted console lines/blocks were independently hashed; underlying artifact hashes remain producer/API reports."
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "kind": "private-appkit-active-owner-selection-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "baseHelper": "c4d4148c6135b9e3054255d9e35a950bef959b71",
+  "baseTree": "34309184ac033c77f891ff18880d55f34dfbbcd8",
+  "status": "immutable-source-candidate-unpublished",
+  "files": [
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "preimage": {
+        "gitBlob": "bdd64d6becb859622bd024fce036482fc668a91f",
+        "bytes": 75735,
+        "sha256": "ec39ba4ba9321f5ba9e5c94c2c652b3c578352a7889e83c82d8e0c333095cc0d"
+      },
+      "candidate": {
+        "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "bytes": 78317,
+        "sha256": "46f7f49b1fb00e0d303f9f81d37c9f0f007d5bbfadc9ce7efb8bef0ac55d31c8"
+      },
+      "transforms": [
+        {
+          "id": "retain-verified-workspace-identity",
+          "before": "static NSUInteger ActivationSequence;\n",
+          "after": "static NSUInteger ActivationSequence;\nstatic pid_t WorkspaceVerifiedProcessId;\nstatic NSURL *WorkspaceVerifiedBundleURL;\n"
+        },
+        {
+          "id": "select-already-active-owned-window",
+          "before": "        TraceActivation(@\"policy-entered\", operation, ^{ return ActivationWindowState(window); });\n",
+          "after": "        TraceActivation(@\"policy-entered\", operation, ^{ return ActivationWindowState(window); });\n        // A window switch within the verified foreground process does not need\n        // another bundle reopen, whose host policy can select the main window.\n        // The initial and inactive paths still use Workspace identity checks.\n        if (WorkspaceVerifiedProcessId > 0 && NSApp.activationPolicy == NSApplicationActivationPolicyRegular && NSApp.active) {\n          pid_t processId = NSProcessInfo.processInfo.processIdentifier;\n          NSURL *bundleURL = NSBundle.mainBundle.bundleURL.URLByResolvingSymlinksInPath;\n          BOOL sameProcess = WorkspaceVerifiedProcessId == processId;\n          BOOL sameBundle = WorkspaceVerifiedBundleURL && [WorkspaceVerifiedBundleURL isEqual:bundleURL];\n          BOOL frontmost = sameProcess && sameBundle && NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier == processId;\n          if (frontmost) {\n            TraceActivation(@\"policy-returned\", operation, ^{ return @{ @\"accepted\": @YES, @\"state\": ActivationWindowState(window) }; });\n            TraceActivation(@\"identity-checked\", operation, ^{ return @{ @\"sameProcess\": @(sameProcess), @\"sameBundle\": @(sameBundle) }; });\n            if (window.miniaturized) {\n              TraceActivation(@\"deminiaturize-entered\", operation, ^{ return ActivationWindowState(window); });\n              [window deminiaturize:nil];\n              TraceActivation(@\"deminiaturize-returned\", operation, ^{ return ActivationWindowState(window); });\n            }\n            TraceActivation(@\"order-front-entered\", operation, ^{ return ActivationWindowState(window); });\n            [window makeKeyAndOrderFront:nil];\n            TraceActivation(@\"order-front-returned\", operation, nil);\n            NSDictionary *result = @{ @\"ok\": @YES, @\"activationPath\": @\"NSWindow.makeKeyAndOrderFront\", @\"priorWorkspaceIdentityVerified\": @YES,\n              @\"processId\": @(processId), @\"activationPolicy\": @(NSApp.activationPolicy), @\"applicationActive\": @(NSApp.active), @\"key\": @(window.keyWindow), @\"visible\": @(window.visible) };\n            TraceActivation(@\"reply-prepared\", operation, ^{ return @{ @\"ok\": result[@\"ok\"], @\"policy\": result[@\"activationPolicy\"],\n              @\"applicationActive\": result[@\"applicationActive\"], @\"key\": result[@\"key\"], @\"visible\": result[@\"visible\"] }; });\n            reply(result);\n            return;\n          }\n        }\n"
+        },
+        {
+          "id": "record-successful-workspace-identity",
+          "before": "            if (window.miniaturized) {\n              TraceActivation(@\"deminiaturize-entered\", operation, ^{ return ActivationWindowState(window); });\n              [window deminiaturize:nil];\n              TraceActivation(@\"deminiaturize-returned\", operation, ^{ return ActivationWindowState(window); });\n            }\n            TraceActivation(@\"order-front-entered\", operation, ^{ return ActivationWindowState(window); });\n            [window makeKeyAndOrderFront:nil];\n            TraceActivation(@\"order-front-returned\", operation, nil);\n            NSDictionary *result = @{ @\"ok\": @YES, @\"activationPath\": @\"NSWorkspace.openApplication\"",
+          "after": "            WorkspaceVerifiedProcessId = processId;\n            WorkspaceVerifiedBundleURL = [bundleURL.URLByResolvingSymlinksInPath copy];\n            if (window.miniaturized) {\n              TraceActivation(@\"deminiaturize-entered\", operation, ^{ return ActivationWindowState(window); });\n              [window deminiaturize:nil];\n              TraceActivation(@\"deminiaturize-returned\", operation, ^{ return ActivationWindowState(window); });\n            }\n            TraceActivation(@\"order-front-entered\", operation, ^{ return ActivationWindowState(window); });\n            [window makeKeyAndOrderFront:nil];\n            TraceActivation(@\"order-front-returned\", operation, nil);\n            NSDictionary *result = @{ @\"ok\": @YES, @\"activationPath\": @\"NSWorkspace.openApplication\""
+        }
+      ]
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "preimage": {
+        "gitBlob": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+        "bytes": 120419,
+        "sha256": "3339553afe83907490dd8daac094cceedf967f3359deada250330b6882b5c9db"
+      },
+      "candidate": {
+        "gitBlob": "8c3176f220c5b038b2f1c7d1bbbc41dc693606f2",
+        "bytes": 120831,
+        "sha256": "2c897c7d380611e5b7eac73e7f4c7a70c7169dc86c16c48351e48a600f6785f9"
+      },
+      "transforms": [
+        {
+          "id": "validate-truthful-owner-selection-path",
+          "before": "  assert.equal(request.activationPath, 'NSWorkspace.openApplication');\n  assert.equal(request.processId, child.pid, 'Workspace activation must retain the launched acceptance process');\n",
+          "after": "  if (observeStartupRequest) assert.equal(request.activationPath, 'NSWorkspace.openApplication');\n  else assert.ok(request.activationPath === 'NSWorkspace.openApplication' || request.activationPath === 'NSWindow.makeKeyAndOrderFront', 'Expected a supported native owner-selection path');\n  if (request.activationPath === 'NSWindow.makeKeyAndOrderFront') assert.equal(request.priorWorkspaceIdentityVerified, true, 'Direct owner selection requires the prior verified Workspace identity');\n  assert.equal(request.processId, child.pid, 'Window selection must retain the launched acceptance process');\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/macos-appkit/spark/README.md",
+      "preimage": {
+        "gitBlob": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+        "bytes": 19469,
+        "sha256": "75beb83db383c90dea906e43c7b5a0618c6504453e472c10f15fb51335145094"
+      },
+      "candidate": {
+        "gitBlob": "97a554f649de9663913895e416c45cd51e24a873",
+        "bytes": 19804,
+        "sha256": "4d6bfa1ed505e375dfac61a5d55b9f239f39b7dbb0d50d4446de80b14a15360c"
+      },
+      "transforms": [
+        {
+          "id": "describe-initial-activation-and-active-owner-selection",
+          "before": "Its explicit `tron.window` show command enables regular AppKit activation and\nrequests foreground presentation through `NSWorkspace.openApplication` for the\nexact existing test bundle. The returned process must be the already launched\nacceptance process. The fixture then requires observed visible, key and active\nowner-window state, including the frontmost process identity; a successful\nactivation request alone cannot pass. Spark's stock capture-only driver\notherwise prohibits activation. Activation uses public AppKit APIs and grants\nno input-posting permission.\n",
+          "after": "Its explicit `tron.window` show command uses `NSWorkspace.openApplication` for\ninitial activation of the exact existing test bundle, enabling regular AppKit\nactivation and verifying the returned process and resolved bundle identity.\nAfter that verification, a subsequent command that observes the same process\nalready Regular, active and frontmost selects its owned window directly with\n`NSWindow.makeKeyAndOrderFront`. If those conditions do not hold, it retains the\nWorkspace activation path. The response identifies the path actually used;\ninitial startup still requires Workspace activation. Every path retains the\nobserved visible, key and active owner-window checks and frontmost process\nidentity; an activation or selection request alone cannot pass. Spark's stock\ncapture-only driver otherwise prohibits activation. These operations use public\nAppKit APIs and grant no input-posting permission.\n"
+        }
+      ]
+    }
+  ],
+  "transformCount": 5,
+  "inverseRule": "Each before span occurs once. Apply in listed file order; reverse each file's transforms in reverse order. Full inverse restores the complete exact preimage.",
+  "preserved": {
+    "initialWorkspaceActivation": true,
+    "initialStartupMustRequireWorkspace": true,
+    "existingWorkspaceConfigurationAndIdentityChecks": true,
+    "failedEligibilityRetainsOriginalWorkspacePath": true,
+    "originalWorkspaceBodyChangedOnlyByIdentityCacheAssignment": true,
+    "additionalDriverRequests": 0,
+    "automaticRetriesAdded": 0,
+    "originalShowPollingAndErrorBodyByteIdentical": true,
+    "originalWaitForByteIdentical": true,
+    "originalTimeoutMs": 20000,
+    "originalPauseMs": 50,
+    "assertionFacts": [
+      "process ID",
+      "regular policy",
+      "can become key"
+    ],
+    "conjunctionFacts": [
+      "visible",
+      "key",
+      "application active",
+      "frontmost process ID"
+    ],
+    "remainingVerifierFromConstControlThroughEOFByteIdentical": true,
+    "existingWindowShowObservationBudgetAndCaptureUnchanged": true,
+    "nativePopoverObserversAndShippingImplementationUnchanged": true,
+    "nativeTraceEventLimit": 128,
+    "hostSecurityLauncherAndWorkflowChanges": false
+  },
+  "newBehavior": {
+    "initialCache": "Process ID defaults to zero; no direct path can be chosen before Workspace's actual same-process/resolved-bundle checks succeed.",
+    "cacheOwnership": "Main-thread fixture state stores one process ID and one retained resolved NSURL, established only in the existing verified Workspace callback. No raw bundle path is added to replies or summaries.",
+    "directEligibility": [
+      "Prior verified process ID is positive and equals the current actual process ID",
+      "Current resolved main-bundle URL equals the retained verified URL",
+      "Current AppKit activation policy is Regular",
+      "Current application is active",
+      "Current frontmost process ID equals this exact process"
+    ],
+    "directAction": "Use the existing public deminiaturize if needed and makeKeyAndOrderFront on the already-resolved owned NSWindow; no bundle reopen or retry on this branch.",
+    "response": {
+      "activationPath": "NSWindow.makeKeyAndOrderFront",
+      "priorWorkspaceIdentityVerified": true
+    },
+    "workspaceResponsePath": "NSWorkspace.openApplication",
+    "JSValidation": "Startup requires Workspace exactly. Other calls accept only the two fixed paths; a direct response additionally requires literal true priorWorkspaceIdentityVerified. Exact child PID and all actual-state polling assertions remain.",
+    "scope": "Private acceptance fixture correction; it does not change shipping application activation or popover behavior."
+  },
+  "sourceBasis": {
+    "upstreamRepository": "https://github.com/LegendApp/legend-spark",
+    "retainedUpstreamRevision": "d3a7eead32459f8f6baf29ef868ea732c5081e47",
+    "appDelegate": {
+      "path": "packages/desktop-host/AppDelegate.mm",
+      "gitBlob": "a6734d1a57b3d9759606d54c7dfef564ec08efda",
+      "bytes": 11910,
+      "sha256": "24fca513cc8188f98dbf0b3cdd1cc3d2a819c331790e9bad9eea46fda66dbb46",
+      "url": "https://github.com/LegendApp/legend-spark/blob/d3a7eead32459f8f6baf29ef868ea732c5081e47/packages/desktop-host/AppDelegate.mm",
+      "sourceFact": "applicationShouldHandleReopen at lines 166–184 defaults its target to self.window and calls makeKeyAndOrderFront unless manual/hidden/visibleWindows policy selects another path. sparkPrepareMainWindow assigns spark.main."
+    },
+    "retainedPinBinding": "This is the previously retained Spark 0.0.2 upstream source revision. The same revision's original SparkTestDriver.mm blob 5504df4ed6eb4ac0259522781bed228ef33d4af1 was used for the retained exact transport patch review.",
+    "currentPreparation": {
+      "installer": "0f22caa6cbc18a1e4e89edafa56ac9c710351fe3",
+      "prepare": "43bbe4568fd25697881254c8976778bb75b6e972",
+      "desktopConfig": "4b2747280cddefbdf86f2ac63ca160c2cc1b77a1",
+      "facts": "Installer requires Spark0.0.2 and uses its published hash-verified release packages, recording release.revision in spark-sdk-inputs.json. Fixture config has no lifecycle/reopen override; private preparation adds testDriverInRelease."
+    },
+    "installedByteBoundary": "The current run's original spark-sdk-inputs, installed AppDelegate bytes and compiler transcript remain uninspected. This is pinned-source reachability analysis, not independently demonstrated current compiled-source equality.",
+    "primaryAPIs": [
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nsworkspace/openconfiguration/appleevent.md",
+        "scope": "Nil uses a default Apple event as needed for an already-running instance; this does not establish this run's event occurrence or ordering."
+      },
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nsapplicationdelegate/applicationshouldhandlereopen(_:hasvisiblewindows:).md",
+        "scope": "Application-specific reopen handling can select window behavior."
+      },
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nswindow/makekeyandorderfront(_:).md",
+        "scope": "Public per-window front/key selection."
+      },
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nsworkspace/openapplication(at:configuration:completionhandler:).md",
+        "scope": "Initial/inactive app activation retains the original asynchronous Workspace callback and identity checks."
+      }
+    ]
+  },
+  "observedFailureBoundary": {
+    "runId": 42999493080,
+    "attempt": 1,
+    "helper": "c4d4148c6135b9e3054255d9e35a950bef959b71",
+    "windowSummaryBlob": "b9c5fb7c0c544e76f4ecbbeb30bdca7ace1ff3f4",
+    "facts": "First document-1 show, activation operation2. Earlier reply-prepared reported key=true. The diagnostic reports354 unchanged projected inspection states with key=false and the other six facts true.",
+    "cause": "No actual reopen callback or replacement key-window identity was observed; repeated bundle reopening is a supported source concern, not a proven cause of that failure."
+  },
+  "checks": {
+    "status": "passed",
+    "scope": "Pure V8 exact JavaScript functions with mocked driver/clock/assertions/IO; native Objective-C++ statically reviewed only.",
+    "groups": [
+      {
+        "name": "exact three-file identities, five inverses, unchanged polling/tail and whole-verifier parse only",
+        "status": "passed"
+      },
+      {
+        "name": "initial startup still requires Workspace and retains its existing observer",
+        "status": "passed"
+      },
+      {
+        "name": "truthful subsequent paths and identity attestation; invalid paths/flags/PIDs reject before inspection",
+        "status": "passed"
+      },
+      {
+        "name": "direct path retains all three strict assertions and waits for the full focus conjunction",
+        "status": "passed"
+      },
+      {
+        "name": "same 20-second mock timeout, exact original Error identity and identical 401-command sequences",
+        "status": "passed"
+      },
+      {
+        "name": "request and inspect rejections preserve original objects without a retry",
+        "status": "passed"
+      }
+    ],
+    "designCount": 6,
+    "metrics": {
+      "timeoutPolls": 400,
+      "timeoutMilliseconds": 20000,
+      "totalCommands": 401,
+      "delayedSuccessPolls": 3,
+      "delayedSuccessMilliseconds": 100,
+      "timeoutConsoleEnvelopeBytes": 1160
+    },
+    "nativeExecution": false,
+    "nodeFilesystemExecution": false
+  },
+  "reviewHarness": {
+    "file": "review-checks.js",
+    "gitBlob": "2165beebce91471c1e6f3b881341b626da54dd2a",
+    "bytes": 20968,
+    "sha256": "97ccf5d40ae458d61fa1c838ba8b835c1ac0bed3ad74b25974118a98ee783c8e",
+    "invocation": "Evaluate the complete script to obtain an async function. Pass {native, verifier, readme, nativePreimage, verifierPreimage, readmePreimage} with the exact full source strings."
+  },
+  "limits": [
+    "No native Objective-C++ compilation, Node filesystem execution, live AppKit API execution or successful native acceptance is claimed for this candidate.",
+    "The six V8/mock designs execute exact JavaScript functions; native eligibility/cache/API behavior has static source review only.",
+    "A direct selection can still fail the unchanged native focus predicate; no retry or timing relaxation is added.",
+    "No ref, tree, commit, PR, workflow dispatch, host setting or security action is performed by this source handoff."
+  ]
+}

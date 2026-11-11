@@ -1,0 +1,1827 @@
+﻿2026-11-11T11:21:58.0390575Z Current runner version: '2.338.2'
+2026-11-11T11:21:58.0428023Z ##[group]Runner Image Provisioner
+2026-11-11T11:21:58.0429308Z Hosted Compute Agent
+2026-11-11T11:21:58.0430267Z Version: 20261103.629
+2026-11-11T11:21:58.0431286Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-11T11:21:58.0432568Z Build Date: 2026-11-03T17:26:59Z
+2026-11-11T11:21:58.0433717Z Worker ID: {6a464616-c478-4b60-9d2b-3c2610abbba1}
+2026-11-11T11:21:58.0434928Z Region: eastus
+2026-11-11T11:21:58.0435753Z Cloud: Azure
+2026-11-11T11:21:58.0436983Z ##[endgroup]
+2026-11-11T11:21:58.0439184Z ##[group]Operating System
+2026-11-11T11:21:58.0440245Z Microsoft Windows Server 2025
+2026-11-11T11:21:58.0441210Z 10.0.26100
+2026-11-11T11:21:58.0441970Z Datacenter
+2026-11-11T11:21:58.0442501Z ##[endgroup]
+2026-11-11T11:21:58.0443027Z ##[group]Runner Image
+2026-11-11T11:21:58.0443613Z Image: windows-2025-vs2026
+2026-11-11T11:21:58.0444165Z Version: 20261103.298.1
+2026-11-11T11:21:58.0445754Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261103.298/images/windows/Windows2025-VS2026-Readme.md
+2026-11-11T11:21:58.0447436Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261103.298
+2026-11-11T11:21:58.0448371Z ##[endgroup]
+2026-11-11T11:21:58.0449387Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T11:21:58.0451563Z Contents: read
+2026-11-11T11:21:58.0452159Z Metadata: read
+2026-11-11T11:21:58.0452678Z ##[endgroup]
+2026-11-11T11:21:58.0454866Z Secret source: Actions
+2026-11-11T11:21:58.0455752Z Cache mode: write
+2026-11-11T11:21:58.0456726Z Prepare workflow directory
+2026-11-11T11:21:58.0802456Z Prepare all required actions
+2026-11-11T11:21:58.0850526Z Getting action download info
+2026-11-11T11:21:58.2163778Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T11:21:58.3708585Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T11:21:58.6726496Z Complete job name: tests and pack on Windows
+2026-11-11T11:21:58.8629942Z ##[group]Run actions/checkout@v4
+2026-11-11T11:21:58.8631031Z with:
+2026-11-11T11:21:58.8631519Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T11:21:58.8636093Z   token: ***
+2026-11-11T11:21:58.8636550Z   ssh-strict: true
+2026-11-11T11:21:58.8637002Z   ssh-user: git
+2026-11-11T11:21:58.8637463Z   persist-credentials: true
+2026-11-11T11:21:58.8637965Z   clean: true
+2026-11-11T11:21:58.8638424Z   sparse-checkout-cone-mode: true
+2026-11-11T11:21:58.8638972Z   fetch-depth: 1
+2026-11-11T11:21:58.8639413Z   fetch-tags: false
+2026-11-11T11:21:58.8639862Z   show-progress: true
+2026-11-11T11:21:58.8640322Z   lfs: false
+2026-11-11T11:21:58.8640742Z   submodules: false
+2026-11-11T11:21:58.8641216Z   set-safe-directory: true
+2026-11-11T11:21:58.8641736Z   allow-unsafe-pr-checkout: false
+2026-11-11T11:21:58.8642697Z ##[endgroup]
+2026-11-11T11:21:59.0069426Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T11:21:59.0071557Z ##[group]Getting Git version info
+2026-11-11T11:21:59.0072338Z Working directory is 'D:\a\NYC-Tron-UI\NYC-Tron-UI'
+2026-11-11T11:21:59.1178248Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-11T11:21:59.5225488Z git version 2.56.0.windows.4
+2026-11-11T11:21:59.5273586Z ##[endgroup]
+2026-11-11T11:21:59.5293067Z Temporarily overriding HOME='D:\a\_temp\7394ff37-72c2-4166-9449-c0d52b890763' before making global git config changes
+2026-11-11T11:21:59.5294913Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T11:21:59.5304268Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-11T11:21:59.5965429Z Deleting the contents of 'D:\a\NYC-Tron-UI\NYC-Tron-UI'
+2026-11-11T11:21:59.5972090Z ##[group]Initializing the repository
+2026-11-11T11:21:59.5980191Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-11T11:21:59.6833754Z Initialized empty Git repository in D:/a/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T11:21:59.6877223Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T11:21:59.7703085Z ##[endgroup]
+2026-11-11T11:21:59.7704517Z ##[group]Disabling automatic garbage collection
+2026-11-11T11:21:59.7711292Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-11-11T11:21:59.8081767Z ##[endgroup]
+2026-11-11T11:21:59.8083506Z ##[group]Setting up auth
+2026-11-11T11:21:59.8094206Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T11:21:59.8467433Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-11T11:22:01.3898506Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T11:22:01.4270839Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-11T11:22:01.9943882Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T11:22:02.0359513Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-11T11:22:02.6353552Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-11-11T11:22:02.6783530Z ##[endgroup]
+2026-11-11T11:22:02.6784569Z ##[group]Fetching the repository
+2026-11-11T11:22:02.6806716Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b:refs/remotes/pull/63/merge
+2026-11-11T11:22:03.9709101Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T11:22:03.9709997Z  * [new ref]         dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b -> pull/63/merge
+2026-11-11T11:22:03.9748891Z ##[endgroup]
+2026-11-11T11:22:03.9749424Z ##[group]Determining the checkout info
+2026-11-11T11:22:03.9751786Z ##[endgroup]
+2026-11-11T11:22:03.9761385Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-11-11T11:22:04.0324645Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-11-11T11:22:04.0734497Z ##[group]Checking out the ref
+2026-11-11T11:22:04.0747034Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/63/merge
+2026-11-11T11:22:05.1354650Z Note: switching to 'refs/remotes/pull/63/merge'.
+2026-11-11T11:22:05.1355317Z 
+2026-11-11T11:22:05.1355758Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-11T11:22:05.1356668Z changes and commit them, and you can discard any commits you make in this
+2026-11-11T11:22:05.1357457Z state without impacting any branches by switching back to a branch.
+2026-11-11T11:22:05.1357892Z 
+2026-11-11T11:22:05.1358154Z If you want to create a new branch to retain commits you create, you may
+2026-11-11T11:22:05.1358813Z do so (now or later) by using -c with the switch command. Example:
+2026-11-11T11:22:05.1359185Z 
+2026-11-11T11:22:05.1359349Z   git switch -c <new-branch-name>
+2026-11-11T11:22:05.1359614Z 
+2026-11-11T11:22:05.1359742Z Or undo this operation with:
+2026-11-11T11:22:05.1360007Z 
+2026-11-11T11:22:05.1360134Z   git switch -
+2026-11-11T11:22:05.1360361Z 
+2026-11-11T11:22:05.1360660Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-11T11:22:05.1361113Z 
+2026-11-11T11:22:05.1361663Z HEAD is now at dad54be Merge 782ed3911dd35950797f7417fed813f5fa669c4e into 25a6af6d020e34d790f6a4f3d9f117738b252f1e
+2026-11-11T11:22:05.1461260Z ##[endgroup]
+2026-11-11T11:22:05.2415409Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-11T11:22:05.2866641Z dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b
+2026-11-11T11:22:05.3412107Z ##[group]Run actions/setup-node@v4
+2026-11-11T11:22:05.3412454Z with:
+2026-11-11T11:22:05.3412649Z   node-version: 24.19.0
+2026-11-11T11:22:05.3412895Z   always-auth: false
+2026-11-11T11:22:05.3413099Z   check-latest: false
+2026-11-11T11:22:05.3415463Z   token: ***
+2026-11-11T11:22:05.3415657Z ##[endgroup]
+2026-11-11T11:22:05.5294921Z Attempting to download 24.19.0...
+2026-11-11T11:22:05.5489383Z (node:1860) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T11:22:05.5490686Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:22:06.1039606Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-win32-x64.7z
+2026-11-11T11:22:06.4011355Z Extracting ...
+2026-11-11T11:22:08.7783811Z Adding to the cache ...
+2026-11-11T11:22:12.4468998Z ##[group]Environment details
+2026-11-11T11:22:13.8335633Z node: v24.19.0
+2026-11-11T11:22:13.8335997Z npm: 11.17.0
+2026-11-11T11:22:13.8336193Z yarn: 1.22.22
+2026-11-11T11:22:13.8337324Z ##[endgroup]
+2026-11-11T11:22:13.8657228Z ##[group]Run corepack enable
+2026-11-11T11:22:13.8657758Z [36;1mcorepack enable[0m
+2026-11-11T11:22:13.9423668Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:22:13.9424132Z ##[endgroup]
+2026-11-11T11:22:14.5797513Z ##[group]Run corepack pnpm install --frozen-lockfile
+2026-11-11T11:22:14.5797991Z [36;1mcorepack pnpm install --frozen-lockfile[0m
+2026-11-11T11:22:14.5867580Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:22:14.5867978Z ##[endgroup]
+2026-11-11T11:22:27.3859417Z Scope: all 16 workspace projects
+2026-11-11T11:22:27.4718418Z Lockfile is up to date, resolution step is skipped
+2026-11-11T11:22:27.5297842Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-11-11T11:22:27.6398342Z Packages: +537
+2026-11-11T11:22:27.6400229Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-11T11:22:28.5346363Z Progress: resolved 537, reused 0, downloaded 8, added 0
+2026-11-11T11:22:29.5337220Z Progress: resolved 537, reused 0, downloaded 36, added 8
+2026-11-11T11:22:30.5361355Z Progress: resolved 537, reused 0, downloaded 75, added 16
+2026-11-11T11:22:31.5526803Z Progress: resolved 537, reused 0, downloaded 154, added 40
+2026-11-11T11:22:32.5497638Z Progress: resolved 537, reused 0, downloaded 217, added 59
+2026-11-11T11:22:33.5512780Z Progress: resolved 537, reused 0, downloaded 261, added 75
+2026-11-11T11:22:34.5595614Z Progress: resolved 537, reused 0, downloaded 410, added 127
+2026-11-11T11:22:35.6288950Z Progress: resolved 537, reused 0, downloaded 437, added 136
+2026-11-11T11:22:36.6830587Z Progress: resolved 537, reused 0, downloaded 446, added 139
+2026-11-11T11:22:37.6754437Z Progress: resolved 537, reused 0, downloaded 455, added 143
+2026-11-11T11:22:38.6895099Z Progress: resolved 537, reused 0, downloaded 461, added 146
+2026-11-11T11:22:39.6957540Z Progress: resolved 537, reused 0, downloaded 479, added 151
+2026-11-11T11:22:40.6974218Z Progress: resolved 537, reused 0, downloaded 517, added 196
+2026-11-11T11:22:41.7000753Z Progress: resolved 537, reused 0, downloaded 518, added 374
+2026-11-11T11:22:42.7092055Z Progress: resolved 537, reused 0, downloaded 519, added 456
+2026-11-11T11:22:43.7245363Z Progress: resolved 537, reused 0, downloaded 519, added 469
+2026-11-11T11:22:44.7253737Z Progress: resolved 537, reused 0, downloaded 519, added 496
+2026-11-11T11:22:45.0873407Z Progress: resolved 537, reused 0, downloaded 519, added 537, done
+2026-11-11T11:22:46.2178998Z 
+2026-11-11T11:22:46.2179548Z devDependencies:
+2026-11-11T11:22:46.2179867Z + @types/react 19.3.0
+2026-11-11T11:22:46.2180130Z + typescript 6.0.3
+2026-11-11T11:22:46.2180819Z 
+2026-11-11T11:22:46.3789322Z Done in 19.4s using pnpm v10.32.1
+2026-11-11T11:22:46.5196758Z ##[group]Run corepack pnpm build
+2026-11-11T11:22:46.5197124Z [36;1mcorepack pnpm build[0m
+2026-11-11T11:22:46.5266878Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:22:46.5267238Z ##[endgroup]
+2026-11-11T11:22:47.1754252Z 
+2026-11-11T11:22:47.1755595Z > nyc-tron-ui@0.1.0 build D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-11T11:22:47.1756214Z > pnpm -r --if-present build
+2026-11-11T11:22:47.1756393Z 
+2026-11-11T11:22:47.5790088Z Scope: 15 of 16 workspace projects
+2026-11-11T11:22:47.5881951Z packages/core build$ tsc --project tsconfig.build.json
+2026-11-11T11:22:47.5890176Z packages/geometry build$ tsc --project tsconfig.build.json
+2026-11-11T11:22:47.5896268Z packages/native-charts build$ tsc -p tsconfig.build.json
+2026-11-11T11:22:47.5901888Z packages/icons build$ node -e "const f=require('node:fs');f.rmSync('dist',{recursive:true,force:true});f.cpSync('src','dist',{recursive:true})"
+2026-11-11T11:22:47.7044553Z packages/icons build: Done
+2026-11-11T11:22:47.7066264Z packages/native-controls build$ tsc -p tsconfig.build.json
+2026-11-11T11:22:49.7481969Z packages/geometry build: Done
+2026-11-11T11:22:49.7501724Z packages/native-navigation build$ tsc --project tsconfig.build.json
+2026-11-11T11:22:50.8630803Z packages/core build: Done
+2026-11-11T11:22:50.8655769Z packages/platform-services build$ tsc -p tsconfig.build.json
+2026-11-11T11:22:51.2624117Z packages/native-charts build: Done
+2026-11-11T11:22:51.2629996Z packages/windows-fluent build$ tsc --project tsconfig.build.json
+2026-11-11T11:22:52.3065935Z packages/native-controls build: Done
+2026-11-11T11:22:52.8573130Z packages/native-navigation build: Done
+2026-11-11T11:22:53.0033178Z packages/windows-fluent build: Done
+2026-11-11T11:22:53.9071527Z packages/platform-services build: Done
+2026-11-11T11:22:53.9080524Z packages/panes build$ tsc --project tsconfig.build.json
+2026-11-11T11:22:53.9083452Z packages/ui build$ tsc --project tsconfig.build.json
+2026-11-11T11:22:53.9086219Z packages/reserved-regions build$ tsc -p tsconfig.build.json
+2026-11-11T11:22:56.4377872Z packages/panes build: Done
+2026-11-11T11:22:56.4917007Z packages/reserved-regions build: Done
+2026-11-11T11:23:08.6694640Z packages/ui build: Done
+2026-11-11T11:23:08.6702877Z packages/expo-controls build$ tsc --project tsconfig.build.json
+2026-11-11T11:23:08.6707185Z packages/hardware-keys build$ tsc -p tsconfig.build.json
+2026-11-11T11:23:10.2585642Z packages/hardware-keys build: Done
+2026-11-11T11:23:11.1720728Z packages/expo-controls build: Done
+2026-11-11T11:23:11.3173815Z ##[group]Run node tooling/run-tests.mjs
+2026-11-11T11:23:11.3174208Z [36;1mnode tooling/run-tests.mjs[0m
+2026-11-11T11:23:11.3245566Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:23:11.3245938Z ##[endgroup]
+2026-11-11T11:23:11.8880515Z ✔ advanced catalog is honest, unique, and prototypes resolve to source (2.0361ms)
+2026-11-11T11:23:11.8882051Z ✔ all upstream port candidates have explicit review classification (0.3868ms)
+2026-11-11T11:23:11.9355360Z ✔ normalizes an Android half-opened horizontal fold as tabletop posture (5.2258ms)
+2026-11-11T11:23:11.9366806Z ✔ keeps a flat dual-screen hinge separating and converts window x to pane-row local x (0.4468ms)
+2026-11-11T11:23:11.9368155Z ✔ preserves negative local x for a hinge left of an offset pane row (0.438ms)
+2026-11-11T11:23:11.9371565Z ✔ infers orientation for UIKit division regions without Android metadata (1.1493ms)
+2026-11-11T11:23:11.9375600Z ✔ uses the hinge as supplementary/detail boundary when both leading panes fit (2.1317ms)
+2026-11-11T11:23:11.9377261Z ✔ uses the hinge as primary boundary when two leading panes cannot fit on the first region (1.1474ms)
+2026-11-11T11:23:11.9389874Z ✔ does not rearrange a flat continuous non-separating fold (1.2021ms)
+2026-11-11T11:23:11.9435065Z ✔ inspector overlays from the trailing physical region without crossing hinge (0.5237ms)
+2026-11-11T11:23:11.9443928Z ✔ inspector ignores a separating hinge that is completely outside the pane row (1.8854ms)
+2026-11-11T11:23:11.9446591Z ✔ inspector width is capped when the trailing fold region is narrower (0.4739ms)
+2026-11-11T11:23:11.9448736Z ✔ RTL inspector uses the logical trailing edge and stays left of the hinge (0.2837ms)
+2026-11-11T11:23:11.9450067Z ✔ preserves and sorts multiple vertical hinges for trifold-aware consumers (0.2468ms)
+2026-11-11T11:23:11.9453007Z ✔ filters off-row folds before primary hinge selection (0.2078ms)
+2026-11-11T11:23:11.9454166Z ✔ keeps an in-row zero-width separating crease (0.1896ms)
+2026-11-11T11:23:11.9457096Z ✔ maps three panes one-per-region across two separating vertical hinges (0.4987ms)
+2026-11-11T11:23:11.9458658Z ✔ multi-hinge planner declines when the authored shape has fewer than three panes (0.3259ms)
+2026-11-11T11:23:11.9460157Z ✔ inspector stays inside the trailingmost physical region on a trifold (0.2002ms)
+2026-11-11T11:23:11.9461613Z ✔ reserved regions feed resolveUsableRegions through foldFeaturesFromRegions (1.1253ms)
+2026-11-11T11:23:11.9463148Z ✔ inactive UIKit division and a flat non-separating crease leave the container whole (1.2748ms)
+2026-11-11T11:23:11.9464437Z ✔ posture comes only from a separating half-opened fold (1.2152ms)
+2026-11-11T11:23:11.9631124Z ✔ no reported folds never fabricate a hinge (3.2579ms)
+2026-11-11T11:23:11.9634674Z ✔ zero-width separating fold divides the content without losing width (0.5625ms)
+2026-11-11T11:23:11.9636799Z ✔ nonoccluding nonseparating crease is not made into dead pixels (0.6772ms)
+2026-11-11T11:23:11.9638438Z ✔ full occlusion removes only its measured stripe and handles offset origin (0.4586ms)
+2026-11-11T11:23:11.9640266Z ✔ multiple reported hinges leave three nonoverlapping regions (0.3716ms)
+2026-11-11T11:23:11.9641432Z ✔ hinges wholly outside the host do not modify regions (0.2411ms)
+2026-11-11T11:23:11.9642504Z ✔ horizontal tabletop separator cuts usable height (0.2829ms)
+2026-11-11T11:23:11.9643565Z ✔ invalid container rejected; invalid feature ignored (0.82ms)
+2026-11-11T11:23:12.0536151Z ✔ InFraX orange/navy preserved for native and web (1.2952ms)
+2026-11-11T11:23:12.0542685Z ✔ presets remain independently themeable (0.2778ms)
+2026-11-11T11:23:12.0551835Z ✔ InFraX emits exactly the variables NYC-Tron components read (1.8114ms)
+2026-11-11T11:23:12.0599967Z ✔ InFraX text pairs meet WCAG AA in light and dark (1.84ms)
+2026-11-11T11:23:12.0627088Z ✔ the theme-agnostic core barrel does not export a brand preset (0.3479ms)
+2026-11-11T11:23:12.0942946Z ✔ native foldables retain physical-right navigation on narrow covers and RTL (1.6575ms)
+2026-11-11T11:23:12.0951924Z ✔ unknown with retained foldable capability stays on right rail (0.247ms)
+2026-11-11T11:23:12.0964485Z ✔ unknown native capability must not be misclassified as a phone (0.2136ms)
+2026-11-11T11:23:12.0999875Z ✔ native Windows desktop uses left collapsible drawer, not Android rail (1.7966ms)
+2026-11-11T11:23:12.1005641Z ✔ macOS sidebar does not change Android and web shells (0.2753ms)
+2026-11-11T11:23:12.1007200Z ✔ spatial contracts reject duplicate IDs and invalid units (0.6078ms)
+2026-11-11T11:23:12.1009774Z ✔ native theme contracts are semantic and app-owned (0.7884ms)
+2026-11-11T11:23:12.1363570Z ✔ tiled master/detail on a wide viewport with contained overlay inspector (2.4069ms)
+2026-11-11T11:23:12.1367921Z ✔ narrow native host keeps the detail; master is controlled overlay (0.2602ms)
+2026-11-11T11:23:12.1371378Z ✔ real separating vertical hinge places book master and detail into distinct regions (0.8039ms)
+2026-11-11T11:23:12.1376369Z ✔ RTL master moves right but physical-right navigation is a separate policy (0.2596ms)
+2026-11-11T11:23:12.1377914Z ✔ top/bottom are used for tabletop without remaking the navigation shell (0.5679ms)
+2026-11-11T11:23:12.1379306Z ✔ multiple hinges never produce an overlapping master/detail/inspector (1.5396ms)
+2026-11-11T11:23:12.1381970Z ✔ narrow inspector becomes contained sheet in detail region (0.2614ms)
+2026-11-11T11:23:12.1385401Z ✔ invalid and missing device geometry does not invent regions (0.6931ms)
+2026-11-11T11:23:12.1387374Z ✔ book layout honors each pane's minimum height (0.4514ms)
+2026-11-11T11:23:12.1388931Z ✔ flat side-by-side requires both panes to fit vertically (0.5155ms)
+2026-11-11T11:23:12.1390210Z ✔ tabletop requires both minimum widths in the actual usable segments (0.4969ms)
+2026-11-11T11:23:12.1392974Z ✔ minimum-size changes do not move detail when opening the inspector (0.2753ms)
+2026-11-11T11:23:12.2180259Z ✔ spatial rays return real meter coordinates and reject targets behind the controller (2.5041ms)
+2026-11-11T11:23:12.2252277Z ✔ spatial pinch gestures have native hysteresis to prevent jitter (0.6095ms)
+2026-11-11T11:23:12.2261334Z ✔ watch model inspection always deep-links into the app 3D viewer (0.2452ms)
+2026-11-11T11:23:12.2262756Z ✔ model handoff round-trips through URLSearchParams with an app-owned scheme (0.6574ms)
+2026-11-11T11:23:12.2264375Z ✔ model handoff parsing ignores app routing keys and rejects invalid input with RangeError (0.5138ms)
+2026-11-11T11:23:12.2867170Z ✔ every TronTheme key maps to a documented token, and every token has a key (3.0627ms)
+2026-11-11T11:23:12.2891113Z ✔ deprecated keys still validate and read back through both names (0.6877ms)
+2026-11-11T11:23:12.2954913Z ✔ current keys, conflicts and missing values (1.202ms)
+2026-11-11T11:23:12.3486417Z ✔ open adds a window on top and focuses it (3.1125ms)
+2026-11-11T11:23:12.3498081Z ✔ duplicate ids are rejected without changing state, even when minimized (0.5309ms)
+2026-11-11T11:23:12.3523930Z ✔ invalid ids, rects, display ids and the window budget are rejected (2.3481ms)
+2026-11-11T11:23:12.3526999Z ✔ unicode, emoji and SQL-looking ids are opaque strings (0.2875ms)
+2026-11-11T11:23:12.3529196Z ✔ focus raises a window; unknown and minimized windows are rejected (0.4583ms)
+2026-11-11T11:23:12.3532521Z ✔ closing the focused window focuses the topmost open window (0.3696ms)
+2026-11-11T11:23:12.3570880Z ✔ closing an unfocused window keeps focus (0.2868ms)
+2026-11-11T11:23:12.3593526Z ✔ minimize and restore (0.2731ms)
+2026-11-11T11:23:12.3594423Z ✔ transitions never mutate the previous state (0.559ms)
+2026-11-11T11:23:12.3596390Z ✔ moveWindow validates and updates display and rect (0.4845ms)
+2026-11-11T11:23:12.3598719Z ✔ begin, over, drop, host accepts: transfer carries the payload and nothing else changes (0.7229ms)
+2026-11-11T11:23:12.3655868Z ✔ host rejection ends the drag without a transfer (0.2151ms)
+2026-11-11T11:23:12.3658393Z ✔ begin is rejected for unknown, minimized sources and while another drag runs (0.2277ms)
+2026-11-11T11:23:12.3659724Z ✔ stale tokens are rejected for every drag event (0.3415ms)
+2026-11-11T11:23:12.3660874Z ✔ resolveDrop is rejected before drop and dropDrag twice is rejected (0.1892ms)
+2026-11-11T11:23:12.3662120Z ✔ cancel mid-drag: late over, drop and resolve events are rejected (0.261ms)
+2026-11-11T11:23:12.3663355Z ✔ cancel while the host is deciding invalidates the pending resolve (0.2357ms)
+2026-11-11T11:23:12.3664668Z ✔ target closed during drag: hover clears, drop on it is rejected, drag survives (0.2245ms)
+2026-11-11T11:23:12.3665912Z ✔ target closed while the host is deciding cancels the drag (0.2206ms)
+2026-11-11T11:23:12.3666944Z ✔ source closed or minimized during drag cancels it (0.2105ms)
+2026-11-11T11:23:12.3667857Z ✔ minimizing the hover target clears hover (0.2008ms)
+2026-11-11T11:23:12.3668789Z ✔ hovering the source, an unknown or a minimized window clears hover (0.2843ms)
+2026-11-11T11:23:12.3670324Z ✔ dropping on the source or a minimized window is rejected (0.2098ms)
+2026-11-11T11:23:12.3671570Z ✔ snapshot is JSON-safe, excludes drag state, and round-trips on the same displays (1.1797ms)
+2026-11-11T11:23:12.3672881Z ✔ parseLayoutSnapshot rejects malformed or hostile input (0.747ms)
+2026-11-11T11:23:12.3674073Z ✔ restore onto fewer displays moves windows to the primary display and clamps them (1.2159ms)
+2026-11-11T11:23:12.3675647Z ✔ a window returns to its home display and rect when that display comes back (0.4375ms)
+2026-11-11T11:23:12.3677075Z ✔ display removal while running reflows and keeps the original home through two relocations (0.4016ms)
+2026-11-11T11:23:12.3678519Z ✔ a window larger than the display shrinks to fit; off-screen windows come back in (0.2537ms)
+2026-11-11T11:23:12.3679785Z ✔ windows are moved off an occluding hinge, to the nearer side (0.4352ms)
+2026-11-11T11:23:12.3681080Z ✔ a zero-width separating fold is not straddled; a window clear of it is untouched (0.2437ms)
+2026-11-11T11:23:12.3682470Z ✔ a window too wide for either side of a hinge shrinks into the larger side (0.2483ms)
+2026-11-11T11:23:12.3683544Z ✔ horizontal hinge (tabletop) is respected (0.2311ms)
+2026-11-11T11:23:12.3684598Z ✔ reservedFromFolds keeps occluding and separating features only (0.2815ms)
+2026-11-11T11:23:12.3685717Z ✔ reflow with nothing to change returns the same state (0.1804ms)
+2026-11-11T11:23:12.3686954Z ✔ restore continues the token sequence so pre-restore drag events stay stale (0.2611ms)
+2026-11-11T11:23:12.3688121Z ✔ restore and reflow reject unusable display lists (0.7918ms)
+2026-11-11T11:23:12.3689166Z ✔ without a primary flag the first display is the fallback (0.2217ms)
+2026-11-11T11:23:12.3690793Z ✔ reflowing 256 windows against several reserved regions stays fast and valid (10.6998ms)
+2026-11-11T11:23:12.4227833Z ✔ keyboard traversal skips disabled sections and wraps through enabled leaves (6.4943ms)
+2026-11-11T11:23:12.4229354Z ✔ native menu tree retains disabled, destructive and checked states (0.854ms)
+2026-11-11T11:23:12.4236436Z ✔ duplicate, missing or cyclic action IDs are rejected before native render (0.8887ms)
+2026-11-11T11:23:12.4287398Z ✔ native menu is iOS/Android Expo component and web has active fallback (0.7366ms)
+2026-11-11T11:23:12.4353612Z ✔ dropdown caption names the picker for screen readers on every platform (2.018ms)
+2026-11-11T11:23:12.4418846Z ✔ SwiftUI popover edges follow the usable-region placement side (3.3802ms)
+2026-11-11T11:23:12.4477491Z ✔ popover renders real SwiftUI/Compose surfaces natively and placePopover on web (2.2297ms)
+2026-11-11T11:23:12.4542903Z ✔ tooltip: Compose TooltipBox on Android, accessibilityHint only on iOS, delayed hover/focus on web (2.6507ms)
+2026-11-11T11:23:12.4584961Z ✔ web overlays cycle Tab inside and restore focus to the opener (0.5815ms)
+2026-11-11T11:23:12.4641010Z ✔ new subpaths resolve to emitted native and web files (0.6587ms)
+2026-11-11T11:23:12.4735956Z ✔ every component subpath's types file declares the component, not only its props (1.7033ms)
+2026-11-11T11:23:12.4758227Z ✔ Select resolves to the platform picker on native and the token combobox on web (0.8203ms)
+2026-11-11T11:23:12.4769407Z ✔ NativeSliderField commits when the OS reports the drag ended and steps map to Compose stops (2.3008ms)
+2026-11-11T11:23:13.6985300Z ✔ Host-backed controls leave appearance to the platform unless the app supplies it (696.6242ms)
+2026-11-11T11:23:13.6987375Z ✔ flat web dropdown forwards explicit appearance without leaking it onto the RN wrapper (33.7339ms)
+2026-11-11T11:23:13.7140449Z ✔ theme changes preserve an in-progress slider preview and its commit callback (76.6752ms)
+2026-11-11T11:23:13.7147899Z ✔ iOS slider provides native SwiftUI content for Expo's label Slot (17.5553ms)
+2026-11-11T11:23:13.7149921Z ✔ theme changes retain an expanded Android split-button menu (23.7164ms)
+2026-11-11T11:23:13.7151690Z ✔ token web fallbacks consume native appearance props and retain their authored content (5.707ms)
+2026-11-11T11:23:13.7156807Z ✔ iOS tooltip remains an accessibility hint without creating a themed native surface (7.9538ms)
+2026-11-11T11:23:13.7501230Z ✔ corner cut produces same platform-independent polygon geometry (2.6732ms)
+2026-11-11T11:23:13.7518879Z ✔ cut corners clamp to half width and height (0.8548ms)
+2026-11-11T11:23:13.7540843Z ✔ all twelve placements use host coordinates (2.9316ms)
+2026-11-11T11:23:13.7561168Z ✔ RTL reverses horizontal alignment but preserves physical side (0.2879ms)
+2026-11-11T11:23:13.7564498Z ✔ oversized overlays and zero-width anchors retain alignment (0.2491ms)
+2026-11-11T11:23:13.7568920Z ✔ reject invalid geometry, placement and overflow (0.8085ms)
+2026-11-11T11:23:15.7475513Z (node:5116) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+2026-11-11T11:23:15.7495153Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:23:15.7502508Z ✔ geometry tarball retains both existing port licenses alongside Floating UI (3101.3545ms)
+2026-11-11T11:23:15.7564474Z ✔ SwiftPM package is shipped and preserves the pod's platform and module identity (16.0954ms)
+2026-11-11T11:23:15.7595643Z ✔ expo-module.config.json autolinks both platforms; android stays off the legacy list (6.6477ms)
+2026-11-11T11:23:15.7606014Z ✔ apple: v2 module under the shared name, key commands on the root controller, no ExpoUI (10.9357ms)
+2026-11-11T11:23:15.7613030Z ✔ android: v2 module compiled by the v2 plugin, unhandled-key listeners on every window (0.8631ms)
+2026-11-11T11:23:15.7626958Z ✔ both platforms' records carry the fields JS reads and sends (3.3825ms)
+2026-11-11T11:23:15.7630685Z ✔ payloads that are not chords are dropped (0.438ms)
+2026-11-11T11:23:15.7636593Z ✔ the registry pushes the union of every hook's bindings, first title wins, removal is idempotent (0.6179ms)
+2026-11-11T11:23:15.7645139Z ✔ web source: handled keys prevent default, already-handled and IME keys are skipped (4.563ms)
+2026-11-11T11:23:15.7648954Z ✔ useKeySource registers the map's native bindings and dispatches resolved chords (152.4427ms)
+2026-11-11T11:23:15.7651111Z ✔ native source: v2 global first, recording chords go to the recorder only, setRecording is reference-counted (156.5391ms)
+2026-11-11T11:23:15.7678692Z ✔ suite inventory spans office, drawing, media and XR tools (2.8396ms)
+2026-11-11T11:23:15.7698831Z ✔ first authored glyphs have explicit outline and filled variants (0.7383ms)
+2026-11-11T11:23:15.7704176Z ✔ inactive always outline, selected always filled; reduced motion still filled (0.9909ms)
+2026-11-11T11:23:15.7742963Z ✔ every authored glyph has a distinct selected variant (1.4713ms)
+2026-11-11T11:23:15.7747625Z ✔ artwork resolves only through catalog IDs, never by bare or borrowed slug (1.4494ms)
+2026-11-11T11:23:15.7762468Z ✔ the six orphan glyphs draw their catalog IDs (0.6031ms)
+2026-11-11T11:23:15.7785241Z ✔ no built-in color palette; theme keys map to icon roles (2.8813ms)
+2026-11-11T11:23:15.7791412Z ✔ TypeScript declarations and runtime modules export the same names (5.3281ms)
+2026-11-11T11:23:15.7796445Z ✔ state semantics cannot imply ready when no native proof exists (1.5893ms)
+2026-11-11T11:23:15.7817703Z ✔ native/web module exposes accessible UI and Rive renderer adapter (2.082ms)
+2026-11-11T11:23:15.7825706Z ✔ navigation and adaptive-device batch has distinct, valid paired artwork (6.4968ms)
+2026-11-11T11:23:15.7843348Z ✔ SVG validation rejects truncated arcs rather than silently losing artwork (1.7297ms)
+2026-11-11T11:23:15.7844614Z ✔ hardware and physical-side icons remain distinct (0.2401ms)
+2026-11-11T11:23:15.7846599Z ✔ NYC-Tron icons own real authored geometry, not a copied full editor engine (1.839ms)
+2026-11-11T11:23:15.7848872Z ✔ host Rive renderer can supply artboards beyond authored SVG subset (2.0891ms)
+2026-11-11T11:23:15.7850015Z ✔ missing SVG without host artboard remains absent (0.7022ms)
+2026-11-11T11:23:15.7852242Z ✔ loading icon button advertises the same disabled state it enforces (1.7447ms)
+2026-11-11T11:23:15.7858064Z ✔ decorative icons hide from assistive technology; labelled icons are one image (1.236ms)
+2026-11-11T11:23:15.7859423Z ✔ knockout detail is a mask cutout, not a painted surface color (0.8674ms)
+2026-11-11T11:23:15.7862354Z ✔ icon button keeps its inner icon decorative (0.451ms)
+2026-11-11T11:23:15.7863866Z ✔ web icons pass only ARIA attributes to the DOM, never RN-only props (1.8184ms)
+2026-11-11T11:23:15.7864928Z ✔ Swift and Kotlin props carry exactly the TS wire props (7.4285ms)
+2026-11-11T11:23:15.7866261Z ✔ both platforms accept the same chart kinds (0.7359ms)
+2026-11-11T11:23:15.7867298Z ✔ autolinking registers the same module and view on Apple and Android (1.7115ms)
+2026-11-11T11:23:15.7872769Z ✔ native renderers use Swift Charts and Vico from Maven, not copied source (0.9553ms)
+2026-11-11T11:23:15.7874504Z ✔ both platforms publish a spoken summary with the same wording (1.6411ms)
+2026-11-11T11:23:15.7875742Z ✔ wire props: sorted points, palette cycling, explicit color wins (0.8662ms)
+2026-11-11T11:23:15.7877340Z ✔ wire props reject input a native chart cannot draw honestly (1.0645ms)
+2026-11-11T11:23:15.7879975Z ✔ chart colors come from semantic theme tokens (0.2974ms)
+2026-11-11T11:23:15.7882718Z ✔ web renders an explicit unavailable notice, not a chart (1.2442ms)
+2026-11-11T11:23:15.7884688Z ✔ example app renders a native chart so the compile lanes build it (1.1757ms)
+2026-11-11T11:23:15.7886049Z ✔ Android video uses an explicit surface/player without requesting app audio focus (2.1006ms)
+2026-11-11T11:23:15.7888406Z ✔ SDK58 autolinking registers identical custom controls on Apple and Android (3.2206ms)
+2026-11-11T11:23:15.7889581Z ✔ iOS sources and podspec do not depend on ExpoUI (1.4911ms)
+2026-11-11T11:23:15.7890656Z ✔ all native views distinguish preview from final engine commit (0.6701ms)
+2026-11-11T11:23:15.7891742Z ✔ exports and original MIT source provenance are included (0.6761ms)
+2026-11-11T11:23:15.7892825Z ✔ example app id never collides with the library Android namespace (0.5293ms)
+2026-11-11T11:23:15.7896675Z ✔ example iOS target module never shadows the library pod module (0.4796ms)
+2026-11-11T11:23:15.7897948Z ✔ XY pad moves on a single tap on both platforms and commits through live props (0.5435ms)
+2026-11-11T11:23:15.7899969Z ✔ observed coalesced samples preserve zero force; predictions never enter strokes (3.7671ms)
+2026-11-11T11:23:15.7902714Z ✔ pen cancels touch once; palm release and hover exit cannot finish a pen stroke (0.6809ms)
+2026-11-11T11:23:15.7904419Z ✔ hover suppresses palms until exit; missing pressure stays unavailable (0.3804ms)
+2026-11-11T11:23:15.7905740Z ✔ cancel and dispose clear previews and cannot create a second commit (0.6932ms)
+2026-11-11T11:23:15.7907147Z ✔ invalid, mixed-pointer, stale and out-of-order batches never reach the document (0.5228ms)
+2026-11-11T11:23:15.7910151Z ✔ disposal from document callback cannot leave predictions after cancellation (0.5511ms)
+2026-11-11T11:23:15.7911751Z ✔ cancellation during preview clearing suppresses the interrupted actual delivery (0.4153ms)
+2026-11-11T11:23:15.7918273Z ✔ hardware keys and mouse hover route without fabricating force (0.3287ms)
+2026-11-11T11:23:15.7922190Z ✔ one pen leaving does not admit a palm while another pen is still hovering (1.5558ms)
+2026-11-11T11:23:15.7923507Z ✔ malformed native payloads are rejected without breaking the active stroke (0.7294ms)
+2026-11-11T11:23:15.7925633Z ✔ SwiftPM preserves native-controls CocoaPods frameworks, target, iOS floor and packed manifest (2.5646ms)
+2026-11-11T11:23:15.7927248Z ✔ stable native rail selection contract rejects invalid and duplicate destinations (3.708ms)
+2026-11-11T11:23:15.7928500Z ✔ native module uses ExpoUI native views and platform components (0.8438ms)
+2026-11-11T11:23:15.7929682Z ✔ native import is isolated from web fallback and Tally/Forge engines (0.7753ms)
+2026-11-11T11:23:15.7931943Z ✔ rail host dimensions preserve custom measurements and reject invalid geometry (2.7237ms)
+2026-11-11T11:23:15.7934251Z ✔ rail region follows the physical right segment around hinges, never text direction (2.2052ms)
+2026-11-11T11:23:15.7936266Z ✔ selected indicator is a fully rounded pill filled from a theme token on every renderer (0.7948ms)
+2026-11-11T11:23:15.7937644Z ✔ contained inspector owns its accessible close action and escape handler (300.1834ms)
+2026-11-11T11:23:15.7946214Z ✔ compact master has an internal close action and hides covered detail (81.0047ms)
+2026-11-11T11:23:15.7947542Z ✔ top inspector is the sole modal when layered above a compact master (71.4418ms)
+2026-11-11T11:23:15.7949249Z ✔ closed panes disable pointer and accessibility exposure without dropping content (72.5202ms)
+2026-11-11T11:23:15.7953482Z ✔ pane child slots and detail frame stay stable across inspector toggles (58.2238ms)
+2026-11-11T11:23:15.7956656Z ✔ regions from useReservedRegions place master and detail on opposite sides of the hinge (61.3002ms)
+2026-11-11T11:23:15.7961008Z ✔ a half-opened horizontal fold in regions sets tabletop posture (52.3682ms)
+2026-11-11T11:23:15.7962319Z ✔ explicit features and posture win over regions; regions still need a container (49.2784ms)
+2026-11-11T11:23:15.7963591Z ✔ checkpoint records reject torn writes, wrong versions and byte corruption (3.4988ms)
+2026-11-11T11:23:15.7966296Z ✔ checkpoint checksum respects selected byte views and owns bytes before yielding (57.0621ms)
+2026-11-11T11:23:15.7967636Z ✔ checkpoint generation and path names cannot escape storage or silently overflow (1.6119ms)
+2026-11-11T11:23:15.7969042Z ✔ closing storage drains accepted writes and rejects later work before releasing its backend (0.6184ms)
+2026-11-11T11:23:15.7970356Z ✔ strict frame capability is absent with old, missing, or noncallable bridge (1.5475ms)
+2026-11-11T11:23:15.7972471Z ✔ strict frame capability sends normalized data and preserves native presentation time (1.721ms)
+2026-11-11T11:23:15.7976521Z ✔ strict frame rejects a neighbor, invalid timestamp, or fractional timestamp instead of rounding it into success (1.4558ms)
+2026-11-11T11:23:15.7980098Z ✔ invalid request and pre-abort never enter native strict decode (1.5231ms)
+2026-11-11T11:23:15.7982574Z ✔ abort detaches strict native work and drops late completion (0.852ms)
+2026-11-11T11:23:15.7983755Z ✔ native failure retains its stable code and never falls back to ordinary decode (0.5202ms)
+2026-11-11T11:23:15.7984922Z ✔ decode request bounds reject before touching native resources (2.9845ms)
+2026-11-11T11:23:15.7986195Z ✔ unavailable decoder reports a real unsupported error and malformed native records reject (0.8428ms)
+2026-11-11T11:23:15.7987330Z ✔ PCM selection remains frame-aligned and interleaved (1.0907ms)
+2026-11-11T11:23:15.7988269Z ✔ an already-aborted frame request never enters native code (0.5499ms)
+2026-11-11T11:23:15.7989530Z ✔ abort settles the consumer and drains a late native completion without serializing its signal (8.8732ms)
+2026-11-11T11:23:15.7991121Z ✔ SwiftPM preserves CocoaPods framework linkage and the established iOS floor (3.2575ms)
+2026-11-11T11:23:15.7993416Z ✔ expo-module.config.json autolinks both platforms; android stays off the legacy list (3.0277ms)
+2026-11-11T11:23:15.7994890Z ✔ each module registers the JS name on both platforms (1.708ms)
+2026-11-11T11:23:15.7995863Z ✔ the JS-facing functions and events exist on both platforms (6.3767ms)
+2026-11-11T11:23:15.7996736Z ✔ every haptic kind maps on both platforms (0.6287ms)
+2026-11-11T11:23:15.7997633Z ✔ session events JS understands are the ones both platforms emit (0.92ms)
+2026-11-11T11:23:15.7998850Z ✔ Android shares app files through the kit's own FileProvider with a per-app authority (0.6383ms)
+2026-11-11T11:23:15.8009818Z ✔ no Swift file imports ExpoUI and the podspec does not depend on it (5.1457ms)
+2026-11-11T11:23:15.8011126Z ✔ old binaries and missing modules do not advertise a presentation index (1.9931ms)
+2026-11-11T11:23:15.8012481Z ✔ the index preserves supplied nonuniform timestamps in an independent immutable result (1.7371ms)
+2026-11-11T11:23:15.8013982Z ✔ invalid or incomplete timelines reject without sorting, truncating or synthesizing frames (1.6565ms)
+2026-11-11T11:23:15.8015366Z ✔ both the public parser and native facade independently validate the frame budget (2.0493ms)
+2026-11-11T11:23:15.8017095Z ✔ the native call receives only the URI and frame budget and rejects an oversized result (0.6164ms)
+2026-11-11T11:23:15.8018619Z ✔ an already-cancelled lookup never allocates native indexing work (0.7327ms)
+2026-11-11T11:23:15.8019994Z ✔ late completion and rejection after cancellation are drained without publishing an index (14.4345ms)
+2026-11-11T11:23:15.8021233Z ✔ native failures retain their public decoder error code (0.6152ms)
+2026-11-11T11:23:15.9239440Z ✔ haptics: the opt-out persists, is read back, and silences play (2.4021ms)
+2026-11-11T11:23:15.9244382Z ✔ haptics: same-kind feedback is rate limited, other kinds are not (0.2365ms)
+2026-11-11T11:23:15.9321008Z ✔ haptics: unknown kinds throw, web and unlinked builds no-op, a rejected play is not an app error (7.0971ms)
+2026-11-11T11:23:15.9330298Z ✔ playback policy: an interruption pauses and resumes only when the OS says so (0.5551ms)
+2026-11-11T11:23:15.9337541Z ✔ playback policy: focus loss ducks, pauses transiently, or stops for good (0.353ms)
+2026-11-11T11:23:15.9339336Z ✔ playback policy: losing the headset pauses and never resumes by itself (0.3921ms)
+2026-11-11T11:23:15.9347388Z ✔ playback payloads are validated; unknown types are dropped (0.3185ms)
+2026-11-11T11:23:15.9352267Z ✔ playback session: native events drive onAction; activate reports refusal (0.9777ms)
+2026-11-11T11:23:15.9358890Z ✔ documents: records are validated, cancel is [], modes are checked (1.2043ms)
+2026-11-11T11:23:15.9363025Z ✔ documentPickerSource maps FilePicker's accept string to picker types (0.5503ms)
+2026-11-11T11:23:15.9369179Z ✔ playback disposal drains activation, ignores stale callbacks and releases focus once (0.5381ms)
+2026-11-11T11:23:15.9370971Z ✔ haptics: synchronous native failures are harmless and invalid intervals reject (0.5251ms)
+2026-11-11T11:23:15.9372590Z ✔ playback listener disposal leaves process-wide focus to the shared owner (0.3293ms)
+2026-11-11T11:23:16.4825003Z ✔ expo-module.config.json autolinks both platforms (2.6534ms)
+2026-11-11T11:23:16.4831553Z ✔ apple: the listed Swift class is the v2 module registered under the shared JS name (0.95ms)
+2026-11-11T11:23:16.4835970Z ✔ android: the Kotlin v2 module is compiled in by the v2 plugin, not the legacy list (1.029ms)
+2026-11-11T11:23:16.4842344Z ✔ android record carries every ReservedRegion field; dp conversion uses display density (0.7602ms)
+2026-11-11T11:23:16.4843811Z ✔ the package ships the native sources and no Gradle build output (0.5511ms)
+2026-11-11T11:23:16.4845257Z ✔ toRegions accepts the v2 array and a { regions } body, drops malformed entries (0.7057ms)
+2026-11-11T11:23:16.4848991Z ✔ regionsEqual compares by value (0.2923ms)
+2026-11-11T11:23:16.5384677Z ✔ android: the v2 module answers the snapshot and the changed event (215.6159ms)
+2026-11-11T11:23:16.6099494Z ✔ ios: legacy lookup, query only, no changed subscription (53.9622ms)
+2026-11-11T11:23:16.8306699Z ✔ no linked module and a failed query both mean no regions (71.4615ms)
+2026-11-11T11:23:16.8319657Z ✔ an override wins and the native module is never queried (22.6284ms)
+2026-11-11T11:23:16.8333740Z ✔ web: side-by-side segments give a vertical hinge; folded posture separates (50.6955ms)
+2026-11-11T11:23:16.8348524Z ✔ web: stacked segments give a horizontal hinge; a flat physical gap still separates (25.6151ms)
+2026-11-11T11:23:16.8349880Z ✔ web: a flat zero-size seam is one continuous surface (30.3258ms)
+2026-11-11T11:23:16.8351220Z ✔ web: the snapshot is stable between reads and empty when hinge-blind (86.7175ms)
+2026-11-11T11:23:16.8352688Z ✔ SwiftPM preserves the native product and SDK-gated source tree (0.3936ms)
+2026-11-11T11:23:16.8703124Z ✔ synchronous and already-settled acknowledgements do not publish a disabling pending state (2.1208ms)
+2026-11-11T11:23:16.8705254Z ✔ real asynchronous work publishes pending, aborts at replacement and ignores late results (1.2703ms)
+2026-11-11T11:23:16.8708257Z ✔ a successful immediate acknowledgement clears a prior operation error (0.5328ms)
+2026-11-11T11:23:16.8727878Z ✔ precision instruments quantize, clamp and respect detents (1.45ms)
+2026-11-11T11:23:16.8739217Z ✔ scrub fine/coarse and XY controls use bounded normalized coordinates (1.095ms)
+2026-11-11T11:23:16.8743591Z ✔ tree rows preserve hierarchy, expansion and reject duplicate ids (0.602ms)
+2026-11-11T11:23:16.8767587Z ✔ loudness formatting and target delta (1.9377ms)
+2026-11-11T11:23:16.8773848Z ✔ peak severity uses danger only above -1 dBFS (0.1705ms)
+2026-11-11T11:23:16.8786635Z ✔ fixed -60..0 scale and bounded momentary bars (2.6452ms)
+2026-11-11T11:23:16.8842480Z ✔ loudness summary names omissions-free readings and the peak warning (0.5659ms)
+2026-11-11T11:23:16.8845416Z ✔ spectrogram intensity steps (0.3408ms)
+2026-11-11T11:23:16.8847407Z ✔ pooling caps columns at 96 and rows at 32 and keeps transients (19.1658ms)
+2026-11-11T11:23:16.8850219Z ✔ drawn views stay bounded for the worst-case checkerboard (34.0008ms)
+2026-11-11T11:23:16.8851172Z ✔ frequency and time axis labels (1.1028ms)
+2026-11-11T11:23:16.8853935Z ✔ spectrogram summary names duration, loudest band and time (0.7574ms)
+2026-11-11T11:23:16.8855353Z ✔ artboard metadata and thumbnail versions reject unrenderable values (1.6881ms)
+2026-11-11T11:23:16.8857505Z ✔ adding at the render limit or beyond representable coordinates is rejected before a host request (2.8085ms)
+2026-11-11T11:23:16.8859790Z ✔ drop, key and grid metrics never return NaN or unbounded columns (0.7795ms)
+2026-11-11T11:23:16.8861574Z ✔ geometry/source/disable restoration reaches the original preview callback and committed value (3.8229ms)
+2026-11-11T11:23:16.8863283Z ✔ EQ tuple previews preserve the original callback without restoring on every move (0.4557ms)
+2026-11-11T11:23:16.8864746Z ✔ callback replacement restores its predecessor before admitting new live audio (0.567ms)
+2026-11-11T11:23:16.8866215Z ✔ queued audio responder input requires matching source/geometry and enabled admission (0.2829ms)
+2026-11-11T11:23:16.8867486Z ✔ EQ and fader native identities do not include geometry keys (2.4315ms)
+2026-11-11T11:23:16.8868773Z ✔ late termination from a preceding responder cannot cancel a newer active gesture (0.2646ms)
+2026-11-11T11:23:16.8870098Z ✔ reentrant restore cannot forward an abandoned value into a newer preview host (0.3689ms)
+2026-11-11T11:23:16.8871483Z ✔ reentrant unscoped clear vetoes a replacement while original preview is detached (0.312ms)
+2026-11-11T11:23:16.8873954Z ✔ successful commit consumes preview without restoring; rejection restores once (5.3216ms)
+2026-11-11T11:23:16.8876662Z ✔ false host result restores feedback but late failed commit cannot overwrite a newer preview (0.6668ms)
+2026-11-11T11:23:16.8877982Z ✔ automation modes include host-gated live transport modes (2.7282ms)
+2026-11-11T11:23:16.8879235Z ✔ value <-> y uses a cubic fader taper for gain and a linear scale for pan (0.8726ms)
+2026-11-11T11:23:16.8880279Z ✔ ticks <-> x snap to the grid, clamp and follow scroll (0.8711ms)
+2026-11-11T11:23:16.8881159Z ✔ valueAt is linear between points and held at both ends (0.322ms)
+2026-11-11T11:23:16.8882056Z ✔ segments include held ends to the lane edges (1.2418ms)
+2026-11-11T11:23:16.8882919Z ✔ hit-testing finds the nearest point inside the 44 pt target (0.4325ms)
+2026-11-11T11:23:16.8884021Z ✔ drags keep a point strictly between its neighbours and snap (0.7741ms)
+2026-11-11T11:23:16.8885049Z ✔ keyboard steps move value and time and never cross neighbours (0.9698ms)
+2026-11-11T11:23:16.8885916Z ✔ value and position formatting (0.6186ms)
+2026-11-11T11:23:16.8886573Z ✔ clamping and duplicate-tick guard (0.6619ms)
+2026-11-11T11:23:16.8887609Z ✔ cancel restores transient engine preview after clearing local gesture state (6.3972ms)
+2026-11-11T11:23:16.8888802Z ✔ cancel works without app preview and never requires a commit callback (0.2418ms)
+2026-11-11T11:23:16.8889985Z ✔ all gesture controls roll back previews and ignore release after termination (1.3332ms)
+2026-11-11T11:23:16.8891123Z ✔ viewport maps document to screen without mirroring and validates (31.1161ms)
+2026-11-11T11:23:16.8892377Z ✔ ruler units convert through dpi, pixels ignore it (0.6664ms)
+2026-11-11T11:23:16.8893646Z ✔ ruler ticks re-space with zoom and keep labels apart (3.4413ms)
+2026-11-11T11:23:16.8894448Z ✔ ruler labels count from the origin (0.5258ms)
+2026-11-11T11:23:16.8895418Z ✔ guides land on whole pixels, drop back on their ruler, and step by key (0.9052ms)
+2026-11-11T11:23:16.8896521Z ✔ grid draws and snaps to what is visible at the zoom (1.3083ms)
+2026-11-11T11:23:16.8897554Z ✔ points snap to grid, guides and artboard edges, meeting at intersections (1.6166ms)
+2026-11-11T11:23:16.8898621Z ✔ reach is in screen units and magnetism fades toward its edge (0.446ms)
+2026-11-11T11:23:16.8899597Z ✔ rects snap by the nearest edge or centre and are never resized (0.7593ms)
+2026-11-11T11:23:16.8900602Z ✔ smart guides align edges and centres with other layers' bounds (2.7927ms)
+2026-11-11T11:23:16.8901612Z ✔ smart guides find equal spacing and centre between neighbours (1.2148ms)
+2026-11-11T11:23:16.8902564Z ✔ pivot maths matches Prism's affine and round-trips (0.7333ms)
+2026-11-11T11:23:16.8903537Z ✔ anchors sit on the transformed bounds and the pivot snaps to them (0.8783ms)
+2026-11-11T11:23:16.8904546Z ✔ rotation snaps the resulting angle to 15 degrees with Shift (0.368ms)
+2026-11-11T11:23:16.8905578Z ✔ align and distribute are disabled with reasons below their minimums (0.717ms)
+2026-11-11T11:23:16.8906464Z ✔ commands are shaped like the Prism ops (0.7308ms)
+2026-11-11T11:23:16.8907313Z ✔ arrange moves one layer with moveLayer indices (0 = bottom) (0.528ms)
+2026-11-11T11:23:16.8908126Z ✔ sources keep the cluster's contracts (4.2486ms)
+2026-11-11T11:23:16.8909022Z ✔ smart guide metadata is bounded and rejects ambiguous identities (29.5629ms)
+2026-11-11T11:23:16.8910101Z ✔ snapping validates guide and artboard metadata before calculation (0.5235ms)
+2026-11-11T11:23:16.8911315Z ✔ smart-guide announcements reject oversized feedback and ignore inherited names (0.4364ms)
+2026-11-11T11:23:16.8912531Z ✔ zoom preserves the document under its anchor including limit clamping (1.6271ms)
+2026-11-11T11:23:16.8914153Z ✔ pinch combines scale with centroid travel without mirroring or pointer-order dependence (1.3342ms)
+2026-11-11T11:23:16.8915577Z ✔ single-pointer pan and coincident pairs remain finite; mismatched/third pointers reject (0.7572ms)
+2026-11-11T11:23:16.8916781Z ✔ fit accounts for offset bounds, padding and minimum/maximum zoom (0.4029ms)
+2026-11-11T11:23:16.8917983Z ✔ wheel units are explicit and zoom wheel anchors rather than changing page geometry (0.4037ms)
+2026-11-11T11:23:17.5228838Z ✔ native platforms retain the native responder (139.9841ms)
+2026-11-11T11:23:17.5230917Z ✔ web Alt-drag keeps local coordinates and commits once with capture (28.4746ms)
+2026-11-11T11:23:17.5235413Z ✔ a second pointer cancels without a commit and always releases capture (28.6148ms)
+2026-11-11T11:23:17.5416176Z ✔ tapping another cell saves the dirty formula before changing selection (1.1667ms)
+2026-11-11T11:23:17.5417893Z ✔ failed save or newer edit prevents a cell tap from discarding the draft (1.1557ms)
+2026-11-11T11:23:17.5419227Z ✔ submit followed by blur sends exactly one commit before React rerenders (1.2886ms)
+2026-11-11T11:23:17.5428460Z ✔ an old save cannot clear a newer draft or sheet selection (0.2939ms)
+2026-11-11T11:23:17.5430176Z ✔ a rejected old save cannot attach errors to the next edit (0.3036ms)
+2026-11-11T11:23:17.5432573Z ✔ current save failure retains the draft and permits retry (0.318ms)
+2026-11-11T11:23:17.5438213Z ✔ missing selection, read-only and clean edits never invoke persistence (0.2835ms)
+2026-11-11T11:23:17.5439602Z ✔ curves preserve endpoint inputs, point identities and ordered neighbors (1.8723ms)
+2026-11-11T11:23:17.5441098Z ✔ linear/monotone interpolation retains endpoints and never overshoots segment extrema (5.607ms)
+2026-11-11T11:23:17.5442628Z ✔ histogram pooling retains total counts including sparse and non-divisible bins (1.2957ms)
+2026-11-11T11:23:17.5444903Z ✔ scope pooling includes edge samples and preserves actual sample intensity (0.5457ms)
+2026-11-11T11:23:17.5447816Z ✔ levels and grading reject impossible bounds and nonfinite exposure (0.6542ms)
+2026-11-11T11:23:17.5449165Z ✔ secondary hue wraps across zero while saturation/luma remain ordered (0.4045ms)
+2026-11-11T11:23:17.5450380Z ✔ mesh edits preserve grid identity and reject folded or singular cells (0.9692ms)
+2026-11-11T11:23:17.5452019Z ✔ bilinear mesh display preview preserves corner colors, smooth intermediate values and premultiplied alpha (2.4705ms)
+2026-11-11T11:23:17.5453490Z ✔ HSV and HSL convert exactly in both directions and keep hue at gray (6.9937ms)
+2026-11-11T11:23:17.5454762Z ✔ WCAG contrast matches reference values and composites translucent text (0.6347ms)
+2026-11-11T11:23:17.5455759Z ✔ harmonies rotate hue only and wrap (0.6975ms)
+2026-11-11T11:23:17.5456691Z ✔ polar angles run anticlockwise from 3 o'clock and invert (0.7115ms)
+2026-11-11T11:23:17.5457808Z ✔ ring hit test splits halfway between the disc and the ring (0.3215ms)
+2026-11-11T11:23:17.5459073Z ✔ disc maps angle to hue, radius to saturation, clamps and retains hue near gray (0.4594ms)
+2026-11-11T11:23:17.5472045Z ✔ ring drag jumps on the ring, then tracks relatively with a fine zone (0.515ms)
+2026-11-11T11:23:17.5473447Z ✔ floating palette undocks past 30 units and stays in bounds and off the hinge (1.3222ms)
+2026-11-11T11:23:17.5474723Z ✔ swatch search matches names and hex prefixes and drops empty groups (0.7828ms)
+2026-11-11T11:23:17.5475889Z ✔ recent swatches dedupe by hex, newest first, and cap (0.6294ms)
+2026-11-11T11:23:17.5476993Z ✔ swatch grid keyboard moves in rows, flips under RTL and clamps (0.4621ms)
+2026-11-11T11:23:17.5479549Z ✔ foreground/background swap twice is identity; defaults are black on white (0.4241ms)
+2026-11-11T11:23:17.5481008Z ✔ channel fields read rounded values and write one channel without drifting the others (1.2841ms)
+2026-11-11T11:23:17.5482326Z ✔ segment gradients sample stop interpolation at segment centers (0.8805ms)
+2026-11-11T11:23:17.5483797Z ✔ saturation layers make white fall off linearly with radius (0.6304ms)
+2026-11-11T11:23:17.5485024Z ✔ value gesture previews, commits once on release and restores on cancel (0.6994ms)
+2026-11-11T11:23:17.5488954Z ✔ local pointer reports view-local points from the grant point plus page travel (0.8117ms)
+2026-11-11T11:23:17.5491037Z ✔ a second pointer cancels unless the control pinches, and termination cancels (0.5583ms)
+2026-11-11T11:23:17.5497101Z ✔ adjust keys follow the ARIA slider pattern and flip horizontally under RTL (0.2756ms)
+2026-11-11T11:23:17.5500241Z ✔ local store notifies only on change and unsubscribes (0.5172ms)
+2026-11-11T11:23:17.5502276Z ✔ color cluster sources use tokens, no hex literals and no engine imports (6.0322ms)
+2026-11-11T11:23:17.5503496Z ✔ ported color files carry the pinned ProCraft notice (0.9029ms)
+2026-11-11T11:23:17.5504445Z ✔ hex parsing covers short and long rgb/rgba forms (2.9484ms)
+2026-11-11T11:23:17.5505753Z ✔ RGB channels round-trip through HSV (0.7729ms)
+2026-11-11T11:23:17.5506680Z ✔ hue is retained at zero saturation and wrapped everywhere (0.4043ms)
+2026-11-11T11:23:17.5507546Z ✔ invalid colors are rejected (0.9489ms)
+2026-11-11T11:23:17.5508459Z ✔ every whole opacity percent survives an 8-bit hex round trip (0.9911ms)
+2026-11-11T11:23:17.5509476Z ✔ field maps corners and clamps to the drawable area (0.3264ms)
+2026-11-11T11:23:17.5510490Z ✔ field round-trips normalized xy and keeps hue and alpha (0.7712ms)
+2026-11-11T11:23:17.5511411Z ✔ field rejects corrupt geometry (0.3108ms)
+2026-11-11T11:23:17.5512281Z ✔ gesture ignores touches before the field is measured (0.7795ms)
+2026-11-11T11:23:17.5513143Z ✔ gesture ignores input while disabled (0.5207ms)
+2026-11-11T11:23:17.5513975Z ✔ gesture keeps the responder for the whole drag (0.357ms)
+2026-11-11T11:23:17.5514919Z ✔ forced platform cancel restores the drag-start color (0.2932ms)
+2026-11-11T11:23:17.5516126Z ✔ normal release keeps the last color (0.2417ms)
+2026-11-11T11:23:17.5517182Z ✔ HsvPicker contract: shared math, controlled, accessible, motion-free (1.5476ms)
+2026-11-11T11:23:17.5518480Z ✔ an opacity-only channel edit keeps hue, saturation and brightness exactly (0.2799ms)
+2026-11-11T11:23:17.5519552Z ✔ rgbToHsv always reports hue in [0, 360) (7.9324ms)
+2026-11-11T11:23:17.5520462Z ✔ moves that land on the same color are not re-emitted (0.3074ms)
+2026-11-11T11:23:17.5521619Z ✔ profiles preserve identity and reject ambiguous or unbounded choices (2.7022ms)
+2026-11-11T11:23:17.5524192Z ✔ CMYK percentages retain profile and alpha; HDR channels retain negative and above-one values (1.6614ms)
+2026-11-11T11:23:17.5525301Z ✔ gamut status requires actual measured counts and finite delta E (0.4308ms)
+2026-11-11T11:23:17.5526301Z ✔ named spot/global colors validate identity without inventing ink conversions (0.399ms)
+2026-11-11T11:23:17.5527460Z ✔ proof settings require an available profile before enabling; every intent is explicit (0.8829ms)
+2026-11-11T11:23:17.5528536Z ✔ Lab entry retains signed profile channels and explicit chroma bounds (0.9458ms)
+2026-11-11T11:23:17.5529655Z ✔ gamut comparison keeps original HDR values distinct from mapped display preview (0.9617ms)
+2026-11-11T11:23:17.5530914Z ✔ empty query keeps every command in the caller's order (2.666ms)
+2026-11-11T11:23:17.5532019Z ✔ label prefix outranks word prefix, substring and keyword matches (1.0311ms)
+2026-11-11T11:23:17.5533194Z ✔ every token must match and search ignores case and accents (0.5317ms)
+2026-11-11T11:23:17.5534288Z ✔ disabled commands stay visible but are never highlighted (0.4152ms)
+2026-11-11T11:23:17.5535441Z ✔ arrow keys wrap over enabled results and stale highlights are replaced (0.3845ms)
+2026-11-11T11:23:17.5536471Z ✔ duplicate IDs and empty labels are rejected (1.1305ms)
+2026-11-11T11:23:17.5537431Z ✔ Tab cycling wraps both ways and enters from outside the list (0.3554ms)
+2026-11-11T11:23:17.5538867Z ✔ placement side follows the usable region, so native popovers flip above near a bottom edge (0.5039ms)
+2026-11-11T11:23:17.5540240Z ✔ palette uses the kit TextField, placePopover and RN-Android-safe roles (2.5275ms)
+2026-11-11T11:23:17.6294400Z ✔ tool and document identities reject ambiguous palettes and malformed permissions (2.4012ms)
+2026-11-11T11:23:17.6297580Z ✔ ribbon menus reject duplicate choices and invalid inline counts (1.022ms)
+2026-11-11T11:23:17.6609085Z ✔ composition expansion preserves document sibling order and reveals nested ancestry (3.5621ms)
+2026-11-11T11:23:17.6620578Z ✔ composition hierarchy rejects cycles, invalid parents and unsupported values (1.0544ms)
+2026-11-11T11:23:17.6623342Z ✔ large composition pages stay iterative and enforce the nesting budget (24.4074ms)
+2026-11-11T11:23:17.7055731Z ✔ accept strings follow the HTML input syntax (2.5744ms)
+2026-11-11T11:23:17.7121717Z ✔ MIME allowlists keep expo-drag-drop-content-view semantics (0.408ms)
+2026-11-11T11:23:17.7146544Z ✔ nested drag targets report one enter and one exit (0.4885ms)
+2026-11-11T11:23:17.7151917Z ✔ every part B primitive has its own subpath with platform forks where needed (0.8172ms)
+2026-11-11T11:23:17.7158458Z ✔ native-only and styling peers stay optional and confined to their subpaths (1.6037ms)
+2026-11-11T11:23:17.7165256Z ✔ feedback semantics: live regions, alert only on request, 44pt dismiss, no color-only state (0.6984ms)
+2026-11-11T11:23:17.7168625Z ✔ semantic set: real elements on web, roles (never accessibilityRole) on native (0.4831ms)
+2026-11-11T11:23:17.7169870Z ✔ FilePicker never renders a dead control on native (0.3168ms)
+2026-11-11T11:23:18.1424390Z ✔ all direct component export targets are actual independent files (27.3923ms)
+2026-11-11T11:23:18.1436348Z ✔ Forge controls never import engine packages or app-specific palettes (3.8662ms)
+2026-11-11T11:23:18.1459829Z ✔ waveform preserves real signal extrema and bounds view work (1.9953ms)
+2026-11-11T11:23:18.1464383Z ✔ frame math returns whole bounded frames and SMPTE display (0.5707ms)
+2026-11-11T11:23:18.1472425Z ✔ RGBA math is document-agnostic and validates channels (0.3649ms)
+2026-11-11T11:23:18.1474678Z ✔ Spreadsheet window virtualizes both rows and columns without allocating full sheet (0.4147ms)
+2026-11-11T11:23:18.1476920Z ✔ data tables switch to labeled record cards in portrait and narrow split panes (1.7386ms)
+2026-11-11T11:23:18.1501881Z ✔ Tally mobile grid keeps all spreadsheet columns, touch targets and formula input (0.5882ms)
+2026-11-11T11:23:18.1504361Z ✔ responsive implementation measures host panes, not window screen dimensions (0.5811ms)
+2026-11-11T11:23:18.1505991Z ✔ portrait-landscape and foldable split resize retain selected sheet region (0.5411ms)
+2026-11-11T11:23:18.1507082Z ✔ every semantic token a component uses is documented for consumers (132.6909ms)
+2026-11-11T11:23:18.1508920Z ✔ interactive controls keep screen-reader semantics (0.6117ms)
+2026-11-11T11:23:18.1510184Z ✔ components take colors from theme tokens, not hardcoded hex values (51.3802ms)
+2026-11-11T11:23:18.1512295Z ✔ every adjustable control can be adjusted by a screen reader (49.9502ms)
+2026-11-11T11:23:18.1520578Z ✔ accessibilityRole only uses values Android's enum accepts (50.4475ms)
+2026-11-11T11:23:18.1521988Z ✔ data grids expose grid semantics instead of per-cell buttons (0.6109ms)
+2026-11-11T11:23:18.1681914Z ✔ geometry or source replacement consumes old drag, release and queued admission (1.2185ms)
+2026-11-11T11:23:18.1684242Z ✔ preview cleanup calls original host after replacement and stale cleanup cannot clear next host (1.9309ms)
+2026-11-11T11:23:18.1685724Z ✔ callback replacement restores predecessor, including throwing and reentrant cleanup (0.9039ms)
+2026-11-11T11:23:18.1687454Z ✔ ruler and selection handles retain semantic keys and explicitly cancel coordinate admission (1.1031ms)
+2026-11-11T11:23:18.1688892Z ✔ raw preview source replacement stops old finish before shared cleanup or write (0.3893ms)
+2026-11-11T11:23:18.1692677Z ✔ source replacement during preview cleanup stops the old final write (0.2828ms)
+2026-11-11T11:23:18.1694178Z ✔ geometry measurements remain available while editing is pending and reject replaced-source events (0.59ms)
+2026-11-11T11:23:18.1695637Z ✔ preview only and one release commit are shared by dock and layer consumers (2.4964ms)
+2026-11-11T11:23:18.1696867Z ✔ cancellation, termination, and becoming disabled never commit (0.2962ms)
+2026-11-11T11:23:18.1699785Z ✔ keyboard key reads web and native event shapes (0.2342ms)
+2026-11-11T11:23:18.1703479Z ✔ responder transport delivers page coordinates for one pointer (0.7623ms)
+2026-11-11T11:23:18.1705041Z ✔ responder transport keeps its drag, rejects disabled/multitouch starts and cancels interruption (0.3603ms)
+2026-11-11T11:23:18.1706461Z ✔ native transport uses RNGH with one pointer and JS callbacks (1.1588ms)
+2026-11-11T11:23:18.1707879Z ✔ native failure and extra pointers cancel without committing (0.393ms)
+2026-11-11T11:23:18.1709032Z ✔ no-MOVE tap releases once and a losing pan finalize cannot cancel it (0.2485ms)
+2026-11-11T11:23:18.1710169Z ✔ multitouch or losing tap cannot start a second transaction (0.5719ms)
+2026-11-11T11:23:18.1711393Z ✔ simultaneous two-finger touch-down stays rejected when begin follows touches (0.4358ms)
+2026-11-11T11:23:18.1712787Z ✔ handle keeps its label, Escape cancel and the optional-peer boundary (1.2127ms)
+2026-11-11T11:23:18.5538291Z ✔ editor pan rolls back once after touch cancellation and ignores late release (156.5335ms)
+2026-11-11T11:23:18.5553954Z ✔ editor pan rolls back once after canceled deactivation and ignores late release (24.2927ms)
+2026-11-11T11:23:18.5562236Z ✔ editor pan rolls back once after finalization and ignores late release (27.9465ms)
+2026-11-11T11:23:18.5563846Z ✔ editor pan rolls back once after second contact and ignores late release (17.891ms)
+2026-11-11T11:23:18.5565358Z ✔ editor pan rolls back once after unmount and ignores late release (15.7683ms)
+2026-11-11T11:23:18.5567330Z ✔ editor pan commits exactly once on successful release (12.7382ms)
+2026-11-11T11:23:18.5835455Z ✔ log frequency maps 20 Hz..20 kHz across the width, one decade per third (2.5281ms)
+2026-11-11T11:23:18.5836812Z ✔ dB maps around the centre line and clamps to the visible range (0.4225ms)
+2026-11-11T11:23:18.5838515Z ✔ gridlines: 100 Hz, 1k, 10k labelled; 0 and ±6, ±12 dB (1.718ms)
+2026-11-11T11:23:18.5840160Z ✔ response segments join points and skip junk; segment geometry matches the sparkline convention (0.6751ms)
+2026-11-11T11:23:18.5841594Z ✔ band handles: pass bands sit on 0 dB (0.306ms)
+2026-11-11T11:23:18.5842900Z ✔ drag moves log frequency and gain, rounds, clamps; pass bands keep gain (0.625ms)
+2026-11-11T11:23:18.5845028Z ✔ rounding: decade resolution, gain to 0.1 within ±24, no negative zero (0.2737ms)
+2026-11-11T11:23:18.5846518Z ✔ keyboard steps: twelfth octave, 0.5 dB, 3 dB pages, Shift fine, Home zero (0.643ms)
+2026-11-11T11:23:18.5847642Z ✔ formatters and spoken values (0.5721ms)
+2026-11-11T11:23:18.5849290Z ✔ dynamics plot: -60..0 on both axes, unity diagonal, gridlines every 12 dB (1.3302ms)
+2026-11-11T11:23:18.5850694Z ✔ curve lookup interpolates engine points only (0.3754ms)
+2026-11-11T11:23:18.5851961Z ✔ threshold drag and ratio steps (0.3813ms)
+2026-11-11T11:23:18.5853039Z ✔ dynamics readouts (0.6431ms)
+2026-11-11T11:23:18.5854100Z ✔ finds cells and ranges with absolute markers and exact offsets (3.1293ms)
+2026-11-11T11:23:18.5855493Z ✔ ignores strings, function names, identifiers and out-of-grid tokens (1.5243ms)
+2026-11-11T11:23:18.5857142Z ✔ sheet-qualified references keep their sheet and only the current sheet is highlighted (0.5151ms)
+2026-11-11T11:23:18.5858881Z ✔ geometry/source/admission cancellation clears only the preview host that owns it (2.8777ms)
+2026-11-11T11:23:18.5860711Z ✔ changing preview callback ownership cancels the previous lease before delivering new pixels (0.3282ms)
+2026-11-11T11:23:18.5862635Z ✔ both gradient layers retain mounted identity across resize, source updates and disable (2.2637ms)
+2026-11-11T11:23:18.5869638Z ✔ queued semantic handle and stop actions reject changed geometry before access (17.1752ms)
+2026-11-11T11:23:18.5872360Z ✔ reentrant restoration publishing a newer owner prevents stale replacement notification (0.3321ms)
+2026-11-11T11:23:18.5882594Z ✔ reentrant restoration clear wins even while the previous lease is already detached (0.2944ms)
+2026-11-11T11:23:18.5899590Z ✔ gradient midpoint identifies half the color transition and interpolation is explicit (3.4334ms)
+2026-11-11T11:23:18.5904942Z ✔ gradient alpha interpolation is premultiplied and coincident end stops remain valid (0.4392ms)
+2026-11-11T11:23:18.5907361Z ✔ gradient angle/type edits preserve origin, length and stop identity (0.5201ms)
+2026-11-11T11:23:18.5909001Z ✔ submits a complete transformed frame and releases the recording after queue ownership (2.898ms)
+2026-11-11T11:23:18.5910629Z ✔ draw failure closes and releases an unsubmitted recording and preserves the error (0.9629ms)
+2026-11-11T11:23:18.5912210Z ✔ a synchronous scope replacement discards the old frame before submission (0.3588ms)
+2026-11-11T11:23:18.5913564Z ✔ zero-sized or retired surfaces do not allocate a recording (0.3609ms)
+2026-11-11T11:23:18.5915058Z ✔ async callbacks are rejected and their recording never reaches the display queue (0.4174ms)
+2026-11-11T11:23:18.6140604Z ✔ native crop rect moves and clamps without resizing (2.905ms)
+2026-11-11T11:23:18.6150307Z ✔ resize handles keep nonzero rect inside visible image and produce engine pixel coords (0.7576ms)
+2026-11-11T11:23:18.7323340Z ✔ defaults mirror the Forge board: three tools and QuickDraw sizes (2.6246ms)
+2026-11-11T11:23:18.7335739Z ✔ validation rejects state the toolbar cannot show honestly (1.4975ms)
+2026-11-11T11:23:18.7346465Z ✔ size and opacity steps clamp at the ends (0.3849ms)
+2026-11-11T11:23:18.7354044Z ✔ size preview dot grows with size, highlighter is wider, and fits the target (0.3669ms)
+2026-11-11T11:23:18.7363459Z ✔ shortcuts map letters, brackets and platform undo/redo without shadowing menus (3.7158ms)
+2026-11-11T11:23:18.7364864Z ✔ commands resolve to host calls or an honest notice (0.549ms)
+2026-11-11T11:23:18.7366226Z ✔ toolbar exposes radio groups, an adjustable size, and no engine or palette (1.2634ms)
+2026-11-11T11:23:18.7591773Z ✔ the innermost active scope wins; global is the fallback (2.2895ms)
+2026-11-11T11:23:18.7593977Z ✔ chords resolve through #39's bindingFromChord: Command on Apple, Control elsewhere (0.6544ms)
+2026-11-11T11:23:18.7595567Z ✔ a focused text field keeps typing and editing keys unless the command opts in (0.4903ms)
+2026-11-11T11:23:18.7596919Z ✔ disabled commands never dispatch and are not registered natively (0.6031ms)
+2026-11-11T11:23:18.7598440Z ✔ conflicts are per scope; the first registration dispatches (1.9432ms)
+2026-11-11T11:23:18.7599787Z ✔ reserved OS chords are reported per platform (0.4433ms)
+2026-11-11T11:23:18.7601322Z ✔ native bindings are split, deduplicated, titled by the first command and keep text editing out of priority (0.5079ms)
+2026-11-11T11:23:18.7752231Z ✔ precise alpha preserves six decimals from percent entry, including transparent and opaque endpoints (1.7681ms)
+2026-11-11T11:23:18.7754865Z ✔ spaces and mode capabilities remain explicit and unsupported retained values explain themselves (1.1341ms)
+2026-11-11T11:23:18.7756807Z ✔ invalid alpha, ambiguous catalogs, unknown policies and mode references are rejected (0.6294ms)
+2026-11-11T11:23:18.9544617Z ✔ base64 round-trips every byte value and engine results decode to rasters (3.2242ms)
+2026-11-11T11:23:18.9546875Z ✔ PNG encoder writes a valid RGBA PNG whose pixels inflate back unchanged (6.8316ms)
+2026-11-11T11:23:18.9550067Z ✔ small drawings upscale by whole pixels, and empty rasters are detected (7.831ms)
+2026-11-11T11:23:18.9553508Z ✔ thumbnail geometry: request size, fit and bounded checkerboard (0.8915ms)
+2026-11-11T11:23:18.9598831Z ✔ cache loads once per id+revision+size, keeps the stale preview while revalidating, and separates error from empty (15.4412ms)
+2026-11-11T11:23:18.9744935Z ✔ cache evicts least recently read entries past its capacity but never loads in flight (4.186ms)
+2026-11-11T11:23:18.9758395Z ✔ mask model: create options explain themselves; refine clamps and refuses no-ops (0.8088ms)
+2026-11-11T11:23:18.9760608Z ✔ clipping resolves each clipped layer to the nearest unclipped sibling below (0.8234ms)
+2026-11-11T11:23:18.9768280Z ✔ clip toggle names its base and explains why the bottom layer cannot clip (0.8725ms)
+2026-11-11T11:23:18.9773194Z ✔ LayerStack rows carry clippedTo into the label and reject a blank one (1.1996ms)
+2026-11-11T11:23:18.9774853Z ✔ artboard model validates, names and places new artboards without overlap (1.0012ms)
+2026-11-11T11:23:18.9776440Z ✔ artboard grid columns, drop targets and keys (0.7733ms)
+2026-11-11T11:23:18.9852307Z ✔ compare model: split keys stay left-to-right, drags and frames line up (1.1164ms)
+2026-11-11T11:23:18.9854241Z ✔ source contracts: controlled, token-only, engine-free, ported files carry the ProCraft header (3.8539ms)
+2026-11-11T11:23:18.9856098Z ✔ malformed successful thumbnail loads become retryable failures (7.6726ms)
+2026-11-11T11:23:18.9977456Z ✔ clear aborts cooperative loaders and late completion cannot resurrect an old document (15.2994ms)
+2026-11-11T11:23:19.0199320Z ✔ pending work has an admission budget and clear before its microtask prevents loading (18.3917ms)
+2026-11-11T11:23:19.0263700Z ✔ document cache namespaces separate reused layer IDs and oversized output has an honest error (1.3148ms)
+2026-11-11T11:23:19.0266991Z ✔ thumbnail encoding bounds large input rasters before creating PNG data URIs (0.5772ms)
+2026-11-11T11:23:19.0268928Z ✔ evicted preview images cannot survive in an unbounded stale-image side cache (2.329ms)
+2026-11-11T11:23:19.0272749Z ✔ miss snapshots stay stable while every admitted slot is pending (0.4264ms)
+2026-11-11T11:23:19.0278574Z ✔ base64 raster metadata is checked before decoding its payload (0.2489ms)
+2026-11-11T11:23:19.0281641Z ✔ clearing a pending preview changes its snapshot so an active subscriber can request again (0.2272ms)
+2026-11-11T11:23:19.0550384Z ✔ layer validation rejects rows the stack cannot render honestly (2.8683ms)
+2026-11-11T11:23:19.0568590Z ✔ opacity math clamps, steps and drags in whole percent (0.9743ms)
+2026-11-11T11:23:19.0570454Z ✔ drag targets and moves treat index 0 as the top layer (1.7925ms)
+2026-11-11T11:23:19.0624619Z ✔ rename drops blank and unchanged drafts (0.8029ms)
+2026-11-11T11:23:19.0762101Z ✔ screen-reader labels carry position, visibility, opacity and lock (0.353ms)
+2026-11-11T11:23:19.0766818Z ✔ opacity drag previews live, commits once on release and restores on cancel (0.5413ms)
+2026-11-11T11:23:19.0768952Z ✔ rows expose 44pt targets and screen-reader actions for every gesture (0.6631ms)
+2026-11-11T11:23:19.0770509Z ✔ kindLabel replaces the built-in kind label on screen and in the spoken label (0.3809ms)
+2026-11-11T11:23:19.0772145Z ✔ thumbnails take a fill or a node, never both or neither, and speak only through the row (0.9693ms)
+2026-11-11T11:23:19.0779523Z ✔ removeLayer returns a new array without the row and rejects unknown ids (0.5287ms)
+2026-11-11T11:23:19.0781110Z ✔ remove is optional, confirm-free, and reachable by pointer, keyboard and screen reader (0.3729ms)
+2026-11-11T11:23:19.0782403Z ✔ layer subpaths ship explicit .js targets (0.1896ms)
+2026-11-11T11:23:19.0784240Z ✔ collapsed groups hide descendants while expanded nesting retains depth and inherited locks (3.8354ms)
+2026-11-11T11:23:19.0788817Z ✔ missing/non-group parents, cycles and unknown expansion are rejected even when collapsed (0.7202ms)
+2026-11-11T11:23:19.0790676Z ✔ moving a group changes sibling order while descendants retain their identities and parents (0.7824ms)
+2026-11-11T11:23:19.0792654Z ✔ reparent and exact remaining-sibling insertion work in both directions (0.4906ms)
+2026-11-11T11:23:19.0794855Z ✔ self/descendant moves, inherited locks and invalid insertion positions cannot mutate the hierarchy (2.0139ms)
+2026-11-11T11:23:19.1355517Z ✔ gain and dB convert both ways, silence is -Infinity (2.3556ms)
+2026-11-11T11:23:19.1362223Z ✔ travel is linear in dB with silence at the bottom (0.5926ms)
+2026-11-11T11:23:19.1377329Z ✔ ranges are validated and bound the gain ceiling (1.439ms)
+2026-11-11T11:23:19.1384683Z ✔ drag is relative to the grab point and clamps at both ends (0.3347ms)
+2026-11-11T11:23:19.1389669Z ✔ steps move in dB, enter from and fall to silence (0.3917ms)
+2026-11-11T11:23:19.1392591Z ✔ readout uses signed dB and an infinity sign for silence (0.2839ms)
+2026-11-11T11:23:19.1394662Z ✔ steps leave the bottom stop of a deep range in both directions (3.7281ms)
+2026-11-11T11:23:19.1691631Z ✔ mask revisions obey the thumbnail cache version contract (1.3116ms)
+2026-11-11T11:23:19.1693353Z ✔ clipping accepts the shared layer parentId contract and respects inherited locks (0.8677ms)
+2026-11-11T11:23:19.1695111Z ✔ ambiguous parents, cycles, duplicate IDs and invalid clipping metadata are rejected (0.3506ms)
+2026-11-11T11:23:19.2014805Z ✔ canceled and superseded begin measurements cannot overwrite the newest drag (2.1076ms)
+2026-11-11T11:23:19.2026405Z ✔ drop before initial measurement rejects instead of reusing a prior gesture origin (0.1893ms)
+2026-11-11T11:23:19.2036582Z ✔ pending release callbacks are invalidated by cancel, geometry or a newer drag (0.2167ms)
+2026-11-11T11:23:19.2044867Z ✔ a reentrant source switch cannot revive an old consumed drop token (1.1973ms)
+2026-11-11T11:23:19.2055090Z ✔ PDF/pivot rows retain item identity and geometry cancels admission instead of remounting (0.8197ms)
+2026-11-11T11:23:19.3239997Z ✔ velocityAtY maps the lane's top to 127 and bottom to 0, clamped (2.471ms)
+2026-11-11T11:23:19.3246659Z ✔ noteLaneX follows inset, scale and scroll (0.3031ms)
+2026-11-11T11:23:19.3253604Z ✔ a line across all bars interpolates linearly, sorted, integer, changed only (1.5426ms)
+2026-11-11T11:23:19.3260031Z ✔ a reversed drag gives the same batch: time stays left to right (0.3237ms)
+2026-11-11T11:23:19.3263488Z ✔ only notes inside the x span are hit; reach widens the span (0.4562ms)
+2026-11-11T11:23:19.3507301Z ✔ a single-point segment sets the bar under it to the point's height (0.2757ms)
+2026-11-11T11:23:19.3517201Z ✔ empty results: no hit, no change, no notes (0.2636ms)
+2026-11-11T11:23:19.3519498Z ✔ the result never depends on layout direction (0.2739ms)
+2026-11-11T11:23:19.3521065Z ✔ duplicate indices cannot appear even for chords (0.2986ms)
+2026-11-11T11:23:19.3522150Z ✔ invalid geometry and points throw (0.5744ms)
+2026-11-11T11:23:19.3523496Z ✔ ramp runs from the selected note's velocity over the next notes in time (0.9707ms)
+2026-11-11T11:23:19.3525816Z ✔ batch summary (0.275ms)
+2026-11-11T11:23:19.3529887Z ✔ channels are 0..15 and read as 1..16 (10.9234ms)
+2026-11-11T11:23:19.3665955Z ✔ pan maps -1..1 onto the track and snaps to centre (2.3694ms)
+2026-11-11T11:23:19.3685707Z ✔ pan steps stop on centre and format physically (0.3774ms)
+2026-11-11T11:23:19.3687049Z ✔ solo takes precedence over mute, matching the engine render (1.4112ms)
+2026-11-11T11:23:19.3688302Z ✔ tap tempo averages the window and resets on a long gap (0.4585ms)
+2026-11-11T11:23:19.3689434Z ✔ time signatures follow the engine's rules (0.4945ms)
+2026-11-11T11:23:19.3690318Z ✔ piano roll geometry (0.5109ms)
+2026-11-11T11:23:19.3691375Z ✔ note drags snap to the grid, stay in the clip and move pitch by rows (0.5637ms)
+2026-11-11T11:23:19.3692695Z ✔ keyboard edits move, resize and remove a focused note (0.5111ms)
+2026-11-11T11:23:19.3694158Z ✔ velocity drags are relative and clamped (0.3357ms)
+2026-11-11T11:23:19.3695522Z ✔ step cells read on-grid notes per lane (0.6403ms)
+2026-11-11T11:23:19.3697003Z ✔ waveform range slicing scrolls and maps taps into the window (0.9052ms)
+2026-11-11T11:23:19.4036771Z ✔ audibility: nothing soloed, every unmuted channel sounds (2.1796ms)
+2026-11-11T11:23:19.4038975Z ✔ audibility: solo-safe keeps an unmuted track heard; a muted safe track stays silent (0.2652ms)
+2026-11-11T11:23:19.4044950Z ✔ audibility: soloing a bus keeps every track routed or sent into it (0.3352ms)
+2026-11-11T11:23:19.4082991Z ✔ audibility: soloing a track keeps the bus it feeds; other buses go silent (0.2664ms)
+2026-11-11T11:23:19.4085516Z ✔ audibility: a track feeding a soloed track (not a bus) is not kept (0.178ms)
+2026-11-11T11:23:19.4090251Z ✔ describeAudibility speaks bus, group and solo safe; the old 3-argument form is unchanged (0.3009ms)
+2026-11-11T11:23:19.4103759Z ✔ mixGroups: first-seen order, all/mixed solo and mute, ungrouped skipped (0.5088ms)
+2026-11-11T11:23:19.4121265Z ✔ peak hold: instant attack, hold for holdMs, then fall at the dB rate (0.4528ms)
+2026-11-11T11:23:19.4125776Z ✔ peak hold: falls to zero under the floor; backwards clock adds no time (0.4456ms)
+2026-11-11T11:23:19.4130075Z ✔ peak hold: rejects bad input (1.3281ms)
+2026-11-11T11:23:19.4136936Z ✔ describeBalance names the attenuated far side (0.3605ms)
+2026-11-11T11:23:19.5150825Z ✔ linear/hold values and velocities distinguish jumps from finite speed (2.2446ms)
+2026-11-11T11:23:19.5166077Z ✔ Bezier time inversion and exact subdivision preserve a nonuniform curve (4.2182ms)
+2026-11-11T11:23:19.5183703Z ✔ vertical tangents have no fabricated finite velocity; reverse remap slopes stay negative (0.8629ms)
+2026-11-11T11:23:19.5193274Z ✔ group moves retain spacing, stop before neighbors and preserve untouched source data (0.8505ms)
+2026-11-11T11:23:19.5194989Z ✔ invalid ordering, duplicate identities and crossed temporal handles are rejected (0.6858ms)
+2026-11-11T11:23:19.5419714Z ✔ effect reordering preserves exact identities and does not mutate authoritative stack (3.0788ms)
+2026-11-11T11:23:19.5421465Z ✔ effect schemas reject invalid numeric, choice, text and boolean values (0.6601ms)
+2026-11-11T11:23:19.5423194Z ✔ malformed stack metadata is rejected while unavailable preset and choice identities are retained (1.4555ms)
+2026-11-11T11:23:19.5743526Z ✔ expression edits preserve UTF-16 pairs and literal replacement syntax (2.3119ms)
+2026-11-11T11:23:19.5764205Z ✔ completion responses require unique stable identities and valid source ranges (0.7479ms)
+2026-11-11T11:23:19.5774195Z ✔ diagnostics and references enforce severity, source ranges and identity budgets (0.6296ms)
+2026-11-11T11:23:19.6826114Z ✔ graph connections enforce typed direction, unique endpoints and single inputs (3.2829ms)
+2026-11-11T11:23:19.6833881Z ✔ cycle policy is explicit and endpoint ordering cannot bypass duplicate detection (0.8021ms)
+2026-11-11T11:23:19.6837634Z ✔ graph viewport reaches distant nodes and rejects invalid dimensions, metadata and positions (2.2743ms)
+2026-11-11T11:23:19.7033464Z ✔ point snapping respects tolerance, deterministic target priority and unsnapped originals (1.9771ms)
+2026-11-11T11:23:19.7036206Z ✔ tangent snapping retains length and signed direction without mutating offsets (1.4016ms)
+2026-11-11T11:23:19.7037570Z ✔ invalid snapping contracts are rejected before gesture handling (0.6276ms)
+2026-11-11T11:23:19.7500024Z ✔ render requests preserve rational timing and reject invalid ranges or path-bearing names (2.8071ms)
+2026-11-11T11:23:19.7517064Z ✔ queued reorder preserves active jobs and progress cannot exceed provider totals (0.6949ms)
+2026-11-11T11:23:19.7525151Z ✔ easing controls retain Bezier overshoot and physical spring parameters without clamping (0.5774ms)
+2026-11-11T11:23:19.8523697Z ✔ 3D transforms preserve spins and mirrored/zero scale without changing unrelated axes (2.1832ms)
+2026-11-11T11:23:19.8534753Z ✔ camera projection depth and physical lens bounds reject degenerate views (0.782ms)
+2026-11-11T11:23:19.8537756Z ✔ matte selection and deterministic particle settings preserve exact identities (0.9441ms)
+2026-11-11T11:23:19.8817942Z ✔ cross-property selection moves atomically and stops at the strictest neighboring track (4.3755ms)
+2026-11-11T11:23:19.8819721Z ✔ group snapping uses the grabbed key while preserving off-grid relative offsets (0.8231ms)
+2026-11-11T11:23:19.9269754Z ✔ shift extends the anchor in display order and skips unavailable objects (3.9882ms)
+2026-11-11T11:23:19.9286238Z ✔ toggle and additive range preserve selection outside the range (0.5809ms)
+2026-11-11T11:23:19.9296175Z ✔ lasso/engine hit sets combine without unknown IDs, duplicates or order drift (0.7472ms)
+2026-11-11T11:23:19.9307600Z ✔ shared values distinguish empty, missing, mixed and explicit null (0.4968ms)
+2026-11-11T11:23:19.9313829Z ✔ grouping requires editable siblings and ungrouping requires selected groups (0.549ms)
+2026-11-11T11:23:19.9316691Z ✔ hierarchy cycles, absent parents, invalid values and stale selection IDs are rejected (0.8057ms)
+2026-11-11T11:23:20.0528777Z ✔ Graphite native config raises API 24 to 26 and preserves unrelated native properties (2.3539ms)
+2026-11-11T11:23:20.0545254Z ✔ Graphite config retains a higher platform minimum and resolves duplicate entries safely (7.4799ms)
+2026-11-11T11:23:20.0547200Z ✔ native example keeps default orientation and opts into the persistent Graphite configuration (0.4475ms)
+2026-11-11T11:23:20.0689957Z ✔ NativeSeekBar puts the frame buttons and timecode in one row under the slider (2.7718ms)
+2026-11-11T11:23:20.0691927Z ✔ the @expo/ui host carries only the slider on every platform (0.5141ms)
+2026-11-11T11:23:20.0693147Z ✔ transport follows the app theme, not the OS scheme (1.4372ms)
+2026-11-11T11:23:20.0694342Z ✔ each platform wires the OS end-of-drag event to the commit (0.3081ms)
+2026-11-11T11:23:20.0954516Z ✔ Windows expanded left pane reserves width and remains visible (2.5607ms)
+2026-11-11T11:23:20.0960115Z ✔ Windows compact view is an icon-only rail until user expands (0.3162ms)
+2026-11-11T11:23:20.0973104Z ✔ minimal view opens as overlay without shrinking the user's work (0.3097ms)
+2026-11-11T11:23:20.0977603Z ✔ drawer validates native hit-target and width constraints (1.8798ms)
+2026-11-11T11:23:20.2046775Z ✔ H-21/K-18 sentences: abbreviations, initials, closing quotes and long runs (4.3602ms)
+2026-11-11T11:23:20.2049905Z ✔ H-21 queue maps each sentence back to its block and char range (1.2648ms)
+2026-11-11T11:23:20.2056299Z ✔ read-aloud words skip punctuation-only runs; speed stays in 0.5–3 (0.5945ms)
+2026-11-11T11:23:20.2060521Z ✔ K-04 search: case, whole words, snippets, page order and wrap (2.7636ms)
+2026-11-11T11:23:20.2065459Z ✔ K-06 tools: order, shortcuts and PDF subtypes (1.5251ms)
+2026-11-11T11:23:20.2074608Z ✔ K-07 threads: page grouping, filters, blank replies, labels (0.7992ms)
+2026-11-11T11:23:20.2081490Z ✔ H-03 ribbon: mixed state, toggles, case, size ladder, shortcuts (1.8804ms)
+2026-11-11T11:23:20.2085404Z ✔ H-07 lists: markers, restart under shallower items, nesting policy (0.9516ms)
+2026-11-11T11:23:20.2088627Z ✔ H-07 authoritative markers preserve starts, mixed nonlist rows and the default counter contract (2.4424ms)
+2026-11-11T11:23:20.2093023Z ✔ H-07 authoritative markers admit long valid letters and reject control, multiline and malformed text (0.92ms)
+2026-11-11T11:23:20.2098198Z ✔ H-15 outline: relative depth, collapse, show level, caret and pages (1.0001ms)
+2026-11-11T11:23:20.2105094Z ✔ J-01/J-02 slide order: moves, block moves, planned single moves, selection, grid (1.2206ms)
+2026-11-11T11:23:20.2113498Z ✔ J-05 canvas: snapping, resize, nudge, rotation, hit testing (1.0838ms)
+2026-11-11T11:23:20.2122523Z ✔ J-09 animations: play order, end time, seconds parsing, labels (0.6898ms)
+2026-11-11T11:23:20.2129563Z ✔ ported files carry source, commit, copyright, both licenses and a modification notice (1.2597ms)
+2026-11-11T11:23:20.2134786Z ✔ office controls never import engine packages and draw only what a callback backs (2.6259ms)
+2026-11-11T11:23:20.2506846Z ✔ temporarily unavailable or malformed panes are distinguished from a usable bounded pane (1.4624ms)
+2026-11-11T11:23:20.2512033Z ✔ command, preset and shortcut budgets reject ambiguous identities and invalid permissions (1.9013ms)
+2026-11-11T11:23:20.5450705Z ✔ package dependency scanner reads declarations without interpreting import/export UI copy (11.4163ms)
+2026-11-11T11:23:21.9128163Z ✔ native pan object configurations satisfy the installed RNGH v3 validator (1161.9425ms)
+2026-11-11T11:23:21.9172009Z ✔ the pinned validator rejects the conflicting thresholds the regression prevents (0.8773ms)
+2026-11-11T11:23:21.9342208Z ✔ graph validates real directional typed endpoints and port anchors (3.4327ms)
+2026-11-11T11:23:21.9343477Z ✔ cubic graph wire math starts and ends exactly, bounds work (0.5248ms)
+2026-11-11T11:23:21.9345265Z ✔ rejected callbacks are consumed and only current request can surface an error (2.2241ms)
+2026-11-11T11:23:21.9346916Z ✔ geometry admission and unmount boundaries suppress old async outcomes (0.3801ms)
+2026-11-11T11:23:21.9348393Z ✔ authoritative geometry mismatch discards previews and dangling selected output (1.4517ms)
+2026-11-11T11:23:21.9350052Z ✔ drag math uses admitted scale and transform geometry changes invalidate without key remounts (1.3028ms)
+2026-11-11T11:23:21.9351966Z ✔ photo settings round-trip full precision and independent bands without originals (5.0683ms)
+2026-11-11T11:23:21.9353373Z ✔ unsupported, oversized and malformed photo interchange fails before application (2.2775ms)
+2026-11-11T11:23:21.9354622Z ✔ normalization excludes unknown fields and prototype keys (0.5183ms)
+2026-11-11T11:23:21.9355833Z ✔ ratings have bounded integer stars and mutually exclusive pick/reject values (0.4961ms)
+2026-11-11T11:23:21.9357182Z ✔ calendar filters reject normalization, reversed dates and invalid EXIF ranges (3.4424ms)
+2026-11-11T11:23:21.9358604Z ✔ catalog pages keep off-page selection and reject duplicate identity (1.6728ms)
+2026-11-11T11:23:21.9360050Z ✔ metadata preserves raw capture labels and rejects invalid measurement/provenance (3.0731ms)
+2026-11-11T11:23:21.9361671Z ✔ brush mapping preserves source-independent normalized points and known/unknown pressure (3.7985ms)
+2026-11-11T11:23:21.9363233Z ✔ linear and radial coverage respect feather and inversion at reference points (1.3369ms)
+2026-11-11T11:23:21.9364786Z ✔ color ranges retain floating profile channels and reject crossed or unbounded samples (1.3567ms)
+2026-11-11T11:23:21.9366740Z ✔ versioned presets retain settings and reject unknown schema or duplicate identity (7.8565ms)
+2026-11-11T11:23:21.9368195Z ✔ batch targets and export configuration preserve explicit metadata privacy (0.9836ms)
+2026-11-11T11:23:21.9369656Z ✔ reported export progress rejects impossible counts without inventing completion (0.3702ms)
+2026-11-11T11:23:21.9371075Z ✔ popover stays entirely in hinge-safe pane, not across the occlusion (1.7997ms)
+2026-11-11T11:23:21.9372337Z ✔ narrow window clamps popup and invalid geometry is rejected (0.7368ms)
+2026-11-11T11:23:21.9373899Z ✔ source replacement restores original preview callback/value and consumes old release/draft handlers (4.2263ms)
+2026-11-11T11:23:21.9375635Z ✔ old pending rejection/finally cannot clear new-source pending state or publish old errors (0.8048ms)
+2026-11-11T11:23:21.9377473Z ✔ same admitted identity retains drafts; config admission resets them and invalidation blocks queued events (0.4321ms)
+2026-11-11T11:23:21.9379060Z ✔ preview callback replacement during a gesture restores its original host (0.4234ms)
+2026-11-11T11:23:21.9380302Z ✔ native body and input are retained across boundary changes (1.1079ms)
+2026-11-11T11:23:21.9381590Z ✔ unmount invalidation restores raw preview even after the final write gate closes (0.413ms)
+2026-11-11T11:23:21.9383034Z ✔ throwing preview restoration cannot strand state or retain old event admission (1.0294ms)
+2026-11-11T11:23:21.9384691Z ✔ reentrant admit during release restoration consumes the old continuation (0.5467ms)
+2026-11-11T11:23:21.9386672Z ✔ reentrant invalidate during release restoration consumes the old continuation (0.3195ms)
+2026-11-11T11:23:21.9388049Z ✔ reentrant admit during begin restoration consumes the old continuation (0.4052ms)
+2026-11-11T11:23:21.9389417Z ✔ reentrant invalidate during begin restoration consumes the old continuation (0.2696ms)
+2026-11-11T11:23:21.9391127Z ✔ reentrant newer admission pending work survives the older admission finally (0.5333ms)
+2026-11-11T11:23:21.9393124Z ✔ precision scrub normal/fine/coarse are absolute, deterministic and mode aware (2.0798ms)
+2026-11-11T11:23:21.9394673Z ✔ precision scrub accepts semantic detents and validates broken controls (1.2191ms)
+2026-11-11T11:23:21.9396161Z ✔ one vertical threshold drives both the knob scrub and the precision scrubber (0.4408ms)
+2026-11-11T11:23:21.9397404Z ✔ scale ticks mark majors and the reached span (0.7355ms)
+2026-11-11T11:23:21.9398467Z ✔ a drag previews every change and commits once on release (2.5446ms)
+2026-11-11T11:23:21.9399720Z ✔ vertical travel switches to fine and coarse during the drag (0.4804ms)
+2026-11-11T11:23:21.9401151Z ✔ crossing the fine/coarse threshold mid-drag continues from the current value (0.5126ms)
+2026-11-11T11:23:21.9402473Z ✔ detents capture a drag that passes close to them (0.3969ms)
+2026-11-11T11:23:21.9404369Z ✔ a detent catches a drag that stops within detentPixels of it (0.6079ms)
+2026-11-11T11:23:21.9409680Z ✔ cancel and a second pointer restore the controlled value without committing (0.7312ms)
+2026-11-11T11:23:21.9410877Z ✔ disabled controls never start or commit (0.4996ms)
+2026-11-11T11:23:21.9411968Z ✔ nudges and text entry commit once; an unchanged value commits nothing (0.7808ms)
+2026-11-11T11:23:21.9413293Z ✔ typed entry snaps to a tenth of the step and clamps to the range (0.5018ms)
+2026-11-11T11:23:21.9414597Z ✔ a pending commit blocks new input and a rejection shows its message (0.445ms)
+2026-11-11T11:23:21.9415824Z ✔ the model follows new controlled values only while idle (0.339ms)
+2026-11-11T11:23:21.9417017Z ✔ component keeps forced-colors, adjustable a11y and no engine imports (0.9009ms)
+2026-11-11T11:23:21.9418345Z ✔ existing value gesture commits one real adjustment and unchanged release does not write (6.0099ms)
+2026-11-11T11:23:21.9419948Z ✔ geometry/source/admission replacement restores original preview host and suppresses late input (0.4052ms)
+2026-11-11T11:23:21.9421956Z ✔ unmount and cancellation restore original host; reentrant restoration cannot resurrect obsolete grant (0.5452ms)
+2026-11-11T11:23:21.9423843Z ✔ throwing original restoration consumes old session before failure (0.8394ms)
+2026-11-11T11:23:21.9425383Z ✔ both range bodies retain identity and opt into existing frame scrub ownership (1.304ms)
+2026-11-11T11:23:21.9426696Z ✔ queued old begin cannot cancel a new admitted gesture (0.5559ms)
+2026-11-11T11:23:21.9428081Z ✔ synchronous preview-store admission suppresses stale outward callbacks (0.9394ms)
+2026-11-11T11:23:21.9429475Z ✔ same-boundary reentrant grant reports obsolete outer begin as unaccepted (0.2841ms)
+2026-11-11T11:23:21.9431261Z ✔ unchanged external boundary disable cancels mid-drag, consumes release and re-enables fresh gestures (0.7196ms)
+2026-11-11T11:23:21.9432801Z ✔ parseTsv splits tabs and newlines, accepting LF, CRLF and CR (3.2154ms)
+2026-11-11T11:23:21.9434192Z ✔ parseTsv drops one trailing newline but keeps interior and extra blank rows (0.3031ms)
+2026-11-11T11:23:21.9435394Z ✔ parseTsv returns no rows for empty input (0.2232ms)
+2026-11-11T11:23:21.9436277Z ✔ parseTsv keeps empty fields (0.2349ms)
+2026-11-11T11:23:21.9440456Z ✔ parseTsv unquotes fields with embedded tabs, newlines and quotes (0.31ms)
+2026-11-11T11:23:21.9444869Z ✔ parseTsv treats a quote in the middle of a field literally and tolerates an unterminated quote (0.2438ms)
+2026-11-11T11:23:21.9446256Z ✔ parseTsv preserves ragged rows (0.2365ms)
+2026-11-11T11:23:21.9467642Z ✔ parseTsv keeps unicode and sql-looking text intact (0.2901ms)
+2026-11-11T11:23:21.9470162Z ✔ parseTsv rejects non-string input (0.8476ms)
+2026-11-11T11:23:21.9471910Z ✔ tsvToRange places cells from the anchor and reports the covered range (0.8805ms)
+2026-11-11T11:23:21.9473898Z ✔ tsvToRange leaves cells missing from ragged rows out instead of blanking them (0.2801ms)
+2026-11-11T11:23:21.9475407Z ✔ tsvToRange returns null range and no cells for empty input (0.1861ms)
+2026-11-11T11:23:21.9476729Z ✔ tsvToRange clamps to the 1,048,576 x 16,384 sheet bounds (0.2363ms)
+2026-11-11T11:23:21.9478020Z ✔ tsvToRange honors custom bounds and returns nothing when the anchor is outside them (0.234ms)
+2026-11-11T11:23:21.9479338Z ✔ tsvToRange rejects invalid anchors (0.329ms)
+2026-11-11T11:23:21.9480519Z ✔ tsvToRange throws PasteTooLargeError above maxCells and passes at the cap (0.6179ms)
+2026-11-11T11:23:21.9481882Z ✔ tsvToRange counts the clamped rectangle against maxCells (0.2017ms)
+2026-11-11T11:23:21.9482867Z ✔ tsvToRange default cap is 1,000,000 cells (53.8284ms)
+2026-11-11T11:23:21.9484254Z ✔ round trip: rangeToTsv then tsvToRange returns the same cells (1.0279ms)
+2026-11-11T11:23:21.9485566Z ✔ large paste parses 100k cells quickly (50.0331ms)
+2026-11-11T11:23:21.9486672Z ✔ meter maps linear peaks to dBFS, fill and bands (2.4226ms)
+2026-11-11T11:23:21.9491561Z ✔ meter announcer is throttled and never repeats a band (0.9539ms)
+2026-11-11T11:23:21.9492811Z ✔ every recording state has honest copy and a defined action (0.6664ms)
+2026-11-11T11:23:21.9494082Z ✔ preview states cover empty, loading, playback and error (0.3292ms)
+2026-11-11T11:23:21.9495420Z ✔ pairing dialog covers all six states plus no-device and error recovery (2.4576ms)
+2026-11-11T11:23:21.9496962Z ✔ system-pairing and awaiting-input states: host steps, Settings, never Connected (0.8163ms)
+2026-11-11T11:23:21.9498277Z ✔ recording and pairing views stay presentational (1.912ms)
+2026-11-11T11:23:22.7863075Z ✔ AutomationLane: one move per drag, preview in between, terminate restores (462.2767ms)
+2026-11-11T11:23:22.9787089Z ✔ AutomationLane: Escape cancels a drag; keys and actions edit once each (241.0088ms)
+2026-11-11T11:23:23.7341824Z ✔ AutomationLane: tap adds snapped, never on a taken tick; Add point uses the cursor (434.1307ms)
+2026-11-11T11:23:24.1218307Z ✔ AutomationLane: empty, off and disabled states (725.8381ms)
+2026-11-11T11:23:24.3316715Z ✔ AutomationModePicker: radios gate live modes behind explicit host capabilities (175.8158ms)
+2026-11-11T11:23:24.3330408Z ✔ AutomationModePicker: host enables live modes and can disable one with a reason (208.2755ms)
+2026-11-11T11:23:24.3854038Z ✔ without a source or a receiver, native renders nothing (146.1759ms)
+2026-11-11T11:23:24.3855614Z ✔ a press picks once with accept and multiple, and hands the documents over (79.0264ms)
+2026-11-11T11:23:24.3857067Z ✔ cancel calls nothing; a failure goes to onError and unlocks the button (25.8488ms)
+2026-11-11T11:23:24.3858679Z ✔ native: the hue slider is one adjustable stop named Hue that reads degrees and steps hue (592.7906ms)
+2026-11-11T11:23:24.3861501Z ✔ disabled pickers report the hue stop disabled and ignore its actions (112.0686ms)
+2026-11-11T11:23:24.3863042Z ✔ web: the range input itself gets aria-label and aria-valuetext (110.6584ms)
+2026-11-11T11:23:25.3003832Z ✔ kindLabel replaces the built-in kind label and falls back when absent (740.6621ms)
+2026-11-11T11:23:25.3022438Z ✔ thumbnails render a fill or the caller's node, hidden from screen readers (482.4084ms)
+2026-11-11T11:23:25.3031612Z ✔ no onRemove means no remove control, action or key handling (407.1773ms)
+2026-11-11T11:23:27.4478507Z ✔ onRemove adds a button, a screen-reader action and Delete/Backspace on the row (439.6097ms)
+2026-11-11T11:23:27.4480052Z ✔ locked rows keep a disabled remove slot and expose no remove action (421.0754ms)
+2026-11-11T11:23:27.4509753Z ✔ RTL anchors the selection strip to the start edge and flips opacity drag (698.2818ms)
+2026-11-11T11:23:27.4594725Z ✔ existing rows without the new fields render as before (276.0892ms)
+2026-11-11T11:23:27.4596280Z ✔ readout rows replace the slider with a labelled button that opens the scrubber (342.6877ms)
+2026-11-11T11:23:27.4597553Z ✔ slider rows keep the 96pt name floor and the 120pt slider (376.3705ms)
+2026-11-11T11:23:28.5416205Z ✔ horizontal drag previews on every distinct value and commits once on release (548.1324ms)
+2026-11-11T11:23:28.5419047Z ✔ horizontal drag over 25 pt of 100 pt travel moves 15 dB (190.3314ms)
+2026-11-11T11:23:28.5424596Z ✔ cancelled horizontal drag restores the committed value without committing (145.5088ms)
+2026-11-11T11:23:28.5428036Z ✔ unchanged horizontal release does not commit (139.2392ms)
+2026-11-11T11:23:28.5436295Z ✔ horizontal screen-reader actions step in dB and commit each step (139.2915ms)
+2026-11-11T11:23:28.5536932Z ✔ disabled horizontal fader refuses gestures and steps (156.8744ms)
+2026-11-11T11:23:28.5540678Z ✔ horizontal travel follows reading direction in RTL (310.4474ms)
+2026-11-11T11:23:28.5544602Z ✔ every horizontal fader pressable target is at least 44 pt (193.4687ms)
+2026-11-11T11:23:28.5548513Z ✔ horizontal invalid values throw instead of rendering a fake level (149.2147ms)
+2026-11-11T11:23:28.5587457Z ✔ horizontal fader claims only travel-axis drags and keeps them against a parent scroll (256.6978ms)
+2026-11-11T11:23:28.5592701Z ✔ horizontal arrow keys step the focused track (208.5761ms)
+2026-11-11T11:23:28.5602785Z ✔ horizontal range with headroom marks unity (92.9413ms)
+2026-11-11T11:23:28.5605997Z ✔ horizontal stepDb and negative gain are validated at render (91.4128ms)
+2026-11-11T11:23:28.5615370Z ✔ vertical fader previews RNGH travel and commits only the final value (118.9955ms)
+2026-11-11T11:23:28.5625823Z ✔ vertical cancellation and extra pointers restore gain without committing (412.8151ms)
+2026-11-11T11:23:28.5630468Z ✔ vertical RNGH config admits single-pointer vertical travel and unchanged releases do not commit (180.8463ms)
+2026-11-11T11:23:28.5654161Z ✔ vertical screen-reader actions step in dB and reset to unity (132.0337ms)
+2026-11-11T11:23:28.5688765Z ✔ disabled vertical faders reject gesture, keyboard and accessibility edits (150.4859ms)
+2026-11-11T11:23:28.5695644Z ✔ vertical targets and keyboard controls retain the native gesture contract (117.0924ms)
+2026-11-11T11:23:28.5700666Z ✔ vertical fine mode reduces travel to one tenth (97.7427ms)
+2026-11-11T11:23:28.5708714Z ✔ vertical double tap resets unity but rejects multiple touches (111.7053ms)
+2026-11-11T11:23:28.5713085Z ✔ vertical numeric entry validates dB and accepts silence (90.5945ms)
+2026-11-11T11:23:28.5726222Z ✔ vertical scope changes invalidate a drag before a later release (101.0366ms)
+2026-11-11T11:23:28.5728018Z ✔ vertical fader validates gains, travel, step and labels at render (125.0726ms)
+2026-11-11T11:23:28.5729937Z ✔ horizontal old gesture IDs cannot release or cancel a newer active preview (105.2773ms)
+2026-11-11T11:23:28.5732540Z ✔ queued horizontal accessibility steps cannot retarget a replacement source (104.7284ms)
+2026-11-11T11:23:28.8666852Z ✔ successful horizontal and vertical releases never restore original feedback before commit (370.5409ms)
+2026-11-11T11:23:29.3636038Z ✔ rejected and false fader commits restore the original feedback once after dispatch (599.8496ms)
+2026-11-11T11:23:29.4731158Z ✔ ios: Library has one virtualized scroll owner including heading and detail (459.1411ms)
+2026-11-11T11:23:29.4734074Z ✔ android: Library has one virtualized scroll owner including heading and detail (191.7063ms)
+2026-11-11T11:23:29.4753002Z ✔ native loading, retry and empty collection stay inside the same list slots (141.7001ms)
+2026-11-11T11:23:29.4765337Z ✔ web keeps its page scroll, adaptive columns and fixed asset viewport (161.2619ms)
+2026-11-11T11:23:29.4768156Z ✔ AssetBrowser preserves defaults and measures composed headers for offscreen focus (112.8546ms)
+2026-11-11T11:23:29.4780207Z ✔ velocity lane: no batch callback means no tool row and no draw layer (472.3798ms)
+2026-11-11T11:23:29.4805814Z ✔ velocity lane: tool row is a radiogroup; uncontrolled tool switches and reports (189.2361ms)
+2026-11-11T11:23:29.4815065Z ✔ velocity lane: a line previews, then commits the batch once on release (149.4903ms)
+2026-11-11T11:23:29.4822622Z ✔ velocity lane: terminate cancels; a no-op line commits nothing (171.4512ms)
+2026-11-11T11:23:29.4835734Z ✔ velocity lane: ramp from the selected note commits one batch (128.1433ms)
+2026-11-11T11:23:29.4857373Z ✔ velocity lane: disabled hides the draw layer; empty clip says so (125.2644ms)
+2026-11-11T11:23:29.4868125Z ✔ channel picker: slider reads 1-16, commits once per key, clamps, disabled (52.5851ms)
+2026-11-11T11:23:29.4917434Z ✔ piano roll: channel in labels only with several channels; picker for the selected note (109.9437ms)
+2026-11-11T11:23:29.7482202Z ✔ PanControl: one commit per drag, previews in between, cancel restores (247.8145ms)
+2026-11-11T11:23:29.7487461Z ✔ PanControl: arrows, Home and screen-reader actions step physically, RTL included (73.892ms)
+2026-11-11T11:23:29.7492746Z ✔ SoloMuteButtons request the opposite state and show solo silencing (108.4248ms)
+2026-11-11T11:23:29.7498125Z ✔ MixingConsole routes each strip's commits with its channel id (620.6353ms)
+2026-11-11T11:23:29.7501398Z ✔ MIDIPianoRoll: a body drag commits time and pitch together, once (127.67ms)
+2026-11-11T11:23:29.7584638Z ✔ MIDIPianoRoll: end grip resizes; interrupted drags and taps commit nothing (125.1558ms)
+2026-11-11T11:23:29.7588101Z ✔ MIDIPianoRoll: a note acknowledgement cancels an active gesture without replacing its body (180.314ms)
+2026-11-11T11:23:29.7594663Z ✔ MIDIPianoRoll: an uncommitted note render cannot replace live responder data or callbacks (107.1658ms)
+2026-11-11T11:23:30.0640560Z ✔ MIDIPianoRoll: keyboard and screen-reader actions edit the focused note (127.6395ms)
+2026-11-11T11:23:30.0647029Z ✔ MIDIPianoRoll: tapping an empty cell adds a one-step note there (144.2621ms)
+2026-11-11T11:23:30.1716485Z ✔ MIDIVelocityLane: vertical drag commits once; keys step (157.5013ms)
+2026-11-11T11:23:30.3682306Z ✔ StepSequencer: press toggles notes, long press accents (106.9731ms)
+2026-11-11T11:23:30.4686840Z ✔ TempoAndMetronome: tap tempo commits once after the taps stop (211.9579ms)
+2026-11-11T11:23:30.4697675Z ✔ WaveformLane: sideways drag scrolls the window once; a tap seeks inside it (78.3163ms)
+2026-11-11T11:23:30.5141913Z ✔ slider ticks preview without seeking; one commit on iOS release (337.9747ms)
+2026-11-11T11:23:30.5202158Z ✔ Android commits once on onValueChangeFinished (135.5138ms)
+2026-11-11T11:23:30.5203631Z ✔ web commits once on the range input's change event (128.341ms)
+2026-11-11T11:23:30.5205202Z ✔ onSeek is a deprecated alias of onCommit and never fires on ticks (89.0821ms)
+2026-11-11T11:23:30.5215805Z ✔ onCommit wins over onSeek: one call per gesture, never both (62.1315ms)
+2026-11-11T11:23:30.5217476Z ✔ step buttons commit once per press and skip a step past the end (73.9203ms)
+2026-11-11T11:23:30.5219754Z ✔ a release on the starting frame does not commit (62.581ms)
+2026-11-11T11:23:30.5221357Z ✔ iOS treats a value change outside a drag as one step (55.5736ms)
+2026-11-11T11:23:30.5222656Z ✔ disabled and empty seek bars ignore the slider and buttons (344.8628ms)
+2026-11-11T11:23:30.5223817Z ✔ web removes its change listener on unmount (48.1113ms)
+2026-11-11T11:23:30.5225276Z ✔ a seek bar without onCommit or onSeek throws (44.9692ms)
+2026-11-11T11:23:31.8123998Z ✔ DevicePairingDialog wires every state to the right callback (262.6072ms)
+2026-11-11T11:23:31.8241170Z ✔ permission errors offer Settings only when the app can open it (70.2105ms)
+2026-11-11T11:23:31.8270818Z ✔ RecordingTrack shows the meter only while recording and maps actions (207.1729ms)
+2026-11-11T11:23:31.8284000Z ✔ AudioPreview maps play, stop and retry and reports position (123.7787ms)
+2026-11-11T11:23:31.8287120Z ✔ LevelMeter announces on react-native-web, which lacks the options variant (36.4932ms)
+2026-11-11T11:23:31.8301244Z ✔ a peak held at full scale stays inside the clipped track (24.5694ms)
+2026-11-11T11:23:31.8302478Z ✔ disabled never traps a live take (142.1211ms)
+2026-11-11T11:23:31.8307802Z ✔ AudioPreview tolerates a slightly negative playhead (113.9809ms)
+2026-11-11T11:23:31.8312584Z ✔ phase changes are announced on iOS only, where live regions are ignored (543.5311ms)
+2026-11-11T11:23:31.8318076Z ✔ DevicePairingDialog splits stop from close and never closes a linked device through stop (49.4725ms)
+2026-11-11T11:23:31.8325626Z ✔ DevicePairingDialog shows the intro only before a search and lists system-pairing steps (72.5105ms)
+2026-11-11T11:23:31.8329266Z ✔ new pairing states reach the live region and the iOS announcement (57.4601ms)
+2026-11-11T11:23:33.0581721Z ✔ SliderField passes the screen-reader audit (541.7651ms)
+2026-11-11T11:23:33.0589201Z ✔ RangeSlider passes the screen-reader audit (321.1735ms)
+2026-11-11T11:23:33.0597167Z ✔ RotaryKnob passes the screen-reader audit (263.2754ms)
+2026-11-11T11:23:33.0605251Z ✔ InstrumentKnob passes the screen-reader audit (110.5825ms)
+2026-11-11T11:23:33.0608354Z ✔ InstrumentXYPad passes the screen-reader audit (63.4484ms)
+2026-11-11T11:23:33.0613667Z ✔ PrecisionScrubber passes the screen-reader audit (112.6358ms)
+2026-11-11T11:23:33.0615015Z ✔ PaneSplitter passes the screen-reader audit (94.9609ms)
+2026-11-11T11:23:33.0623342Z ✔ LevelFader passes the screen-reader audit (165.0651ms)
+2026-11-11T11:23:33.0627072Z ✔ ImageCropOverlay passes the screen-reader audit (68.2575ms)
+2026-11-11T11:23:33.0628705Z ✔ LayerStack passes the screen-reader audit (362.7898ms)
+2026-11-11T11:23:33.0633844Z ✔ DocumentTabBar passes the screen-reader audit (40.3838ms)
+2026-11-11T11:23:33.0636721Z ✔ Button passes the screen-reader audit (9.3917ms)
+2026-11-11T11:23:33.0637768Z ✔ WaveformLane passes the screen-reader audit (71.7356ms)
+2026-11-11T11:23:33.0638783Z ✔ the audit catches each rule on a broken tree (1.493ms)
+2026-11-11T11:23:33.1352190Z ✔ native without a recorder stays read-only, as before (533.2493ms)
+2026-11-11T11:23:33.1354095Z ✔ native with a recorder: Change starts recording and the next chord rebinds (216.589ms)
+2026-11-11T11:23:33.1385417Z ✔ native recording: a conflict asks first, a bare key is refused, Escape cancels (120.1106ms)
+2026-11-11T11:23:33.1386855Z ✔ web ignores the recorder and records from the browser (109.1544ms)
+2026-11-11T11:23:33.1388354Z ✔ native recorder drops delayed callbacks after scope replacement and removal (178.6886ms)
+2026-11-11T11:23:33.1390096Z ✔ removing the recording command stops capture and current conflicts still require confirmation (114.5064ms)
+2026-11-11T11:23:33.1397777Z ✔ layout switches to the grid only when every column fits (2.4165ms)
+2026-11-11T11:23:33.1403886Z ✔ send levels clamp, round to percent, step and drag (1.0075ms)
+2026-11-11T11:23:33.1409926Z ✔ outputs resolve, name and cycle through master and buses (1.8254ms)
+2026-11-11T11:23:33.1410944Z ✔ send lookup and labels (0.3191ms)
+2026-11-11T11:23:33.1411900Z ✔ insert kinds, full chain reason, moves and descriptions (0.3711ms)
+2026-11-11T11:23:33.1413165Z ✔ preset filter matches every word, ignores case and accents, keeps order (0.7846ms)
+2026-11-11T11:23:33.1414561Z ✔ rotated frame corners and handle-first hit testing use document coordinates (13.2119ms)
+2026-11-11T11:23:33.1415976Z ✔ move applies one absolute captured delta without accumulating preview error (0.5717ms)
+2026-11-11T11:23:33.1417398Z ✔ rotated resize preserves the opposite corner while changing local size (0.5427ms)
+2026-11-11T11:23:33.1418756Z ✔ aspect resizing and min/max constraints retain the chosen opposite anchor (1.7043ms)
+2026-11-11T11:23:33.1420307Z ✔ rotation wraps across the branch cut, supports angle snapping and ignores a pointer at the pivot (0.5409ms)
+2026-11-11T11:23:33.1422003Z ✔ edge resize leaves its orthogonal dimension alone and accessible growth follows rotation (0.4371ms)
+2026-11-11T11:23:33.1423987Z ✔ selection: modifiers pick the combine mode (2.0331ms)
+2026-11-11T11:23:33.1425370Z ✔ selection: view points map to clamped document pixels (1.7274ms)
+2026-11-11T11:23:33.1426705Z ✔ selection: boxes normalise and Shift-after-start constrains to a square (0.3102ms)
+2026-11-11T11:23:33.1428008Z ✔ selection: one request per gesture, too-small shapes commit nothing (1.1636ms)
+2026-11-11T11:23:33.1429848Z ✔ selection: lasso drops close points and thins long strokes; polygon closes on the first point (1.6428ms)
+2026-11-11T11:23:33.1431515Z ✔ selection: keyboard commands and the keyboard marquee stay in the document (0.5854ms)
+2026-11-11T11:23:33.1432738Z ✔ selection: labels and validation (1.7592ms)
+2026-11-11T11:23:33.1433902Z ✔ magic wand: requests mirror magicWand, layer sampling needs a layer (0.718ms)
+2026-11-11T11:23:33.1435392Z ✔ magic wand: edge changes mirror modifySelection and explain why they are off (0.4543ms)
+2026-11-11T11:23:33.1438120Z ✔ color drop: tap versus drag uses the ProCraft slop and dot size (0.4188ms)
+2026-11-11T11:23:33.1439512Z ✔ color drop: only drops inside the target map to document pixels (0.7889ms)
+2026-11-11T11:23:33.1548127Z ✔ reference: fit shows the whole picture, crop covers the frame (0.2977ms)
+2026-11-11T11:23:33.1550036Z ✔ reference: frames stay on the board and above the minimum size (0.4981ms)
+2026-11-11T11:23:33.1552459Z ✔ reference: lock refuses everything, pin refuses moving, both say why (0.6773ms)
+2026-11-11T11:23:33.1554059Z ✔ gestures: ProCraft delay range and defaults (0.8422ms)
+2026-11-11T11:23:33.1557481Z ✔ gestures: duplicates and reserved gestures are conflicts that block saving (0.8013ms)
+2026-11-11T11:23:33.1562706Z ✔ gestures: keeping a gesture for one action releases it elsewhere; drafts compare by value (0.4876ms)
+2026-11-11T11:23:33.1564780Z ✔ sources: no engine imports, tokens only, host-owned state, one commit per gesture (3.126ms)
+2026-11-11T11:23:33.1566325Z ✔ sources: ProCraft ports carry the pinned-commit header and both licenses (0.6476ms)
+2026-11-11T11:23:33.1569109Z ✔ addresses round-trip and selections normalize to rectangles (3.5133ms)
+2026-11-11T11:23:33.1570395Z ✔ keyboard moves collapse; Shift extends from a fixed anchor (0.5768ms)
+2026-11-11T11:23:33.1571666Z ✔ Ctrl/Cmd jumps reach the 1,048,576 x 16,384 edges; Tab and Enter never extend (0.5033ms)
+2026-11-11T11:23:33.1572979Z ✔ TSV copy quotes tabs, newlines and quotes and caps huge ranges (0.8113ms)
+2026-11-11T11:23:33.1574329Z ✔ frozen panes stay out of the body window and body indices are absolute (0.8679ms)
+2026-11-11T11:23:33.1576888Z ✔ prefetch ranges are block-stable, bounded and clamped on a full-size sheet (1.1435ms)
+2026-11-11T11:23:33.1578468Z ✔ keyboard focus far outside the window scrolls the body just enough to reveal it (0.5562ms)
+2026-11-11T11:23:33.1579879Z ✔ selected cell stays visible across every viewport transition (2.872ms)
+2026-11-11T11:23:33.1581373Z ✔ a cell near the bottom of portrait stays reachable after rotating to the shorter landscape (1.0887ms)
+2026-11-11T11:23:33.1583149Z ✔ the top-left logical cell stays anchored when only the viewport size changes (1.1942ms)
+2026-11-11T11:23:33.1584713Z ✔ a cell already in view does not move the scroll (0.2344ms)
+2026-11-11T11:23:33.1586137Z ✔ frozen rows and columns never scroll the focused cell out of place (0.2496ms)
+2026-11-11T11:23:33.1587584Z ✔ reanchorSheetScroll round-trips through every pair of responsive metrics (0.5133ms)
+2026-11-11T11:23:33.1589273Z ✔ reanchorSheetScroll keeps the same row index at the top edge (0.2371ms)
+2026-11-11T11:23:33.1590736Z ✔ reanchorSheetScroll treats the row-header strip separately from the body (0.2528ms)
+2026-11-11T11:23:33.1592245Z ✔ reanchorSheetScroll rejects non-finite, negative and zero anchors (0.7434ms)
+2026-11-11T11:23:33.1593806Z ✔ the render window always includes the revealed cell at every viewport (0.9262ms)
+2026-11-11T11:23:33.1595336Z ✔ SpreadsheetGrid reveals the focused cell when the body viewport changes size (0.4897ms)
+2026-11-11T11:23:33.1599006Z ✔ ribbon ids are unique, contextual tabs name their group, galleries keep the selection inline (2.5631ms)
+2026-11-11T11:23:33.1600681Z ✔ preset grids fit columns, filter favorites and move focus without wrapping (0.4656ms)
+2026-11-11T11:23:33.1602794Z ✔ bindings come from key chords with Mod meaning Command on Apple and Control elsewhere (0.538ms)
+2026-11-11T11:23:33.1604283Z ✔ only modified keys or function keys can be assigned, and conflicts are found (0.5914ms)
+2026-11-11T11:23:33.1606106Z ✔ keycaps and spoken names follow the platform (0.5062ms)
+2026-11-11T11:23:33.1607378Z ✔ the a11y store queues repeat announcements and zeroes motion when reduced (0.3908ms)
+2026-11-11T11:23:33.1608888Z ✔ command and overlay sources keep Android-safe roles and 44pt targets (0.9235ms)
+2026-11-11T11:23:33.1610528Z ✔ asset list sorts folders first, uses natural names, searches metadata and preserves source order (19.9688ms)
+2026-11-11T11:23:33.1612221Z ✔ asset ranges follow the filtered display order and toggles retain off-page selections (0.5796ms)
+2026-11-11T11:23:33.1613864Z ✔ history cursor validates initial, current and undone states without changing the host history (0.5929ms)
+2026-11-11T11:23:33.1615408Z ✔ find is literal, Unicode-aware, uses UTF-16 ranges and distinguishes whole words (6.1574ms)
+2026-11-11T11:23:33.1617162Z ✔ literal replacement commits one plan, preserves dollar signs, and rejects stale revisions/tokens (0.9348ms)
+2026-11-11T11:23:33.1619283Z ✔ find reports the full count while bounding previews and rejects invalid provider records (1.1198ms)
+2026-11-11T11:23:33.1620993Z ✔ reported job status controls available actions and unknown progress stays unknown (0.839ms)
+2026-11-11T11:23:33.1622568Z ✔ request owner cancels replaced operations and never consumes their late results (1.2715ms)
+2026-11-11T11:23:33.1624184Z ✔ unmount/cancel suppress stale failures and a remount can accept a new operation (0.9421ms)
+2026-11-11T11:23:33.1626087Z ✔ lengths convert at 96 pixels per inch and mix units in arithmetic (3.73ms)
+2026-11-11T11:23:33.1627266Z ✔ time, level and ratio units need their context (0.7203ms)
+2026-11-11T11:23:33.1628420Z ✔ the parser rejects bad input with a position instead of evaluating it (0.743ms)
+2026-11-11T11:23:33.1629674Z ✔ parser work is bounded by length, tokens and nesting (0.4538ms)
+2026-11-11T11:23:33.1630753Z ✔ values format in the display unit and convert back (0.7815ms)
+2026-11-11T11:23:33.1631768Z ✔ slider positions, keys and steps (1.852ms)
+2026-11-11T11:23:33.1632714Z ✔ range ends never cross and keep the minimum gap (0.8548ms)
+2026-11-11T11:23:33.1633837Z ✔ knob angle maps both ways and holds an end across the bottom gap (0.5542ms)
+2026-11-11T11:23:33.1634934Z ✔ inspector headings, search matching and summaries (1.3872ms)
+2026-11-11T11:23:33.1639025Z ✔ the row registry counts matches per section, nested sections included (0.7056ms)
+2026-11-11T11:23:33.1640989Z ✔ inspector and input sources keep Android-safe roles, 44pt targets and no eval (1.5823ms)
+2026-11-11T11:23:33.2908310Z ✔ split clamps to both minimums (3.5213ms)
+2026-11-11T11:23:33.2947776Z ✔ a vertical hinge on a side-by-side split becomes a band from the splitter's edge (0.6747ms)
+2026-11-11T11:23:33.2970449Z ✔ the divider seats on a hinge instead of resting on it (0.4175ms)
+2026-11-11T11:23:33.2997711Z ✔ a hinge that would break a minimum pushes the divider to the side that keeps it (0.3979ms)
+2026-11-11T11:23:33.3000914Z ✔ keyboard steps move into and back out of a hinge (0.4422ms)
+2026-11-11T11:23:33.3064352Z ✔ an end-edge size round-trips through the start-size model (0.2842ms)
+2026-11-11T11:23:33.3118657Z ✔ panels move between edges and floating, activating where they land (1.1099ms)
+2026-11-11T11:23:33.3124424Z ✔ closing the active panel activates its neighbour and closing an unknown id is a no-op (0.4999ms)
+2026-11-11T11:23:33.3126629Z ✔ dock layouts reject duplicates, unknown panels and empty stacks (0.6453ms)
+2026-11-11T11:23:33.3144249Z ✔ drop targets and floating rects respect edges and usable regions (0.734ms)
+2026-11-11T11:23:33.3162214Z ✔ document tabs reorder, close to a neighbour and announce unsaved changes (0.7249ms)
+2026-11-11T11:23:33.3165618Z ✔ status text formats zoom, selection, elapsed time and activity (0.8056ms)
+2026-11-11T11:23:33.3167253Z ✔ roving focus wraps, skips disabled stops and flips horizontal arrows in RTL (5.2167ms)
+2026-11-11T11:23:33.3184513Z ✔ tool groups show the chosen or active variant (0.2283ms)
+2026-11-11T11:23:33.3212726Z ✔ shell sources keep Android-safe roles and 44pt targets (1.4135ms)
+2026-11-11T11:23:33.3261349Z ✔ preserves default bounds and permits the actual host dimension range (3.617ms)
+2026-11-11T11:23:33.3264590Z ✔ rejects invalid bounds and writes without silently clamping or changing modes (1.0339ms)
+2026-11-11T11:23:33.3268025Z ✔ retains authoritative axis, capability and disabled state at commit (1.4837ms)
+2026-11-11T11:23:33.4057434Z ✔ I-02 fill handle follows the dominant axis and never returns the source alone (3.7924ms)
+2026-11-11T11:23:33.4059098Z ✔ I-02 Ctrl+D and Ctrl+R fill from the first row or column (0.4377ms)
+2026-11-11T11:23:33.4079145Z ✔ I-06 references keep one tone per distinct reference, ignoring $ and case (2.5096ms)
+2026-11-11T11:23:33.4080582Z ✔ I-06 formula segments rebuild the formula and mark reference runs (0.6537ms)
+2026-11-11T11:23:33.4082023Z ✔ I-08 sheet names follow spreadsheet rules and stay unique (0.7065ms)
+2026-11-11T11:23:33.4086320Z ✔ I-08 tab keyboard follows reading direction (0.3727ms)
+2026-11-11T11:23:33.4095047Z ✔ I-13 chart series come from computed numbers; text and blanks are skipped, not zero (2.4839ms)
+2026-11-11T11:23:33.4099509Z ✔ I-14 sparkline geometry: gaps break lines, flat data sits mid-height, win/loss splits at center (2.4112ms)
+2026-11-11T11:23:33.4100918Z ✔ I-17 freeze commands and split geometry (0.7801ms)
+2026-11-11T11:23:33.4106178Z ✔ I-20 cards: header names fields, first column titles, blanks read (blank) (0.8671ms)
+2026-11-11T11:23:33.4337832Z ✔ SpreadsheetGrid declares controlled paste props (2.6986ms)
+2026-11-11T11:23:33.4339250Z ✔ paste is wired to Ctrl/Cmd+V, the paste event and a screen-reader action (1.3692ms)
+2026-11-11T11:23:33.4340717Z ✔ paste goes through the owned-action guard and is blocked when read-only or disabled (0.4503ms)
+2026-11-11T11:23:33.4342340Z ✔ the grid does not write cells itself when pasting (1.2257ms)
+2026-11-11T11:23:33.4985711Z ✔ fractional mantissas and exponent steps retain exact display precision including fine adjustment (1.8536ms)
+2026-11-11T11:23:33.6017811Z ✔ a row with thumbnail and remove keeps the slider only when it fits beside a 96pt name (2.0387ms)
+2026-11-11T11:23:33.6027132Z ✔ rows without a thumbnail or remove need less room before giving up the slider (0.2542ms)
+2026-11-11T11:23:33.6036808Z ✔ an unmeasured stack keeps the slider it drew before layout (0.2142ms)
+2026-11-11T11:23:33.6039109Z ✔ LayerStack switches presentation from its own measured width and keeps one commit path (1.0162ms)
+2026-11-11T11:23:33.6041407Z ✔ measureAnchor resolves the window frame, or undefined when it cannot measure (1.7307ms)
+2026-11-11T11:23:33.6042658Z ✔ popover props take exactly one of anchor or trigger (0.7506ms)
+2026-11-11T11:23:33.6043817Z ✔ trigger state toggles through onOpenChange and announces expanded (0.4245ms)
+2026-11-11T11:23:33.6045680Z ✔ option groups flatten in display order and reject blank headings or empty groups (0.6061ms)
+2026-11-11T11:23:33.6047015Z ✔ Select renders headed groups as a named grouped listbox (0.4738ms)
+2026-11-11T11:23:33.6048134Z ✔ compact TabBar sizes to its tabs; the icon never shrinks (0.5255ms)
+2026-11-11T11:23:33.6253826Z ✔ horizontal arrows follow reading direction; vertical never flips (1.4369ms)
+2026-11-11T11:23:33.6255347Z ✔ choice keys wrap, skip disabled items and jump with Home/End (0.4194ms)
+2026-11-11T11:23:33.6256652Z ✔ roving tab stop lands on the selection or the first enabled item (0.2404ms)
+2026-11-11T11:23:33.6258336Z ✔ typeahead finds the next enabled label after the active one (0.3482ms)
+2026-11-11T11:23:33.6259789Z ✔ studio primitives are addressable subpaths and stay out of the root barrel (0.5775ms)
+2026-11-11T11:23:33.6262524Z ✔ studio primitives expose the semantics their pattern requires (1.6714ms)
+2026-11-11T11:23:33.6264018Z ✔ every studio primitive meets 44pt and gives selection a forced-colors cue (1.0568ms)
+2026-11-11T11:23:33.7007800Z ✔ workspace validation catches bad modes and layouts outside a mode's panels (2.7961ms)
+2026-11-11T11:23:33.7009367Z ✔ a mode shows its stored layout, else its default (0.329ms)
+2026-11-11T11:23:33.7013711Z ✔ Ctrl or Cmd plus 1 to 9 picks a mode; other chords do not (0.5266ms)
+2026-11-11T11:23:33.7018800Z ✔ mode switches and the document title read as words (0.3007ms)
+2026-11-11T11:23:33.7024778Z ✔ preset names are trimmed, capped and unique regardless of case (0.4223ms)
+2026-11-11T11:23:33.7035063Z ✔ copies get the first free name that fits the cap (0.495ms)
+2026-11-11T11:23:33.7041307Z ✔ built-ins are read-only and reset needs a modified layout (1.768ms)
+2026-11-11T11:23:33.7046570Z ✔ items follow the selection kind and keep declared order (0.8969ms)
+2026-11-11T11:23:33.7050779Z ✔ overflow drops the lowest priority, last declared first, and always leaves the trigger room (1.3078ms)
+2026-11-11T11:23:33.7063610Z ✔ export formats validate and quality snaps into range (1.1542ms)
+2026-11-11T11:23:33.7065805Z ✔ default settings pick the first available destination and switching format swaps the extension (0.6516ms)
+2026-11-11T11:23:33.7067438Z ✔ file names are checked for extension, characters, length and reserved names (0.6229ms)
+2026-11-11T11:23:33.7068782Z ✔ the export request is validated and carries only what the format declares (0.6648ms)
+2026-11-11T11:23:33.7076081Z ✔ summary and status lines read as sentences (0.6612ms)
+2026-11-11T11:23:33.7077253Z ✔ imports match by extension, then MIME type, and refuse the rest by name (0.4483ms)
+2026-11-11T11:23:33.7078628Z ✔ the studio shell sources stay platform-safe and engine-free (3.3037ms)
+2026-11-11T11:23:33.7288001Z ✔ semantic text input is app-theme neutral and RN native (2.0978ms)
+2026-11-11T11:23:33.7713054Z ✔ round trips frame indices through seconds (1.1669ms)
+2026-11-11T11:23:33.7720328Z ✔ seconds use the exact rational rate (0.2414ms)
+2026-11-11T11:23:33.7728250Z ✔ generates non-drop timecode (1.506ms)
+2026-11-11T11:23:33.7743831Z ✔ uses SMPTE-style drop-frame labeling for 29.97fps (0.268ms)
+2026-11-11T11:23:33.7752362Z ✔ uses drop frame labeling for 59.94fps (0.1937ms)
+2026-11-11T11:23:33.7757859Z ✔ normalizes long media transport without exposing giant native step counts (0.7432ms)
+2026-11-11T11:23:33.7762656Z ✔ clamps and rejects invalid timebases/frames (0.5385ms)
+2026-11-11T11:23:33.9666183Z ✔ track kinds, silencing and delta seconds (4.1136ms)
+2026-11-11T11:23:33.9683857Z ✔ slip keeps the clip in place and stops at the media's ends (0.6584ms)
+2026-11-11T11:23:33.9701000Z ✔ slide trades media with touching neighbours and needs room on open sides (1.1478ms)
+2026-11-11T11:23:33.9713278Z ✔ roll moves the cut between touching clips (0.7042ms)
+2026-11-11T11:23:33.9724277Z ✔ ripple trim shifts later clips by the change in length (0.9608ms)
+2026-11-11T11:23:33.9725298Z ✔ ripple delete closes the gap (0.3081ms)
+2026-11-11T11:23:33.9726225Z ✔ placement across tracks follows kind and lock rules (0.6499ms)
+2026-11-11T11:23:33.9727209Z ✔ transitions: cuts, handles and requests (3.2393ms)
+2026-11-11T11:23:33.9728197Z ✔ transition presets cover the engine kinds with a diagram each (0.6538ms)
+2026-11-11T11:23:33.9729205Z ✔ markers sort, step, move and resize inside the timeline (0.9069ms)
+2026-11-11T11:23:33.9730149Z ✔ loop range stays at least a frame long (0.6112ms)
+2026-11-11T11:23:33.9730952Z ✔ J/K/L climbs, stops and steps down through pause (0.8331ms)
+2026-11-11T11:23:33.9738164Z ✔ batch edits validate against clips that stay and order safely (3.5073ms)
+2026-11-11T11:23:33.9765891Z ✔ track stack groups overlay above video above audio and moves within a group (0.6506ms)
+2026-11-11T11:23:34.1250164Z ✔ frames, seconds and samples convert exactly at rational rates (6.2306ms)
+2026-11-11T11:23:34.1256929Z ✔ drop-frame timecode parses back to every frame for twenty minutes at 29.97 and 59.94 (163.3892ms)
+2026-11-11T11:23:34.1259897Z ✔ non-drop timecode parses, and malformed or out-of-range fields are rejected (0.3717ms)
+2026-11-11T11:23:34.1265931Z ✔ display formats round-trip through typed entry (1.1535ms)
+2026-11-11T11:23:34.1268389Z ✔ ruler steps match FilmCraft's table and label frames between seconds (1.732ms)
+2026-11-11T11:23:34.1274692Z ✔ zoom limits keep the whole timeline at the narrowest and about six frames at the widest (0.3704ms)
+2026-11-11T11:23:34.1284423Z ✔ viewport maps frames and x, clamps, zooms about an anchor and fits ranges (1.0971ms)
+2026-11-11T11:23:34.1289417Z ✔ follow-playhead pages or centers and leaves a visible playhead alone (0.2874ms)
+2026-11-11T11:23:34.1293650Z ✔ mini-map window and scroll invert (0.4658ms)
+2026-11-11T11:23:34.1294720Z ✔ clip geometry, overlap and visibility follow the engine's rules (0.9129ms)
+2026-11-11T11:23:34.1295883Z ✔ snapping picks the nearest target within the threshold (0.6051ms)
+2026-11-11T11:23:34.1297503Z ✔ move previews round, snap either edge, clamp at zero and refuse overlaps (0.6129ms)
+2026-11-11T11:23:34.1300199Z ✔ tail trims stop at neighbours, the media end and one frame (0.6163ms)
+2026-11-11T11:23:34.1306251Z ✔ head trims move start and in-point together, speed-aware, with the right apply order (0.6186ms)
+2026-11-11T11:23:34.1314639Z ✔ splits are strictly inside a clip and carry seconds (0.4374ms)
+2026-11-11T11:23:34.1323162Z ✔ in/out marks clamp and never form an empty or reversed range (0.4727ms)
+2026-11-11T11:23:34.1324610Z ✔ frame keys step a frame, page a second and clamp (0.2858ms)
+2026-11-11T11:23:34.1351536Z ✔ safe areas follow SMPTE and the picture's aspect fit (0.7633ms)
+2026-11-11T11:23:34.1353804Z ✔ timeline sources use tokens, no hex literals, no engine or optional renderer imports, no useState (8.3533ms)
+2026-11-11T11:23:34.1355234Z ✔ ported timeline files carry the pinned FilmCraft notice (7.6621ms)
+2026-11-11T11:23:34.1585436Z ✔ TreeGrid records measured row heights and uses them when a scroll-to-index fails (1.8197ms)
+2026-11-11T11:23:34.1587439Z ✔ TreeGrid still does not assume a fixed row height (0.31ms)
+2026-11-11T11:23:34.1588953Z ✔ rows carry level, sibling position and set size independent of expansion (2.8369ms)
+2026-11-11T11:23:34.1590607Z ✔ column order is controlled, tolerant of stale ids, and pinned columns split out (1.1562ms)
+2026-11-11T11:23:34.1594217Z ✔ selection helpers toggle and build visible-order ranges (0.5206ms)
+2026-11-11T11:23:34.1597381Z ✔ arrow, Home and End move focus; Shift extends from the anchor (0.597ms)
+2026-11-11T11:23:34.1599279Z ✔ Space toggles, Shift+Space selects the range, other keys pass through (0.473ms)
+2026-11-11T11:23:34.1600662Z ✔ ArrowRight expands then enters; ArrowLeft collapses then returns to parent (0.6173ms)
+2026-11-11T11:23:34.1653635Z ✔ unmeasured rows use the estimate (2.1116ms)
+2026-11-11T11:23:34.1655117Z ✔ setHeight updates prefix sums for later rows only (1.474ms)
+2026-11-11T11:23:34.1656813Z ✔ setHeight reports no change for an identical measurement and handles shrinking (0.2793ms)
+2026-11-11T11:23:34.1658104Z ✔ indexAtOffset finds the row containing a scroll offset (0.2294ms)
+2026-11-11T11:23:34.1660036Z ✔ indexAtOffset clamps outside the content and returns -1 when empty (0.2974ms)
+2026-11-11T11:23:34.1661375Z ✔ visibleRange returns the rows overlapping a viewport (1.222ms)
+2026-11-11T11:23:34.1662730Z ✔ resize keeps measured heights of surviving rows and estimates new ones (1.0589ms)
+2026-11-11T11:23:34.1664045Z ✔ reset forgets measurements and can change the estimate (0.5052ms)
+2026-11-11T11:23:34.1665333Z ✔ invalid input is rejected (2.0877ms)
+2026-11-11T11:23:34.1666311Z ✔ agrees with a brute-force model across random measurements (6.939ms)
+2026-11-11T11:23:34.1667629Z ✔ one million rows build, measure and look up quickly (20.6958ms)
+2026-11-11T11:23:34.3523489Z ✔ view transform maps content to the overlay and back, including drag deltas (5.3108ms)
+2026-11-11T11:23:34.3527664Z ✔ paint and stroke validation mirror the engine's rules (0.9483ms)
+2026-11-11T11:23:34.3532649Z ✔ keyboard nudge is 1 unit, 10 with Shift, arrows only (0.2737ms)
+2026-11-11T11:23:34.3538194Z ✔ subpath validation refuses what the overlay cannot draw honestly (1.5254ms)
+2026-11-11T11:23:34.3549028Z ✔ segments: closed paths wrap, lines stay one piece, curves sample within bounds (0.9061ms)
+2026-11-11T11:23:34.3553962Z ✔ hitPath finds the nearest segment within tolerance, in view space (0.8719ms)
+2026-11-11T11:23:34.3555478Z ✔ splitting a straight segment inserts a corner and leaves neighbours alone (0.721ms)
+2026-11-11T11:23:34.3557682Z ✔ splitting a curve keeps its shape (de Casteljau) and shortens the neighbour handles (0.5475ms)
+2026-11-11T11:23:34.3559116Z ✔ dragging handles: smooth stays collinear, symmetric mirrors, corner and Alt move one (0.7166ms)
+2026-11-11T11:23:34.3564435Z ✔ kind conversion makes handles consistent and pulls new ones from neighbours (1.1014ms)
+2026-11-11T11:23:34.3566168Z ✔ node commands are unavailable with a reason instead of failing silently (1.5923ms)
+2026-11-11T11:23:34.3621032Z ✔ boolean availability mirrors booleanLayers validation (1.5034ms)
+2026-11-11T11:23:34.3622654Z ✔ fill conversions keep colours and place gradients on the content bounds (0.5199ms)
+2026-11-11T11:23:34.3623979Z ✔ layer kinds explain what they cannot take (0.2236ms)
+2026-11-11T11:23:34.3625906Z ✔ dash presets scale with width; typed patterns are validated (0.9432ms)
+2026-11-11T11:23:34.3627339Z ✔ gradient handles: linear ends move and the end rotates, Shift snaps to 15 degrees (0.7196ms)
+2026-11-11T11:23:34.3629273Z ✔ radial: center carries the focal point, radius cannot swallow it, focal stays inside (0.6181ms)
+2026-11-11T11:23:34.3630679Z ✔ stops: offsets project onto the axis, stay ordered, and add or delete with reasons (1.1396ms)
+2026-11-11T11:23:34.3632264Z ✔ components stay engine-free, token-styled, and commit through callbacks (2.6924ms)
+2026-11-11T11:23:34.9005999Z ✔ vertical fader uses compatible RNGH axis activation and failure thresholds (191.9518ms)
+2026-11-11T11:23:34.9016738Z ✔ queued old vertical callbacks cannot clear a replacement source preview or commit (55.393ms)
+2026-11-11T11:23:34.9384222Z ✔ ordinary tap and sideways drag use captured real coordinates once (2.6897ms)
+2026-11-11T11:23:34.9403783Z ✔ resize, disable, source replacement or termination consume release instead of seeking (0.3942ms)
+2026-11-11T11:23:34.9405583Z ✔ native lane remains mounted and measured width changes cancel the actual session (0.9183ms)
+2026-11-11T11:23:34.9435081Z ✔ source-tagged fallback is zero immediately before any new source seek or extra render (0.4947ms)
+2026-11-11T11:23:34.9475021Z ✔ actual Zustand fallback advances twice without render and authoritative position wins (0.7014ms)
+2026-11-11T11:23:34.9500593Z ✔ frame previews coalesce and cancellation cannot leak a queued value (1.6908ms)
+2026-11-11T11:23:34.9581689Z ✔ dialog draft and Enter ownership preserve original until commit (0.8791ms)
+2026-11-11T11:23:34.9584097Z ✔ presenter ink maps between slide sizes and erases using normalized geometry (1.2086ms)
+2026-11-11T11:23:34.9633991Z ✔ presenter commands keep session undo and laser lifetime separate (0.3646ms)
+2026-11-11T11:23:34.9636630Z ✔ workspace document keys are validated and inherited layout names never replace the default (1.6394ms)
+2026-11-11T11:23:34.9638575Z ✔ preset metadata cannot lose its built-in permission flag and name copying has a bounded search (3.233ms)
+2026-11-11T11:23:34.9643261Z ✔ RNW 0.85 native codegen includes Fabric view and strongly typed events (2.9861ms)
+2026-11-11T11:23:34.9654462Z ✔ C++ registers a native WinUI XAML island, not a fabricated React View (0.3898ms)
+2026-11-11T11:23:34.9657203Z ✔ the Windows Fabric peer lane cannot be silently installed into Expo58 (0.3996ms)
+2026-11-11T11:23:34.9659633Z ✔ route approval remains app-owned and unrelated updates retain native items (0.4412ms)
+2026-11-11T11:23:34.9662733Z ✔ pane approval remains app-owned: a rejected toggle is put back (0.6119ms)
+2026-11-11T11:23:34.9664477Z ✔ items and the NavigationView carry Narrator names (0.4107ms)
+2026-11-11T11:23:34.9667780Z ✔ library and consumer build against the same stable Windows App SDK (0.3805ms)
+2026-11-11T11:23:34.9699376Z ✔ island width follows the committed pane state instead of a fixed width (0.414ms)
+2026-11-11T11:23:34.9700787Z ✔ consumer solution registers the x64 library project for solution builds (0.4682ms)
+2026-11-11T11:23:34.9702168Z ✔ native failures reach JS through onNativeError instead of being swallowed (0.9993ms)
+2026-11-11T11:23:34.9703614Z ✔ RTL layout passes authored direction with the host locale as fallback (0.6138ms)
+2026-11-11T11:23:34.9705039Z ✔ registration asks RNW to create its XamlApplication for the island (0.3037ms)
+2026-11-11T11:23:34.9706457Z ✔ Metro resolves the typed codegen source; types and default resolve to dist (1.548ms)
+2026-11-11T11:23:34.9707786Z ✔ initial navigation state is sent once and not double-routed (2.9596ms)
+2026-11-11T11:23:34.9709082Z ✔ updates retain app-controlled route and skip redundant host renders (0.3489ms)
+2026-11-11T11:23:34.9711360Z ✔ invalid destination IDs, unknown selections and invalid modes fail fast (0.4424ms)
+2026-11-11T11:23:34.9712921Z ✔ native shell is real WinUI NavigationView outside Fabric composition (1.2746ms)
+2026-11-11T11:23:34.9715119Z ✔ an unchanged app state reconciles a rejected native pane toggle (0.4822ms)
+2026-11-11T11:23:43.8491183Z ✔ public aliases resolve to declarations and include private reachable props, not unused helpers (752.0983ms)
+2026-11-11T11:23:43.8511181Z ✔ prop requiredness, prop type and return signature changes fail with unchanged export names (1448.4603ms)
+2026-11-11T11:23:43.8513937Z ✔ a type change behind an imported prop fails even when the component declaration is unchanged (626.0078ms)
+2026-11-11T11:23:43.8520258Z ✔ declaration comments and whitespace do not require an API baseline update (657.2186ms)
+2026-11-11T11:23:43.8527392Z ✔ unresolvable public dependencies fail instead of silently becoming an incomplete snapshot (314.9592ms)
+2026-11-11T11:23:43.8534867Z ✔ inline import types reject a missing module, missing qualified type and missing namespace (907.7363ms)
+2026-11-11T11:23:43.8541428Z ✔ platform export routing changes fail even when declaration symbols stay identical (1296.1795ms)
+2026-11-11T11:23:43.8543224Z ✔ installed external prop declarations and their exact package versions are tracked (1269.5278ms)
+2026-11-11T11:23:43.8550314Z ✔ an archive consumer can explicitly supply its compiler without a nested tooling install (1508.1047ms)
+2026-11-11T11:23:43.9005859Z ✔ identical surfaces produce no problems (2.3579ms)
+2026-11-11T11:23:43.9007401Z ✔ a removed export subpath fails the check (0.3806ms)
+2026-11-11T11:23:43.9008925Z ✔ an added export subpath also fails until the snapshot is updated (0.2456ms)
+2026-11-11T11:23:43.9010097Z ✔ a removed package fails the check (0.2965ms)
+2026-11-11T11:23:43.9011462Z ✔ local and pinned external implementations count separately from pending external work (37.3185ms)
+2026-11-11T11:23:43.9013344Z ✔ external completion requires revision, actual source paths, public exports and an existing report (57.371ms)
+2026-11-11T11:23:43.9015301Z ✔ external repositories, paths and immutable revisions cannot be unsafe or mutable references (218.7631ms)
+2026-11-11T11:23:43.9016770Z ✔ external ownership cannot masquerade as local implementation or source (43.2127ms)
+2026-11-11T11:23:43.9018732Z ✔ local implementations need existing owned source, evidence and a public export (40.1706ms)
+2026-11-11T11:23:43.9020598Z ✔ the exact 341 canonical IDs and names cannot be replaced while retaining the count (33.0332ms)
+2026-11-11T11:23:43.9021884Z ✔ baseline contents and ledger baseline identity remain frozen (13.1109ms)
+2026-11-11T11:23:43.9023562Z ✔ the required eight-platform scope cannot shrink, duplicate or substitute another platform (13.9085ms)
+2026-11-11T11:23:43.9025029Z ✔ unknown implementation, acceptance and platform result statuses are rejected (29.6557ms)
+2026-11-11T11:23:43.9026431Z ✔ accepted rows require completed implementation and eight passing, existing proofs (79.7862ms)
+2026-11-11T11:23:43.9029325Z ✔ partial work must stay visible and cannot be labeled implemented (28.335ms)
+2026-11-11T11:23:43.9030684Z ✔ consumer peers resolve to artifacts, including undeclared additional package coverage (2.6458ms)
+2026-11-11T11:23:43.9032190Z ✔ missing tarballs and incompatible runtime lanes cannot silently install from npm (0.9114ms)
+2026-11-11T11:23:43.9033549Z ✔ artifact corruption and omitted checksum evidence stop the consumer run (1.3861ms)
+2026-11-11T11:23:43.9034349Z ✔ checksum lists reject traversal, duplicate artifacts and empty manifests (0.6667ms)
+2026-11-11T11:23:43.9035020Z ✔ clean consumer runtime dependencies use existing exact pins (0.5121ms)
+2026-11-11T11:23:43.9035815Z ✔ installed npm lock identifies the exact canonical file bytes instead of a same-version registry package (2.0558ms)
+2026-11-11T11:23:43.9038195Z (node:1868) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///D:/a/NYC-Tron-UI/NYC-Tron-UI/examples/native-instruments/media-acceptance-contract.ts is not specified and it doesn't parse as CommonJS.
+2026-11-11T11:23:43.9040333Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-11T11:23:43.9041842Z To eliminate this warning, add "type": "module" to \\?\D:\a\NYC-Tron-UI\NYC-Tron-UI\examples\native-instruments\package.json.
+2026-11-11T11:23:43.9043463Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-11T11:23:43.9044688Z ✔ the runtime contract identifies the actual bundled video bytes (4.3708ms)
+2026-11-11T11:23:43.9046070Z ✔ runtime acceptance rejects stale provenance, omitted checks and fabricated timing/audio (3.3953ms)
+2026-11-11T11:23:43.9047413Z ✔ the clean native host selects media acceptance without a source resolver (4.2261ms)
+2026-11-11T11:23:43.9048212Z ✔ warmup requests the actual native Expo entry and consumes the complete JavaScript stream (60.3298ms)
+2026-11-11T11:23:43.9049130Z ✔ an available Metro status is insufficient: HTTP errors, wrong MIME and empty bundles fail (10.0751ms)
+2026-11-11T11:23:43.9049956Z ✔ warmup records bounded-download and timeout failures without a ready receipt (6.2234ms)
+2026-11-11T11:23:43.9050706Z ✔ iOS identity changes when native debug code changes despite an unchanged launcher (16.1711ms)
+2026-11-11T11:23:43.9051420Z ✔ app identity is independent of its absolute path and file enumeration order (23.0512ms)
+2026-11-11T11:23:43.9052209Z ✔ framework symlinks are recorded without duplicate traversal and retain relocation identity (54.0083ms)
+2026-11-11T11:23:43.9063587Z ✔ app identity rejects external, dangling and cyclic symlinks without following them (24.2888ms)
+2026-11-11T11:23:43.9064451Z ✔ Windows link separators are interpreted without changing literal manifest targets (0.5013ms)
+2026-11-11T11:23:43.9065259Z ✔ Android identity hashes raw APK bytes and both platforms persist a verifiable manifest (19.3002ms)
+2026-11-11T11:23:43.9066043Z ✔ native UI evidence rejects empty, skipped, failed and truncated driver reports (4.4264ms)
+2026-11-11T11:23:43.9066803Z ✔ semantic proof comes from a real populated hierarchy with the requested labels (1.0137ms)
+2026-11-11T11:23:43.9067544Z ✔ native touch coordinates must come from valid observed accessibility bounds (1.1965ms)
+2026-11-11T11:23:43.9068253Z ✔ native reference geometry rejects the observed safe-area origin regression (1.3126ms)
+2026-11-11T11:23:43.9068945Z ✔ native geometry requires unique real screen rectangles on both platforms (0.8259ms)
+2026-11-11T11:23:43.9069711Z ✔ the native driver is an immutable official tool and its flows contain no injected app scripts (1.622ms)
+2026-11-11T11:23:43.9070551Z ✔ both installed native jobs require the real UI runner and retain semantic and image artifacts (0.7575ms)
+2026-11-11T11:23:43.9071387Z ✔ Android recovery requires the exact initial launch transport failure before any app assertion (2.6685ms)
+2026-11-11T11:23:43.9072305Z ✔ iOS recovery binds the first Settings tap to its actual Recap sender, nonempty cancelled contact, app and time (1.6203ms)
+2026-11-11T11:23:43.9073471Z ✔ near misses, different app/contact, missing registration, empty contacts and out-of-attempt logs are not recoverable (2.8685ms)
+2026-11-11T11:23:43.9074333Z ✔ iOS never retries arbitrary assertions, edits, later taps or malformed timing (0.5925ms)
+2026-11-11T11:23:43.9075040Z ✔ one eligible recovery retains the failure before a fresh successful attempt (1.4242ms)
+2026-11-11T11:23:43.9075730Z ✔ a second failure is final, and an ineligible failure cannot reach recovery (1.7982ms)
+2026-11-11T11:23:43.9076988Z ✔ retention preserves the failed JUnit, native logs and screenshots byte for byte, without overwriting them on rerun (42.3024ms)
+2026-11-11T11:23:43.9077991Z ✔ retained snapshots survive writes through an already-open driver log and include hidden debug evidence (18.1617ms)
+2026-11-11T11:24:11.0859131Z ✔ release versions distinguish stable from actual prereleases and reject malformed semver (3.9167ms)
+2026-11-11T11:24:11.0864185Z ✔ prerelease candidate packaging preserves pending acceptance and never fetches or invents owner approval (2058.351ms)
+2026-11-11T11:24:11.0870738Z ✔ stable cannot publish with any of the 341 rows unverified or with invented platform acceptance (3130.9833ms)
+2026-11-11T11:24:11.0875490Z ✔ stable cannot publish from pending, incomplete or locally forged distribution review (10930.6783ms)
+2026-11-11T11:24:11.0878492Z ✔ stable owner approval must authenticate the exact author, repository, statement, version and bytes (11891.4387ms)
+2026-11-11T11:24:11.0882787Z ✔ stable requires and verifies all fifteen archive hashes, including both isolated desktop packages (3046.051ms)
+2026-11-11T11:24:11.0887364Z ✔ omitting the AppKit archive cannot silently restore the older fourteen-package inventory (1029.7917ms)
+2026-11-11T11:24:11.0891204Z ✔ an authenticated approval for prior checksums cannot authorize a later artifact inventory (2046.5664ms)
+2026-11-11T11:24:11.0895687Z ✔ only complete platform acceptance and a live exact owner approval can make stable ready without mutation (1024.7014ms)
+2026-11-11T11:24:11.0901230Z ✔ release retains candidate archives before readiness and requires both native desktop hosts plus reference evidence (1.3259ms)
+2026-11-11T11:24:11.0905435Z ✔ manual candidate runs cannot publish without explicit opt-in, even when every gate passes (6.7241ms)
+2026-11-11T11:24:11.1103266Z ✔ discovery lists every package test directory, not a hand-kept subset (1.4349ms)
+2026-11-11T11:24:11.1104923Z ✔ discovery skips Playwright browser suites and fixtures (0.4476ms)
+2026-11-11T11:24:11.1107582Z ✔ discovery returns forward-slash relative paths, sorted (1.4036ms)
+2026-11-11T11:24:11.1108513Z ✔ macos merges the exact tested bytes and retains the original native receipt (122.0189ms)
+2026-11-11T11:24:11.1109426Z ✔ windows merges the exact tested bytes and retains the original native receipt (173.0879ms)
+2026-11-11T11:24:11.1110443Z ✔ failed, stale, incomplete or mismatched native receipts cannot contribute a release archive (50.9784ms)
+2026-11-11T11:24:11.1111676Z ✔ AppKit requires both observed tooltip hover and an actual cross-window OS dragging session (44.9669ms)
+2026-11-11T11:24:11.1113458Z ✔ AppKit permission observation and native protocol checks cannot substitute for blocked OS gestures (64.6153ms)
+2026-11-11T11:24:11.1114526Z ✔ changed archive bytes cannot be released under the successful native job's checksum (56.7802ms)
+2026-11-11T11:24:11.1115524Z ✔ native acceptance binds the release's shared dependencies as well as the desktop adapter (166.3179ms)
+2026-11-11T11:24:11.1116652Z ✔ the passed Windows artifact preserves the exact installed npm lock for independent archive verification (232.091ms)
+2026-11-11T11:24:11.1117930Z (node:6844) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+2026-11-11T11:24:11.1118878Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:24:11.1119847Z ✔ a relocated canonical artifact retains the producer's exact thirteen package identities (996.8663ms)
+2026-11-11T11:24:11.1120729Z ✔ a prior checkout, wrong release version or absent producer hash cannot authorize these archives (556.1416ms)
+2026-11-11T11:24:11.1121568Z ✔ changing the manifest cannot relabel old package bytes as another source revision (513.1628ms)
+2026-11-11T11:24:11.1122357Z ✔ archive tampering and a valid same-version repack both fail the producer binding (725.1476ms)
+2026-11-11T11:24:11.1123116Z ✔ a tarball's embedded wrong version is rejected even with fresh valid checksums (1281.0807ms)
+2026-11-11T11:24:11.1123861Z ✔ missing, extra and symlinked workspace archives cannot enter the canonical set (484.2556ms)
+2026-11-11T11:24:11.1124664Z ✔ release assembly preserves all thirteen bytes while adding exactly the two desktop archives (947.1034ms)
+2026-11-11T11:24:11.1125491Z ✔ consumer preparation retains producer provenance and uses its exact local archives (1109.8619ms)
+2026-11-11T11:24:11.1126274Z ✔ consumer preparation rejects stale or changed artifacts before creating an app (646.1451ms)
+2026-11-11T11:24:11.1127082Z ✔ the producer CLI emits a hash for the actual checkout and rejects a different workflow revision (763.7338ms)
+2026-11-11T11:24:11.1127950Z ✔ an offline npm consumer records the canonical archive and rejects replacement after preparation (3268.3648ms)
+2026-11-11T11:24:11.1128717Z ℹ tests 1204
+2026-11-11T11:24:11.1128928Z ℹ suites 0
+2026-11-11T11:24:11.1129144Z ℹ pass 1204
+2026-11-11T11:24:11.1129340Z ℹ fail 0
+2026-11-11T11:24:11.1129918Z ℹ cancelled 0
+2026-11-11T11:24:11.1130202Z ℹ skipped 0
+2026-11-11T11:24:11.1130399Z ℹ todo 0
+2026-11-11T11:24:11.1130624Z ℹ duration_ms 59411.0954
+2026-11-11T11:24:11.2470586Z ##[group]Run node tooling/verify-packages.mjs
+2026-11-11T11:24:11.2471098Z [36;1mnode tooling/verify-packages.mjs[0m
+2026-11-11T11:24:11.2542781Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:24:11.2543171Z ##[endgroup]
+2026-11-11T11:24:12.9042912Z Packages: core, expo-controls, geometry, hardware-keys, icons, native-charts, native-controls, native-navigation, panes, platform-services, reserved-regions, ui, windows-fluent
+2026-11-11T11:24:12.9044819Z Validated 619 built conditional package exports and 750 ESM files.
+2026-11-11T11:24:12.9047674Z Subpaths that need an optional peer installed:
+2026-11-11T11:24:12.9048556Z   @nyc-tron/icons/native -> react, react-native, react-native-svg
+2026-11-11T11:24:12.9049403Z   @nyc-tron/icons/web -> react, react-native, react-native-svg
+2026-11-11T11:24:12.9050101Z   @nyc-tron/ui/components/shell/PaneSplitter -> zustand
+2026-11-11T11:24:12.9050847Z   @nyc-tron/ui/components/shell/AdaptiveDock -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9051335Z   @nyc-tron/ui/components/shell/ToolRail -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9051793Z   @nyc-tron/ui/components/shell/StatusBar -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9052270Z   @nyc-tron/ui/components/shell/MenuButton -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9052704Z   @nyc-tron/ui/components/shell/InspectorPanel -> zustand
+2026-11-11T11:24:12.9053091Z   @nyc-tron/ui/components/shell/InspectorSection -> zustand
+2026-11-11T11:24:12.9053475Z   @nyc-tron/ui/components/shell/PropertyRow -> zustand
+2026-11-11T11:24:12.9053888Z   @nyc-tron/ui/components/shell/UnitInput -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9054351Z   @nyc-tron/ui/components/shell/SliderField -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9054818Z   @nyc-tron/ui/components/shell/RangeSlider -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9055301Z   @nyc-tron/ui/components/shell/RotaryKnob -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9055735Z   @nyc-tron/ui/components/forge/WaveformLane -> zustand
+2026-11-11T11:24:12.9056155Z   @nyc-tron/ui/components/forge/NativeSeekBar -> @expo/ui, zustand
+2026-11-11T11:24:12.9056566Z   @nyc-tron/ui/components/forge/ColorChannels -> @expo/ui
+2026-11-11T11:24:12.9057392Z   @nyc-tron/ui/components/forge/audio/LevelFader -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9057997Z   @nyc-tron/ui/components/forge/color/HsvPicker -> @expo/ui, expo-linear-gradient
+2026-11-11T11:24:12.9058488Z   @nyc-tron/ui/components/forge/color/AlphaSlider -> zustand
+2026-11-11T11:24:12.9058890Z   @nyc-tron/ui/components/forge/color/ColorWheel -> zustand
+2026-11-11T11:24:12.9060142Z   @nyc-tron/ui/components/forge/color/ColorDiscPicker -> zustand
+2026-11-11T11:24:12.9060915Z   @nyc-tron/ui/components/forge/color/ColorChannelFields -> zustand
+2026-11-11T11:24:12.9061544Z   @nyc-tron/ui/components/forge/color/SwatchGrid -> zustand
+2026-11-11T11:24:12.9062005Z   @nyc-tron/ui/components/forge/color/FloatingColorPalette -> zustand
+2026-11-11T11:24:12.9062525Z   @nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle -> zustand
+2026-11-11T11:24:12.9063073Z   @nyc-tron/ui/components/data/DataTable -> @tanstack/react-table, zustand
+2026-11-11T11:24:12.9063543Z   @nyc-tron/ui/components/forge/SpreadsheetGrid -> zustand
+2026-11-11T11:24:12.9063966Z   @nyc-tron/ui/components/forge/inputs/InstrumentKnob -> zustand
+2026-11-11T11:24:12.9064412Z   @nyc-tron/ui/components/forge/inputs/InstrumentXYPad -> zustand
+2026-11-11T11:24:12.9064809Z   @nyc-tron/ui/components/data/TreeGrid -> zustand
+2026-11-11T11:24:12.9065189Z   @nyc-tron/ui/components/forge/graph/PatchGraph -> zustand
+2026-11-11T11:24:12.9065768Z   @nyc-tron/ui/components/forge/graphics/ImageCropOverlay -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9066403Z   @nyc-tron/ui/components/overlays/popover-position -> @nyc-tron/core
+2026-11-11T11:24:12.9066879Z   @nyc-tron/ui/components/overlays/CommandPopover -> @nyc-tron/core
+2026-11-11T11:24:12.9069819Z   @nyc-tron/ui/components/overlays/CommandPalette -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9070503Z   @nyc-tron/ui/components/overlays/AnchoredPopover -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9071034Z   @nyc-tron/ui/components/overlays/useTriggerAnchor -> zustand
+2026-11-11T11:24:12.9071522Z   @nyc-tron/ui/components/shell/SplitButton -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9072012Z   @nyc-tron/ui/components/shell/RibbonTabs -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9072510Z   @nyc-tron/ui/components/shell/ContextMenu -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9072967Z   @nyc-tron/ui/components/shell/PresetGallery -> zustand
+2026-11-11T11:24:12.9073441Z   @nyc-tron/ui/components/shell/KeyboardShortcutHUD -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9073929Z   @nyc-tron/ui/components/shell/FocusAndA11yLayer -> zustand
+2026-11-11T11:24:12.9074401Z   @nyc-tron/ui/components/forge/layers/LayerStack -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9074920Z   @nyc-tron/ui/components/forge/inputs/PrecisionScrubber -> zustand
+2026-11-11T11:24:12.9075476Z   @nyc-tron/ui/components/gestures/GestureHandlerDrag -> react-native-gesture-handler
+2026-11-11T11:24:12.9075989Z   @nyc-tron/ui/components/forge/ink/InkToolbar -> zustand
+2026-11-11T11:24:12.9076379Z   @nyc-tron/ui/components/content/KeyValueList -> zustand
+2026-11-11T11:24:12.9076753Z   @nyc-tron/ui/components/theme/NightScope -> uniwind
+2026-11-11T11:24:12.9077106Z   @nyc-tron/ui/components/files/DropZone -> zustand
+2026-11-11T11:24:12.9077456Z   @nyc-tron/ui/components/Select -> zustand
+2026-11-11T11:24:12.9077857Z   @nyc-tron/ui/components/forge/timeline/TimecodeDisplay -> zustand
+2026-11-11T11:24:12.9078336Z   @nyc-tron/ui/components/forge/timeline/TransportControls -> zustand
+2026-11-11T11:24:12.9078810Z   @nyc-tron/ui/components/forge/timeline/PlaybackRateMenu -> zustand
+2026-11-11T11:24:12.9079238Z   @nyc-tron/ui/components/forge/timeline/SeekBar -> zustand
+2026-11-11T11:24:12.9080135Z   @nyc-tron/ui/components/forge/timeline/TimelineRuler -> zustand
+2026-11-11T11:24:12.9080599Z   @nyc-tron/ui/components/forge/timeline/TimelinePlayhead -> zustand
+2026-11-11T11:24:12.9081066Z   @nyc-tron/ui/components/forge/timeline/InOutRangeHandles -> zustand
+2026-11-11T11:24:12.9081742Z   @nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll -> zustand
+2026-11-11T11:24:12.9082231Z   @nyc-tron/ui/components/forge/timeline/TimelineClipLane -> zustand
+2026-11-11T11:24:12.9082692Z   @nyc-tron/ui/components/forge/timeline/ClipTrimHandles -> zustand
+2026-11-11T11:24:12.9083146Z   @nyc-tron/ui/components/forge/timeline/RazorSplitTool -> zustand
+2026-11-11T11:24:12.9083596Z   @nyc-tron/ui/components/forge/timeline/SafeAreaOverlay -> zustand
+2026-11-11T11:24:12.9084035Z   @nyc-tron/ui/components/forge/spreadsheet/SheetTabs -> zustand
+2026-11-11T11:24:12.9084539Z   @nyc-tron/ui/components/forge/spreadsheet/ChartBuilder -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9085078Z   @nyc-tron/ui/components/forge/spreadsheet/SparklineEditor -> zustand
+2026-11-11T11:24:12.9085576Z   @nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls -> zustand
+2026-11-11T11:24:12.9086100Z   @nyc-tron/ui/components/forge/spreadsheet/SplitSpreadsheetView -> zustand
+2026-11-11T11:24:12.9086628Z   @nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView -> zustand
+2026-11-11T11:24:12.9087082Z   @nyc-tron/ui/components/forge/audio/PanControl -> zustand
+2026-11-11T11:24:12.9087518Z   @nyc-tron/ui/components/forge/audio/SoloMuteButtons -> zustand
+2026-11-11T11:24:12.9088062Z   @nyc-tron/ui/components/forge/audio/ChannelStrip -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9088729Z   @nyc-tron/ui/components/forge/audio/MixingConsole -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9089285Z   @nyc-tron/ui/components/forge/audio/TempoAndMetronome -> zustand
+2026-11-11T11:24:12.9089720Z   @nyc-tron/ui/components/forge/midi/MIDIPianoRoll -> zustand
+2026-11-11T11:24:12.9090703Z   @nyc-tron/ui/components/forge/midi/MIDIVelocityLane -> zustand
+2026-11-11T11:24:12.9091174Z   @nyc-tron/ui/components/forge/midi/StepSequencer -> zustand
+2026-11-11T11:24:12.9091623Z   @nyc-tron/ui/components/forge/office/ReadAloudTransport -> zustand
+2026-11-11T11:24:12.9092162Z   @nyc-tron/ui/components/forge/slides/SlideAnimationPane -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9092678Z   @nyc-tron/ui/components/forge/slides/SlideCanvas -> zustand
+2026-11-11T11:24:12.9093103Z   @nyc-tron/ui/components/forge/slides/SlideFilmstrip -> zustand
+2026-11-11T11:24:12.9093528Z   @nyc-tron/ui/components/forge/slides/SlideSorter -> zustand
+2026-11-11T11:24:12.9093988Z   @nyc-tron/ui/components/forge/document/BulletsNumberingEditor -> zustand
+2026-11-11T11:24:12.9094527Z   @nyc-tron/ui/components/forge/document/DocumentReadAloudTransport -> zustand
+2026-11-11T11:24:12.9095050Z   @nyc-tron/ui/components/forge/document/NavigationOutline -> zustand
+2026-11-11T11:24:12.9095513Z   @nyc-tron/ui/components/forge/document/RichTextRibbon -> zustand
+2026-11-11T11:24:12.9095975Z   @nyc-tron/ui/components/forge/pdf/AnnotationToolbar -> zustand
+2026-11-11T11:24:12.9096431Z   @nyc-tron/ui/components/forge/pdf/CommentsThreadPanel -> zustand
+2026-11-11T11:24:12.9096896Z   @nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport -> zustand
+2026-11-11T11:24:12.9097363Z   @nyc-tron/ui/components/forge/pdf/TextSearchResults -> zustand
+2026-11-11T11:24:12.9097789Z   @nyc-tron/ui/components/forge/audio/RecordingTrack -> zustand
+2026-11-11T11:24:12.9098206Z   @nyc-tron/ui/components/forge/audio/AudioPreview -> zustand
+2026-11-11T11:24:12.9098659Z   @nyc-tron/ui/components/forge/timeline/JKLShuttleController -> zustand
+2026-11-11T11:24:12.9099122Z   @nyc-tron/ui/components/forge/timeline/LoopRangeBar -> zustand
+2026-11-11T11:24:12.9099551Z   @nyc-tron/ui/components/forge/timeline/TrackHeaders -> zustand
+2026-11-11T11:24:12.9101376Z   @nyc-tron/ui/components/forge/timeline/RollSlipSlideControls -> zustand
+2026-11-11T11:24:12.9104280Z   @nyc-tron/ui/components/forge/timeline/DragReorderAndRipple -> zustand
+2026-11-11T11:24:12.9105009Z   @nyc-tron/ui/components/forge/timeline/TransitionHandles -> zustand
+2026-11-11T11:24:12.9105543Z   @nyc-tron/ui/components/forge/timeline/TimelineMarkers -> zustand
+2026-11-11T11:24:12.9106356Z   @nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack -> zustand
+2026-11-11T11:24:12.9106924Z   @nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser -> zustand
+2026-11-11T11:24:12.9107432Z   @nyc-tron/ui/components/forge/timeline/BatchEditPanel -> zustand
+2026-11-11T11:24:12.9107942Z   @nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget -> zustand
+2026-11-11T11:24:12.9108507Z   @nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel -> zustand
+2026-11-11T11:24:12.9109059Z   @nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard -> zustand
+2026-11-11T11:24:12.9109573Z   @nyc-tron/ui/components/forge/canvas/AlignDistributePanel -> zustand
+2026-11-11T11:24:12.9110053Z   @nyc-tron/ui/components/forge/canvas/CanvasRuler -> zustand
+2026-11-11T11:24:12.9110501Z   @nyc-tron/ui/components/forge/canvas/SnapGridSettings -> zustand
+2026-11-11T11:24:12.9110981Z   @nyc-tron/ui/components/forge/canvas/TransformOriginHandle -> zustand
+2026-11-11T11:24:12.9111464Z   @nyc-tron/ui/components/forge/layers/ArtboardNavigator -> zustand
+2026-11-11T11:24:12.9111915Z   @nyc-tron/ui/components/forge/layers/CanvasCompareView -> zustand
+2026-11-11T11:24:12.9112389Z   @nyc-tron/ui/components/forge/layers/ClippingMaskControls -> zustand
+2026-11-11T11:24:12.9112887Z   @nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor -> zustand
+2026-11-11T11:24:12.9113410Z   @nyc-tron/ui/components/forge/selection/MagicSelectionControls -> zustand
+2026-11-11T11:24:12.9113906Z   @nyc-tron/ui/components/forge/selection/SelectionMarquee -> zustand
+2026-11-11T11:24:12.9114373Z   @nyc-tron/ui/components/forge/vector/FillStrokeInspector -> zustand
+2026-11-11T11:24:12.9115921Z   @nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles -> zustand
+2026-11-11T11:24:12.9116778Z   @nyc-tron/ui/components/forge/vector/PenNodeEditor -> zustand
+2026-11-11T11:24:12.9117245Z   @nyc-tron/ui/components/forge/vector/ShapeBuilder -> zustand
+2026-11-11T11:24:12.9117731Z   @nyc-tron/ui/components/forge/audio/AutomationLane -> zustand
+2026-11-11T11:24:12.9118218Z   @nyc-tron/ui/components/forge/audio/AutomationModePicker -> zustand
+2026-11-11T11:24:12.9118734Z   @nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix -> zustand
+2026-11-11T11:24:12.9119232Z   @nyc-tron/ui/components/forge/audio/DynamicsTransferGraph -> zustand
+2026-11-11T11:24:12.9119704Z   @nyc-tron/ui/components/forge/audio/EQFrequencyGraph -> zustand
+2026-11-11T11:24:12.9120145Z   @nyc-tron/ui/components/forge/audio/InsertEffectRack -> zustand
+2026-11-11T11:24:12.9121029Z   @nyc-tron/ui/components/forge/audio/LoudnessMeter -> zustand
+2026-11-11T11:24:12.9121510Z   @nyc-tron/ui/components/forge/audio/PluginPresetBrowser -> zustand
+2026-11-11T11:24:12.9121986Z   @nyc-tron/ui/components/forge/audio/SpectrogramView -> zustand
+2026-11-11T11:24:12.9122567Z   @nyc-tron/ui/components/forge/color/ColorPickerDialog -> @expo/ui, expo-linear-gradient, zustand
+2026-11-11T11:24:12.9123282Z   @nyc-tron/ui/components/forge/slides/PresenterInkOverlay -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9123887Z   @nyc-tron/ui/components/forge/slides/PresenterInkStrip -> zustand
+2026-11-11T11:24:12.9124373Z   @nyc-tron/ui/components/shell/ContextualToolbar -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9124880Z   @nyc-tron/ui/components/shell/WorkspaceHost -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9125417Z   @nyc-tron/ui/components/shell/WorkspacePresetSwitcher -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9125993Z   @nyc-tron/ui/components/files/FileImportExportSheet -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9126562Z   @nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog -> zustand
+2026-11-11T11:24:12.9127049Z   @nyc-tron/ui/components/shell/AssetBrowser -> zustand
+2026-11-11T11:24:12.9127414Z   @nyc-tron/ui/components/shell/HistoryPanel -> zustand
+2026-11-11T11:24:12.9128433Z   @nyc-tron/ui/components/shell/FindReplacePopover -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9129683Z   @nyc-tron/ui/components/shell/FindReplaceContent -> zustand
+2026-11-11T11:24:12.9130448Z   @nyc-tron/ui/components/shell/ToastAndProgress -> zustand
+2026-11-11T11:24:12.9131341Z   @nyc-tron/ui/components/forge/color/PrintColorChannels -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9132357Z   @nyc-tron/ui/components/forge/color/WideGamutChannels -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9133196Z   @nyc-tron/ui/components/forge/color/ColorSpaceChooser -> zustand
+2026-11-11T11:24:12.9133975Z   @nyc-tron/ui/components/forge/color/ThemeColorReferences -> zustand
+2026-11-11T11:24:12.9134954Z   @nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9135979Z   @nyc-tron/ui/components/forge/color/SoftProofControls -> zustand
+2026-11-11T11:24:12.9136777Z   @nyc-tron/ui/components/forge/color/LevelsEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9137699Z   @nyc-tron/ui/components/forge/color/ColorGradingWheels -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9138699Z   @nyc-tron/ui/components/forge/color/HSLSecondaryEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9139673Z   @nyc-tron/ui/components/forge/color/GradientStopEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9140893Z   @nyc-tron/ui/components/forge/color/CurvesEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9141704Z   @nyc-tron/ui/components/forge/color/SVColorField -> zustand
+2026-11-11T11:24:12.9142493Z   @nyc-tron/ui/components/forge/color/HueSlider -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9143450Z   @nyc-tron/ui/components/forge/color/GradientMeshEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9144395Z   @nyc-tron/ui/components/forge/color/EyedropperTool -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9145446Z   @nyc-tron/ui/components/shell/NumericScrubField -> zustand
+2026-11-11T11:24:12.9146400Z   @nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9147451Z   @nyc-tron/ui/components/forge/photo/ToneAndPresence -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9148533Z   @nyc-tron/ui/components/forge/photo/EightBandColorMixer -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9149530Z   @nyc-tron/ui/components/forge/photo/LensCorrectionPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9150471Z   @nyc-tron/ui/components/forge/photo/RatingAndFlagControl -> zustand
+2026-11-11T11:24:12.9151384Z   @nyc-tron/ui/components/forge/photo/RAWDevelopPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9152214Z   @nyc-tron/ui/components/forge/photo/PhotoLibraryGrid -> zustand
+2026-11-11T11:24:12.9153100Z   @nyc-tron/ui/components/forge/photo/CatalogFilterBar -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9154005Z   @nyc-tron/ui/components/forge/photo/BeforeAfterCompare -> zustand
+2026-11-11T11:24:12.9154806Z   @nyc-tron/ui/components/forge/photo/PhotoMetadataInspector -> zustand
+2026-11-11T11:24:12.9155629Z   @nyc-tron/ui/components/forge/photo/PresetFilmstrip -> zustand
+2026-11-11T11:24:12.9156377Z   @nyc-tron/ui/components/forge/photo/PresetManager -> zustand
+2026-11-11T11:24:12.9157197Z   @nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser -> zustand
+2026-11-11T11:24:12.9158133Z   @nyc-tron/ui/components/forge/photo/BatchExportPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9159084Z   @nyc-tron/ui/components/forge/photo/LocalMaskBrush -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9160100Z   @nyc-tron/ui/components/forge/photo/CleanupAndRetouchPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9161414Z   @nyc-tron/ui/components/forge/photo/LinearRadialGradientMask -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9162529Z   @nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9163580Z   @nyc-tron/ui/components/forge/motion/Transform3DInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9164665Z   @nyc-tron/ui/components/forge/motion/CameraAndLightControls -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9165858Z   @nyc-tron/ui/components/forge/motion/MatteAndMaskPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9166931Z   @nyc-tron/ui/components/forge/motion/ParticleEmitterControls -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9167889Z   @nyc-tron/ui/components/forge/motion/EasingPresetGallery -> zustand
+2026-11-11T11:24:12.9168802Z   @nyc-tron/ui/components/forge/motion/RenderQueuePanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9169768Z   @nyc-tron/ui/components/forge/motion/KeyframeValueGraph -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9170789Z   @nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9171796Z   @nyc-tron/ui/components/forge/motion/TimeRemapCurve -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9172806Z   @nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9173720Z   @nyc-tron/ui/components/forge/motion/CompositionLayerTree -> zustand
+2026-11-11T11:24:12.9174548Z   @nyc-tron/ui/components/forge/motion/MotionPathEditor -> zustand
+2026-11-11T11:24:12.9175509Z   @nyc-tron/ui/components/forge/motion/EffectStackAndInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9176437Z   @nyc-tron/ui/components/forge/motion/ExpressionEditor -> zustand
+2026-11-11T11:24:12.9177290Z   @nyc-tron/ui/components/forge/motion/NodeGraphEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9178395Z   @nyc-tron/ui/components/forge/canvas/CanvasPanZoom -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9179531Z   @nyc-tron/ui/components/forge/canvas/GPUCanvasViewport -> react-native-skia, zustand
+2026-11-11T11:24:12.9180907Z   @nyc-tron/ui/components/forge/selection/SelectionBounds -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9182678Z   @nyc-tron/ui/components/forge/selection/MultiSelectionControls -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9183838Z   @nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9185103Z   @nyc-tron/ui/components/forge/canvas/GuidedCropAndStraighten -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9186395Z   @nyc-tron/ui/components/forge/ink/BrushPresetBrowser -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9187419Z   @nyc-tron/ui/components/forge/ink/BrushDynamicsInspector -> zustand
+2026-11-11T11:24:12.9188553Z   @nyc-tron/ui/components/forge/ink/InkStrokePreview -> react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T11:24:12.9189664Z   @nyc-tron/ui/components/forge/ink/EraserModePicker -> zustand
+2026-11-11T11:24:12.9190385Z   @nyc-tron/ui/components/forge/ink/BrushTaperControl -> zustand
+2026-11-11T11:24:12.9191195Z   @nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter -> zustand
+2026-11-11T11:24:12.9192413Z   @nyc-tron/ui/components/forge/ink/BrushStabilizationPreview -> react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T11:24:12.9193533Z   @nyc-tron/ui/components/forge/timeline/MediaMonitor -> zustand
+2026-11-11T11:24:12.9194265Z   @nyc-tron/ui/components/forge/timeline/SourceMonitor -> zustand
+2026-11-11T11:24:12.9195033Z   @nyc-tron/ui/components/forge/timeline/ProgramMonitor -> zustand
+2026-11-11T11:24:12.9195810Z   @nyc-tron/ui/components/forge/timeline/VideoFilmstrip -> zustand
+2026-11-11T11:24:12.9196569Z   @nyc-tron/ui/components/forge/timeline/AudioClipWaveform -> zustand
+2026-11-11T11:24:12.9197358Z   @nyc-tron/ui/components/forge/timeline/MulticamAngleViewer -> zustand
+2026-11-11T11:24:12.9198193Z   @nyc-tron/ui/components/forge/timeline/RenderCacheIndicator -> zustand
+2026-11-11T11:24:12.9199071Z   @nyc-tron/ui/components/forge/timeline/PictureInPictureControls -> zustand
+2026-11-11T11:24:12.9199919Z   @nyc-tron/ui/components/forge/timeline/waveform-cache -> zustand
+2026-11-11T11:24:12.9201115Z   @nyc-tron/ui/components/forge/timeline/ExportMonitor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9201817Z   @nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9202585Z   @nyc-tron/ui/components/forge/timeline/VideoQualityInspector -> zustand
+2026-11-11T11:24:12.9203407Z   @nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector -> zustand
+2026-11-11T11:24:12.9204104Z   @nyc-tron/ui/components/forge/timeline/AutoReframeGuides -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9204709Z   @nyc-tron/ui/components/forge/timeline/CoverFramePicker -> zustand
+2026-11-11T11:24:12.9205255Z   @nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9205932Z   @nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9206708Z   @nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9207571Z   @nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9208443Z   @nyc-tron/ui/components/forge/timeline/StickerMotionLane -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9209197Z   @nyc-tron/ui/components/forge/audio/VerticalFader -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9209781Z   @nyc-tron/ui/components/forge/audio/NativeAudioTransport -> zustand
+2026-11-11T11:24:12.9210254Z   @nyc-tron/ui/components/forge/audio/RecordingArmButton -> zustand
+2026-11-11T11:24:12.9210985Z   @nyc-tron/ui/components/forge/audio/InputMonitorToggle -> zustand
+2026-11-11T11:24:12.9211588Z   @nyc-tron/ui/components/forge/audio/DeviceAndChannelPicker -> zustand
+2026-11-11T11:24:12.9212244Z   @nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9213024Z   @nyc-tron/ui/components/forge/audio/LiveRecordingWaveform -> zustand
+2026-11-11T11:24:12.9213539Z   @nyc-tron/ui/components/forge/audio/RealtimePeakMeter -> zustand
+2026-11-11T11:24:12.9214121Z   @nyc-tron/ui/components/forge/audio/SurroundPanView -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9214821Z   @nyc-tron/ui/components/forge/audio/PanAndBalanceControl -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9215406Z   @nyc-tron/ui/components/forge/audio/ClipGainEnvelope -> zustand
+2026-11-11T11:24:12.9215863Z   @nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade -> zustand
+2026-11-11T11:24:12.9216323Z   @nyc-tron/ui/components/forge/audio/LoopPunchRecording -> zustand
+2026-11-11T11:24:12.9216760Z   @nyc-tron/ui/components/forge/audio/SampleEditor -> zustand
+2026-11-11T11:24:12.9217214Z   @nyc-tron/ui/components/forge/audio/LatencyCalibrationPanel -> zustand
+2026-11-11T11:24:12.9217834Z   @nyc-tron/ui/components/forge/audio/TakePlaylistAndComping -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9218934Z   @nyc-tron/ui/components/forge/audio/AudioVideoSync -> zustand
+2026-11-11T11:24:12.9219402Z   @nyc-tron/ui/components/forge/audio/AudioProcessingPanel -> zustand
+2026-11-11T11:24:12.9219896Z   @nyc-tron/ui/components/forge/audio/VoiceIsolationPanel -> zustand
+2026-11-11T11:24:12.9220374Z   @nyc-tron/ui/components/forge/audio/NoiseReductionMonitor -> zustand
+2026-11-11T11:24:12.9220849Z   @nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel -> zustand
+2026-11-11T11:24:12.9221405Z   @nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9221972Z   @nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane -> zustand
+2026-11-11T11:24:12.9222469Z   @nyc-tron/ui/components/forge/audio/SoundEffectsLibrary -> zustand
+2026-11-11T11:24:12.9223155Z   @nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9223875Z   @nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin -> zustand
+2026-11-11T11:24:12.9224442Z   @nyc-tron/ui/components/forge/inputs/PropertyInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9225047Z   @nyc-tron/ui/components/forge/document/TypographyInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9225773Z   @nyc-tron/ui/components/forge/document/PageSetupPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9226370Z   @nyc-tron/ui/components/forge/document/HeadersFootersEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9226938Z   @nyc-tron/ui/components/forge/document/ParagraphStylesGallery -> zustand
+2026-11-11T11:24:12.9227506Z   @nyc-tron/ui/components/forge/document/TableLayoutInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9228236Z   @nyc-tron/ui/components/forge/document/InsertTableGrid -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9229061Z   @nyc-tron/ui/components/forge/document/ParagraphRuler -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9229721Z   @nyc-tron/ui/components/forge/document/CommentsAndReviewRail -> zustand
+2026-11-11T11:24:12.9230224Z   @nyc-tron/ui/components/forge/document/TrackChangesView -> zustand
+2026-11-11T11:24:12.9230784Z   @nyc-tron/ui/components/forge/document/TableOfContentsEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9231350Z   @nyc-tron/ui/components/forge/document/DictationSessionPanel -> zustand
+2026-11-11T11:24:12.9231897Z   @nyc-tron/ui/components/forge/document/TextWrapAndFrames -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9232443Z   @nyc-tron/ui/components/forge/document/LayoutSpreadNavigator -> zustand
+2026-11-11T11:24:12.9232936Z   @nyc-tron/ui/components/forge/document/MailMergeFieldPicker -> zustand
+2026-11-11T11:24:12.9233493Z   @nyc-tron/ui/components/forge/document/SpellGrammarPopover -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9234117Z   @nyc-tron/ui/components/forge/document/FootnoteCitationEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9234832Z   @nyc-tron/ui/components/forge/document/TextSelectionAndCaret -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9235457Z   @nyc-tron/ui/components/forge/document/PaginatedTextCanvas -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9236047Z   @nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid -> zustand
+2026-11-11T11:24:12.9236546Z   @nyc-tron/ui/components/forge/spreadsheet/FormulaBar -> zustand
+2026-11-11T11:24:12.9236984Z   @nyc-tron/ui/components/forge/spreadsheet/NameBox -> zustand
+2026-11-11T11:24:12.9237451Z   @nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete -> zustand
+2026-11-11T11:24:12.9237966Z   @nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer -> zustand
+2026-11-11T11:24:12.9239082Z   @nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9240137Z   @nyc-tron/ui/components/forge/spreadsheet/FillHandleAndAutoFill -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9241076Z   @nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9241660Z   @nyc-tron/ui/components/forge/spreadsheet/ValidationDropdown -> zustand
+2026-11-11T11:24:12.9242233Z   @nyc-tron/ui/components/forge/spreadsheet/TableStyleGallery -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9242874Z   @nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9243520Z   @nyc-tron/ui/components/forge/spreadsheet/SortFilterHeader -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9244127Z   @nyc-tron/ui/components/forge/spreadsheet/DataImportWizard -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9244699Z   @nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager -> zustand
+2026-11-11T11:24:12.9245342Z   @nyc-tron/ui/components/forge/spreadsheet/PivotFieldList -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9245942Z   @nyc-tron/ui/components/forge/spreadsheet/RangeComments -> zustand
+2026-11-11T11:24:12.9246414Z   @nyc-tron/ui/components/forge/inputs/AssetPresetGallery -> zustand
+2026-11-11T11:24:12.9246961Z   @nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9247726Z   @nyc-tron/ui/components/forge/slides/MasterLayoutEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9248479Z   @nyc-tron/ui/components/forge/slides/ShapePresetGallery -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9249166Z   @nyc-tron/ui/components/forge/slides/TransitionPicker -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9249737Z   @nyc-tron/ui/components/forge/slides/SlideNotesEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9250239Z   @nyc-tron/ui/components/forge/slides/PresenterView -> zustand
+2026-11-11T11:24:12.9250687Z   @nyc-tron/ui/components/forge/slides/RehearsalTimers -> zustand
+2026-11-11T11:24:12.9251186Z   @nyc-tron/ui/components/forge/slides/MorphPreview -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9251760Z   @nyc-tron/ui/components/forge/slides/MediaInsertInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9252360Z   @nyc-tron/ui/components/forge/slides/ChartAndTableEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9253000Z   @nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9253751Z   @nyc-tron/ui/components/forge/slides/InkAndLaserPointer -> react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T11:24:12.9254415Z   @nyc-tron/ui/components/forge/pdf/PDFPageLayoutSelector -> zustand
+2026-11-11T11:24:12.9254888Z   @nyc-tron/ui/components/forge/pdf/VirtualPDFPageViewer -> zustand
+2026-11-11T11:24:12.9255396Z   @nyc-tron/ui/components/forge/pdf/PDFTextSelection -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9256019Z   @nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9256567Z   @nyc-tron/ui/components/forge/inputs/OutlineTree -> zustand
+2026-11-11T11:24:12.9257078Z   @nyc-tron/ui/components/forge/pdf/BookmarkOutline -> zustand
+2026-11-11T11:24:12.9257705Z   @nyc-tron/ui/components/forge/pdf/PDFThumbnailSidebar -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9258832Z   @nyc-tron/ui/components/forge/pdf/PageReorderOrganizer -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9259534Z   @nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog -> zustand
+2026-11-11T11:24:12.9260079Z   @nyc-tron/ui/components/forge/pdf/HyperlinkInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9260640Z   @nyc-tron/ui/components/forge/pdf/PDFCompareOverlay -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9261218Z   @nyc-tron/ui/components/forge/pdf/PrintAndExportPreview -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9261764Z   @nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel -> zustand
+2026-11-11T11:24:12.9262238Z   @nyc-tron/ui/components/forge/pdf/RedactionReviewTool -> zustand
+2026-11-11T11:24:12.9262954Z   @nyc-tron/ui/components/forge/pdf/SignatureStampTool -> @nyc-tron/core, react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T11:24:12.9263695Z   @nyc-tron/ui/components/forge/pdf/PDFFormFieldEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9264227Z   @nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment -> zustand
+2026-11-11T11:24:12.9264854Z   @nyc-tron/ui/components/forge/pdf/PDFScanSession -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9265627Z   @nyc-tron/ui/components/forge/inputs/PointEditor2D -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9266258Z   @nyc-tron/ui/components/forge/design/FrameAndComponentTree -> zustand
+2026-11-11T11:24:12.9266807Z   @nyc-tron/ui/components/forge/design/AutoLayoutInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9267436Z   @nyc-tron/ui/components/forge/design/HugFillFixedSizeControls -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9268047Z   @nyc-tron/ui/components/forge/design/ConstraintsPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9268646Z   @nyc-tron/ui/components/forge/design/ComponentVariantPicker -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9269191Z   @nyc-tron/ui/components/forge/design/ReusableStylesPanel -> zustand
+2026-11-11T11:24:12.9269850Z   @nyc-tron/ui/components/forge/design/VariablesAndModes -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9270579Z   @nyc-tron/ui/components/forge/design/PrototypeConnectionTool -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9271331Z   @nyc-tron/ui/components/forge/design/InteractionTriggerEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9271909Z   @nyc-tron/ui/components/forge/design/PrototypePreviewPlayer -> zustand
+2026-11-11T11:24:12.9272373Z   @nyc-tron/ui/components/forge/design/FlowOverview -> zustand
+2026-11-11T11:24:12.9272834Z   @nyc-tron/ui/components/forge/design/DevHandoffInspector -> zustand
+2026-11-11T11:24:12.9273329Z   @nyc-tron/ui/components/forge/design/CollaborationPresence -> zustand
+2026-11-11T11:24:12.9273783Z   @nyc-tron/ui/components/forge/design/CommentPins -> zustand
+2026-11-11T11:24:12.9274276Z   @nyc-tron/ui/components/forge/design/MultiExportSlices -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9274907Z   @nyc-tron/ui/components/forge/cad/Native3DViewport -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9275478Z   @nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo -> zustand
+2026-11-11T11:24:12.9276098Z   @nyc-tron/ui/components/forge/cad/TransformGizmo3D -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9276827Z   @nyc-tron/ui/components/forge/cad/UVEditor -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9277388Z   @nyc-tron/ui/components/forge/cad/TextureSetPanel -> zustand
+2026-11-11T11:24:12.9277908Z   @nyc-tron/ui/components/forge/cad/PBRMaterialInspector -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9279512Z   @nyc-tron/ui/components/forge/cad/TextureBrush3D -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9280308Z   @nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9280900Z   @nyc-tron/ui/components/forge/cad/BakingMapPanel -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9281527Z   @nyc-tron/ui/components/forge/cad/NodeGraphCanvas -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9282207Z   @nyc-tron/ui/components/forge/cad/NodeLibrarySearch -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9282773Z   @nyc-tron/ui/components/forge/cad/LiveNodeThumbnail -> zustand
+2026-11-11T11:24:12.9283234Z   @nyc-tron/ui/components/forge/cad/DraftingCommandLine -> zustand
+2026-11-11T11:24:12.9283750Z   @nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9284342Z   @nyc-tron/ui/components/forge/cad/DimensionsAndHatching -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9284929Z   @nyc-tron/ui/components/forge/cad/PaperSpaceLayout -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9285535Z   @nyc-tron/ui/components/forge/cad/ParametricConstraintEditor -> @nyc-tron/core, zustand
+2026-11-11T11:24:12.9286289Z   @nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl -> react-native-gesture-handler, zustand
+2026-11-11T11:24:12.9287013Z   @nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber -> @expo/ui, zustand
+2026-11-11T11:24:13.0637651Z ##[group]Run node tooling/pack-release.mjs "$env:RUNNER_TEMP\nyc-tron-packs"
+2026-11-11T11:24:13.0638305Z [36;1mnode tooling/pack-release.mjs "$env:RUNNER_TEMP\nyc-tron-packs"[0m
+2026-11-11T11:24:13.0708058Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:24:13.0708414Z ##[endgroup]
+2026-11-11T11:24:52.9243627Z nyc-tron-core-1.0.0.tgz  @nyc-tron/core  68 files  sha256 2079abe606dadde1d0d34cba4a4a31820f289cd893f2ad1e0a5c85a20914992c
+2026-11-11T11:24:52.9246521Z nyc-tron-expo-controls-1.0.0.tgz  @nyc-tron/expo-controls  140 files  sha256 0af9242ddff4c9d1c7a71808a194a68307b4de250311fe96b2c8b1ecaf6f58d0
+2026-11-11T11:24:52.9249168Z nyc-tron-geometry-1.0.0.tgz  @nyc-tron/geometry  19 files  sha256 28f8ce71bd22fa1590999d11699804f0b70d7da91553bc57270618572a6bcf91
+2026-11-11T11:24:52.9252024Z nyc-tron-hardware-keys-1.0.0.tgz  @nyc-tron/hardware-keys  67 files  sha256 afa9972cb46aa51485874c5d679580fa08f64476a4c5f7f4d15342d365efa178
+2026-11-11T11:24:52.9255245Z nyc-tron-icons-1.0.0.tgz  @nyc-tron/icons  17 files  sha256 dcadfdc21d51fc88f645460d9967066298622f4dbdeb4f50ea1c6ed49402ff78
+2026-11-11T11:24:52.9257827Z nyc-tron-native-charts-1.0.0.tgz  @nyc-tron/native-charts  43 files  sha256 472ffd4d03a0f2dd2ffa6174eab3331ffc637136a153e7a9c36718c9418b6553
+2026-11-11T11:24:52.9260999Z nyc-tron-native-controls-1.0.0.tgz  @nyc-tron/native-controls  76 files  sha256 4fd0ac5d18388d3687b3c6f6c034988b44dd98c7d5933843ee2dad80547f38c3
+2026-11-11T11:24:52.9263231Z (node:6100) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+2026-11-11T11:24:52.9264723Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:24:52.9265647Z nyc-tron-native-navigation-1.0.0.tgz  @nyc-tron/native-navigation  31 files  sha256 f7bdae21ce9bd2bde414c7d77aa791f1c57974c934487471d38e82aaf23d3a1d
+2026-11-11T11:24:52.9266721Z nyc-tron-panes-1.0.0.tgz  @nyc-tron/panes  40 files  sha256 0e79d0501f58cd89078d7c256b20ca6303c609e5b88931b4e001bf425f41bef4
+2026-11-11T11:24:52.9267768Z nyc-tron-platform-services-1.0.0.tgz  @nyc-tron/platform-services  228 files  sha256 85521ad865fda01cb59c7f5636e0bd0f34ed1d1f3e7b8c9c957130875783d81c
+2026-11-11T11:24:52.9269908Z nyc-tron-reserved-regions-1.0.0.tgz  @nyc-tron/reserved-regions  43 files  sha256 81c4c1f0c5e6c59ec0e3dd753f48fdd1c59268e9f8d9a2421f536a42b6866171
+2026-11-11T11:24:52.9272249Z nyc-tron-ui-1.0.0.tgz  @nyc-tron/ui  2516 files  sha256 d6509a9ac910a950d724daf24bb49df6603dbcdc2579b87a2c02c47893cd9d0d
+2026-11-11T11:24:52.9273290Z nyc-tron-windows-fluent-1.0.0.tgz  @nyc-tron/windows-fluent  20 files  sha256 71417ed170abbc265788226295e2bddddfcc5ae13a874d2890ba8864ff8e1014
+2026-11-11T11:24:52.9274061Z Wrote 13 tarballs and SHA256SUMS to D:\a\_temp\nyc-tron-packs
+2026-11-11T11:24:53.0397541Z ##[group]Run node tooling/consumer-smoke.mjs "$env:RUNNER_TEMP\nyc-tron-packs"
+2026-11-11T11:24:53.0398191Z [36;1mnode tooling/consumer-smoke.mjs "$env:RUNNER_TEMP\nyc-tron-packs"[0m
+2026-11-11T11:24:53.0469366Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-11T11:24:53.0469743Z ##[endgroup]
+2026-11-11T11:24:56.2379145Z 
+2026-11-11T11:24:56.2379772Z added 3 packages in 3s
+2026-11-11T11:24:56.3142947Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent
+2026-11-11T11:24:56.4884397Z Post job cleanup.
+2026-11-11T11:24:56.6383017Z (node:5560) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T11:24:56.6384398Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:24:56.6713512Z Post job cleanup.
+2026-11-11T11:24:56.8986141Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-11T11:24:56.9342066Z git version 2.56.0.windows.4
+2026-11-11T11:24:56.9420010Z Temporarily overriding HOME='D:\a\_temp\10a078e4-6ff4-4eec-ba28-13973b1dd16d' before making global git config changes
+2026-11-11T11:24:56.9420843Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T11:24:56.9431340Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\NYC-Tron-UI\NYC-Tron-UI
+2026-11-11T11:24:56.9813739Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T11:24:57.0192334Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-11T11:24:57.5934461Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T11:24:57.6338112Z http.https://github.com/.extraheader
+2026-11-11T11:24:57.6386992Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T11:24:57.6774709Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-11T11:24:58.2409623Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T11:24:58.2777440Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-11T11:24:58.8262276Z Cleaning up orphan processes
+2026-11-11T11:24:58.8361163Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

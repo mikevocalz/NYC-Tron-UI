@@ -1,0 +1,954 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed Windows run 42987324915 attempt 1; exact originals and selected console evidence",
+  "sourceRevision": "41967d41afe811cefdb192182a4f47cb132cb78a",
+  "helperHead": "03de1fde81734d12ed49478dbc52570a4bc1312e",
+  "recordedAtUtc": "2026-11-11 09:19:16 UTC",
+  "retainedFiles": [
+    {
+      "path": "source-job.log",
+      "bytes": 31860,
+      "gitBlob": "91624fd513800b88d8b71c51e7c9f2dcfeafe6f0",
+      "sha256": "73999164ce9246176beeea1df1ebfa44bb8ed8f4f9cdc76981948449a40d9e45",
+      "kind": "complete-decoded-original-job-log"
+    },
+    {
+      "path": "native-job.log",
+      "bytes": 396292,
+      "gitBlob": "8bb08f3c2829c828b6002e75bd5d74dc739961d0",
+      "sha256": "73069eb9e236dc238ac4f2c64e95df6d57047f39576ec6b3b1d63e7a83a97607",
+      "kind": "complete-decoded-original-job-log"
+    },
+    {
+      "path": "drag-environment-01-summary.json",
+      "bytes": 14435,
+      "gitBlob": "dfd4dd0624fc4ec2c28c437263e02ddba21947e1",
+      "sha256": "48b2cb116bf756ae0fefba58cdd649e65a6b3842aed6a90ecb0ee7ad84fefd5c",
+      "kind": "exact-console-json-substring"
+    },
+    {
+      "path": "drag-environment-01-envelope.log",
+      "bytes": 14586,
+      "gitBlob": "a002938da76947d5769128d72495c69139291cef",
+      "sha256": "1d89a1d4f940f666194efff01f3958211c38d2f30515e8e94d42da29ff68d280",
+      "kind": "exact-timestamped-console-envelope"
+    },
+    {
+      "path": "drag-environment-02-summary.json",
+      "bytes": 14435,
+      "gitBlob": "cffa3d6f28678158701c35daafc65c712d1ce80e",
+      "sha256": "5ae7cabf9b1451bcbbcf87429da5107aeb01d55cf75da4dd3ae9a83ffaa5fdb1",
+      "kind": "exact-console-json-substring"
+    },
+    {
+      "path": "drag-environment-02-envelope.log",
+      "bytes": 14586,
+      "gitBlob": "2889b135625ec557e0e1c7fd70c7da49e7869c85",
+      "sha256": "c1f3f510725b1d4f42ee1d298dfd4476081f7b210ffffe3b594bb05322f8144a",
+      "kind": "exact-timestamped-console-envelope"
+    },
+    {
+      "path": "drag-environment-03-summary.json",
+      "bytes": 14435,
+      "gitBlob": "4d3d1843a566800cd23db2d338f8d2655d25e3a0",
+      "sha256": "1359c810af111567abba9f14307eda7289986a416aa88d91ed47e11d1455ef18",
+      "kind": "exact-console-json-substring"
+    },
+    {
+      "path": "drag-environment-03-envelope.log",
+      "bytes": 14586,
+      "gitBlob": "6d537777c04a7d2fb1f475ed8259c1a92daf777d",
+      "sha256": "8b87bf4bcf7412d485982a8bd726de49260735bb5cb9816c716cb20cff2530e3",
+      "kind": "exact-timestamped-console-envelope"
+    },
+    {
+      "path": "drag-environment-04-summary.json",
+      "bytes": 14435,
+      "gitBlob": "ac4746b4b3f5d6f6eec1955f86726fda4a368272",
+      "sha256": "1991c799555141b3aded84c904a26bff2d379ae476cd648820139cdd1eafdf30",
+      "kind": "exact-console-json-substring"
+    },
+    {
+      "path": "drag-environment-04-envelope.log",
+      "bytes": 14586,
+      "gitBlob": "8f1174a71452480ba78cbd5af242e7184084602e",
+      "sha256": "89af035ffa1b797efa76782cc676c28d77ea0504f9089a18037cc6def9084be5",
+      "kind": "exact-timestamped-console-envelope"
+    },
+    {
+      "path": "workflow-metadata.json",
+      "bytes": 22616,
+      "gitBlob": "492d90ed6d2bc169b86e0b11790f9c80500bea87",
+      "sha256": "621119024c91b9a316c308374306a54c33f8873e97017c5940eaf1cd05466366",
+      "kind": "derived-receipt"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9036,
+      "gitBlob": "763a19778910206442f4be469469f69137c1fcea",
+      "sha256": "35b3e5852fc1c1f54933cbdf78b78d9928b53572ad7b6339398ba0886098fe26",
+      "kind": "derived-receipt"
+    }
+  ],
+  "extraction": {
+    "source": "native-job.log",
+    "beginMarker": "NYCTRON_DRAG_ENVIRONMENT_BEGIN",
+    "endMarker": "NYCTRON_DRAG_ENVIRONMENT_END",
+    "requireStandaloneTimestampStrippedMarkers": true,
+    "exactPairCount": 4,
+    "payloadRule": "One complete JSON line per pair; preserve original substring without reserialization or added newline",
+    "envelopeRule": "Original bytes from timestamped BEGIN line through the CRLF after END",
+    "filetimeRule": "Raw JSON retains all original decimal digits. For exact crash identity comparison only, six creationFileTime digit tokens per payload were copied into strings before JSON parsing and compared as BigInt. Derived FILETIME values are decimal strings; no floating-point FILETIME conversion."
+  },
+  "observations": [
+    {
+      "index": 1,
+      "summaryFile": "drag-environment-01-summary.json",
+      "envelopeFile": "drag-environment-01-envelope.log",
+      "sourceLines": {
+        "begin": 1773,
+        "json": 1774,
+        "end": 1775
+      },
+      "interleavedNonJsonLines": 0,
+      "capturedAt": "2026-11-11T08:40:30.4510532Z",
+      "sourceRevision": "41967d41afe811cefdb192182a4f47cb132cb78a",
+      "appProcessId": 7620,
+      "appStartedAt": "2026-11-11T08:40:13.7600648Z",
+      "shellProcessId": 7428,
+      "shellStartedAt": "2026-11-11T08:25:48.8580859Z",
+      "driverProcessId": 6300,
+      "driverStartedAt": "2026-11-11T08:40:12.1142211Z",
+      "identityStable": true,
+      "appSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "sessionIds": {
+        "shell": 2,
+        "app": 2,
+        "driver": 2
+      },
+      "eligibility": {
+        "purpose": "eligibility-for-activation-review",
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "knownTrue": 8,
+        "knownFalse": 2,
+        "unobserved": 2,
+        "predicates": [
+          {
+            "name": "stable-owned-identities",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-query-handles-closed",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-not-elevated",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-medium-integrity",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-no-uiaccess",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellToApp-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToApp-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "driverDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "appDesktop-receives-input",
+            "observed": true,
+            "value": true
+          }
+        ],
+        "sameUserStatus": {
+          "shellToApp": "not-requested-unsupported-shell",
+          "shellToDriver": "not-requested-unsupported-shell"
+        }
+      },
+      "originalEnvironment": {
+        "filename": "drag-environment-01.json",
+        "bytes": 81427,
+        "sha256": "b444d6bcc7d43571792df6cec69d33ee8aa3ef861843b7189b50c8e1fd7d18b0",
+        "evidenceLevel": "producer-reported; full original file not inspected"
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ],
+        "originalByteLimit": 262144,
+        "originalReadByteLimit": 262145,
+        "logByteLimit": 32768
+      },
+      "loadedModulePathFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "summaryFile": "drag-environment-02-summary.json",
+      "envelopeFile": "drag-environment-02-envelope.log",
+      "sourceLines": {
+        "begin": 1804,
+        "json": 1805,
+        "end": 1806
+      },
+      "interleavedNonJsonLines": 0,
+      "capturedAt": "2026-11-11T08:40:32.8571945Z",
+      "sourceRevision": "41967d41afe811cefdb192182a4f47cb132cb78a",
+      "appProcessId": 7620,
+      "appStartedAt": "2026-11-11T08:40:13.7600648Z",
+      "shellProcessId": 7428,
+      "shellStartedAt": "2026-11-11T08:25:48.8580859Z",
+      "driverProcessId": 6300,
+      "driverStartedAt": "2026-11-11T08:40:12.1142211Z",
+      "identityStable": true,
+      "appSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "sessionIds": {
+        "shell": 2,
+        "app": 2,
+        "driver": 2
+      },
+      "eligibility": {
+        "purpose": "eligibility-for-activation-review",
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "knownTrue": 8,
+        "knownFalse": 2,
+        "unobserved": 2,
+        "predicates": [
+          {
+            "name": "stable-owned-identities",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-query-handles-closed",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-not-elevated",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-medium-integrity",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-no-uiaccess",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellToApp-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToApp-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "driverDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "appDesktop-receives-input",
+            "observed": true,
+            "value": true
+          }
+        ],
+        "sameUserStatus": {
+          "shellToApp": "not-requested-unsupported-shell",
+          "shellToDriver": "not-requested-unsupported-shell"
+        }
+      },
+      "originalEnvironment": {
+        "filename": "drag-environment-02.json",
+        "bytes": 81427,
+        "sha256": "b5eb66d67ad10ec36297eedde842136b21e6bb617ee88b470771e8a0b404db68",
+        "evidenceLevel": "producer-reported; full original file not inspected"
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ],
+        "originalByteLimit": 262144,
+        "originalReadByteLimit": 262145,
+        "logByteLimit": 32768
+      },
+      "loadedModulePathFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "summaryFile": "drag-environment-03-summary.json",
+      "envelopeFile": "drag-environment-03-envelope.log",
+      "sourceLines": {
+        "begin": 1834,
+        "json": 1835,
+        "end": 1836
+      },
+      "interleavedNonJsonLines": 0,
+      "capturedAt": "2026-11-11T08:40:34.6751646Z",
+      "sourceRevision": "41967d41afe811cefdb192182a4f47cb132cb78a",
+      "appProcessId": 7620,
+      "appStartedAt": "2026-11-11T08:40:13.7600648Z",
+      "shellProcessId": 7428,
+      "shellStartedAt": "2026-11-11T08:25:48.8580859Z",
+      "driverProcessId": 6300,
+      "driverStartedAt": "2026-11-11T08:40:12.1142211Z",
+      "identityStable": true,
+      "appSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "sessionIds": {
+        "shell": 2,
+        "app": 2,
+        "driver": 2
+      },
+      "eligibility": {
+        "purpose": "eligibility-for-activation-review",
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "knownTrue": 8,
+        "knownFalse": 2,
+        "unobserved": 2,
+        "predicates": [
+          {
+            "name": "stable-owned-identities",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-query-handles-closed",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-not-elevated",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-medium-integrity",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-no-uiaccess",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellToApp-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToApp-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "driverDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "appDesktop-receives-input",
+            "observed": true,
+            "value": true
+          }
+        ],
+        "sameUserStatus": {
+          "shellToApp": "not-requested-unsupported-shell",
+          "shellToDriver": "not-requested-unsupported-shell"
+        }
+      },
+      "originalEnvironment": {
+        "filename": "drag-environment-03.json",
+        "bytes": 81427,
+        "sha256": "edb892fbd626dde7cfd74e9942f6cb573ad91d1431fcdc402b0f7f01d74fdda6",
+        "evidenceLevel": "producer-reported; full original file not inspected"
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ],
+        "originalByteLimit": 262144,
+        "originalReadByteLimit": 262145,
+        "logByteLimit": 32768
+      },
+      "loadedModulePathFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "summaryFile": "drag-environment-04-summary.json",
+      "envelopeFile": "drag-environment-04-envelope.log",
+      "sourceLines": {
+        "begin": 1866,
+        "json": 1867,
+        "end": 1868
+      },
+      "interleavedNonJsonLines": 0,
+      "capturedAt": "2026-11-11T08:40:37.4684705Z",
+      "sourceRevision": "41967d41afe811cefdb192182a4f47cb132cb78a",
+      "appProcessId": 7620,
+      "appStartedAt": "2026-11-11T08:40:13.7600648Z",
+      "shellProcessId": 7428,
+      "shellStartedAt": "2026-11-11T08:25:48.8580859Z",
+      "driverProcessId": 6300,
+      "driverStartedAt": "2026-11-11T08:40:12.1142211Z",
+      "identityStable": true,
+      "appSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellSecurity": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "sessionIds": {
+        "shell": 2,
+        "app": 2,
+        "driver": 2
+      },
+      "eligibility": {
+        "purpose": "eligibility-for-activation-review",
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "knownTrue": 8,
+        "knownFalse": 2,
+        "unobserved": 2,
+        "predicates": [
+          {
+            "name": "stable-owned-identities",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-query-handles-closed",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shell-not-elevated",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-medium-integrity",
+            "observed": true,
+            "value": false
+          },
+          {
+            "name": "shell-no-uiaccess",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToDriver-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellToApp-same-session",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "shellToApp-same-user",
+            "observed": false,
+            "value": null
+          },
+          {
+            "name": "shellDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "driverDesktop-receives-input",
+            "observed": true,
+            "value": true
+          },
+          {
+            "name": "appDesktop-receives-input",
+            "observed": true,
+            "value": true
+          }
+        ],
+        "sameUserStatus": {
+          "shellToApp": "not-requested-unsupported-shell",
+          "shellToDriver": "not-requested-unsupported-shell"
+        }
+      },
+      "originalEnvironment": {
+        "filename": "drag-environment-04.json",
+        "bytes": 81427,
+        "sha256": "43a2060cba5ad0f586a9028585e2b48239803f5990bd878d32cb3961b421316b",
+        "evidenceLevel": "producer-reported; full original file not inspected"
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ],
+        "originalByteLimit": 262144,
+        "originalReadByteLimit": 262145,
+        "logByteLimit": 32768
+      },
+      "loadedModulePathFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true,
+          "evidenceLevel": "producer-observed field; file bytes not independently inspected for this receipt"
+        }
+      ]
+    }
+  ],
+  "crashIdentity": {
+    "logLine": 1923,
+    "eventId": 1000,
+    "eventTimeUtc": "2026-11-11T08:40:51.7244013Z",
+    "observedLogTimeUtc": "2026-11-11T08:40:53.9432996Z",
+    "application": "powershell.EXE",
+    "module": "ntdll.dll",
+    "exceptionCode": "0xc0000374",
+    "faultOffset": "0x00000000001166d5",
+    "pid": 6300,
+    "pidHex": "0x189C",
+    "creationFileTimeHex": "0x1DD71B844152BC3",
+    "creationFileTimeDecimal": "134388600121142211",
+    "reportId": "5748adc9-328d-42b8-961d-d42f8d62e9e1",
+    "matches": [
+      {
+        "index": 1,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      },
+      {
+        "index": 2,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      },
+      {
+        "index": 3,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      },
+      {
+        "index": 4,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      }
+    ],
+    "identityComparison": "Digit-preserving string tokens converted to BigInt; no Number conversion of FILETIMEs",
+    "corruptingCall": null,
+    "faultingCall": null,
+    "stackInspected": false
+  },
+  "limitations": [
+    "The complete source/native decoded job-log bytes and console payloads were independently hashed. Artifact, original environment-file, and loaded-module file hashes remain producer/API-reported.",
+    "Four completed drag sequences are established by exact executed-source control flow and later log records; raw UIA/drag trace files and pixels were not independently inspected.",
+    "The matching Application Error record identifies this run's PowerShell driver by exact PID and creation FILETIME. It does not establish the corrupting operation, exact faulting call, causal source component or faulting process in the earlier d1 run.",
+    "The external workflow queried Application events across all processes. Retention of its completed original log does not authorize or adopt broader event collection; derived crash fields include only the matching PowerShell event.",
+    "The elevated app and elevated existing shell remain outside the documented supported drag-host boundary. Partial progression does not certify supported-host acceptance, and elevation alone does not prove this crash's cause.",
+    "No complete RTL result, remaining navigation acceptance, final descendant count, cleanup completion, consumer-app crash or passed native distribution is inferred.",
+    "The native log reports three broadly collected event records; that is not three app-matching crash events or proof of an exhaustive error-free query.",
+    "Later helper changes and runs remain separate. No raw ZIP extraction, pixel viewing, job retry, runner mutation, reference update or source change was performed."
+  ],
+  "references": [
+    {
+      "purpose": "completed workflow",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42987324915/attempts/1"
+    },
+    {
+      "purpose": "NTSTATUS_HEAP_CORRUPTION definition",
+      "url": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/596a1078-e883-4972-9bbc-49e60bebca55"
+    },
+    {
+      "purpose": "vendor elevated-mode support limit",
+      "url": "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.uielement.startdragasync?view=windows-app-sdk-1.8"
+    },
+    {
+      "purpose": "prior exact-source and existing-shell support boundary",
+      "path": "../v1-windows-0578582-elevated-existing-shell/README.md"
+    },
+    {
+      "purpose": "separate earlier d1 outcome, whose faulting process remains unidentified",
+      "path": "../v1-windows-d1d955a-drag-progress-smoke-exit/README.md"
+    }
+  ]
+}

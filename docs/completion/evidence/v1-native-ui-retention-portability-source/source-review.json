@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-ui-retention-source-review",
+  "status": "source-reviewed",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "baseRevision": "7a160c536b845d71487ba2997262daf3cf07cb9b",
+  "observedCheckout": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+  "failure": {
+    "run": 42994633542,
+    "job": 130435532706,
+    "logBlob": "058feca66e4a22a222bc2f6ca722154be9e8fa91",
+    "logBytes": 159544,
+    "logSha256": "2a63568340e93933954ebe5ee651a0177ffbd29fe409e438703643b774de3b31",
+    "test": "retained snapshots survive writes through an already-open driver log and include hidden debug evidence",
+    "operation": "rename(settings, settings-initial-transport-live)",
+    "code": "EPERM"
+  },
+  "files": [
+    {
+      "file": "tooling/native/ui-transport.mjs",
+      "bytes": 9068,
+      "sha256": "3421577500e0d07d5bf933f02e79739011737614200c138c210ce7922f6c9bc2",
+      "gitBlob": "fbf804293b94406b65a36d273f4c2528825b4bc4",
+      "before": "9a362c4b7af481c01beeb7bd0f7b03a9a692080b",
+      "deltaBytes": -160
+    },
+    {
+      "file": "tooling/native/run-ui-acceptance.mjs",
+      "bytes": 17132,
+      "sha256": "e61511ef69eb25b8153184acb694265946bf7e675cfcdca01dde08c61af3536e",
+      "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+      "before": "50d0a3435fb52f4ad1b73df224fc01436f5d443b",
+      "deltaBytes": 121
+    },
+    {
+      "file": "tooling/tests/native-ui-transport.test.mjs",
+      "bytes": 11854,
+      "sha256": "c654e88a0a64d95c98d669b6689bd97c52f5b6d86eb07ef2cd5b44889989378c",
+      "gitBlob": "750bcf5cd84d5b00b50b0e2820bd0012a3893619",
+      "before": "9e62b8505328cc9e76cf6a361571565eb0fc11a3",
+      "deltaBytes": 382
+    },
+    {
+      "file": "tooling/native/UI_ACCEPTANCE.md",
+      "bytes": 6410,
+      "sha256": "9b18813b7f95b21ac128092ba9694e747157b2915ee6cc96c0b28488099112af",
+      "gitBlob": "d4fa0c0fad6829965108e0a6da78b77678e9cc91",
+      "before": "a3a51e499711f026463b9ff6b571422f730c0cf8",
+      "deltaBytes": 225
+    }
+  ],
+  "manifest": {
+    "file": "edits.json",
+    "bytes": 12807,
+    "sha256": "f376f0dbb537230c938a9b3de7ee1bd43eb7d17f68b239aa2fe7699c5f090d19",
+    "gitBlob": "fb34dbee47aafd124c8f10f2b17ef2e1aca9daaf"
+  },
+  "checker": {
+    "file": "flow-check.mjs",
+    "bytes": 4304,
+    "sha256": "b116804e20b58968796c5eac31a8f6a2520d5a2367fc92691f3b0456e4215287",
+    "gitBlob": "5f7ee7a5703f2cfac71966de245d079e4986277c",
+    "result": {
+      "uniqueTransforms": 13,
+      "forwardAndInverse": true,
+      "parsedModules": 3,
+      "mockedFlow": [
+        {
+          "separator": "/",
+          "firstEvidence": "settings",
+          "retryEvidence": "settings-retry",
+          "logicalFlow": "settings"
+        },
+        {
+          "separator": "\\",
+          "firstEvidence": "settings",
+          "retryEvidence": "settings-retry",
+          "logicalFlow": "settings"
+        }
+      ],
+      "scope": "V8 syntax/source and extracted actual flow with mocked IO only; no Node filesystem or native execution"
+    }
+  },
+  "ownership": {
+    "runner": "spawnSync owns the command; captured stdout/stderr is written after return. Nested surviving driver handles are not owned by retainInitialUiTransportFailure.",
+    "snapshot": "Copies read bytes into exclusive separate retained files and hashes those destination bytes; live source files stay in place.",
+    "retry": "Only the existing attempt 1 gets a separate settings-retry evidence prefix; stage and YAML remain settings.",
+    "snapshotLimits": "Read-time per-file snapshots before recovery, not atomic multi-file or complete post-exit logs."
+  },
+  "callerReview": {
+    "runnerPreimage": "50d0a3435fb52f4ad1b73df224fc01436f5d443b",
+    "evidenceParser": "f431a5221308910de84cf83ce245d19882edcbba",
+    "nativeWorkflow": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+    "releaseReadiness": "e8430cb774fea68aee984a0170cd3107e9696ad7",
+    "finding": "The runner records actual successful evidence paths; the native workflow uploads the whole runtime-ui directory. No inspected downstream requirement fixes successful settings evidence to the failed attempt's old path."
+  },
+  "reviews": [
+    {
+      "role": "author",
+      "scope": "Exact preimage/candidate/hash readback, 13 unique transformations/inverses, caller ownership/path review, three-module V8 syntax and mocked extracted actual flow under two path conventions."
+    },
+    {
+      "role": "root coordinator",
+      "scope": "Independent four-blob/manifest verification, exact inverse and unchanged classifier/retry checks, extracted actual flow path checks and syntax."
+    }
+  ],
+  "unchanged": [
+    "Failure classifiers and eligibility conditions",
+    "Exactly one authorized recovery; second failure final",
+    "Logical settings flow/YAML/stage identity",
+    "Native geometry/semantic/screenshot/JUnit assertions",
+    "All other flow output paths",
+    "Native binaries, workflows, deadlines and permissions"
+  ],
+  "limits": [
+    "V8 syntax/static and mocked-flow checks only; no actual Node filesystem or Windows/mobile execution of candidate",
+    "Existing actual open-descriptor append/rewrite/truncate regression is preserved for CI",
+    "Retained files are read-time snapshots before recovery, not atomic multi-file or complete post-exit logs",
+    "The separate release-readiness failure is not changed by this patch",
+    "No native filesystem or platform execution pass is claimed by this source receipt.",
+    "No production driver handle is forcibly closed, no evidence is silently omitted and no failed snapshot is treated as eligible recovery success.",
+    "Other de54 failures and the original Windows lifecycle source receipt are separate from this portability correction."
+  ]
+}

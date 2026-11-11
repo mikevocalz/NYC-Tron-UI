@@ -1,0 +1,362 @@
+﻿2026-11-11T08:28:36.9236671Z Current runner version: '2.338.2'
+2026-11-11T08:28:36.9262585Z ##[group]Runner Image Provisioner
+2026-11-11T08:28:36.9263433Z Hosted Compute Agent
+2026-11-11T08:28:36.9263958Z Version: 20261028.624
+2026-11-11T08:28:36.9264608Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T08:28:36.9265269Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T08:28:36.9266081Z Worker ID: {c3c6cf8a-45cf-4f3e-a8f4-757b4c37b05a}
+2026-11-11T08:28:36.9266758Z Region: westus3
+2026-11-11T08:28:36.9267266Z Cloud: Azure
+2026-11-11T08:28:36.9267809Z ##[endgroup]
+2026-11-11T08:28:36.9269269Z ##[group]Operating System
+2026-11-11T08:28:36.9269854Z Ubuntu
+2026-11-11T08:28:36.9270368Z 26.04.1
+2026-11-11T08:28:36.9270826Z LTS
+2026-11-11T08:28:36.9271341Z ##[endgroup]
+2026-11-11T08:28:36.9271836Z ##[group]Runner Image
+2026-11-11T08:28:36.9272384Z Image: ubuntu-26.04
+2026-11-11T08:28:36.9272932Z Version: 20261101.186.1
+2026-11-11T08:28:36.9274122Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-11T08:28:36.9275564Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-11T08:28:36.9276657Z ##[endgroup]
+2026-11-11T08:28:36.9277721Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T08:28:36.9279845Z Contents: read
+2026-11-11T08:28:36.9280457Z Metadata: read
+2026-11-11T08:28:36.9280982Z ##[endgroup]
+2026-11-11T08:28:36.9283194Z Secret source: Actions
+2026-11-11T08:28:36.9284094Z Cache mode: write
+2026-11-11T08:28:36.9284770Z Prepare workflow directory
+2026-11-11T08:28:36.9631666Z Prepare all required actions
+2026-11-11T08:28:36.9682810Z Getting action download info
+2026-11-11T08:28:37.2778281Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T08:28:37.4127738Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T08:28:37.4668864Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-11T08:28:37.6335460Z Complete job name: Fabric codegen and source gates
+2026-11-11T08:28:37.7287097Z ##[group]Run actions/checkout@v4
+2026-11-11T08:28:37.7287899Z with:
+2026-11-11T08:28:37.7288310Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T08:28:37.7291719Z   token: ***
+2026-11-11T08:28:37.7292090Z   ssh-strict: true
+2026-11-11T08:28:37.7292482Z   ssh-user: git
+2026-11-11T08:28:37.7292878Z   persist-credentials: true
+2026-11-11T08:28:37.7293311Z   clean: true
+2026-11-11T08:28:37.7293711Z   sparse-checkout-cone-mode: true
+2026-11-11T08:28:37.7294179Z   fetch-depth: 1
+2026-11-11T08:28:37.7294571Z   fetch-tags: false
+2026-11-11T08:28:37.7294978Z   show-progress: true
+2026-11-11T08:28:37.7295372Z   lfs: false
+2026-11-11T08:28:37.7295942Z   submodules: false
+2026-11-11T08:28:37.7296540Z   set-safe-directory: true
+2026-11-11T08:28:37.7297179Z   allow-unsafe-pr-checkout: false
+2026-11-11T08:28:37.7298345Z ##[endgroup]
+2026-11-11T08:28:38.0222810Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T08:28:38.0227544Z ##[group]Getting Git version info
+2026-11-11T08:28:38.0228870Z Working directory is '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T08:28:38.0230630Z [command]/usr/bin/git version
+2026-11-11T08:28:38.0231506Z git version 2.56.0
+2026-11-11T08:28:38.0234111Z ##[endgroup]
+2026-11-11T08:28:38.0251295Z Temporarily overriding HOME='/home/runner/work/_temp/11de2e17-929d-4ae7-8338-0436c926fb3c' before making global git config changes
+2026-11-11T08:28:38.0262002Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T08:28:38.0283000Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T08:28:38.0373658Z Deleting the contents of '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T08:28:38.0376783Z ##[group]Initializing the repository
+2026-11-11T08:28:38.0378991Z [command]/usr/bin/git init /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T08:28:38.0467672Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T08:28:38.0470916Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T08:28:38.0472555Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T08:28:38.0473880Z hint: call:
+2026-11-11T08:28:38.0474582Z hint:
+2026-11-11T08:28:38.0475422Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T08:28:38.0476736Z hint:
+2026-11-11T08:28:38.0477675Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T08:28:38.0479231Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T08:28:38.0480423Z hint:
+2026-11-11T08:28:38.0481109Z hint: 	git branch -m <name>
+2026-11-11T08:28:38.0481898Z hint:
+2026-11-11T08:28:38.0482893Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T08:28:38.0502664Z Initialized empty Git repository in /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T08:28:38.0506154Z [command]/usr/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T08:28:38.0566761Z ##[endgroup]
+2026-11-11T08:28:38.0568142Z ##[group]Disabling automatic garbage collection
+2026-11-11T08:28:38.0571905Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T08:28:38.0610076Z ##[endgroup]
+2026-11-11T08:28:38.0610832Z ##[group]Setting up auth
+2026-11-11T08:28:38.0619727Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T08:28:38.0659415Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T08:28:38.1203915Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T08:28:38.1233192Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T08:28:38.1485916Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T08:28:38.1522238Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T08:28:38.1770768Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T08:28:38.1831219Z ##[endgroup]
+2026-11-11T08:28:38.1832692Z ##[group]Fetching the repository
+2026-11-11T08:28:38.1842688Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +41967d41afe811cefdb192182a4f47cb132cb78a:refs/remotes/pull/60/merge
+2026-11-11T08:28:39.2768737Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T08:28:39.2770707Z  * [new ref]         41967d41afe811cefdb192182a4f47cb132cb78a -> pull/60/merge
+2026-11-11T08:28:39.2774582Z ##[endgroup]
+2026-11-11T08:28:39.2776652Z ##[group]Determining the checkout info
+2026-11-11T08:28:39.2779915Z ##[endgroup]
+2026-11-11T08:28:39.2799101Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T08:28:39.2860885Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T08:28:39.2894515Z ##[group]Checking out the ref
+2026-11-11T08:28:39.2896815Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/60/merge
+2026-11-11T08:28:39.4096457Z Note: switching to 'refs/remotes/pull/60/merge'.
+2026-11-11T08:28:39.4097503Z 
+2026-11-11T08:28:39.4098206Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-11T08:28:39.4099868Z changes and commit them, and you can discard any commits you make in this
+2026-11-11T08:28:39.4101726Z state without impacting any branches by switching back to a branch.
+2026-11-11T08:28:39.4103081Z 
+2026-11-11T08:28:39.4104180Z If you want to create a new branch to retain commits you create, you may
+2026-11-11T08:28:39.4106639Z do so (now or later) by using -c with the switch command. Example:
+2026-11-11T08:28:39.4108450Z 
+2026-11-11T08:28:39.4109289Z   git switch -c <new-branch-name>
+2026-11-11T08:28:39.4110277Z 
+2026-11-11T08:28:39.4110969Z Or undo this operation with:
+2026-11-11T08:28:39.4111882Z 
+2026-11-11T08:28:39.4112456Z   git switch -
+2026-11-11T08:28:39.4113222Z 
+2026-11-11T08:28:39.4114577Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-11T08:28:39.4116493Z 
+2026-11-11T08:28:39.4118401Z HEAD is now at 41967d4 Merge 03de1fde81734d12ed49478dbc52570a4bc1312e into ac5d69585a52a6e945dc996ea08030e190574699
+2026-11-11T08:28:39.4124350Z ##[endgroup]
+2026-11-11T08:28:39.4160010Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T08:28:39.4186558Z 41967d41afe811cefdb192182a4f47cb132cb78a
+2026-11-11T08:28:39.4589095Z ##[group]Run actions/setup-node@v4
+2026-11-11T08:28:39.4590241Z with:
+2026-11-11T08:28:39.4591133Z   node-version: 24.19.0
+2026-11-11T08:28:39.4592109Z   always-auth: false
+2026-11-11T08:28:39.4593089Z   check-latest: false
+2026-11-11T08:28:39.4600686Z   token: ***
+2026-11-11T08:28:39.4601566Z ##[endgroup]
+2026-11-11T08:28:39.6109432Z Attempting to download 24.19.0...
+2026-11-11T08:28:39.6263350Z (node:2421) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T08:28:39.6266025Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T08:28:40.6822153Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-11T08:28:41.2098901Z Extracting ...
+2026-11-11T08:28:41.2223115Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/43a7f32c-728d-4e5f-9887-cb77d735270d -f /home/runner/work/_temp/191a1b4c-a097-4ba9-92c2-3ac552febc68
+2026-11-11T08:28:41.9570253Z Adding to the cache ...
+2026-11-11T08:28:43.5472090Z ##[group]Environment details
+2026-11-11T08:28:43.8158992Z node: v24.19.0
+2026-11-11T08:28:43.8159582Z npm: 11.17.0
+2026-11-11T08:28:43.8159875Z yarn: 1.22.22
+2026-11-11T08:28:43.8160522Z ##[endgroup]
+2026-11-11T08:28:43.8445545Z ##[group]Run node --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs
+2026-11-11T08:28:43.8447701Z [36;1mnode --test packages/windows-fluent/rnw-fabric/tests/*.test.mjs[0m
+2026-11-11T08:28:43.8519747Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:28:43.8520116Z ##[endgroup]
+2026-11-11T08:28:43.9552935Z ✔ RNW 0.85 native codegen includes Fabric view and strongly typed events (2.318617ms)
+2026-11-11T08:28:43.9554986Z ✔ C++ registers a native WinUI XAML island, not a fabricated React View (0.323015ms)
+2026-11-11T08:28:43.9556380Z ✔ the Windows Fabric peer lane cannot be silently installed into Expo58 (0.245729ms)
+2026-11-11T08:28:43.9557817Z ✔ route approval remains app-owned and unrelated updates retain native items (0.271496ms)
+2026-11-11T08:28:43.9559203Z ✔ pane approval remains app-owned: a rejected toggle is put back (0.375005ms)
+2026-11-11T08:28:43.9560689Z ✔ items and the NavigationView carry Narrator names (0.188051ms)
+2026-11-11T08:28:43.9562440Z ✔ library and consumer build against the same stable Windows App SDK (0.154107ms)
+2026-11-11T08:28:43.9566495Z ✔ island width follows the committed pane state instead of a fixed width (0.267321ms)
+2026-11-11T08:28:43.9571135Z ✔ consumer solution registers the x64 library project for solution builds (0.257182ms)
+2026-11-11T08:28:43.9575120Z ✔ native failures reach JS through onNativeError instead of being swallowed (0.91008ms)
+2026-11-11T08:28:43.9579144Z ✔ RTL layout passes authored direction with the host locale as fallback (0.457304ms)
+2026-11-11T08:28:43.9581416Z ✔ registration asks RNW to create its XamlApplication for the island (0.245606ms)
+2026-11-11T08:28:43.9583896Z ✔ Metro resolves the typed codegen source; types and default resolve to dist (0.372048ms)
+2026-11-11T08:28:43.9673451Z ℹ tests 13
+2026-11-11T08:28:43.9673948Z ℹ suites 0
+2026-11-11T08:28:43.9674219Z ℹ pass 13
+2026-11-11T08:28:43.9675075Z ℹ fail 0
+2026-11-11T08:28:43.9675335Z ℹ cancelled 0
+2026-11-11T08:28:43.9675573Z ℹ skipped 0
+2026-11-11T08:28:43.9676181Z ℹ todo 0
+2026-11-11T08:28:43.9676578Z ℹ duration_ms 76.48418
+2026-11-11T08:28:43.9771449Z ##[group]Run npm install --ignore-scripts --no-audit --no-fund
+2026-11-11T08:28:43.9771924Z [36;1mnpm install --ignore-scripts --no-audit --no-fund[0m
+2026-11-11T08:28:43.9804640Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:28:43.9804939Z ##[endgroup]
+2026-11-11T08:28:57.7293238Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-11T08:28:57.8830696Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:29:04.4558499Z 
+2026-11-11T08:29:04.4559078Z added 625 packages in 20s
+2026-11-11T08:29:04.5065063Z ##[group]Run node scripts/build-peers.mjs
+2026-11-11T08:29:04.5065414Z [36;1mnode scripts/build-peers.mjs[0m
+2026-11-11T08:29:04.5107406Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:29:04.5107698Z ##[endgroup]
+2026-11-11T08:29:05.9957312Z ##[group]Run npm run typecheck
+2026-11-11T08:29:05.9957619Z [36;1mnpm run typecheck[0m
+2026-11-11T08:29:05.9989973Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:29:05.9990254Z ##[endgroup]
+2026-11-11T08:29:06.1069216Z 
+2026-11-11T08:29:06.1069822Z > @nyc-tron/windows-fluent-fabric@1.0.0 typecheck
+2026-11-11T08:29:06.1070280Z > tsc --noEmit -p tsconfig.json
+2026-11-11T08:29:06.1070450Z 
+2026-11-11T08:29:07.1946966Z ##[group]Run npm run build
+2026-11-11T08:29:07.1947259Z [36;1mnpm run build[0m
+2026-11-11T08:29:07.1947482Z [36;1mnpm test[0m
+2026-11-11T08:29:07.1948084Z [36;1mlisting=$(npm pack --dry-run --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].files.map(f=>f.path).join("\n")))')[0m
+2026-11-11T08:29:07.1950144Z [36;1mfor f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts src/TronOverlayAnchorNativeComponent.ts src/TronDragSurfaceNativeComponent.ts dist/overlays.windows.js dist/drag-drop.windows.js windows/NYCTronFluentFabric/TronNavigationView.cpp windows/NYCTronFluentFabric/TronOverlayAnchor.cpp windows/NYCTronFluentFabric/TronDragSurface.cpp windows/NYCTronFluentFabric/NativeDragBroker.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do[0m
+2026-11-11T08:29:07.1952002Z [36;1m  echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }[0m
+2026-11-11T08:29:07.1952460Z [36;1mdone[0m
+2026-11-11T08:29:07.1983244Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:29:07.1983530Z ##[endgroup]
+2026-11-11T08:29:07.2990250Z 
+2026-11-11T08:29:07.2991170Z > @nyc-tron/windows-fluent-fabric@1.0.0 build
+2026-11-11T08:29:07.2991913Z > node scripts/build-peers.mjs && tsc -p tsconfig.build.json
+2026-11-11T08:29:07.2992379Z 
+2026-11-11T08:29:10.0389466Z 
+2026-11-11T08:29:10.0390482Z > @nyc-tron/windows-fluent-fabric@1.0.0 test
+2026-11-11T08:29:10.0391457Z > node --test tests/*.test.mjs isolated-tests/*.test.mjs
+2026-11-11T08:29:10.0391810Z 
+2026-11-11T08:29:10.1538467Z (node:2591) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/dist/native-drag-controller.js is not specified and it doesn't parse as CommonJS.
+2026-11-11T08:29:10.1540394Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-11T08:29:10.1541939Z To eliminate this warning, add "type": "module" to /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/package.json.
+2026-11-11T08:29:10.1543254Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-11T08:29:10.1782161Z ✔ native Move plus live approval releases one original opaque payload only after DropCompleted (13.705402ms)
+2026-11-11T08:29:10.1808168Z ✔ application rejection completes the native deferral with None and retains the payload (1.405163ms)
+2026-11-11T08:29:10.1810102Z ✔ approved native none result never authorizes a move (0.6969ms)
+2026-11-11T08:29:10.1816356Z ✔ approved native copy result never authorizes a move (0.570677ms)
+2026-11-11T08:29:10.1849250Z ✔ approved native link result never authorizes a move (0.647741ms)
+2026-11-11T08:29:10.1877670Z ✔ approved native unknown result never authorizes a move (1.087923ms)
+2026-11-11T08:29:10.1887805Z ✔ foreign connections and replaced source lifetimes cannot reach the app drop policy (1.022185ms)
+2026-11-11T08:29:10.1889419Z ✔ main close invalidates an unresolved native drop (0.96677ms)
+2026-11-11T08:29:10.1890575Z ✔ document close invalidates an unresolved native drop (1.052756ms)
+2026-11-11T08:29:10.1892174Z ✔ main minimize invalidates an unresolved native drop (0.92632ms)
+2026-11-11T08:29:10.1893415Z ✔ document minimize invalidates an unresolved native drop (0.851356ms)
+2026-11-11T08:29:10.1894852Z ✔ unmounting the target cancels the dropping token and rejects late application approval (0.772255ms)
+2026-11-11T08:29:10.1896586Z ✔ native deadline finishes without waiting for an unresponsive application callback (0.555594ms)
+2026-11-11T08:29:10.1918801Z ✔ disposal and a replaced target generation cannot authorize the reported OS Move (1.178705ms)
+2026-11-11T08:29:10.1947604Z ✔ native drag requires the registered transport and a currently observed source (0.838701ms)
+2026-11-11T08:29:10.1959260Z ✔ malformed completion cannot transfer and cancels the native request (1.290661ms)
+2026-11-11T08:29:10.1961519Z ✔ overlay events consult only the live committed scope and disabled state (0.287943ms)
+2026-11-11T08:29:10.1977642Z ✔ a dismissal veto without a React commit is acknowledged and a later request reaches the app (0.429776ms)
+2026-11-11T08:29:10.1980579Z ✔ delivery acknowledges exceptions and stale scopes without invoking a replacement owner (0.310401ms)
+2026-11-11T08:29:10.1981937Z ✔ inspector acknowledgments are bounded nonnegative integer counts (0.72744ms)
+2026-11-11T08:29:10.2034464Z (node:2592) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/dist/navigation-binding.js is not specified and it doesn't parse as CommonJS.
+2026-11-11T08:29:10.2038081Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-11T08:29:10.2039472Z To eliminate this warning, add "type": "module" to /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/package.json.
+2026-11-11T08:29:10.2040576Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-11T08:29:10.2041830Z ✔ focus requests belong only to the current mounted native host (2.799827ms)
+2026-11-11T08:29:10.2151660Z (node:2593) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/dist/window-controller.js is not specified and it doesn't parse as CommonJS.
+2026-11-11T08:29:10.2166672Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-11T08:29:10.2169680Z To eliminate this warning, add "type": "module" to /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/windows-fluent/rnw-fabric/package.json.
+2026-11-11T08:29:10.2171688Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-11T08:29:10.2173178Z ✔ native protocol validates geometry and freezes all leases (3.547308ms)
+2026-11-11T08:29:10.2174693Z ✔ connection attaches one primary and ignores stale and foreign-owner observations (2.91203ms)
+2026-11-11T08:29:10.2176532Z ✔ open owns request bytes before queueing and observes actual native geometry (0.866042ms)
+2026-11-11T08:29:10.2177960Z ✔ failed native move leaves the committed window registry unchanged (0.936933ms)
+2026-11-11T08:29:10.2180003Z ✔ actual native focus updates the core stacking order used by saved layouts (1.607677ms)
+2026-11-11T08:29:10.2180805Z ✔ close requests are delivered once and veto retains the native surface (3.130658ms)
+2026-11-11T08:29:10.2181605Z ✔ reusing a window ID cancels transfers addressed to the previous native lifetime (2.219068ms)
+2026-11-11T08:29:10.2182449Z ✔ minimization cancels an active drag and native restore retains identity (1.203183ms)
+2026-11-11T08:29:10.2183451Z ✔ only a live app-approved drop authorizes a transfer of the original payload (1.887917ms)
+2026-11-11T08:29:10.2184432Z ✔ restoring a layout invalidates pending drops and retains a disconnected home through focus echoes (2.934922ms)
+2026-11-11T08:29:10.2185312Z ✔ layout restore validates all window identities before issuing any OS move (0.815472ms)
+2026-11-11T08:29:10.2186893Z ✔ layout restore replays every native surface in saved bottom-to-top order (2.386201ms)
+2026-11-11T08:29:10.2190683Z ✔ dispose drains accepted native operations and rejects new commands (0.854772ms)
+2026-11-11T08:29:10.2199599Z ✔ connection failure releases both native subscriptions (0.725643ms)
+2026-11-11T08:29:10.2203004Z ✔ navigation transport owns destination arrays and detaches stale native hosts (1.165692ms)
+2026-11-11T08:29:10.2607798Z ✔ RNW 0.85 native codegen includes Fabric view and strongly typed events (2.455412ms)
+2026-11-11T08:29:10.2609837Z ✔ C++ registers a native WinUI XAML island, not a fabricated React View (0.310886ms)
+2026-11-11T08:29:10.2610811Z ✔ the Windows Fabric peer lane cannot be silently installed into Expo58 (0.237662ms)
+2026-11-11T08:29:10.2611665Z ✔ route approval remains app-owned and unrelated updates retain native items (0.33029ms)
+2026-11-11T08:29:10.2612804Z ✔ pane approval remains app-owned: a rejected toggle is put back (0.409131ms)
+2026-11-11T08:29:10.2613545Z ✔ items and the NavigationView carry Narrator names (0.199282ms)
+2026-11-11T08:29:10.2615124Z ✔ library and consumer build against the same stable Windows App SDK (0.356868ms)
+2026-11-11T08:29:10.2616599Z ✔ island width follows the committed pane state instead of a fixed width (0.226297ms)
+2026-11-11T08:29:10.2618256Z ✔ consumer solution registers the x64 library project for solution builds (0.304322ms)
+2026-11-11T08:29:10.2619658Z ✔ native failures reach JS through onNativeError instead of being swallowed (0.611218ms)
+2026-11-11T08:29:10.2621153Z ✔ RTL layout passes authored direction with the host locale as fallback (0.246727ms)
+2026-11-11T08:29:10.2622353Z ✔ registration asks RNW to create its XamlApplication for the island (0.150156ms)
+2026-11-11T08:29:10.2623552Z ✔ Metro resolves the typed codegen source; types and default resolve to dist (1.01028ms)
+2026-11-11T08:29:10.2679568Z ℹ tests 49
+2026-11-11T08:29:10.2680073Z ℹ suites 0
+2026-11-11T08:29:10.2680420Z ℹ pass 49
+2026-11-11T08:29:10.2680744Z ℹ fail 0
+2026-11-11T08:29:10.2681080Z ℹ cancelled 0
+2026-11-11T08:29:10.2681468Z ℹ skipped 0
+2026-11-11T08:29:10.2681802Z ℹ todo 0
+2026-11-11T08:29:10.2682233Z ℹ duration_ms 187.82743
+2026-11-11T08:29:10.5242651Z 
+2026-11-11T08:29:10.5244025Z > @nyc-tron/windows-fluent-fabric@1.0.0 prepack
+2026-11-11T08:29:10.5244500Z > npm run build
+2026-11-11T08:29:10.5244629Z 
+2026-11-11T08:29:10.6233001Z 
+2026-11-11T08:29:10.6233624Z > @nyc-tron/windows-fluent-fabric@1.0.0 build
+2026-11-11T08:29:10.6234322Z > node scripts/build-peers.mjs && tsc -p tsconfig.build.json
+2026-11-11T08:29:10.6234571Z 
+2026-11-11T08:29:13.8056673Z ##[group]Run node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
+2026-11-11T08:29:13.8057584Z [36;1mnode tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json[0m
+2026-11-11T08:29:13.8087768Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:29:13.8088048Z ##[endgroup]
+2026-11-11T08:29:14.7022234Z API signatures match: 1 packages, 8 subpaths, 44 reachable declarations.
+2026-11-11T08:29:14.7230187Z ##[group]Run corepack enable
+2026-11-11T08:29:14.7230652Z [36;1mcorepack enable[0m
+2026-11-11T08:29:14.7230978Z [36;1mcorepack pnpm install --frozen-lockfile --ignore-scripts[0m
+2026-11-11T08:29:14.7231477Z [36;1mcorepack pnpm --filter @nyc-tron/core --filter @nyc-tron/windows-fluent build[0m
+2026-11-11T08:29:14.7232056Z [36;1mnode tooling/pack-release.mjs "$RUNNER_TEMP/windows-shared" --packages core,windows-fluent[0m
+2026-11-11T08:29:14.7262381Z shell: /usr/bin/bash -e {0}
+2026-11-11T08:29:14.7262679Z ##[endgroup]
+2026-11-11T08:29:16.0505976Z Scope: all 16 workspace projects
+2026-11-11T08:29:16.1307322Z Lockfile is up to date, resolution step is skipped
+2026-11-11T08:29:16.1819946Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-11-11T08:29:16.2418939Z Packages: +537
+2026-11-11T08:29:16.2419937Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-11T08:29:17.1870636Z Progress: resolved 537, reused 0, downloaded 73, added 25
+2026-11-11T08:29:18.1878298Z Progress: resolved 537, reused 0, downloaded 268, added 247
+2026-11-11T08:29:19.2167228Z Progress: resolved 537, reused 0, downloaded 441, added 441
+2026-11-11T08:29:20.2116420Z Progress: resolved 537, reused 0, downloaded 461, added 450
+2026-11-11T08:29:21.2136256Z Progress: resolved 537, reused 0, downloaded 466, added 453
+2026-11-11T08:29:22.2257426Z Progress: resolved 537, reused 0, downloaded 504, added 465
+2026-11-11T08:29:23.2198974Z Progress: resolved 537, reused 0, downloaded 518, added 536
+2026-11-11T08:29:23.9844941Z Progress: resolved 537, reused 0, downloaded 519, added 537, done
+2026-11-11T08:29:24.5350806Z 
+2026-11-11T08:29:24.5351745Z devDependencies:
+2026-11-11T08:29:24.5352605Z + @types/react 19.3.0
+2026-11-11T08:29:24.5353237Z + typescript 6.0.3
+2026-11-11T08:29:24.5353747Z 
+2026-11-11T08:29:24.5851464Z Done in 8.9s using pnpm v10.32.1
+2026-11-11T08:29:24.9606897Z Scope: 2 of 16 workspace projects
+2026-11-11T08:29:24.9656983Z packages/core build$ tsc --project tsconfig.build.json
+2026-11-11T08:29:24.9686916Z packages/windows-fluent build$ tsc --project tsconfig.build.json
+2026-11-11T08:29:26.0268874Z packages/windows-fluent build: Done
+2026-11-11T08:29:26.2778515Z packages/core build: Done
+2026-11-11T08:29:29.4723259Z nyc-tron-core-1.0.0.tgz  @nyc-tron/core  68 files  sha256 dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355
+2026-11-11T08:29:29.4724365Z nyc-tron-windows-fluent-1.0.0.tgz  @nyc-tron/windows-fluent  20 files  sha256 e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73
+2026-11-11T08:29:29.4725249Z Wrote 2 tarballs and SHA256SUMS to /home/runner/work/_temp/windows-shared
+2026-11-11T08:29:29.4853533Z ##[group]Run actions/upload-artifact@v4
+2026-11-11T08:29:29.4853819Z with:
+2026-11-11T08:29:29.4854045Z   name: windows-fabric-shared-packages
+2026-11-11T08:29:29.4854360Z   path: /home/runner/work/_temp/windows-shared
+2026-11-11T08:29:29.4854651Z   if-no-files-found: error
+2026-11-11T08:29:29.4854895Z   compression-level: 6
+2026-11-11T08:29:29.4855103Z   overwrite: false
+2026-11-11T08:29:29.4855325Z   include-hidden-files: false
+2026-11-11T08:29:29.4855548Z ##[endgroup]
+2026-11-11T08:29:29.6618855Z (node:2874) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T08:29:29.6620143Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T08:29:29.6687218Z With the provided path, there will be 3 files uploaded
+2026-11-11T08:29:29.6688099Z Artifact name is valid!
+2026-11-11T08:29:29.6688462Z Root directory input is valid!
+2026-11-11T08:29:30.0085563Z Beginning upload of artifact content to blob storage
+2026-11-11T08:29:30.0808096Z (node:2874) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-11T08:29:30.4296641Z Uploaded bytes 62822
+2026-11-11T08:29:30.4957512Z Finished uploading artifact content to blob storage!
+2026-11-11T08:29:30.4958745Z SHA256 digest of uploaded artifact zip is 5609c2ea606a0d085511e5013cea4f974196f21f3753e8344e2452e5902c330a
+2026-11-11T08:29:30.4961434Z Finalizing artifact upload
+2026-11-11T08:29:30.8497876Z Artifact windows-fabric-shared-packages.zip successfully finalized. Artifact ID 13839673460
+2026-11-11T08:29:30.8498754Z Artifact windows-fabric-shared-packages has been successfully uploaded! Final size is 62822 bytes. Artifact ID is 13839673460
+2026-11-11T08:29:30.8504638Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42987324915/artifacts/13839673460
+2026-11-11T08:29:30.8684627Z Post job cleanup.
+2026-11-11T08:29:30.9951143Z (node:2886) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T08:29:30.9952310Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T08:29:31.0130527Z Post job cleanup.
+2026-11-11T08:29:31.1068384Z [command]/usr/bin/git version
+2026-11-11T08:29:31.1111080Z git version 2.56.0
+2026-11-11T08:29:31.1148527Z Temporarily overriding HOME='/home/runner/work/_temp/da7ce878-075f-4ad6-9bb4-8e3af366b8cd' before making global git config changes
+2026-11-11T08:29:31.1150421Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T08:29:31.1153492Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T08:29:31.1195190Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T08:29:31.1232800Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T08:29:31.1498152Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T08:29:31.1525390Z http.https://github.com/.extraheader
+2026-11-11T08:29:31.1537537Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T08:29:31.1578683Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T08:29:31.1907269Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T08:29:31.1946694Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T08:29:31.2388857Z Cleaning up orphan processes
+2026-11-11T08:29:31.2747987Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

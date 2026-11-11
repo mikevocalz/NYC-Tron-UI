@@ -104,17 +104,17 @@ function hierarchy(name) {
   writeFileSync(join(output, name + "-hierarchy.json"), JSON.stringify(tree, null, 2) + "\n");
   return tree;
 }
-function flow(name, labels, screenshots) {
-  const directory = join(output, name), junit = join(directory, "report.xml");
+function flow(name, labels, screenshots, evidenceName = name) {
+  const directory = join(output, evidenceName), junit = join(directory, "report.xml");
   mkdirSync(directory);
   run(maestro, ["--device", deviceId, "--platform", platform, "--no-ansi", "test",
     // Retain the same native driver for each flow and hierarchy capture. The
     // default iOS close uninstalls XCTest, whose next startup can take focus.
     "--no-reinstall-driver", "--format", "junit", "--output", junit,
     "--test-output-dir", join(directory, "artifacts"), "--debug-output", join(directory, "debug"),
-    join(repo, "tooling/native/ui-flows", name + ".yaml")], { timeout: 360000, log: name + "-maestro.log" });
+    join(repo, "tooling/native/ui-flows", name + ".yaml")], { timeout: 360000, log: evidenceName + "-maestro.log" });
   const result = requirePassedFlow(readFileSync(junit, "utf8"));
-  const tree = hierarchy(name);
+  const tree = hierarchy(evidenceName);
   requireSemanticLabels(tree, labels);
   const geometry = name === "settings" || name === "editor" ? requireReferenceHostBounds(tree) : undefined;
   const files = allFiles(directory);
@@ -123,8 +123,8 @@ function flow(name, labels, screenshots) {
     if (!file || readFileSync(file).subarray(0, 8).toString("hex") !== "89504e470d0a1a0a") throw new Error("Native screenshot missing: " + name);
     return { file: file.slice(output.length + 1), sha256: hash(file) };
   });
-  stages.push({ name, ...result, report: name + "/report.xml", reportSha256: hash(junit),
-    hierarchy: name + "-hierarchy.json", hierarchySha256: hash(join(output, name + "-hierarchy.json")), images,
+  stages.push({ name, ...result, report: evidenceName + "/report.xml", reportSha256: hash(junit),
+    hierarchy: evidenceName + "-hierarchy.json", hierarchySha256: hash(join(output, evidenceName + "-hierarchy.json")), images,
     ...(geometry ? { geometry } : {}) });
   return tree;
 }
@@ -210,7 +210,7 @@ try {
   await startMetro("reference"); launch();
   let recoveryReceipt;
   await withInitialUiTransportRecovery({
-    attempt: () => flow("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"]),
+    attempt: attempt => flow("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"], attempt === 0 ? "settings" : "settings-retry"),
     classify: initialSettingsTransportFailure,
     recover: async (eligibility, error) => {
       recoveryReceipt = retainInitialUiTransportFailure({ output, eligibility, error, sourceCommit: revision, nativeArtifact });

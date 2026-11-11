@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "title": "Reject unusable UIA navigation pane rectangles before area selection",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+  "preimage": {
+    "bytes": 12691,
+    "sha256": "ef15eda3eda4e2846e45352a3ca83cdc0f371926ed70eb7b2ad530bed1ea1187",
+    "gitBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975"
+  },
+  "candidate": {
+    "bytes": 13196,
+    "sha256": "150775591ad1e4b3ed1edc995dab86be8c3eb6b5fb5bb482ff69623aa07caced",
+    "gitBlob": "dc38acc53801ed3c7a2acd19406b71782d26ce0b"
+  },
+  "edits": [
+    {
+      "id": "finite-visible-native-pane-candidates",
+      "before": "    $r = $item.Current.BoundingRectangle\n    if ($r.Width*$r.Height -gt $area) { $area = $r.Width*$r.Height; $largest = $item }\n",
+      "after": "    $r = $item.Current.BoundingRectangle\n    # Rect.Empty dimensions multiply to positive infinity; they are not pane bounds.\n    if ($r.IsEmpty -or $item.Current.IsOffscreen -or $r.Width -le 0 -or $r.Height -le 0) { continue }\n    $paneBoundsFinite = $true\n    foreach ($paneCoordinate in @($r.X, $r.Y, $r.Width, $r.Height, $r.Right, $r.Bottom, ($r.Width*$r.Height))) {\n      if ([double]::IsNaN($paneCoordinate) -or [double]::IsInfinity($paneCoordinate)) { $paneBoundsFinite = $false; break }\n    }\n    if (-not $paneBoundsFinite) { continue }\n    if ($r.Width*$r.Height -gt $area) { $area = $r.Width*$r.Height; $largest = $item }\n",
+      "occurrences": 1
+    }
+  ],
+  "scope": {
+    "sourceDefect": "Rect.Empty has negative-infinite dimensions. The original area comparator can select it because their product is positive infinity; a later physical-left comparison can then be vacuous.",
+    "observedRunCause": "Not established. The exact selected runtime IDs and measured pane bounds in the external completed0a2 run remain in its uninspected breadcrumb artifact.",
+    "preserved": "The original FindAll/BoundingRectangle reads, largest-area comparator, tie/order behavior, actions, assertion expressions, deadlines, LocalFree/SetContrast ownership, catch/finally and all other bytes remain unchanged.",
+    "newQuery": "The existing candidate's IsOffscreen property is read after the existing BoundingRectangle read unless Rect.Empty short-circuits the guard. No catch hides provider exceptions; no reacquisition or extra native action is added.",
+    "visibleMeaning": "UIA IsOffscreen is false; this is not proof of complete visual exposure or a unique native pane identity.",
+    "geometry": "X,Y,Width,Height,Right,Bottom and area must be finite; dimensions positive. Negative screen origins remain valid."
+  },
+  "primarySources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.windows.rect.empty?view=windowsdesktop-10.0",
+      "supportedFact": "Rect.Empty has positive-infinite X/Y and negative-infinite Width/Height."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.automationelementinformation.isoffscreen?view=windowsdesktop-10.0",
+      "supportedFact": "IsOffscreen reports whether the UIA element is off the screen."
+    }
+  ],
+  "verification": {
+    "status": "passed",
+    "scope": "V8 source checks and independent IEEE-754 geometry model; no PowerShell parser, UIA, .NET or native execution",
+    "sourceChecks": 8,
+    "geometryCases": 17,
+    "selectionCases": 6,
+    "cases": [
+      {
+        "name": "Rect.Empty",
+        "expectedAccepted": false
+      },
+      {
+        "name": "zero width",
+        "expectedAccepted": false
+      },
+      {
+        "name": "zero height",
+        "expectedAccepted": false
+      },
+      {
+        "name": "negative width",
+        "expectedAccepted": false
+      },
+      {
+        "name": "offscreen",
+        "expectedAccepted": false
+      },
+      {
+        "name": "NaN X",
+        "expectedAccepted": false
+      },
+      {
+        "name": "NaN Y",
+        "expectedAccepted": false
+      },
+      {
+        "name": "NaN width",
+        "expectedAccepted": false
+      },
+      {
+        "name": "NaN height",
+        "expectedAccepted": false
+      },
+      {
+        "name": "infinite X",
+        "expectedAccepted": false
+      },
+      {
+        "name": "infinite width",
+        "expectedAccepted": false
+      },
+      {
+        "name": "right-edge overflow",
+        "expectedAccepted": false
+      },
+      {
+        "name": "bottom-edge overflow",
+        "expectedAccepted": false
+      },
+      {
+        "name": "finite-dimension area overflow",
+        "expectedAccepted": false
+      },
+      {
+        "name": "finite open pane",
+        "expectedAccepted": true
+      },
+      {
+        "name": "finite compact pane",
+        "expectedAccepted": true
+      },
+      {
+        "name": "valid negative origin",
+        "expectedAccepted": true
+      }
+    ],
+    "checkSource": "function reviewPaneSelectionGuard({before,after,edit}) {\n  function assert(value,message) { if (!value) throw new Error(message); }\n  assert(typeof before===\"string\"&&typeof after===\"string\",\"source inputs required\");\n  assert(before.split(edit.before).length===2,\"one unique preimage\");\n  assert(after===before.replace(edit.before,edit.after),\"exact forward edit\");\n  assert(after.split(edit.after).length===2&&after.replace(edit.after,edit.before)===before,\"complete inverse\");\n  const comparator=\"    if ($r.Width*$r.Height -gt $area) { $area = $r.Width*$r.Height; $largest = $item }\\n\";\n  assert(edit.before.endsWith(comparator)&&edit.after.endsWith(comparator),\"original comparator/order preserved\");\n  assert(edit.after.includes(\"$r.IsEmpty -or $item.Current.IsOffscreen -or $r.Width -le 0 -or $r.Height -le 0\"),\"empty/offscreen/nonpositive guard\");\n  assert(edit.after.includes(\"@($r.X, $r.Y, $r.Width, $r.Height, $r.Right, $r.Bottom, ($r.Width*$r.Height))\"),\"all fixed geometry fields\");\n  assert(edit.after.includes(\"[double]::IsNaN($paneCoordinate) -or [double]::IsInfinity($paneCoordinate)\")&&edit.after.includes(\"if (-not $paneBoundsFinite) { continue }\"),\"nonfinite rejection\");\n  function rect(x,y,width,height,offscreen=false) {\n    return {X:x,Y:y,Width:width,Height:height,Right:x+width,Bottom:y+height,IsEmpty:false,IsOffscreen:offscreen};\n  }\n  function accepted(r) {\n    return !r.IsEmpty&&!r.IsOffscreen&&r.Width>0&&r.Height>0&&\n      [r.X,r.Y,r.Width,r.Height,r.Right,r.Bottom,r.Width*r.Height].every(Number.isFinite);\n  }\n  function select(items,guard) {\n    let largest=null,area=0;\n    for (const item of items) {\n      if (guard&&!accepted(item)) continue;\n      const candidate=item.Width*item.Height;\n      if (candidate>area) { area=candidate;largest=item; }\n    }\n    return largest;\n  }\n  const empty={X:Infinity,Y:Infinity,Width:-Infinity,Height:-Infinity,Right:-Infinity,Bottom:-Infinity,IsEmpty:true,IsOffscreen:false};\n  const valid=rect(24,48,320,681),negativeOrigin=rect(-1920,-100,320,681),compact=rect(24,48,48,681);\n  const cases=[\n    [\"Rect.Empty\",empty,false],\n    [\"zero width\",rect(0,0,0,20),false],\n    [\"zero height\",rect(0,0,20,0),false],\n    [\"negative width\",rect(0,0,-1,20),false],\n    [\"offscreen\",rect(0,0,20,20,true),false],\n    [\"NaN X\",rect(NaN,0,20,20),false],\n    [\"NaN Y\",rect(0,NaN,20,20),false],\n    [\"NaN width\",rect(0,0,NaN,20),false],\n    [\"NaN height\",rect(0,0,20,NaN),false],\n    [\"infinite X\",rect(Infinity,0,20,20),false],\n    [\"infinite width\",rect(0,0,Infinity,20),false],\n    [\"right-edge overflow\",rect(Number.MAX_VALUE,0,Number.MAX_VALUE,1),false],\n    [\"bottom-edge overflow\",rect(0,Number.MAX_VALUE,1,Number.MAX_VALUE),false],\n    [\"finite-dimension area overflow\",rect(0,0,1e200,1e200),false],\n    [\"finite open pane\",valid,true],\n    [\"finite compact pane\",compact,true],\n    [\"valid negative origin\",negativeOrigin,true]\n  ];\n  for(const [name,r,wanted]of cases) assert(accepted(r)===wanted,name);\n  assert(select([valid,empty],false)===empty,\"documented old-selector counterexample\");\n  assert(select([valid,empty],true)===valid,\"empty cannot replace valid candidate\");\n  assert(select([empty,valid],true)===valid,\"valid candidate after empty\");\n  const tie=rect(50,50,320,681);\n  assert(select([valid,tie],true)===valid,\"first equal-area candidate retained\");\n  assert(select([compact,valid],true)===valid,\"largest finite area retained\");\n  assert(select([empty,rect(0,0,0,20)],true)===null,\"no usable pane remains failure\");\n  return {status:\"passed\",scope:\"V8 source checks and independent IEEE-754 geometry model; no PowerShell parser, UIA, .NET or native execution\",sourceChecks:8,geometryCases:cases.length,selectionCases:6,cases:cases.map(([name,,expected])=>({name,expectedAccepted:expected}))};\n}",
+    "runInstructions": "Evaluate checkSource as JavaScript, then call reviewPaneSelectionGuard({before,after,edit:manifest.edits[0]}) with exact full source strings."
+  },
+  "limitations": [
+    "PowerShell syntax and actual UIA/native execution of this candidate have not run.",
+    "This guard does not choose between multiple finite visible elements sharing NYC-Tron.",
+    "The observed0a2 failure is not retrospectively assigned a selector cause.",
+    "Separate fixed-checkpoint and possible GET-ownership changes are not part of this candidate."
+  ],
+  "application": "Require exact preimage; replace the one before span with after. Reversing the one after span must restore every byte of cb69."
+}

@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "kind": "windows-lifecycle-source-review",
+  "status": "source-reviewed",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "candidate": {
+    "commit": "7a160c536b845d71487ba2997262daf3cf07cb9b",
+    "tree": "24b244e41d6d61e7dfe56a1cd32d56d37bb0f035",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e"
+    ]
+  },
+  "base": {
+    "commit": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+    "tree": "87cfe23f3dfe5cb8111cb104b0108df57fec9459"
+  },
+  "pullRequestSnapshot": {
+    "observedAt": "2026-11-11 09:24:36 UTC",
+    "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/pulls/63",
+    "number": 63,
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/pull/63",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "mergeable": true,
+    "head": {
+      "ref": "codex/v1-windows-reviewed-lifecycle-nov11",
+      "sha": "7a160c536b845d71487ba2997262daf3cf07cb9b"
+    },
+    "base": {
+      "ref": "codex/v1-reviewed-integration-nov10",
+      "sha": "25a6af6d020e34d790f6a4f3d9f117738b252f1e"
+    },
+    "generatedMerge": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+    "changedFiles": 4,
+    "scope": "Historical normalized API metadata, not a later live-ref claim or CI result."
+  },
+  "merge": {
+    "commit": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+    "tree": "24b244e41d6d61e7dfe56a1cd32d56d37bb0f035",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "7a160c536b845d71487ba2997262daf3cf07cb9b"
+    ]
+  },
+  "fullTreeVerification": {
+    "base": {
+      "root": "87cfe23f3dfe5cb8111cb104b0108df57fec9459",
+      "leafCount": 3152,
+      "recomputedTreeObjects": 513,
+      "leafInventory": {
+        "bytes": 498448,
+        "sha256": "8677cebd19b4c6ce5be22e87d37b84449a9fc5f2bbafb5fac072b1c7c309a650",
+        "gitBlob": "65bc268171319d8621a4ce0e28656dc2f2e9f1a7"
+      }
+    },
+    "candidate": {
+      "root": "24b244e41d6d61e7dfe56a1cd32d56d37bb0f035",
+      "leafCount": 3152,
+      "recomputedTreeObjects": 513,
+      "leafInventory": {
+        "bytes": 498448,
+        "sha256": "194e13526f6bfe235842b61387965e12114b2854a317c64e2ba47c2c717ec0f1",
+        "gitBlob": "fda4b53fc5fb733cac6db95d155c56f8f800e900"
+      }
+    },
+    "leafInventoryEncoding": "JSON array sorted by path, each entry {path,mode,type,sha}, plus one LF; hashes refer to this derived inventory, not a Git tree object.",
+    "untruncated": true,
+    "changedPaths": [
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+        "before": {
+          "gitBlob": "070424fa54f1645cc6be02187647f84732a6b53c",
+          "mode": "100644",
+          "bytes": 44307
+        },
+        "after": {
+          "gitBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+          "mode": "100644",
+          "bytes": 44768
+        }
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.cpp",
+        "before": {
+          "gitBlob": "561bd52c4780fb59ece93f5538c2631f912a70e2",
+          "mode": "100644",
+          "bytes": 11391
+        },
+        "after": {
+          "gitBlob": "be0d4e845fda172e69519871f3a014d1ae3620ec",
+          "mode": "100644",
+          "bytes": 12927
+        }
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.h",
+        "before": {
+          "gitBlob": "2d88c35324b84a65d5e7ef240f2969d7effbf3e7",
+          "mode": "100644",
+          "bytes": 2616
+        },
+        "after": {
+          "gitBlob": "0c3ae907418020400b7baf9f96b054ae2a37a944",
+          "mode": "100644",
+          "bytes": 2760
+        }
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+        "before": {
+          "gitBlob": "d86f3b1454d93996606faa11d2f25fa7a9fea7d1",
+          "mode": "100644",
+          "bytes": 22311
+        },
+        "after": {
+          "gitBlob": "a2148fdc939011492f52df1b6899a613a17cddae",
+          "mode": "100644",
+          "bytes": 45441
+        }
+      }
+    ],
+    "unchangedLeafCount": 3148,
+    "allOtherLeafModesAndIdentitiesEqual": true,
+    "rootAndDesktopIndependentFullTreeReviews": true
+  },
+  "adoption": {
+    "aggregateSurface": {
+      "gitBlob": "d86f3b1454d93996606faa11d2f25fa7a9fea7d1",
+      "bytes": 22311
+    },
+    "externalSurface": {
+      "gitBlob": "d7c28b5525ffe6ed5363460c70db62935c0bbee6",
+      "bytes": 34710
+    },
+    "correctedSurface": {
+      "gitBlob": "a2148fdc939011492f52df1b6899a613a17cddae",
+      "bytes": 45441
+    },
+    "manifestBoundary": "The manifest's 26 exact edits start at external d7, plus the recorded broker/header preimages. It is not an exact aggregate d86-to-a214 patch."
+  },
+  "nativeEditManifest": {
+    "file": "native-edits.json",
+    "bytes": 55682,
+    "sha256": "a136c033a97d04ffcec188ae7800d39edd1915e3a7fc5feb063f71158060d7bf",
+    "gitBlob": "e1a666db4e7ad8f13dc0059b8bd3bd205e140c09",
+    "reusedUnchanged": true
+  },
+  "nativeFiles": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+      "preimage": {
+        "bytes": 34710,
+        "sha256": "7991a27787054b4b6a242119bbc85c990a79e77bdad4fe632084d522e9d11781",
+        "gitBlob": "d7c28b5525ffe6ed5363460c70db62935c0bbee6"
+      },
+      "candidate": {
+        "bytes": 45441,
+        "sha256": "1957facfd7d0941c6fc5ea41dfef84f33c0a748a295b1387ebff3a5710ab492f",
+        "gitBlob": "a2148fdc939011492f52df1b6899a613a17cddae"
+      },
+      "transformCount": 20
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.cpp",
+      "preimage": {
+        "bytes": 11391,
+        "sha256": "3fb7fc1d1293469d73df7b50839076842d891fbc8ce8e79e2a2e70a1c546ef36",
+        "gitBlob": "561bd52c4780fb59ece93f5538c2631f912a70e2"
+      },
+      "candidate": {
+        "bytes": 12927,
+        "sha256": "f2fe48dd1dee1259afb231f55c634d31b686c71ee8034b1087fa0be9b4043844",
+        "gitBlob": "be0d4e845fda172e69519871f3a014d1ae3620ec"
+      },
+      "transformCount": 5
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.h",
+      "preimage": {
+        "bytes": 2616,
+        "sha256": "87bde02c2e053efac1e5baa4db8a8e5e22801a9b9ab7d84a34603ae576479246",
+        "gitBlob": "2d88c35324b84a65d5e7ef240f2969d7effbf3e7"
+      },
+      "candidate": {
+        "bytes": 2760,
+        "sha256": "addb1b277e0f3d6b4c48077ad03e51903973b4b0978b86f9e6f981bc2f1c59ac",
+        "gitBlob": "0c3ae907418020400b7baf9f96b054ae2a37a944"
+      },
+      "transformCount": 1
+    }
+  ],
+  "uiaComposition": {
+    "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+    "aggregatePreimage": {
+      "bytes": 44307,
+      "sha256": "60ba5d0a72ea23d47123507f3baa0059ac3bd78a4843a102db0e9391cdbc417a",
+      "gitBlob": "070424fa54f1645cc6be02187647f84732a6b53c"
+    },
+    "externalBefore": {
+      "bytes": 44619,
+      "sha256": "89e6a2eb6dbaab1bbc111b816a532ec318d6c432bc060f97487cf583305a029c",
+      "gitBlob": "bc18f6a74b6237530fd570d5c4c7e3a22a9af5ec"
+    },
+    "externalAfter": {
+      "bytes": 45080,
+      "sha256": "808876460015ea691503d4604b6a440bf2bfccc92a2b6eb15b594a39c1d7f4c0",
+      "gitBlob": "a6bfaccc3dcbdafcd398bd0d1c5bde63ba22ab23"
+    },
+    "candidate": {
+      "bytes": 44768,
+      "sha256": "1898d0668faffe31c283a0cbfe84ed03e46526b4c80d4c2532cda5b947ecaa85",
+      "gitBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554"
+    },
+    "deltaBytes": 461,
+    "exactReplacement": {
+      "before": "$window = $AE::RootElement.FindFirst($Tree::Children, $processCondition)",
+      "after": "# Startup can expose a transient InputSiteWindowClass top-level element for this\n    # process before the real window (runs 42979339503 and 42982441629: \"Unsupported\n    # Pattern\" on WindowPattern). Accept only an element that supports WindowPattern.\n    $window = $null\n    foreach ($candidate in $AE::RootElement.FindAll($Tree::Children, $processCondition)) {\n      $pattern = $null\n      if ($candidate.TryGetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern, [ref]$pattern)) { $window = $candidate; break }\n    }"
+    },
+    "forwardAndInverseVerified": true,
+    "unchanged": "All aggregate bytes outside that exact replacement, including 10-second focus/ErrorRecord handling, the 90-second poll, actual foreground/stable-positive-rectangle requirements and drag/ownership/environment/assertion/failure/finally logic.",
+    "execution": "Static source composition only; no PowerShell parse/runtime result supplied by this receipt."
+  },
+  "checker": {
+    "file": "composition-check.mjs",
+    "bytes": 3751,
+    "sha256": "c291b03ce09ef03187e0f245af9dce69b360f8efee06763fb083d2c5af09d13c",
+    "gitBlob": "9411559937415d80235d150ee18e4d7ea15db5bd",
+    "result": {
+      "nativeTransforms": 26,
+      "nativeForwardAndInverse": true,
+      "approvedProbeExact": true,
+      "aggregateToExternalAdoptionExplicit": true,
+      "uiaSelectionDeltaBytes": 461,
+      "uiaForwardAndInverse": true,
+      "scope": "Pure UTF-8 source identity/composition checks only; no native or PowerShell execution"
+    }
+  },
+  "reviews": [
+    {
+      "role": "source author",
+      "scope": "All 26 unique native forward/inverse transforms, exact probe equality, both Offer call sites and 12 other native C++ files; source exception/ownership/API analysis; UIA exact source composition."
+    },
+    {
+      "role": "root coordinator",
+      "scope": "Independent complete source reads, final timer/Start correction, native manifest/inverses, UIA composition and complete four-file tree gate."
+    },
+    {
+      "role": "independent desktop reviewer",
+      "scope": "Independent native source/manifest and exact probe review; cancellation-before-await, queue ownership, timer/Start cleanup and UIA static approval."
+    }
+  ],
+  "preserved": {
+    "brokerDeadlineSeconds": 30,
+    "parentWaitSeconds": 35,
+    "workflowBlob": "4bfac5a1e0b91ac88a104a08d08ebcdc873be6bc",
+    "workflowChanged": false,
+    "hostOrSecurityChanged": false,
+    "nativeStrictAcceptanceRelaxed": false,
+    "priorEvidenceAndLedgerChanged": false
+  },
+  "limits": [
+    "This is source review and immutable source composition, not actual C++ compilation, native concurrency, PowerShell runtime, supported-host drag or package acceptance evidence.",
+    "No inference that these source corrections caused or fixed a historical PowerShell driver heap-corruption exit.",
+    "No tested-package archive is created or accepted by this receipt.",
+    "General affine-transform geometry and competing parent-manager arbitration remain outside the correction's proof.",
+    "No concrete new old-DropCompleted/new-request ordering failure was established from available source; universal OS ordering is not claimed.",
+    "The reused manifest describes its source-authoring checkpoint, including then-unexecuted native checks. Actual later CI outcomes and repairs require separate exact-revision receipts.",
+    "Receipt authoring created immutable blobs only; publication/ref/PR/CI ownership remained with the root coordinator."
+  ]
+}

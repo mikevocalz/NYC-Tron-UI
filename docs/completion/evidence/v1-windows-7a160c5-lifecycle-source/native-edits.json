@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "kind": "windows-native-drag-lifecycle-source-edits",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "baseNativeSource": "d7c28b5525ffe6ed5363460c70db62935c0bbee6",
+  "approvedProbeSource": "c0e90062f6747c6d5dd216691c98de08d2d1eea8",
+  "scope": "Three native source files only. This manifest records deterministic text transformations and source review boundaries; it is not a native execution receipt.",
+  "files": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+      "preimage": {
+        "bytes": 34710,
+        "sha256": "7991a27787054b4b6a242119bbc85c990a79e77bdad4fe632084d522e9d11781",
+        "gitBlob": "d7c28b5525ffe6ed5363460c70db62935c0bbee6"
+      },
+      "candidate": {
+        "bytes": 45441,
+        "sha256": "1957facfd7d0941c6fc5ea41dfef84f33c0a748a295b1387ebff3a5710ab492f",
+        "gitBlob": "a2148fdc939011492f52df1b6899a613a17cddae"
+      },
+      "transforms": [
+        {
+          "id": "approved-bounded-ole-probe",
+          "before": "// Diagnostic only. Lists every window on this thread with class, visibility,\n// rect and whether OLE holds a drop target on it (the \"OleDropTargetInterface\"\n// window property RegisterDragDrop sets). InputSiteWindowClass windows are\n// summarized so the record stays far below the trace's 4096-byte record limit.\nstruct OleProbeState { std::string text; uint32_t inputSites{0}, inputSitesWithOle{0}, count{0}; };\nstatic void ProbeWindow(HWND hwnd, HWND parent, OleProbeState& state) noexcept {\n  try {\n    if (state.count >= 40) return;\n    wchar_t cls[96] = {}; GetClassNameW(hwnd, cls, 96);\n    const bool ole = GetPropW(hwnd, L\"OleDropTargetInterface\") != nullptr;\n    if (std::wstring_view(cls) == L\"InputSiteWindowClass\") { ++state.inputSites; if (ole) ++state.inputSitesWithOle; }\n    else {\n      RECT rect{}; GetWindowRect(hwnd, &rect);\n      ++state.count;\n      state.text += std::to_string(reinterpret_cast<uintptr_t>(hwnd)) + \"<\" + std::to_string(reinterpret_cast<uintptr_t>(parent)) + \" \" + winrt::to_string(cls) +\n        (IsWindowVisible(hwnd) ? \" vis\" : \" hid\") + (ole ? \" OLE\" : \" noole\") + \" \" + std::to_string(rect.left) + \",\" + std::to_string(rect.top) + \",\" + std::to_string(rect.right) + \",\" + std::to_string(rect.bottom) + \";\";\n    }\n  } catch (...) {}\n  for (HWND child = GetWindow(hwnd, GW_CHILD); child; child = GetWindow(child, GW_HWNDNEXT)) ProbeWindow(child, hwnd, state);\n}\nstatic void RecordOleProbe(std::string const& owner, char const* after) noexcept {\n  if (!nyctron::desktop::NativeDragTrace::Enabled(owner)) return;\n  try {\n    OleProbeState state;\n    EnumThreadWindows(GetCurrentThreadId(), [](HWND top, LPARAM value) -> BOOL {\n      ProbeWindow(top, GetWindow(top, GW_OWNER), *reinterpret_cast<OleProbeState*>(value)); return TRUE;\n    }, reinterpret_cast<LPARAM>(&state));\n    if (state.text.size() > 3000) state.text.resize(3000);\n    Json::JsonObject record;\n    record.SetNamedValue(L\"stage\", Json::JsonValue::CreateStringValue(L\"ole-probe\"));\n    record.SetNamedValue(L\"after\", Json::JsonValue::CreateStringValue(winrt::to_hstring(after)));\n    record.SetNamedValue(L\"inputSites\", Json::JsonValue::CreateNumberValue(state.inputSites));\n    record.SetNamedValue(L\"inputSitesWithOle\", Json::JsonValue::CreateNumberValue(state.inputSitesWithOle));\n    record.SetNamedValue(L\"windows\", Json::JsonValue::CreateStringValue(winrt::to_hstring(state.text)));\n    nyctron::desktop::NativeDragTrace::Record(owner, record);\n  } catch (...) {}\n}\n",
+          "after": "// Diagnostic only. Bounded observations of windows on this thread. The\n// private OleDropTargetInterface property is recorded only as presence/absence;\n// it does not establish a public OLE registration or a functioning drop target.\nstatic constexpr uint32_t OleProbeNodeLimit = 40;\nstatic constexpr uint32_t OleProbeDepthLimit = 16;\nstruct OleProbeState { std::string text; uint32_t inputSites{0}, inputSitesWithOle{0}, count{0}; bool truncated{false}; };\nstatic void ProbeWindow(HWND hwnd, HWND parent, OleProbeState& state, uint32_t depth = 0) noexcept {\n  if (state.count >= OleProbeNodeLimit || depth >= OleProbeDepthLimit) { state.truncated = true; return; }\n  ++state.count; // Every visited window consumes the budget, including InputSite nodes.\n  try {\n    wchar_t cls[96] = {}; GetClassNameW(hwnd, cls, 96);\n    const bool ole = GetPropW(hwnd, L\"OleDropTargetInterface\") != nullptr;\n    if (std::wstring_view(cls) == L\"InputSiteWindowClass\") { ++state.inputSites; if (ole) ++state.inputSitesWithOle; }\n    else {\n      RECT rect{}; GetWindowRect(hwnd, &rect);\n      state.text += std::to_string(reinterpret_cast<uintptr_t>(hwnd)) + \"<\" + std::to_string(reinterpret_cast<uintptr_t>(parent)) + \" \" + winrt::to_string(cls) +\n        (IsWindowVisible(hwnd) ? \" vis\" : \" hid\") + (ole ? \" ole-prop\" : \" no-ole-prop\") + \" \" + std::to_string(rect.left) + \",\" + std::to_string(rect.top) + \",\" + std::to_string(rect.right) + \",\" + std::to_string(rect.bottom) + \";\";\n    }\n  } catch (...) {}\n  for (HWND child = GetWindow(hwnd, GW_CHILD); child; child = GetWindow(child, GW_HWNDNEXT)) {\n    if (state.count >= OleProbeNodeLimit || depth + 1 >= OleProbeDepthLimit) { state.truncated = true; break; }\n    ProbeWindow(child, hwnd, state, depth + 1);\n  }\n}\nstatic void RecordOleProbe(std::string const& owner, char const* after) noexcept {\n  if (!nyctron::desktop::NativeDragTrace::Enabled(owner)) return;\n  try {\n    OleProbeState state;\n    EnumThreadWindows(GetCurrentThreadId(), [](HWND top, LPARAM value) -> BOOL {\n      auto& probe = *reinterpret_cast<OleProbeState*>(value);\n      if (probe.count >= OleProbeNodeLimit) { probe.truncated = true; return FALSE; }\n      ProbeWindow(top, GetWindow(top, GW_OWNER), probe);\n      if (probe.count >= OleProbeNodeLimit) { probe.truncated = true; return FALSE; }\n      return TRUE;\n    }, reinterpret_cast<LPARAM>(&state));\n    if (state.text.size() > 3000) state.text.resize(3000);\n    Json::JsonObject record;\n    record.SetNamedValue(L\"stage\", Json::JsonValue::CreateStringValue(L\"ole-probe\"));\n    record.SetNamedValue(L\"after\", Json::JsonValue::CreateStringValue(winrt::to_hstring(after)));\n    record.SetNamedValue(L\"inputSites\", Json::JsonValue::CreateNumberValue(state.inputSites));\n    record.SetNamedValue(L\"inputSitesWithOle\", Json::JsonValue::CreateNumberValue(state.inputSitesWithOle));\n    record.SetNamedValue(L\"visitedWindows\", Json::JsonValue::CreateNumberValue(state.count));\n    record.SetNamedValue(L\"visitLimit\", Json::JsonValue::CreateNumberValue(OleProbeNodeLimit));\n    record.SetNamedValue(L\"depthLimit\", Json::JsonValue::CreateNumberValue(OleProbeDepthLimit));\n    record.SetNamedValue(L\"traversalTruncated\", Json::JsonValue::CreateBooleanValue(state.truncated));\n    record.SetNamedValue(L\"windows\", Json::JsonValue::CreateStringValue(winrt::to_hstring(state.text)));\n    nyctron::desktop::NativeDragTrace::Record(owner, record);\n  } catch (...) {}\n}\n"
+        },
+        {
+          "id": "standard-library-ownership-headers",
+          "before": "#include <memory>\n",
+          "after": "#include <memory>\n#include <mutex>\n#include <limits>\n"
+        },
+        {
+          "id": "owned-escape-lease",
+          "before": "// Escape during a native drag. The Microsoft.UI.Input.DragDrop loop that carries\n// a XAML drag between islands does not cancel on Escape sent to this window\n// (run 42980627512: the drop was still delivered after Escape). A thread-local\n// keyboard hook records the key while a native drag is in flight, and the drop\n// target refuses the drop when it was seen. It only observes; the key is passed on.\nstruct EscapeWatch {\n  static inline HHOOK hook{nullptr};\n  static inline bool seen{false};\n  static inline uint32_t count{0};\n  static LRESULT CALLBACK Proc(int code, WPARAM wparam, LPARAM lparam) {\n    if (code == HC_ACTION && wparam == VK_ESCAPE && (lparam & (1u << 31)) == 0) { seen = true; ++count; }\n    return CallNextHookEx(hook, code, wparam, lparam);\n  }\n  static void Begin() noexcept {\n    seen = false; count = 0;\n    if (!hook) hook = SetWindowsHookExW(WH_KEYBOARD, Proc, nullptr, GetCurrentThreadId());\n  }\n  static void End() noexcept {\n    if (hook) { UnhookWindowsHookEx(hook); hook = nullptr; }\n  }\n};\n",
+          "after": "// One keyboard-hook lease belongs to one prepared source drag on its UI thread.\n// Both drop routes consult the same owner/nonce binding; unrelated surfaces\n// cannot release it. The hook observes Escape and always passes the key on.\nstruct EscapeLease final {\n  ~EscapeLease() { Stop(); }\n  void Stop() noexcept {\n    auto value = std::exchange(hook, nullptr);\n    if (value) UnhookWindowsHookEx(value);\n  }\n  std::string owner, request, nonce;\n  DWORD thread{0}; HHOOK hook{nullptr}; bool seen{false}; uint32_t count{0};\n};\nstruct EscapeWatch {\n  static inline thread_local std::weak_ptr<EscapeLease> active;\n  static LRESULT CALLBACK Proc(int code, WPARAM wparam, LPARAM lparam) {\n    auto lease = active.lock();\n    if (lease && code == HC_ACTION && wparam == VK_ESCAPE && (lparam & (1u << 31)) == 0) {\n      lease->seen = true;\n      if (lease->count < std::numeric_limits<uint32_t>::max()) ++lease->count;\n    }\n    return CallNextHookEx(lease ? lease->hook : nullptr, code, wparam, lparam);\n  }\n  static bool Begin(std::shared_ptr<EscapeLease> const& lease, std::string const& owner, std::string const& request) {\n    if (!lease || active.lock() || owner.empty() || request.empty()) return false;\n    lease->owner = owner; lease->request = request; lease->thread = GetCurrentThreadId();\n    lease->hook = SetWindowsHookExW(WH_KEYBOARD, Proc, nullptr, lease->thread);\n    if (!lease->hook) return false;\n    active = lease;\n    return true;\n  }\n  static bool Bind(std::shared_ptr<EscapeLease> const& lease, std::string const& owner, std::string const& request, std::string const& nonce) {\n    if (!lease || active.lock() != lease || !lease->hook || lease->thread != GetCurrentThreadId() ||\n        lease->owner != owner || lease->request != request || nonce.empty()) return false;\n    lease->nonce = nonce;\n    return true;\n  }\n  static std::shared_ptr<EscapeLease> ForOwner(std::string const& owner) noexcept {\n    auto lease = active.lock();\n    return lease && lease->owner == owner ? lease : nullptr;\n  }\n  static bool Seen(std::string const& owner, std::string const& nonce) noexcept {\n    auto lease = ForOwner(owner);\n    return lease && !nonce.empty() && lease->nonce == nonce && lease->seen;\n  }\n  static void End(std::shared_ptr<EscapeLease> const& lease) noexcept {\n    if (!lease) return;\n    if (active.lock() == lease) active.reset();\n    lease->Stop();\n  }\n};\n"
+        },
+        {
+          "id": "owned-parent-drop-completion",
+          "before": "// The OS drag reaches this nested XAML island only through the RNW parent\n// island's Microsoft.UI.Input.DragDrop target. RNW's parent island sets none, so\n// the input system finds no target and XAML never raises DragEnter. This proxy\n// is the parent island's drop target for target surfaces and forwards to the same\n// broker calls the XAML DragEnter/DragOver/Drop handlers make.\nnamespace InputDnD = winrt::Microsoft::UI::Input::DragDrop;\nusing DropComplete = std::shared_ptr<std::function<void(Transfer::DataPackageOperation)>>;\nstruct ParentDropTarget : winrt::implements<ParentDropTarget, InputDnD::IDropOperationTarget> {\n  using Handler = std::function<Transfer::DataPackageOperation(int, InputDnD::DragInfo const&, DropComplete)>;\n  explicit ParentDropTarget(Handler handler) : m_handler(std::move(handler)) {}\n  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> EnterAsync(InputDnD::DragInfo info, InputDnD::DragUIOverride) { co_return m_handler(0, info, nullptr); }\n  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> OverAsync(InputDnD::DragInfo info, InputDnD::DragUIOverride) { co_return m_handler(1, info, nullptr); }\n  winrt::Windows::Foundation::IAsyncAction LeaveAsync(InputDnD::DragInfo info) { m_handler(2, info, nullptr); co_return; }\n  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> DropAsync(InputDnD::DragInfo info) {\n    winrt::handle signal{CreateEventW(nullptr, TRUE, FALSE, nullptr)};\n    auto result = std::make_shared<Transfer::DataPackageOperation>(Transfer::DataPackageOperation::None);\n    auto complete = std::make_shared<std::function<void(Transfer::DataPackageOperation)>>([result, raw = signal.get()](Transfer::DataPackageOperation value) { *result = value; SetEvent(raw); });\n    const auto immediate = m_handler(3, info, complete);\n    if (!signal) co_return immediate;\n    if (immediate != Transfer::DataPackageOperation::None) co_return immediate;\n    // The broker resolves the drop on the UI thread within its 30 s deadline.\n    co_await winrt::resume_on_signal(signal.get(), std::chrono::seconds(35));\n    co_return *result;\n  }\n private:\n  Handler m_handler;\n};\n",
+          "after": "// The parent island proxy and XAML events share the same broker. Only the\n// captured UI dispatcher may call that broker; coroutine wait/cancellation\n// continuations touch synchronized completion state and enqueue exact cleanup.\nnamespace InputDnD = winrt::Microsoft::UI::Input::DragDrop;\nusing DispatcherQueue = winrt::Microsoft::UI::Dispatching::DispatcherQueue;\nclass DropCompletion final {\n public:\n  DropCompletion() : m_signal(CreateEventW(nullptr, TRUE, FALSE, nullptr)) {\n    if (!m_signal) winrt::throw_last_error();\n  }\n  HANDLE Signal() const noexcept { return m_signal.get(); }\n  bool Pending() const noexcept {\n    std::lock_guard lock(m_mutex);\n    return m_phase == Phase::Waiting;\n  }\n  void Complete(Transfer::DataPackageOperation value) noexcept {\n    {\n      std::lock_guard lock(m_mutex);\n      if (m_phase != Phase::Waiting) return;\n      m_result = value; m_phase = Phase::Ready;\n    }\n    if (!SetEvent(m_signal.get())) Abandon();\n  }\n  void BindAbandon(std::function<void()> cleanup) {\n    bool invoke = false;\n    {\n      std::lock_guard lock(m_mutex);\n      if (m_phase == Phase::Abandoned) invoke = true;\n      else if (m_phase != Phase::Returned) m_cleanup = std::move(cleanup);\n    }\n    if (invoke) Run(cleanup);\n  }\n  void Abandon() noexcept {\n    std::function<void()> cleanup;\n    {\n      std::lock_guard lock(m_mutex);\n      if (m_phase == Phase::Abandoned || m_phase == Phase::Returned) return;\n      m_phase = Phase::Abandoned; m_result = Transfer::DataPackageOperation::None;\n      cleanup = std::move(m_cleanup);\n    }\n    SetEvent(m_signal.get());\n    Run(cleanup);\n  }\n  Transfer::DataPackageOperation Take(bool signaled) noexcept {\n    if (!signaled) Abandon();\n    std::function<void()> released;\n    auto result = Transfer::DataPackageOperation::None;\n    {\n      std::lock_guard lock(m_mutex);\n      if (m_phase == Phase::Ready) {\n        result = m_result; m_phase = Phase::Returned; released = std::move(m_cleanup);\n      }\n    }\n    return result;\n  }\n private:\n  enum class Phase { Waiting, Ready, Abandoned, Returned };\n  static void Run(std::function<void()>& callback) noexcept { try { if (callback) callback(); } catch (...) {} }\n  // The broker callback, cancelling thread and threadpool wait continuation\n  // share only these fields. No UI/callback work runs while the mutex is held.\n  winrt::handle m_signal;\n  mutable std::mutex m_mutex;\n  Phase m_phase{Phase::Waiting};\n  Transfer::DataPackageOperation m_result{Transfer::DataPackageOperation::None};\n  std::function<void()> m_cleanup;\n};\nusing DropComplete = std::shared_ptr<DropCompletion>;\nstruct ParentDropTarget : winrt::implements<ParentDropTarget, InputDnD::IDropOperationTarget> {\n  using Handler = std::function<Transfer::DataPackageOperation(int, InputDnD::DragInfo const&, DropComplete)>;\n  ParentDropTarget(DispatcherQueue dispatcher, Handler handler) : m_dispatcher(std::move(dispatcher)), m_handler(std::move(handler)) {}\n  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> EnterAsync(InputDnD::DragInfo info, InputDnD::DragUIOverride) {\n    co_return OnOwnerThread() ? m_handler(0, info, nullptr) : Transfer::DataPackageOperation::None;\n  }\n  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> OverAsync(InputDnD::DragInfo info, InputDnD::DragUIOverride) {\n    co_return OnOwnerThread() ? m_handler(1, info, nullptr) : Transfer::DataPackageOperation::None;\n  }\n  winrt::Windows::Foundation::IAsyncAction LeaveAsync(InputDnD::DragInfo info) {\n    if (OnOwnerThread()) m_handler(2, info, nullptr);\n    co_return;\n  }\n  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> DropAsync(InputDnD::DragInfo info) {\n    auto lifetime = get_strong();\n    // Allocate and validate the event before any offer can retain a callback.\n    auto complete = std::make_shared<DropCompletion>();\n    auto cancellation = co_await winrt::get_cancellation_token();\n    cancellation.callback([complete]() noexcept { complete->Abandon(); });\n    try {\n      if (cancellation()) throw winrt::hresult_canceled();\n      if (!OnOwnerThread()) { complete->Complete(Transfer::DataPackageOperation::None); co_return complete->Take(true); }\n      const auto immediate = m_handler(3, info, complete);\n      if (immediate != Transfer::DataPackageOperation::None) complete->Complete(immediate);\n      // Preserve the existing 35 s native wait and the broker's 30 s deadline.\n      // A false wait result is terminal even if approval races the timeout.\n      const bool signaled = co_await winrt::resume_on_signal(complete->Signal(), std::chrono::seconds(35));\n      if (cancellation()) throw winrt::hresult_canceled();\n      co_return complete->Take(signaled);\n    } catch (...) { complete->Abandon(); throw; }\n  }\n private:\n  bool OnOwnerThread() const noexcept {\n    try { return m_dispatcher && m_dispatcher.HasThreadAccess(); } catch (...) { return false; }\n  }\n  DispatcherQueue m_dispatcher{nullptr};\n  Handler m_handler;\n};\nstruct ParentDropRegistration final {\n  winrt::Microsoft::UI::Content::ChildSiteLink site{nullptr};\n  winrt::Microsoft::UI::Content::ContentIsland parent{nullptr};\n  DispatcherQueue dispatcher{nullptr};\n};\n"
+        },
+        {
+          "id": "destroy-owned-escape-only",
+          "before": "    EscapeWatch::End();\n    m_mounted = false;",
+          "after": "    EscapeWatch::End(m_escapeLease); m_escapeLease.reset();\n    m_mounted = false;"
+        },
+        {
+          "id": "mount-site-change-release",
+          "before": "      m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink());",
+          "after": "      const auto site = view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink();\n      if (m_connection.Site() != site) Cleanup();\n      m_connection.SetSite(site);"
+        },
+        {
+          "id": "layout-registration-reconcile",
+          "before": "    try { m_connection.UpdateLayout(sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>(), args); }",
+          "after": "    try {\n      m_connection.UpdateLayout(sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>(), args);\n      ObserveParentDropTarget();\n    }"
+        },
+        {
+          "id": "drop-completed-owned-escape-and-request",
+          "before": "      m_surface.DropCompleted([weak = get_weak()](auto const&, Xaml::DropCompletedEventArgs const& args) {\n        if (auto self = weak.get()) {\n          if (self->m_disposed || self->m_request.empty()) return;\n          const auto result = args.DropResult();\n          self->Trace(\"source-drop-completed\");\n          EscapeWatch::End();\n          auto effect = result == Transfer::DataPackageOperation::Move ? \"move\" : result == Transfer::DataPackageOperation::Copy ? \"copy\" : result == Transfer::DataPackageOperation::Link ? \"link\" : result == Transfer::DataPackageOperation::None ? \"none\" : \"unknown\";\n          if (auto broker = Broker::Find(self->m_owner)) broker->NativeCompleted(self->m_request, effect);\n          self->m_request.clear();\n        }\n      });\n",
+          "after": "      m_surface.DropCompleted([weak = get_weak()](auto const&, Xaml::DropCompletedEventArgs const& args) {\n        if (auto self = weak.get()) {\n          if (self->m_disposed || self->m_request.empty()) { EscapeWatch::End(self->m_escapeLease); self->m_escapeLease.reset(); return; }\n          auto escape = std::exchange(self->m_escapeLease, {});\n          auto request = std::exchange(self->m_request, {});\n          std::shared_ptr<Broker> broker;\n          try {\n            broker = Broker::Find(self->m_owner);\n            const auto result = args.DropResult();\n            self->Trace(\"source-drop-completed\");\n            EscapeWatch::End(escape);\n            auto effect = result == Transfer::DataPackageOperation::Move ? \"move\" : result == Transfer::DataPackageOperation::Copy ? \"copy\" : result == Transfer::DataPackageOperation::Link ? \"link\" : result == Transfer::DataPackageOperation::None ? \"none\" : \"unknown\";\n            if (broker) broker->NativeCompleted(request, effect);\n          } catch (...) {\n            EscapeWatch::End(escape);\n            if (broker) broker->Cancel(request, \"unavailable\");\n            throw;\n          }\n        }\n      });\n"
+        },
+        {
+          "id": "escape-state-trace",
+          "before": "      boolean(L\"escapeSeen\", EscapeWatch::seen); number(L\"escapeCount\", EscapeWatch::count); boolean(L\"escapeHook\", EscapeWatch::hook != nullptr);",
+          "after": "      const auto escape = EscapeWatch::ForOwner(m_owner);\n      boolean(L\"escapeSeen\", escape && escape->seen); number(L\"escapeCount\", escape ? escape->count : 0); boolean(L\"escapeHook\", escape && escape->hook);"
+        },
+        {
+          "id": "parent-registration-lifetime",
+          "before": "  // Diagnostic only. Observes, without ever calling SetTarget, whether the OS\n  // drag asks the RNW parent island (the one hosting this nested XAML island)\n  // for a drop target. Nothing here changes which object receives the drop.\n  void ObserveParentDropTarget() noexcept {\n    if (m_parentDropManager || m_role != \"target\") return;\n    try {\n      const auto site = m_connection.Site();\n      if (!site || site.IsClosed()) { Trace(\"parent-drop-observer-unavailable\"); return; }\n      const auto parent = site.Parent();\n      if (!parent || parent.IsClosed()) { Trace(\"parent-drop-observer-unavailable\"); return; }\n      m_parentDropManager = winrt::Microsoft::UI::Input::DragDrop::DragDropManager::GetForIsland(parent);\n      m_parentDropToken = m_parentDropManager.TargetRequested([weak = get_weak()](auto const&, InputDnD::DropOperationTargetRequestedEventArgs const& args) {\n        auto self = weak.get(); if (!self) return;\n        self->Trace(\"parent-target-requested\");\n        try {\n          args.SetTarget(winrt::make<ParentDropTarget>([weak](int kind, InputDnD::DragInfo const& info, DropComplete complete) {\n            auto owner = weak.get();\n            return owner ? owner->ParentDrop(kind, info, std::move(complete)) : Transfer::DataPackageOperation::None;\n          }));\n          self->Trace(\"parent-target-set\");\n        } catch (...) { self->Trace(\"parent-target-set-failed\"); }\n      });\n      Trace(\"parent-drop-observer-attached\");\n    } catch (...) { Trace(\"parent-drop-observer-failed\"); }\n  }\n",
+          "after": "  // This registration supplies the actual parent-island target. Its unique\n  // lease is invalidated before revocation/Close, including reentrant callbacks.\n  bool ParentRegistrationReady(std::shared_ptr<ParentDropRegistration> const& registration) const noexcept {\n    try {\n      if (!registration || !registration->dispatcher || !registration->dispatcher.HasThreadAccess()) return false;\n      if (registration != m_parentDropRegistration || !m_parentDropManager ||\n          !InputReady() || m_role != \"target\" || !m_surface.IsEnabled()) return false;\n      const auto site = m_connection.Site();\n      return site && site == registration->site && !site.IsClosed() &&\n        registration->parent && !registration->parent.IsClosed() && site.Parent() == registration->parent;\n    } catch (...) { return false; }\n  }\n  void ObserveParentDropTarget() noexcept {\n    auto registration = m_parentDropRegistration;\n    try {\n      if (!m_props || !InputReady() || m_role != \"target\" || !m_surface.IsEnabled()) { ReleaseParentDropObserver(); return; }\n      const auto site = m_connection.Site();\n      if (!site || site.IsClosed()) { ReleaseParentDropObserver(); Trace(\"parent-drop-observer-unavailable\"); return; }\n      const auto parent = site.Parent();\n      if (!parent || parent.IsClosed()) { ReleaseParentDropObserver(); Trace(\"parent-drop-observer-unavailable\"); return; }\n      if (ParentRegistrationReady(m_parentDropRegistration)) return;\n      ReleaseParentDropObserver();\n      // Preserve a replacement installed by a reentrant native callback.\n      if (m_parentDropRegistration) return;\n      registration = std::make_shared<ParentDropRegistration>();\n      registration->site = site; registration->parent = parent; registration->dispatcher = m_surface.DispatcherQueue();\n      if (!registration->dispatcher || !registration->dispatcher.HasThreadAccess()) return;\n      auto manager = InputDnD::DragDropManager::GetForIsland(parent);\n      m_parentDropRegistration = registration; m_parentDropManager = manager;\n      const auto token = manager.TargetRequested([weak = get_weak(), registration](auto const&, InputDnD::DropOperationTargetRequestedEventArgs const& args) {\n        try { if (!registration->dispatcher.HasThreadAccess()) return; } catch (...) { return; }\n        auto self = weak.get();\n        if (!self || !self->ParentRegistrationReady(registration)) return;\n        self->Trace(\"parent-target-requested\");\n        try {\n          args.SetTarget(winrt::make<ParentDropTarget>(registration->dispatcher, [weak, registration](int kind, InputDnD::DragInfo const& info, DropComplete complete) {\n            auto owner = weak.get();\n            if (!owner || !owner->ParentRegistrationReady(registration)) {\n              if (complete) complete->Complete(Transfer::DataPackageOperation::None);\n              return Transfer::DataPackageOperation::None;\n            }\n            return owner->ParentDrop(kind, info, std::move(complete));\n          }));\n          self->Trace(\"parent-target-set\");\n        } catch (...) { self->Trace(\"parent-target-set-failed\"); }\n      });\n      // A synchronous event can invalidate this lease while registration runs.\n      if (m_parentDropRegistration != registration || m_parentDropManager != manager) {\n        try { manager.TargetRequested(token); } catch (...) {}\n        try { manager.Close(); } catch (...) {}\n        return;\n      }\n      m_parentDropToken = token;\n      if (!ParentRegistrationReady(registration)) { ReleaseParentDropObserver(); return; }\n      Trace(\"parent-drop-observer-attached\");\n    } catch (...) {\n      if (m_parentDropRegistration == registration) ReleaseParentDropObserver();\n      Trace(\"parent-drop-observer-failed\");\n    }\n  }\n"
+        },
+        {
+          "id": "parent-escape-state-trace",
+          "before": "      record.SetNamedValue(L\"escapeSeen\", Json::JsonValue::CreateBooleanValue(EscapeWatch::seen));",
+          "after": "      const auto escape = EscapeWatch::ForOwner(m_owner);\n      record.SetNamedValue(L\"escapeSeen\", Json::JsonValue::CreateBooleanValue(escape && escape->seen));"
+        },
+        {
+          "id": "parent-offer-exact-cleanup",
+          "before": "  Transfer::DataPackageOperation ParentDrop(int kind, InputDnD::DragInfo const& info, DropComplete complete) noexcept {\n    double geometry[6] = {};\n    bool inside = false, allowed = false;\n    try {\n      inside = m_role == \"target\" && ParentPositionInside(info, geometry);\n      auto broker = Broker::Find(m_owner);\n      if (kind == 2) {\n        if (InputReady() && broker) broker->Leave(m_window, m_generation);\n        TraceParentDrop(\"parent-drop-leave\", geometry, inside, false);\n        m_parentInside = false;\n        return Transfer::DataPackageOperation::None;\n      }\n      const auto nonce = NonceFrom(info.Data());\n      allowed = !EscapeWatch::seen && inside && InputReady() && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation);\n      if (kind == 3) {\n        TraceParentDrop(\"parent-drop-drop\", geometry, inside, allowed);\n        if (!allowed) { (*complete)(Transfer::DataPackageOperation::None); return Transfer::DataPackageOperation::None; }\n        broker->Offer(nonce, m_window, m_generation, [complete](bool accepted) {\n          (*complete)(accepted ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None);\n        });\n        // Offer resolves later through Resolve; DropAsync waits on the signal.\n        return Transfer::DataPackageOperation::None;\n      }\n      if (allowed) broker->Hover(nonce, m_window, m_generation);\n      else if (m_parentInside && broker) broker->Leave(m_window, m_generation);\n      if (kind == 0 || allowed != m_parentInside) TraceParentDrop(kind == 0 ? \"parent-drop-enter\" : \"parent-drop-over\", geometry, inside, allowed);\n      m_parentInside = allowed;\n      return allowed ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None;\n    } catch (...) { TraceParentDrop(\"parent-drop-failed\", geometry, inside, allowed); if (kind == 3 && complete) { try { (*complete)(Transfer::DataPackageOperation::None); } catch (...) {} } return Transfer::DataPackageOperation::None; }\n  }\n",
+          "after": "  Transfer::DataPackageOperation ParentDrop(int kind, InputDnD::DragInfo const& info, DropComplete complete) noexcept {\n    double geometry[6] = {};\n    bool inside = false, allowed = false;\n    try {\n      inside = m_role == \"target\" && ParentPositionInside(info, geometry);\n      auto broker = Broker::Find(m_owner);\n      if (kind == 2) {\n        if (InputReady() && broker) broker->Leave(m_window, m_generation);\n        TraceParentDrop(\"parent-drop-leave\", geometry, inside, false);\n        m_parentInside = false;\n        return Transfer::DataPackageOperation::None;\n      }\n      const auto nonce = NonceFrom(info.Data());\n      allowed = !EscapeWatch::Seen(m_owner, nonce) && inside && InputReady() && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation);\n      if (kind == 3) {\n        TraceParentDrop(\"parent-drop-drop\", geometry, inside, allowed);\n        if (!complete) return Transfer::DataPackageOperation::None;\n        if (!allowed || !complete->Pending()) { complete->Complete(Transfer::DataPackageOperation::None); return Transfer::DataPackageOperation::None; }\n        const auto target = m_window, generation = m_generation;\n        const auto dispatcher = m_surface.DispatcherQueue();\n        std::string request;\n        try {\n          request = broker->Offer(nonce, target, generation, [complete](bool accepted) {\n            complete->Complete(accepted ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None);\n          });\n          if (!request.empty()) complete->BindAbandon([dispatcher, weak = std::weak_ptr<Broker>(broker), nonce, target, generation, request]() noexcept {\n            // This can run on a cancellation/threadpool thread. Never fall back\n            // to inline broker access if its original dispatcher is shutting down.\n            try {\n              dispatcher.TryEnqueue([weak, nonce, target, generation, request]() noexcept {\n                if (auto owner = weak.lock()) owner->CancelOffer(nonce, target, generation, request);\n              });\n            } catch (...) {}\n          });\n        } catch (...) {\n          if (!request.empty()) broker->CancelOffer(nonce, target, generation, request);\n          throw;\n        }\n        // Offer resolves later through Resolve; DropAsync owns the signaled state.\n        return Transfer::DataPackageOperation::None;\n      }\n      if (allowed) broker->Hover(nonce, m_window, m_generation);\n      else if (m_parentInside && broker) broker->Leave(m_window, m_generation);\n      if (kind == 0 || allowed != m_parentInside) TraceParentDrop(kind == 0 ? \"parent-drop-enter\" : \"parent-drop-over\", geometry, inside, allowed);\n      m_parentInside = allowed;\n      return allowed ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None;\n    } catch (...) { TraceParentDrop(\"parent-drop-failed\", geometry, inside, allowed); if (kind == 3 && complete) complete->Abandon(); return Transfer::DataPackageOperation::None; }\n  }\n"
+        },
+        {
+          "id": "invalidate-before-revoke-and-close",
+          "before": "  void ReleaseParentDropObserver() noexcept {\n    try { if (m_parentDropManager) { m_parentDropManager.TargetRequested(m_parentDropToken); m_parentDropManager.Close(); } } catch (...) {}\n    m_parentDropManager = nullptr;\n  }\n",
+          "after": "  void ReleaseParentDropObserver() noexcept {\n    // Clear the lease first: event removal and Close may reenter native code.\n    m_parentDropRegistration.reset();\n    auto manager = std::exchange(m_parentDropManager, nullptr);\n    const auto token = std::exchange(m_parentDropToken, winrt::event_token{});\n    m_parentInside = false;\n    try { if (manager) manager.TargetRequested(token); } catch (...) {}\n    try { if (manager) manager.Close(); } catch (...) {}\n  }\n"
+        },
+        {
+          "id": "cleanup-exact-source-lease",
+          "before": "  void Cleanup() noexcept {\n    if (auto broker = Broker::Find(m_owner)) {\n      if (!m_request.empty()) broker->Cancel(m_request, \"unavailable\");\n      if (m_role == \"target\") broker->CancelTarget(m_window, m_generation);\n    }\n    m_request.clear();\n  }\n",
+          "after": "  void Cleanup() noexcept {\n    ReleaseParentDropObserver();\n    EscapeWatch::End(m_escapeLease); m_escapeLease.reset();\n    auto request = std::exchange(m_request, {});\n    if (auto broker = Broker::Find(m_owner)) {\n      if (!request.empty()) broker->Cancel(request, \"unavailable\");\n      if (m_role == \"target\") broker->CancelTarget(m_window, m_generation);\n    }\n  }\n"
+        },
+        {
+          "id": "unready-registration-release",
+          "before": "    if (!m_props || !InputReady()) { Trace(\"capabilities-deferred\"); return; }",
+          "after": "    if (!m_props || !InputReady()) { ReleaseParentDropObserver(); Trace(\"capabilities-deferred\"); return; }"
+        },
+        {
+          "id": "capability-failure-registration-release",
+          "before": "    } catch (...) { Error(\"Could not apply native drag capabilities\"); }",
+          "after": "    } catch (...) { ReleaseParentDropObserver(); Error(\"Could not apply native drag capabilities\"); }"
+        },
+        {
+          "id": "source-hook-preparation-and-cleanup",
+          "before": "  void Starting(Xaml::DragStartingEventArgs const& args) noexcept {\n    EscapeWatch::Begin();\n    Trace(\"source-starting\");\n    std::shared_ptr<DragDeferral> completion;\n    try {\n      completion = std::make_shared<DragDeferral>(); completion->Set(args.GetDeferral());\n      auto ready = [args, completion, weak = get_weak()](bool allowed, std::string const& nonce) {\n        if (!completion->Claim()) return;\n        try {\n          args.Cancel(!allowed);\n          if (allowed) {\n            // The data package carries a nonce only. Documents never leave the JS owner.\n            args.Data().SetData(PrivateFormat, winrt::box_value(winrt::to_hstring(nonce)));\n            args.Data().Properties().Insert(NonceProperty, winrt::box_value(winrt::to_hstring(nonce)));\n            args.Data().RequestedOperation(Transfer::DataPackageOperation::Move);\n            if (auto self = weak.get()) self->Trace(\"source-data-prepared\");\n          }\n        } catch (...) { try { args.Cancel(true); } catch (...) {} completion->Complete(); throw; }\n        completion->Complete();\n      };\n      auto broker = Broker::Find(m_owner); auto emitter = EventEmitter();\n      if (!InputReady() || !broker || !emitter || m_role != \"source\" || !m_surface.IsEnabled()) { ready(false, \"\"); return; }\n      m_request = broker->PrepareSource(m_window, m_generation, ready);\n      Codegen::TronDragSurfaceEventEmitter::OnDragStarting event; event.scopeToken = m_scope; event.requestId = m_request; emitter->onDragStarting(std::move(event));\n    } catch (...) {\n      try { args.Cancel(true); } catch (...) {} if (completion) completion->Complete();\n      if (!m_disposed) Cleanup(); Error(\"Native drag start was refused or its owner is unavailable\");\n    }\n  }\n",
+          "after": "  void Starting(Xaml::DragStartingEventArgs const& args) noexcept {\n    Trace(\"source-starting\");\n    std::shared_ptr<DragDeferral> completion;\n    std::shared_ptr<EscapeLease> escape;\n    std::shared_ptr<Broker> broker;\n    std::string request;\n    try {\n      completion = std::make_shared<DragDeferral>(); completion->Set(args.GetDeferral());\n      escape = std::make_shared<EscapeLease>();\n      auto ready = [args, completion, escape, weak = get_weak()](bool allowed, std::string const& nonce) {\n        if (!completion->Claim()) return;\n        try {\n          auto self = weak.get();\n          if (allowed && (!self || !self->InputReady() || self->m_role != \"source\" || !self->m_surface.IsEnabled() ||\n              !EscapeWatch::Bind(escape, self->m_owner, self->m_request, nonce)))\n            throw std::runtime_error(\"Native drag source lease is no longer live\");\n          args.Cancel(!allowed);\n          if (allowed) {\n            // The data package carries a nonce only. Documents never leave the JS owner.\n            args.Data().SetData(PrivateFormat, winrt::box_value(winrt::to_hstring(nonce)));\n            args.Data().Properties().Insert(NonceProperty, winrt::box_value(winrt::to_hstring(nonce)));\n            args.Data().RequestedOperation(Transfer::DataPackageOperation::Move);\n            self->Trace(\"source-data-prepared\");\n          } else EscapeWatch::End(escape);\n        } catch (...) {\n          try { args.Cancel(true); } catch (...) {}\n          EscapeWatch::End(escape); completion->Complete(); throw;\n        }\n        completion->Complete();\n      };\n      broker = Broker::Find(m_owner); auto emitter = EventEmitter();\n      if (!InputReady() || !broker || !emitter || m_role != \"source\" || !m_surface.IsEnabled() ||\n          (m_escapeLease && m_escapeLease->hook)) { ready(false, \"\"); return; }\n      request = broker->PrepareSource(m_window, m_generation, ready);\n      if (!EscapeWatch::Begin(escape, m_owner, request)) throw std::runtime_error(\"Native drag Escape observation is unavailable\");\n      m_request = request; m_escapeLease = escape;\n      Codegen::TronDragSurfaceEventEmitter::OnDragStarting event; event.scopeToken = m_scope; event.requestId = request; emitter->onDragStarting(std::move(event));\n    } catch (...) {\n      try { args.Cancel(true); } catch (...) {}\n      EscapeWatch::End(escape);\n      if (broker && !request.empty()) broker->Cancel(request, \"unavailable\");\n      if (escape && m_escapeLease == escape) { m_escapeLease.reset(); m_request.clear(); }\n      if (completion) completion->Complete();\n      Error(\"Native drag start was refused or its owner is unavailable\");\n    }\n  }\n"
+        },
+        {
+          "id": "xaml-hover-exact-escape-binding",
+          "before": "      if (InputReady() && m_role == \"target\" && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation)) {",
+          "after": "      if (InputReady() && m_role == \"target\" && m_surface.IsEnabled() && !EscapeWatch::Seen(m_owner, nonce) && broker && broker->CanTarget(nonce, m_window, m_generation)) {"
+        },
+        {
+          "id": "xaml-drop-exact-escape-binding",
+          "before": "      if (!InputReady() || m_role != \"target\" || !m_surface.IsEnabled() || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }",
+          "after": "      if (!InputReady() || m_role != \"target\" || !m_surface.IsEnabled() || EscapeWatch::Seen(m_owner, nonce) || !broker || !broker->CanTarget(nonce, m_window, m_generation)) { ready(false); return; }"
+        },
+        {
+          "id": "owned-registration-and-escape-members",
+          "before": "  winrt::Microsoft::UI::Input::DragDrop::DragDropManager m_parentDropManager{nullptr}; winrt::event_token m_parentDropToken{}; bool m_parentInside{false};",
+          "after": "  winrt::Microsoft::UI::Input::DragDrop::DragDropManager m_parentDropManager{nullptr}; winrt::event_token m_parentDropToken{}; bool m_parentInside{false};\n  std::shared_ptr<ParentDropRegistration> m_parentDropRegistration;\n  std::shared_ptr<EscapeLease> m_escapeLease;"
+        }
+      ]
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.cpp",
+      "preimage": {
+        "bytes": 11391,
+        "sha256": "3fb7fc1d1293469d73df7b50839076842d891fbc8ce8e79e2a2e70a1c546ef36",
+        "gitBlob": "561bd52c4780fb59ece93f5538c2631f912a70e2"
+      },
+      "candidate": {
+        "bytes": 12927,
+        "sha256": "f2fe48dd1dee1259afb231f55c634d31b686c71ee8034b1087fa0be9b4043844",
+        "gitBlob": "be0d4e845fda172e69519871f3a014d1ae3620ec"
+      },
+      "transforms": [
+        {
+          "id": "exception-safe-offer-and-captured-request",
+          "before": "void NativeDragBroker::Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed) {\n  if (!CanTarget(nonce, id, generation) || m_active->dropReady || m_active->approved) { Trace(\"broker-offer-refused\"); completed(false); return; }\n  m_active->target = id; m_active->targetGeneration = generation; m_active->dropRequest = NewToken(); m_active->dropReady = std::move(completed);\n  ArmDeadline();\n  Trace(\"broker-offer\");\n  Emit(\"offer\");\n}\n",
+          "after": "std::string NativeDragBroker::Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed) {\n  if (!CanTarget(nonce, id, generation) || m_active->dropReady || m_active->approved) { Trace(\"broker-offer-refused\"); completed(false); return {}; }\n  // Build the lease before publishing the callback. Emit may synchronously\n  // resolve or cancel it, so return this captured ID without rereading Active.\n  auto request = NewToken();\n  const auto offerNonce = nonce, offerTarget = id, offerGeneration = generation;\n  auto target = offerTarget; auto targetGeneration = offerGeneration; auto dropRequest = request;\n  m_active->target = std::move(target); m_active->targetGeneration = std::move(targetGeneration);\n  m_active->dropRequest = std::move(dropRequest); m_active->dropReady = std::move(completed);\n  try {\n    ArmDeadline();\n    Trace(\"broker-offer\");\n    Emit(\"offer\");\n  } catch (...) { CancelOffer(offerNonce, offerTarget, offerGeneration, request); throw; }\n  return request;\n}\n"
+        },
+        {
+          "id": "exact-offer-cancellation",
+          "before": "void NativeDragBroker::CancelTarget(",
+          "after": "void NativeDragBroker::CancelOffer(std::string const& nonce, std::string const& id, std::string const& generation, std::string const& request) noexcept {\n  // A queued timeout must not cancel a newer offer for the same drag/target.\n  // Like the rest of this broker, this method runs only on its UI dispatcher.\n  if (m_active && !request.empty() && m_active->nonce == nonce && m_active->target == id &&\n      m_active->targetGeneration == generation && m_active->dropRequest == request)\n    Cancel(\"\", \"unavailable\");\n}\nvoid NativeDragBroker::CancelTarget("
+        },
+        {
+          "id": "timer-utility-header",
+          "before": "#include <stdexcept>\n",
+          "after": "#include <stdexcept>\n#include <utility>\n"
+        },
+        {
+          "id": "timer-tick-current-identity",
+          "before": "  timer.Tick([weak = weak_from_this()](auto const&, auto const&) { if (auto self = weak.lock()) self->Cancel(\"\", \"timeout\"); });",
+          "after": "  timer.Tick([weak = weak_from_this()](auto const& sender, auto const&) {\n    if (auto self = weak.lock(); self && self->m_active && self->m_active->timer == sender)\n      self->Cancel(\"\", \"timeout\");\n  });"
+        },
+        {
+          "id": "clear-preparation-timer-and-clean-source-on-failure",
+          "before": "  auto ready = std::move(m_active->sourceReady); const auto nonce = m_active->nonce;\n  if (m_active->timer) m_active->timer.Stop();\n  try { ready(true, nonce); } catch (...) { Cancel(request); throw; }",
+          "after": "  SourceReady ready;\n  try {\n    const auto nonce = m_active->nonce;\n    ready = std::move(m_active->sourceReady);\n    // Invalidate this deadline before Stop can reenter or an already queued tick runs.\n    auto timer = std::exchange(m_active->timer, nullptr);\n    if (timer) timer.Stop();\n    ready(true, nonce);\n  } catch (...) {\n    // If moved, the source callback's Claim guard releases its deferral/hook\n    // once. Otherwise Cancel still owns it, including a failed nonce copy.\n    try { if (ready) ready(false, \"\"); } catch (...) {}\n    Cancel(request);\n    throw;\n  }"
+        }
+      ]
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.h",
+      "preimage": {
+        "bytes": 2616,
+        "sha256": "87bde02c2e053efac1e5baa4db8a8e5e22801a9b9ab7d84a34603ae576479246",
+        "gitBlob": "2d88c35324b84a65d5e7ef240f2969d7effbf3e7"
+      },
+      "candidate": {
+        "bytes": 2760,
+        "sha256": "addb1b277e0f3d6b4c48077ad03e51903973b4b0978b86f9e6f981bc2f1c59ac",
+        "gitBlob": "0c3ae907418020400b7baf9f96b054ae2a37a944"
+      },
+      "transforms": [
+        {
+          "id": "offer-return-and-exact-cancellation-declaration",
+          "before": "  void Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed);",
+          "after": "  std::string Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed);\n  void CancelOffer(std::string const& nonce, std::string const& id, std::string const& generation, std::string const& request) noexcept;"
+        }
+      ]
+    }
+  ],
+  "applyRule": "For each file, start with the exact UTF-8 preimage. Apply its transforms in listed order; require each before string to occur exactly once and replace that occurrence with after. Verify the candidate identity. Invert in reverse order with the same uniqueness checks and require byte-for-byte preimage equality.",
+  "sourceChecks": {
+    "exactForwardAndInverse": true,
+    "allTransforms": 26,
+    "originalProbeBlockPreserved": true,
+    "probeBlockStart": "// Diagnostic only. Bounded",
+    "probeBlockEndExclusive": "struct DragDataObservation",
+    "originalWaitSeconds": 35,
+    "candidateWaitSeconds": 35,
+    "originalBrokerDeadlineSeconds": 30,
+    "candidateBrokerDeadlineSeconds": 30,
+    "nativeCppCallSitesReviewed": [
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+        "route": "ParentDrop",
+        "change": "Consumes the returned offer ID, binds nonce/target/generation/dropRequest cleanup to the original dispatcher, and abandons any unreturned completion on failure."
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+        "route": "Drop",
+        "change": "Keeps its XAML deferral and actual OS result flow. Ignores the new return value, and applies the same owner/nonce Escape refusal as the parent proxy."
+      }
+    ],
+    "otherNativeCppFilesInspected": [
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/DesktopGeometry.cpp",
+        "gitBlob": "ef8f6bed9add314dbd74fafd46984682890634cd",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/DesktopSession.cpp",
+        "gitBlob": "95553c87dacdb41932b59cab9dae8a6df9badc71",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/InspectorEditSequenceTests.cpp",
+        "gitBlob": "f6fc580cb429a296c4885bf708d1351dffd0c092",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/IslandLayoutTests.cpp",
+        "gitBlob": "a69300ef1a97e4d9f04fb92334d80b6df5a1fb1b",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragTrace.cpp",
+        "gitBlob": "19b9312185fe718a4caffe904e074801075a41e0",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragTraceBudgetTests.cpp",
+        "gitBlob": "033eb4ece175cc12825ecded8d694fc46b309c89",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/OverlayDismissalTests.cpp",
+        "gitBlob": "dc7f53a28778fd69e9341ea09e08b0c45f058858",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/ReactPackageProvider.cpp",
+        "gitBlob": "335b8421d93facd5310b388b741d3e5f055655bd",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDesktop.cpp",
+        "gitBlob": "0d0cd456c19c1f17656e9cbd5a3ea028c04ac862",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronNavigationView.cpp",
+        "gitBlob": "c23cc7f146477a00669921e3f4826e8ff9f39d69",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronOverlayAnchor.cpp",
+        "gitBlob": "4705136e27b9e4e217d67c30c2b6ab40434e6ec4",
+        "offerCallCount": 0
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/pch.cpp",
+        "gitBlob": "50c55f8b3a0b8aabeacffa29ebfa55d70b6b6cd7",
+        "offerCallCount": 0
+      }
+    ],
+    "untouchedBehavior": [
+      "No workflow, UIA, host, launcher, token, integrity, permission, SDK, dependency, or registration API substitution.",
+      "The broker still reports an accepted transfer only from the existing native completion path and app approval; cleanup cannot invent an OS result.",
+      "The parent hit-test geometry is unchanged; general affine transform support and competing parent-manager arbitration are not established by this correction.",
+      "All broker operations remain on the existing UI dispatcher; failed TryEnqueue has no inline fallback.",
+      "Source and target ownership, scope, and generation remain application-owned.",
+      "All existing strict native acceptance and package-receipt gates remain unchanged."
+    ],
+    "timerOwnership": "Tick cancels only while its sender is the current active timer. Start clears the preparation-timer reference before stopping it. Both deadlines remain unchanged.",
+    "sourceStartFailureCleanup": "Start protects the nonce copy, move of sourceReady, timer-reference clearing/Stop, and ready(true) in one try. Its catch attempts the moved ready(false) before exact Cancel(request) and rethrow; if copying failed before the move, Cancel still owns sourceReady. The existing source Claim guard prevents duplicate deferral/hook completion."
+  },
+  "validation": {
+    "actualTextTransformExecution": "Completed in V8 on the exact three input and output strings, including forward uniqueness, complete inverse equality, hashes, and approved-probe equality.",
+    "cppCompilation": "Not executed for these candidates.",
+    "nativeConcurrencyTests": "Not executed for these candidates.",
+    "nativeWinUIRuntime": "Not executed for these candidates.",
+    "stateModelSimulation": "Not used as a substitute for native execution.",
+    "laterNativeCases": [
+      "Event allocation failure must prevent Offer.",
+      "Timeout, cancellation before/after callback registration, a racing approval, and duplicate/late broker callbacks must leave a single terminal result and a valid event lifetime.",
+      "An old queued cleanup must not cancel an offer with a different nonce, target, target generation, or dropRequest.",
+      "An unrelated surface, refused new drag, failed preparation, and failed hook installation must not release another source's Escape lease.",
+      "Disabled/unmounted/unloaded/disposed/rebound surfaces and stale held ParentDropTargets must refuse work; registration is invalidated before revoke or Close.",
+      "A tick from a preparation deadline cleared by Start, or from an older replaced timer, must not cancel the current active operation.",
+      "A nonce copy or timer Stop failure before ready(true) must still invoke sourceReady(false) for exactly-once cancellation, deferral and Escape cleanup while retaining the original error; a true callback that already claimed completion must not run again."
+    ]
+  },
+  "primaryContracts": [
+    "https://learn.microsoft.com/en-us/uwp/cpp-ref-for-winrt/resume-on-signal",
+    "https://learn.microsoft.com/en-us/windows/apps/develop/cpp-winrt/concurrency-2",
+    "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.dispatching.dispatcherqueue.hasthreadaccess?view=windows-app-sdk-1.8",
+    "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.dispatching.dispatcherqueue.tryenqueue?view=windows-app-sdk-1.8",
+    "https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/threading",
+    "https://github.com/microsoft/cppwinrt/blob/297454ee285476f16bf11425bd60daf4593b66ee/strings/base_coroutine_threadpool.h",
+    "https://github.com/microsoft/cppwinrt/blob/297454ee285476f16bf11425bd60daf4593b66ee/strings/base_coroutine_foundation.h",
+    "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.dispatching.dispatcherqueuetimer.tick?view=windows-app-sdk-1.8"
+  ],
+  "limits": [
+    "No causal attribution of a previously observed heap-corruption exit is made.",
+    "No supported-host or elevated-host drag claim is made.",
+    "No tested-package archive or release acceptance is produced.",
+    "Immutable blob creation/readback only; no tree, commit, ref, PR, workflow, dispatch, rerun, or security mutation.",
+    "The timer identity guard is an ownership invariant; no delayed Tick callback was observed in the available native evidence."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "task": "PR63 release-readiness checkout line endings",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceRevision": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+  "path": "tooling/tests/release-readiness.test.mjs",
+  "preimage": {
+    "git": "62ba8325d3695a6e04e2144f70748f72327abf90",
+    "bytes": 13838,
+    "sha256": "f4a6761f62177e5183537ccc74fe9b04765619e83be5b6d26ba35dd61370e96d"
+  },
+  "candidate": {
+    "path": "tooling/tests/release-readiness.test.mjs",
+    "git": "d5f217076df126f8160982d07db05e8cee288889",
+    "bytes": 13916,
+    "sha256": "beab3d0902035b7a3856c309e8f951221cca5bda02190857542d3e9bed5b17f3"
+  },
+  "transforms": [
+    {
+      "before": "test(\"manual candidate runs cannot publish without explicit opt-in, even when every gate passes\", () => {\n  const workflow = readFileSync(new URL(\"../../.github/workflows/release.yml\", import.meta.url), \"utf8\");\n",
+      "after": "test(\"manual candidate runs cannot publish without explicit opt-in, even when every gate passes\", () => {\n  // Git can check out this YAML with CRLF on Windows.\n  const workflow = readFileSync(new URL(\"../../.github/workflows/release.yml\", import.meta.url), \"utf8\").replace(/\\r\\n/g, \"\\n\");\n"
+    }
+  ],
+  "protectedFiles": [
+    {
+      "path": ".github/workflows/release.yml",
+      "git": "bc0460ccb6dd3b0dbcbaa1cd1801e69a2a20bd0c",
+      "bytes": 10816,
+      "sha256": "6d4f1584ad60f74026b978b57177ad8e12fca5ebd83c2e47d7d035cc4374ea99"
+    },
+    {
+      "path": "tooling/release-readiness.mjs",
+      "git": "e8430cb774fea68aee984a0170cd3107e9696ad7"
+    },
+    {
+      "path": ".gitattributes",
+      "git": "2473a84e6c5aee51974755c4b66af6e9648b587e"
+    }
+  ],
+  "scope": "One test-only comment and CRLF-to-LF normalization; existing assertions, eight evaluated publication cases, release workflow, readiness implementation and approval requirements unchanged."
+}

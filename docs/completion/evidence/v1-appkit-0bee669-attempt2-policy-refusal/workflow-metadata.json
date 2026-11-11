@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "Completed attempt 2 only; API-listed earlier core-job timestamps preserved; no fresh source execution inferred.",
+  "observedAtUtc": "2026-11-11 09:15:29 UTC",
+  "attempt": {
+    "id": 42985584907,
+    "runAttempt": 2,
+    "headSha": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+    "headBranch": "codex/v1-appkit-interactions-nov10",
+    "status": "completed",
+    "conclusion": "failure",
+    "reportedCreatedAt": "2026-11-11T08:28:50Z",
+    "reportedRunStartedAt": "2026-11-11T08:28:49Z",
+    "updatedAt": "2026-11-11T08:47:54Z"
+  },
+  "checkout": {
+    "sha": "3f9d3ad376bd6b4514ca691997c56dfc74888bec",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "0bee669639a5d9ffaa7c456343344ccd42283c04"
+    ],
+    "completeLeaves": 2050,
+    "directoryHashesIncludingRoot": 284,
+    "nativeLogLine": 113
+  },
+  "jobs": [
+    {
+      "id": 130411620710,
+      "name": "Spark 0.0.2 ARM64 AppKit compile and native acceptance",
+      "runId": 42985584907,
+      "runAttempt": 2,
+      "headSha": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+      "status": "completed",
+      "conclusion": "failure",
+      "startedAt": "2026-11-11T08:28:53Z",
+      "completedAt": "2026-11-11T08:47:54Z",
+      "runnerLabels": [
+        "macos-15"
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:54Z",
+          "completedAt": "2026-11-11T08:28:56Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:56Z",
+          "completedAt": "2026-11-11T08:28:59Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:59Z",
+          "completedAt": "2026-11-11T08:29:05Z"
+        },
+        {
+          "number": 4,
+          "name": "Verify native ARM64 host and Apple build tools",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:05Z",
+          "completedAt": "2026-11-11T08:29:15Z"
+        },
+        {
+          "number": 5,
+          "name": "Run actions/download-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:15Z",
+          "completedAt": "2026-11-11T08:29:16Z"
+        },
+        {
+          "number": 6,
+          "name": "Build and install archive consumer outside the monorepo",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:16Z",
+          "completedAt": "2026-11-11T08:31:32Z"
+        },
+        {
+          "number": 7,
+          "name": "Verify the installed AppKit public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:31:32Z",
+          "completedAt": "2026-11-11T08:31:34Z"
+        },
+        {
+          "number": 8,
+          "name": "Verify the private Spark transport with native Foundation and socketpair",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:31:34Z",
+          "completedAt": "2026-11-11T08:31:38Z"
+        },
+        {
+          "number": 9,
+          "name": "Compile a standalone native AppKit reference",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:31:38Z",
+          "completedAt": "2026-11-11T08:47:19Z"
+        },
+        {
+          "number": 10,
+          "name": "Exercise actual native controls and window lifetimes",
+          "status": "completed",
+          "conclusion": "failure",
+          "startedAt": "2026-11-11T08:47:19Z",
+          "completedAt": "2026-11-11T08:47:34Z"
+        },
+        {
+          "number": 11,
+          "name": "Retain build and native evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:47:34Z",
+          "completedAt": "2026-11-11T08:47:36Z"
+        },
+        {
+          "number": 12,
+          "name": "Retain the exact natively tested distribution",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T08:47:36Z",
+          "completedAt": "2026-11-11T08:47:36Z"
+        },
+        {
+          "number": 23,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T08:47:36Z",
+          "completedAt": "2026-11-11T08:47:36Z"
+        },
+        {
+          "number": 24,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:47:36Z",
+          "completedAt": "2026-11-11T08:47:37Z"
+        },
+        {
+          "number": 25,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:47:37Z",
+          "completedAt": "2026-11-11T08:47:39Z"
+        }
+      ]
+    },
+    {
+      "id": 130411622915,
+      "name": "Canonical core release archive",
+      "runId": 42985584907,
+      "runAttempt": 2,
+      "headSha": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-11-11T08:15:27Z",
+      "completedAt": "2026-11-11T08:15:50Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:27Z",
+          "completedAt": "2026-11-11T08:15:28Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:28Z",
+          "completedAt": "2026-11-11T08:15:29Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:29Z",
+          "completedAt": "2026-11-11T08:15:33Z"
+        },
+        {
+          "number": 4,
+          "name": "Install the pinned workspace compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:33Z",
+          "completedAt": "2026-11-11T08:15:42Z"
+        },
+        {
+          "number": 5,
+          "name": "Build and pack core with release provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:42Z",
+          "completedAt": "2026-11-11T08:15:46Z"
+        },
+        {
+          "number": 6,
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:46Z",
+          "completedAt": "2026-11-11T08:15:47Z"
+        },
+        {
+          "number": 11,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:47Z",
+          "completedAt": "2026-11-11T08:15:48Z"
+        },
+        {
+          "number": 12,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:48Z",
+          "completedAt": "2026-11-11T08:15:48Z"
+        },
+        {
+          "number": 13,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:15:48Z",
+          "completedAt": "2026-11-11T08:15:48Z"
+        }
+      ]
+    }
+  ],
+  "artifact": {
+    "id": 13840489142,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 1662239,
+    "digest": "sha256:2b38396c9d74628337aa37ec8ca991e80d1b4148cdc83d90344bf7be74811369",
+    "createdAt": "2026-11-11T08:47:36Z",
+    "updatedAt": "2026-11-11T08:47:36Z",
+    "expiresAt": "2026-11-25T08:47:35Z",
+    "expired": false,
+    "workflowRun": {
+      "id": 42985584907,
+      "repository_id": 1446064781,
+      "head_repository_id": 1446064781,
+      "head_branch": "codex/v1-appkit-interactions-nov10",
+      "head_sha": "0bee669639a5d9ffaa7c456343344ccd42283c04"
+    },
+    "producerFileCount": 53,
+    "zipIndependentlyHashed": false,
+    "membersExtracted": false,
+    "pixelsInspected": false
+  },
+  "originalNativeLog": {
+    "gitBlob": "1f97c28e8794c9026d4f07d7bda59ea73aee149d",
+    "bytes": 80372,
+    "sha256": "636d5ccfabc54ab9df44ffcbee363cda6db72cefa9bcbc1cbeed8db6723ad36e",
+    "newlineCount": 610,
+    "crlfCount": 0,
+    "leadingBom": true
+  },
+  "coreSourceLog": {
+    "listedJobId": 130411622915,
+    "gitBlob": "142302be32d13db6f5b8356054474fae554531c7",
+    "bytes": 19614,
+    "sha256": "18930c31d6bc6a1c77f08c2af02efb70f6b19019ddc3a6ee9a6cc9bf8ac28442",
+    "identicalToAttemptOne": true,
+    "retainedPath": "../v1-appkit-0bee669-secondary-policy-refusal/source-job.log",
+    "independentNewExecutionEstablished": false
+  },
+  "failure": {
+    "nativeLogLine": 537,
+    "error": "tron.window: The native test host refused interactive activation policy",
+    "verifierLine": 1212,
+    "call": "await show('document-1')",
+    "exitCode": 1,
+    "exitLogLine": 544,
+    "exitTimestamp": "2026-11-11T08:47:34.2043000Z",
+    "fullNativeAcceptance": false
+  },
+  "endpoints": [
+    "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/2",
+    "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/2/jobs?per_page=100",
+    "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/artifacts"
+  ]
+}

@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "title": "AppKit e086: second document activation timed out at the strict focus wait",
+  "recordedAt": "2026-11-11 09:46:16 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "candidate": {
+    "head": "e08679769e471aba5403cd864c8a2fa2310b9086",
+    "tree": "b4f409fbf1af7a5de5c4d2eab0c73bd55806d6de",
+    "parents": [
+      "057b3aa7a28c12594f26dd4bc9baf9bc636610e8"
+    ]
+  },
+  "execution": {
+    "run": 42992156557,
+    "attempt": 1,
+    "checkout": "001763090bc16a9e72143022bf04543c5acd39b6",
+    "tree": "b4f409fbf1af7a5de5c4d2eab0c73bd55806d6de",
+    "parents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "e08679769e471aba5403cd864c8a2fa2310b9086"
+    ],
+    "runMetadataHead": "e08679769e471aba5403cd864c8a2fa2310b9086",
+    "nativeJob": 130427608864,
+    "coreJob": 130427396629,
+    "coreConclusion": "success",
+    "nativeConclusion": "failure",
+    "completeNativeAcceptance": false
+  },
+  "source": {
+    "verifier": {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+      "bytes": 114435,
+      "sha256": "71714864b1f10d975b640b6bfa09b203509f419d1441469700e32b9074be98ae"
+    },
+    "shippingPopover": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+    "fullTreeVerification": {
+      "leaves": 2050,
+      "directoryHashes": 284,
+      "complete": true
+    }
+  },
+  "failure": {
+    "message": "Timed out waiting for visible, key and active native owner window (document-1)",
+    "gate": "second show(document-1): visible && key && applicationActive && frontmostProcessId === child.pid",
+    "verifierLine": 1319,
+    "nativeLog": {
+      "errorLine": 536,
+      "stackLine": 538,
+      "exitLine": 542,
+      "exitCode": 1
+    },
+    "whichPredicateWasFalse": "unknown; late returned state values not present in retained projection"
+  },
+  "build": {
+    "reported": {
+      "schemaVersion": 1,
+      "sourceRevision": "001763090bc16a9e72143022bf04543c5acd39b6",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "outcome": "success",
+      "transcript": {
+        "filename": "build-console.log",
+        "bytes": 12329229,
+        "sha256": "e6351daee41430266ed3502fe5989750f1e36c57dba6aebb422c072e715e725c",
+        "complete": true,
+        "normalized": false
+      }
+    },
+    "compilerTranscriptIndependentlyInspected": false
+  },
+  "extractions": {
+    "APPKIT_BUILD_RESULT": {
+      "beginLine": 509,
+      "endLine": 511,
+      "jsonLine": 510,
+      "interleavedNonJsonLines": 0,
+      "method": "Remove exactly the timestamp prefix from the one JSON record; preserve its original newline. Retain complete selected envelope bytes including interleaved stderr.",
+      "originalJob": 130427608864
+    },
+    "TOOLTIP_EVIDENCE": {
+      "beginLine": 527,
+      "endLine": 529,
+      "jsonLine": 528,
+      "interleavedNonJsonLines": 0,
+      "method": "Remove exactly the timestamp prefix from the one JSON record; preserve its original newline. Retain complete selected envelope bytes including interleaved stderr.",
+      "originalJob": 130427608864
+    },
+    "STARTUP_EVIDENCE": {
+      "beginLine": 530,
+      "endLine": 541,
+      "jsonLine": 531,
+      "interleavedNonJsonLines": 9,
+      "method": "Remove exactly the timestamp prefix from the one JSON record; preserve its original newline. Retain complete selected envelope bytes including interleaved stderr.",
+      "originalJob": 130427608864
+    }
+  },
+  "projectionLimits": {
+    "inputs": {
+      "appLog": {
+        "filename": "app.log",
+        "status": "snapshot-retained",
+        "readByteLimit": 1048576,
+        "readBytes": 663918,
+        "sourceLive": true,
+        "sourceBytesBefore": 663918,
+        "sourceBytesAfter": 663918,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": false,
+        "laterAppendsPossible": true,
+        "unreadBytesObserved": 0,
+        "snapshot": {
+          "filename": "startup-app-log-snapshot.log",
+          "kind": "read-time-prefix-from-live-app-log",
+          "offset": 0,
+          "bytes": 663918,
+          "sha256": "91b8df5c67b52be166d58c864477a7cf898be03de8dbfb849f4a7626a8ecbc52",
+          "retained": true,
+          "eventualAppLogHash": false
+        }
+      },
+      "commands": {
+        "filename": "commands.jsonl",
+        "status": "incomplete-or-changing-read",
+        "readByteLimit": 262145,
+        "readBytes": 262145,
+        "sourceLive": false,
+        "sourceBytesBefore": 1075548,
+        "sourceBytesAfter": 1075548,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": false,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": true,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 813403,
+        "snapshot": null
+      },
+      "processFailure": {
+        "filename": "native-process-failure.json",
+        "status": "complete-stable-read",
+        "readByteLimit": 262145,
+        "readBytes": 1320,
+        "sourceLive": false,
+        "sourceBytesBefore": 1320,
+        "sourceBytesAfter": 1320,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": true,
+        "originalSha256": "4ae23d43cb69239182283a6780eb634087920e1705956df45170664dcdcd2e37",
+        "truncated": false,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 0,
+        "snapshot": null,
+        "jsonStatus": "parsed"
+      }
+    },
+    "activation": {
+      "matched": 40,
+      "selected": 32,
+      "omitted": 8
+    },
+    "commands": {
+      "matched": 469,
+      "selected": 32,
+      "omitted": 437,
+      "partialTrailingLine": true
+    },
+    "completeCommandFileInspected": false,
+    "appLogSnapshotIndependentlyInspected": false,
+    "sampleStacksInspected": false
+  },
+  "artifacts": [
+    {
+      "id": 13842788261,
+      "name": "macos-appkit-native-evidence",
+      "bytes": 1716578,
+      "producerOrApiSha256": "sha256:b5d4ea688695f4629945d3122b766fd0547573521c7e000129999d1651e503dd",
+      "expired": false,
+      "originalZipBytesInspected": false,
+      "downloadUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13842788261/zip"
+    },
+    {
+      "id": 13840914825,
+      "name": "macos-appkit-shared-packages",
+      "bytes": 51323,
+      "producerOrApiSha256": "sha256:5161f57cb42794d89d25cfd0e2264d2b8fcf89764f3954ea67eedf825baf6611",
+      "expired": false,
+      "originalZipBytesInspected": false,
+      "downloadUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13840914825/zip"
+    }
+  ],
+  "files": {
+    "native-job.log": {
+      "gitBlob": "947b5cd3793248f08d62cd89f4c49f8f00fbaf14",
+      "bytes": 93759,
+      "sha256": "3af2be4c28cdd40df7235d280d85b904de46e800825141e4482ba34617c4d524"
+    },
+    "core-job.log": {
+      "gitBlob": "e204e59749c038d12e2ebbe5369e108974f0f3a2",
+      "bytes": 19522,
+      "sha256": "744803b65d143c4243e3f5f83c2c632274536136b170e63d527dbe591f6f772b"
+    },
+    "build-summary.json": {
+      "gitBlob": "ea48c1b07846a7997ee57a325fce3d304eca284a",
+      "bytes": 319,
+      "sha256": "5d6dc2a7b0c641b6788c0774fdaf9f4b33fa995f7daacd965d8368c66992c97f"
+    },
+    "tooltip-summary.json": {
+      "gitBlob": "68fc5b333ca47e95bf803806313ef06429af69ed",
+      "bytes": 9153,
+      "sha256": "544f11bc80c50eb2b38d4700873ad00d56b097787ead59c4d3b0ad909beab82d"
+    },
+    "tooltip-envelope.log": {
+      "gitBlob": "d1118d8bfbd5676acbb811a7e1028da03707a68b",
+      "bytes": 9300,
+      "sha256": "7f4bcd04c4561afc5eb994e683b52ea10e0905b0a7ec3d6e9d84ea43a1b56441"
+    },
+    "startup-summary.json": {
+      "gitBlob": "e8264247da297e83c009325658759fa19e309a9d",
+      "bytes": 31142,
+      "sha256": "2eab33ed4d4ca5fa9e4cdd2d473af601f2e75846b10df56b16ba27c685aa38d4"
+    },
+    "startup-envelope.log": {
+      "gitBlob": "142a259c03f9ce32d4e18e0ab55c0e149cb18766",
+      "bytes": 31990,
+      "sha256": "5178aea6e020ccb43fde9c21af6c11cfbf6f62460b8861e7a444da9e91969b27"
+    },
+    "metadata.json": {
+      "gitBlob": "768e5c74520290761313e27edd419a2ac101c1fb",
+      "bytes": 28395,
+      "sha256": "7bdd241d395f346f2476821592d0f617c2283b5dff4bb822da937f569f7848e6"
+    }
+  },
+  "scope": {
+    "sourceImplementationCount": 341,
+    "local": 332,
+    "pinnedExternal": 9,
+    "requestedTwelveImplemented": true,
+    "sourcePending": 0,
+    "fullEightPlatformAcceptance": 0,
+    "physicalSpeechPerformanceAccepted": false,
+    "releaseOrMergeAuthorizedByThisReceipt": false,
+    "ownerOriginalManifestApproval": false
+  },
+  "controlFlow": {
+    "activationOperation": 4,
+    "retainedOperationRecords": [
+      {
+        "line": 1180,
+        "phase": "policy-entered",
+        "atEpochSeconds": 1794389058.0268888,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        }
+      },
+      {
+        "line": 1181,
+        "phase": "policy-returned",
+        "atEpochSeconds": 1794389058.027295,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": true,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        }
+      },
+      {
+        "line": 1182,
+        "phase": "workspace-request-entered",
+        "atEpochSeconds": 1794389058.0274,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": null,
+          "applicationActive": null,
+          "visible": null,
+          "key": null,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      },
+      {
+        "line": 1183,
+        "phase": "workspace-request-returned",
+        "atEpochSeconds": 1794389058.027482,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": null,
+          "applicationActive": null,
+          "visible": null,
+          "key": null,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      },
+      {
+        "line": 1184,
+        "phase": "workspace-completion-received",
+        "atEpochSeconds": 1794389058.045713,
+        "mainThread": false,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": true,
+          "hasError": false,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": null,
+          "applicationActive": null,
+          "visible": null,
+          "key": null,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      },
+      {
+        "line": 1185,
+        "phase": "workspace-main-continuation",
+        "atEpochSeconds": 1794389058.045906,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        },
+        "timing": {
+          "clock": "CACurrentMediaTime",
+          "clockExcludesSystemSleep": true,
+          "intervalsAreNotQueueResidence": true,
+          "intervalsDoNotEstablishCause": true,
+          "completionTraceElapsedSeconds": 0.00013091666664877266,
+          "submissionStartToMainEntrySeconds": 0.00006354166657729365
+        }
+      },
+      {
+        "line": 1186,
+        "phase": "identity-checked",
+        "atEpochSeconds": 1794389058.046301,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": true,
+          "sameBundle": true,
+          "ok": null
+        },
+        "state": {
+          "policy": null,
+          "applicationActive": null,
+          "visible": null,
+          "key": null,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      },
+      {
+        "line": 1187,
+        "phase": "order-front-entered",
+        "atEpochSeconds": 1794389058.046324,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        }
+      },
+      {
+        "line": 1188,
+        "phase": "order-front-returned",
+        "atEpochSeconds": 1794389058.054356,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": null,
+          "applicationActive": null,
+          "visible": null,
+          "key": null,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      },
+      {
+        "line": 1189,
+        "phase": "reply-prepared",
+        "atEpochSeconds": 1794389058.054665,
+        "mainThread": true,
+        "operation": 4,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": true
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": true,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      }
+    ],
+    "returnedBeforeFailure": [
+      "first Escape didClose plus later owned main-turn completion witness",
+      "unchanged exact opener first-responder assertion",
+      "native drag-protocol cases",
+      "layout restoration",
+      "second main popover presentation and close-witness arming"
+    ],
+    "notReached": [
+      "explicit close at verifier line1320",
+      "second close-completion wait at line1321",
+      "document popover presentation/minimize gate"
+    ],
+    "separatePollingAssertions": [
+      "processId === child.pid",
+      "activationPolicy === 0",
+      "canBecomeKey === true"
+    ],
+    "finalPollingConjunction": [
+      "visible",
+      "key",
+      "applicationActive",
+      "frontmostProcessId === child.pid"
+    ],
+    "basis": "Exact executed verifier control flow and bounded producer projection; no demonstrated focus-stealing cause or second witness result"
+  }
+}

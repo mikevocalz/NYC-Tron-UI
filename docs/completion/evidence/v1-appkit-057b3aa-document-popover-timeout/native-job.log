@@ -1,0 +1,608 @@
+﻿2026-11-11T08:50:12.1710290Z Current runner version: '2.338.2'
+2026-11-11T08:50:12.1726690Z ##[group]Runner Image Provisioner
+2026-11-11T08:50:12.1727370Z Hosted Compute Agent
+2026-11-11T08:50:12.1727860Z Version: 20261103.629
+2026-11-11T08:50:12.1728300Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-11T08:50:12.1728870Z Build Date: 2026-11-03T17:26:59Z
+2026-11-11T08:50:12.1729340Z Worker ID: {a897690b-5f29-4610-88c0-1857a7114561}
+2026-11-11T08:50:12.1729810Z Region: westus
+2026-11-11T08:50:12.1730270Z Cloud: MacCloud
+2026-11-11T08:50:12.1730700Z ##[endgroup]
+2026-11-11T08:50:12.1731660Z ##[group]Operating System
+2026-11-11T08:50:12.1732080Z macOS
+2026-11-11T08:50:12.1732470Z 15.8.2
+2026-11-11T08:50:12.1732900Z 24H232
+2026-11-11T08:50:12.1733240Z ##[endgroup]
+2026-11-11T08:50:12.1733700Z ##[group]Runner Image
+2026-11-11T08:50:12.1734320Z Image: macos-15-arm64
+2026-11-11T08:50:12.1734880Z Version: 20261104.0514.1
+2026-11-11T08:50:12.1736040Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20261104.0514/images/macos/macos-15-arm64-Readme.md
+2026-11-11T08:50:12.1737390Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20261104.0514
+2026-11-11T08:50:12.1738170Z ##[endgroup]
+2026-11-11T08:50:12.1739030Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T08:50:12.1740320Z Contents: read
+2026-11-11T08:50:12.1740760Z Metadata: read
+2026-11-11T08:50:12.1741190Z ##[endgroup]
+2026-11-11T08:50:12.1742650Z Secret source: Actions
+2026-11-11T08:50:12.1743430Z Cache mode: write
+2026-11-11T08:50:12.1743920Z Prepare workflow directory
+2026-11-11T08:50:12.2007480Z Prepare all required actions
+2026-11-11T08:50:12.2046180Z Getting action download info
+2026-11-11T08:50:12.6585700Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T08:50:13.0947940Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T08:50:13.4660710Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-11-11T08:50:13.9338930Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-11T08:50:14.1261090Z Complete job name: Spark 0.0.2 ARM64 AppKit compile and native acceptance
+2026-11-11T08:50:14.1871040Z ##[group]Run actions/checkout@v4
+2026-11-11T08:50:14.1871670Z with:
+2026-11-11T08:50:14.1872060Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T08:50:14.1875220Z   token: ***
+2026-11-11T08:50:14.1875570Z   ssh-strict: true
+2026-11-11T08:50:14.1876000Z   ssh-user: git
+2026-11-11T08:50:14.1876410Z   persist-credentials: true
+2026-11-11T08:50:14.1876960Z   clean: true
+2026-11-11T08:50:14.1877460Z   sparse-checkout-cone-mode: true
+2026-11-11T08:50:14.1877900Z   fetch-depth: 1
+2026-11-11T08:50:14.1899450Z   fetch-tags: false
+2026-11-11T08:50:14.1899930Z   show-progress: true
+2026-11-11T08:50:14.1900360Z   lfs: false
+2026-11-11T08:50:14.1900720Z   submodules: false
+2026-11-11T08:50:14.1901100Z   set-safe-directory: true
+2026-11-11T08:50:14.1901560Z   allow-unsafe-pr-checkout: false
+2026-11-11T08:50:14.1902460Z env:
+2026-11-11T08:50:14.1902790Z   CI: 1
+2026-11-11T08:50:14.1903120Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:50:14.1903490Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:50:14.1904020Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:50:14.1904560Z ##[endgroup]
+2026-11-11T08:50:14.5185350Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T08:50:14.5186890Z ##[group]Getting Git version info
+2026-11-11T08:50:14.5187490Z Working directory is '/Users/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T08:50:14.5188400Z [command]/opt/homebrew/bin/git version
+2026-11-11T08:50:14.5420580Z git version 2.56.0
+2026-11-11T08:50:14.5432520Z ##[endgroup]
+2026-11-11T08:50:14.5441890Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/73393315-d88c-490d-8b80-a86ece823185/.gitconfig'
+2026-11-11T08:50:14.5449910Z Temporarily overriding HOME='/Users/runner/work/_temp/73393315-d88c-490d-8b80-a86ece823185' before making global git config changes
+2026-11-11T08:50:14.5451560Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T08:50:14.5452840Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T08:50:14.5559450Z Deleting the contents of '/Users/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T08:50:14.5562300Z ##[group]Initializing the repository
+2026-11-11T08:50:14.5565570Z [command]/opt/homebrew/bin/git init /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T08:50:14.5763030Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T08:50:14.5763970Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T08:50:14.5764840Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T08:50:14.5765560Z hint: call:
+2026-11-11T08:50:14.5765930Z hint:
+2026-11-11T08:50:14.5766380Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T08:50:14.5766930Z hint:
+2026-11-11T08:50:14.5767820Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T08:50:14.5768760Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T08:50:14.5769530Z hint:
+2026-11-11T08:50:14.5769900Z hint: 	git branch -m <name>
+2026-11-11T08:50:14.5770300Z hint:
+2026-11-11T08:50:14.5770820Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T08:50:14.5773260Z Initialized empty Git repository in /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T08:50:14.5780420Z [command]/opt/homebrew/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T08:50:14.5860820Z ##[endgroup]
+2026-11-11T08:50:14.5861540Z ##[group]Disabling automatic garbage collection
+2026-11-11T08:50:14.5862150Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-11T08:50:14.5929610Z ##[endgroup]
+2026-11-11T08:50:14.5930840Z ##[group]Setting up auth
+2026-11-11T08:50:14.5941830Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T08:50:14.6007180Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T08:50:14.6903520Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T08:50:14.6960570Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T08:50:14.7680570Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T08:50:14.7734170Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T08:50:14.8395300Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T08:50:14.8452840Z ##[endgroup]
+2026-11-11T08:50:14.8453690Z ##[group]Fetching the repository
+2026-11-11T08:50:14.8458400Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +69eb1c504c105b57844181c1e27c1a430fc888cd:refs/remotes/pull/59/merge
+2026-11-11T08:50:15.5298460Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T08:50:15.5299710Z  * [new ref]         69eb1c504c105b57844181c1e27c1a430fc888cd -> pull/59/merge
+2026-11-11T08:50:15.5302020Z ##[endgroup]
+2026-11-11T08:50:15.5302840Z ##[group]Determining the checkout info
+2026-11-11T08:50:15.5303750Z ##[endgroup]
+2026-11-11T08:50:15.5304480Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-11T08:50:15.5371090Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T08:50:15.5428140Z ##[group]Checking out the ref
+2026-11-11T08:50:15.5430170Z [command]/opt/homebrew/bin/git checkout --progress --force refs/remotes/pull/59/merge
+2026-11-11T08:50:15.7588230Z HEAD is now at 69eb1c5 Merge 057b3aa7a28c12594f26dd4bc9baf9bc636610e8 into ac5d69585a52a6e945dc996ea08030e190574699
+2026-11-11T08:50:15.7600230Z ##[endgroup]
+2026-11-11T08:50:15.7684360Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-11T08:50:15.7745900Z 69eb1c504c105b57844181c1e27c1a430fc888cd
+2026-11-11T08:50:15.8079900Z ##[group]Run actions/setup-node@v4
+2026-11-11T08:50:15.8080730Z with:
+2026-11-11T08:50:15.8081350Z   node-version: 24.19.0
+2026-11-11T08:50:15.8082050Z   always-auth: false
+2026-11-11T08:50:15.8082740Z   check-latest: false
+2026-11-11T08:50:15.8089840Z   token: ***
+2026-11-11T08:50:15.8090460Z env:
+2026-11-11T08:50:15.8091020Z   CI: 1
+2026-11-11T08:50:15.8091610Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:50:15.8092300Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:50:15.8093210Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:50:15.8094240Z ##[endgroup]
+2026-11-11T08:50:15.9361720Z Attempting to download 24.19.0...
+2026-11-11T08:50:15.9513570Z (node:1086) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T08:50:15.9516520Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T08:50:16.6165390Z Acquiring 24.19.0 - arm64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-darwin-arm64.tar.gz
+2026-11-11T08:50:17.3086770Z Extracting ...
+2026-11-11T08:50:17.3321290Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/5c8bb793-b031-434a-a87b-17b835cee219 -f /Users/runner/work/_temp/d78098ef-cede-413a-bb8a-2d321248e157
+2026-11-11T08:50:18.5017910Z Adding to the cache ...
+2026-11-11T08:50:20.5550850Z ##[group]Environment details
+2026-11-11T08:50:20.9210830Z node: v24.19.0
+2026-11-11T08:50:20.9211260Z npm: 11.17.0
+2026-11-11T08:50:20.9211560Z yarn: 1.22.22
+2026-11-11T08:50:20.9212600Z ##[endgroup]
+2026-11-11T08:50:20.9345170Z ##[group]Run set -euo pipefail
+2026-11-11T08:50:20.9345560Z [36;1mset -euo pipefail[0m
+2026-11-11T08:50:20.9345790Z [36;1mtest "$(uname -m)" = arm64[0m
+2026-11-11T08:50:20.9346320Z [36;1mnode -e 'if(process.platform!=="darwin"||process.arch!=="arm64")throw Error("Expected native macOS ARM64 Node")'[0m
+2026-11-11T08:50:20.9346830Z [36;1mtest -d "$DEVELOPER_DIR"[0m
+2026-11-11T08:50:20.9347100Z [36;1mmkdir -p "$RUNNER_TEMP/appkit-toolchain"[0m
+2026-11-11T08:50:20.9347520Z [36;1mxcodebuild -version > "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T08:50:20.9347990Z [36;1mxcrun swift --version >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T08:50:20.9348540Z [36;1mxcrun --sdk macosx --show-sdk-path >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T08:50:20.9349000Z [36;1mcat "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T08:50:20.9349960Z [36;1mnode -e 'const fs=require("node:fs"); const text=fs.readFileSync(process.env.RUNNER_TEMP+"/appkit-toolchain/versions.txt","utf8"); if(!/^Xcode 26\.2\n/m.test(text))throw Error("Expected selected Xcode 26.2")'[0m
+2026-11-11T08:50:20.9350820Z [36;1mcat > "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" <<'SWIFT'[0m
+2026-11-11T08:50:20.9351290Z [36;1mprotocol AppKitHostProbe { func update() }[0m
+2026-11-11T08:50:20.9351670Z [36;1m@MainActor final class AppKitHost: @MainActor AppKitHostProbe {[0m
+2026-11-11T08:50:20.9352060Z [36;1m  func update() {}[0m
+2026-11-11T08:50:20.9352290Z [36;1m}[0m
+2026-11-11T08:50:20.9352450Z [36;1mSWIFT[0m
+2026-11-11T08:50:20.9353090Z [36;1mxcrun swiftc -typecheck -swift-version 6 "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" 2>&1 | tee "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.log"[0m
+2026-11-11T08:50:20.9353710Z [36;1mpod --version[0m
+2026-11-11T08:50:20.9409600Z shell: /bin/bash -e {0}
+2026-11-11T08:50:20.9409960Z env:
+2026-11-11T08:50:20.9415740Z   CI: 1
+2026-11-11T08:50:20.9415950Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:50:20.9416210Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:50:20.9416540Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:50:20.9417070Z ##[endgroup]
+2026-11-11T08:50:25.5411730Z Xcode 26.2
+2026-11-11T08:50:25.5412280Z Build version 17C52
+2026-11-11T08:50:25.5412830Z Apple Swift version 6.2.3 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+2026-11-11T08:50:25.5413340Z Target: arm64-apple-macosx15.0
+2026-11-11T08:50:25.5414000Z /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk
+2026-11-11T08:50:29.1218960Z 1.17.0
+2026-11-11T08:50:29.1248340Z swift-driver version: 1.127.14.1 
+2026-11-11T08:50:29.1344100Z ##[group]Run actions/download-artifact@v4
+2026-11-11T08:50:29.1344580Z with:
+2026-11-11T08:50:29.1344860Z   name: macos-appkit-shared-packages
+2026-11-11T08:50:29.1345320Z   path: /Users/runner/work/_temp/appkit-shared
+2026-11-11T08:50:29.1345800Z   merge-multiple: false
+2026-11-11T08:50:29.1345980Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T08:50:29.1346320Z   run-id: 42990107157
+2026-11-11T08:50:29.1346470Z env:
+2026-11-11T08:50:29.1346670Z   CI: 1
+2026-11-11T08:50:29.1346800Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:50:29.1347050Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:50:29.1347290Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:50:29.1347620Z ##[endgroup]
+2026-11-11T08:50:29.3336500Z Downloading single artifact
+2026-11-11T08:50:29.3448300Z (node:1205) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T08:50:29.3451910Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T08:50:29.6041390Z Preparing to download the following artifacts:
+2026-11-11T08:50:29.6042310Z - macos-appkit-shared-packages (ID: 13841236971, Size: 51323, Expected Digest: sha256:da51996e175fc175451bc96a779cf6660e61dfa57084cccb806d63c94cbc1fda)
+2026-11-11T08:50:29.8320960Z Redirecting to blob download url: https://productionresultssa4.blob.core.windows.net/actions-results/02e8dec0-df89-8e29-af44-a1fa99d165cb/workflow-job-run-560a8d03-5f51-5fe3-ab95-14687bb2de17/artifacts/f955b4ef80b1133a3a670032e9aa603b16bb296bd37718508b89f68db22454fa.zip
+2026-11-11T08:50:29.8322230Z Starting download of artifact to: /Users/runner/work/_temp/appkit-shared
+2026-11-11T08:50:30.1314970Z (node:1205) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-11T08:50:30.1931790Z SHA256 digest of downloaded artifact is da51996e175fc175451bc96a779cf6660e61dfa57084cccb806d63c94cbc1fda
+2026-11-11T08:50:30.1934260Z Artifact download completed successfully.
+2026-11-11T08:50:30.1935790Z Total of 1 artifact(s) downloaded
+2026-11-11T08:50:30.1944410Z Download artifact has finished successfully
+2026-11-11T08:50:30.2041260Z ##[group]Run node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
+2026-11-11T08:50:30.2042900Z [36;1mnode tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"[0m
+2026-11-11T08:50:30.2086060Z shell: /bin/bash -e {0}
+2026-11-11T08:50:30.2165970Z env:
+2026-11-11T08:50:30.2166260Z   CI: 1
+2026-11-11T08:50:30.2166450Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:50:30.2166680Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:50:30.2167000Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:50:30.2167440Z ##[endgroup]
+2026-11-11T08:50:57.8801650Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-11T08:50:59.4847760Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-11-11T08:51:01.9625930Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:02.1615560Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:02.2373540Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:02.4059260Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:02.4065310Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:02.5216730Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:02.5345730Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:03.0782390Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:03.2194180Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:03.3734660Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T08:51:03.4548770Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T08:51:04.8933940Z npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+2026-11-11T08:51:06.4819750Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:06.4988070Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:21.6356270Z 
+2026-11-11T08:51:21.6363040Z > nyc-tron-appkit-reference@1.0.0 postinstall
+2026-11-11T08:51:21.6363890Z > node node_modules/@legendapp/spark/init-template.cjs
+2026-11-11T08:51:21.6368750Z 
+2026-11-11T08:51:22.3593610Z 
+2026-11-11T08:51:22.3594620Z added 1073 packages in 52s
+2026-11-11T08:51:23.9384070Z Prepared hash-verified native inputs from the Spark 0.0.2 release manifest.
+2026-11-11T08:51:26.3133180Z 
+2026-11-11T08:51:26.3136330Z > nyc-tron-appkit-reference@1.0.0 postinstall
+2026-11-11T08:51:26.3138030Z > node node_modules/@legendapp/spark/init-template.cjs
+2026-11-11T08:51:26.3139530Z 
+2026-11-11T08:51:27.0064210Z 
+2026-11-11T08:51:27.0065200Z added 4 packages, and changed 2 packages in 3s
+2026-11-11T08:51:29.0750920Z ✔ NSScreen-to-core mapping is reversible across negative origins and mixed scale (1.412292ms)
+2026-11-11T08:51:29.0755920Z ✔ native open stays hidden until observation and the app close guard are installed (1.356666ms)
+2026-11-11T08:51:29.0757630Z ✔ native close veto preserves registry/document ownership and an allowed close removes observers (0.618917ms)
+2026-11-11T08:51:29.0758640Z ✔ failed native resize does not commit imaginary geometry (1.677292ms)
+2026-11-11T08:51:29.0759530Z ✔ minimize cancels a pending host-approved drop and late approval cannot move a document (0.910916ms)
+2026-11-11T08:51:29.0760440Z ✔ only an accepted current drop yields a transfer, no document data is copied (0.495209ms)
+2026-11-11T08:51:29.0761220Z ✔ old native events cannot close a reopened window with the same logical ID (0.442292ms)
+2026-11-11T08:51:29.0762220Z ✔ dispose during asynchronous native listener acquisition releases the late handle and rolls back created window (0.264792ms)
+2026-11-11T08:51:29.0763440Z ✔ native display reflow uses observed work area and retains document/window identity (0.784791ms)
+2026-11-11T08:51:29.0765210Z ✔ layout restoration preserves native identities and applies minimization, focus and current display bounds (0.966542ms)
+2026-11-11T08:51:29.0766180Z ✔ restore rejects unknown window IDs before mutation and owns the submitted layout (0.387875ms)
+2026-11-11T08:51:29.0767180Z ✔ restore records the saved three-window order when the focused window is unchanged (0.734583ms)
+2026-11-11T08:51:29.0768070Z ✔ a failed restore reports only the native changes that actually completed (0.366833ms)
+2026-11-11T08:51:29.0769060Z ✔ display removal remembers the home through focus notifications and returns when the display reconnects (0.483666ms)
+2026-11-11T08:51:29.0770120Z ✔ disposing while a display read is pending prevents a later native resize (0.249333ms)
+2026-11-11T08:51:29.0771060Z ✔ disposal drains asynchronous removal after a native close event (0.220583ms)
+2026-11-11T08:51:29.0828380Z ℹ tests 16
+2026-11-11T08:51:29.0828810Z ℹ suites 0
+2026-11-11T08:51:29.0829040Z ℹ pass 16
+2026-11-11T08:51:29.0829330Z ℹ fail 0
+2026-11-11T08:51:29.0829580Z ℹ cancelled 0
+2026-11-11T08:51:29.0829860Z ℹ skipped 0
+2026-11-11T08:51:29.0830290Z ℹ todo 0
+2026-11-11T08:51:29.0830550Z ℹ duration_ms 88.36275
+2026-11-11T08:51:29.1211230Z AppKit package exports, native source, notices and isolated peers verified.
+2026-11-11T08:51:29.4028350Z npm notice
+2026-11-11T08:51:29.4030500Z npm notice 📦  @nyc-tron/macos-appkit@1.0.0
+2026-11-11T08:51:29.4031300Z npm notice Tarball Contents
+2026-11-11T08:51:29.4037900Z npm notice 1.1kB LICENSE
+2026-11-11T08:51:29.4038330Z npm notice 762B NYCTronAppKit.podspec
+2026-11-11T08:51:29.4038770Z npm notice 18.5kB README.md
+2026-11-11T08:51:29.4039160Z npm notice 1.3kB THIRD_PARTY_NOTICES.md
+2026-11-11T08:51:29.4039680Z npm notice 289B dist/anchored-inspector.d.ts
+2026-11-11T08:51:29.4040140Z npm notice 258B dist/anchored-inspector.js
+2026-11-11T08:51:29.4040470Z npm notice 290B dist/button.d.ts
+2026-11-11T08:51:29.4040840Z npm notice 422B dist/button.js
+2026-11-11T08:51:29.4041210Z npm notice 399B dist/context-menu.d.ts
+2026-11-11T08:51:29.4041640Z npm notice 417B dist/context-menu.js
+2026-11-11T08:51:29.4041960Z npm notice 372B dist/drag-drop.d.ts
+2026-11-11T08:51:29.4042370Z npm notice 452B dist/drag-drop.js
+2026-11-11T08:51:29.4042820Z npm notice 424B dist/menus.d.ts
+2026-11-11T08:51:29.4043150Z npm notice 377B dist/menus.js
+2026-11-11T08:51:29.4044120Z npm notice 234B dist/native-availability.d.ts
+2026-11-11T08:51:29.4044550Z npm notice 410B dist/native-availability.js
+2026-11-11T08:51:29.4045020Z npm notice 194B dist/NativeNYCTronDisplays.d.ts
+2026-11-11T08:51:29.4045450Z npm notice 117B dist/NativeNYCTronDisplays.js
+2026-11-11T08:51:29.4045980Z npm notice 1.1kB dist/NYCTronPopoverNativeComponent.d.ts
+2026-11-11T08:51:29.4046490Z npm notice 112B dist/NYCTronPopoverNativeComponent.js
+2026-11-11T08:51:29.4046890Z npm notice 1.3kB dist/popover.d.ts
+2026-11-11T08:51:29.4047250Z npm notice 3.6kB dist/popover.js
+2026-11-11T08:51:29.4047640Z npm notice 350B dist/segmented-control.d.ts
+2026-11-11T08:51:29.4048020Z npm notice 483B dist/segmented-control.js
+2026-11-11T08:51:29.4048400Z npm notice 290B dist/select.d.ts
+2026-11-11T08:51:29.4048760Z npm notice 422B dist/select.js
+2026-11-11T08:51:29.4049060Z npm notice 462B dist/sidebar.d.ts
+2026-11-11T08:51:29.4049480Z npm notice 596B dist/sidebar.js
+2026-11-11T08:51:29.4049880Z npm notice 402B dist/split-view.d.ts
+2026-11-11T08:51:29.4050200Z npm notice 425B dist/split-view.js
+2026-11-11T08:51:29.4050750Z npm notice 280B dist/text-field.d.ts
+2026-11-11T08:51:29.4051500Z npm notice 441B dist/text-field.js
+2026-11-11T08:51:29.4051850Z npm notice 423B dist/tooltip.d.ts
+2026-11-11T08:51:29.4052320Z npm notice 658B dist/tooltip.js
+2026-11-11T08:51:29.4052860Z npm notice 4.3kB dist/window-controller.d.ts
+2026-11-11T08:51:29.4053270Z npm notice 19.6kB dist/window-controller.js
+2026-11-11T08:51:29.4053700Z npm notice 2.0kB dist/windows.d.ts
+2026-11-11T08:51:29.4054300Z npm notice 1.4kB dist/windows.js
+2026-11-11T08:51:29.4054630Z npm notice 119B macos/NYCTronDisplays.h
+2026-11-11T08:51:29.4055040Z npm notice 2.0kB macos/NYCTronDisplays.mm
+2026-11-11T08:51:29.4055490Z npm notice 351B macos/NYCTronPopover.h
+2026-11-11T08:51:29.4056070Z npm notice 13.6kB macos/NYCTronPopover.mm
+2026-11-11T08:51:29.4056640Z npm notice 2.7kB macos/NYCTronPopoverComponentDescriptor.h
+2026-11-11T08:51:29.4057940Z npm notice 3.9kB package.json
+2026-11-11T08:51:29.4062000Z npm notice 197B react-native.config.cjs
+2026-11-11T08:51:29.4063620Z npm notice 1.6kB scripts/check-package.mjs
+2026-11-11T08:51:29.4064210Z npm notice 299B src/anchored-inspector.tsx
+2026-11-11T08:51:29.4065550Z npm notice 460B src/button.tsx
+2026-11-11T08:51:29.4066940Z npm notice 626B src/context-menu.ts
+2026-11-11T08:51:29.4067410Z npm notice 560B src/drag-drop.tsx
+2026-11-11T08:51:29.4069240Z npm notice 626B src/menus.ts
+2026-11-11T08:51:29.4069870Z npm notice 495B src/native-availability.ts
+2026-11-11T08:51:29.4070640Z npm notice 254B src/NativeNYCTronDisplays.ts
+2026-11-11T08:51:29.4071490Z npm notice 1.1kB src/NYCTronPopoverNativeComponent.ts
+2026-11-11T08:51:29.4072960Z npm notice 4.5kB src/popover.tsx
+2026-11-11T08:51:29.4073820Z npm notice 571B src/segmented-control.tsx
+2026-11-11T08:51:29.4075510Z npm notice 460B src/select.tsx
+2026-11-11T08:51:29.4077310Z npm notice 727B src/sidebar.tsx
+2026-11-11T08:51:29.4077820Z npm notice 571B src/split-view.tsx
+2026-11-11T08:51:29.4079080Z npm notice 466B src/text-field.tsx
+2026-11-11T08:51:29.4083450Z npm notice 789B src/tooltip.tsx
+2026-11-11T08:51:29.4084780Z npm notice 18.7kB src/window-controller.ts
+2026-11-11T08:51:29.4085690Z npm notice 1.6kB src/windows.ts
+2026-11-11T08:51:29.4086490Z npm notice Tarball Details
+2026-11-11T08:51:29.4086910Z npm notice name: @nyc-tron/macos-appkit
+2026-11-11T08:51:29.4087480Z npm notice version: 1.0.0
+2026-11-11T08:51:29.4088070Z npm notice filename: nyc-tron-macos-appkit-1.0.0.tgz
+2026-11-11T08:51:29.4088980Z npm notice package size: 34.2 kB
+2026-11-11T08:51:29.4090040Z npm notice unpacked size: 122.4 kB
+2026-11-11T08:51:29.4091010Z npm notice shasum: 94283fd3c937656ccac801268d91636e3e53a0af
+2026-11-11T08:51:29.4092140Z npm notice integrity: sha512-d+Pcl7IbkKviI[...]O6h1LFzym9a5g==
+2026-11-11T08:51:29.4092980Z npm notice total files: 63
+2026-11-11T08:51:29.4093330Z npm notice
+2026-11-11T08:51:29.4094140Z nyc-tron-macos-appkit-1.0.0.tgz
+2026-11-11T08:51:49.5493910Z 
+2026-11-11T08:51:49.5495600Z up to date in 14s
+2026-11-11T08:51:56.0960880Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-11T08:51:56.2718250Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-11-11T08:51:56.3683480Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3689050Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3694560Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3704040Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3715190Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3725320Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3739030Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3792030Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.3803170Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:56.9992990Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T08:51:57.0001280Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T08:51:58.1121020Z npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+2026-11-11T08:51:58.9986000Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:51:59.0016600Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T08:52:06.6843410Z 
+2026-11-11T08:52:06.6927640Z > nyc-tron-appkit-reference@1.0.0 postinstall
+2026-11-11T08:52:06.6930220Z > node node_modules/@legendapp/spark/init-template.cjs
+2026-11-11T08:52:06.6931410Z 
+2026-11-11T08:52:07.5253730Z 
+2026-11-11T08:52:07.5255250Z added 1128 packages in 18s
+2026-11-11T08:52:09.1401460Z Initialized the Spark 0.0.2 starter with its official template/migration helpers.
+2026-11-11T08:52:10.8889780Z Analyzing production JavaScript…
+2026-11-11T08:52:10.9001600Z Log: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/logs/1794387130886-904538da-3a71-4d26-9b1a-6aa101a8058a-cli.log
+2026-11-11T08:52:12.9618740Z Expo Autolinking module resolution enabled
+2026-11-11T08:52:14.2886050Z Starting Metro Bundler
+2026-11-11T08:52:14.2886690Z 
+2026-11-11T08:52:14.8494960Z macos ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+2026-11-11T08:52:18.3501540Z macos ./index.ts ▓▓▓▓░░░░░░░░░░░░ 26.3% (153/300)
+2026-11-11T08:52:21.8550050Z macos ./index.ts ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 77.3% (451/513)
+2026-11-11T08:52:24.8652540Z macos Bundled 10039ms index.ts (662 modules)
+2026-11-11T08:52:24.8754910Z Writing bundle output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.js
+2026-11-11T08:52:24.8958590Z Writing sourcemap output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.map
+2026-11-11T08:52:24.9244220Z Done writing bundle output
+2026-11-11T08:52:24.9330720Z Done writing sourcemap output
+2026-11-11T08:52:28.5070740Z Analyzing production JavaScript finished (17.6s).
+2026-11-11T08:52:28.5841370Z Analyzing production JavaScript…
+2026-11-11T08:52:28.5842390Z Log: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/logs/1794387148583-564e7878-2ce7-49a0-9354-bf249b4f699a-cli.log
+2026-11-11T08:52:29.3896140Z Expo Autolinking module resolution enabled
+2026-11-11T08:52:30.4466740Z Starting Metro Bundler
+2026-11-11T08:52:30.4467250Z 
+2026-11-11T08:52:30.9565180Z macos ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+2026-11-11T08:52:31.5792640Z macos Bundled 660ms index.ts (586 modules)
+2026-11-11T08:52:31.5894280Z Writing bundle output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.js
+2026-11-11T08:52:31.5943580Z Writing sourcemap output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.map
+2026-11-11T08:52:31.6234060Z Done writing bundle output
+2026-11-11T08:52:31.6269000Z Done writing sourcemap output
+2026-11-11T08:52:35.1420290Z Analyzing production JavaScript finished (6.6s).
+2026-11-11T08:52:35.2454080Z {
+2026-11-11T08:52:35.2454490Z   "included": [
+2026-11-11T08:52:35.2454780Z     "@expo/dom-webview",
+2026-11-11T08:52:35.2455180Z     "@expo/log-box",
+2026-11-11T08:52:35.2455560Z     "@legendapp/spark-context-menu",
+2026-11-11T08:52:35.2457150Z     "@legendapp/spark-desktop-app",
+2026-11-11T08:52:35.2457630Z     "@legendapp/spark-desktop-windows",
+2026-11-11T08:52:35.2458010Z     "@legendapp/spark-drag-drop",
+2026-11-11T08:52:35.2458310Z     "@legendapp/spark-native-menu",
+2026-11-11T08:52:35.2458730Z     "@legendapp/spark-system",
+2026-11-11T08:52:35.2459090Z     "@legendapp/spark-ui",
+2026-11-11T08:52:35.2459510Z     "@nyc-tron/appkit-acceptance-driver",
+2026-11-11T08:52:35.2459920Z     "@nyc-tron/macos-appkit",
+2026-11-11T08:52:35.2460280Z     "expo",
+2026-11-11T08:52:35.2460520Z     "expo-asset",
+2026-11-11T08:52:35.2460820Z     "expo-constants",
+2026-11-11T08:52:35.2461240Z     "expo-desktop-modules-core",
+2026-11-11T08:52:35.2461560Z     "expo-desktop-stubs",
+2026-11-11T08:52:35.2461900Z     "expo-file-system",
+2026-11-11T08:52:35.2462250Z     "expo-font",
+2026-11-11T08:52:35.2462540Z     "expo-keep-awake",
+2026-11-11T08:52:35.2462900Z     "expo-modules-core",
+2026-11-11T08:52:35.2463300Z     "react-native",
+2026-11-11T08:52:35.2463650Z     "react-native-macos",
+2026-11-11T08:52:35.2465670Z     "react-native-nitro-modules"
+2026-11-11T08:52:35.2466090Z   ],
+2026-11-11T08:52:35.2466340Z   "excluded": [
+2026-11-11T08:52:35.2466670Z     "@legendapp/spark-audio",
+2026-11-11T08:52:35.2467020Z     "@legendapp/spark-clipboard",
+2026-11-11T08:52:35.2467420Z     "@legendapp/spark-codex",
+2026-11-11T08:52:35.2467830Z     "@legendapp/spark-desktop-links",
+2026-11-11T08:52:35.2468180Z     "@legendapp/spark-desktop-shortcuts",
+2026-11-11T08:52:35.2468620Z     "@legendapp/spark-file-dialog",
+2026-11-11T08:52:35.2469020Z     "@legendapp/spark-file-system",
+2026-11-11T08:52:35.2469390Z     "@legendapp/spark-global-shortcuts",
+2026-11-11T08:52:35.2469800Z     "@legendapp/spark-message-dialog",
+2026-11-11T08:52:35.2470230Z     "@legendapp/spark-notifications",
+2026-11-11T08:52:35.2470580Z     "@legendapp/spark-processes",
+2026-11-11T08:52:35.2471010Z     "@legendapp/spark-secure-storage",
+2026-11-11T08:52:35.2471450Z     "@legendapp/spark-tray",
+2026-11-11T08:52:35.2472980Z     "@legendapp/spark-updates",
+2026-11-11T08:52:35.2474320Z     "@react-native-runtimes/core"
+2026-11-11T08:52:35.2474810Z   ]
+2026-11-11T08:52:35.2475030Z }
+2026-11-11T08:52:35.4314930Z Prepared installed AppKit consumer at /Users/runner/work/_temp/nyc-tron-appkit-consumer
+2026-11-11T08:52:35.4582950Z ##[group]Run node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+2026-11-11T08:52:35.4584580Z [36;1mnode tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json[0m
+2026-11-11T08:52:35.6814820Z shell: /bin/bash -e {0}
+2026-11-11T08:52:35.6815120Z env:
+2026-11-11T08:52:35.6815420Z   CI: 1
+2026-11-11T08:52:35.6815720Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:52:35.6815950Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:52:35.6816370Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:52:35.6816750Z ##[endgroup]
+2026-11-11T08:52:36.7300180Z API signatures match: 1 packages, 15 subpaths, 33 reachable declarations.
+2026-11-11T08:52:36.7433180Z ##[group]Run node tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"
+2026-11-11T08:52:36.7433890Z [36;1mnode tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"[0m
+2026-11-11T08:52:36.7468590Z shell: /bin/bash -e {0}
+2026-11-11T08:52:36.7468800Z env:
+2026-11-11T08:52:36.7468970Z   CI: 1
+2026-11-11T08:52:36.7469130Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:52:36.7469470Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:52:36.7469750Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:52:36.7470120Z ##[endgroup]
+2026-11-11T08:52:40.4328100Z Pinned Spark transport: seven original/patched native cases, trace privacy and explicit closed-peer failure passed. Native application acceptance remains separate.
+2026-11-11T08:52:40.4418330Z ##[group]Run set -euo pipefail
+2026-11-11T08:52:40.4418670Z [36;1mset -euo pipefail[0m
+2026-11-11T08:52:40.4418930Z [36;1mmkdir -p "$(dirname "$APPKIT_BUILD_LOG")"[0m
+2026-11-11T08:52:40.4419270Z [36;1mtest ! -e "$APPKIT_BUILD_LOG"[0m
+2026-11-11T08:52:40.4419540Z [36;1mbuild_status=0[0m
+2026-11-11T08:52:40.4419890Z [36;1m(set -o noclobber; npm run build > "$APPKIT_BUILD_LOG" 2>&1) || build_status=$?[0m
+2026-11-11T08:52:40.4420340Z [36;1mexport APPKIT_BUILD_EXIT_CODE="$build_status"[0m
+2026-11-11T08:52:40.4420680Z [36;1mreporting_status=0[0m
+2026-11-11T08:52:40.4420990Z [36;1mnode --input-type=module <<'NODE' || reporting_status=$?[0m
+2026-11-11T08:52:40.4421410Z [36;1mimport { createHash } from "node:crypto";[0m
+2026-11-11T08:52:40.4421730Z [36;1mimport { open, stat, writeFile } from "node:fs/promises";[0m
+2026-11-11T08:52:40.4422140Z [36;1mconst exitCode = Number(process.env.APPKIT_BUILD_EXIT_CODE);[0m
+2026-11-11T08:52:40.4422800Z [36;1mif (!Number.isInteger(exitCode) || exitCode < 0 || exitCode > 255) throw new Error("Invalid build exit status");[0m
+2026-11-11T08:52:40.4423930Z [36;1mif (!/^[0-9a-f]{40}$/.test(process.env.GITHUB_SHA ?? "")) throw new Error("Missing actual checkout revision");[0m
+2026-11-11T08:52:40.4424510Z [36;1mconst file = await open(process.env.APPKIT_BUILD_LOG, "r");[0m
+2026-11-11T08:52:40.4424860Z [36;1mconst digest = createHash("sha256");[0m
+2026-11-11T08:52:40.4425160Z [36;1mlet before, after, bytes = 0;[0m
+2026-11-11T08:52:40.4425390Z [36;1mtry {[0m
+2026-11-11T08:52:40.4425570Z [36;1m  before = await file.stat();[0m
+2026-11-11T08:52:40.4426560Z [36;1m  if (!before.isFile() || !Number.isSafeInteger(before.size)) throw new Error("Build transcript is not a bounded regular file");[0m
+2026-11-11T08:52:40.4427170Z [36;1m  for await (const chunk of file.createReadStream({ autoClose: false })) {[0m
+2026-11-11T08:52:40.4427520Z [36;1m    bytes += chunk.length;[0m
+2026-11-11T08:52:40.4427970Z [36;1m    if (bytes > before.size) throw new Error("Build transcript grew during hashing");[0m
+2026-11-11T08:52:40.4428340Z [36;1m    digest.update(chunk);[0m
+2026-11-11T08:52:40.4428570Z [36;1m  }[0m
+2026-11-11T08:52:40.4428750Z [36;1m  after = await file.stat();[0m
+2026-11-11T08:52:40.4429010Z [36;1m} finally { await file.close(); }[0m
+2026-11-11T08:52:40.4429330Z [36;1mconst current = await stat(process.env.APPKIT_BUILD_LOG);[0m
+2026-11-11T08:52:40.4429680Z [36;1mfor (const snapshot of [after, current]) {[0m
+2026-11-11T08:52:40.4430100Z [36;1m  if (snapshot.dev !== before.dev || snapshot.ino !== before.ino || snapshot.size !== before.size ||[0m
+2026-11-11T08:52:40.4430640Z [36;1m      snapshot.mtimeMs !== before.mtimeMs || snapshot.ctimeMs !== before.ctimeMs) {[0m
+2026-11-11T08:52:40.4431170Z [36;1m    throw new Error("Build transcript changed during hashing");[0m
+2026-11-11T08:52:40.4431480Z [36;1m  }[0m
+2026-11-11T08:52:40.4431640Z [36;1m}[0m
+2026-11-11T08:52:40.4431930Z [36;1mif (bytes !== before.size) throw new Error("Build transcript byte count changed");[0m
+2026-11-11T08:52:40.4432430Z [36;1mconst result = { schemaVersion: 1, sourceRevision: process.env.GITHUB_SHA,[0m
+2026-11-11T08:52:40.4432930Z [36;1m  command: ["npm", "run", "build"], exitCode, outcome: exitCode === 0 ? "success" : "failure",[0m
+2026-11-11T08:52:40.4433530Z [36;1m  transcript: { filename: "build-console.log", bytes, sha256: digest.digest("hex"), complete: true, normalized: false } };[0m
+2026-11-11T08:52:40.4434210Z [36;1mawait writeFile(process.env.APPKIT_BUILD_RESULT, JSON.stringify(result, null, 2) + "\n", { flag: "wx" });[0m
+2026-11-11T08:52:40.4434710Z [36;1mconsole.log("NYCTRON_APPKIT_BUILD_RESULT_BEGIN");[0m
+2026-11-11T08:52:40.4435010Z [36;1mconsole.log(JSON.stringify(result));[0m
+2026-11-11T08:52:40.4435320Z [36;1mconsole.log("NYCTRON_APPKIT_BUILD_RESULT_END");[0m
+2026-11-11T08:52:40.4435580Z [36;1mNODE[0m
+2026-11-11T08:52:40.4435770Z [36;1mif [ "$build_status" -ne 0 ]; then[0m
+2026-11-11T08:52:40.4436440Z [36;1m  tail -c 32768 "$APPKIT_BUILD_LOG" || true[0m
+2026-11-11T08:52:40.4436770Z [36;1m  exit "$build_status"[0m
+2026-11-11T08:52:40.4437070Z [36;1mfi[0m
+2026-11-11T08:52:40.4437230Z [36;1mexit "$reporting_status"[0m
+2026-11-11T08:52:40.4488810Z shell: /bin/bash -e {0}
+2026-11-11T08:52:40.4489090Z env:
+2026-11-11T08:52:40.4489300Z   CI: 1
+2026-11-11T08:52:40.4489510Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T08:52:40.4489720Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T08:52:40.4489990Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T08:52:40.4490910Z   APPKIT_BUILD_LOG: /Users/runner/work/_temp/appkit-build-console/build-console.log
+2026-11-11T08:52:40.4491420Z   APPKIT_BUILD_RESULT: /Users/runner/work/_temp/appkit-build-console/build-result.json
+2026-11-11T08:52:40.4491780Z ##[endgroup]
+2026-11-11T09:06:46.0481600Z NYCTRON_APPKIT_BUILD_RESULT_BEGIN
+2026-11-11T09:06:46.0573850Z {"schemaVersion":1,"sourceRevision":"69eb1c504c105b57844181c1e27c1a430fc888cd","command":["npm","run","build"],"exitCode":0,"outcome":"success","transcript":{"filename":"build-console.log","bytes":12329230,"sha256":"5abb66b73b2f2a9671fd8b9c4ecac42a169160d9f39a7064a5216dc6d3cda214","complete":true,"normalized":false}}
+2026-11-11T09:06:46.0671640Z NYCTRON_APPKIT_BUILD_RESULT_END
+2026-11-11T09:06:46.1397770Z ##[group]Run npm run verify:native
+2026-11-11T09:06:46.1398590Z [36;1mnpm run verify:native[0m
+2026-11-11T09:06:46.3400210Z shell: /bin/bash -e {0}
+2026-11-11T09:06:46.3400510Z env:
+2026-11-11T09:06:46.3400840Z   CI: 1
+2026-11-11T09:06:46.3401120Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T09:06:46.3401410Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T09:06:46.3402060Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T09:06:46.3402970Z   APPKIT_EVIDENCE: /Users/runner/work/_temp/nyc-tron-appkit-evidence
+2026-11-11T09:06:46.3403570Z   APPKIT_TESTED_PACKAGE: /Users/runner/work/_temp/nyc-tron-appkit-tested-package
+2026-11-11T09:06:46.3404050Z ##[endgroup]
+2026-11-11T09:06:46.8033110Z 
+2026-11-11T09:06:46.8134470Z > nyc-tron-appkit-reference@1.0.0 verify:native
+2026-11-11T09:06:46.8236210Z > node verify-native.mjs
+2026-11-11T09:06:46.8336160Z 
+2026-11-11T09:07:21.9116130Z NYCTRON_TOOLTIP_EVIDENCE_BEGIN
+2026-11-11T09:07:22.0015610Z {"schemaVersion":1,"status":"summary","sourceRevision":"69eb1c504c105b57844181c1e27c1a430fc888cd","processId":34194,"diagnosticOnly":true,"selection":"allowlisted-derived-tooltip-subset","outputSummaryOmitted":false,"diagnosticRowsOmittedForByteLimit":false,"logByteLimit":16384,"omittedOriginalFields":["error","reason","boundary","coordinates","helpTags.strings","windows.class","capture"],"original":{"filename":"tooltip-hover.json","bytes":32230,"sha256":"0695d25673540a7d6bcd37161d66f4a419a42138eaab5b75ec888fcf5517bafb","completeRead":true,"readByteLimit":1048577},"summary":{"status":"passed","permission":{"postEventsAllowed":true,"accessibilityTrusted":true},"pointerRequests":{"initialExit":{"action":"leave","ok":true,"targetPoint":{"x":529,"y":514},"triggerFrame":{"x":249,"y":366,"width":160,"height":36}},"enter":{"action":"enter","ok":true,"targetPoint":{"x":329,"y":384},"triggerFrame":{"x":249,"y":366,"width":160,"height":36}},"exit":{"action":"leave","ok":true,"targetPoint":{"x":529,"y":514},"triggerFrame":{"x":249,"y":366,"width":160,"height":36}}},"baseline":{"phase":null,"postEventsAllowed":true,"accessibilityTrusted":true,"ownerVisible":true,"ownerKey":true,"applicationActive":true,"traversalTruncated":false,"cursorInsideTrigger":false,"pointerRunning":false,"triggerFrame":{"x":249,"y":366,"width":160,"height":36},"cursor":{"x":529,"y":514},"helpTags":{"total":0,"inspected":0,"inspectionLimit":128,"inspectionTruncated":false,"matchingExpectedTextCount":0,"matchingShownTagPredicateCount":0,"retainedLimit":0,"recordsOmitted":0,"records":null},"windows":{"total":2,"retainedLimit":0,"recordsOmitted":2,"records":null}},"observationSource":"lastObservation","observation":{"phase":"outside-after-hover","postEventsAllowed":true,"accessibilityTrusted":true,"ownerVisible":true,"ownerKey":true,"applicationActive":true,"traversalTruncated":false,"cursorInsideTrigger":false,"pointerRunning":false,"triggerFrame":{"x":249,"y":366,"width":160,"height":36},"cursor":{"x":529,"y":514},"helpTags":{"total":0,"inspected":0,"inspectionLimit":128,"inspectionTruncated":false,"matchingExpectedTextCount":0,"matchingShownTagPredicateCount":0,"retainedLimit":8,"recordsOmitted":0,"records":[]},"windows":{"total":3,"retainedLimit":12,"recordsOmitted":0,"records":[{"number":24,"visible":true,"onscreen":true,"frame":{"x":0,"y":62,"width":1024,"height":681},"roles":["AXWindow","AXSplitGroup","AXButton","AXUnknown","AXScrollArea","other","AXGroup","AXTable","other","AXTextArea","AXTextField","other"],"rolesOmitted":2},{"number":30,"visible":false,"onscreen":false,"frame":{"x":0,"y":0,"width":500,"height":500},"roles":null,"rolesOmitted":null},{"number":41,"visible":false,"onscreen":false,"frame":{"x":329,"y":347,"width":213,"height":18},"roles":null,"rolesOmitted":null}]}}}}
+2026-11-11T09:07:22.0041040Z NYCTRON_TOOLTIP_EVIDENCE_END
+2026-11-11T09:07:22.0064370Z NYCTRON_STARTUP_EVIDENCE_BEGIN
+2026-11-11T09:07:22.0069310Z file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/verify-native.mjs:954
+2026-11-11T09:07:22.0071790Z   throw new Error(`Timed out waiting for ${label}`);
+2026-11-11T09:07:22.0074740Z         ^
+2026-11-11T09:07:22.0074960Z 
+2026-11-11T09:07:22.0075410Z Error: Timed out waiting for shown native NSPopover
+2026-11-11T09:07:22.0076350Z     at waitFor (file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/verify-native.mjs:954:9)
+2026-11-11T09:07:22.0077360Z     at async shownPopover (file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/verify-native.mjs:975:17)
+2026-11-11T09:07:22.0078210Z     at async file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/verify-native.mjs:1265:33
+2026-11-11T09:07:22.0078650Z 
+2026-11-11T09:07:22.0078810Z Node.js v24.19.0
+2026-11-11T09:07:22.0298140Z {"schemaVersion":1,"diagnosticOnly":true,"sourceRevision":"69eb1c504c105b57844181c1e27c1a430fc888cd","processId":34194,"capturedAt":"2026-11-11T09:07:21.915Z","selection":"typed-startup-failure-projection","consoleByteLimit":32768,"missingTraceDoesNotProveNonexecution":true,"inputs":{"appLog":{"filename":"app.log","status":"snapshot-retained","readByteLimit":1048576,"readBytes":715947,"sourceLive":true,"sourceBytesBefore":715947,"sourceBytesAfter":715947,"sameFileIdentity":true,"changedDuringRead":false,"completeAtRead":true,"completeOriginalFile":false,"originalSha256":null,"truncated":false,"laterAppendsPossible":true,"unreadBytesObserved":0,"snapshot":{"filename":"startup-app-log-snapshot.log","kind":"read-time-prefix-from-live-app-log","offset":0,"bytes":715947,"sha256":"74640b4ef6bebf803754a852ff764e4565664836be4fe36c770ac3e4c1944b81","retained":true,"eventualAppLogHash":false}},"commands":{"filename":"commands.jsonl","status":"incomplete-or-changing-read","readByteLimit":262145,"readBytes":262145,"sourceLive":false,"sourceBytesBefore":508756,"sourceBytesAfter":508756,"sameFileIdentity":true,"changedDuringRead":false,"completeAtRead":false,"completeOriginalFile":false,"originalSha256":null,"truncated":true,"laterAppendsPossible":false,"unreadBytesObserved":246611,"snapshot":null},"processFailure":{"filename":"native-process-failure.json","status":"complete-stable-read","readByteLimit":262145,"readBytes":1320,"sourceLive":false,"sourceBytesBefore":1320,"sourceBytesAfter":1320,"sameFileIdentity":true,"changedDuringRead":false,"completeAtRead":true,"completeOriginalFile":true,"originalSha256":"4d02c33bc03ea85757263db5dffb1ae96f30696de7b96fcab4c586840cf15776","truncated":false,"laterAppendsPossible":false,"unreadBytesObserved":0,"snapshot":null,"jsonStatus":"parsed"}},"activation":{"status":"projected","coverage":"retained-live-log-prefix","completeAtRead":true,"finalAppLogClaim":false,"lineByteLimit":8192,"lineScanLimit":4096,"scannedLines":3136,"unscannedLines":0,"partialTrailingLine":false,"ignoredLines":3096,"oversizedLines":0,"malformedRecords":0,"pidMismatchRecords":0,"unsupportedRecords":0,"matchedRecords":40,"selectedRecords":32,"omittedRecords":8,"outputOmittedRecords":0,"selection":"first-16-and-last-16-with-oldest-removal-if-output-limit","records":[{"line":11,"phase":"policy-entered","atEpochSeconds":1794388008.391306,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":2,"applicationActive":false,"visible":false,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":12,"phase":"policy-returned","atEpochSeconds":1794388008.40078,"mainThread":true,"operation":1,"details":{"accepted":true,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":false,"visible":false,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":13,"phase":"workspace-request-entered","atEpochSeconds":1794388008.4009671,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":14,"phase":"workspace-request-returned","atEpochSeconds":1794388008.402252,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":16,"phase":"workspace-completion-received","atEpochSeconds":1794388008.5034451,"mainThread":false,"operation":1,"details":{"accepted":null,"hasApplication":true,"hasError":false,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":17,"phase":"workspace-main-continuation","atEpochSeconds":1794388008.666741,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":false,"canBecomeKey":true},"timing":{"clock":"CACurrentMediaTime","clockExcludesSystemSleep":true,"intervalsAreNotQueueResidence":true,"intervalsDoNotEstablishCause":true,"completionTraceElapsedSeconds":0.00016845833329171,"submissionStartToMainEntrySeconds":0.16312841666672284}},{"line":18,"phase":"identity-checked","atEpochSeconds":1794388008.66752,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":true,"sameBundle":true,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":19,"phase":"order-front-entered","atEpochSeconds":1794388008.6675549,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":false,"canBecomeKey":true}},{"line":20,"phase":"order-front-returned","atEpochSeconds":1794388008.6682281,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":21,"phase":"reply-prepared","atEpochSeconds":1794388008.668354,"mainThread":true,"operation":1,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":true},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":null,"canBecomeKey":null}},{"line":860,"phase":"policy-entered","atEpochSeconds":1794388015.323039,"mainThread":true,"operation":2,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":false,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":861,"phase":"policy-returned","atEpochSeconds":1794388015.32341,"mainThread":true,"operation":2,"details":{"accepted":true,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":false,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":862,"phase":"workspace-request-entered","atEpochSeconds":1794388015.323524,"mainThread":true,"operation":2,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":863,"phase":"workspace-request-returned","atEpochSeconds":1794388015.3236818,"mainThread":true,"operation":2,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":864,"phase":"workspace-completion-received","atEpochSeconds":1794388015.402502,"mainThread":false,"operation":2,"details":{"accepted":null,"hasApplication":true,"hasError":false,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":865,"phase":"workspace-main-continuation","atEpochSeconds":1794388015.4233031,"mainThread":true,"operation":2,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":false,"miniaturized":false,"canBecomeKey":true},"timing":{"clock":"CACurrentMediaTime","clockExcludesSystemSleep":true,"intervalsAreNotQueueResidence":true,"intervalsDoNotEstablishCause":true,"completionTraceElapsedSeconds":0.00008654166663291107,"submissionStartToMainEntrySeconds":0.02071470833334388}},{"line":1149,"phase":"workspace-completion-received","atEpochSeconds":1794388016.829379,"mainThread":false,"operation":3,"details":{"accepted":null,"hasApplication":true,"hasError":false,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1150,"phase":"workspace-main-continuation","atEpochSeconds":1794388016.846266,"mainThread":true,"operation":3,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":false,"canBecomeKey":true},"timing":{"clock":"CACurrentMediaTime","clockExcludesSystemSleep":true,"intervalsAreNotQueueResidence":true,"intervalsDoNotEstablishCause":true,"completionTraceElapsedSeconds":0.00007545833318545192,"submissionStartToMainEntrySeconds":0.0168105000000196}},{"line":1151,"phase":"identity-checked","atEpochSeconds":1794388016.847379,"mainThread":true,"operation":3,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":true,"sameBundle":true,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1152,"phase":"order-front-entered","atEpochSeconds":1794388016.8474169,"mainThread":true,"operation":3,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":false,"canBecomeKey":true}},{"line":1153,"phase":"order-front-returned","atEpochSeconds":1794388016.8484101,"mainThread":true,"operation":3,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1154,"phase":"reply-prepared","atEpochSeconds":1794388016.8489308,"mainThread":true,"operation":3,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":true},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":null,"canBecomeKey":null}},{"line":1180,"phase":"policy-entered","atEpochSeconds":1794388016.929702,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":1181,"phase":"policy-returned","atEpochSeconds":1794388016.930574,"mainThread":true,"operation":4,"details":{"accepted":true,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":1182,"phase":"workspace-request-entered","atEpochSeconds":1794388016.930927,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1183,"phase":"workspace-request-returned","atEpochSeconds":1794388016.931288,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1184,"phase":"workspace-completion-received","atEpochSeconds":1794388016.954753,"mainThread":false,"operation":4,"details":{"accepted":null,"hasApplication":true,"hasError":false,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1185,"phase":"workspace-main-continuation","atEpochSeconds":1794388016.955823,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":false,"miniaturized":false,"canBecomeKey":true},"timing":{"clock":"CACurrentMediaTime","clockExcludesSystemSleep":true,"intervalsAreNotQueueResidence":true,"intervalsDoNotEstablishCause":true,"completionTraceElapsedSeconds":0.00007412499985548493,"submissionStartToMainEntrySeconds":0.000996375000113403}},{"line":1186,"phase":"identity-checked","atEpochSeconds":1794388016.956699,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":true,"sameBundle":true,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1187,"phase":"order-front-entered","atEpochSeconds":1794388016.956743,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":0,"applicationActive":true,"visible":true,"key":false,"miniaturized":false,"canBecomeKey":true}},{"line":1188,"phase":"order-front-returned","atEpochSeconds":1794388016.967834,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":null},"state":{"policy":null,"applicationActive":null,"visible":null,"key":null,"miniaturized":null,"canBecomeKey":null}},{"line":1189,"phase":"reply-prepared","atEpochSeconds":1794388016.969078,"mainThread":true,"operation":4,"details":{"accepted":null,"hasApplication":null,"hasError":null,"sameProcess":null,"sameBundle":null,"ok":true},"state":{"policy":0,"applicationActive":true,"visible":true,"key":true,"miniaturized":null,"canBecomeKey":null}}]},"transport":{"status":"projected","coverage":"retained-live-log-prefix","completeAtRead":true,"finalAppLogClaim":false,"lineByteLimit":8192,"lineScanLimit":4096,"scannedLines":3136,"unscannedLines":0,"partialTrailingLine":false,"ignoredLines":91,"oversizedLines":0,"malformedRecords":0,"pidMismatchRecords":0,"unsupportedRecords":0,"matchedRecords":3045,"selectedRecords":32,"omittedRecords":3013,"outputOmittedRecords":0,"selection":"first-16-and-last-16-with-oldest-removal-if-output-limit","records":[{"line":1,"phase":"request-received","atEpochSeconds":1794388007.7327008,"mainThread":false,"sequence":1,"command":"ping","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":5,"phase":"main-dispatched","atEpochSeconds":1794388008.356042,"mainThread":true,"sequence":1,"command":"ping","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":6,"phase":"main-replied","atEpochSeconds":1794388008.356133,"mainThread":true,"sequence":1,"command":"ping","details":{"parsed":null,"dictionary":true,"nilResponse":false,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":7,"phase":"serialized","atEpochSeconds":1794388008.356365,"mainThread":false,"sequence":1,"command":"ping","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":18,"errno":null,"errorCode":null}},{"line":8,"phase":"send-completed","atEpochSeconds":1794388008.356408,"mainThread":false,"sequence":1,"command":"ping","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":19,"errno":null,"errorCode":null}},{"line":9,"phase":"request-received","atEpochSeconds":1794388008.3579779,"mainThread":false,"sequence":2,"command":"tron.window","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":10,"phase":"main-dispatched","atEpochSeconds":1794388008.3910809,"mainThread":true,"sequence":2,"command":"tron.window","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":22,"phase":"main-replied","atEpochSeconds":1794388008.668388,"mainThread":true,"sequence":2,"command":"tron.window","details":{"parsed":null,"dictionary":true,"nilResponse":false,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":23,"phase":"serialized","atEpochSeconds":1794388008.668467,"mainThread":false,"sequence":2,"command":"tron.window","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":155,"errno":null,"errorCode":null}},{"line":24,"phase":"send-completed","atEpochSeconds":1794388008.668518,"mainThread":false,"sequence":2,"command":"tron.window","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":156,"errno":null,"errorCode":null}},{"line":25,"phase":"request-received","atEpochSeconds":1794388008.671087,"mainThread":false,"sequence":3,"command":"tron.inspect","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":26,"phase":"main-dispatched","atEpochSeconds":1794388008.671317,"mainThread":true,"sequence":3,"command":"tron.inspect","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":27,"phase":"main-replied","atEpochSeconds":1794388008.672014,"mainThread":true,"sequence":3,"command":"tron.inspect","details":{"parsed":null,"dictionary":true,"nilResponse":false,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":28,"phase":"serialized","atEpochSeconds":1794388008.672223,"mainThread":false,"sequence":3,"command":"tron.inspect","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":726,"errno":null,"errorCode":null}},{"line":29,"phase":"send-completed","atEpochSeconds":1794388008.67227,"mainThread":false,"sequence":3,"command":"tron.inspect","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":727,"errno":null,"errorCode":null}},{"line":30,"phase":"request-received","atEpochSeconds":1794388008.67296,"mainThread":false,"sequence":4,"command":"waitFor","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3121,"phase":"send-completed","atEpochSeconds":1794388037.3232532,"mainThread":false,"sequence":606,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":389,"errno":null,"errorCode":null}},{"line":3122,"phase":"request-received","atEpochSeconds":1794388037.37498,"mainThread":false,"sequence":607,"command":"tron.popover","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3123,"phase":"main-dispatched","atEpochSeconds":1794388037.3750691,"mainThread":true,"sequence":607,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3124,"phase":"main-replied","atEpochSeconds":1794388037.375952,"mainThread":true,"sequence":607,"command":"tron.popover","details":{"parsed":null,"dictionary":true,"nilResponse":false,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3125,"phase":"serialized","atEpochSeconds":1794388037.3761249,"mainThread":false,"sequence":607,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":388,"errno":null,"errorCode":null}},{"line":3126,"phase":"send-completed","atEpochSeconds":1794388037.376164,"mainThread":false,"sequence":607,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":389,"errno":null,"errorCode":null}},{"line":3127,"phase":"request-received","atEpochSeconds":1794388037.4280229,"mainThread":false,"sequence":608,"command":"tron.popover","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3128,"phase":"main-dispatched","atEpochSeconds":1794388037.428149,"mainThread":true,"sequence":608,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3129,"phase":"main-replied","atEpochSeconds":1794388037.428883,"mainThread":true,"sequence":608,"command":"tron.popover","details":{"parsed":null,"dictionary":true,"nilResponse":false,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3130,"phase":"serialized","atEpochSeconds":1794388037.429031,"mainThread":false,"sequence":608,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":388,"errno":null,"errorCode":null}},{"line":3131,"phase":"send-completed","atEpochSeconds":1794388037.429093,"mainThread":false,"sequence":608,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":389,"errno":null,"errorCode":null}},{"line":3132,"phase":"request-received","atEpochSeconds":1794388037.481025,"mainThread":false,"sequence":609,"command":"tron.popover","details":{"parsed":true,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3133,"phase":"main-dispatched","atEpochSeconds":1794388037.481286,"mainThread":true,"sequence":609,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3134,"phase":"main-replied","atEpochSeconds":1794388037.4824939,"mainThread":true,"sequence":609,"command":"tron.popover","details":{"parsed":null,"dictionary":true,"nilResponse":false,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":null,"bytes":null,"errno":null,"errorCode":null}},{"line":3135,"phase":"serialized","atEpochSeconds":1794388037.482585,"mainThread":false,"sequence":609,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":388,"errno":null,"errorCode":null}},{"line":3136,"phase":"send-completed","atEpochSeconds":1794388037.482647,"mainThread":false,"sequence":609,"command":"tron.popover","details":{"parsed":null,"dictionary":null,"nilResponse":null,"validJSONObject":null,"hasError":null,"threwException":null,"replacedWithFailure":false,"bytes":389,"errno":null,"errorCode":null}}]},"commands":{"status":"projected","coverage":"bounded-command-file-read","completeAtRead":false,"finalAppLogClaim":false,"lineByteLimit":8192,"lineScanLimit":4096,"scannedLines":530,"unscannedLines":0,"partialTrailingLine":true,"ignoredLines":0,"oversizedLines":0,"malformedRecords":0,"pidMismatchRecords":0,"unsupportedRecords":0,"matchedRecords":530,"selectedRecords":32,"omittedRecords":498,"outputOmittedRecords":0,"selection":"first-16-and-last-16-with-oldest-removal-if-output-limit","records":[{"line":1,"phase":"socket-connecting","at":"2026-11-11T09:06:47.723Z","command":null,"requestId":null,"responseId":null,"ok":null,"protocol":null},{"line":2,"phase":"socket-connected","at":"2026-11-11T09:06:47.727Z","command":null,"requestId":null,"responseId":null,"ok":null,"protocol":null},{"line":3,"phase":"authentication-started","at":"2026-11-11T09:06:47.728Z","command":null,"requestId":null,"responseId":null,"ok":null,"protocol":null},{"line":4,"phase":"authentication-response","at":"2026-11-11T09:06:47.731Z","command":null,"requestId":null,"responseId":null,"ok":true,"protocol":1},{"line":5,"phase":"request-started","at":"2026-11-11T09:06:47.731Z","command":"ping","requestId":1,"responseId":null,"ok":null,"protocol":null},{"line":6,"phase":"response","at":"2026-11-11T09:06:48.356Z","command":"ping","requestId":1,"responseId":1,"ok":true,"protocol":null},{"line":7,"phase":"request-started","at":"2026-11-11T09:06:48.357Z","command":"tron.window","requestId":2,"responseId":null,"ok":null,"protocol":null},{"line":8,"phase":"response","at":"2026-11-11T09:06:48.669Z","command":"tron.window","requestId":2,"responseId":2,"ok":true,"protocol":null},{"line":9,"phase":"request-started","at":"2026-11-11T09:06:48.669Z","command":"tron.inspect","requestId":3,"responseId":null,"ok":null,"protocol":null},{"line":10,"phase":"response","at":"2026-11-11T09:06:48.672Z","command":"tron.inspect","requestId":3,"responseId":3,"ok":true,"protocol":null},{"line":11,"phase":"request-started","at":"2026-11-11T09:06:48.672Z","command":"waitFor","requestId":4,"responseId":null,"ok":null,"protocol":null},{"line":12,"phase":"response","at":"2026-11-11T09:06:49.177Z","command":"waitFor","requestId":4,"responseId":4,"ok":true,"protocol":null},{"line":13,"phase":"request-started","at":"2026-11-11T09:06:49.178Z","command":"tron.inspect","requestId":5,"responseId":null,"ok":null,"protocol":null},{"line":14,"phase":"response","at":"2026-11-11T09:06:49.194Z","command":"tron.inspect","requestId":5,"responseId":5,"ok":true,"protocol":null},{"line":15,"phase":"request-started","at":"2026-11-11T09:06:49.247Z","command":"tron.inspect","requestId":6,"responseId":null,"ok":null,"protocol":null},{"line":16,"phase":"response","at":"2026-11-11T09:06:49.249Z","command":"tron.inspect","requestId":6,"responseId":6,"ok":true,"protocol":null},{"line":515,"phase":"request-started","at":"2026-11-11T09:06:58.569Z","command":"tron.popover","requestId":256,"responseId":null,"ok":null,"protocol":null},{"line":516,"phase":"response","at":"2026-11-11T09:06:58.571Z","command":"tron.popover","requestId":256,"responseId":256,"ok":true,"protocol":null},{"line":517,"phase":"request-started","at":"2026-11-11T09:06:58.622Z","command":"tron.popover","requestId":257,"responseId":null,"ok":null,"protocol":null},{"line":518,"phase":"response","at":"2026-11-11T09:06:58.624Z","command":"tron.popover","requestId":257,"responseId":257,"ok":true,"protocol":null},{"line":519,"phase":"request-started","at":"2026-11-11T09:06:58.675Z","command":"tron.popover","requestId":258,"responseId":null,"ok":null,"protocol":null},{"line":520,"phase":"response","at":"2026-11-11T09:06:58.677Z","command":"tron.popover","requestId":258,"responseId":258,"ok":true,"protocol":null},{"line":521,"phase":"request-started","at":"2026-11-11T09:06:58.730Z","command":"tron.popover","requestId":259,"responseId":null,"ok":null,"protocol":null},{"line":522,"phase":"response","at":"2026-11-11T09:06:58.732Z","command":"tron.popover","requestId":259,"responseId":259,"ok":true,"protocol":null},{"line":523,"phase":"request-started","at":"2026-11-11T09:06:58.784Z","command":"tron.popover","requestId":260,"responseId":null,"ok":null,"protocol":null},{"line":524,"phase":"response","at":"2026-11-11T09:06:58.785Z","command":"tron.popover","requestId":260,"responseId":260,"ok":true,"protocol":null},{"line":525,"phase":"request-started","at":"2026-11-11T09:06:58.836Z","command":"tron.popover","requestId":261,"responseId":null,"ok":null,"protocol":null},{"line":526,"phase":"response","at":"2026-11-11T09:06:58.838Z","command":"tron.popover","requestId":261,"responseId":261,"ok":true,"protocol":null},{"line":527,"phase":"request-started","at":"2026-11-11T09:06:58.890Z","command":"tron.popover","requestId":262,"responseId":null,"ok":null,"protocol":null},{"line":528,"phase":"response","at":"2026-11-11T09:06:58.892Z","command":"tron.popover","requestId":262,"responseId":262,"ok":true,"protocol":null},{"line":529,"phase":"request-started","at":"2026-11-11T09:06:58.943Z","command":"tron.popover","requestId":263,"responseId":null,"ok":null,"protocol":null},{"line":530,"phase":"response","at":"2026-11-11T09:06:58.944Z","command":"tron.popover","requestId":263,"responseId":263,"ok":true,"protocol":null}]},"process":{"status":"projected","processId":34194,"observedAt":"2026-11-11T09:07:17.539Z","exitCode":null,"exitCodeAvailable":true,"signal":null,"signalAvailable":true,"beforeSample":{"observedAt":"2026-11-11T09:07:17.551Z","exitCode":0,"exitCodeAvailable":true,"signal":null,"signalAvailable":true},"afterSample":{"observedAt":"2026-11-11T09:07:21.904Z","exitCode":0,"exitCodeAvailable":true,"signal":null,"signalAvailable":true},"sample":{"observedAt":null,"exitCode":0,"exitCodeAvailable":true,"signal":null,"signalAvailable":true,"durationSeconds":2,"intervalMilliseconds":10,"threadGroups":8,"hasThreadStacks":true,"file":"native-process-sample.txt","sha256":"e3f70ffc61abd09ad4ccaaf88f1802d72d842c25e63bca2ee6211d4662b99797","digestScope":"producer-recorded-sample-file-not-reread","stacksDoNotEstablishHealth":true}}}
+2026-11-11T09:07:22.0447550Z NYCTRON_STARTUP_EVIDENCE_END
+2026-11-11T09:07:22.0542690Z ##[error]Process completed with exit code 1.
+2026-11-11T09:07:22.0916100Z ##[group]Run actions/upload-artifact@v4
+2026-11-11T09:07:22.0916600Z with:
+2026-11-11T09:07:22.0916860Z   name: macos-appkit-native-evidence
+2026-11-11T09:07:22.0917290Z   if-no-files-found: warn
+2026-11-11T09:07:22.0917550Z   retention-days: 14
+2026-11-11T09:07:22.0921200Z   path: /Users/runner/work/_temp/nyc-tron-appkit-evidence/
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/package-preparation.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/package-lock.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/spark-sdk-inputs.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/*.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-device-name/*.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/*.mm
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/*.log
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/logs/
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/commands.jsonl
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/selection-report.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/version
+/Users/runner/work/_temp/appkit-toolchain/
+/Users/runner/work/_temp/appkit-build-console/
+
+2026-11-11T09:07:22.0926190Z   compression-level: 6
+2026-11-11T09:07:22.0926530Z   overwrite: false
+2026-11-11T09:07:22.0926780Z   include-hidden-files: false
+2026-11-11T09:07:22.0927150Z env:
+2026-11-11T09:07:22.0927380Z   CI: 1
+2026-11-11T09:07:22.0927670Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T09:07:22.0928010Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T09:07:22.0928470Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T09:07:22.0928770Z ##[endgroup]
+2026-11-11T09:07:22.7546020Z (node:35071) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T09:07:22.7546970Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T09:07:22.7872240Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-11T09:07:22.7880620Z The least common ancestor is /Users/runner/work/_temp. This will be the root directory of the artifact
+2026-11-11T09:07:22.7882040Z With the provided path, there will be 54 files uploaded
+2026-11-11T09:07:22.7883230Z Artifact name is valid!
+2026-11-11T09:07:22.7884040Z Root directory input is valid!
+2026-11-11T09:07:23.1917550Z Beginning upload of artifact content to blob storage
+2026-11-11T09:07:23.5246280Z (node:35071) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-11T09:07:24.3489330Z Uploaded bytes 1739270
+2026-11-11T09:07:24.4282820Z Finished uploading artifact content to blob storage!
+2026-11-11T09:07:24.4303770Z SHA256 digest of uploaded artifact zip is 092d9b9fd14581b909f76eb6fd93405e86b1e83950f004936dccde71282b414e
+2026-11-11T09:07:24.4351460Z Finalizing artifact upload
+2026-11-11T09:07:24.8421770Z Artifact macos-appkit-native-evidence.zip successfully finalized. Artifact ID 13842122841
+2026-11-11T09:07:24.8422630Z Artifact macos-appkit-native-evidence has been successfully uploaded! Final size is 1739270 bytes. Artifact ID is 13842122841
+2026-11-11T09:07:24.8429600Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/artifacts/13842122841
+2026-11-11T09:07:24.8736930Z Post job cleanup.
+2026-11-11T09:07:24.9988070Z [command]/opt/homebrew/bin/git version
+2026-11-11T09:07:25.0395190Z git version 2.56.0
+2026-11-11T09:07:25.0905900Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/657fd677-0c2c-43e6-9da0-f42788ef2020/.gitconfig'
+2026-11-11T09:07:25.1019030Z Temporarily overriding HOME='/Users/runner/work/_temp/657fd677-0c2c-43e6-9da0-f42788ef2020' before making global git config changes
+2026-11-11T09:07:25.1122140Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T09:07:25.1225910Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T09:07:25.1461580Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T09:07:25.1623420Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T09:07:25.2318370Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T09:07:25.2412050Z http.https://github.com/.extraheader
+2026-11-11T09:07:25.2430410Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T09:07:25.2564010Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T09:07:25.3605170Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T09:07:25.3762690Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T09:07:25.4896100Z Cleaning up orphan processes
+2026-11-11T09:07:26.0161290Z Terminate orphan process: pid (30393) (ibtoold)
+2026-11-11T09:07:26.0391960Z Terminate orphan process: pid (30392) (ibtoold)
+2026-11-11T09:07:26.9693540Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/download-artifact@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

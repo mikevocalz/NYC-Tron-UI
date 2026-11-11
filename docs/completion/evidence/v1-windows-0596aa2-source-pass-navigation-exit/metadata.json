@@ -1,0 +1,849 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceWorkflow": {
+    "id": 42997727683,
+    "name": "NYC-Tron source, exports and types",
+    "event": "pull_request",
+    "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "headBranch": "codex/v1-windows-reviewed-lifecycle-nov11",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "createdAt": "2026-11-11T09:44:38Z",
+    "updatedAt": "2026-11-11T09:48:03Z",
+    "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727683",
+    "jobs": [
+      {
+        "id": 130445894076,
+        "name": "pure contracts and dependency boundaries",
+        "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-11-11T09:44:40Z",
+        "completedAt": "2026-11-11T09:45:39Z",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727683/job/130445894076",
+        "steps": [
+          {
+            "number": 1,
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:41Z",
+            "completedAt": "2026-11-11T09:44:42Z"
+          },
+          {
+            "number": 2,
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:42Z",
+            "completedAt": "2026-11-11T09:44:43Z"
+          },
+          {
+            "number": 3,
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:43Z",
+            "completedAt": "2026-11-11T09:44:48Z"
+          },
+          {
+            "number": 4,
+            "name": "Install source-test tooling",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:48Z",
+            "completedAt": "2026-11-11T09:44:57Z"
+          },
+          {
+            "number": 5,
+            "name": "Build packages the tests import",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:57Z",
+            "completedAt": "2026-11-11T09:45:14Z"
+          },
+          {
+            "number": 6,
+            "name": "All unit, contract and mocked-render tests",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:14Z",
+            "completedAt": "2026-11-11T09:45:37Z"
+          },
+          {
+            "number": 11,
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:37Z",
+            "completedAt": "2026-11-11T09:45:37Z"
+          },
+          {
+            "number": 12,
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:37Z",
+            "completedAt": "2026-11-11T09:45:37Z"
+          },
+          {
+            "number": 13,
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:37Z",
+            "completedAt": "2026-11-11T09:45:37Z"
+          }
+        ]
+      },
+      {
+        "id": 130445894077,
+        "name": "workspace TypeScript",
+        "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-11-11T09:44:40Z",
+        "completedAt": "2026-11-11T09:45:57Z",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727683/job/130445894077",
+        "steps": [
+          {
+            "number": 1,
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:41Z",
+            "completedAt": "2026-11-11T09:44:41Z"
+          },
+          {
+            "number": 2,
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:41Z",
+            "completedAt": "2026-11-11T09:44:43Z"
+          },
+          {
+            "number": 3,
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:43Z",
+            "completedAt": "2026-11-11T09:44:47Z"
+          },
+          {
+            "number": 4,
+            "name": "Enable corepack",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:47Z",
+            "completedAt": "2026-11-11T09:44:47Z"
+          },
+          {
+            "number": 5,
+            "name": "Install local workspace",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:47Z",
+            "completedAt": "2026-11-11T09:44:55Z"
+          },
+          {
+            "number": 6,
+            "name": "Compile independent package distributions in dependency order",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:55Z",
+            "completedAt": "2026-11-11T09:45:08Z"
+          },
+          {
+            "number": 7,
+            "name": "Typecheck packages against built peer workspaces",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:08Z",
+            "completedAt": "2026-11-11T09:45:28Z"
+          },
+          {
+            "number": 8,
+            "name": "Verify distributable subpaths and dependency boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:28Z",
+            "completedAt": "2026-11-11T09:45:28Z"
+          },
+          {
+            "number": 9,
+            "name": "Verify the public API surface against docs/api-surface.json",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:28Z",
+            "completedAt": "2026-11-11T09:45:28Z"
+          },
+          {
+            "number": 10,
+            "name": "Verify reachable public declarations and dependency type boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:28Z",
+            "completedAt": "2026-11-11T09:45:30Z"
+          },
+          {
+            "number": 11,
+            "name": "Verify the complete component ledger and reviewed public exports",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:30Z",
+            "completedAt": "2026-11-11T09:45:30Z"
+          },
+          {
+            "number": 12,
+            "name": "Pack every package and check release tarball contents",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:30Z",
+            "completedAt": "2026-11-11T09:45:54Z"
+          },
+          {
+            "number": 13,
+            "name": "Install the dependency-free tarballs in a fresh project and import them",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:54Z",
+            "completedAt": "2026-11-11T09:45:54Z"
+          },
+          {
+            "number": 25,
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:54Z",
+            "completedAt": "2026-11-11T09:45:54Z"
+          },
+          {
+            "number": 26,
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:54Z",
+            "completedAt": "2026-11-11T09:45:54Z"
+          },
+          {
+            "number": 27,
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:54Z",
+            "completedAt": "2026-11-11T09:45:54Z"
+          }
+        ]
+      },
+      {
+        "id": 130445894126,
+        "name": "tests and pack on Windows",
+        "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-11-11T09:44:41Z",
+        "completedAt": "2026-11-11T09:48:03Z",
+        "labels": [
+          "windows-2025"
+        ],
+        "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727683/job/130445894126",
+        "steps": [
+          {
+            "number": 1,
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:42Z",
+            "completedAt": "2026-11-11T09:44:42Z"
+          },
+          {
+            "number": 2,
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:42Z",
+            "completedAt": "2026-11-11T09:44:50Z"
+          },
+          {
+            "number": 3,
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:50Z",
+            "completedAt": "2026-11-11T09:44:59Z"
+          },
+          {
+            "number": 4,
+            "name": "Enable corepack",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:59Z",
+            "completedAt": "2026-11-11T09:45:00Z"
+          },
+          {
+            "number": 5,
+            "name": "Install local workspace",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:00Z",
+            "completedAt": "2026-11-11T09:45:32Z"
+          },
+          {
+            "number": 6,
+            "name": "Build every package",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:32Z",
+            "completedAt": "2026-11-11T09:45:57Z"
+          },
+          {
+            "number": 7,
+            "name": "All unit, contract and mocked-render tests",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:57Z",
+            "completedAt": "2026-11-11T09:46:58Z"
+          },
+          {
+            "number": 8,
+            "name": "Verify distributable subpaths and dependency boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:58Z",
+            "completedAt": "2026-11-11T09:47:00Z"
+          },
+          {
+            "number": 9,
+            "name": "Pack every package and check release tarball contents",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:47:00Z",
+            "completedAt": "2026-11-11T09:47:42Z"
+          },
+          {
+            "number": 10,
+            "name": "Install the dependency-free tarballs in a fresh project and import them",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:47:42Z",
+            "completedAt": "2026-11-11T09:47:58Z"
+          },
+          {
+            "number": 19,
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:47:58Z",
+            "completedAt": "2026-11-11T09:47:59Z"
+          },
+          {
+            "number": 20,
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:47:59Z",
+            "completedAt": "2026-11-11T09:48:01Z"
+          },
+          {
+            "number": 21,
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:48:01Z",
+            "completedAt": "2026-11-11T09:48:01Z"
+          }
+        ]
+      }
+    ]
+  },
+  "nativeWorkflow": {
+    "id": 42997727800,
+    "name": "WinUI 3 navigation and native desktop in RNW Fabric",
+    "event": "pull_request",
+    "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "headBranch": "codex/v1-windows-reviewed-lifecycle-nov11",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "failure",
+    "createdAt": "2026-11-11T09:44:38Z",
+    "updatedAt": "2026-11-11T09:54:16Z",
+    "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727800",
+    "jobs": [
+      {
+        "id": 130445893932,
+        "name": "Fabric codegen and source gates",
+        "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-11-11T09:44:40Z",
+        "completedAt": "2026-11-11T09:45:23Z",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727800/job/130445893932",
+        "steps": [
+          {
+            "number": 1,
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:41Z",
+            "completedAt": "2026-11-11T09:44:42Z"
+          },
+          {
+            "number": 2,
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:42Z",
+            "completedAt": "2026-11-11T09:44:44Z"
+          },
+          {
+            "number": 3,
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:44Z",
+            "completedAt": "2026-11-11T09:44:48Z"
+          },
+          {
+            "number": 4,
+            "name": "Validate actual XAML Fabric native bridge sources",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:48Z",
+            "completedAt": "2026-11-11T09:44:48Z"
+          },
+          {
+            "number": 5,
+            "name": "Install isolated RNW 0.85 dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:44:48Z",
+            "completedAt": "2026-11-11T09:45:02Z"
+          },
+          {
+            "number": 6,
+            "name": "Build peer-free shared contracts",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:02Z",
+            "completedAt": "2026-11-11T09:45:03Z"
+          },
+          {
+            "number": 7,
+            "name": "Validate Windows-only TypeScript",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:03Z",
+            "completedAt": "2026-11-11T09:45:04Z"
+          },
+          {
+            "number": 8,
+            "name": "Build dist and check the release tarball",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:04Z",
+            "completedAt": "2026-11-11T09:45:08Z"
+          },
+          {
+            "number": 9,
+            "name": "Verify the isolated RNW public declaration snapshot",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:08Z",
+            "completedAt": "2026-11-11T09:45:09Z"
+          },
+          {
+            "number": 10,
+            "name": "Build canonical shared release packages with the root compiler",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:09Z",
+            "completedAt": "2026-11-11T09:45:20Z"
+          },
+          {
+            "number": 11,
+            "name": "Retain canonical shared archives for the native consumer",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:20Z",
+            "completedAt": "2026-11-11T09:45:21Z"
+          },
+          {
+            "number": 21,
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:21Z",
+            "completedAt": "2026-11-11T09:45:21Z"
+          },
+          {
+            "number": 22,
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:21Z",
+            "completedAt": "2026-11-11T09:45:21Z"
+          },
+          {
+            "number": 23,
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:21Z",
+            "completedAt": "2026-11-11T09:45:21Z"
+          }
+        ]
+      },
+      {
+        "id": 130446243806,
+        "name": "VS 2026 RNW 0.85 XAML Fabric native C++ compile",
+        "headSha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+        "status": "completed",
+        "conclusion": "failure",
+        "startedAt": "2026-11-11T09:45:25Z",
+        "completedAt": "2026-11-11T09:54:16Z",
+        "labels": [
+          "windows-2025"
+        ],
+        "htmlUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42997727800/job/130446243806",
+        "steps": [
+          {
+            "number": 1,
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:26Z",
+            "completedAt": "2026-11-11T09:45:28Z"
+          },
+          {
+            "number": 2,
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:28Z",
+            "completedAt": "2026-11-11T09:45:35Z"
+          },
+          {
+            "number": 3,
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:35Z",
+            "completedAt": "2026-11-11T09:45:44Z"
+          },
+          {
+            "number": 4,
+            "name": "Install native-codegen dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:45:44Z",
+            "completedAt": "2026-11-11T09:46:17Z"
+          },
+          {
+            "number": 5,
+            "name": "Build source distribution and validate lifecycle contracts",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:17Z",
+            "completedAt": "2026-11-11T09:46:21Z"
+          },
+          {
+            "number": 6,
+            "name": "Verify the isolated RNW public declaration snapshot",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:21Z",
+            "completedAt": "2026-11-11T09:46:23Z"
+          },
+          {
+            "number": 7,
+            "name": "Download the canonical shared package archives",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:23Z",
+            "completedAt": "2026-11-11T09:46:24Z"
+          },
+          {
+            "number": 8,
+            "name": "Verify the release producer's exact workspace archives",
+            "status": "completed",
+            "conclusion": "skipped",
+            "startedAt": "2026-11-11T09:46:24Z",
+            "completedAt": "2026-11-11T09:46:24Z"
+          },
+          {
+            "number": 9,
+            "name": "Install the fresh consumer from canonical peers and the Fabric candidate",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:24Z",
+            "completedAt": "2026-11-11T09:46:47Z"
+          },
+          {
+            "number": 10,
+            "name": "Validate diagnostic scripts with the UIA PowerShell runtime",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:47Z",
+            "completedAt": "2026-11-11T09:46:56Z"
+          },
+          {
+            "number": 11,
+            "name": "Generate native code from the installed package",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:46:56Z",
+            "completedAt": "2026-11-11T09:47:03Z"
+          },
+          {
+            "number": 12,
+            "name": "Generate official RNW application and connect native package",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:47:03Z",
+            "completedAt": "2026-11-11T09:47:15Z"
+          },
+          {
+            "number": 13,
+            "name": "Build installed native C++/WinRT Fabric package",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:47:15Z",
+            "completedAt": "2026-11-11T09:51:22Z"
+          },
+          {
+            "number": 14,
+            "name": "Compile actual Windows consumer executable",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:51:22Z",
+            "completedAt": "2026-11-11T09:52:36Z"
+          },
+          {
+            "number": 15,
+            "name": "Deploy the packaged consumer the way run-windows does",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:52:36Z",
+            "completedAt": "2026-11-11T09:53:27Z"
+          },
+          {
+            "number": 16,
+            "name": "UI Automation smoke test of the packaged consumer",
+            "status": "completed",
+            "conclusion": "failure",
+            "startedAt": "2026-11-11T09:53:27Z",
+            "completedAt": "2026-11-11T09:54:08Z"
+          },
+          {
+            "number": 17,
+            "name": "Retain the exact package that passed native acceptance",
+            "status": "completed",
+            "conclusion": "skipped",
+            "startedAt": "2026-11-11T09:54:08Z",
+            "completedAt": "2026-11-11T09:54:08Z"
+          },
+          {
+            "number": 18,
+            "name": "Upload tested Windows distribution",
+            "status": "completed",
+            "conclusion": "skipped",
+            "startedAt": "2026-11-11T09:54:08Z",
+            "completedAt": "2026-11-11T09:54:08Z"
+          },
+          {
+            "number": 19,
+            "name": "Upload UI Automation screenshots",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:54:08Z",
+            "completedAt": "2026-11-11T09:54:10Z"
+          },
+          {
+            "number": 37,
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "startedAt": "2026-11-11T09:54:10Z",
+            "completedAt": "2026-11-11T09:54:10Z"
+          },
+          {
+            "number": 38,
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:54:10Z",
+            "completedAt": "2026-11-11T09:54:12Z"
+          },
+          {
+            "number": 39,
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "startedAt": "2026-11-11T09:54:12Z",
+            "completedAt": "2026-11-11T09:54:12Z"
+          }
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13845740998,
+        "name": "winui-fabric-uia-smoke",
+        "sizeInBytes": 417056,
+        "digest": "sha256:f72049177586f4bd492941e6385d8f4dd03b501dcf0aac663c967de229b411c4",
+        "expired": false,
+        "createdAt": "2026-11-11T09:54:09Z",
+        "updatedAt": "2026-11-11T09:54:09Z",
+        "expiresAt": "2027-02-09T09:44:38Z",
+        "workflowRun": {
+          "id": 42997727800,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-windows-reviewed-lifecycle-nov11",
+          "head_sha": "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+        },
+        "archiveInspected": false,
+        "membersInspected": false
+      },
+      {
+        "id": 13844019150,
+        "name": "windows-fabric-shared-packages",
+        "sizeInBytes": 62822,
+        "digest": "sha256:d1d230c4432549bb8a1d43d1b516e2fa2852ba75069cf32a1b4a7a2fb7318516",
+        "expired": false,
+        "createdAt": "2026-11-11T09:45:20Z",
+        "updatedAt": "2026-11-11T09:45:20Z",
+        "expiresAt": "2027-02-09T09:44:38Z",
+        "workflowRun": {
+          "id": 42997727800,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-windows-reviewed-lifecycle-nov11",
+          "head_sha": "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+        },
+        "archiveInspected": false,
+        "membersInspected": false
+      }
+    ]
+  },
+  "head": {
+    "commit": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+    "orderedParents": [
+      "7a160c536b845d71487ba2997262daf3cf07cb9b"
+    ]
+  },
+  "actualCheckout": {
+    "commit": "8ff0adf28897e7fd7300f6ebac112513ee7a4dbe",
+    "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+    ],
+    "originalCheckoutLines": {
+      "source-linux.log": 122,
+      "source-windows.log": 109,
+      "workspace-types.log": 122,
+      "fabric-source.log": 123,
+      "fabric-native.log": 111
+    }
+  },
+  "fullTreeBinding": {
+    "leaves": 3152,
+    "recomputedTreeObjects": 513,
+    "changedPathsAgainst7a": [
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/IslandConnection.h",
+        "before": {
+          "sha": "afcd61d50584a90cc58ab8dbd77c2bcc2a602be1",
+          "mode": "100644",
+          "bytes": 2736
+        },
+        "after": {
+          "sha": "5b8b1054bcc13d09e958be40709a6273b797d11f",
+          "mode": "100644",
+          "bytes": 2824
+        }
+      },
+      {
+        "path": "tooling/native/UI_ACCEPTANCE.md",
+        "before": {
+          "sha": "a3a51e499711f026463b9ff6b571422f730c0cf8",
+          "mode": "100644",
+          "bytes": 6185
+        },
+        "after": {
+          "sha": "d4fa0c0fad6829965108e0a6da78b77678e9cc91",
+          "mode": "100644",
+          "bytes": 6410
+        }
+      },
+      {
+        "path": "tooling/native/run-ui-acceptance.mjs",
+        "before": {
+          "sha": "50d0a3435fb52f4ad1b73df224fc01436f5d443b",
+          "mode": "100644",
+          "bytes": 17011
+        },
+        "after": {
+          "sha": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+          "mode": "100644",
+          "bytes": 17132
+        }
+      },
+      {
+        "path": "tooling/native/ui-transport.mjs",
+        "before": {
+          "sha": "9a362c4b7af481c01beeb7bd0f7b03a9a692080b",
+          "mode": "100644",
+          "bytes": 9228
+        },
+        "after": {
+          "sha": "fbf804293b94406b65a36d273f4c2528825b4bc4",
+          "mode": "100644",
+          "bytes": 9068
+        }
+      },
+      {
+        "path": "tooling/tests/native-ui-transport.test.mjs",
+        "before": {
+          "sha": "9e62b8505328cc9e76cf6a361571565eb0fc11a3",
+          "mode": "100644",
+          "bytes": 11472
+        },
+        "after": {
+          "sha": "750bcf5cd84d5b00b50b0e2820bd0012a3893619",
+          "mode": "100644",
+          "bytes": 11854
+        }
+      },
+      {
+        "path": "tooling/tests/release-readiness.test.mjs",
+        "before": {
+          "sha": "62ba8325d3695a6e04e2144f70748f72327abf90",
+          "mode": "100644",
+          "bytes": 13838
+        },
+        "after": {
+          "sha": "d5f217076df126f8160982d07db05e8cee288889",
+          "mode": "100644",
+          "bytes": 13916
+        }
+      }
+    ],
+    "unchangedLeavesAgainst7a": 3146
+  },
+  "scope": "Normalized completed GitHub run/job/step/artifact metadata. Original logs separately bind actual checkout. Archive hashes and file sizes are reported metadata, not downloaded ZIP verification."
+}

@@ -1,0 +1,945 @@
+{
+  "schemaVersion": 1,
+  "kind": "external-windows-navigation-outcome-and-adjacent-source-evidence",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "directory": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure",
+  "status": "native-acceptance-failed",
+  "scope": "Completed attempt-1 evidence for external PR60 heads 0b99266, c9ddfcf and 0a2d066. This is not a pass for the separately corrected PR63 lifecycle source or a final combined release.",
+  "source": [
+    {
+      "label": "0b99266-before-native-width-mutation",
+      "head": "0b99266c09723b73bf4c4be061d7ed8de4935fc2",
+      "actualCheckout": "943ed8086eb3964821ee7d87221a00b9a7046193",
+      "tree": "5781b08ebc128a526d19989f9406d7524a4171f4",
+      "orderedMergeParents": [
+        "ac5d69585a52a6e945dc996ea08030e190574699",
+        "0b99266c09723b73bf4c4be061d7ed8de4935fc2"
+      ],
+      "runId": 42996235176,
+      "event": "pull_request",
+      "runAttempt": 1,
+      "logProvesCheckout": true,
+      "completeTreeVerification": {
+        "leaves": 2076,
+        "treeObjects": 284,
+        "untruncated": true
+      }
+    },
+    {
+      "label": "c9ddfcf-native-width-mutation",
+      "head": "c9ddfcfa9e173e3eb056a7eb46ff7f2d99c54f2d",
+      "actualCheckout": "87df9ba9a287e7761f73392c7851e249ecc2c6c6",
+      "tree": "326f7b99269ca17629ecef462721123c9b6bb291",
+      "orderedMergeParents": [
+        "ac5d69585a52a6e945dc996ea08030e190574699",
+        "c9ddfcfa9e173e3eb056a7eb46ff7f2d99c54f2d"
+      ],
+      "runId": 42998020660,
+      "event": "pull_request",
+      "runAttempt": 1,
+      "logProvesCheckout": true,
+      "completeTreeVerification": {
+        "leaves": 2076,
+        "treeObjects": 284,
+        "untruncated": true
+      }
+    },
+    {
+      "label": "0a2d066-pane-diagnostics",
+      "head": "0a2d0661ef651be6b2ea6c5586f58bce686973c6",
+      "actualCheckout": "f705fd2b678298d810b715963908f31c4086ac5f",
+      "tree": "328cc454cb1a5022955bf8aa93741584a3a6be4e",
+      "orderedMergeParents": [
+        "ac5d69585a52a6e945dc996ea08030e190574699",
+        "0a2d0661ef651be6b2ea6c5586f58bce686973c6"
+      ],
+      "runId": 42999747451,
+      "event": "pull_request",
+      "runAttempt": 1,
+      "logProvesCheckout": true,
+      "completeTreeVerification": {
+        "leaves": 2076,
+        "treeObjects": 284,
+        "untruncated": true
+      }
+    }
+  ],
+  "records": [
+    {
+      "file": "source-job.log",
+      "bytes": 31864,
+      "sha256": "d3f3f0f4b8adc0ca526aab5a9ef59001c775be3abe68666aec11d62ce1c86caf",
+      "gitBlob": "bda683a4511f150e3f4b39065f5b38c8a8efe2f4",
+      "kind": "complete-original-decoded-job-log",
+      "readbackExact": true,
+      "lineCountByLf": 363,
+      "normalization": "none; original BOM, CRLF/LF and final newline preserved",
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130452657632/logs"
+    },
+    {
+      "file": "native-job.log",
+      "bytes": 528014,
+      "sha256": "ba21bc3878a95d9f564057a1e73f8d38c24db3b18e4596dbc25f383f64124813",
+      "gitBlob": "0c96c4a5b64f948b40f0f1b364dfd529e1ff0e4f",
+      "kind": "complete-original-decoded-job-log",
+      "readbackExact": true,
+      "lineCountByLf": 2148,
+      "normalization": "none; original BOM, CRLF/LF and final newline preserved",
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130453312644/logs"
+    },
+    {
+      "file": "adjacent-0b99266-native.log",
+      "bytes": 465708,
+      "sha256": "e274a46a8efd9c3f2ddfd875f1e4ce29f8d2cc0b43a3c993e2f017847654f8e2",
+      "gitBlob": "5c1662baeb5b4d21345133fd60df7eb4665bc03f",
+      "kind": "complete-original-decoded-job-log",
+      "readbackExact": true,
+      "lineCountByLf": 2089,
+      "normalization": "none; original BOM, CRLF/LF and final newline preserved",
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130441347661/logs"
+    },
+    {
+      "file": "adjacent-c9ddfcf-native.log",
+      "bytes": 482385,
+      "sha256": "3e1701a0d297f331aba8d7402782c77c840a607ae24a4197317fd8a7b377d7dc",
+      "gitBlob": "854cf6a9506a1321c764f1e8241e7952e89c014e",
+      "kind": "complete-original-decoded-job-log",
+      "readbackExact": true,
+      "lineCountByLf": 2102,
+      "normalization": "none; original BOM, CRLF/LF and final newline preserved",
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130447331638/logs"
+    }
+  ],
+  "metadata": {
+    "file": "metadata.json",
+    "kind": "normalized selected GitHub API fields",
+    "adjacentSourceJobs": "success by completed metadata only; their original source logs were not fetched",
+    "archiveAccess": "metadata only; no ZIP extracted and no image or raw member inspected"
+  },
+  "sourceGate0a2": {
+    "file": "source-job.log",
+    "jobId": 130452657632,
+    "checkoutLine": 123,
+    "subset": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 56.222783,
+      "lines": [
+        160,
+        167
+      ]
+    },
+    "fullFabricSuite": {
+      "tests": 49,
+      "passed": 49,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 121.861975,
+      "lines": [
+        266,
+        273
+      ]
+    },
+    "relationship": "The 13 tests are included in the subsequent 49-test Fabric suite; do not add them as 62 distinct tests. This is not the separate 1,204-test root suite.",
+    "publicApi": {
+      "packages": 1,
+      "typedSubpaths": 8,
+      "reachableDeclarations": 44,
+      "line": 286
+    }
+  },
+  "outcome0a2": {
+    "file": "native-job.log",
+    "jobId": 130453312644,
+    "checkoutLine": 111,
+    "compiledNativePackage": true,
+    "compiledConsumerExecutable": true,
+    "deployedConsumer": true,
+    "nativeStepConclusion": "failure",
+    "firstFailure": {
+      "line": 2064,
+      "text": "2026-11-11T10:08:20.8599475Z UIA smoke failed: The actual native drawer did not collapse and expand\r",
+      "message": "The actual native drawer did not collapse and expand"
+    },
+    "secondaryStack": {
+      "line": 2075,
+      "scriptLine": 296,
+      "meaning": "The outer final failure rethrow after cleanup, not a new independent cause."
+    },
+    "exit": {
+      "line": 2081,
+      "code": 1
+    },
+    "observedProgress": [
+      {
+        "lines": [
+          1954,
+          1961
+        ],
+        "meaning": "Navigation checks began; settings focus-return and resize selection checks returned; resize screenshot reported."
+      },
+      {
+        "lines": [
+          1962,
+          1964
+        ],
+        "meaning": "RTL action followed by the selection observation and reported screenshot; this establishes control-flow progress through the executed predicate, not independently verified physical-left geometry."
+      },
+      {
+        "lines": [
+          1965,
+          1967
+        ],
+        "meaning": "LTR, close-pane and open-pane actions were reported before the drawer assertion."
+      }
+    ],
+    "processAtFailure": {
+      "line": 2065,
+      "processId": 880,
+      "reportedExited": false,
+      "originalHwndExists": true,
+      "windowProcessId": 880
+    },
+    "matchingAppWerRecordCount": {
+      "line": 2070,
+      "count": 0,
+      "limit": "This app-scoped result does not establish a comprehensive absence of all process or system errors."
+    },
+    "highContrastAcceptanceStageReached": false,
+    "testedPackageRetention": "skipped",
+    "testedPackageUpload": "skipped"
+  },
+  "adjacentOutcomes": [
+    {
+      "file": "adjacent-0b99266-native.log",
+      "runId": 42996235176,
+      "jobId": 130441347661,
+      "firstFailure": {
+        "line": 2005,
+        "text": "2026-11-11T09:45:13.5565494Z UIA smoke failed: The actual native pane toggle did not mirror for RTL\r"
+      },
+      "exit": {
+        "line": 2022,
+        "code": 1
+      },
+      "meaning": "Before the native width/alignment mutation, the strict toggle-mirroring predicate failed."
+    },
+    {
+      "file": "adjacent-c9ddfcf-native.log",
+      "runId": 42998020660,
+      "jobId": 130447331638,
+      "firstFailure": {
+        "line": 2019,
+        "text": "2026-11-11T09:56:47.9907458Z UIA smoke failed: The actual native drawer did not collapse and expand\r"
+      },
+      "exit": {
+        "line": 2036,
+        "code": 1
+      },
+      "meaning": "After the sole native width/alignment mutation, execution reached the later drawer collapse/restore predicate and failed there."
+    }
+  ],
+  "exactSourceComparison": {
+    "beforeToNativeMutation": {
+      "from": "0b99266c09723b73bf4c4be061d7ed8de4935fc2",
+      "to": "c9ddfcfa9e173e3eb056a7eb46ff7f2d99c54f2d",
+      "changedLeaves": [
+        {
+          "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronNavigationView.cpp",
+          "before": "88a7321c5cc8cf54410be57591b92c6f356c6ed3",
+          "after": "785dffe481334a6050d150ab472db97269b070be",
+          "modeBefore": "100644",
+          "modeAfter": "100644"
+        }
+      ],
+      "unchangedLeaves": 2075,
+      "navigationScriptUnchanged": true,
+      "scriptBlob": "7e84a1292e901a4fb39e7d2620ec8018b56c7022",
+      "nativeDelta": {
+        "addedBytes": 1394,
+        "netAddedLf": 27,
+        "exactThreeSpanInverse": true,
+        "behavior": "Adds ConstrainToggleButton: searches the owned NavigationView template for TogglePaneButton, sets HorizontalAlignment=Left and Width=CompactPaneLength, calls it after props and in the existing low-priority callback."
+      }
+    },
+    "nativeMutationToPaneDiagnostics": {
+      "from": "c9ddfcfa9e173e3eb056a7eb46ff7f2d99c54f2d",
+      "to": "0a2d0661ef651be6b2ea6c5586f58bce686973c6",
+      "changedLeaves": [
+        {
+          "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+          "before": "7e84a1292e901a4fb39e7d2620ec8018b56c7022",
+          "after": "b22915d16935d68b8397a3be6a12578a0205f688",
+          "modeBefore": "100644",
+          "modeAfter": "100644"
+        }
+      ],
+      "unchangedLeaves": 2075,
+      "nativeBlobUnchanged": true,
+      "behavior": "Adds Describe-Pane candidate diagnostics; it does not change the largest-area selection, strict predicates or waits."
+    },
+    "retainedSourceBoundary": [
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronNavigationView.cpp",
+        "gitBlob": "785dffe481334a6050d150ab472db97269b070be",
+        "bytes": 24439
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+        "gitBlob": "b22915d16935d68b8397a3be6a12578a0205f688",
+        "bytes": 16905
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+        "gitBlob": "d7c28b5525ffe6ed5363460c70db62935c0bbee6",
+        "bytes": 34710
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.cpp",
+        "gitBlob": "561bd52c4780fb59ece93f5538c2631f912a70e2",
+        "bytes": 11391
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.h",
+        "gitBlob": "2d88c35324b84a65d5e7ef240f2969d7effbf3e7",
+        "bytes": 2616
+      }
+    ],
+    "lifecycleLimit": "The external head still uses d7c28b55/561bd52c/2d88c353 lifecycle files, not the reviewed a2148fdc/be0d4e84/0c3ae907 corrections. Do not transfer these native results to PR63."
+  },
+  "nativeGeometry": {
+    "evidence": "Selected fixed fields from complete original console trace lines; full lines remain in the original logs. Trace sequence numbers identify records, not tests.",
+    "rows": [
+      {
+        "file": "adjacent-0b99266-native.log",
+        "line": 2003,
+        "sequence": 107,
+        "stage": "nav-props-applied",
+        "isRTL": "True",
+        "flowDirection": "1",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "320",
+        "toggleFlow": "1",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320r"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+320r"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+272r"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+60r"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@32+16r"
+          }
+        ]
+      },
+      {
+        "file": "adjacent-0b99266-native.log",
+        "line": 2004,
+        "sequence": 108,
+        "stage": "nav-after-layout",
+        "isRTL": "True",
+        "flowDirection": "1",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "320",
+        "toggleFlow": "1",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320r"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+320r"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+272r"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+60r"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@32+16r"
+          }
+        ]
+      },
+      {
+        "file": "adjacent-c9ddfcf-native.log",
+        "line": 2011,
+        "sequence": 107,
+        "stage": "nav-props-applied",
+        "isRTL": "True",
+        "flowDirection": "1",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "320",
+        "toggleFlow": "1",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320r"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+320r"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+272r"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+60r"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@32+16r"
+          }
+        ]
+      },
+      {
+        "file": "adjacent-c9ddfcf-native.log",
+        "line": 2012,
+        "sequence": 108,
+        "stage": "nav-after-layout",
+        "isRTL": "True",
+        "flowDirection": "1",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "48",
+        "toggleFlow": "1",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320r"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+48r"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+4r"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+22r"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@32+16r"
+          }
+        ]
+      },
+      {
+        "file": "adjacent-c9ddfcf-native.log",
+        "line": 2016,
+        "sequence": 112,
+        "stage": "nav-after-layout",
+        "isRTL": "False",
+        "flowDirection": "0",
+        "navigationWidth": "48",
+        "toggleX": "0",
+        "toggleWidth": "48",
+        "toggleFlow": "0",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+48l"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+48l"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+4l"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+60l"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@16+16l"
+          }
+        ]
+      },
+      {
+        "file": "adjacent-c9ddfcf-native.log",
+        "line": 2018,
+        "sequence": 114,
+        "stage": "nav-after-layout",
+        "isRTL": "False",
+        "flowDirection": "0",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "48",
+        "toggleFlow": "0",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320l"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+48l"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+4l"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+22l"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@16+16l"
+          }
+        ]
+      },
+      {
+        "file": "native-job.log",
+        "line": 2008,
+        "sequence": 107,
+        "stage": "nav-props-applied",
+        "isRTL": "True",
+        "flowDirection": "1",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "320",
+        "toggleFlow": "1",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320r"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+320r"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+272r"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+60r"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@32+16r"
+          }
+        ]
+      },
+      {
+        "file": "native-job.log",
+        "line": 2009,
+        "sequence": 108,
+        "stage": "nav-after-layout",
+        "isRTL": "True",
+        "flowDirection": "1",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "48",
+        "toggleFlow": "1",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320r"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+48r"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+4r"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+22r"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@32+16r"
+          }
+        ]
+      },
+      {
+        "file": "native-job.log",
+        "line": 2013,
+        "sequence": 112,
+        "stage": "nav-after-layout",
+        "isRTL": "False",
+        "flowDirection": "0",
+        "navigationWidth": "48",
+        "toggleX": "0",
+        "toggleWidth": "48",
+        "toggleFlow": "0",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+48l"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+48l"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+4l"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+60l"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@16+16l"
+          }
+        ]
+      },
+      {
+        "file": "native-job.log",
+        "line": 2015,
+        "sequence": 114,
+        "stage": "nav-after-layout",
+        "isRTL": "False",
+        "flowDirection": "0",
+        "navigationWidth": "320",
+        "toggleX": "0",
+        "toggleWidth": "48",
+        "toggleFlow": "0",
+        "selectedTemplateLayoutFields": [
+          {
+            "name": "RootGrid",
+            "observation": "RootGrid@0+320l"
+          },
+          {
+            "name": "TogglePaneButton",
+            "observation": "TogglePaneButton@0+48l"
+          },
+          {
+            "name": "ContentPresenter",
+            "observation": "ContentPresenter@44+4l"
+          },
+          {
+            "name": "PaneTitleTextBlock",
+            "observation": "PaneTitleTextBlock@48+22l"
+          },
+          {
+            "name": "Icon",
+            "observation": "Icon@16+16l"
+          }
+        ]
+      }
+    ],
+    "coordinates": "toggleX and named layout positions come from TransformToVisual(m_navigation), not screen coordinates. Named layout offsets and widths are cast to int by the producer; they are not inspected rendered pixels.",
+    "interpretation": "For c9 and 0a2 the later RTL record has a 320-wide NavigationView and a 48-wide toggle; closed/open native NavigationView widths are 48 then 320. This is distinct from the UIA-selected candidate width and does not prove which element the failing predicate measured.",
+    "titleRisk": "The same trace narrows the first named ContentPresenter from 272 to 4 and PaneTitleTextBlock from 60 to 22. Pinned template/source intentionally places the title in a full-width toggle when appropriate. This supports reviewing layout semantics before adoption; no rendered clipping was inspected and the width mutation is not endorsed by this receipt."
+  },
+  "selectorAudit": {
+    "source": {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+      "gitBlob": "b22915d16935d68b8397a3be6a12578a0205f688"
+    },
+    "nativePaneLines": [
+      100,
+      111
+    ],
+    "collapseLines": [
+      217,
+      239
+    ],
+    "exactPredicate": "if ($closedWidth -ge $openWidth-100) { throw \"The actual native drawer did not collapse and expand\" }",
+    "selection": "The executed selector chooses the largest Width*Height among all descendants named NYC-Tron, without IsEmpty, visibility or finiteness guards.",
+    "demonstratedSourceHazard": "System.Windows.Rect.Empty has negative-infinite dimensions whose product is positive infinity, so it can replace a valid pane candidate. The separate physical-left predicate also lacks a finite, nonempty candidate guard. This is a reachable source/geometry defect, not an observation of the selected runtime candidate in these runs.",
+    "exactFailedRuntimeCandidate": "unknown; candidate identity, closed/open UIA widths and pane breadcrumbs are in an uninspected artifact member, not in the retained console output",
+    "shippingBehaviorCause": "unknown; the logs do not distinguish a selected-target/measurement issue from a shipping pane-behavior problem",
+    "relatedGuard": "The separately authored dc38acc5 guard is source-only follow-up and was not executed by these historical runs."
+  },
+  "environment0a2": {
+    "file": "native-job.log",
+    "records": [
+      {
+        "startLine": 1770,
+        "endLine": 1772,
+        "attempt": 1,
+        "sourceRevision": "f705fd2b678298d810b715963908f31c4086ac5f",
+        "processId": 880,
+        "appToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "driverProcessId": 9876,
+        "shellProcessId": 3708,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "existingShellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "observedTrue": 8,
+          "observedFalse": 2,
+          "unobserved": 2
+        },
+        "enableLua": 1
+      },
+      {
+        "startLine": 1801,
+        "endLine": 1803,
+        "attempt": 2,
+        "sourceRevision": "f705fd2b678298d810b715963908f31c4086ac5f",
+        "processId": 880,
+        "appToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "driverProcessId": 9876,
+        "shellProcessId": 3708,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "existingShellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "observedTrue": 8,
+          "observedFalse": 2,
+          "unobserved": 2
+        },
+        "enableLua": 1
+      },
+      {
+        "startLine": 1854,
+        "endLine": 1856,
+        "attempt": 3,
+        "sourceRevision": "f705fd2b678298d810b715963908f31c4086ac5f",
+        "processId": 880,
+        "appToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "driverProcessId": 9876,
+        "shellProcessId": 3708,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "existingShellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "observedTrue": 8,
+          "observedFalse": 2,
+          "unobserved": 2
+        },
+        "enableLua": 1
+      },
+      {
+        "startLine": 1886,
+        "endLine": 1888,
+        "attempt": 4,
+        "sourceRevision": "f705fd2b678298d810b715963908f31c4086ac5f",
+        "processId": 880,
+        "appToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "driverProcessId": 9876,
+        "shellProcessId": 3708,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "existingShellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "observedTrue": 8,
+          "observedFalse": 2,
+          "unobserved": 2
+        },
+        "enableLua": 1
+      }
+    ],
+    "interpretation": "All four console summaries record High integrity RID 12288, TokenElevation 1, elevation type 1 and UIAccess 0 for the app and existing shell. Existing-shell eligibility is observed-ineligible with eight true, two false and two unobserved predicates. Progress in the run is not evidence of a supported unelevated host.",
+    "rawFiles": "Original per-attempt environment files were not extracted. Exact full console JSON remains in native-job.log; unsafe-integer FILETIME fields were not reserialized into this receipt."
+  },
+  "primarySourceReview": {
+    "windowsAppSdk": {
+      "repository": "microsoft/microsoft-ui-xaml",
+      "revision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+      "provenanceLimit": "Files fetched at the earlier matching PDB source revision; no new C13 checksum validation of these individual files.",
+      "files": [
+        {
+          "path": "src/controls/dev/NavigationView/NavigationView.cpp",
+          "gitBlob": "371152af1e0692f5f8dfc379173c61fbb7e77c5d",
+          "relevant": "UpdatePaneToggleSize and UpdatePaneTitleFrameworkElementParents preserve the titled full-width toggle."
+        },
+        {
+          "path": "src/controls/dev/NavigationView/NavigationView.xaml",
+          "gitBlob": "a21c87b48e29d0dd25beacaa4ae62167947e14fe",
+          "relevant": "PaneTitleTextBlock is a toggle child; MenuItemsHost inherits the NavigationView automation name, so that name is not unique."
+        },
+        {
+          "path": "src/controls/dev/NavigationView/NavigationView_themeresources.xaml",
+          "gitBlob": "aa3ff11b2c3128dd198d7140417594cfa6fe5c74",
+          "relevant": "PaneToggleButtonStyle places the 16-by-16 Raw accessibility Icon and title content in separate columns."
+        }
+      ]
+    },
+    "rectangleContract": "https://learn.microsoft.com/en-us/dotnet/api/system.windows.rect.empty?view=windowsdesktop-10.0",
+    "borrowedSchemeCorrection": {
+      "status": "separate source-supported ownership finding; not executed by a new owned candidate in this receipt",
+      "repository": "dotnet/dotnet",
+      "commit": "461c220ba5d192fea95ca9249b22b96d3c9e9903",
+      "path": "src/winforms/src/System.Private.Windows.Core/src/Windows/Win32/PInvokeCore.SystemParametersInfo.cs",
+      "gitBlob": "c52fc3df81c9eccd38a1db134d76457c49cb2b85",
+      "bytes": 4028,
+      "sha256": "efab1e24b2e1f665f6cea9e2df667844ceab04b005104e86cac5658f902e05f2",
+      "officialImplementation": "https://source.dot.net/Microsoft.Private.Windows.Core/Windows/Win32/PInvokeCore.SystemParametersInfo.cs.html",
+      "conflictingReference": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-highcontrastw",
+      "interpretation": "The official .NET implementation explicitly contradicts the reference's free requirement for SPI_GETHIGHCONTRAST. It supports copying the borrowed GET scheme without LocalFree while preserving FreeHGlobal for our SET allocation. It does not establish the cause of a historical driver crash, and no underlying Windows implementation was inspected."
+    }
+  },
+  "limits": [
+    "All three native jobs failed; none produced a passed tested-package distribution.",
+    "Screenshots and ZIP members were not inspected. ZIP digests and member counts are producer/API reports, not independently recomputed archive hashes.",
+    "The later external 594b6170 source and any of its outcomes are outside this receipt.",
+    "No run was dispatched or rerun, no host/security configuration changed and no source/ref/PR was mutated to obtain this evidence.",
+    "This receipt does not close final combined-source, supported-host or eight-platform acceptance gates."
+  ]
+}

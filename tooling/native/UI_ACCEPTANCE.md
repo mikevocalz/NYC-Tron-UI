@@ -59,10 +59,13 @@ Every original failed report, screenshot and log is copied into an independent
 snapshot under `settings-initial-transport-failure` before another attempt.
 `transport-recovery.json` hashes those retained bytes and records the snapshot
 interval before recovery. These snapshots do not claim to be complete post-exit
-logs: existing driver handles may still write to the original files, preserved
-separately under `settings-initial-transport-live`. The scoped native evidence
-uploads include the driver's hidden `debug/.maestro` logs. The installed app
-payload is unchanged. The complete Settings flow then runs with the same semantic
+logs: existing driver handles may still write to the original files, which stay
+in `settings` with the original `settings-maestro.log` beside it. Keeping them in
+place avoids renaming directories with open driver handles on Windows. The one
+retry writes to `settings-retry` and its own command log and hierarchy; its flow
+receipt names those actual paths. The scoped native evidence uploads include the
+driver's hidden `debug/.maestro` logs. The installed app payload is unchanged.
+The complete Settings flow then runs with the same semantic
 assertions, and any second failure is final. Editor, pointer, later edits,
 ordinary assertion failures and unproven cancellations are never retried.
 Only a successful full suite produces `result.json`, which records any recovery

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-only-popover-response-observation-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "checkpoint": {
+    "asOfUtc": "2026-11-11T11:39:18Z",
+    "commit": "f8c180be8af630886274f71313fa229ea6074001",
+    "tree": "d6e3e01f3cc6dd3ea913f1135654bb08491211fb",
+    "parents": [
+      "bd3ba9af7bba06ab2653806a3acf2525e28927a7"
+    ],
+    "publicationStatus": "prepared-unreferenced-no-separate-PR62-run",
+    "intendedIntegration": "Root will integrate this one-file source into the combined candidate for ordinary native CI. No ref, workflow dispatch or retry was performed for this prepared child.",
+    "sourcePath": "examples/macos-appkit/spark/verify-native.mjs",
+    "preimage": "8c3176f220c5b038b2f1c7d1bbbc41dc693606f2",
+    "candidate": {
+      "gitBlob": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+      "bytes": 128984,
+      "sha256": "06da9207bda3fec1b8b599d1de1517c64e124683ba2718800078ef5b2b24b298"
+    },
+    "treeScope": {
+      "leaves": 2050,
+      "directoryHashes": 284,
+      "changedLeaves": 1,
+      "unchangedLeaves": 2049,
+      "independentlyVerifiedBy": "final_gate_review",
+      "authorCheck": "Author fetched exact immutable commit/tree/sole-parent metadata; full tree gate is the independent reviewer's separate check."
+    },
+    "nodeFilesystemExecution": false,
+    "nativeExecution": false
+  },
+  "why": {
+    "completedOutcome": "../v1-appkit-bd3ba9a-document-popover-timeout/",
+    "runId": 43007235899,
+    "attempt": 1,
+    "nativeJobId": 130477798290,
+    "executedPreimage": "8c3176f220c5b038b2f1c7d1bbbc41dc693606f2",
+    "failedLines": {
+      "caller": 1440,
+      "wait": 1148
+    },
+    "failedPredicate": "current.shown && current.contentVisible",
+    "observedProgress": "Prior owner selections, native protocol transfer checks and newer-window focus preservation returned before this failed document-inspector presentation wait.",
+    "unknown": "The separate shown/contentVisible values, any current frame/region failure, and cause are unobserved in the retained prefix-only console data. No shipping correction is established by those records."
+  },
+  "change": {
+    "exactTransforms": 2,
+    "helperFunctions": [
+      "projectPopoverResponse",
+      "createPopoverObservation",
+      "capturePopoverResponse",
+      "popoverObservationSummary",
+      "reportPopoverFailure"
+    ],
+    "scope": "Capture existing returned tron.popover values inside shownPopover's existing wait. Only wait rejection emits this diagnostic; subsequent native/geometry assertions remain outside the new catch.",
+    "emittedFields": [
+      "fixed main/document-1 owner or null",
+      "typed nativePopover",
+      "typed shown/contentVisible",
+      "finite-or-null frame/region with fixed read status",
+      "guarded nonempty/containment booleans or null",
+      "bounded-identity-string presence/equality booleans or null",
+      "response/change/omission counts and overflow/capture flags"
+    ],
+    "privacy": "The first accepted identity string is bounded to128 code units and retained only in private observation memory. Raw pointer strings, arbitrary class/status/token/error text and other native response fields are absent from this projection.",
+    "identityMeaning": "String-shape presence and equality to the first bounded observed string only, not actual native-object presence or liveness.",
+    "limits": {
+      "selectedRecords": 8,
+      "privateIdentityStringCodeUnits": 128,
+      "consoleEnvelopeUtf8Bytes": 8192
+    },
+    "selection": "First and last responses plus latest projected state changes. Separate counts expose omitted responses/state changes and byte-limit removals.",
+    "failureFile": "popover-show-failure.json",
+    "writeMode": "wx",
+    "consoleMarkers": [
+      "NYCTRON_POPOVER_SHOW_EVIDENCE_BEGIN",
+      "NYCTRON_POPOVER_SHOW_EVIDENCE_END"
+    ],
+    "errors": "Fixed write status/code only; diagnostic exceptions are secondary. The original request, process, predicate or timeout Error is rethrown unchanged.",
+    "noNewNativeRequests": true
+  },
+  "preserved": [
+    "Exact current.shown && current.contentVisible predicate and wait label.",
+    "Byte-identical existing waitFor20s deadline/50ms pause and tron.popover request helper.",
+    "Original post-wait native-type/positive-frame/region-start/region-end assertions and order.",
+    "Existing successful popovers.json retention and complete later runtime/error/cleanup source.",
+    "All shipping components, native driver, activation/focus operations, workflows and host/security configuration."
+  ],
+  "review": {
+    "source": {
+      "author": "desktop_host_audit",
+      "root": "approved",
+      "final_gate_review": "approved"
+    },
+    "harness": {
+      "status": "passed",
+      "rootReproduction": "same-eight-designs-passed",
+      "countsAreNotCumulative": true,
+      "scope": "Exact extracted verifier functions in V8 with mocked driver, clock, assertions and IO; no Node filesystem or native execution.",
+      "designCount": 8,
+      "groups": [
+        {
+          "name": "exact identities, two-edit inverse, original wait/request/predicate/assertion/runtime suffix and V8 parse only",
+          "status": "passed"
+        },
+        {
+          "name": "typed false-versus-unknown predicates, finite geometry/overflow, bounded identity shape and own-data-only projection",
+          "status": "passed"
+        },
+        {
+          "name": "first/last/change accounting, private identity baseline, owner allowlist and safe-counter overflow",
+          "status": "passed"
+        },
+        {
+          "name": "same successful three-response polling, original response/assertion order and popovers retention",
+          "status": "passed"
+        },
+        {
+          "name": "same 20-second timeout/Error identity and 400-command sequence for false shown, hidden content and unknowns",
+          "status": "passed"
+        },
+        {
+          "name": "request/process/predicate errors keep exact objects without extra requests or getter calls",
+          "status": "passed"
+        },
+        {
+          "name": "exclusive first-file preservation and secondary file/console errors with unchanged primary timeout",
+          "status": "passed"
+        },
+        {
+          "name": "eight-record finite-numeric envelope bound/omissions and unchanged postpoll native/geometry assertions",
+          "status": "passed"
+        }
+      ],
+      "metrics": {
+        "timeoutPolls": 400,
+        "timeoutMilliseconds": 20000,
+        "timeoutNativeRequests": 400,
+        "delayedSuccessPolls": 3,
+        "delayedSuccessMilliseconds": 100,
+        "normalEnvelopeBytes": 1631,
+        "maximumNumericEightRecordEnvelopeBytes": 4951
+      },
+      "nativeExecution": false,
+      "nodeFilesystemExecution": false,
+      "reproduction": "Author, root and final_gate_review passed the same eight designs, not twenty-four independent designs."
+    },
+    "runtimeBoundary": "Exact extracted JavaScript functions execute with mocked driver, clock, assertions and IO in V8. Whole-verifier check is parse-only. No actual Node filesystem, AppKit/native invocation or success on the new source is claimed."
+  },
+  "collector": {
+    "code": {
+      "outputEnvironment": "APPKIT_EVIDENCE",
+      "outputLine": 13,
+      "filenameLine": 1242,
+      "exclusiveWriteLine": 1263
+    },
+    "helperWorkflow": {
+      "gitBlob": "c46871c2e8b065b478da8ed1946432a2d05502b9",
+      "environmentLine": 158,
+      "alwaysLine": 162,
+      "wholeEvidenceDirectoryLine": 169
+    },
+    "aggregateWorkflow": {
+      "gitBlob": "73a526c3768fa21b3d8a0b071db47ebfa9cc5bf8",
+      "environmentLine": 177,
+      "alwaysLine": 181,
+      "wholeEvidenceDirectoryLine": 188
+    },
+    "sourceProof": "Both exact existing workflows assign the same output directory used by the verifier and upload that entire directory under always(); the fixed new JSON file is included without a workflow change.",
+    "actualFileRetained": false
+  },
+  "artifacts": [
+    {
+      "path": "edit-manifest.json",
+      "gitBlob": "7a3c63f0833f363d4879c752821300cb979dee2a",
+      "bytes": 14203,
+      "sha256": "ffcd1173ca78e83e0323e623a3f075bfd67ae728c96ddf8229630b2d7347df10"
+    },
+    {
+      "path": "review-checks.js",
+      "gitBlob": "31ce5ea4b79c145464d9e87f0349557a37152149",
+      "bytes": 25211,
+      "sha256": "be894bbdc4650b38d5094f22504104d33ad32fd8965b96d3a541168e59cd7b65"
+    }
+  ],
+  "limits": [
+    "The completed bd3 native failure remains separate from this unexecuted source correction.",
+    "No cause is inferred from missing or unknown projected values.",
+    "400 polls/requests and20,000 milliseconds are mock metrics, not a promised real-run response count.",
+    "No ref, PR, dispatch, unchanged retry, host/security or original acceptance change was made by the author."
+  ]
+}

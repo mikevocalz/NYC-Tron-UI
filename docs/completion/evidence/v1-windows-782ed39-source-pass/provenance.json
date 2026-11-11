@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-windows-navigation-source-suite-pass",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "helper": "782ed3911dd35950797f7417fed813f5fa669c4e",
+    "helperParent": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "actualCheckout": "dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b",
+    "tree": "7eb00e6b03fdec748227d03db04b232eb93a28d8",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "782ed3911dd35950797f7417fed813f5fa669c4e"
+    ],
+    "actualCheckoutObservedInAllThreeOriginalLogs": true,
+    "navigationBlob": "877c51ea1e16918968a6929e389c1f61f4a4e23d"
+  },
+  "run": {
+    "id": 43011337381,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "originalFiles": [
+    {
+      "path": "linux-source-job.log",
+      "gitBlob": "6286b51eb2c6b9c95149927e3830feb631f87c3f",
+      "bytes": 155917,
+      "sha256": "81176fe7d6bb6d1a1aa3f45ca1075dbb90eb80b31eff2abba1878d4a6d98d3f7",
+      "jobId": 130491406028,
+      "checkoutLines": [
+        {
+          "line": 122,
+          "text": "2026-11-11T11:22:00.6241514Z dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b"
+        }
+      ],
+      "summaryLines": [
+        {
+          "line": 1410,
+          "text": "2026-11-11T11:22:42.4127785Z ℹ tests 1204"
+        },
+        {
+          "line": 1412,
+          "text": "2026-11-11T11:22:42.4128214Z ℹ pass 1204"
+        },
+        {
+          "line": 1413,
+          "text": "2026-11-11T11:22:42.4128400Z ℹ fail 0"
+        },
+        {
+          "line": 1414,
+          "text": "2026-11-11T11:22:42.4128586Z ℹ cancelled 0"
+        },
+        {
+          "line": 1415,
+          "text": "2026-11-11T11:22:42.4128783Z ℹ skipped 0"
+        },
+        {
+          "line": 1417,
+          "text": "2026-11-11T11:22:42.4129182Z ℹ duration_ms 17785.90368"
+        }
+      ]
+    },
+    {
+      "path": "windows-source-job.log",
+      "gitBlob": "e6b7a9c00291cf4e5fa9d7ede8d45e258fd47e4d",
+      "bytes": 198175,
+      "sha256": "3f23cc353a8770e69d35bc39a3e7b2a86f04d323bead5196f72d0b9b6ea48ee1",
+      "jobId": 130491405973,
+      "checkoutLines": [
+        {
+          "line": 109,
+          "text": "2026-11-11T11:22:05.2866641Z dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b"
+        }
+      ],
+      "summaryLines": [
+        {
+          "line": 1416,
+          "text": "2026-11-11T11:24:11.1128717Z ℹ tests 1204"
+        },
+        {
+          "line": 1418,
+          "text": "2026-11-11T11:24:11.1129144Z ℹ pass 1204"
+        },
+        {
+          "line": 1419,
+          "text": "2026-11-11T11:24:11.1129340Z ℹ fail 0"
+        },
+        {
+          "line": 1420,
+          "text": "2026-11-11T11:24:11.1129918Z ℹ cancelled 0"
+        },
+        {
+          "line": 1421,
+          "text": "2026-11-11T11:24:11.1130202Z ℹ skipped 0"
+        },
+        {
+          "line": 1423,
+          "text": "2026-11-11T11:24:11.1130624Z ℹ duration_ms 59411.0954"
+        },
+        {
+          "line": 1429,
+          "text": "2026-11-11T11:24:12.9044819Z Validated 619 built conditional package exports and 750 ESM files."
+        },
+        {
+          "line": 1801,
+          "text": "2026-11-11T11:24:52.9274061Z Wrote 13 tarballs and SHA256SUMS to D:\\a\\_temp\\nyc-tron-packs"
+        },
+        {
+          "line": 1808,
+          "text": "2026-11-11T11:24:56.3142947Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent"
+        }
+      ]
+    },
+    {
+      "path": "types-and-pack-job.log",
+      "gitBlob": "b71b936317a9c7f4d91aa7ebdb25569c50643a91",
+      "bytes": 62301,
+      "sha256": "23f10ea6d6da4e11f2962f6ea655c810af1f2a8a9e7441167f6414fd6f374396",
+      "jobId": 130491405587,
+      "checkoutLines": [
+        {
+          "line": 122,
+          "text": "2026-11-11T11:22:01.5897268Z dad54be82f3912e4ab3fc7e1fff6f7db70ebb81b"
+        }
+      ],
+      "summaryLines": [
+        {
+          "line": 248,
+          "text": "2026-11-11T11:23:07.2703186Z Validated 619 built conditional package exports and 750 ESM files."
+        },
+        {
+          "line": 605,
+          "text": "2026-11-11T11:23:07.3368525Z API surface matches snapshot: 13 packages, 619 export subpaths."
+        },
+        {
+          "line": 610,
+          "text": "2026-11-11T11:23:09.5600475Z API signatures match: 13 packages, 619 subpaths, 3306 reachable declarations."
+        },
+        {
+          "line": 615,
+          "text": "2026-11-11T11:23:10.1802651Z Component program: 341 canonical IDs; 332 local implementations, 0 partial, 9 pinned external implementations, 0 pending; 0 accepted with all eight platform proofs."
+        },
+        {
+          "line": 633,
+          "text": "2026-11-11T11:23:44.0772437Z Wrote 13 tarballs and SHA256SUMS to /home/runner/work/_temp/nyc-tron-packs"
+        },
+        {
+          "line": 640,
+          "text": "2026-11-11T11:23:44.7714807Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "gitBlob": "5ee873d40244bf1e94e4aede7a12d87086537a03",
+    "bytes": 12049,
+    "sha256": "672e28a425c2a213b8bd2917f40c9bdab1ab520e5bc4ca6a3d360dcec446703a",
+    "scope": "Normalized API metadata retrieved after all three jobs completed; complete original job logs are retained separately."
+  },
+  "results": {
+    "linux": {
+      "tests": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMilliseconds": 17785.90368
+    },
+    "windows": {
+      "tests": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMilliseconds": 59411.0954
+    },
+    "counting": "The same suite on two hosts; not 2,408 unique tests.",
+    "exports": {
+      "conditionalExports": 619,
+      "esmFiles": 750
+    },
+    "api": {
+      "packages": 13,
+      "subpaths": 619,
+      "reachableDeclarations": 3306
+    },
+    "roster": {
+      "canonicalIds": 341,
+      "local": 332,
+      "pinnedExternal": 9,
+      "partial": 0,
+      "pending": 0,
+      "acceptedAcrossAllEightPlatforms": 0
+    },
+    "packaging": {
+      "lanes": [
+        "workspace TypeScript",
+        "tests and pack on Windows"
+      ],
+      "archivesPerLane": 13,
+      "freshImportsPerLane": 17,
+      "archiveBytesInspected": false
+    }
+  },
+  "limits": [
+    "This receipt is the completed source/type/packaging result for exact helper 782ed391 and actual checkout dad54be8.",
+    "The separate native workflow 43011337384, attempt 1, has no outcome assigned by this receipt.",
+    "The source checks do not establish actual Raw Icon peer existence, complete native acceptance, supported-host eligibility or original tested-archive verification.",
+    "Producer archive/checksum output is retained in original logs; binary archives and cross-producer identity were not independently inspected here.",
+    "Original 341-ID and all-eight-platform scope, physical/device, speech, performance and final owner-manifest approval remain unchanged."
+  ]
+}

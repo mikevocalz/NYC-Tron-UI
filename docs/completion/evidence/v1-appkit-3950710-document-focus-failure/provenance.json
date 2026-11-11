@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "kind": "external-appkit-completed-attempt-source-and-outcome",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "reviewedSource": {
+    "head": "3950710601981e53960da6057b99721ecb43044c",
+    "tree": "b50228fd5e3e5af0a0913828e09b96e278854b6f",
+    "baselineHead": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+    "baselineTree": "da0cbf6c7dedd2505a963db67d53d8f2810f23d2",
+    "orderedHistoryAfterBaseline": [
+      "f0196b0ef8ee8408d6e30cf17bd0e4b7d365dc72",
+      "3950710601981e53960da6057b99721ecb43044c"
+    ],
+    "fullTreeCheck": {
+      "bothTreesUntruncated": true,
+      "leavesPerTree": 2050,
+      "treeObjectsIncludingRootPerTree": 284,
+      "allDirectoryHashesRecomputedAndMatched": true,
+      "changedLeaves": 2,
+      "otherLeavesAndModesUnchanged": 2048
+    },
+    "changedFiles": [
+      {
+        "path": "packages/macos-appkit/spark/README.md",
+        "before": {
+          "mode": "100644",
+          "gitBlob": "5978122a5d665c27ffeffe865e0fbae61b64a7ab",
+          "bytes": 18487
+        },
+        "after": {
+          "mode": "100644",
+          "gitBlob": "e21949759367d791399482b60ce0f6e771b0c90a",
+          "bytes": 18777,
+          "sha256": "f857f506e4846a0178ca7937180fa2e6ebdb5055525da9535f19f9615004b8cc"
+        }
+      },
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+        "before": {
+          "mode": "100644",
+          "gitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+          "bytes": 13581
+        },
+        "after": {
+          "mode": "100644",
+          "gitBlob": "89a3081770279a87403af32d4b9045e9154f5d4a",
+          "bytes": 16773,
+          "sha256": "7f4cf2bc36074a0db26a10e902ae13a94481844a9d97f4ff7b5f92cc039ffd17"
+        }
+      }
+    ],
+    "unchanged": {
+      "nativeDriver": "353fa05f0f2e0e939538c7fbaacdcdb449f44bd8",
+      "verifier": "f21e9349b35922ad689a2f6320ed651b5557de64",
+      "fixture": "8826fb256b24b780450ee2634ad78dad457642dd",
+      "workflow": "c46871c2e8b065b478da8ed1946432a2d05502b9"
+    },
+    "adoptedIntoReviewedCandidate": false
+  },
+  "actualCheckout": {
+    "commit": "b130aa3710c01190c5a247ece9d0e1773df88caf",
+    "tree": "b50228fd5e3e5af0a0913828e09b96e278854b6f",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "3950710601981e53960da6057b99721ecb43044c"
+    ],
+    "proof": "Both original checkout logs and fetched immutable Git commit metadata agree."
+  },
+  "sourceReview": {
+    "presentation": "Tries requested vertical edge, opposite vertical edge, then layout-direction-ordered horizontal edges; caches a fitting edge for a shown popover; disables animation for later probes and restores it.",
+    "unchangedGate": "The final actual-frame containment and rejection path remain.",
+    "unchangedSuffix": "All source from viewDidMoveToWindow through EOF is byte-identical, including owner observation, property updates, dismissal, focus restoration and recycling.",
+    "shippingLogs": "New unconditional presentation-decision logs include generated scope/presentation tokens and geometry. These have not been adopted into the reviewed candidate.",
+    "primaryAPI": "https://developer.apple.com/documentation/appkit/nspopover/show(relativeto:of:preferrededge:).md",
+    "primaryAPIScope": "Apple documents that a call while already shown updates the anchored view, rectangle and preferred edge. This is source-contract support, not proof of runtime placement.",
+    "externalCommitAttribution": "Prior-run frame values and causal descriptions in the external commits are not independently established by this receipt; the original underlying app-log files remain uninspected."
+  },
+  "originalLogs": {
+    "native": {
+      "file": "native-job.log",
+      "jobId": 130442369577,
+      "gitBlob": "ca6bdf7762ff496759b205385254f4d269c83ab3",
+      "bytes": 88009,
+      "sha256": "9a99c37c36b873cb8bcf8c0c0e65bf0a90eb097ed235b9a1fd6ab2ffd7c97e9f",
+      "utf8BOM": true,
+      "lineEndings": "LF",
+      "lineCount": 618,
+      "scope": "Complete decoded GitHub job log, retained without modification."
+    },
+    "source": {
+      "file": "source-job.log",
+      "jobId": 130442172816,
+      "gitBlob": "903a901b8e717ac0e9a98fa4e204474e582411c1",
+      "bytes": 19615,
+      "sha256": "d8de8ca6db2d6689ba9920855ef0fd86a1145d900e603f20df6be5e924ef5bd0",
+      "utf8BOM": true,
+      "lineEndings": "LF",
+      "lineCount": 242,
+      "scope": "Complete decoded canonical core job log, retained without modification."
+    }
+  },
+  "observedOutcome": {
+    "runId": 42996616807,
+    "attempt": 1,
+    "nativeJobId": 130442369577,
+    "status": "failure",
+    "completedAt": "2026-11-11T09:54:42Z",
+    "firstFailure": {
+      "type": "AssertionError",
+      "message": "Expected values to be strictly equal: false !== true",
+      "nativeLogLines": [
+        534,
+        545
+      ],
+      "sourceFile": "examples/macos-appkit/spark/verify-native.mjs",
+      "sourceBlob": "f21e9349b35922ad689a2f6320ed651b5557de64",
+      "sourceLine": 1257,
+      "expression": "(await inspect(undefined, 'document-1')).key === true",
+      "actual": false,
+      "expected": true
+    },
+    "returnedBeforeFailure": [
+      "Second document-1 show polling",
+      "Main inspector close command",
+      "Native inspector dismissed status wait",
+      "Main popover shown=false wait"
+    ],
+    "notReached": [
+      "Next main.key === false assertion at line 1258",
+      "Document inspector presentation at line 1265, including the previously failed edge case",
+      "Owner minimization checks",
+      "Later real pointer/native dragging gates"
+    ],
+    "completionBoundary": "The external f21 verifier has no object-specific didClose/subsequent-main-turn witness at this immediate key assertion. This observation gap does not establish the cause of document-1.key being false.",
+    "counts": {
+      "coreSource": {
+        "passed": 13,
+        "failed": 0
+      },
+      "consumerSource": {
+        "passed": 16,
+        "failed": 0
+      },
+      "installedPublicAPI": {
+        "subpaths": 15,
+        "reachableDeclarations": 33
+      },
+      "nativeTransportProbe": {
+        "cases": 7,
+        "passed": true
+      },
+      "notCombinedIntoNativePass": true
+    },
+    "compileStep": {
+      "number": 9,
+      "conclusion": "success"
+    },
+    "nativeAcceptanceStep": {
+      "number": 10,
+      "conclusion": "failure"
+    },
+    "tooltipSummary": "passed",
+    "testedDistributionStep": {
+      "number": 12,
+      "conclusion": "skipped"
+    }
+  },
+  "inspectedConsoleProjections": {
+    "BUILD": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 0,
+      "rawJSON": {
+        "gitBlob": "7648a520c9ab12406dcf4c2fe6ee3693ba22fb93",
+        "bytes": 318,
+        "sha256": "b4de0138c8c8b9e328a26175e2b16bf472049a734f01a2ea81b460590c977e6e"
+      },
+      "retainedLocation": "Exact JSON line remains in native-job.log; no reserialized replacement is used."
+    },
+    "STARTUP": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 0,
+      "rawJSON": {
+        "gitBlob": "7cd995fd34e66769ef1c60b0e5e6d55058c88bd5",
+        "bytes": 31184,
+        "sha256": "ad1192caa573b38672ef288dff6c29538939212a307ff7643ca02d6e0c41127c"
+      },
+      "retainedLocation": "Exact JSON line remains in native-job.log; no reserialized replacement is used."
+    },
+    "TOOLTIP": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 0,
+      "rawJSON": {
+        "gitBlob": "8a26513d0bfde7b761cc3b84b76cc1c59482f071",
+        "bytes": 2799,
+        "sha256": "6169a091447e6dbef36b9bfb1ad1a20c38c31fb23a17092bf01500acb0369bc7"
+      },
+      "retainedLocation": "Exact JSON line remains in native-job.log; no reserialized replacement is used."
+    }
+  },
+  "producerOnlyInputs": {
+    "compilerTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329230,
+      "sha256": "a1bb8676018127bfbcaac3997b6d37e8fee5e58ec94ca0f6f35ac2aca8533089",
+      "complete": true,
+      "normalized": false
+    },
+    "appLogSnapshot": {
+      "filename": "startup-app-log-snapshot.log",
+      "kind": "read-time-prefix-from-live-app-log",
+      "offset": 0,
+      "bytes": 287158,
+      "sha256": "aa81151aa2388eb051fed816bcda9d092c9f698a421b45989d4e619f81a1533a",
+      "retained": true,
+      "eventualAppLogHash": false
+    },
+    "commandsFile": {
+      "bytes": 236656,
+      "sha256": "9d91fc1265f23af065dca0e7a6ea065ec2561d0a8e3f32b1651ed4ab85b293f3",
+      "producerReportsCompleteRead": true
+    },
+    "processFile": {
+      "bytes": 1321,
+      "sha256": "5d0e20361e2e6a8510bf8f3a3fabf5145acd0202e970b088184eb1952c875201"
+    },
+    "tooltipFile": {
+      "filename": "tooltip-hover.json",
+      "bytes": 32230,
+      "sha256": "fb156f2fbc59a884d44ea5f2387536604a3b7393d9680ee17c599da67491ea0f",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    },
+    "processSample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 18,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "e8c9e821f3e3daf1e77e54b87d5b04eb2fa7e16ad29c9e21ef137527ac5f41d8",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true
+    },
+    "inspectedOriginalBytes": false,
+    "note": "The inspected native log contains these producer claims; the original listed files, compiler transcript, sample stacks, ZIP contents and screenshots were not opened.",
+    "sampleDurationScope": "The sample duration and interval fields describe the producer's requested sampling parameters; no elapsed-time or stack interpretation is derived here."
+  },
+  "artifact": {
+    "id": 13844364651,
+    "uploadedFiles": 54,
+    "bytes": 1675818,
+    "sha256": "2365b722807c67dc39f9798d6196bb8be77a300a0a390287d33be9595fceac35",
+    "digestScope": "Producer log and GitHub artifact API agree; ZIP bytes uninspected."
+  },
+  "limitations": [
+    "Source review does not prove that alternate-edge placement succeeds for the document inspector; attempt 1 stopped earlier.",
+    "The false key observation does not identify a focus-stealing callback, delayed close, or other cause.",
+    "Full command-file read is producer-reported, while the inspected console retains only 32 of 462 fixed-field command records and no raw late key-state response object.",
+    "This receipt does not adopt either changed shipping file or authorize a ref, CI, host, security or launcher action.",
+    "Attempt 2 is retained only as a separate 10:11:24 UTC metadata snapshot; it is not an additional outcome in this receipt."
+  ]
+}

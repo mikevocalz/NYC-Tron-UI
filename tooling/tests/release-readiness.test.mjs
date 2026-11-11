@@ -192,7 +192,8 @@ test("release retains candidate archives before readiness and requires both nati
 });
 
 test("manual candidate runs cannot publish without explicit opt-in, even when every gate passes", () => {
-  const workflow = readFileSync(new URL("../../.github/workflows/release.yml", import.meta.url), "utf8");
+  // Git can check out this YAML with CRLF on Windows.
+  const workflow = readFileSync(new URL("../../.github/workflows/release.yml", import.meta.url), "utf8").replace(/\r\n/g, "\n");
   const dispatch = workflow.slice(workflow.indexOf("  workflow_dispatch:"), workflow.indexOf("\npermissions:"));
   const input = dispatch.match(/^      publish:\n((?:        .*\n)+)/m)?.[1];
   assert.ok(input, "manual publication must have an explicit input");

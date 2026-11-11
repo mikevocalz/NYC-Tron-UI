@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed attempt 2 only; API-listed earlier core-job timestamps preserved; no fresh source execution inferred.",
+  "sourceRevision": "3f9d3ad376bd6b4514ca691997c56dfc74888bec",
+  "helperHead": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+  "retainedFiles": [
+    {
+      "path": "native-job.log",
+      "gitBlob": "1f97c28e8794c9026d4f07d7bda59ea73aee149d",
+      "bytes": 80372,
+      "sha256": "636d5ccfabc54ab9df44ffcbee363cda6db72cefa9bcbc1cbeed8db6723ad36e"
+    },
+    {
+      "path": "README.md",
+      "gitBlob": "41af94d81fd6f7659b60dc949611cbcd23317c7c",
+      "bytes": 3315,
+      "sha256": "cf121838c40b31072d8bb37c5fe61d170b7f7a8e4a37deacd70c30d6defa2b4e"
+    },
+    {
+      "path": "workflow-metadata.json",
+      "gitBlob": "25c521c22276f38f2eaf6fd1b813a332c3c420b9",
+      "bytes": 10127,
+      "sha256": "bdf7c505d3ff03fe47655631b3c18b78c3b140f3d3bf1650ca5211ae17a13774"
+    }
+  ],
+  "sharedSourceLog": {
+    "listedJobId": 130411622915,
+    "gitBlob": "142302be32d13db6f5b8356054474fae554531c7",
+    "bytes": 19614,
+    "sha256": "18930c31d6bc6a1c77f08c2af02efb70f6b19019ddc3a6ee9a6cc9bf8ac28442",
+    "identicalToAttemptOne": true,
+    "retainedPath": "../v1-appkit-0bee669-secondary-policy-refusal/source-job.log",
+    "independentNewExecutionEstablished": false
+  },
+  "limits": [
+    "Original decoded native log bytes are retained exactly, without newline normalization.",
+    "The API-listed earlier core timestamps and byte-identical log do not establish a second source execution.",
+    "Artifact digest remains producer/API-reported; ZIP members and pixels were not inspected.",
+    "No retry, cancellation, host/security change, acceptance promotion or source change was performed for this receipt."
+  ]
+}

@@ -1,0 +1,1622 @@
+{
+  "schemaVersion": 1,
+  "kind": "reviewed-combined-source-and-evidence-manifest",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "preparedAt": "2026-11-11 11:44:03 UTC",
+  "base": {
+    "commit": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+    "tree": "87cfe23f3dfe5cb8111cb104b0108df57fec9459"
+  },
+  "intendedSoleParent": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+  "sourceOverlay": {
+    "helpers": {
+      "appkit": {
+        "commit": "f8c180be8af630886274f71313fa229ea6074001",
+        "tree": "d6e3e01f3cc6dd3ea913f1135654bb08491211fb",
+        "parents": [
+          "bd3ba9af7bba06ab2653806a3acf2525e28927a7"
+        ],
+        "separatelyPublished": false
+      },
+      "windows": {
+        "commit": "782ed3911dd35950797f7417fed813f5fa669c4e",
+        "tree": "7eb00e6b03fdec748227d03db04b232eb93a28d8",
+        "parents": [
+          "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+        ],
+        "publishedPr": 63
+      }
+    },
+    "sourceOnlyTree": "71307312406a2c692a1fe74ab2b146e90dd518f6",
+    "leafCount": 3152,
+    "directoryCount": 513,
+    "changedLeaves": 15,
+    "unchangedLeaves": 3137,
+    "changes": [
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "before": "209e0ebfee4b9ba7fe902b64ec1bd09ae108b000",
+        "after": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "mode": "100644",
+        "type": "blob",
+        "source": "mac"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "before": "a82e2fc7df3bde243eb6d053a97e310c39b1293c",
+        "after": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+        "mode": "100644",
+        "type": "blob",
+        "source": "mac-popover-diagnostic"
+      },
+      {
+        "path": "packages/macos-appkit/spark/README.md",
+        "before": "19316ab2ac2c68d7340589d9fb540f897884048f",
+        "after": "97a554f649de9663913895e416c45cd51e24a873",
+        "mode": "100644",
+        "type": "blob",
+        "source": "mac"
+      },
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+        "before": "fc5da2316f654c491e39bdd0898f24e6d784d90a",
+        "after": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+        "mode": "100644",
+        "type": "blob",
+        "source": "mac"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+        "before": "d86f3b1454d93996606faa11d2f25fa7a9fea7d1",
+        "after": "a2148fdc939011492f52df1b6899a613a17cddae",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.cpp",
+        "before": "561bd52c4780fb59ece93f5538c2631f912a70e2",
+        "after": "be0d4e845fda172e69519871f3a014d1ae3620ec",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/NativeDragBroker.h",
+        "before": "2d88c35324b84a65d5e7ef240f2969d7effbf3e7",
+        "after": "0c3ae907418020400b7baf9f96b054ae2a37a944",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+        "before": "070424fa54f1645cc6be02187647f84732a6b53c",
+        "after": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "tooling/native/ui-transport.mjs",
+        "before": "9a362c4b7af481c01beeb7bd0f7b03a9a692080b",
+        "after": "fbf804293b94406b65a36d273f4c2528825b4bc4",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "tooling/native/run-ui-acceptance.mjs",
+        "before": "50d0a3435fb52f4ad1b73df224fc01436f5d443b",
+        "after": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "tooling/tests/native-ui-transport.test.mjs",
+        "before": "9e62b8505328cc9e76cf6a361571565eb0fc11a3",
+        "after": "750bcf5cd84d5b00b50b0e2820bd0012a3893619",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "tooling/native/UI_ACCEPTANCE.md",
+        "before": "a3a51e499711f026463b9ff6b571422f730c0cf8",
+        "after": "d4fa0c0fad6829965108e0a6da78b77678e9cc91",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "tooling/tests/release-readiness.test.mjs",
+        "before": "62ba8325d3695a6e04e2144f70748f72327abf90",
+        "after": "d5f217076df126f8160982d07db05e8cee288889",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/IslandConnection.h",
+        "before": "afcd61d50584a90cc58ab8dbd77c2bcc2a602be1",
+        "after": "5b8b1054bcc13d09e958be40709a6273b797d11f",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+        "before": "cb69ad47c11d6b868957a2a72feb8fb27319d975",
+        "after": "877c51ea1e16918968a6929e389c1f61f4a4e23d",
+        "mode": "100644",
+        "type": "blob",
+        "source": "windows-navigation"
+      }
+    ]
+  },
+  "report": {
+    "path": "docs/completion/reports/V1-RELEASE-GATES.md",
+    "mode": "100644",
+    "type": "blob",
+    "before": "f65b5b3a293ef6e40c65653e422e5b82b52b493a",
+    "after": "e6842e36098997ee8dff8afb4a12c07d79dcddb1",
+    "bytes": 156790,
+    "sha256": "e2659fef068f39794312791b3c602c73e851b52933a6a9354072ece56d342dd7",
+    "historicalSuffixPreserved": true
+  },
+  "receipts": {
+    "folderCount": 23,
+    "fileCount": 161,
+    "bytes": 7135952,
+    "folders": [
+      {
+        "folder": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit",
+        "files": 13,
+        "bytes": 595743,
+        "readmeBlob": "633d071de013a213dbf6fcc2feb626b56e012982"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure",
+        "files": 13,
+        "bytes": 606477,
+        "readmeBlob": "763a19778910206442f4be469469f69137c1fcea"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-0bee669-attempt2-policy-refusal",
+        "files": 4,
+        "bytes": 95583,
+        "readmeBlob": "41af94d81fd6f7659b60dc949611cbcd23317c7c"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source",
+        "files": 5,
+        "bytes": 133312,
+        "readmeBlob": "92030693509b752e6a90edab70d1fb14eecc5d7f"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-7a160c5-lifecycle-source",
+        "files": 4,
+        "bytes": 78095,
+        "readmeBlob": "157903e93e7d5f97753e7cc0e638ba976088ff09"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-native-ui-retention-portability-source",
+        "files": 4,
+        "bytes": 28011,
+        "readmeBlob": "0ae2a448f137e782d0efb9c318e8652aa734b038"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-release-readiness-0596aa2-crlf-source",
+        "files": 4,
+        "bytes": 22093,
+        "readmeBlob": "7e801ce12634f8443aab19a4ab1cca80af7e8ced"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure",
+        "files": 6,
+        "bytes": 342092,
+        "readmeBlob": "4e23ec3f01245d01f7e88eade5b6fe79ffbf1fd9"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout",
+        "files": 10,
+        "bytes": 219110,
+        "readmeBlob": "63a06cfeca4fc235d060b8da01829fd570cb8422"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout",
+        "files": 10,
+        "bytes": 244926,
+        "readmeBlob": "c20c1a40d7fae225f36b993f719b0758dc5cb73b"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-c4d4148-show-observation-source",
+        "files": 4,
+        "bytes": 46565,
+        "readmeBlob": "28f74956971110710da594c0de4e7410edba0167"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit",
+        "files": 16,
+        "bytes": 1034051,
+        "readmeBlob": "a877ccf409bb1431c5160a07c5664162e759caa3"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-3950710-document-focus-failure",
+        "files": 5,
+        "bytes": 134932,
+        "readmeBlob": "d9700a7f99d5e23ab2d0ded5090fae5281e72390"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout",
+        "files": 11,
+        "bytes": 206053,
+        "readmeBlob": "ea39627513d28a202afed224f195f9c6585658d7"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source",
+        "files": 6,
+        "bytes": 49472,
+        "readmeBlob": "9213b0837a26f86b85cdb3e1a60b408333e5e3e5"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure",
+        "files": 7,
+        "bytes": 1596662,
+        "readmeBlob": "ca762b708102d2bafe0201992727fa005ea9af52"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-bd3ba9a-active-owner-source",
+        "files": 4,
+        "bytes": 56899,
+        "readmeBlob": "e73e66e1112feea9230ff8b113d9fefab602561d"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass",
+        "files": 6,
+        "bytes": 429331,
+        "readmeBlob": "7033f32c57c0c4e52875d1f594722150bfde13ed"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout",
+        "files": 9,
+        "bytes": 218745,
+        "readmeBlob": "5c893987838e0eefef2e360d6372b587439008ac"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-782ed39-raw-rtl-source",
+        "files": 4,
+        "bytes": 68656,
+        "readmeBlob": "30fe6a5a3337f607eaaf8dfec6a5fffb4bbab2b6"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-782ed39-source-pass",
+        "files": 6,
+        "bytes": 438091,
+        "readmeBlob": "9ba2433c7ce1117088181dbfefd2d71bccfa91d7"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-f8c180b-popover-observation-source",
+        "files": 4,
+        "bytes": 53619,
+        "readmeBlob": "05a27d32cf4df3431e5dc0c12d54647a41d3aed6"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable",
+        "files": 6,
+        "bytes": 437434,
+        "readmeBlob": "7c9c9ba421be0fe69ba906866322a770bf7b4216"
+      }
+    ],
+    "files": [
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "633d071de013a213dbf6fcc2feb626b56e012982",
+        "bytes": 8905,
+        "sha256": "84923fafcdfbc5612e68d2ca34e7e9bf0fc232660e45fa45086d0b11258d4719"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5effff9f0719c9647b13f737ea3bf84b75d0ea85",
+        "bytes": 27384,
+        "sha256": "0b17d85f8739b1761a77ae042e6130e729884e716f152deb3b8181640a838cc6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/workflow-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e94f964d08d0a68b4eacfea9bc3f71f355d4c15a",
+        "bytes": 18622,
+        "sha256": "93eb88f3b38f1538debcf7686d391a3f8da5762c61905a6b87d7b89f3d5db9d5"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1c45dd188fe48d5b2bdda7343495bd0303e3174f",
+        "bytes": 31868,
+        "sha256": "48b8b8b1e1981f8398e4383587d018995c81bf7ae8327e65fe7f80254d5dba0b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3526edd6c606e6a1953c3e43a2c93a5104b21f95",
+        "bytes": 392648,
+        "sha256": "d6ebcb503c5c892b969404944f1c81d841ee01709ae000316f85683642f80a7a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-01-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b4ef83c8058a5d1dc8ee02cc276af427e6bbc1f",
+        "bytes": 14464,
+        "sha256": "58501760fad45ddd06643b1737f29730f8d53aba7f1e96bcdc331a2c8eec09f3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-01-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9605c23b0f7e9af7bfdc6beb43fd9728dc96f817",
+        "bytes": 14615,
+        "sha256": "cc3c84acfa5a3571ed0968d7cf666659e14afb21df202263dc2b34e09a18ac14"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-02-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1e39bf3d03d20632aebb6bf6f26354afaf935056",
+        "bytes": 14464,
+        "sha256": "02124a58ab8631bc4cc9001ce0afad7351eb88d2f7d794d60e17749a567c0f41"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-02-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4bad84373b04141a4005b473255b4b5be44a93f7",
+        "bytes": 14615,
+        "sha256": "ff6d01d5f4d5fe6459914fa0ab13cbaa800a14d398e47834db7b3f0d357f48de"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-03-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eed724bdb04e89320ec18b4d5612acc182a2d6b2",
+        "bytes": 14464,
+        "sha256": "6b8474bb7915204d65be9ae0ac6207b102d5f853a1c06559cc5236a46889ade7"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-03-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "faaaca90dcde31e6a997ebc6e717e8dc82d61a2e",
+        "bytes": 14615,
+        "sha256": "cba3a1a938f3bd98c655aca13b70b4f1f42c2b957f6a1c15cd15de587a7a5ecf"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-04-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ae907bf1f3e76d7f26601c8e93625e9591d3f78",
+        "bytes": 14464,
+        "sha256": "18d36d13b693cb162512afe0adcbdb11161e68f8a116de160cd98c7810aa1ef2"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-d1d955a-drag-progress-smoke-exit/drag-environment-04-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59fe2933198b7c043e65a8ca62fc9d3d4a25d31f",
+        "bytes": 14615,
+        "sha256": "f865e5cb48ad003bb4a5268cef3d20cf4dcabc312f99936d01cda1884819a6f4"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "763a19778910206442f4be469469f69137c1fcea",
+        "bytes": 9036,
+        "sha256": "35b3e5852fc1c1f54933cbdf78b78d9928b53572ad7b6339398ba0886098fe26"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20e6d54f99e2723f2f23c641ea0709e342349b05",
+        "bytes": 30589,
+        "sha256": "1dced96371c019e380fdd06825e79981006d7d5809218ebc278521cc88958b1c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/workflow-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "492d90ed6d2bc169b86e0b11790f9c80500bea87",
+        "bytes": 22616,
+        "sha256": "621119024c91b9a316c308374306a54c33f8873e97017c5940eaf1cd05466366"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "91624fd513800b88d8b71c51e7c9f2dcfeafe6f0",
+        "bytes": 31860,
+        "sha256": "73999164ce9246176beeea1df1ebfa44bb8ed8f4f9cdc76981948449a40d9e45"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8bb08f3c2829c828b6002e75bd5d74dc739961d0",
+        "bytes": 396292,
+        "sha256": "73069eb9e236dc238ac4f2c64e95df6d57047f39576ec6b3b1d63e7a83a97607"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-01-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dfd4dd0624fc4ec2c28c437263e02ddba21947e1",
+        "bytes": 14435,
+        "sha256": "48b2cb116bf756ae0fefba58cdd649e65a6b3842aed6a90ecb0ee7ad84fefd5c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-01-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a002938da76947d5769128d72495c69139291cef",
+        "bytes": 14586,
+        "sha256": "1d89a1d4f940f666194efff01f3958211c38d2f30515e8e94d42da29ff68d280"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-02-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cffa3d6f28678158701c35daafc65c712d1ce80e",
+        "bytes": 14435,
+        "sha256": "5ae7cabf9b1451bcbbcf87429da5107aeb01d55cf75da4dd3ae9a83ffaa5fdb1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-02-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2889b135625ec557e0e1c7fd70c7da49e7869c85",
+        "bytes": 14586,
+        "sha256": "c1f3f510725b1d4f42ee1d298dfd4476081f7b210ffffe3b594bb05322f8144a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-03-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d3d1843a566800cd23db2d338f8d2655d25e3a0",
+        "bytes": 14435,
+        "sha256": "1359c810af111567abba9f14307eda7289986a416aa88d91ed47e11d1455ef18"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-03-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d537777c04a7d2fb1f475ed8259c1a92daf777d",
+        "bytes": 14586,
+        "sha256": "8b87bf4bcf7412d485982a8bd726de49260735bb5cb9816c716cb20cff2530e3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-04-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ac4746b4b3f5d6f6eec1955f86726fda4a368272",
+        "bytes": 14435,
+        "sha256": "1991c799555141b3aded84c904a26bff2d379ae476cd648820139cdd1eafdf30"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-03de1fd-powershell-heap-failure/drag-environment-04-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8f1174a71452480ba78cbd5af242e7184084602e",
+        "bytes": 14586,
+        "sha256": "89af035ffa1b797efa76782cc676c28d77ea0504f9089a18037cc6def9084be5"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-0bee669-attempt2-policy-refusal/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1f97c28e8794c9026d4f07d7bda59ea73aee149d",
+        "bytes": 80372,
+        "sha256": "636d5ccfabc54ab9df44ffcbee363cda6db72cefa9bcbc1cbeed8db6723ad36e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-0bee669-attempt2-policy-refusal/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "41af94d81fd6f7659b60dc949611cbcd23317c7c",
+        "bytes": 3315,
+        "sha256": "cf121838c40b31072d8bb37c5fe61d170b7f7a8e4a37deacd70c30d6defa2b4e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-0bee669-attempt2-policy-refusal/workflow-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "25c521c22276f38f2eaf6fd1b813a332c3c420b9",
+        "bytes": 10127,
+        "sha256": "bdf7c505d3ff03fe47655631b3c18b78c3b140f3d3bf1650ca5211ae17a13774"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-0bee669-attempt2-policy-refusal/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9f6ee814cdf4bb398663b8e040a36691bb81f505",
+        "bytes": 1769,
+        "sha256": "f21dbf4c530fa586143b7c18cf2db6913bea859f1d68d665516a14dc1ef990e1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "92030693509b752e6a90edab70d1fb14eecc5d7f",
+        "bytes": 10694,
+        "sha256": "f54ad949c33840281af9450f99d30395935dbec59f68e3100b9b9fb6f813092e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "40dab25a947de1556e04567d5569146e5d10a0e4",
+        "bytes": 18220,
+        "sha256": "17e7df7d977d37b76b629c487e8c742dde50161624bd8b2db7dddd026be16836"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "18b6d60c24d99fcc45a323e1e4a891dd98a0bd0d",
+        "bytes": 53088,
+        "sha256": "718eaa37e5bce7137851885a51483058e11ed907de10861ea29d01d022c05eaa"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source/source-edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9fb47225df6f3e82b7a40c8e48f3f2dc08284009",
+        "bytes": 40941,
+        "sha256": "8326c18166f8ab1f7cf7db860aa489040640df8da248c58335197c7bf6f6e526"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-reviewed-acceptance-source/composition-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4829444f7f12634bf0d329f7ebc15087542bee90",
+        "bytes": 10369,
+        "sha256": "271d67ccb9fb257e8d1b73ff9c87fb3aaf4934dccd7658736057b9cd966d2280"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-lifecycle-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "157903e93e7d5f97753e7cc0e638ba976088ff09",
+        "bytes": 7425,
+        "sha256": "f42aba1829baa6c75255b44082e81eb917aad19044c773d7c34c9747b4689d92"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-lifecycle-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "84e6b21739b7a790a2c04472fc04929b0ef632f3",
+        "bytes": 11237,
+        "sha256": "f157a1da3835dd6d247d1248c9bd9c9529a8767b227a65de4487a115496a7cab"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-lifecycle-source/composition-check.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9411559937415d80235d150ee18e4d7ea15db5bd",
+        "bytes": 3751,
+        "sha256": "c291b03ce09ef03187e0f245af9dce69b360f8efee06763fb083d2c5af09d13c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-lifecycle-source/native-edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e1a666db4e7ad8f13dc0059b8bd3bd205e140c09",
+        "bytes": 55682,
+        "sha256": "a136c033a97d04ffcec188ae7800d39edd1915e3a7fc5feb063f71158060d7bf"
+      },
+      {
+        "path": "docs/completion/evidence/v1-native-ui-retention-portability-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0ae2a448f137e782d0efb9c318e8652aa734b038",
+        "bytes": 5173,
+        "sha256": "01cee78fab2d92d4f5363ab45b54c1e50bf1fe10a113198599154545501c9456"
+      },
+      {
+        "path": "docs/completion/evidence/v1-native-ui-retention-portability-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2fb974afc61a72433ac2ae4502c3f2f0a6f57a0a",
+        "bytes": 5727,
+        "sha256": "6ac05ee7ae02d3a4a3bf356e72cd14c347f1f523f98381b0b580cd2bf5370697"
+      },
+      {
+        "path": "docs/completion/evidence/v1-native-ui-retention-portability-source/flow-check.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5f7ee7a5703f2cfac71966de245d079e4986277c",
+        "bytes": 4304,
+        "sha256": "b116804e20b58968796c5eac31a8f6a2520d5a2367fc92691f3b0456e4215287"
+      },
+      {
+        "path": "docs/completion/evidence/v1-native-ui-retention-portability-source/edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb34dbee47aafd124c8f10f2b17ef2e1aca9daaf",
+        "bytes": 12807,
+        "sha256": "f376f0dbb537230c938a9b3de7ee1bd43eb7d17f68b239aa2fe7699c5f090d19"
+      },
+      {
+        "path": "docs/completion/evidence/v1-release-readiness-0596aa2-crlf-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e801ce12634f8443aab19a4ab1cca80af7e8ced",
+        "bytes": 4911,
+        "sha256": "04d0171a394bd0bbd522889bd2026cfeece6756ddf7c7d33943329acce42e6ce"
+      },
+      {
+        "path": "docs/completion/evidence/v1-release-readiness-0596aa2-crlf-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e8fd6cf42c8d6c945ae6a16199cf37e09c5f353d",
+        "bytes": 7476,
+        "sha256": "6e380665f169400fab4cd4afab4acbc3d834173903bb551c9df305d3ba6a6223"
+      },
+      {
+        "path": "docs/completion/evidence/v1-release-readiness-0596aa2-crlf-source/source-edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "77216836f4b837e237504ab0dae035a911c3cca9",
+        "bytes": 1918,
+        "sha256": "6ade6383fc3280323ae4a19bce30f84042115fa6705851bcc34c56e95841b16c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-release-readiness-0596aa2-crlf-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3c795786a7288649fe5d06ecf7b74accb610bca5",
+        "bytes": 7788,
+        "sha256": "d3e2d796ac0185ea85554ccd85b214ed5df7b097575f87ab7f8b4e1417e9e2e0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e23ec3f01245d01f7e88eade5b6fe79ffbf1fd9",
+        "bytes": 7439,
+        "sha256": "3a8e0d84700350f2c0659e597ac7e8806071f525b36412a09fa092efb02d3754"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "73cabb2ee3477def01965e7bc43ee553c5654953",
+        "bytes": 11185,
+        "sha256": "ce820771535bebc81c53d0c1aa6433ba77e95baa72939f62092b004f8b9c7cce"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure/metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28957e769c2959e73195d8ac29b53e9cb674bfa0",
+        "bytes": 27554,
+        "sha256": "cdefc8358849207b237c1fdc455b3864cbe9bac0af88df45dd4fcc9a78edecca"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure/workspace-windows.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "058feca66e4a22a222bc2f6ca722154be9e8fa91",
+        "bytes": 159544,
+        "sha256": "2a63568340e93933954ebe5ee651a0177ffbd29fe409e438703643b774de3b31"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure/fabric-source.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "629bd26db9ddefbfddfb11093dea49083469a824",
+        "bytes": 31860,
+        "sha256": "3c9029524aa83a9b14cadf59bb27d5e581312385aaba009e0f67c066e558176a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-7a160c5-source-native-failure/fabric-native.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "165a4650b55bed9dceeb3ba946b60628c5b7550b",
+        "bytes": 104510,
+        "sha256": "d659414884edcbce4377349925447c8b32509fdacb35d1b7af049b91f6194a7a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f5b20289953a87106df369db6969ab2ac3c3b088",
+        "bytes": 87659,
+        "sha256": "c864224a91bdf91483453da256832f29a27a593cb79173e05cae61a110f36675"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/core-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63d7e697b0c80bd8b901b8d4df35141499e788f0",
+        "bytes": 19701,
+        "sha256": "b017ba201e7908421b8a3a2bc1c61873e62a1f3d3321fe7bef1aa62ee11ab5ac"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c9ab504f1706c26f3549dd52d1670a9587dcfcce",
+        "bytes": 319,
+        "sha256": "a30bf0e4c0c365283407a9196a9fb469987de7256acede6b73911de3e76a4de0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/tooltip-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7c16a8edb76dee93638b24b7f764555ff3679d89",
+        "bytes": 2800,
+        "sha256": "b1c36c096f49cd80bb91db4fcf81fabf3c98c212751dd4523fcaa8bedad9ab56"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/tooltip-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "74dac1d745d6ecaa6358f43bedd2c6023f5a2640",
+        "bytes": 2947,
+        "sha256": "9ee59f42fd0fec32f6b4c0fb3be10c7f58ff2eb8227bdfad082a7fd6945cb8f1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/startup-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b52145858022d980b6f9eb0d0aaa7350e20c8f1",
+        "bytes": 31132,
+        "sha256": "395e052daa67ec770366079debad49bdf1d0b7de8b9674de11e601b509d88dc6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/startup-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b8b3bea500a3f16e5b94514eb21083342d6b0216",
+        "bytes": 32086,
+        "sha256": "61b14466bcab72fa2451520cf6fc1537a00450ca33da7142c94e73458c4d8862"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "136da0a18cd8db8d519c1f77057eb0209844fed6",
+        "bytes": 28210,
+        "sha256": "b8902f201e5dc04fff67bdc96ca4b9e7d79d92781a7a602f97312cfc2fc35137"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2eecb042835ec6e6aa56775f5fc890dbd3dd030e",
+        "bytes": 9306,
+        "sha256": "6a5a647fbb1f2a79c142ab9ebc729c109f2b71d4d500188da0ae6da30ec4aed2"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-057b3aa-document-popover-timeout/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63a06cfeca4fc235d060b8da01829fd570cb8422",
+        "bytes": 4950,
+        "sha256": "213c407ed09af22a0c54b720cac8f1018b3b52c21fe5efe17cc1c1f73259d691"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "947b5cd3793248f08d62cd89f4c49f8f00fbaf14",
+        "bytes": 93759,
+        "sha256": "3af2be4c28cdd40df7235d280d85b904de46e800825141e4482ba34617c4d524"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/core-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e204e59749c038d12e2ebbe5369e108974f0f3a2",
+        "bytes": 19522,
+        "sha256": "744803b65d143c4243e3f5f83c2c632274536136b170e63d527dbe591f6f772b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ea48c1b07846a7997ee57a325fce3d304eca284a",
+        "bytes": 319,
+        "sha256": "5d6dc2a7b0c641b6788c0774fdaf9f4b33fa995f7daacd965d8368c66992c97f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/tooltip-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "68fc5b333ca47e95bf803806313ef06429af69ed",
+        "bytes": 9153,
+        "sha256": "544f11bc80c50eb2b38d4700873ad00d56b097787ead59c4d3b0ad909beab82d"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/tooltip-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d1118d8bfbd5676acbb811a7e1028da03707a68b",
+        "bytes": 9300,
+        "sha256": "7f4bcd04c4561afc5eb994e683b52ea10e0905b0a7ec3d6e9d84ea43a1b56441"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/startup-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e8264247da297e83c009325658759fa19e309a9d",
+        "bytes": 31142,
+        "sha256": "2eab33ed4d4ca5fa9e4cdd2d473af601f2e75846b10df56b16ba27c685aa38d4"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/startup-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "142a259c03f9ce32d4e18e0ab55c0e149cb18766",
+        "bytes": 31990,
+        "sha256": "5178aea6e020ccb43fde9c21af6c11cfbf6f62460b8861e7a444da9e91969b27"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "768e5c74520290761313e27edd419a2ac101c1fb",
+        "bytes": 28395,
+        "sha256": "7bdd241d395f346f2476821592d0f617c2283b5dff4bb822da937f569f7848e6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d5b3cf7f9b028d91fc9c7465e68e746ef24f025c",
+        "bytes": 15999,
+        "sha256": "08fa9a9525fd5fad51bf552aa28912b2cfc0467c472ec3d4e929a88d809b08a4"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-e086797-document-focus-timeout/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c20c1a40d7fae225f36b993f719b0758dc5cb73b",
+        "bytes": 5347,
+        "sha256": "a5357dbcc3840d67743bab1608bfa6cd6e8c83531f1ac372a3574aa07a45bd14"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-show-observation-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "28f74956971110710da594c0de4e7410edba0167",
+        "bytes": 5287,
+        "sha256": "0252c825c492b0d2b45f7a58e7d2975fe19aaa96e765885c3aa6244a42a53f10"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-show-observation-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "adf294c78ce2ef721ee7a56e77ab2f65376f2c08",
+        "bytes": 9290,
+        "sha256": "022ac6a1af632dd47d4993b9bb4b99e5f268122c6d7f6b3cb5a166156883723a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-show-observation-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f694d94172236c1726a6cbf430354df4891bdff3",
+        "bytes": 12990,
+        "sha256": "b8fdaa62629d27bdc430bba54e30dbf075ad1807a633c516c12c9afdd238288f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-show-observation-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2a1f054cf5b21e9dbdb96c163a0e88a704f7900",
+        "bytes": 18998,
+        "sha256": "efe354725af8a215a30d1c33b3a376246e7774efbabe261ea48dcc45100fbd6b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a877ccf409bb1431c5160a07c5664162e759caa3",
+        "bytes": 11437,
+        "sha256": "dc26a02bf9e1947ebc887acfa3bdac93300fb781bdbcedf59077982cdda744f5"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e3e261d64484131fdd5bb62863aaced8b16b0f1",
+        "bytes": 35512,
+        "sha256": "4e9ee15ac8952ba6e074735ab39a50560a369ee006661c9827be314b468ed144"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d118a286c50ea4185a29b9796504958bf7c4762e",
+        "bytes": 29216,
+        "sha256": "f7f68ad64a78f1ccdf9d4d4e78920cb6ce621d348116c12c414aa6d96a486d0c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/source-linux.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3742023be870f97a3d79330c4730510d70197458",
+        "bytes": 156140,
+        "sha256": "6ecb90716def618fea54091d5e0d987c3ec679c9ecceff954e2606cf6075d3bd"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/source-windows.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "57147b1e56275ff22668653e5f58290e1a02c423",
+        "bytes": 198275,
+        "sha256": "3ec0afb03f1c9da947f4e63046e90bc7b6061f7dd7df9aad3eb6e1d3a8c58504"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/workspace-types.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "87accd8276a365986579d2f96d81b74961d0ab8d",
+        "bytes": 62126,
+        "sha256": "8eebce897c76013b0b78053a92732fe81ca28965395e836524ea3789717c7c2b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/fabric-source.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b5bb97aa3ccf43dc529f6dd96b84fe34c5b361a",
+        "bytes": 31688,
+        "sha256": "33898c649afddfe28be3e52b48ea7398891184c21698169adedfe0f92e3c9059"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/fabric-native.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "584c6fcdfff825993efc9e500ceded1ad9490b45",
+        "bytes": 393557,
+        "sha256": "3e2532a4d8c7fb2737ac4e8ef4b22fc908b86c5c19ea767b3420206e3f060c4c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-01.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f86b74fe200dc1ccb4770bb36140425339d2b975",
+        "bytes": 14437,
+        "sha256": "561fc7e2a259d9eb2d998a39ff14ff462fab916b0e1c9c753c60564d0a402d41"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-01.envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ee1f87b77a1d178d969bcaff6a52ba0ed7cd47de",
+        "bytes": 14588,
+        "sha256": "4d12e94572898dafeeed35652dbc418a70e29e82f7916ef062a3c0b0fb399bc8"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-02.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "702e91612cb73c2f5201477dee039516a9cdf5ad",
+        "bytes": 14437,
+        "sha256": "22ebf14469b64b64254b9a8005166195f3c6b3dcb482d572b16eebf66fe18ef3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-02.envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad9b0bde3596f7f4fe57bd7c6ee647a4b2cd0d89",
+        "bytes": 14588,
+        "sha256": "bd651a95a8eeea61e51e0ad37d6f96b98ffe1e58e39f04861d0b28a034773ec9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-03.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d36a1eea40d9778ae15ae665cea8da9341e8d078",
+        "bytes": 14437,
+        "sha256": "779d7a88f1eb80a2ec02199810f7d7259a271de23ea3fefd1d6fa0356703dce2"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-03.envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20f6ff067eae3621a864074980954cfca27eeea7",
+        "bytes": 14588,
+        "sha256": "04a2ebc470fb0eec44b59da22713552478ab3bd8ef7328984bca00270d967c1a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-04.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eb47ba9578d7a62844cbab2f3871ddd96de999c3",
+        "bytes": 14437,
+        "sha256": "404b4c2f4ee725a049d28241389e62dfd8212ffea5aba3af1538cfd4351278c7"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0596aa2-source-pass-navigation-exit/environment-04.envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "182dc2f539a041b6ef41501348a27667a17d40dc",
+        "bytes": 14588,
+        "sha256": "5293624fca6eb5ccab8f55f068ad7ff37dc1a0eaed89aa750d5f0c31201c78c0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-3950710-document-focus-failure/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d9700a7f99d5e23ab2d0ded5090fae5281e72390",
+        "bytes": 4919,
+        "sha256": "c53246e5405486bd94c3e9a0d274286f42ce9a5f0a3b3243b3205db2d665690e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-3950710-document-focus-failure/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7fdb98e4c27d2502197894c8965e57768c0f6b15",
+        "bytes": 11002,
+        "sha256": "ff7ee022601fcf119ac850ddcf4143772f50299189a5fe5387dbb53e63ecab41"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-3950710-document-focus-failure/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e2e80c001ce9b9145af2a487ac79db42d94b5e73",
+        "bytes": 11387,
+        "sha256": "f3d47358b2430c6a954a4169fe6747683e0843868676cffb1d0f541dced19627"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-3950710-document-focus-failure/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "903a901b8e717ac0e9a98fa4e204474e582411c1",
+        "bytes": 19615,
+        "sha256": "d8de8ca6db2d6689ba9920855ef0fd86a1145d900e603f20df6be5e924ef5bd0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-3950710-document-focus-failure/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ca6bdf7762ff496759b205385254f4d269c83ab3",
+        "bytes": 88009,
+        "sha256": "9a99c37c36b873cb8bcf8c0c0e65bf0a90eb097ed235b9a1fd6ab2ffd7c97e9f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ea39627513d28a202afed224f195f9c6585658d7",
+        "bytes": 5313,
+        "sha256": "9429b26fa9a76e33b454b5aa4bf3e85eb97e6e047465e1fc44b15fb5f1669d1c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecfafb1821e7bb687930ed24e30878f45034cd05",
+        "bytes": 15991,
+        "sha256": "c17ca57e1155ea7ac0126be17a2c255dc25bc996b1993c319abbdb566e4c847e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ee5278f5b9ca65cc23d50f0a624ef7d121d0eaad",
+        "bytes": 8817,
+        "sha256": "c0820bdfcf9550da93ad7497725dda59b6d9ae546cdd611f6b7279869b3bf2dd"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fea99bff21edecd9250e9a180a2523db649b8a10",
+        "bytes": 19435,
+        "sha256": "337919ac824de0cdc63f1b45b8d92c838bb92f64f79f44883c7b2ede6922f3b4"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb7a054070b9376b77834a23b5f78adc3e846c39",
+        "bytes": 90642,
+        "sha256": "0a259961617bdac3a82a659e711ce7247068356990fbf3378c1e8f5e15bcfdda"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1c578716ff204b6ff15c697cd727d54d7f8dc266",
+        "bytes": 318,
+        "sha256": "0ae4bf5fbf9696f3d83ec3c949a62be3e04327951c0cb13c9be68af6b1a6b65b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/startup-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "272b3c967dfafc93c45bf8b989175e1e181154d4",
+        "bytes": 26529,
+        "sha256": "28db93f9e0639ac4d711706b51770d418d35d45f7f91c64737344f9dee4af1c3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/startup-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c0d75c433bd3a11983657ed51181686383a48eac",
+        "bytes": 27512,
+        "sha256": "5039379f60252547433a955e0a11fa4e22a491aaff19e01767db522b609402d9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/tooltip-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "689ee2833895d85dfa2ec645ff49a555afc946c5",
+        "bytes": 9152,
+        "sha256": "f9c2623e17a47276f59c1c9ed0a4306d35e157a0c0652e5e01aed0048b3396be"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/window-show-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b9c5fb7c0c544e76f4ecbbeb30bdca7ace1ff3f4",
+        "bytes": 1094,
+        "sha256": "99dc8c1a34fe54a68f9aa420a912c4b8f5f0f353fc0fa9ad66b17df36a6c4054"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-c4d4148-document-key-timeout/window-show-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4771a3893d85bc44e0263041528a59b44c7161bc",
+        "bytes": 1250,
+        "sha256": "dce3f599826e99be6cf5093fe52482f1722ddaefcf913263b31d9f6c31974920"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9213b0837a26f86b85cdb3e1a60b408333e5e3e5",
+        "bytes": 3612,
+        "sha256": "4daefdbcc8a4428f24b84e62bc834e26a0a4635afcdbbf990356041f50d278ee"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source/review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "64b324ef0889e77451daa471942f4ddc3d4ecee0",
+        "bytes": 4937,
+        "sha256": "7fc0d0a7ac066e9b0973a2bac7072dd8559cc8fecfa3c94682a26f1eec7cbe03"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source/edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "52365ada61c9a299a64f0655dfc77f8d6333e3df",
+        "bytes": 11297,
+        "sha256": "9d30a398849caec0ad3a7bd7e693df07c9ee6fcf8c2256f3ece1a92d1966a2e1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source/checkpoint-edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1fbd65ed7e1bf3654cdb57a50a41ef81f59eb821",
+        "bytes": 8628,
+        "sha256": "26834489fe4df3e65df496391a55aa11babeb5bda64b0da6db0e4e103c7a8d69"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source/checkpoint-review.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "059d6fd4c8c1d38ee21f865ed688d20bfcb365e2",
+        "bytes": 11447,
+        "sha256": "abf6ec96c771f7813e6fedf15b2d137f2302d67e0fff1058e03ec226d8f7b16e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-navigation-ownership-and-geometry-source/pane-selection-edits.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "81849e933faf291d5b467fc7fbada6bc45a3b958",
+        "bytes": 9551,
+        "sha256": "b2d69bcde05ffe1390d89812271d3841d6615fccff932779d48ebf90f0d9de1e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ca762b708102d2bafe0201992727fa005ea9af52",
+        "bytes": 8347,
+        "sha256": "70f970d96ce9c7cc591eb86ccfd25ecb942026ec27272407a2718724db5b2113"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ac897914fd745b8988121fe471b9a10766ac4341",
+        "bytes": 32358,
+        "sha256": "fb0bda77dbc911d6f26752723a412dafd85740b2de9d44f602be3c1f3305fc46"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8a961e66c3f5c36137d21309d5ac3da0f757e8f8",
+        "bytes": 47986,
+        "sha256": "702d39f4b633aa52c28e995d950f0a78be9fc0c012030f8d324a3f3812eab36b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bda683a4511f150e3f4b39065f5b38c8a8efe2f4",
+        "bytes": 31864,
+        "sha256": "d3f3f0f4b8adc0ca526aab5a9ef59001c775be3abe68666aec11d62ce1c86caf"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0c96c4a5b64f948b40f0f1b364dfd529e1ff0e4f",
+        "bytes": 528014,
+        "sha256": "ba21bc3878a95d9f564057a1e73f8d38c24db3b18e4596dbc25f383f64124813"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/adjacent-0b99266-native.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5c1662baeb5b4d21345133fd60df7eb4665bc03f",
+        "bytes": 465708,
+        "sha256": "e274a46a8efd9c3f2ddfd875f1e4ce29f8d2cc0b43a3c993e2f017847654f8e2"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-0a2d066-navigation-selector-failure/adjacent-c9ddfcf-native.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "854cf6a9506a1321c764f1e8241e7952e89c014e",
+        "bytes": 482385,
+        "sha256": "3e1701a0d297f331aba8d7402782c77c840a607ae24a4197317fd8a7b377d7dc"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-active-owner-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e73e66e1112feea9230ff8b113d9fefab602561d",
+        "bytes": 6030,
+        "sha256": "55388f70caaa33ec66e451af28a947e2448ce7f416922627052229a200d6636f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-active-owner-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cfe2d0ea2cf1a63ec360997ff30e94df23a5f1eb",
+        "bytes": 12296,
+        "sha256": "cdf7563ce6b01985b28cccae212f3ac710fd18ac10722c2991f09071491ac4b0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-active-owner-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "eedd9cb003cdbee5ef284ac19718bd4bfbdf1b4a",
+        "bytes": 17605,
+        "sha256": "3bf5137030c01715c41c7fc4c7b199a4ef4e95ab65454ff670c9a3e770484732"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-active-owner-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2165beebce91471c1e6f3b881341b626da54dd2a",
+        "bytes": 20968,
+        "sha256": "97ccf5d40ae458d61fa1c838ba8b835c1ac0bed3ad74b25974118a98ee783c8e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7033f32c57c0c4e52875d1f594722150bfde13ed",
+        "bytes": 2383,
+        "sha256": "6881e7df47d0bc1f96f7575fbd40e55d3e7becd304c581a673bce453c8750fab"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "02069803cae9840ced3403744b7659a81298fc82",
+        "bytes": 3570,
+        "sha256": "bd227cd3a1aa3ddc322556d902cfb8cbb0f9f9969c595608c06fbd1621ab9e8d"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass/metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b7bc1c9c608b20bcdc8d08771690d64d694ae64",
+        "bytes": 12097,
+        "sha256": "3316ab04149affc99b66ff5d96aed3847bad7c2ee00767564671f487105542c2"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass/source-linux.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "57eea3f54781848db3efc9b93818a3bce0c5182d",
+        "bytes": 153780,
+        "sha256": "1d65d1d3c6e942100a5b24a6fa382f8a946ec591b8723994895b9a4f87407145"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass/source-windows.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3f6143b3446a4732c240ba0d86a562d504c5eb71",
+        "bytes": 195291,
+        "sha256": "2d93facad4e87f5599097c963fbc07fbd4f250e4260431c14699d075793d0eb0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-source-pass/source-types.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dde1fdb2fcc8839a83dcf48431c6dfa8f8cf7f30",
+        "bytes": 62210,
+        "sha256": "49ec35af0cd824f8a8214f158d641fdd56e0c4754b646f31a2fab307dad5a514"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "003508eaae7c8442e8231a84d997d46ca60ac058",
+        "bytes": 19531,
+        "sha256": "996c90c6d72e67e2a04870159b3ef7916da2f010165b2f541ebee69158e76bf9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5d455a3b30800cd43b6c5e0a2fe48e13cb3f16c9",
+        "bytes": 91624,
+        "sha256": "e07f5be39209295cc9ad60410f373ff9e25e390c40ef5b0152abd80b04cf7e58"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f047ec585f1f7a921ef64ed3c764c18514791113",
+        "bytes": 318,
+        "sha256": "63a79130eb33c5f13743416cb8d6ef63ce7c3a1104254ce744436e7f8dba9062"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/startup-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "88a201b2142225abacf3da60ab5cea10c5d8caa1",
+        "bytes": 28898,
+        "sha256": "5c7343a55751d5d9a1dd0974f9b8a799276bc2ddd1a9c80073dbd8eb67334dc9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/startup-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d1083f296f6bbb6aee504db2740435e6af668c65",
+        "bytes": 29856,
+        "sha256": "e4755ab6f5b87cdcd461bedfab2a36b6a38edcf695b7a1894942ab5ab2fd501f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/tooltip-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63801dd2a38cb5b2b0926d7eb76eab1f9703c43d",
+        "bytes": 9152,
+        "sha256": "b50f84e835277efe417623caf30deb3970c72fa5c7b3461bb678a45c4c44dcd6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5c893987838e0eefef2e360d6372b587439008ac",
+        "bytes": 5796,
+        "sha256": "922a0f1b7e1d3bcca763bcc8504e3b950d087205c6e7ff5aff74f5156a3a3104"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "426935592710f5c43c4552b859e7cb37d1e43e6c",
+        "bytes": 24093,
+        "sha256": "4b071275bcaef3ba018372dc2a3c54cfa7de308e8b59fcddaa79834b4ced2024"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-bd3ba9a-document-popover-timeout/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "18152eaff499d2d81a2e31460ae88ff0cf0c2a40",
+        "bytes": 9477,
+        "sha256": "0ea47a2b2107f0c8b4719bd7664891b4f15d19bc796ffc2cb7ddb4750ebd6490"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-rtl-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "30fe6a5a3337f607eaaf8dfec6a5fffb4bbab2b6",
+        "bytes": 8682,
+        "sha256": "81126469a8446accf76985880a907acc281c4f4fe151d4696d03b8f1ecdf4e43"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-rtl-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d5e17d04f6b8a5e9d5a0aef06972a5f1871c927",
+        "bytes": 11925,
+        "sha256": "3f6568fb309b9b9b9a88bc254d345d6b8631875148438e1384fef43c186f97c8"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-rtl-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8be3831b6ded27855a2217bff29d55ee3fb56ba2",
+        "bytes": 27994,
+        "sha256": "822ed256a862f576d16e7826b99cbbd96c63562a8e1876c039db5916a0117f05"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-rtl-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1e2a01484083aad3085dcadc2fff543644ebe6f9",
+        "bytes": 20055,
+        "sha256": "040e0050188cde8d29ebb3ccbcb44de29c79cc50df96fe082dd1f8f0317ba20c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-source-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ba2433c7ce1117088181dbfefd2d71bccfa91d7",
+        "bytes": 2568,
+        "sha256": "dce640e791ec1f40dd86270af070ff9f9a14706101dd74c26570d8299498dcc1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-source-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "21d5204c13258168f25ae976af2c5fd7db1fa049",
+        "bytes": 7081,
+        "sha256": "27545651866ed9eecee310814dcdff80333a226adf79623ae3c236b47e8bd90b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-source-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5ee873d40244bf1e94e4aede7a12d87086537a03",
+        "bytes": 12049,
+        "sha256": "672e28a425c2a213b8bd2917f40c9bdab1ab520e5bc4ca6a3d360dcec446703a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-source-pass/linux-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6286b51eb2c6b9c95149927e3830feb631f87c3f",
+        "bytes": 155917,
+        "sha256": "81176fe7d6bb6d1a1aa3f45ca1075dbb90eb80b31eff2abba1878d4a6d98d3f7"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-source-pass/windows-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e6b7a9c00291cf4e5fa9d7ede8d45e258fd47e4d",
+        "bytes": 198175,
+        "sha256": "3f23cc353a8770e69d35bc39a3e7b2a86f04d323bead5196f72d0b9b6ea48ee1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-source-pass/types-and-pack-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b71b936317a9c7f4d91aa7ebdb25569c50643a91",
+        "bytes": 62301,
+        "sha256": "23f10ea6d6da4e11f2962f6ea655c810af1f2a8a9e7441167f6414fd6f374396"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-f8c180b-popover-observation-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "05a27d32cf4df3431e5dc0c12d54647a41d3aed6",
+        "bytes": 5338,
+        "sha256": "af6f7de05e41d24bc08f4e6ba70998bad3b65106a037a1adf84d219d1e125929"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-f8c180b-popover-observation-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "656c72a6cf688cfbbd27679a673e67dfe13882e6",
+        "bytes": 8867,
+        "sha256": "21d023426f2708b32b62e5f8f963bd96e9e9951d8fb814c5610ad952f8a2c1d1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-f8c180b-popover-observation-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7a3c63f0833f363d4879c752821300cb979dee2a",
+        "bytes": 14203,
+        "sha256": "ffcd1173ca78e83e0323e623a3f075bfd67ae728c96ddf8229630b2d7347df10"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-f8c180b-popover-observation-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "31ce5ea4b79c145464d9e87f0349557a37152149",
+        "bytes": 25211,
+        "sha256": "be894bbdc4650b38d5094f22504104d33ad32fd8965b96d3a541168e59cd7b65"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7c9c9ba421be0fe69ba906866322a770bf7b4216",
+        "bytes": 6719,
+        "sha256": "2e416b613d5bd94221359b58192b07e2456a0a5d52ef48ace9d9b03f289163fe"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "92c68d2a3c710a2fdfb23d377c14719b42c69f52",
+        "bytes": 17399,
+        "sha256": "40c5efd6828572d9a726a36baaec09b2f1414ed79f0978f385c14cd315f4cb5d"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "74e0086d59709bc6de9b8536e5100a1b99344737",
+        "bytes": 396613,
+        "sha256": "f2c35f37f2a49c10844457e394e1af37de748838c9e4a99b66e27423a66538e5"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable/rtl-witness.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "03b9a1a64661e9217ba00402a17d4d1d898f1070",
+        "bytes": 724,
+        "sha256": "bfec71de51d58df014082a38a3044e099574e31207039ad3b6c5405109fb1c33"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable/rtl-witness-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "808c5442caa06205a9f1ed67436328863e913fa6",
+        "bytes": 863,
+        "sha256": "67576b542dd514d69a5093218944162cf341c3c571df50669d5fa3462788bc9a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-782ed39-raw-icon-unavailable/workflow-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bbf0ae0039349b66949f899adb2e1dd7a7ad7efa",
+        "bytes": 15116,
+        "sha256": "a2e77b2630f99b520fe0526543a43142e4e2da47f0964f0e3bb07dfa453e5a73"
+      }
+    ]
+  },
+  "scope": {
+    "canonicalIds": 341,
+    "localImplementations": 332,
+    "pinnedExternalImplementations": 9,
+    "sourcePartial": 0,
+    "sourcePending": 0,
+    "allTwelveRequestedRowsImplemented": true,
+    "acceptedAcrossAllEightPlatforms": 0,
+    "forgePin": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+    "viroPin": "e84a1a9a37168a835f7730e09016917b9d49c6ef"
+  },
+  "limits": [
+    "This manifest records proposed inputs. Its own object identity and the final combined commit/tree must be bound externally, avoiding self-reference.",
+    "All original receipt bytes are retained, including raw line endings, BOMs and JSON excerpts; normalized metadata is explicitly named.",
+    "Completed helper outcomes remain tied to their actual checkouts. No helper source pass is transferred into a combined native or release pass.",
+    "The current Windows helper fails before RTL interaction because no qualifying Raw Icon peer is observed. It establishes no rendered-icon or actual RTL-geometry defect.",
+    "The current executed AppKit helper fails at document-popover presentation; the added verifier diagnostic has source/mock review only.",
+    "No main merge, release, tag, npm publication, supported-host, device/speech/performance or original tested-archive acceptance is conferred; exact final owner-manifest approval remains separate."
+  ]
+}

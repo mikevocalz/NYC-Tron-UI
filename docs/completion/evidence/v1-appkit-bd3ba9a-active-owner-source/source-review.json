@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "kind": "private-appkit-active-owner-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceCheckpoint": {
+    "commit": "bd3ba9af7bba06ab2653806a3acf2525e28927a7",
+    "tree": "21b26dbe190f534212be5f546c9f5ac0ebb1a2c6",
+    "parents": [
+      "c4d4148c6135b9e3054255d9e35a950bef959b71"
+    ],
+    "publication": {
+      "status": "published-by-root",
+      "confirmedAtUtc": "2026-11-11T10:52:22Z",
+      "postReadAtUtc": "2026-11-11T10:52:35Z",
+      "scope": "Root reported a fresh-lease nonforced c4-to-bd3 update and exact ref/PR62 postreads."
+    },
+    "actualMerge": {
+      "status": "independently-fetched",
+      "commit": "2c20b0ea6a2670a744b4199202bbb902de2270a8",
+      "tree": "21b26dbe190f534212be5f546c9f5ac0ebb1a2c6",
+      "parents": [
+        "ac5d69585a52a6e945dc996ea08030e190574699",
+        "bd3ba9af7bba06ab2653806a3acf2525e28927a7"
+      ],
+      "observedAtUtc": "2026-11-11T10:53:23Z"
+    },
+    "nativeExecution": {
+      "status": "pending",
+      "runId": 43007235899,
+      "runAttempt": 1,
+      "nativeJobId": 130477798290,
+      "observedAtUtc": "2026-11-11T10:53:23Z",
+      "step": "Build and install archive consumer outside the monorepo",
+      "compileObserved": false,
+      "acceptanceObserved": false
+    },
+    "identityCheck": "The author independently fetched the immutable helper and generated-merge commits and checked exact tree/parent identities. Root coordinated the full helper-tree publication gate separately; this receipt does not repeat a complete tree-hash reconstruction."
+  },
+  "files": [
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "preimage": {
+        "gitBlob": "bdd64d6becb859622bd024fce036482fc668a91f",
+        "bytes": 75735,
+        "sha256": "ec39ba4ba9321f5ba9e5c94c2c652b3c578352a7889e83c82d8e0c333095cc0d"
+      },
+      "candidate": {
+        "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "bytes": 78317,
+        "sha256": "46f7f49b1fb00e0d303f9f81d37c9f0f007d5bbfadc9ce7efb8bef0ac55d31c8"
+      },
+      "transformCount": 3
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "preimage": {
+        "gitBlob": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+        "bytes": 120419,
+        "sha256": "3339553afe83907490dd8daac094cceedf967f3359deada250330b6882b5c9db"
+      },
+      "candidate": {
+        "gitBlob": "8c3176f220c5b038b2f1c7d1bbbc41dc693606f2",
+        "bytes": 120831,
+        "sha256": "2c897c7d380611e5b7eac73e7f4c7a70c7169dc86c16c48351e48a600f6785f9"
+      },
+      "transformCount": 1
+    },
+    {
+      "path": "packages/macos-appkit/spark/README.md",
+      "preimage": {
+        "gitBlob": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+        "bytes": 19469,
+        "sha256": "75beb83db383c90dea906e43c7b5a0618c6504453e472c10f15fb51335145094"
+      },
+      "candidate": {
+        "gitBlob": "97a554f649de9663913895e416c45cd51e24a873",
+        "bytes": 19804,
+        "sha256": "4d6bfa1ed505e375dfac61a5d55b9f239f39b7dbb0d50d4446de80b14a15360c"
+      },
+      "transformCount": 1
+    }
+  ],
+  "changes": {
+    "transformCount": 5,
+    "native": "Three insertions: retain the PID/resolved bundle URL only after the original successful Workspace identity checks; admit direct per-window selection only for that verified identity while the exact current process is Regular, active and frontmost; report the actual selected path.",
+    "verifier": "One replacement accepts a truthful supported direct path only on subsequent requests with strict Boolean prior-Workspace-identity attestation, while the initial startup request remains Workspace-only.",
+    "readme": "One paragraph distinguishes initial/inactive Workspace activation from subsequent verified foreground owner selection and retains the actual focus checks.",
+    "scope": "Private acceptance driver and verifier plus their documentation; no shipping component, workflow, host, permissions, launcher or security change."
+  },
+  "preserved": [
+    "The complete initial/inactive Workspace request, actual returned-process/resolved-bundle validation and error path.",
+    "The same selected owned NSWindow, exact launched process, Regular policy and canBecomeKey assertions.",
+    "The full visible/key/applicationActive/frontmost-process conjunction from already-returned tron.inspect responses.",
+    "Existing 20-second polling deadline, polling cadence, operation/request bounds and initial startup observation.",
+    "Existing first/last/change failure capture, bounded envelope, original caught Error identity, cleanup and runtime tail.",
+    "No extra native request, blanket retry, background activation, sleep or weakened acceptance predicate."
+  ],
+  "observedFailure": {
+    "receipt": "../v1-appkit-c4d4148-document-key-timeout/",
+    "helper": "c4d4148c6135b9e3054255d9e35a950bef959b71",
+    "actualMerge": "62a4b3d2385b588d634eb189bfb630679c21b3ef",
+    "runId": 42999493080,
+    "attempt": 1,
+    "nativeJobId": 130452053349,
+    "nativeLog": {
+      "gitBlob": "fb7a054070b9376b77834a23b5f78adc3e846c39",
+      "bytes": 90642,
+      "sha256": "0a259961617bdac3a82a659e711ce7247068356990fbf3378c1e8f5e15bcfdda"
+    },
+    "windowSummary": {
+      "gitBlob": "b9c5fb7c0c544e76f4ecbbeb30bdca7ace1ff3f4",
+      "bytes": 1094,
+      "sha256": "99dc8c1a34fe54a68f9aa420a912c4b8f5f0f353fc0fa9ad66b17df36a6c4054"
+    },
+    "operation": "First document-1 show; activation operation 2.",
+    "observations": {
+      "returnedInspectionResponses": 354,
+      "stateChanges": 0,
+      "selectedFirstAndLast": 2,
+      "omittedResponses": 352,
+      "assertionFacts": {
+        "processIdMatches": true,
+        "policyRegular": true,
+        "canBecomeKey": true
+      },
+      "waitFacts": {
+        "visible": true,
+        "key": false,
+        "applicationActive": true,
+        "frontmostProcessMatches": true
+      }
+    },
+    "priorReply": "Earlier operation-2 reply-prepared trace reported key=true, visible=true and applicationActive=true.",
+    "cause": "The records do not identify the replacement key window, a reopen callback, its ordering, or the reason key became false. This correction follows a reachable source concern; it does not establish the cause or retroactively pass that run.",
+    "artifactBoundary": "Original installed SDK inputs/AppDelegate bytes and compiler transcript remain uninspected; prior outcome's underlying ZIP and new original JSON file were not extracted."
+  },
+  "sourceBasis": {
+    "upstreamRepository": "https://github.com/LegendApp/legend-spark",
+    "retainedUpstreamRevision": "d3a7eead32459f8f6baf29ef868ea732c5081e47",
+    "appDelegate": {
+      "path": "packages/desktop-host/AppDelegate.mm",
+      "gitBlob": "a6734d1a57b3d9759606d54c7dfef564ec08efda",
+      "bytes": 11910,
+      "sha256": "24fca513cc8188f98dbf0b3cdd1cc3d2a819c331790e9bad9eea46fda66dbb46",
+      "url": "https://github.com/LegendApp/legend-spark/blob/d3a7eead32459f8f6baf29ef868ea732c5081e47/packages/desktop-host/AppDelegate.mm",
+      "sourceFact": "applicationShouldHandleReopen at lines 166–184 defaults its target to self.window and calls makeKeyAndOrderFront unless manual/hidden/visibleWindows policy selects another path. sparkPrepareMainWindow assigns spark.main."
+    },
+    "retainedPinBinding": "This is the previously retained Spark 0.0.2 upstream source revision. The same revision's original SparkTestDriver.mm blob 5504df4ed6eb4ac0259522781bed228ef33d4af1 was used for the retained exact transport patch review.",
+    "currentPreparation": {
+      "installer": "0f22caa6cbc18a1e4e89edafa56ac9c710351fe3",
+      "prepare": "43bbe4568fd25697881254c8976778bb75b6e972",
+      "desktopConfig": "4b2747280cddefbdf86f2ac63ca160c2cc1b77a1",
+      "facts": "Installer requires Spark0.0.2 and uses its published hash-verified release packages, recording release.revision in spark-sdk-inputs.json. Fixture config has no lifecycle/reopen override; private preparation adds testDriverInRelease."
+    },
+    "installedByteBoundary": "The current run's original spark-sdk-inputs, installed AppDelegate bytes and compiler transcript remain uninspected. This is pinned-source reachability analysis, not independently demonstrated current compiled-source equality.",
+    "primaryAPIs": [
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nsworkspace/openconfiguration/appleevent.md",
+        "scope": "Nil uses a default Apple event as needed for an already-running instance; this does not establish this run's event occurrence or ordering."
+      },
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nsapplicationdelegate/applicationshouldhandlereopen(_:hasvisiblewindows:).md",
+        "scope": "Application-specific reopen handling can select window behavior."
+      },
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nswindow/makekeyandorderfront(_:).md",
+        "scope": "Public per-window front/key selection."
+      },
+      {
+        "url": "https://developer.apple.com/documentation/appkit/nsworkspace/openapplication(at:configuration:completionhandler:).md",
+        "scope": "Initial/inactive app activation retains the original asynchronous Workspace callback and identity checks."
+      }
+    ]
+  },
+  "review": {
+    "status": "approved-source-only",
+    "author": "desktop_host_audit",
+    "independentReviewers": [
+      "root",
+      "final_gate_review"
+    ],
+    "reproduction": "Author, root and final_gate_review each passed the same six harness designs. These are six designs, not eighteen independent tests.",
+    "checks": {
+      "status": "passed",
+      "scope": "Pure V8 exact JavaScript functions with mocked driver/clock/assertions/IO; native Objective-C++ statically reviewed only.",
+      "groups": [
+        {
+          "name": "exact three-file identities, five inverses, unchanged polling/tail and whole-verifier parse only",
+          "status": "passed"
+        },
+        {
+          "name": "initial startup still requires Workspace and retains its existing observer",
+          "status": "passed"
+        },
+        {
+          "name": "truthful subsequent paths and identity attestation; invalid paths/flags/PIDs reject before inspection",
+          "status": "passed"
+        },
+        {
+          "name": "direct path retains all three strict assertions and waits for the full focus conjunction",
+          "status": "passed"
+        },
+        {
+          "name": "same 20-second mock timeout, exact original Error identity and identical 401-command sequences",
+          "status": "passed"
+        },
+        {
+          "name": "request and inspect rejections preserve original objects without a retry",
+          "status": "passed"
+        }
+      ],
+      "designCount": 6,
+      "metrics": {
+        "timeoutPolls": 400,
+        "timeoutMilliseconds": 20000,
+        "totalCommands": 401,
+        "delayedSuccessPolls": 3,
+        "delayedSuccessMilliseconds": 100,
+        "timeoutConsoleEnvelopeBytes": 1160
+      },
+      "nativeExecution": false,
+      "nodeFilesystemExecution": false
+    },
+    "nativeSource": "Objective-C++ cache, ownership, main-thread transport and public AppKit API behavior received static source review only.",
+    "noAdditionalTests": true
+  },
+  "artifacts": [
+    {
+      "path": "edit-manifest.json",
+      "gitBlob": "eedd9cb003cdbee5ef284ac19718bd4bfbdf1b4a",
+      "bytes": 17605,
+      "sha256": "3bf5137030c01715c41c7fc4c7b199a4ef4e95ab65454ff670c9a3e770484732"
+    },
+    {
+      "path": "review-checks.js",
+      "gitBlob": "2165beebce91471c1e6f3b881341b626da54dd2a",
+      "bytes": 20968,
+      "sha256": "97ccf5d40ae458d61fa1c838ba8b835c1ac0bed3ad74b25974118a98ee783c8e"
+    }
+  ],
+  "limits": [
+    "A sampled eligible foreground state can change; success still requires the unchanged subsequent actual native conjunction.",
+    "Pinned upstream source reachability is not current installed-source or binary equality and does not prove the prior timeout's cause.",
+    "No native compilation, AppKit execution, Node filesystem execution or accepted distribution is established by this source receipt.",
+    "No refs, PRs, workflow dispatches, retries or host/security changes were made by the author."
+  ]
+}

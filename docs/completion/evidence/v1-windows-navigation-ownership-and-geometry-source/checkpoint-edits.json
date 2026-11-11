@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "kind": "fixed-navigation-console-checkpoints-source",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+  "before": {
+    "gitBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975",
+    "bytes": 12691,
+    "sha256": "ef15eda3eda4e2846e45352a3ca83cdc0f371926ed70eb7b2ad530bed1ea1187"
+  },
+  "after": {
+    "gitBlob": "c998f9f2f534db692a0ba2ab7296c4a78077086c",
+    "bytes": 14781,
+    "sha256": "2da5cccb150ff2aee521f1b195abb2a74416a212532df44785ed70b49941b4bf"
+  },
+  "scope": {
+    "sourceOnly": true,
+    "powershellParserExecuted": false,
+    "powershellRuntimeExecuted": false,
+    "nativeExecuted": false,
+    "publication": "immutable-blob-only",
+    "operationChanges": "none",
+    "compoundStatementChange": "split the existing pane and host BoundingRectangle assignments without changing their expressions or order"
+  },
+  "console": {
+    "prefix": "NYCTRON_NAVIGATION_CHECKPOINT ",
+    "fixedCallSites": 20,
+    "maximumFixedContentUtf8BytesIncludingCRLF": 1092,
+    "excludes": "runner-provided timestamp or formatting decoration",
+    "insidePolls": false,
+    "labels": [
+      "rtl-status-before",
+      "rtl-status-returned",
+      "rtl-toggle-poll-before",
+      "rtl-toggle-poll-returned",
+      "rtl-pane-bounds-before",
+      "rtl-pane-bounds-returned",
+      "rtl-host-bounds-before",
+      "rtl-host-bounds-returned",
+      "rtl-selection-before",
+      "rtl-selection-returned",
+      "rtl-screenshot-before",
+      "rtl-screenshot-returned",
+      "navigation-catch-entered",
+      "navigation-finally-entered",
+      "restore-contrast-before",
+      "restore-contrast-returned",
+      "restore-window-before",
+      "restore-window-returned",
+      "navigation-result-before",
+      "navigation-result-returned"
+    ],
+    "errors": "caught only within the new reporting helper",
+    "interpretation": "entered/returned source spans only; no corruption cause, exact nested poll call, or faulting-process attribution"
+  },
+  "preserved": [
+    "complete Add-Type C# block, including HIGHCONTRASTW and LocalFree",
+    "existing UIA and native call expressions/count/order",
+    "existing polling loops, sleeps and deadline expressions",
+    "existing assertions, failure assignment and bare throw",
+    "existing restoration try/catch logic and result pipeline",
+    "original pane object and selection item references; no provider reacquisition"
+  ],
+  "transforms": [
+    {
+      "name": "fixed-console-helper",
+      "before": "$ae = [System.Windows.Automation.AutomationElement]\n",
+      "after": "# Fixed call sites outside loops keep this diagnostic bounded. Reporting errors\n# stay secondary; labels do not read providers or identify a corrupting call.\nfunction Write-NavigationCheckpoint([string]$label) {\n  try {\n    if ($label -notin @(\n      \"rtl-status-before\",\n      \"rtl-status-returned\",\n      \"rtl-toggle-poll-before\",\n      \"rtl-toggle-poll-returned\",\n      \"rtl-pane-bounds-before\",\n      \"rtl-pane-bounds-returned\",\n      \"rtl-host-bounds-before\",\n      \"rtl-host-bounds-returned\",\n      \"rtl-selection-before\",\n      \"rtl-selection-returned\",\n      \"rtl-screenshot-before\",\n      \"rtl-screenshot-returned\",\n      \"navigation-catch-entered\",\n      \"navigation-finally-entered\",\n      \"restore-contrast-before\",\n      \"restore-contrast-returned\",\n      \"restore-window-before\",\n      \"restore-window-returned\",\n      \"navigation-result-before\",\n      \"navigation-result-returned\"\n    )) { return }\n    Write-Host (\"NYCTRON_NAVIGATION_CHECKPOINT \" + $label)\n  } catch {}\n}\n\n$ae = [System.Windows.Automation.AutomationElement]\n"
+    },
+    {
+      "name": "rtl-status-pair",
+      "before": "  Find-ByName $Window \"Navigation direction: rtl\" | Out-Null\n",
+      "after": "  Write-NavigationCheckpoint \"rtl-status-before\"\n  Find-ByName $Window \"Navigation direction: rtl\" | Out-Null\n  Write-NavigationCheckpoint \"rtl-status-returned\"\n"
+    },
+    {
+      "name": "toggle-poll-entry",
+      "before": "  $deadline = (Get-Date).AddSeconds(10)\n  do {\n    Start-Sleep -Milliseconds 100\n    $rtl = (Find-Id \"TogglePaneButton\").Current.BoundingRectangle\n",
+      "after": "  Write-NavigationCheckpoint \"rtl-toggle-poll-before\"\n  $deadline = (Get-Date).AddSeconds(10)\n  do {\n    Start-Sleep -Milliseconds 100\n    $rtl = (Find-Id \"TogglePaneButton\").Current.BoundingRectangle\n"
+    },
+    {
+      "name": "toggle-return-and-split-bounds",
+      "before": "  } while ($rtl.X -le $ltr.X+20 -and (Get-Date) -lt $deadline)\n  $paneRect = $pane.Current.BoundingRectangle; $hostRect = $Window.Current.BoundingRectangle\n",
+      "after": "  } while ($rtl.X -le $ltr.X+20 -and (Get-Date) -lt $deadline)\n  Write-NavigationCheckpoint \"rtl-toggle-poll-returned\"\n  Write-NavigationCheckpoint \"rtl-pane-bounds-before\"\n  $paneRect = $pane.Current.BoundingRectangle\n  Write-NavigationCheckpoint \"rtl-pane-bounds-returned\"\n  Write-NavigationCheckpoint \"rtl-host-bounds-before\"\n  $hostRect = $Window.Current.BoundingRectangle\n  Write-NavigationCheckpoint \"rtl-host-bounds-returned\"\n"
+    },
+    {
+      "name": "selection-and-screenshot-pairs",
+      "before": "  Assert-Selection $homeItem $workspace \"workspace\" $stage\n  Save-Screenshot \"navigation-rtl\" $Window\n",
+      "after": "  Write-NavigationCheckpoint \"rtl-selection-before\"\n  Assert-Selection $homeItem $workspace \"workspace\" $stage\n  Write-NavigationCheckpoint \"rtl-selection-returned\"\n  Write-NavigationCheckpoint \"rtl-screenshot-before\"\n  Save-Screenshot \"navigation-rtl\" $Window\n  Write-NavigationCheckpoint \"rtl-screenshot-returned\"\n"
+    },
+    {
+      "name": "catch-marker-after-failure-capture",
+      "before": "} catch {\n  $failure = $_.Exception.Message\n  throw\n} finally {\n",
+      "after": "} catch {\n  $failure = $_.Exception.Message\n  Write-NavigationCheckpoint \"navigation-catch-entered\"\n  throw\n} finally {\n  Write-NavigationCheckpoint \"navigation-finally-entered\"\n"
+    },
+    {
+      "name": "contrast-restoration-pair",
+      "before": "  try {\n    [NavigationAccessibilityNative]::SetContrast($contrast, (($contrast.Flags -band 1) -ne 0))\n    Wait-Contrast (($contrast.Flags -band 1) -ne 0) | Out-Null\n",
+      "after": "  try {\n    Write-NavigationCheckpoint \"restore-contrast-before\"\n    [NavigationAccessibilityNative]::SetContrast($contrast, (($contrast.Flags -band 1) -ne 0))\n    Wait-Contrast (($contrast.Flags -band 1) -ne 0) | Out-Null\n    Write-NavigationCheckpoint \"restore-contrast-returned\"\n"
+    },
+    {
+      "name": "window-restoration-entry",
+      "before": "  try {\n    if (-not [NavigationAccessibilityNative]::SetWindowPos($handle, [IntPtr]::Zero, [int]$originalRect.X, [int]$originalRect.Y, [int]$originalRect.Width, [int]$originalRect.Height, 0x14)) { throw \"Native restoration of window bounds failed\" }\n",
+      "after": "  try {\n    Write-NavigationCheckpoint \"restore-window-before\"\n    if (-not [NavigationAccessibilityNative]::SetWindowPos($handle, [IntPtr]::Zero, [int]$originalRect.X, [int]$originalRect.Y, [int]$originalRect.Width, [int]$originalRect.Height, 0x14)) { throw \"Native restoration of window bounds failed\" }\n"
+    },
+    {
+      "name": "window-restoration-return",
+      "before": "    if (-not $restored) { throw \"Actual window bounds/state did not return to their original values\" }\n",
+      "after": "    if (-not $restored) { throw \"Actual window bounds/state did not return to their original values\" }\n    Write-NavigationCheckpoint \"restore-window-returned\"\n"
+    },
+    {
+      "name": "result-pipeline-pair",
+      "before": "  @{ status=$result; platform=\"windows\"; sourceRevision=$env:GITHUB_SHA; processId=$Window.Current.ProcessId; stage=$stage; error=$failure; checks=$checks.ToArray(); completedAt=(Get-Date).ToUniversalTime().ToString(\"o\") } |\n    ConvertTo-Json -Depth 8 | Set-Content (Join-Path $OutDir \"navigation-accessibility-result.json\") -Encoding UTF8\n",
+      "after": "  Write-NavigationCheckpoint \"navigation-result-before\"\n  @{ status=$result; platform=\"windows\"; sourceRevision=$env:GITHUB_SHA; processId=$Window.Current.ProcessId; stage=$stage; error=$failure; checks=$checks.ToArray(); completedAt=(Get-Date).ToUniversalTime().ToString(\"o\") } |\n    ConvertTo-Json -Depth 8 | Set-Content (Join-Path $OutDir \"navigation-accessibility-result.json\") -Encoding UTF8\n  Write-NavigationCheckpoint \"navigation-result-returned\"\n"
+    }
+  ]
+}

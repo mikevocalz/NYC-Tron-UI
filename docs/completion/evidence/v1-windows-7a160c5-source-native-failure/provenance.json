@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-source-and-native-compile-failure",
+  "status": "failed",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "head": "7a160c536b845d71487ba2997262daf3cf07cb9b",
+  "actualCheckout": {
+    "commit": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+    "tree": "24b244e41d6d61e7dfe56a1cd32d56d37bb0f035",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "7a160c536b845d71487ba2997262daf3cf07cb9b"
+    ],
+    "logLines": {
+      "workspace-windows.log": 109,
+      "fabric-source.log": 123,
+      "fabric-native.log": 111
+    },
+    "sameTreeAsHead": true
+  },
+  "metadata": {
+    "file": "metadata.json",
+    "bytes": 27554,
+    "sha256": "cdefc8358849207b237c1fdc455b3864cbe9bac0af88df45dd4fcc9a78edecca",
+    "gitBlob": "28957e769c2959e73195d8ac29b53e9cb674bfa0"
+  },
+  "originalLogs": [
+    {
+      "file": "workspace-windows.log",
+      "bytes": 159544,
+      "sha256": "2a63568340e93933954ebe5ee651a0177ffbd29fe409e438703643b774de3b31",
+      "gitBlob": "058feca66e4a22a222bc2f6ca722154be9e8fa91",
+      "run": 42994633542,
+      "job": 130435532706,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130435532706/logs",
+      "retrieval": "Complete decoded GitHub workflow-job log; exact UTF-8 text retained, including original BOM/line endings/ANSI where present.",
+      "immutableReadbackExact": true
+    },
+    {
+      "file": "fabric-source.log",
+      "bytes": 31860,
+      "sha256": "3c9029524aa83a9b14cadf59bb27d5e581312385aaba009e0f67c066e558176a",
+      "gitBlob": "629bd26db9ddefbfddfb11093dea49083469a824",
+      "run": 42994633333,
+      "job": 130435532463,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130435532463/logs",
+      "retrieval": "Complete decoded GitHub workflow-job log; exact UTF-8 text retained, including original BOM/line endings/ANSI where present.",
+      "immutableReadbackExact": true
+    },
+    {
+      "file": "fabric-native.log",
+      "bytes": 104510,
+      "sha256": "d659414884edcbce4377349925447c8b32509fdacb35d1b7af049b91f6194a7a",
+      "gitBlob": "165a4650b55bed9dceeb3ba946b60628c5b7550b",
+      "run": 42994633333,
+      "job": 130436004660,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130436004660/logs",
+      "retrieval": "Complete decoded GitHub workflow-job log; exact UTF-8 text retained, including original BOM/line endings/ANSI where present.",
+      "immutableReadbackExact": true
+    }
+  ],
+  "workspaceWindows": {
+    "run": 42994633542,
+    "job": 130435532706,
+    "attempt": 1,
+    "total": 1204,
+    "passed": 1202,
+    "failed": 2,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 45600.9894,
+    "summaryLines": {
+      "start": 1416,
+      "end": 1423
+    },
+    "failures": [
+      {
+        "test": "retained snapshots survive writes through an already-open driver log and include hidden debug evidence",
+        "testLocation": "tooling/tests/native-ui-transport.test.mjs:123:1",
+        "error": "EPERM: operation not permitted, rename",
+        "errno": -4048,
+        "syscall": "rename",
+        "from": "settings",
+        "to": "settings-initial-transport-live",
+        "implementationLocation": "tooling/native/ui-transport.mjs:113:3",
+        "originalLogLines": {
+          "start": 1427,
+          "end": 1444
+        }
+      },
+      {
+        "test": "manual candidate runs cannot publish without explicit opt-in, even when every gate passes",
+        "testLocation": "tooling/tests/release-readiness.test.mjs:194:1",
+        "assertion": "manual publication must have an explicit input",
+        "assertionLocation": "tooling/tests/release-readiness.test.mjs:198:10",
+        "actualType": "undefined",
+        "expected": true,
+        "originalLogLines": {
+          "start": 1446,
+          "end": 1462
+        },
+        "limit": "This assertion is not evidence of production publication or an absent production guard."
+      }
+    ],
+    "laterWindowsPackAndImportSteps": "skipped",
+    "otherSourceJobs": "Pure contracts and workspace TypeScript succeeded in API metadata; their full logs/totals are not supplied here."
+  },
+  "fabric": {
+    "run": 42994633333,
+    "attempt": 1,
+    "sourceJob": {
+      "id": 130435532463,
+      "status": "success",
+      "sourceSuite": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 56.898678,
+        "summaryLines": {
+          "start": 160,
+          "end": 167
+        }
+      },
+      "packageAndIsolatedSuite": {
+        "total": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 132.027468,
+        "summaryLines": {
+          "start": 266,
+          "end": 273
+        }
+      },
+      "countsOverlap": true,
+      "apiSnapshot": {
+        "packages": 1,
+        "subpaths": 8,
+        "reachableDeclarations": 44,
+        "line": 286
+      }
+    },
+    "nativeJob": {
+      "id": 130436004660,
+      "status": "failure",
+      "packageAndIsolatedSuite": {
+        "total": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 194.6526,
+        "summaryLines": {
+          "start": 214,
+          "end": 221
+        }
+      },
+      "apiSnapshot": {
+        "packages": 1,
+        "subpaths": 8,
+        "reachableDeclarations": 44,
+        "line": 226
+      },
+      "powershellGate": {
+        "step": 10,
+        "conclusion": "success",
+        "runtime": "Windows PowerShell 5.1 x64, mandatory runtime gate in executed step",
+        "consolePassLineCount": 21,
+        "consolePassLines": [
+          465,
+          466,
+          467,
+          468,
+          469,
+          470,
+          471,
+          472,
+          473,
+          474,
+          475,
+          477,
+          478,
+          479,
+          480,
+          481,
+          482,
+          483,
+          485,
+          486,
+          487
+        ],
+        "scope": "Actual owned-process token query plus suites containing mocked and actual diagnostic checks; not deployment or UIA of the candidate app.",
+        "rawJsonReceipts": "Inside uninspected uploaded artifact; not independently read here."
+      },
+      "consumerConnectionSuite": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 113.5908,
+        "summaryLines": {
+          "start": 597,
+          "end": 604
+        }
+      },
+      "compile": {
+        "step": 13,
+        "firstErrorLine": 804,
+        "source": "TronDragSurface.cpp",
+        "sourceLine": 304,
+        "sourceColumn": 24,
+        "code": "C2039",
+        "message": "'Site': is not a member of 'nyctron::islands::IslandConnection'",
+        "headerDeclaration": "IslandConnection.h(13,7)",
+        "laterMissingSiteSourceLines": [
+          467,
+          476,
+          523
+        ],
+        "processExitCode": 1,
+        "exitLogLine": 881,
+        "scope": "Installed package C++ compile; further runtime behavior not reached."
+      },
+      "skippedSteps": [
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "noTestedPackageAccepted": true
+    }
+  },
+  "artifacts": [
+    {
+      "id": 13843521730,
+      "name": "windows-fabric-shared-packages",
+      "sizeInBytes": 62822,
+      "sha256": "8956e8b7f1a2052081ef360a53ad8403913d97e27664556c23b341a392ab8508",
+      "digestScope": "GitHub-reported uploaded ZIP digest; archive not downloaded or inspected for this receipt",
+      "expired": false,
+      "createdAt": "2026-11-11T09:23:28Z",
+      "updatedAt": "2026-11-11T09:23:28Z",
+      "expiresAt": "2027-02-09T09:22:29Z",
+      "workflowRun": {
+        "id": 42994633333,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-reviewed-lifecycle-nov11",
+        "head_sha": "7a160c536b845d71487ba2997262daf3cf07cb9b"
+      },
+      "producerFileCount": 3,
+      "archiveDownloaded": false,
+      "membersExtracted": false
+    },
+    {
+      "id": 13843293794,
+      "name": "winui-fabric-uia-smoke",
+      "sizeInBytes": 16353,
+      "sha256": "e809817fa55c585bf6f99fc89d57ddfc9f58e23d607a7f06c8af571187204768",
+      "digestScope": "GitHub-reported uploaded ZIP digest; archive not downloaded or inspected for this receipt",
+      "expired": false,
+      "createdAt": "2026-11-11T09:29:01Z",
+      "updatedAt": "2026-11-11T09:29:01Z",
+      "expiresAt": "2027-02-09T09:22:29Z",
+      "workflowRun": {
+        "id": 42994633333,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-reviewed-lifecycle-nov11",
+        "head_sha": "7a160c536b845d71487ba2997262daf3cf07cb9b"
+      },
+      "producerFileCount": 16,
+      "archiveDownloaded": false,
+      "membersExtracted": false
+    }
+  ],
+  "producerArchiveHashes": {
+    "scope": "Reported by original source-producer log, not new tarball extraction in this receipt",
+    "core": {
+      "filename": "nyc-tron-core-1.0.0.tgz",
+      "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355",
+      "line": 318
+    },
+    "windowsFluent": {
+      "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+      "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73",
+      "line": 319
+    }
+  },
+  "followup": {
+    "observedAt": "2026-11-11 09:45:19 UTC",
+    "commit": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+    "orderedParents": [
+      "7a160c536b845d71487ba2997262daf3cf07cb9b"
+    ],
+    "generatedMerge": {
+      "commit": "8ff0adf28897e7fd7300f6ebac112513ee7a4dbe",
+      "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+      "orderedParents": [
+        "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+        "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+      ]
+    },
+    "sourceRun": 42997727683,
+    "nativeRun": 42997727800,
+    "outcome": "Not inspected or claimed by this historical receipt; generated merge identity is not a substitute for later actual checkout logs."
+  },
+  "independentChecks": [
+    "All three full original job logs independently fetched and hashed by the author and root coordinator; immutable readbacks exact.",
+    "Exact merge/head tree and ordered parent identities verified; checkout lines in the three original logs agree.",
+    "Completed run/job/step metadata distinguishes source checks from unexecuted consumer build, deployment, UIA and tested-package stages."
+  ],
+  "limits": [
+    "No actual packaged-app UIA or new drag/hover/focus/navigation result: those stages were skipped after C++ package compile failed.",
+    "No eligible-shell/support/security condition is inferred from diagnostic test PASS messages.",
+    "No cause of prior driver heap corruption and no success of a later accessor or retention repair is established.",
+    "Uploaded ZIP sizes/digests/member counts remain producer/API-reported; originals inside those artifacts were not inspected.",
+    "Static source review, this completed failed outcome and follow-up source/CI records remain separate."
+  ]
+}

@@ -1,0 +1,677 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "observedAtUtc": "2026-11-11 09:19:16 UTC",
+  "scope": "Completed 03de1fd helper run, attempt 1; exact retrieved log bytes and selected console evidence",
+  "run": {
+    "id": 42987324915,
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42987324915",
+    "name": "WinUI 3 navigation and native desktop in RNW Fabric",
+    "event": "pull_request",
+    "headBranch": "codex/v1-windows-interactions-nov10",
+    "headSha": "03de1fde81734d12ed49478dbc52570a4bc1312e",
+    "runAttempt": 1,
+    "status": "completed",
+    "conclusion": "failure",
+    "createdAt": "2026-11-11T08:28:33Z",
+    "runStartedAt": "2026-11-11T08:28:33Z",
+    "updatedAt": "2026-11-11T08:41:00Z"
+  },
+  "checkout": {
+    "sha": "41967d41afe811cefdb192182a4f47cb132cb78a",
+    "tree": "1aa932cb1bf07cc84d0e4b24d0e1820857b2392a",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "03de1fde81734d12ed49478dbc52570a4bc1312e"
+    ],
+    "sourceLogLine": 123,
+    "nativeLogLine": 111,
+    "completeLeafMapCount": 2076,
+    "recomputedTreeHashesIncludingRoot": 284,
+    "allDirectoryHashesMatch": true
+  },
+  "jobs": [
+    {
+      "id": 130411495279,
+      "name": "Fabric codegen and source gates",
+      "status": "completed",
+      "conclusion": "success",
+      "runId": 42987324915,
+      "runAttempt": 1,
+      "headSha": "03de1fde81734d12ed49478dbc52570a4bc1312e",
+      "startedAt": "2026-11-11T08:28:35Z",
+      "completedAt": "2026-11-11T08:29:33Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:36Z",
+          "completedAt": "2026-11-11T08:28:37Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:37Z",
+          "completedAt": "2026-11-11T08:28:39Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:39Z",
+          "completedAt": "2026-11-11T08:28:43Z"
+        },
+        {
+          "number": 4,
+          "name": "Validate actual XAML Fabric native bridge sources",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:43Z",
+          "completedAt": "2026-11-11T08:28:43Z"
+        },
+        {
+          "number": 5,
+          "name": "Install isolated RNW 0.85 dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:28:43Z",
+          "completedAt": "2026-11-11T08:29:04Z"
+        },
+        {
+          "number": 6,
+          "name": "Build peer-free shared contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:04Z",
+          "completedAt": "2026-11-11T08:29:05Z"
+        },
+        {
+          "number": 7,
+          "name": "Validate Windows-only TypeScript",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:05Z",
+          "completedAt": "2026-11-11T08:29:07Z"
+        },
+        {
+          "number": 8,
+          "name": "Build dist and check the release tarball",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:07Z",
+          "completedAt": "2026-11-11T08:29:13Z"
+        },
+        {
+          "number": 9,
+          "name": "Verify the isolated RNW public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:13Z",
+          "completedAt": "2026-11-11T08:29:14Z"
+        },
+        {
+          "number": 10,
+          "name": "Build canonical shared release packages with the root compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:14Z",
+          "completedAt": "2026-11-11T08:29:29Z"
+        },
+        {
+          "number": 11,
+          "name": "Retain canonical shared archives for the native consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:29Z",
+          "completedAt": "2026-11-11T08:29:30Z"
+        },
+        {
+          "number": 21,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:30Z",
+          "completedAt": "2026-11-11T08:29:31Z"
+        },
+        {
+          "number": 22,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:31Z",
+          "completedAt": "2026-11-11T08:29:31Z"
+        },
+        {
+          "number": 23,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:31Z",
+          "completedAt": "2026-11-11T08:29:31Z"
+        }
+      ]
+    },
+    {
+      "id": 130411925116,
+      "name": "VS 2026 RNW 0.85 XAML Fabric native C++ compile",
+      "status": "completed",
+      "conclusion": "failure",
+      "runId": 42987324915,
+      "runAttempt": 1,
+      "headSha": "03de1fde81734d12ed49478dbc52570a4bc1312e",
+      "startedAt": "2026-11-11T08:29:35Z",
+      "completedAt": "2026-11-11T08:41:00Z",
+      "runnerLabels": [
+        "windows-2025"
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:36Z",
+          "completedAt": "2026-11-11T08:29:37Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:37Z",
+          "completedAt": "2026-11-11T08:29:43Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:43Z",
+          "completedAt": "2026-11-11T08:29:55Z"
+        },
+        {
+          "number": 4,
+          "name": "Install native-codegen dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:29:55Z",
+          "completedAt": "2026-11-11T08:30:28Z"
+        },
+        {
+          "number": 5,
+          "name": "Build source distribution and validate lifecycle contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:30:28Z",
+          "completedAt": "2026-11-11T08:30:31Z"
+        },
+        {
+          "number": 6,
+          "name": "Verify the isolated RNW public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:30:31Z",
+          "completedAt": "2026-11-11T08:30:33Z"
+        },
+        {
+          "number": 7,
+          "name": "Download the canonical shared package archives",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:30:33Z",
+          "completedAt": "2026-11-11T08:30:33Z"
+        },
+        {
+          "number": 8,
+          "name": "Install the fresh consumer from canonical peers and the Fabric candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:30:33Z",
+          "completedAt": "2026-11-11T08:30:55Z"
+        },
+        {
+          "number": 9,
+          "name": "Validate diagnostic scripts with the UIA PowerShell runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:30:55Z",
+          "completedAt": "2026-11-11T08:31:05Z"
+        },
+        {
+          "number": 10,
+          "name": "Generate native code from the installed package",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:31:05Z",
+          "completedAt": "2026-11-11T08:31:13Z"
+        },
+        {
+          "number": 11,
+          "name": "Generate official RNW application and connect native package",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:31:13Z",
+          "completedAt": "2026-11-11T08:31:23Z"
+        },
+        {
+          "number": 12,
+          "name": "Build installed native C++/WinRT Fabric package",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:31:23Z",
+          "completedAt": "2026-11-11T08:38:13Z"
+        },
+        {
+          "number": 13,
+          "name": "Compile actual Windows consumer executable",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:38:13Z",
+          "completedAt": "2026-11-11T08:39:17Z"
+        },
+        {
+          "number": 14,
+          "name": "Deploy the packaged consumer the way run-windows does",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:39:17Z",
+          "completedAt": "2026-11-11T08:40:12Z"
+        },
+        {
+          "number": 15,
+          "name": "UI Automation smoke test of the packaged consumer",
+          "status": "completed",
+          "conclusion": "failure",
+          "startedAt": "2026-11-11T08:40:12Z",
+          "completedAt": "2026-11-11T08:40:53Z"
+        },
+        {
+          "number": 16,
+          "name": "Application Error records after a failed smoke test",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:40:53Z",
+          "completedAt": "2026-11-11T08:40:53Z"
+        },
+        {
+          "number": 17,
+          "name": "Retain the exact package that passed native acceptance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T08:40:53Z",
+          "completedAt": "2026-11-11T08:40:53Z"
+        },
+        {
+          "number": 18,
+          "name": "Upload tested Windows distribution",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T08:40:53Z",
+          "completedAt": "2026-11-11T08:40:53Z"
+        },
+        {
+          "number": 19,
+          "name": "Upload UI Automation screenshots",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:40:53Z",
+          "completedAt": "2026-11-11T08:40:55Z"
+        },
+        {
+          "number": 37,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T08:40:55Z",
+          "completedAt": "2026-11-11T08:40:55Z"
+        },
+        {
+          "number": 38,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:40:55Z",
+          "completedAt": "2026-11-11T08:40:57Z"
+        },
+        {
+          "number": 39,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T08:40:57Z",
+          "completedAt": "2026-11-11T08:40:57Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13841311512,
+      "name": "winui-fabric-uia-smoke",
+      "sizeInBytes": 414348,
+      "digest": "sha256:d63b6fcbe487306c79a7ca23abb90744964dd3c66e294f500b16975f99d24cfd",
+      "expired": false,
+      "createdAt": "2026-11-11T08:40:55Z",
+      "updatedAt": "2026-11-11T08:40:55Z",
+      "expiresAt": "2027-02-09T08:28:33Z",
+      "workflowRun": {
+        "id": 42987324915,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-interactions-nov10",
+        "head_sha": "03de1fde81734d12ed49478dbc52570a4bc1312e"
+      },
+      "evidenceLevel": "API/producer-reported; ZIP bytes, members and pixels not inspected"
+    },
+    {
+      "id": 13839673460,
+      "name": "windows-fabric-shared-packages",
+      "sizeInBytes": 62822,
+      "digest": "sha256:5609c2ea606a0d085511e5013cea4f974196f21f3753e8344e2452e5902c330a",
+      "expired": false,
+      "createdAt": "2026-11-11T08:29:30Z",
+      "updatedAt": "2026-11-11T08:29:30Z",
+      "expiresAt": "2027-02-09T08:28:33Z",
+      "workflowRun": {
+        "id": 42987324915,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-interactions-nov10",
+        "head_sha": "03de1fde81734d12ed49478dbc52570a4bc1312e"
+      },
+      "evidenceLevel": "API/producer-reported; ZIP bytes, members and pixels not inspected"
+    }
+  ],
+  "originalLogChecks": [
+    {
+      "file": "source-job.log",
+      "jobId": 130411495279,
+      "bytes": 31860,
+      "gitBlob": "91624fd513800b88d8b71c51e7c9f2dcfeafe6f0",
+      "sha256": "73999164ce9246176beeea1df1ebfa44bb8ed8f4f9cdc76981948449a40d9e45",
+      "encoding": "UTF-8",
+      "leadingBomRetained": true,
+      "lineEndings": "LF",
+      "newlineCount": 362
+    },
+    {
+      "file": "native-job.log",
+      "jobId": 130411925116,
+      "bytes": 396292,
+      "gitBlob": "8bb08f3c2829c828b6002e75bd5d74dc739961d0",
+      "sha256": "73069eb9e236dc238ac4f2c64e95df6d57047f39576ec6b3b1d63e7a83a97607",
+      "encoding": "UTF-8",
+      "leadingBomRetained": true,
+      "lineEndings": "CRLF",
+      "newlineCount": 1972
+    }
+  ],
+  "inspectedSourceFiles": [
+    {
+      "path": ".github/workflows/winui-fabric.yml",
+      "bytes": 20225,
+      "gitBlob": "d211c05f3cfc5b3974f988575bd7d695a36a8d96",
+      "sha256": "23a6d1d34f6f76fd13d8c599aacad6f841f98da5ebf812d4ead31a1d70894d72"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+      "bytes": 45080,
+      "gitBlob": "a6bfaccc3dcbdafcd398bd0d1c5bde63ba22ab23",
+      "sha256": "808876460015ea691503d4604b6a440bf2bfccc92a2b6eb15b594a39c1d7f4c0"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+      "bytes": 12691,
+      "gitBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975",
+      "sha256": "ef15eda3eda4e2846e45352a3ca83cdc0f371926ed70eb7b2ad530bed1ea1187"
+    }
+  ],
+  "comparisonWithD1": {
+    "priorActualCheckout": "d4d0de4f47bd5d0167a8a656bb109fdb71be0390",
+    "priorTree": "30bb83f83df516de0a2cb6de9be1bde37dc8b3da",
+    "changedLeaves": [
+      {
+        "path": ".github/workflows/winui-fabric.yml",
+        "before": "dd9532580fc8666223863528cc98d62d72ae8ef8",
+        "after": "d211c05f3cfc5b3974f988575bd7d695a36a8d96"
+      }
+    ],
+    "allOtherLeafIdsAndModesUnchanged": true,
+    "scope": "Only the external failure-event collection workflow differs; original 03 event identity does not identify the faulting process in the separate d1 run."
+  },
+  "observedGates": {
+    "sourcePreflight": {
+      "tests": 13,
+      "pass": 13,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "scope": "Source preflight subset; not additive with the 49-test suite",
+      "log": "source-job.log",
+      "summaryLine": 160
+    },
+    "sourceSuite": {
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "sourceSummaryLine": 266,
+      "nativeSummaryLine": 214,
+      "scope": "The same source suite executes on Linux and Windows; not 98 distinct tests"
+    },
+    "apiSnapshot": {
+      "packages": 1,
+      "subpaths": 8,
+      "reachableDeclarations": 44,
+      "sourceLogLine": 286,
+      "nativeLogLine": 226
+    },
+    "diagnosticCompatibility": {
+      "status": "passed",
+      "actualRuntime": "Windows PowerShell Desktop 5.1 x64",
+      "realHelperCSharpCompiled": true,
+      "passGroups": 21,
+      "groups": {
+        "environmentMocks": 10,
+        "inputMocks": 7,
+        "actualOwnedTokenGuard": 1,
+        "actualOwnedUserSessionAndSidGroups": 3
+      },
+      "nativeLogLines": [
+        465,
+        487
+      ],
+      "scope": "Mock groups and actual read-only token/SID checks are separate from native UI acceptance"
+    },
+    "installedConsumerOwnerTests": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "nativeLogLines": [
+        588,
+        604
+      ],
+      "scope": "Node owner/source tests from the installed consumer, not five native UI tests"
+    },
+    "nativePackageBuild": "success",
+    "consumerExecutableBuild": "success",
+    "packagedDeployment": "success",
+    "uiaSmoke": "failure",
+    "testedPackageRetention": "skipped",
+    "testedPackageUpload": "skipped"
+  },
+  "actualProgress": {
+    "basis": "Exact executed source ordering plus original native log; detailed original UIA/trace/PNG files not inspected",
+    "fourDragSequencesReturned": true,
+    "sourceLines": {
+      "smoke": [
+        638,
+        675
+      ],
+      "navigationInvocation": 680
+    },
+    "requiredResults": [
+      {
+        "sequence": 1,
+        "policy": "reject",
+        "completionCount": 1,
+        "result": "none/rejected",
+        "owner": "main",
+        "authorizedTransfers": 0
+      },
+      {
+        "sequence": 2,
+        "policy": "accept with Escape cancellation",
+        "completionCount": 2,
+        "result": "none/cancelled",
+        "owner": "main",
+        "authorizedTransfers": 0
+      },
+      {
+        "sequence": 3,
+        "policy": "delay approval then close target",
+        "completionCount": 3,
+        "resultLabelAsserted": null,
+        "ownerAfterLateApproval": "main",
+        "authorizedTransfers": 0
+      },
+      {
+        "sequence": 4,
+        "policy": "accept",
+        "completionCount": 4,
+        "result": "move/accepted",
+        "ownerObservedInBothWindows": "document",
+        "authorizedTransfers": 1
+      }
+    ],
+    "lastRecordedInteraction": {
+      "nativeLogLine": 1904,
+      "time": "2026-11-11T08:40:40.7238337Z",
+      "action": "Pressed 'Use RTL navigation' with the keyboard (no InvokePattern)"
+    },
+    "smokeExit": {
+      "nativeLogLine": 1905,
+      "time": "2026-11-11T08:40:53.4348017Z",
+      "reportedExitCode": -1073740940,
+      "faultingProcess": "powershell.EXE",
+      "faultingModule": "ntdll.dll",
+      "cause": null
+    },
+    "navigationStatus": "entered; Settings focus and resize checks returned by source/log ordering; complete RTL and later gates not established",
+    "fullNativeAcceptance": false
+  },
+  "crashIdentity": {
+    "logLine": 1923,
+    "eventId": 1000,
+    "eventTimeUtc": "2026-11-11T08:40:51.7244013Z",
+    "observedLogTimeUtc": "2026-11-11T08:40:53.9432996Z",
+    "application": "powershell.EXE",
+    "module": "ntdll.dll",
+    "exceptionCode": "0xc0000374",
+    "faultOffset": "0x00000000001166d5",
+    "pid": 6300,
+    "pidHex": "0x189C",
+    "creationFileTimeHex": "0x1DD71B844152BC3",
+    "creationFileTimeDecimal": "134388600121142211",
+    "reportId": "5748adc9-328d-42b8-961d-d42f8d62e9e1",
+    "matches": [
+      {
+        "index": 1,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      },
+      {
+        "index": 2,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      },
+      {
+        "index": 3,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      },
+      {
+        "index": 4,
+        "driverBeforePid": 6300,
+        "driverAfterPid": 6300,
+        "driverBeforeCreation": "134388600121142211",
+        "driverAfterCreation": "134388600121142211",
+        "matchBefore": true,
+        "matchAfter": true,
+        "appPid": 7620,
+        "appCreated": "2026-11-11T08:40:13.7600648Z"
+      }
+    ],
+    "identityComparison": "Digit-preserving string tokens converted to BigInt; no Number conversion of FILETIMEs",
+    "corruptingCall": null,
+    "faultingCall": null,
+    "stackInspected": false
+  },
+  "externalEventCollection": {
+    "workflowGitBlob": "d211c05f3cfc5b3974f988575bd7d695a36a8d96",
+    "stepNumber": 16,
+    "stepName": "Application Error records after a failed smoke test",
+    "status": "success",
+    "eventLog": "Application",
+    "eventIds": [
+      1000,
+      1001
+    ],
+    "timeWindowMinutes": 40,
+    "maxRecords": 40,
+    "processFilter": null,
+    "providerFilter": null,
+    "recordCountReported": 3,
+    "recordCountLogLine": 1922,
+    "relevantRetainedEventLogLine": 1923,
+    "consoleMessageCharacterLimit": 900,
+    "outputFile": "driver-crash-events.txt",
+    "fullFileInspected": false,
+    "scope": "External workflow collection; no authorization or adoption of this broad collection is implied by retaining the already-completed original log. Derived fields include only the matching PowerShell event.",
+    "queryErrors": "Get-WinEvent uses SilentlyContinue; the console count does not establish an error-free exhaustive query."
+  },
+  "uploadReceipt": {
+    "nativeLogLine": 1940,
+    "producerFileCount": 43,
+    "artifactId": 13841311512,
+    "sizeInBytes": 414348,
+    "sha256": "d63b6fcbe487306c79a7ca23abb90744964dd3c66e294f500b16975f99d24cfd",
+    "originalZipIndependentlyHashed": false,
+    "membersExtracted": false,
+    "pixelsInspected": false
+  },
+  "metadataEndpoints": [
+    "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42987324915",
+    "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42987324915/attempts/1/jobs",
+    "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42987324915/artifacts"
+  ]
+}

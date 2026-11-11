@@ -1,0 +1,1111 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-pass-native-navigation-exit",
+  "status": "native-acceptance-failed",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceWorkflowStatus": "success",
+  "nativeWorkflowStatus": "failure",
+  "head": {
+    "commit": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+    "orderedParents": [
+      "7a160c536b845d71487ba2997262daf3cf07cb9b"
+    ]
+  },
+  "actualCheckout": {
+    "commit": "8ff0adf28897e7fd7300f6ebac112513ee7a4dbe",
+    "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+    ],
+    "originalCheckoutLines": {
+      "source-linux.log": 122,
+      "source-windows.log": 109,
+      "workspace-types.log": 122,
+      "fabric-source.log": 123,
+      "fabric-native.log": 111
+    }
+  },
+  "metadata": {
+    "file": "metadata.json",
+    "bytes": 29216,
+    "sha256": "f7f68ad64a78f1ccdf9d4d4e78920cb6ce621d348116c12c414aa6d96a486d0c",
+    "gitBlob": "d118a286c50ea4185a29b9796504958bf7c4762e"
+  },
+  "originalLogs": [
+    {
+      "file": "source-linux.log",
+      "bytes": 156140,
+      "sha256": "6ecb90716def618fea54091d5e0d987c3ec679c9ecceff954e2606cf6075d3bd",
+      "gitBlob": "3742023be870f97a3d79330c4730510d70197458",
+      "job": 130445894076,
+      "run": 42997727683,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130445894076/logs",
+      "completeOriginal": true,
+      "immutableReadbackExact": true,
+      "lineEndings": "Original UTF-8 text/BOM/line endings/ANSI retained, without normalization."
+    },
+    {
+      "file": "source-windows.log",
+      "bytes": 198275,
+      "sha256": "3ec0afb03f1c9da947f4e63046e90bc7b6061f7dd7df9aad3eb6e1d3a8c58504",
+      "gitBlob": "57147b1e56275ff22668653e5f58290e1a02c423",
+      "job": 130445894126,
+      "run": 42997727683,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130445894126/logs",
+      "completeOriginal": true,
+      "immutableReadbackExact": true,
+      "lineEndings": "Original UTF-8 text/BOM/line endings/ANSI retained, without normalization."
+    },
+    {
+      "file": "workspace-types.log",
+      "bytes": 62126,
+      "sha256": "8eebce897c76013b0b78053a92732fe81ca28965395e836524ea3789717c7c2b",
+      "gitBlob": "87accd8276a365986579d2f96d81b74961d0ab8d",
+      "job": 130445894077,
+      "run": 42997727683,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130445894077/logs",
+      "completeOriginal": true,
+      "immutableReadbackExact": true,
+      "lineEndings": "Original UTF-8 text/BOM/line endings/ANSI retained, without normalization."
+    },
+    {
+      "file": "fabric-source.log",
+      "bytes": 31688,
+      "sha256": "33898c649afddfe28be3e52b48ea7398891184c21698169adedfe0f92e3c9059",
+      "gitBlob": "1b5bb97aa3ccf43dc529f6dd96b84fe34c5b361a",
+      "job": 130445893932,
+      "run": 42997727800,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130445893932/logs",
+      "completeOriginal": true,
+      "immutableReadbackExact": true,
+      "lineEndings": "Original UTF-8 text/BOM/line endings/ANSI retained, without normalization."
+    },
+    {
+      "file": "fabric-native.log",
+      "bytes": 393557,
+      "sha256": "3e2532a4d8c7fb2737ac4e8ef4b22fc908b86c5c19ea767b3420206e3f060c4c",
+      "gitBlob": "584c6fcdfff825993efc9e500ceded1ad9490b45",
+      "job": 130446243806,
+      "run": 42997727800,
+      "endpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130446243806/logs",
+      "completeOriginal": true,
+      "immutableReadbackExact": true,
+      "lineEndings": "Original UTF-8 text/BOM/line endings/ANSI retained, without normalization."
+    }
+  ],
+  "sourceResults": {
+    "run": 42997727683,
+    "attempt": 1,
+    "linux": {
+      "job": 130445894076,
+      "total": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 22498.073191,
+      "summaryLines": {
+        "start": 1412,
+        "end": 1419
+      },
+      "correctedRetentionTestLine": 1378,
+      "correctedPublicationGuardTestLine": 1389
+    },
+    "windows": {
+      "job": 130445894126,
+      "total": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 60510.8985,
+      "summaryLines": {
+        "start": 1417,
+        "end": 1424
+      },
+      "correctedRetentionTestLine": 1381,
+      "correctedRetentionTestDurationMs": 37.7253,
+      "correctedPublicationGuardTestLine": 1392,
+      "pack": {
+        "tarballs": 13,
+        "line": 1802
+      },
+      "freshImports": {
+        "subpaths": 17,
+        "packages": [
+          "@nyc-tron/core",
+          "@nyc-tron/geometry",
+          "@nyc-tron/windows-fluent"
+        ],
+        "line": 1809
+      }
+    },
+    "countLimit": "Same 1204-case suite executed on two hosts; not 2408 distinct contracts or native runtime assertions.",
+    "types": {
+      "job": 130445894077,
+      "exports": {
+        "conditional": 619,
+        "esmFiles": 750,
+        "line": 246
+      },
+      "api": {
+        "packages": 13,
+        "subpaths": 619,
+        "reachableDeclarations": 3306,
+        "line": 608
+      },
+      "componentProgram": {
+        "canonicalIds": 341,
+        "localImplementations": 332,
+        "partial": 0,
+        "pinnedExternalImplementations": 9,
+        "pending": 0,
+        "acceptedWithAllEightPlatformProofs": 0,
+        "line": 613
+      },
+      "pack": {
+        "tarballs": 13,
+        "line": 631
+      },
+      "freshImports": {
+        "subpaths": 17,
+        "packages": [
+          "@nyc-tron/core",
+          "@nyc-tron/geometry",
+          "@nyc-tron/windows-fluent"
+        ],
+        "line": 638
+      }
+    }
+  },
+  "sourceFixBinding": {
+    "preimage": "7a160c536b845d71487ba2997262daf3cf07cb9b",
+    "candidate": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+    "fullTree": {
+      "leaves": 3152,
+      "recomputedTreeObjects": 513,
+      "changedPathsAgainst7a": [
+        {
+          "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/IslandConnection.h",
+          "before": {
+            "sha": "afcd61d50584a90cc58ab8dbd77c2bcc2a602be1",
+            "mode": "100644",
+            "bytes": 2736
+          },
+          "after": {
+            "sha": "5b8b1054bcc13d09e958be40709a6273b797d11f",
+            "mode": "100644",
+            "bytes": 2824
+          }
+        },
+        {
+          "path": "tooling/native/UI_ACCEPTANCE.md",
+          "before": {
+            "sha": "a3a51e499711f026463b9ff6b571422f730c0cf8",
+            "mode": "100644",
+            "bytes": 6185
+          },
+          "after": {
+            "sha": "d4fa0c0fad6829965108e0a6da78b77678e9cc91",
+            "mode": "100644",
+            "bytes": 6410
+          }
+        },
+        {
+          "path": "tooling/native/run-ui-acceptance.mjs",
+          "before": {
+            "sha": "50d0a3435fb52f4ad1b73df224fc01436f5d443b",
+            "mode": "100644",
+            "bytes": 17011
+          },
+          "after": {
+            "sha": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+            "mode": "100644",
+            "bytes": 17132
+          }
+        },
+        {
+          "path": "tooling/native/ui-transport.mjs",
+          "before": {
+            "sha": "9a362c4b7af481c01beeb7bd0f7b03a9a692080b",
+            "mode": "100644",
+            "bytes": 9228
+          },
+          "after": {
+            "sha": "fbf804293b94406b65a36d273f4c2528825b4bc4",
+            "mode": "100644",
+            "bytes": 9068
+          }
+        },
+        {
+          "path": "tooling/tests/native-ui-transport.test.mjs",
+          "before": {
+            "sha": "9e62b8505328cc9e76cf6a361571565eb0fc11a3",
+            "mode": "100644",
+            "bytes": 11472
+          },
+          "after": {
+            "sha": "750bcf5cd84d5b00b50b0e2820bd0012a3893619",
+            "mode": "100644",
+            "bytes": 11854
+          }
+        },
+        {
+          "path": "tooling/tests/release-readiness.test.mjs",
+          "before": {
+            "sha": "62ba8325d3695a6e04e2144f70748f72327abf90",
+            "mode": "100644",
+            "bytes": 13838
+          },
+          "after": {
+            "sha": "d5f217076df126f8160982d07db05e8cee288889",
+            "mode": "100644",
+            "bytes": 13916
+          }
+        }
+      ],
+      "unchangedLeavesAgainst7a": 3146
+    },
+    "siteAccessor": {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/IslandConnection.h",
+      "before": "",
+      "after": "winrt::Microsoft::UI::Content::ChildSiteLink Site() const noexcept { return m_site; }\n  ",
+      "deltaBytes": 88,
+      "exactOnlyInsertion": true
+    },
+    "retentionManifest": "fb34dbee47aafd124c8f10f2b17ef2e1aca9daaf",
+    "releaseGuardTestAfter": "d5f217076df126f8160982d07db05e8cee288889",
+    "threeLifecycleFilesAndUiaUnchanged": true,
+    "workflowUnchanged": true,
+    "hostSecurityLauncherAndDeadlineUnchanged": true,
+    "externalDependencyReview": {
+      "source": "217e72c4db2ce96313d407c83918da54b5f24d84",
+      "reviewedBy": "Root coordinator and independent final-gate reviewer",
+      "scope": "Static full native dependency-union review, separate from this author's six-path tree verification.",
+      "nativePathCount": 32,
+      "identicalAfterRestoringSite": 29,
+      "remainingDifferences": [
+        "NativeDragBroker.cpp",
+        "NativeDragBroker.h",
+        "TronDragSurface.cpp"
+      ],
+      "noAdditionalMissingDependencyIdentified": true
+    }
+  },
+  "nativeResults": {
+    "run": 42997727800,
+    "attempt": 1,
+    "sourceJob": {
+      "id": 130445893932,
+      "status": "success",
+      "initialSuite": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "durationMs": 43.861098,
+        "summaryLines": {
+          "start": 160,
+          "end": 167
+        }
+      },
+      "packageIsolatedSuite": {
+        "total": 49,
+        "passed": 49,
+        "failed": 0,
+        "durationMs": 90.435507,
+        "summaryLines": {
+          "start": 266,
+          "end": 273
+        }
+      },
+      "api": {
+        "packages": 1,
+        "subpaths": 8,
+        "reachableDeclarations": 44,
+        "line": 286
+      },
+      "countLimit": "The 49-case suite includes source cases; not 62 distinct cases."
+    },
+    "nativeJob": {
+      "id": 130446243806,
+      "status": "failure",
+      "packageSuite": {
+        "total": 49,
+        "passed": 49,
+        "failed": 0,
+        "durationMs": 239.009,
+        "summaryLines": {
+          "start": 214,
+          "end": 221
+        }
+      },
+      "consumerConnectionSuite": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "durationMs": 181.5371,
+        "summaryLines": {
+          "start": 597,
+          "end": 604
+        }
+      },
+      "powershellDiagnosticStep": {
+        "number": 10,
+        "conclusion": "success",
+        "scope": "Diagnostic/owned-process tests; distinct from packaged-app UIA."
+      },
+      "packageCompile": {
+        "step": 13,
+        "conclusion": "success",
+        "linkedDllLine": 833
+      },
+      "consumerCompile": {
+        "step": 14,
+        "conclusion": "success",
+        "linkedExeLine": 1000,
+        "compiledConsumerLine": 1001,
+        "dependencyIsolation": {
+          "reactCopies": 1,
+          "rnwCopies": 1,
+          "reactNativeCoreFiles": 0,
+          "lines": {
+            "start": 1002,
+            "end": 1006
+          }
+        }
+      },
+      "deployment": {
+        "step": 15,
+        "conclusion": "success",
+        "successLines": [
+          1703,
+          1707
+        ]
+      },
+      "uia": {
+        "step": 16,
+        "conclusion": "failure",
+        "sourceBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+        "strictDragSourceLines": {
+          "start": 635,
+          "end": 672
+        },
+        "returnedScenarioChecks": [
+          {
+            "name": "rejected",
+            "completed": 1,
+            "osResult": "none/rejected",
+            "documentOwner": "main",
+            "authorizedTransfers": 0
+          },
+          {
+            "name": "escape",
+            "completed": 2,
+            "osResult": "none/cancelled",
+            "documentOwner": "main",
+            "authorizedTransfers": 0
+          },
+          {
+            "name": "close-before-delayed-approval",
+            "completed": 3,
+            "documentOwnerAfterDelayedResolution": "main",
+            "authorizedTransfers": 0
+          },
+          {
+            "name": "accepted",
+            "completed": 4,
+            "osResult": "move/accepted",
+            "documentOwnerInBothWindows": "document",
+            "authorizedTransfers": 1
+          }
+        ],
+        "proofKind": "Source-bound control-flow inference: original log reaches accepted-drag capture/navigation after these strict synchronous status checks in unchanged UIA source. Not a final passed report or viewed PNG.",
+        "acceptedDragCaptureLine": 1895,
+        "navigationSourceBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975",
+        "lastMessages": [
+          {
+            "line": 1903,
+            "time": "2026-11-11T09:53:55.3170698Z",
+            "message": "Saved navigation-resize screenshot reported"
+          },
+          {
+            "line": 1904,
+            "time": "2026-11-11T09:53:55.7270194Z",
+            "message": "Pressed Use RTL navigation with keyboard, no InvokePattern"
+          },
+          {
+            "line": 1905,
+            "time": "2026-11-11T09:54:08.5520703Z",
+            "message": "Process completed with exit code -1073740940"
+          }
+        ],
+        "pressToStepExitSeconds": 12.8250509,
+        "stepExitCode": -1073740940,
+        "managedAssertionObserved": false,
+        "currentFaultingProcessIdentified": false,
+        "currentFaultingModuleIdentified": false,
+        "currentCauseEstablished": false,
+        "rtlSuccessEstablished": false,
+        "laterHighContrastSuccessEstablished": false,
+        "finalNavigationResultEstablished": false
+      },
+      "testedPackageSteps": {
+        "retention": 17,
+        "upload": 18,
+        "conclusion": "skipped"
+      }
+    }
+  },
+  "environmentExtraction": {
+    "marker": "NYCTRON_DRAG_ENVIRONMENT",
+    "count": 4,
+    "jsonEncoding": "Exact JSON payload string after removing only the GitHub timestamp prefix and line ending; no JSON reserialization.",
+    "envelopeEncoding": "Exact original three-line timestamped CRLF blocks.",
+    "files": [
+      {
+        "name": "environment-01.json",
+        "identity": {
+          "bytes": 14437,
+          "sha256": "561fc7e2a259d9eb2d998a39ff14ff462fab916b0e1c9c753c60564d0a402d41",
+          "gitBlob": "f86b74fe200dc1ccb4770bb36140425339d2b975"
+        },
+        "sourceLines": {
+          "start": 1773,
+          "end": 1775
+        },
+        "kind": "exact JSON payload without timestamp or line ending",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-01.envelope.log",
+        "identity": {
+          "bytes": 14588,
+          "sha256": "4d12e94572898dafeeed35652dbc418a70e29e82f7916ef062a3c0b0fb399bc8",
+          "gitBlob": "ee1f87b77a1d178d969bcaff6a52ba0ed7cd47de"
+        },
+        "sourceLines": {
+          "start": 1773,
+          "end": 1775
+        },
+        "kind": "full original timestamped CRLF envelope",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-02.json",
+        "identity": {
+          "bytes": 14437,
+          "sha256": "22ebf14469b64b64254b9a8005166195f3c6b3dcb482d572b16eebf66fe18ef3",
+          "gitBlob": "702e91612cb73c2f5201477dee039516a9cdf5ad"
+        },
+        "sourceLines": {
+          "start": 1804,
+          "end": 1806
+        },
+        "kind": "exact JSON payload without timestamp or line ending",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-02.envelope.log",
+        "identity": {
+          "bytes": 14588,
+          "sha256": "bd651a95a8eeea61e51e0ad37d6f96b98ffe1e58e39f04861d0b28a034773ec9",
+          "gitBlob": "ad9b0bde3596f7f4fe57bd7c6ee647a4b2cd0d89"
+        },
+        "sourceLines": {
+          "start": 1804,
+          "end": 1806
+        },
+        "kind": "full original timestamped CRLF envelope",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-03.json",
+        "identity": {
+          "bytes": 14437,
+          "sha256": "779d7a88f1eb80a2ec02199810f7d7259a271de23ea3fefd1d6fa0356703dce2",
+          "gitBlob": "d36a1eea40d9778ae15ae665cea8da9341e8d078"
+        },
+        "sourceLines": {
+          "start": 1834,
+          "end": 1836
+        },
+        "kind": "exact JSON payload without timestamp or line ending",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-03.envelope.log",
+        "identity": {
+          "bytes": 14588,
+          "sha256": "04a2ebc470fb0eec44b59da22713552478ab3bd8ef7328984bca00270d967c1a",
+          "gitBlob": "20f6ff067eae3621a864074980954cfca27eeea7"
+        },
+        "sourceLines": {
+          "start": 1834,
+          "end": 1836
+        },
+        "kind": "full original timestamped CRLF envelope",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-04.json",
+        "identity": {
+          "bytes": 14437,
+          "sha256": "404b4c2f4ee725a049d28241389e62dfd8212ffea5aba3af1538cfd4351278c7",
+          "gitBlob": "eb47ba9578d7a62844cbab2f3871ddd96de999c3"
+        },
+        "sourceLines": {
+          "start": 1866,
+          "end": 1868
+        },
+        "kind": "exact JSON payload without timestamp or line ending",
+        "interleavedLines": 0
+      },
+      {
+        "name": "environment-04.envelope.log",
+        "identity": {
+          "bytes": 14588,
+          "sha256": "5293624fca6eb5ccab8f55f068ad7ff37dc1a0eaed89aa750d5f0c31201c78c0",
+          "gitBlob": "182dc2f539a041b6ef41501348a27667a17d40dc"
+        },
+        "sourceLines": {
+          "start": 1866,
+          "end": 1868
+        },
+        "kind": "full original timestamped CRLF envelope",
+        "interleavedLines": 0
+      }
+    ],
+    "boundaries": [
+      {
+        "attempt": 1,
+        "startLine": 1773,
+        "jsonLine": 1774,
+        "endLine": 1775,
+        "complete": true,
+        "interleavedLines": 0
+      },
+      {
+        "attempt": 2,
+        "startLine": 1804,
+        "jsonLine": 1805,
+        "endLine": 1806,
+        "complete": true,
+        "interleavedLines": 0
+      },
+      {
+        "attempt": 3,
+        "startLine": 1834,
+        "jsonLine": 1835,
+        "endLine": 1836,
+        "complete": true,
+        "interleavedLines": 0
+      },
+      {
+        "attempt": 4,
+        "startLine": 1866,
+        "jsonLine": 1867,
+        "endLine": 1868,
+        "complete": true,
+        "interleavedLines": 0
+      }
+    ],
+    "originalsInArchiveInspected": false,
+    "summaryIsNotFullOriginal": true
+  },
+  "environmentObservations": [
+    {
+      "attempt": 1,
+      "capturedAt": "2026-11-11T09:53:44.6497156Z",
+      "appPid": 6096,
+      "driverPid": 6780,
+      "shellPid": 5952,
+      "appCreatedAt": "2026-11-11T09:53:28.6747531Z",
+      "driverCreatedAt": "2026-11-11T09:53:27.7361993Z",
+      "shellCreatedAt": "2026-11-11T09:40:06.7672823Z",
+      "appCreationFileTimeDecimal": "134388644086747531",
+      "driverCreationFileTimeDecimal": "134388644077361993",
+      "shellCreationFileTimeDecimal": "134388636067672823",
+      "numericIdentityNote": "FILETIME values are exact decimal strings extracted from original JSON text, never rounded JavaScript numbers.",
+      "appFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "enableLua": 1,
+      "sessionId": 2,
+      "existingShell": {
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "truePredicates": 8,
+        "falsePredicates": 2,
+        "unobservedPredicates": 2,
+        "sameUserStatus": "not-requested-unsupported-shell",
+        "sameUserValue": null
+      },
+      "loadedModuleFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true
+        }
+      ],
+      "producerOriginal": {
+        "filename": "drag-environment-01.json",
+        "bytes": 81429,
+        "sha256": "09428bb3f1ac5c5327e2b0a6e48b08920275e3382b8aa3f983d37e8369ef738a",
+        "inspected": false
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ]
+      }
+    },
+    {
+      "attempt": 2,
+      "capturedAt": "2026-11-11T09:53:47.2704125Z",
+      "appPid": 6096,
+      "driverPid": 6780,
+      "shellPid": 5952,
+      "appCreatedAt": "2026-11-11T09:53:28.6747531Z",
+      "driverCreatedAt": "2026-11-11T09:53:27.7361993Z",
+      "shellCreatedAt": "2026-11-11T09:40:06.7672823Z",
+      "appCreationFileTimeDecimal": "134388644086747531",
+      "driverCreationFileTimeDecimal": "134388644077361993",
+      "shellCreationFileTimeDecimal": "134388636067672823",
+      "numericIdentityNote": "FILETIME values are exact decimal strings extracted from original JSON text, never rounded JavaScript numbers.",
+      "appFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "enableLua": 1,
+      "sessionId": 2,
+      "existingShell": {
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "truePredicates": 8,
+        "falsePredicates": 2,
+        "unobservedPredicates": 2,
+        "sameUserStatus": "not-requested-unsupported-shell",
+        "sameUserValue": null
+      },
+      "loadedModuleFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true
+        }
+      ],
+      "producerOriginal": {
+        "filename": "drag-environment-02.json",
+        "bytes": 81429,
+        "sha256": "44744bd34a91a258d352d36cf11347d00361fc563d7e2049e9f37efe5b479449",
+        "inspected": false
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ]
+      }
+    },
+    {
+      "attempt": 3,
+      "capturedAt": "2026-11-11T09:53:49.2644411Z",
+      "appPid": 6096,
+      "driverPid": 6780,
+      "shellPid": 5952,
+      "appCreatedAt": "2026-11-11T09:53:28.6747531Z",
+      "driverCreatedAt": "2026-11-11T09:53:27.7361993Z",
+      "shellCreatedAt": "2026-11-11T09:40:06.7672823Z",
+      "appCreationFileTimeDecimal": "134388644086747531",
+      "driverCreationFileTimeDecimal": "134388644077361993",
+      "shellCreationFileTimeDecimal": "134388636067672823",
+      "numericIdentityNote": "FILETIME values are exact decimal strings extracted from original JSON text, never rounded JavaScript numbers.",
+      "appFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "enableLua": 1,
+      "sessionId": 2,
+      "existingShell": {
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "truePredicates": 8,
+        "falsePredicates": 2,
+        "unobservedPredicates": 2,
+        "sameUserStatus": "not-requested-unsupported-shell",
+        "sameUserValue": null
+      },
+      "loadedModuleFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true
+        }
+      ],
+      "producerOriginal": {
+        "filename": "drag-environment-03.json",
+        "bytes": 81429,
+        "sha256": "1517a9be2e99577e7d5056a0ffad3f8cd4285f60a02ae316ccba9bbbde066944",
+        "inspected": false
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ]
+      }
+    },
+    {
+      "attempt": 4,
+      "capturedAt": "2026-11-11T09:53:52.0311363Z",
+      "appPid": 6096,
+      "driverPid": 6780,
+      "shellPid": 5952,
+      "appCreatedAt": "2026-11-11T09:53:28.6747531Z",
+      "driverCreatedAt": "2026-11-11T09:53:27.7361993Z",
+      "shellCreatedAt": "2026-11-11T09:40:06.7672823Z",
+      "appCreationFileTimeDecimal": "134388644086747531",
+      "driverCreationFileTimeDecimal": "134388644077361993",
+      "shellCreationFileTimeDecimal": "134388636067672823",
+      "numericIdentityNote": "FILETIME values are exact decimal strings extracted from original JSON text, never rounded JavaScript numbers.",
+      "appFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "shellFields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      },
+      "enableLua": 1,
+      "sessionId": 2,
+      "existingShell": {
+        "status": "observed-ineligible",
+        "eligibleForActivationReview": false,
+        "truePredicates": 8,
+        "falsePredicates": 2,
+        "unobservedPredicates": 2,
+        "sameUserStatus": "not-requested-unsupported-shell",
+        "sameUserValue": null
+      },
+      "loadedModuleFiles": [
+        {
+          "basename": "Microsoft.UI.Xaml.dll",
+          "status": "observed",
+          "bytes": 15083832,
+          "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+          "fileStable": true
+        },
+        {
+          "basename": "Microsoft.UI.Input.dll",
+          "status": "observed",
+          "bytes": 1701688,
+          "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+          "fileStable": true
+        }
+      ],
+      "producerOriginal": {
+        "filename": "drag-environment-04.json",
+        "bytes": 81429,
+        "sha256": "3867dec672a4b6f76cec5e823be1954a13c6369d6aea22be062af03d975648e1",
+        "inspected": false
+      },
+      "selection": {
+        "omittedOriginalSections": [
+          "source.uiaAncestors",
+          "target.uiaAncestors"
+        ],
+        "compactedOriginalSections": [
+          "mainChildren",
+          "documentChildren"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13845740998,
+      "name": "winui-fabric-uia-smoke",
+      "sizeInBytes": 417056,
+      "digest": "sha256:f72049177586f4bd492941e6385d8f4dd03b501dcf0aac663c967de229b411c4",
+      "expired": false,
+      "createdAt": "2026-11-11T09:54:09Z",
+      "updatedAt": "2026-11-11T09:54:09Z",
+      "expiresAt": "2027-02-09T09:44:38Z",
+      "workflowRun": {
+        "id": 42997727800,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-reviewed-lifecycle-nov11",
+        "head_sha": "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+      },
+      "archiveInspected": false,
+      "membersInspected": false,
+      "producerFileCount": 43,
+      "archiveHashIndependentlyVerified": false,
+      "archiveMembersViewed": false
+    },
+    {
+      "id": 13844019150,
+      "name": "windows-fabric-shared-packages",
+      "sizeInBytes": 62822,
+      "digest": "sha256:d1d230c4432549bb8a1d43d1b516e2fa2852ba75069cf32a1b4a7a2fb7318516",
+      "expired": false,
+      "createdAt": "2026-11-11T09:45:20Z",
+      "updatedAt": "2026-11-11T09:45:20Z",
+      "expiresAt": "2027-02-09T09:44:38Z",
+      "workflowRun": {
+        "id": 42997727800,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-windows-reviewed-lifecycle-nov11",
+        "head_sha": "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+      },
+      "archiveInspected": false,
+      "membersInspected": false,
+      "producerFileCount": 3,
+      "archiveHashIndependentlyVerified": false,
+      "archiveMembersViewed": false
+    }
+  ],
+  "inspectionLimits": [
+    "Both prior source test failures now have actual passing Linux and Windows executions; mocked source checks are not being substituted.",
+    "The app and existing shell remain observed High/elevated with an ineligible shell snapshot. Strict drag results on this host do not promote it to supported-host acceptance.",
+    "Unknown same-user comparisons remain unknown; zero-area/hidden InputSite observations do not prove a registration defect.",
+    "No caught current UIA assertion, faulting-process/module attribution, or cause is established by this log; previous external runs' process attribution is not transferred.",
+    "The initial documentation-only review read Microsoft Learn as requiring LocalFree. Subsequent independent review bound dotnet/dotnet commit 461c220ba5d192fea95ca9249b22b96d3c9e9903, src/winforms/src/System.Private.Windows.Core/src/Windows/Win32/PInvokeCore.SystemParametersInfo.cs, blob c52fc3df81c9eccd38a1db134d76457c49cb2b85: that official implementation explicitly says the documentation's free requirement is incorrect. The separately reviewed navigation ownership correction copies the borrowed GET string without freeing it and preserves the caller-owned SET allocation/free. This revises the initial review on first-party evidence without establishing this recorded exit's cause.",
+    "Original archive contents including native traces, PNGs and the larger 81429-byte environment records remain uninspected; their hashes/bytes are producer-reported.",
+    "No successful final native result or tested-package archive is claimed; all subsequent source/CI revisions require their own evidence."
+  ],
+  "primaryContractForRejectedOwnershipHypothesis": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-highcontrastw"
+}

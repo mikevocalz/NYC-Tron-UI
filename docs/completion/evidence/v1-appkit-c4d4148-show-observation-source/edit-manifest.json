@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "kind": "bounded-private-show-response-diagnostic-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "examples/macos-appkit/spark/verify-native.mjs",
+  "preimage": {
+    "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+    "bytes": 114435,
+    "sha256": "71714864b1f10d975b640b6bfa09b203509f419d1441469700e32b9074be98ae"
+  },
+  "candidate": {
+    "gitBlob": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+    "bytes": 120419,
+    "sha256": "3339553afe83907490dd8daac094cceedf967f3359deada250330b6882b5c9db"
+  },
+  "reviewScript": {
+    "gitBlob": "d2a1f054cf5b21e9dbdb96c163a0e88a704f7900",
+    "bytes": 18998,
+    "sha256": "efe354725af8a215a30d1c33b3a376246e7774efbabe261ea48dcc45100fbd6b"
+  },
+  "transforms": [
+    {
+      "id": "bounded-show-response-report",
+      "before": "async function waitFor(check, label, timeoutMs = 20000) {",
+      "after": "// Failure-only observation of responses already returned to show's unchanged\n// polling predicate. This never requests activation, focus, or another snapshot.\nfunction projectShowResponse(value, expectedProcessId) {\n  const record = value && typeof value === 'object' && !Array.isArray(value) ? value : {};\n  const boolean = input => typeof input === 'boolean' ? input : null;\n  const pid = input => Number.isSafeInteger(input) && input > 0;\n  const matchesPid = input => pid(input) && pid(expectedProcessId) ? input === expectedProcessId : null;\n  return {\n    assertions: {\n      processIdMatches: matchesPid(record.processId),\n      activationPolicyRegular: Number.isSafeInteger(record.activationPolicy) ? record.activationPolicy === 0 : null,\n      canBecomeKey: boolean(record.canBecomeKey),\n    },\n    conjunction: {\n      visible: boolean(record.visible), key: boolean(record.key),\n      applicationActive: boolean(record.applicationActive),\n      frontmostProcessMatches: matchesPid(record.frontmostProcessId),\n    },\n  };\n}\nfunction createShowObservation(window, expectedProcessId) {\n  return { owner: window === 'main' || window === 'document-1' ? window : null,\n    expectedProcessId: Number.isSafeInteger(expectedProcessId) && expectedProcessId > 0 ? expectedProcessId : null,\n    returnedResponses: 0, stateChanges: 0, retained: [], last: null, lastSignature: null,\n    captureFailed: false, countOverflow: false };\n}\nfunction captureShowResponse(observation, value) {\n  try {\n    const increment = name => {\n      if (Number.isSafeInteger(observation[name]) && observation[name] < Number.MAX_SAFE_INTEGER) observation[name]++;\n      else { observation[name] = null; observation.countOverflow = true; }\n    };\n    increment('returnedResponses');\n    let state;\n    try { state = projectShowResponse(value, observation.expectedProcessId); }\n    catch { observation.captureFailed = true; state = projectShowResponse(null, observation.expectedProcessId); }\n    const signature = JSON.stringify(state);\n    const changed = observation.last !== null && signature !== observation.lastSignature;\n    if (changed) increment('stateChanges');\n    const record = { response: observation.returnedResponses, changed, state };\n    if (observation.last === null || changed) {\n      observation.retained.push(record);\n      // First response + latest six changes; reserve the eighth slot for last.\n      if (observation.retained.length > 7) observation.retained.splice(1, observation.retained.length - 7);\n    }\n    observation.last = record; observation.lastSignature = signature;\n  } catch { observation.captureFailed = true; }\n}\nfunction showObservationSummary(observation) {\n  const selected = observation.retained.slice();\n  if (observation.last && selected.at(-1) !== observation.last) selected.push(observation.last);\n  const retainedChanges = selected.filter(record => record.changed).length;\n  return {\n    schemaVersion: 1, status: 'failed-show-poll', diagnosticOnly: true,\n    sourceRevision: typeof revision === 'string' && /^[a-f0-9]{40}$/.test(revision) ? revision : null,\n    owner: observation.owner, expectedProcessId: observation.expectedProcessId,\n    scope: 'already-returned-show-inspect-responses', recordLimit: 8, consoleByteLimit: 8192,\n    selection: 'first-and-last-response-plus-latest-state-changes',\n    returnedResponses: observation.returnedResponses, stateChanges: observation.stateChanges,\n    selectedRecords: selected.length,\n    omittedResponses: Number.isSafeInteger(observation.returnedResponses) ? observation.returnedResponses - selected.length : null,\n    omittedStateChanges: Number.isSafeInteger(observation.stateChanges) ? observation.stateChanges - retainedChanges : null,\n    captureFailed: observation.captureFailed, countOverflow: observation.countOverflow,\n    records: selected.map(record => ({\n      response: record.response, first: record === observation.retained[0], last: record === observation.last,\n      stateChange: record.changed, assertions: record.state.assertions, conjunction: record.state.conjunction,\n    })),\n  };\n}\nfunction reportShowFailure(observation) {\n  try {\n    const summary = showObservationSummary(observation);\n    const filename = 'window-show-failure.json';\n    const original = { filename, writeStatus: 'not-attempted', writeErrorCode: null };\n    const report = { ...summary, original };\n    const encode = () => 'NYCTRON_WINDOW_SHOW_EVIDENCE_BEGIN\\n' + JSON.stringify(report) + '\\nNYCTRON_WINDOW_SHOW_EVIDENCE_END\\n';\n    if (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit) {\n      report.omittedResponses = summary.returnedResponses;\n      report.omittedStateChanges = summary.stateChanges;\n      report.selectedRecords = 0; report.records = [];\n      report.status = 'failed-show-poll-details-omitted';\n    }\n    if (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit) return;\n    // The original file is observation data only; write status belongs to the\n    // console receipt. A duplicate failure cannot replace the first file.\n    const { original: omittedWriteStatus, ...fileRecord } = report;\n    try {\n      writeFileSync(join(output, filename), JSON.stringify(fileRecord) + '\\n', { flag: 'wx' });\n      original.writeStatus = 'retained';\n    } catch (error) {\n      original.writeStatus = 'failed';\n      original.writeErrorCode = ['EACCES', 'EPERM', 'EEXIST', 'ENOSPC', 'EIO', 'ENOENT'].includes(error?.code) ? error.code : 'other';\n    }\n    const envelope = encode();\n    if (Buffer.byteLength(envelope, 'utf8') <= summary.consoleByteLimit) console.info(envelope.slice(0, -1));\n  } catch {\n    // Diagnostic projection, file, and console failures never replace the\n    // original show assertion, inspect rejection, or timeout object.\n  }\n}\n\nasync function waitFor(check, label, timeoutMs = 20000) {"
+    },
+    {
+      "id": "capture-existing-show-poll",
+      "before": "  return waitFor(async () => {\n    const observed = await inspect(undefined, window);\n    assert.equal(observed.processId, child.pid);\n    assert.equal(observed.activationPolicy, 0, 'Interactive acceptance requires regular AppKit activation policy');\n    assert.equal(observed.canBecomeKey, true, 'The requested owner must be able to become key');\n    return observed.visible && observed.key && observed.applicationActive && observed.frontmostProcessId === child.pid ? observed : undefined;\n  }, `visible, key and active native owner window (${window})`);\n",
+      "after": "  const observation = createShowObservation(window, child.pid);\n  try {\n    return await waitFor(async () => {\n      const observed = await inspect(undefined, window);\n      captureShowResponse(observation, observed);\n      assert.equal(observed.processId, child.pid);\n      assert.equal(observed.activationPolicy, 0, 'Interactive acceptance requires regular AppKit activation policy');\n      assert.equal(observed.canBecomeKey, true, 'The requested owner must be able to become key');\n      return observed.visible && observed.key && observed.applicationActive && observed.frontmostProcessId === child.pid ? observed : undefined;\n    }, `visible, key and active native owner window (${window})`);\n  } catch (error) {\n    reportShowFailure(observation);\n    throw error;\n  }\n"
+    }
+  ],
+  "applyRule": "Apply each unique literal before-to-after transform in listed order; reverse in reverse order. Exact inversion must restore the entire d21 preimage.",
+  "scope": {
+    "capture": "Only values already returned by the existing tron.inspect calls in show's polling loop",
+    "ownerLabels": [
+      "main",
+      "document-1",
+      null
+    ],
+    "assertionFacts": [
+      "processIdMatches",
+      "activationPolicyRegular",
+      "canBecomeKey"
+    ],
+    "conjunctionFacts": [
+      "visible",
+      "key",
+      "applicationActive",
+      "frontmostProcessMatches"
+    ],
+    "types": "Observed booleans or null unknowns; no conversion of missing/wrong-type values to observed false.",
+    "selection": "First response plus latest six state changes and final response; duplicate final is not repeated.",
+    "recordLimit": 8,
+    "consoleByteLimit": 8192,
+    "byteLimitIncludes": "Both fixed delimiter lines, complete JSON line and their newlines",
+    "omissions": [
+      "omittedResponses",
+      "omittedStateChanges"
+    ],
+    "overflow": "Counts become null with countOverflow rather than wrapping.",
+    "outputFile": "window-show-failure.json",
+    "fileWriteFlag": "wx",
+    "writeFailure": "Fixed allowlisted error code in bounded console receipt; no raw message or path.",
+    "consoleMarkers": [
+      "NYCTRON_WINDOW_SHOW_EVIDENCE_BEGIN",
+      "NYCTRON_WINDOW_SHOW_EVIDENCE_END"
+    ],
+    "failureOnly": true,
+    "additionalNativeRequests": 0,
+    "postFailureWitnessRequests": 0
+  },
+  "preservation": {
+    "originalWaitForByteIdentical": true,
+    "originalWaitTimeoutMs": 20000,
+    "originalPauseMs": 50,
+    "strictAssertionsAndPredicateTextUnchanged": true,
+    "activationRequestAndRequestIdentityChecksUnchanged": true,
+    "allSourceFromConstControlThroughEndByteIdentical": true,
+    "outerFailureCollectorAndFinallyByteIdentical": true,
+    "originalErrorRethrownByIdentity": true,
+    "shippingNativeObserversWorkflowsAndPermissionsUnchanged": true
+  },
+  "validation": {
+    "status": "passed",
+    "scope": "pure V8 source parsing and mocked IO/clock/driver; no Node filesystem or AppKit execution",
+    "groups": [
+      {
+        "name": "exact source identities, two inverses, syntax and unchanged acceptance predicates",
+        "status": "passed"
+      },
+      {
+        "name": "typed false key, false active, unknowns and closed projection privacy",
+        "status": "passed"
+      },
+      {
+        "name": "bounded first/last/state-change selection and explicit omissions",
+        "status": "passed"
+      },
+      {
+        "name": "original 20-second timeout identity and identical command sequence",
+        "status": "passed"
+      },
+      {
+        "name": "successful polling keeps commands, return value and no diagnostic artifact",
+        "status": "passed"
+      },
+      {
+        "name": "assertion facts and inspect rejection preserve their original errors",
+        "status": "passed"
+      },
+      {
+        "name": "file and console failures are secondary; first receipt cannot be replaced",
+        "status": "passed"
+      },
+      {
+        "name": "maximum valid record/count widths remain inside the complete 8-KiB envelope",
+        "status": "passed"
+      }
+    ],
+    "metrics": {
+      "timeoutPolls": 400,
+      "ordinaryEnvelopeBytes": 1160,
+      "maximumValidEnvelopeBytes": 2844
+    },
+    "source": {
+      "gitBlob": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+      "bytes": 120419,
+      "sha256": "3339553afe83907490dd8daac094cceedf967f3359deada250330b6882b5c9db"
+    },
+    "preimage": {
+      "gitBlob": "d21bf8d24520183a61bf6b82879d78bd6a9d322f",
+      "bytes": 114435,
+      "sha256": "71714864b1f10d975b640b6bfa09b203509f419d1441469700e32b9074be98ae"
+    }
+  },
+  "limits": [
+    "The eight designs execute exact extracted candidate helpers and show/waitFor in V8 with mocked filesystem, console, driver, clock and assertions. They are not Node filesystem or native AppKit execution.",
+    "The 400-poll/20000ms result is a deterministic mock-clock regression, not a native timing claim.",
+    "Actual native property sampling remains sequential and non-atomic. The diagnostic cannot establish callback or focus causation from the observed conjunction alone.",
+    "Successful show calls produce no new file or console output. Activation-request failures before polling still use the existing diagnostics.",
+    "The full original 057/e086 outcomes remain separate. This candidate is unexecuted in native CI and does not resolve or reclassify either failure.",
+    "No source commit, tree, reference, PR, workflow, dispatch, retry, host or security action is performed by this handoff."
+  ]
+}

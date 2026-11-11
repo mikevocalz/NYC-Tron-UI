@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "title": "Keep initial native UI failure snapshots independent without renaming live driver paths",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceRevision": "7a160c536b845d71487ba2997262daf3cf07cb9b",
+  "actualFailedCheckout": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+  "observedFailure": {
+    "run": 42994633542,
+    "job": 130435532706,
+    "logBlob": "058feca66e4a22a222bc2f6ca722154be9e8fa91",
+    "logBytes": 159544,
+    "logSha256": "2a63568340e93933954ebe5ee651a0177ffbd29fe409e438703643b774de3b31",
+    "test": "retained snapshots survive writes through an already-open driver log and include hidden debug evidence",
+    "operation": "rename(settings, settings-initial-transport-live)",
+    "code": "EPERM"
+  },
+  "scope": {
+    "callerOwnership": "The runner owns the spawnSync invocation and captures its stdout/stderr into settings-maestro.log after return; it does not own arbitrary surviving nested driver log handles.",
+    "implementation": "Leave failed settings and original command log at their existing paths, copy independent exclusive snapshots before recovery, and give only attempt 1 its own settings-retry directory/log/hierarchy/report paths.",
+    "unchanged": [
+      "Failure classifiers and eligibility conditions",
+      "Exactly one authorized recovery; second failure final",
+      "Logical settings flow/YAML/stage identity",
+      "Native geometry/semantic/screenshot/JUnit assertions",
+      "All other flow output paths",
+      "Native binaries, workflows, deadlines and permissions"
+    ],
+    "limits": [
+      "V8 syntax/static and mocked-flow checks only; no actual Node filesystem or Windows/mobile execution of candidate",
+      "Existing actual open-descriptor append/rewrite/truncate regression is preserved for CI",
+      "Retained files are read-time snapshots before recovery, not atomic multi-file or complete post-exit logs",
+      "The separate release-readiness failure is not changed by this patch"
+    ]
+  },
+  "files": [
+    {
+      "file": "tooling/native/ui-transport.mjs",
+      "bytes": 9068,
+      "sha256": "3421577500e0d07d5bf933f02e79739011737614200c138c210ce7922f6c9bc2",
+      "gitBlob": "fbf804293b94406b65a36d273f4c2528825b4bc4",
+      "before": "9a362c4b7af481c01beeb7bd0f7b03a9a692080b",
+      "deltaBytes": -160
+    },
+    {
+      "file": "tooling/native/run-ui-acceptance.mjs",
+      "bytes": 17132,
+      "sha256": "e61511ef69eb25b8153184acb694265946bf7e675cfcdca01dde08c61af3536e",
+      "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+      "before": "50d0a3435fb52f4ad1b73df224fc01436f5d443b",
+      "deltaBytes": 121
+    },
+    {
+      "file": "tooling/tests/native-ui-transport.test.mjs",
+      "bytes": 11854,
+      "sha256": "c654e88a0a64d95c98d669b6689bd97c52f5b6d86eb07ef2cd5b44889989378c",
+      "gitBlob": "750bcf5cd84d5b00b50b0e2820bd0012a3893619",
+      "before": "9e62b8505328cc9e76cf6a361571565eb0fc11a3",
+      "deltaBytes": 382
+    },
+    {
+      "file": "tooling/native/UI_ACCEPTANCE.md",
+      "bytes": 6410,
+      "sha256": "9b18813b7f95b21ac128092ba9694e747157b2915ee6cc96c0b28488099112af",
+      "gitBlob": "d4fa0c0fad6829965108e0a6da78b77678e9cc91",
+      "before": "a3a51e499711f026463b9ff6b571422f730c0cf8",
+      "deltaBytes": 225
+    }
+  ],
+  "edits": [
+    {
+      "file": "tooling/native/ui-transport.mjs",
+      "reason": "Do not rename files or directories with unowned live driver handles",
+      "before": "import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from \"node:fs\";",
+      "after": "import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from \"node:fs\";"
+    },
+    {
+      "file": "tooling/native/ui-transport.mjs",
+      "reason": "Keep the failed attempt in place; retained destination and receipt still reject reuse",
+      "before": "  const live = join(output, \"settings-initial-transport-live\");\n  const receipt = join(output, \"transport-recovery.json\"), originalLog = join(output, \"settings-maestro.log\");\n  if (!existsSync(initial) || existsSync(retained) || existsSync(live) || existsSync(receipt)) throw new Error(\"Initial UI transport evidence cannot be replaced\");",
+      "after": "  const receipt = join(output, \"transport-recovery.json\"), originalLog = join(output, \"settings-maestro.log\");\n  if (!existsSync(initial) || existsSync(retained) || existsSync(receipt)) throw new Error(\"Initial UI transport evidence cannot be replaced\");"
+    },
+    {
+      "file": "tooling/native/ui-transport.mjs",
+      "reason": "Record the unchanged live directory and copy before retry without moving its open files",
+      "before": "  const snapshot = { phase: \"before recovery\", startedAt: new Date().toISOString(), liveDirectory: path(live) };\n  // Renaming alone leaves existing driver file descriptors attached to the\n  // retained files. Keep those live inodes, then write independent snapshots.\n  renameSync(initial, live);",
+      "after": "  const snapshot = { phase: \"before recovery\", startedAt: new Date().toISOString(), liveDirectory: path(initial) };\n  // Driver handles can outlive the command and prevent a directory rename on\n  // Windows. Keep those live files in place and copy independent snapshots;\n  // the retry writes to its own directory and command log."
+    },
+    {
+      "file": "tooling/native/ui-transport.mjs",
+      "reason": "Copy originals directly and retain original command log at its owned path",
+      "before": "    retainFile(join(live, name), join(retained, name), path(file));\n  }\n  if (existsSync(originalLog)) {\n    renameSync(originalLog, join(live, \"maestro-command.log\"));\n    retainFile(join(live, \"maestro-command.log\"), join(retained, \"maestro-command.log\"), path(originalLog));\n  }",
+      "after": "    retainFile(file, join(retained, name), path(file));\n  }\n  if (existsSync(originalLog)) {\n    retainFile(originalLog, join(retained, \"maestro-command.log\"), path(originalLog));\n  }"
+    },
+    {
+      "file": "tooling/native/run-ui-acceptance.mjs",
+      "reason": "Separate evidence path from logical flow and YAML name",
+      "before": "function flow(name, labels, screenshots) {\n  const directory = join(output, name), junit = join(directory, \"report.xml\");",
+      "after": "function flow(name, labels, screenshots, evidenceName = name) {\n  const directory = join(output, evidenceName), junit = join(directory, \"report.xml\");"
+    },
+    {
+      "file": "tooling/native/run-ui-acceptance.mjs",
+      "reason": "Give retry command and hierarchy evidence separate paths",
+      "before": "    join(repo, \"tooling/native/ui-flows\", name + \".yaml\")], { timeout: 360000, log: name + \"-maestro.log\" });\n  const result = requirePassedFlow(readFileSync(junit, \"utf8\"));\n  const tree = hierarchy(name);",
+      "after": "    join(repo, \"tooling/native/ui-flows\", name + \".yaml\")], { timeout: 360000, log: evidenceName + \"-maestro.log\" });\n  const result = requirePassedFlow(readFileSync(junit, \"utf8\"));\n  const tree = hierarchy(evidenceName);"
+    },
+    {
+      "file": "tooling/native/run-ui-acceptance.mjs",
+      "reason": "Bind successful stage receipt to actual report and hierarchy paths",
+      "before": "  stages.push({ name, ...result, report: name + \"/report.xml\", reportSha256: hash(junit),\n    hierarchy: name + \"-hierarchy.json\", hierarchySha256: hash(join(output, name + \"-hierarchy.json\")), images,",
+      "after": "  stages.push({ name, ...result, report: evidenceName + \"/report.xml\", reportSha256: hash(junit),\n    hierarchy: evidenceName + \"-hierarchy.json\", hierarchySha256: hash(join(output, evidenceName + \"-hierarchy.json\")), images,"
+    },
+    {
+      "file": "tooling/native/run-ui-acceptance.mjs",
+      "reason": "Use a distinct evidence prefix only for the existing single authorized retry",
+      "before": "    attempt: () => flow(\"settings\", [\"Workspace name\", \"Native UI workspace\"], [\"settings-saved\"]),",
+      "after": "    attempt: attempt => flow(\"settings\", [\"Workspace name\", \"Native UI workspace\"], [\"settings-saved\"], attempt === 0 ? \"settings\" : \"settings-retry\"),"
+    },
+    {
+      "file": "tooling/tests/native-ui-transport.test.mjs",
+      "reason": "Verify original live files and copied snapshots survive a separate retry",
+      "before": "  mkdirSync(join(output, \"settings\"));\n  writeFileSync(join(output, \"settings\", \"report.xml\"), '<testcase status=\"SUCCESS\"/>');\n  assert.match(readFileSync(join(output, retained.retainedDirectory, \"report.xml\"), \"utf8\"), /status=\"ERROR\"/);",
+      "after": "  assert.equal(record.snapshot.liveDirectory, \"settings\");\n  mkdirSync(join(output, \"settings-retry\"));\n  writeFileSync(join(output, \"settings-retry\", \"report.xml\"), '<testcase status=\"SUCCESS\"/>');\n  writeFileSync(join(output, \"settings-retry-maestro.log\"), \"successful retry\\n\");\n  for (const [name, bytes] of Object.entries(fixtures)) assert.deepEqual(readFileSync(join(output, name)), Buffer.from(bytes));\n  assert.match(readFileSync(join(output, retained.retainedDirectory, \"report.xml\"), \"utf8\"), /status=\"ERROR\"/);"
+    },
+    {
+      "file": "tooling/tests/native-ui-transport.test.mjs",
+      "reason": "Close the test-owned descriptor before removing its directory on every test exit",
+      "before": "  const output = mkdtempSync(join(tmpdir(), \"native-ui-live-log-\"));\n  t.after(() => rmSync(output, { recursive: true, force: true }));",
+      "after": "  const output = mkdtempSync(join(tmpdir(), \"native-ui-live-log-\"));\n  let descriptor;\n  t.after(() => {\n    if (descriptor !== undefined) closeSync(descriptor);\n    rmSync(output, { recursive: true, force: true });\n  });"
+    },
+    {
+      "file": "tooling/tests/native-ui-transport.test.mjs",
+      "reason": "Keep the descriptor open throughout retention and late-write assertions",
+      "before": "  const descriptor = openSync(join(output, \"settings\", relativeLog), \"r+\");\n  t.after(() => closeSync(descriptor));",
+      "after": "  descriptor = openSync(join(output, \"settings\", relativeLog), \"r+\");"
+    },
+    {
+      "file": "tooling/tests/native-ui-transport.test.mjs",
+      "reason": "Require the live source path to remain unchanged",
+      "before": "  assert.equal(receipt.snapshot.phase, \"before recovery\");\n  assert.ok(Date.parse(receipt.snapshot.completedAt) >= Date.parse(receipt.snapshot.startedAt));",
+      "after": "  assert.equal(receipt.snapshot.phase, \"before recovery\");\n  assert.equal(receipt.snapshot.liveDirectory, \"settings\");\n  assert.ok(Date.parse(receipt.snapshot.completedAt) >= Date.parse(receipt.snapshot.startedAt));"
+    },
+    {
+      "file": "tooling/native/UI_ACCEPTANCE.md",
+      "reason": "Document in-place live evidence and separately named retry without changing acceptance scope",
+      "before": "logs: existing driver handles may still write to the original files, preserved\nseparately under `settings-initial-transport-live`. The scoped native evidence\nuploads include the driver's hidden `debug/.maestro` logs. The installed app\npayload is unchanged. The complete Settings flow then runs with the same semantic",
+      "after": "logs: existing driver handles may still write to the original files, which stay\nin `settings` with the original `settings-maestro.log` beside it. Keeping them in\nplace avoids renaming directories with open driver handles on Windows. The one\nretry writes to `settings-retry` and its own command log and hierarchy; its flow\nreceipt names those actual paths. The scoped native evidence uploads include the\ndriver's hidden `debug/.maestro` logs. The installed app payload is unchanged.\nThe complete Settings flow then runs with the same semantic"
+    }
+  ],
+  "verification": {
+    "syntax": "three ES modules parsed in V8 after import/export/import.meta syntax replacement; not Node execution",
+    "mockedFlow": [
+      {
+        "separator": "/",
+        "logicalFlow": "settings",
+        "firstDirectory": "settings",
+        "retryDirectory": "settings-retry",
+        "pathChecks": "passed",
+        "execution": "V8 extracted actual flow with mocked IO only"
+      },
+      {
+        "separator": "\\",
+        "logicalFlow": "settings",
+        "firstDirectory": "settings",
+        "retryDirectory": "settings-retry",
+        "pathChecks": "passed",
+        "execution": "V8 extracted actual flow with mocked IO only"
+      }
+    ],
+    "exactInverseEdits": 13,
+    "nativeFilesystem": "not executed; Windows source CI must run actual filesystem regressions"
+  },
+  "application": "For each edit in order, require its before string occurs exactly once, replace it with after; reverse order and strings must restore exact per-file preimage."
+}

@@ -1,0 +1,559 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-11-11 09:46:16 UTC",
+  "run": {
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/attempts/1",
+    "value": {
+      "id": 42990107157,
+      "name": "NYC-Tron AppKit native host",
+      "node_id": "WFR_kwLOVjEyjc8AAAAKAmj6FQ",
+      "head_branch": "codex/v1-appkit-interactions-nov10",
+      "head_sha": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+      "path": ".github/workflows/macos-appkit.yml",
+      "display_title": "Complete native AppKit menus, popovers, tooltips and drag acceptance",
+      "run_number": 31,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "failure",
+      "workflow_id": 413427679,
+      "check_suite_id": 116419573676,
+      "check_suite_node_id": "CS_kwDOVjEyjc8AAAAbGyW3rA",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157",
+      "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42990107157",
+      "pull_requests": [
+        {
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/pulls/59",
+          "id": 5244665524,
+          "number": 59,
+          "head": {
+            "ref": "codex/v1-appkit-interactions-nov10",
+            "sha": "3950710601981e53960da6057b99721ecb43044c",
+            "repo": {
+              "id": 1446064781,
+              "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI",
+              "name": "NYC-Tron-UI"
+            }
+          },
+          "base": {
+            "ref": "codex/v1-completion",
+            "sha": "ac5d69585a52a6e945dc996ea08030e190574699",
+            "repo": {
+              "id": 1446064781,
+              "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI",
+              "name": "NYC-Tron-UI"
+            }
+          }
+        }
+      ],
+      "created_at": "2026-11-11T08:49:37Z",
+      "updated_at": "2026-11-11T09:07:39Z",
+      "actor": {
+        "login": "mikevocalz",
+        "id": 7896619,
+        "node_id": "MDQ6VXNlcjc4OTY2MTk=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/7896619?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/mikevocalz",
+        "html_url": "https://github.com/mikevocalz",
+        "followers_url": "https://api.github.com/users/mikevocalz/followers",
+        "following_url": "https://api.github.com/users/mikevocalz/following{/other_user}",
+        "gists_url": "https://api.github.com/users/mikevocalz/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/mikevocalz/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/mikevocalz/subscriptions",
+        "organizations_url": "https://api.github.com/users/mikevocalz/orgs",
+        "repos_url": "https://api.github.com/users/mikevocalz/repos",
+        "events_url": "https://api.github.com/users/mikevocalz/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/mikevocalz/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "run_attempt": 1,
+      "referenced_workflows": [],
+      "run_started_at": "2026-11-11T08:49:37Z",
+      "triggering_actor": {
+        "login": "mikevocalz",
+        "id": 7896619,
+        "node_id": "MDQ6VXNlcjc4OTY2MTk=",
+        "avatar_url": "https://avatars.githubusercontent.com/u/7896619?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/mikevocalz",
+        "html_url": "https://github.com/mikevocalz",
+        "followers_url": "https://api.github.com/users/mikevocalz/followers",
+        "following_url": "https://api.github.com/users/mikevocalz/following{/other_user}",
+        "gists_url": "https://api.github.com/users/mikevocalz/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/mikevocalz/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/mikevocalz/subscriptions",
+        "organizations_url": "https://api.github.com/users/mikevocalz/orgs",
+        "repos_url": "https://api.github.com/users/mikevocalz/repos",
+        "events_url": "https://api.github.com/users/mikevocalz/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/mikevocalz/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/attempts/1/jobs",
+      "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/attempts/1/logs",
+      "check_suite_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/check-suites/116419573676",
+      "artifacts_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/artifacts",
+      "cancel_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/cancel",
+      "rerun_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/rerun",
+      "previous_attempt_url": null,
+      "workflow_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/workflows/413427679",
+      "head_commit": {
+        "id": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+        "tree_id": "da0cbf6c7dedd2505a963db67d53d8f2810f23d2",
+        "message": "Accept an already-Regular activation policy on repeated window show\n\nThe second tron.window show found policy 0 and setActivationPolicy:Regular\nreturned NO for the no-op, which failed with 'refused interactive\nactivation policy' (run 42985584907). Require the resulting policy to be\nRegular instead of trusting the return value of a redundant call. The\nearlier steps, including Native inspector dismissed, passed in that run.\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>",
+        "timestamp": "2026-11-11T08:49:30Z",
+        "author": {
+          "name": "Mike Allen",
+          "email": "mikefacesny@gmail.com"
+        },
+        "committer": {
+          "name": "Mike Allen",
+          "email": "mikefacesny@gmail.com"
+        }
+      },
+      "repository": {
+        "id": 1446064781,
+        "node_id": "R_kgDOVjEyjQ",
+        "name": "NYC-Tron-UI",
+        "full_name": "mikevocalz/NYC-Tron-UI",
+        "private": false,
+        "owner": {
+          "login": "mikevocalz",
+          "id": 7896619,
+          "node_id": "MDQ6VXNlcjc4OTY2MTk=",
+          "avatar_url": "https://avatars.githubusercontent.com/u/7896619?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/mikevocalz",
+          "html_url": "https://github.com/mikevocalz",
+          "followers_url": "https://api.github.com/users/mikevocalz/followers",
+          "following_url": "https://api.github.com/users/mikevocalz/following{/other_user}",
+          "gists_url": "https://api.github.com/users/mikevocalz/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/mikevocalz/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/mikevocalz/subscriptions",
+          "organizations_url": "https://api.github.com/users/mikevocalz/orgs",
+          "repos_url": "https://api.github.com/users/mikevocalz/repos",
+          "events_url": "https://api.github.com/users/mikevocalz/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/mikevocalz/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "html_url": "https://github.com/mikevocalz/NYC-Tron-UI",
+        "description": null,
+        "fork": false,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI",
+        "forks_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/forks",
+        "keys_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/keys{/key_id}",
+        "collaborators_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/collaborators{/collaborator}",
+        "teams_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/teams",
+        "hooks_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/hooks",
+        "issue_events_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues/events{/number}",
+        "events_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/events",
+        "assignees_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/assignees{/user}",
+        "branches_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/branches{/branch}",
+        "tags_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/tags",
+        "blobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/blobs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/tags{/sha}",
+        "git_refs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/refs{/sha}",
+        "trees_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/trees{/sha}",
+        "statuses_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/statuses/{sha}",
+        "languages_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/languages",
+        "stargazers_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/stargazers",
+        "contributors_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/contributors",
+        "subscribers_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/subscribers",
+        "subscription_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/subscription",
+        "commits_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/commits{/sha}",
+        "git_commits_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits{/sha}",
+        "comments_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/comments{/number}",
+        "issue_comment_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues/comments{/number}",
+        "contents_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/contents/{+path}",
+        "compare_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/compare/{base}...{head}",
+        "merges_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/merges",
+        "archive_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/{archive_format}{/ref}",
+        "downloads_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/downloads",
+        "issues_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues{/number}",
+        "pulls_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/pulls{/number}",
+        "milestones_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/milestones{/number}",
+        "notifications_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/notifications{?since,all,participating}",
+        "labels_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/labels{/name}",
+        "releases_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/releases{/id}",
+        "deployments_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/deployments"
+      },
+      "head_repository": {
+        "id": 1446064781,
+        "node_id": "R_kgDOVjEyjQ",
+        "name": "NYC-Tron-UI",
+        "full_name": "mikevocalz/NYC-Tron-UI",
+        "private": false,
+        "owner": {
+          "login": "mikevocalz",
+          "id": 7896619,
+          "node_id": "MDQ6VXNlcjc4OTY2MTk=",
+          "avatar_url": "https://avatars.githubusercontent.com/u/7896619?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/mikevocalz",
+          "html_url": "https://github.com/mikevocalz",
+          "followers_url": "https://api.github.com/users/mikevocalz/followers",
+          "following_url": "https://api.github.com/users/mikevocalz/following{/other_user}",
+          "gists_url": "https://api.github.com/users/mikevocalz/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/mikevocalz/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/mikevocalz/subscriptions",
+          "organizations_url": "https://api.github.com/users/mikevocalz/orgs",
+          "repos_url": "https://api.github.com/users/mikevocalz/repos",
+          "events_url": "https://api.github.com/users/mikevocalz/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/mikevocalz/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "html_url": "https://github.com/mikevocalz/NYC-Tron-UI",
+        "description": null,
+        "fork": false,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI",
+        "forks_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/forks",
+        "keys_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/keys{/key_id}",
+        "collaborators_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/collaborators{/collaborator}",
+        "teams_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/teams",
+        "hooks_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/hooks",
+        "issue_events_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues/events{/number}",
+        "events_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/events",
+        "assignees_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/assignees{/user}",
+        "branches_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/branches{/branch}",
+        "tags_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/tags",
+        "blobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/blobs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/tags{/sha}",
+        "git_refs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/refs{/sha}",
+        "trees_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/trees{/sha}",
+        "statuses_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/statuses/{sha}",
+        "languages_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/languages",
+        "stargazers_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/stargazers",
+        "contributors_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/contributors",
+        "subscribers_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/subscribers",
+        "subscription_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/subscription",
+        "commits_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/commits{/sha}",
+        "git_commits_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits{/sha}",
+        "comments_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/comments{/number}",
+        "issue_comment_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues/comments{/number}",
+        "contents_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/contents/{+path}",
+        "compare_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/compare/{base}...{head}",
+        "merges_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/merges",
+        "archive_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/{archive_format}{/ref}",
+        "downloads_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/downloads",
+        "issues_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues{/number}",
+        "pulls_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/pulls{/number}",
+        "milestones_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/milestones{/number}",
+        "notifications_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/notifications{?since,all,participating}",
+        "labels_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/labels{/name}",
+        "releases_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/releases{/id}",
+        "deployments_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/deployments"
+      }
+    }
+  },
+  "jobs": {
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/attempts/1/jobs?per_page=100",
+    "value": {
+      "total_count": 2,
+      "jobs": [
+        {
+          "id": 130420608185,
+          "run_id": 42990107157,
+          "workflow_name": "NYC-Tron AppKit native host",
+          "head_branch": "codex/v1-appkit-interactions-nov10",
+          "run_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVjEyjc8AAAAeXayMuQ",
+          "head_sha": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130420608185",
+          "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/job/130420608185",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-11T08:49:37Z",
+          "started_at": "2026-11-11T08:49:39Z",
+          "completed_at": "2026-11-11T08:50:09Z",
+          "name": "Canonical core release archive",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-11T08:49:40Z",
+              "completed_at": "2026-11-11T08:49:42Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-11T08:49:42Z",
+              "completed_at": "2026-11-11T08:49:44Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-11T08:49:44Z",
+              "completed_at": "2026-11-11T08:49:51Z"
+            },
+            {
+              "name": "Install the pinned workspace compiler",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-11T08:49:51Z",
+              "completed_at": "2026-11-11T08:50:01Z"
+            },
+            {
+              "name": "Build and pack core with release provenance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-11T08:50:01Z",
+              "completed_at": "2026-11-11T08:50:04Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-11T08:50:04Z",
+              "completed_at": "2026-11-11T08:50:06Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-11T08:50:06Z",
+              "completed_at": "2026-11-11T08:50:06Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-11T08:50:06Z",
+              "completed_at": "2026-11-11T08:50:06Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-11T08:50:06Z",
+              "completed_at": "2026-11-11T08:50:06Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/check-runs/130420608185",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000050435,
+          "runner_name": "GitHub Actions 1000050435",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        {
+          "id": 130420839031,
+          "run_id": 42990107157,
+          "workflow_name": "NYC-Tron AppKit native host",
+          "head_branch": "codex/v1-appkit-interactions-nov10",
+          "run_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVjEyjc8AAAAeXbASdw",
+          "head_sha": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8",
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/jobs/130420839031",
+          "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/job/130420839031",
+          "status": "completed",
+          "conclusion": "failure",
+          "created_at": "2026-11-11T08:50:09Z",
+          "started_at": "2026-11-11T08:50:11Z",
+          "completed_at": "2026-11-11T09:07:38Z",
+          "name": "Spark 0.0.2 ARM64 AppKit compile and native acceptance",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-11T08:50:12Z",
+              "completed_at": "2026-11-11T08:50:14Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-11T08:50:14Z",
+              "completed_at": "2026-11-11T08:50:15Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-11T08:50:15Z",
+              "completed_at": "2026-11-11T08:50:20Z"
+            },
+            {
+              "name": "Verify native ARM64 host and Apple build tools",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-11T08:50:20Z",
+              "completed_at": "2026-11-11T08:50:29Z"
+            },
+            {
+              "name": "Run actions/download-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-11T08:50:29Z",
+              "completed_at": "2026-11-11T08:50:30Z"
+            },
+            {
+              "name": "Build and install archive consumer outside the monorepo",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-11T08:50:30Z",
+              "completed_at": "2026-11-11T08:52:35Z"
+            },
+            {
+              "name": "Verify the installed AppKit public declaration snapshot",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-11T08:52:35Z",
+              "completed_at": "2026-11-11T08:52:36Z"
+            },
+            {
+              "name": "Verify the private Spark transport with native Foundation and socketpair",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-11T08:52:36Z",
+              "completed_at": "2026-11-11T08:52:40Z"
+            },
+            {
+              "name": "Compile a standalone native AppKit reference",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-11-11T08:52:40Z",
+              "completed_at": "2026-11-11T09:06:46Z"
+            },
+            {
+              "name": "Exercise actual native controls and window lifetimes",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 10,
+              "started_at": "2026-11-11T09:06:46Z",
+              "completed_at": "2026-11-11T09:07:22Z"
+            },
+            {
+              "name": "Retain build and native evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-11T09:07:22Z",
+              "completed_at": "2026-11-11T09:07:24Z"
+            },
+            {
+              "name": "Retain the exact natively tested distribution",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12,
+              "started_at": "2026-11-11T09:07:24Z",
+              "completed_at": "2026-11-11T09:07:24Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 23,
+              "started_at": "2026-11-11T09:07:24Z",
+              "completed_at": "2026-11-11T09:07:24Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24,
+              "started_at": "2026-11-11T09:07:24Z",
+              "completed_at": "2026-11-11T09:07:25Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25,
+              "started_at": "2026-11-11T09:07:25Z",
+              "completed_at": "2026-11-11T09:07:26Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/check-runs/130420839031",
+          "labels": [
+            "macos-15"
+          ],
+          "runner_id": 1000050438,
+          "runner_name": "GitHub Actions 1000050438",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42990107157/artifacts?per_page=100",
+    "value": {
+      "total_count": 2,
+      "artifacts": [
+        {
+          "id": 13842122841,
+          "node_id": "MDg6QXJ0aWZhY3QxMzg0MjEyMjg0MQ==",
+          "name": "macos-appkit-native-evidence",
+          "size_in_bytes": 1739270,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13842122841",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13842122841/zip",
+          "expired": false,
+          "digest": "sha256:092d9b9fd14581b909f76eb6fd93405e86b1e83950f004936dccde71282b414e",
+          "created_at": "2026-11-11T09:07:25Z",
+          "updated_at": "2026-11-11T09:07:25Z",
+          "expires_at": "2026-11-25T09:07:22Z",
+          "workflow_run": {
+            "id": 42990107157,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-appkit-interactions-nov10",
+            "head_sha": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8"
+          }
+        },
+        {
+          "id": 13841236971,
+          "node_id": "MDg6QXJ0aWZhY3QxMzg0MTIzNjk3MQ==",
+          "name": "macos-appkit-shared-packages",
+          "size_in_bytes": 51323,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13841236971",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13841236971/zip",
+          "expired": false,
+          "digest": "sha256:da51996e175fc175451bc96a779cf6660e61dfa57084cccb806d63c94cbc1fda",
+          "created_at": "2026-11-11T08:50:05Z",
+          "updated_at": "2026-11-11T08:50:05Z",
+          "expires_at": "2026-11-25T08:50:05Z",
+          "workflow_run": {
+            "id": 42990107157,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-appkit-interactions-nov10",
+            "head_sha": "057b3aa7a28c12594f26dd4bc9baf9bc636610e8"
+          }
+        }
+      ]
+    }
+  }
+}

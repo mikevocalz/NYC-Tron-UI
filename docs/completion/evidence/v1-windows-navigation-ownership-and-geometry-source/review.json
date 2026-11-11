@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "kind": "navigation-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+  "preimage": "cb69ad47c11d6b868957a2a72feb8fb27319d975",
+  "candidate": "8c7632eeea23671646721ec7e96ecc386486e610",
+  "manifest": "52365ada61c9a299a64f0655dfc77f8d6333e3df",
+  "sourceOnly": true,
+  "independentReview": {
+    "author": "root composition; Final checkpoint component; Forge finite pane component",
+    "reviewers": [
+      "root",
+      "forge_gap_audit"
+    ],
+    "sourceBytes": 15321,
+    "sourceSha256": "aecc1110691d7acc833bca9cef42f38027dd7a014ba319a7979d66983f673147",
+    "componentsCommuteInAllSixOrders": true,
+    "completeInverseForEachOrderMatchesPreimage": true,
+    "originalThrowBearingLinesPreserved": 21,
+    "originalDeadlineAndSleepLinesPreserved": 15,
+    "ownedSetContrastMethodByteIdentical": true
+  },
+  "componentChecks": {
+    "checkpoint": {
+      "status": "passed",
+      "scope": "V8 source-contract checks only; not PowerShell parsing/runtime or native execution",
+      "sourceBytes": 14781,
+      "groups": [
+        {
+          "name": "exact source identities and reversible ten-edit manifest",
+          "status": "passed"
+        },
+        {
+          "name": "closed fixed labels and conservative 1092-byte emission bound",
+          "status": "passed"
+        },
+        {
+          "name": "all original operations survive removal of diagnostic-only statements",
+          "status": "passed"
+        },
+        {
+          "name": "loop and error-path placement stays observational",
+          "status": "passed"
+        }
+      ],
+      "fixedCallSites": 20,
+      "maximumFixedContentUtf8BytesIncludingCRLF": 1092,
+      "runnerDecorationIncluded": false
+    },
+    "pane": {
+      "status": "passed",
+      "scope": "V8 source checks and independent IEEE-754 geometry model; no PowerShell parser, UIA, .NET or native execution",
+      "sourceChecks": 8,
+      "geometryCases": 17,
+      "selectionCases": 6,
+      "cases": [
+        {
+          "name": "Rect.Empty",
+          "expectedAccepted": false
+        },
+        {
+          "name": "zero width",
+          "expectedAccepted": false
+        },
+        {
+          "name": "zero height",
+          "expectedAccepted": false
+        },
+        {
+          "name": "negative width",
+          "expectedAccepted": false
+        },
+        {
+          "name": "offscreen",
+          "expectedAccepted": false
+        },
+        {
+          "name": "NaN X",
+          "expectedAccepted": false
+        },
+        {
+          "name": "NaN Y",
+          "expectedAccepted": false
+        },
+        {
+          "name": "NaN width",
+          "expectedAccepted": false
+        },
+        {
+          "name": "NaN height",
+          "expectedAccepted": false
+        },
+        {
+          "name": "infinite X",
+          "expectedAccepted": false
+        },
+        {
+          "name": "infinite width",
+          "expectedAccepted": false
+        },
+        {
+          "name": "right-edge overflow",
+          "expectedAccepted": false
+        },
+        {
+          "name": "bottom-edge overflow",
+          "expectedAccepted": false
+        },
+        {
+          "name": "finite-dimension area overflow",
+          "expectedAccepted": false
+        },
+        {
+          "name": "finite open pane",
+          "expectedAccepted": true
+        },
+        {
+          "name": "finite compact pane",
+          "expectedAccepted": true
+        },
+        {
+          "name": "valid negative origin",
+          "expectedAccepted": true
+        }
+      ]
+    }
+  },
+  "firstPartyOwnershipEvidence": {
+    "repository": "dotnet/dotnet",
+    "commit": "461c220ba5d192fea95ca9249b22b96d3c9e9903",
+    "path": "src/winforms/src/System.Private.Windows.Core/src/Windows/Win32/PInvokeCore.SystemParametersInfo.cs",
+    "blob": "c52fc3df81c9eccd38a1db134d76457c49cb2b85",
+    "bytes": 4028,
+    "sha256": "efab1e24b2e1f665f6cea9e2df667844ceab04b005104e86cac5658f902e05f2",
+    "independentlyReadBy": [
+      "root",
+      "forge_gap_audit",
+      "final_gate_review"
+    ],
+    "documentationConflictAcknowledged": true,
+    "recordedCrashCauseEstablished": false
+  },
+  "notExecuted": [
+    "PowerShell parser",
+    "C# compilation",
+    "PowerShell execution",
+    "UI Automation",
+    "native acceptance"
+  ],
+  "scopeLimits": [
+    "The finite selector defect is demonstrated independently of any particular failed drawer measurement.",
+    "Checkpoints bound returned source spans; they cannot attribute heap corruption or nested provider faults.",
+    "Strict RTL layout, physical-left placement, drawer collapse, high-contrast repaint and input still require native execution.",
+    "No shipping NavigationView width override, provider reacquisition, stale-element suppression, retry, workflow or host change is included."
+  ]
+}

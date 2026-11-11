@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "kind": "navigation-borrowed-scheme-finite-pane-and-checkpoints",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+  "before": {
+    "gitBlob": "cb69ad47c11d6b868957a2a72feb8fb27319d975",
+    "bytes": 12691,
+    "sha256": "ef15eda3eda4e2846e45352a3ca83cdc0f371926ed70eb7b2ad530bed1ea1187"
+  },
+  "after": {
+    "gitBlob": "8c7632eeea23671646721ec7e96ecc386486e610",
+    "bytes": 15321,
+    "sha256": "aecc1110691d7acc833bca9cef42f38027dd7a014ba319a7979d66983f673147"
+  },
+  "components": [
+    {
+      "kind": "borrowed-get-scheme-ownership",
+      "edits": [
+        {
+          "name": "remove-unowned-scheme-free-import",
+          "before": "  [DllImport(\"kernel32.dll\")] private static extern IntPtr LocalFree(IntPtr memory);\n",
+          "after": ""
+        },
+        {
+          "name": "copy-borrowed-get-scheme",
+          "before": "    try { return new Contrast { Flags=value.flags, Scheme=Marshal.PtrToStringUni(value.scheme) }; }\n    finally { if (value.scheme != IntPtr.Zero) LocalFree(value.scheme); }\n",
+          "after": "    // SPI_GETHIGHCONTRAST returns a borrowed scheme pointer; copy without freeing it.\n    // Ownership follows dotnet/dotnet 461c220ba5d192fea95ca9249b22b96d3c9e9903, PInvokeCore.SystemParametersInfo.\n    return new Contrast { Flags=value.flags, Scheme=Marshal.PtrToStringUni(value.scheme) };\n"
+        }
+      ],
+      "inverseImportAnchor": "  [DllImport(\"user32.dll\", SetLastError=true)]\n  public static extern bool SetWindowPos",
+      "officialImplementation": {
+        "repository": "dotnet/dotnet",
+        "commit": "461c220ba5d192fea95ca9249b22b96d3c9e9903",
+        "path": "src/winforms/src/System.Private.Windows.Core/src/Windows/Win32/PInvokeCore.SystemParametersInfo.cs",
+        "gitBlob": "c52fc3df81c9eccd38a1db134d76457c49cb2b85",
+        "bytes": 4028,
+        "sha256": "efab1e24b2e1f665f6cea9e2df667844ceab04b005104e86cac5658f902e05f2",
+        "sourceURL": "https://source.dot.net/Microsoft.Private.Windows.Core/Windows/Win32/PInvokeCore.SystemParametersInfo.cs.html",
+        "conflictingReference": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-highcontrastw",
+        "reason": "The official .NET implementation explicitly says the HIGHCONTRASTW documentation's free requirement is incorrect and performs GET without freeing the scheme pointer. Copy the returned text into a managed string; retain owned SET allocation/free.",
+        "limits": "No underlying Windows implementation was inspected. This correction does not establish the cause of the historical crash."
+      }
+    },
+    {
+      "kind": "fixed-secondary-console-checkpoints",
+      "manifest": "1fbd65ed7e1bf3654cdb57a50a41ef81f59eb821",
+      "harness": "059d6fd4c8c1d38ee21f865ed688d20bfcb365e2",
+      "edits": [
+        {
+          "name": "fixed-console-helper",
+          "before": "$ae = [System.Windows.Automation.AutomationElement]\n",
+          "after": "# Fixed call sites outside loops keep this diagnostic bounded. Reporting errors\n# stay secondary; labels do not read providers or identify a corrupting call.\nfunction Write-NavigationCheckpoint([string]$label) {\n  try {\n    if ($label -notin @(\n      \"rtl-status-before\",\n      \"rtl-status-returned\",\n      \"rtl-toggle-poll-before\",\n      \"rtl-toggle-poll-returned\",\n      \"rtl-pane-bounds-before\",\n      \"rtl-pane-bounds-returned\",\n      \"rtl-host-bounds-before\",\n      \"rtl-host-bounds-returned\",\n      \"rtl-selection-before\",\n      \"rtl-selection-returned\",\n      \"rtl-screenshot-before\",\n      \"rtl-screenshot-returned\",\n      \"navigation-catch-entered\",\n      \"navigation-finally-entered\",\n      \"restore-contrast-before\",\n      \"restore-contrast-returned\",\n      \"restore-window-before\",\n      \"restore-window-returned\",\n      \"navigation-result-before\",\n      \"navigation-result-returned\"\n    )) { return }\n    Write-Host (\"NYCTRON_NAVIGATION_CHECKPOINT \" + $label)\n  } catch {}\n}\n\n$ae = [System.Windows.Automation.AutomationElement]\n"
+        },
+        {
+          "name": "rtl-status-pair",
+          "before": "  Find-ByName $Window \"Navigation direction: rtl\" | Out-Null\n",
+          "after": "  Write-NavigationCheckpoint \"rtl-status-before\"\n  Find-ByName $Window \"Navigation direction: rtl\" | Out-Null\n  Write-NavigationCheckpoint \"rtl-status-returned\"\n"
+        },
+        {
+          "name": "toggle-poll-entry",
+          "before": "  $deadline = (Get-Date).AddSeconds(10)\n  do {\n    Start-Sleep -Milliseconds 100\n    $rtl = (Find-Id \"TogglePaneButton\").Current.BoundingRectangle\n",
+          "after": "  Write-NavigationCheckpoint \"rtl-toggle-poll-before\"\n  $deadline = (Get-Date).AddSeconds(10)\n  do {\n    Start-Sleep -Milliseconds 100\n    $rtl = (Find-Id \"TogglePaneButton\").Current.BoundingRectangle\n"
+        },
+        {
+          "name": "toggle-return-and-split-bounds",
+          "before": "  } while ($rtl.X -le $ltr.X+20 -and (Get-Date) -lt $deadline)\n  $paneRect = $pane.Current.BoundingRectangle; $hostRect = $Window.Current.BoundingRectangle\n",
+          "after": "  } while ($rtl.X -le $ltr.X+20 -and (Get-Date) -lt $deadline)\n  Write-NavigationCheckpoint \"rtl-toggle-poll-returned\"\n  Write-NavigationCheckpoint \"rtl-pane-bounds-before\"\n  $paneRect = $pane.Current.BoundingRectangle\n  Write-NavigationCheckpoint \"rtl-pane-bounds-returned\"\n  Write-NavigationCheckpoint \"rtl-host-bounds-before\"\n  $hostRect = $Window.Current.BoundingRectangle\n  Write-NavigationCheckpoint \"rtl-host-bounds-returned\"\n"
+        },
+        {
+          "name": "selection-and-screenshot-pairs",
+          "before": "  Assert-Selection $homeItem $workspace \"workspace\" $stage\n  Save-Screenshot \"navigation-rtl\" $Window\n",
+          "after": "  Write-NavigationCheckpoint \"rtl-selection-before\"\n  Assert-Selection $homeItem $workspace \"workspace\" $stage\n  Write-NavigationCheckpoint \"rtl-selection-returned\"\n  Write-NavigationCheckpoint \"rtl-screenshot-before\"\n  Save-Screenshot \"navigation-rtl\" $Window\n  Write-NavigationCheckpoint \"rtl-screenshot-returned\"\n"
+        },
+        {
+          "name": "catch-marker-after-failure-capture",
+          "before": "} catch {\n  $failure = $_.Exception.Message\n  throw\n} finally {\n",
+          "after": "} catch {\n  $failure = $_.Exception.Message\n  Write-NavigationCheckpoint \"navigation-catch-entered\"\n  throw\n} finally {\n  Write-NavigationCheckpoint \"navigation-finally-entered\"\n"
+        },
+        {
+          "name": "contrast-restoration-pair",
+          "before": "  try {\n    [NavigationAccessibilityNative]::SetContrast($contrast, (($contrast.Flags -band 1) -ne 0))\n    Wait-Contrast (($contrast.Flags -band 1) -ne 0) | Out-Null\n",
+          "after": "  try {\n    Write-NavigationCheckpoint \"restore-contrast-before\"\n    [NavigationAccessibilityNative]::SetContrast($contrast, (($contrast.Flags -band 1) -ne 0))\n    Wait-Contrast (($contrast.Flags -band 1) -ne 0) | Out-Null\n    Write-NavigationCheckpoint \"restore-contrast-returned\"\n"
+        },
+        {
+          "name": "window-restoration-entry",
+          "before": "  try {\n    if (-not [NavigationAccessibilityNative]::SetWindowPos($handle, [IntPtr]::Zero, [int]$originalRect.X, [int]$originalRect.Y, [int]$originalRect.Width, [int]$originalRect.Height, 0x14)) { throw \"Native restoration of window bounds failed\" }\n",
+          "after": "  try {\n    Write-NavigationCheckpoint \"restore-window-before\"\n    if (-not [NavigationAccessibilityNative]::SetWindowPos($handle, [IntPtr]::Zero, [int]$originalRect.X, [int]$originalRect.Y, [int]$originalRect.Width, [int]$originalRect.Height, 0x14)) { throw \"Native restoration of window bounds failed\" }\n"
+        },
+        {
+          "name": "window-restoration-return",
+          "before": "    if (-not $restored) { throw \"Actual window bounds/state did not return to their original values\" }\n",
+          "after": "    if (-not $restored) { throw \"Actual window bounds/state did not return to their original values\" }\n    Write-NavigationCheckpoint \"restore-window-returned\"\n"
+        },
+        {
+          "name": "result-pipeline-pair",
+          "before": "  @{ status=$result; platform=\"windows\"; sourceRevision=$env:GITHUB_SHA; processId=$Window.Current.ProcessId; stage=$stage; error=$failure; checks=$checks.ToArray(); completedAt=(Get-Date).ToUniversalTime().ToString(\"o\") } |\n    ConvertTo-Json -Depth 8 | Set-Content (Join-Path $OutDir \"navigation-accessibility-result.json\") -Encoding UTF8\n",
+          "after": "  Write-NavigationCheckpoint \"navigation-result-before\"\n  @{ status=$result; platform=\"windows\"; sourceRevision=$env:GITHUB_SHA; processId=$Window.Current.ProcessId; stage=$stage; error=$failure; checks=$checks.ToArray(); completedAt=(Get-Date).ToUniversalTime().ToString(\"o\") } |\n    ConvertTo-Json -Depth 8 | Set-Content (Join-Path $OutDir \"navigation-accessibility-result.json\") -Encoding UTF8\n  Write-NavigationCheckpoint \"navigation-result-returned\"\n"
+        }
+      ]
+    },
+    {
+      "kind": "finite-visible-pane-selection",
+      "manifest": "81849e933faf291d5b467fc7fbada6bc45a3b958",
+      "edits": [
+        {
+          "id": "finite-visible-native-pane-candidates",
+          "before": "    $r = $item.Current.BoundingRectangle\n    if ($r.Width*$r.Height -gt $area) { $area = $r.Width*$r.Height; $largest = $item }\n",
+          "after": "    $r = $item.Current.BoundingRectangle\n    # Rect.Empty dimensions multiply to positive infinity; they are not pane bounds.\n    if ($r.IsEmpty -or $item.Current.IsOffscreen -or $r.Width -le 0 -or $r.Height -le 0) { continue }\n    $paneBoundsFinite = $true\n    foreach ($paneCoordinate in @($r.X, $r.Y, $r.Width, $r.Height, $r.Right, $r.Bottom, ($r.Width*$r.Height))) {\n      if ([double]::IsNaN($paneCoordinate) -or [double]::IsInfinity($paneCoordinate)) { $paneBoundsFinite = $false; break }\n    }\n    if (-not $paneBoundsFinite) { continue }\n    if ($r.Width*$r.Height -gt $area) { $area = $r.Width*$r.Height; $largest = $item }\n",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "sourceVerification": {
+    "allSixComponentOrdersIdentical": true,
+    "completeInverseMatchesPreimage": true,
+    "ownedSetContrastByteIdentical": true,
+    "checkpointCalls": 20,
+    "maximumFixedOutputBytesIncludingCRLF": 1092,
+    "sourceOnly": true,
+    "powershellParserExecuted": false,
+    "powershellRuntimeExecuted": false,
+    "nativeExecuted": false
+  },
+  "preserved": [
+    "Strict RTL and physical-left assertions",
+    "Drawer collapse/restore assertion",
+    "High contrast repaint, keyboard and selection assertions",
+    "All existing deadlines, sleeps, action count and order",
+    "Existing provider references and stale-element failure behavior",
+    "Owned SetContrast StringToHGlobalUni/FreeHGlobal pair",
+    "Shipping NavigationView layout and all workflows"
+  ],
+  "excluded": [
+    "External width override",
+    "External broad event-log collection",
+    "External provider reacquisition",
+    "Any host, launcher, token or security-policy change"
+  ]
+}

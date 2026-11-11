@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "kind": "release-readiness-test-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "checkpoint": {
+    "observedAt": "2026-11-11T09:45:58Z",
+    "status": "published source checkpoint; new CI result unobserved",
+    "publicationReportedByRootAt": "2026-11-11T09:44:44Z",
+    "pullRequest": {
+      "number": 63,
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/pull/63",
+      "draft": true,
+      "headRef": "codex/v1-windows-reviewed-lifecycle-nov11",
+      "baseRef": "codex/v1-reviewed-integration-nov10",
+      "head": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+      "base": "25a6af6d020e34d790f6a4f3d9f117738b252f1e"
+    },
+    "commit": {
+      "sha": "0596aa2e4441b2e3464a9fff32060cc10fb17481",
+      "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+      "parents": [
+        "7a160c536b845d71487ba2997262daf3cf07cb9b"
+      ]
+    },
+    "generatedMerge": {
+      "sha": "8ff0adf28897e7fd7300f6ebac112513ee7a4dbe",
+      "tree": "6aad15f5f522da18a37fc5abe697953c71db92b0",
+      "orderedParents": [
+        "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+        "0596aa2e4441b2e3464a9fff32060cc10fb17481"
+      ],
+      "independentlyRead": true,
+      "actualRunnerCheckoutNotClaimed": true
+    }
+  },
+  "observedFailure": {
+    "revision": "de54b75c752e57fbfd12cbf01e458bfd41788c45",
+    "runId": 42994633542,
+    "jobId": 130435532706,
+    "log": {
+      "git": "058feca66e4a22a222bc2f6ca722154be9e8fa91",
+      "bytes": 159544,
+      "sha256": "2a63568340e93933954ebe5ee651a0177ffbd29fe409e438703643b774de3b31",
+      "retrieval": "exact immutable original-log blob fetched and independently rehashed"
+    },
+    "tests": 1204,
+    "passed": 1202,
+    "failed": 2,
+    "selectedFailure": {
+      "test": "manual candidate runs cannot publish without explicit opt-in, even when every gate passes",
+      "path": "tooling/tests/release-readiness.test.mjs",
+      "testLine": 194,
+      "assertionLine": 198,
+      "logLines": [
+        1446,
+        1462
+      ],
+      "message": "manual publication must have an explicit input"
+    },
+    "otherFailure": "The native UI transport EPERM retention failure is reviewed separately.",
+    "rawCheckedOutWorkflowLineEndings": "not present in the retained log; not independently observed",
+    "effectiveCoreAutocrlf": "not present in the retained log; not independently observed"
+  },
+  "source": {
+    "path": "tooling/tests/release-readiness.test.mjs",
+    "preimage": {
+      "git": "62ba8325d3695a6e04e2144f70748f72327abf90",
+      "bytes": 13838,
+      "sha256": "f4a6761f62177e5183537ccc74fe9b04765619e83be5b6d26ba35dd61370e96d"
+    },
+    "candidate": {
+      "path": "tooling/tests/release-readiness.test.mjs",
+      "git": "d5f217076df126f8160982d07db05e8cee288889",
+      "bytes": 13916,
+      "sha256": "beab3d0902035b7a3856c309e8f951221cca5bda02190857542d3e9bed5b17f3"
+    },
+    "deltaBytes": 78,
+    "transformation": "One unique comment plus CRLF-to-LF normalization after the final test's existing workflow read.",
+    "preserved": "Every original assertion and all eight original evaluated publication cases are byte-identical. No release workflow or readiness implementation edit."
+  },
+  "protectedFiles": [
+    {
+      "path": ".github/workflows/release.yml",
+      "git": "bc0460ccb6dd3b0dbcbaa1cd1801e69a2a20bd0c",
+      "mode": "100644",
+      "unchangedFromParent": true
+    },
+    {
+      "path": "tooling/release-readiness.mjs",
+      "git": "e8430cb774fea68aee984a0170cd3107e9696ad7",
+      "mode": "100644",
+      "unchangedFromParent": true
+    },
+    {
+      "path": ".gitattributes",
+      "git": "2473a84e6c5aee51974755c4b66af6e9648b587e",
+      "mode": "100644",
+      "unchangedFromParent": true
+    }
+  ],
+  "diagnosis": {
+    "classification": "reproduced test line-ending assumption defect",
+    "originalLF": "passes all eight original publication cases",
+    "originalCRLF": "fails at the same explicit-input assertion when only workflow newline bytes change",
+    "correctedLFAndCRLF": "each passes all eight original publication cases",
+    "qualification": "The CRLF failure is reproduced with the exact repository workflow. This does not substitute for observation of the failed runner's raw checked-out workflow or effective Git setting.",
+    "primaryDocumentation": {
+      "url": "https://git-scm.com/docs/gitattributes",
+      "section": "Checking-out and checking-in: text and eol",
+      "relevance": "Unspecified text/eol leaves conversion to Git configuration. The repository attribute file pins only baseline-roster.tsv."
+    }
+  },
+  "verification": {
+    "author": {
+      "environment": "functions V8 isolate",
+      "groups": [
+        "exact source identities and one-transform inverse",
+        "original LF passes and CRLF reproduces the observed assertion",
+        "corrected LF and CRLF each evaluate all eight original publication cases",
+        "missing input, wrong type and unsafe default remain rejected in both encodings",
+        "missing, unconditional, opt-in-free and success-free guards remain rejected in both encodings"
+      ],
+      "negativeChecks": 14,
+      "negativeVariants": [
+        "missing publish input",
+        "wrong input type",
+        "unsafe default",
+        "missing mutation guard",
+        "unconditional mutation guard",
+        "missing explicit opt-in",
+        "missing successful gates"
+      ],
+      "encodings": [
+        "LF",
+        "CRLF"
+      ],
+      "actualTestBodyExecuted": true,
+      "mocked": [
+        "readFileSync",
+        "assert",
+        "node:vm.runInNewContext"
+      ],
+      "wholeModuleSyntax": "passed after import declarations were removed and import.meta.url replaced with a fixed literal; full module body not executed",
+      "immutableSourceAndForwardInverse": true
+    },
+    "root": {
+      "reportedReproduction": "same five author groups and fourteen negative checks reproduced; not additional independent test designs"
+    },
+    "excluded": [
+      "Node runtime execution",
+      "Windows execution",
+      "Git checkout execution",
+      "GitHub Actions execution of this correction",
+      "new native compilation or acceptance"
+    ]
+  },
+  "integrationGate": {
+    "independentFullTree": true,
+    "leafCount": 3152,
+    "directoryHashCount": 513,
+    "changedLeaves": 6,
+    "unchangedLeaves": 3146,
+    "receiptScope": "This receipt covers the one release-readiness test edit. The five other commit changes are the separately reviewed IslandConnection accessor and native UI transport retention correction."
+  },
+  "artifacts": {
+    "manifest": {
+      "path": "source-edits.json",
+      "git": "77216836f4b837e237504ab0dae035a911c3cca9",
+      "bytes": 1918,
+      "sha256": "6ade6383fc3280323ae4a19bce30f84042115fa6705851bcc34c56e95841b16c"
+    },
+    "checks": {
+      "path": "review-checks.js",
+      "git": "3c795786a7288649fe5d06ecf7b74accb610bca5",
+      "bytes": 7788,
+      "sha256": "d3e2d796ac0185ea85554ccd85b214ed5df7b097575f87ab7f8b4e1417e9e2e0"
+    },
+    "invocation": "Evaluate review-checks.js as a function expression, then call with exact {source, preimage, workflow, manifest} strings pinned by the script."
+  },
+  "limits": [
+    "Source review does not satisfy stable platform acceptance or owner distribution approval.",
+    "No release, tag, approval record, ledger, workflow, ref or CI mutation was performed by this review.",
+    "Subsequent CI results require their own original logs."
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-workspace-source-pass",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceHead": "bd3ba9af7bba06ab2653806a3acf2525e28927a7",
+  "actualCheckout": "2c20b0ea6a2670a744b4199202bbb902de2270a8",
+  "tree": "21b26dbe190f534212be5f546c9f5ac0ebb1a2c6",
+  "orderedParents": [
+    "ac5d69585a52a6e945dc996ea08030e190574699",
+    "bd3ba9af7bba06ab2653806a3acf2525e28927a7"
+  ],
+  "runId": 43007236028,
+  "attempt": 1,
+  "originals": [
+    {
+      "file": "source-linux.log",
+      "gitBlob": "57eea3f54781848db3efc9b93818a3bce0c5182d",
+      "bytes": 153780,
+      "sha256": "1d65d1d3c6e942100a5b24a6fa382f8a946ec591b8723994895b9a4f87407145",
+      "jobId": 130477637755,
+      "utf8BOM": true,
+      "lineEndings": "LF",
+      "normalization": "none; complete decoded original preserved"
+    },
+    {
+      "file": "source-windows.log",
+      "gitBlob": "3f6143b3446a4732c240ba0d86a562d504c5eb71",
+      "bytes": 195291,
+      "sha256": "2d93facad4e87f5599097c963fbc07fbd4f250e4260431c14699d075793d0eb0",
+      "jobId": 130477637414,
+      "utf8BOM": true,
+      "lineEndings": "CRLF",
+      "normalization": "none; complete decoded original preserved"
+    },
+    {
+      "file": "source-types.log",
+      "gitBlob": "dde1fdb2fcc8839a83dcf48431c6dfa8f8cf7f30",
+      "bytes": 62210,
+      "sha256": "49ec35af0cd824f8a8214f158d641fdd56e0c4754b646f31a2fab307dad5a514",
+      "jobId": 130477637778,
+      "utf8BOM": true,
+      "lineEndings": "LF",
+      "normalization": "none; complete decoded original preserved"
+    }
+  ],
+  "observations": {
+    "linux": {
+      "jobId": 130477637755,
+      "checkoutLine": 122,
+      "tests": 1187,
+      "passed": 1187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 21153.908536,
+      "summaryLines": [
+        1395,
+        1402
+      ]
+    },
+    "windows": {
+      "jobId": 130477637414,
+      "checkoutLine": 109,
+      "tests": 1187,
+      "passed": 1187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 42579.4062,
+      "summaryLines": [
+        1395,
+        1402
+      ],
+      "packedTarballs": 13,
+      "packLine": 1780,
+      "freshImports": 17,
+      "importsLine": 1787
+    },
+    "types": {
+      "jobId": 130477637778,
+      "checkoutLine": 122,
+      "packages": 13,
+      "exportSubpaths": 619,
+      "reachableDeclarations": 3306,
+      "apiLines": [
+        604,
+        609
+      ],
+      "rosterLine": 614,
+      "roster": {
+        "canonicalIds": 341,
+        "localImplementations": 332,
+        "pinnedExternalImplementations": 9,
+        "partial": 0,
+        "pending": 0,
+        "acceptedAcrossEightPlatforms": 0
+      },
+      "packedTarballs": 13,
+      "packLine": 632,
+      "freshImports": 17,
+      "importsLine": 639
+    }
+  },
+  "comparison": "Linux and Windows execute the same 1,187-test suite at this AppKit helper's exact ac5d-based source. This is not the 1,204-test aggregate-based Windows0596 suite, not 2,374 distinct contracts, and not a final combined-source result.",
+  "limits": [
+    "Native compilation and acceptance are separate workflow 43007235899, still pending at this source checkpoint.",
+    "The core13 native-workflow test result is separate and not added to these counts.",
+    "Package log rows and checksums are producer output; original tarballs/ZIP bytes were not independently inspected here.",
+    "Passing source counts does not supply native, supported-host, physical-device, speech, performance, original final-archive or owner-manifest acceptance."
+  ]
+}

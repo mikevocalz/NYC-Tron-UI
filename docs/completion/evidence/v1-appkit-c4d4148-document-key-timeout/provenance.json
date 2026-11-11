@@ -1,0 +1,435 @@
+{
+  "schemaVersion": 1,
+  "kind": "appkit-completed-native-first-document-show-key-timeout",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "helper": "c4d4148c6135b9e3054255d9e35a950bef959b71",
+    "helperParent": "e08679769e471aba5403cd864c8a2fa2310b9086",
+    "actualCheckout": "62a4b3d2385b588d634eb189bfb630679c21b3ef",
+    "tree": "34309184ac033c77f891ff18880d55f34dfbbcd8",
+    "orderedMergeParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "c4d4148c6135b9e3054255d9e35a950bef959b71"
+    ],
+    "nativeDriver": "bdd64d6becb859622bd024fce036482fc668a91f",
+    "verifier": "ae88774e652cab55d556b5cd94da0a85d2505a45",
+    "shippingPopover": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+    "fixture": "8826fb256b24b780450ee2634ad78dad457642dd",
+    "workflow": "c46871c2e8b065b478da8ed1946432a2d05502b9",
+    "checkoutProof": "Both complete job checkout logs and immutable merge metadata agree.",
+    "fullTreeProof": {
+      "untruncated": true,
+      "leaves": 2050,
+      "treeObjectsIncludingRoot": 284,
+      "allDirectoryHashesRecomputedAndMatched": true
+    },
+    "external395ChangesIncluded": false
+  },
+  "originalFiles": [
+    {
+      "file": "source-job.log",
+      "gitBlob": "fea99bff21edecd9250e9a180a2523db649b8a10",
+      "bytes": 19435,
+      "sha256": "337919ac824de0cdc63f1b45b8d92c838bb92f64f79f44883c7b2ede6922f3b4",
+      "scope": "Complete decoded original job log; no normalization."
+    },
+    {
+      "file": "native-job.log",
+      "gitBlob": "fb7a054070b9376b77834a23b5f78adc3e846c39",
+      "bytes": 90642,
+      "sha256": "0a259961617bdac3a82a659e711ce7247068356990fbf3378c1e8f5e15bcfdda",
+      "scope": "Complete decoded original job log; no normalization."
+    },
+    {
+      "file": "build-summary.json",
+      "gitBlob": "1c578716ff204b6ff15c697cd727d54d7f8dc266",
+      "bytes": 318,
+      "sha256": "0ae4bf5fbf9696f3d83ec3c949a62be3e04327951c0cb13c9be68af6b1a6b65b",
+      "scope": "Exact extracted JSON line or original timestamped envelope from the retained native log; no reserialization."
+    },
+    {
+      "file": "startup-summary.json",
+      "gitBlob": "272b3c967dfafc93c45bf8b989175e1e181154d4",
+      "bytes": 26529,
+      "sha256": "28db93f9e0639ac4d711706b51770d418d35d45f7f91c64737344f9dee4af1c3",
+      "scope": "Exact extracted JSON line or original timestamped envelope from the retained native log; no reserialization."
+    },
+    {
+      "file": "startup-envelope.log",
+      "gitBlob": "c0d75c433bd3a11983657ed51181686383a48eac",
+      "bytes": 27512,
+      "sha256": "5039379f60252547433a955e0a11fa4e22a491aaff19e01767db522b609402d9",
+      "scope": "Exact extracted JSON line or original timestamped envelope from the retained native log; no reserialization."
+    },
+    {
+      "file": "tooltip-summary.json",
+      "gitBlob": "689ee2833895d85dfa2ec645ff49a555afc946c5",
+      "bytes": 9152,
+      "sha256": "f9c2623e17a47276f59c1c9ed0a4306d35e157a0c0652e5e01aed0048b3396be",
+      "scope": "Exact extracted JSON line or original timestamped envelope from the retained native log; no reserialization."
+    },
+    {
+      "file": "window-show-summary.json",
+      "gitBlob": "b9c5fb7c0c544e76f4ecbbeb30bdca7ace1ff3f4",
+      "bytes": 1094,
+      "sha256": "99dc8c1a34fe54a68f9aa420a912c4b8f5f0f353fc0fa9ad66b17df36a6c4054",
+      "scope": "Exact extracted JSON line or original timestamped envelope from the retained native log; no reserialization."
+    },
+    {
+      "file": "window-show-envelope.log",
+      "gitBlob": "4771a3893d85bc44e0263041528a59b44c7161bc",
+      "bytes": 1250,
+      "sha256": "dce3f599826e99be6cf5093fe52482f1722ddaefcf913263b31d9f6c31974920",
+      "scope": "Exact extracted JSON line or original timestamped envelope from the retained native log; no reserialization."
+    }
+  ],
+  "failure": {
+    "runId": 42999493080,
+    "attempt": 1,
+    "nativeJob": 130452053349,
+    "completedAt": "2026-11-11T10:19:59Z",
+    "message": "Timed out waiting for visible, key and active native owner window (document-1)",
+    "sourcePath": "examples/macos-appkit/spark/verify-native.mjs",
+    "waitForLine": 1088,
+    "showLine": 1098,
+    "callSiteLine": 1384,
+    "phase": "First document-1 show after mounting root-document-1 and observing two real NSWindows.",
+    "activationOperation": 2,
+    "notTheLaterSecondDocumentShow": true,
+    "deadlineMs": 20000,
+    "deadlineScope": "Unchanged source waitFor limit; no per-poll timestamp was added."
+  },
+  "typedWindowObservation": {
+    "source": "window-show-summary.json",
+    "status": "failed-show-poll",
+    "requestedOwner": "document-1",
+    "expectedProcessId": 43621,
+    "returnedResponses": 354,
+    "stateChanges": 0,
+    "selectedRecords": 2,
+    "omittedResponses": 352,
+    "omittedStateChanges": 0,
+    "captureFailed": false,
+    "countOverflow": false,
+    "firstResponse": {
+      "response": 1,
+      "first": true,
+      "last": false,
+      "stateChange": false,
+      "assertions": {
+        "processIdMatches": true,
+        "activationPolicyRegular": true,
+        "canBecomeKey": true
+      },
+      "conjunction": {
+        "visible": true,
+        "key": false,
+        "applicationActive": true,
+        "frontmostProcessMatches": true
+      }
+    },
+    "lastResponse": {
+      "response": 354,
+      "first": false,
+      "last": true,
+      "stateChange": false,
+      "assertions": {
+        "processIdMatches": true,
+        "activationPolicyRegular": true,
+        "canBecomeKey": true
+      },
+      "conjunction": {
+        "visible": true,
+        "key": false,
+        "applicationActive": true,
+        "frontmostProcessMatches": true
+      }
+    },
+    "interpretation": "The diagnostic reports 354 sequential projected responses with zero state changes. The selected first and last have six true facts and key=false. The 352 intermediate raw responses were not independently inspected.",
+    "unchangedProjectedFacts": {
+      "assertions": {
+        "processIdMatches": true,
+        "activationPolicyRegular": true,
+        "canBecomeKey": true
+      },
+      "conjunction": {
+        "visible": true,
+        "key": false,
+        "applicationActive": true,
+        "frontmostProcessMatches": true
+      }
+    },
+    "recordLimit": 8,
+    "consoleByteLimit": 8192,
+    "completeConsoleEnvelopeBytes": 1163,
+    "writeReport": {
+      "filename": "window-show-failure.json",
+      "writeStatus": "retained",
+      "writeErrorCode": null
+    },
+    "originalFailureFileBytesInspected": false,
+    "originalFailureFileHashClaim": false
+  },
+  "retainedActivation": {
+    "source": "startup-summary.json",
+    "matchedRecords": 20,
+    "selectedRecords": 20,
+    "omittedRecords": 0,
+    "operation2": [
+      {
+        "line": 866,
+        "phase": "policy-returned",
+        "atEpochSeconds": 1794392359.44644,
+        "mainThread": true,
+        "operation": 2,
+        "details": {
+          "accepted": true,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": false,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        }
+      },
+      {
+        "line": 870,
+        "phase": "workspace-main-continuation",
+        "atEpochSeconds": 1794392359.5147119,
+        "mainThread": true,
+        "operation": 2,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": true,
+          "miniaturized": false,
+          "canBecomeKey": true
+        },
+        "timing": {
+          "clock": "CACurrentMediaTime",
+          "clockExcludesSystemSleep": true,
+          "intervalsAreNotQueueResidence": true,
+          "intervalsDoNotEstablishCause": true,
+          "completionTraceElapsedSeconds": 0.00006720833334838971,
+          "submissionStartToMainEntrySeconds": 0.0005046666667567479
+        }
+      },
+      {
+        "line": 874,
+        "phase": "reply-prepared",
+        "atEpochSeconds": 1794392359.51588,
+        "mainThread": true,
+        "operation": 2,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": true
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": true,
+          "key": true,
+          "miniaturized": null,
+          "canBecomeKey": null
+        }
+      }
+    ],
+    "interpretation": "Operation 2's reply-prepared snapshot reported visible/key/applicationActive true before the show polling reported key=false. The snapshots are sequential and do not identify which window became key, a focus-stealing callback, or whether a popover close was pending. No exact NSWindow object identity comparison is claimed.",
+    "selection": "Three relevant operation-2 phase records quoted here; all ten operation-2 records and all twenty activation records remain in the exact startup-summary.json."
+  },
+  "controlFlowBoundary": {
+    "returnedBeforeFailure": [
+      "Initial main-window show and typed tooltip acceptance",
+      "Main inspector Escape didClose/subsequent-main-turn witness and exact opener responder assertion",
+      "Inspector reopening/retained identity checks and controlled close shown=false wait",
+      "Sidebar/appearance and controlled native text/selection checks",
+      "root-document-1 mount and two-real-NSWindows wait"
+    ],
+    "notReached": [
+      "Shared document value/selection checks following the first document show",
+      "Document resize and retained-identity checks",
+      "Native drag-protocol checks",
+      "Later second document show and newer-window-focus close witness",
+      "Document inspector minimization checks and later real-pointer gates"
+    ],
+    "scope": "Inferred only from the sequential executed verifier reaching the first show call and then throwing at line 1384."
+  },
+  "stageResults": {
+    "coreSource": {
+      "jobId": 130451791248,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "consumerSource": {
+      "passed": 16,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "installedAPI": {
+      "subpaths": 15,
+      "reachableDeclarations": 33
+    },
+    "nativeTransportProbe": {
+      "cases": 7,
+      "passed": true
+    },
+    "standaloneCompile": "success",
+    "tooltipSummary": "passed",
+    "fullNativeAcceptance": "failure",
+    "testedDistribution": "skipped",
+    "countsAreSeparate": true
+  },
+  "envelopeIntegrity": {
+    "BUILD": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 0,
+      "rawJSONBytes": 318,
+      "rawJSONSha256": "0ae4bf5fbf9696f3d83ec3c949a62be3e04327951c0cb13c9be68af6b1a6b65b",
+      "rawJSONGitBlob": "1c578716ff204b6ff15c697cd727d54d7f8dc266",
+      "timestampedEnvelopeBytes": 472
+    },
+    "STARTUP": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 10,
+      "rawJSONBytes": 26529,
+      "rawJSONSha256": "28db93f9e0639ac4d711706b51770d418d35d45f7f91c64737344f9dee4af1c3",
+      "rawJSONGitBlob": "272b3c967dfafc93c45bf8b989175e1e181154d4",
+      "timestampedEnvelopeBytes": 27512
+    },
+    "TOOLTIP": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 0,
+      "rawJSONBytes": 9152,
+      "rawJSONSha256": "f9c2623e17a47276f59c1c9ed0a4306d35e157a0c0652e5e01aed0048b3396be",
+      "rawJSONGitBlob": "689ee2833895d85dfa2ec645ff49a555afc946c5",
+      "timestampedEnvelopeBytes": 9300
+    },
+    "WINDOW_SHOW": {
+      "status": "complete-unique-json-line",
+      "beginCount": 1,
+      "endCount": 1,
+      "jsonLines": 1,
+      "interleavedNonJSONLines": 0,
+      "rawJSONBytes": 1094,
+      "rawJSONSha256": "99dc8c1a34fe54a68f9aa420a912c4b8f5f0f353fc0fa9ad66b17df36a6c4054",
+      "rawJSONGitBlob": "b9c5fb7c0c544e76f4ecbbeb30bdca7ace1ff3f4",
+      "timestampedEnvelopeBytes": 1250
+    }
+  },
+  "producerOnlyOriginals": {
+    "compilerTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329156,
+      "sha256": "8f5095eaa2e2ef9cfd51f20f98a31410e3ae30eb0bc47e24853bf631278998cd",
+      "complete": true,
+      "normalized": false
+    },
+    "appLogSnapshot": {
+      "filename": "startup-app-log-snapshot.log",
+      "kind": "read-time-prefix-from-live-app-log",
+      "offset": 0,
+      "bytes": 608662,
+      "sha256": "3e8a742133d7f8e1a4ee46fdee5e44d555f162427b2d74a476dc0cbdf12eca03",
+      "retained": true,
+      "eventualAppLogHash": false
+    },
+    "commands": {
+      "readBytes": 262145,
+      "totalBytes": 1031710,
+      "truncated": true,
+      "completeOriginalFile": false,
+      "originalSha256": null
+    },
+    "processFile": {
+      "filename": "native-process-failure.json",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 1320,
+      "sourceLive": false,
+      "sourceBytesBefore": 1320,
+      "sourceBytesAfter": 1320,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "5390d4ea83d735e0b301291cdf132fb7c644d451784384f3c01a873e20bf7c7f",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null,
+      "jsonStatus": "parsed"
+    },
+    "tooltipFile": {
+      "filename": "tooltip-hover.json",
+      "bytes": 43485,
+      "sha256": "9ef7411e8584909fb65ede1e45a0bd4421fa43b0ac7c7c9b18054d4ee672163d",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    },
+    "processSample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 9,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "328ddd9f3f40c79d0e7039d87439d7cabf2d578d5f4945bc69fdcec67474ee49",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true
+    },
+    "originalBytesInspected": false,
+    "sampleDurationScope": "Requested duration/interval, not a measured elapsed-time or interpreted stack claim.",
+    "note": "Only the containing original console log and its raw projections were inspected. The underlying files, snapshots, samples, archive and pixels were not opened."
+  },
+  "artifact": {
+    "id": 13846767035,
+    "reportedUploadedFiles": 54,
+    "reportedBytes": 1711186,
+    "reportedSha256": "a96ed4eaa06e49c60979875e64bf493ad208054e34b06fe39b99b5fbc5e1a446",
+    "ZIPInspected": false,
+    "digestScope": "Producer log and GitHub artifact API metadata."
+  },
+  "limits": [
+    "The source diagnostic ran in the native acceptance job, but its original output file is not independently inspected; the console reports a successful exclusive write.",
+    "Zero reported state changes is evidence about the fixed seven-field projection, not proof that every other native property was unchanged.",
+    "Neither native activation snapshots nor the new summary identify the current key window or establish the cause of the key transition.",
+    "The earlier e086 later-show failure and external395 post-close key assertion remain distinct completed outcomes.",
+    "No source correction, branch update, retry, host/security change or unsupported assertion relaxation is part of this receipt."
+  ]
+}
