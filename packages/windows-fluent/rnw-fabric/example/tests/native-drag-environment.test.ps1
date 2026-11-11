@@ -140,6 +140,7 @@ function ShellFixture {
     shellWindowHandle=100; shellWindowHandleAfter=100; shellProcessId=88; shellProcessIdAfter=88; shellThreadId=900; shellThreadIdAfter=900
     shellSecurity=@{ status='queried'; tokenCloseError=$null; fields=@{
       elevation=@{ status='observed'; value=0 }; integrityRid=@{ status='observed'; value=8192 }; uiAccess=@{ status='observed'; value=0 } } }
+  }
   foreach ($name in @('shellToDriver','shellToApp')) {
     $observation[$name]=@{ status='queried'; identityStable=$true; errors=@{}; sameSession=$true
       leftSession=@{ status='observed'; value=3 }; rightSession=@{ status='observed'; value=3 }; sameUser=@{ status='observed'; value=$true } }
