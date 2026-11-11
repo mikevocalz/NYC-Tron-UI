@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "representation": "Selected completed GitHub API fields; no actor profiles or inferred log data.",
+  "workflowRun": {
+    "id": 42958884395,
+    "name": "NYC-Tron native controls",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "head_sha": "12e35b48f75408ac4da4f8130853148ef00a5881",
+    "path": ".github/workflows/native-controls-port.yml",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884395",
+    "created_at": "2026-11-11T04:23:13Z",
+    "updated_at": "2026-11-11T04:52:00Z",
+    "run_number": 259,
+    "run_attempt": 1,
+    "run_started_at": "2026-11-11T04:23:13Z"
+  },
+  "jobs": [
+    {
+      "id": 130320429307,
+      "name": "Android installed-tarball compile, media and native UI",
+      "status": "completed",
+      "conclusion": "failure",
+      "runId": 42958884395,
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884395/job/130320429307",
+      "stepCounts": {
+        "total": 24,
+        "successful": 22,
+        "failed": 1,
+        "skipped": 1
+      },
+      "relevantSteps": [
+        {
+          "number": 11,
+          "name": "Expo development app native generation",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 12,
+          "name": "Native Kotlin / Compose debug build (instruments + Vico charts)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 18,
+          "name": "Install the pinned official native UI test driver",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 19,
+          "name": "Execute the installed decoder and OS-driven UI on Android",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "number": 20,
+          "name": "Save installed-package evidence and the Android acceptance build",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 130320429571,
+      "name": "TypeScript / source contracts / independent pack",
+      "status": "completed",
+      "conclusion": "success",
+      "runId": 42958884395,
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884395/job/130320429571",
+      "stepCounts": {
+        "total": 31,
+        "successful": 31,
+        "failed": 0,
+        "skipped": 0
+      },
+      "relevantSteps": []
+    },
+    {
+      "id": 130320429685,
+      "name": "iOS installed-tarball compile, media and native UI",
+      "status": "completed",
+      "conclusion": "failure",
+      "runId": 42958884395,
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884395/job/130320429685",
+      "stepCounts": {
+        "total": 26,
+        "successful": 24,
+        "failed": 1,
+        "skipped": 1
+      },
+      "relevantSteps": [
+        {
+          "number": 11,
+          "name": "Build iOS simulator without code signing",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 16,
+          "name": "Archive the simulator app for interaction acceptance",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 18,
+          "name": "Install the pinned official native UI test driver",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 19,
+          "name": "Boot one simulator for both native acceptance runners",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 20,
+          "name": "Execute the installed native decoder on iOS",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "number": 21,
+          "name": "Execute the reference and pointer UI through XCTest touches",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "number": 22,
+          "name": "Save installed-package evidence and the iOS acceptance build",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13829557288,
+      "name": "native-release-consumer-ios",
+      "sizeInBytes": 71587392,
+      "producerApiDigest": "sha256:0e388e429d7242abb341864b76b698428123c660f775ddfe15269073a5f808d2",
+      "createdAt": "2026-11-11T04:51:01Z",
+      "updatedAt": "2026-11-11T04:51:01Z",
+      "expired": false,
+      "workflowRunId": 42958884395,
+      "headSha": "12e35b48f75408ac4da4f8130853148ef00a5881",
+      "rawZipInspected": false,
+      "membersInspected": false
+    },
+    {
+      "id": 13828539943,
+      "name": "native-release-consumer-android",
+      "sizeInBytes": 121147097,
+      "producerApiDigest": "sha256:bf98e235825c7db0c8cd0ccb9937b054aa3ffbc0404dd74741ad7100a9af1b8b",
+      "createdAt": "2026-11-11T04:41:23Z",
+      "updatedAt": "2026-11-11T04:41:23Z",
+      "expired": false,
+      "workflowRunId": 42958884395,
+      "headSha": "12e35b48f75408ac4da4f8130853148ef00a5881",
+      "rawZipInspected": false,
+      "membersInspected": false
+    }
+  ],
+  "refObservations": {
+    "scope": "Separate fresh API observations during this review, not an atomic or future branch snapshot.",
+    "pullRequests": [
+      {
+        "pullRequest": 57,
+        "headRef": "codex/v1-completion",
+        "headSha": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "baseSha": "0b0b45d6ddd0e32428f72e7372e89cb3acc86c54",
+        "mergeCommit": "e597d73757911e9a58005d577b3c2bf2496bd798",
+        "state": "open",
+        "draft": true
+      },
+      {
+        "pullRequest": 59,
+        "headRef": "codex/v1-appkit-interactions-nov10",
+        "headSha": "12e35b48f75408ac4da4f8130853148ef00a5881",
+        "baseSha": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "mergeCommit": "96e7558fbb859a2430b0f192bb5f11e940229cfa",
+        "state": "open",
+        "draft": true
+      },
+      {
+        "pullRequest": 60,
+        "headRef": "codex/v1-windows-interactions-nov10",
+        "headSha": "0578582686e483003db64e252e4ea65f0b48c093",
+        "baseSha": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "mergeCommit": "0a44cc99e8d7e1932235a463d4b1f3d82047fe8c",
+        "state": "open",
+        "draft": true
+      }
+    ],
+    "aggregate": {
+      "ref": "refs/heads/codex/v1-reviewed-integration-nov10",
+      "sha": "9e3933cb9749cb7c0a18b61d58999831acc3cc8d"
+    }
+  },
+  "iosLogReads": {
+    "attempted": 2,
+    "originalLogAvailable": false,
+    "attempts": [
+      {
+        "ordinal": 1,
+        "result": "failed",
+        "originalLogRetained": false,
+        "errorBodyRetained": false,
+        "errorText": null,
+        "note": "The read guard threw before the error body was retained."
+      },
+      {
+        "ordinal": 2,
+        "result": "failed",
+        "originalLogRetained": false,
+        "errorBodyRetained": true,
+        "errorText": "tool call error: tool call failed for codex_apps/github.fetch_workflow_job_logs; Caused by: Transport closed"
+      }
+    ],
+    "subsequentAttempts": 0,
+    "ciJobRerun": false
+  }
+}

@@ -81,6 +81,58 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit initial-request watchdog source
+
+The [watchdog source checkpoint](../evidence/v1-appkit-8a24668-startup-watchdog-source/README.md)
+records helper `8a2466835e14b579002a7fbaa3a240aaaf16e059`, tree
+`e2ea092f9d21a0a1e4a87cd9413ed39b0beb314a` and sole parent
+`12e35b48f75408ac4da4f8130853148ef00a5881`.
+Exactly one private verifier file changes. Root and independent review checked
+all 2,048 leaves / 284 tree objects and the five-transform exact inverse.
+
+The completed 12e timing result below did not identify a blocked stack or
+activation cause. The new verifier arms one ten-second watcher around only
+the original first `tron.window` request promise. It latches diagnostic-only
+status before any observer, then asynchronously checks the retained child,
+PID, parent PID and expected command before sampling the owned process.
+The command match is explicitly `ps comm` / argv[0], without claiming an
+independent mapped-executable measurement.
+
+Sampling requests two seconds at ten-millisecond intervals. The sampler has
+an eight-second timer and one-second bounded cleanup; signal acknowledgment
+does not establish exit or close. Unconfirmed closure suppresses the existing
+postfailure sampler. The original request's 35-second timer stays runnable,
+and its rejection preserves the original error object. Observation-task waiting,
+file reads, hashes and reporting happen after the original request settles.
+A request resolving after the watcher fires receives a fixed diagnostic-only
+failure before remaining show checks or passed acceptance/archive output.
+Sampling can affect scheduling and does not establish unperturbed startup.
+
+A separate complete console envelope is capped at 16 KiB. The fixed original
+sample is processed within a one-MiB cap plus one overflow byte. Whole-file
+hashes require complete stable reads after observed sampler closure and
+successful descriptor closure. Incomplete/changing reads retain only explicitly
+scoped prefix hashes and no frame projection. Matching PID declarations and
+one explicit main-thread group are required; at most 32 frames expose fixed
+labels, counts, depth and relative offsets. Raw symbols, addresses and paths
+remain outside the projection. Task status and later close observations are
+separately labeled.
+
+Fourteen author-designed V8/mock lifecycle, parser and IO groups passed, and
+root and independent review reproduced those same designs. Ordinary and
+maximum-width allowed envelopes measured 3,176 and 10,536 bytes. Separate
+root parser and desktop parser/read/report reviews also passed; these are
+source/mock checks, not additional native acceptance evidence.
+
+The helper was published at 2026-11-11 05:14:39 UTC with native execution
+unknown. Root subsequently verified actual merge
+`e72dcda68234a6506dfef07dc18ffd3b8de9f916`, the exact reviewed tree and
+ordered parents `0edd5f30` then `8a246683`.
+[AppKit run 42964459265](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42964459265)
+and browser-overlay run 42964459201 were in progress at the source checkpoint.
+That checkpoint establishes no actual Node OS IO, native compilation/runtime,
+behavior correction, accepted ledger row or tested distribution.
+
 ### November 11 AppKit completed activation-timing result
 
 The [completed 12e native receipt](../evidence/v1-appkit-12e35b4-dispatch-interval-timeout/README.md)
@@ -837,6 +889,28 @@ tested archive receipts before desktop acceptance or release assembly. The
 source inventory remains 332 local plus nine pinned external rows; full
 acceptance across all eight required platforms is not inferred from these
 individual component or diagnostic results.
+
+## November 11 helper mobile result
+
+The separate [helper mobile receipt](../evidence/v1-mobile-12e35b4-helper-ui-failures/README.md)
+records native-controls run 42958884395 at actual merge
+`96e7558fbb859a2430b0f192bb5f11e940229cfa` (helper `12e35b48`).
+Source checks passed 131 tests across ten groups with zero failures, skips
+or cancellations. Android native compilation and eleven decoder checks passed
+before a generic Maestro wrapper failure; its detailed assertion is uninspected.
+iOS metadata reports native compilation and decoder step 20 passed,
+UI step 21 failed, and evidence upload succeeded. Two failed original-log reads
+leave its decoder count and assertion unknown; only the second returned error
+text was retained, reporting `Transport closed`.
+
+The explicit 168-path source comparison has six differences and nineteen
+matching navigation paths. This helper lacks the aggregate's PR61 cancellation
+fix and later snapshot-retention, pointer-fixture and canonical-archive changes.
+Those additional changes are not all attributed to PR61. The result does not
+establish mobile flakiness, either failure's cause, or a regression of the
+reviewed aggregate. Original source/Android logs are retained; original iOS log
+and artifact ZIP/member bytes remain unavailable or uninspected as specified
+in the receipt. No acceptance or release gate changes.
 
 ## November 10 native integration
 

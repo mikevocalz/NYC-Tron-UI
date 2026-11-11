@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "scope": "completed-helper-native-controls-run-with-unavailable-ios-original-log",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "runId": 42958884395,
+  "helperHead": "12e35b48f75408ac4da4f8130853148ef00a5881",
+  "helperTree": "d4352a6aba7cca7a9b898b6c25c9e4a5d729587d",
+  "actualMerge": "96e7558fbb859a2430b0f192bb5f11e940229cfa",
+  "orderedMergeParents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "12e35b48f75408ac4da4f8130853148ef00a5881"
+  ],
+  "logCheckoutVerification": {
+    "source": true,
+    "android": true,
+    "ios": false,
+    "iosReason": "Original iOS log unavailable; run/job source context comes from GitHub metadata."
+  },
+  "outcomes": {
+    "source": {
+      "jobId": 130320429571,
+      "status": "success",
+      "loggedTestGroupCounts": [
+        25,
+        16,
+        10,
+        44,
+        3,
+        7,
+        7,
+        6,
+        3,
+        10
+      ],
+      "totalLoggedTests": 131,
+      "passed": 131,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "scope": "Ten source-test command summaries; not application runtime acceptance."
+    },
+    "android": {
+      "jobId": 130320429307,
+      "status": "failure",
+      "nativeBuild": "passed",
+      "decoderChecksPassed": 11,
+      "failedStep": 19,
+      "failedStepName": "Execute the installed decoder and OS-driven UI on Android",
+      "firstExposedError": "Error: /home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro failed: ",
+      "wrapperLocation": "tooling/native/run-ui-acceptance.mjs:221:3",
+      "detailedMaestroAssertion": null,
+      "cause": null,
+      "evidenceUpload": "success",
+      "uploadedFilesReported": 41
+    },
+    "ios": {
+      "jobId": 130320429685,
+      "status": "failure",
+      "nativeBuildStep": "passed",
+      "decoderStep20": "passed",
+      "decoderCheckCount": null,
+      "failedStep": 21,
+      "failedStepName": "Execute the reference and pointer UI through XCTest touches",
+      "originalLogAvailable": false,
+      "detailedAssertion": null,
+      "cause": null,
+      "evidenceUploadStep22": "success",
+      "uploadedFilesReported": null
+    }
+  },
+  "retainedOriginalLogs": [
+    {
+      "filename": "source-job.log",
+      "jobId": 130320429571,
+      "bytes": 86356,
+      "sha256": "272f67d1074fc54f6704704c51147878e8864a053af37c33d710bbb7f734a3ef",
+      "gitBlob": "8d08177126e09fa303045c4ed51e682022a5606f",
+      "stringLength": 85920,
+      "scope": "Complete decoded GitHub job log retained without trimming, ANSI removal or newline normalization."
+    },
+    {
+      "filename": "android-job.log",
+      "jobId": 130320429307,
+      "bytes": 284165,
+      "sha256": "d6b486a76afc8d658595bc4bcf750e45e3bdff79400256ceb9c35b9500473fa8",
+      "gitBlob": "b2cbb56e96929ae1f0af644e742f32cc0b907e6b",
+      "stringLength": 284120,
+      "scope": "Complete decoded GitHub job log retained without trimming, ANSI removal or newline normalization."
+    }
+  ],
+  "normalizedMetadata": {
+    "filename": "workflow-metadata.json",
+    "bytes": 7352,
+    "sha256": "a4b8829c4e0210a4a47aace71d22137ad469a11d752762d419b2daa5303bb6fe",
+    "gitBlob": "89860c58505f89f8e8564b1a52ee4206bd12a596"
+  },
+  "iosLogAvailability": {
+    "attempted": 2,
+    "originalLogAvailable": false,
+    "attempts": [
+      {
+        "ordinal": 1,
+        "result": "failed",
+        "originalLogRetained": false,
+        "errorBodyRetained": false,
+        "errorText": null,
+        "note": "The read guard threw before the error body was retained."
+      },
+      {
+        "ordinal": 2,
+        "result": "failed",
+        "originalLogRetained": false,
+        "errorBodyRetained": true,
+        "errorText": "tool call error: tool call failed for codex_apps/github.fetch_workflow_job_logs; Caused by: Transport closed"
+      }
+    ],
+    "subsequentAttempts": 0,
+    "ciJobRerun": false
+  },
+  "sourceComparison": {
+    "helperCommit": "12e35b48f75408ac4da4f8130853148ef00a5881",
+    "helperTree": "d4352a6aba7cca7a9b898b6c25c9e4a5d729587d",
+    "aggregateCommit": "9e3933cb9749cb7c0a18b61d58999831acc3cc8d",
+    "aggregateTree": "f75085511d06c82a194e4f6c6b8d638e6542edf2",
+    "pr61Head": "2a74fbf5bc5f3be5137af73d9590ce05abaaf0b0",
+    "pr61Tree": "f6d55646022c3544136b0aab917081cc179b851e",
+    "pathScopeRegex": "^(examples\\/native-instruments\\/|packages\\/native-controls\\/|packages\\/native-navigation\\/|packages\\/expo-navigation\\/|tooling\\/native\\/|tooling\\/tests\\/native-ui|\\.github\\/workflows\\/native-controls-port\\.yml)",
+    "comparedPaths": 168,
+    "changedPaths": 6,
+    "unchangedPaths": 162,
+    "navigationPathsCompared": 19,
+    "navigationAllEqual": true,
+    "comparedRowsCanonicalEncoding": "UTF-8 of JSON.stringify(path-sorted rows with properties path, helper, aggregate, pr61) plus a final newline.",
+    "comparedRowsSha256": "e12295a5ab4c4e09dafcc6cfd1a12b064026403a844e973960854f4300d182e3",
+    "changes": [
+      {
+        "path": ".github/workflows/native-controls-port.yml",
+        "helper": "3e56aaca9fab6f68496d9ab93aa2bce8938b10ca",
+        "aggregate": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+        "pr61": "5ccc3e8f3ae290a9ff1b4cabd202ea7459649b6d",
+        "aggregateMatchesPr61": false
+      },
+      {
+        "path": "examples/native-instruments/pointer-acceptance.js",
+        "helper": "3682d984458c38183b9432d1bf47ed679db519c1",
+        "aggregate": "724586a2f0a21a8f991dd971b7e1e2626238889b",
+        "pr61": "3682d984458c38183b9432d1bf47ed679db519c1",
+        "aggregateMatchesPr61": false
+      },
+      {
+        "path": "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronPointerCaptureView.kt",
+        "helper": "23b6f11431be3869b98b55b01c5026479adf50bf",
+        "aggregate": "fd8d00d663b948c4bdf4db359911cfc4d62a61b2",
+        "pr61": "fd8d00d663b948c4bdf4db359911cfc4d62a61b2",
+        "aggregateMatchesPr61": true
+      },
+      {
+        "path": "tooling/native/UI_ACCEPTANCE.md",
+        "helper": "a5e254852721193b01e392ba9f597aa82dc6f593",
+        "aggregate": "a3a51e499711f026463b9ff6b571422f730c0cf8",
+        "pr61": "a5e254852721193b01e392ba9f597aa82dc6f593",
+        "aggregateMatchesPr61": false
+      },
+      {
+        "path": "tooling/native/ui-transport.mjs",
+        "helper": "4839573c63934b5ecffe60755982211d9018ba2a",
+        "aggregate": "9a362c4b7af481c01beeb7bd0f7b03a9a692080b",
+        "pr61": "4839573c63934b5ecffe60755982211d9018ba2a",
+        "aggregateMatchesPr61": false
+      },
+      {
+        "path": "tooling/tests/native-ui-transport.test.mjs",
+        "helper": "f7e5a9ee73f2c1b5a099ffd6838ce5806a1e9881",
+        "aggregate": "9e62b8505328cc9e76cf6a361571565eb0fc11a3",
+        "pr61": "f7e5a9ee73f2c1b5a099ffd6838ce5806a1e9881",
+        "aggregateMatchesPr61": false
+      }
+    ],
+    "interpretation": [
+      "The aggregate Android capture view exactly matches PR61's cancellation fix; the helper retains the older cancellation implementation.",
+      "The aggregate's UI-transport snapshot retention, regression test, pointer-fixture StatusBar and canonical workspace archive wiring are additional changes; helper and PR61 retain the same older transport implementation.",
+      "All 19 native/expo-navigation paths in this defined scope match helper and aggregate.",
+      "The 168-path scope is explicit and is not a claim that every other repository path matches."
+    ]
+  },
+  "boundaries": [
+    "This run tests the helper's tree, not the reviewed aggregate or a frozen final release candidate.",
+    "The private macOS-only delta from helper 5340 and matching navigation source do not prove mobile flakiness, a timeout cause, or a regression.",
+    "The generic returned Android wrapper error does not expose the detailed Maestro assertion; no earlier-run assertion is imported.",
+    "The iOS failure step is established by completed metadata only. No iOS decoder count, assertion, stack or actual log checkout is invented.",
+    "Artifact sizes and digests are producer/API-reported; ZIP and member bytes are not inspected.",
+    "Only immutable receipt blobs are created. No source change, executor use, workflow retry, commit, tree, reference or PR mutation is made."
+  ]
+}

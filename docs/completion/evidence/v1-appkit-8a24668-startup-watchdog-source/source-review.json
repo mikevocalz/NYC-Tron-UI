@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "kind": "private-appkit-startup-watchdog-source-review",
+  "checkpoint": {
+    "status": "published-source-review-checkpoint",
+    "publishedAt": "2026-11-11T05:14:39Z",
+    "nativeExecution": "unknown-at-publication; no native or Node OS IO success is established by this receipt",
+    "acceptanceChanged": false
+  },
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "commit": "8a2466835e14b579002a7fbaa3a240aaaf16e059",
+    "tree": "e2ea092f9d21a0a1e4a87cd9413ed39b0beb314a",
+    "parents": [
+      "12e35b48f75408ac4da4f8130853148ef00a5881"
+    ],
+    "changedPaths": 1,
+    "treeLeaves": 2048,
+    "treeObjects": 284,
+    "treeReviewers": [
+      "root",
+      "forge_gap_audit"
+    ]
+  },
+  "source": {
+    "path": "examples/macos-appkit/spark/verify-native.mjs",
+    "preimage": "2d9efdb7834b3ee461bf00e3fecbcc5c11b43964",
+    "gitBlob": "4507f860155746bb6f1a3a9528dd0e74de5d6492",
+    "bytes": 90995,
+    "sha256": "7e4f8421b447a3ecef3623e9a6ee1b1269a571b6d6f96019bcd1d7126be27736",
+    "netLines": 287,
+    "preimageBytes": 70956,
+    "preimageSha256": "489685c674ced00fdd831043f315e7698991fcca5b9b0e4f9ad4d1920d6bb74b",
+    "inverse": "Exact five-transform reversal restores the complete 2d9 preimage; original startup and tooltip reporters, outer catch/finally, later show calls and strict native assertions remain unchanged."
+  },
+  "scope": {
+    "file": "examples/macos-appkit/spark/verify-native.mjs",
+    "initialRequest": "Exactly one original first tron.window/show request promise; observeInitialWindowRequest is enabled only at the initial show call before the root-main mount check.",
+    "unchanged": [
+      "35 second client timeout",
+      "original request arguments and activation API",
+      "foreground and same-process assertions",
+      "native driver source",
+      "tooltip and drag acceptance gates",
+      "later show calls",
+      "workflow and package dependencies",
+      "owned app final cleanup",
+      "original failure rejection object"
+    ],
+    "newBuiltinImport": "node:fs/promises mkdir",
+    "triggerMilliseconds": 10000,
+    "conservativeDiagnosticOnlyLatch": "Set when the watchdog callback fires while the request is pending, before directory reservation or preflight. A triggered resolving request raises E_STARTUP_DIAGNOSTIC_ONLY before remaining show assertions and before any passed report/tested archive.",
+    "asynchronousOnlyWhilePending": "This observation does not await its task or read/hash/report retained files until the original request settles. The sampler itself writes its fixed original file during sampling.",
+    "ownerIdentity": "Retained direct-spawn child object/PID/liveness before and after preflight, plus exact owned-PID/PPID/expected ps comm match. ps comm is argv[0], not an independent mapped-executable-path observation.",
+    "preflightCommand": {
+      "executable": "/bin/ps",
+      "arguments": [
+        "-ww",
+        "-p",
+        "<owned-child-pid>",
+        "-o",
+        "pid=,ppid=,comm="
+      ],
+      "timeoutMilliseconds": 2000
+    },
+    "sampleCommand": {
+      "executable": "/usr/bin/sample",
+      "arguments": [
+        "<owned-child-pid>",
+        "2",
+        "10",
+        "-file",
+        "<fixed-evidence-directory>/startup-predeadline/sample.txt"
+      ],
+      "requestedDurationSeconds": 2,
+      "requestedIntervalMilliseconds": 10,
+      "timeoutMilliseconds": 8000
+    },
+    "cleanup": {
+      "termThenKillMilliseconds": 500,
+      "cleanupGraceMilliseconds": 1000,
+      "closeRequiredForRead": true,
+      "signalDeliveryIsNotExitOrClose": true,
+      "unknownCloseSuppressesExistingPostFailureSampler": true,
+      "statusScope": "observer-task-outcome",
+      "lateClose": "sample.closeObserved/closedAt reflect a later observed close; cleanupLimitReached remains historical. Task status need not change after task settlement."
+    },
+    "outputReservation": "Async exclusive mkdir of the fixed startup-predeadline directory, mode 0700; an existing directory or failed reservation stops observation without overwriting prior sample evidence.",
+    "observerEffect": "Sampling can perturb scheduling. Every triggered run is diagnostic-only, including failed preflight. No launch timing or successful activation after attachment establishes native acceptance or a behavior correction.",
+    "noNewPrivileges": true,
+    "noProcessSearch": true,
+    "noRetry": true
+  },
+  "evidence": {
+    "originalSample": "startup-predeadline/sample.txt",
+    "observationJson": "startup-predeadline.json",
+    "observationJsonWriteMode": "wx; collision or reporting errors stay secondary",
+    "consoleMarkers": [
+      "NYCTRON_STARTUP_SAMPLE_BEGIN",
+      "NYCTRON_STARTUP_SAMPLE_END"
+    ],
+    "consoleByteLimit": 16384,
+    "processingByteLimit": 1048576,
+    "readByteLimit": 1048577,
+    "stdoutAndStderrByteLimitEach": 65536,
+    "frameLimit": 32,
+    "frameLineScanLimit": 4096,
+    "frameLineByteLimit": 8192,
+    "identity": "Exactly one valid matching Process header; optional Analysis-of-sampling PID declaration must be single, valid and match. Exactly one explicitly named serial main-thread group.",
+    "projectedFrames": "Fixed image/function enums or unknown, safe integer count/depth and relative offsets only. No absolute addresses, arbitrary symbols, paths, raw stderr, ps command string, or application content.",
+    "hashScope": "Whole sample SHA256 only after observed spawn/close, complete read within cap, successful file close, and stable fd/path file identity/stat checks. Incomplete or changing reads retain only a labeled capped prefix digest, null whole-file hash, and no frame projection. Failed reads/closes retain explicit unknowns.",
+    "overLimit": "If the complete console envelope exceeds its cap, remove frame detail and record the omitted frame count; emit only when the resulting complete envelope fits.",
+    "originalErrorPreservation": "Original request rejection identity is rethrown after bounded cleanup; observation, file and console failures cannot replace it.",
+    "requestedVersusMeasured": "2 seconds / 10 ms are requested sample parameters, not measured duration. Timer bounds do not prove OS termination; observed exit and close remain separate."
+  },
+  "validation": {
+    "author": {
+      "status": "passed",
+      "harness": {
+        "path": "review-checks.js",
+        "gitBlob": "1f93e09c6865a581d124cc1a4557ee28b6eeb95e",
+        "bytes": 33044,
+        "sha256": "dff0edde17a63702dca601f97a23018cac22ed5e4363c18900394c794064c5a7"
+      },
+      "designGroups": [
+        {
+          "name": "exact source identity, five-edit inverse and initial-only integration",
+          "status": "passed"
+        },
+        {
+          "name": "healthy resolve and early rejection cancel the watcher without observers",
+          "status": "passed"
+        },
+        {
+          "name": "watchdog latch precedes observers and settlement during directory/preflight stops sampling",
+          "status": "passed"
+        },
+        {
+          "name": "asynchronous sample leaves request pending and defers reads, hashes and reporting until settlement",
+          "status": "passed"
+        },
+        {
+          "name": "a request resolving after the trigger cannot reach native acceptance",
+          "status": "passed"
+        },
+        {
+          "name": "identity mismatches, output overflow and changed app ownership stop before sample",
+          "status": "passed"
+        },
+        {
+          "name": "directory and subprocess denial stay secondary and cannot fabricate observed close",
+          "status": "passed"
+        },
+        {
+          "name": "kill acknowledgment and kill errors without close produce bounded unknown cleanup and suppress overlap",
+          "status": "passed"
+        },
+        {
+          "name": "exit-before-close and late close preserve historical cleanup boundary separately from observed closure",
+          "status": "passed"
+        },
+        {
+          "name": "historical sample is a bounded format fixture with exact PID declarations and explicit main thread",
+          "status": "passed"
+        },
+        {
+          "name": "conflicting, malformed and duplicate declarations cannot silently project frames",
+          "status": "passed"
+        },
+        {
+          "name": "frame parsing preserves closed labels and scan/count/offset bounds without raw values",
+          "status": "passed"
+        },
+        {
+          "name": "complete-file hashes require observed close and exact stable reads within one MiB",
+          "status": "passed"
+        },
+        {
+          "name": "wx original retention, output failures and maximum allowed frames preserve the primary rejection and output cap",
+          "status": "passed"
+        }
+      ],
+      "metrics": {
+        "sourceBytes": 90995,
+        "normalEnvelopeBytes": 3176,
+        "historicalFixture": {
+          "processId": 37118,
+          "formatOnly": true,
+          "frames": 32,
+          "parsedFrameLines": 480,
+          "omittedFrameLines": 448
+        },
+        "maximumFrameEnvelopeBytes": 10536
+      },
+      "scope": "V8 source assertions and deterministic mocked timers, child processes, filesystem and console; no Node OS IO, AppKit compilation or native execution."
+    },
+    "independent": [
+      {
+        "reviewer": "root",
+        "scope": "Whole verifier V8 parse, complete five-transform inverse, final source/tree identity; eight independently selected parser cases on f1e, whose parser is unchanged in final4507. Root also reproduced the same fourteen authored V8/mock groups with matching envelope metrics.",
+        "status": "passed"
+      },
+      {
+        "reviewer": "forge_gap_audit",
+        "scope": "Independent source/lifecycle/ownership/API review, exact prepared helper tree/parent verification, and reproduction of the same fourteen author groups.",
+        "status": "passed",
+        "reproductionMetrics": {
+          "normalEnvelopeBytes": 3176,
+          "maximumFrameEnvelopeBytes": 10536,
+          "historicalRetainedFrames": 32,
+          "historicalParsedFrameLines": 480,
+          "historicalOmittedFrameLines": 448
+        }
+      },
+      {
+        "reviewer": "desktop_host_audit",
+        "scope": "Seventeen independent V8/mock parser, privacy, file IO/hash/close and report/budget/error groups; one final 76-byte statusScope/reportedAt metadata check.",
+        "status": "passed"
+      }
+    ],
+    "distinctDesignCounting": "Reproductions of the same fourteen author groups are recorded as reproducibility checks, not new distinct designs and not native passes.",
+    "wholeVerifierSyntax": "V8 AsyncFunction parse after stripping imports and replacing import.meta for parsing only.",
+    "notExecuted": [
+      "real Node filesystem or child-process IO",
+      "Apple sample against an app",
+      "AppKit native compilation/runtime for this source",
+      "real first-request watcher and macOS process cleanup",
+      "native tooltip or dragging acceptance"
+    ],
+    "meaningfulLimits": "Mocks establish source and diagnostic lifecycle contracts only. Real Mac CI is still needed to observe the new sampler and unchanged native gates."
+  },
+  "historicalFormatFixture": {
+    "gitBlob": "394dd1966d30d917c471a6d9eec323c654fee15e",
+    "bytes": 296824,
+    "sha256": "50e2a86844b56968a73d111ba8172f471f7a9a780d47d24b725d7886b70e542e",
+    "processId": 37118,
+    "use": "Historical sample format and privacy/bounds fixture only; it is not a stack observation of 12e or this candidate."
+  },
+  "motivatingObservation": {
+    "runId": 42958884494,
+    "nativeJobId": 130320556894,
+    "actualCheckout": "96e7558fbb859a2430b0f192bb5f11e940229cfa",
+    "nativeLog": {
+      "gitBlob": "5c21e84175abc4736a7099976a3640535f67b42d",
+      "bytes": 65531,
+      "sha256": "ad562522d15fdf9a3c299a417c8e688fbb9d1742a42f2fcac6086ce7a30c6430"
+    },
+    "scope": "Compilation passed, but initial tron.window request 2 timed out before the verifier reached its root-main mount check or allocated tooltip evidence. The observed pre-submission-to-main-entry interval was about 35.407 seconds. Its cause remains unproved; the uninspected post-timeout sample does not establish a blocked stack."
+  },
+  "primaryReferences": [
+    {
+      "url": "https://raw.githubusercontent.com/nodejs/node/v24.19.0/doc/api/child_process.md",
+      "use": "Async spawn; drained pipes; kill/killed are signal observations, exit and close are distinct."
+    },
+    {
+      "url": "https://developer.apple.com/library/archive/documentation/Performance/Conceptual/CodeSpeed/Articles/DiagnosingSlowness.html",
+      "use": "Retired official sampling guide; PID/duration/interval and limitations of statistical samples."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/apple-oss-distributions/adv_cmds/main/ps/print.c",
+      "use": "comm / just_command reads argv[0], not a separate mapped executable path."
+    }
+  ],
+  "releaseBoundary": "No native pass, canonical tested archive, ledger acceptance, owner approval, publication readiness, signing/distribution or release result is established here.",
+  "publication": {
+    "branch": "codex/v1-appkit-interactions-nov10",
+    "head": "8a2466835e14b579002a7fbaa3a240aaaf16e059",
+    "expectedPreviousHead": "12e35b48f75408ac4da4f8130853148ef00a5881",
+    "nonforcedLeasedUpdate": true,
+    "postUpdateRefReadback": "verified-by-root",
+    "pr": 59
+  },
+  "postpublicationVerification": {
+    "actualMerge": "e72dcda68234a6506dfef07dc18ffd3b8de9f916",
+    "tree": "e2ea092f9d21a0a1e4a87cd9413ed39b0beb314a",
+    "orderedParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "8a2466835e14b579002a7fbaa3a240aaaf16e059"
+    ],
+    "verifiedBy": "root",
+    "appkitRun": 42964459265,
+    "browserOverlayRun": 42964459201,
+    "statusAtReceipt": "runs in progress; results unknown",
+    "nativeSuccessInferred": false
+  }
+}

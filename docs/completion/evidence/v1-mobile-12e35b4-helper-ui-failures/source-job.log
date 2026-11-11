@@ -1,0 +1,1160 @@
+﻿2026-11-11T04:23:16.6732519Z Current runner version: '2.338.2'
+2026-11-11T04:23:16.6770149Z ##[group]Runner Image Provisioner
+2026-11-11T04:23:16.6771482Z Hosted Compute Agent
+2026-11-11T04:23:16.6772620Z Version: 20261028.624
+2026-11-11T04:23:16.6773632Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T04:23:16.6775040Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T04:23:16.6776239Z Worker ID: {a92d5ed4-f2d2-49c9-ada3-c037162cbebb}
+2026-11-11T04:23:16.6777639Z Region: eastus2
+2026-11-11T04:23:16.6778618Z Cloud: Azure
+2026-11-11T04:23:16.6779553Z ##[endgroup]
+2026-11-11T04:23:16.6782805Z ##[group]Operating System
+2026-11-11T04:23:16.6783887Z Ubuntu
+2026-11-11T04:23:16.6785004Z 26.04.1
+2026-11-11T04:23:16.6785936Z LTS
+2026-11-11T04:23:16.6786994Z ##[endgroup]
+2026-11-11T04:23:16.6788040Z ##[group]Runner Image
+2026-11-11T04:23:16.6789050Z Image: ubuntu-26.04
+2026-11-11T04:23:16.6790159Z Version: 20261101.186.1
+2026-11-11T04:23:16.6792632Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-11T04:23:16.6795476Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-11T04:23:16.6797314Z ##[endgroup]
+2026-11-11T04:23:16.6799169Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T04:23:16.6802204Z Contents: read
+2026-11-11T04:23:16.6803259Z Metadata: read
+2026-11-11T04:23:16.6804358Z ##[endgroup]
+2026-11-11T04:23:16.6808045Z Secret source: Actions
+2026-11-11T04:23:16.6809657Z Cache mode: write
+2026-11-11T04:23:16.6811253Z Prepare workflow directory
+2026-11-11T04:23:16.7315752Z Prepare all required actions
+2026-11-11T04:23:16.7389317Z Getting action download info
+2026-11-11T04:23:16.8982236Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T04:23:17.0483770Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T04:23:17.2806048Z Complete job name: TypeScript / source contracts / independent pack
+2026-11-11T04:23:17.3807969Z ##[group]Run actions/checkout@v4
+2026-11-11T04:23:17.3808874Z with:
+2026-11-11T04:23:17.3809345Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:17.3813538Z   token: ***
+2026-11-11T04:23:17.3813996Z   ssh-strict: true
+2026-11-11T04:23:17.3814454Z   ssh-user: git
+2026-11-11T04:23:17.3814914Z   persist-credentials: true
+2026-11-11T04:23:17.3815417Z   clean: true
+2026-11-11T04:23:17.3815876Z   sparse-checkout-cone-mode: true
+2026-11-11T04:23:17.3816411Z   fetch-depth: 1
+2026-11-11T04:23:17.3816852Z   fetch-tags: false
+2026-11-11T04:23:17.3817311Z   show-progress: true
+2026-11-11T04:23:17.3817771Z   lfs: false
+2026-11-11T04:23:17.3818206Z   submodules: false
+2026-11-11T04:23:17.3818667Z   set-safe-directory: true
+2026-11-11T04:23:17.3819184Z   allow-unsafe-pr-checkout: false
+2026-11-11T04:23:17.3819956Z ##[endgroup]
+2026-11-11T04:23:17.6963124Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:17.6966594Z ##[group]Getting Git version info
+2026-11-11T04:23:17.6968370Z Working directory is '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T04:23:17.6970699Z [command]/usr/bin/git version
+2026-11-11T04:23:17.6972172Z git version 2.56.0
+2026-11-11T04:23:17.6975699Z ##[endgroup]
+2026-11-11T04:23:17.6982757Z Temporarily overriding HOME='/home/runner/work/_temp/e57ebdef-f170-4c6b-9a22-5df03cccd303' before making global git config changes
+2026-11-11T04:23:17.6985743Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T04:23:17.6988450Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:23:17.7067382Z Deleting the contents of '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T04:23:17.7069971Z ##[group]Initializing the repository
+2026-11-11T04:23:17.7074515Z [command]/usr/bin/git init /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:23:17.7209255Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T04:23:17.7214678Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T04:23:17.7217200Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T04:23:17.7218760Z hint: call:
+2026-11-11T04:23:17.7219605Z hint:
+2026-11-11T04:23:17.7220707Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T04:23:17.7222352Z hint:
+2026-11-11T04:23:17.7223676Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T04:23:17.7225673Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T04:23:17.7227197Z hint:
+2026-11-11T04:23:17.7228085Z hint: 	git branch -m <name>
+2026-11-11T04:23:17.7229164Z hint:
+2026-11-11T04:23:17.7230551Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T04:23:17.7232961Z Initialized empty Git repository in /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T04:23:17.7247886Z [command]/usr/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:17.7315021Z ##[endgroup]
+2026-11-11T04:23:17.7316650Z ##[group]Disabling automatic garbage collection
+2026-11-11T04:23:17.7320492Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T04:23:17.7371118Z ##[endgroup]
+2026-11-11T04:23:17.7373852Z ##[group]Setting up auth
+2026-11-11T04:23:17.7397766Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T04:23:17.7455075Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T04:23:17.7968109Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T04:23:17.8016662Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T04:23:17.8295191Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T04:23:17.8330951Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T04:23:17.8608650Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T04:23:17.8649393Z ##[endgroup]
+2026-11-11T04:23:17.8650483Z ##[group]Fetching the repository
+2026-11-11T04:23:17.8659999Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +96e7558fbb859a2430b0f192bb5f11e940229cfa:refs/remotes/pull/59/merge
+2026-11-11T04:23:18.4687441Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:18.4691254Z  * [new ref]         96e7558fbb859a2430b0f192bb5f11e940229cfa -> pull/59/merge
+2026-11-11T04:23:18.4698109Z ##[endgroup]
+2026-11-11T04:23:18.4700867Z ##[group]Determining the checkout info
+2026-11-11T04:23:18.4704312Z ##[endgroup]
+2026-11-11T04:23:18.4706314Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T04:23:18.4764145Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T04:23:18.4794158Z ##[group]Checking out the ref
+2026-11-11T04:23:18.4797061Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/59/merge
+2026-11-11T04:23:18.6323966Z Note: switching to 'refs/remotes/pull/59/merge'.
+2026-11-11T04:23:18.6325650Z 
+2026-11-11T04:23:18.6326784Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-11T04:23:18.6328796Z changes and commit them, and you can discard any commits you make in this
+2026-11-11T04:23:18.6330712Z state without impacting any branches by switching back to a branch.
+2026-11-11T04:23:18.6332289Z 
+2026-11-11T04:23:18.6333729Z If you want to create a new branch to retain commits you create, you may
+2026-11-11T04:23:18.6336791Z do so (now or later) by using -c with the switch command. Example:
+2026-11-11T04:23:18.6338510Z 
+2026-11-11T04:23:18.6339697Z   git switch -c <new-branch-name>
+2026-11-11T04:23:18.6340890Z 
+2026-11-11T04:23:18.6341741Z Or undo this operation with:
+2026-11-11T04:23:18.6343267Z 
+2026-11-11T04:23:18.6343972Z   git switch -
+2026-11-11T04:23:18.6344713Z 
+2026-11-11T04:23:18.6345836Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-11T04:23:18.6347846Z 
+2026-11-11T04:23:18.6349860Z HEAD is now at 96e7558 Merge 12e35b48f75408ac4da4f8130853148ef00a5881 into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-11T04:23:18.6355708Z ##[endgroup]
+2026-11-11T04:23:18.6402115Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T04:23:18.6429847Z 96e7558fbb859a2430b0f192bb5f11e940229cfa
+2026-11-11T04:23:18.6912652Z ##[group]Run actions/setup-node@v4
+2026-11-11T04:23:18.6913885Z with:
+2026-11-11T04:23:18.6914783Z   node-version: 24.19.0
+2026-11-11T04:23:18.6915792Z   always-auth: false
+2026-11-11T04:23:18.6916762Z   check-latest: false
+2026-11-11T04:23:18.6927993Z   token: ***
+2026-11-11T04:23:18.6928883Z ##[endgroup]
+2026-11-11T04:23:18.8440498Z Attempting to download 24.19.0...
+2026-11-11T04:23:18.8606628Z (node:2414) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T04:23:18.8610323Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T04:23:19.4703263Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-11T04:23:19.8054371Z Extracting ...
+2026-11-11T04:23:19.8189437Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/26fe202c-92fd-453f-84bd-a30b5575033f -f /home/runner/work/_temp/40973ba0-d90d-4634-bac6-22f14d94db31
+2026-11-11T04:23:20.5949975Z Adding to the cache ...
+2026-11-11T04:23:22.3297925Z ##[group]Environment details
+2026-11-11T04:23:22.5732276Z node: v24.19.0
+2026-11-11T04:23:22.5732741Z npm: 11.17.0
+2026-11-11T04:23:22.5733237Z yarn: 1.22.22
+2026-11-11T04:23:22.5733992Z ##[endgroup]
+2026-11-11T04:23:22.5958049Z ##[group]Run corepack enable
+2026-11-11T04:23:22.5958395Z [36;1mcorepack enable[0m
+2026-11-11T04:23:22.6013300Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:22.6013570Z ##[endgroup]
+2026-11-11T04:23:22.6774505Z ##[group]Run corepack pnpm install --frozen-lockfile
+2026-11-11T04:23:22.6774950Z [36;1mcorepack pnpm install --frozen-lockfile[0m
+2026-11-11T04:23:22.6825010Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:22.6825272Z ##[endgroup]
+2026-11-11T04:23:23.9711199Z Scope: all 16 workspace projects
+2026-11-11T04:23:24.0402343Z Lockfile is up to date, resolution step is skipped
+2026-11-11T04:23:24.0944850Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-11-11T04:23:24.1677405Z Packages: +537
+2026-11-11T04:23:24.1678468Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-11T04:23:25.0983500Z Progress: resolved 537, reused 0, downloaded 95, added 40
+2026-11-11T04:23:26.0960203Z Progress: resolved 537, reused 0, downloaded 238, added 102
+2026-11-11T04:23:27.1007194Z Progress: resolved 537, reused 0, downloaded 419, added 208
+2026-11-11T04:23:28.1223405Z Progress: resolved 537, reused 0, downloaded 447, added 223
+2026-11-11T04:23:29.1304363Z Progress: resolved 537, reused 0, downloaded 461, added 231
+2026-11-11T04:23:30.1353343Z Progress: resolved 537, reused 0, downloaded 474, added 235
+2026-11-11T04:23:31.1623250Z Progress: resolved 537, reused 0, downloaded 475, added 235
+2026-11-11T04:23:32.1631716Z Progress: resolved 537, reused 0, downloaded 517, added 331
+2026-11-11T04:23:32.8033145Z Progress: resolved 537, reused 0, downloaded 519, added 537, done
+2026-11-11T04:23:33.3114058Z 
+2026-11-11T04:23:33.3114708Z devDependencies:
+2026-11-11T04:23:33.3115174Z + @types/react 19.3.0
+2026-11-11T04:23:33.3115610Z + typescript 6.0.3
+2026-11-11T04:23:33.3115861Z 
+2026-11-11T04:23:33.4011593Z Done in 9.8s using pnpm v10.32.1
+2026-11-11T04:23:33.4945199Z ##[group]Run node --test packages/native-controls/tests/*.test.mjs packages/native-navigation/tests/*.test.mjs
+2026-11-11T04:23:33.4946237Z [36;1mnode --test packages/native-controls/tests/*.test.mjs packages/native-navigation/tests/*.test.mjs[0m
+2026-11-11T04:23:33.4998061Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:33.4998323Z ##[endgroup]
+2026-11-11T04:23:33.6089049Z ✔ Android video uses an explicit surface/player without requesting app audio focus (1.716555ms)
+2026-11-11T04:23:33.6288163Z ✔ SDK58 autolinking registers identical custom controls on Apple and Android (2.780588ms)
+2026-11-11T04:23:33.6289970Z ✔ iOS sources and podspec do not depend on ExpoUI (2.034791ms)
+2026-11-11T04:23:33.6291382Z ✔ all native views distinguish preview from final engine commit (0.50684ms)
+2026-11-11T04:23:33.6293063Z ✔ exports and original MIT source provenance are included (0.675876ms)
+2026-11-11T04:23:33.6294688Z ✔ example app id never collides with the library Android namespace (0.517079ms)
+2026-11-11T04:23:33.6296172Z ✔ example iOS target module never shadows the library pod module (0.397284ms)
+2026-11-11T04:23:33.6305414Z ✔ XY pad moves on a single tap on both platforms and commits through live props (0.436077ms)
+2026-11-11T04:23:33.6794433Z ✔ observed coalesced samples preserve zero force; predictions never enter strokes (3.047007ms)
+2026-11-11T04:23:33.6823444Z ✔ pen cancels touch once; palm release and hover exit cannot finish a pen stroke (0.541204ms)
+2026-11-11T04:23:33.6853197Z ✔ hover suppresses palms until exit; missing pressure stays unavailable (0.366506ms)
+2026-11-11T04:23:33.6878630Z ✔ cancel and dispose clear previews and cannot create a second commit (0.401282ms)
+2026-11-11T04:23:33.6903383Z ✔ invalid, mixed-pointer, stale and out-of-order batches never reach the document (0.317355ms)
+2026-11-11T04:23:33.6934223Z ✔ disposal from document callback cannot leave predictions after cancellation (0.404688ms)
+2026-11-11T04:23:33.6991294Z ✔ cancellation during preview clearing suppresses the interrupted actual delivery (0.424976ms)
+2026-11-11T04:23:33.7030409Z ✔ hardware keys and mouse hover route without fabricating force (0.303468ms)
+2026-11-11T04:23:33.7046933Z ✔ one pen leaving does not admit a palm while another pen is still hovering (0.381484ms)
+2026-11-11T04:23:33.7073433Z ✔ malformed native payloads are rejected without breaking the active stroke (4.288115ms)
+2026-11-11T04:23:33.7097962Z ✔ SwiftPM preserves native-controls CocoaPods frameworks, target, iOS floor and packed manifest (2.073083ms)
+2026-11-11T04:23:33.7749160Z ✔ stable native rail selection contract rejects invalid and duplicate destinations (1.974137ms)
+2026-11-11T04:23:33.7773407Z ✔ native module uses ExpoUI native views and platform components (0.555571ms)
+2026-11-11T04:23:33.7793506Z ✔ native import is isolated from web fallback and Tally/Forge engines (0.632254ms)
+2026-11-11T04:23:33.7813839Z ✔ rail host dimensions preserve custom measurements and reject invalid geometry (1.284547ms)
+2026-11-11T04:23:33.7816785Z ✔ rail region follows the physical right segment around hinges, never text direction (0.830185ms)
+2026-11-11T04:23:33.7822384Z ✔ selected indicator is a fully rounded pill filled from a theme token on every renderer (1.425229ms)
+2026-11-11T04:23:33.7884888Z ℹ tests 25
+2026-11-11T04:23:33.7885648Z ℹ suites 0
+2026-11-11T04:23:33.7886494Z ℹ pass 25
+2026-11-11T04:23:33.7886906Z ℹ fail 0
+2026-11-11T04:23:33.7887295Z ℹ cancelled 0
+2026-11-11T04:23:33.7887728Z ℹ skipped 0
+2026-11-11T04:23:33.7888122Z ℹ todo 0
+2026-11-11T04:23:33.7888596Z ℹ duration_ms 249.807773
+2026-11-11T04:23:33.7988641Z ##[group]Run node --test packages/reserved-regions/tests/*.test.mjs
+2026-11-11T04:23:33.7989145Z [36;1mnode --test packages/reserved-regions/tests/*.test.mjs[0m
+2026-11-11T04:23:33.8039478Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:33.8039737Z ##[endgroup]
+2026-11-11T04:23:34.2906189Z ✔ expo-module.config.json autolinks both platforms (1.920597ms)
+2026-11-11T04:23:34.2907703Z ✔ apple: the listed Swift class is the v2 module registered under the shared JS name (0.581269ms)
+2026-11-11T04:23:34.2909582Z ✔ android: the Kotlin v2 module is compiled in by the v2 plugin, not the legacy list (0.55491ms)
+2026-11-11T04:23:34.2911174Z ✔ android record carries every ReservedRegion field; dp conversion uses display density (0.594424ms)
+2026-11-11T04:23:34.2912390Z ✔ the package ships the native sources and no Gradle build output (0.435476ms)
+2026-11-11T04:23:34.2913375Z ✔ toRegions accepts the v2 array and a { regions } body, drops malformed entries (0.538137ms)
+2026-11-11T04:23:34.2914691Z ✔ regionsEqual compares by value (0.280415ms)
+2026-11-11T04:23:34.3205183Z ✔ android: the v2 module answers the snapshot and the changed event (122.526829ms)
+2026-11-11T04:23:34.3683076Z ✔ ios: legacy lookup, query only, no changed subscription (29.691473ms)
+2026-11-11T04:23:34.5117617Z ✔ no linked module and a failed query both mean no regions (47.467099ms)
+2026-11-11T04:23:34.5118835Z ✔ an override wins and the native module is never queried (18.230076ms)
+2026-11-11T04:23:34.5120476Z ✔ web: side-by-side segments give a vertical hinge; folded posture separates (25.438508ms)
+2026-11-11T04:23:34.5122658Z ✔ web: stacked segments give a horizontal hinge; a flat physical gap still separates (19.891818ms)
+2026-11-11T04:23:34.5135695Z ✔ web: a flat zero-size seam is one continuous surface (16.040204ms)
+2026-11-11T04:23:34.5137199Z ✔ web: the snapshot is stable between reads and empty when hinge-blind (61.764628ms)
+2026-11-11T04:23:34.5138217Z ✔ SwiftPM preserves the native product and SDK-gated source tree (0.353653ms)
+2026-11-11T04:23:34.5344162Z ℹ tests 16
+2026-11-11T04:23:34.5344521Z ℹ suites 0
+2026-11-11T04:23:34.5344745Z ℹ pass 16
+2026-11-11T04:23:34.5344957Z ℹ fail 0
+2026-11-11T04:23:34.5345178Z ℹ cancelled 0
+2026-11-11T04:23:34.5345412Z ℹ skipped 0
+2026-11-11T04:23:34.5345634Z ℹ todo 0
+2026-11-11T04:23:34.5345892Z ℹ duration_ms 692.93687
+2026-11-11T04:23:34.5465274Z ##[group]Run node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
+2026-11-11T04:23:34.5465959Z [36;1mnode --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs[0m
+2026-11-11T04:23:34.5515154Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:34.5515418Z ##[endgroup]
+2026-11-11T04:23:35.1072376Z ✔ SwiftPM package is shipped and preserves the pod's platform and module identity (2.528055ms)
+2026-11-11T04:23:35.1095893Z ✔ expo-module.config.json autolinks both platforms; android stays off the legacy list (1.240544ms)
+2026-11-11T04:23:35.1098281Z ✔ apple: v2 module under the shared name, key commands on the root controller, no ExpoUI (1.750098ms)
+2026-11-11T04:23:35.1100248Z ✔ android: v2 module compiled by the v2 plugin, unhandled-key listeners on every window (0.758792ms)
+2026-11-11T04:23:35.1101413Z ✔ both platforms' records carry the fields JS reads and sends (3.598329ms)
+2026-11-11T04:23:35.1102623Z ✔ payloads that are not chords are dropped (0.425848ms)
+2026-11-11T04:23:35.1104081Z ✔ the registry pushes the union of every hook's bindings, first title wins, removal is idempotent (0.546815ms)
+2026-11-11T04:23:35.1105424Z ✔ web source: handled keys prevent default, already-handled and IME keys are skipped (3.942855ms)
+2026-11-11T04:23:35.1106541Z ✔ useKeySource registers the map's native bindings and dispatches resolved chords (77.8626ms)
+2026-11-11T04:23:35.1107861Z ✔ native source: v2 global first, recording chords go to the recorder only, setRecording is reference-counted (63.032443ms)
+2026-11-11T04:23:35.1272595Z ℹ tests 10
+2026-11-11T04:23:35.1273096Z ℹ suites 0
+2026-11-11T04:23:35.1273384Z ℹ pass 10
+2026-11-11T04:23:35.1273595Z ℹ fail 0
+2026-11-11T04:23:35.1273806Z ℹ cancelled 0
+2026-11-11T04:23:35.1274044Z ℹ skipped 0
+2026-11-11T04:23:35.1274249Z ℹ todo 0
+2026-11-11T04:23:35.1282817Z ℹ duration_ms 539.88466
+2026-11-11T04:23:35.1356118Z ##[group]Run node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
+2026-11-11T04:23:35.1356827Z [36;1mnode --experimental-strip-types --test packages/platform-services/tests/*.test.mjs[0m
+2026-11-11T04:23:35.1407392Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:35.1407657Z ##[endgroup]
+2026-11-11T04:23:35.3332687Z ✔ checkpoint records reject torn writes, wrong versions and byte corruption (3.31551ms)
+2026-11-11T04:23:35.4021708Z ✔ checkpoint checksum respects selected byte views and owns bytes before yielding (88.899681ms)
+2026-11-11T04:23:35.4085524Z ✔ checkpoint generation and path names cannot escape storage or silently overflow (1.588525ms)
+2026-11-11T04:23:35.4103220Z ✔ closing storage drains accepted writes and rejects later work before releasing its backend (0.943177ms)
+2026-11-11T04:23:35.4223839Z ✔ strict frame capability is absent with old, missing, or noncallable bridge (1.30791ms)
+2026-11-11T04:23:35.4238150Z ✔ strict frame capability sends normalized data and preserves native presentation time (1.434106ms)
+2026-11-11T04:23:35.4240169Z ✔ strict frame rejects a neighbor, invalid timestamp, or fractional timestamp instead of rounding it into success (1.269107ms)
+2026-11-11T04:23:35.4242464Z ✔ invalid request and pre-abort never enter native strict decode (0.495468ms)
+2026-11-11T04:23:35.4243805Z ✔ abort detaches strict native work and drops late completion (2.763155ms)
+2026-11-11T04:23:35.4245042Z ✔ native failure retains its stable code and never falls back to ordinary decode (0.470471ms)
+2026-11-11T04:23:35.4246338Z ✔ decode request bounds reject before touching native resources (2.907195ms)
+2026-11-11T04:23:35.4247876Z ✔ unavailable decoder reports a real unsupported error and malformed native records reject (0.733324ms)
+2026-11-11T04:23:35.4249315Z ✔ PCM selection remains frame-aligned and interleaved (0.847728ms)
+2026-11-11T04:23:35.4260522Z ✔ an already-aborted frame request never enters native code (0.734446ms)
+2026-11-11T04:23:35.4262929Z ✔ abort settles the consumer and drains a late native completion without serializing its signal (7.892072ms)
+2026-11-11T04:23:35.5190562Z ✔ SwiftPM preserves CocoaPods framework linkage and the established iOS floor (1.909746ms)
+2026-11-11T04:23:35.5213491Z ✔ expo-module.config.json autolinks both platforms; android stays off the legacy list (1.48928ms)
+2026-11-11T04:23:35.5253353Z ✔ each module registers the JS name on both platforms (0.975086ms)
+2026-11-11T04:23:35.5254901Z ✔ the JS-facing functions and events exist on both platforms (3.557904ms)
+2026-11-11T04:23:35.5283011Z ✔ every haptic kind maps on both platforms (0.37908ms)
+2026-11-11T04:23:35.5305861Z ✔ session events JS understands are the ones both platforms emit (0.342832ms)
+2026-11-11T04:23:35.5333963Z ✔ Android shares app files through the kit's own FileProvider with a per-app authority (0.389339ms)
+2026-11-11T04:23:35.5353447Z ✔ no Swift file imports ExpoUI and the podspec does not depend on it (1.830549ms)
+2026-11-11T04:23:35.5450765Z ✔ old binaries and missing modules do not advertise a presentation index (1.977413ms)
+2026-11-11T04:23:35.5483236Z ✔ the index preserves supplied nonuniform timestamps in an independent immutable result (1.859934ms)
+2026-11-11T04:23:35.5486083Z ✔ invalid or incomplete timelines reject without sorting, truncating or synthesizing frames (1.159141ms)
+2026-11-11T04:23:35.5490517Z ✔ both the public parser and native facade independently validate the frame budget (1.344098ms)
+2026-11-11T04:23:35.5494406Z ✔ the native call receives only the URI and frame budget and rejects an oversized result (0.849892ms)
+2026-11-11T04:23:35.5495913Z ✔ an already-cancelled lookup never allocates native indexing work (0.524823ms)
+2026-11-11T04:23:35.5497518Z ✔ late completion and rejection after cancellation are drained without publishing an index (13.543932ms)
+2026-11-11T04:23:35.5498949Z ✔ native failures retain their public decoder error code (0.880008ms)
+2026-11-11T04:23:35.5638066Z ✔ haptics: the opt-out persists, is read back, and silences play (3.915343ms)
+2026-11-11T04:23:35.5639687Z ✔ haptics: same-kind feedback is rate limited, other kinds are not (0.237425ms)
+2026-11-11T04:23:35.5701209Z ✔ haptics: unknown kinds throw, web and unlinked builds no-op, a rejected play is not an app error (6.840653ms)
+2026-11-11T04:23:35.5703261Z ✔ playback policy: an interruption pauses and resumes only when the OS says so (1.028196ms)
+2026-11-11T04:23:35.5718338Z ✔ playback policy: focus loss ducks, pauses transiently, or stops for good (0.3201ms)
+2026-11-11T04:23:35.5737311Z ✔ playback policy: losing the headset pauses and never resumes by itself (0.427822ms)
+2026-11-11T04:23:35.5738863Z ✔ playback payloads are validated; unknown types are dropped (0.285715ms)
+2026-11-11T04:23:35.5740546Z ✔ playback session: native events drive onAction; activate reports refusal (0.728815ms)
+2026-11-11T04:23:35.5742268Z ✔ documents: records are validated, cancel is [], modes are checked (0.90779ms)
+2026-11-11T04:23:35.5749903Z ✔ documentPickerSource maps FilePicker's accept string to picker types (0.504555ms)
+2026-11-11T04:23:35.5751685Z ✔ playback disposal drains activation, ignores stale callbacks and releases focus once (0.409167ms)
+2026-11-11T04:23:35.5753672Z ✔ haptics: synchronous native failures are harmless and invalid intervals reject (0.408295ms)
+2026-11-11T04:23:35.5755300Z ✔ playback listener disposal leaves process-wide focus to the shared owner (0.204383ms)
+2026-11-11T04:23:35.5843722Z ℹ tests 44
+2026-11-11T04:23:35.5853116Z ℹ suites 0
+2026-11-11T04:23:35.5853560Z ℹ pass 44
+2026-11-11T04:23:35.5853924Z ℹ fail 0
+2026-11-11T04:23:35.5854287Z ℹ cancelled 0
+2026-11-11T04:23:35.5854666Z ℹ skipped 0
+2026-11-11T04:23:35.5855019Z ℹ todo 0
+2026-11-11T04:23:35.5855481Z ℹ duration_ms 405.045864
+2026-11-11T04:23:35.5948492Z ##[group]Run node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
+2026-11-11T04:23:35.5949709Z [36;1mnode --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs[0m
+2026-11-11T04:23:35.6008560Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:35.6008836Z ##[endgroup]
+2026-11-11T04:23:35.7321238Z (node:2610) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/NYC-Tron-UI/NYC-Tron-UI/examples/native-instruments/media-acceptance-contract.ts is not specified and it doesn't parse as CommonJS.
+2026-11-11T04:23:35.7323975Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+2026-11-11T04:23:35.7326011Z To eliminate this warning, add "type": "module" to /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/examples/native-instruments/package.json.
+2026-11-11T04:23:35.7327555Z (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-11T04:23:35.7454066Z ✔ the runtime contract identifies the actual bundled video bytes (2.665753ms)
+2026-11-11T04:23:35.7455558Z ✔ runtime acceptance rejects stale provenance, omitted checks and fabricated timing/audio (0.878295ms)
+2026-11-11T04:23:35.7456959Z ✔ the clean native host selects media acceptance without a source resolver (1.259038ms)
+2026-11-11T04:23:35.7589359Z ℹ tests 3
+2026-11-11T04:23:35.7603219Z ℹ suites 0
+2026-11-11T04:23:35.7614227Z ℹ pass 3
+2026-11-11T04:23:35.7614629Z ℹ fail 0
+2026-11-11T04:23:35.7615022Z ℹ cancelled 0
+2026-11-11T04:23:35.7615384Z ℹ skipped 0
+2026-11-11T04:23:35.7615603Z ℹ todo 0
+2026-11-11T04:23:35.7615884Z ℹ duration_ms 121.842202
+2026-11-11T04:23:35.7706942Z ##[group]Run node --test tooling/tests/native-ui-acceptance.test.mjs
+2026-11-11T04:23:35.7707492Z [36;1mnode --test tooling/tests/native-ui-acceptance.test.mjs[0m
+2026-11-11T04:23:35.7756450Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:35.7756715Z ##[endgroup]
+2026-11-11T04:23:35.8728979Z ✔ native UI evidence rejects empty, skipped, failed and truncated driver reports (2.169895ms)
+2026-11-11T04:23:35.8731176Z ✔ semantic proof comes from a real populated hierarchy with the requested labels (1.360698ms)
+2026-11-11T04:23:35.8734097Z ✔ native touch coordinates must come from valid observed accessibility bounds (0.570809ms)
+2026-11-11T04:23:35.8746849Z ✔ native reference geometry rejects the observed safe-area origin regression (0.756427ms)
+2026-11-11T04:23:35.8748917Z ✔ native geometry requires unique real screen rectangles on both platforms (3.783337ms)
+2026-11-11T04:23:35.8753426Z ✔ the native driver is an immutable official tool and its flows contain no injected app scripts (1.031322ms)
+2026-11-11T04:23:35.8755840Z ✔ both installed native jobs require the real UI runner and retain semantic and image artifacts (0.431137ms)
+2026-11-11T04:23:35.8845026Z ℹ tests 7
+2026-11-11T04:23:35.8845766Z ℹ suites 0
+2026-11-11T04:23:35.8846363Z ℹ pass 7
+2026-11-11T04:23:35.8846639Z ℹ fail 0
+2026-11-11T04:23:35.8846862Z ℹ cancelled 0
+2026-11-11T04:23:35.8847101Z ℹ skipped 0
+2026-11-11T04:23:35.8847490Z ℹ todo 0
+2026-11-11T04:23:35.8847751Z ℹ duration_ms 73.006145
+2026-11-11T04:23:35.8928019Z ##[group]Run node --test tooling/tests/native-ui-transport.test.mjs
+2026-11-11T04:23:35.8928524Z [36;1mnode --test tooling/tests/native-ui-transport.test.mjs[0m
+2026-11-11T04:23:35.8977173Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:35.8977430Z ##[endgroup]
+2026-11-11T04:23:36.0101695Z ✔ Android recovery requires the exact initial launch transport failure before any app assertion (1.672202ms)
+2026-11-11T04:23:36.0121058Z ✔ iOS recovery binds the first Settings tap to its actual Recap sender, nonempty cancelled contact, app and time (1.110169ms)
+2026-11-11T04:23:36.0123462Z ✔ near misses, different app/contact, missing registration, empty contacts and out-of-attempt logs are not recoverable (2.421125ms)
+2026-11-11T04:23:36.0125334Z ✔ iOS never retries arbitrary assertions, edits, later taps or malformed timing (0.379881ms)
+2026-11-11T04:23:36.0126874Z ✔ one eligible recovery retains the failure before a fresh successful attempt (1.005293ms)
+2026-11-11T04:23:36.0128481Z ✔ a second failure is final, and an ineligible failure cannot reach recovery (0.917819ms)
+2026-11-11T04:23:36.0130399Z ✔ retention preserves the failed JUnit, native logs and screenshots byte for byte, without overwriting them on rerun (4.346321ms)
+2026-11-11T04:23:36.0217633Z ℹ tests 7
+2026-11-11T04:23:36.0218087Z ℹ suites 0
+2026-11-11T04:23:36.0218450Z ℹ pass 7
+2026-11-11T04:23:36.0220317Z ℹ fail 0
+2026-11-11T04:23:36.0220558Z ℹ cancelled 0
+2026-11-11T04:23:36.0220802Z ℹ skipped 0
+2026-11-11T04:23:36.0221024Z ℹ todo 0
+2026-11-11T04:23:36.0221336Z ℹ duration_ms 86.808139
+2026-11-11T04:23:36.0303420Z ##[group]Run node --test tooling/tests/native-artifact.test.mjs
+2026-11-11T04:23:36.0303920Z [36;1mnode --test tooling/tests/native-artifact.test.mjs[0m
+2026-11-11T04:23:36.0353630Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:36.0353893Z ##[endgroup]
+2026-11-11T04:23:36.1463973Z ✔ iOS identity changes when native debug code changes despite an unchanged launcher (4.766498ms)
+2026-11-11T04:23:36.1466263Z ✔ app identity is independent of its absolute path and file enumeration order (3.438661ms)
+2026-11-11T04:23:36.1470101Z ✔ framework symlinks are recorded without duplicate traversal and retain relocation identity (4.362791ms)
+2026-11-11T04:23:36.1472468Z ✔ app identity rejects external, dangling and cyclic symlinks without following them (2.735824ms)
+2026-11-11T04:23:36.1474656Z ✔ Windows link separators are interpreted without changing literal manifest targets (0.436658ms)
+2026-11-11T04:23:36.1477147Z ✔ Android identity hashes raw APK bytes and both platforms persist a verifiable manifest (2.646597ms)
+2026-11-11T04:23:36.1570438Z ℹ tests 6
+2026-11-11T04:23:36.1570850Z ℹ suites 0
+2026-11-11T04:23:36.1572927Z ℹ pass 6
+2026-11-11T04:23:36.1573696Z ℹ fail 0
+2026-11-11T04:23:36.1574347Z ℹ cancelled 0
+2026-11-11T04:23:36.1574748Z ℹ skipped 0
+2026-11-11T04:23:36.1575098Z ℹ todo 0
+2026-11-11T04:23:36.1575488Z ℹ duration_ms 84.111105
+2026-11-11T04:23:36.1652867Z ##[group]Run node --test tooling/tests/metro-warmup.test.mjs
+2026-11-11T04:23:36.1653343Z [36;1mnode --test tooling/tests/metro-warmup.test.mjs[0m
+2026-11-11T04:23:36.1702861Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:36.1703121Z ##[endgroup]
+2026-11-11T04:23:36.3015924Z ✔ warmup requests the actual native Expo entry and consumes the complete JavaScript stream (29.562292ms)
+2026-11-11T04:23:36.3026521Z ✔ an available Metro status is insufficient: HTTP errors, wrong MIME and empty bundles fail (3.250829ms)
+2026-11-11T04:23:36.3028513Z ✔ warmup records bounded-download and timeout failures without a ready receipt (1.835748ms)
+2026-11-11T04:23:36.3153491Z ℹ tests 3
+2026-11-11T04:23:36.3153950Z ℹ suites 0
+2026-11-11T04:23:36.3154311Z ℹ pass 3
+2026-11-11T04:23:36.3154661Z ℹ fail 0
+2026-11-11T04:23:36.3155002Z ℹ cancelled 0
+2026-11-11T04:23:36.3155896Z ℹ skipped 0
+2026-11-11T04:23:36.3156539Z ℹ todo 0
+2026-11-11T04:23:36.3157322Z ℹ duration_ms 105.533372
+2026-11-11T04:23:36.3250711Z ##[group]Run node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
+2026-11-11T04:23:36.3251419Z [36;1mnode --experimental-strip-types --test packages/native-charts/tests/*.test.mjs[0m
+2026-11-11T04:23:36.3301440Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:36.3301702Z ##[endgroup]
+2026-11-11T04:23:36.4879535Z ✔ Swift and Kotlin props carry exactly the TS wire props (2.986784ms)
+2026-11-11T04:23:36.4899952Z ✔ both platforms accept the same chart kinds (0.519473ms)
+2026-11-11T04:23:36.4901313Z ✔ autolinking registers the same module and view on Apple and Android (0.840715ms)
+2026-11-11T04:23:36.4903049Z ✔ native renderers use Swift Charts and Vico from Maven, not copied source (0.583764ms)
+2026-11-11T04:23:36.4904819Z ✔ both platforms publish a spoken summary with the same wording (1.878607ms)
+2026-11-11T04:23:36.4906689Z ✔ wire props: sorted points, palette cycling, explicit color wins (0.66228ms)
+2026-11-11T04:23:36.4907734Z ✔ wire props reject input a native chart cannot draw honestly (0.749915ms)
+2026-11-11T04:23:36.4908543Z ✔ chart colors come from semantic theme tokens (0.284593ms)
+2026-11-11T04:23:36.4909267Z ✔ web renders an explicit unavailable notice, not a chart (0.689772ms)
+2026-11-11T04:23:36.4910083Z ✔ example app renders a native chart so the compile lanes build it (0.548988ms)
+2026-11-11T04:23:36.5092397Z ℹ tests 10
+2026-11-11T04:23:36.5104196Z ℹ suites 0
+2026-11-11T04:23:36.5104823Z ℹ pass 10
+2026-11-11T04:23:36.5105347Z ℹ fail 0
+2026-11-11T04:23:36.5105875Z ℹ cancelled 0
+2026-11-11T04:23:36.5106421Z ℹ skipped 0
+2026-11-11T04:23:36.5106908Z ℹ todo 0
+2026-11-11T04:23:36.5107550Z ℹ duration_ms 138.790753
+2026-11-11T04:23:36.5194648Z ##[group]Run corepack pnpm --dir packages/native-controls typecheck
+2026-11-11T04:23:36.5195519Z [36;1mcorepack pnpm --dir packages/native-controls typecheck[0m
+2026-11-11T04:23:36.5253249Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:36.5253511Z ##[endgroup]
+2026-11-11T04:23:36.8467291Z 
+2026-11-11T04:23:36.8468534Z > @nyc-tron/native-controls@1.0.0 typecheck /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-controls
+2026-11-11T04:23:36.8469698Z > tsc --noEmit -p tsconfig.json
+2026-11-11T04:23:36.8470001Z 
+2026-11-11T04:23:38.0999710Z ##[group]Run corepack pnpm --dir packages/native-navigation typecheck
+2026-11-11T04:23:38.1000647Z [36;1mcorepack pnpm --dir packages/native-navigation typecheck[0m
+2026-11-11T04:23:38.1074042Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:38.1074489Z ##[endgroup]
+2026-11-11T04:23:38.4188208Z 
+2026-11-11T04:23:38.4189329Z > @nyc-tron/native-navigation@1.0.0 typecheck /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-navigation
+2026-11-11T04:23:38.4190094Z > tsc --noEmit -p tsconfig.json
+2026-11-11T04:23:38.4190301Z 
+2026-11-11T04:23:39.4159891Z ##[group]Run corepack pnpm --dir packages/native-charts typecheck
+2026-11-11T04:23:39.4160409Z [36;1mcorepack pnpm --dir packages/native-charts typecheck[0m
+2026-11-11T04:23:39.4209348Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:39.4209609Z ##[endgroup]
+2026-11-11T04:23:39.7331179Z 
+2026-11-11T04:23:39.7332584Z > @nyc-tron/native-charts@1.0.0 typecheck /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-charts
+2026-11-11T04:23:39.7333623Z > tsc --noEmit -p tsconfig.json
+2026-11-11T04:23:39.7333923Z 
+2026-11-11T04:23:40.7172161Z ##[group]Run corepack pnpm build
+2026-11-11T04:23:40.7172676Z [36;1mcorepack pnpm build[0m
+2026-11-11T04:23:40.7229167Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:40.7229438Z ##[endgroup]
+2026-11-11T04:23:41.0338506Z 
+2026-11-11T04:23:41.0339389Z > nyc-tron-ui@0.1.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:23:41.0340270Z > pnpm -r --if-present build
+2026-11-11T04:23:41.0340464Z 
+2026-11-11T04:23:41.3814101Z Scope: 15 of 16 workspace projects
+2026-11-11T04:23:41.3876146Z packages/core build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:41.3877174Z packages/geometry build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:41.3878847Z packages/icons build$ node -e "const f=require('node:fs');f.rmSync('dist',{recursive:true,force:true});f.cpSync('src','dist',{recursive:true})"
+2026-11-11T04:23:41.3881539Z packages/native-charts build$ tsc -p tsconfig.build.json
+2026-11-11T04:23:41.4503188Z packages/icons build: Done
+2026-11-11T04:23:41.4533056Z packages/native-controls build$ tsc -p tsconfig.build.json
+2026-11-11T04:23:43.1389741Z packages/geometry build: Done
+2026-11-11T04:23:43.1415368Z packages/native-navigation build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:43.7973045Z packages/native-charts build: Done
+2026-11-11T04:23:43.7984336Z packages/platform-services build$ tsc -p tsconfig.build.json
+2026-11-11T04:23:44.0013114Z packages/core build: Done
+2026-11-11T04:23:44.0033978Z packages/windows-fluent build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:44.6247646Z packages/native-controls build: Done
+2026-11-11T04:23:45.6451229Z packages/native-navigation build: Done
+2026-11-11T04:23:45.7102195Z packages/windows-fluent build: Done
+2026-11-11T04:23:46.3053049Z packages/platform-services build: Done
+2026-11-11T04:23:46.3058697Z packages/panes build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:46.3061257Z packages/reserved-regions build$ tsc -p tsconfig.build.json
+2026-11-11T04:23:46.3064100Z packages/ui build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:48.2914486Z packages/panes build: Done
+2026-11-11T04:23:48.3133080Z packages/reserved-regions build: Done
+2026-11-11T04:23:59.4665818Z packages/ui build: Done
+2026-11-11T04:23:59.4669850Z packages/expo-controls build$ tsc --project tsconfig.build.json
+2026-11-11T04:23:59.4672711Z packages/hardware-keys build$ tsc -p tsconfig.build.json
+2026-11-11T04:24:00.7393068Z packages/hardware-keys build: Done
+2026-11-11T04:24:01.5214284Z packages/expo-controls build: Done
+2026-11-11T04:24:01.5468803Z ##[group]Run corepack pnpm --dir packages/native-controls build
+2026-11-11T04:24:01.5469290Z [36;1mcorepack pnpm --dir packages/native-controls build[0m
+2026-11-11T04:24:01.5517977Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:01.5518393Z ##[endgroup]
+2026-11-11T04:24:01.8631260Z 
+2026-11-11T04:24:01.8632549Z > @nyc-tron/native-controls@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-controls
+2026-11-11T04:24:01.8633241Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:01.8633430Z 
+2026-11-11T04:24:03.0679134Z ##[group]Run corepack pnpm --dir packages/native-navigation build
+2026-11-11T04:24:03.0679651Z [36;1mcorepack pnpm --dir packages/native-navigation build[0m
+2026-11-11T04:24:03.0728784Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:03.0729041Z ##[endgroup]
+2026-11-11T04:24:03.3822409Z 
+2026-11-11T04:24:03.3823672Z > @nyc-tron/native-navigation@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-navigation
+2026-11-11T04:24:03.3824903Z > tsc --project tsconfig.build.json
+2026-11-11T04:24:03.3825268Z 
+2026-11-11T04:24:04.6430974Z ##[group]Run corepack pnpm --dir examples/native-instruments typecheck
+2026-11-11T04:24:04.6431527Z [36;1mcorepack pnpm --dir examples/native-instruments typecheck[0m
+2026-11-11T04:24:04.6480650Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:04.6480913Z ##[endgroup]
+2026-11-11T04:24:04.9622431Z 
+2026-11-11T04:24:04.9623683Z > @nyc-tron/native-instruments-example@0.1.0 typecheck /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/examples/native-instruments
+2026-11-11T04:24:04.9624401Z > tsc --noEmit
+2026-11-11T04:24:04.9624545Z 
+2026-11-11T04:24:07.4596457Z ##[group]Run mkdir -p /tmp/nyc-tron-native-pack
+2026-11-11T04:24:07.4596873Z [36;1mmkdir -p /tmp/nyc-tron-native-pack[0m
+2026-11-11T04:24:07.4597407Z [36;1mcorepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack[0m
+2026-11-11T04:24:07.4598347Z [36;1mcorepack pnpm --dir packages/native-navigation pack --pack-destination /tmp/nyc-tron-native-pack[0m
+2026-11-11T04:24:07.4599267Z [36;1mtar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'[0m
+2026-11-11T04:24:07.4600476Z [36;1mtar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-controls-*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'[0m
+2026-11-11T04:24:07.4649331Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:07.4649585Z ##[endgroup]
+2026-11-11T04:24:07.7720254Z 
+2026-11-11T04:24:07.7721508Z > @nyc-tron/native-controls@1.0.0 prepack /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-controls
+2026-11-11T04:24:07.7722647Z > pnpm build
+2026-11-11T04:24:07.7722859Z 
+2026-11-11T04:24:08.1393766Z 
+2026-11-11T04:24:08.1395047Z > @nyc-tron/native-controls@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-controls
+2026-11-11T04:24:08.1395845Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:08.1396236Z 
+2026-11-11T04:24:09.4308727Z 📦  @nyc-tron/native-controls@1.0.0
+2026-11-11T04:24:09.4309390Z Tarball Contents
+2026-11-11T04:24:09.4309802Z android/build.gradle
+2026-11-11T04:24:09.4310513Z android/src/main/java/com/nyctron/instruments/NYCTronInstrumentsModule.kt
+2026-11-11T04:24:09.4311475Z android/src/main/java/com/nyctron/instruments/TronArcKnobView.kt
+2026-11-11T04:24:09.4312650Z android/src/main/java/com/nyctron/instruments/TronDisplayP3DiscProps.kt
+2026-11-11T04:24:09.4313604Z android/src/main/java/com/nyctron/instruments/TronDisplayP3DiscView.kt
+2026-11-11T04:24:09.4314658Z android/src/main/java/com/nyctron/instruments/TronPointerBatch.kt
+2026-11-11T04:24:09.4315642Z android/src/main/java/com/nyctron/instruments/TronPointerCaptureView.kt
+2026-11-11T04:24:09.4316632Z android/src/main/java/com/nyctron/instruments/TronPointerInputProps.kt
+2026-11-11T04:24:09.4317642Z android/src/main/java/com/nyctron/instruments/TronPointerInputView.kt
+2026-11-11T04:24:09.4318697Z android/src/main/java/com/nyctron/instruments/TronPointerKey.kt
+2026-11-11T04:24:09.4319730Z android/src/main/java/com/nyctron/instruments/TronPointerSample.kt
+2026-11-11T04:24:09.4320683Z android/src/main/java/com/nyctron/instruments/TronVideoOwner.kt
+2026-11-11T04:24:09.4321653Z android/src/main/java/com/nyctron/instruments/TronVideoPlayerProps.kt
+2026-11-11T04:24:09.4322889Z android/src/main/java/com/nyctron/instruments/TronVideoPlayerView.kt
+2026-11-11T04:24:09.4323906Z android/src/main/java/com/nyctron/instruments/TronVideoStatusPayload.kt
+2026-11-11T04:24:09.4324894Z android/src/main/java/com/nyctron/instruments/TronVideoSurface.kt
+2026-11-11T04:24:09.4325852Z android/src/main/java/com/nyctron/instruments/TronXYPadView.kt
+2026-11-11T04:24:09.4326522Z dist/ArcKnob.d.ts
+2026-11-11T04:24:09.4326905Z dist/ArcKnob.d.ts.map
+2026-11-11T04:24:09.4327293Z dist/ArcKnob.js
+2026-11-11T04:24:09.4327620Z dist/ArcKnob.js.map
+2026-11-11T04:24:09.4328003Z dist/DisplayP3DiscLayer.d.ts
+2026-11-11T04:24:09.4328467Z dist/DisplayP3DiscLayer.d.ts.map
+2026-11-11T04:24:09.4328906Z dist/DisplayP3DiscLayer.js
+2026-11-11T04:24:09.4329369Z dist/DisplayP3DiscLayer.js.map
+2026-11-11T04:24:09.4329755Z dist/index.d.ts
+2026-11-11T04:24:09.4330083Z dist/index.d.ts.map
+2026-11-11T04:24:09.4330400Z dist/index.js
+2026-11-11T04:24:09.4330722Z dist/index.js.map
+2026-11-11T04:24:09.4331093Z dist/NativePointerInput.d.ts
+2026-11-11T04:24:09.4331565Z dist/NativePointerInput.d.ts.map
+2026-11-11T04:24:09.4332189Z dist/NativePointerInput.js
+2026-11-11T04:24:09.4332637Z dist/NativePointerInput.js.map
+2026-11-11T04:24:09.4333136Z dist/NativePointerInput.types.d.ts
+2026-11-11T04:24:09.4334006Z dist/NativePointerInput.types.d.ts.map
+2026-11-11T04:24:09.4334566Z dist/NativePointerInput.types.js
+2026-11-11T04:24:09.4335065Z dist/NativePointerInput.types.js.map
+2026-11-11T04:24:09.4335568Z dist/NativePointerInput.web.d.ts
+2026-11-11T04:24:09.4336143Z dist/NativePointerInput.web.d.ts.map
+2026-11-11T04:24:09.4336904Z dist/NativePointerInput.web.js
+2026-11-11T04:24:09.4337418Z dist/NativePointerInput.web.js.map
+2026-11-11T04:24:09.4337905Z dist/NativeVideoPlayer.d.ts
+2026-11-11T04:24:09.4338405Z dist/NativeVideoPlayer.d.ts.map
+2026-11-11T04:24:09.4338864Z dist/NativeVideoPlayer.js
+2026-11-11T04:24:09.4339300Z dist/NativeVideoPlayer.js.map
+2026-11-11T04:24:09.4339744Z dist/pointer-input.d.ts
+2026-11-11T04:24:09.4340161Z dist/pointer-input.d.ts.map
+2026-11-11T04:24:09.4340578Z dist/pointer-input.js
+2026-11-11T04:24:09.4341005Z dist/pointer-input.js.map
+2026-11-11T04:24:09.4354921Z dist/XYPad.d.ts
+2026-11-11T04:24:09.4355367Z dist/XYPad.d.ts.map
+2026-11-11T04:24:09.4355786Z dist/XYPad.js
+2026-11-11T04:24:09.4356191Z dist/XYPad.js.map
+2026-11-11T04:24:09.4356617Z expo-module.config.json
+2026-11-11T04:24:09.4357168Z ios/NYCTronInstruments.podspec
+2026-11-11T04:24:09.4357745Z ios/NYCTronInstrumentsModule.swift
+2026-11-11T04:24:09.4358268Z ios/TronArcKnobView.swift
+2026-11-11T04:24:09.4358789Z ios/TronAVPlayerSurface.swift
+2026-11-11T04:24:09.4359336Z ios/TronDisplayP3DiscProps.swift
+2026-11-11T04:24:09.4359890Z ios/TronDisplayP3DiscView.swift
+2026-11-11T04:24:09.4360390Z ios/TronPlayerLayerView.swift
+2026-11-11T04:24:09.4360953Z ios/TronPointerCaptureView.swift
+2026-11-11T04:24:09.4361504Z ios/TronPointerInputProps.swift
+2026-11-11T04:24:09.4362365Z ios/TronPointerInputView.swift
+2026-11-11T04:24:09.4362909Z ios/TronPointerSurface.swift
+2026-11-11T04:24:09.4363459Z ios/TronVideoPlayerCoordinator.swift
+2026-11-11T04:24:09.4364066Z ios/TronVideoPlayerProps.swift
+2026-11-11T04:24:09.4364582Z ios/TronVideoPlayerView.swift
+2026-11-11T04:24:09.4365064Z ios/TronXYPadView.swift
+2026-11-11T04:24:09.4365581Z ios/View+zeroContentOrigin.swift
+2026-11-11T04:24:09.4366032Z LICENSE
+2026-11-11T04:24:09.4366479Z licenses/AudioKit-Controls-MIT.txt
+2026-11-11T04:24:09.4366971Z package.json
+2026-11-11T04:24:09.4367313Z Package.swift
+2026-11-11T04:24:09.4367670Z README.md
+2026-11-11T04:24:09.4368044Z THIRD_PARTY_NOTICES.md
+2026-11-11T04:24:09.4368449Z Tarball Details
+2026-11-11T04:24:09.4369083Z /tmp/nyc-tron-native-pack/nyc-tron-native-controls-1.0.0.tgz
+2026-11-11T04:24:09.7463924Z 
+2026-11-11T04:24:09.7465140Z > @nyc-tron/native-navigation@1.0.0 prepack /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-navigation
+2026-11-11T04:24:09.7465852Z > pnpm build
+2026-11-11T04:24:09.7466012Z 
+2026-11-11T04:24:10.0887035Z 
+2026-11-11T04:24:10.0887994Z > @nyc-tron/native-navigation@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-navigation
+2026-11-11T04:24:10.0888644Z > tsc --project tsconfig.build.json
+2026-11-11T04:24:10.0888841Z 
+2026-11-11T04:24:11.2084680Z 📦  @nyc-tron/native-navigation@1.0.0
+2026-11-11T04:24:11.2085165Z Tarball Contents
+2026-11-11T04:24:11.2085415Z android/build.gradle
+2026-11-11T04:24:11.2085845Z android/src/main/java/com/nyctron/navigation/NYCTronNavigationModule.kt
+2026-11-11T04:24:11.2086429Z android/src/main/java/com/nyctron/navigation/TronNavigationRailView.kt
+2026-11-11T04:24:11.2086835Z dist/index.d.ts
+2026-11-11T04:24:11.2087064Z dist/index.d.ts.map
+2026-11-11T04:24:11.2087275Z dist/index.js
+2026-11-11T04:24:11.2087487Z dist/index.js.map
+2026-11-11T04:24:11.2087769Z dist/NativeNavigationRail.native.d.ts
+2026-11-11T04:24:11.2088173Z dist/NativeNavigationRail.native.d.ts.map
+2026-11-11T04:24:11.2088554Z dist/NativeNavigationRail.native.js
+2026-11-11T04:24:11.2088926Z dist/NativeNavigationRail.native.js.map
+2026-11-11T04:24:11.2089302Z dist/NativeNavigationRail.types.d.ts
+2026-11-11T04:24:11.2089648Z dist/NativeNavigationRail.types.d.ts.map
+2026-11-11T04:24:11.2089991Z dist/NativeNavigationRail.types.js
+2026-11-11T04:24:11.2090348Z dist/NativeNavigationRail.types.js.map
+2026-11-11T04:24:11.2090990Z dist/NativeNavigationRail.web.d.ts
+2026-11-11T04:24:11.2091380Z dist/NativeNavigationRail.web.d.ts.map
+2026-11-11T04:24:11.2091757Z dist/NativeNavigationRail.web.js
+2026-11-11T04:24:11.2092533Z dist/NativeNavigationRail.web.js.map
+2026-11-11T04:24:11.2092876Z dist/navigation-model.d.ts
+2026-11-11T04:24:11.2093405Z dist/navigation-model.d.ts.map
+2026-11-11T04:24:11.2093717Z dist/navigation-model.js
+2026-11-11T04:24:11.2094001Z dist/navigation-model.js.map
+2026-11-11T04:24:11.2094288Z expo-module.config.json
+2026-11-11T04:24:11.2094582Z ios/NYCTronNavigation.podspec
+2026-11-11T04:24:11.2094918Z ios/NYCTronNavigationModule.swift
+2026-11-11T04:24:11.2095261Z ios/TronNavigationRailView.swift
+2026-11-11T04:24:11.2095544Z LICENSE
+2026-11-11T04:24:11.2095767Z package.json
+2026-11-11T04:24:11.2095963Z README.md
+2026-11-11T04:24:11.2096197Z THIRD_PARTY_NOTICES.md
+2026-11-11T04:24:11.2096440Z Tarball Details
+2026-11-11T04:24:11.2096831Z /tmp/nyc-tron-native-pack/nyc-tron-native-navigation-1.0.0.tgz
+2026-11-11T04:24:11.2206622Z package/android/src/main/java/com/nyctron/navigation/TronNavigationRailView.kt
+2026-11-11T04:24:11.2207587Z package/ios/TronNavigationRailView.swift
+2026-11-11T04:24:11.2238345Z package/android/src/main/java/com/nyctron/instruments/TronXYPadView.kt
+2026-11-11T04:24:11.2239422Z package/THIRD_PARTY_NOTICES.md
+2026-11-11T04:24:11.2240026Z package/ios/TronArcKnobView.swift
+2026-11-11T04:24:11.2240842Z package/licenses/AudioKit-Controls-MIT.txt
+2026-11-11T04:24:11.2292152Z ##[group]Run mkdir -p /tmp/nyc-tron-regions-pack
+2026-11-11T04:24:11.2292883Z [36;1mmkdir -p /tmp/nyc-tron-regions-pack[0m
+2026-11-11T04:24:11.2293918Z [36;1mcorepack pnpm --dir packages/reserved-regions pack --pack-destination /tmp/nyc-tron-regions-pack[0m
+2026-11-11T04:24:11.2294992Z [36;1mentries=$(tar -tzf /tmp/nyc-tron-regions-pack/*.tgz)[0m
+2026-11-11T04:24:11.2296113Z [36;1mfor f in package/ios/NYCTronReservedRegionsModule.swift package/ios/NYCTronReservedRegions.podspec \[0m
+2026-11-11T04:24:11.2297751Z [36;1m         package/android/build.gradle package/android/src/main/java/com/nyctron/reservedregions/NYCTronReservedRegionsModule.kt \[0m
+2026-11-11T04:24:11.2299142Z [36;1m         package/expo-module.config.json package/dist/index.native.js; do[0m
+2026-11-11T04:24:11.2300079Z [36;1m  echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }[0m
+2026-11-11T04:24:11.2300821Z [36;1mdone[0m
+2026-11-11T04:24:11.2301567Z [36;1mif echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi[0m
+2026-11-11T04:24:11.2369082Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:11.2369350Z ##[endgroup]
+2026-11-11T04:24:11.5481551Z 
+2026-11-11T04:24:11.5483150Z > @nyc-tron/reserved-regions@1.0.0 prepack /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/reserved-regions
+2026-11-11T04:24:11.5483919Z > pnpm build
+2026-11-11T04:24:11.5484087Z 
+2026-11-11T04:24:11.8936311Z 
+2026-11-11T04:24:11.8937548Z > @nyc-tron/reserved-regions@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/reserved-regions
+2026-11-11T04:24:11.8938588Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:11.8938870Z 
+2026-11-11T04:24:12.9609901Z 📦  @nyc-tron/reserved-regions@1.0.0
+2026-11-11T04:24:12.9610536Z Tarball Contents
+2026-11-11T04:24:12.9610940Z android/build.gradle
+2026-11-11T04:24:12.9611521Z android/src/main/AndroidManifest.xml
+2026-11-11T04:24:12.9612675Z android/src/main/java/com/nyctron/reservedregions/NYCTronReservedRegionsModule.kt
+2026-11-11T04:24:12.9613810Z android/src/main/java/com/nyctron/reservedregions/RegionMarginsRecord.kt
+2026-11-11T04:24:12.9614512Z android/src/main/java/com/nyctron/reservedregions/ReservedRegionRecord.kt
+2026-11-11T04:24:12.9615322Z android/src/main/java/com/nyctron/reservedregions/WindowLayoutInfo+toReservedRegionRecords.kt
+2026-11-11T04:24:12.9615847Z dist/index.d.ts
+2026-11-11T04:24:12.9616086Z dist/index.d.ts.map
+2026-11-11T04:24:12.9616341Z dist/index.js
+2026-11-11T04:24:12.9616570Z dist/index.js.map
+2026-11-11T04:24:12.9616841Z dist/index.native.d.ts
+2026-11-11T04:24:12.9617106Z dist/index.native.d.ts.map
+2026-11-11T04:24:12.9617398Z dist/index.native.js
+2026-11-11T04:24:12.9617687Z dist/index.native.js.map
+2026-11-11T04:24:12.9617958Z dist/payload.d.ts
+2026-11-11T04:24:12.9618253Z dist/payload.d.ts.map
+2026-11-11T04:24:12.9618861Z dist/payload.js
+2026-11-11T04:24:12.9619152Z dist/payload.js.map
+2026-11-11T04:24:12.9619483Z dist/ReservedRegionsOverride.d.ts
+2026-11-11T04:24:12.9619909Z dist/ReservedRegionsOverride.d.ts.map
+2026-11-11T04:24:12.9620309Z dist/ReservedRegionsOverride.js
+2026-11-11T04:24:12.9620662Z dist/ReservedRegionsOverride.js.map
+2026-11-11T04:24:12.9621021Z dist/useReservedRegions.d.ts
+2026-11-11T04:24:12.9621381Z dist/useReservedRegions.d.ts.map
+2026-11-11T04:24:12.9621708Z dist/useReservedRegions.js
+2026-11-11T04:24:12.9622384Z dist/useReservedRegions.js.map
+2026-11-11T04:24:12.9622732Z dist/useReservedRegions.native.d.ts
+2026-11-11T04:24:12.9623118Z dist/useReservedRegions.native.d.ts.map
+2026-11-11T04:24:12.9623504Z dist/useReservedRegions.native.js
+2026-11-11T04:24:12.9623894Z dist/useReservedRegions.native.js.map
+2026-11-11T04:24:12.9624238Z expo-module.config.json
+2026-11-11T04:24:12.9624624Z ios/Extensions/ReservedRegionMargins+insets.swift
+2026-11-11T04:24:12.9625089Z ios/Extensions/ReservedRegionRecord+region.swift
+2026-11-11T04:24:12.9625541Z ios/Extensions/UIWindow+keyRootView.swift
+2026-11-11T04:24:12.9625910Z ios/NYCTronReservedRegions.podspec
+2026-11-11T04:24:12.9626556Z ios/NYCTronReservedRegionsModule.swift
+2026-11-11T04:24:12.9626933Z ios/ReservedRegionMargins.swift
+2026-11-11T04:24:12.9627254Z ios/ReservedRegionRecord.swift
+2026-11-11T04:24:12.9627517Z LICENSE
+2026-11-11T04:24:12.9627720Z package.json
+2026-11-11T04:24:12.9627931Z Package.swift
+2026-11-11T04:24:12.9628145Z README.md
+2026-11-11T04:24:12.9628382Z THIRD_PARTY_NOTICES.md
+2026-11-11T04:24:12.9628622Z Tarball Details
+2026-11-11T04:24:12.9629014Z /tmp/nyc-tron-regions-pack/nyc-tron-reserved-regions-1.0.0.tgz
+2026-11-11T04:24:12.9887687Z ##[group]Run mkdir -p /tmp/nyc-tron-keys-pack
+2026-11-11T04:24:12.9888090Z [36;1mmkdir -p /tmp/nyc-tron-keys-pack[0m
+2026-11-11T04:24:12.9888599Z [36;1mcorepack pnpm --dir packages/hardware-keys pack --pack-destination /tmp/nyc-tron-keys-pack[0m
+2026-11-11T04:24:12.9889154Z [36;1mentries=$(tar -tzf /tmp/nyc-tron-keys-pack/*.tgz)[0m
+2026-11-11T04:24:12.9889740Z [36;1mfor f in package/ios/NYCTronHardwareKeysModule.swift package/ios/NYCTronHardwareKeys.podspec \[0m
+2026-11-11T04:24:12.9890385Z [36;1m         package/ios/Extensions/UIViewController+hardwareKeyCommand.swift \[0m
+2026-11-11T04:24:12.9891102Z [36;1m         package/android/build.gradle package/android/src/main/java/com/nyctron/hardwarekeys/NYCTronHardwareKeysModule.kt \[0m
+2026-11-11T04:24:12.9892188Z [36;1m         package/expo-module.config.json package/dist/index.native.js package/dist/index.js; do[0m
+2026-11-11T04:24:12.9892811Z [36;1m  echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }[0m
+2026-11-11T04:24:12.9893172Z [36;1mdone[0m
+2026-11-11T04:24:12.9893579Z [36;1mif echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi[0m
+2026-11-11T04:24:12.9943156Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:12.9943416Z ##[endgroup]
+2026-11-11T04:24:13.3102593Z 
+2026-11-11T04:24:13.3103764Z > @nyc-tron/hardware-keys@1.0.0 prepack /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/hardware-keys
+2026-11-11T04:24:13.3104481Z > pnpm build
+2026-11-11T04:24:13.3104639Z 
+2026-11-11T04:24:13.6492237Z 
+2026-11-11T04:24:13.6493258Z > @nyc-tron/hardware-keys@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/hardware-keys
+2026-11-11T04:24:13.6493845Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:13.6494028Z 
+2026-11-11T04:24:14.6396140Z 📦  @nyc-tron/hardware-keys@1.0.0
+2026-11-11T04:24:14.6396659Z Tarball Contents
+2026-11-11T04:24:14.6396920Z android/build.gradle
+2026-11-11T04:24:14.6397225Z android/src/main/AndroidManifest.xml
+2026-11-11T04:24:14.6397741Z android/src/main/java/com/nyctron/hardwarekeys/KeyBindingRecord.kt
+2026-11-11T04:24:14.6398382Z android/src/main/java/com/nyctron/hardwarekeys/KeyBindingRecord+matches.kt
+2026-11-11T04:24:14.6398985Z android/src/main/java/com/nyctron/hardwarekeys/KeyChordRecord.kt
+2026-11-11T04:24:14.6399638Z android/src/main/java/com/nyctron/hardwarekeys/KeyEvent+toKeyChordRecord.kt
+2026-11-11T04:24:14.6400781Z android/src/main/java/com/nyctron/hardwarekeys/KitKeyName.kt
+2026-11-11T04:24:14.6401443Z android/src/main/java/com/nyctron/hardwarekeys/NYCTronHardwareKeysModule.kt
+2026-11-11T04:24:14.6402480Z android/src/main/java/com/nyctron/hardwarekeys/UnhandledKeyAttacher.kt
+2026-11-11T04:24:14.6403125Z android/src/main/java/com/nyctron/hardwarekeys/WindowAttachment.kt
+2026-11-11T04:24:14.6403604Z dist/binding-registry.d.ts
+2026-11-11T04:24:14.6403954Z dist/binding-registry.d.ts.map
+2026-11-11T04:24:14.6404263Z dist/binding-registry.js
+2026-11-11T04:24:14.6404578Z dist/binding-registry.js.map
+2026-11-11T04:24:14.6404885Z dist/index.d.ts
+2026-11-11T04:24:14.6405171Z dist/index.d.ts.map
+2026-11-11T04:24:14.6405424Z dist/index.js
+2026-11-11T04:24:14.6405688Z dist/index.js.map
+2026-11-11T04:24:14.6405960Z dist/index.native.d.ts
+2026-11-11T04:24:14.6406255Z dist/index.native.d.ts.map
+2026-11-11T04:24:14.6406553Z dist/index.native.js
+2026-11-11T04:24:14.6406838Z dist/index.native.js.map
+2026-11-11T04:24:14.6407140Z dist/key-source.d.ts
+2026-11-11T04:24:14.6407427Z dist/key-source.d.ts.map
+2026-11-11T04:24:14.6407720Z dist/key-source.js
+2026-11-11T04:24:14.6407989Z dist/key-source.js.map
+2026-11-11T04:24:14.6408257Z dist/native-source.d.ts
+2026-11-11T04:24:14.6408552Z dist/native-source.d.ts.map
+2026-11-11T04:24:14.6408854Z dist/native-source.js
+2026-11-11T04:24:14.6409136Z dist/native-source.js.map
+2026-11-11T04:24:14.6409436Z dist/payload.d.ts
+2026-11-11T04:24:14.6409694Z dist/payload.d.ts.map
+2026-11-11T04:24:14.6409960Z dist/payload.js
+2026-11-11T04:24:14.6410194Z dist/payload.js.map
+2026-11-11T04:24:14.6410918Z dist/platform.native.d.ts
+2026-11-11T04:24:14.6411235Z dist/platform.native.d.ts.map
+2026-11-11T04:24:14.6411540Z dist/platform.native.js
+2026-11-11T04:24:14.6412085Z dist/platform.native.js.map
+2026-11-11T04:24:14.6412358Z dist/platform.web.d.ts
+2026-11-11T04:24:14.6412600Z dist/platform.web.d.ts.map
+2026-11-11T04:24:14.6412842Z dist/platform.web.js
+2026-11-11T04:24:14.6413080Z dist/platform.web.js.map
+2026-11-11T04:24:14.6413331Z dist/useHardwareKeyboard.d.ts
+2026-11-11T04:24:14.6413636Z dist/useHardwareKeyboard.d.ts.map
+2026-11-11T04:24:14.6413922Z dist/useHardwareKeyboard.js
+2026-11-11T04:24:14.6414206Z dist/useHardwareKeyboard.js.map
+2026-11-11T04:24:14.6414462Z dist/web-source.d.ts
+2026-11-11T04:24:14.6414688Z dist/web-source.d.ts.map
+2026-11-11T04:24:14.6414916Z dist/web-source.js
+2026-11-11T04:24:14.6415133Z dist/web-source.js.map
+2026-11-11T04:24:14.6415378Z expo-module.config.json
+2026-11-11T04:24:14.6415701Z ios/Extensions/KeyBindingRecord+keyCommand.swift
+2026-11-11T04:24:14.6416082Z ios/Extensions/UIKey+chordRecord.swift
+2026-11-11T04:24:14.6416449Z ios/Extensions/UIKeyboardHIDUsage+keyName.swift
+2026-11-11T04:24:14.6416881Z ios/Extensions/UIViewController+hardwareKeyCommand.swift
+2026-11-11T04:24:14.6417323Z ios/Extensions/UIWindow+keyRootViewController.swift
+2026-11-11T04:24:14.6417694Z ios/HardwareKeyCaptureView.swift
+2026-11-11T04:24:14.6418015Z ios/HardwareKeyRouter.swift
+2026-11-11T04:24:14.6418283Z ios/KeyBindingRecord.swift
+2026-11-11T04:24:14.6418536Z ios/KeyChordRecord.swift
+2026-11-11T04:24:14.6418809Z ios/NYCTronHardwareKeys.podspec
+2026-11-11T04:24:14.6419117Z ios/NYCTronHardwareKeysModule.swift
+2026-11-11T04:24:14.6419389Z LICENSE
+2026-11-11T04:24:14.6419569Z package.json
+2026-11-11T04:24:14.6419765Z Package.swift
+2026-11-11T04:24:14.6419960Z README.md
+2026-11-11T04:24:14.6420160Z THIRD_PARTY_NOTICES.md
+2026-11-11T04:24:14.6420372Z Tarball Details
+2026-11-11T04:24:14.6420701Z /tmp/nyc-tron-keys-pack/nyc-tron-hardware-keys-1.0.0.tgz
+2026-11-11T04:24:14.6711003Z ##[group]Run mkdir -p /tmp/nyc-tron-services-pack
+2026-11-11T04:24:14.6711445Z [36;1mmkdir -p /tmp/nyc-tron-services-pack[0m
+2026-11-11T04:24:14.6712272Z [36;1mcorepack pnpm --dir packages/platform-services pack --pack-destination /tmp/nyc-tron-services-pack[0m
+2026-11-11T04:24:14.6712866Z [36;1mentries=$(tar -tzf /tmp/nyc-tron-services-pack/*.tgz)[0m
+2026-11-11T04:24:14.6713630Z [36;1mfor f in package/ios/NYCTronHapticsModule.swift package/ios/NYCTronDocumentsModule.swift \[0m
+2026-11-11T04:24:14.6714377Z [36;1m         package/ios/NYCTronPlaybackSessionModule.swift package/ios/NYCTronPlatformServices.podspec \[0m
+2026-11-11T04:24:14.6715049Z [36;1m         package/android/build.gradle package/android/src/main/AndroidManifest.xml \[0m
+2026-11-11T04:24:14.6715593Z [36;1m         package/android/src/main/res/xml/nyctron_file_paths.xml \[0m
+2026-11-11T04:24:14.6716193Z [36;1m         package/android/src/main/java/com/nyctron/platformservices/NYCTronDocumentsModule.kt \[0m
+2026-11-11T04:24:14.6716850Z [36;1m         package/android/src/main/java/com/nyctron/platformservices/IsoBmffTimeline.java \[0m
+2026-11-11T04:24:14.6717560Z [36;1m         package/expo-module.config.json package/dist/index.native.js package/dist/haptics/index.native.js; do[0m
+2026-11-11T04:24:14.6718181Z [36;1m  echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }[0m
+2026-11-11T04:24:14.6718538Z [36;1mdone[0m
+2026-11-11T04:24:14.6718947Z [36;1mif echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi[0m
+2026-11-11T04:24:14.6767242Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:14.6767496Z ##[endgroup]
+2026-11-11T04:24:14.9891319Z 
+2026-11-11T04:24:14.9892736Z > @nyc-tron/platform-services@1.0.0 prepack /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/platform-services
+2026-11-11T04:24:14.9893789Z > pnpm build
+2026-11-11T04:24:14.9894009Z 
+2026-11-11T04:24:15.3294218Z 
+2026-11-11T04:24:15.3295377Z > @nyc-tron/platform-services@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/platform-services
+2026-11-11T04:24:15.3296417Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:15.3296695Z 
+2026-11-11T04:24:16.9433753Z 📦  @nyc-tron/platform-services@1.0.0
+2026-11-11T04:24:16.9434220Z Tarball Contents
+2026-11-11T04:24:16.9434653Z android/build.gradle
+2026-11-11T04:24:16.9435134Z android/src/main/AndroidManifest.xml
+2026-11-11T04:24:16.9436128Z android/src/main/java/com/nyctron/platformservices/ActivateOptionsRecord.kt
+2026-11-11T04:24:16.9437282Z android/src/main/java/com/nyctron/platformservices/AndroidDecodedImage.kt
+2026-11-11T04:24:16.9438384Z android/src/main/java/com/nyctron/platformservices/AndroidDecodedPcm.kt
+2026-11-11T04:24:16.9439473Z android/src/main/java/com/nyctron/platformservices/AndroidMediaDecoder.kt
+2026-11-11T04:24:16.9440671Z android/src/main/java/com/nyctron/platformservices/AudioFocusController.kt
+2026-11-11T04:24:16.9441991Z android/src/main/java/com/nyctron/platformservices/AudioRequestRecord.kt
+2026-11-11T04:24:16.9443274Z android/src/main/java/com/nyctron/platformservices/ContentResolver+copyToCache.kt
+2026-11-11T04:24:16.9444718Z android/src/main/java/com/nyctron/platformservices/ContentResolver+pickedDocumentRecord.kt
+2026-11-11T04:24:16.9446030Z android/src/main/java/com/nyctron/platformservices/DecodedAudioRecord.kt
+2026-11-11T04:24:16.9446837Z android/src/main/java/com/nyctron/platformservices/DecodedFrameRecord.kt
+2026-11-11T04:24:16.9447478Z android/src/main/java/com/nyctron/platformservices/DocumentPickLauncher.kt
+2026-11-11T04:24:16.9448102Z android/src/main/java/com/nyctron/platformservices/FrameRequestRecord.kt
+2026-11-11T04:24:16.9448699Z android/src/main/java/com/nyctron/platformservices/HapticConstant.kt
+2026-11-11T04:24:16.9449290Z android/src/main/java/com/nyctron/platformservices/IsoBmffTimeline.java
+2026-11-11T04:24:16.9449918Z android/src/main/java/com/nyctron/platformservices/MediaDecodeFailure.kt
+2026-11-11T04:24:16.9450526Z android/src/main/java/com/nyctron/platformservices/MediaProbeRecord.kt
+2026-11-11T04:24:16.9451430Z android/src/main/java/com/nyctron/platformservices/NYCTronDocumentsModule.kt
+2026-11-11T04:24:16.9452325Z android/src/main/java/com/nyctron/platformservices/NYCTronFileProvider.kt
+2026-11-11T04:24:16.9452935Z android/src/main/java/com/nyctron/platformservices/NYCTronHapticsModule.kt
+2026-11-11T04:24:16.9453551Z android/src/main/java/com/nyctron/platformservices/NYCTronMediaDecoderModule.kt
+2026-11-11T04:24:16.9454406Z android/src/main/java/com/nyctron/platformservices/NYCTronPlaybackSessionModule.kt
+2026-11-11T04:24:16.9455028Z android/src/main/java/com/nyctron/platformservices/OutputLossCallback.kt
+2026-11-11T04:24:16.9455602Z android/src/main/java/com/nyctron/platformservices/PickedDocumentRecord.kt
+2026-11-11T04:24:16.9456171Z android/src/main/java/com/nyctron/platformservices/PickOptionsRecord.kt
+2026-11-11T04:24:16.9456779Z android/src/main/java/com/nyctron/platformservices/PickOptionsRecord+mimeTypes.kt
+2026-11-11T04:24:16.9457459Z android/src/main/java/com/nyctron/platformservices/PresentationIndexRecord.kt
+2026-11-11T04:24:16.9458061Z android/src/main/java/com/nyctron/platformservices/RestoredAccessRecord.kt
+2026-11-11T04:24:16.9458630Z android/src/main/java/com/nyctron/platformservices/SessionEventRecord.kt
+2026-11-11T04:24:16.9459167Z android/src/main/java/com/nyctron/platformservices/SessionEvents.kt
+2026-11-11T04:24:16.9459707Z android/src/main/java/com/nyctron/platformservices/ShareOptionsRecord.kt
+2026-11-11T04:24:16.9460399Z android/src/main/java/com/nyctron/platformservices/ShareOptionsRecord+chooserIntent.kt
+2026-11-11T04:24:16.9460925Z android/src/main/res/xml/nyctron_file_paths.xml
+2026-11-11T04:24:16.9461238Z dist/checkpoints/index.d.ts
+2026-11-11T04:24:16.9461521Z dist/checkpoints/index.d.ts.map
+2026-11-11T04:24:16.9461990Z dist/checkpoints/index.js
+2026-11-11T04:24:16.9462278Z dist/checkpoints/index.js.map
+2026-11-11T04:24:16.9462569Z dist/checkpoints/index.native.d.ts
+2026-11-11T04:24:16.9462938Z dist/checkpoints/index.native.d.ts.map
+2026-11-11T04:24:16.9463291Z dist/checkpoints/index.native.js
+2026-11-11T04:24:16.9463616Z dist/checkpoints/index.native.js.map
+2026-11-11T04:24:16.9463956Z dist/checkpoints/platform.native.d.ts
+2026-11-11T04:24:16.9464344Z dist/checkpoints/platform.native.d.ts.map
+2026-11-11T04:24:16.9464705Z dist/checkpoints/platform.native.js
+2026-11-11T04:24:16.9465053Z dist/checkpoints/platform.native.js.map
+2026-11-11T04:24:16.9465396Z dist/checkpoints/platform.web.d.ts
+2026-11-11T04:24:16.9465767Z dist/checkpoints/platform.web.d.ts.map
+2026-11-11T04:24:16.9466110Z dist/checkpoints/platform.web.js
+2026-11-11T04:24:16.9466448Z dist/checkpoints/platform.web.js.map
+2026-11-11T04:24:16.9466760Z dist/checkpoints/record.d.ts
+2026-11-11T04:24:16.9467068Z dist/checkpoints/record.d.ts.map
+2026-11-11T04:24:16.9467359Z dist/checkpoints/record.js
+2026-11-11T04:24:16.9467653Z dist/checkpoints/record.js.map
+2026-11-11T04:24:16.9467941Z dist/documents/documents.d.ts
+2026-11-11T04:24:16.9468261Z dist/documents/documents.d.ts.map
+2026-11-11T04:24:16.9468564Z dist/documents/documents.js
+2026-11-11T04:24:16.9468862Z dist/documents/documents.js.map
+2026-11-11T04:24:16.9469148Z dist/documents/index.d.ts
+2026-11-11T04:24:16.9469417Z dist/documents/index.d.ts.map
+2026-11-11T04:24:16.9469686Z dist/documents/index.js
+2026-11-11T04:24:16.9469943Z dist/documents/index.js.map
+2026-11-11T04:24:16.9470246Z dist/documents/index.native.d.ts
+2026-11-11T04:24:16.9470564Z dist/documents/index.native.d.ts.map
+2026-11-11T04:24:16.9470894Z dist/documents/index.native.js
+2026-11-11T04:24:16.9471207Z dist/documents/index.native.js.map
+2026-11-11T04:24:16.9471547Z dist/documents/picker-source.d.ts
+2026-11-11T04:24:16.9472152Z dist/documents/picker-source.d.ts.map
+2026-11-11T04:24:16.9472503Z dist/documents/picker-source.js
+2026-11-11T04:24:16.9472828Z dist/documents/picker-source.js.map
+2026-11-11T04:24:16.9473176Z dist/documents/platform.native.d.ts
+2026-11-11T04:24:16.9473519Z dist/documents/platform.native.d.ts.map
+2026-11-11T04:24:16.9473859Z dist/documents/platform.native.js
+2026-11-11T04:24:16.9474403Z dist/documents/platform.native.js.map
+2026-11-11T04:24:16.9474778Z dist/documents/platform.web.d.ts
+2026-11-11T04:24:16.9475110Z dist/documents/platform.web.d.ts.map
+2026-11-11T04:24:16.9475441Z dist/documents/platform.web.js
+2026-11-11T04:24:16.9475769Z dist/documents/platform.web.js.map
+2026-11-11T04:24:16.9476070Z dist/haptics/haptics.d.ts
+2026-11-11T04:24:16.9476351Z dist/haptics/haptics.d.ts.map
+2026-11-11T04:24:16.9476886Z dist/haptics/haptics.js
+2026-11-11T04:24:16.9477162Z dist/haptics/haptics.js.map
+2026-11-11T04:24:16.9477439Z dist/haptics/index.d.ts
+2026-11-11T04:24:16.9477701Z dist/haptics/index.d.ts.map
+2026-11-11T04:24:16.9477966Z dist/haptics/index.js
+2026-11-11T04:24:16.9478219Z dist/haptics/index.js.map
+2026-11-11T04:24:16.9478508Z dist/haptics/index.native.d.ts
+2026-11-11T04:24:16.9478826Z dist/haptics/index.native.d.ts.map
+2026-11-11T04:24:16.9479127Z dist/haptics/index.native.js
+2026-11-11T04:24:16.9479431Z dist/haptics/index.native.js.map
+2026-11-11T04:24:16.9479722Z dist/haptics/kinds.d.ts
+2026-11-11T04:24:16.9479977Z dist/haptics/kinds.d.ts.map
+2026-11-11T04:24:16.9480236Z dist/haptics/kinds.js
+2026-11-11T04:24:16.9480490Z dist/haptics/kinds.js.map
+2026-11-11T04:24:16.9480771Z dist/haptics/platform.native.d.ts
+2026-11-11T04:24:16.9481106Z dist/haptics/platform.native.d.ts.map
+2026-11-11T04:24:16.9481459Z dist/haptics/platform.native.js
+2026-11-11T04:24:16.9482031Z dist/haptics/platform.native.js.map
+2026-11-11T04:24:16.9482398Z dist/haptics/platform.web.d.ts
+2026-11-11T04:24:16.9482720Z dist/haptics/platform.web.d.ts.map
+2026-11-11T04:24:16.9483022Z dist/haptics/platform.web.js
+2026-11-11T04:24:16.9483326Z dist/haptics/platform.web.js.map
+2026-11-11T04:24:16.9483669Z dist/haptics/use-haptics-enabled.d.ts
+2026-11-11T04:24:16.9484029Z dist/haptics/use-haptics-enabled.d.ts.map
+2026-11-11T04:24:16.9484384Z dist/haptics/use-haptics-enabled.js
+2026-11-11T04:24:16.9484743Z dist/haptics/use-haptics-enabled.js.map
+2026-11-11T04:24:16.9485035Z dist/index.d.ts
+2026-11-11T04:24:16.9485267Z dist/index.d.ts.map
+2026-11-11T04:24:16.9485472Z dist/index.js
+2026-11-11T04:24:16.9485697Z dist/index.js.map
+2026-11-11T04:24:16.9485937Z dist/index.native.d.ts
+2026-11-11T04:24:16.9486198Z dist/index.native.d.ts.map
+2026-11-11T04:24:16.9486470Z dist/index.native.js
+2026-11-11T04:24:16.9486718Z dist/index.native.js.map
+2026-11-11T04:24:16.9486980Z dist/media/decoder.d.ts
+2026-11-11T04:24:16.9487246Z dist/media/decoder.d.ts.map
+2026-11-11T04:24:16.9487499Z dist/media/decoder.js
+2026-11-11T04:24:16.9487754Z dist/media/decoder.js.map
+2026-11-11T04:24:16.9488045Z dist/media/fetch-media.web.d.ts
+2026-11-11T04:24:16.9488368Z dist/media/fetch-media.web.d.ts.map
+2026-11-11T04:24:16.9488671Z dist/media/fetch-media.web.js
+2026-11-11T04:24:16.9488981Z dist/media/fetch-media.web.js.map
+2026-11-11T04:24:16.9489263Z dist/media/index.d.ts
+2026-11-11T04:24:16.9489513Z dist/media/index.d.ts.map
+2026-11-11T04:24:16.9489766Z dist/media/index.js
+2026-11-11T04:24:16.9490013Z dist/media/index.js.map
+2026-11-11T04:24:16.9490277Z dist/media/index.native.d.ts
+2026-11-11T04:24:16.9490607Z dist/media/index.native.d.ts.map
+2026-11-11T04:24:16.9490905Z dist/media/index.native.js
+2026-11-11T04:24:16.9491215Z dist/media/index.native.js.map
+2026-11-11T04:24:16.9507451Z dist/media/platform.native.d.ts
+2026-11-11T04:24:16.9508266Z dist/media/platform.native.d.ts.map
+2026-11-11T04:24:16.9508813Z dist/media/platform.native.js
+2026-11-11T04:24:16.9509387Z dist/media/platform.native.js.map
+2026-11-11T04:24:16.9509878Z dist/media/platform.web.d.ts
+2026-11-11T04:24:16.9510402Z dist/media/platform.web.d.ts.map
+2026-11-11T04:24:16.9510882Z dist/media/platform.web.js
+2026-11-11T04:24:16.9511385Z dist/media/platform.web.js.map
+2026-11-11T04:24:16.9512141Z dist/media/webcodecs-frame.web.d.ts
+2026-11-11T04:24:16.9512756Z dist/media/webcodecs-frame.web.d.ts.map
+2026-11-11T04:24:16.9513361Z dist/media/webcodecs-frame.web.js
+2026-11-11T04:24:16.9513976Z dist/media/webcodecs-frame.web.js.map
+2026-11-11T04:24:16.9514541Z dist/module-names.d.ts
+2026-11-11T04:24:16.9515362Z dist/module-names.d.ts.map
+2026-11-11T04:24:16.9515795Z dist/module-names.js
+2026-11-11T04:24:16.9516214Z dist/module-names.js.map
+2026-11-11T04:24:16.9516648Z dist/native-module.d.ts
+2026-11-11T04:24:16.9517065Z dist/native-module.d.ts.map
+2026-11-11T04:24:16.9517462Z dist/native-module.js
+2026-11-11T04:24:16.9517846Z dist/native-module.js.map
+2026-11-11T04:24:16.9518319Z dist/playback/index.d.ts
+2026-11-11T04:24:16.9518915Z dist/playback/index.d.ts.map
+2026-11-11T04:24:16.9519333Z dist/playback/index.js
+2026-11-11T04:24:16.9519710Z dist/playback/index.js.map
+2026-11-11T04:24:16.9520157Z dist/playback/index.native.d.ts
+2026-11-11T04:24:16.9520644Z dist/playback/index.native.d.ts.map
+2026-11-11T04:24:16.9521112Z dist/playback/index.native.js
+2026-11-11T04:24:16.9521576Z dist/playback/index.native.js.map
+2026-11-11T04:24:16.9522245Z dist/playback/platform.native.d.ts
+2026-11-11T04:24:16.9522836Z dist/playback/platform.native.d.ts.map
+2026-11-11T04:24:16.9523464Z dist/playback/platform.native.js
+2026-11-11T04:24:16.9523962Z dist/playback/platform.native.js.map
+2026-11-11T04:24:16.9524468Z dist/playback/platform.web.d.ts
+2026-11-11T04:24:16.9524946Z dist/playback/platform.web.d.ts.map
+2026-11-11T04:24:16.9525403Z dist/playback/platform.web.js
+2026-11-11T04:24:16.9525876Z dist/playback/platform.web.js.map
+2026-11-11T04:24:16.9526319Z dist/playback/policy.d.ts
+2026-11-11T04:24:16.9526726Z dist/playback/policy.d.ts.map
+2026-11-11T04:24:16.9527146Z dist/playback/policy.js
+2026-11-11T04:24:16.9527544Z dist/playback/policy.js.map
+2026-11-11T04:24:16.9527948Z dist/playback/session.d.ts
+2026-11-11T04:24:16.9528438Z dist/playback/session.d.ts.map
+2026-11-11T04:24:16.9529013Z dist/playback/session.js
+2026-11-11T04:24:16.9550247Z dist/playback/session.js.map
+2026-11-11T04:24:16.9550563Z expo-module.config.json
+2026-11-11T04:24:16.9550866Z ios/ActivateOptionsRecord.swift
+2026-11-11T04:24:16.9551147Z ios/AudioRequest.swift
+2026-11-11T04:24:16.9551401Z ios/AudioRequestRecord.swift
+2026-11-11T04:24:16.9551704Z ios/AudioSessionObserver.swift
+2026-11-11T04:24:16.9552231Z ios/DecodedAudioRecord.swift
+2026-11-11T04:24:16.9552521Z ios/DecodedFrameRecord.swift
+2026-11-11T04:24:16.9552785Z ios/DecodedImageData.swift
+2026-11-11T04:24:16.9553077Z ios/DocumentPickerSession.swift
+2026-11-11T04:24:16.9553490Z ios/Extensions/ActivateOptionsRecord+sessionCategory.swift
+2026-11-11T04:24:16.9553945Z ios/Extensions/AVAssetTrack+displaySize.swift
+2026-11-11T04:24:16.9554345Z ios/Extensions/AVURLAsset+decodedAudio.swift
+2026-11-11T04:24:16.9554714Z ios/Extensions/AVURLAsset+decodedFrame.swift
+2026-11-11T04:24:16.9555113Z ios/Extensions/AVURLAsset+decodedImage.swift
+2026-11-11T04:24:16.9555506Z ios/Extensions/AVURLAsset+presentationIndex.swift
+2026-11-11T04:24:16.9555905Z ios/Extensions/AVURLAsset+probeRecord.swift
+2026-11-11T04:24:16.9556315Z ios/Extensions/CMFormatDescription+codecString.swift
+2026-11-11T04:24:16.9556705Z ios/Extensions/CMTime+microseconds.swift
+2026-11-11T04:24:16.9557081Z ios/Extensions/MediaDecodeFailure+avError.swift
+2026-11-11T04:24:16.9557487Z ios/Extensions/MediaDecodeFailure+exception.swift
+2026-11-11T04:24:16.9557908Z ios/Extensions/Notification+sessionEventRecord.swift
+2026-11-11T04:24:16.9558333Z ios/Extensions/PickOptionsRecord+contentTypes.swift
+2026-11-11T04:24:16.9558746Z ios/Extensions/UIViewController+topPresented.swift
+2026-11-11T04:24:16.9559145Z ios/Extensions/URL+pickedDocumentRecord.swift
+2026-11-11T04:24:16.9559465Z ios/FrameRequest.swift
+2026-11-11T04:24:16.9559722Z ios/FrameRequestRecord.swift
+2026-11-11T04:24:16.9559990Z ios/HapticFeedbackKind.swift
+2026-11-11T04:24:16.9560274Z ios/HapticPlayer.swift
+2026-11-11T04:24:16.9560515Z ios/MediaDecodeFailure.swift
+2026-11-11T04:24:16.9560774Z ios/MediaDecoderQueue.swift
+2026-11-11T04:24:16.9561081Z ios/MediaOutputDirectory.swift
+2026-11-11T04:24:16.9561341Z ios/MediaPcmInput.swift
+2026-11-11T04:24:16.9561585Z ios/MediaProbeRecord.swift
+2026-11-11T04:24:16.9562026Z ios/MediaSource.swift
+2026-11-11T04:24:16.9562307Z ios/NYCTronDocumentsModule.swift
+2026-11-11T04:24:16.9562811Z ios/NYCTronHapticsModule.swift
+2026-11-11T04:24:16.9563145Z ios/NYCTronMediaDecoderModule.swift
+2026-11-11T04:24:16.9563470Z ios/NYCTronPlatformServices.podspec
+2026-11-11T04:24:16.9563797Z ios/NYCTronPlaybackSessionModule.swift
+2026-11-11T04:24:16.9564124Z ios/PickedDocumentRecord.swift
+2026-11-11T04:24:16.9564396Z ios/PickOptionsRecord.swift
+2026-11-11T04:24:16.9564682Z ios/PresentationIndexData.swift
+2026-11-11T04:24:16.9565135Z ios/PresentationIndexRecord.swift
+2026-11-11T04:24:16.9565453Z ios/RestoredAccessRecord.swift
+2026-11-11T04:24:16.9565743Z ios/SecurityScopedAccess.swift
+2026-11-11T04:24:16.9566015Z ios/SessionEventRecord.swift
+2026-11-11T04:24:16.9566283Z ios/ShareOptionsRecord.swift
+2026-11-11T04:24:16.9566535Z ios/ShareSession.swift
+2026-11-11T04:24:16.9566749Z LICENSE
+2026-11-11T04:24:16.9566937Z package.json
+2026-11-11T04:24:16.9567130Z Package.swift
+2026-11-11T04:24:16.9567321Z README.md
+2026-11-11T04:24:16.9567506Z THIRD_PARTY.md
+2026-11-11T04:24:16.9567752Z third-party/mediabunny/LICENSE
+2026-11-11T04:24:16.9567988Z Tarball Details
+2026-11-11T04:24:16.9568358Z /tmp/nyc-tron-services-pack/nyc-tron-platform-services-1.0.0.tgz
+2026-11-11T04:24:16.9860804Z ##[group]Run corepack pnpm --dir packages/native-charts build
+2026-11-11T04:24:16.9861279Z [36;1mcorepack pnpm --dir packages/native-charts build[0m
+2026-11-11T04:24:16.9909896Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:16.9910174Z ##[endgroup]
+2026-11-11T04:24:17.3044483Z 
+2026-11-11T04:24:17.3045683Z > @nyc-tron/native-charts@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-charts
+2026-11-11T04:24:17.3046664Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:17.3046962Z 
+2026-11-11T04:24:18.3504140Z ##[group]Run mkdir -p /tmp/nyc-tron-charts-pack
+2026-11-11T04:24:18.3504575Z [36;1mmkdir -p /tmp/nyc-tron-charts-pack[0m
+2026-11-11T04:24:18.3505107Z [36;1mcorepack pnpm --dir packages/native-charts pack --pack-destination /tmp/nyc-tron-charts-pack[0m
+2026-11-11T04:24:18.3505676Z [36;1mlisting=$(tar -tzf /tmp/nyc-tron-charts-pack/*.tgz)[0m
+2026-11-11T04:24:18.3506180Z [36;1mfor f in package/ios/TronChartView.swift package/ios/NYCTronCharts.podspec \[0m
+2026-11-11T04:24:18.3506859Z [36;1m         package/android/build.gradle package/android/src/main/java/com/nyctron/charts/TronChartView.kt \[0m
+2026-11-11T04:24:18.3507645Z [36;1m         package/dist/NativeChart.web.js package/dist/NativeChart.native.js package/THIRD_PARTY_NOTICES.md; do[0m
+2026-11-11T04:24:18.3508347Z [36;1m  echo "$listing" | grep -qx "$f" || { echo "Missing $f in native-charts pack"; exit 1; }[0m
+2026-11-11T04:24:18.3508790Z [36;1mdone[0m
+2026-11-11T04:24:18.3557735Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:24:18.3558042Z ##[endgroup]
+2026-11-11T04:24:18.6729371Z 
+2026-11-11T04:24:18.6730170Z > @nyc-tron/native-charts@1.0.0 prepack /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-charts
+2026-11-11T04:24:18.6730772Z > pnpm build
+2026-11-11T04:24:18.6730914Z 
+2026-11-11T04:24:19.0090121Z 
+2026-11-11T04:24:19.0091541Z > @nyc-tron/native-charts@1.0.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/native-charts
+2026-11-11T04:24:19.0092737Z > tsc -p tsconfig.build.json
+2026-11-11T04:24:19.0093037Z 
+2026-11-11T04:24:20.1101514Z 📦  @nyc-tron/native-charts@1.0.0
+2026-11-11T04:24:20.1102373Z Tarball Contents
+2026-11-11T04:24:20.1102782Z android/build.gradle
+2026-11-11T04:24:20.1103435Z android/src/main/java/com/nyctron/charts/NYCTronChartsModule.kt
+2026-11-11T04:24:20.1104342Z android/src/main/java/com/nyctron/charts/TronChartColor.kt
+2026-11-11T04:24:20.1105134Z android/src/main/java/com/nyctron/charts/TronChartKind.kt
+2026-11-11T04:24:20.1105890Z android/src/main/java/com/nyctron/charts/TronChartPoint.kt
+2026-11-11T04:24:20.1106695Z android/src/main/java/com/nyctron/charts/TronChartProps.kt
+2026-11-11T04:24:20.1107543Z android/src/main/java/com/nyctron/charts/TronChartSeries.kt
+2026-11-11T04:24:20.1108400Z android/src/main/java/com/nyctron/charts/TronChartSummary.kt
+2026-11-11T04:24:20.1109246Z android/src/main/java/com/nyctron/charts/TronChartView.kt
+2026-11-11T04:24:20.1109879Z dist/index.native.d.ts
+2026-11-11T04:24:20.1110337Z dist/index.native.d.ts.map
+2026-11-11T04:24:20.1110797Z dist/index.native.js
+2026-11-11T04:24:20.1111241Z dist/index.native.js.map
+2026-11-11T04:24:20.1111712Z dist/index.web.d.ts
+2026-11-11T04:24:20.1112336Z dist/index.web.d.ts.map
+2026-11-11T04:24:20.1112792Z dist/index.web.js
+2026-11-11T04:24:20.1113612Z dist/index.web.js.map
+2026-11-11T04:24:20.1114072Z dist/NativeChart.native.d.ts
+2026-11-11T04:24:20.1114617Z dist/NativeChart.native.d.ts.map
+2026-11-11T04:24:20.1115147Z dist/NativeChart.native.js
+2026-11-11T04:24:20.1115663Z dist/NativeChart.native.js.map
+2026-11-11T04:24:20.1116176Z dist/NativeChart.types.d.ts
+2026-11-11T04:24:20.1116706Z dist/NativeChart.types.d.ts.map
+2026-11-11T04:24:20.1117202Z dist/NativeChart.types.js
+2026-11-11T04:24:20.1117677Z dist/NativeChart.types.js.map
+2026-11-11T04:24:20.1118184Z dist/NativeChart.web.d.ts
+2026-11-11T04:24:20.1118669Z dist/NativeChart.web.d.ts.map
+2026-11-11T04:24:20.1119195Z dist/NativeChart.web.js
+2026-11-11T04:24:20.1119663Z dist/NativeChart.web.js.map
+2026-11-11T04:24:20.1120152Z expo-module.config.json
+2026-11-11T04:24:20.1120590Z ios/NYCTronCharts.podspec
+2026-11-11T04:24:20.1121091Z ios/NYCTronChartsModule.swift
+2026-11-11T04:24:20.1121532Z ios/TronChartKind.swift
+2026-11-11T04:24:20.1122164Z ios/TronChartPoint.swift
+2026-11-11T04:24:20.1122602Z ios/TronChartProps.swift
+2026-11-11T04:24:20.1123012Z ios/TronChartSeries.swift
+2026-11-11T04:24:20.1123438Z ios/TronChartSummary.swift
+2026-11-11T04:24:20.1123861Z ios/TronChartView.swift
+2026-11-11T04:24:20.1124329Z ios/View+zeroContentOrigin.swift
+2026-11-11T04:24:20.1125037Z LICENSE
+2026-11-11T04:24:20.1125360Z package.json
+2026-11-11T04:24:20.1125676Z README.md
+2026-11-11T04:24:20.1126016Z THIRD_PARTY_NOTICES.md
+2026-11-11T04:24:20.1126374Z Tarball Details
+2026-11-11T04:24:20.1126941Z /tmp/nyc-tron-charts-pack/nyc-tron-native-charts-1.0.0.tgz
+2026-11-11T04:24:20.1470344Z Post job cleanup.
+2026-11-11T04:24:20.2794128Z (node:3396) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T04:24:20.2795045Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T04:24:20.2958616Z Post job cleanup.
+2026-11-11T04:24:20.3901186Z [command]/usr/bin/git version
+2026-11-11T04:24:20.3948433Z git version 2.56.0
+2026-11-11T04:24:20.3990231Z Temporarily overriding HOME='/home/runner/work/_temp/c6ff29e8-00b7-4557-82c5-eb405e7608b3' before making global git config changes
+2026-11-11T04:24:20.3991728Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T04:24:20.3996669Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:24:20.4061092Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T04:24:20.4107425Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T04:24:20.4434863Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T04:24:20.4486540Z http.https://github.com/.extraheader
+2026-11-11T04:24:20.4495946Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T04:24:20.4550009Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T04:24:20.4991038Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T04:24:20.5022650Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T04:24:20.5528954Z Cleaning up orphan processes
+2026-11-11T04:24:20.5941313Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
