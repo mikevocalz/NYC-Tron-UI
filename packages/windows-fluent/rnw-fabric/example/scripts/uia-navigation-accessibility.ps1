@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 public static class NavigationAccessibilityNative {
   [StructLayout(LayoutKind.Sequential)] private struct HC { public uint size, flags; public IntPtr scheme; }
-  public sealed class Contrast { public uint Flags; public string Scheme; }
+  public sealed class Contrast { public uint Flags; public string Scheme; public bool SchemeIsNull; }
   [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Unicode)]
   private static extern bool SystemParametersInfoW(uint action, uint size, ref HC data, uint flags);
   [DllImport("user32.dll", SetLastError=true)]
@@ -17,10 +17,15 @@ public static class NavigationAccessibilityNative {
   public static Contrast ReadContrast() {
     HC value = new HC { size = (uint)Marshal.SizeOf(typeof(HC)) };
     if (!SystemParametersInfoW(0x42, value.size, ref value, 0)) throw new Win32Exception(Marshal.GetLastWin32Error());
-    // Do not LocalFree value.scheme. Run 42990880283 faulted in this call with
-    // 0xC0000374 right after SPI_SETHIGHCONTRAST restored the original mode. The
-    // string is a few bytes per call in a short-lived runner process.
-    return new Contrast { Flags=value.flags, Scheme=Marshal.PtrToStringUni(value.scheme) };
+    // lpszDefaultScheme: the HIGHCONTRAST documentation says the system allocates this
+    // buffer and the caller frees it with LocalFree. The free is left out on purpose.
+    // With it, powershell.EXE faulted with 0xC0000374 (ntdll heap check) inside this
+    // method, right after SPI_SETHIGHCONTRAST restored the original mode (run
+    // 42990880283); without it the same sequence completes (run 42992371670). The
+    // observed scheme string was empty, and an empty scheme can be a null pointer
+    // that was never allocated. SchemeIsNull records which one we got. Cost of the
+    // omission: a few bytes per read in a short-lived runner process, about 30 reads.
+    return new Contrast { Flags=value.flags, Scheme=Marshal.PtrToStringUni(value.scheme), SchemeIsNull=(value.scheme == IntPtr.Zero) };
   }
   public static void SetContrast(Contrast original, bool enabled) {
     // Apply to this disposable runner session and notify native controls; do not persist a profile change.
@@ -86,7 +91,7 @@ function Wait-Contrast([bool]$enabled) {
   do {
     Crumb "contrast: ReadContrast call"
     $observed = [NavigationAccessibilityNative]::ReadContrast()
-    Crumb "contrast: ReadContrast returned flags=$($observed.Flags) scheme=$($observed.Scheme)"
+    Crumb "contrast: ReadContrast returned flags=$($observed.Flags) scheme=$($observed.Scheme) schemeIsNull=$($observed.SchemeIsNull)"
     if ((($observed.Flags -band 1) -ne 0) -eq $enabled) { Start-Sleep -Milliseconds 500; return $observed }
     Start-Sleep -Milliseconds 100
   } while ((Get-Date) -lt $deadline)
@@ -229,6 +234,7 @@ try {
 } catch {
   $failure = $_.Exception.Message
   Crumb "catch: $failure"
+  try { Save-DragTraceCheckpoint "nav-failure" } catch {}
   throw
 } finally {
   Crumb "finally: begin"

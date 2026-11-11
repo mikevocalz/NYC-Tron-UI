@@ -3,6 +3,7 @@
 // packages/sample-custom-component/ComboBox.cpp (MIT).
 #include "pch.h"
 #include "TronNavigationView.h"
+#include "NativeDragTrace.h"
 
 #ifdef RNW_NEW_ARCH
 #include "IslandConnection.h"
@@ -10,12 +11,15 @@
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
+#include <winrt/Microsoft.UI.Xaml.Media.h>
+#include <winrt/Windows.Data.Json.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Windows.Data.Json.h>
 #include <exception>
 #include <unordered_set>
+#include <optional>
 #include <vector>
 
 namespace winrt::NYCTronFluentFabric {
@@ -245,6 +249,42 @@ struct TronNavigationViewComponentView
     m_updatingFromJs = false;
   }
 
+  // Diagnostic only. Records the isRTL prop this view received, the FlowDirection
+  // XAML holds after it is applied, and where the pane toggle sits inside the
+  // NavigationView, read once now and once after layout has run.
+  void TraceDirection(char const* stage, std::optional<bool> isRTL) noexcept {
+    try {
+      namespace Json = winrt::Windows::Data::Json;
+      namespace Media = winrt::Microsoft::UI::Xaml::Media;
+      Json::JsonObject record;
+      record.SetNamedValue(L"stage", Json::JsonValue::CreateStringValue(winrt::to_hstring(stage)));
+      record.SetNamedValue(L"isRTLPresent", Json::JsonValue::CreateBooleanValue(isRTL.has_value()));
+      record.SetNamedValue(L"isRTL", Json::JsonValue::CreateBooleanValue(isRTL.value_or(false)));
+      record.SetNamedValue(L"flowDirection", Json::JsonValue::CreateNumberValue(static_cast<int32_t>(m_navigation.FlowDirection())));
+      record.SetNamedValue(L"navWidth", Json::JsonValue::CreateNumberValue(m_navigation.ActualWidth()));
+      record.SetNamedValue(L"loaded", Json::JsonValue::CreateBooleanValue(m_navigation.IsLoaded()));
+      record.SetNamedValue(L"updateCount", Json::JsonValue::CreateNumberValue(static_cast<double>(++m_traceCount)));
+      // Breadth-first search of the template for the element named TogglePaneButton.
+      std::vector<winrt::Microsoft::UI::Xaml::DependencyObject> queue{m_navigation};
+      for (size_t i = 0; i < queue.size() && i < 400; ++i) {
+        const auto count = Media::VisualTreeHelper::GetChildrenCount(queue[i]);
+        for (int32_t child = 0; child < count; ++child) {
+          auto node = Media::VisualTreeHelper::GetChild(queue[i], child);
+          if (auto element = node.try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>()) {
+            if (element.Name() == L"TogglePaneButton") {
+              const auto point = element.TransformToVisual(m_navigation).TransformPoint({0, 0});
+              record.SetNamedValue(L"toggleX", Json::JsonValue::CreateNumberValue(point.X));
+              record.SetNamedValue(L"toggleWidth", Json::JsonValue::CreateNumberValue(element.ActualWidth()));
+              record.SetNamedValue(L"toggleFlowDirection", Json::JsonValue::CreateNumberValue(static_cast<int32_t>(element.FlowDirection())));
+            }
+          }
+          queue.push_back(node);
+        }
+      }
+      nyctron::desktop::NativeDragTrace::RecordActive(record);
+    } catch (...) {}
+  }
+
   void ApplyProps(Codegen::TronNavigationViewProps const& props) noexcept {
     try {
       m_updatingFromJs = true;
@@ -288,6 +328,13 @@ struct TronNavigationViewComponentView
       m_paneOpen = props.paneOpen.value_or(false);
       m_navigation.IsPaneOpen(m_paneOpen);
       m_updatingFromJs = false;
+      TraceDirection("nav-props-applied", props.isRTL);
+      if (m_navigation.DispatcherQueue()) {
+        const std::optional<bool> received = props.isRTL;
+        m_navigation.DispatcherQueue().TryEnqueue(winrt::Microsoft::UI::Dispatching::DispatcherQueuePriority::Low, [weak = get_weak(), received]() noexcept {
+          if (auto self = weak.get()) if (!self->m_disposed) self->TraceDirection("nav-after-layout", received);
+        });
+      }
     } catch (...) {
       m_updatingFromJs = false;
       // Invalid serialized items must not crash native; report them instead.
@@ -360,6 +407,7 @@ struct TronNavigationViewComponentView
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   nyctron::islands::IslandConnection m_connection;
   winrt::Microsoft::UI::Xaml::Controls::NavigationView m_navigation{nullptr};
+  uint32_t m_traceCount{0};
   winrt::com_ptr<Codegen::TronNavigationViewProps> m_props;
   winrt::event_token m_itemInvoked{};
   winrt::event_token m_paneOpened{};

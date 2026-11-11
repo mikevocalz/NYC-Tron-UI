@@ -13,6 +13,9 @@ class NativeDragTrace final {
  public:
   static std::shared_ptr<NativeDragTrace> Enable(std::string const& owner);
   static bool Enabled(std::string const& owner) noexcept;
+  // Diagnostic records from components that have no desktop owner token, such as the
+  // navigation view. Writes only while a session already enabled the trace.
+  static void RecordActive(winrt::Windows::Data::Json::JsonObject const& record) noexcept;
   static void Record(std::string const& owner, winrt::Windows::Data::Json::JsonObject const& record) noexcept;
   ~NativeDragTrace();
   NativeDragTrace(NativeDragTrace const&) = delete;

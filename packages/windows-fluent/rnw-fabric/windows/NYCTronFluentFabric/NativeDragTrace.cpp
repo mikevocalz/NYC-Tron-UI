@@ -44,6 +44,9 @@ bool NativeDragTrace::Enabled(std::string const& owner) noexcept {
 void NativeDragTrace::Record(std::string const& owner, Json::JsonObject const& record) noexcept {
   if (auto trace = activeTrace.lock()) if (trace->m_owner == owner) trace->Write(record);
 }
+void NativeDragTrace::RecordActive(Json::JsonObject const& record) noexcept {
+  if (auto trace = activeTrace.lock()) if (!trace->m_finished) trace->Write(record);
+}
 void NativeDragTrace::Close() noexcept {
   if (m_file) { CloseHandle(m_file); m_file = nullptr; }
 }
