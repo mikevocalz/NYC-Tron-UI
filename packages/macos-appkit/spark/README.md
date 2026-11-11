@@ -235,12 +235,27 @@ allowed, the fixture moves the pointer outside the trigger, into its native
 rectangle, and outside again. Public `NSEvent.mouseLocation` readback must
 confirm each move while the owner is visible, key and active. Bounded,
 cycle-safe traversal of `NSApp.windows` and public accessibility properties
-must find a newly visible `AXHelpTag` with a native frame. The `AXHelpTag`
-element exposes no text attribute (only role, frame, position, size and
-parent), so the in-process driver reads the presented text from the private
-`_attributedString` ivar of the panel's `NSCustomToolTipDrawView` and requires
-it to equal the expected tooltip string. That ivar is private AppKit layout:
-a rename leaves the text unread and fails the run. The check must also observe
+must find a newly visible `AXHelpTag` with a native frame and the exact expected
+text. On the retained 79a host observation, the tested public value/label/title
+getters and diagnostic legacy value reads returned nil. The separately reported
+standalone attribute enumeration has not been independently inspected here;
+this does not establish that every host/version lacks a public text attribute.
+
+The private acceptance driver also reads `_attributedString` from the exact
+`NSCustomToolTipDrawView` class. It admits private text only from the selected
+onscreen help-tag window's content subtree, with same-window identity, visible
+finite nonempty clipped geometry, and a post-read eligibility recheck. Public
+retained strings, private unique additions and the combined total are recorded
+separately. Private inspection considers at most eight nodes and retains at
+most four detail rows per observation; omitted or unavailable data stays
+explicit. This is a host/version-dependent private-layout observation, not a
+public AX/VoiceOver text result or independent pixel-content verification.
+An absent or ineligible private source contributes no string. The strict
+expected-text comparison remains required.
+
+The bounded console projection retains the shown observation as well as the
+last/final observation, with separate private provenance and a shared 16 KiB
+output cap. Full original JSON remains separate evidence. The check must observe
 the actual help-tag window disappearing after exit. The fixture retains
 that window's native content bitmap during hover and an owner capture after
 exit. It never counts

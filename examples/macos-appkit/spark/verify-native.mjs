@@ -642,16 +642,46 @@ function tooltipFailureSummary(evidence) {
           exactExpected: normalized === true && metadataStatus === 'observed' ? boolean(row.exactExpected) : null, metadataStatus };
       }) };
     };
-    return { schemaVersion: 1, status: 'observed', nodes: countValue(value.nodes),
+    const privateValue = isRecord(value.private) && value.private.schemaVersion === 1 && value.private.status === 'observed' &&
+      value.private.source === 'private-appkit-draw-view' ? value.private : null;
+    const privateView = value => isRecord(value) ? {
+      hasWindow: boolean(value.hasWindow), sameWindow: boolean(value.sameWindow), inContentSubtree: boolean(value.inContentSubtree),
+      windowOnscreen: boolean(value.windowOnscreen), viewVisible: boolean(value.viewVisible), boundsNonempty: boolean(value.boundsNonempty),
+      visibleIntersectionNonempty: boolean(value.visibleIntersectionNonempty), frameNonempty: boolean(value.frameNonempty),
+      sourceWindowNumber: countValue(value.sourceWindowNumber), frameInSelectedWindow: frame(value.frameInSelectedWindow)
+    } : null;
+    const privateRows = value => {
+      if (!Array.isArray(value)) return { total: null, omitted: null, records: null };
+      const selected = value.slice(0, budget.private); budget.private -= selected.length;
+      return { total: value.length, omitted: value.length - selected.length, records: selected.map(row => {
+        if (!isRecord(row)) return null;
+        const read = allowed(row.read, ['unavailable', 'ineligible', 'nil', 'captured', 'exception']);
+        const normalized = read === 'captured' ? boolean(row.normalized) : null;
+        return { node: countValue(row.node), read, stage: allowed(row.stage, ['class', 'eligibility', 'ivar', 'read', 'normalize', 'recheck', 'retain', 'complete']),
+          classMatch: boolean(row.classMatch), ivarPresent: boolean(row.ivarPresent), objectEncoding: boolean(row.objectEncoding),
+          kind: read === 'captured' ? allowed(row.kind, ['string', 'attributed-string', 'other']) : null,
+          normalized, length: normalized === true ? countValue(row.length) : null,
+          nonempty: normalized === true ? boolean(row.nonempty) : null,
+          exactExpected: normalized === true ? boolean(row.exactExpected) : null,
+          accepted: boolean(row.accepted), uniqueAdded: boolean(row.uniqueAdded),
+          before: privateView(row.before), after: privateView(row.after) };
+      }) };
+    };
+    return { schemaVersion: 1, status: 'observed', nodes: countValue(value.nodes), combinedRetainedStrings: countValue(value.combinedRetainedStrings),
       current: { ...counts(value.current, ['fieldSlots', 'calls', 'unavailable', 'nil', 'captured', 'string', 'attributedString', 'other', 'normalizedNil', 'empty', 'nonempty', 'retainedStrings', 'detailLimit', 'detailsOmitted']),
         rows: rows(value.current?.rows, false) },
       legacy: { ...counts(value.legacy, ['nodeLimit', 'nodesConsidered', 'supportedReadsAttempted', 'returned', 'thrown', 'selectorExceptions', 'metadataExceptions', 'nodesOmitted']),
-        diagnosticOnly: boolean(value.legacy?.diagnosticOnly), rows: rows(value.legacy?.rows, true) } };
+        diagnosticOnly: boolean(value.legacy?.diagnosticOnly), rows: rows(value.legacy?.rows, true) },
+      private: { schemaVersion: privateValue ? 1 : null, status: privateValue ? 'observed' : null, source: privateValue ? 'private-appkit-draw-view' : null,
+        ...counts(privateValue, ['nodeLimit', 'detailLimit', 'nodesConsidered', 'nodesOmitted', 'classMatches', 'eligibleViews', 'postReadEligibleViews',
+          'readAttempts', 'returned', 'nil', 'string', 'attributedString', 'other', 'normalizedNil', 'empty', 'nonempty',
+          'acceptedValues', 'uniqueStringsAdded', 'unavailable', 'ineligible', 'exceptions', 'detailsOmitted']),
+        rows: privateRows(privateValue?.rows) } };
   };
   const observation = (value, includeRecords) => {
     if (!isRecord(value)) return null;
     const tags = Array.isArray(value.helpTags) ? value.helpTags : null;
-    const detailBudget = { current: 16, legacy: 8 };
+    const detailBudget = { current: 16, legacy: 8, private: 4 };
     const inspected = tags?.slice(0, 128).map((tag, index) => {
       const textMatchesExpected = Array.isArray(tag?.strings) && tag.strings.every(text => typeof text === 'string')
         ? tag.strings.includes("Save this document's local checkpoint") : null;
@@ -691,7 +721,8 @@ function tooltipFailureSummary(evidence) {
     status: allowed(evidence?.status, ['pending', 'blocked', 'failed', 'passed']),
     permission: { postEventsAllowed: boolean(evidence?.permission?.postEventsAllowed), accessibilityTrusted: boolean(evidence?.permission?.accessibilityTrusted) },
     pointerRequests: { initialExit: motion(evidence?.initialExit), enter: motion(evidence?.enter), exit: motion(evidence?.exit) },
-    baseline: observation(evidence?.baseline, false), observationSource: latest, observation: observation(latest ? evidence[latest] : null, true)
+    baseline: observation(evidence?.baseline, false), shownObservation: observation(evidence?.shown?.observation, true),
+    observationSource: latest, observation: observation(latest ? evidence[latest] : null, true)
   };
 }
 
@@ -730,15 +761,17 @@ function reportTooltipFailure() {
   } catch { report.status = 'readback-unavailable'; }
   try {
     let message = begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';
-    if (Buffer.byteLength(message, 'utf8') > logByteLimit && report.summary?.observation) {
-      // Drop only new detail rows first. Keep their omission counts, aggregate
-      // observations and the original latest tooltip predicates visible.
-      for (const tag of report.summary.observation.helpTags.records ?? []) {
-        for (const kind of ['current', 'legacy']) {
-          const rows = tag.textReadDiagnostic?.[kind]?.rows;
-          if (Array.isArray(rows?.records) && rows.records.length) {
-            rows.omitted += rows.records.length; rows.records = [];
-            report.diagnosticRowsOmittedForByteLimit = true;
+    if (Buffer.byteLength(message, 'utf8') > logByteLimit && (report.summary?.observation || report.summary?.shownObservation)) {
+      // Drop detail rows from both snapshots first; preserve their omission
+      // counts, public/private totals and shown/final tooltip predicates.
+      for (const snapshot of [report.summary.shownObservation, report.summary.observation]) {
+        for (const tag of snapshot?.helpTags.records ?? []) {
+          for (const kind of ['current', 'legacy', 'private']) {
+            const rows = tag.textReadDiagnostic?.[kind]?.rows;
+            if (Array.isArray(rows?.records) && rows.records.length) {
+              rows.omitted += rows.records.length; rows.records = [];
+              report.diagnosticRowsOmittedForByteLimit = true;
+            }
           }
         }
       }
@@ -971,6 +1004,36 @@ const control = (testID, action, options = {}, window = 'main') => driver.reques
 const mounted = testID => driver.request('waitFor', { testID, timeoutMs: 20000 });
 const status = text => waitFor(async () => (await inspect('status-main')).label.includes(text), text);
 const popover = (window = 'main', action) => driver.request('tron.popover', { window, testID: `inspector-${window}`, ...(action ? { action } : {}) });
+async function armPopoverCloseObservation(window, shown) {
+  const armed = await popover(window, 'arm-close-observation');
+  assert.equal(armed.nativePopover, true);
+  assert.equal(armed.shown, true);
+  assert.equal(armed.contentVisible, true);
+  assert.ok(typeof shown?.contentIdentity === 'string' && shown.contentIdentity.length > 0 &&
+    typeof armed.contentIdentity === 'string' && armed.contentIdentity.length > 0, 'Close observation requires nonempty native content identities');
+  assert.equal(armed.contentIdentity, shown.contentIdentity, 'Close observation must bind the same shown popover content');
+  const observation = armed.closeObservation;
+  assert.equal(observation?.schemaVersion, 1);
+  assert.equal(observation.status, 'armed');
+  assert.equal(observation.identityMatches, true);
+  assert.equal(observation.armedWhileShown, true);
+  assert.ok(Number.isSafeInteger(observation.sequence) && observation.sequence >= 1 && observation.sequence <= 2);
+  return { sequence: observation.sequence, contentIdentity: armed.contentIdentity };
+}
+function popoverCloseCompleted(current, armed) {
+  const observation = current?.closeObservation;
+  return typeof armed?.contentIdentity === 'string' && armed.contentIdentity.length > 0 &&
+    typeof current?.contentIdentity === 'string' && current.contentIdentity.length > 0 &&
+    Number.isSafeInteger(armed.sequence) && armed.sequence >= 1 && armed.sequence <= 2 &&
+    current?.nativePopover === true && current.shown === false &&
+    current.contentIdentity === armed.contentIdentity &&
+    observation?.schemaVersion === 1 && observation.status === 'completed' &&
+    observation.sequence === armed.sequence && observation.identityMatches === true &&
+    observation.armedWhileShown === true && Number.isSafeInteger(observation.didCloseCount) &&
+    observation.didCloseCount > 0 && observation.didCloseCount <= 8 && observation.didCloseOnMain === true &&
+    observation.postDidCloseMainTurnObserved === true && observation.expired === false &&
+    observation.released === false && observation.threadViolation === false && observation.overflowed === false;
+}
 async function shownPopover(window = 'main') {
   const value = await waitFor(async () => { const current = await popover(window); return current.shown && current.contentVisible ? current : undefined; }, 'shown native NSPopover');
   assert.equal(value.nativePopover, true);
@@ -1075,7 +1138,7 @@ try {
   assert.equal(typeof tooltipInitial.postEventsAllowed, 'boolean');
   assert.equal(typeof tooltipInitial.accessibilityTrusted, 'boolean');
   tooltipEvidence = { schemaVersion: 1, status: tooltipInitial.postEventsAllowed ? 'pending' : 'blocked',
-    boundary: 'CGEvent-posted mouse movement followed by NSApp.windows and NSAccessibility help-tag discovery, with the presented text read in process from the private NSCustomToolTipDrawView of the tooltip panel _attributedString (no public accessibility attribute carries it); no physical mouse hardware or human gesture.',
+    boundary: 'CGEvent-posted mouse movement followed by NSApp.windows and NSAccessibility help-tag discovery, with public text collection and separately counted private draw-view storage reads bound to the selected visible panel; private layout is host/version dependent and does not establish public AX text or independently verified pixels; no physical mouse hardware or human gesture.',
     coordinates: 'AppKit global screen logical points, with a bottom-left origin on the primary display.',
     permission: { postEventsAllowed: tooltipInitial.postEventsAllowed, accessibilityTrusted: tooltipInitial.accessibilityTrusted }, initial: tooltipInitial,
     ...(tooltipInitial.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process. Native hover presentation and dismissal remain untested; no TCC change or permission prompt was attempted.' }) };
@@ -1173,8 +1236,9 @@ try {
   assert.equal(resizedPopover.contentIdentity, firstPopover.contentIdentity);
   assert.equal((await inspect('inspector-title-main')).editorIdentity, editingPopover.editorIdentity);
   assert.equal((await inspect('inspector-title-main')).editing, true, 'Safe popover reposition interrupted native field editing');
+  const escapeCloseObservation = await armPopoverCloseObservation('main', resizedPopover);
   await popover('main', 'escape'); await status('Native inspector dismissed');
-  await waitFor(async () => !(await popover()).shown, 'native Escape dismissal');
+  await waitFor(async () => popoverCloseCompleted(await popover(), escapeCloseObservation), 'native Escape dismissal');
   assert.equal((await inspect()).firstResponderIdentity, opener, 'Closing NSPopover did not restore its original native responder');
   await control('inspect-main', 'press');
   const reopenedPopover = await shownPopover();
@@ -1250,10 +1314,11 @@ try {
   checks.push('native-layout-restoration');
 
   await show();
-  await control('inspect-main', 'press'); await shownPopover();
+  await control('inspect-main', 'press'); const newerFocusPopover = await shownPopover();
+  const newerFocusCloseObservation = await armPopoverCloseObservation('main', newerFocusPopover);
   await show('document-1');
   await popover('main', 'close'); await status('Native inspector dismissed');
-  await waitFor(async () => !(await popover()).shown, 'popover close after another window gained focus');
+  await waitFor(async () => popoverCloseCompleted(await popover(), newerFocusCloseObservation), 'popover close after another window gained focus');
   assert.equal((await inspect(undefined, 'document-1')).key, true);
   assert.equal((await inspect()).key, false);
   checks.push('native-popover-dismissal-preserves-newer-window-focus');

@@ -53,6 +53,140 @@ static NSRect OwnerCoordinates(NSWindow *owner, NSRect screenRect) {
   return result;
 }
 static NSDictionary *Failure(NSString *message) { return @{ @"ok": @NO, @"error": @{ @"code": @"E_ACCEPTANCE", @"message": message } }; }
+
+// Private acceptance observation only. No delegate or focus behavior is changed.
+@interface NYCTronAcceptancePopoverCloseObservation : NSObject {
+@public
+  NSUInteger sequence, willCloseCount, didCloseCount;
+  __weak NSWindow *owner;
+  __weak NYCTronPopoverComponentView *component;
+  __weak NSPopover *popover;
+  id willObserver, didObserver;
+  NSNumber *willCloseOnMain, *didCloseOnMain;
+  BOOL armedWhileShown, postDidCloseMainTurnObserved, expired, released;
+  BOOL unavailable, threadViolation, identityEnded, overflowed;
+}
+- (void)removeObservers;
+- (void)releaseObservation;
+- (BOOL)matchesLiveObjects;
+- (void)observe:(NSNotification *)notification didClose:(BOOL)didClose;
+@end
+static NYCTronAcceptancePopoverCloseObservation *PopoverCloseObservation;
+static NSUInteger PopoverCloseArms;
+@implementation NYCTronAcceptancePopoverCloseObservation
+- (void)removeObservers {
+  if (willObserver) { [NSNotificationCenter.defaultCenter removeObserver:willObserver]; willObserver = nil; }
+  if (didObserver) { [NSNotificationCenter.defaultCenter removeObserver:didObserver]; didObserver = nil; }
+}
+- (void)releaseObservation { released = YES; [self removeObservers]; }
+- (BOOL)matchesLiveObjects {
+  NSWindow *currentOwner = owner;
+  NYCTronPopoverComponentView *currentComponent = component;
+  NSPopover *currentPopover = popover;
+  return currentOwner && currentComponent && currentPopover &&
+    currentComponent.window == currentOwner && currentComponent.nativePopover == currentPopover;
+}
+- (void)observe:(NSNotification *)notification didClose:(BOOL)didClose {
+  __weak NYCTronAcceptancePopoverCloseObservation *weakObservation = self;
+  const NSUInteger observedSequence = sequence;
+  if (!NSThread.isMainThread) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NYCTronAcceptancePopoverCloseObservation *value = weakObservation;
+      if (value && value == PopoverCloseObservation && value->sequence == observedSequence && !value->released) {
+        value->threadViolation = YES;
+        if (didClose) value->didCloseOnMain = @NO; else value->willCloseOnMain = @NO;
+        [value removeObservers];
+      }
+    });
+    return;
+  }
+  if (self != PopoverCloseObservation || released || expired || unavailable || threadViolation) return;
+  @try {
+    if (notification.object != popover || ![self matchesLiveObjects]) {
+      identityEnded = YES; [self removeObservers]; return;
+    }
+    if (!didClose) {
+      willCloseOnMain = @YES;
+      if (willCloseCount < 8) willCloseCount++; else overflowed = YES;
+      return;
+    }
+    didCloseOnMain = @YES;
+    if (didCloseCount < 8) didCloseCount++; else overflowed = YES;
+    [self removeObservers];
+    // Observer entry does not establish the delegate's focus result. Require
+    // a later owned main-queue turn, then keep the exact focus checks.
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NYCTronAcceptancePopoverCloseObservation *value = weakObservation;
+      if (!value || value != PopoverCloseObservation || value->sequence != observedSequence ||
+          value->released || value->expired || value->unavailable || value->threadViolation) return;
+      @try {
+        if ([value matchesLiveObjects] && !value->popover.shown) value->postDidCloseMainTurnObserved = YES;
+        else value->identityEnded = YES;
+      } @catch (__unused NSException *exception) { value->unavailable = YES; }
+    });
+  } @catch (__unused NSException *exception) {
+    unavailable = YES; [self removeObservers];
+  }
+}
+- (void)dealloc { [self removeObservers]; }
+@end
+static void ArmPopoverCloseObservation(NSWindow *owner, NYCTronPopoverComponentView *component, NSPopover *popover) {
+  [PopoverCloseObservation releaseObservation]; PopoverCloseObservation = nil;
+  // The verifier arms only its Escape and newer-window-focus scenarios.
+  if (PopoverCloseArms >= 2) return;
+  NYCTronAcceptancePopoverCloseObservation *value = [NYCTronAcceptancePopoverCloseObservation new];
+  value->sequence = ++PopoverCloseArms; value->owner = owner; value->component = component; value->popover = popover;
+  PopoverCloseObservation = value;
+  @try {
+    NSView *content = popover.contentViewController.view;
+    if (![value matchesLiveObjects] || !popover.shown || !content || content.hidden) {
+      value->unavailable = YES; return;
+    }
+    value->armedWhileShown = YES;
+    __weak NYCTronAcceptancePopoverCloseObservation *weakObservation = value;
+    value->willObserver = [NSNotificationCenter.defaultCenter addObserverForName:NSPopoverWillCloseNotification object:popover queue:nil usingBlock:^(NSNotification *notification) {
+      [weakObservation observe:notification didClose:NO];
+    }];
+    value->didObserver = [NSNotificationCenter.defaultCenter addObserverForName:NSPopoverDidCloseNotification object:popover queue:nil usingBlock:^(NSNotification *notification) {
+      [weakObservation observe:notification didClose:YES];
+    }];
+    if (!value->willObserver || !value->didObserver) { value->unavailable = YES; [value removeObservers]; return; }
+    const NSUInteger observedSequence = value->sequence;
+    // Cleanup only: this expiry never supplies completion or extends a wait.
+    // No native object is retained by this delayed block.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 60 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+      NYCTronAcceptancePopoverCloseObservation *current = weakObservation;
+      if (current && current == PopoverCloseObservation && current->sequence == observedSequence &&
+          !current->released && !current->postDidCloseMainTurnObserved) {
+        current->expired = YES; [current removeObservers];
+      }
+    });
+  } @catch (__unused NSException *exception) { value->unavailable = YES; [value removeObservers]; }
+}
+static NSDictionary *PopoverCloseObservationState(NSWindow *owner, NYCTronPopoverComponentView *component, NSPopover *popover) {
+  @try {
+    NYCTronAcceptancePopoverCloseObservation *value = PopoverCloseObservation;
+    if (!value) return @{ @"schemaVersion": @1, @"status": @"unavailable", @"sequence": NSNull.null };
+    NSWindow *observedOwner = value->owner;
+    NYCTronPopoverComponentView *observedComponent = value->component;
+    NSPopover *observedPopover = value->popover;
+    id identity = observedOwner && observedComponent && observedPopover ?
+      @(observedOwner == owner && observedComponent == component && observedPopover == popover && [value matchesLiveObjects]) : NSNull.null;
+    NSString *status = value->unavailable || value->threadViolation || value->identityEnded ? @"unavailable" :
+      value->expired ? @"expired" : value->released ? @"released" :
+      value->postDidCloseMainTurnObserved ? @"completed" : @"armed";
+    return @{ @"schemaVersion": @1, @"status": status, @"sequence": @(value->sequence),
+      @"identityMatches": identity, @"armedWhileShown": @(value->armedWhileShown),
+      @"willCloseCount": @(value->willCloseCount), @"didCloseCount": @(value->didCloseCount),
+      @"willCloseOnMain": value->willCloseOnMain ?: NSNull.null, @"didCloseOnMain": value->didCloseOnMain ?: NSNull.null,
+      @"postDidCloseMainTurnObserved": @(value->postDidCloseMainTurnObserved),
+      @"expired": @(value->expired), @"released": @(value->released),
+      @"threadViolation": @(value->threadViolation), @"overflowed": @(value->overflowed) };
+  } @catch (__unused NSException *exception) {
+    return @{ @"schemaVersion": @1, @"status": @"unavailable", @"sequence": NSNull.null };
+  }
+}
+
 static NSMenu *TrackedContextMenu;
 static NSUInteger ContextMenuGeneration, TrackedContextMenuGeneration, EndedContextMenuGeneration;
 static NSUInteger ContextMenuTraceEvents;
@@ -186,7 +320,7 @@ static NSArray *AccessibilityNodes(id root, BOOL *truncated) {
 }
 // Read metadata stays separate from acceptance strings. These limits are shared
 // by every help tag in one observation; they bound reads, not elapsed time.
-struct HelpTagDiagnosticBudget { NSUInteger currentDetails = 0, legacyNodes = 0; };
+struct HelpTagDiagnosticBudget { NSUInteger currentDetails = 0, legacyNodes = 0, privateNodes = 0, privateDetails = 0; };
 struct HelpTagReadRecord {
   NSUInteger node = 0, field = 0, calls = 0, state = 0, kind = 0, length = 0;
   BOOL normalized = NO;
@@ -204,7 +338,147 @@ static NSDictionary *HelpTagReadDetail(const HelpTagReadRecord &read, NSString *
     @"kind": kinds[read.kind], @"normalized": @(read.normalized), @"length": read.normalized ? @(read.length) : NSNull.null,
     @"nonempty": read.normalized ? @(read.length > 0) : NSNull.null, @"exactExpected": matches, @"metadataStatus": metadataStatus };
 }
-static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated, HelpTagDiagnosticBudget *budget, NSDictionary *__autoreleasing *diagnostic) {
+static BOOL HelpTagFiniteNonemptyRect(NSRect rect) {
+  return isfinite(rect.origin.x) && isfinite(rect.origin.y) && isfinite(rect.size.width) && isfinite(rect.size.height) &&
+    rect.size.width > 0 && rect.size.height > 0;
+}
+static NSDictionary *PrivateHelpTagViewState(NSView *view, NSWindow *selectedWindow, BOOL *eligible) {
+  *eligible = NO;
+  NSMutableDictionary *state = [@{ @"hasWindow": NSNull.null, @"sameWindow": NSNull.null, @"inContentSubtree": NSNull.null,
+    @"windowOnscreen": NSNull.null, @"viewVisible": NSNull.null, @"boundsNonempty": NSNull.null,
+    @"visibleIntersectionNonempty": NSNull.null, @"frameNonempty": NSNull.null,
+    @"sourceWindowNumber": NSNull.null, @"frameInSelectedWindow": NSNull.null } mutableCopy];
+  NSWindow *actualWindow = view.window;
+  state[@"hasWindow"] = @(actualWindow != nil);
+  if (!actualWindow || !selectedWindow) return state;
+  state[@"sameWindow"] = @(actualWindow == selectedWindow);
+  if (actualWindow != selectedWindow) return state;
+  state[@"sourceWindowNumber"] = @(actualWindow.windowNumber);
+  NSView *content = selectedWindow.contentView;
+  BOOL inContent = content && (view == content || [view isDescendantOf:content]);
+  BOOL onscreen = selectedWindow.visible && !selectedWindow.miniaturized && selectedWindow.alphaValue > 0 &&
+    (selectedWindow.occlusionState & NSWindowOcclusionStateVisible);
+  state[@"inContentSubtree"] = @(inContent); state[@"windowOnscreen"] = @(onscreen);
+  if (!inContent || !onscreen) return state;
+  BOOL visible = ![view isHiddenOrHasHiddenAncestor];
+  state[@"viewVisible"] = @(visible);
+  if (!visible) return state;
+  NSRect bounds = view.bounds, visibleRect = view.visibleRect;
+  BOOL boundsNonempty = HelpTagFiniteNonemptyRect(bounds);
+  state[@"boundsNonempty"] = @(boundsNonempty);
+  if (!boundsNonempty || !HelpTagFiniteNonemptyRect(visibleRect)) {
+    state[@"visibleIntersectionNonempty"] = @NO; return state;
+  }
+  NSRect intersection = NSIntersectionRect(bounds, visibleRect);
+  BOOL intersectionNonempty = HelpTagFiniteNonemptyRect(intersection);
+  state[@"visibleIntersectionNonempty"] = @(intersectionNonempty);
+  if (!intersectionNonempty) return state;
+  NSRect frame = [view convertRect:intersection toView:nil];
+  BOOL frameNonempty = HelpTagFiniteNonemptyRect(frame);
+  state[@"frameNonempty"] = @(frameNonempty);
+  if (frameNonempty) state[@"frameInSelectedWindow"] = RectDictionary(frame);
+  *eligible = frameNonempty;
+  return state;
+}
+static NSDictionary *PrivateHelpTagStrings(NSArray *nodes, NSWindow *selectedWindow,
+    NSMutableOrderedSet<NSString *> *strings, HelpTagDiagnosticBudget *budget) {
+  // This is an OS-private storage observation on the selected visible panel.
+  // The retained 79a evidence establishes nil results only for its tested
+  // getters; the separately reported AX attribute enumeration is uninspected.
+  // No public-AX text or independently verified pixel-content claim follows.
+  const NSUInteger beforeCount = strings.count;
+  NSUInteger considered = 0, classMatches = 0, eligibleViews = 0, postReadEligibleViews = 0;
+  NSUInteger attempted = 0, returned = 0, nilReads = 0, stringValues = 0, attributedValues = 0, otherValues = 0;
+  NSUInteger normalizedNil = 0, empty = 0, nonempty = 0, acceptedValues = 0, unavailable = 0, ineligible = 0, exceptions = 0;
+  @try {
+    NSMutableArray *rows = [NSMutableArray new];
+    for (id node in nodes) {
+      if (budget->privateNodes >= 8) break;
+      budget->privateNodes++; NSUInteger index = considered++;
+      NSMutableDictionary *row = [@{ @"node": @(index), @"read": @"unavailable", @"stage": @"class",
+        @"classMatch": NSNull.null, @"ivarPresent": NSNull.null, @"objectEncoding": NSNull.null,
+        @"kind": NSNull.null, @"normalized": NSNull.null, @"length": NSNull.null, @"nonempty": NSNull.null,
+        @"exactExpected": NSNull.null, @"accepted": @NO, @"uniqueAdded": @NO,
+        @"before": NSNull.null, @"after": NSNull.null } mutableCopy];
+      NSString *stage = @"class";
+      @try {
+        do {
+          Class drawClass = object_getClass(node);
+          BOOL classMatch = [node isKindOfClass:NSView.class] &&
+            [NSStringFromClass(drawClass) isEqualToString:@"NSCustomToolTipDrawView"];
+          row[@"classMatch"] = @(classMatch);
+          if (!classMatch) break;
+          classMatches++;
+          NSView *view = (NSView *)node;
+          stage = @"eligibility";
+          BOOL eligible = NO;
+          row[@"before"] = PrivateHelpTagViewState(view, selectedWindow, &eligible);
+          if (!eligible) { row[@"read"] = @"ineligible"; break; }
+          eligibleViews++;
+          stage = @"ivar";
+          Ivar drawText = class_getInstanceVariable(drawClass, "_attributedString");
+          row[@"ivarPresent"] = @(drawText != NULL);
+          const char *encoding = drawText ? ivar_getTypeEncoding(drawText) : NULL;
+          if (encoding) row[@"objectEncoding"] = @(encoding[0] == '@');
+          if (!encoding || encoding[0] != '@') break;
+          stage = @"read"; attempted++;
+          id drawn = object_getIvar(node, drawText);
+          returned++;
+          NSString *text = nil; NSUInteger length = 0;
+          row[@"read"] = drawn ? @"captured" : @"nil";
+          if (!drawn) nilReads++;
+          else {
+            stage = @"normalize";
+            BOOL attributed = [drawn isKindOfClass:NSAttributedString.class];
+            BOOL plain = !attributed && [drawn isKindOfClass:NSString.class];
+            row[@"kind"] = attributed ? @"attributed-string" : plain ? @"string" : @"other";
+            if (attributed) attributedValues++; else if (plain) stringValues++; else otherValues++;
+            text = attributed ? [drawn string] : plain ? drawn : nil;
+            row[@"normalized"] = @(text != nil);
+            if (!text) normalizedNil++;
+            else {
+              length = text.length;
+              row[@"length"] = @(length); row[@"nonempty"] = @(length > 0);
+              row[@"exactExpected"] = @((length == 37) && [text isEqualToString:@"Save this document's local checkpoint"]);
+              if (length) nonempty++; else empty++;
+            }
+          }
+          stage = @"recheck";
+          BOOL eligibleAfter = NO;
+          row[@"after"] = PrivateHelpTagViewState(view, selectedWindow, &eligibleAfter);
+          if (!eligibleAfter) { row[@"read"] = @"ineligible"; break; }
+          postReadEligibleViews++;
+          if (text && length) {
+            stage = @"retain";
+            NSUInteger prior = strings.count;
+            [strings addObject:text];
+            acceptedValues++; row[@"accepted"] = @YES; row[@"uniqueAdded"] = @(strings.count > prior);
+          }
+          stage = @"complete";
+        } while (NO);
+      } @catch (__unused NSException *exception) {
+        exceptions++; row[@"read"] = @"exception";
+      }
+      row[@"stage"] = stage;
+      if ([row[@"read"] isEqual:@"unavailable"]) unavailable++;
+      else if ([row[@"read"] isEqual:@"ineligible"]) ineligible++;
+      if (budget->privateDetails < 4) { [rows addObject:row]; budget->privateDetails++; }
+    }
+    return @{ @"schemaVersion": @1, @"status": @"observed", @"source": @"private-appkit-draw-view",
+      @"nodeLimit": @8, @"detailLimit": @4, @"nodesConsidered": @(considered), @"nodesOmitted": @(nodes.count - considered),
+      @"classMatches": @(classMatches), @"eligibleViews": @(eligibleViews), @"postReadEligibleViews": @(postReadEligibleViews),
+      @"readAttempts": @(attempted), @"returned": @(returned), @"nil": @(nilReads), @"string": @(stringValues),
+      @"attributedString": @(attributedValues), @"other": @(otherValues), @"normalizedNil": @(normalizedNil),
+      @"empty": @(empty), @"nonempty": @(nonempty), @"acceptedValues": @(acceptedValues),
+      @"uniqueStringsAdded": @(strings.count - beforeCount), @"unavailable": @(unavailable), @"ineligible": @(ineligible),
+      @"exceptions": @(exceptions), @"detailsOmitted": @(considered - rows.count), @"rows": rows };
+  } @catch (__unused NSException *exception) {
+    // Added observations cannot replace the original public collector's result
+    // or exception behavior. Missing private diagnostics remain unknown.
+    return nil;
+  }
+}
+static NSArray<NSString *> *HelpTagStrings(id root, NSWindow *selectedWindow, BOOL *truncated, HelpTagDiagnosticBudget *budget, NSDictionary *__autoreleasing *diagnostic) {
   NSMutableOrderedSet<NSString *> *strings = [NSMutableOrderedSet new];
   NSArray *nodes = AccessibilityNodes(root, truncated);
   HelpTagReadRecord details[16] = {};
@@ -243,21 +517,6 @@ static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated, HelpTagDiag
       [values addObject:((NSTextField *)node).stringValue]; fields[valueCount++] = 3;
       reads[3].calls = 1; reads[3].state = 2;
     }
-    // The system tooltip panel exposes no text through any accessibility
-    // attribute: its AXHelpTag element has only role, frame, position, size and
-    // parent (checked with AXUIElementCopyAttributeNames). The text lives in the
-    // private NSCustomToolTipDrawView, which this in-process driver reads from its
-    // _attributedString ivar. This is a private-layout read, not public API; if
-    // AppKit renames it no string is collected and the exact-match check fails.
-    if ([node isKindOfClass:NSView.class] && [NSStringFromClass([node class]) isEqualToString:@"NSCustomToolTipDrawView"]) {
-      Ivar drawText = class_getInstanceVariable(object_getClass(node), "_attributedString");
-      const char *encoding = drawText ? ivar_getTypeEncoding(drawText) : NULL;
-      if (encoding && encoding[0] == '@') {
-        id drawn = object_getIvar(node, drawText);
-        NSString *drawnText = [drawn isKindOfClass:NSAttributedString.class] ? [drawn string] : ([drawn isKindOfClass:NSString.class] ? drawn : nil);
-        if (drawnText.length) [strings addObject:drawnText];
-      }
-    }
     NSUInteger valueIndex = 0;
     for (id value in values) {
       BOOL attributed = [value isKindOfClass:NSAttributedString.class];
@@ -293,6 +552,8 @@ static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated, HelpTagDiag
     }
     nodeIndex++;
   }
+  const NSUInteger publicRetainedStrings = strings.count;
+  NSDictionary *privateDiagnostic = PrivateHelpTagStrings(nodes, selectedWindow, strings, budget);
   NSArray<NSString *> *result = strings.array;
   // Every original read, normalization and ordered-set operation above keeps
   // its failure behavior. Only the added observations are exception-contained.
@@ -343,9 +604,10 @@ static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated, HelpTagDiag
         @"length": length, @"nonempty": hasContent, @"exactExpected": matches, @"metadataStatus": metadataStatus }];
     }
     *diagnostic = @{ @"schemaVersion": @1, @"status": @"observed", @"nodes": @(nodeIndex),
+      @"combinedRetainedStrings": @(result.count), @"private": privateDiagnostic ?: NSNull.null,
       @"current": @{ @"fieldSlots": @(nodeIndex * 4), @"calls": @(calls), @"unavailable": @(unavailable), @"nil": @(nilReads), @"captured": @(captured),
         @"string": @(stringValues), @"attributedString": @(attributedValues), @"other": @(otherValues), @"normalizedNil": @(normalizedNil),
-        @"empty": @(empty), @"nonempty": @(nonempty), @"retainedStrings": @(result.count), @"detailLimit": @16,
+        @"empty": @(empty), @"nonempty": @(nonempty), @"retainedStrings": @(publicRetainedStrings), @"detailLimit": @16,
         @"detailsOmitted": @(nodeIndex * 4 - detailCount), @"rows": currentRows },
       @"legacy": @{ @"diagnosticOnly": @YES, @"nodeLimit": @8, @"nodesConsidered": @(considered), @"supportedReadsAttempted": @(attempted),
         @"returned": @(returned), @"thrown": @(thrown), @"selectorExceptions": @(selectorExceptions), @"metadataExceptions": @(metadataExceptions),
@@ -372,7 +634,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       if (![role isEqual:(__bridge NSString *)kAXHelpTagRole]) continue;
       NSRect frame = [node respondsToSelector:@selector(accessibilityFrame)] ? [node accessibilityFrame] : NSZeroRect;
       NSDictionary *textDiagnostic = nil;
-      [helpTags addObject:@{ @"windowNumber": @(window.windowNumber), @"windowFrame": RectDictionary(window.frame), @"frame": RectDictionary(frame), @"role": [node accessibilityRole], @"strings": HelpTagStrings(node, &truncated, &diagnosticBudget, &textDiagnostic) }];
+      [helpTags addObject:@{ @"windowNumber": @(window.windowNumber), @"windowFrame": RectDictionary(window.frame), @"frame": RectDictionary(frame), @"role": [node accessibilityRole], @"strings": HelpTagStrings(node, window, &truncated, &diagnosticBudget, &textDiagnostic) }];
       @try {
         if (textDiagnostic) {
           NSMutableDictionary *tag = [helpTags.lastObject mutableCopy];
@@ -458,6 +720,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NYCTronPopoverComponentView *component = (NYCTronPopoverComponentView *)view;
       NSPopover *popover = component.nativePopover;
       NSView *content = popover.contentViewController.view;
+      if ([request[@"action"] isEqual:@"arm-close-observation"]) ArmPopoverCloseObservation(owner, component, popover);
       NSMutableDictionary *closeTrace = nil;
       if ([request[@"action"] isEqual:@"escape"] || [request[@"action"] isEqual:@"close"]) {
         BOOL escape = [request[@"action"] isEqual:@"escape"];
@@ -475,6 +738,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NSMutableArray *classes = [NSMutableArray new]; Classes(content, classes);
       NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": RectDictionary(component.nativeAllowedRegion) } mutableCopy];
       if (closeTrace) result[@"closeTrace"] = closeTrace;
+      result[@"closeObservation"] = PopoverCloseObservationState(owner, component, popover);
       if (popover.shown && content.window) result[@"frame"] = RectDictionary(OwnerCoordinates(owner, content.window.frame));
       reply(result);
     });
