@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <utility>
 #include <cmath>
+#include <string_view>
 
 namespace winrt::NYCTronFluentFabric {
 namespace Xaml = winrt::Microsoft::UI::Xaml;
@@ -25,6 +26,43 @@ using Broker = nyctron::desktop::NativeDragBroker;
 static constexpr wchar_t NonceProperty[] = L"NYCTron.NativeWindowDrag.Nonce";
 static constexpr wchar_t PrivateFormat[] = L"application/x-nyc-tron-window-transfer";
 static uint64_t NextDiagnosticSurface() noexcept { static uint64_t ordinal = 0; return ++ordinal; }
+// Diagnostic only. Lists every window on this thread with class, visibility,
+// rect and whether OLE holds a drop target on it (the "OleDropTargetInterface"
+// window property RegisterDragDrop sets). InputSiteWindowClass windows are
+// summarized so the record stays far below the trace's 4096-byte record limit.
+struct OleProbeState { std::string text; uint32_t inputSites{0}, inputSitesWithOle{0}, count{0}; };
+static void ProbeWindow(HWND hwnd, HWND parent, OleProbeState& state) noexcept {
+  try {
+    if (state.count >= 40) return;
+    wchar_t cls[96] = {}; GetClassNameW(hwnd, cls, 96);
+    const bool ole = GetPropW(hwnd, L"OleDropTargetInterface") != nullptr;
+    if (std::wstring_view(cls) == L"InputSiteWindowClass") { ++state.inputSites; if (ole) ++state.inputSitesWithOle; }
+    else {
+      RECT rect{}; GetWindowRect(hwnd, &rect);
+      ++state.count;
+      state.text += std::to_string(reinterpret_cast<uintptr_t>(hwnd)) + "<" + std::to_string(reinterpret_cast<uintptr_t>(parent)) + " " + winrt::to_string(cls) +
+        (IsWindowVisible(hwnd) ? " vis" : " hid") + (ole ? " OLE" : " noole") + " " + std::to_string(rect.left) + "," + std::to_string(rect.top) + "," + std::to_string(rect.right) + "," + std::to_string(rect.bottom) + ";";
+    }
+  } catch (...) {}
+  for (HWND child = GetWindow(hwnd, GW_CHILD); child; child = GetWindow(child, GW_HWNDNEXT)) ProbeWindow(child, hwnd, state);
+}
+static void RecordOleProbe(std::string const& owner, char const* after) noexcept {
+  if (!nyctron::desktop::NativeDragTrace::Enabled(owner)) return;
+  try {
+    OleProbeState state;
+    EnumThreadWindows(GetCurrentThreadId(), [](HWND top, LPARAM value) -> BOOL {
+      ProbeWindow(top, GetWindow(top, GW_OWNER), *reinterpret_cast<OleProbeState*>(value)); return TRUE;
+    }, reinterpret_cast<LPARAM>(&state));
+    if (state.text.size() > 3000) state.text.resize(3000);
+    Json::JsonObject record;
+    record.SetNamedValue(L"stage", Json::JsonValue::CreateStringValue(L"ole-probe"));
+    record.SetNamedValue(L"after", Json::JsonValue::CreateStringValue(winrt::to_hstring(after)));
+    record.SetNamedValue(L"inputSites", Json::JsonValue::CreateNumberValue(state.inputSites));
+    record.SetNamedValue(L"inputSitesWithOle", Json::JsonValue::CreateNumberValue(state.inputSitesWithOle));
+    record.SetNamedValue(L"windows", Json::JsonValue::CreateStringValue(winrt::to_hstring(state.text)));
+    nyctron::desktop::NativeDragTrace::Record(owner, record);
+  } catch (...) {}
+}
 struct DragDataObservation {
   bool propertiesRead{false}, formatRead{false}, formatPresent{false};
   bool noncePropertyRead{false}, noncePropertyPresent{false}, nonceStringRead{false}, nonceValid{false};
@@ -212,6 +250,7 @@ struct TronDragSurfaceComponentView
       } catch (winrt::hresult_error const& error) { boolean(L"eventReadFailed", true); number(L"eventHresult", error.code().value); }
       catch (...) { boolean(L"eventReadFailed", true); }
       nyctron::desktop::NativeDragTrace::Record(m_owner, record);
+      if (std::string_view(stage) == "source-starting" || std::string_view(stage) == "source-drop-completed") RecordOleProbe(m_owner, stage);
     } catch (...) { /* Diagnostic allocation/read failures cannot affect input. */ }
   }
   void Error(std::string const& message) noexcept {
