@@ -49,3 +49,16 @@ Keep each skill's platform/version guidance aligned with this repository's
 pinned runtime and preserve its state, window and ownership contracts.
 
 User requirement (2026-11-07): use subagents for scoped implementation and independent review. Apply relevant native, domain and project skills, and the no-ai-slop skill, to implementation and reports.
+
+## Native feel and adaptive content
+
+User direction (2026-11-09): learn from Expo Exact and its Softwear preview.
+Read [Native feel and adaptive content](docs/EXACT_NATIVE_FEEL.md) before changing
+shared control presentation or responsive composition. Explicit supported app
+styling wins; unspecified presentation uses native platform defaults, followed
+by documented shared fallbacks. Keep appearance choices consistent between app
+surfaces and native hosts. Constrain reading/form widths, arrange related content
+within the current safe container, and preserve mounted children and product
+state while resizing. Continue using the navigation and pane owners above.
+Record browser and native evidence separately; upstream speed claims are not
+NYC-Tron measurements.

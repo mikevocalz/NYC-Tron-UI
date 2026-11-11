@@ -1,11 +1,12 @@
 import type { TronMenuAction } from "./menu-model.ts";
+import type { NativeAppearanceProps } from "./native-appearance.ts";
 
 /**
  * A primary action plus a separate flyout of related actions, on every
  * platform. The flyout takes the same {@linkcode TronMenuAction} tree as
  * `NativeActionMenu`; nested groups are flattened into one list.
  */
-export interface NativeSplitButtonProps {
+export interface NativeSplitButtonProps extends NativeAppearanceProps {
   readonly label:string;
   readonly onPress:()=>void;
   readonly actions:readonly TronMenuAction[];

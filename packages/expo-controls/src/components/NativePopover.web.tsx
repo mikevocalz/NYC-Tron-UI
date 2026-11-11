@@ -11,6 +11,6 @@ export type {
  * and focus returns to the element that opened it. Takes either an `anchor`
  * rect or a `trigger` it measures on open.
  */
-export function NativePopover(props:NativePopoverProps){
+export function NativePopover({colorScheme:_colorScheme,...props}:NativePopoverProps){
   return <AnchoredPopover {...props}/>;
 }

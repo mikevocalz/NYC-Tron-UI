@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import type { NativeAppearanceProps } from "./native-appearance.ts";
 
 /**
  * Short supplementary text for a control.
@@ -12,7 +13,7 @@ import type { ReactElement } from "react";
  * - Web: shown after a hover or keyboard-focus delay, hidden on leave, blur
  *   or Escape, and linked to the anchor with `aria-describedby`.
  */
-export interface TooltipProps {
+export interface TooltipProps extends NativeAppearanceProps {
   readonly label: string;
   /** One control element; the tooltip text is attached to it. */
   readonly children: ReactElement;

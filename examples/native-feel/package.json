@@ -1,0 +1,24 @@
+{
+  "name": "@nyc-tron/native-feel-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared account-screen recipe for native appearance and intrinsic content layouts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@expo/ui": "58.0.27",
+    "@nyc-tron/expo-controls": "workspace:*",
+    "@nyc-tron/ui": "workspace:*",
+    "expo": "58.0.23",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "uniwind": "1.13.2",
+    "zustand": "5.0.16"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3"
+  }
+}

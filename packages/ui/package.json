@@ -30,6 +30,16 @@
       "react-native": "./dist/components/Card.js",
       "default": "./dist/components/Card.js"
     },
+    "./components/layout/ContentFrame": {
+      "types": "./dist/components/layout/ContentFrame.d.ts",
+      "react-native": "./dist/components/layout/ContentFrame.js",
+      "default": "./dist/components/layout/ContentFrame.js"
+    },
+    "./components/layout/AdaptiveColumns": {
+      "types": "./dist/components/layout/AdaptiveColumns.d.ts",
+      "react-native": "./dist/components/layout/AdaptiveColumns.js",
+      "default": "./dist/components/layout/AdaptiveColumns.js"
+    },
     "./components/NavigationRail": {
       "types": "./dist/components/NavigationRail.d.ts",
       "react-native": "./dist/components/NavigationRail.js",

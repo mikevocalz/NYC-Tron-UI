@@ -122,6 +122,33 @@ take arbitrary Tailwind CSS effects. Tests prove source contracts and, in Chromi
 NOT prove native menu or popover placement, touch behavior, hardware-keyboard
 focus or screen-reader output on a device.
 
+### App-selected appearance
+
+`NativeDropdown`, `NativeSliderField`, `NativeSplitButton`, `NativePopover`
+and Android `Tooltip` accept `colorScheme="light"` or `colorScheme="dark"`.
+This forwards the app's choice to the existing Expo `Host`; omit it for the
+platform setting. Switching this prop preserves the control's identity and
+local interaction state. Keep app theme selection in the existing app store
+and pass its resolved choice to the controls:
+
+```tsx
+<NativeDropdown label="Typeface" value={font} onValueChange={setFont}
+  colorScheme={appearance === "system" ? undefined : appearance}
+  options={typefaces} />
+```
+
+The flat web dropdown also passes the choice to Expo's universal Host.
+Token-styled web fallbacks, grouped web dropdowns and surrounding RN content
+use the app's CSS/theme as before; this prop does not install a global theme.
+On iOS `Tooltip` only adds an accessibility hint, so it draws no surface to
+theme. `NativeActionMenu` and `ContextMenu` retain platform appearance:
+the pinned Expo 58.0.27 iOS `MenuView` does not forward a color scheme to its
+Host. They therefore do not expose an override that would only work on Android.
+
+Forwarding is checked against the installed Expo types and mocked render
+tests. Native screenshots and device interaction remain separate acceptance
+checks. See the [Expo Host API](https://docs.expo.dev/versions/latest/sdk/ui/universal/host/).
+
 Reference: https://docs.expo.dev/versions/latest/sdk/ui/universal/picker/ and
 https://docs.expo.dev/versions/latest/sdk/ui/drop-in-replacements/menu/ .
 https://docs.expo.dev/versions/latest/sdk/ui/swift-ui/popover/ and

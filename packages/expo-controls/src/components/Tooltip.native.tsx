@@ -11,11 +11,11 @@ export type { TooltipProps } from "./Tooltip.types.ts";
  * `TooltipBox`. iOS has no touch tooltip, so on iOS this only sets the
  * anchor's accessibilityHint for VoiceOver and renders the child unchanged.
  */
-export function Tooltip({label,children,disabled=false,testID}:TooltipProps){
+export function Tooltip({label,children,disabled=false,testID,colorScheme}:TooltipProps){
   const text=validateTooltipLabel(label);
   const anchor=withAccessibilityHint(children,text);
   if(Platform.OS!=="android")return <>{anchor}</>;
-  return <Host matchContents>
+  return <Host colorScheme={colorScheme} matchContents>
     <TooltipBox enableUserInput={!disabled}
       modifiers={testID?[composeTestID(testID)]:undefined}>
       <TooltipBox.PlainTooltip><ComposeText>{text}</ComposeText></TooltipBox.PlainTooltip>

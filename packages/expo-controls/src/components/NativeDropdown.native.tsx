@@ -56,7 +56,7 @@ export { validateDropdownOptions, dropdownOptions } from "./NativeDropdown.types
  */
 export function NativeDropdown(props:NativeDropdownProps){
   const {
-    label,value,onValueChange,disabled=false,appearance="menu",
+    label,value,onValueChange,disabled=false,appearance="menu",colorScheme,
     className,labelClassName,testID,style,options:_options,groups,...rest
   }=props;
   const options=dropdownOptions(props);
@@ -67,7 +67,7 @@ export function NativeDropdown(props:NativeDropdownProps){
     {...{className:joinDropdownClasses("w-full min-w-0 gap-1",className)}}>
     <Text accessibilityElementsHidden importantForAccessibility="no"
       {...{className:joinDropdownClasses("text-sm text-text",labelClassName)}}>{label}</Text>
-    <Host matchContents={{vertical:true}} style={{width:"100%"}}>
+    <Host colorScheme={colorScheme} matchContents={{vertical:true}} style={{width:"100%"}}>
       {Platform.OS==="android"
         ? <ComposeDropdown label={label} value={value} options={options} groups={groups}
             enabled={enabled} onChoose={choose} testID={testID}/>

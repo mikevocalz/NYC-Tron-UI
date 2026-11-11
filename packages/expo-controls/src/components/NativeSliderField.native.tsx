@@ -23,7 +23,7 @@ export type { NativeSliderFieldProps } from "./NativeSliderField.types.ts";
  * visible RN caption is hidden from assistive tech so it is not read twice.
  */
 export function NativeSliderField({
-  label,value,min,max,step,onPreview,onCommit,defaultValue,unit,disabled=false,testID,
+  label,value,min,max,step,onPreview,onCommit,defaultValue,unit,disabled=false,testID,colorScheme,
 }:NativeSliderFieldProps){
   const local=useRef<StoreApi<{preview:number|undefined}>|null>(null);
   if(!local.current)local.current=createStore<{preview:number|undefined}>(()=>({preview:undefined}));
@@ -55,7 +55,7 @@ export function NativeSliderField({
         precision={decimals} disabled={disabled} onCommit={commit} style={{width:80}}/>
       {unit?<Text {...{className:"text-text-muted text-xs"}}>{unit}</Text>:null}
     </View>
-    <Host matchContents={{vertical:true}} style={{width:"100%",minHeight:44}}>
+    <Host colorScheme={colorScheme} matchContents={{vertical:true}} style={{width:"100%",minHeight:44}}>
       {Platform.OS==="android"
         ? <ComposeSlider value={shown} min={min} max={max} steps={composeSteps(min,max,step)} enabled={!disabled}
             onValueChange={preview_} onValueChangeFinished={finish}
