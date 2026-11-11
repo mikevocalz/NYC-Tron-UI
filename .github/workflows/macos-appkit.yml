@@ -50,7 +50,7 @@ jobs:
           corepack enable
           corepack pnpm install --frozen-lockfile --ignore-scripts
       - name: Check shared archive and native driver contracts
-        run: node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs
+        run: node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs tooling/macos-appkit/patch-expo-device-name.test.mjs
       - name: Build and pack core with release provenance
         if: inputs.workspace_artifact == '' && inputs.workspace_manifest_sha256 == ''
         run: |
@@ -192,6 +192,7 @@ jobs:
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-device-name/*.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.mm
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.log
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE

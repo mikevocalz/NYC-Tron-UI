@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "scope": "Normalized completed GitHub run/job/artifact metadata; no artifact archive bytes retrieved.",
+  "run": {
+    "id": 42977406729,
+    "name": "NYC-Tron rendered web overlay acceptance",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "runNumber": 308,
+    "attempt": 1,
+    "workflowPath": ".github/workflows/menu-browser.yml",
+    "headBranch": "codex/v1-appkit-interactions-nov10",
+    "headSha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "createdAt": "2026-11-11T07:09:12Z",
+    "runStartedAt": "2026-11-11T07:09:12Z",
+    "updatedAt": "2026-11-11T07:09:52Z",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406729",
+    "pullRequests": [
+      {
+        "number": 59,
+        "head": {
+          "ref": "codex/v1-appkit-interactions-nov10",
+          "sha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd"
+        },
+        "base": {
+          "ref": "codex/v1-completion",
+          "sha": "ac5d69585a52a6e945dc996ea08030e190574699"
+        }
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "id": 130379593658,
+      "runId": 42977406729,
+      "name": "chromium",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406729/job/130379593658",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install isolated browser test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Exercise the rendered RN web menu, popover, command palette and tooltip",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13835573308,
+      "name": "overlay-renders",
+      "sizeInBytes": 280598,
+      "digest": "sha256:65957a16752b1020c3ddefbfecffbecdb64bf112be66b1c39466a033c3b4fd68",
+      "expired": false,
+      "createdAt": "2026-11-11T07:09:50Z",
+      "updatedAt": "2026-11-11T07:09:50Z",
+      "expiresAt": "2026-11-25T07:09:49Z",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13835573308",
+      "workflowRun": {
+        "id": 42977406729,
+        "headBranch": "codex/v1-appkit-interactions-nov10",
+        "headSha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd"
+      },
+      "digestAuthority": "GitHub artifact API and matching upload-log producer digest; not independently recomputed from archive bytes.",
+      "archiveBytesRetrieved": false,
+      "archiveMembersInspected": false,
+      "pixelsInspected": false
+    }
+  ],
+  "actualCheckout": {
+    "sha": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "tree": "8bafabc7750c8a087a56a9a309fbd04f5ea0d377",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "1283fd6dea6cead03be7d0eb22863e02dbe648fd"
+    ],
+    "logLine": 123,
+    "identitySource": "Exact git log -1 --format=%H output in original job log plus independently retrieved Git commit object."
+  },
+  "availability": {
+    "jobStartedAt": null,
+    "jobCompletedAt": null,
+    "note": "The successful workflow-jobs wrapper exposes completed state and steps, but not job start/end timestamps. A separate generic single-job URL was unsupported; these timestamps are not inferred from run/log timestamps."
+  }
+}

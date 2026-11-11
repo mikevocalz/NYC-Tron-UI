@@ -1,0 +1,31 @@
+2026-11-11T06:50:40.7697740Z ##[group]Run set -euo pipefail
+2026-11-11T06:50:40.7698970Z [36;1mset -euo pipefail[0m
+2026-11-11T06:50:40.7699760Z [36;1mprobe="$RUNNER_TEMP/hostname-probe"[0m
+2026-11-11T06:50:40.7700520Z [36;1mmkdir -p "$probe"[0m
+2026-11-11T06:50:40.7701270Z [36;1mcat > "$probe/main.swift" <<'SWIFT'[0m
+2026-11-11T06:50:40.7702130Z [36;1mimport Foundation[0m
+2026-11-11T06:50:40.7702740Z [36;1mlet start = Date()[0m
+2026-11-11T06:50:40.7708390Z [36;1mlet name = ProcessInfo.processInfo.hostName[0m
+2026-11-11T06:50:40.7713000Z [36;1mprint(String(format: "ProcessInfo.hostName took %.2f s (%@)", Date().timeIntervalSince(start), name))[0m
+2026-11-11T06:50:40.7713610Z [36;1mprint(String(format: "%.3f", Date().timeIntervalSince(start)))[0m
+2026-11-11T06:50:40.7719930Z [36;1mSWIFT[0m
+2026-11-11T06:50:40.7720500Z [36;1mxcrun swiftc -O "$probe/main.swift" -o "$probe/hostname-probe"[0m
+2026-11-11T06:50:40.7724740Z [36;1mecho "hostname: $(hostname) / short: $(hostname -s) / LocalHostName: $(scutil --get LocalHostName 2>/dev/null || echo unset)"[0m
+2026-11-11T06:50:40.7729780Z [36;1m"$probe/hostname-probe" | head -1[0m
+2026-11-11T06:50:40.7734650Z [36;1mnames="$(hostname) $(hostname -s) $(scutil --get LocalHostName 2>/dev/null || true)"[0m
+2026-11-11T06:50:40.7738780Z [36;1mprimary="$(ipconfig getifaddr en0 2>/dev/null || true)"[0m
+2026-11-11T06:50:40.7749630Z [36;1m{ echo "127.0.0.1 $names"; if [ -n "$primary" ]; then echo "$primary $names"; fi; } | sudo tee -a /etc/hosts >/dev/null[0m
+2026-11-11T06:50:40.7750380Z [36;1msudo dscacheutil -flushcache || true[0m
+2026-11-11T06:50:40.7753170Z [36;1mseconds="$("$probe/hostname-probe" | tail -1)"[0m
+2026-11-11T06:50:40.7755220Z [36;1m"$probe/hostname-probe" | head -1[0m
+2026-11-11T06:50:40.7764030Z [36;1mnode -e 'if(!(Number(process.argv[1])<5))throw Error("ProcessInfo.hostName still blocks for "+process.argv[1]+" s")' "$seconds"[0m
+2026-11-11T06:50:41.0350970Z shell: /bin/bash -e {0}
+2026-11-11T06:50:41.0351590Z env:
+2026-11-11T06:50:41.0352280Z   CI: 1
+2026-11-11T06:50:41.0353490Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T06:50:41.0360880Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T06:50:41.0364710Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T06:50:41.0366310Z ##[endgroup]
+2026-11-11T06:50:50.9322070Z hostname: sat12-bq158-1cbe8a04-aeee-41de-910f-83052f18e90b-56E8C0C795AA.local / short: sat12-bq158-1cbe8a04-aeee-41de-910f-83052f18e90b-56E8C0C795AA / LocalHostName: sat12-bq158-1cbe8a04-aeee-41de-910f-83052f18e90b-56E8C0C795AA
+2026-11-11T06:50:50.9814580Z ProcessInfo.hostName took 0.03 s (sat12-bq158-1cbe8a04-aeee-41de-910f-83052f18e90b-56e8c0c795aa.local)
+2026-11-11T06:50:51.3240040Z ProcessInfo.hostName took 0.01 s (sat12-bq158-1cbe8a04-aeee-41de-910f-83052f18e90b-56e8c0c795aa.local)

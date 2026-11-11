@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "platform": "web",
+  "browser": "chromium",
+  "scope": "Completed rendered-browser fixture only.",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "runId": 42977406729,
+  "jobId": 130379593658,
+  "runAttempt": 1,
+  "helperHead": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+  "actualCheckout": {
+    "sha": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "tree": "8bafabc7750c8a087a56a9a309fbd04f5ea0d377",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "1283fd6dea6cead03be7d0eb22863e02dbe648fd"
+    ],
+    "logLine": 123
+  },
+  "sourceTreeMatchesReviewedHelper": true,
+  "originalLog": {
+    "filename": "chromium-job.log",
+    "bytes": 43805,
+    "characters": 40971,
+    "gitBlob": "fc1480d8226280181eac23f7dd73a19cee0ed754",
+    "sha256": "8dd0c46add455c45b19ff7963d2932895859c311c5466239ea2d39f2a4c188d6",
+    "representation": "Complete tool-returned decoded log retained as exact UTF-8, including its initial BOM; independently rehashed here."
+  },
+  "testSummary": {
+    "plannedCount": 32,
+    "workers": 2,
+    "recordedPassedCount": 32,
+    "uniqueDerivedCaseKeys": 32,
+    "uniqueReportedOrdinals": 32,
+    "reportedOrdinalsCover1Through32": true,
+    "unaccountedPlannedCases": 0,
+    "finalSummary": "32 passed (9.3s)",
+    "reportedDurationSeconds": 9.3,
+    "planLogLine": 377,
+    "summaryLogLine": 412,
+    "bySourceFile": {
+      "overlays-visual.spec.mjs": 20,
+      "menu.spec.mjs": 12
+    },
+    "caseKeyDefinition": "A derived key combining project, source file/line/column, and exact reported test title; not a separately exposed internal Playwright identifier.",
+    "cases": [
+      {
+        "reportedOrdinal": 1,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:popover renders inside the viewport (light, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "popover renders inside the viewport (light, phone)",
+        "durationMilliseconds": 419,
+        "logLine": 379
+      },
+      {
+        "reportedOrdinal": 2,
+        "derivedCaseKey": "chromium:menu.spec.mjs:5:1:keyboard opens at first item, skips disabled branches, wraps, and restores focus on Escape",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 5,
+        "sourceColumn": 1,
+        "title": "keyboard opens at first item, skips disabled branches, wraps, and restores focus on Escape",
+        "durationMilliseconds": 604,
+        "logLine": 380
+      },
+      {
+        "reportedOrdinal": 3,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:commands renders inside the viewport (light, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "commands renders inside the viewport (light, phone)",
+        "durationMilliseconds": 398,
+        "logLine": 381
+      },
+      {
+        "reportedOrdinal": 4,
+        "derivedCaseKey": "chromium:menu.spec.mjs:27:1:up arrow opens at the last item and Space activates the focused checkbox",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 27,
+        "sourceColumn": 1,
+        "title": "up arrow opens at the last item and Space activates the focused checkbox",
+        "durationMilliseconds": 394,
+        "logLine": 382
+      },
+      {
+        "reportedOrdinal": 5,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:palette renders inside the viewport (light, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "palette renders inside the viewport (light, phone)",
+        "durationMilliseconds": 401,
+        "logLine": 383
+      },
+      {
+        "reportedOrdinal": 6,
+        "derivedCaseKey": "chromium:menu.spec.mjs:38:1:pointer cannot invoke disabled actions or descendants and enabled selection closes the menu",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 38,
+        "sourceColumn": 1,
+        "title": "pointer cannot invoke disabled actions or descendants and enabled selection closes the menu",
+        "durationMilliseconds": 461,
+        "logLine": 384
+      },
+      {
+        "reportedOrdinal": 7,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:tooltip renders inside the viewport (light, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "tooltip renders inside the viewport (light, phone)",
+        "durationMilliseconds": 508,
+        "logLine": 385
+      },
+      {
+        "reportedOrdinal": 8,
+        "derivedCaseKey": "chromium:menu.spec.mjs:53:1:outside close button dismisses without invoking an action",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 53,
+        "sourceColumn": 1,
+        "title": "outside close button dismisses without invoking an action",
+        "durationMilliseconds": 330,
+        "logLine": 386
+      },
+      {
+        "reportedOrdinal": 9,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:trigger-popover renders inside the viewport (light, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "trigger-popover renders inside the viewport (light, phone)",
+        "durationMilliseconds": 368,
+        "logLine": 387
+      },
+      {
+        "reportedOrdinal": 10,
+        "derivedCaseKey": "chromium:menu.spec.mjs:61:1:Tab and Shift+Tab stay inside the open action menu and Escape returns focus to the trigger",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 61,
+        "sourceColumn": 1,
+        "title": "Tab and Shift+Tab stay inside the open action menu and Escape returns focus to the trigger",
+        "durationMilliseconds": 415,
+        "logLine": 388
+      },
+      {
+        "reportedOrdinal": 11,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:popover renders inside the viewport (dark, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "popover renders inside the viewport (dark, phone)",
+        "durationMilliseconds": 386,
+        "logLine": 389
+      },
+      {
+        "reportedOrdinal": 12,
+        "derivedCaseKey": "chromium:menu.spec.mjs:77:1:selecting a menu item with the keyboard returns focus to the trigger",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 77,
+        "sourceColumn": 1,
+        "title": "selecting a menu item with the keyboard returns focus to the trigger",
+        "durationMilliseconds": 372,
+        "logLine": 390
+      },
+      {
+        "reportedOrdinal": 13,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:commands renders inside the viewport (dark, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "commands renders inside the viewport (dark, phone)",
+        "durationMilliseconds": 369,
+        "logLine": 391
+      },
+      {
+        "reportedOrdinal": 14,
+        "derivedCaseKey": "chromium:menu.spec.mjs:85:1:web NativePopover is placed below the anchor, cycles Tab and restores focus",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 85,
+        "sourceColumn": 1,
+        "title": "web NativePopover is placed below the anchor, cycles Tab and restores focus",
+        "durationMilliseconds": 430,
+        "logLine": 392
+      },
+      {
+        "reportedOrdinal": 15,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:palette renders inside the viewport (dark, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "palette renders inside the viewport (dark, phone)",
+        "durationMilliseconds": 423,
+        "logLine": 393
+      },
+      {
+        "reportedOrdinal": 16,
+        "derivedCaseKey": "chromium:menu.spec.mjs:106:1:CommandPopover focuses the first enabled item, skips disabled on Tab and restores focus",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 106,
+        "sourceColumn": 1,
+        "title": "CommandPopover focuses the first enabled item, skips disabled on Tab and restores focus",
+        "durationMilliseconds": 410,
+        "logLine": 394
+      },
+      {
+        "reportedOrdinal": 17,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:tooltip renders inside the viewport (dark, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "tooltip renders inside the viewport (dark, phone)",
+        "durationMilliseconds": 511,
+        "logLine": 395
+      },
+      {
+        "reportedOrdinal": 18,
+        "derivedCaseKey": "chromium:menu.spec.mjs:121:1:CommandPalette filters, moves with arrows, runs with Enter and restores focus",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 121,
+        "sourceColumn": 1,
+        "title": "CommandPalette filters, moves with arrows, runs with Enter and restores focus",
+        "durationMilliseconds": 367,
+        "logLine": 396
+      },
+      {
+        "reportedOrdinal": 19,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:trigger-popover renders inside the viewport (dark, phone)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "trigger-popover renders inside the viewport (dark, phone)",
+        "durationMilliseconds": 388,
+        "logLine": 397
+      },
+      {
+        "reportedOrdinal": 20,
+        "derivedCaseKey": "chromium:menu.spec.mjs:141:1:CommandPalette keeps Tab inside, never activates disabled commands and Escape closes",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 141,
+        "sourceColumn": 1,
+        "title": "CommandPalette keeps Tab inside, never activates disabled commands and Escape closes",
+        "durationMilliseconds": 530,
+        "logLine": 398
+      },
+      {
+        "reportedOrdinal": 21,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:popover renders inside the viewport (light, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "popover renders inside the viewport (light, tablet)",
+        "durationMilliseconds": 379,
+        "logLine": 399
+      },
+      {
+        "reportedOrdinal": 23,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:commands renders inside the viewport (light, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "commands renders inside the viewport (light, tablet)",
+        "durationMilliseconds": 315,
+        "logLine": 400
+      },
+      {
+        "reportedOrdinal": 22,
+        "derivedCaseKey": "chromium:menu.spec.mjs:164:1:tooltip appears after the focus delay, describes the control and hides on Escape and blur",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 164,
+        "sourceColumn": 1,
+        "title": "tooltip appears after the focus delay, describes the control and hides on Escape and blur",
+        "durationMilliseconds": 731,
+        "logLine": 401
+      },
+      {
+        "reportedOrdinal": 24,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:palette renders inside the viewport (light, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "palette renders inside the viewport (light, tablet)",
+        "durationMilliseconds": 382,
+        "logLine": 402
+      },
+      {
+        "reportedOrdinal": 25,
+        "derivedCaseKey": "chromium:menu.spec.mjs:178:1:trigger-form popover anchors to its measured trigger and hands focus back",
+        "project": "chromium",
+        "file": "menu.spec.mjs",
+        "sourceLine": 178,
+        "sourceColumn": 1,
+        "title": "trigger-form popover anchors to its measured trigger and hands focus back",
+        "durationMilliseconds": 574,
+        "logLine": 403
+      },
+      {
+        "reportedOrdinal": 26,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:tooltip renders inside the viewport (light, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "tooltip renders inside the viewport (light, tablet)",
+        "durationMilliseconds": 498,
+        "logLine": 404
+      },
+      {
+        "reportedOrdinal": 27,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:trigger-popover renders inside the viewport (light, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "trigger-popover renders inside the viewport (light, tablet)",
+        "durationMilliseconds": 279,
+        "logLine": 405
+      },
+      {
+        "reportedOrdinal": 28,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:popover renders inside the viewport (dark, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "popover renders inside the viewport (dark, tablet)",
+        "durationMilliseconds": 289,
+        "logLine": 406
+      },
+      {
+        "reportedOrdinal": 29,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:commands renders inside the viewport (dark, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "commands renders inside the viewport (dark, tablet)",
+        "durationMilliseconds": 289,
+        "logLine": 407
+      },
+      {
+        "reportedOrdinal": 30,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:palette renders inside the viewport (dark, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "palette renders inside the viewport (dark, tablet)",
+        "durationMilliseconds": 327,
+        "logLine": 408
+      },
+      {
+        "reportedOrdinal": 31,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:tooltip renders inside the viewport (dark, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "tooltip renders inside the viewport (dark, tablet)",
+        "durationMilliseconds": 431,
+        "logLine": 409
+      },
+      {
+        "reportedOrdinal": 32,
+        "derivedCaseKey": "chromium:overlays-visual.spec.mjs:18:3:trigger-popover renders inside the viewport (dark, tablet)",
+        "project": "chromium",
+        "file": "overlays-visual.spec.mjs",
+        "sourceLine": 18,
+        "sourceColumn": 3,
+        "title": "trigger-popover renders inside the viewport (dark, tablet)",
+        "durationMilliseconds": 293,
+        "logLine": 410
+      }
+    ]
+  },
+  "artifact": {
+    "id": 13835573308,
+    "name": "overlay-renders",
+    "sizeInBytes": 280598,
+    "sha256ReportedByProducer": "65957a16752b1020c3ddefbfecffbecdb64bf112be66b1c39466a033c3b4fd68",
+    "apiDigestMatchesUploadLog": true,
+    "uploadedFileCountReportedByProducer": 20,
+    "uploadPath": "packages/expo-controls/tests/browser/test-results/**/*.png",
+    "archiveBytesRetrieved": false,
+    "independentlyRehashed": false,
+    "archiveMembersInspected": false,
+    "pixelsInspected": false
+  },
+  "boundaries": [
+    "This receipt establishes the completed Chromium fixture result on the actual checked-out merge tree.",
+    "It does not establish macOS, Windows, mobile, physical-device, screen-reader, or release-package acceptance.",
+    "The 20 uploaded PNG files and archive digest are producer/API observations; the archive was not extracted and screenshots were not viewed.",
+    "The helper's modified Expo acceptance-consumer source has no native runtime result in this browser receipt.",
+    "No workflow rerun, dispatch, source change, or reference update was performed for this receipt."
+  ]
+}

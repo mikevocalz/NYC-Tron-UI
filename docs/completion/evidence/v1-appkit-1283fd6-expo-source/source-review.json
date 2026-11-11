@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-source-reconciliation-review",
+  "scope": "Source, exact immutable byte identities and Git tree review; not native acceptance.",
+  "helper": {
+    "commit": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "tree": "8bafabc7750c8a087a56a9a309fbd04f5ea0d377",
+    "orderedParents": [
+      "79a51bb7663bffe130568f81e276ded0e0b065b9",
+      "ac5d69585a52a6e945dc996ea08030e190574699"
+    ],
+    "publication": {
+      "reportedBy": "root",
+      "reportedAt": "2026-11-11T07:09:07Z",
+      "method": "Fresh expected-head lease, nonforced ref update and exact post-read; reviewer independently verified immutable commit/tree, and made no ref update."
+    },
+    "fullTree": {
+      "untruncated": true,
+      "leaves": 2050,
+      "treeObjectsIncludingRoot": 284,
+      "allDirectoryHashesRecomputed": true
+    },
+    "comparedWithExternalHead": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "changedPaths": [
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "before": {
+          "sha": "4507f860155746bb6f1a3a9528dd0e74de5d6492",
+          "mode": "100644",
+          "type": "blob"
+        },
+        "after": {
+          "sha": "a82e2fc7df3bde243eb6d053a97e310c39b1293c",
+          "mode": "100644",
+          "type": "blob"
+        }
+      },
+      {
+        "path": "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronPointerCaptureView.kt",
+        "before": {
+          "sha": "23b6f11431be3869b98b55b01c5026479adf50bf",
+          "mode": "100644",
+          "type": "blob"
+        },
+        "after": {
+          "sha": "04f8fdfaf7c89b169ee7d5c81a6584c12ccb49d1",
+          "mode": "100644",
+          "type": "blob"
+        }
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+        "before": {
+          "sha": "2f1264e9f5458bf0fa8d3563cc44fe1e79df3ee7",
+          "mode": "100644",
+          "type": "blob"
+        },
+        "after": {
+          "sha": "8bd25374b1c3a24911d13b0a2e8e40b0b5d9f0f4",
+          "mode": "100644",
+          "type": "blob"
+        }
+      },
+      {
+        "path": "tooling/macos-appkit/patch-expo-device-name.mjs",
+        "before": {
+          "sha": "1db73096cf95827f5582d188580e74a482beb503",
+          "mode": "100644",
+          "type": "blob"
+        },
+        "after": {
+          "sha": "2e6ff07ebf22fa8212dfb2028ff740d46720d622",
+          "mode": "100644",
+          "type": "blob"
+        }
+      }
+    ],
+    "otherLeavesAndModesUnchanged": 2046
+  },
+  "sourceIdentities": {
+    "patch": {
+      "path": "tooling/macos-appkit/patch-expo-device-name.mjs",
+      "preimage": {
+        "gitBlob": "1db73096cf95827f5582d188580e74a482beb503",
+        "bytes": 3900,
+        "sha256": "80a727480dbbb864894712f4944b5a28aadc3d7333ef83538169014b6d5739b4"
+      },
+      "reviewed": {
+        "gitBlob": "2e6ff07ebf22fa8212dfb2028ff740d46720d622",
+        "bytes": 3864,
+        "sha256": "35dbf1d0beff6a73bcb8f1af8cb2acfc161ad468522a968ea1161359d074f0f9"
+      }
+    },
+    "tests": {
+      "path": "tooling/macos-appkit/patch-expo-device-name.test.mjs",
+      "gitBlob": "08cb09e31bc830b7449dbe2600a367939aa845c9",
+      "bytes": 622,
+      "sha256": "8dd0d797bac50dc0292c978957045c6a26cf7b1c827eaee24e4ef4aec65bbaaa"
+    },
+    "preparation": {
+      "path": "tooling/macos-appkit/prepare-consumer.mjs",
+      "preimage": {
+        "gitBlob": "e1601516ac2e420a49b6f15be7d0b7d07634894c",
+        "bytes": 8413,
+        "sha256": "a43ca711eec8c904690cb87e8b7e924561b0b8a6e3c348b6b26ebcc94fe405e2"
+      },
+      "reviewed": {
+        "gitBlob": "43bbe4568fd25697881254c8976778bb75b6e972",
+        "bytes": 8640,
+        "sha256": "e5273cf9296ef5b4fa92e4e360567c968812c9c153a425d07e206fbc656ceb7d"
+      }
+    },
+    "helperWorkflow": {
+      "path": ".github/workflows/macos-appkit.yml",
+      "gitBlob": "c46871c2e8b065b478da8ed1946432a2d05502b9",
+      "bytes": 9889,
+      "sha256": "a593e9575d0d4f24eb7ca047317e2bfd5f2e18eed7c3762fb5f37f7d0bba591c"
+    },
+    "aggregateWorkflow": {
+      "path": ".github/workflows/macos-appkit.yml",
+      "preimage": {
+        "gitBlob": "c19589c71bf77b8145766ee9efe446b4cdce0142",
+        "bytes": 10952,
+        "sha256": "261fe351210d98e6d6f839daefe91aef419fcfda04e66fc00735873346c97d9a"
+      },
+      "reviewed": {
+        "gitBlob": "73a526c3768fa21b3d8a0b071db47ebfa9cc5bf8",
+        "bytes": 11091,
+        "sha256": "c1f7e3ec874a916c27aefb9164ae695505af349ab7c1f5297b8d3fac2491b6f3"
+      }
+    }
+  },
+  "expoSource": {
+    "repository": "expo/expo",
+    "revision": "04ead0d0c3d5b77853c5b79ab9b7bb86fb30271c",
+    "packageName": "expo-modules-core",
+    "packageVersion": "55.0.27",
+    "path": "packages/expo-modules-core/ios/Utilities/ConstantsProvider.swift",
+    "original": {
+      "blob": "7a820eff57eb7d6e4ed3c216763f83521897b90d",
+      "bytes": 3990,
+      "sha256": "16d30e5eafc45074426b770c1b8d0330c754e6b424213595c1fd9c5c673a884a"
+    },
+    "materializedReplacement": {
+      "blob": "23eff06296d6862a15ec3e82c18785cc14259fd0",
+      "bytes": 4297,
+      "sha256": "b6406c3a54ba65713d54e3971ffa8a56eef4fe830de558ee84dafc2f130f3bca"
+    },
+    "replacementCount": 1,
+    "site": "getDeviceName, #elseif os(macOS)",
+    "inverseRestoresOriginal": true,
+    "reachability": "The version-aligned official source places getDeviceName in performSynchronouslyOnMainActor and reads ProcessInfo.processInfo.hostName on macOS. This source fact does not bind an unknown sampled frame to that function."
+  },
+  "correction": {
+    "exactReversibleTransforms": 4,
+    "changes": [
+      "Qualify the header: the NSHost attribution for run 42973159971 is an external report; its original sample and timeout cause are not independently established by this review.",
+      "Change [UInt8](repeating: 0, count: 256) to [CChar](repeating: 0, count: 256).",
+      "Use withUnsafeMutableBufferPointer and gethostname($0.baseAddress!, 255), eliminating assumingMemoryBound from differently typed initialized storage.",
+      "Map the bounded non-NUL CChar prefix through UInt8(bitPattern:) before UTF8 decoding."
+    ],
+    "inverseRestoresPatchPreimage": true,
+    "importsAndGuardWriteReceiptImplementationByteIdentical": true,
+    "unchangedSemantics": [
+      "256 zero-initialized elements",
+      "255-byte gethostname argument",
+      "status == 0 success branch",
+      "bounded non-NUL prefix",
+      "UTF8 decoding",
+      "Mac fallback"
+    ],
+    "rationale": "The typed buffer removes the specific UInt8-to-CChar mutable-access contract concern documented by Swift's pointer API and SE-0107; it is not a fix inferred from an observed native crash."
+  },
+  "preparation": {
+    "exactReversibleTransforms": 3,
+    "changes": [
+      "Import patchExpoDeviceName.",
+      "Call it only when --native-acceptance is present, after the existing private transport patch and before Spark analyze.",
+      "Embed its returned receipt in package-preparation.json."
+    ],
+    "inverseRestoresPreimage": true,
+    "sourceReviewedGuards": [
+      "Requires manifest name nyc-tron-appkit-reference, a truthy private flag, and expo-modules-core version 55.0.27.",
+      "Rejects a symbolic-link target and a resolved target outside the private consumer.",
+      "Requires the full original provider SHA-256 before writing.",
+      "Requires one replacement context and verifies the written provider hash.",
+      "Writes before/after hashes to acceptance-device-name/patch-receipt.json."
+    ],
+    "archiveBoundary": "The patch targets an installed Expo dependency after clean installation. It does not edit the adapter/core candidate archives or Spark distribution archives, and existing archive/installed-byte comparisons are unchanged. Native results would describe this explicitly modified consumer, not unmodified Expo behavior."
+  },
+  "aggregateWorkflow": {
+    "exactReversibleTransforms": 2,
+    "changes": [
+      "Append tooling/macos-appkit/patch-expo-device-name.test.mjs to the existing always-run shared archive/native driver source check.",
+      "Add acceptance-device-name/*.json immediately after acceptance-transport/*.json in the existing always-uploaded native evidence paths."
+    ],
+    "inverseRestoresPreimage": true,
+    "unchanged": [
+      "Reusable-workflow inputs",
+      "canonical archive selection and verification",
+      "native deadlines and assertions",
+      "artifact success conditions",
+      "other artifact paths"
+    ],
+    "hostnameSetupPresent": false
+  },
+  "checks": {
+    "correctedPatch": "Complete blob fetched/rehashed; four unique forward and inverse transformations checked.",
+    "officialSource": "Full official preimage rehashed; one macOS replacement independently materialized to the recorded 4,297-byte hash and inversed.",
+    "existingTests": {
+      "count": 2,
+      "kind": "Unchanged test bodies evaluated in V8 using local test/assert shims",
+      "status": "passed",
+      "coverage": "Single-context text replacement and refusal of missing/duplicated context; not filesystem or manifest/path-guard execution."
+    },
+    "helperTree": "Complete recursive tree independently recomputed, including all 284 directory hashes; exact ordered parents and four changed leaves checked.",
+    "preparationAndWorkflow": "Exact three- and two-transform inverses checked.",
+    "verifierLabel": "a82e2fc7df3bde243eb6d053a97e310c39b1293c adds only the fixed ConstantsProvider.swift -> expo-constants-provider source-file label over ccdbf3f1d2e58612ddd3993892d071dab9724fb2; no new function or phase inference.",
+    "diagnosticHarness": {
+      "gitBlob": "bd47ae1e4453c147d7230c2bae60b63700e69105",
+      "groups": 10,
+      "status": "passed",
+      "kind": "Reproduction of the same author V8/mock designs, not ten additional runtime tests",
+      "normalEnvelopeBytes": 4383,
+      "trimmedEnvelopeBytes": 10359
+    }
+  },
+  "limits": [
+    "No Node operating-system filesystem execution, Swift compilation, or native runtime result is claimed by this review.",
+    "Filesystem guards and receipts were source-reviewed; the two existing test bodies do not execute those guards.",
+    "No current helper actual-merge or CI outcome is included at this source checkpoint.",
+    "The external 8f17/79a run outcomes and asserted raw-stack causes remain separate from this reviewed source.",
+    "The reverted hostname setup is not restored. No host resolver configuration, TCC, privilege, app deadline, retry, or native assertion change is introduced by this reconciliation.",
+    "A later strict native pass must preserve the installed Expo modification and its receipt as part of its tested environment."
+  ],
+  "supersededUnpublishedCandidates": {
+    "helperCommits": [
+      "24aca7f316d4447d02ce9c322deb7b3106df933d",
+      "b00cf503f49b862962c155dcdb7930575514a80d"
+    ],
+    "hostnameWorkflowBlob": "eebf448e583ef35006ec1a99493370ba381e5d45",
+    "note": "Root reports the helper candidates were never published. The hostname workflow remained an unreferenced review candidate after the external revert."
+  },
+  "primaryReferences": [
+    "https://github.com/expo/expo/blob/04ead0d0c3d5b77853c5b79ab9b7bb86fb30271c/packages/expo-modules-core/ios/Utilities/ConstantsProvider.swift",
+    "https://github.com/expo/expo/blob/04ead0d0c3d5b77853c5b79ab9b7bb86fb30271c/packages/expo-modules-core/ios/Utilities.swift",
+    "https://developer.apple.com/documentation/swift/unsafemutablerawpointer/assumingmemorybound(to:)",
+    "https://github.com/swiftlang/swift-evolution/blob/main/proposals/0107-unsaferawpointer.md",
+    "https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/gethostname.3.html"
+  ]
+}

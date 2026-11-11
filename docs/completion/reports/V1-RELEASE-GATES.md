@@ -13,6 +13,124 @@ The latest completed desktop attempts still failed their complete native gates.
 The original failures, supported corrections and new native runs have separate
 receipts; a source or compiler pass does not substitute for interaction results.
 
+### November 11 AppKit hostname-run result and symbol diagnostic
+
+The direct-head `8f17a1fd7530d2907e28401063cd7b49841e8ebd` run
+[42973159971](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42973159971)
+completed with the same initial `tron.window` request-2 timeout. Source checks
+passed 11 tests, the installed consumer passed 16, API declarations matched
+15 subpaths / 33 declarations, all seven native transport-probe cases passed,
+and standalone compilation and the hostname preflight succeeded. Native
+acceptance remained diagnostic-only and tested-distribution upload was skipped.
+The verifier did not reach its root-mount, tooltip or later interaction checks;
+actual React mounting remains unknown.
+
+The preflight printed a 0.03-second baseline and a 0.01-second post-setup call.
+A different invocation supplied the successful `<5` check; its scalar was not
+printed. These completed-call observations do not establish that hostname
+lookup caused the previous wait or that the host setup fixed app startup.
+The newly sampled main-thread projection has 30 retained rows, each with count
+161; the labels, depths and offsets equal the earlier 8a projection when counts
+are excluded. Its owned image-relative offset 355132 remains unnamed and the
+branch reaches `semaphore_wait_trap`. Counts are not additive, and the sampled
+projection does not prove an exact caller, a continuous 35-second wait or cause.
+
+The sampler process lived 4.841 seconds and closed 20.136 seconds before the
+request's 35.011-second rejection; observer settlement occurred at 35.014 seconds.
+The late native completion-trace interval was about 0.288 milliseconds and the
+submission-start-to-main-entry interval was 35.458414 seconds. The latter is not
+a queue-residence measurement. The late continuation identified the same process
+and bundle with a visible, inactive, non-key window. Sampling can perturb timing.
+
+The [completed-run receipt](../evidence/v1-appkit-8f17a1f-hostname-startup-timeout/README.md)
+retains both complete original job logs, exact JSON substrings and timestamped
+envelopes, the original hostname-step output and normalized completed metadata.
+Root independently checked these bytes and the run/job/artifact metadata.
+The 47-file native artifact is API-reported as 1,482,523 bytes with digest
+`c55678622445247576403f64e201c82828a705439a879e65a4a857ffad50f244`.
+Its archive, original sample and compiler transcript remain unextracted and
+uninspected; their producer-reported identities do not become local verification.
+
+Concurrent source subsequently reverted that hosts-file setup in `8f1cf564`
+and added `79a51bb7`'s pinned change to Expo's macOS device-name getter in the
+private native acceptance consumer. The source preimage matches the inspected
+version-aligned Expo provider SHA-256
+`16d30e5eafc45074426b770c1b8d0330c754e6b424213595c1fd9c5c673a884a`.
+The patch uses `gethostname` and records its before/after identities in consumer
+preparation. It does not modify the shipped adapter/core archives or the driver
+deadline and assertions. Its causal comments are external attribution: the
+original 8a and 8f raw samples have not been independently inspected here.
+Any resulting native evidence applies to this explicitly patched private
+consumer; it does not establish ordinary unpatched Expo startup behavior.
+
+Reviewed helper `1283fd6dea6cead03be7d0eb22863e02dbe648fd` was published
+at 07:09:07 UTC with tree `8bafabc7750c8a087a56a9a309fbd04f5ea0d377`
+and ordered parents `79a51bb7663bffe130568f81e276ded0e0b065b9`, then
+`ac5d69585a52a6e945dc996ea08030e190574699`. Root and independent review
+verified its complete 2,050-leaf map and recomputed all 284 tree-object hashes. A fresh,
+nonforced expected-head update preserved concurrent source; prepared
+`24aca7f`, `b00cf503` and hostname-capture candidate `eebf448e` were never
+published.
+
+The [symbol-source receipt](../evidence/v1-appkit-1283fd6-startup-symbol-source/README.md)
+binds verifier blob `a82e2fc7df3bde243eb6d053a97e310c39b1293c` and the
+reproducible harness. The diagnostic runs only after the original request
+settles, retains the original error and diagnostic-only latch, binds one
+retained owned frame to the same executable's UUID/load/range and complete
+hash, and uses bounded offline Apple symbol tools. One optional dSYM has a
+fixed path and must match the executable UUID; an existing unreadable or
+mismatched dSYM remains unknown. Raw symbol output remains private while
+the console receives only fixed labels and bounded metadata. A matching
+source-file label does not establish a unique function, phase or timeout cause.
+
+All ten existing author-designed V8/mock/static diagnostic groups passed and
+were reproduced by root and independent review as the same ten designs.
+Normal and trimmed envelopes measured 4,383 and 10,359 bytes, within 16 KiB.
+The eight-transform inverse restores verifier `4507f860`. These source and
+mock checks do not verify real Node filesystem behavior, `dwarfdump`, `atos`,
+Swift compilation or native interactions.
+
+The [Expo source review](../evidence/v1-appkit-1283fd6-expo-source/source-review.json)
+records the external private-consumer patch and its narrow correction:
+blob `2e6ff07ebf22fa8212dfb2028ff740d46720d622` uses `CChar` storage and its
+typed buffer pointer, retaining the 255-byte call, 256 zeroed elements, bounded
+UTF-8 decoding and fallback. This corrects the prior `UInt8` storage passed
+through `assumingMemoryBound(to: CChar.self)`; it is a documented pointer
+contract issue, not an observed native failure or explanation for the old wait.
+The exact pinned Swift source materializes to 4,297 bytes with SHA-256
+`b6406c3a54ba65713d54e3971ffa8a56eef4fe830de558ee84dafc2f130f3bca`.
+The two unchanged text-replacement tests were also exercised through V8 shims;
+their scope excludes filesystem guards and actual Swift execution.
+
+The aggregate workflow keeps its existing shared-archive inputs and strict
+native distribution gates, adding only the external patch test to its source
+check and the patch-receipt path to its always-uploaded evidence. Aggregate
+Windows readiness blob `070424fa` and its supported-host restriction remain
+unchanged. At this source checkpoint, neither the newly published helper nor
+the combined aggregate has a completed native acceptance result. Physical
+platform gates, the frozen combined distribution and exact-manifest owner
+approval remain open; no ledger row is promoted.
+
+### November 11 reviewed helper source and browser checkpoint
+
+After publication, [AppKit source job 130379594331](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406794/job/130379594331)
+confirmed actual PR merge `039390442b53ef8a44ca413246cb56ae29f3e095`
+and passed all 13 source tests with zero failures, cancellations or skips.
+That merge has the helper's exact reviewed tree and ordered parents
+`ac5d6958` then `1283fd6d`; its native interaction outcome remains separate.
+
+[Web overlay run 42977406729](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406729)
+also checked out that exact merge and passed all 32 tests in 9.3 seconds:
+20 rendering cases and 12 keyboard/focus/interaction cases, with 32 unique
+test IDs, two workers, no failures and no skipped cases. Root independently
+checked the complete 43,805-byte job log. The
+[browser receipt](../evidence/v1-web-1283fd6-overlay-pass/README.md)
+retains that result and source/artifact identities. Artifact 13835573308 is
+reported as 280,598 bytes, SHA-256
+`65957a16752b1020c3ddefbfecffbecdb64bf112be66b1c39466a033c3b4fd68`.
+Its ZIP and rendered pixels remain uninspected here. This browser result does
+not establish native desktop or physical-platform acceptance.
+
 ### November 11 Windows readiness source reconciliation
 
 The [source receipt](../evidence/v1-windows-070424f-readiness-source/README.md)

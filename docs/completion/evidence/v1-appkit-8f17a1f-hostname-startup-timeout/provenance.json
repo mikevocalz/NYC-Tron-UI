@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "Completed historical direct-head AppKit hostname-preflight/startup-timeout outcome",
+  "workflow": {
+    "id": 42973159971,
+    "name": "NYC-Tron AppKit native host",
+    "path": ".github/workflows/macos-appkit.yml",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "failure",
+    "run_number": 24,
+    "run_attempt": 1,
+    "workflow_id": 413427679,
+    "head_sha": "8f17a1fd7530d2907e28401063cd7b49841e8ebd",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "created_at": "2026-11-11T06:32:35Z",
+    "run_started_at": "2026-11-11T06:32:35Z",
+    "updated_at": "2026-11-11T06:51:50Z",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42973159971"
+  },
+  "jobs": {
+    "source": {
+      "id": 130366073441,
+      "conclusion": "success"
+    },
+    "native": {
+      "id": 130366229307,
+      "conclusion": "failure"
+    }
+  },
+  "source": {
+    "commit": "8f17a1fd7530d2907e28401063cd7b49841e8ebd",
+    "tree": "b868c3bf7f45b7d668c629b6629c33f19c48bb28",
+    "parents": [
+      "8a2466835e14b579002a7fbaa3a240aaaf16e059"
+    ],
+    "actualSourceCheckout": "8f17a1fd7530d2907e28401063cd7b49841e8ebd",
+    "sourceCheckoutLogLine": 107,
+    "actualNativeCheckout": "8f17a1fd7530d2907e28401063cd7b49841e8ebd",
+    "nativeCheckoutLogLine": 114,
+    "checkoutKind": "direct head from workflow_dispatch",
+    "prMergeCommit": null,
+    "treeLeavesIndependentlyVerified": 2048,
+    "treeObjectsIndependentlyRecomputed": 284,
+    "workflowGitBlob": "70061e6a9fb2b0752ccca2825669d169e7a11064",
+    "previousWorkflowGitBlob": "ed8c5a2c8eb06e68b920413836c8cd32fadcf198",
+    "changedPaths": [
+      ".github/workflows/macos-appkit.yml"
+    ]
+  },
+  "chronology": {
+    "runIsDirectWorkflowDispatch": true,
+    "runIsPrMerge": false,
+    "laterRevisionOutsideThisRun": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "laterRevisionValidatedByThisRun": false,
+    "earlierReceiptsRewritten": false
+  },
+  "completedGates": {
+    "source": {
+      "passed": 11,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMs": 625.783012,
+      "file": "source-job.log",
+      "summaryLines": {
+        "start": 168,
+        "end": 175
+      }
+    },
+    "consumerController": {
+      "passed": 16,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMs": 69.888,
+      "file": "native-job.log",
+      "summaryLines": {
+        "start": 251,
+        "end": 258
+      }
+    },
+    "packagePreparation": {
+      "status": "success",
+      "packageCheckLine": 259,
+      "consumerPreparedLine": 431
+    },
+    "installedApi": {
+      "status": "matched",
+      "packages": 1,
+      "subpaths": 15,
+      "reachableDeclarations": 33,
+      "line": 441,
+      "countsAreInventoryNotTests": true
+    },
+    "nativeTransportProbe": {
+      "status": "passed",
+      "originalAndPatchedCases": 7,
+      "tracePrivacyPassed": true,
+      "closedPeerFailurePassed": true,
+      "line": 451,
+      "nativeAppAcceptanceSeparate": true
+    },
+    "compile": {
+      "outcome": "success",
+      "exitCode": 0,
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "payloadFile": "build-result.json"
+    },
+    "hostnameSetup": {
+      "conclusion": "success",
+      "nativeStepNumber": 10
+    },
+    "nativeRuntime": {
+      "status": "failed",
+      "diagnosticOnly": true,
+      "nativeAcceptancePermitted": false,
+      "testedDistributionUpload": "skipped"
+    }
+  },
+  "hostnamePreflight": {
+    "nativeStepNumber": 10,
+    "conclusion": "success",
+    "originalStepLog": "hostname-preflight-step.log",
+    "originalNativeLogLines": {
+      "start": 512,
+      "end": 542
+    },
+    "printedProbeBeforeSetup": {
+      "line": 541,
+      "elapsedSecondsRoundedToTwoDecimals": 0.03
+    },
+    "printedProbeAfterSetup": {
+      "line": 542,
+      "elapsedSecondsRoundedToTwoDecimals": 0.01
+    },
+    "thresholdInvocationIsSeparateFromPrintedAfterInvocation": true,
+    "thresholdSecondsExclusive": 5,
+    "thresholdGatePassed": true,
+    "exactThresholdInvocationElapsedSeconds": null,
+    "hostFileContentsIndependentlyInspected": false,
+    "hostSetupCauseOrFixEstablished": false,
+    "printedBeforeTimestamp": "2026-11-11T06:50:50.9814580Z",
+    "printedAfterTimestamp": "2026-11-11T06:50:51.3240040Z",
+    "printedValuesAreRounded": true,
+    "checkedInvocationExactOutputRetained": false,
+    "checkedAndPrintedAfterAreDifferentInvocations": true,
+    "rawStepFile": {
+      "file": "hostname-preflight-step.log",
+      "utf8Bytes": 2839,
+      "sha256": "16720188c35c5c1940e2c3fa4f76045b5fb15ddeb002847b6aa604b3da8c322b",
+      "gitBlob": "3fa37794fe1dc7713c539893486e78dbeb624645"
+    },
+    "commitProseTreatedAsIndependentStackEvidence": false
+  },
+  "primaryFailure": {
+    "message": "Native driver response timed out awaiting tron.window (request 2)",
+    "file": "native-job.log",
+    "line": 567,
+    "consoleEmittedAt": "2026-11-11T06:51:33.1482300Z",
+    "command": "tron.window",
+    "action": "show",
+    "requestId": 2,
+    "startedAt": "2026-11-11T06:50:54.396Z",
+    "rejectedAt": "2026-11-11T06:51:29.407Z",
+    "clientDeadlineMs": 35000,
+    "reportedErrorRemainsOriginalDriverTimeout": true
+  },
+  "watchdog": {
+    "processId": 40640,
+    "parentProcessId": 40620,
+    "identity": {
+      "kind": "pid-ppid-ps-comm-argv0-not-mapped-executable",
+      "parsed": true,
+      "processId": 40640,
+      "parentProcessId": 40620,
+      "matchesPid": true,
+      "matchesParent": true,
+      "matchesExpectedCommand": true
+    },
+    "firstRequestOnly": true,
+    "diagnosticOnly": true,
+    "nativeAcceptancePermitted": false,
+    "samplingMayPerturbScheduling": true,
+    "triggerAfterMs": 10000,
+    "armedAt": "2026-11-11T06:50:54.396Z",
+    "firedAt": "2026-11-11T06:51:04.402Z",
+    "settledAt": "2026-11-11T06:51:29.410Z",
+    "requestOutcome": "rejected",
+    "status": "sampler-closed",
+    "statusScope": "observer-task-outcome",
+    "requestedDurationSeconds": 2,
+    "requestedIntervalMilliseconds": 10,
+    "samplerTimeoutMs": 8000,
+    "cleanupGraceMs": 1000,
+    "samplerProcess": {
+      "attemptedAt": "2026-11-11T06:51:04.420Z",
+      "processId": 41427,
+      "spawnObserved": true,
+      "spawnFailed": false,
+      "requestPendingAtAttempt": true,
+      "requestPendingAtSpawnEvent": true,
+      "spawnedAt": "2026-11-11T06:51:04.430Z",
+      "exitObserved": true,
+      "exitedAt": "2026-11-11T06:51:09.270Z",
+      "closeObserved": true,
+      "closedAt": "2026-11-11T06:51:09.271Z",
+      "exitCode": 0,
+      "signal": null,
+      "errorCode": null,
+      "timedOut": false,
+      "outputLimit": false,
+      "stdoutBytes": 0,
+      "stderrBytes": 258,
+      "termRequested": false,
+      "killRequested": false,
+      "cleanupUnconfirmed": false,
+      "cleanupLimitReached": false,
+      "captureFailed": false,
+      "settledAt": "2026-11-11T06:51:09.271Z"
+    },
+    "skipPostFailureSample": false
+  },
+  "derivedTiming": {
+    "basis": "Differences of recorded JavaScript wall-clock timestamps; separate from native monotonic intervals",
+    "samplerProcessLifetimeSeconds": 4.841,
+    "samplerCloseBeforeRejectionSeconds": 20.136,
+    "rejectionAfterRequestStartSeconds": 35.011,
+    "observerSettlementAfterRequestStartSeconds": 35.014,
+    "processLifetimeIsNotMeasuredCollectionDuration": true
+  },
+  "nativeTiming": {
+    "phase": "workspace-main-continuation",
+    "atEpochSeconds": 1794379889.9892259,
+    "clock": "CACurrentMediaTime",
+    "clockExcludesSystemSleep": true,
+    "intervalsAreNotQueueResidence": true,
+    "intervalsDoNotEstablishCause": true,
+    "completionTraceElapsedSeconds": 0.00028833333317379584,
+    "submissionStartToMainEntrySeconds": 35.45841429166671,
+    "queueResidenceEstablished": false,
+    "causeEstablished": false
+  },
+  "lateNativeState": {
+    "sameProcess": true,
+    "sameBundle": true,
+    "visible": true,
+    "applicationActive": false,
+    "key": false,
+    "payloadFile": "startup-evidence.json"
+  },
+  "projectedMainThread": {
+    "sourceFile": "startup-sample.json",
+    "headerProcessId": 40640,
+    "analysisProcessId": 40640,
+    "mainThreadGroups": 1,
+    "parsedFrameRows": 30,
+    "retainedFrameRows": 30,
+    "omittedFrameRows": 0,
+    "unparsedFrameRows": 0,
+    "eachFrameCount": 161,
+    "countsAreNotAdditive": true,
+    "countsAreNotTests": true,
+    "terminalFrame": {
+      "count": 161,
+      "depthColumns": 64,
+      "image": "libsystem_kernel.dylib",
+      "symbol": "semaphore_wait_trap",
+      "offset": 8,
+      "offsetKind": "symbol-relative"
+    },
+    "ownedFrame": {
+      "count": 161,
+      "depthColumns": 50,
+      "image": "owned-application",
+      "symbol": "unknown",
+      "offset": 355132,
+      "offsetKind": "image-relative"
+    },
+    "intermediateUnknownFramesPresent": true,
+    "ownedFunctionIdentified": false,
+    "waitOwnerIdentified": false,
+    "comparison": {
+      "priorSampleGitBlob": "2cd140fd1655da36311210d97cac331886a924b4",
+      "method": "Compare parsed frame arrays after omitting only count from each row",
+      "labelsDepthsAndRelativeOffsetsEqual": true,
+      "comparisonIdentifiesFunction": false
+    },
+    "continuousWaitThroughoutRequestEstablished": false,
+    "historicalCauseEstablished": false,
+    "namedNSHostOrExpoStackIndependentlyVerified": false,
+    "unperturbedStartupEstablished": false,
+    "originalSampleBytesInspected": false
+  },
+  "verifierReachability": {
+    "basis": "Control-flow inference from the first show request rejection and unchanged verifier source",
+    "rootMainMountCheckReached": false,
+    "actualReactMountState": "unknown",
+    "menuChecksReached": false,
+    "tooltipChecksReached": false,
+    "dragChecksReached": false
+  },
+  "consoleExtraction": [
+    {
+      "marker": "NYCTRON_APPKIT_BUILD_RESULT",
+      "startLine": 509,
+      "endLine": 511,
+      "jsonLine": 510,
+      "interleavedLineCount": 0,
+      "json": {
+        "file": "build-result.json",
+        "bytes": 318,
+        "sha256": "73c75e458f39066691d51850f3d57b530d0403dc8ea3dfbabec9f7ea78a42a91",
+        "gitBlob": "61486b1ce034ff2abe5097687e53c013507054ea"
+      },
+      "block": {
+        "file": "build-result-envelope.log",
+        "bytes": 472,
+        "sha256": "8de1af1174acd23b9d31b07addf0f46ae7fd6f86305821eaeac1d6ccfb429ff3",
+        "gitBlob": "3e836fc107f5c45ae7f4a767de63c5ddc33e81f1"
+      }
+    },
+    {
+      "marker": "NYCTRON_STARTUP_SAMPLE",
+      "startLine": 558,
+      "endLine": 560,
+      "jsonLine": 559,
+      "interleavedLineCount": 0,
+      "json": {
+        "file": "startup-sample.json",
+        "bytes": 6712,
+        "sha256": "960a0d9af80b2048c8076925503692b1ce2681b81b7e77fb1d1713290d7282b4",
+        "gitBlob": "c34e3cd55949e0de262abc61a839cee2e9aa7020"
+      },
+      "block": {
+        "file": "startup-sample-envelope.log",
+        "bytes": 6856,
+        "sha256": "ffb36c488a118c59b88f38e25771bc5c5360407cf991ff3d6fdeef15c2a45b5a",
+        "gitBlob": "84394bbfcc5d0ceb294a3dd2332974cb6800b3ee"
+      }
+    },
+    {
+      "marker": "NYCTRON_STARTUP_EVIDENCE",
+      "startLine": 561,
+      "endLine": 573,
+      "jsonLine": 562,
+      "interleavedLineCount": 10,
+      "json": {
+        "file": "startup-evidence.json",
+        "bytes": 12140,
+        "sha256": "24908e036c830c269574ebcfd13bf722cd23a3b0ea28d5b5a8408a5f3ec0f909",
+        "gitBlob": "e9cf0b3be6743c47c3ba6d5328cdc04462229202"
+      },
+      "block": {
+        "file": "startup-evidence-envelope.log",
+        "bytes": 13139,
+        "sha256": "6eec8a005174405eb2735e11575349e8c3a409c9c0cfabc8f25b18cdda4949c0",
+        "gitBlob": "e43ecc799e21bf22e2a8088cc20b448d030804b1"
+      }
+    }
+  ],
+  "hostnameStepExtraction": {
+    "startLine": 512,
+    "endLine": 542,
+    "originalLineEndingsAndTimestampsPreserved": true,
+    "scriptEchoAndActualStdoutBothRetained": true
+  },
+  "producerReportedOriginals": {
+    "predeadlineSample": {
+      "file": "startup-predeadline/sample.txt",
+      "reportedBytes": 233224,
+      "reportedSha256": "397ed758a7f148bd0979d4cceefe8845b15018d938dd1b9403da9b921ba80847",
+      "producerStatus": "complete-stable-read",
+      "producerDigestScope": "complete-stable-file-after-sampler-close",
+      "typedProjectionInspected": true,
+      "originalFileRetrieved": false,
+      "originalHashIndependentlyVerified": false
+    },
+    "compilerTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329228,
+      "sha256": "6085e0fef8c23afa2c344a1032b061b7d8e98b010b6532c5489f3ab7d38a63f6",
+      "complete": true,
+      "normalized": false,
+      "originalFileRetrieved": false,
+      "originalHashIndependentlyVerified": false
+    },
+    "postFailureSample": {
+      "file": "native-process-sample.txt",
+      "reportedSha256": "ea9160daf1e7dffb10dfa5bc8cc851f0d7a01ecb7984503be264f08951b01640",
+      "reportedThreadGroups": 29,
+      "originalFileRetrieved": false,
+      "originalHashIndependentlyVerified": false,
+      "earlierThreadStateEstablished": false
+    },
+    "nativeEvidenceArchive": {
+      "id": 13835092536,
+      "name": "macos-appkit-native-evidence",
+      "reportedBytes": 1482523,
+      "reportedUploadedFiles": 47,
+      "uploadedFilesLogLine": 608,
+      "reportedSha256": "c55678622445247576403f64e201c82828a705439a879e65a4a857ffad50f244",
+      "apiAndUploadLogDigestAgree": true,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13835092536",
+      "archiveDownloadUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13835092536/zip",
+      "createdAt": "2026-11-11T06:51:35Z",
+      "expiresAt": "2026-11-25T06:51:33Z",
+      "expiredAtRetrieval": false,
+      "archiveRetrieved": false,
+      "archiveHashIndependentlyVerified": false,
+      "membersExtracted": false
+    }
+  },
+  "retainedFiles": [
+    {
+      "file": "source-job.log",
+      "utf8Bytes": 18466,
+      "sha256": "e28992460debb50df20109d15f1ff1071b1b4cf3437e1d56e130cc05671599e9",
+      "gitBlob": "9577363fdc1e22b5c4d2de9f4a9ddb9cb927b2f9",
+      "exactImmutableReadbackVerified": true,
+      "representation": "complete decoded original job log without normalization"
+    },
+    {
+      "file": "native-job.log",
+      "utf8Bytes": 75309,
+      "sha256": "8bac9972d7de026fb9fbe7572da7eeef5fd9bbc32cf14d070b7c4ae0e8336db0",
+      "gitBlob": "8519da061e0c117c939bb471e281c27ab1ab06db",
+      "exactImmutableReadbackVerified": true,
+      "representation": "complete decoded original job log without normalization"
+    },
+    {
+      "file": "workflow-metadata.json",
+      "utf8Bytes": 11793,
+      "sha256": "9eb615cc64415e6f798e1df4cdc65105ae0c23b8be1486f63b3e644b21cc5bd4",
+      "gitBlob": "cf89eec0e9bbae5c0bf7e419a17a39b4ad5baa07",
+      "exactImmutableReadbackVerified": true,
+      "representation": "normalized completed API metadata"
+    },
+    {
+      "file": "build-result.json",
+      "utf8Bytes": 318,
+      "sha256": "73c75e458f39066691d51850f3d57b530d0403dc8ea3dfbabec9f7ea78a42a91",
+      "gitBlob": "61486b1ce034ff2abe5097687e53c013507054ea",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact console JSON payload substring without timestamp or terminating line ending"
+    },
+    {
+      "file": "build-result-envelope.log",
+      "utf8Bytes": 472,
+      "sha256": "8de1af1174acd23b9d31b07addf0f46ae7fd6f86305821eaeac1d6ccfb429ff3",
+      "gitBlob": "3e836fc107f5c45ae7f4a767de63c5ddc33e81f1",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact timestamped original-log substring"
+    },
+    {
+      "file": "startup-sample.json",
+      "utf8Bytes": 6712,
+      "sha256": "960a0d9af80b2048c8076925503692b1ce2681b81b7e77fb1d1713290d7282b4",
+      "gitBlob": "c34e3cd55949e0de262abc61a839cee2e9aa7020",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact console JSON payload substring without timestamp or terminating line ending"
+    },
+    {
+      "file": "startup-sample-envelope.log",
+      "utf8Bytes": 6856,
+      "sha256": "ffb36c488a118c59b88f38e25771bc5c5360407cf991ff3d6fdeef15c2a45b5a",
+      "gitBlob": "84394bbfcc5d0ceb294a3dd2332974cb6800b3ee",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact timestamped original-log substring"
+    },
+    {
+      "file": "startup-evidence.json",
+      "utf8Bytes": 12140,
+      "sha256": "24908e036c830c269574ebcfd13bf722cd23a3b0ea28d5b5a8408a5f3ec0f909",
+      "gitBlob": "e9cf0b3be6743c47c3ba6d5328cdc04462229202",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact console JSON payload substring without timestamp or terminating line ending"
+    },
+    {
+      "file": "startup-evidence-envelope.log",
+      "utf8Bytes": 13139,
+      "sha256": "6eec8a005174405eb2735e11575349e8c3a409c9c0cfabc8f25b18cdda4949c0",
+      "gitBlob": "e43ecc799e21bf22e2a8088cc20b448d030804b1",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact timestamped original-log substring"
+    },
+    {
+      "file": "hostname-preflight-step.log",
+      "utf8Bytes": 2839,
+      "sha256": "16720188c35c5c1940e2c3fa4f76045b5fb15ddeb002847b6aa604b3da8c322b",
+      "gitBlob": "3fa37794fe1dc7713c539893486e78dbeb624645",
+      "exactImmutableReadbackVerified": true,
+      "representation": "exact timestamped original-log substring"
+    }
+  ],
+  "independentVerification": {
+    "author": {
+      "allRetainedFilesHashedAndReadBack": true,
+      "fullTreeRecomputed": true,
+      "sourceAndNativeCheckoutVerified": true
+    },
+    "root": {
+      "completeSourceAndNativeLogsIndependentlyFetchedAndHashed": true,
+      "completedApiMetadataIndependentlyChecked": true,
+      "sixJsonAndEnvelopeIdentitiesReproduced": true,
+      "hostnameStepSliceReproduced": true,
+      "timingDerivationsIndependentlyChecked": true,
+      "originalArchiveExtraction": false
+    }
+  },
+  "boundaries": {
+    "onlyThisRunInterpreted": true,
+    "hostnameCauseOrFixEstablished": false,
+    "nativeAcceptancePassed": false,
+    "testedDistributionProduced": false,
+    "physicalDeviceAcceptanceClaimed": false,
+    "frozenCombinedCandidateTested": false,
+    "ledgerChanged": false,
+    "distributionApprovalChanged": false
+  },
+  "authorActions": {
+    "scope": "Outcome retention and review",
+    "immutableBlobsAndReadbackOnly": true,
+    "sourceChanges": false,
+    "treeCommitRefOrPrWrites": false,
+    "workflowDispatchOrRerun": false,
+    "alternateArchiveExtraction": false
+  },
+  "receipt": {
+    "readme": {
+      "file": "README.md",
+      "utf8Bytes": 7453,
+      "sha256": "4275fd8810c329375b626a8658e83d128c4647edfe11d9538d684ef00932b764",
+      "gitBlob": "93d8ab40ba24e3db48a016418a4a120c111b8f8f"
+    },
+    "provenanceFile": "provenance.json",
+    "totalFiles": 12,
+    "provenanceDoesNotHashItself": true
+  }
+}
