@@ -34,7 +34,42 @@ struct NYCTronPresentationShowRecord {
   BOOL returned{NO}, shown{NO}, windowRead{NO}, hasWindow{NO};
   BOOL containmentRead{NO}, contained{NO}, coordinatesRead{NO}, coordinatesReady{NO};
   NSRect anchor{}, region{}, frame{};
+  NSUInteger attempt{};
+  NSRectEdge edge{NSMinYEdge};
 };
+struct NYCTronPlacementCache {
+  BOOL valid{NO}, above{NO};
+  __weak NSWindow *owner = nil;
+  __weak NSView *positioningView = nil;
+  __weak NSView *content = nil;
+  __weak NSPopover *popover = nil;
+  NSObject *lifetime = nil;
+  NSString *scope = nil, *presentation = nil;
+  NSRect anchor{}, region{};
+  NSSize size{};
+  NSRectEdge preferred{NSMinYEdge}, edge{NSMinYEdge};
+};
+static id NYCTronDiagnosticEdgeName(NSRectEdge edge) {
+  switch (edge) {
+    case NSMinXEdge: return @"min-x";
+    case NSMaxXEdge: return @"max-x";
+    case NSMinYEdge: return @"min-y";
+    case NSMaxYEdge: return @"max-y";
+    default: return NSNull.null;
+  }
+}
+static void NYCTronRestorePopoverAnimation(NSPopover *popover, BOOL value, BOOL preserveFailure) {
+  if (!preserveFailure) { popover.animates = value; return; }
+  // A restoration failure must not replace the exception already unwinding.
+#if __has_feature(cxx_exceptions)
+  try {
+#endif
+    @try { popover.animates = value; }
+    @catch (NSException *exception) { (void)exception; }
+#if __has_feature(cxx_exceptions)
+  } catch (...) {}
+#endif
+}
 static BOOL NYCTronDiagnosticTokenEqual(NSString *a, NSString *b) {
   return a == b || (a && b && [a isEqualToString:b]);
 }
@@ -100,6 +135,8 @@ using namespace facebook::react;
   BOOL _presentationObservationUnavailable;
   NYCTronPresentationBranchRecord _presentationBranch;
   NYCTronPresentationShowRecord _presentationShow;
+  NSObject *_placementLifetime, *_placementInvocation, *_animationPolicyIdentity;
+  NYCTronPlacementCache _placementCache;
 }
 - (instancetype)init {
   if (self = [super init]) {
@@ -141,10 +178,14 @@ using namespace facebook::react;
 }
 - (void)observePresentationBranch:(NYCTronPresentationBranch)branch mark:(NYCTronPresentationMark const &)mark {
   @try {
-    if (mark.observed && !_presentationObservationUnavailable && mark.lifetime == _presentationObservationLifetime) {
+    if (mark.observed && !_presentationObservationUnavailable && mark.lifetime == _presentationObservationLifetime &&
+        mark.sequence == _presentationObservationSequence) {
       _presentationBranch.mark = mark; _presentationBranch.branch = branch;
     }
-  } @catch (NSException *exception) { (void)exception; _presentationBranch.mark.observed = NO; }
+  } @catch (NSException *exception) {
+    (void)exception;
+    if (mark.sequence == _presentationObservationSequence) _presentationBranch.mark.observed = NO;
+  }
 }
 - (NSDictionary *)presentationContext:(NYCTronPresentationMark const &)mark owner:(NSWindow *)owner {
   if (!mark.observed || _presentationObservationUnavailable) return @{
@@ -193,6 +234,8 @@ using namespace facebook::react;
     NSMutableDictionary *show = [[self presentationContext:_presentationShow.mark owner:owner] mutableCopy];
     BOOL showValid = [show[@"status"] isEqual:@"observed"];
     show[@"stage"] = showValid ? (_presentationShow.returned ? @"returned" : @"entered") : unknown;
+    show[@"attempt"] = showValid && _presentationShow.attempt >= 1 && _presentationShow.attempt <= 4 ? @(_presentationShow.attempt) : unknown;
+    show[@"edge"] = showValid && _presentationShow.attempt >= 1 && _presentationShow.attempt <= 4 ? NYCTronDiagnosticEdgeName(_presentationShow.edge) : unknown;
     show[@"shownAfterCall"] = showValid && _presentationShow.returned ? @(_presentationShow.shown) : unknown;
     show[@"contentWindowPresent"] = showValid && _presentationShow.windowRead ? @(_presentationShow.hasWindow) : unknown;
     show[@"contained"] = showValid && _presentationShow.containmentRead ? @(_presentationShow.contained) : unknown;
@@ -234,84 +277,179 @@ using namespace facebook::react;
   return YES;
 }
 - (void)synchronizePresentation {
+  // A nested synchronization invalidates the caller even if its props are equal.
+  _placementInvocation = nil;
   NYCTronPresentationMark observation;
   [self capturePresentationMark:&observation];
   if (_closing) { [self observePresentationBranch:NYCTronPresentationBranch::Closing mark:observation]; return; }
   if (!_visible || !_owner || !_content.subviews.count) { [self observePresentationBranch:NYCTronPresentationBranch::ContentPrerequisites mark:observation]; [self closeSilently]; return; }
   if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) { [self observePresentationBranch:NYCTronPresentationBranch::TokenSuppressed mark:observation]; return; }
-  NSView *positioningView = _owner.contentView;
-  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self observePresentationBranch:NYCTronPresentationBranch::OwnerUnavailable mark:observation]; [self closeSilently]; return; }
-  NSRect anchor = _anchor;
+  NSWindow *owner = _owner;
+  NSView *positioningView = owner.contentView;
+  if (!positioningView || !owner.visible || owner.miniaturized) { [self observePresentationBranch:NYCTronPresentationBranch::OwnerUnavailable mark:observation]; [self closeSilently]; return; }
+  if (!_placementLifetime) _placementLifetime = [NSObject new];
+  NSObject *lifetime = _placementLifetime;
+  NSObject *invocation = [NSObject new]; _placementInvocation = invocation;
+  NSUInteger generation = _generation;
+  NSPopover *popover = _popover;
+  NYCTronPopoverContent *content = _content;
+  NSString *scope = _scopeToken, *presentation = _presentationToken;
+  const NSRect configuredAnchor = _anchor, region = _allowedRegion;
+  const NSSize size = _contentSize;
+  const BOOL above = _above;
+  auto samePresentation = [&]() {
+    return _placementInvocation == invocation && _placementLifetime == lifetime &&
+      _owner == owner && self.window == owner && owner.contentView == positioningView &&
+      _content == content && _popover == popover && _visible &&
+      NYCTronDiagnosticTokenEqual(_scopeToken, scope) && NYCTronDiagnosticTokenEqual(_presentationToken, presentation) &&
+      NSEqualRects(_anchor, configuredAnchor) && NSEqualRects(_allowedRegion, region) &&
+      NSEqualSizes(_contentSize, size) && _above == above;
+  };
+  auto current = [&]() {
+    return samePresentation() && _generation == generation && !_closing && owner.visible && !owner.miniaturized;
+  };
+  auto ownsObservation = [&]() {
+    return observation.observed && !_presentationObservationUnavailable &&
+      observation.lifetime == _presentationObservationLifetime &&
+      observation.sequence == _presentationObservationSequence &&
+      _presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence;
+  };
+  NSRect anchor = configuredAnchor;
   // The public contract uses top-left owner-content coordinates.
-  if (!positioningView.isFlipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);
-  _content.frame = NSMakeRect(0, 0, _contentSize.width, _contentSize.height);
-  _popover.contentSize = _contentSize;
-  BOOL presenting = !_popover.shown;
-  if (presenting) { _opener = _owner.firstResponder; _presentedToken = [_scopeToken copy]; }
-  NSRectEdge edge = _above ? (positioningView.isFlipped ? NSMinYEdge : NSMaxYEdge) : (positioningView.isFlipped ? NSMaxYEdge : NSMinYEdge);
-  // AppKit may fit against a screen rather than an app-reserved region. Keep
-  // controls hidden until its actual placement satisfies the selected region.
-  // An already presented field must keep its responder/composition while the
-  // owner moves or resizes. Only the initial reveal is hidden for this check.
-  if (presenting) _content.hidden = YES;
-  [self observePresentationBranch:NYCTronPresentationBranch::ShowEntered mark:observation];
+  const BOOL flipped = positioningView.isFlipped;
+  if (!flipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);
+  content.frame = NSMakeRect(0, 0, size.width, size.height);
+  if (!current()) return;
+  popover.contentSize = size;
+  if (!current()) return;
+  BOOL presenting = !popover.shown;
+  if (presenting) { _opener = owner.firstResponder; _presentedToken = [scope copy]; }
+  NSRectEdge preferred = above ? (flipped ? NSMinYEdge : NSMaxYEdge) : (flipped ? NSMaxYEdge : NSMinYEdge);
+  NSRectEdge opposite = preferred == NSMinYEdge ? NSMaxYEdge : NSMinYEdge;
+  NSRectEdge edges[4] = { preferred, opposite, NSMaxXEdge, NSMinXEdge };
+  const BOOL cached = _placementCache.valid && _placementCache.owner == owner &&
+    _placementCache.positioningView == positioningView && _placementCache.content == content &&
+    _placementCache.popover == popover && _placementCache.lifetime == lifetime &&
+    NYCTronDiagnosticTokenEqual(_placementCache.scope, scope) &&
+    NYCTronDiagnosticTokenEqual(_placementCache.presentation, presentation) &&
+    _placementCache.above == above && _placementCache.preferred == preferred &&
+    NSEqualRects(_placementCache.anchor, configuredAnchor) && NSEqualRects(_placementCache.region, region) &&
+    NSEqualSizes(_placementCache.size, size);
+  if (cached) {
+    for (NSUInteger index = 1; index < 4; ++index) {
+      if (edges[index] == _placementCache.edge) {
+        NSRectEdge first = edges[index];
+        for (NSUInteger preceding = index; preceding > 0; --preceding) edges[preceding] = edges[preceding - 1];
+        edges[0] = first;
+        break;
+      }
+    }
+  } else _placementCache = {};
+  // Retained content and its responder/composition remain intact while a shown
+  // popover moves. Only an initial presentation is hidden until it is safe.
+  if (presenting) content.hidden = YES;
+  if (!current()) return;
+  NSObject *animationPolicy = _animationPolicyIdentity;
+  const BOOL originalAnimates = popover.animates;
+  BOOL completed = NO, stale = NO, measured = NO, contained = NO;
+  NSRect actual = NSZeroRect;
+  NSRectEdge selected = preferred;
   @try {
-    _presentationShow = {};
-    _presentationShow.mark = observation; _presentationShow.anchor = anchor; _presentationShow.region = _allowedRegion;
-  } @catch (NSException *exception) { (void)exception; _presentationShow.mark.observed = NO; }
-  [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge];
-  // Cache only the two scalar results of the original short-circuit predicate.
-  BOOL shownAfterCall = _popover.shown;
-  BOOL contentWindowPresent = shownAfterCall && _content.window != nil;
-  if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {
-    _presentationShow.returned = YES; _presentationShow.shown = shownAfterCall;
-    _presentationShow.windowRead = shownAfterCall; _presentationShow.hasWindow = contentWindowPresent;
+    popover.animates = NO;
+    // AppKit supports changing the edge of an already shown popover. Do not
+    // close/reopen between candidates or infer placement from requested size.
+    for (NSUInteger index = 0; index < 4; ++index) {
+      if (!current()) { stale = YES; break; }
+      selected = edges[index];
+      [self observePresentationBranch:NYCTronPresentationBranch::ShowEntered mark:observation];
+      @try {
+        if (observation.observed && observation.sequence == _presentationObservationSequence &&
+            observation.lifetime == _presentationObservationLifetime && !_presentationObservationUnavailable) {
+          _presentationShow = {};
+          _presentationShow.mark = observation; _presentationShow.anchor = anchor; _presentationShow.region = region;
+          _presentationShow.attempt = index + 1; _presentationShow.edge = selected;
+        }
+      } @catch (NSException *exception) {
+        (void)exception;
+        if (_presentationShow.mark.sequence == observation.sequence) _presentationShow.mark.observed = NO;
+      }
+      [popover showRelativeToRect:anchor ofView:positioningView preferredEdge:selected];
+      BOOL shownAfterCall = popover.shown;
+      BOOL contentWindowPresent = shownAfterCall && content.window != nil;
+      if (ownsObservation()) {
+        _presentationShow.returned = YES; _presentationShow.shown = shownAfterCall;
+        _presentationShow.windowRead = shownAfterCall; _presentationShow.hasWindow = contentWindowPresent;
+      }
+      if (!current()) { stale = YES; break; }
+      if (!shownAfterCall || !contentWindowPresent) {
+        [self observePresentationBranch:shownAfterCall ? NYCTronPresentationBranch::ContentWindowUnavailable : NYCTronPresentationBranch::ShowNotShown mark:observation];
+        measured = NO;
+        break;
+      }
+      [content layoutSubtreeIfNeeded];
+      if (!current()) { stale = YES; break; }
+      NSWindow *contentWindow = content.window;
+      if (!contentWindow || !popover.shown) { measured = NO; break; }
+      // NSWindow.frame includes the actual border and arrow, not its shadow.
+      NSRect screenRect = contentWindow.frame;
+      actual = [positioningView convertRect:[owner convertRectFromScreen:screenRect] fromView:nil];
+      if (!flipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);
+      if (!current() || content.window != contentWindow) { stale = YES; break; }
+      measured = YES;
+      contained = NSContainsRect(region, actual);
+      if (ownsObservation()) {
+        _presentationShow.frame = actual; _presentationShow.region = region;
+        _presentationShow.containmentRead = YES; _presentationShow.contained = contained;
+      }
+      if (contained) break;
+    }
+    completed = YES;
+  } @finally {
+    // Nested probes unwind in stack order. A newer props/recycle policy owns
+    // its setting and must not be overwritten by this older restoration.
+    if (_popover == popover && _placementLifetime == lifetime && _animationPolicyIdentity == animationPolicy)
+      NYCTronRestorePopoverAnimation(popover, originalAnimates, !completed);
   }
-  if (shownAfterCall && contentWindowPresent) {
-    [_content layoutSubtreeIfNeeded];
-    // NSWindow.frame includes AppKit's popover border and arrow. The separate
-    // window shadow is an OS effect, not part of the interactive frame.
-    NSRect screenRect = _content.window.frame;
-    NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];
-    if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);
-    if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {
-      _presentationShow.frame = actual; _presentationShow.region = _allowedRegion;
-      _presentationShow.containmentRead = YES;
+  if (stale || !current() || !measured) return;
+  if (contained) {
+    _placementCache.valid = scope.length > 0 && presentation.length > 0; _placementCache.owner = owner;
+    _placementCache.positioningView = positioningView; _placementCache.content = content;
+    _placementCache.popover = popover; _placementCache.lifetime = lifetime;
+    _placementCache.scope = scope; _placementCache.presentation = presentation;
+    _placementCache.above = above; _placementCache.preferred = preferred; _placementCache.edge = selected;
+    _placementCache.anchor = configuredAnchor; _placementCache.region = region; _placementCache.size = size;
+    BOOL coordinatesReady = [self synchronizeContentCoordinates];
+    if (ownsObservation()) {
+      _presentationShow.coordinatesRead = YES; _presentationShow.coordinatesReady = coordinatesReady;
     }
-    if (NSContainsRect(_allowedRegion, actual)) {
-      if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) _presentationShow.contained = YES;
-      // Initial controls remain hidden until the matching Fabric layout has
-      // committed. A shown field stays visible through safe geometry changes.
-      BOOL coordinatesReady = [self synchronizeContentCoordinates];
-      if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {
-        _presentationShow.coordinatesRead = YES; _presentationShow.coordinatesReady = coordinatesReady;
-      }
-      [self observePresentationBranch:coordinatesReady ? NYCTronPresentationBranch::CoordinatesReady : NYCTronPresentationBranch::CoordinatesPending mark:observation];
-      if (coordinatesReady) _content.hidden = NO;
-    }
-    else {
-      [self observePresentationBranch:NYCTronPresentationBranch::OutsideRegion mark:observation];
-      _rejectedPresentationToken = [_presentationToken copy];
-      [self closeSilently];
-      auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);
-      if (emitter) {
-        NYCTronPopoverEventEmitter::OnPresentationRejected event;
-        event.scopeToken = _scopeToken.UTF8String ?: "";
-        event.presentationToken = _presentationToken.UTF8String ?: "";
-        event.x = actual.origin.x; event.y = actual.origin.y;
-        event.width = actual.size.width; event.height = actual.size.height;
-        event.regionX = _allowedRegion.origin.x; event.regionY = _allowedRegion.origin.y;
-        event.regionWidth = _allowedRegion.size.width; event.regionHeight = _allowedRegion.size.height;
-        emitter->onPresentationRejected(event);
-      }
-    }
+    [self observePresentationBranch:coordinatesReady ? NYCTronPresentationBranch::CoordinatesReady : NYCTronPresentationBranch::CoordinatesPending mark:observation];
+    if (coordinatesReady && current()) content.hidden = NO;
   } else {
-    [self observePresentationBranch:shownAfterCall ? NYCTronPresentationBranch::ContentWindowUnavailable : NYCTronPresentationBranch::ShowNotShown mark:observation];
+    _placementCache = {};
+    [self observePresentationBranch:NYCTronPresentationBranch::OutsideRegion mark:observation];
+    if (!current()) return;
+    _rejectedPresentationToken = [presentation copy];
+    [self closeSilently];
+    // Our own close may synchronously schedule didClose. Do not require its
+    // old generation, but never emit for a replacement owner/presentation.
+    if (!samePresentation() || !NYCTronDiagnosticTokenEqual(_rejectedPresentationToken, presentation)) return;
+    auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);
+    if (emitter) {
+      NYCTronPopoverEventEmitter::OnPresentationRejected event;
+      event.scopeToken = scope.UTF8String ?: "";
+      event.presentationToken = presentation.UTF8String ?: "";
+      event.x = actual.origin.x; event.y = actual.origin.y;
+      event.width = actual.size.width; event.height = actual.size.height;
+      event.regionX = region.origin.x; event.regionY = region.origin.y;
+      event.regionWidth = region.size.width; event.regionHeight = region.size.height;
+      emitter->onPresentationRejected(event);
+    }
   }
 }
 - (void)viewDidMoveToWindow {
   [super viewDidMoveToWindow];
   if (_owner != self.window) {
+    _placementInvocation = nil; _placementCache = {};
     [self closeSilently];
     // Remove only the observations of the previous owner. A blanket
     // removeObserver:self also strips the notifications NSPopover registered
@@ -350,9 +488,13 @@ using namespace facebook::react;
   _presentationToken = [NSString stringWithUTF8String:value.presentationToken.c_str()];
   _visible = value.visible;
   _above = value.preferredEdge == "above";
+  if (_placementCache.valid && (_placementCache.above != _above ||
+      !NYCTronDiagnosticTokenEqual(_placementCache.scope, _scopeToken) ||
+      !NYCTronDiagnosticTokenEqual(_placementCache.presentation, _presentationToken))) _placementCache = {};
   _anchor = NSMakeRect(value.anchorX, value.anchorY, MAX(1, value.anchorWidth), MAX(1, value.anchorHeight));
   _allowedRegion = NSMakeRect(value.regionX, value.regionY, value.regionWidth, value.regionHeight);
   _contentSize = NSMakeSize(value.popupWidth, value.popupHeight);
+  _animationPolicyIdentity = [NSObject new];
   _popover.animates = value.animated && !NSWorkspace.sharedWorkspace.accessibilityDisplayShouldReduceMotion;
   _content.accessibilityLabel = [NSString stringWithUTF8String:value.accessibilityLabel.c_str()];
   [super updateProps:props oldProps:oldProps];
@@ -406,6 +548,7 @@ using namespace facebook::react;
   [self schedulePresentation];
 }
 - (void)prepareForRecycle {
+  _placementInvocation = nil; _placementLifetime = nil; _animationPolicyIdentity = nil; _placementCache = {};
   // Recycle invalidates both diagnostic identities before the original cleanup.
   if (_presentationObservationLifetime == NSUIntegerMax) _presentationObservationUnavailable = YES;
   else ++_presentationObservationLifetime;

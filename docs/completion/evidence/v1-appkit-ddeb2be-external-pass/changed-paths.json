@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "kind": "read-only-exact-port-comparison",
+  "base": {
+    "commit": "ac5d69585a52a6e945dc996ea08030e190574699",
+    "tree": "96ad858c7f7fc4e65d043990684e311e20ee71e3",
+    "leaves": 2032,
+    "directories": 284
+  },
+  "target": {
+    "head": "129bd0802535ffbe485d0342f948365927082058",
+    "tree": "6d3a7bc19629019596cd888b50d20a936b32f5ee",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699"
+    ],
+    "leaves": 2050,
+    "directories": 284
+  },
+  "verification": {
+    "fullTreesTruncated": false,
+    "everyDirectoryGitHashRecomputed": true,
+    "changedPaths": 31,
+    "replacedLeaves": 13,
+    "addedLeaves": 18,
+    "removedLeaves": 0,
+    "allOther2019BaseLeavesUnchanged": true
+  },
+  "paths": [
+    {
+      "path": ".github/workflows/macos-appkit.yml",
+      "before": "a69c9bc0f6a336db62000ca5adfc9a20e9982be1",
+      "after": "c46871c2e8b065b478da8ed1946432a2d05502b9",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "docs/api-signatures-macos.json",
+      "before": "1a1611965501ffc48c31e27673badc6114d04a4c",
+      "after": "097ae76926094aeaa5d0e1e622f9d6ee22012d0f",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "examples/macos-appkit/spark/App.tsx",
+      "before": "c616379d91cbed8c3bce1d3d1c5045e4da56e2d9",
+      "after": "8826fb256b24b780450ee2634ad78dad457642dd",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "before": "098e1465eacad8c541763debc33fad87418083b0",
+      "after": "173fb70c01aec0237dafc23d425a6019c00583d9",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.podspec",
+      "before": "58a25fe85415e8c3fa6ce202b4acb3e37552498e",
+      "after": "dde87c9af2a61ba9d6091631a6ab972fdefd6c26",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "examples/macos-appkit/spark/driver-client.mjs",
+      "before": "e0beae86b767f72df1acbfcbce5ef0aada36ccfe",
+      "after": "0365653c0b6f4ee12f1022b31ee905127d2b6023",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "before": "e4a9cef0812d4b1dc86063d73645a22801774a0b",
+      "after": "f21e9349b35922ad689a2f6320ed651b5557de64",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/NYCTronAppKit.podspec",
+      "before": "c50d10812d5f6e416a6d44aca29d85c8ce3e6d86",
+      "after": "8ad850abfc9dc32b120217b8b8b4a7ad688dbb40",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/README.md",
+      "before": "832d86dee566901a102d7b881ca99bc8ec0a2072",
+      "after": "e21949759367d791399482b60ce0f6e771b0c90a",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/THIRD_PARTY_NOTICES.md",
+      "before": "27960d9fd3569ed7be773f2ad1c7e5a1a4caae1c",
+      "after": "cccbe9f141a1cc24b888e8e132791f1ff03c3d59",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/package.json",
+      "before": "9500b6fac0a3633a874699f58169596cfcc34f97",
+      "after": "60c13358821980cda180e6ff2af801f1f232a5cf",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/scripts/check-package.mjs",
+      "before": "6efacbe7298254c7610add36e4ca806f238020d7",
+      "after": "fdf6b494204bf09f764313af8b5190d2637f3bce",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/prepare-consumer.mjs",
+      "before": "91c4c6e4e10f35103e2e0c297d241749f3273878",
+      "after": "43bbe4568fd25697881254c8976778bb75b6e972",
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+      "before": null,
+      "after": "42776ef0157ad390af0b139a8080993082d243f3",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "before": null,
+      "after": "a00a810e5c6da2b440a20facd13eae50284647af",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopoverComponentDescriptor.h",
+      "before": null,
+      "after": "468caf56d14319b1f898f8bb4087b0ead80e78d3",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/src/NYCTronPopoverNativeComponent.ts",
+      "before": null,
+      "after": "11f74f3046c40a2b12d3e510abbab094b525a610",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/src/anchored-inspector.tsx",
+      "before": null,
+      "after": "00a86f5adbae9c9522814b919545be06369a6c0a",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/src/context-menu.ts",
+      "before": null,
+      "after": "e8e768e05ef49b7c56d2e859e1998b40cab365cb",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/src/menus.ts",
+      "before": null,
+      "after": "909518336ee6000ac771a9fb9a1e1c97b3a063d2",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/src/popover.tsx",
+      "before": null,
+      "after": "d8c63628f5a84695d59e4262659fc514debe971d",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "packages/macos-appkit/spark/src/tooltip.tsx",
+      "before": null,
+      "after": "d39ca4d4ac8f3ac3840c1d3ffa856534e7e15a81",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/TRANSPORT_DIAGNOSTICS.md",
+      "before": null,
+      "after": "3901bec724378672b921bd5cbab45b5781f8948d",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/driver-client.test.mjs",
+      "before": null,
+      "after": "f78632abb0e69f72beb759d406b8d63aa1228fb9",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/driver-transport-probe.mm",
+      "before": null,
+      "after": "a3ba1aea25005b021cce8a7e76ebcb2071a4d4b9",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/driver-transport.inc.mm",
+      "before": null,
+      "after": "3969d068c344ee9cefc8c4bc1bb78f630e1e0bc6",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/driver-transport.test.mjs",
+      "before": null,
+      "after": "cff1992b42e32e1e8f56ac418a4a91f35893400e",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/patch-driver-transport.mjs",
+      "before": null,
+      "after": "41012da9f3325235d40c9e9a816699a685e8c009",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/patch-expo-device-name.mjs",
+      "before": null,
+      "after": "2e6ff07ebf22fa8212dfb2028ff740d46720d622",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/patch-expo-device-name.test.mjs",
+      "before": null,
+      "after": "08cb09e31bc830b7449dbe2600a367939aa845c9",
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "tooling/macos-appkit/probe-driver-transport.mjs",
+      "before": null,
+      "after": "4b82b9aab5ed8b8c13d387bc640102bdd62444ab",
+      "beforeMode": null,
+      "afterMode": "100644"
+    }
+  ],
+  "comparisonWithExecutedExternalTree": {
+    "head": "ddeb2be0e07c98183d7aafb1d2a5737207ff0803",
+    "tree": "a6001b036034289e94a3ad47708cb8fb0a442283",
+    "leaves": 2050,
+    "directories": 284,
+    "changedPaths": [
+      {
+        "path": "packages/expo-controls/tests/browser/server.mjs",
+        "target": "c2be551288cd4f76258816ea468e967facaa4ad3",
+        "ddeb": "2687299e55689f6fca67d7a8904eb85923d2aaa9"
+      }
+    ],
+    "scope": "Every other leaf type/mode/blob matches. The port preserves the base browser-server blob rather than copying the external branch's different browser-server blob. No browser behavior inference is needed for the AppKit source equality."
+  }
+}

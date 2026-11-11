@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "kind": "external-appkit-pass-and-later-port-audit",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "recordedAtUTC": "2026-11-11 13:16:28 UTC",
+  "executedSource": {
+    "head": "ddeb2be0e07c98183d7aafb1d2a5737207ff0803",
+    "actualCheckout": "e074a8bbb133457942b28883b196d581910250ce",
+    "tree": "a6001b036034289e94a3ad47708cb8fb0a442283",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "ddeb2be0e07c98183d7aafb1d2a5737207ff0803"
+    ]
+  },
+  "laterPort": {
+    "head": "129bd0802535ffbe485d0342f948365927082058",
+    "tree": "6d3a7bc19629019596cd888b50d20a936b32f5ee",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699"
+    ]
+  },
+  "workflow": {
+    "id": 43017672560,
+    "attempt": 1,
+    "event": "pull_request",
+    "conclusion": "success"
+  },
+  "jobs": {
+    "source": 130512854517,
+    "native": 130513078820
+  },
+  "retainedRecords": [
+    {
+      "file": "source-job.log",
+      "gitBlob": "1d178de115afe7ae016e392286df3ed6a4240841",
+      "bytes": 19523,
+      "sha256": "cebd7efe2b954c4fdd405cae17ce8d863258ecf0ec21fe29ea078fc6efb314cf"
+    },
+    {
+      "file": "native-job.log",
+      "gitBlob": "49184c58a2a9cdaca8faa027c6c72040d8858074",
+      "bytes": 55371,
+      "sha256": "079fef48d38dde4d9a2f82a92a5168632886f3e548a66fabed8f3039be413072"
+    },
+    {
+      "file": "completed-metadata.json",
+      "gitBlob": "66bbd3bd060dd29bee5085b3e4ad1abb9adb6a91",
+      "bytes": 10479,
+      "sha256": "00b859542a3e4dc0b7930a9a83baa64fd6e0f9b04387f7c6cc28b6d2533fafec"
+    },
+    {
+      "file": "changed-paths.json",
+      "gitBlob": "3e067c835310ec075727a22cb5e511b8cb611649",
+      "bytes": 8622,
+      "sha256": "e74b7529d02bfc52bce4e6f1982896cd2e67db82698e3def4f819150329b9f06"
+    },
+    {
+      "file": "build-summary.json",
+      "gitBlob": "947e418ab5b27a122d79231f929a4756c0ef1b84",
+      "bytes": 319,
+      "sha256": "6930fe50704b55a1caaa9b52afe9ba5314c5e5c61631ac65a85ea9bd3629b44a"
+    }
+  ],
+  "logScope": "The two complete decoded originals are retained byte for byte as UTF-8, without newline normalization. Their hashes are independently computed from inspected text.",
+  "observed": {
+    "checkout": {
+      "sourceLines": [
+        120,
+        123
+      ],
+      "nativeLines": [
+        110,
+        113
+      ],
+      "sha": "e074a8bbb133457942b28883b196d581910250ce"
+    },
+    "source": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "durationMilliseconds": 460.17667,
+      "lines": [
+        185,
+        192
+      ]
+    },
+    "nativePreparation": {
+      "packageTests": 16,
+      "packagePassed": 16,
+      "packageFailed": 0,
+      "durationMilliseconds": 171.20325,
+      "lines": [
+        250,
+        257
+      ],
+      "api": {
+        "packages": 1,
+        "subpaths": 15,
+        "reachableDeclarations": 33,
+        "line": 442
+      },
+      "foundationSocketpair": {
+        "casesReported": 7,
+        "line": 452
+      }
+    },
+    "build": {
+      "markerLines": [
+        510,
+        512
+      ],
+      "jsonLine": 511,
+      "exitCode": 0,
+      "outcome": "success",
+      "producerTranscript": {
+        "filename": "build-console.log",
+        "bytes": 12329950,
+        "sha256": "7203724fc78e904f29bc403d373829e007fb3bd84643a503e769bb5b528e98d8",
+        "complete": true,
+        "normalized": false
+      },
+      "transcriptOriginalInspected": false
+    },
+    "acceptance": {
+      "line": 528,
+      "checksReported": 18,
+      "sourceRevision": "e074a8bbb133457942b28883b196d581910250ce",
+      "testedArchiveSha256Reported": "e3cc82943d01e6b8c6109d78bbbd1ea2bc5c442a93c596e3236b757ca07a9888",
+      "scope": "Complete original console summary reports the external suite passed. Individual result/permission/geometry/session JSON and screenshot pixels were not inspected."
+    },
+    "artifactUploadCounts": {
+      "nativeEvidence": {
+        "id": 13855820041,
+        "filesReported": 53,
+        "line": 563
+      },
+      "testedPackage": {
+        "id": 13855640660,
+        "filesReported": 3,
+        "line": 592
+      },
+      "scope": "Uploader statements, not independently inspected member counts."
+    }
+  },
+  "derivedBuildSummary": {
+    "source": "native-job.log",
+    "line": 511,
+    "transformation": "Only the timestamp prefix is removed from the complete JSON line, and one LF is retained. Parsed sourceRevision/exitCode and transcript metadata remain exact.",
+    "originalTranscriptHashIsProducerOnly": true
+  },
+  "reviewedSourceComparison": {
+    "referenceHead": "9a430338d8336283b230203a8555257798fcd62c",
+    "popover": {
+      "reference": {
+        "gitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+        "bytes": 13581,
+        "sha256": "794e30f71b429f3dbc1248ad0935224fbb9fe955652a7218b38d614eec5f3d92"
+      },
+      "external": {
+        "gitBlob": "a00a810e5c6da2b440a20facd13eae50284647af",
+        "bytes": 14583,
+        "sha256": "c3b549f0221aaef19e30a65d07b48f89ea17927066fe542f58d7bc1456e62b6b"
+      },
+      "delta": "Adds remembered-edge state and a bounded preferred/opposite vertical plus horizontal-edge search. Each candidate uses the actual native window frame against the existing allowed region; a final preferred-edge attempt preserves rejection when none fits. Removes the prior notification/log diagnostic registrations."
+    },
+    "activation": {
+      "externalDriver": {
+        "gitBlob": "173fb70c01aec0237dafc23d425a6019c00583d9",
+        "bytes": 62682,
+        "sha256": "101e7e76295bf25766edb1db46e255d72ed41707fb1fd4a5bdc3ac4c26bc511f"
+      },
+      "ddebChanges": "After the existing supported activation request, checks visible/nonminiaturized/key/application-active state up to 20 times 50 ms apart, re-requesting activation/key when needed and requiring three consecutive holds. This changes fixture actions, not merely observation."
+    },
+    "tooltipAndClose": {
+      "referenceDriver": {
+        "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "bytes": 78317,
+        "sha256": "46f7f49b1fb00e0d303f9f81d37c9f0f007d5bbfadc9ce7efb8bef0ac55d31c8"
+      },
+      "referenceVerifier": {
+        "gitBlob": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+        "bytes": 128984,
+        "sha256": "06da9207bda3fec1b8b599d1de1517c64e124683ba2718800078ef5b2b24b298"
+      },
+      "externalVerifier": {
+        "gitBlob": "f21e9349b35922ad689a2f6320ed651b5557de64",
+        "bytes": 108899,
+        "sha256": "066e1f55509f9e8cde7564c37a47b77e9f904f4d8ee34b381d1ce8cc8673ca8f"
+      },
+      "scope": "The external driver retains the older inline private NSCustomToolTipDrawView._attributedString collector; it does not contain the later separately scoped PrivateHelpTagStrings implementation. The external verifier lacks the later closeObservation witness. Its claim that no public accessibility attribute contains tooltip text is not independently established by this receipt."
+    },
+    "strictInteractionGate": {
+      "externalVerifierLines": [
+        1319,
+        1334
+      ],
+      "checks": [
+        "native-cgevent-tooltip-hover-presentation-and-dismissal",
+        "native-cgevent-pointer-session-and-cross-window-document-transfer"
+      ],
+      "scope": "Source control-flow review confirms the pass summary follows both required named checks and passed statuses. This is not inspection of the retained raw interaction or permission JSON."
+    }
+  },
+  "limitations": [
+    "The pass belongs to external ddeb at actual merge e074, not the later 129 port or current reviewed combined source.",
+    "No selected popover edge, individual per-check value, physical mouse gesture, VoiceOver speech, multi-display/hardware, eight-platform or owner acceptance is established by the original summary.",
+    "No cause of historical startup, focus, popover or drag failures is established; changing fixture actions and an observed pass do not isolate causality.",
+    "The native and tested-package ZIPs, members, screenshots, compiler transcript and archive bytes were not downloaded/extracted/rehashed here; their metadata/hashes remain producer reports.",
+    "The port changes 31 AppKit paths. Whole-port adoption, source reconciliation and later current-source validation remain separate decisions.",
+    "No source, tree, commit, ref, PR, workflow, dispatch/rerun, host/security/launcher or permission changes were made in this audit."
+  ]
+}

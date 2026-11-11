@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-popover-edge-fallback-source-review",
+  "recordedAtUTC": "2026-11-11 14:07:07 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "publication": {
+    "sourceOnly": true,
+    "refChangedByAuthor": false,
+    "ciDispatchedByAuthor": false,
+    "helperCommit": null,
+    "helperPublicationUnverified": true,
+    "nativeResult": null
+  },
+  "baseline": {
+    "combinedHead": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9"
+  },
+  "sourceFiles": [
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "before": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+      "gitBlob": "14c1ce085e65b7b7f638559f7a7ea159e404173c",
+      "bytes": 31959,
+      "sha256": "b64029a9b7dfc07c95036e8dedc82c287a5d97c903e8490922c3908c29d7e56b",
+      "preimageBytes": 25122,
+      "preimageSha256": "79af800a514f55f64938494f4a14ca6496cf2036a1b53328181e7805805a63e2"
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "before": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+      "gitBlob": "9bb6dab3c9e378c00050ca3a2472c61eafab7b2b",
+      "bytes": 133747,
+      "sha256": "62bec93a8a36a00a3367d01bea3142931498638894af0285d74b40d3cfbdafc4",
+      "preimageBytes": 133456,
+      "preimageSha256": "4c706372c05aa8f7086f3ea6a9cc50339845bb551ee42724b0a1e6831e38a01b"
+    }
+  ],
+  "motivation": {
+    "completedOutcome": "../v1-appkit-fc90103-popover-region-rejection/README.md",
+    "originalNativeLog": {
+      "gitBlob": "3cf78d555ed173feab5f41894a0a0a2397bce36b",
+      "bytes": 98870,
+      "sha256": "11bd3729f74a66cab9e7f06b83f02cc87f242ea2510ebe154c88ff5800cd4849"
+    },
+    "rawPopoverSummary": {
+      "gitBlob": "6ca82f31ed78a74d7fa9873ca7425a64fe036ced",
+      "bytes": 6732,
+      "sha256": "e63a7972cbe47db4323c239c0d2f9b5cf74e75766eeac3b3b19288fddbc6b705"
+    },
+    "failedGate": "Timed out waiting for shown native NSPopover at the document inspector before the minimization scenario",
+    "observations": {
+      "frame": {
+        "x": -65,
+        "y": 33,
+        "width": 346,
+        "height": 326
+      },
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 680,
+        "height": 592
+      },
+      "leftOverflowNativePoints": 65,
+      "returned": true,
+      "shownAfterCall": true,
+      "contentWindowPresent": true,
+      "contained": false,
+      "coordinatesReady": null,
+      "sameLifetime": true,
+      "sameIdentity": true,
+      "sameGeneration": false,
+      "sameScopeToken": false,
+      "samePresentationToken": false,
+      "sameParameters": false
+    },
+    "interpretation": "This run's executed native show placed the full popover frame outside the app's allowed region. The retained historical result remains valid for the same native objects/lifetime even after controlled state and tokens changed. No successful alternative edge, unique AppKit internal cause, specific React callback delivery, or earlier-run cause is inferred."
+  },
+  "implementation": {
+    "edgeBound": 4,
+    "uniqueEdges": [
+      "min-y",
+      "max-y",
+      "max-x",
+      "min-x"
+    ],
+    "order": "Configured preferred vertical edge, opposite vertical edge, then the two horizontal edges; a valid same-presentation cached edge moves first without changing the order of the remaining candidates.",
+    "measurement": "Each shown candidate with a content window is laid out and measured using its actual full NSWindow frame, converted to owner-content top-left coordinates. The existing full-frame region-containment and coordinates-ready reveal conditions remain.",
+    "retainedNativeObjects": "All probes use the same NSPopover, content and owner; there is no intermediate close/reopen, additional activation call, or deliberate responder/composition reset.",
+    "cacheKeys": [
+      "weak owner",
+      "weak positioning view",
+      "weak content",
+      "weak popover",
+      "opaque recycle lifetime",
+      "nonempty scope token",
+      "nonempty presentation token",
+      "configured anchor",
+      "allowed region",
+      "content size",
+      "above/preferred-edge policy"
+    ],
+    "cacheInvalidation": "Owner/presentation/preferred-policy/recycle changes invalidate the cache; all keys and actual geometry are checked again on use.",
+    "staleWork": "Exact invocation, lifetime, generation, owner/content/popover, tokens and parameters gate continuing work and reveal. Diagnostic sequence/lifetime ownership prevents an older probe from overwriting a newer record.",
+    "terminalBehavior": "Only a final observed out-of-region result closes and conditionally emits one presentation rejection for that exact owned presentation. Missing shown state/window retains its non-rejection path. The original close/dismissal/focus/observer bodies remain unchanged.",
+    "animation": "Temporarily disables the animation hint around the bounded native probes and restores it in finally. Newer props/recycle animation policy retains ownership. Normal restoration failures remain observable; secondary restoration errors cannot replace an exception already unwinding, within the enabled language exception modes.",
+    "diagnosticProjection": {
+      "attempt": "safe integer 1..4 or null",
+      "edge": "min-x|max-x|min-y|max-y or null",
+      "historicalQualifiersPreserved": true,
+      "rawTokenPointerOrTextEmission": false,
+      "existingCompleteConsoleLimitBytes": 8192
+    }
+  },
+  "preserved": {
+    "nativeObserversAndDismissalFocusBodies": true,
+    "publicInterfaces": true,
+    "acceptanceDriver": true,
+    "workflow": true,
+    "hostAndSecurity": true,
+    "shownPopoverPredicate": "current.shown && current.contentVisible",
+    "shownPopoverTimeoutMilliseconds": 20000,
+    "pollIntervalMilliseconds": 50,
+    "requestSequence": true,
+    "originalErrorIdentity": true,
+    "verifierSuffix": "The entire async function shownPopover and later runtime/assertion suffix is byte-identical to f4e630f147d8bb7f5370531e778ed60acf03a802."
+  },
+  "compilerContract": {
+    "actualInstalledTargetCppExceptionFlags": "uninspected",
+    "podspec": {
+      "path": "packages/macos-appkit/spark/NYCTronAppKit.podspec",
+      "gitBlob": "8ad850abfc9dc32b120217b8b8b4a7ad688dbb40",
+      "observation": "Delegates native compiler configuration to install_modules_dependencies; no explicit C++ exception override."
+    },
+    "featureGuard": "Only C++ try/catch is conditional on __has_feature(cxx_exceptions); Objective-C @try/@catch and normal restoration are unconditional.",
+    "predecessor": {
+      "nativeGitBlob": "205fac96527d36f302430779796ef7d8943d4935",
+      "changedBytes": 82,
+      "scope": "Single helper-span addition of two compile-feature guards; no other native behavior region changed."
+    },
+    "interpretation": "Supports either compiler mode and is not a fix for an observed native compilation failure. The exact generated SDK/build flags and native behavior remain unverified."
+  },
+  "reproducibleReview": {
+    "manifest": {
+      "path": "edit-manifest.json",
+      "gitBlob": "2e786f2056d756f1a8a8793e3b6487531ad89fda",
+      "bytes": 26726,
+      "sha256": "521327042211e70338e288e30d8f66e47f4152fbe2343faa8b8fe087b9228a91"
+    },
+    "harness": {
+      "path": "review-checks.js",
+      "gitBlob": "9c74d18c0f882db5600c9e7207a3d070e574d849",
+      "bytes": 25441,
+      "sha256": "b2f743f18514dbba13da923a79effae36e3a7b121813387ac9324ef3added89f"
+    },
+    "invocation": "await eval(harnessText)({native, verifier, nativePreimage, verifierPreimage, manifest: manifestText})",
+    "uniqueForwardInverseTransforms": 10,
+    "nativeTransforms": 9,
+    "verifierTransforms": 1,
+    "status": "passed",
+    "groups": [
+      "exact source identities, ten inverses and preserved strict tail",
+      "bounded preferred and cached edge policy, observed left overflow and synthetic alternatives",
+      "single terminal rejection, unavailable show and retained composition",
+      "cache scope invalidation and reentrant operation ownership models",
+      "animation restoration preserves original errors and newer policy",
+      "actual typed edge projection, historical validity and privacy",
+      "actual complete envelope budgets and exclusive original record",
+      "unchanged strict polling, request count, timeout identity and secondary reporters"
+    ],
+    "designCount": 8,
+    "assertions": 157,
+    "polling": {
+      "calls": 400,
+      "milliseconds": 20000
+    },
+    "ordinaryEnvelope": {
+      "bytes": 6892,
+      "records": 3
+    },
+    "stressEnvelope": {
+      "bytes": 6032,
+      "records": 2,
+      "byteBudgetOmissions": 5
+    },
+    "scope": "V8 source checks, extracted JavaScript with mocked IO, and explicitly non-native placement/ownership/exception policy models; no Node filesystem, Objective-C compilation, AppKit or native placement execution."
+  },
+  "reviewCheckpoints": [
+    {
+      "reviewer": "author",
+      "candidate": "14c1ce0/9bb6",
+      "harness": "9c74d18c0f882db5600c9e7207a3d070e574d849",
+      "designCount": 8,
+      "status": "passed after immutable readback",
+      "scope": "V8 source checks, extracted JavaScript with mocked IO, and explicitly non-native placement/ownership/exception policy models; no Node filesystem, Objective-C compilation, AppKit or native placement execution."
+    },
+    {
+      "reviewer": "root",
+      "candidate": "205fac9/9bb6 before compiler-feature guard",
+      "harness": "afe3fd9e1d530d739a3453d1307935d5c5a868b4",
+      "designCount": 8,
+      "status": "same eight designs reproduced; source review found no blocker; narrow feature guard authorized",
+      "scope": "Not eight additional designs and not native execution."
+    },
+    {
+      "reviewer": "final_gate_review",
+      "candidate": "14c1ce0/9bb6",
+      "harness": "9c74d18c0f882db5600c9e7207a3d070e574d849",
+      "designCount": 8,
+      "status": "approved exact source, ten inverses, guarded delta and reproduction",
+      "scope": "Same eight author designs; independent source/API/ownership/privacy/error review. No installed-flags or Objective-C/native execution claim."
+    }
+  ],
+  "primarySources": [
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nspopover/show(relativeto:of:preferrededge:).md",
+      "supports": "Already-shown popovers accept updates to anchored view, rectangle and preferred edge without a required close/reopen."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nspopover/animates.md",
+      "supports": "Animation setting is a hint; no suppression/completion guarantee is assumed."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nspopover/isshown.md",
+      "supports": "Shown state is not an animation-completion witness."
+    },
+    {
+      "url": "https://clang.llvm.org/docs/LanguageExtensions.html#c-exceptions",
+      "supports": "__has_feature(cxx_exceptions) reports whether C++ exceptions are enabled; the candidate supports either compiler mode without requiring a new flag."
+    }
+  ],
+  "limitations": [
+    "The geometry, cache, reentrancy and exception cases are explicitly non-native policy models; they do not execute AppKit, Objective-C exceptions, animations or the native run loop.",
+    "The JavaScript checks execute extracted projector, reporter and polling code with mocked IO and time; they are not Node filesystem or native acceptance runs.",
+    "No alternative edge has yet been demonstrated to satisfy this app region on the actual native host.",
+    "No native compilation, full native acceptance, later minimization/restore, physical drag session or release-archive pass is claimed for this candidate.",
+    "The prior fc901 failure remains a separate immutable completed outcome. Source review does not replace its failure with a pass.",
+    "Artifact ZIP members, original compiler transcript and SDK inputs remain uninspected; hashes reported by those producers are not promoted to independently inspected bytes."
+  ]
+}

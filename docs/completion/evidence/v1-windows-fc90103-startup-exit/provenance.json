@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "kind": "combined-windows-startup-exit-after-compile",
+  "recordedAtUTC": "2026-11-11 13:28:43 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ],
+    "hookHeader": "00f6ff5f1735c81a5268855a5fb33627f5112cd7"
+  },
+  "workflow": {
+    "id": 43026784222,
+    "attempt": 1,
+    "conclusion": "failure",
+    "event": "pull_request"
+  },
+  "jobs": {
+    "fabricSource": 130543374921,
+    "native": 130543971826
+  },
+  "retainedRecords": [
+    {
+      "file": "fabric-source-job.log",
+      "gitBlob": "422f7368bee1fe42df47e748294e7615f538da27",
+      "bytes": 31858,
+      "sha256": "e02c42feceebc3c831915b011dc16819808910004569123c6386b6bb5c38a84c"
+    },
+    {
+      "file": "native-job.log",
+      "gitBlob": "016ef8f069f81479d317b87f2375cc6fe727ce18",
+      "bytes": 323061,
+      "sha256": "a6c2b2268d9005a0cef3ba76ecaa799d7f06fc5e59d9d8b0db978f35356ec78a"
+    },
+    {
+      "file": "failure-excerpt.log",
+      "gitBlob": "72e360bfd718d246693f56f3719a1f26cde1823d",
+      "bytes": 3705,
+      "sha256": "5f91816ab7682d696481eeb4bed2b1fc835cc9980d4579b5fd664b7c341160a0"
+    },
+    {
+      "file": "completed-metadata.json",
+      "gitBlob": "3a58dd4f65690b44e8a7b2ada283394eaa742002",
+      "bytes": 12992,
+      "sha256": "a71199c3d62c2e4c74eb0337873dd9a233c6885d70e2ead0754a9ddd05f992a3"
+    }
+  ],
+  "originalScope": "Complete decoded original GitHub job logs are retained byte for byte as returned, with original line endings; hashes are computed over exact UTF-8 bytes.",
+  "observed": {
+    "checkout": {
+      "sourceLines": [
+        120,
+        123
+      ],
+      "nativeLines": [
+        108,
+        111
+      ],
+      "sha": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+    },
+    "sourceGate": {
+      "conclusion": "success",
+      "contracts": {
+        "tests": 13,
+        "passed": 13,
+        "failed": 0,
+        "durationMilliseconds": 71.853709,
+        "lines": [
+          160,
+          167
+        ]
+      },
+      "packageSuite": {
+        "tests": 49,
+        "passed": 49,
+        "failed": 0,
+        "durationMilliseconds": 171.09036,
+        "lines": [
+          266,
+          273
+        ]
+      },
+      "api": {
+        "packages": 1,
+        "subpaths": 8,
+        "reachableDeclarations": 44,
+        "line": 286
+      },
+      "scope": "The 13 source contracts are included in the 49-test package suite; they are not 62 distinct designs."
+    },
+    "nativeStages": [
+      {
+        "number": 10,
+        "name": "Validate diagnostic scripts with the UIA PowerShell runtime",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:13:16Z",
+        "completed_at": "2026-11-11T13:13:24Z"
+      },
+      {
+        "number": 11,
+        "name": "Generate native code from the installed package",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:13:24Z",
+        "completed_at": "2026-11-11T13:13:30Z"
+      },
+      {
+        "number": 12,
+        "name": "Generate official RNW application and connect native package",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:13:30Z",
+        "completed_at": "2026-11-11T13:13:40Z"
+      },
+      {
+        "number": 13,
+        "name": "Build installed native C++/WinRT Fabric package",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:13:40Z",
+        "completed_at": "2026-11-11T13:18:17Z"
+      },
+      {
+        "number": 14,
+        "name": "Compile actual Windows consumer executable",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:18:17Z",
+        "completed_at": "2026-11-11T13:19:36Z"
+      },
+      {
+        "number": 15,
+        "name": "Deploy the packaged consumer the way run-windows does",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:19:36Z",
+        "completed_at": "2026-11-11T13:20:59Z"
+      },
+      {
+        "number": 16,
+        "name": "UI Automation smoke test of the packaged consumer",
+        "conclusion": "failure",
+        "started_at": "2026-11-11T13:20:59Z",
+        "completed_at": "2026-11-11T13:21:04Z"
+      },
+      {
+        "number": 17,
+        "name": "Retain the exact package that passed native acceptance",
+        "conclusion": "skipped",
+        "started_at": "2026-11-11T13:21:04Z",
+        "completed_at": "2026-11-11T13:21:04Z"
+      },
+      {
+        "number": 18,
+        "name": "Upload tested Windows distribution",
+        "conclusion": "skipped",
+        "started_at": "2026-11-11T13:21:04Z",
+        "completed_at": "2026-11-11T13:21:04Z"
+      },
+      {
+        "number": 19,
+        "name": "Upload UI Automation screenshots",
+        "conclusion": "success",
+        "started_at": "2026-11-11T13:21:04Z",
+        "completed_at": "2026-11-11T13:21:05Z"
+      }
+    ],
+    "startup": {
+      "launchLine": 1729,
+      "launchObservation": "Existing shell:AppsFolder launch command",
+      "firstExitObservationLine": 1730,
+      "firstFailureLine": 1731,
+      "firstFailure": "Consumer process exited before creating a window",
+      "processObservation": {
+        "line": 1732,
+        "pid": 1860,
+        "exited": true,
+        "exitCode": -1073741819,
+        "windowHandle": 0,
+        "windowExists": false,
+        "windowProcessId": 0
+      },
+      "matchingErrorRecord": {
+        "count": 1,
+        "countLine": 1737,
+        "appName": "NYCTronWindowsExample.exe",
+        "moduleName": "NYCTronWindowsExample.exe",
+        "imageTimestamp": "0x6af46b66",
+        "exceptionCode": "0xc0000005",
+        "imageRelativeFaultOffset": "0x0000000000004e8c",
+        "processIdHex": "0x744",
+        "appStartTimeHex": "0x1DD71DF7EAD04D0",
+        "lines": [
+          1738,
+          1748
+        ]
+      },
+      "uiaWrapperExit": {
+        "line": 1758,
+        "exitCode": 1
+      },
+      "scope": "The process observation and matching Application Error/WER text identify the failed application and code/offset. No inspected stack, binary/PDB mapping, function name, invalid memory address, or causal source line is available."
+    },
+    "wer": {
+      "enabledLine": 1728,
+      "enabledReported": true,
+      "restoredLine": 1750,
+      "restoredReported": true,
+      "scope": "These are observations from the existing app-scoped diagnostic path. This audit did not change WER or other host settings; no dump existence or contents are inferred."
+    },
+    "screenshot": {
+      "line": 1749,
+      "savedMessageObserved": true,
+      "pixelsViewed": false
+    },
+    "nativeObserverEnvelopeCount": 0,
+    "runtimeBoundary": "UIA failed while waiting for its first app window, before the navigation script, observer geometry/RTL interactions, drag or other acceptance assertions. This does not prove which internal application or observer initialization callbacks ran before exit."
+  },
+  "excerpt": {
+    "source": "native-job.log",
+    "firstLine": 1721,
+    "lastLine": 1758,
+    "transformation": "Exact contiguous original bytes including line endings; no prefixes, normalization or redaction added."
+  },
+  "archiveBoundary": {
+    "evidence": {
+      "id": 13861040131,
+      "producerReportedBytes": 642649,
+      "producerReportedSha256": "a9e3170d4824453b9d2fcd50d0f27dc3a12b446cf41efabd0e50fc4c292d7fd3",
+      "producerReportedFileCount": 23,
+      "countLine": 1778,
+      "digestLine": 1785
+    },
+    "shared": {
+      "id": 13857073394,
+      "producerReportedBytes": 62822,
+      "producerReportedSha256": "4fe6a467bc3ca9731aca5c457cd8ff8fd63babfbf3cda24f6af1e1d8c6dfce60"
+    },
+    "originalZipInspected": false,
+    "membersInspected": false
+  },
+  "limits": [
+    "The corrected Hook header compiled in this actual combined run; compilation/deployment success does not establish runtime observer or geometry correctness.",
+    "No native observer request/response, exact icon bounds, RTL interaction, application drag, host-eligibility acceptance, screenshot pixel verification or physical-device result is established.",
+    "The pre-window UIA observation does not establish that React or the native observer had not initialized or mounted internally.",
+    "The matching EXE name and image-relative fault offset alone do not identify a function or establish crash causality. No symbolicated stack or dump was inspected.",
+    "Tested-package retention and upload steps were skipped. No accepted native distribution or final fifteen-archive release is established.",
+    "Historical external AppKit success and earlier Windows results are separate source/outcome records, not transferred to this run.",
+    "No unchanged rerun, source/ref/PR/workflow, launcher/security/permission or host change was performed to create this receipt."
+  ]
+}

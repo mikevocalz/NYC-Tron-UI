@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-combined-source-suite-pass",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "recordedAtUTC": "2026-11-11 13:16:15 UTC",
+  "source": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "soleParent": "9a430338d8336283b230203a8555257798fcd62c",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "actualCheckoutTree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "actualCheckoutOrderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ],
+    "actualCheckoutObservedInAllThreeOriginalLogs": true,
+    "pr": {
+      "number": 64,
+      "baseRef": "codex/v1-reviewed-integration-nov10",
+      "baseCommit": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "draft": true
+    },
+    "workflow": {
+      "path": ".github/workflows/ci.yml",
+      "gitBlob": "12e2027a8ab889117165588431b737ce53ae4bef"
+    },
+    "integrationManifest": "11c5ade88dde02a2d77c0469da0477e0f04c5f15",
+    "report": "09bf7bd8f000ea5c24d767d45b7b38260cebf582",
+    "fullTreeReviewed": {
+      "leaves": 3380,
+      "directories": 550,
+      "sourceChanges": 8,
+      "newReceiptFiles": 64,
+      "newManifest": 1,
+      "reportChanges": 1,
+      "changedPaths": 74,
+      "replacedBaseLeaves": 8,
+      "newLeaves": 66,
+      "unchangedBaseLeaves": 3306
+    }
+  },
+  "run": {
+    "id": 43026784250,
+    "attempt": 1,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "completedUpdatedAt": "2026-11-11T13:14:18Z"
+  },
+  "originalFiles": [
+    {
+      "path": "linux-source-job.log",
+      "gitBlob": "87d8a1ebcbf3de8c7bb50b4c9fda23e35dc7f702",
+      "bytes": 156153,
+      "sha256": "6a19e9ded94f03ba9d634ca6c9c4515c09970dea153001c6da76a14ffbe1e5fb",
+      "readbackExact": true,
+      "jobId": 130543376075,
+      "checkoutLines": [
+        {
+          "line": 122,
+          "text": "2026-11-11T13:11:09.8012088Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        }
+      ],
+      "summaryLines": [
+        {
+          "line": 1412,
+          "text": "2026-11-11T13:12:01.7569687Z ℹ tests 1204"
+        },
+        {
+          "line": 1414,
+          "text": "2026-11-11T13:12:01.7570275Z ℹ pass 1204"
+        },
+        {
+          "line": 1415,
+          "text": "2026-11-11T13:12:01.7570528Z ℹ fail 0"
+        },
+        {
+          "line": 1416,
+          "text": "2026-11-11T13:12:01.7570721Z ℹ cancelled 0"
+        },
+        {
+          "line": 1417,
+          "text": "2026-11-11T13:12:01.7570909Z ℹ skipped 0"
+        },
+        {
+          "line": 1418,
+          "text": "2026-11-11T13:12:01.7571074Z ℹ todo 0"
+        },
+        {
+          "line": 1419,
+          "text": "2026-11-11T13:12:01.7571276Z ℹ duration_ms 21897.776457"
+        }
+      ]
+    },
+    {
+      "path": "windows-source-job.log",
+      "gitBlob": "6c6d10a8b3916512b2bbe948934f1315760442c2",
+      "bytes": 198873,
+      "sha256": "ab9282b747d5c3a30eb446c6e67a919729df10a42c9de541d379eac1467e774c",
+      "readbackExact": true,
+      "jobId": 130543375725,
+      "checkoutLines": [
+        {
+          "line": 120,
+          "text": "2026-11-11T13:11:16.7486299Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6\r"
+        }
+      ],
+      "summaryLines": [
+        {
+          "line": 1427,
+          "text": "2026-11-11T13:13:26.2501434Z ℹ tests 1204\r"
+        },
+        {
+          "line": 1429,
+          "text": "2026-11-11T13:13:26.2501824Z ℹ pass 1204\r"
+        },
+        {
+          "line": 1430,
+          "text": "2026-11-11T13:13:26.2502009Z ℹ fail 0\r"
+        },
+        {
+          "line": 1431,
+          "text": "2026-11-11T13:13:26.2502204Z ℹ cancelled 0\r"
+        },
+        {
+          "line": 1432,
+          "text": "2026-11-11T13:13:26.2502398Z ℹ skipped 0\r"
+        },
+        {
+          "line": 1433,
+          "text": "2026-11-11T13:13:26.2502579Z ℹ todo 0\r"
+        },
+        {
+          "line": 1434,
+          "text": "2026-11-11T13:13:26.2502798Z ℹ duration_ms 60288.8427\r"
+        },
+        {
+          "line": 1440,
+          "text": "2026-11-11T13:13:28.1590022Z Validated 619 built conditional package exports and 750 ESM files.\r"
+        },
+        {
+          "line": 1812,
+          "text": "2026-11-11T13:14:10.3044442Z Wrote 13 tarballs and SHA256SUMS to D:\\a\\_temp\\nyc-tron-packs\r"
+        },
+        {
+          "line": 1819,
+          "text": "2026-11-11T13:14:13.8017871Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent\r"
+        }
+      ]
+    },
+    {
+      "path": "types-and-pack-job.log",
+      "gitBlob": "201a3a9c60811a4eb50b28965b6b06ee10643f01",
+      "bytes": 62121,
+      "sha256": "9bfa22c4d803596791b64e9463fd3d2579287b6952a71a5a3cc54e842ec641b8",
+      "readbackExact": true,
+      "jobId": 130543375277,
+      "checkoutLines": [
+        {
+          "line": 122,
+          "text": "2026-11-11T13:11:09.7807888Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        }
+      ],
+      "summaryLines": [
+        {
+          "line": 246,
+          "text": "2026-11-11T13:11:57.9721611Z Validated 619 built conditional package exports and 750 ESM files."
+        },
+        {
+          "line": 603,
+          "text": "2026-11-11T13:11:58.0285728Z API surface matches snapshot: 13 packages, 619 export subpaths."
+        },
+        {
+          "line": 608,
+          "text": "2026-11-11T13:11:59.5362382Z API signatures match: 13 packages, 619 subpaths, 3306 reachable declarations."
+        },
+        {
+          "line": 613,
+          "text": "2026-11-11T13:11:59.9569567Z Component program: 341 canonical IDs; 332 local implementations, 0 partial, 9 pinned external implementations, 0 pending; 0 accepted with all eight platform proofs."
+        },
+        {
+          "line": 631,
+          "text": "2026-11-11T13:12:22.8808447Z Wrote 13 tarballs and SHA256SUMS to /home/runner/work/_temp/nyc-tron-packs"
+        },
+        {
+          "line": 638,
+          "text": "2026-11-11T13:12:23.3479083Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "path": "completed-metadata.json",
+    "gitBlob": "8d1857bea14168a92daf9a90333a1e2b74aac1ff",
+    "bytes": 12340,
+    "sha256": "c322c61953a4f64925de975dad95ba9f8eee4be7ecc041b4b7734d4dac9ad09d",
+    "readbackExact": true,
+    "scope": "Normalized completed API metadata. Three complete decoded original logs are retained without rewriting line endings, BOM or timestamps."
+  },
+  "results": {
+    "linux": {
+      "tests": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMilliseconds": 21897.776457
+    },
+    "windows": {
+      "tests": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMilliseconds": 60288.8427
+    },
+    "counting": "Two executions of the same workflow test list; not 2,408 independent test designs.",
+    "exports": {
+      "conditionalExports": 619,
+      "esmFiles": 750
+    },
+    "api": {
+      "packages": 13,
+      "subpaths": 619,
+      "reachableDeclarations": 3306
+    },
+    "roster": {
+      "canonicalIds": 341,
+      "local": 332,
+      "pinnedExternal": 9,
+      "partial": 0,
+      "pending": 0,
+      "acceptedAcrossAllEightPlatforms": 0
+    },
+    "packaging": {
+      "lanes": [
+        "workspace TypeScript",
+        "tests and pack on Windows"
+      ],
+      "archivesPerLane": 13,
+      "freshImportsPerLane": 17,
+      "originalBinaryArchivesInspected": false,
+      "exactCrossProducerArchiveByteIdentityInspected": false
+    }
+  },
+  "limits": [
+    "This is the completed source result from the new combined fc901 head and its actual 255b63f5 merge checkout, not a transferred helper pass.",
+    "The frozen PR base is 25a6; the previous 9a combined checkout used ac5d. The original records remain separate.",
+    "General source, type and package checks do not execute the new C++/WinRT Hook, PowerShell consumer or AppKit presentation diagnostic and do not establish native interaction or supported-host eligibility.",
+    "The historical 8a native C2338 failure is preserved separately. This source pass does not prove that the six-byte Hook correction compiles in the native example.",
+    "Native Windows and AppKit workflow outcomes are assigned only by their own completed original evidence, not this receipt.",
+    "Producer archive/checksum output and fresh imports do not substitute for original archive inspection or exact final distribution identity.",
+    "The 341-ID/eight-platform acceptance scope, physical-device, speech, performance and exact final owner-manifest approval remain open as recorded in the report.",
+    "No main merge, tag, release or npm publication is authorized by this receipt."
+  ]
+}

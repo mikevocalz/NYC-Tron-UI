@@ -22,6 +22,7 @@
 #include <atomic>
 #include <cmath>
 #include <cstdint>
+#include <cstdio>
 #include <limits>
 #include <memory>
 #include <string>
@@ -56,9 +57,243 @@ constexpr uint32_t RequestBytes = 2048;
 constexpr uint32_t ResponseBytes = 8192;
 constexpr wchar_t MessageName[] = L"NYCTron.Example.NavigationProbe.v1";
 
+// Startup observation is private to this prepared example. A missing record
+// does not prove a call was absent: path resolution, contention, caps, partial
+// writes and process termination can all truncate this diagnostic. IO itself
+// can perturb startup. Synchronous Win32 file calls have no hard time bound.
+enum class StartupStage : uint8_t {
+  ConfigureEntry,
+  ObserverFactoryBefore,
+  ObserverConstructorBodyEntry,
+  ObserverProcessTimesBefore,
+  ObserverProcessTimesReturned,
+  ObserverCreationStringBefore,
+  ObserverCreationStringReturned,
+  ObserverSessionGuidBefore,
+  ObserverSessionGuidReturned,
+  ObserverSessionStringBefore,
+  ObserverSessionStringReturned,
+  ApplicationDataBefore,
+  ApplicationDataReturned,
+  ObserverPrefixBefore,
+  ObserverPrefixReturned,
+  MessageRegistrationBefore,
+  MessageRegistrationReturned,
+  ObserverConstructorBodyExit,
+  ObserverFactoryReturned,
+  PropertySetBefore,
+  PropertySetReturned,
+  ConfigureException,
+  HookKeyBefore,
+  HookKeyReturned,
+  HookConstructorBodyEntry,
+  HookConstructorBodyExit,
+  HookRegisterEntry,
+  HookRegisterReturned,
+  HookRegisterUnavailable,
+  HookRegisterException,
+  ObserverRegisterEntry,
+  RegisterProjectionBefore,
+  RegisterProjectionReturned,
+  RegisterContextBefore,
+  RegisterContextReturned,
+  RegisterDispatcherBefore,
+  RegisterDispatcherReturned,
+  RegisterOwnerBefore,
+  RegisterOwnerReturned,
+  RegisterTicketBefore,
+  RegisterTicketReturned,
+  RegisterSubclassBefore,
+  RegisterSubclassReturned,
+  RegisterReadyBefore,
+  RegisterReadyReturned,
+  ObserverRegisterReturned,
+  WindowMessageEntry,
+  WindowMessageScopeExit,
+  TraceLimit
+};
+constexpr uint32_t StartupTraceRecordLimit = 64;
+constexpr uint32_t StartupTraceByteLimit = 16384;
+constexpr uint32_t StartupTraceRowBytes = 512;
+struct StartupTraceState {
+  SRWLOCK lock = SRWLOCK_INIT;
+  HANDLE file = INVALID_HANDLE_VALUE;
+  bool attempted{}, disabled{};
+  DWORD processId{};
+  uint64_t creationFileTime{};
+  char revision[41]{};
+  uint32_t records{}, bytes{};
+  std::atomic<bool> contention{false};
+  std::atomic<bool> firstWindowMessage{false};
+};
+inline StartupTraceState g_startupTrace;
+struct StartupLastError {
+  DWORD value = GetLastError();
+  ~StartupLastError() noexcept { SetLastError(value); }
+};
+struct StartupUnlock {
+  SRWLOCK* lock;
+  ~StartupUnlock() noexcept { ReleaseSRWLockExclusive(lock); }
+};
+inline char const* StartupStageName(StartupStage stage) noexcept {
+  static constexpr char const* names[] = {
+    "configure-entry",
+    "observer-factory-before",
+    "observer-constructor-body-entry",
+    "observer-process-times-before",
+    "observer-process-times-returned",
+    "observer-creation-string-before",
+    "observer-creation-string-returned",
+    "observer-session-guid-before",
+    "observer-session-guid-returned",
+    "observer-session-string-before",
+    "observer-session-string-returned",
+    "application-data-before",
+    "application-data-returned",
+    "observer-prefix-before",
+    "observer-prefix-returned",
+    "message-registration-before",
+    "message-registration-returned",
+    "observer-constructor-body-exit",
+    "observer-factory-returned",
+    "property-set-before",
+    "property-set-returned",
+    "configure-exception",
+    "hook-key-before",
+    "hook-key-returned",
+    "hook-constructor-body-entry",
+    "hook-constructor-body-exit",
+    "hook-register-entry",
+    "hook-register-returned",
+    "hook-register-unavailable",
+    "hook-register-exception",
+    "observer-register-entry",
+    "register-projection-before",
+    "register-projection-returned",
+    "register-context-before",
+    "register-context-returned",
+    "register-dispatcher-before",
+    "register-dispatcher-returned",
+    "register-owner-before",
+    "register-owner-returned",
+    "register-ticket-before",
+    "register-ticket-returned",
+    "register-subclass-before",
+    "register-subclass-returned",
+    "register-ready-before",
+    "register-ready-returned",
+    "observer-register-returned",
+    "window-message-entry",
+    "window-message-scope-exit",
+    "trace-limit"
+  };
+  const auto index = static_cast<uint32_t>(stage);
+  return index < sizeof(names) / sizeof(names[0]) ? names[index] : nullptr;
+}
+// Caller owns the try-only lock. Reserve a final complete trace-limit row;
+// no cap/error closes the handle early or permits another writer to replace it.
+inline void StartupTraceLocked(StartupStage stage) noexcept {
+  auto& state = g_startupTrace;
+  if (state.file == INVALID_HANDLE_VALUE || state.disabled) return;
+  const bool limit = state.records >= StartupTraceRecordLimit - 1 ||
+      state.bytes > StartupTraceByteLimit - 2 * StartupTraceRowBytes;
+  if (limit) stage = StartupStage::TraceLimit;
+  const auto name = StartupStageName(stage);
+  if (!name) return;
+  char row[StartupTraceRowBytes]{};
+  const int length = std::snprintf(row, sizeof(row),
+      "{\"schemaVersion\":1,\"sourceRevision\":\"%s\",\"processId\":%lu,"
+      "\"creationFileTime\":\"%llu\",\"sequence\":%u,\"threadId\":%lu,"
+      "\"stage\":\"%s\",\"contentionObservedThroughRow\":%s}\n",
+      state.revision, static_cast<unsigned long>(state.processId),
+      static_cast<unsigned long long>(state.creationFileTime), state.records + 1,
+      static_cast<unsigned long>(GetCurrentThreadId()), name,
+      state.contention.load(std::memory_order_relaxed) ? "true" : "false");
+  if (length <= 0 || static_cast<size_t>(length) >= sizeof(row) ||
+      state.bytes + static_cast<uint32_t>(length) > StartupTraceByteLimit) {
+    state.disabled = true;
+    return;
+  }
+  DWORD written = 0;
+  if (!WriteFile(state.file, row, static_cast<DWORD>(length), &written, nullptr) ||
+      written != static_cast<DWORD>(length)) {
+    // Preserve a possible partial final row for the failure collector.
+    state.disabled = true;
+    return;
+  }
+  state.bytes += written;
+  ++state.records;
+  if (limit) state.disabled = true;
+}
+inline void StartupTrace(StartupStage stage) noexcept {
+  StartupLastError preserve;
+  auto& state = g_startupTrace;
+  if (!TryAcquireSRWLockExclusive(&state.lock)) {
+    state.contention.store(true, std::memory_order_relaxed);
+    return;
+  }
+  StartupUnlock unlock{&state.lock};
+  StartupTraceLocked(stage);
+}
+inline void BeginStartupTrace(winrt::hstring const& revision) noexcept {
+  StartupLastError preserve;
+  auto& state = g_startupTrace;
+  if (!TryAcquireSRWLockExclusive(&state.lock)) {
+    state.contention.store(true, std::memory_order_relaxed);
+    return;
+  }
+  StartupUnlock unlock{&state.lock};
+  if (state.attempted) return;
+  state.attempted = true;
+  if (revision.size() != 40) return;
+  for (uint32_t index = 0; index < 40; ++index) {
+    const auto c = revision[index];
+    if (!((c >= L'0' && c <= L'9') || (c >= L'a' && c <= L'f'))) return;
+    state.revision[index] = static_cast<char>(c);
+  }
+  state.processId = GetCurrentProcessId();
+  FILETIME created{}, exited{}, kernel{}, user{};
+  if (!GetProcessTimes(GetCurrentProcess(), &created, &exited, &kernel, &user)) return;
+  state.creationFileTime = (static_cast<uint64_t>(created.dwHighDateTime) << 32) | created.dwLowDateTime;
+  if (!state.processId || !state.creationFileTime) return;
+  wchar_t directory[MAX_PATH + 1]{};
+  const DWORD count = GetTempPathW(MAX_PATH + 1, directory);
+  if (!count || count >= MAX_PATH + 1) return;
+  wchar_t path[MAX_PATH]{};
+  const int length = _snwprintf_s(path, MAX_PATH, _TRUNCATE,
+      L"%lsnyctron-startup-%ls-%lu-%llu.jsonl", directory, revision.c_str(),
+      static_cast<unsigned long>(state.processId), static_cast<unsigned long long>(state.creationFileTime));
+  if (length <= 0 || length >= MAX_PATH) return;
+  state.file = CreateFileW(path, GENERIC_WRITE, FILE_SHARE_READ, nullptr,
+      CREATE_NEW, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
+  if (state.file == INVALID_HANDLE_VALUE) return;
+  BY_HANDLE_FILE_INFORMATION information{};
+  if (GetFileType(state.file) != FILE_TYPE_DISK || !GetFileInformationByHandle(state.file, &information) ||
+      (information.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_REPARSE_POINT)) != 0) {
+    CloseHandle(state.file);
+    state.file = INVALID_HANDLE_VALUE;
+    return;
+  }
+  StartupTraceLocked(StartupStage::ConfigureEntry);
+  // The operating system closes this non-inherited handle on process exit.
+  // The parent does not collect until the retained owned process has exited.
+}
+struct StartupWindowMessageScope {
+  bool first = !g_startupTrace.firstWindowMessage.exchange(true, std::memory_order_relaxed);
+  StartupWindowMessageScope() noexcept {
+    if (first) StartupTrace(StartupStage::WindowMessageEntry);
+  }
+  ~StartupWindowMessageScope() noexcept {
+    if (first) StartupTrace(StartupStage::WindowMessageScopeExit);
+  }
+};
+
 inline RN::IReactPropertyName HookKey() {
-  return RN::ReactPropertyBagHelper::GetName(
+  StartupTrace(StartupStage::HookKeyBefore);
+  auto key = RN::ReactPropertyBagHelper::GetName(
       RN::ReactPropertyBagHelper::GetNamespace(L"NYCTron.Example.NavigationProbe"), L"hook.v1");
+  StartupTrace(StartupStage::HookKeyReturned);
+  return key;
 }
 struct Unavailable { wchar_t const* code; };
 [[noreturn]] inline void Refuse(wchar_t const* code) { throw Unavailable{code}; }
@@ -213,22 +448,38 @@ class Observer : public std::enable_shared_from_this<Observer> {
   wchar_t const* m_registrationFailure{};
  public:
   explicit Observer(winrt::hstring revision) : m_revision(std::move(revision)) {
+    StartupTrace(StartupStage::ObserverConstructorBodyEntry);
     m_pid = GetCurrentProcessId();
     FILETIME created{}, exited{}, kernel{}, user{};
+    StartupTrace(StartupStage::ObserverProcessTimesBefore);
     if (!GetProcessTimes(GetCurrentProcess(), &created, &exited, &kernel, &user))
       Refuse(L"process-creation-unavailable");
+    StartupTrace(StartupStage::ObserverProcessTimesReturned);
     const uint64_t creation = (static_cast<uint64_t>(created.dwHighDateTime) << 32) | created.dwLowDateTime;
+    StartupTrace(StartupStage::ObserverCreationStringBefore);
     m_creation = winrt::hstring(Decimal(creation));
+    StartupTrace(StartupStage::ObserverCreationStringReturned);
     GUID session{};
+    StartupTrace(StartupStage::ObserverSessionGuidBefore);
     winrt::check_hresult(CoCreateGuid(&session));
+    StartupTrace(StartupStage::ObserverSessionGuidReturned);
     wchar_t text[40]{};
+    StartupTrace(StartupStage::ObserverSessionStringBefore);
     if (StringFromGUID2(session, text, 40) != 39) Refuse(L"session-unavailable");
     m_session = text;
+    StartupTrace(StartupStage::ObserverSessionStringReturned);
+    StartupTrace(StartupStage::ApplicationDataBefore);
     const auto folder = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+    StartupTrace(StartupStage::ApplicationDataReturned);
+    StartupTrace(StartupStage::ObserverPrefixBefore);
     m_prefix = std::wstring(folder.c_str(), folder.size()) + L"\\nyctron-navigation-probe-" +
         Decimal(m_pid) + L"-" + Decimal(creation);
+    StartupTrace(StartupStage::ObserverPrefixReturned);
+    StartupTrace(StartupStage::MessageRegistrationBefore);
     m_message = RegisterWindowMessageW(MessageName);
     if (!m_message) Refuse(L"message-registration-failed");
+    StartupTrace(StartupStage::MessageRegistrationReturned);
+    StartupTrace(StartupStage::ObserverConstructorBodyExit);
   }
   Json::JsonObject Header(uint32_t sequence, uint32_t phase) const {
     Json::JsonObject object;
@@ -272,23 +523,32 @@ class Observer : public std::enable_shared_from_this<Observer> {
   }
   void Register(Object const& navigationObject, Object const& islandObject,
       Object const& viewObject, ::IInspectable** ticketOut) {
+    StartupTrace(StartupStage::ObserverRegisterEntry);
     if (!ticketOut) Refuse(L"ticket-output-unavailable");
     *ticketOut = nullptr;
+    StartupTrace(StartupStage::RegisterProjectionBefore);
     const auto navigation = navigationObject.as<XC::NavigationView>();
     const auto island = islandObject.as<Content::ContentIsland>();
     const auto view = viewObject.as<View>();
+    StartupTrace(StartupStage::RegisterProjectionReturned);
+    StartupTrace(StartupStage::RegisterContextBefore);
     const auto context = view.ReactContext();
+    StartupTrace(StartupStage::RegisterContextReturned);
+    StartupTrace(StartupStage::RegisterDispatcherBefore);
     if (!context.UIDispatcher().HasThreadAccess()) Refuse(L"wrong-ui-thread");
+    StartupTrace(StartupStage::RegisterDispatcherReturned);
     const DWORD thread = GetCurrentThreadId();
     DWORD expectedThread = 0;
     if (!m_uiThread.compare_exchange_strong(expectedThread, thread,
           std::memory_order_acq_rel, std::memory_order_acquire) && expectedThread != thread)
       Refuse(L"wrong-ui-thread");
+    StartupTrace(StartupStage::RegisterOwnerBefore);
     const auto hwnd = reinterpret_cast<HWND>(RN::ReactCoreInjection::GetTopLevelWindowId(context.Properties()));
     DWORD process = 0;
     if (!hwnd || !IsWindow(hwnd) || GetWindowThreadProcessId(hwnd, &process) != thread || process != m_pid ||
         (m_hwnd && m_hwnd != hwnd) || m_closed) Refuse(L"owner-window-unavailable");
     m_hwnd = hwnd;
+    StartupTrace(StartupStage::RegisterOwnerReturned);
     const auto site = view.ChildSiteLink();
     if (!site) Refuse(L"component-not-mounted");
     if (m_registrationInvalid.load(std::memory_order_acquire) || m_entries.size() >= RegistryLimit || m_generation >= GenerationLimit)
@@ -299,27 +559,34 @@ class Observer : public std::enable_shared_from_this<Observer> {
       if (entry.tag == view.Tag() || (registered && Identity(registered) == navIdentity))
         Refuse(L"registry-duplicate");
     }
+    StartupTrace(StartupStage::RegisterTicketBefore);
     Ticket ticket;
     const auto generation = ++m_generation;
     ticket.Insert(L"generation", winrt::box_value(generation));
     Entry entry{generation, view.Tag(), ticket, winrt::make_weak(navigation),
         winrt::make_weak(island), winrt::make_weak(view), winrt::make_weak(site)};
     m_entries.push_back(entry);
+    StartupTrace(StartupStage::RegisterTicketReturned);
     try {
       if (!m_lease) {
         auto lease = std::make_unique<WindowLease>();
         lease->observer = shared_from_this(); lease->hwnd = hwnd;
+        StartupTrace(StartupStage::RegisterSubclassBefore);
         if (!SetWindowSubclass(hwnd, WindowMessage, reinterpret_cast<UINT_PTR>(this),
             reinterpret_cast<DWORD_PTR>(lease.get()))) Refuse(L"window-observer-unavailable");
         m_lease = lease.release();
+        StartupTrace(StartupStage::RegisterSubclassReturned);
       }
       ticket.as<::IInspectable>().copy_to(ticketOut);
+      StartupTrace(StartupStage::RegisterReadyBefore);
       Ready();
+      StartupTrace(StartupStage::RegisterReadyReturned);
     } catch (...) {
       m_entries.erase(std::remove_if(m_entries.begin(), m_entries.end(),
           [generation](auto const& current) { return current.generation == generation; }), m_entries.end());
       throw;
     }
+    StartupTrace(StartupStage::ObserverRegisterReturned);
   }
   void RegistrationFailed(wchar_t const* code) noexcept {
     // Even a wrong-thread ABI caller permanently invalidates this fixture.
@@ -349,6 +616,7 @@ class Observer : public std::enable_shared_from_this<Observer> {
   }
   static LRESULT CALLBACK WindowMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam,
       UINT_PTR id, DWORD_PTR data) noexcept {
+    StartupWindowMessageScope startupScope;
     auto* lease = reinterpret_cast<WindowLease*>(data);
     if (!lease) return DefSubclassProc(hwnd, message, wparam, lparam);
     const auto observer = lease->observer;
@@ -551,15 +819,25 @@ class Observer : public std::enable_shared_from_this<Observer> {
 
 struct Hook : winrt::implements<Hook, Object, NavigationProbeHook> {
   std::shared_ptr<Observer> observer;
-  explicit Hook(std::shared_ptr<Observer> value) : observer(std::move(value)) {}
+  explicit Hook(std::shared_ptr<Observer> value) : observer(std::move(value)) {
+    StartupTrace(StartupStage::HookConstructorBodyEntry);
+    StartupTrace(StartupStage::HookConstructorBodyExit);
+  }
   HRESULT STDMETHODCALLTYPE Register(::IInspectable* navigation, ::IInspectable* island,
       ::IInspectable* view, ::IInspectable** ticket) noexcept override {
+    StartupTrace(StartupStage::HookRegisterEntry);
     if (ticket) *ticket = nullptr;
     try {
       observer->Register(Borrow<Object>(navigation), Borrow<Object>(island), Borrow<Object>(view), ticket);
+      StartupTrace(StartupStage::HookRegisterReturned);
       return S_OK;
-    } catch (Unavailable const& error) { observer->RegistrationFailed(error.code); return E_FAIL; }
-    catch (...) { observer->RegistrationFailed(L"registration-failed"); return E_FAIL; }
+    } catch (Unavailable const& error) {
+      StartupTrace(StartupStage::HookRegisterUnavailable);
+      observer->RegistrationFailed(error.code); return E_FAIL;
+    } catch (...) {
+      StartupTrace(StartupStage::HookRegisterException);
+      observer->RegistrationFailed(L"registration-failed"); return E_FAIL;
+    }
   }
   HRESULT STDMETHODCALLTYPE Unregister(::IInspectable* ticket) noexcept override {
     try { observer->Unregister(Borrow<Object>(ticket)); return S_OK; }
@@ -572,9 +850,15 @@ inline void ConfigureNavigationProbe(RN::ReactInstanceSettings const& settings, 
     if (revision.size() != 40 || std::any_of(revision.begin(), revision.end(),
         [](wchar_t c) { return !((c >= L'0' && c <= L'9') || (c >= L'a' && c <= L'f')); }))
       return;
+    BeginStartupTrace(revision);
+    StartupTrace(StartupStage::ObserverFactoryBefore);
     auto observer = std::make_shared<Observer>(revision);
+    StartupTrace(StartupStage::ObserverFactoryReturned);
+    StartupTrace(StartupStage::PropertySetBefore);
     settings.Properties().Set(HookKey(), winrt::make<Hook>(std::move(observer)));
+    StartupTrace(StartupStage::PropertySetReturned);
   } catch (...) {
+    StartupTrace(StartupStage::ConfigureException);
     // The example remains an ordinary app. The fixture requires its own
     // matching ready record and fails explicitly if configuration was absent.
   }

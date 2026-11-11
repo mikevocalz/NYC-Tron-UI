@@ -1,0 +1,943 @@
+{
+  "schemaVersion": 1,
+  "kind": "reviewed-native-placement-startup-and-output-integration",
+  "recordedAtUTC": "2026-11-11 14:45:54 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "base": {
+    "commit": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "leafCount": 3380,
+    "directoryHashCount": 550,
+    "soleParent": "9a430338d8336283b230203a8555257798fcd62c"
+  },
+  "comparison": {
+    "branch": "codex/v1-reviewed-9a43033-nov11",
+    "commit": "9a430338d8336283b230203a8555257798fcd62c",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "leafCount": 3314,
+    "directoryHashCount": 537,
+    "changedPathsInPreparedCandidate": 141,
+    "retargetedBeforeHeadAdvance": true,
+    "unchangedHeadRunIdsBeforeAndAfter": [
+      43026784250,
+      43026784222,
+      43026784346,
+      43026784314,
+      43026784298,
+      43026784430,
+      43026784631,
+      43026784330
+    ],
+    "newRunIdsAfterRetarget": [],
+    "reason": "Keep accumulated source/receipt comparison below documented diff file limits while preserving a nonempty draft comparison. Candidate parent remains fc90103.",
+    "primarySource": "https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits#diff-limits"
+  },
+  "sourceOverlay": {
+    "tree": "990ea1d3dd5a03edcf8fd9910938bce4cd6d05bc",
+    "leafCount": 3382,
+    "directoryHashCount": 550,
+    "replacements": 5,
+    "additions": 2,
+    "unchangedBaseLeaves": 3375,
+    "rootFullTreeGate": true,
+    "independentFullTreeGate": true,
+    "scope": "Seven reviewed source paths only; old report/evidence retain exact base identities in this tree."
+  },
+  "sourceChanges": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+      "mode": "100644",
+      "type": "blob",
+      "before": {
+        "gitBlob": "00f6ff5f1735c81a5268855a5fb33627f5112cd7",
+        "bytes": 30240,
+        "sha256": "cfa10130880d4adc0089abc3b923d81ecabfd4394de476d282e0fed15d0fc3ea"
+      },
+      "after": {
+        "gitBlob": "26807e1426f40a83b5664871b1dbb82b7bc5cf19",
+        "bytes": 41674,
+        "sha256": "38f29c17da9c9b8bcd651148b79f4d668935b55c248390684604d39fbc59ae0f"
+      }
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+      "mode": "100644",
+      "type": "blob",
+      "before": {
+        "gitBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+        "bytes": 44768,
+        "sha256": "1898d0668faffe31c283a0cbfe84ed03e46526b4c80d4c2532cda5b947ecaa85"
+      },
+      "after": {
+        "gitBlob": "51a86756bfb8305c7ada28f77fa952fe772afcb7",
+        "bytes": 66219,
+        "sha256": "fbb7f7c3c758315492c4e64183c4d5a3d13585b3ad7184725969314ea7b5dcfc"
+      }
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "mode": "100644",
+      "type": "blob",
+      "before": {
+        "gitBlob": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+        "bytes": 25122,
+        "sha256": "79af800a514f55f64938494f4a14ca6496cf2036a1b53328181e7805805a63e2"
+      },
+      "after": {
+        "gitBlob": "14c1ce085e65b7b7f638559f7a7ea159e404173c",
+        "bytes": 31959,
+        "sha256": "b64029a9b7dfc07c95036e8dedc82c287a5d97c903e8490922c3908c29d7e56b"
+      }
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "before": {
+        "gitBlob": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+        "bytes": 133456,
+        "sha256": "4c706372c05aa8f7086f3ea6a9cc50339845bb551ee42724b0a1e6831e38a01b"
+      },
+      "after": {
+        "gitBlob": "9bb6dab3c9e378c00050ca3a2472c61eafab7b2b",
+        "bytes": 133747,
+        "sha256": "62bec93a8a36a00a3367d01bea3142931498638894af0285d74b40d3cfbdafc4"
+      }
+    },
+    {
+      "path": ".github/workflows/native-controls-port.yml",
+      "mode": "100644",
+      "type": "blob",
+      "before": {
+        "gitBlob": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+        "bytes": 24929,
+        "sha256": "c41cf7bbfcb3d27f7322474dc84d41028e07c3ab5778c4ed3102dfbdf65f7aed"
+      },
+      "after": {
+        "gitBlob": "c6c51423a0fcbab4768751bd8f1e04d2939f20fe",
+        "bytes": 26243,
+        "sha256": "42a89920560c87eb92c77bd0042bfa7b3642a45103929b9a0924db4419a8a00f"
+      }
+    },
+    {
+      "path": "tooling/native/report-ios-command-output.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "before": null,
+      "after": {
+        "gitBlob": "114c9490410b7b1598b6ec416b14a35cfb3dc233",
+        "bytes": 21491,
+        "sha256": "399a09ca060a67892e7f70ff1fa5a025d4aa5ff962a0223d33cb86ef485cb17a"
+      }
+    },
+    {
+      "path": "tooling/tests/ios-command-output.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "before": null,
+      "after": {
+        "gitBlob": "e240477f92344c1ef506c0afbc27aff60e407e52",
+        "bytes": 15584,
+        "sha256": "efaee3ad37508eea6b2c9575e3f7b6373b8d14735f5c1d1050925487806dbe09"
+      }
+    }
+  ],
+  "sourceReview": [
+    {
+      "area": "Windows native startup trace",
+      "folder": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source",
+      "manifest": "d997a803ec42a82cbb9550735269aaad9a0bb98a",
+      "checks": "09a67b698d2a57d64761ac85faff7869ff0bd5a5",
+      "protocol": "b982f6fdf349d251f48c6ec0aebbeb5e42c3ee33",
+      "designs": 5,
+      "assertions": 517,
+      "rootReproduced": true,
+      "independentSourceApproved": true,
+      "execution": "V8 source/format/model only; no C++/Win32/native execution"
+    },
+    {
+      "area": "Windows failure-only collector",
+      "folder": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source",
+      "manifest": "84c3bcbdc1c06d65545ca56bf9be46e3b55dbd3b",
+      "checks": "6abcd80ce6970c7a2ce021dbc92331e0c27fe289",
+      "designs": 6,
+      "assertions": 174,
+      "rootReproduced": true,
+      "independentSourceApproved": true,
+      "execution": "V8 source/contract/model only; no PowerShell/C#/.NET/Win32 execution"
+    },
+    {
+      "area": "AppKit bounded edge selection",
+      "folder": "docs/completion/evidence/v1-appkit-14c1ce0-popover-edge-source",
+      "manifest": "2e786f2056d756f1a8a8793e3b6487531ad89fda",
+      "checks": "9c74d18c0f882db5600c9e7207a3d070e574d849",
+      "designs": 8,
+      "assertions": 157,
+      "rootReproduced": true,
+      "independentSourceApproved": true,
+      "execution": "V8 source/extracted JavaScript with mocked IO and non-native placement/ownership/exception models"
+    },
+    {
+      "area": "iOS existing-command output capture",
+      "folder": "docs/completion/evidence/v1-ios-c6c5142-command-output-source",
+      "manifest": "273825d5e83ff43ded700a916290a18d24df7bec",
+      "checks": "8cad3b606a542633b0a8b0579ed80ca7e9ec1d40",
+      "designs": 4,
+      "assertions": 116,
+      "statusCases": 24,
+      "rootReproduced": true,
+      "independentSourceApproved": true,
+      "execution": "V8 source/status-contract only; no YAML/Bash/Node filesystem/native execution"
+    },
+    {
+      "area": "iOS bounded reporter and new focused tests",
+      "folder": "docs/completion/evidence/v1-ios-114c949-command-reporter-source",
+      "manifest": "262b639cc79ccd812560a9b8bdc6b166f4a0e4af",
+      "checks": "ef0c6c100fe6802a1eff6cc44d1ee0ad5dce90b2",
+      "designs": 8,
+      "pathModels": [
+        "posix",
+        "windows-separators"
+      ],
+      "assertionsPerModel": 148,
+      "rootReproduced": true,
+      "independentSourceApproved": true,
+      "execution": "Same eight designs under two V8 path models with Buffer/crypto/path/assert shims and mocked IO; not sixteen designs or Node/OS/iOS execution"
+    }
+  ],
+  "completedEvidence": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "orderedMergeParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ],
+    "scope": "Available original source/browser/Android/desktop logs print this checkout. iOS original unavailable; its completed metadata identifies PR head only.",
+    "source": {
+      "run": 43026784250,
+      "linuxPasses": 1204,
+      "windowsPasses": 1204,
+      "failures": 0,
+      "skips": 0
+    },
+    "browser": {
+      "overlayRun": 43026784346,
+      "overlayPasses": 32,
+      "instrumentsRun": 43026784430,
+      "instrumentsPasses": 686,
+      "consumerRun": 43026784298,
+      "basicPasses": 1,
+      "basicExpoOnlySkips": 1,
+      "expoPasses": 2,
+      "canonicalProducerDownloads": "skipped"
+    },
+    "mobile": {
+      "run": 43026784330,
+      "androidJob": 130544275610,
+      "androidDecoderChecks": 11,
+      "androidUIFlows": 4,
+      "androidRecoveryCount": null,
+      "iosJob": 130544275678,
+      "iosConclusion": "failure",
+      "iosOriginalAvailability": "Two completed reads returned Transport closed; no underlying cause established.",
+      "iosDecoder": "success metadata only; count unknown",
+      "iosTouch": "failure metadata only; assertion/count/recovery/actual checkout unknown"
+    },
+    "windows": {
+      "run": 43026784222,
+      "sourceJob": 130543374921,
+      "nativeJob": 130543971826,
+      "compile": "package and corrected example passed",
+      "deploy": "passed",
+      "ui": "process exited before UIA observed an app window",
+      "exitCode": -1073741819,
+      "eventException": "0xc0000005",
+      "eventOffset": "0x4e8c",
+      "causalFunction": null,
+      "testedDistribution": "skipped",
+      "registrationBeforeWindowObservation": "not established either way"
+    },
+    "appkit": {
+      "run": 43026784631,
+      "sourceJob": 130543378154,
+      "nativeJob": 130543725501,
+      "compile": "passed",
+      "ui": "document-1 shownPopover timeout",
+      "stateChanges": 1,
+      "selectedRecords": 3,
+      "actualHistoricalFrame": {
+        "x": -65,
+        "y": 33,
+        "width": 346,
+        "height": 326
+      },
+      "allowedRegion": {
+        "x": 0,
+        "y": 0,
+        "width": 680,
+        "height": 592
+      },
+      "leftOverflowNativePoints": 65,
+      "contained": false,
+      "coordinatesReady": null,
+      "historicalValidity": "same identity/lifetime; different later generation/tokens/parameters",
+      "testedDistribution": "skipped",
+      "returnedResponses": 375,
+      "omittedResponses": 372,
+      "omittedStateChanges": 0
+    },
+    "legacyWindows": {
+      "run": 43026784314,
+      "conclusion": "success metadata only; original not independently inspected"
+    },
+    "externalAppkit": {
+      "head": "ddeb2be0e07c98183d7aafb1d2a5737207ff0803",
+      "actualCheckout": "e074a8bbb133457942b28883b196d581910250ce",
+      "externalPort": "129bd0802535ffbe485d0342f948365927082058",
+      "originalReportedAcceptanceChecks": 18,
+      "scope": "Different source/actions; native pass and producer archive digest not transferred to this candidate."
+    }
+  },
+  "report": {
+    "path": "docs/completion/reports/V1-RELEASE-GATES.md",
+    "before": {
+      "gitBlob": "09bf7bd8f000ea5c24d767d45b7b38260cebf582",
+      "bytes": 170224,
+      "sha256": "fd94d9698b128f0c7a0b3471f257a41f17d63f8fc37d006eff326f872c481263"
+    },
+    "after": {
+      "gitBlob": "efcc015a55582fa430bea2a352aad6702fa53883",
+      "bytes": 185606,
+      "sha256": "21461fbda6a55ac4f023be31b677ceb743e2d2fa3b964fcb888852efb02aebd5"
+    },
+    "newPrefixBytes": 15382,
+    "historicalSuffixPreservedExactly": true,
+    "interpretation": "Current prefix followed by complete byte-identical prior report."
+  },
+  "retainedEvidence": {
+    "newFolders": 10,
+    "newFiles": 62,
+    "newBytes": 2145127,
+    "priorCommittedFolders": 34,
+    "priorCommittedFiles": 225,
+    "priorCommittedBytes": 9946505,
+    "encoding": "Exact original decoded UTF-8 bytes, including BOM/CRLF/JSON/timestamps where present; no normalization of originals.",
+    "folders": [
+      {
+        "folder": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass",
+        "files": 7,
+        "bytes": 107271,
+        "readmeGitBlob": "32022c6b1bd8fa8e87c2a71a61650803f3422544"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-combined-fc90103-source-pass",
+        "files": 6,
+        "bytes": 442103,
+        "readmeGitBlob": "139d57313dd7b82081f2d4f1b75a401976b1d328"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass",
+        "files": 7,
+        "bytes": 316875,
+        "readmeGitBlob": "89a25e5753b61dada203133941f06ebed7b36d86"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-fc90103-startup-exit",
+        "files": 6,
+        "bytes": 384555,
+        "readmeGitBlob": "83014ec373b21f153a3df1a9f3624dbaf6056aaf"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection",
+        "files": 11,
+        "bytes": 240857,
+        "readmeGitBlob": "94b8416f3b442971a2aebd419f0cd27ecd7bb157"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-combined-fc90103-mobile-outcome",
+        "files": 5,
+        "bytes": 395177,
+        "readmeGitBlob": "0c78914b1c476f6e8235ccbdd90b16efb69c2703"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source",
+        "files": 8,
+        "bytes": 121363,
+        "readmeGitBlob": "f85e44cd124afe2ede0a229a138f76aa02d7e667"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-14c1ce0-popover-edge-source",
+        "files": 4,
+        "bytes": 71100,
+        "readmeGitBlob": "5f9320f4280665fd914ffef6eec04f2a6545b3ea"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-ios-c6c5142-command-output-source",
+        "files": 4,
+        "bytes": 30774,
+        "readmeGitBlob": "254c067bdffe7407f71d2549d0faacd1cf587058"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-ios-114c949-command-reporter-source",
+        "files": 4,
+        "bytes": 35052,
+        "readmeGitBlob": "2f3b0d9607d35e436a0012bdccfee7be1ee5d9c0"
+      }
+    ],
+    "files": [
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "32022c6b1bd8fa8e87c2a71a61650803f3422544",
+        "bytes": 4541,
+        "sha256": "3670dbe7d6f7e0c11627053897a426942b7206cf51423d25c99cd98eedaab18b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "c261363ea691f22607145750c4828d2d8d7631b3",
+        "bytes": 8416,
+        "sha256": "f3ab08a3fe86fcdcc0e0ca892c3900a400c7e6ac369e2e4dc8d8c108044e69a1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/changed-paths.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "3e067c835310ec075727a22cb5e511b8cb611649",
+        "bytes": 8622,
+        "sha256": "e74b7529d02bfc52bce4e6f1982896cd2e67db82698e3def4f819150329b9f06"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "66bbd3bd060dd29bee5085b3e4ad1abb9adb6a91",
+        "bytes": 10479,
+        "sha256": "00b859542a3e4dc0b7930a9a83baa64fd6e0f9b04387f7c6cc28b6d2533fafec"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1d178de115afe7ae016e392286df3ed6a4240841",
+        "bytes": 19523,
+        "sha256": "cebd7efe2b954c4fdd405cae17ce8d863258ecf0ec21fe29ea078fc6efb314cf"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "49184c58a2a9cdaca8faa027c6c72040d8858074",
+        "bytes": 55371,
+        "sha256": "079fef48d38dde4d9a2f82a92a5168632886f3e548a66fabed8f3039be413072"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ddeb2be-external-pass/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "947e418ab5b27a122d79231f929a4756c0ef1b84",
+        "bytes": 319,
+        "sha256": "6930fe50704b55a1caaa9b52afe9ba5314c5e5c61631ac65a85ea9bd3629b44a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-source-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "139d57313dd7b82081f2d4f1b75a401976b1d328",
+        "bytes": 3645,
+        "sha256": "4ac8c373b26b80c3c534f14310e3f9878a370a5ea8dac2778351644d1f7bc064"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-source-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "755acf010ab31c8360064fdf87cee8fdf274e8e6",
+        "bytes": 8971,
+        "sha256": "866e5e16be6ce917f607df4e144275ee7142e9e3047646f37b2ff6150ad584d1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-source-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "8d1857bea14168a92daf9a90333a1e2b74aac1ff",
+        "bytes": 12340,
+        "sha256": "c322c61953a4f64925de975dad95ba9f8eee4be7ecc041b4b7734d4dac9ad09d"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-source-pass/linux-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "87d8a1ebcbf3de8c7bb50b4c9fda23e35dc7f702",
+        "bytes": 156153,
+        "sha256": "6a19e9ded94f03ba9d634ca6c9c4515c09970dea153001c6da76a14ffbe1e5fb"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-source-pass/windows-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6c6d10a8b3916512b2bbe948934f1315760442c2",
+        "bytes": 198873,
+        "sha256": "ab9282b747d5c3a30eb446c6e67a919729df10a42c9de541d379eac1467e774c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-source-pass/types-and-pack-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "201a3a9c60811a4eb50b28965b6b06ee10643f01",
+        "bytes": 62121,
+        "sha256": "9bfa22c4d803596791b64e9463fd3d2579287b6952a71a5a3cc54e842ec641b8"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "89a25e5753b61dada203133941f06ebed7b36d86",
+        "bytes": 2044,
+        "sha256": "01dbbd78edbf9d49982fd44c38dbf001aed834b22d28195af6c67fb62c413b28"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "46ac7cc1da7ab22602657b0371ddddd2f7f77244",
+        "bytes": 5138,
+        "sha256": "32d86982cc9e25ea5dec25a7e53277d418c9bc18b5728d6380c383576ab82765"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "7730fa2be2e2672d229d391635037c3b6c3dd69d",
+        "bytes": 18762,
+        "sha256": "2d2db17d1ca81212be8ed9fd096e006ffadc031eccd7899bdb14ae2fa42f25c1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/overlay-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "11e373ce23ce9ab1232ef30cce57158fd14dfd58",
+        "bytes": 43806,
+        "sha256": "423831ef1ca301490ec5d5e6cb66df9a56f91cc8490b6161c675b2c5ab2bbbcf"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/instruments-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "88b9db41f9f082a998bcb31bc1a52067d8e83f83",
+        "bytes": 148387,
+        "sha256": "cf693fd579cbab8187ce8f950c14e39a485fad53b2600f11ac0f859a43032120"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/installed-basic-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "a6f615dd56be6f43ad559ab9c6b56020e849786a",
+        "bytes": 49366,
+        "sha256": "061045519340b207758020759b7db839139c7ea88d8b1f95da5446bda37376a3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-browser-and-consumers-pass/installed-expo-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "07870cf94e44867ed0bb863bc4bf5152d792f90b",
+        "bytes": 49372,
+        "sha256": "4cdfecbb9db3e25fc6230b4569209d7d4de65c39277bd84a357a882ac710bd5d"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-fc90103-startup-exit/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "83014ec373b21f153a3df1a9f3624dbaf6056aaf",
+        "bytes": 3941,
+        "sha256": "50419b634521b379021182a1a04abb8d91f3620ed74d5421c6309a36e8b76f9f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-fc90103-startup-exit/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "9cf63f5c9d2b9e1b70409c6f873327869e41310e",
+        "bytes": 8998,
+        "sha256": "131fbba243aaa6485ba686c3f79e275c469f58e184ded3c5191ab38c0b9ebc8b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-fc90103-startup-exit/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "3a58dd4f65690b44e8a7b2ada283394eaa742002",
+        "bytes": 12992,
+        "sha256": "a71199c3d62c2e4c74eb0337873dd9a233c6885d70e2ead0754a9ddd05f992a3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-fc90103-startup-exit/fabric-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "422f7368bee1fe42df47e748294e7615f538da27",
+        "bytes": 31858,
+        "sha256": "e02c42feceebc3c831915b011dc16819808910004569123c6386b6bb5c38a84c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-fc90103-startup-exit/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "016ef8f069f81479d317b87f2375cc6fe727ce18",
+        "bytes": 323061,
+        "sha256": "a6c2b2268d9005a0cef3ba76ecaa799d7f06fc5e59d9d8b0db978f35356ec78a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-fc90103-startup-exit/failure-excerpt.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "72e360bfd718d246693f56f3719a1f26cde1823d",
+        "bytes": 3705,
+        "sha256": "5f91816ab7682d696481eeb4bed2b1fc835cc9980d4579b5fd664b7c341160a0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "94b8416f3b442971a2aebd419f0cd27ecd7bb157",
+        "bytes": 6953,
+        "sha256": "7f47a7cf58b35b7ac869fe06b496ec8ca30d1a8abadbcd2b25c92dd7680f1e75"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "f259be8b12e5c9b62669a32de111e9adeb128e7f",
+        "bytes": 20538,
+        "sha256": "a75f40de8475ee36edfe8d275a0290efa752fd9df7395a1fe6170284b4260a53"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "b6083574877a94a046014ae9610ffcc985037521",
+        "bytes": 12739,
+        "sha256": "6973d830f16c3164a319a04cd2051ba2172fe1d6e0cebb4405d60b2ef129b497"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "fe2994c8c12fe6771c7b4f0bfb04a4f6af687f0c",
+        "bytes": 19895,
+        "sha256": "522fa9e8f1ad9c9d28274d885d15e226d031bcdfbe0c3d22d8e4d860ed44b91f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "3cf78d555ed173feab5f41894a0a0a2397bce36b",
+        "bytes": 98870,
+        "sha256": "11bd3729f74a66cab9e7f06b83f02cc87f242ea2510ebe154c88ff5800cd4849"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "29af272e9f79955e3a023d15c20d4a9e11b8d3bc",
+        "bytes": 318,
+        "sha256": "e10de97fd567f087fc07024e950749bcf49d7a5c5191aa6415dd8946ff4e8aae"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/startup-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "00b486be06ba6f28ba073c0167fdde46c9e4166e",
+        "bytes": 28906,
+        "sha256": "bf567e4933afc86146b1d97a1e0ded27034774756cb21b1c066820bb9c70b4e9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/startup-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "49d994d5eda9eb04c04a8327a967423a2235d7f6",
+        "bytes": 29864,
+        "sha256": "bb6b6a9d5581e05e8194a583727146a3b1433dfa74ccaf0c3b7d4fe1b240e769"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/tooltip-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "9330225380a54d4e1baf1c2c5b188bfe562bf984",
+        "bytes": 9152,
+        "sha256": "3bd70a2b7a302e2cfd3f34bc4e2e24144a6818796e7b1d3e1d97ac7ed8af94f6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/popover-show-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6ca82f31ed78a74d7fa9873ca7425a64fe036ced",
+        "bytes": 6732,
+        "sha256": "e63a7972cbe47db4323c239c0d2f9b5cf74e75766eeac3b3b19288fddbc6b705"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-fc90103-popover-region-rejection/popover-show-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "9e2990ff3deb0dec3883bfa818d51a52a8470caa",
+        "bytes": 6890,
+        "sha256": "1e56272fe908ccfc7e0d903512ca40937fdf1a3dc2817ac8b99c85a402f001c7"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-mobile-outcome/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "0c78914b1c476f6e8235ccbdd90b16efb69c2703",
+        "bytes": 2632,
+        "sha256": "fba3bf08dce7a4072e3f22a19f46791eb2d957d1ed83ffa704adf7f4a535a180"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-mobile-outcome/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "4f585f2de6669457c20df8418dbe269a805387cc",
+        "bytes": 4546,
+        "sha256": "a927270e762877630a7df297f57b008adb97b478fef3c761a56331828b38ad48"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-mobile-outcome/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "d858e162ca44a5c0cc88c671817019af3097f5b4",
+        "bytes": 47975,
+        "sha256": "97ce7f4157373d8fc5ee0fc1c9a5f4a1a9b0c99f16ec65971c0cd2d58cc48860"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-mobile-outcome/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "ab9845df3585ede770de6f775b938ea6e403b411",
+        "bytes": 58104,
+        "sha256": "5b8b091becfcdb6a8af94c5e737cf994f5dd69a99fe5f54fe8f13bde30b48c2f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-fc90103-mobile-outcome/android-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "e81f1ac7fdeab797b19f073cf32c3d9ff98b720e",
+        "bytes": 281920,
+        "sha256": "64f755df43ea9182c7b15ec6c59332c03eb30430338085c69b4732dcc9435101"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "f85e44cd124afe2ede0a229a138f76aa02d7e667",
+        "bytes": 5785,
+        "sha256": "8083c90d5cf6042c5d60c4b2d43549e44028092d43fde8e25f0c9a46bc5f3ce9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/native-source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "da9eb2d37d39e774b2bf95338d67b467eb763087",
+        "bytes": 6982,
+        "sha256": "83893410049ec4990ce473022cd4b30a3e0ccf062bf9e910d6abf177f9fae8ad"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/native-edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "d997a803ec42a82cbb9550735269aaad9a0bb98a",
+        "bytes": 22343,
+        "sha256": "ee268316411b914883a843e92da1c78a84c1899e4dab3afc20e86a18e76187ea"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/protocol.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "b982f6fdf349d251f48c6ec0aebbeb5e42c3ee33",
+        "bytes": 3362,
+        "sha256": "64934bbca2e11a18a3ff1b53555c3a4d046a53ad93b875a5c45f86ada81da0fa"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/native-review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "09a67b698d2a57d64761ac85faff7869ff0bd5a5",
+        "bytes": 15874,
+        "sha256": "56e211b479170b0115536aa7ac8ad64418ac1b05b06d5743c0df0890369c6cd3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/collector-source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1191c54550760731bc28e073a0c25173001d7492",
+        "bytes": 11436,
+        "sha256": "ca67416ecad76071021780252845fa0c0c2a8a6d5f021e822a6b81a5f337f5fb"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/collector-edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "84c3bcbdc1c06d65545ca56bf9be46e3b55dbd3b",
+        "bytes": 27445,
+        "sha256": "6e7336cb5888e5644255df6bdf8992c1371837ed3815477ac7604c921acf0923"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/collector-review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6abcd80ce6970c7a2ce021dbc92331e0c27fe289",
+        "bytes": 28136,
+        "sha256": "e5132b15b7df47ef1c1d6160e18d5fae7f2eb7148985ba56e279798dccfc2bed"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-14c1ce0-popover-edge-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "5f9320f4280665fd914ffef6eec04f2a6545b3ea",
+        "bytes": 6857,
+        "sha256": "445fe1d006b91efcd9fb53858ae10b9b52263d2702a93098d0e1d4f2b3f1677c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-14c1ce0-popover-edge-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "801357d87b0c5945c64d3d4a63d97ce73d6bd8ce",
+        "bytes": 12076,
+        "sha256": "56187d1873012ae42646daa7da72ff81b277a579903b4499ff8577ba3f253b02"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-14c1ce0-popover-edge-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "2e786f2056d756f1a8a8793e3b6487531ad89fda",
+        "bytes": 26726,
+        "sha256": "521327042211e70338e288e30d8f66e47f4152fbe2343faa8b8fe087b9228a91"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-14c1ce0-popover-edge-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "9c74d18c0f882db5600c9e7207a3d070e574d849",
+        "bytes": 25441,
+        "sha256": "b2f743f18514dbba13da923a79effae36e3a7b121813387ac9324ef3added89f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-c6c5142-command-output-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "254c067bdffe7407f71d2549d0faacd1cf587058",
+        "bytes": 4656,
+        "sha256": "5bff4eb2ef82a23634334949c0a321d0eb3f4b980fb0997cc32158ed604c8d45"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-c6c5142-command-output-source/workflow-source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "83e133f884fd5ffc8bd17cf50b547f38ede24383",
+        "bytes": 8126,
+        "sha256": "ffb07ef3802d4bbcaf54766604b34323fb53213a50179ac469cc5eb78f17478f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-c6c5142-command-output-source/workflow-edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "273825d5e83ff43ded700a916290a18d24df7bec",
+        "bytes": 7566,
+        "sha256": "340c4b60333469ffc5b568811fec80f1d5e39ded2fb77de7380d8c182f33ada6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-c6c5142-command-output-source/workflow-review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "8cad3b606a542633b0a8b0579ed80ca7e9ec1d40",
+        "bytes": 10426,
+        "sha256": "f621819b4f36b29ce2b7995a7bfbaf88d6303eae2d50be697f519ccbd1350729"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-114c949-command-reporter-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "2f3b0d9607d35e436a0012bdccfee7be1ee5d9c0",
+        "bytes": 6567,
+        "sha256": "41aaedb59c4916b5eef2ddf875bdc3c3e637e536347871b43ac5492a020c29e8"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-114c949-command-reporter-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "c4c1d47087de61bec9802bc344f0ef0c5657929f",
+        "bytes": 10838,
+        "sha256": "cdf204619daccba7b9bd6cbf67b5dc508627d386b551456ef5190c7613048e45"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-114c949-command-reporter-source/addition-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "262b639cc79ccd812560a9b8bdc6b166f4a0e4af",
+        "bytes": 8049,
+        "sha256": "fb174c5a5f4741370d63a6a99ff7d2c13cf028db8e4cb02b48b109b1087774d1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-ios-114c949-command-reporter-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "ef0c6c100fe6802a1eff6cc44d1ee0ad5dce90b2",
+        "bytes": 9598,
+        "sha256": "df46a6f0a412dbfe773f6a968e73f505c8ef1e47552763b6de957ed746bd803c"
+      }
+    ]
+  },
+  "protectedScope": {
+    "canonicalCapabilities": {
+      "total": 341,
+      "local": 332,
+      "pinnedExternal": 9,
+      "partial": 0,
+      "sourcePending": 0,
+      "acceptedAcrossAllEight": 0,
+      "platforms": [
+        "ios",
+        "android",
+        "web",
+        "macos",
+        "windows",
+        "visionos",
+        "quest",
+        "pico"
+      ]
+    },
+    "issueLedger": {
+      "path": "docs/completion/v1-issue-status.md",
+      "gitBlob": "0deceb5313a0453aaa5cc1a5ecbbdfdec21f3e97"
+    },
+    "nativeUiRunner": {
+      "path": "tooling/native/run-ui-acceptance.mjs",
+      "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af"
+    },
+    "forgePin": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+    "viroPin": "e84a1a9a37168a835f7730e09016917b9d49c6ef",
+    "workflowChange": "Only existing iOS build/UI capture blocks and one existing always-upload path. Triggers, runners, native commands/arguments, driver, acceptance assertions, retries, deadlines, Android/source steps and remaining workflows are preserved.",
+    "hostSettingsChanged": false,
+    "otherRefChanges": "Only frozen comparison anchor creation and PR64 base/body metadata preceded publication; no external umbrella/main/release/unrelated ref changed."
+  },
+  "publication": {
+    "targetDraftPullRequest": 64,
+    "branch": "codex/v1-reviewed-closure-nov11",
+    "expectedParent": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "force": false,
+    "required": "Full leaf/type/mode/all-directory/ordered-parent independent gates, current report/evidence semantic review, fresh expected-parent lease and exact postread. Ordinary changed-source pull-request CI only.",
+    "candidateCommitIdentity": "Bound externally after manifest creation; no self-referential hash."
+  },
+  "remainingGates": [
+    "Actual changed-source desktop/mobile execution and supported-host native acceptance.",
+    "Original final fifteen tested archives (thirteen workspace plus two desktop), matching peer hashes and seventeen imports.",
+    "Physical-device, speech and performance evidence across the original eight-platform scope.",
+    "Owner approval of the original final archive manifest before main merge, tag, release or npm publication.",
+    "Unretrieved iOS original and uninspected ZIP/member/pixel/dump evidence remain explicit limits."
+  ],
+  "claimsNotMade": [
+    "No prior pass transfers to a changed candidate.",
+    "No Windows crash cause or startup fix is inferred from trace stages, missing files or timing perturbation.",
+    "No actual alternate AppKit edge success is inferred from geometry models.",
+    "No iOS failed assertion or connector error cause is inferred from output capture changes.",
+    "No configured flow slot, JUnit structural count, model or shim execution establishes native acceptance.",
+    "No producer digest/upload metadata establishes independently inspected archive bytes or eligible physical-host evidence."
+  ]
+}

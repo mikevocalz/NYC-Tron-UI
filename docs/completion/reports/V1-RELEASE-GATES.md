@@ -1,3 +1,106 @@
+# v1 release-gate evidence: native placement and failure observation
+
+Current checkpoint: 2026-11-11 14:45:54 UTC.
+
+## Implementation coverage and acceptance boundary
+
+All **341 canonical capabilities are implemented: 332 locally and nine through pinned external integrations**. There are zero partial or source-pending capabilities. This includes all twelve specifically requested capabilities:
+
+| Source implementation | Requested capabilities |
+| --- | --- |
+| Local | N-01 NativePointerRouter; N-04 PalmRejectionAndPrediction; N-19 NativeMediaDecoderSurface |
+| Pinned external integration | N-03 LogitechMuseSpatialInk; N-09 XRPresentationAdapter; N-10 OfflineCheckpointAndAutosave; N-11 CollaborationAdapter; N-13 LongTaskScheduler; N-14 MediaCache; N-15 UndoTransactionCoordinator; N-16 NativeBinaryTransport; N-18 TestAndTelemetryAdapter |
+
+The canonical [issue ledger](../v1-issue-status.md) remains blob `0deceb5313a0453aaa5cc1a5ecbbdfdec21f3e97`. The existing Forge pin `cc4893b29f6182c71705a64785a41f5bbf3f5507` and Viro pin `e84a1a9a37168a835f7730e09016917b9d49c6ef` are preserved. This candidate adds no capability-count or dependency-pin change.
+
+**Full acceptance remains 0/341 across all eight required platforms:** ios, android, web, macos, windows, visionos, quest and pico. Source implementation, individual passing checks, supported-host eligibility, original final archive identity and owner approval are distinct gates. This source checkpoint does not approve main merge, a tag, release or npm publication.
+
+## Completed combined execution: fc90103
+
+The completed original logs below belong to head `fc901030ba1e0eed1b399ad0a3100529bf97e52f`, actual checkout `255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6`, tree `5acadef01a5fcafa3600949e7c50e730aa3663e9`, with ordered merge parents `25a6af6d020e34d790f6a4f3d9f117738b252f1e` then `fc901030ba1e0eed1b399ad0a3100529bf97e52f`. Available source, browser, Android and desktop originals independently print that checkout. The unavailable iOS original does not establish its own checkout line.
+
+| Gate | Completed result and evidence boundary |
+| --- | --- |
+| [General source, exports and types](../evidence/v1-combined-fc90103-source-pass/README.md), run 43026784250 | Linux and Windows originals each report 1,204 passes with zero failures/cancellations/skips/todos. Types and pack checks passed. Source/API output reports 619 exports, 750 ESM entries, 13 API packages, 619 subpaths and 3,306 reachable declarations; applicable pack/consumer checks report 13 packs and 17 imports. These results are for fc90103. |
+| [Browser and installed consumers](../evidence/v1-combined-fc90103-browser-and-consumers-pass/README.md) | Overlay 32 passes; instruments 686 passes; basic installed consumer one pass and one Expo-only skip; Expo consumer two passes. Canonical release-artifact download steps were skipped in these PR jobs. The separate older reference-browser result is not retested or counted in this receipt. |
+| [Mobile](../evidence/v1-combined-fc90103-mobile-outcome/README.md), run 43026784330 | Source produced 13 packs. Android original reports 11 decoder checks and four actual OS-driven UI flows; recovery count is unknown. iOS completed with failure at 13:40:30 UTC. Its completed metadata reports successful simulator build and decoder step, failed XCTest reference/pointer touch step, and successful artifact retention. Its assertion, test counts, recovery count and original checkout line remain unknown. Two dedicated completed-original reads returned `Transport closed`; the cause of that retrieval error is unestablished. |
+| [Windows Fabric](../evidence/v1-windows-fc90103-startup-exit/README.md), run 43026784222 | Fabric source checks, package compilation, corrected example compilation and deployment passed. PID 1860 exited before UIA observed an app window, with exit -1073741819. A matching error record reports `0xc0000005` in NYCTronWindowsExample.exe at offset `0x4e8c`. No mapped stack, function or source cause was inspected. Startup/registration callbacks may have run before that observation. No navigation geometry, RTL or full acceptance result followed; tested distribution steps were skipped. |
+| [AppKit](../evidence/v1-appkit-fc90103-popover-region-rejection/README.md), run 43026784631 | Compilation passed. The first document-popover wait failed. Its collector observed 375 returned responses and retained three selected records spanning one projected state change, without capture failure or byte-budget loss. An actual historical returned show measured frame (-65, 33, 346, 326) against region (0, 0, 680, 592): 65 native points of left overflow, `contained=false`, coordinate readiness unread. Identity/lifetime remained qualified, while generation/tokens/parameters differed from later state. Tested distribution was skipped. |
+| Legacy WinUI native host, run 43026784314 | Completed success metadata only. Its original log was not independently inspected for this checkpoint; this is not Fabric UI acceptance. |
+
+The [external AppKit pass and port audit](../evidence/v1-appkit-ddeb2be-external-pass/README.md) remains separate. Its original reports eighteen acceptance checks at actual checkout `e074a8bbb133457942b28883b196d581910250ce`; the related external port `129bd0802535ffbe485d0342f948365927082058` is preserved. That execution used different source and actions. Neither its native pass nor its producer archive digest transfers to the candidate below.
+
+## Reviewed source in this candidate
+
+The sole intended parent is `fc901030ba1e0eed1b399ad0a3100529bf97e52f`. The source overlay has tree `990ea1d3dd5a03edcf8fd9910938bce4cd6d05bc`. The [integration manifest](../evidence/v1-native-placement-startup-output-integration-nov11/integration-manifest.json) binds every changed path, complete blob identity, byte count, source review, retained receipt and report suffix. Candidate commit and generated-merge identities are bound externally after this manifest is committed.
+
+| Changed path | Preimage | Reviewed candidate |
+| --- | --- | --- |
+| `packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h` | `00f6ff5f1735c81a5268855a5fb33627f5112cd7` | `26807e1426f40a83b5664871b1dbb82b7bc5cf19` |
+| `packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1` | `aa54819df02c2decfba2fb19e3b4d2a5aaabd554` | `51a86756bfb8305c7ada28f77fa952fe772afcb7` |
+| `packages/macos-appkit/spark/macos/NYCTronPopover.mm` | `ecd9f2235d17c4d3bf6a20143c385d72d0dfea63` | `14c1ce085e65b7b7f638559f7a7ea159e404173c` |
+| `examples/macos-appkit/spark/verify-native.mjs` | `f4e630f147d8bb7f5370531e778ed60acf03a802` | `9bb6dab3c9e378c00050ca3a2472c61eafab7b2b` |
+| `.github/workflows/native-controls-port.yml` | `624bcf9c74ddfb89a43ca7e303560331c258cafb` | `c6c51423a0fcbab4768751bd8f1e04d2939f20fe` |
+| `tooling/native/report-ios-command-output.mjs` | New file | `114c9490410b7b1598b6ec416b14a35cfb3dc233` |
+| `tooling/tests/ios-command-output.test.mjs` | New file | `e240477f92344c1ef506c0afbc27aff60e407e52` |
+
+### macOS placement repair
+
+[Source review](../evidence/v1-appkit-14c1ce0-popover-edge-source/README.md) binds the repair to the observed left overflow. The same NSPopover tries at most four unique public edges, starting with its preferred edge unless an exactly scoped prior successful edge qualifies for first position. Each returned candidate uses actual post-layout full-window geometry. Full containment and matching-layout coordinate readiness still gate reveal. Only initial presentation hides content; there is no close/reopen or extra activation between candidates.
+
+Owner/content/popover identity, invocation, lifetime, generation, tokens and parameters prevent stale reentrant work from completing. A final measured rejection remains strict. Animation restoration respects newer props/recycle policy and preserves an exception already unwinding. C++ cleanup is guarded by Clang's exception-mode feature query; the actual installed target flags remain uninspected. The verifier adds only typed edge/attempt fields. Existing native assertions, polling deadline, observers and focus behavior remain protected. No synthetic alternate rectangle establishes an actual native placement success.
+
+### Windows startup observation
+
+[Native trace review](../evidence/v1-windows-26807e1-startup-trace-source/README.md) and [collector review](../evidence/v1-windows-26807e1-startup-trace-source/collector-source-review.json) add bounded diagnostic stages and failure-only retention. The original property-bag expression and argument-order freedom remain intact. The fixed file binds source revision, PID and creation FILETIME, with 64-row / 16-KiB caps, retained writer ownership and explicit partial-tail handling.
+
+The parent uses the already-retained process handle after original cleanup. It retains a bounded stable snapshot before typed projection; collector errors remain secondary to the original ErrorRecord. No missing file/marker, final retained stage or changed timing identifies a crash cause. Parent/child temp paths can differ. The trace is an observation change, not a demonstrated startup repair.
+
+### iOS output observation
+
+[Workflow capture review](../evidence/v1-ios-c6c5142-command-output-source/README.md) and [reporter review](../evidence/v1-ios-114c949-command-reporter-source/README.md) retain the existing top-level build/touch stdout and stderr and emit a bounded typed observation after the command or capture setup settles. Build stdout stays at `/tmp/xcodebuild.log` for the existing compiled-source checks. The build's original terminal test still yields 0/1; UI returns its saved status exactly. The reporter cannot replace that status. Commands execute at most once, without a new retry or fallback execution.
+
+The existing UI runner remains blob `3cac0f88b939d1ed1619396bd1fc2aa58f6061af`: native actions, assertions, launcher, driver, timeout, recovery and cleanup behavior are unchanged. The console envelope is capped at 8,192 bytes and includes only typed facts, fixed labels and hashes. Inputs have bounded reads, explicit exact hashed-byte counts, qualified complete/prefix scope and sampled file-identity checks. The summary is created exclusively and read back after close. Existing decoded/buffered nested logs remain distinct from raw top-level captures.
+
+Configured flow/attempt slots do not establish execution or a recovery count. JUnit counts describe supported structure, not a native verdict. A supplied status may come from setup or redirection, so launch, signal, workflow-step status and input freshness remain unestablished by this reporter. This change neither identifies the earlier failed assertion nor explains the connector's Transport closed errors.
+
+### Source verification boundary
+
+| Reviewed area | Reproduced source/model checks | Execution limit |
+| --- | --- | --- |
+| Windows native trace | Five designs, 517 assertions; maximum legal modeled row 262 B and modeled file 15,689 B | No C++/Win32/startup execution |
+| Windows parent collector | Six designs, 174 assertions; complete modeled envelopes 1,432 / 3,894 / 181 B | No PowerShell/C#/.NET/Win32 execution |
+| AppKit placement and typed observation | Eight designs, 157 assertions; 400 requests over 20,000 mock ms; complete 6,892 / 6,032 B envelopes | Geometry/ownership/exception models and extracted JavaScript with mocked IO; no native placement or Objective-C compilation |
+| iOS capture workflow | Four groups, 116 assertions and 24 modeled status combinations | No Bash or native capture execution |
+| iOS reporter and focused tests | Same eight designs, 148 assertions in each POSIX and Windows-separator V8 variant; 4,603 B envelope and 4,351 B retained mock summary | Explicit Buffer/crypto/path/assert shims and mocked IO; no actual Node, OS or iOS execution |
+
+Root and independent reviewers approved every source delta and reproduced these exact checks. The final reporter tests correct a concrete slash-only mock-filesystem defect; production reporter behavior is unchanged by that correction. The existing test discovery includes the new test file without an added workflow test step.
+
+These source/model checks do not substitute for the next candidate's actual compiler, PowerShell/.NET/Win32/AppKit, simulator or native UI execution. Reproductions of the same design are not additional independent test designs. Prior passes remain attached to their exact source and observed checkout.
+
+## Publication and evidence integrity
+
+The review comparison uses frozen branch `codex/v1-reviewed-9a43033-nov11` at `9a430338d8336283b230203a8555257798fcd62c`. Root freshly recomputed that complete 3,314-leaf / 537-directory tree and reconciled all 74 fc90103 changes. The candidate still has fc90103 as its parent. This keeps the review diff below GitHub's [documented file limit](https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits#diff-limits) as retained receipts accumulate. Retargeting preserved the open draft PR and produced no new workflow run at its unchanged head.
+
+Only ordinary changed-source PR CI is intended. Ref publication requires complete leaf path/type/mode/blob checks, every directory hash, ordered parents, a fresh expected-fc90103 lease, `force:false`, and exact postreads. No main/release ref, unrelated PR, external umbrella source or device/host configuration is advanced by this source checkpoint.
+
+This candidate retains 10 new evidence folders, 62 files and 2,145,127 bytes, while preserving all 225 previously committed receipt files and their 9,946,505 bytes. The combined receipt inventory therefore contains 287 files and 12,091,632 bytes. The integration manifest enumerates exact path, mode, type, Git blob, byte count and SHA-256 for each new file. Original decoded logs, BOM/CRLF, JSON and timestamped envelopes retain their original bytes; whitespace checks apply only to authored source/prose.
+
+Producer artifact IDs/digests and successful upload messages remain producer metadata. No ZIP/member/pixel/crash-dump or final archive byte equality is inferred. The external AppKit port audit, completed failures and reviewed corrective/diagnostic sources remain separate receipts.
+
+The entire preceding report remains an exact 170,224-byte suffix: blob `09bf7bd8f000ea5c24d767d45b7b38260cebf582`, SHA-256 `fd94d9698b128f0c7a0b3471f257a41f17d63f8fc37d006eff326f872c481263`. This prefix is current; older checkpoint wording below remains historical.
+
+## Remaining release gates
+
+1. Complete the changed-source desktop and mobile runs, investigate actual failing assertions/stages, and obtain supported-host native acceptance. The earlier elevated Windows app/shell result does not establish eligible-host acceptance; fc90103 exited before new eligibility proof.
+2. Obtain and independently inspect the original final fifteen tested archives: thirteen workspace archives and two desktop archives. Verify matching peer hashes and seventeen installed imports at the final source.
+3. Complete the required physical-device, speech and performance evidence for the original eight-platform scope. Source models, producer digests, metadata and uninspected ZIP/pixel/dump evidence do not replace those results.
+4. Obtain owner approval of the original final archive manifest before main merge, tag, release or npm publication.
+
+---
+
+## Preserved preceding report
+
 # v1 release-gate evidence: desktop follow-up candidate
 
 Current checkpoint: 2026-11-11 13:01:37 UTC.

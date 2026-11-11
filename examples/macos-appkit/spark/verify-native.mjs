@@ -1201,6 +1201,8 @@ function projectPopoverPresentation(value) {
       ['closing', 'content-prerequisites', 'token-suppressed', 'owner-unavailable', 'show-entered',
         'show-not-shown', 'content-window-unavailable', 'coordinates-pending', 'coordinates-ready', 'outside-region']) : null },
     lastShow: { ...show, stage,
+      attempt: showValid && Number.isSafeInteger(read(showSource, 'attempt')) && read(showSource, 'attempt') >= 1 && read(showSource, 'attempt') <= 4 ? read(showSource, 'attempt') : null,
+      edge: showValid ? choice(read(showSource, 'edge'), ['min-x', 'max-x', 'min-y', 'max-y']) : null,
       shownAfterCall: returned ? boolean(read(showSource, 'shownAfterCall')) : null,
       contentWindowPresent: returned ? boolean(read(showSource, 'contentWindowPresent')) : null,
       contained, coordinatesReady: contained === true ? boolean(read(showSource, 'coordinatesReady')) : null,

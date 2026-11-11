@@ -1,0 +1,601 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-appkit-popover-left-overflow-observation",
+  "recordedAtUTC": "2026-11-11 13:35:27 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "soleParent": "9a430338d8336283b230203a8555257798fcd62c",
+    "comparisonBase": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "orderedMergeParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ],
+    "checkoutObservedInBothCompletedOriginals": true,
+    "checkoutLines": {
+      "core": 123,
+      "native": 113
+    },
+    "sourceFiles": [
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+        "gitBlob": "ac9c7077d62cb52650ee5ee36bba1f6b383a4a5f",
+        "bytes": 516,
+        "sha256": "000b3a7c94d355fcbc79c49c474757311d2b79d81c0a23582236ed504b2c6e05"
+      },
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+        "gitBlob": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+        "bytes": 25122,
+        "sha256": "79af800a514f55f64938494f4a14ca6496cf2036a1b53328181e7805805a63e2"
+      },
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "gitBlob": "6eaeab02acb6af6635a368101bce514bc0c89549",
+        "bytes": 78701,
+        "sha256": "a37b7cefbfe910de05e96c6e06ecab8d090cb823e8857cf17f7c2b0bb7b8d5d8"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "gitBlob": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+        "bytes": 133456,
+        "sha256": "4c706372c05aa8f7086f3ea6a9cc50339845bb551ee42724b0a1e6831e38a01b"
+      }
+    ],
+    "sourceReceipt": "../v1-appkit-ecd9f22-presentation-observation-source/README.md",
+    "integrationManifest": "11c5ade88dde02a2d77c0469da0477e0f04c5f15",
+    "identityScope": "Immutable commit/tree metadata and exact source blobs; original archive/member/installed-SDK bytes were not independently inspected."
+  },
+  "workflow": {
+    "id": 43026784631,
+    "attempt": 1,
+    "coreJob": 130543378154,
+    "nativeJob": 130543725501,
+    "conclusion": "failure"
+  },
+  "originalFiles": [
+    {
+      "name": "source-job.log",
+      "gitBlob": "fe2994c8c12fe6771c7b4f0bfb04a4f6af687f0c",
+      "bytes": 19895,
+      "sha256": "522fa9e8f1ad9c9d28274d885d15e226d031bcdfbe0c3d22d8e4d860ed44b91f"
+    },
+    {
+      "name": "native-job.log",
+      "gitBlob": "3cf78d555ed173feab5f41894a0a0a2397bce36b",
+      "bytes": 98870,
+      "sha256": "11bd3729f74a66cab9e7f06b83f02cc87f242ea2510ebe154c88ff5800cd4849"
+    },
+    {
+      "name": "build-summary.json",
+      "gitBlob": "29af272e9f79955e3a023d15c20d4a9e11b8d3bc",
+      "bytes": 318,
+      "sha256": "e10de97fd567f087fc07024e950749bcf49d7a5c5191aa6415dd8946ff4e8aae"
+    },
+    {
+      "name": "startup-summary.json",
+      "gitBlob": "00b486be06ba6f28ba073c0167fdde46c9e4166e",
+      "bytes": 28906,
+      "sha256": "bf567e4933afc86146b1d97a1e0ded27034774756cb21b1c066820bb9c70b4e9"
+    },
+    {
+      "name": "startup-envelope.log",
+      "gitBlob": "49d994d5eda9eb04c04a8327a967423a2235d7f6",
+      "bytes": 29864,
+      "sha256": "bb6b6a9d5581e05e8194a583727146a3b1433dfa74ccaf0c3b7d4fe1b240e769"
+    },
+    {
+      "name": "tooltip-summary.json",
+      "gitBlob": "9330225380a54d4e1baf1c2c5b188bfe562bf984",
+      "bytes": 9152,
+      "sha256": "3bd70a2b7a302e2cfd3f34bc4e2e24144a6818796e7b1d3e1d97ac7ed8af94f6"
+    },
+    {
+      "name": "popover-show-summary.json",
+      "gitBlob": "6ca82f31ed78a74d7fa9873ca7425a64fe036ced",
+      "bytes": 6732,
+      "sha256": "e63a7972cbe47db4323c239c0d2f9b5cf74e75766eeac3b3b19288fddbc6b705"
+    },
+    {
+      "name": "popover-show-envelope.log",
+      "gitBlob": "9e2990ff3deb0dec3883bfa818d51a52a8470caa",
+      "bytes": 6890,
+      "sha256": "1e56272fe908ccfc7e0d903512ca40937fdf1a3dc2817ac8b99c85a402f001c7"
+    }
+  ],
+  "originalsScope": "Complete decoded UTF-8 original job logs and exact timestamp-stripped JSON line content; original timestamped envelopes preserve their line endings and stderr interleaving. No JSON reserialization or line-ending normalization of these eight files.",
+  "immutableOriginalReadback": {
+    "files": 8,
+    "bytes": 200627,
+    "allByteIdentical": true
+  },
+  "envelopeExtraction": {
+    "BUILD": {
+      "beginCount": 1,
+      "endCount": 1,
+      "status": "complete-unique-json-line",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    "STARTUP": {
+      "beginCount": 1,
+      "endCount": 1,
+      "status": "complete-unique-json-line",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 10
+    },
+    "TOOLTIP": {
+      "beginCount": 1,
+      "endCount": 1,
+      "status": "complete-unique-json-line",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    "POPOVER_SHOW": {
+      "beginCount": 1,
+      "endCount": 1,
+      "status": "complete-unique-json-line",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    "WINDOW_SHOW": {
+      "beginCount": 0,
+      "endCount": 0,
+      "status": "absent",
+      "jsonLines": 0,
+      "interleavedNonJsonLines": 0
+    },
+    "lines": {
+      "build": {
+        "begin": 509,
+        "json": 510,
+        "end": 511
+      },
+      "popover": {
+        "begin": 527,
+        "json": 528,
+        "end": 529
+      },
+      "tooltip": {
+        "begin": 530,
+        "json": 531,
+        "end": 532
+      },
+      "startup": {
+        "begin": 533,
+        "json": 535,
+        "end": 545,
+        "interleaved": [
+          534,
+          536,
+          537,
+          538,
+          539,
+          540,
+          541,
+          542,
+          543,
+          544
+        ]
+      }
+    },
+    "uniqueStandaloneMarkersOnly": true,
+    "echoedBuildScriptMarkersExcluded": true,
+    "startupInterleavedScope": "Ten original stderr lines, including blank lines and Node version, retained in timestamped block; JSON is extracted from its unique valid line without discarding the interleaving from the block."
+  },
+  "stageResults": {
+    "core": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "logLines": [
+        185,
+        187,
+        188,
+        189,
+        190
+      ]
+    },
+    "consumer": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "logLines": [
+        250,
+        252,
+        253
+      ]
+    },
+    "installedApi": {
+      "packages": 1,
+      "subpaths": 15,
+      "reachableDeclarations": 33,
+      "logLine": 441
+    },
+    "nativeTransportProbe": {
+      "originalAndPatchedCases": 7,
+      "logLine": 451,
+      "scope": "Actual native Foundation/socketpair transport probe; not full application acceptance."
+    },
+    "compilation": {
+      "conclusion": "success",
+      "exitCode": 0,
+      "startedAt": "2026-11-11T13:14:50Z",
+      "completedAt": "2026-11-11T13:29:43Z",
+      "buildSummary": "build-summary.json"
+    },
+    "nativeExercise": {
+      "conclusion": "failure",
+      "startedAt": "2026-11-11T13:29:43Z",
+      "completedAt": "2026-11-11T13:30:17Z"
+    },
+    "testedDistribution": {
+      "step": 13,
+      "conclusion": "skipped"
+    }
+  },
+  "firstFailure": {
+    "message": "Timed out waiting for shown native NSPopover",
+    "nativeLogLines": [
+      534,
+      539,
+      540,
+      541,
+      542,
+      546
+    ],
+    "verifierGitBlob": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+    "waitForLine": 1088,
+    "shownPopoverLine": 1347,
+    "callLine": 1647,
+    "call": "const beforeMinimizePopover = await shownPopover('document-1');",
+    "unchangedPredicate": "current.shown && current.contentVisible",
+    "timeoutMilliseconds": 20000,
+    "pollIntervalMilliseconds": 50,
+    "laterMinimizeAndPhysicalNativeDragGatesReached": false
+  },
+  "presentation": {
+    "source": "popover-show-summary.json",
+    "processId": 33677,
+    "owner": "document-1",
+    "returnedResponses": 375,
+    "stateChanges": 1,
+    "selectedResponses": [
+      1,
+      2,
+      375
+    ],
+    "omittedResponses": 372,
+    "omittedStateChanges": 0,
+    "recordsOmittedForByteLimit": 0,
+    "captureFailed": false,
+    "countOverflow": false,
+    "first": {
+      "shown": false,
+      "contentVisible": true,
+      "controlledVisible": true,
+      "lastShowStatus": "unavailable",
+      "lastBranch": "content-prerequisites",
+      "lastBranchIsHistorical": true
+    },
+    "secondAndLast": {
+      "shown": false,
+      "contentVisible": false,
+      "controlledVisible": false,
+      "lastBranch": "content-prerequisites",
+      "lastBranchSameGenerationAndLifetimeAndIdentity": true,
+      "lastShow": {
+        "status": "observed",
+        "sameLifetime": true,
+        "sameIdentity": true,
+        "sameGeneration": false,
+        "sameScopeToken": false,
+        "samePresentationToken": false,
+        "sameParameters": false,
+        "stage": "returned",
+        "shownAfterCall": true,
+        "contentWindowPresent": true,
+        "contained": false,
+        "coordinatesReady": null,
+        "anchor": {
+          "x": 28,
+          "y": 359,
+          "width": 160,
+          "height": 36
+        },
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 680,
+          "height": 592
+        },
+        "actualFrame": {
+          "x": -65,
+          "y": 33,
+          "width": 346,
+          "height": 326
+        }
+      }
+    },
+    "currentContentSize": {
+      "width": 320,
+      "height": 300
+    },
+    "currentPreferredEdge": "above",
+    "coordinates": {
+      "showAnchor": "positioning-view",
+      "actualFrameAndRegion": "owner-content-top-left"
+    },
+    "geometryDerived": {
+      "leftOverflow": 65,
+      "actualRight": 281,
+      "actualBottom": 359,
+      "verticalInsideRegion": true,
+      "horizontalFrameCenter": 108,
+      "horizontalAnchorCenter": 108
+    },
+    "identityScope": "Weak exact owner/content/popover identity and recycle lifetime qualify the historical record. Token/generation/parameter equality is false and remains explicit; the historical result is not current state or evidence of unchanged React props.",
+    "causalScope": "An actual retained show returned shown with a content window but failed the existing full-frame containment test. The executed source's failed-containment branch closes silently and conditionally emits rejection. Current controlledVisible=false and later content-prerequisites are observed; delivery of a particular JS callback is not separately traced.",
+    "sourceLines": {
+      "nativeFile": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "nativeBlob": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+      "context": 149,
+      "show": 262,
+      "shownRead": 264,
+      "containment": 281,
+      "failedContainmentBranch": 293,
+      "close": 295,
+      "conditionalRejection": 305
+    },
+    "notEstablished": [
+      "No earlier run's cause is retroactively established.",
+      "The record does not prove a unique AppKit internal placement algorithm, although horizontal centers are equal in the observed rectangles.",
+      "No alternate placement or fix was executed in this run.",
+      "Coordinates-ready was not observed for the rejected show; null does not mean false.",
+      "The current false presentation predicate alone is not the reason for the historical failed-containment result."
+    ]
+  },
+  "priorProgress": {
+    "basis": "Sequential executed verifier control flow before line1647, not a complete pass report.",
+    "returned": [
+      "Main-window native popover/React interaction and retained-identity/focus assertions.",
+      "Document window, shared-document/resize and native layout-restoration assertions.",
+      "Main-popover did-close witness after a newer document window gained focus, with document.key=true and main.key=false at1639-1640.",
+      "Document close veto, two-window count and save/status assertions at1643-1645.",
+      "The document inspector press at1646."
+    ],
+    "unreached": [
+      "The before-minimize popover/content identity capture after1647.",
+      "Native minimize/restore and retained popover-content checks.",
+      "Remaining document close/reopen checks.",
+      "Later physical NSDraggingSession acceptance and final required-checks result."
+    ]
+  },
+  "tooltip": {
+    "source": "tooltip-summary.json",
+    "status": "passed",
+    "processId": 33677,
+    "helpTagWindow": 41,
+    "role": "AXHelpTag",
+    "exactTextPredicate": true,
+    "publicCurrent": {
+      "calls": 9,
+      "nil": 9,
+      "captured": 0,
+      "retainedStrings": 0
+    },
+    "legacy": {
+      "attempted": 3,
+      "nil": 3,
+      "diagnosticOnly": true
+    },
+    "private": {
+      "eligible": 1,
+      "postReadEligible": 1,
+      "attributedStrings": 1,
+      "acceptedValues": 1,
+      "uniqueStringsAdded": 1,
+      "stringLength": 37,
+      "exactExpected": true,
+      "sourceWindow": 41,
+      "windowSubtreeAndVisibleGeometryBeforeAndAfter": true
+    },
+    "scope": "Actual pointer-hover/private selected-window fixture path passed. This does not assert a successful public AX text getter or inspect original pixels.",
+    "originalProducerOnly": {
+      "filename": "tooltip-hover.json",
+      "bytes": 43485,
+      "sha256": "603b14a9f380e072b174e54a4312af9559c83186be7e71630358170a34501f56",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    }
+  },
+  "startup": {
+    "source": "startup-summary.json",
+    "processId": 33677,
+    "capturedAt": "2026-11-11T13:30:17.541Z",
+    "inputs": {
+      "appLog": {
+        "filename": "app.log",
+        "status": "snapshot-retained",
+        "readByteLimit": 1048576,
+        "readBytes": 713326,
+        "sourceLive": true,
+        "sourceBytesBefore": 713326,
+        "sourceBytesAfter": 713326,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": false,
+        "laterAppendsPossible": true,
+        "unreadBytesObserved": 0,
+        "snapshot": {
+          "filename": "startup-app-log-snapshot.log",
+          "kind": "read-time-prefix-from-live-app-log",
+          "offset": 0,
+          "bytes": 713326,
+          "sha256": "8c02bf38e4bd607cdbee8ffc488a92afd6a5f59360f50268066a22788a8df5e5",
+          "retained": true,
+          "eventualAppLogHash": false
+        }
+      },
+      "commands": {
+        "filename": "commands.jsonl",
+        "status": "incomplete-or-changing-read",
+        "readByteLimit": 262145,
+        "readBytes": 262145,
+        "sourceLive": false,
+        "sourceBytesBefore": 1132599,
+        "sourceBytesAfter": 1132599,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": false,
+        "completeOriginalFile": false,
+        "originalSha256": null,
+        "truncated": true,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 870454,
+        "snapshot": null
+      },
+      "processFailure": {
+        "filename": "native-process-failure.json",
+        "status": "complete-stable-read",
+        "readByteLimit": 262145,
+        "readBytes": 1320,
+        "sourceLive": false,
+        "sourceBytesBefore": 1320,
+        "sourceBytesAfter": 1320,
+        "sameFileIdentity": true,
+        "changedDuringRead": false,
+        "completeAtRead": true,
+        "completeOriginalFile": true,
+        "originalSha256": "29dabe5e361b31155a45b5d0355f865ee21e6f472022aac85dbfd0d13b387737",
+        "truncated": false,
+        "laterAppendsPossible": false,
+        "unreadBytesObserved": 0,
+        "snapshot": null,
+        "jsonStatus": "parsed"
+      }
+    },
+    "retainedCounts": {
+      "activation": {
+        "matched": 28,
+        "selected": 28,
+        "omitted": 0
+      },
+      "transport": {
+        "matched": 3045,
+        "selected": 32,
+        "omitted": 3013
+      },
+      "commands": {
+        "matched": 463,
+        "selected": 32,
+        "omitted": 431,
+        "partialTrailingLine": true,
+        "lastSelectedRequestId": 230
+      }
+    },
+    "process": {
+      "status": "projected",
+      "processId": 33677,
+      "observedAt": "2026-11-11T13:30:12.792Z",
+      "exitCode": null,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "beforeSample": {
+        "observedAt": "2026-11-11T13:30:12.798Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "afterSample": {
+        "observedAt": "2026-11-11T13:30:17.531Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "sample": {
+        "observedAt": null,
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true,
+        "durationSeconds": 2,
+        "intervalMilliseconds": 10,
+        "threadGroups": 8,
+        "hasThreadStacks": true,
+        "file": "native-process-sample.txt",
+        "sha256": "8094bd21196063808b4bc579ad0f04f78a1ea81849e56ab2e8098b74a7b390fb",
+        "digestScope": "producer-recorded-sample-file-not-reread",
+        "stacksDoNotEstablishHealth": true
+      }
+    },
+    "interpretation": [
+      "The fixed live-log snapshot hash is not an eventual app.log hash.",
+      "The command projection reads262145 of1132599 bytes;870454 bytes are unobserved in this console projection.",
+      "The two zero exit statuses under beforeSample/afterSample belong to ps observations, not the application.",
+      "The post-failure sample digest and8 thread-group count are producer-reported; its original stacks are uninspected.",
+      "No window-show-failure envelope occurred; absence is not used alone as proof of every focus assertion."
+    ]
+  },
+  "producerOnly": {
+    "buildTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12334234,
+      "sha256": "66e0f0fb6b431b4a63fc82b7d63c063f00df25f1ccda490d6a61dc3853306d70",
+      "complete": true,
+      "normalized": false
+    },
+    "artifacts": [
+      {
+        "id": 13859432889,
+        "name": "macos-appkit-native-evidence",
+        "size_in_bytes": 1739858,
+        "digest": "sha256:5b56b33495a5584e8547ae6aa8648aa119d7b6cc5c5614d5b9057424ec7b664b",
+        "expired": false,
+        "created_at": "2026-11-11T13:30:19Z",
+        "updated_at": "2026-11-11T13:30:19Z",
+        "expires_at": "2026-11-25T13:30:18Z",
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13859432889",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13859432889/zip",
+        "digestScope": "Producer/API reported; original ZIP bytes and members not inspected"
+      },
+      {
+        "id": 13856714388,
+        "name": "macos-appkit-shared-packages",
+        "size_in_bytes": 51323,
+        "digest": "sha256:0aa189fe828fba539c635afd8f8270328128bee8a1097f0d0109820202b205cb",
+        "expired": false,
+        "created_at": "2026-11-11T13:11:29Z",
+        "updated_at": "2026-11-11T13:11:29Z",
+        "expires_at": "2026-11-25T13:11:28Z",
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13856714388",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13856714388/zip",
+        "digestScope": "Producer/API reported; original ZIP bytes and members not inspected"
+      }
+    ],
+    "nativeUploadFiles": 56,
+    "popoverFailureFile": {
+      "filename": "popover-show-failure.json",
+      "writeStatus": "retained",
+      "writeErrorCode": null,
+      "originalBytesInspected": false,
+      "originalSha256": null
+    },
+    "limits": "Original ZIP/member bytes, screenshots/pixels, compiler transcript, app snapshot, complete command file, process/sample files, tooltip file and SDK input payloads were not retrieved or inspected. Reported hashes are not independent member verification."
+  },
+  "scope": [
+    "No rerun, dispatch, source/ref/PR, host/TCC/security, account/launcher or executor change was performed to retain this result.",
+    "The completed attempt is separate from externally passing helper executions with different source/actions.",
+    "Native compilation success does not close this failed application's acceptance or final archive/physical-device gates."
+  ]
+}

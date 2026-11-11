@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "status": "independently-reviewed-source-only",
+  "source": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+  "preimage": {
+    "gitBlob": "00f6ff5f1735c81a5268855a5fb33627f5112cd7",
+    "bytes": 30240,
+    "sha256": "cfa10130880d4adc0089abc3b923d81ecabfd4394de476d282e0fed15d0fc3ea"
+  },
+  "candidate": {
+    "gitBlob": "26807e1426f40a83b5664871b1dbb82b7bc5cf19",
+    "bytes": 41674,
+    "sha256": "38f29c17da9c9b8bcd651148b79f4d668935b55c248390684604d39fbc59ae0f"
+  },
+  "protocol": {
+    "gitBlob": "b982f6fdf349d251f48c6ec0aebbeb5e42c3ee33",
+    "bytes": 3362,
+    "sha256": "64934bbca2e11a18a3ff1b53555c3a4d046a53ad93b875a5c45f86ada81da0fa"
+  },
+  "editManifest": {
+    "gitBlob": "d997a803ec42a82cbb9550735269aaad9a0bb98a",
+    "bytes": 22343,
+    "sha256": "ee268316411b914883a843e92da1c78a84c1899e4dab3afc20e86a18e76187ea"
+  },
+  "reproduction": {
+    "gitBlob": "09a67b698d2a57d64761ac85faff7869ff0bd5a5",
+    "bytes": 15874,
+    "sha256": "56e211b479170b0115536aa7ac8ad64418ac1b05b06d5743c0df0890369c6cd3"
+  },
+  "sourceContext": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualMerge": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "nativeRun": 43026784222,
+    "nativeJob": 130543971826,
+    "outcomeReceipt": "../v1-windows-fc90103-startup-exit/README.md",
+    "observedFailure": "Compiled/deployed app exited with0xc0000005 before UIA observed its first window; raw dump and mapped stack not inspected; no causal function established"
+  },
+  "purpose": "Add bounded before/returned stage observation to the private prepared-example header, independently writable before ApplicationData; parent collector is a separate reviewed source change.",
+  "authorChecks": {
+    "status": "passed",
+    "scope": "Five portable source/format/model review designs only; no C++ compiler, Win32 IO, Windows process, native UI or concurrency execution.",
+    "groups": [
+      "Exact Git/SHA/byte provenance and fifteen reversible unique source transforms",
+      "Original expression ownership, operation ordering, callback and geometry/protocol preservation",
+      "Actual fixed resolver/flags/schema agreement and every label's maximum-width JSON row",
+      "Portable cap, partial-write, failed-write and contention semantics with retained writer ownership",
+      "Source-level GetLastError, one-shot, nonblocking lock and secondary diagnostic ownership guards"
+    ],
+    "assertions": 517,
+    "maximumRowBytes": 262,
+    "maximumModeledFileBytes": 15689,
+    "identities": {
+      "preimage": {
+        "gitBlob": "00f6ff5f1735c81a5268855a5fb33627f5112cd7",
+        "bytes": 30240,
+        "sha256": "cfa10130880d4adc0089abc3b923d81ecabfd4394de476d282e0fed15d0fc3ea"
+      },
+      "candidate": {
+        "gitBlob": "26807e1426f40a83b5664871b1dbb82b7bc5cf19",
+        "bytes": 41674,
+        "sha256": "38f29c17da9c9b8bcd651148b79f4d668935b55c248390684604d39fbc59ae0f"
+      }
+    }
+  },
+  "independentReview": {
+    "finalGate": "Independently read the complete source/diff and found no blocker; returned-marker interpretation qualified below. Collector and native runtime are separate.",
+    "root": "Independently read all fifteen exact edits and reproduced the five-group, 517-assertion V8 harness; no blocking source defect found. Static/model review only."
+  },
+  "interpretation": {
+    "returnedMarkers": "A returned marker proves control reached its inserted statement. Several follow the original success guard or Refuse; a missing returned marker does not prove the API never returned.",
+    "constructorMarkers": "Observer and Hook constructor body markers occur after member initialization. Hook body exit is not a winrt::make-return marker.",
+    "windowScope": "Only the first WindowMessage callback is observed. Its scope-exit marker labels the diagnostic destructor, not a success result or coverage of all callbacks.",
+    "writerLoss": "Try-lock contention records an observed-through-row boolean only. A cap row is evidence only if successfully written. Later loss is unknown; no finalized footer exists.",
+    "paths": "GetTempPathW depends on process environment; the parent and child may resolve different paths. A missing file never proves Configure was not entered.",
+    "timing": "Trace IO may perturb startup; no timestamps or elapsed/causal conclusion are emitted. Synchronous Win32 calls have no hard cancellation deadline.",
+    "partial": "Write error disables further writes and retains the owned handle; a partial trailing row may remain. Collector must retain exact bounded bytes and identify partial/invalid data."
+  },
+  "unchanged": {
+    "setExpression": "settings.Properties().Set(HookKey(), winrt::make<Hook>(std::move(observer)));",
+    "setEvaluation": "Original caller expression and unspecified argument evaluation preserved; no extracted Properties/factory argument calls.",
+    "app": "All original Observer constructor/registration statements retain relative order, original callback/close/visual/request protocol unchanged apart from diagnostic scope.",
+    "otherFiles": "No shipping component, preparer, navigation behavior, launcher, host/security/permissions, workflow, dependencies, deadlines or acceptance predicates changed by this header-only candidate."
+  },
+  "notExecuted": [
+    "C++/WinRT compilation",
+    "Win32 trace filesystem operations",
+    "PowerShell/.NET collector",
+    "Windows process startup",
+    "Native UI, drag, RTL, tooltip or full release acceptance"
+  ],
+  "primarySources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-gettemppathw",
+      "supports": "Win32 temp resolver, environment-dependent search order and bounded return contract"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getprocesstimes",
+      "supports": "Owned-handle creation FILETIME identity"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew",
+      "supports": "CREATE_NEW, noninheritance, share flags and reparse/file handling"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-tryacquiresrwlockexclusive",
+      "supports": "Nonwaiting exclusive try-lock result"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror",
+      "supports": "Last-error state belongs to the calling thread"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setlasterror",
+      "supports": "Restoration of the calling thread's last error"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/snprintf-s-snprintf-s-l-snwprintf-s-snwprintf-s-l?view=msvc-170",
+      "supports": "Wide bounded fixed-format path construction and _TRUNCATE failure behavior"
+    }
+  ]
+}

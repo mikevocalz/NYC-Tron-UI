@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "path": ".github/workflows/native-controls-port.yml",
+  "scope": "iOS output observability only; no Bash/Node/native execution or failure fix established",
+  "preimage": {
+    "gitBlob": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+    "bytes": 24929,
+    "sha256": "c41cf7bbfcb3d27f7322474dc84d41028e07c3ab5778c4ed3102dfbdf65f7aed"
+  },
+  "candidate": {
+    "gitBlob": "c6c51423a0fcbab4768751bd8f1e04d2939f20fe",
+    "bytes": 26243,
+    "sha256": "42a89920560c87eb92c77bd0042bfa7b3642a45103929b9a0924db4419a8a00f"
+  },
+  "apply": "Apply three exact unique before→after replacements in order; reverse after→before replacements in reverse order requiring uniqueness",
+  "edits": [
+    {
+      "id": "capture-original-ios-build",
+      "before": "          xcodebuild -workspace \"$workspace\" -scheme \"$scheme\" \\\n            -configuration Debug -sdk iphonesimulator \\\n            -derivedDataPath \"$RUNNER_TEMP/nyc-tron-ios-derived\" \\\n            -destination 'generic/platform=iOS Simulator' \\\n            CODE_SIGNING_ALLOWED=NO build | tee /tmp/xcodebuild.log\n          test \"${PIPESTATUS[0]}\" -eq 0",
+      "after": "          nyc_tron_ios_output=\"$NYC_TRON_CONSUMER/ios-command-output\"\n          if mkdir -p \"$nyc_tron_ios_output\"; then\n            if xcodebuild -workspace \"$workspace\" -scheme \"$scheme\" \\\n              -configuration Debug -sdk iphonesimulator \\\n              -derivedDataPath \"$RUNNER_TEMP/nyc-tron-ios-derived\" \\\n              -destination 'generic/platform=iOS Simulator' \\\n              CODE_SIGNING_ALLOWED=NO build > /tmp/xcodebuild.log 2> \"$nyc_tron_ios_output/build-stderr.log\"; then\n              nyc_tron_build_status=0\n            else\n              nyc_tron_build_status=$?\n            fi\n          else\n            nyc_tron_build_status=$?\n            printf '%s\\n' 'iOS build output capture setup failed before command execution.' >&2 || :\n          fi\n          node \"$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs\" build \"$nyc_tron_build_status\" \"$NYC_TRON_CONSUMER\" || :\n          test \"$nyc_tron_build_status\" -eq 0"
+    },
+    {
+      "id": "capture-original-ios-ui",
+      "before": "          node tooling/native/run-ui-acceptance.mjs ios \"$app\" \"$NYC_TRON_CONSUMER\"",
+      "after": "          nyc_tron_ios_output=\"$NYC_TRON_CONSUMER/ios-command-output\"\n          if mkdir -p \"$nyc_tron_ios_output\"; then\n            if node tooling/native/run-ui-acceptance.mjs ios \"$app\" \"$NYC_TRON_CONSUMER\" > \"$nyc_tron_ios_output/ui-stdout.log\" 2> \"$nyc_tron_ios_output/ui-stderr.log\"; then\n              nyc_tron_ui_status=0\n            else\n              nyc_tron_ui_status=$?\n            fi\n          else\n            nyc_tron_ui_status=$?\n            printf '%s\\n' 'iOS UI output capture setup failed before command execution.' >&2 || :\n          fi\n          node \"$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs\" ui \"$nyc_tron_ui_status\" \"$NYC_TRON_CONSUMER\" || :\n          exit \"$nyc_tron_ui_status\""
+    },
+    {
+      "id": "retain-ios-command-output-sibling",
+      "before": "            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-ios\n            ${{ runner.temp }}/nyc-tron-ios-boot",
+      "after": "            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-ios\n            ${{ runner.temp }}/nyc-tron-native-consumer/ios-command-output\n            ${{ runner.temp }}/nyc-tron-ios-boot"
+    }
+  ],
+  "commandContract": {
+    "reporter": "node \"$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs\" <build|ui> <shell-status> \"$NYC_TRON_CONSUMER\"",
+    "build": {
+      "stdout": "/tmp/xcodebuild.log",
+      "stderr": "<consumer>/ios-command-output/build-stderr.log",
+      "savedStatus": "nyc_tron_build_status",
+      "terminalGate": "test \"$nyc_tron_build_status\" -eq 0",
+      "interpretation": "Reporter receives command/redirection/setup shell status; the step retains the original effective0/1 xcodebuild-status test. A nonzero value does not independently establish that xcodebuild launched."
+    },
+    "ui": {
+      "stdout": "<consumer>/ios-command-output/ui-stdout.log",
+      "stderr": "<consumer>/ios-command-output/ui-stderr.log",
+      "savedStatus": "nyc_tron_ui_status",
+      "terminalGate": "exit \"$nyc_tron_ui_status\"",
+      "interpretation": "Reporter receives command/redirection/setup shell status; exact saved UI status determines step exit. A nonzero value does not independently establish that Node launched."
+    },
+    "setup": "Only mkdir -p of the fixed sibling folder; no runtime-ui-ios creation. Failed setup prints a fixed marker, preserves its failure status and does not run the native command. No fallback or retry.",
+    "reporting": "Reporter is called once after the attempted command/setup settles and shell redirections close; || : makes a reporter failure secondary. Fixed capture files may be absent or partial. Existing files/status alone do not establish execution or complete/fresh command output.",
+    "upload": "One new sibling directory in the existing always() iOS evidence upload; existing /tmp/xcodebuild.log and runtime-ui-ios paths remain."
+  },
+  "preserved": [
+    "All original xcodebuild option/argument tokens, workspace/scheme discovery, working directory and environment",
+    "Original node run-ui-acceptance command arguments exactly once, launcher/driver/security/assertions/deadlines/retry logic unchanged",
+    "All triggers, runner choice, source/Android steps, other iOS steps and original artifact paths",
+    "Build step0/1 normalization distinct from raw saved command status; UI exact saved status",
+    "No ZIP extraction, local/alternate execution, workflow dispatch, rerun, ref or PR changes"
+  ],
+  "runUiSource": {
+    "path": "tooling/native/run-ui-acceptance.mjs",
+    "identity": {
+      "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+      "bytes": 17132,
+      "sha256": "e61511ef69eb25b8153184acb694265946bf7e675cfcdca01dde08c61af3536e"
+    },
+    "inspection": "Source uses exclusive mkdirSync(runtime-ui-ios), internal UTF-8-decoded stdout+stderr concatenation for subprocess logs, original first-error throw and cleanup; none modified. Raw top-level captured streams must be distinguished from these existing decoded nested logs."
+  },
+  "testDiscovery": {
+    "candidateFile": "tooling/tests/ios-command-output.test.mjs",
+    "sourceRevision": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "identities": {
+      "discovery": {
+        "gitBlob": "327d9c2b8cc9ab40cc1cd5d3a1bc5a10fdc3cefa",
+        "bytes": 1444,
+        "sha256": "9d0ef2a49b9559738938fec89662daec905eacb6efb17327e32266d09026d008"
+      },
+      "package": {
+        "gitBlob": "a792d0c6af732fceebd047e7fa58afcff7acd083",
+        "bytes": 999,
+        "sha256": "3b69bc24173c03ef29808aae7e7af013a29bc844421a6cc03bee1d43c7fb3434"
+      },
+      "testRunner": {
+        "gitBlob": "952bf2d06cf3982a2e170a690d1cd966ab417175",
+        "bytes": 537,
+        "sha256": "a016056fb162f7f7cc8d1e346b1025fffc9773c914de090945e175b1a22a1c6e"
+      }
+    },
+    "interpretation": "Static source confirms root pnpm test routes through tooling/run-tests.mjs and discoverTests() recursively includes tooling/tests/*.test.mjs. No extra native-workflow source step is added; actual new-test execution remains CI pending."
+  },
+  "verification": "Exact forward/inverse and source/token/status-model checks only; no YAML/Bash/Node filesystem/macOS runtime execution claimed."
+}
