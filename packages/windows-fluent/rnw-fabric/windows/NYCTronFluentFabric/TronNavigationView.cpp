@@ -17,6 +17,17 @@
 #include <exception>
 #include <unordered_set>
 #include <vector>
+#include <inspectable.h>
+
+namespace nyctron::fixture {
+// Private ABI-only example hook. Ordinary applications do not install it.
+// Keep the IID/signatures identical to example/native/NavigationProbe.h.
+struct __declspec(uuid("91bd88af-7765-4adb-8891-f5436ca14c2f")) NavigationProbeHook : ::IUnknown {
+  virtual HRESULT STDMETHODCALLTYPE Register(::IInspectable* navigation, ::IInspectable* island,
+      ::IInspectable* view, ::IInspectable** ticket) noexcept = 0;
+  virtual HRESULT STDMETHODCALLTYPE Unregister(::IInspectable* ticket) noexcept = 0;
+};
+} // namespace nyctron::fixture
 
 namespace winrt::NYCTronFluentFabric {
 
@@ -28,6 +39,7 @@ struct TronNavigationViewComponentView
 
   void Destroy() noexcept {
     if (std::exchange(m_disposed, true)) return;
+    DetachFixture();
     try { if (m_xamlIsland) m_xamlIsland.Close(); } catch (...) {}
     m_connection.Close();
   }
@@ -36,7 +48,9 @@ struct TronNavigationViewComponentView
     if (m_disposed) return;
     try { m_connection.SetSite(view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>().ChildSiteLink()); }
     catch (...) { ReportNativeError("Could not retain the navigation connection: " + DescribeCurrentException()); }
+    AttachFixture(view);
   }
+  void Unmounted() noexcept { DetachFixture(); }
   void LayoutChanged(winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
     if (m_disposed) return;
     try { m_connection.UpdateLayout(sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>(), args); }
@@ -121,6 +135,38 @@ struct TronNavigationViewComponentView
   }
 
  private:
+  void AttachFixture(winrt::Microsoft::ReactNative::ComponentView const& view) noexcept {
+    if (m_disposed || m_fixtureTicket) return;
+    try {
+      const auto context = view.ReactContext();
+      if (!context.UIDispatcher().HasThreadAccess()) return;
+      const auto key = winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"NYCTron.Example.NavigationProbe"), L"hook.v1");
+      const auto configured = context.Properties().Get(key);
+      if (!configured) return; // No example registry: ordinary behavior is inert.
+      const auto hook = configured.try_as<nyctron::fixture::NavigationProbeHook>();
+      if (!hook || !m_navigation || !m_xamlIsland) return;
+      winrt::com_ptr<::IInspectable> ticket;
+      const auto result = hook->Register(m_navigation.as<::IInspectable>().get(),
+          m_xamlIsland.ContentIsland().as<::IInspectable>().get(), view.as<::IInspectable>().get(), ticket.put());
+      if (FAILED(result) || !ticket) {
+        if (ticket) hook->Unregister(ticket.get());
+        return; // Fixture failure never replaces the component's own lifetime.
+      }
+      m_fixtureHook = hook;
+      m_fixtureTicket = std::move(ticket);
+    } catch (...) {
+      // Missing/failed fixture registration is an explicit unavailable result
+      // to the fixture driver; it is never a production onNativeError event.
+    }
+  }
+  void DetachFixture() noexcept {
+    // Invalidate locally before the callback: reentrant unmount/destruction
+    // cannot unregister a replacement ticket or retain this component.
+    auto ticket = std::move(m_fixtureTicket);
+    auto hook = std::move(m_fixtureHook);
+    try { if (hook && ticket) hook->Unregister(ticket.get()); } catch (...) {}
+  }
   static void FocusItem(winrt::IInspectable const& value) {
     auto item = value.try_as<winrt::Microsoft::UI::Xaml::Controls::Control>();
     if (item && item.IsEnabled()) item.Focus(winrt::Microsoft::UI::Xaml::FocusState::Programmatic);
@@ -359,6 +405,8 @@ struct TronNavigationViewComponentView
 
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   nyctron::islands::IslandConnection m_connection;
+  winrt::com_ptr<nyctron::fixture::NavigationProbeHook> m_fixtureHook;
+  winrt::com_ptr<::IInspectable> m_fixtureTicket;
   winrt::Microsoft::UI::Xaml::Controls::NavigationView m_navigation{nullptr};
   winrt::com_ptr<Codegen::TronNavigationViewProps> m_props;
   winrt::event_token m_itemInvoked{};
@@ -398,6 +446,9 @@ void RegisterTronNavigationViewComponent(
               islandView.UserData(*data);
               islandView.Mounted([weak = data->get_weak()](winrt::IInspectable const&, winrt::Microsoft::ReactNative::ComponentView const& mounted) noexcept {
                 if (auto owner = weak.get()) owner->Mounted(mounted);
+              });
+              islandView.Unmounted([weak = data->get_weak()](auto const&, auto const&) noexcept {
+                if (auto owner = weak.get()) owner->Unmounted();
               });
               islandView.LayoutMetricsChanged([weak = data->get_weak()](winrt::IInspectable const& sender, winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs const& args) noexcept {
                 if (auto owner = weak.get()) owner->LayoutChanged(sender, args);
