@@ -1,4 +1,5 @@
 #import <AppKit/AppKit.h>
+#import <objc/runtime.h>
 #import <QuartzCore/CAMediaTiming.h>
 #include <atomic>
 #include <math.h>
@@ -157,8 +158,9 @@ static void PostPointer(CGEventType type, CGPoint point, double delay) {
   });
 }
 
-// Inspect only public native window/accessibility properties. A tooltip text
-// binding on the trigger is never counted as a presented help tag.
+// Inspect native windows and accessibility nodes. A tooltip text binding on the
+// trigger is never counted as a presented help tag; the presented text is read
+// from the tooltip panel itself (see HelpTagStrings).
 static NSArray *AccessibilityNodes(id root, BOOL *truncated) {
   NSMutableArray *queue = [NSMutableArray arrayWithObject:root], *nodes = [NSMutableArray new];
   NSHashTable *visited = [NSHashTable hashTableWithOptions:NSPointerFunctionsObjectPointerPersonality];
@@ -240,6 +242,21 @@ static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated, HelpTagDiag
     if ([node isKindOfClass:NSTextField.class]) {
       [values addObject:((NSTextField *)node).stringValue]; fields[valueCount++] = 3;
       reads[3].calls = 1; reads[3].state = 2;
+    }
+    // The system tooltip panel exposes no text through any accessibility
+    // attribute: its AXHelpTag element has only role, frame, position, size and
+    // parent (checked with AXUIElementCopyAttributeNames). The text lives in the
+    // private NSCustomToolTipDrawView, which this in-process driver reads from its
+    // _attributedString ivar. This is a private-layout read, not public API; if
+    // AppKit renames it no string is collected and the exact-match check fails.
+    if ([node isKindOfClass:NSView.class] && [NSStringFromClass([node class]) isEqualToString:@"NSCustomToolTipDrawView"]) {
+      Ivar drawText = class_getInstanceVariable(object_getClass(node), "_attributedString");
+      const char *encoding = drawText ? ivar_getTypeEncoding(drawText) : NULL;
+      if (encoding && encoding[0] == '@') {
+        id drawn = object_getIvar(node, drawText);
+        NSString *drawnText = [drawn isKindOfClass:NSAttributedString.class] ? [drawn string] : ([drawn isKindOfClass:NSString.class] ? drawn : nil);
+        if (drawnText.length) [strings addObject:drawnText];
+      }
     }
     NSUInteger valueIndex = 0;
     for (id value in values) {
@@ -369,7 +386,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
   NSPoint cursor = NSEvent.mouseLocation;
   // AXIsProcessTrusted returns C Boolean, whose boxed value serializes as a
   // number. Preserve its truth value with explicit JSON boolean objects.
-  return @{ @"ok": @YES, @"boundary": @"public-native-help-tag-observation", @"postEventsAllowed": @(CGPreflightPostEventAccess()), @"accessibilityTrusted": (AXIsProcessTrusted() ? @YES : @NO),
+  return @{ @"ok": @YES, @"boundary": @"native-help-tag-observation-with-private-draw-view-text", @"postEventsAllowed": @(CGPreflightPostEventAccess()), @"accessibilityTrusted": (AXIsProcessTrusted() ? @YES : @NO),
     @"ownerVisible": @(owner.visible && !owner.miniaturized), @"ownerKey": @(owner.keyWindow), @"applicationActive": @(NSApp.active), @"pointerRunning": @(PointerRunning), @"triggerFrame": RectDictionary(triggerFrame),
     @"cursor": @{ @"x": @(cursor.x), @"y": @(cursor.y) }, @"cursorInsideTrigger": @(NSPointInRect(cursor, triggerFrame)), @"windows": windows, @"helpTags": helpTags, @"traversalTruncated": @(truncated) };
 }

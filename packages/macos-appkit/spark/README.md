@@ -235,8 +235,13 @@ allowed, the fixture moves the pointer outside the trigger, into its native
 rectangle, and outside again. Public `NSEvent.mouseLocation` readback must
 confirm each move while the owner is visible, key and active. Bounded,
 cycle-safe traversal of `NSApp.windows` and public accessibility properties
-must observe a newly visible `AXHelpTag` with the expected text, a native frame,
-and the actual help-tag window disappearing after exit. The fixture retains
+must find a newly visible `AXHelpTag` with a native frame. The `AXHelpTag`
+element exposes no text attribute (only role, frame, position, size and
+parent), so the in-process driver reads the presented text from the private
+`_attributedString` ivar of the panel's `NSCustomToolTipDrawView` and requires
+it to equal the expected tooltip string. That ivar is private AppKit layout:
+a rename leaves the text unread and fails the run. The check must also observe
+the actual help-tag window disappearing after exit. The fixture retains
 that window's native content bitmap during hover and an owner capture after
 exit. It never counts
 `toolTip` or `accessibilityHelp` as proof that a help tag appeared, and never

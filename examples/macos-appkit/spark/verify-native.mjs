@@ -1075,7 +1075,7 @@ try {
   assert.equal(typeof tooltipInitial.postEventsAllowed, 'boolean');
   assert.equal(typeof tooltipInitial.accessibilityTrusted, 'boolean');
   tooltipEvidence = { schemaVersion: 1, status: tooltipInitial.postEventsAllowed ? 'pending' : 'blocked',
-    boundary: 'CGEvent-posted mouse movement followed by public NSApp.windows and NSAccessibility help-tag observation; no physical mouse hardware or human gesture.',
+    boundary: 'CGEvent-posted mouse movement followed by NSApp.windows and NSAccessibility help-tag discovery, with the presented text read in process from the private NSCustomToolTipDrawView of the tooltip panel _attributedString (no public accessibility attribute carries it); no physical mouse hardware or human gesture.',
     coordinates: 'AppKit global screen logical points, with a bottom-left origin on the primary display.',
     permission: { postEventsAllowed: tooltipInitial.postEventsAllowed, accessibilityTrusted: tooltipInitial.accessibilityTrusted }, initial: tooltipInitial,
     ...(tooltipInitial.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process. Native hover presentation and dismissal remain untested; no TCC change or permission prompt was attempted.' }) };
@@ -1086,7 +1086,7 @@ try {
     const observeTooltip = async phase => {
       const observation = await tooltipRequest({ action: 'inspect' });
       tooltipEvidence.lastObservation = { phase, ...observation }; retainTooltip();
-      assert.equal(observation.boundary, 'public-native-help-tag-observation');
+      assert.equal(observation.boundary, 'native-help-tag-observation-with-private-draw-view-text');
       assert.equal(observation.traversalTruncated, false, 'The bounded native accessibility traversal could not establish tooltip visibility');
       assert.equal(observation.ownerVisible, true); assert.equal(observation.ownerKey, true); assert.equal(observation.applicationActive, true);
       return observation;
