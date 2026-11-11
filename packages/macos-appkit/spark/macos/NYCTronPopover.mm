@@ -193,26 +193,33 @@ using namespace facebook::react;
   [childComponentView removeFromSuperview];
   [self schedulePresentation];
 }
+- (void)emitDismissIfUserInitiated {
+  // AppKit posts popoverDidClose only after the close animation completes. The
+  // dismissal intent is known at popoverWillClose, so React is told then and
+  // does not wait on animation completion.
+  if (_silentClose || !_visible || ![_presentedToken isEqual:_scopeToken] || [_dismissedToken isEqual:_scopeToken]) return;
+  _dismissedToken = [_presentedToken copy];
+  auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);
+  if (emitter) {
+    NYCTronPopoverEventEmitter::OnDismiss event;
+    event.scopeToken = _presentedToken.UTF8String ?: "";
+    emitter->onDismiss(event);
+  }
+}
 - (void)popoverWillClose:(NSNotification *)notification {
   _closing = YES;
   NSWindow *key = NSApp.keyWindow;
   _restoreFocus = !key || key == _owner || key == _content.window;
+  NSLog(@"NYCTronPopover phase=will-close silent=%d visible=%d presented=%@ scope=%@ emitter=%d", _silentClose, _visible, _presentedToken, _scopeToken, _eventEmitter != nullptr);
+  [self emitDismissIfUserInitiated];
 }
 - (void)popoverDidClose:(NSNotification *)notification {
   BOOL silent = _silentClose; _silentClose = NO; _closing = NO;
+  NSLog(@"NYCTronPopover phase=did-close silent=%d visible=%d presented=%@ dismissed=%@", silent, _visible, _presentedToken, _dismissedToken);
   // Do not replace a focus choice made in another window while this closed.
   NSWindow *key = NSApp.keyWindow;
   if (_restoreFocus && (!key || key == _owner) && _owner.visible && !_owner.miniaturized &&
       [_opener isKindOfClass:NSView.class] && ((NSView *)_opener).window == _owner) [_owner makeFirstResponder:_opener];
-  if (!silent && _visible && [_presentedToken isEqual:_scopeToken]) {
-    _dismissedToken = [_presentedToken copy];
-    auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);
-    if (emitter) {
-      NYCTronPopoverEventEmitter::OnDismiss event;
-      event.scopeToken = _presentedToken.UTF8String ?: "";
-      emitter->onDismiss(event);
-    }
-  }
   [self schedulePresentation];
 }
 - (void)prepareForRecycle {
