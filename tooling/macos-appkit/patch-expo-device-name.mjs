@@ -5,23 +5,23 @@ import { join, sep } from 'node:path';
 // Acceptance-only repair for the private native acceptance consumer.
 //
 // expo-modules-core 55.0.27 builds its constants on the main thread and reads
-// the macOS device name with ProcessInfo.hostName. That calls -[NSHost name],
-// which reverse-resolves every local address through getnameinfo/mDNS. In run
-// 42973159971 the AppKit app's main thread sat in that call from 06:50:54 to
-// 06:51:29 (35 s) while the same call in a plain process on the same runner
-// took 0.03 s. Every main-queue driver command queued behind it and the
-// tron.window reply missed the client's 35 s limit. gethostname(3) returns the
-// kernel host name without any lookup. Nothing in this acceptance suite reads
-// the device name, and no timeout or assertion changes.
+// the macOS device name with ProcessInfo.hostName. An external report for run
+// 42973159971 attributes the startup delay to an NSHost resolver call, with a
+// slow in-app read and a fast plain-process read. The original sample for that
+// attribution has not been independently inspected in this review; neither the
+// exact waiting function nor the timeout cause is established here.
+// This private-consumer patch uses gethostname(3) for the device-name value.
+// Nothing in this acceptance suite reads that value; timeouts and assertions
+// remain unchanged.
 export const pinnedConstantsProviderSha256 = '16d30e5eafc45074426b770c1b8d0330c754e6b424213595c1fd9c5c673a884a';
 export const constantsProviderRelativePath = 'node_modules/expo-modules-core/ios/Utilities/ConstantsProvider.swift';
 const hash = value => createHash('sha256').update(value).digest('hex');
 export const before = '  return ProcessInfo.processInfo.hostName\n';
 export const after = [
   '  // NYC-Tron acceptance: kernel host name, no NSHost reverse lookup on the main thread.',
-  '  var buffer = [UInt8](repeating: 0, count: 256)',
-  '  let status = buffer.withUnsafeMutableBytes { gethostname($0.baseAddress!.assumingMemoryBound(to: CChar.self), 255) }',
-  '  return status == 0 ? String(decoding: buffer.prefix { $0 != 0 }, as: UTF8.self) : "Mac"',
+  '  var buffer = [CChar](repeating: 0, count: 256)',
+  '  let status = buffer.withUnsafeMutableBufferPointer { gethostname($0.baseAddress!, 255) }',
+  '  return status == 0 ? String(decoding: buffer.prefix { $0 != 0 }.map { UInt8(bitPattern: $0) }, as: UTF8.self) : "Mac"',
   ''
 ].join('\n');
 export function patchConstantsProvider(original) {

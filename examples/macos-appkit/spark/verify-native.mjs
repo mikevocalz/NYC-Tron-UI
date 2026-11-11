@@ -204,7 +204,7 @@ function startupObservationSample(text, pid, applicationName) {
   result.unscannedLines = Math.max(0, lines.length - result.lineScanLimit);
   const images = ['AppKit', 'Foundation', 'CoreFoundation', 'HIToolbox', 'QuartzCore', 'dyld', 'libdyld.dylib',
     'libdispatch.dylib', 'libsystem_kernel.dylib', 'libsystem_pthread.dylib', 'libsystem_c.dylib',
-    'libsystem_trace.dylib', 'libsystem_platform.dylib', 'libsystem_malloc.dylib', 'libxpc.dylib'];
+    'libsystem_trace.dylib', 'libsystem_platform.dylib', 'libsystem_malloc.dylib', 'libxpc.dylib', 'libsystem_blocks.dylib', 'libobjc.A.dylib'];
   const symbols = ['start', 'NSApplicationMain', '-[NSApplication run]',
     '-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]',
     '_DPSNextEvent', '_BlockUntilNextEventMatchingListInModeWithFilter', 'ReceiveNextEventCommon', 'RunCurrentEventLoopInMode',
@@ -213,7 +213,10 @@ function startupObservationSample(text, pid, applicationName) {
     '_dispatch_main_queue_callback_4CF', '_dispatch_client_callout', '_dispatch_call_block_and_release',
     'dispatch_async', '_dispatch_async_f_slow', '__DISPATCH_WAIT_FOR_QUEUE__', '_dispatch_sync_f_slow',
     'NSLog', 'NSLogv', '_NSLogv', '_CFLogvEx3', '_CFLogvEx2', '_os_log_impl',
-    '__ulock_wait', '__ulock_wait2', '__psynch_mutexwait', '__psynch_cvwait', 'semaphore_wait_trap', 'semaphore_timedwait_trap'];
+    '__ulock_wait', '__ulock_wait2', '__psynch_mutexwait', '__psynch_cvwait', 'semaphore_wait_trap', 'semaphore_timedwait_trap',
+    '_Block_copy', '_Block_release', '_Block_object_dispose', 'objc_release', 'objc_storeStrong',
+    '_dispatch_block_async_invoke', '_dispatch_block_async_invoke2', '_dispatch_block_async_invoke_and_release',
+    'dispatch_block_wait', 'dispatch_semaphore_wait', '_dispatch_semaphore_wait_slow', '_dispatch_sema4_wait'];
   for (const line of lines.slice(0, result.lineScanLimit)) {
     result.scannedLines++;
     if (Buffer.byteLength(line, 'utf8') > result.lineByteLimit) { result.oversizedLines++; continue; }
@@ -223,13 +226,18 @@ function startupObservationSample(text, pid, applicationName) {
     if (!Number.isSafeInteger(count) || count < 0 || !Number.isSafeInteger(offset) || offset < 0) { result.unparsedFrameLines++; continue; }
     result.parsedFrameLines++;
     if (result.frames.length >= result.frameLimit) { result.omittedFrameLines++; continue; }
+    let symbol = symbols.includes(match[3]) ? match[3] : 'unknown';
+    if (symbol === 'unknown' && ['Foundation', 'AppKit', 'libobjc.A.dylib'].includes(match[4])) {
+      const selector = match[3].match(/^-\[[A-Za-z_$][A-Za-z0-9_$]{0,100}(?:\([A-Za-z0-9_$]{1,100}\))? (dealloc|waitUntilFinished|waitUntilAllOperationsAreFinished)\]$/);
+      if (selector) symbol = ({ dealloc: 'objc-dealloc-selector', waitUntilFinished: 'objc-wait-until-finished-selector', waitUntilAllOperationsAreFinished: 'objc-wait-all-operations-selector' })[selector[1]];
+    }
     result.frames.push({ count, depthColumns: match[1].length, image: images.includes(match[4]) ? match[4] : match[4] === applicationName ? 'owned-application' : 'unknown',
-      symbol: symbols.includes(match[3]) ? match[3] : 'unknown', offset, offsetKind: match[5] === undefined ? 'image-relative' : 'symbol-relative' });
+      symbol, offset, offsetKind: match[5] === undefined ? 'image-relative' : 'symbol-relative' });
   }
   result.status = 'projected-main-thread';
   return result;
 }
-function readStartupObservationSample(observation) {
+function readStartupObservationSample(observation, onComplete) {
   const file = join(output, 'startup-predeadline', 'sample.txt'), cap = 1024 * 1024;
   const result = { file: 'startup-predeadline/sample.txt', status: 'unavailable', processingByteLimit: cap,
     readByteLimit: cap + 1, bytesRead: 0, originalBytes: null, completeStableRead: false, originalSha256: null,
@@ -256,7 +264,9 @@ function readStartupObservationSample(observation) {
   if (result.completeStableRead) {
     result.originalSha256 = hash(bytes); result.digestScope = 'complete-stable-file-after-sampler-close';
     result.status = 'complete-stable-read';
-    result.parsed = startupObservationSample(bytes.toString('utf8'), observation.processId, executable.split('/').at(-1));
+    const text = bytes.toString('utf8');
+    result.parsed = startupObservationSample(text, observation.processId, executable.split('/').at(-1));
+    if (onComplete) onComplete(text);
   } else {
     const prefix = bytes.subarray(0, cap);
     result.prefixBytes = prefix.length; result.prefixSha256 = hash(prefix);
@@ -264,8 +274,209 @@ function readStartupObservationSample(observation) {
   }
   return result;
 }
-function reportStartupObservation(observation) {
+function startupSymbolUUID(text) {
+  const lines = text.split(/\r?\n/).filter(line => line.trim());
+  const match = lines.length === 1 ? lines[0].match(/^UUID: ([0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}) \(arm64\) .+$/) : null;
+  return match ? match[1].toUpperCase() : null;
+}
+function startupSymbolInput(text, observation, original) {
+  const result = { status: 'sample-input-unavailable', architecture: null, imageUUIDUnique: null, imageRangeBytes: null,
+    ownedFrames: 0, selectedFrames: 0, omittedOwnedFrames: 0, frame: null };
+  if (!original.completeStableRead || original.parsed?.status !== 'projected-main-thread' || typeof text !== 'string' ||
+      original.parsed.headerCount !== 1 || original.parsed.headerProcessId !== observation.processId ||
+      !Number.isSafeInteger(observation.processId) || observation.processId <= 0 ||
+      Buffer.byteLength(text, 'utf8') > 1048576 || hash(Buffer.from(text, 'utf8')) !== original.originalSha256) return { result };
+  const name = executable.split('/').at(-1), bundle = app.split('/').at(-1), identifier = config.macos?.bundleIdentifier;
+  if (!/^[A-Za-z0-9._-]{1,100}$/.test(name) || config.name !== name || bundle !== name + '.app' ||
+      app !== join(root, '.spark', 'products', 'macos-arm64', 'release', bundle) ||
+      executable !== join(app, 'Contents', 'MacOS', name) || typeof identifier !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9.-]{0,200}$/.test(identifier)) {
+    result.status = 'owned-product-layout-unverified'; return { result };
+  }
+  const lines = text.split(/\r?\n/), graph = lines.indexOf('Call graph:'), images = lines.indexOf('Binary Images:');
+  if (graph < 0 || images <= graph || lines.filter(line => line === 'Call graph:').length !== 1 || lines.filter(line => line === 'Binary Images:').length !== 1) { result.status = 'sample-sections-unavailable'; return { result }; }
+  const header = lines.slice(0, graph);
+  const one = key => { const values = header.filter(line => line.startsWith(key)); return values.length === 1 ? values[0].slice(key.length).trim() : null; };
+  const suffix = '/' + bundle + '/Contents/MacOS/' + name;
+  const path = one('Path:'), architecture = one('Code Type:'), loadText = one('Load Address:');
+  if (architecture !== 'ARM64' || one('Identifier:') !== identifier || typeof path !== 'string' || !path.endsWith(suffix) ||
+      typeof loadText !== 'string' || !/^0x[0-9a-fA-F]+$/.test(loadText)) {
+    result.status = 'sample-owner-header-unverified'; return { result };
+  }
+  result.architecture = 'arm64';
+  // Count candidate owner rows before parsing; malformed or oversized rows
+  // cannot disappear and create a false uniqueness result.
+  const token = new RegExp('(?:^|\\s)\\+?' + identifier.replace(/\./g, '\\.') + '(?:\\s|$)');
+  const ownerRows = lines.slice(images + 1).filter(line => token.test(line) || line.trimEnd().endsWith(suffix));
+  const row = ownerRows.length === 1 && Buffer.byteLength(ownerRows[0], 'utf8') <= 8192 ? ownerRows[0].match(/^\s*(0x[0-9a-fA-F]+)\s*-\s*(0x[0-9a-fA-F]+)\s+\+?(\S+)\s+\([^)]*\)\s+<([0-9A-Fa-f-]{36})>\s+(.+)$/) : null;
+  if (!row || row[3] !== identifier || !row[5].endsWith(suffix)) {
+    result.status = 'sample-owned-image-ambiguous'; return { result };
+  }
+  const load = Number(row[1]), end = Number(row[2]), headerLoad = Number(loadText);
+  const uuid = row[4].toUpperCase();
+  if (!/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuid) ||
+      lines.slice(images + 1).filter(line => line.toUpperCase().includes('<' + uuid + '>')).length !== 1 ||
+      ![load, end, headerLoad].every(Number.isSafeInteger) || load !== headerLoad || end < load || end - load > 0xffffffff) {
+    result.status = 'sample-image-range-or-uuid-unverified'; return { result };
+  }
+  result.imageUUIDUnique = true; result.imageRangeBytes = end - load + 1;
+  const main = /^\s+\d+\s+Thread_\d+\s+DispatchQueue_\d+:\s+com\.apple\.main-thread\s+\(serial\)\s*$/;
+  const starts = lines.slice(graph + 1, images).map((line, i) => main.test(line) ? graph + 1 + i : -1).filter(i => i >= 0);
+  if (starts.length !== 1) { result.status = 'sample-main-group-unverified'; return { result }; }
+  const frames = [];
+  for (const line of lines.slice(starts[0] + 1, Math.min(images, starts[0] + 4097))) {
+    if (/^\s+\d+\s+Thread_/.test(line) || line.startsWith('Total number in stack')) break;
+    if (Buffer.byteLength(line, 'utf8') > 8192) continue;
+    const frame = line.match(/^([ +!|:.\t-]*)(\d+)\s+(.+?)\s{2,}\(in ([^)\r\n]+)\)\s+(?:\+\s+(\d+)|load address (0x[a-fA-F0-9]+)\s+\+\s+(0x[a-fA-F0-9]+))\s+\[(0x[a-fA-F0-9]+)\]\s*$/);
+    if (!frame || frame[4] !== name) continue;
+    const count = Number(frame[2]), pc = Number(frame[8]), offset = Number(frame[5] ?? frame[7]);
+    if (![count, pc, offset].every(Number.isSafeInteger) || count < 0 || offset < 0 || pc < load || pc > end ||
+        (frame[6] !== undefined && (Number(frame[6]) !== load || load + offset !== pc)) ||
+        (frame[5] !== undefined && pc - offset < load)) {
+      result.status = 'sample-owned-frame-outside-image'; return { result };
+    }
+    frames.push({ count, depthColumns: frame[1].length, offset, offsetKind: frame[5] === undefined ? 'image-relative' : 'symbol-relative',
+      imageRelativeOffset: pc - load, address: frame[8] });
+  }
+  result.ownedFrames = frames.length; result.selectedFrames = Math.min(1, frames.length); result.omittedOwnedFrames = Math.max(0, frames.length - 1);
+  if (!frames.length) { result.status = 'no-owned-main-frame'; return { result }; }
+  const retained = original.parsed.frames.filter(frame => frame.image === 'owned-application' &&
+    frame.count === frames[0].count && frame.depthColumns === frames[0].depthColumns &&
+    frame.offset === frames[0].offset && frame.offsetKind === frames[0].offsetKind);
+  if (retained.length !== 1) { result.status = 'owned-frame-not-uniquely-retained'; return { result }; }
+  const { address, ...frame } = frames[0];
+  result.frame = frame; result.status = 'sample-image-bound';
+  // Addresses and source paths are private inputs only, never projected.
+  return { result, uuid, address, loadAddress: row[1], name, bundle };
+}
+function startupSymbolFile(file, maximumBytes) {
+  const result = { status: 'unavailable', bytes: null, sha256: null };
+  let fd, failed = false, count = 0, before, after, current;
   try {
+    if (!file.startsWith(root + '/')) return { ...result, status: 'outside-owned-product-root' };
+    for (let at = file; at !== root; at = dirname(at)) {
+      const value = lstatSync(at);
+      if (value.isSymbolicLink()) return { ...result, status: 'symlink-refused' };
+    }
+    if (!lstatSync(file).isFile()) return { ...result, status: 'not-regular-file' };
+    fd = openSync(file, 'r'); before = fstatSync(fd);
+    if (!before.isFile() || !Number.isSafeInteger(before.size) || before.size <= 0 || before.size > maximumBytes) return { ...result, status: 'size-outside-bound' };
+    const digest = createHash('sha256'), buffer = Buffer.alloc(65536);
+    while (count <= maximumBytes) {
+      const read = readSync(fd, buffer, 0, Math.min(buffer.length, maximumBytes + 1 - count), count);
+      if (!read) break; digest.update(buffer.subarray(0, read)); count += read;
+    }
+    after = fstatSync(fd); current = lstatSync(file);
+    if (count > maximumBytes || count !== before.size || !current.isFile() ||
+        ![after, current].every(value => value.dev === before.dev && value.ino === before.ino && value.size === before.size && value.mtimeMs === before.mtimeMs && value.ctimeMs === before.ctimeMs)) {
+      result.status = 'changed-or-incomplete-file'; return result;
+    }
+    result.bytes = count; result.sha256 = digest.digest('hex'); result.status = 'complete-stable-file';
+  } catch (error) { failed = true; result.status = error?.code === 'ENOENT' ? 'file-absent' : 'file-unavailable'; }
+  finally { if (fd !== undefined) { try { closeSync(fd); } catch { failed = true; result.status = 'close-unavailable'; } } }
+  if (failed) { result.bytes = null; result.sha256 = null; }
+  return result;
+}
+function startupSymbolClassification(text, expectedImage) {
+  const result = { status: 'unresolved', sourceFile: 'unknown', functionFamily: 'unknown',
+    uniqueSourceCallerEstablished: false, sourceLineValuesPrivate: true, inliningAndDeduplicationLimited: true };
+  const lines = text.split(/\r?\n/).filter(line => line.trim());
+  if (lines.length !== 1 || Buffer.byteLength(lines[0] ?? '', 'utf8') > 8192) { result.status = 'multiple-or-invalid-symbol-results'; return result; }
+  const line = lines[0];
+  if (/<deduplicated_symbol>|inlined|inline frame/i.test(line)) { result.status = 'ambiguous-inline-or-deduplicated'; return result; }
+  const match = line.match(/^(.+?) \(in ([^)\r\n]+)\)(?: \(([^()\r\n]+):(\d+)\))?$/);
+  if (!match || /^0x[0-9a-f]+$/i.test(match[1]) || / \+ \d+$/.test(match[1])) return result;
+  if (typeof expectedImage !== 'string' || match[2] !== expectedImage) { result.status = 'symbol-image-mismatch'; return result; }
+  // A predecessor/symbol-table name without an actual source annotation is
+  // insufficient for attribution. Keep the raw tool text in private evidence.
+  if (!match[3] || !Number.isSafeInteger(Number(match[4]))) { result.status = 'symbol-name-without-source'; return result; }
+  const file = match[3].split('/').at(-1);
+  const sources = { 'NYCTronAcceptanceDriver.mm': 'private-acceptance-driver', 'SparkTestDriver.mm': 'pinned-spark-driver',
+    'ConstantsProvider.swift': 'expo-constants-provider',
+    'AppDelegate.mm': 'app-delegate', 'AppDelegate.m': 'app-delegate', 'main.m': 'app-entry', '<compiler-generated>': 'compiler-generated' };
+  result.sourceFile = Object.hasOwn(sources, file) ? sources[file] : 'unknown';
+  const name = match[1];
+  const exact = { TraceActivation: 'activation-trace', ActivationWindowState: 'activation-state-read',
+    SparkExecute: 'spark-command-dispatch', SparkSession: 'spark-server-session', SparkServe: 'spark-server-loop',
+    '+[NYCTronAcceptanceDriver load]': 'acceptance-driver-registration' };
+  // Unrecognized demangled parameter signatures stay unknown. Never strip
+  // arguments to manufacture an exact function or unique caller attribution.
+  const simple = name.startsWith('_') && !name.startsWith('__') ? name.slice(1) : name;
+  if (Object.hasOwn(exact, simple)) result.functionFamily = exact[simple];
+  else if (/^__destroy_helper_block_[A-Za-z0-9_]{1,160}$/.test(name)) result.functionFamily = 'compiler-block-destruction';
+  else if (/^__copy_helper_block_[A-Za-z0-9_]{1,160}$/.test(name)) result.functionFamily = 'compiler-block-copy';
+  else if (/^__\d+\+\[NYCTronAcceptanceDriver load\]_block_invoke(?:_\d+)?$/.test(name)) result.functionFamily = 'acceptance-driver-registration-block';
+  result.status = result.sourceFile !== 'unknown' || result.functionFamily !== 'unknown' ? 'closed-source-or-family-observation' : 'unrecognized-source-and-function';
+  return result;
+}
+async function startupSymbolication(observation, original, text) {
+  const result = { status: 'unavailable', diagnosticOnly: true, offlineOnly: true, liveProcessAttachment: false,
+    uniqueSourceCallerEstablished: false, originalSampleSha256: original.originalSha256, binding: null,
+    executable: null, optionalDsym: { candidate: 'pinned-deriveddata-release-product', presenceEstablished: false, status: 'not-probed' },
+    symbolProvider: null, tools: [], classification: null, toolLimit: 3, toolTimeoutMs: 3000, toolCleanupGraceMs: 1000,
+    executableByteLimit: 67108864, symbolByteLimit: 134217728, selectedFrameLimit: 1 };
+  try {
+    const input = startupSymbolInput(text, observation, original); result.binding = input.result;
+    if (input.result.status !== 'sample-image-bound') { result.status = input.result.status; return result; }
+    const binary = startupSymbolFile(executable, result.executableByteLimit);
+    result.executable = { status: binary.status, bytes: binary.bytes, sha256: binary.sha256, matchesLaunchHash: binary.sha256 === null ? null : binary.sha256 === nativeArtifact.executableSha256, uuidMatches: null, matchesBeforeToolsHashAndBytes: null };
+    if (binary.status !== 'complete-stable-file' || !result.executable.matchesLaunchHash) { result.status = 'executable-launch-hash-unverified'; return result; }
+    const run = async (label, args) => {
+      const task = startupObservationProcess('/usr/bin/xcrun', args, result.toolTimeoutMs, () => false);
+      const completed = await task.promise, state = completed.record;
+      const record = { tool: label, status: 'unavailable', closeObserved: state.closeObserved, exitCode: state.exitCode,
+        timedOut: state.timedOut, cleanupLimitReached: state.cleanupLimitReached, outputLimit: state.outputLimit,
+        errorCode: state.errorCode, stdoutBytes: state.stdoutBytes, stderrBytes: state.stderrBytes,
+        file: 'startup-symbol-' + label + '.txt', retained: false, retainedSha256: null, retainedEncoding: 'decoded-stdout-as-utf8' };
+      result.tools.push(record);
+      const usable = state.spawnObserved && state.closeObserved && state.exitCode === 0 && !state.timedOut && !state.outputLimit && !state.captureFailed && state.errorCode === null;
+      record.status = usable ? 'completed' : state.closeObserved ? 'tool-failed' : 'tool-close-unconfirmed';
+      try {
+        writeFileSync(join(output, record.file), completed.stdout, { flag: 'wx' });
+        record.retained = true; record.retainedSha256 = hash(Buffer.from(completed.stdout, 'utf8'));
+      } catch { record.status = 'private-output-retention-failed'; }
+      return usable && record.retained ? completed.stdout : null;
+    };
+    const executableUUID = startupSymbolUUID((await run('executable-uuid', ['dwarfdump', '--uuid', executable])) ?? '');
+    result.executable.uuidMatches = executableUUID === null ? null : executableUUID === input.uuid;
+    if (!result.executable.uuidMatches) { result.status = 'executable-uuid-or-architecture-unverified'; return result; }
+    // Pinned Spark build.ts derives this product directory, but the existence
+    // and contents of this optional dSYM have not been assumed or generated.
+    const dsym = join(root, '.spark', 'DerivedData', 'macos-arm64', 'Build', 'Products', 'Release',
+      input.bundle + '.dSYM', 'Contents', 'Resources', 'DWARF', input.name);
+    const symbols = startupSymbolFile(dsym, result.symbolByteLimit);
+    result.optionalDsym.status = symbols.status;
+    let symbolFile = executable, selectedSymbols = binary;
+    if (symbols.status === 'complete-stable-file') {
+      result.optionalDsym.presenceEstablished = true; result.optionalDsym.bytes = symbols.bytes; result.optionalDsym.sha256 = symbols.sha256;
+      const uuid = startupSymbolUUID((await run('dsym-uuid', ['dwarfdump', '--uuid', dsym])) ?? '');
+      result.optionalDsym.uuidMatches = uuid === null ? null : uuid === executableUUID;
+      if (!result.optionalDsym.uuidMatches) { result.status = 'optional-dsym-uuid-or-architecture-unverified'; return result; }
+      symbolFile = dsym; selectedSymbols = symbols; result.symbolProvider = 'uuid-matched-existing-dsym';
+    } else if (symbols.status === 'file-absent') result.symbolProvider = 'exact-launch-executable';
+    else { result.status = 'optional-symbol-file-unverified'; return result; }
+    const resolved = await run('atos', ['atos', '-arch', 'arm64', '-o', symbolFile, '-l', input.loadAddress, '-i', '-dedup', input.address]);
+    // Unsupported flags fail closed; never retry with ambiguity flags removed.
+    if (resolved === null) { result.status = 'atos-unavailable'; return result; }
+    const binaryAfter = startupSymbolFile(executable, result.executableByteLimit);
+    result.executable.matchesBeforeToolsHashAndBytes = binaryAfter.status === 'complete-stable-file' && binaryAfter.sha256 === binary.sha256 && binaryAfter.bytes === binary.bytes;
+    let symbolsStable = true;
+    if (symbolFile !== executable) {
+      const after = startupSymbolFile(dsym, result.symbolByteLimit);
+      symbolsStable = after.status === 'complete-stable-file' && after.sha256 === selectedSymbols.sha256 && after.bytes === selectedSymbols.bytes;
+      result.optionalDsym.matchesBeforeToolsHashAndBytes = symbolsStable;
+    }
+    if (!result.executable.matchesBeforeToolsHashAndBytes || !symbolsStable) { result.status = 'symbol-input-changed'; return result; }
+    result.classification = startupSymbolClassification(resolved, input.name);
+    result.status = 'offline-symbol-observation-completed';
+  } catch { result.status = 'symbol-observation-unavailable'; }
+  return result;
+}
+
+async function reportStartupObservation(observation) {
+  try {
+    let sampleText;
+    const original = readStartupObservationSample(observation, text => { sampleText = text; });
+    const symbolication = await startupSymbolication(observation, original, sampleText);
     const record = { schemaVersion: 1, sourceRevision: revision, processId: observation.processId,
       diagnosticOnly: true, samplingMayPerturbScheduling: true, nativeAcceptancePermitted: false,
       firstRequestOnly: true, command: 'tron.window', action: 'show', triggerAfterMs: 10000,
@@ -275,7 +486,7 @@ function reportStartupObservation(observation) {
       ownerLiveAtFire: observation.ownerLiveAtFire, ownerLiveBeforeSample: observation.ownerLiveBeforeSample,
       ownerLiveAfterObservation: observation.ownerLiveAfterObservation,
       preflight: observation.preflight, identity: observation.identity, sample: observation.sample,
-      skipPostFailureSample: observation.skipPostFailureSample, original: readStartupObservationSample(observation) };
+      skipPostFailureSample: observation.skipPostFailureSample, original, symbolication };
     const begin = 'NYCTRON_STARTUP_SAMPLE_BEGIN', end = 'NYCTRON_STARTUP_SAMPLE_END', limit = 16 * 1024;
     record.consoleByteLimit = limit;
     const encode = () => begin + '\n' + JSON.stringify(record) + '\n' + end + '\n';
@@ -348,7 +559,7 @@ async function observeInitialWindowRequest(request) {
       observation.ownerLiveAfterObservation = startupObservationLive(owner, pid);
       observation.skipPostFailureSample = !!observation.sample && !observation.sample.closeObserved &&
         !(observation.sample.spawnFailed && observation.sample.processId === null);
-      if (observation.fired) reportStartupObservation(observation);
+      if (observation.fired) await reportStartupObservation(observation);
     } catch {
       // Unknown cleanup must not overlap the existing postfailure sampler.
       observation.skipPostFailureSample = !!observation.sample && !observation.sample.closeObserved;
