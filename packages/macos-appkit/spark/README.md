@@ -18,7 +18,7 @@ Spark desktop application with these pinned dependency inputs:
 | `react-native` | `0.83.10` |
 | `react-native-macos` | `0.83.0` |
 | `react-native-nitro-modules` | `0.37.0` |
-| `@nyc-tron/core` | `1.0.0` |
+| `@nyc-tron/core` | `1.0.0-rc.1` |
 
 Use Node 24.19 or later, full Xcode 26.2 or later and CocoaPods. The isolated
 workflow selects Xcode 26.2 explicitly: the macOS 15 runner's default Xcode

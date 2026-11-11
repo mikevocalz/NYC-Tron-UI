@@ -50,7 +50,8 @@ run(process.execPath, ['node_modules/typescript/bin/tsc', '-p', 'adapter-source/
 run(process.execPath, ['--test', ...((await readdir(join(destination, 'adapter-source/tests'))).filter(f => f.endsWith('.test.mjs')).map(f => join('adapter-source/tests', f)))]);
 run(process.execPath, ['scripts/check-package.mjs'], join(destination, 'adapter-source'));
 run('npm', ['pack', '--ignore-scripts', '--pack-destination', join(destination, 'vendor')], join(destination, 'adapter-source'));
-manifest.dependencies['@nyc-tron/macos-appkit'] = 'file:vendor/nyc-tron-macos-appkit-1.0.0.tgz';
+const adapter = JSON.parse(await readFile(join(repo, 'packages/macos-appkit/spark/package.json'), 'utf8'));
+manifest.dependencies['@nyc-tron/macos-appkit'] = `file:vendor/nyc-tron-macos-appkit-${adapter.version}.tgz`;
 await writeFile(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
 // Acceptance must install the distribution, never retain the bootstrap source symlink.
 await rm(join(destination, 'node_modules'), { recursive: true });
@@ -68,7 +69,7 @@ const acceptanceTransport = nativeAcceptance ? await patchDriverTransport(destin
 const acceptanceDeviceName = nativeAcceptance ? await patchExpoDeviceName(destination) : undefined;
 // Execute Spark's native patch-provenance and Metro graph gates before Xcode.
 run(process.execPath, ['node_modules/@legendapp/spark/bin/spark.cjs', 'analyze']);
-const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': '1.0.0', '@nyc-tron/macos-appkit': '1.0.0' };
+const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': core.version, '@nyc-tron/macos-appkit': adapter.version };
 for (const [name, expected] of Object.entries(pins)) {
   const path = join(destination, 'node_modules', name);
   if ((await lstat(path)).isSymbolicLink()) throw new Error(`Acceptance dependency is a source link: ${name}`);

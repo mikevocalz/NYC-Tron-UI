@@ -14,7 +14,7 @@ not copied into this archive:
 | React Native | 0.83.10 | MIT; https://github.com/facebook/react-native |
 | React Native macOS | 0.83.0 | MIT; https://github.com/microsoft/react-native-macos |
 | Expo | 55.0.32 | MIT; https://github.com/expo/expo |
-| NYC-Tron core | 1.0.0 | MIT; https://github.com/mikevocalz/NYC-Tron-UI |
+| NYC-Tron core | 1.0.0-rc.1 | MIT; https://github.com/mikevocalz/NYC-Tron-UI |
 
 Spark retains its own packaged native sources and license notices. Its pinned
 runtime uses react-native-nitro-modules 0.37.0; that runtime is not vendored into

@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/windows-fluent-fabric",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.1",
   "private": true,
   "license": "MIT",
   "repository": {
@@ -95,8 +95,8 @@
     "react-native": "0.85.3",
     "react-native-windows": "0.85.0",
     "react": ">=19.2.0",
-    "@nyc-tron/core": "1.0.0",
-    "@nyc-tron/windows-fluent": "1.0.0"
+    "@nyc-tron/core": "1.0.0-rc.1",
+    "@nyc-tron/windows-fluent": "1.0.0-rc.1"
   },
   "devDependencies": {
     "react-native": "0.85.3",
