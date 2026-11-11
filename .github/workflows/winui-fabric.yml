@@ -288,6 +288,20 @@ jobs:
         shell: powershell
         run: |
           & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+      - name: Application Error records after a failed smoke test
+        if: failure()
+        shell: powershell
+        run: |
+          # The smoke driver itself can die (exit code -1073740940 in runs 42982441629 and 42985816081)
+          # before it writes any record. Keep every Application Error/WER entry of the last 40 minutes,
+          # whatever process faulted, so the faulting module is readable.
+          $out = Join-Path $env:RUNNER_TEMP "uia-smoke"
+          New-Item -ItemType Directory -Force -Path $out | Out-Null
+          $events = @(Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = (Get-Date).AddMinutes(-40); Id = 1000, 1001 } -MaxEvents 40 -ErrorAction SilentlyContinue)
+          $lines = foreach ($e in $events) { "[{0}] id={1} {2}" -f $e.TimeCreated.ToUniversalTime().ToString("o"), $e.Id, ($e.Message -replace "\s+", " ") }
+          [System.IO.File]::WriteAllLines((Join-Path $out "driver-crash-events.txt"), [string[]]@($lines))
+          Write-Host "Application Error/WER records in the last 40 minutes: $($events.Count)"
+          $lines | ForEach-Object { Write-Host $_.Substring(0, [Math]::Min(900, $_.Length)) }
       - name: Retain the exact package that passed native acceptance
         shell: pwsh
         run: |
