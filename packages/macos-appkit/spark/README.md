@@ -93,8 +93,12 @@ The shared `@nyc-tron/core/overlays` placement selects the region, preferred
 content size and above/below preference. AppKit chooses the final x/y position.
 Before revealing controls, the adapter checks the actual popover window frame
 against the selected region. That frame includes AppKit's border and arrow;
-the system's noninteractive window shadow is outside the frame. If the frame
-does not fit, the adapter closes it, calls `onOpenChange(false)`, and reports
+the system's noninteractive window shadow is outside the frame. AppKit centers
+the popover on the anchor, so an anchor near a window side can overflow the
+region on the other axis. The adapter therefore tries the opposite vertical
+edge, then the horizontal edges (leading side first, per the owner's layout
+direction), and keeps the first whose actual frame fits. If no edge fits, the
+adapter closes it, calls `onOpenChange(false)`, and reports
 `onPresentationRejected({ reason: 'outside-usable-region', bounds, region })`.
 The app can then choose another anchor, region or presentation. This is a safe
 region gate, not exact replay of the shared placement's x/y coordinates.

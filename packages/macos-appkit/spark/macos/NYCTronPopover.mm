@@ -38,6 +38,8 @@ using namespace facebook::react;
   BOOL _above;
   BOOL _silentClose;
   BOOL _closing;
+  BOOL _hasEdge;
+  NSRectEdge _edge;
   BOOL _restoreFocus;
   NSUInteger _generation;
 }
@@ -105,14 +107,39 @@ using namespace facebook::react;
   _content.frame = NSMakeRect(0, 0, _contentSize.width, _contentSize.height);
   _popover.contentSize = _contentSize;
   BOOL presenting = !_popover.shown;
-  if (presenting) { _opener = _owner.firstResponder; _presentedToken = [_scopeToken copy]; }
+  if (presenting) { _opener = _owner.firstResponder; _presentedToken = [_scopeToken copy]; _hasEdge = NO; }
   NSRectEdge edge = _above ? (positioningView.isFlipped ? NSMinYEdge : NSMaxYEdge) : (positioningView.isFlipped ? NSMaxYEdge : NSMinYEdge);
   // AppKit may fit against a screen rather than an app-reserved region. Keep
   // controls hidden until its actual placement satisfies the selected region.
   // An already presented field must keep its responder/composition while the
   // owner moves or resizes. Only the initial reveal is hidden for this check.
   if (presenting) _content.hidden = YES;
-  [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge];
+  // AppKit centers the popover on the anchor along the chosen edge, so an anchor
+  // near a window side can overflow the usable region on the other axis. Try the
+  // opposite vertical edge, then the horizontal edges (leading side first), and
+  // keep the first whose actual frame fits. A presented popover starts from its
+  // current edge so a resize does not move it between sides without need.
+  NSRectEdge vertical = edge, oppositeVertical = edge == NSMinYEdge ? NSMaxYEdge : NSMinYEdge;
+  BOOL rtl = positioningView.userInterfaceLayoutDirection == NSUserInterfaceLayoutDirectionRightToLeft;
+  NSMutableArray<NSNumber *> *candidates = [NSMutableArray arrayWithArray:@[@(vertical), @(oppositeVertical), @(rtl ? NSMinXEdge : NSMaxXEdge), @(rtl ? NSMaxXEdge : NSMinXEdge)]];
+  if (!presenting && _hasEdge) { [candidates removeObject:@(_edge)]; [candidates insertObject:@(_edge) atIndex:0]; }
+  BOOL savedAnimates = _popover.animates;
+  BOOL fitted = NO;
+  NSUInteger attempt = 0;
+  for (NSNumber *candidate in candidates) {
+    // Later probes reposition an already shown popover; do not animate them.
+    if (attempt++ > 0) _popover.animates = NO;
+    [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:(NSRectEdge)candidate.integerValue];
+    if (_popover.shown && _content.window) {
+      NSRect probe = [positioningView convertRect:[_owner convertRectFromScreen:_content.window.frame] fromView:nil];
+      if (!positioningView.isFlipped) probe.origin.y = NSHeight(positioningView.bounds) - NSMaxY(probe);
+      NSLog(@"NYCTronPopover sync=probe edge=%ld actual=%@ allowed=%@ fits=%d", (long)candidate.integerValue, NSStringFromRect(probe), NSStringFromRect(_allowedRegion), NSContainsRect(_allowedRegion, probe));
+      if (NSContainsRect(_allowedRegion, probe)) { _edge = (NSRectEdge)candidate.integerValue; _hasEdge = YES; fitted = YES; break; }
+    }
+  }
+  // No edge fits: present the preferred edge so the rejection below reports its frame.
+  if (!fitted) { _popover.animates = NO; [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge]; }
+  _popover.animates = savedAnimates;
   NSLog(@"NYCTronPopover sync=presented presenting=%d shown=%d anchor=%@ allowed=%@ content=%@ view=%@ scope=%@", presenting, _popover.shown, NSStringFromRect(anchor), NSStringFromRect(_allowedRegion), NSStringFromSize(_contentSize), NSStringFromRect(positioningView.bounds), _scopeToken);
   if (_popover.shown && _content.window) {
     [_content layoutSubtreeIfNeeded];
