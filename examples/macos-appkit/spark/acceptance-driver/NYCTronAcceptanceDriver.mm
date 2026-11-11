@@ -706,7 +706,12 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       if (![source isKindOfClass:RNDesktopDragView.class] || ![target isKindOfClass:RNDesktopDragView.class]) { reply(Failure(@"Expected installed native drag surfaces")); return; }
       [source scrollRectToVisible:source.bounds]; [target scrollRectToVisible:target.bounds];
       [sourceWindow layoutIfNeeded]; [targetWindow layoutIfNeeded];
-      NSRect sourceVisible = source.visibleRect, targetVisible = target.visibleRect;
+      // Run 43005945813 logged a start point of y=-204 in source coordinates and a
+      // button under it: visibleRect here is not clipped to the view's bounds
+      // (it contains them), so its center is outside the surface. Use the part
+      // of visibleRect that lies inside the view's bounds.
+      NSRect sourceVisible = NSIntersectionRect(source.visibleRect, source.bounds), targetVisible = NSIntersectionRect(target.visibleRect, target.bounds);
+      NSLog(@"NYCTronPointer drag sourceBounds=%@ sourceVisibleRaw=%@ targetBounds=%@ targetVisibleRaw=%@", NSStringFromRect(source.bounds), NSStringFromRect(source.visibleRect), NSStringFromRect(target.bounds), NSStringFromRect(target.visibleRect));
       if (NSIsEmptyRect(sourceVisible) || NSIsEmptyRect(targetVisible)) { reply(Failure(@"A native drag surface is outside its visible scroll region")); return; }
       // The surface contains selectable text. A mouse-down on that text starts a
       // text selection instead of the drag source, so start at a point whose
@@ -726,6 +731,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NSLog(@"NYCTronPointer drag centerHit=%@ startHit=%@ ownPoint=%d start=%@ key=%d active=%d sourceKey=%d", NSStringFromClass(centerHit.class), NSStringFromClass(startHit.class), foundOwnPoint, NSStringFromPoint(startInSource), NSApp.keyWindow == sourceWindow, NSApp.active, sourceWindow.keyWindow);
       if (!NSApp.active) [NSApp activateIgnoringOtherApps:YES];
       if (!sourceWindow.keyWindow) [sourceWindow makeKeyAndOrderFront:nil];
+      NSLog(@"NYCTronPointer drag afterActivate key=%d active=%d", sourceWindow.keyWindow, NSApp.active);
       __block NSInteger seenDown = 0, seenDragged = 0, seenUp = 0;
       id monitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown | NSEventMaskLeftMouseDragged | NSEventMaskLeftMouseUp) handler:^NSEvent *(NSEvent *event) {
         if (event.type == NSEventTypeLeftMouseDown) { seenDown++; NSLog(@"NYCTronPointer event=down window=%ld loc=%@ hit=%@", (long)event.windowNumber, NSStringFromPoint(event.locationInWindow), NSStringFromClass([event.window.contentView.superview hitTest:event.locationInWindow].class)); }
