@@ -1,7 +1,7 @@
 // Real release consumers live outside this checkout and install the produced
 // .tgz files. No workspace alias, mocked RN host or source import is allowed.
 //
-// node tooling/consumer-release.mjs prepare <packs> <out> <basic|expo-web|expo-native>
+// node tooling/consumer-release.mjs prepare <packs> <out> <basic|expo-web|expo-native> [--workspace-manifest <producer-sha256>]
 // node tooling/consumer-release.mjs install <out>
 // node tooling/consumer-release.mjs build-web <out>
 // node tooling/consumer-release.mjs test-web <out>
@@ -10,7 +10,8 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, realpathSync,
 import { createRequire } from "node:module";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { BASIC_ABSENT_PEERS, consumerDependencies, exactPin, releaseChecksums, verifyArchiveHash } from "./consumer-model.mjs";
+import { BASIC_ABSENT_PEERS, consumerDependencies, exactPin, releaseChecksums, verifyArchiveHash, verifyInstalledArchive } from "./consumer-model.mjs";
+import { checkoutRevision, verifyWorkspacePackages, WORKSPACE_PACK_MANIFEST } from "./workspace-pack-artifact.mjs";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const fixtures = join(root, "tooling/consumer-fixtures");
@@ -41,12 +42,14 @@ function archivesFrom(directory) {
   return archives;
 }
 
-function prepare(packs, output, kind) {
+function prepare(packs, output, kind, manifestSha256) {
   if (!["basic", "expo-web", "expo-native"].includes(kind)) throw new Error("Unknown consumer kind " + kind);
   if (existsSync(output)) throw new Error("Consumer output must be a new directory: " + output);
   // Otherwise a missing dependency can accidentally resolve from this repo.
   if (output === root || output.startsWith(root + sep)) throw new Error("Consumer output must be outside the repository");
-  const archives = archivesFrom(packs);
+  const sourceCommit = checkoutRevision(root);
+  const workspace = manifestSha256 === undefined ? undefined : verifyWorkspacePackages(packs, { revision: sourceCommit, manifestSha256 });
+  const archives = workspace?.archives ?? archivesFrom(packs);
   const native = readJSON(join(root, "examples/native-instruments/package.json"));
   const browser = readJSON(join(root, "packages/ui/tests/browser/package.json"));
   const project = join(output, "app");
@@ -106,8 +109,15 @@ function prepare(packs, output, kind) {
     });
   }
   writeJSON(join(project, "package.json"), manifest);
+  if (workspace) {
+    cpSync(join(packs, WORKSPACE_PACK_MANIFEST), join(output, WORKSPACE_PACK_MANIFEST));
+    cpSync(join(packs, "SHA256SUMS"), join(output, "workspace-SHA256SUMS"));
+  }
   writeJSON(join(output, "consumer.json"), {
-    kind, sourceCommit: execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim(),
+    kind, sourceCommit,
+    ...(workspace ? { workspacePackages: { manifestSha256: workspace.manifestSha256,
+      checksumsSha256: workspace.manifest.checksumsSha256, archiveCount: workspace.manifest.archives.length,
+      sourceCommit: workspace.manifest.sourceCommit, version: workspace.manifest.version } } : {}),
     packages: Object.fromEntries([...archives].filter(([name]) => name in dependencies)),
     absentPeers: kind === "basic" ? BASIC_ABSENT_PEERS : [],
   });
@@ -155,6 +165,7 @@ function checkInstall(output) {
   const plan = readJSON(join(output, "consumer.json"));
   const localRequire = createRequire(join(project, "package.json"));
   const packageRoot = realpathSync(join(project, "node_modules")) + sep;
+  const lock = plan.workspacePackages ? readJSON(join(project, "package-lock.json")) : undefined;
   const installed = {};
   for (const [name, expected] of Object.entries(plan.packages)) {
     const directory = realpathSync(join(project, "node_modules", name));
@@ -162,6 +173,7 @@ function checkInstall(output) {
     const actual = readJSON(join(directory, "package.json"));
     if (actual.version !== expected.version) throw new Error(name + " installed the wrong release version");
     if (JSON.stringify(actual).includes("workspace:")) throw new Error(name + " retained a workspace dependency");
+    if (lock) verifyInstalledArchive(name, expected, readFileSync(expected.path), lock.packages?.["node_modules/" + name], project);
     installed[name] = { version: actual.version, sha256: expected.sha256, directory };
   }
   for (const name of plan.absentPeers) {
@@ -213,8 +225,11 @@ export default defineConfig({testDir:'.',testMatch:'consumer.spec.mjs',workers:1
   console.log("Built installed " + plan.kind + " consumer without workspace imports");
 }
 
-const [command, first, second, third] = process.argv.slice(2);
-if (command === "prepare" && first && second && third) prepare(resolve(first), resolve(second), third);
+const [command, first, second, third, ...extra] = process.argv.slice(2);
+if (command === "prepare" && first && second && third) {
+  if (extra.length && (extra.length !== 2 || extra[0] !== "--workspace-manifest" || !extra[1])) throw new Error("Expected --workspace-manifest <producer-sha256>");
+  prepare(resolve(first), resolve(second), third, extra[1]);
+}
 else if (command === "install" && first) {
   const output = resolve(first);
   run("npm", ["install", "--ignore-scripts", "--no-audit", "--no-fund"], join(output, "app"));

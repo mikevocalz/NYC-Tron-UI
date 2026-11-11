@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { basename } from "node:path";
+import { basename, resolve } from "node:path";
 
 /** Exact release artifacts, never a workspace source alias or registry fallback. */
 export function consumerDependencies(dependencies, archives, required = []) {
@@ -41,6 +41,17 @@ export function releaseChecksums(text) {
 export function verifyArchiveHash(file, bytes, expected) {
   if (!expected || createHash("sha256").update(bytes).digest("hex") !== expected) {
     throw new Error("Release tarball checksum mismatch: " + file);
+  }
+}
+
+/** Bind npm's actual file dependency and integrity to the producer's archive. */
+export function verifyInstalledArchive(name, archive, bytes, lockEntry, project) {
+  verifyArchiveHash(basename(archive.path), bytes, archive.sha256);
+  const integrity = "sha512-" + createHash("sha512").update(bytes).digest("base64");
+  if (lockEntry?.link || lockEntry?.version !== archive.version || lockEntry?.integrity !== integrity ||
+      !lockEntry?.resolved?.startsWith("file:") ||
+      resolve(project, decodeURIComponent(lockEntry.resolved.slice(5))) !== resolve(archive.path)) {
+    throw new Error(name + " installed lock differs from the canonical archive");
   }
 }
 

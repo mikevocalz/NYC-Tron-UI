@@ -14,6 +14,8 @@ on:
       - "tooling/consumer*"
       - "tooling/consumer-fixtures/**"
       - "tooling/pack-release.mjs"
+      - "tooling/workspace-pack-artifact.mjs"
+      - "tooling/tests/workspace-pack-artifact.test.mjs"
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
       - "tooling/tests/native-ui-acceptance.test.mjs"
@@ -43,6 +45,8 @@ on:
       - "tooling/consumer*"
       - "tooling/consumer-fixtures/**"
       - "tooling/pack-release.mjs"
+      - "tooling/workspace-pack-artifact.mjs"
+      - "tooling/tests/workspace-pack-artifact.test.mjs"
       - "tooling/native/**"
       - "tooling/tests/media-acceptance.test.mjs"
       - "tooling/tests/native-ui-acceptance.test.mjs"
@@ -57,6 +61,10 @@ on:
   workflow_dispatch:
   # The release calls this exact workflow at the same candidate commit.
   workflow_call:
+    outputs:
+      workspace_manifest_sha256:
+        description: SHA-256 of the canonical thirteen-package producer manifest
+        value: ${{ jobs.source.outputs.workspace_manifest_sha256 }}
 concurrency:
   group: nyc-tron-native-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -65,9 +73,11 @@ permissions:
 
 jobs:
   source:
-    name: TypeScript / source contracts / independent pack
+    name: TypeScript / source contracts / canonical workspace pack
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    outputs:
+      workspace_manifest_sha256: ${{ steps.workspace_packages.outputs.manifest_sha256 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -84,6 +94,7 @@ jobs:
       - run: node --test tooling/tests/native-ui-transport.test.mjs
       - run: node --test tooling/tests/native-artifact.test.mjs
       - run: node --test tooling/tests/metro-warmup.test.mjs
+      - run: node --test tooling/tests/workspace-pack-artifact.test.mjs tooling/tests/consumer-release.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-navigation typecheck
@@ -94,17 +105,14 @@ jobs:
       - run: corepack pnpm --dir packages/native-controls build
       - run: corepack pnpm --dir packages/native-navigation build
       - run: corepack pnpm --dir examples/native-instruments typecheck
+      - name: Pack all thirteen workspace packages once for native acceptance and release
+        run: node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
       - run: |
-          mkdir -p /tmp/nyc-tron-native-pack
-          corepack pnpm --dir packages/native-controls pack --pack-destination /tmp/nyc-tron-native-pack
-          corepack pnpm --dir packages/native-navigation pack --pack-destination /tmp/nyc-tron-native-pack
-          tar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'
-          tar -tzf /tmp/nyc-tron-native-pack/nyc-tron-native-controls-*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
+          tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'
+          tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-native-controls-*.tgz | grep -E 'ios/TronArcKnobView.swift|android/.*/TronXYPadView.kt|THIRD_PARTY_NOTICES.md|licenses/AudioKit-Controls-MIT.txt'
       - name: Reserved-regions tarball carries both native modules and no Gradle output
         run: |
-          mkdir -p /tmp/nyc-tron-regions-pack
-          corepack pnpm --dir packages/reserved-regions pack --pack-destination /tmp/nyc-tron-regions-pack
-          entries=$(tar -tzf /tmp/nyc-tron-regions-pack/*.tgz)
+          entries=$(tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-reserved-regions-*.tgz)
           for f in package/ios/NYCTronReservedRegionsModule.swift package/ios/NYCTronReservedRegions.podspec \
                    package/android/build.gradle package/android/src/main/java/com/nyctron/reservedregions/NYCTronReservedRegionsModule.kt \
                    package/expo-module.config.json package/dist/index.native.js; do
@@ -113,9 +121,7 @@ jobs:
           if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
       - name: Hardware-keys tarball carries both native modules and no Gradle output
         run: |
-          mkdir -p /tmp/nyc-tron-keys-pack
-          corepack pnpm --dir packages/hardware-keys pack --pack-destination /tmp/nyc-tron-keys-pack
-          entries=$(tar -tzf /tmp/nyc-tron-keys-pack/*.tgz)
+          entries=$(tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-hardware-keys-*.tgz)
           for f in package/ios/NYCTronHardwareKeysModule.swift package/ios/NYCTronHardwareKeys.podspec \
                    package/ios/Extensions/UIViewController+hardwareKeyCommand.swift \
                    package/android/build.gradle package/android/src/main/java/com/nyctron/hardwarekeys/NYCTronHardwareKeysModule.kt \
@@ -125,9 +131,7 @@ jobs:
           if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
       - name: Platform-services tarball carries all three native modules, the FileProvider and no Gradle output
         run: |
-          mkdir -p /tmp/nyc-tron-services-pack
-          corepack pnpm --dir packages/platform-services pack --pack-destination /tmp/nyc-tron-services-pack
-          entries=$(tar -tzf /tmp/nyc-tron-services-pack/*.tgz)
+          entries=$(tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-platform-services-*.tgz)
           for f in package/ios/NYCTronHapticsModule.swift package/ios/NYCTronDocumentsModule.swift \
                    package/ios/NYCTronPlaybackSessionModule.swift package/ios/NYCTronPlatformServices.podspec \
                    package/android/build.gradle package/android/src/main/AndroidManifest.xml \
@@ -138,20 +142,28 @@ jobs:
             echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
           done
           if echo "$entries" | grep -q '^package/android/build/'; then echo "Gradle output packed"; exit 1; fi
-      - run: corepack pnpm --dir packages/native-charts build
       - name: Native charts pack contents
         run: |
-          mkdir -p /tmp/nyc-tron-charts-pack
-          corepack pnpm --dir packages/native-charts pack --pack-destination /tmp/nyc-tron-charts-pack
-          listing=$(tar -tzf /tmp/nyc-tron-charts-pack/*.tgz)
+          listing=$(tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-native-charts-*.tgz)
           for f in package/ios/TronChartView.swift package/ios/NYCTronCharts.podspec \
                    package/android/build.gradle package/android/src/main/java/com/nyctron/charts/TronChartView.kt \
                    package/dist/NativeChart.web.js package/dist/NativeChart.native.js package/THIRD_PARTY_NOTICES.md; do
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in native-charts pack"; exit 1; }
           done
+      - name: Bind the canonical archives to this exact checkout
+        id: workspace_packages
+        run: node tooling/workspace-pack-artifact.mjs record "$RUNNER_TEMP/nyc-tron-packs"
+      - name: Retain the canonical workspace archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-workspace-packages
+          path: ${{ runner.temp }}/nyc-tron-packs/
+          if-no-files-found: error
+          retention-days: 30
 
   android:
     name: Android installed-tarball compile, media and native UI
+    needs: source
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -171,11 +183,16 @@ jobs:
         run: node tooling/native/verify-media-timeline.mjs
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
-      - name: Build and pack this candidate for a clean Expo consumer
+      - name: Download the canonical workspace archives
+        uses: actions/download-artifact@v4
+        with:
+          name: native-workspace-packages
+          path: ${{ runner.temp }}/nyc-tron-packs
+      - name: Verify and install the canonical archives in a clean Expo consumer
+        env:
+          WORKSPACE_MANIFEST_SHA256: ${{ needs.source.outputs.workspace_manifest_sha256 }}
         run: |
-          corepack pnpm build
-          node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
-          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" expo-native
+          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" expo-native --workspace-manifest "$WORKSPACE_MANIFEST_SHA256"
           node tooling/consumer-release.mjs install "$NYC_TRON_CONSUMER"
       - name: Typecheck the installed public API and bundle its Android entry
         working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app
@@ -271,6 +288,8 @@ jobs:
           path: |
             ${{ runner.temp }}/nyc-tron-native-consumer/consumer.json
             ${{ runner.temp }}/nyc-tron-native-consumer/installed-packages.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/workspace-packages.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/workspace-SHA256SUMS
             ${{ runner.temp }}/nyc-tron-native-consumer/app/package-lock.json
             ${{ runner.temp }}/nyc-tron-native-consumer/app/android/app/build/outputs/apk/debug/*.apk
             ${{ runner.temp }}/nyc-tron-android-js/metadata.json
@@ -282,6 +301,7 @@ jobs:
 
   ios:
     name: iOS installed-tarball compile, media and native UI
+    needs: source
     runs-on: macos-latest
     timeout-minutes: 90
     env:
@@ -295,11 +315,16 @@ jobs:
           node-version: "24.19.0"
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
-      - name: Build and pack this candidate for a clean Expo consumer
+      - name: Download the canonical workspace archives
+        uses: actions/download-artifact@v4
+        with:
+          name: native-workspace-packages
+          path: ${{ runner.temp }}/nyc-tron-packs
+      - name: Verify and install the canonical archives in a clean Expo consumer
+        env:
+          WORKSPACE_MANIFEST_SHA256: ${{ needs.source.outputs.workspace_manifest_sha256 }}
         run: |
-          corepack pnpm build
-          node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
-          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" expo-native
+          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" expo-native --workspace-manifest "$WORKSPACE_MANIFEST_SHA256"
           node tooling/consumer-release.mjs install "$NYC_TRON_CONSUMER"
       - name: Typecheck the installed public API and bundle its iOS entry
         working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app
@@ -399,6 +424,8 @@ jobs:
           path: |
             ${{ runner.temp }}/nyc-tron-native-consumer/consumer.json
             ${{ runner.temp }}/nyc-tron-native-consumer/installed-packages.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/workspace-packages.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/workspace-SHA256SUMS
             ${{ runner.temp }}/nyc-tron-native-consumer/app/package-lock.json
             ${{ runner.temp }}/nyc-tron-ios-js/metadata.json
             ${{ runner.temp }}/nyc-tron-ios-simulator.zip
