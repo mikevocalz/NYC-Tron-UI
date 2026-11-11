@@ -22,7 +22,8 @@ class NativeDragBroker : public std::enable_shared_from_this<NativeDragBroker> {
   bool CanTarget(std::string const& nonce, std::string const& id, std::string const& generation) const;
   void Hover(std::string const& nonce, std::string const& id, std::string const& generation);
   void Leave(std::string const& id, std::string const& generation);
-  void Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed);
+  std::string Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed);
+  void CancelOffer(std::string const& nonce, std::string const& id, std::string const& generation, std::string const& request) noexcept;
   bool Resolve(std::string const& token, std::string const& request, bool accepted);
   void NativeCompleted(std::string const& request, std::string const& effect);
   void Cancel(std::string const& requestOrToken, std::string const& reason = "cancelled") noexcept;

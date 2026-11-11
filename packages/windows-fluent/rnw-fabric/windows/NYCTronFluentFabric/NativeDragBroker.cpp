@@ -6,6 +6,7 @@
 #include <chrono>
 #include <map>
 #include <stdexcept>
+#include <utility>
 
 namespace nyctron::desktop {
 namespace Json = winrt::Windows::Data::Json;
@@ -72,7 +73,10 @@ void NativeDragBroker::ArmDeadline() {
   if (m_active->timer) m_active->timer.Stop();
   auto timer = winrt::Microsoft::UI::Dispatching::DispatcherQueue::GetForCurrentThread().CreateTimer();
   timer.IsRepeating(false); timer.Interval(std::chrono::seconds(30));
-  timer.Tick([weak = weak_from_this()](auto const&, auto const&) { if (auto self = weak.lock()) self->Cancel("", "timeout"); });
+  timer.Tick([weak = weak_from_this()](auto const& sender, auto const&) {
+    if (auto self = weak.lock(); self && self->m_active && self->m_active->timer == sender)
+      self->Cancel("", "timeout");
+  });
   m_active->timer = timer; timer.Start();
 }
 std::string NativeDragBroker::PrepareSource(std::string const& id, std::string const& generation, SourceReady ready) {
@@ -89,9 +93,21 @@ void NativeDragBroker::Start(std::string const& source, std::string const& token
     throw std::runtime_error("Stale native drag-start request");
   m_active->token = token; m_active->completed = std::move(completed); m_active->started = true;
   Trace("broker-source-started");
-  auto ready = std::move(m_active->sourceReady); const auto nonce = m_active->nonce;
-  if (m_active->timer) m_active->timer.Stop();
-  try { ready(true, nonce); } catch (...) { Cancel(request); throw; }
+  SourceReady ready;
+  try {
+    const auto nonce = m_active->nonce;
+    ready = std::move(m_active->sourceReady);
+    // Invalidate this deadline before Stop can reenter or an already queued tick runs.
+    auto timer = std::exchange(m_active->timer, nullptr);
+    if (timer) timer.Stop();
+    ready(true, nonce);
+  } catch (...) {
+    // If moved, the source callback's Claim guard releases its deferral/hook
+    // once. Otherwise Cancel still owns it, including a failed nonce copy.
+    try { if (ready) ready(false, ""); } catch (...) {}
+    Cancel(request);
+    throw;
+  }
 }
 bool NativeDragBroker::CanTarget(std::string const& nonce, std::string const& id, std::string const& generation) const {
   return !m_disposed && m_active && m_active->started && m_active->nonce == nonce && id != m_active->source &&
@@ -116,12 +132,21 @@ void NativeDragBroker::Leave(std::string const& id, std::string const& generatio
   Trace("broker-leave");
   m_active->target.clear(); m_active->targetGeneration.clear(); Emit("hover");
 }
-void NativeDragBroker::Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed) {
-  if (!CanTarget(nonce, id, generation) || m_active->dropReady || m_active->approved) { Trace("broker-offer-refused"); completed(false); return; }
-  m_active->target = id; m_active->targetGeneration = generation; m_active->dropRequest = NewToken(); m_active->dropReady = std::move(completed);
-  ArmDeadline();
-  Trace("broker-offer");
-  Emit("offer");
+std::string NativeDragBroker::Offer(std::string const& nonce, std::string const& id, std::string const& generation, std::function<void(bool)> completed) {
+  if (!CanTarget(nonce, id, generation) || m_active->dropReady || m_active->approved) { Trace("broker-offer-refused"); completed(false); return {}; }
+  // Build the lease before publishing the callback. Emit may synchronously
+  // resolve or cancel it, so return this captured ID without rereading Active.
+  auto request = NewToken();
+  const auto offerNonce = nonce, offerTarget = id, offerGeneration = generation;
+  auto target = offerTarget; auto targetGeneration = offerGeneration; auto dropRequest = request;
+  m_active->target = std::move(target); m_active->targetGeneration = std::move(targetGeneration);
+  m_active->dropRequest = std::move(dropRequest); m_active->dropReady = std::move(completed);
+  try {
+    ArmDeadline();
+    Trace("broker-offer");
+    Emit("offer");
+  } catch (...) { CancelOffer(offerNonce, offerTarget, offerGeneration, request); throw; }
+  return request;
 }
 bool NativeDragBroker::Resolve(std::string const& token, std::string const& request, bool accepted) {
   if (m_disposed || !m_active || m_active->token != token || m_active->dropRequest != request || !m_active->dropReady)
@@ -160,6 +185,13 @@ void NativeDragBroker::Cancel(std::string const& request, std::string const& rea
   // Once a native gesture started, cancellation cannot claim an unobserved
   // OS result, even before approval. Only DropCompleted establishes an effect.
   try { if (active->completed) active->completed(Result(*active, active->started ? "unknown" : "none", reason)); } catch (...) {}
+}
+void NativeDragBroker::CancelOffer(std::string const& nonce, std::string const& id, std::string const& generation, std::string const& request) noexcept {
+  // A queued timeout must not cancel a newer offer for the same drag/target.
+  // Like the rest of this broker, this method runs only on its UI dispatcher.
+  if (m_active && !request.empty() && m_active->nonce == nonce && m_active->target == id &&
+      m_active->targetGeneration == generation && m_active->dropRequest == request)
+    Cancel("", "unavailable");
 }
 void NativeDragBroker::CancelTarget(std::string const& id, std::string const& generation) noexcept {
   if (m_active && m_active->target == id && m_active->targetGeneration == generation) {
