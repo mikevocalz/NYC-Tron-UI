@@ -151,35 +151,6 @@ jobs:
             exit "$build_status"
           fi
           exit "$reporting_status"
-      # Expo's constants provider reads ProcessInfo.hostName on the main thread
-      # while the reference app starts. On a runner whose host name does not
-      # resolve locally, -[NSHost name] blocks in blockingResolveUntil for about
-      # 35 s (run 42964459265 sample: main thread in semaphore_wait under
-      # NSHost). That stalls every main-queue driver command past the client's
-      # 35 s response limit. Time the real call, map the names to loopback, time
-      # it again, and require the second call to be fast.
-      - name: Make the runner host name resolvable before the AppKit app starts
-        run: |
-          set -euo pipefail
-          probe="$RUNNER_TEMP/hostname-probe"
-          mkdir -p "$probe"
-          cat > "$probe/main.swift" <<'SWIFT'
-          import Foundation
-          let start = Date()
-          let name = ProcessInfo.processInfo.hostName
-          print(String(format: "ProcessInfo.hostName took %.2f s (%@)", Date().timeIntervalSince(start), name))
-          print(String(format: "%.3f", Date().timeIntervalSince(start)))
-          SWIFT
-          xcrun swiftc -O "$probe/main.swift" -o "$probe/hostname-probe"
-          echo "hostname: $(hostname) / short: $(hostname -s) / LocalHostName: $(scutil --get LocalHostName 2>/dev/null || echo unset)"
-          "$probe/hostname-probe" | head -1
-          names="$(hostname) $(hostname -s) $(scutil --get LocalHostName 2>/dev/null || true)"
-          primary="$(ipconfig getifaddr en0 2>/dev/null || true)"
-          { echo "127.0.0.1 $names"; if [ -n "$primary" ]; then echo "$primary $names"; fi; } | sudo tee -a /etc/hosts >/dev/null
-          sudo dscacheutil -flushcache || true
-          seconds="$("$probe/hostname-probe" | tail -1)"
-          "$probe/hostname-probe" | head -1
-          node -e 'if(!(Number(process.argv[1])<5))throw Error("ProcessInfo.hostName still blocks for "+process.argv[1]+" s")' "$seconds"
       - name: Exercise actual native controls and window lifetimes
         id: native
         working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
