@@ -6,6 +6,7 @@
 #include "IslandConnection.h"
 #include "codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.UI.Input.DragDrop.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
@@ -106,6 +107,7 @@ struct TronDragSurfaceComponentView
   ~TronDragSurfaceComponentView() { Destroy(); }
   void Destroy() noexcept {
     if (std::exchange(m_disposed, true)) return;
+    ReleaseParentDropObserver();
     m_mounted = false;
     m_loaded = false;
     Trace("surface-destroying");
@@ -258,6 +260,27 @@ struct TronDragSurfaceComponentView
     if (auto emitter = EventEmitter()) { Codegen::TronDragSurfaceEventEmitter::OnNativeError error; error.message = message; emitter->onNativeError(std::move(error)); }
     else m_errors.push_back(message);
   }
+  // Diagnostic only. Observes, without ever calling SetTarget, whether the OS
+  // drag asks the RNW parent island (the one hosting this nested XAML island)
+  // for a drop target. Nothing here changes which object receives the drop.
+  void ObserveParentDropTarget() noexcept {
+    if (m_parentDropManager || m_role != "target") return;
+    try {
+      const auto site = m_connection.Site();
+      if (!site || site.IsClosed()) { Trace("parent-drop-observer-unavailable"); return; }
+      const auto parent = site.Parent();
+      if (!parent || parent.IsClosed()) { Trace("parent-drop-observer-unavailable"); return; }
+      m_parentDropManager = winrt::Microsoft::UI::Input::DragDrop::DragDropManager::GetForIsland(parent);
+      m_parentDropToken = m_parentDropManager.TargetRequested([weak = get_weak()](auto const&, auto const&) {
+        if (auto self = weak.get()) self->Trace("parent-target-requested");
+      });
+      Trace("parent-drop-observer-attached");
+    } catch (...) { Trace("parent-drop-observer-failed"); }
+  }
+  void ReleaseParentDropObserver() noexcept {
+    try { if (m_parentDropManager) { m_parentDropManager.TargetRequested(m_parentDropToken); m_parentDropManager.Close(); } } catch (...) {}
+    m_parentDropManager = nullptr;
+  }
   void Cleanup() noexcept {
     if (auto broker = Broker::Find(m_owner)) {
       if (!m_request.empty()) broker->Cancel(m_request, "unavailable");
@@ -282,6 +305,7 @@ struct TronDragSurfaceComponentView
       m_surface.CanDrag(m_role == "source" && m_surface.IsEnabled());
       m_surface.AllowDrop(m_role == "target" && m_surface.IsEnabled());
       Trace("capabilities-applied");
+      ObserveParentDropTarget();
     } catch (...) { Error("Could not apply native drag capabilities"); }
   }
   void Apply(Codegen::TronDragSurfaceProps const& props) noexcept {
@@ -376,6 +400,7 @@ struct TronDragSurfaceComponentView
   }
   Xaml::XamlIsland m_island{nullptr}; Xaml::Controls::ContentControl m_surface{nullptr}; Xaml::Controls::TextBlock m_label{nullptr};
   nyctron::islands::IslandConnection m_connection;
+  winrt::Microsoft::UI::Input::DragDrop::DragDropManager m_parentDropManager{nullptr}; winrt::event_token m_parentDropToken{};
   winrt::com_ptr<Codegen::TronDragSurfaceProps> m_props;
   std::string m_owner, m_window, m_generation, m_role, m_scope, m_request;
   std::vector<std::string> m_errors; bool m_disposed{false}, m_mounted{false}, m_loaded{false};
