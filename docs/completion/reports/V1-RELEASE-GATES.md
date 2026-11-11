@@ -13,6 +13,51 @@ The complete native desktop gates remain open for the reviewed combined candidat
 Original failures, source corrections, cancellations and native outcomes have
 separate receipts; source or compiler passes do not establish interaction results.
 
+### November 11 AppKit tooltip progress and inspector status timeout
+
+[Completed run 42979226147](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42979226147)
+tested external helper `a957d4059b8a86735f2c152371eb7a2c2bd4e4ae` through
+actual merge `b296b206f7bcc7740f46e1e7435f490a138935ce`, tree
+`8cf08b5ce3331bad684f2efa33d9570b3e9702ed`. The source job passed 13 tests,
+the installed consumer passed 16, API declarations matched 15 subpaths / 33
+declarations, and seven native transport-probe cases passed. Standalone
+compilation succeeded. Initial native activation returned successfully in
+0.626 seconds, with the same process and bundle and a visible, key, active owner.
+These counts and observations are separate gates.
+
+This candidate's tooltip summary reports `passed`. Its text collector permits
+a private AppKit draw-view ivar read; this is not public-accessibility-only text
+proof. The console retains the final outside-after-hover observation: the
+cursor is outside, the pointer-sequence flag is cleared, no help tags are present,
+and window 41 is invisible and offscreen. It omits the earlier shown tag and
+the source of the text that matched. The original tooltip JSON and captured
+pixels remain uninspected. The pass belongs to this exact source and does not
+certify the pending correction to private-text provenance and window binding.
+
+The first later runtime error is `Timed out waiting for Native inspector
+dismissed`. Executed verifier line 1176 awaits the Escape command, then waits
+for the application status label to include that text. The separate native
+`shown === false` check on line 1177 was not reached. The failure therefore
+does not establish the final native popover visibility or the cause of the
+missing status. Focus restoration, reopening and later drag checks remain
+unexecuted. The preceding responder, editing and resize assertions are
+control-flow observations; their detailed original artifacts remain uninspected.
+
+The [eleven-file completed-run receipt](../evidence/v1-appkit-a957d40-inspector-status-timeout/README.md)
+retains both complete original job logs, all three exact JSON payloads and
+timestamped envelopes, and completed metadata. Root independently rehashed
+every retained file and matched the console extractions and metadata to the
+completed originals. The command projection covers a bounded prefix, not the
+full command history. No predeadline sample envelope was emitted. The original
+compiler transcript, tooltip JSON, later process sample, captures and ZIP
+remain uninspected; their recorded identities are producer/API-reported.
+
+The complete native gate failed and tested-distribution upload was skipped.
+This outcome-only receipt adds no source changes. The external private-text
+source remains separate from this reviewed aggregate while its correction
+is reviewed. Supported-host Windows, physical-platform, combined-release and
+exact-manifest owner gates remain open.
+
 ### November 11 AppKit startup progress, tooltip text and cancelled compile
 
 [Direct-head run 42975767901](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42975767901)
@@ -55,14 +100,15 @@ not emitted results. The producer-reported 32-file artifact and compiler output
 remain uninspected. This run establishes no compilation success or native
 runtime outcome for the corrected candidate.
 
-The external helper subsequently advanced to `a957d405`, which adds private
-AppKit draw-view storage to accepted tooltip strings. That is a change to the
-acceptance text source and cannot certify public accessibility text exposure,
-VoiceOver or rendered pixels. At the 07:37 UTC checkpoint its thirteen source
-checks passed on actual merge `b296b206`, while native compilation continued.
-That external source is not included in this reviewed aggregate; its private
-text provenance and draw-view association are under review. All native,
-physical-platform and exact-manifest release conditions remain in force.
+At the earlier 07:37 UTC checkpoint, the external helper had advanced to
+`a957d405`, adding private AppKit draw-view storage to accepted tooltip strings.
+Its thirteen source checks had passed on actual merge `b296b206`, while native
+compilation continued. The completed result is recorded above. This change to
+the acceptance text source cannot certify public accessibility text exposure,
+VoiceOver or rendered pixels. That external source is not included in this
+outcome-only aggregate; its private-text provenance and draw-view association
+remain under review. All native, physical-platform and exact-manifest release
+conditions remain in force.
 
 ### November 11 AppKit hostname-run result and symbol diagnostic
 
