@@ -1300,13 +1300,34 @@ try {
       const [main, document] = await Promise.all([inspect('root-main'), inspect('root-document-1', 'document-1')]);
       return main.viewBounds.width === main.contentBounds.width && document.viewBounds.width === document.contentBounds.width;
     }, 'resized native React roots before pointer input');
+    // The roots resize with their windows at once; Fabric lays out the drag
+    // surfaces later. Run 43046836104 posted the drag while drop-main was still
+    // 560 points wide in a 500 point window. Wait until both surfaces fit the
+    // width of their window content and keep the same frame across two reads.
+    // Vertical position is left to the driver, which scrolls each surface into view.
+    let surfaces;
+    await waitFor(async () => {
+      const read = await Promise.all([inspect('drop-main'), inspect('drop-document-1', 'document-1')]);
+      const inside = read.every(({ contentFrame: f, contentBounds: b }) => f && f.width > 0 && f.height > 0 &&
+        f.x >= b.x && f.x + f.width <= b.x + b.width);
+      const frames = JSON.stringify(read.map(value => value.contentFrame));
+      const settled = inside && surfaces === frames;
+      surfaces = inside ? frames : undefined;
+      return settled;
+    }, 'drag surfaces laid out inside the arranged windows before pointer input');
     pointerEvidence.invocation = await driver.request('tron.pointer', { action: 'drag', source: 'main', target: 'document-1' });
     writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
+    let lastPointerState;
     const session = await waitFor(async () => {
       const state = await driver.request('tron.pointer', { action: 'status' });
+      lastPointerState = state;
       if (state.session?.nativeSession) { pointerEvidence.session = state.session; writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
       return state.session?.nativeSession && !state.running ? state.session : undefined;
-    }, 'actual AppKit NSDraggingSession from posted mouse events');
+    }, 'actual AppKit NSDraggingSession from posted mouse events').catch(error => {
+      pointerEvidence.observation = lastPointerState?.observation ?? null;
+      writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
+      throw new Error(`${error.message}; drag observation ${JSON.stringify(pointerEvidence.observation)}`);
+    });
     assert.equal(session.source, 'drop-main');
     assert.ok(session.pasteboardTypes.length);
     await status('Document moved to document-1');
