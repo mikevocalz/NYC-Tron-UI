@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "head": "0578582686e483003db64e252e4ea65f0b48c093",
+    "tree": "99a1e8463fd2f6aab907589aef37e3c59c557962",
+    "actualMerge": "0a44cc99e8d7e1932235a463d4b1f3d82047fe8c",
+    "actualMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "0578582686e483003db64e252e4ea65f0b48c093"
+    ],
+    "sameTreeVerified": true,
+    "fullTreeLeavesVerified": 2076
+  },
+  "workflow": {
+    "runId": 42935377885,
+    "sourceJobId": 130244042064,
+    "nativeJobId": 130244373435,
+    "source": "success",
+    "powerShellParserAndProductionCSharp": "success",
+    "realOwnedProcessScalarTokenCheck": "success",
+    "environmentRegressionGroupsPassed": 10,
+    "inputRegressionGroupsPassed": 7,
+    "realNativeIdentityGroupsPassed": 3,
+    "nativeCodeGeneration": "success",
+    "nativeLibraryCompilation": "success",
+    "consumerCompilation": "success",
+    "deployment": "success",
+    "uia": "failure",
+    "testedDistributionRetention": "skipped",
+    "testedDistributionUpload": "skipped"
+  },
+  "failure": {
+    "message": "UIA element named 'Native drag result: none/rejected' did not appear within 30 s",
+    "processId": 5464,
+    "mainWindowHandle": 852334,
+    "ownedProcessAlive": true,
+    "finalDescendants": 51,
+    "matchingCrashRecords": 0,
+    "actualFinalResultLabel": null,
+    "nativeTargetEventCount": null,
+    "originalUiTreeInspected": false,
+    "originalNativeTraceInspected": false
+  },
+  "observation": {
+    "sourceRevision": "0a44cc99e8d7e1932235a463d4b1f3d82047fe8c",
+    "capturedAt": "2026-11-11T01:07:09.5996127Z",
+    "app": {
+      "processId": 5464,
+      "createdAt": "2026-11-11T01:06:54.4966572Z",
+      "security": {
+        "status": "queried",
+        "processId": 5464,
+        "access": "TOKEN_QUERY",
+        "win32Error": null,
+        "errorType": null,
+        "tokenCloseError": null,
+        "fields": {
+          "elevation": {
+            "status": "observed",
+            "value": 1,
+            "win32Error": null,
+            "errorType": null
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1,
+            "win32Error": null,
+            "errorType": null
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288,
+            "win32Error": null,
+            "errorType": null
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0,
+            "win32Error": null,
+            "errorType": null
+          }
+        }
+      },
+      "identityStable": true
+    },
+    "driver": {
+      "processId": 2480,
+      "createdAt": "2026-11-11T01:06:53.4476962Z"
+    },
+    "shell": {
+      "windowHandle": 65754,
+      "processId": 7940,
+      "threadId": 7928,
+      "createdAt": "2026-11-11T00:57:12.7463059Z",
+      "security": {
+        "status": "queried",
+        "processId": 7940,
+        "access": "TOKEN_QUERY",
+        "win32Error": null,
+        "errorType": null,
+        "tokenCloseError": null,
+        "fields": {
+          "elevation": {
+            "status": "observed",
+            "value": 1,
+            "win32Error": null,
+            "errorType": null
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1,
+            "win32Error": null,
+            "errorType": null
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288,
+            "win32Error": null,
+            "errorType": null
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0,
+            "win32Error": null,
+            "errorType": null
+          }
+        }
+      },
+      "windowAndProcessAndThreadStable": true
+    },
+    "shellToDriver": {
+      "sameSession": true,
+      "leftSession": 2,
+      "rightSession": 2,
+      "sameUser": {
+        "status": "not-requested-unsupported-shell",
+        "value": null,
+        "win32Error": null,
+        "errorType": null
+      }
+    },
+    "shellToApp": {
+      "sameSession": true,
+      "leftSession": 2,
+      "rightSession": 2,
+      "sameUser": {
+        "status": "not-requested-unsupported-shell",
+        "value": null,
+        "win32Error": null,
+        "errorType": null
+      }
+    },
+    "inputDesktopObservations": {
+      "app": {
+        "status": "observed",
+        "threadId": 10064,
+        "receivesInput": true,
+        "win32Error": null,
+        "errorType": null
+      },
+      "driver": {
+        "status": "observed",
+        "threadId": 10040,
+        "receivesInput": true,
+        "win32Error": null,
+        "errorType": null
+      },
+      "shell": {
+        "status": "observed",
+        "threadId": 7928,
+        "receivesInput": true,
+        "win32Error": null,
+        "errorType": null
+      }
+    },
+    "identityStable": true,
+    "errors": {},
+    "review": {
+      "purpose": "eligibility-for-activation-review",
+      "snapshotOnly": true,
+      "eligibleForActivationReview": false,
+      "status": "observed-ineligible",
+      "predicates": [
+        {
+          "name": "stable-owned-identities",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "shell-query-handles-closed",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "shell-not-elevated",
+          "observed": true,
+          "value": false
+        },
+        {
+          "name": "shell-medium-integrity",
+          "observed": true,
+          "value": false
+        },
+        {
+          "name": "shell-no-uiaccess",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "shellToDriver-same-session",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "shellToDriver-same-user",
+          "observed": false,
+          "value": false
+        },
+        {
+          "name": "shellToApp-same-session",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "shellToApp-same-user",
+          "observed": false,
+          "value": false
+        },
+        {
+          "name": "shellDesktop-receives-input",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "driverDesktop-receives-input",
+          "observed": true,
+          "value": true
+        },
+        {
+          "name": "appDesktop-receives-input",
+          "observed": true,
+          "value": true
+        }
+      ]
+    },
+    "predicateCounts": {
+      "observedTrue": 8,
+      "observedFalse": 2,
+      "unobserved": 2
+    },
+    "sameUserWasNotRequestedBecauseShellScalarConditionsFailed": true,
+    "rawFileTimeNumbersNotReserialized": true,
+    "originalFileTimeValuesPreservedOnlyInVerbatimLogAndSummary": true
+  },
+  "sourceLog": {
+    "path": "source-job.log",
+    "characters": 31620,
+    "utf8Bytes": 31778,
+    "sha256": "f84eacf2fafa050f5c356bf523ae7b903fdc12bea12721ec88136db191e7dfc5",
+    "gitBlob": "aaefc792c7ced0bb2ee3ad5dc11f11e62ccc5aa6",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "nativeLog": {
+    "path": "native-job.log",
+    "characters": 340795,
+    "utf8Bytes": 342310,
+    "sha256": "42da2fe547a670dbecefc8be2e306558fbd7655a64adb78d1cd18ff17f1bc79f",
+    "gitBlob": "1b56f958c620df7594ca06555edde036f2bcb58d",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "derivedSummary": {
+    "path": "environment-log-summary.json",
+    "utf8Bytes": 14447,
+    "sha256": "9779ce53637b511cee1799d541f491e8046ad859f2a93acb00596f68738df80a",
+    "gitBlob": "097ecbe27a3f388c783f1f941032430faf3e8c6a",
+    "completeMarkerEnvelopes": 1,
+    "onlyTimestampAndLogLineEndingRemoved": true,
+    "newlineAdded": false,
+    "isCompleteOriginalEnvironmentFile": false,
+    "rawJsonPreservedWithoutParseAndReserialize": true
+  },
+  "producerReportedOriginalEnvironmentFile": {
+    "filename": "drag-environment-01.json",
+    "bytes": 81458,
+    "sha256": "a2979710a36cca878303ec7b210dde074b2fd92c5527cdf6cfceaf38ca66c5ac",
+    "independentlyExtracted": false,
+    "independentlyRehashed": false
+  },
+  "producerReportedArtifact": {
+    "id": 13817948422,
+    "name": "winui-fabric-uia-smoke",
+    "bytes": 337987,
+    "sha256": "89e4daac0a89fe272f2f3d5788ecc97b5f740e722aafa2e7119d60b37d70ff9b",
+    "uploadReportedFiles": 40,
+    "originalBytesVerified": false,
+    "membersExtracted": false,
+    "screenshotsViewed": false
+  },
+  "limits": {
+    "actualDropFailureCauseEstablished": false,
+    "existingObservedShellEligibleForUnelevatedActivation": false,
+    "otherUnobservedHostsOrShellsCharacterized": false,
+    "launcherChanged": false,
+    "securitySettingsChanged": false,
+    "localExecutionEnvironmentAvailable": false,
+    "localFetchPerformed": false,
+    "fullNativeGatePassed": false,
+    "finalCombinedCandidatePassed": false,
+    "allEightPlatformsAccepted": false,
+    "ownerApprovedDistribution": false,
+    "releaseCreated": false,
+    "tagCreated": false
+  }
+}

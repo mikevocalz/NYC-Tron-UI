@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "helperCommit": "0578582686e483003db64e252e4ea65f0b48c093",
+  "parentCommit": "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5",
+  "helperTree": "99a1e8463fd2f6aab907589aef37e3c59c557962",
+  "onlyImmediateParentChange": {
+    "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-environment.test.ps1",
+    "oldGitBlob": "2b8f37763e5acfe28de712abe45b01bc741ac4e3",
+    "gitBlob": "d3f4492c96f1b805048031ea2a96f607e844c8df",
+    "utf8Bytes": 24322,
+    "sha256": "ba5ca5d0523708b5f40a6f3f18a8d6fa027cd4df47856b0c2edf878c9f3b2164",
+    "insertedBytes": 4,
+    "insertedLines": 1,
+    "removedLines": 0,
+    "exactPreimageRestoredByRemovingInsertion": true
+  },
+  "priorDiagnosticSourceReceipt": "../v1-windows-2566b2b-shell-fixture-parse-failure/source-review.json",
+  "finalDiagnosticFiles": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-drag-environment.ps1",
+      "gitBlob": "4c854c10eda02d1a64440c0b036667fa7f6dec76",
+      "utf8Bytes": 54542,
+      "sha256": "8cef4e9ba10876c05f25c0fc052789ac275a5b747b80b2acda9ec1e556a7996e"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-environment.test.ps1",
+      "gitBlob": "d3f4492c96f1b805048031ea2a96f607e844c8df",
+      "utf8Bytes": 24322,
+      "sha256": "ba5ca5d0523708b5f40a6f3f18a8d6fa027cd4df47856b0c2edf878c9f3b2164"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/tests/native-shell-identity.test.ps1",
+      "gitBlob": "8f0403042e607df7b49d58b69d01154be78f0418",
+      "utf8Bytes": 7156,
+      "sha256": "94edae4cdb85d6bf0d35a9a1560e19b4a7d49ad9e808c1433a7506aec89c8a5d"
+    },
+    {
+      "path": ".github/workflows/winui-fabric.yml",
+      "gitBlob": "dd9532580fc8666223863528cc98d62d72ae8ef8",
+      "utf8Bytes": 19055,
+      "sha256": "5229030c8c7bc3d874edf7df97ba701fdec2ffa220356e00d871feafd36a05d3"
+    }
+  ],
+  "aggregateWorkflow": {
+    "path": ".github/workflows/winui-fabric.yml",
+    "oldGitBlob": "988737b29372fdb4b7eaf69e5f1c8da85654a9e9",
+    "gitBlob": "4bfac5a1e0b91ac88a104a08d08ebcdc873be6bc",
+    "utf8Bytes": 20247,
+    "sha256": "e1a5f6141f4f528502dba89615750e5320350645feb1cbd1b0852fe46cf8da15",
+    "canonicalArchiveWiringPreserved": true
+  },
+  "verification": {
+    "independentSourceAndCompleteBlobReviewPassed": true,
+    "actualPowerShellEdition": "Desktop",
+    "actualPowerShellVersion": "5.1",
+    "actualProcessBits": 64,
+    "actualParserAndProductionCSharpPassed": true,
+    "realOwnedScalarCheckPassed": true,
+    "environmentGroupsPassed": 10,
+    "inputGroupsPassed": 7,
+    "realIdentityAndBoundsGroupsPassed": 3,
+    "actualPassMarkerLines": 21,
+    "sourceInvocations": [
+      {
+        "checks": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "native-source subset"
+      },
+      {
+        "checks": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "full source/adapter suite including the same 13 native-source checks"
+      }
+    ],
+    "distinctSourceChecks": 49,
+    "publicApiSubpaths": 8,
+    "publicApiReachableDeclarations": 44,
+    "nativeLibraryAndConsumerAndDeploymentPassed": true,
+    "strictNativeAcceptancePassed": false
+  },
+  "unchanged": {
+    "launcher": true,
+    "securitySettings": true,
+    "nativeDragImplementation": true,
+    "gestureTiming": true,
+    "outcomeAssertions": true
+  }
+}

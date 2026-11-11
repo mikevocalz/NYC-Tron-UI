@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperCommit": "3891ee1788e6722c922ef431c576f507c5591f60",
+  "parentCommit": "cea75ae6e088a5638d900154b85edeb4c84b0248",
+  "helperTree": "335314d5b47567fa2db208096707a52d99b23a09",
+  "helperFile": {
+    "path": ".github/workflows/macos-appkit.yml",
+    "oldGitBlob": "2213a088b453cbcb84f382027d6896f784f40401",
+    "gitBlob": "ed8c5a2c8eb06e68b920413836c8cd32fadcf198",
+    "utf8Bytes": 9750,
+    "sha256": "471ef88f86ba7a334da760e754140e390295f0c77270ba9cfba9ffa7a37f0c29"
+  },
+  "aggregateFile": {
+    "path": ".github/workflows/macos-appkit.yml",
+    "oldGitBlob": "98721a164949cac6238c009ec5d5602d21473308",
+    "gitBlob": "c19589c71bf77b8145766ee9efe446b4cdce0142",
+    "utf8Bytes": 10952,
+    "sha256": "261fe351210d98e6d6f839daefe91aef419fcfda04e66fc00735873346c97d9a",
+    "canonicalArchiveWiringPreserved": true
+  },
+  "change": {
+    "insertedLines": 52,
+    "removedLines": 1,
+    "originalCommand": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "originalWorkingDirectoryAndBuildEnvironmentPreserved": true,
+    "originalStdoutAndStderrPreservedInFile": true,
+    "originalNonzeroExitRemainsPrimary": true,
+    "reporterFailureCannotMakeSuccess": true,
+    "failedTranscriptTailCapBytes": 32768,
+    "nativeVerifyCommandChanged": false,
+    "nativeSourceChanged": false,
+    "permissionPolicyChanged": false,
+    "gestureDeadlinesChanged": false,
+    "strictAssertionsChanged": false,
+    "distributionGateChanged": false
+  },
+  "verification": {
+    "independentSourceAndHashReviewPassed": true,
+    "reporterJavaScriptSyntaxReviewed": true,
+    "localNodeFilesystemOrShellExecution": false,
+    "actualCiBuildAndReporterSucceeded": true,
+    "sourceTests": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0
+    },
+    "installedApi": {
+      "subpaths": 15,
+      "reachableDeclarations": 33
+    },
+    "nativeAcceptancePassed": false
+  },
+  "unchangedNativeFiles": [
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "gitBlob": "35414d7cd7e91e907698ea68538c7ec9de1913c2"
+    },
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "gitBlob": "b01dccc74827a61ce5b2cfe3ededeca5c001b045"
+    }
+  ]
+}

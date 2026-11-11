@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperCommit": "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5",
+  "helperTree": "3dec3aa2ef7312becf9dc02fdb72679b154c2bbc",
+  "parentCommit": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8",
+  "helperFiles": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-drag-environment.ps1",
+      "oldGitBlob": "721e781922999ec95f9246719b2678edd41fbc64",
+      "gitBlob": "4c854c10eda02d1a64440c0b036667fa7f6dec76",
+      "utf8Bytes": 54542,
+      "sha256": "8cef4e9ba10876c05f25c0fc052789ac275a5b747b80b2acda9ec1e556a7996e"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-environment.test.ps1",
+      "oldGitBlob": "284cb31bf03aa65c5b1a1ed8d03b9909d0d2c5fa",
+      "gitBlob": "2b8f37763e5acfe28de712abe45b01bc741ac4e3",
+      "utf8Bytes": 24318,
+      "sha256": "4924bb9d3b0475a18f54acd18dcd3c1686812ec7dcb1f0fd56c2184a13305096"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/tests/native-shell-identity.test.ps1",
+      "oldGitBlob": null,
+      "gitBlob": "8f0403042e607df7b49d58b69d01154be78f0418",
+      "utf8Bytes": 7156,
+      "sha256": "94edae4cdb85d6bf0d35a9a1560e19b4a7d49ad9e808c1433a7506aec89c8a5d"
+    },
+    {
+      "path": ".github/workflows/winui-fabric.yml",
+      "oldGitBlob": "e779a774fe38f84cf425cc7755ea3e81d92cdd36",
+      "gitBlob": "dd9532580fc8666223863528cc98d62d72ae8ef8",
+      "utf8Bytes": 19055,
+      "sha256": "5229030c8c7bc3d874edf7df97ba701fdec2ffa220356e00d871feafd36a05d3"
+    }
+  ],
+  "correctedFixture": {
+    "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-environment.test.ps1",
+    "oldGitBlob": "2b8f37763e5acfe28de712abe45b01bc741ac4e3",
+    "gitBlob": "d3f4492c96f1b805048031ea2a96f607e844c8df",
+    "utf8Bytes": 24322,
+    "sha256": "ba5ca5d0523708b5f40a6f3f18a8d6fa027cd4df47856b0c2edf878c9f3b2164",
+    "insertedBytes": 4,
+    "insertedLines": 1,
+    "removedLines": 0,
+    "exactPreimageRestoredByRemovingInsertion": true,
+    "actualCorrectedParserResult": "recorded separately when available"
+  },
+  "aggregateWorkflow": {
+    "path": ".github/workflows/winui-fabric.yml",
+    "oldGitBlob": "988737b29372fdb4b7eaf69e5f1c8da85654a9e9",
+    "gitBlob": "4bfac5a1e0b91ac88a104a08d08ebcdc873be6bc",
+    "utf8Bytes": 20247,
+    "sha256": "e1a5f6141f4f528502dba89615750e5320350645feb1cbd1b0852fe46cf8da15",
+    "canonicalArchiveWiringPreserved": true,
+    "exactReviewedReplacementSpans": 4
+  },
+  "diagnosticScope": {
+    "existingShellOnly": true,
+    "processAccess": "PROCESS_QUERY_LIMITED_INFORMATION",
+    "tokenAccess": "TOKEN_QUERY",
+    "accountDataRetained": "equality booleans only",
+    "inputDesktopObservation": "GetUserObjectInformationW(UOI_IO)",
+    "predicateCount": 12,
+    "purpose": "eligibility-for-activation-review",
+    "snapshotOnly": true,
+    "launcherChanged": false,
+    "securitySettingsChanged": false,
+    "nativeDragImplementationChanged": false,
+    "gestureTimingChanged": false,
+    "outcomeAssertionsChanged": false
+  },
+  "verification": {
+    "sourceAndHashReviewPerformed": true,
+    "sourceReviewMissedFixtureSyntaxError": true,
+    "actualParserCaughtFixtureSyntaxError": true,
+    "correctionIndependentlyReviewed": true,
+    "correctedRuntimeNotEstablishedByThisRun": true,
+    "sourceInvocations": [
+      {
+        "checks": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "native-source subset"
+      },
+      {
+        "checks": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "full source/adapter suite including the same 13 native-source checks"
+      }
+    ],
+    "distinctSourceChecks": 49,
+    "publicApiSubpaths": 8,
+    "publicApiReachableDeclarations": 44
+  }
+}

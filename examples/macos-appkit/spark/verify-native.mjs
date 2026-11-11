@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import { createHash, randomBytes } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync, appendFileSync, readdirSync, lstatSync, readlinkSync, copyFileSync, openSync, closeSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync, appendFileSync, readdirSync, lstatSync, readlinkSync, copyFileSync, openSync, closeSync, readSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as pause } from 'node:timers/promises';
@@ -101,6 +101,108 @@ function retainProcessFailure() {
   }
   writeFileSync(join(output, 'native-process-failure.json'), JSON.stringify(processState, null, 2) + '\n');
 }
+function tooltipFailureSummary(evidence) {
+  const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  const boolean = value => typeof value === 'boolean' ? value : null;
+  const number = value => Number.isFinite(value) ? value : null;
+  const integer = value => Number.isSafeInteger(value) ? value : null;
+  const allowed = (value, values) => typeof value === 'string' ? (values.includes(value) ? value : 'other') : null;
+  const roles = ['AXHelpTag', 'AXWindow', 'AXGroup', 'AXButton', 'AXStaticText', 'AXTextField', 'AXTextArea', 'AXScrollArea', 'AXUnknown', 'AXRow', 'AXTable', 'AXList', 'AXMenu', 'AXMenuItem', 'AXToolbar', 'AXSplitGroup', 'AXTabGroup', 'AXCheckBox', 'AXImage', 'AXRadioButton', 'AXSlider', 'AXComboBox'];
+  const geometry = (value, fields) => isRecord(value) ? Object.fromEntries(fields.map(field => [field, number(value[field])])) : null;
+  const point = value => geometry(value, ['x', 'y']);
+  const frame = value => geometry(value, ['x', 'y', 'width', 'height']);
+  const nonempty = value => Number.isFinite(value?.width) && Number.isFinite(value?.height) ? value.width > 0 && value.height > 0 : null;
+  const conjunction = values => values.includes(false) ? false : values.every(value => value === true) ? true : null;
+  const motion = value => isRecord(value) ? { action: allowed(value.action, ['enter', 'leave']), ok: boolean(value.ok), targetPoint: point(value.targetPoint), triggerFrame: frame(value.triggerFrame) } : null;
+  const observation = (value, includeRecords) => {
+    if (!isRecord(value)) return null;
+    const tags = Array.isArray(value.helpTags) ? value.helpTags : null;
+    const inspected = tags?.slice(0, 128).map((tag, index) => {
+      const textMatchesExpected = Array.isArray(tag?.strings) && tag.strings.every(text => typeof text === 'string')
+        ? tag.strings.includes("Save this document's local checkpoint") : null;
+      const roleIsHelpTag = typeof tag?.role === 'string' ? tag.role === 'AXHelpTag' : null;
+      const tagFrameNonempty = nonempty(tag?.frame), windowFrameNonempty = nonempty(tag?.windowFrame);
+      return { index, windowNumber: integer(tag?.windowNumber), role: allowed(tag?.role, roles), textMatchesExpected, roleIsHelpTag,
+        tagFrameNonempty, windowFrameNonempty, matchesShownTagPredicate: conjunction([textMatchesExpected, roleIsHelpTag, tagFrameNonempty, windowFrameNonempty]),
+        frame: frame(tag?.frame), windowFrame: frame(tag?.windowFrame) };
+    }) ?? null;
+    const count = field => tags && tags.length <= 128 && inspected.every(tag => typeof tag[field] === 'boolean')
+      ? inspected.filter(tag => tag[field]).length : null;
+    const windows = Array.isArray(value.windows) ? value.windows : null;
+    return {
+      phase: allowed(value.phase, ['outside-before-hover', 'hover', 'before-exit', 'outside-after-hover']),
+      postEventsAllowed: boolean(value.postEventsAllowed), accessibilityTrusted: boolean(value.accessibilityTrusted),
+      ownerVisible: boolean(value.ownerVisible), ownerKey: boolean(value.ownerKey), applicationActive: boolean(value.applicationActive),
+      traversalTruncated: boolean(value.traversalTruncated), cursorInsideTrigger: boolean(value.cursorInsideTrigger), pointerRunning: boolean(value.pointerRunning),
+      triggerFrame: frame(value.triggerFrame), cursor: point(value.cursor),
+      helpTags: { total: tags?.length ?? null, inspected: inspected?.length ?? null, inspectionLimit: 128,
+        inspectionTruncated: tags ? tags.length > 128 : null, matchingExpectedTextCount: count('textMatchesExpected'), matchingShownTagPredicateCount: count('matchesShownTagPredicate'),
+        retainedLimit: includeRecords ? 8 : 0, recordsOmitted: tags ? Math.max(0, tags.length - (includeRecords ? 8 : 0)) : null,
+        records: includeRecords ? inspected?.slice(0, 8) ?? null : null },
+      windows: { total: windows?.length ?? null, retainedLimit: includeRecords ? 12 : 0,
+        recordsOmitted: windows ? Math.max(0, windows.length - (includeRecords ? 12 : 0)) : null,
+        records: includeRecords ? windows?.slice(0, 12).map(window => {
+          const observedRoles = Array.isArray(window?.roles) ? window.roles : null;
+          return { number: integer(window?.number), visible: boolean(window?.visible), onscreen: boolean(window?.onscreen), frame: frame(window?.frame),
+            roles: observedRoles?.slice(0, 12).map(role => allowed(role, roles)) ?? null,
+            rolesOmitted: observedRoles ? Math.max(0, observedRoles.length - 12) : null };
+        }) ?? null : null }
+    };
+  };
+  const latest = isRecord(evidence?.lastObservation) ? 'lastObservation' : isRecord(evidence?.initial) ? 'initial' : null;
+  return {
+    status: allowed(evidence?.status, ['pending', 'blocked', 'failed', 'passed']),
+    permission: { postEventsAllowed: boolean(evidence?.permission?.postEventsAllowed), accessibilityTrusted: boolean(evidence?.permission?.accessibilityTrusted) },
+    pointerRequests: { initialExit: motion(evidence?.initialExit), enter: motion(evidence?.enter), exit: motion(evidence?.exit) },
+    baseline: observation(evidence?.baseline, false), observationSource: latest, observation: observation(latest ? evidence[latest] : null, true)
+  };
+}
+
+function reportTooltipFailure() {
+  const begin = 'NYCTRON_TOOLTIP_EVIDENCE_BEGIN', end = 'NYCTRON_TOOLTIP_EVIDENCE_END';
+  const originalByteLimit = 1024 * 1024, logByteLimit = 16 * 1024;
+  const report = {
+    schemaVersion: 1, status: 'unavailable', sourceRevision: revision, processId: Number.isSafeInteger(child.pid) ? child.pid : null,
+    diagnosticOnly: true, selection: 'allowlisted-derived-tooltip-subset', outputSummaryOmitted: false, logByteLimit,
+    omittedOriginalFields: ['error', 'reason', 'boundary', 'coordinates', 'helpTags.strings', 'windows.class', 'capture'],
+    original: { filename: 'tooltip-hover.json', bytes: null, sha256: null, completeRead: null, readByteLimit: originalByteLimit + 1 }
+  };
+  try {
+    const file = join(output, 'tooltip-hover.json');
+    if (!lstatSync(file).isFile()) throw new Error('Expected the retained tooltip evidence file');
+    const bytes = Buffer.alloc(originalByteLimit + 1);
+    const descriptor = openSync(file, 'r');
+    let length = 0;
+    try {
+      while (length < bytes.length) {
+        const read = readSync(descriptor, bytes, length, bytes.length - length, null);
+        if (read === 0) break;
+        length += read;
+      }
+    } finally { closeSync(descriptor); }
+    if (length > originalByteLimit) {
+      report.status = 'original-over-read-limit'; report.original.bytesRead = length; report.original.completeRead = false;
+    } else {
+      const original = bytes.subarray(0, length);
+      report.original.bytes = length; report.original.sha256 = hash(original); report.original.completeRead = true;
+      const evidence = JSON.parse(original.toString('utf8'));
+      if (evidence?.schemaVersion !== 1) throw new Error('Unexpected tooltip evidence schema');
+      report.summary = tooltipFailureSummary(evidence);
+      report.status = 'summary';
+    }
+  } catch { report.status = 'readback-unavailable'; }
+  try {
+    let message = begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';
+    if (Buffer.byteLength(message, 'utf8') > logByteLimit) {
+      delete report.summary; report.status = 'omitted-over-log-limit'; report.outputSummaryOmitted = true;
+      message = begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';
+    }
+    // All envelope strings are fixed or validated identities. Reporting stays
+    // secondary to the original failure and never modifies retained JSON bytes.
+    if (Buffer.byteLength(message, 'utf8') <= logByteLimit) console.info(message.slice(0, -1));
+  } catch {}
+}
+
 async function waitFor(check, label, timeoutMs = 20000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
@@ -505,6 +607,7 @@ try {
   try { retainProcessFailure(); }
   catch (diagnosticError) { writeFileSync(join(output, 'native-process-diagnostic-error.txt'), String(diagnosticError) + '\n'); }
   if (tooltipEvidence?.status === 'pending') { tooltipEvidence.status = 'failed'; tooltipEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'tooltip-hover.json'), JSON.stringify(tooltipEvidence, null, 2) + '\n'); }
+  if (tooltipEvidence) reportTooltipFailure();
   if (pointerEvidence?.status === 'pending') { pointerEvidence.status = 'failed'; pointerEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
   writeFileSync(join(output, 'failure.json'), JSON.stringify({ schemaVersion: 1, status: 'failed', sourceRevision: revision, checks, error: error instanceof Error ? error.message : String(error) }, null, 2) + '\n');
   throw error;

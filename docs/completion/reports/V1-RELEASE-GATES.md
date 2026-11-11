@@ -13,6 +13,131 @@ The latest completed desktop attempts still failed their complete native gates.
 The original failures, supported corrections and new native runs have separate
 receipts; a source or compiler pass does not substitute for interaction results.
 
+### November 11 Windows diagnostic follow-up
+
+The corrected read-only observation is integrated from helper
+`0578582686e483003db64e252e4ea65f0b48c093`. Its
+[completed native receipt](../evidence/v1-windows-0578582-elevated-existing-shell/README.md)
+records actual merge `0a44cc99e8d7e1932235a463d4b1f3d82047fe8c`,
+tree `99a1e8463fd2f6aab907589aef37e3c59c557962`, all 2,076 helper leaves
+and the independently verified actual merge's ordered parents.
+
+[Run 42935377885](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42935377885)
+passed the 13-check subset and full 49-check suite including that subset,
+with zero failures/skips, plus API 8/44. The real Windows PowerShell Desktop
+5.1 x64 parser and production C# compile passed. The complete original log
+records the real owned scalar-token check, ten portable environment groups,
+seven portable input groups and three real native token-user/session,
+borrowed-handle and SID-bounds groups. These 21 actual PASS lines are distinct
+from the source-suite counts and the later app observations.
+
+Native code generation, library compilation, the actual consumer compilation
+and packaged deployment passed. UI Automation still failed
+`UIA element named 'Native drag result: none/rejected' did not appear within 30 s`.
+The owned app remained alive with 51 final descendants and zero matched crash
+records. Passed-only distribution retention/upload were skipped. The actual
+final drag label and target-event trace remain uninspected in the original
+runtime ZIP; no older result is assigned to this run.
+
+The new source-bound observation directly records both app PID 5464 and the
+exact GetShellWindow shell PID 7940 as elevated (DWORD 1), High integrity
+(RID 12288), elevation type 1 and UIAccess 0. Shell window/PID/thread identities
+and app/driver process identities remained stable; no query/close error was
+reported. Session comparisons observed session 2, and all three input desktops
+reported receiving input. The review-only result is `observed-ineligible`:
+eight predicates true, two false, two unobserved. The same-user comparisons
+were deliberately skipped after the unsupported shell scalar values; they are
+unknown, not unequal.
+
+Microsoft's documented elevated-app drag restriction applies to the matching
+automatic CanDrag path. The existing shell is also elevated, so it cannot
+supply the documented existing-shell route to unelevated activation. This
+establishes a supported-host boundary, not the precise timeout mechanism or
+execution of an internal null-operation guard. No launcher, security setting,
+native drag, pointer timing or required assertion was changed.
+The [next-host instructions](../evidence/v1-windows-0578582-elevated-existing-shell/NEXT_HOST.md)
+identify the existing unelevated interactive session, prior toolchain/package
+provisioning, unchanged native gates and original tested-archive requirements.
+No replacement host was provisioned or unchanged workflow retried.
+
+The complete original source/native logs are 31,778/342,310 UTF-8 bytes.
+The exact selected 14,447-byte environment JSON line is preserved without
+parsing and reserializing its unsafe-in-JavaScript FILETIME numbers.
+Derived provenance uses ISO timestamps and the native identity result.
+The producer-reported original environment file (81,458 bytes) and runtime
+artifact 13817948422 (337,987 bytes, 40 uploaded files) remain unextracted and
+unverified independently. All hash/provenance distinctions are in the receipt.
+
+The [preceding 2566 failure](../evidence/v1-windows-2566b2b-shell-fixture-parse-failure/README.md)
+passed source checks but stopped at the actual parser before C#/native tests.
+Independent source inspection found the missing outer hashtable brace;
+the four-byte correction is blob `d3f4492c96f1b805048031ea2a96f607e844c8df`.
+The new run confirms that correction passed the actual parser/runtime gate.
+Both original failed and corrected-run logs are retained.
+
+The aggregate-specific workflow
+`4bfac5a1e0b91ac88a104a08d08ebcdc873be6bc` preserves canonical archive wiring
+over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
+workflow. The new native shell-identity test and corrected environment fixture
+are carried with the reviewed diagnostic; no complete native acceptance follows.
+
+### November 11 AppKit compile and tooltip-hover result
+
+The [completed 3891 run](../evidence/v1-appkit-3891ee1-tooltip-hover-failure/README.md)
+passed eleven source checks with zero failures/skips, clean consumer preparation,
+the fifteen-subpath/33-declaration API check, the real Foundation/socketpair
+probe and ARM64 native compilation. Actual merge
+`8cf0e6fd70c9984c471560e432783e0881f0f63d` matches helper tree
+`335314d5b47567fa2db208096707a52d99b23a09`; all 2,048 leaves and the actual
+merge's ordered parents were independently verified.
+
+The workflow's new bounded build reporting worked in the actual run. Its
+source-bound envelope reports build exit zero and an original compiler
+transcript of 12,329,153 bytes, SHA256
+`bf800a11426fa2d749ecd29127fc72728e586704ebecb2d8c78dfca3554c78aa`.
+That file's bytes remain unextracted and the hash is producer-reported.
+The complete 53,338-byte native job log was separately retrieved and verified;
+the retained 318-byte build-result log summary is explicitly derived from it.
+
+The exact first runtime failure is `Timed out waiting for new visible native
+help-tag text after the posted pointer reaches the trigger`, at
+`verify-native.mjs:257:29`. The unchanged wait requires actual cursor-inside,
+a cleared pointer-sequence flag and matching AXHelpTag text with nonzero
+element/window frames. The console does not isolate the failed conjunct.
+Earlier menu/property assertions, Boolean type checks, the enabled hover branch
+and outside/no-matching-tag baseline completed according to verified source
+control flow; original runtime JSON remains uninspected. No cursor-arrival,
+AX trust value, missing tooltip, permission denial or underlying cause is
+invented. Later popover and OS-drag assertions were not reached, and passed-only
+distribution retention/upload were skipped.
+
+Artifact 13818227148 reports 45 uploaded files, 1,448,094 bytes and SHA256
+`550dd8f292b02c1d8a2c7b5728802ef31b694341a25bdd652e67585ee889e078`.
+Original ZIP/member bytes and screenshots remain unextracted/unviewed. This
+new result does not establish the earlier cea run's uninspected first failure.
+The [source-reviewed follow-up](../evidence/v1-appkit-f157c9b-tooltip-observation-source/README.md)
+at `f157c9bf207f8ceae890e299f9667b56ab78360d` adds failure-only reporting of
+the already-retained tooltip JSON, with exact original-byte/hash binding,
+strict unknown-value handling and a 16 KiB complete console-envelope cap.
+Native commands, gestures, deadlines, assertions, original evidence writes and
+passed-only distribution gates remain unchanged. Its actual PR merge is
+`6d6b913c771e49385e5a57c9737b66fbeb07a9a7`, matching full 2,048-leaf tree
+`ac12abeb27d91dcb978492d9aad187c4f198e3b5` and the verified ordered parents.
+[Native run 42938338972](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42938338972)
+was newly started at the source checkpoint; actual runtime outcomes are
+recorded separately. Source/V8 checks do not establish native execution.
+
+The aggregate-specific AppKit workflow is
+`c19589c71bf77b8145766ee9efe446b4cdce0142`, based on
+`98721a164949cac6238c009ec5d5602d21473308`, with canonical archive inputs
+preserved. The helper-specific workflow is distinct. The separate
+[3891 rendered-overlay failure](../evidence/v1-web-3891ee1-overlay-alias-failure/README.md)
+stopped at fixture bundling because the helper lacks the core overlay alias.
+The aggregate already has the exact one-line fix, and f157 now backports it
+to this helper. [Rendered-overlay run 42938339031](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42938339031)
+was newly started at the source checkpoint. Its result remains separate from
+the original failed run. This fixture issue does not identify the native tooltip cause.
+
 ### Windows: OS drag starts, rejected-drop result still failing
 
 [Windows at `988008c`](../evidence/v1-windows-988008c-drag-transition-failure/README.md)

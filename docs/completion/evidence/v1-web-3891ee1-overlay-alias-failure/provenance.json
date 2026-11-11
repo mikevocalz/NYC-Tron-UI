@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperHead": "3891ee1788e6722c922ef431c576f507c5591f60",
+  "actualCheckout": "8cf0e6fd70c9984c471560e432783e0881f0f63d",
+  "workflow": {
+    "runId": 42932762692,
+    "jobId": 130235313805,
+    "conclusion": "failure",
+    "failureStage": "browser fixture web-server bundling",
+    "browserAssertionsReached": false,
+    "artifactListEmpty": true
+  },
+  "failure": {
+    "message": "Could not resolve \"@nyc-tron/core/overlays\"",
+    "importer": "packages/ui/src/components/overlays/popover-position.ts"
+  },
+  "sourceLog": {
+    "path": "browser-job.log",
+    "characters": 38969,
+    "utf8Bytes": 41617,
+    "sha256": "40d6e98a8143fc0c7090d07798fa3c8d25477283be51fe7a3c5a40cbb7efda9b",
+    "gitBlob": "7cc778dae3bb1186df9da5bc5f2551a60fba1711",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "sourceCorrection": {
+    "path": "packages/expo-controls/tests/browser/server.mjs",
+    "oldGitBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+    "oldBytes": 4944,
+    "oldSha256": "1d824308e76e5521845845048042e343cacdd3774df24e01c0d725caedae4a82",
+    "existingFixedGitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+    "fixedBytes": 5021,
+    "fixedSha256": "c959c3cafca4f1ab7b62088fffb673b485e54035594f3d4ac3e57b7fa126a819",
+    "insertedBytes": 77,
+    "insertedLines": 1,
+    "exactPreimageRestoredByRemovingInsertion": true,
+    "targetPath": "packages/core/src/overlays.ts",
+    "targetGitBlob": "00421bd97f041ce69a7b7071a1ba7810d5e68a48",
+    "targetExistsInHelper": true,
+    "alreadyPresentInAggregate": "65ac627f843fdbc365d7badb5adb4a3e6061c308",
+    "correctedHelperRun": "recorded separately when available"
+  },
+  "limits": {
+    "renderedPassAt3891": false,
+    "nativeTooltipCauseEstablished": false,
+    "finalCombinedCandidatePassed": false,
+    "releaseCreated": false
+  }
+}

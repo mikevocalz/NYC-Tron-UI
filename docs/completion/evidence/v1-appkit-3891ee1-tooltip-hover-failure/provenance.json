@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "head": "3891ee1788e6722c922ef431c576f507c5591f60",
+    "tree": "335314d5b47567fa2db208096707a52d99b23a09",
+    "actualMerge": "8cf0e6fd70c9984c471560e432783e0881f0f63d",
+    "actualMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "3891ee1788e6722c922ef431c576f507c5591f60"
+    ],
+    "sameTreeVerified": true,
+    "fullTreeLeavesVerified": 2048
+  },
+  "workflow": {
+    "runId": 42932762727,
+    "sourceJobId": 130235314012,
+    "nativeJobId": 130235524253,
+    "source": "success",
+    "cleanConsumerPreparation": "success",
+    "installedApi": "success",
+    "foundationSocketpairProbe": "success",
+    "nativeCompilation": "success",
+    "nativeInteractionAcceptance": "failure",
+    "evidenceUpload": "success",
+    "testedDistributionRetention": "skipped",
+    "testedDistributionUpload": "skipped"
+  },
+  "failure": {
+    "message": "Timed out waiting for new visible native help-tag text after the posted pointer reaches the trigger",
+    "sourceLocation": "examples/macos-appkit/spark/verify-native.mjs:257:29",
+    "sourceGitBlob": "35414d7cd7e91e907698ea68538c7ec9de1913c2",
+    "requiredConjunction": [
+      "cursorInsideTrigger is true",
+      "pointerRunning is false",
+      "matching help-tag string with AXHelpTag role and nonzero tag/window frame"
+    ],
+    "failedConjunct": null,
+    "actualFinalCursor": null,
+    "actualFinalHelpTags": null,
+    "actualAccessibilityTrustedValue": null,
+    "originalTooltipJsonInspected": false
+  },
+  "sourceFlowInference": {
+    "basis": "The exact verified source order and the first thrown error location; original runtime JSON is not extracted.",
+    "earlierMenuAndTooltipPropertyAssertionsCompleted": true,
+    "booleanTypeAssertionsCompleted": true,
+    "postEventsAllowedBranchEntered": true,
+    "outsideAndNoMatchingHelpTagBaselineCompleted": true,
+    "laterPopoverAndDragChecksReached": false,
+    "actualPointerArrivalEstablished": false
+  },
+  "sourceLog": {
+    "path": "source-job.log",
+    "characters": 19381,
+    "utf8Bytes": 19421,
+    "sha256": "19d917ce6507d3a6e5ad9f0a35b537b931966a568436a7103369e082ac96a15c",
+    "gitBlob": "c70677af232875a0d38162e9a5df7ab7adb3337f",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "nativeLog": {
+    "path": "native-job.log",
+    "characters": 53154,
+    "utf8Bytes": 53338,
+    "sha256": "2d426308cff7b3151781a30ab18ed4b2d7cf226ec9292f9de91535ae624a3770",
+    "gitBlob": "ec9a85a217f26118d33ac59dc036ae16630fd5fe",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "derivedBuildSummary": {
+    "path": "build-result-log-summary.json",
+    "utf8Bytes": 318,
+    "sha256": "1b85e7cbc20c53e278f4f4842316744a919510d15df67ac2a723f0278561628c",
+    "gitBlob": "baf2da462d3207474bc7bd54dc79d38d7242625a",
+    "completeMarkerEnvelopes": 1,
+    "onlyTimestampAndLogLineEndingRemoved": true,
+    "newlineAdded": false,
+    "isOriginalBuildResultFile": false
+  },
+  "producerReportedCompilerTranscript": {
+    "filename": "build-console.log",
+    "bytes": 12329153,
+    "sha256": "bf800a11426fa2d749ecd29127fc72728e586704ebecb2d8c78dfca3554c78aa",
+    "complete": true,
+    "normalized": false,
+    "independentlyExtracted": false,
+    "independentlyRehashed": false
+  },
+  "producerReportedArtifact": {
+    "id": 13818227148,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 1448094,
+    "sha256": "550dd8f292b02c1d8a2c7b5728802ef31b694341a25bdd652e67585ee889e078",
+    "uploadReportedFiles": 45,
+    "originalBytesVerified": false,
+    "membersExtracted": false,
+    "screenshotsViewed": false
+  },
+  "limits": {
+    "actualTooltipFailureCauseEstablished": false,
+    "priorCeaFirstFailureEstablished": false,
+    "localExecutionEnvironmentAvailable": false,
+    "localFetchPerformed": false,
+    "fullNativeGatePassed": false,
+    "finalCombinedCandidatePassed": false,
+    "allEightPlatformsAccepted": false,
+    "ownerApprovedDistribution": false,
+    "releaseCreated": false,
+    "tagCreated": false
+  }
+}

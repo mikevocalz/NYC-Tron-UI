@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "currentSourceRevision": "0a44cc99e8d7e1932235a463d4b1f3d82047fe8c",
+  "actualLoadedPathFiles": [
+    {
+      "basename": "Microsoft.UI.Xaml.dll",
+      "bytes": 15083832,
+      "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+      "identityKind": "loaded-module-path-file",
+      "inMemoryImageBytesClaimed": false
+    },
+    {
+      "basename": "Microsoft.UI.Input.dll",
+      "bytes": 1701688,
+      "sha256": "c8cb8c10285c735ce94491352533bc7f4f0e183131dc6540d8184cd30b9ce975",
+      "identityKind": "loaded-module-path-file",
+      "inMemoryImageBytesClaimed": false
+    }
+  ],
+  "priorExactBinaryAndSourceReview": "../v1-windows-c3a52cf-elevated-drag-failure/upstream-source-review.json",
+  "sourceRevision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+  "primaryDocumentation": [
+    "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.uielement.startdragasync?view=windows-app-sdk-1.8",
+    "https://learn.microsoft.com/en-us/windows/win32/shell/samples-execinexplorer",
+    "https://learn.microsoft.com/en-us/windows/apps/distribute-through-store/how-to-transition-users-from-your-web-unpackaged-app-to-store-packaged-app#how-to-launch-the-store-application-from-your-web-unpackaged-app"
+  ],
+  "conclusion": "The actual app and exact existing shell are elevated at High integrity. The observed shell fails the supported unelevated activation precondition. No launcher change or security/token manipulation was attempted.",
+  "limits": [
+    "Automatic CanDrag-to-StartDragAsync source equivalence and the elevated support restriction do not prove the current timeout's exact mechanism.",
+    "No null asynchronous operation guard was observed.",
+    "Unknown same-user comparisons were deliberately skipped, not reported as unequal.",
+    "No claim is made about another unobserved interactive host."
+  ]
+}

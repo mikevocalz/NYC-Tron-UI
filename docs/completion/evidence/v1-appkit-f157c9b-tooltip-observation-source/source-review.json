@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperCommit": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+  "helperTree": "ac12abeb27d91dcb978492d9aad187c4f198e3b5",
+  "parentCommit": "3891ee1788e6722c922ef431c576f507c5591f60",
+  "sourceOnly": true,
+  "verifier": {
+    "path": "examples/macos-appkit/spark/verify-native.mjs",
+    "oldGitBlob": "35414d7cd7e91e907698ea68538c7ec9de1913c2",
+    "gitBlob": "deeedf41711c84dbcca0029104e5ea03e6b55a2c",
+    "utf8Bytes": 51641,
+    "sha256": "c040f762b84d36a16a95359353ddc6b87a2b8386fc42a5406a9280a48cfb5e75",
+    "insertedLines": 104,
+    "removedLines": 1,
+    "exactPreimageRestoredByRemovingThreeEdits": true
+  },
+  "existingAlias": {
+    "path": "packages/expo-controls/tests/browser/server.mjs",
+    "oldGitBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+    "gitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+    "insertedBytes": 77,
+    "insertedLines": 1,
+    "alreadyPresentInAggregate": true
+  },
+  "reporter": {
+    "inputFile": "tooltip-hover.json",
+    "readByteLimit": 1048577,
+    "fullOriginalByteLimit": 1048576,
+    "oversizedFileHasNoPartialHashClaim": true,
+    "consoleByteLimit": 16384,
+    "markersIncludedInConsoleByteLimit": true,
+    "inspectedTagLimit": 128,
+    "retainedTagLimit": 8,
+    "retainedWindowLimit": 12,
+    "retainedRolesPerWindow": 12,
+    "unknownBooleanIsNull": true,
+    "unknownCountIsNull": true,
+    "missingVersusObservedEmptyArraysDistinct": true,
+    "pointerRunningIsNotDeliveryAcknowledgment": true,
+    "sourceRevisionAndProcessIdBound": true,
+    "actualOriginalFileByteHashBound": true,
+    "originalJsonNeverRewritten": true,
+    "arbitraryTextClassPathAndErrorStringsExcluded": true,
+    "reportingFailuresSecondary": true
+  },
+  "verification": {
+    "independentFullBlobAndInverseReview": true,
+    "rootSyntheticSelectorChecks": 8,
+    "authorInMemoryIoAdapterChecks": true,
+    "addedJavaScriptBlockSyntaxPassed": true,
+    "localNodeFilesystemOrNativeExecution": false,
+    "pinnedNodeConsoleImplementation": {
+      "repository": "nodejs/node",
+      "ref": "v24.19.0",
+      "path": "lib/internal/console/constructor.js",
+      "gitBlob": "bb79678001ec66d27b1fb710c99d2a7778f8a034",
+      "sha256": "6cdad6113815cecbe8c914af86835499dbf2b3bbd617babec9e24af779c8aeaa"
+    },
+    "forgeIndependentSourceReviewPassed": true
+  },
+  "unchanged": {
+    "nativeApplicationAndDriver": true,
+    "nativeCommands": true,
+    "permissionHandling": true,
+    "gestureDeadlines": true,
+    "strictAssertions": true,
+    "originalEvidenceWrites": true,
+    "primaryErrorRethrow": true,
+    "passedOnlyDistributionGate": true
+  },
+  "nativeRuntimeAtSourcePublication": "pending",
+  "sourcePublicationAt": "2026-11-11 01:21:14 UTC",
+  "actualMerge": {
+    "sha": "6d6b913c771e49385e5a57c9737b66fbeb07a9a7",
+    "tree": "ac12abeb27d91dcb978492d9aad187c4f198e3b5",
+    "parents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "f157c9bf207f8ceae890e299f9667b56ab78360d"
+    ],
+    "fullTreeLeavesVerified": 2048
+  },
+  "workflowRunAtPublication": 42938338972,
+  "overlayRunAtPublication": 42938339031
+}

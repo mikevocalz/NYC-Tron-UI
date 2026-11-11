@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "head": "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5",
+    "tree": "3dec3aa2ef7312becf9dc02fdb72679b154c2bbc",
+    "actualMerge": "0578b0703260a1a55c588358ea1e0ec02c0075d6",
+    "actualMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5"
+    ],
+    "sameTreeVerified": true,
+    "fullTreeLeavesVerified": 2076
+  },
+  "workflow": {
+    "runId": 42933603735,
+    "sourceJobId": 130238102053,
+    "nativeJobId": 130238476477,
+    "source": "success",
+    "consumerPreparation": "success",
+    "powerShellParser": "failure",
+    "productionCSharpCompilation": "not-reached",
+    "environmentRegressionGroups": "not-reached",
+    "inputRegressionGroups": "not-reached",
+    "nativeShellIdentityTests": "not-reached",
+    "nativeCodeGeneration": "skipped",
+    "nativeLibraryCompilation": "skipped",
+    "consumerCompilation": "skipped",
+    "deployment": "skipped",
+    "uia": "skipped",
+    "testedDistributionRetention": "skipped",
+    "testedDistributionUpload": "skipped"
+  },
+  "failure": {
+    "message": "Diagnostic script failed Windows PowerShell parsing: tests\\native-drag-environment.test.ps1",
+    "diagnosticStage": "mandatory Windows PowerShell Desktop 5.1 x64 script parser",
+    "sourceReviewFinding": "ShellFixture does not close its outer observation hashtable before its first foreach statement.",
+    "sourceReviewFindingIndependentlyConfirmed": true,
+    "fullParserDiagnosticsExtracted": false,
+    "newShellObservationExists": false
+  },
+  "sourceLog": {
+    "path": "source-job.log",
+    "characters": 31700,
+    "utf8Bytes": 31858,
+    "sha256": "f76c3f9f0a4f321de4c19fdcb66ed1fafc06fcee54910e14e63afc33c8c07320",
+    "gitBlob": "5792465298106da23a7ee3bfbed016025ad674c7",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "nativeLog": {
+    "path": "native-job.log",
+    "characters": 47607,
+    "utf8Bytes": 47723,
+    "sha256": "fa51c957d2031bd969c51c2954c89e5d7f95d603c7c0ca9cea84ab18fcc2d227",
+    "gitBlob": "c4089b5eee96e6d9fa8753c473dfa6aebf69a0ca",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "producerReportedArtifact": {
+    "id": 13818085290,
+    "name": "winui-fabric-uia-smoke",
+    "bytes": 876,
+    "sha256": "6e5fd4d92a1c2b1af820c7c1c0a9856d2c21f0ee7e46986f68412b407468420b",
+    "uploadReportedFiles": 1,
+    "originalBytesVerified": false,
+    "membersExtracted": false
+  },
+  "correction": {
+    "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-environment.test.ps1",
+    "oldGitBlob": "2b8f37763e5acfe28de712abe45b01bc741ac4e3",
+    "gitBlob": "d3f4492c96f1b805048031ea2a96f607e844c8df",
+    "utf8Bytes": 24322,
+    "sha256": "ba5ca5d0523708b5f40a6f3f18a8d6fa027cd4df47856b0c2edf878c9f3b2164",
+    "insertedBytes": 4,
+    "insertedLines": 1,
+    "removedLines": 0,
+    "exactPreimageRestoredByRemovingInsertion": true,
+    "actualCorrectedParserResult": "recorded separately when available"
+  },
+  "limits": {
+    "newShellEligibilityEstablished": false,
+    "localExecutionEnvironmentAvailable": false,
+    "localFetchPerformed": false,
+    "fullNativeGatePassed": false,
+    "finalCombinedCandidatePassed": false,
+    "allEightPlatformsAccepted": false,
+    "ownerApprovedDistribution": false,
+    "releaseCreated": false,
+    "tagCreated": false
+  }
+}

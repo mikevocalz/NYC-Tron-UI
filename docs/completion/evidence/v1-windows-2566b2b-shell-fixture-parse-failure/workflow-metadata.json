@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "metadataSource": "GitHub connector normalized completed job and artifact responses",
+  "jobs": {
+    "jobs": [
+      {
+        "id": 130238102053,
+        "name": "Fabric codegen and source gates",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42933603735,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Validate actual XAML Fabric native bridge sources",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Install isolated RNW 0.85 dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Build peer-free shared contracts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Validate Windows-only TypeScript",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Build dist and check the release tarball",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Verify the isolated RNW public declaration snapshot",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Build canonical shared release packages with the root compiler",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Retain canonical shared archives for the native consumer",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23
+          }
+        ]
+      },
+      {
+        "id": 130238476477,
+        "name": "VS 2026 RNW 0.85 XAML Fabric native C++ compile",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 42933603735,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install native-codegen dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Build source distribution and validate lifecycle contracts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Verify the isolated RNW public declaration snapshot",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Download the canonical shared package archives",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Install the fresh consumer from canonical peers and the Fabric candidate",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Validate diagnostic scripts with the UIA PowerShell runtime",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 9
+          },
+          {
+            "name": "Generate native code from the installed package",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10
+          },
+          {
+            "name": "Generate official RNW application and connect native package",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11
+          },
+          {
+            "name": "Build installed native C++/WinRT Fabric package",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 12
+          },
+          {
+            "name": "Compile actual Windows consumer executable",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13
+          },
+          {
+            "name": "Deploy the packaged consumer the way run-windows does",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 14
+          },
+          {
+            "name": "UI Automation smoke test of the packaged consumer",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 15
+          },
+          {
+            "name": "Retain the exact package that passed native acceptance",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 16
+          },
+          {
+            "name": "Upload tested Windows distribution",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 17
+          },
+          {
+            "name": "Upload UI Automation screenshots",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 35
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 36
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 37
+          }
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "artifacts": [
+      {
+        "id": 13818085290,
+        "name": "winui-fabric-uia-smoke",
+        "size_in_bytes": 876,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13818085290",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13818085290/zip",
+        "expired": false,
+        "created_at": "2026-11-11T00:46:01Z",
+        "expires_at": "2027-02-09T00:43:38Z",
+        "updated_at": "2026-11-11T00:46:01Z",
+        "digest": "sha256:6e5fd4d92a1c2b1af820c7c1c0a9856d2c21f0ee7e46986f68412b407468420b",
+        "workflow_run": {
+          "id": 42933603735,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-windows-interactions-nov10",
+          "head_sha": "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5"
+        }
+      },
+      {
+        "id": 13817890786,
+        "name": "windows-fabric-shared-packages",
+        "size_in_bytes": 62822,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13817890786",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13817890786/zip",
+        "expired": false,
+        "created_at": "2026-11-11T00:44:28Z",
+        "expires_at": "2027-02-09T00:43:38Z",
+        "updated_at": "2026-11-11T00:44:28Z",
+        "digest": "sha256:1d00f03e30e7538529c7b3f2787388c86d54d877b7576e07e3ff0b0b438192de",
+        "workflow_run": {
+          "id": 42933603735,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-windows-interactions-nov10",
+          "head_sha": "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5"
+        }
+      }
+    ]
+  },
+  "actualMerge": {
+    "sha": "0578b0703260a1a55c588358ea1e0ec02c0075d6",
+    "node_id": "C_kwDOVjEyjdoAKDA1NzhiMDcwMzI2MGExYTU1YzU4ODM1OGVhMWUwZWMwMmMwMDc1ZDY",
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits/0578b0703260a1a55c588358ea1e0ec02c0075d6",
+    "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/commit/0578b0703260a1a55c588358ea1e0ec02c0075d6",
+    "author": {
+      "name": "Michael Allen",
+      "email": "mikefacesny@gmail.com",
+      "date": "2026-11-11T00:43:36Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-11-11T00:43:36Z"
+    },
+    "tree": {
+      "sha": "3dec3aa2ef7312becf9dc02fdb72679b154c2bbc",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/trees/3dec3aa2ef7312becf9dc02fdb72679b154c2bbc"
+    },
+    "message": "Merge 2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5 into 0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "parents": [
+      {
+        "sha": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits/0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/commit/0edd5f302e99877191ba9a412c5c060571a5f6c9"
+      },
+      {
+        "sha": "2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5",
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits/2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5",
+        "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/commit/2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5"
+      }
+    ],
+    "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq87o4CRC1aQ7uu5UhlAAAQrwQAHeDn62C1SSpv9j0PBx0u93j\nMpBjngsBibhKLYJBTeNUmuKpO15r8zbLCIjZUojQJMSDF+8OhcbREWqpbhLfPnXw\nQv4Dptj1Mc7Butv6baT+2qyAGuaLK4b3No4hzMYWm4a16o7aV5oKoSpov8oFcV/l\nHNzR2QDeTbQjVfSHSyqU71xz8vCRbmVumzFQN30Gg8XiISn3bhTSx/wQEtg+HE/U\nDKHsxLKAAH4FxnbMq3tRfl6bUkFqNpAo4nNbuua1IG6Z4Kv8hKZOh6fKoYUN2BYn\nSFbh3LOxrrGeSGjSNUMrBo2FunASFX2aOSLHkF6fOHJ4u8gjs1yUPK9zXsxPUlkI\nxz3L5CX4ESs5+U/7jdx5vkO9xo1NpNDNn1XfAbN1Y37gmOMFEGFmw9/JhbcD8H2o\nUhDQxvYklfcLiFWJ12SgsWji9SkL7uf5zvs5wGTpnjL5NGRvFjhZo4sgodm4tISm\nIGEgjIkCV4XiJcct8QpSBUWpJx7tLYC/XL9WkeaNQHN//xBJCeRpYeM9O95YQfoe\nHLt+6M8GtRdIicfnQbW3xoQX6yvXePgYvArlv3Wx6Azja4rO59MtKGu6D25rUeFJ\nO/31a5ZTTpVQvSX15iymWEX4AxMKelTQQ4q+LT7nG/m/v7jFBjMwTYq3a/dTGrIi\nn7ueK94aoIj+LYAVyysq\n=tMGn\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree 3dec3aa2ef7312becf9dc02fdb72679b154c2bbc\nparent 0edd5f302e99877191ba9a412c5c060571a5f6c9\nparent 2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5\nauthor Michael Allen <mikefacesny@gmail.com> 1794357816 +0000\ncommitter GitHub <noreply@github.com> 1794357816 +0000\n\nMerge 2566b2b2d546a975d32aebc2548cb5ff1cbdd1c5 into 0edd5f302e99877191ba9a412c5c060571a5f6c9\n",
+      "verified_at": "2026-11-11T00:43:37Z"
+    }
+  }
+}
