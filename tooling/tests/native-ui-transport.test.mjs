@@ -28,6 +28,19 @@ const android = () => ({ platform: "android", flow: "settings", appId, deviceId,
   commands: [command("launchAppCommand", { appId, stopApp: false }, "FAILED", { sequenceNumber: 2,
     error: { message: "Command failed (host:transport:emulator-5554): device offline" } })] });
 
+// Editor's first tab tap from release run 43046836104 (main 11c1ce8), same
+// shortening as above. The tap ran 15:43:19.539 to 15:43:24.913 UTC.
+const editorCommands = () => [launch(), command("tapOnElement", { selector: { textRegex: "Editor", optional: false }, longPress: false }, "COMPLETED",
+  { timestamp: 1794411799539, duration: 5374, sequenceNumber: 3 }), visible("Quiet forms", "FAILED",
+  { timestamp: 1794411804913, sequenceNumber: 4, error: { message: 'Assertion is false: "Quiet forms" is visible' } })];
+const editorLog = [
+  "2026-11-11 15:43:24.241869+0000  localhost backboardd[21229]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x1013418000008 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0",
+  "2026-11-11 15:43:24.246184+0000  localhost backboardd[21229]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x1013418000008",
+  "2026-11-11 15:43:24.478747+0000  localhost backboardd[21229]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10ec8f560; touchScreen; builtin; senderID: 0x1013418000008; contacts: contacts: [pathIndex: 2; touchIdentifier: 5; touching; locked; destinations: (sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground)]>",
+  "2026-11-11 15:43:24.478812+0000  localhost backboardd[21229]: [com.apple.BackBoard:TouchEvents] canceling paths contacts: [pathIndex: 2; touchIdentifier: 5; touching; locked; destinations: (sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground)]",
+].join("\n");
+const editor = () => ({ platform: "ios", flow: "editor", appId, deviceId: "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC", commands: editorCommands(), simulatorLog: editorLog });
+
 test("Android recovery requires the exact initial launch transport failure before any app assertion", () => {
   assert.equal(classify(android()).kind, "android-initial-launch-device-offline");
   for (const change of [
@@ -78,6 +91,42 @@ test("iOS never retries arbitrary assertions, edits, later taps or malformed tim
   ]) { const input = ios(); change(input); assert.equal(classify(input), null); }
 });
 
+test("iOS recovery binds the first Editor tap to the same Recap/cancel evidence", () => {
+  const evidence = classify(editor());
+  assert.equal(evidence.kind, "ios-initial-navigation-recap-cancelled");
+  assert.equal(evidence.flow, "editor");
+  assert.equal(evidence.tap.text, "Editor");
+  assert.equal(evidence.senderId, "0x1013418000008");
+  assert.equal(evidence.pathIndex, 2);
+  for (const line of Object.values(evidence.evidence)) assert.ok(line.at >= evidence.tap.start && line.at <= evidence.tap.end);
+});
+
+test("Editor recovery rejects the same near misses and anything past its first tab tap", () => {
+  const mutations = [
+    text => text.split("\n").filter(line => !line.includes("digitizer did disappear")).join("\n"),
+    text => text.replace("unknown senderID: 0x1013418000008", "unknown senderID: 0x222"),
+    text => text.replaceAll("sceneID:" + appId + "-default", "sceneID:com.other.app-default"),
+    text => text.replace("contacts: contacts: [pathIndex: 2;", "contacts: contacts: []; ignored: [pathIndex: 2;"),
+    text => text.replace("canceling paths contacts: [pathIndex: 2;", "canceling paths contacts: [pathIndex: 3;"),
+    text => text.replace("transport:Recap", "transport:Other"),
+    text => text.replaceAll("15:43:24.", "15:43:25."),
+  ];
+  for (const mutate of mutations) assert.equal(classify({ ...editor(), simulatorLog: mutate(editorLog) }), null);
+  for (const change of [
+    input => { input.commands[1].command.tapOnElement.selector.textRegex = "Settings"; },
+    input => { input.commands[2] = visible("Workspace preferences", "FAILED", input.commands[2].metadata); },
+    input => { input.commands[2] = visible("Cover headline", "FAILED", input.commands[2].metadata); },
+    input => { input.commands.splice(2, 0, visible("Quiet forms")); },
+    input => { input.commands.unshift(visible("Library")); },
+    input => { input.commands[1].command.tapOnElement.longPress = true; },
+    input => { input.commands[2].metadata.timestamp -= 2; },
+    input => { input.flow = "settings"; },
+    input => { input.platform = "android"; },
+  ]) { const input = editor(); change(input); assert.equal(classify(input), null); }
+  // A Settings failure never qualifies under the Editor rules.
+  assert.equal(classify({ ...ios(), flow: "editor" }), null);
+});
+
 test("one eligible recovery retains the failure before a fresh successful attempt", async () => {
   const order = [], failure = new Error("original transport"), eligibility = classify(android());
   const result = await retry({ attempt: number => { order.push("attempt " + number); if (!number) throw failure; return "full assertions passed"; },
@@ -118,4 +167,19 @@ test("retention preserves the failed JUnit, native logs and screenshots byte for
   writeFileSync(join(output, "settings", "report.xml"), '<testcase status="SUCCESS"/>');
   assert.match(readFileSync(join(output, retained.retainedDirectory, "report.xml"), "utf8"), /status="ERROR"/);
   assert.throws(() => retain({ output }), /cannot be replaced/);
+});
+
+test("Editor retention uses its own directory and receipt and cannot replace Settings evidence", t => {
+  const output = mkdtempSync(join(tmpdir(), "native-ui-recovery-"));
+  t.after(() => rmSync(output, { recursive: true, force: true }));
+  mkdirSync(join(output, "editor", "artifacts"), { recursive: true });
+  writeFileSync(join(output, "editor", "report.xml"), '<testcase status="ERROR"/>');
+  writeFileSync(join(output, "transport-recovery.json"), "{}\n");
+  const retained = retain({ output, flow: "editor", eligibility: classify(editor()), error: new Error("original"),
+    sourceCommit: "2".repeat(40), nativeArtifact: { kind: "ios-app", sha256: "1".repeat(64) } });
+  assert.equal(retained.file, "editor-transport-recovery.json");
+  assert.equal(retained.retainedDirectory, "editor-initial-transport-failure");
+  assert.equal(JSON.parse(readFileSync(join(output, retained.file), "utf8")).flow, "editor");
+  assert.equal(readFileSync(join(output, "transport-recovery.json"), "utf8"), "{}\n");
+  assert.throws(() => retain({ output, flow: "pointer" }), /No initial UI transport recovery/);
 });

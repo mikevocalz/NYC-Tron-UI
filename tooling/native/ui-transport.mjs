@@ -2,8 +2,9 @@ import { createHash } from "node:crypto";
 import { constants, copyFileSync, existsSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
-// Recovery is restricted to the first Settings navigation, before any edit or
-// save. Maestro's completed tap is insufficient evidence of delivered input:
+// Recovery is restricted to the first tab navigation of the Settings and
+// Editor flows, before any edit or save. Maestro's completed tap is
+// insufficient evidence of delivered input:
 // https://github.com/mobile-dev-inc/Maestro/issues/3686
 // https://github.com/mobile-dev-inc/Maestro/issues/3685
 const escape = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -28,9 +29,18 @@ function timedLines(log, start, end) {
   });
 }
 
+// Each recoverable iOS flow: the exact commands that may precede its first
+// tab tap, that tap's text, and the assertion that only the destination can
+// satisfy. Nothing after that assertion (edits, saves, scrolls) is covered.
+const iosInitialNavigation = {
+  settings: { before: ["launch", "Library"], tap: "Settings", destination: "Workspace preferences" },
+  editor: { before: ["launch"], tap: "Editor", destination: "Quiet forms" },
+};
+export const recoverableUiFlows = Object.freeze(Object.keys(iosInitialNavigation));
+
 /** Return an evidence-bound initial transport failure, or null; never infer it from a failed assertion alone. */
 export function classifyInitialUiTransportFailure({ platform, flow, commands, simulatorLog, appId, deviceId }) {
-  if (flow !== "settings" || !Array.isArray(commands) || !commands.length ||
+  if (!Object.hasOwn(iosInitialNavigation, flow) || !Array.isArray(commands) || !commands.length ||
       !/^[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z0-9_]+)+$/.test(appId ?? "")) return null;
   const execution = [];
   for (const entry of commands) {
@@ -38,20 +48,22 @@ export function classifyInitialUiTransportFailure({ platform, flow, commands, si
     execution.push(entry);
   }
   if (platform === "android") {
-    if (execution.length !== 1 || !isLaunch(execution[0], appId, "FAILED") ||
+    if (flow !== "settings" || execution.length !== 1 || !isLaunch(execution[0], appId, "FAILED") ||
         !/^emulator-\d+$/.test(deviceId ?? "")) return null;
     const expected = "Command failed (host:transport:" + deviceId + "): device offline";
     if (execution[0].metadata.error?.message !== expected) return null;
     return { kind: "android-initial-launch-device-offline", appId, deviceId,
       failedSequence: execution[0].metadata.sequenceNumber, error: expected };
   }
-  if (platform !== "ios" || execution.length !== 4) return null;
-  const [launch, library, tap, assertion] = execution;
-  if (!isLaunch(launch, appId, "COMPLETED") || !isVisible(library, "Library", "COMPLETED") ||
-      !commandIs(tap, "tapOnElement", "COMPLETED") || !isText(tap.command.tapOnElement.selector, "Settings") ||
+  const spec = iosInitialNavigation[flow];
+  if (platform !== "ios" || execution.length !== spec.before.length + 2) return null;
+  const before = execution.slice(0, spec.before.length), [tap, assertion] = execution.slice(spec.before.length);
+  if (!spec.before.every((step, index) => step === "launch" ? isLaunch(before[index], appId, "COMPLETED") :
+        isVisible(before[index], step, "COMPLETED")) ||
+      !commandIs(tap, "tapOnElement", "COMPLETED") || !isText(tap.command.tapOnElement.selector, spec.tap) ||
       tap.command.tapOnElement.longPress || tap.command.tapOnElement.repeat ||
-      !isVisible(assertion, "Workspace preferences", "FAILED") ||
-      assertion.metadata.error?.message !== 'Assertion is false: "Workspace preferences" is visible') return null;
+      !isVisible(assertion, spec.destination, "FAILED") ||
+      assertion.metadata.error?.message !== 'Assertion is false: "' + spec.destination + '" is visible') return null;
   const start = tap.metadata.timestamp, duration = tap.metadata.duration;
   if (!Number.isSafeInteger(start) || !Number.isSafeInteger(duration) || duration <= 0 || duration > 60000 ||
       !Number.isSafeInteger(assertion.metadata.timestamp) || assertion.metadata.timestamp < start + duration) return null;
@@ -77,7 +89,7 @@ export function classifyInitialUiTransportFailure({ platform, flow, commands, si
   // Multiple possible contacts cannot prove which delivered command failed.
   if (candidates.length !== 1) return null;
   return { kind: "ios-initial-navigation-recap-cancelled", appId, deviceId,
-    tap: { text: "Settings", start, end, sequence: tap.metadata.sequenceNumber },
+    flow, tap: { text: spec.tap, start, end, sequence: tap.metadata.sequenceNumber },
     failedSequence: assertion.metadata.sequenceNumber, ...candidates[0],
     upstreamIssue: "https://github.com/mobile-dev-inc/Maestro/issues/3686" };
 }
@@ -94,9 +106,12 @@ export async function withInitialUiTransportRecovery({ attempt, classify, recove
 }
 
 /** Move, never overwrite, every original driver artifact before a fresh attempt. */
-export function retainInitialUiTransportFailure({ output, eligibility, error, sourceCommit, nativeArtifact }) {
-  const initial = join(output, "settings"), retained = join(output, "settings-initial-transport-failure");
-  const receipt = join(output, "transport-recovery.json"), originalLog = join(output, "settings-maestro.log");
+export function retainInitialUiTransportFailure({ output, flow = "settings", eligibility, error, sourceCommit, nativeArtifact }) {
+  if (!Object.hasOwn(iosInitialNavigation, flow)) throw new Error("No initial UI transport recovery exists for flow " + flow);
+  // Settings keeps its original receipt name; other flows get their own so neither can replace the other.
+  const initial = join(output, flow), retained = join(output, flow + "-initial-transport-failure");
+  const receipt = join(output, flow === "settings" ? "transport-recovery.json" : flow + "-transport-recovery.json");
+  const originalLog = join(output, flow + "-maestro.log");
   if (!existsSync(initial) || existsSync(retained) || existsSync(receipt)) throw new Error("Initial UI transport evidence cannot be replaced");
   if (["maestro-command.log", "commands-before-recovery.jsonl", "runner-failure.txt"].some(name => existsSync(join(initial, name))))
     throw new Error("Initial UI transport evidence conflicts with retained runner metadata");
@@ -117,7 +132,7 @@ export function retainInitialUiTransportFailure({ output, eligibility, error, so
   }
   const failure = join(retained, "runner-failure.txt");
   writeFileSync(failure, String(error?.stack ?? error) + "\n", { flag: "wx" });
-  const record = { schema: 1, status: "eligible", sourceCommit, nativeArtifact, eligibility, originals,
+  const record = { schema: 1, status: "eligible", flow, sourceCommit, nativeArtifact, eligibility, originals,
     runnerFailure: { file: path(failure), sha256: digest(failure) } };
   writeFileSync(receipt, JSON.stringify(record, null, 2) + "\n", { flag: "wx" });
   return { file: path(receipt), sha256: digest(receipt), kind: eligibility.kind, retainedDirectory: path(retained) };
