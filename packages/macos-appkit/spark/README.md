@@ -288,14 +288,18 @@ The patch changes neither distribution archives nor ordinary Spark consumers;
 it preserves authentication, one-session behavior, deadlines and every native
 interaction assertion. See `tooling/macos-appkit/TRANSPORT_DIAGNOSTICS.md` in the
 repository for the exact provenance and probe boundary.
-Its explicit `tron.window` show command enables regular AppKit activation and
-requests foreground presentation through `NSWorkspace.openApplication` for the
-exact existing test bundle. The returned process must be the already launched
-acceptance process. The fixture then requires observed visible, key and active
-owner-window state, including the frontmost process identity; a successful
-activation request alone cannot pass. Spark's stock capture-only driver
-otherwise prohibits activation. Activation uses public AppKit APIs and grants
-no input-posting permission.
+Its explicit `tron.window` show command uses `NSWorkspace.openApplication` for
+initial activation of the exact existing test bundle, enabling regular AppKit
+activation and verifying the returned process and resolved bundle identity.
+After that verification, a subsequent command that observes the same process
+already Regular, active and frontmost selects its owned window directly with
+`NSWindow.makeKeyAndOrderFront`. If those conditions do not hold, it retains the
+Workspace activation path. The response identifies the path actually used;
+initial startup still requires Workspace activation. Every path retains the
+observed visible, key and active owner-window checks and frontmost process
+identity; an activation or selection request alone cannot pass. Spark's stock
+capture-only driver otherwise prohibits activation. These operations use public
+AppKit APIs and grant no input-posting permission.
 Driver target/action and protocol evidence does not prove actual pointer input;
 the separate CGEvent result must be inspected for that boundary. Even a passed
 posted-event session does not prove physical mouse hardware, human gestures,

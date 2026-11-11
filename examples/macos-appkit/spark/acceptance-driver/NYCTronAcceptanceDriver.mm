@@ -198,6 +198,8 @@ static void TraceContextMenu(NSString *phase, NSUInteger generation) {
     (unsigned long)generation, (unsigned long)TrackedContextMenuGeneration, (unsigned long)EndedContextMenuGeneration);
 }
 static NSUInteger ActivationSequence;
+static pid_t WorkspaceVerifiedProcessId;
+static NSURL *WorkspaceVerifiedBundleURL;
 static std::atomic<unsigned int> ActivationTraceEvents{0};
 static void TraceActivation(NSString *phase, NSUInteger operation, NSDictionary *(^details)(void)) {
   if (ActivationTraceEvents.fetch_add(1) >= 128) return;
@@ -1028,6 +1030,34 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       else if ([action isEqual:@"show"]) {
         NSUInteger operation = ++ActivationSequence;
         TraceActivation(@"policy-entered", operation, ^{ return ActivationWindowState(window); });
+        // A window switch within the verified foreground process does not need
+        // another bundle reopen, whose host policy can select the main window.
+        // The initial and inactive paths still use Workspace identity checks.
+        if (WorkspaceVerifiedProcessId > 0 && NSApp.activationPolicy == NSApplicationActivationPolicyRegular && NSApp.active) {
+          pid_t processId = NSProcessInfo.processInfo.processIdentifier;
+          NSURL *bundleURL = NSBundle.mainBundle.bundleURL.URLByResolvingSymlinksInPath;
+          BOOL sameProcess = WorkspaceVerifiedProcessId == processId;
+          BOOL sameBundle = WorkspaceVerifiedBundleURL && [WorkspaceVerifiedBundleURL isEqual:bundleURL];
+          BOOL frontmost = sameProcess && sameBundle && NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier == processId;
+          if (frontmost) {
+            TraceActivation(@"policy-returned", operation, ^{ return @{ @"accepted": @YES, @"state": ActivationWindowState(window) }; });
+            TraceActivation(@"identity-checked", operation, ^{ return @{ @"sameProcess": @(sameProcess), @"sameBundle": @(sameBundle) }; });
+            if (window.miniaturized) {
+              TraceActivation(@"deminiaturize-entered", operation, ^{ return ActivationWindowState(window); });
+              [window deminiaturize:nil];
+              TraceActivation(@"deminiaturize-returned", operation, ^{ return ActivationWindowState(window); });
+            }
+            TraceActivation(@"order-front-entered", operation, ^{ return ActivationWindowState(window); });
+            [window makeKeyAndOrderFront:nil];
+            TraceActivation(@"order-front-returned", operation, nil);
+            NSDictionary *result = @{ @"ok": @YES, @"activationPath": @"NSWindow.makeKeyAndOrderFront", @"priorWorkspaceIdentityVerified": @YES,
+              @"processId": @(processId), @"activationPolicy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active), @"key": @(window.keyWindow), @"visible": @(window.visible) };
+            TraceActivation(@"reply-prepared", operation, ^{ return @{ @"ok": result[@"ok"], @"policy": result[@"activationPolicy"],
+              @"applicationActive": result[@"applicationActive"], @"key": result[@"key"], @"visible": result[@"visible"] }; });
+            reply(result);
+            return;
+          }
+        }
         // A second show finds the policy already Regular, and AppKit returns NO
         // for that no-op (run 42985584907, operation 2: policy 0, accepted false).
         // The requirement is the resulting policy, so check that.
@@ -1081,6 +1111,8 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
             if (!sameProcess || !sameBundle) {
               reply(Failure(@"Workspace activation did not return the existing acceptance process and bundle")); return;
             }
+            WorkspaceVerifiedProcessId = processId;
+            WorkspaceVerifiedBundleURL = [bundleURL.URLByResolvingSymlinksInPath copy];
             if (window.miniaturized) {
               TraceActivation(@"deminiaturize-entered", operation, ^{ return ActivationWindowState(window); });
               [window deminiaturize:nil];

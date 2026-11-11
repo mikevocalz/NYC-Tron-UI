@@ -1091,8 +1091,10 @@ const inspect = (testID, window = 'main') => driver.request('tron.inspect', { wi
 async function show(window = 'main', observeStartupRequest = false) {
   const response = driver.request('tron.window', { window, action: 'show' });
   const request = await (observeStartupRequest ? observeInitialWindowRequest(response) : response);
-  assert.equal(request.activationPath, 'NSWorkspace.openApplication');
-  assert.equal(request.processId, child.pid, 'Workspace activation must retain the launched acceptance process');
+  if (observeStartupRequest) assert.equal(request.activationPath, 'NSWorkspace.openApplication');
+  else assert.ok(request.activationPath === 'NSWorkspace.openApplication' || request.activationPath === 'NSWindow.makeKeyAndOrderFront', 'Expected a supported native owner-selection path');
+  if (request.activationPath === 'NSWindow.makeKeyAndOrderFront') assert.equal(request.priorWorkspaceIdentityVerified, true, 'Direct owner selection requires the prior verified Workspace identity');
+  assert.equal(request.processId, child.pid, 'Window selection must retain the launched acceptance process');
   const observation = createShowObservation(window, child.pid);
   try {
     return await waitFor(async () => {
