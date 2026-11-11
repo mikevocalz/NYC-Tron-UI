@@ -146,8 +146,14 @@ using namespace facebook::react;
   [super viewDidMoveToWindow];
   if (_owner != self.window) {
     [self closeSilently];
-    [NSNotificationCenter.defaultCenter removeObserver:self];
-    [self observePopoverNotifications];
+    // Remove only the observations of the previous owner. A blanket
+    // removeObserver:self also strips the notifications NSPopover registered
+    // for its delegate, so popoverWillClose:/popoverDidClose: never arrived.
+    if (_owner) {
+      for (NSNotificationName name in @[NSWindowDidResizeNotification, NSWindowDidMoveNotification, NSWindowDidBecomeKeyNotification, NSWindowDidMiniaturizeNotification, NSWindowDidDeminiaturizeNotification, NSWindowDidChangeOcclusionStateNotification, NSWindowWillCloseNotification]) {
+        [NSNotificationCenter.defaultCenter removeObserver:self name:name object:_owner];
+      }
+    }
     _owner = self.window;
     if (_owner) {
       for (NSNotificationName name in @[NSWindowDidResizeNotification, NSWindowDidMoveNotification, NSWindowDidBecomeKeyNotification, NSWindowDidMiniaturizeNotification, NSWindowDidDeminiaturizeNotification, NSWindowDidChangeOcclusionStateNotification]) {
@@ -234,7 +240,11 @@ using namespace facebook::react;
 }
 - (void)prepareForRecycle {
   ++_generation; _visible = NO; [self closeSilently];
-  [NSNotificationCenter.defaultCenter removeObserver:self];
+  if (_owner) {
+    for (NSNotificationName name in @[NSWindowDidResizeNotification, NSWindowDidMoveNotification, NSWindowDidBecomeKeyNotification, NSWindowDidMiniaturizeNotification, NSWindowDidDeminiaturizeNotification, NSWindowDidChangeOcclusionStateNotification, NSWindowWillCloseNotification]) {
+      [NSNotificationCenter.defaultCenter removeObserver:self name:name object:_owner];
+    }
+  }
   _owner = nil; _opener = nil; _scopeToken = nil; _presentationToken = nil; _presentedToken = nil; _dismissedToken = nil; _rejectedPresentationToken = nil;
   _state.reset(); [_content setBoundsOrigin:NSZeroPoint];
   [super prepareForRecycle];
