@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import { createHash, randomBytes } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync, appendFileSync, readdirSync, lstatSync, readlinkSync, copyFileSync, openSync, closeSync, readSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync, appendFileSync, readdirSync, lstatSync, readlinkSync, copyFileSync, openSync, closeSync, readSync, fstatSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as pause } from 'node:timers/promises';
@@ -201,6 +201,187 @@ function reportTooltipFailure() {
     // secondary to the original failure and never modifies retained JSON bytes.
     if (Buffer.byteLength(message, 'utf8') <= logByteLimit) console.info(message.slice(0, -1));
   } catch {}
+}
+
+function startupProject(kind, value) {
+  const object = x => x !== null && typeof x === 'object' && !Array.isArray(x);
+  if (!object(value)) return null;
+  const bool = x => typeof x === 'boolean' ? x : null;
+  const integer = x => Number.isSafeInteger(x) && x >= 0 ? x : null;
+  const number = x => Number.isFinite(x) && x >= 0 && x <= Number.MAX_SAFE_INTEGER ? x : null;
+  const time = x => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(x) && Number.isFinite(Date.parse(x)) && new Date(x).toISOString() === x ? x : null;
+  const commands = ['ping', 'waitFor', 'navigate', 'openFile', 'setAppAppearance', 'capture', 'quit', 'tron.inspect', 'tron.control', 'tron.window', 'tron.windows', 'tron.popover', 'tron.responder', 'tron.menu', 'tron.context-menu', 'tron.drag-protocol', 'tron.pointer', 'tron.tooltip', 'unrecognized-command'];
+  const phases = {
+    activation: ['policy-entered', 'policy-returned', 'workspace-request-entered', 'workspace-request-returned', 'workspace-completion-received', 'workspace-main-continuation', 'workspace-rejected', 'identity-checked', 'deminiaturize-entered', 'deminiaturize-returned', 'order-front-entered', 'order-front-returned', 'reply-prepared', 'trace-encoding-failed', 'trace-encoding-threw'],
+    transport: ['request-received', 'main-dispatched', 'main-replied', 'serialization-failed', 'failure-serialization-failed', 'serialized', 'send-buffer-failed', 'send-failed', 'send-completed', 'trace-bound-reached', 'trace-encoding-failed', 'trace-encoding-threw'],
+    commands: ['socket-connecting', 'socket-connected', 'authentication-started', 'authentication-response', 'authentication-failed', 'request-started', 'request-failed', 'response'],
+  };
+  if (!phases[kind]?.includes(value.phase)) return null;
+  if (kind === 'commands') {
+    const request = object(value.request) ? value.request : {}, response = object(value.response) ? value.response : {};
+    return { phase: value.phase, at: time(value.at), command: commands.includes(request.command) ? request.command : null,
+      requestId: integer(request.id), responseId: integer(response.id),
+      ok: bool(value.phase === 'authentication-response' ? value.ok : response.ok), protocol: integer(value.protocol) };
+  }
+  const details = object(value.details) ? value.details : {};
+  const result = { phase: value.phase, atEpochSeconds: number(value.at), mainThread: bool(value.mainThread) };
+  if (kind === 'transport') {
+    result.sequence = integer(value.sequence); result.command = commands.includes(value.command) ? value.command : null;
+    result.details = {};
+    for (const key of ['parsed', 'dictionary', 'nilResponse', 'validJSONObject', 'hasError', 'threwException', 'replacedWithFailure']) result.details[key] = bool(details[key]);
+    for (const key of ['bytes', 'errno']) result.details[key] = integer(details[key]);
+    result.details.errorCode = Number.isSafeInteger(details.errorCode) ? details.errorCode : null;
+  } else {
+    result.operation = integer(value.operation); result.details = {};
+    for (const key of ['accepted', 'hasApplication', 'hasError', 'sameProcess', 'sameBundle', 'ok']) result.details[key] = bool(details[key]);
+    const state = object(details.state) ? details.state : details;
+    result.state = { policy: [0, 1, 2].includes(state.policy) ? state.policy : null };
+    for (const key of ['applicationActive', 'visible', 'key', 'miniaturized', 'canBecomeKey']) result.state[key] = bool(state[key]);
+  }
+  return result;
+}
+function startupStream(kind, bytes, ownedPid, completeAtRead) {
+  const result = { status: bytes ? 'projected' : 'unavailable', coverage: kind === 'commands' ? 'bounded-command-file-read' : 'retained-live-log-prefix',
+    completeAtRead: completeAtRead === true, finalAppLogClaim: false, lineByteLimit: 8192, lineScanLimit: 4096,
+    scannedLines: 0, unscannedLines: 0, partialTrailingLine: false, ignoredLines: 0, oversizedLines: 0,
+    malformedRecords: 0, pidMismatchRecords: 0, unsupportedRecords: 0, matchedRecords: 0, selectedRecords: 0, omittedRecords: 0, outputOmittedRecords: 0,
+    selection: 'first-16-and-last-16-with-oldest-removal-if-output-limit', records: [] };
+  if (!bytes) return result;
+  const lines = bytes.toString('utf8').split('\n');
+  result.partialTrailingLine = lines.at(-1) !== ''; lines.pop();
+  result.unscannedLines = Math.max(0, lines.length - result.lineScanLimit);
+  const first = [], last = [];
+  for (const [index, raw] of lines.slice(0, result.lineScanLimit).entries()) {
+    result.scannedLines++;
+    const line = raw.endsWith('\r') ? raw.slice(0, -1) : raw;
+    if (Buffer.byteLength(line, 'utf8') > result.lineByteLimit) { result.oversizedLines++; continue; }
+    let text = line;
+    if (kind !== 'commands') {
+      const match = line.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{1,9})? [^\r\n\[\]]{1,128}\[(\d{1,10}):\d{1,20}\] (NYCTronActivation|NYCTronDriverTransport) (.*)$/);
+      const prefix = kind === 'activation' ? 'NYCTronActivation' : 'NYCTronDriverTransport';
+      if (!match || match[2] !== prefix) { result.ignoredLines++; continue; }
+      if (!Number.isSafeInteger(ownedPid) || ownedPid <= 0 || Number(match[1]) !== ownedPid) { result.pidMismatchRecords++; continue; }
+      text = match[3];
+    }
+    let value;
+    try { value = ['trace-encoding-failed', 'trace-encoding-threw'].includes(text) ? { phase: text } : JSON.parse(text); }
+    catch { result.malformedRecords++; continue; }
+    const selected = startupProject(kind, value);
+    if (!selected) { result.unsupportedRecords++; continue; }
+    const record = { line: index + 1, ...selected }; result.matchedRecords++;
+    if (first.length < 16) first.push(record);
+    else { last.push(record); if (last.length > 16) last.shift(); }
+  }
+  result.records = [...first, ...last]; result.selectedRecords = result.records.length;
+  result.omittedRecords = result.matchedRecords - result.selectedRecords;
+  return result;
+}
+function startupProcess(value, ownedPid) {
+  const object = x => x !== null && typeof x === 'object' && !Array.isArray(x);
+  const integer = x => Number.isSafeInteger(x) && x >= 0 ? x : null;
+  const time = x => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(x) && Number.isFinite(Date.parse(x)) && new Date(x).toISOString() === x ? x : null;
+  if (!object(value)) return { status: 'unavailable' };
+  const processId = integer(value.processId);
+  if (!Number.isSafeInteger(ownedPid) || ownedPid <= 0 || processId !== ownedPid) return { status: 'pid-mismatch', processId };
+  const signals = ['SIGABRT', 'SIGALRM', 'SIGBUS', 'SIGFPE', 'SIGHUP', 'SIGILL', 'SIGINT', 'SIGKILL', 'SIGPIPE', 'SIGQUIT', 'SIGSEGV', 'SIGTERM', 'SIGTRAP', 'SIGUSR1', 'SIGUSR2', 'SIGXCPU', 'SIGXFSZ'];
+  const state = (item, signalKey = 'signal') => object(item) ? { observedAt: time(item.observedAt),
+    exitCode: integer(item.exitCode), exitCodeAvailable: Object.hasOwn(item, 'exitCode') && (item.exitCode === null || integer(item.exitCode) !== null),
+    signal: signals.includes(item[signalKey]) ? item[signalKey] : null,
+    signalAvailable: Object.hasOwn(item, signalKey) && (item[signalKey] === null || signals.includes(item[signalKey])) } : null;
+  const sample = object(value.sample) ? value.sample : null;
+  return { status: 'projected', processId, ...state(value, 'signalCode'), beforeSample: state(value.beforeSample), afterSample: state(value.afterSample),
+    sample: sample ? { ...state(sample), durationSeconds: integer(sample.durationSeconds), intervalMilliseconds: integer(sample.intervalMilliseconds),
+      threadGroups: integer(sample.threadGroups), hasThreadStacks: typeof sample.hasThreadStacks === 'boolean' ? sample.hasThreadStacks : null,
+      file: sample.file === 'native-process-sample.txt' ? sample.file : null,
+      sha256: typeof sample.sha256 === 'string' && /^[a-f0-9]{64}$/.test(sample.sha256) ? sample.sha256 : null,
+      digestScope: 'producer-recorded-sample-file-not-reread', stacksDoNotEstablishHealth: true } : null };
+}
+function readStartupInput(filename, live = false) {
+  const cap = live ? 1024 * 1024 : 256 * 1024;
+  const info = { filename, status: 'unavailable', readByteLimit: cap + (live ? 0 : 1), readBytes: 0,
+    sourceLive: live, sourceBytesBefore: null, sourceBytesAfter: null, sameFileIdentity: null, changedDuringRead: null,
+    completeAtRead: false, completeOriginalFile: false, originalSha256: null, truncated: null, laterAppendsPossible: live, unreadBytesObserved: null, snapshot: null };
+  let fd, bytes, before, after, current, eof = false, failed = false, stage = 'open';
+  try {
+    if (!['app.log', 'commands.jsonl', 'native-process-failure.json'].includes(filename) || live !== (filename === 'app.log')) throw new Error('Unexpected startup input');
+    const path = join(output, filename);
+    if (!lstatSync(path).isFile()) throw new Error('Startup input is not a regular file');
+    fd = openSync(path, 'r'); before = fstatSync(fd);
+    if (!before.isFile() || !Number.isSafeInteger(before.size) || before.size < 0) throw new Error('Invalid startup input size');
+    info.sourceBytesBefore = before.size;
+    const maximum = live ? Math.min(cap, before.size) : cap + 1, buffer = Buffer.alloc(maximum);
+    stage = 'read';
+    while (info.readBytes < maximum) {
+      const count = readSync(fd, buffer, info.readBytes, maximum - info.readBytes, info.readBytes);
+      if (count === 0) { eof = true; break; }
+      info.readBytes += count;
+    }
+    bytes = buffer.subarray(0, info.readBytes); after = fstatSync(fd); current = lstatSync(path);
+    info.sourceBytesAfter = after.size;
+    info.sameFileIdentity = current.isFile() && [after, current].every(x => x.dev === before.dev && x.ino === before.ino);
+    info.changedDuringRead = !info.sameFileIdentity || [after, current].some(x => x.size !== before.size || x.mtimeMs !== before.mtimeMs || x.ctimeMs !== before.ctimeMs);
+    info.truncated = live ? before.size > cap || bytes.length < before.size : bytes.length > cap;
+    info.unreadBytesObserved = Math.max(0, after.size - bytes.length);
+    info.completeAtRead = info.sameFileIdentity && !info.changedDuringRead && bytes.length === before.size && (live || eof);
+    info.completeOriginalFile = !live && !info.truncated && !info.changedDuringRead && info.completeAtRead;
+    if (info.completeOriginalFile) info.originalSha256 = hash(bytes);
+  } catch { failed = true; info.status = stage + '-failed'; }
+  finally {
+    if (fd !== undefined) {
+      try { closeSync(fd); }
+      catch { failed = true; info.status = 'close-failed'; }
+    }
+  }
+  if (failed) { info.completeOriginalFile = false; info.originalSha256 = null; return { info }; }
+  if (live) {
+    const filename = 'startup-app-log-snapshot.log';
+    info.snapshot = { filename, kind: 'read-time-prefix-from-live-app-log', offset: 0, bytes: bytes.length, sha256: null, retained: false, eventualAppLogHash: false };
+    try {
+      writeFileSync(join(output, filename), bytes, { flag: 'wx' });
+      info.snapshot.sha256 = hash(bytes); info.snapshot.retained = true; info.status = 'snapshot-retained';
+    } catch { info.status = 'snapshot-retention-failed'; return { info }; }
+  } else info.status = info.completeOriginalFile ? 'complete-stable-read' : 'incomplete-or-changing-read';
+  return { info, bytes: bytes.subarray(0, cap) };
+}
+function reportStartupFailure() {
+  // Only fixed existing files are read. This runs after failure capture while
+  // the owner still holds the socket/app; it never sends a driver request.
+  try {
+    const app = readStartupInput('app.log', true), commands = readStartupInput('commands.jsonl'), processFile = readStartupInput('native-process-failure.json');
+    const processId = Number.isSafeInteger(child.pid) && child.pid > 0 ? child.pid : null;
+    let processRecord;
+    processFile.info.jsonStatus = 'not-read-completely';
+    if (processFile.info.completeOriginalFile) {
+      try { processRecord = JSON.parse(processFile.bytes.toString('utf8')); processFile.info.jsonStatus = 'parsed'; }
+      catch { processFile.info.jsonStatus = 'invalid-json'; }
+    }
+    const report = { schemaVersion: 1, diagnosticOnly: true, sourceRevision: revision, processId, capturedAt: new Date().toISOString(),
+      selection: 'typed-startup-failure-projection', consoleByteLimit: 32768, missingTraceDoesNotProveNonexecution: true,
+      inputs: { appLog: app.info, commands: commands.info, processFailure: processFile.info },
+      activation: startupStream('activation', app.bytes, processId, app.info.completeAtRead),
+      transport: startupStream('transport', app.bytes, processId, app.info.completeAtRead),
+      commands: startupStream('commands', commands.bytes, processId, commands.info.completeOriginalFile),
+      process: startupProcess(processRecord, processId) };
+    const begin = 'NYCTRON_STARTUP_EVIDENCE_BEGIN', end = 'NYCTRON_STARTUP_EVIDENCE_END';
+    const encode = () => begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';
+    let envelope = encode();
+    while (Buffer.byteLength(envelope, 'utf8') > report.consoleByteLimit) {
+      const selected = [report.activation, report.transport, report.commands].sort((a, b) => b.records.length - a.records.length)[0];
+      if (selected.records.length <= 1) break;
+      selected.records.shift(); selected.outputOmittedRecords++; selected.selectedRecords--; selected.omittedRecords++;
+      envelope = encode();
+    }
+    if (Buffer.byteLength(envelope, 'utf8') > report.consoleByteLimit) {
+      for (const selected of [report.activation, report.transport, report.commands]) {
+        selected.outputOmittedRecords += selected.records.length; selected.omittedRecords += selected.records.length; selected.selectedRecords = 0; selected.records = [];
+      }
+      report.projectionOmittedForOutputLimit = true; envelope = encode();
+    }
+    if (Buffer.byteLength(envelope, 'utf8') <= report.consoleByteLimit) console.info(envelope.slice(0, -1));
+  } catch {
+    // Read, snapshot, projection and console failures remain secondary. No
+    // arbitrary error string is logged and the caller rethrows its first error.
+  }
 }
 
 async function waitFor(check, label, timeoutMs = 20000) {
@@ -610,6 +791,7 @@ try {
   if (tooltipEvidence) reportTooltipFailure();
   if (pointerEvidence?.status === 'pending') { pointerEvidence.status = 'failed'; pointerEvidence.error = error instanceof Error ? error.message : String(error); writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n'); }
   writeFileSync(join(output, 'failure.json'), JSON.stringify({ schemaVersion: 1, status: 'failed', sourceRevision: revision, checks, error: error instanceof Error ? error.message : String(error) }, null, 2) + '\n');
+  reportStartupFailure();
   throw error;
 } finally {
   driver?.close();
