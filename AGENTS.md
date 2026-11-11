@@ -62,3 +62,14 @@ within the current safe container, and preserve mounted children and product
 state while resizing. Continue using the navigation and pane owners above.
 Record browser and native evidence separately; upstream speed claims are not
 NYC-Tron measurements.
+
+## Approved v1 completion checkpoint
+
+User direction (2026-11-10): complete the v1 proposal and all twelve remaining
+native/service rows. The earlier implementation-first testing pause was
+superseded for that work. The original 341 IDs and eight required platforms
+remain intact. Follow the current [completion program](docs/completion/PROGRAM.md)
+and its [candidate evidence](docs/completion/reports/V1-RELEASE-GATES.md);
+earlier phase reports describe their own commits. Source ownership is complete,
+but stable release still requires the actual platform evidence and owner
+distribution review documented in the release conditions.

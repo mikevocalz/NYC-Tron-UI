@@ -4,11 +4,13 @@
     "./advanced-catalog",
     "./folds",
     "./navigation",
+    "./overlays",
     "./pane-plan",
     "./presets/infrax",
     "./spatial",
     "./spatial-interactions",
-    "./theme"
+    "./theme",
+    "./window-lifecycle"
   ],
   "@nyc-tron/expo-controls": [
     ".",
@@ -50,8 +52,10 @@
     ".",
     "./ArcKnob",
     "./DisplayP3DiscLayer",
+    "./NativePointerInput",
     "./NativeVideoPlayer",
-    "./XYPad"
+    "./XYPad",
+    "./pointer-input"
   ],
   "@nyc-tron/native-navigation": [
     ".",

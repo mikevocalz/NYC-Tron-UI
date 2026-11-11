@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "headRevision": "10f3df208b549567c5084eeea91b2d5f9863fd78",
+  "testedMergeRevision": "640759da66f486e9abc70863b7707fd6023452c6",
+  "workflowUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42755744795",
+  "jobId": 129629586741,
+  "artifactId": 13735639913,
+  "artifactSha256": "ae41871dcfd267622e01758cff1e284b02b3050b37ff583536b23e23760837e2",
+  "result": "passed-then-current-11-check-contract",
+  "limit": "The permissive tail check accepted 3984 of an expected 4000 frames. This historical result does not satisfy the newer exact-length resampling gate or native UI interaction flows. No physical-device or screen-reader speech acceptance is asserted.",
+  "files": [
+    {
+      "path": "result.json",
+      "sha256": "3f504f2af6d0c56224c5fdfacb5ebd5eb6ba57ca5280ab5035eda15548627c45",
+      "bytes": 4150
+    },
+    {
+      "path": "native-report.json",
+      "sha256": "c75e184d8d2a1e276fe399a17a84ff958217500c8dbbd8cecd878c6e638f2c82",
+      "bytes": 835
+    },
+    {
+      "path": "screen.png",
+      "sha256": "05b6d53ced7e39bdbf7727c1dd9ebbf090f3d7f45529e0e3ebb5a187cfd70337",
+      "bytes": 283699
+    }
+  ]
+}

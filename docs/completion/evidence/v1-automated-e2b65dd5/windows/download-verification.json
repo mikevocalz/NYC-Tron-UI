@@ -1,0 +1,11 @@
+{
+  "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "sha256": "9bfbe0855350b526753b604f728ab7ae5f1ef93d73d79d774e8094c4faa6b5d6",
+  "verified": true,
+  "archiveBytes": 85171,
+  "files": [
+    "01-launched.png",
+    "02-rejected.png",
+    "03-accepted.png"
+  ]
+}

@@ -17,6 +17,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: read
 
 concurrency:
   group: release-${{ github.ref }}
@@ -25,7 +26,10 @@ concurrency:
 jobs:
   # The release job needs the same gates a pull request needs: source tests,
   # typecheck, package and API-surface checks, component ledger, pack and
-  # consumer smoke test, the Windows lane, and both Chromium acceptance suites.
+  # consumer smoke test, Windows compilation/UIA, Chromium acceptance suites,
+  # reference captures/performance, installed UI/Expo consumers and native
+  # compilation/runtime from those tarballs. Stable publication then requires
+  # the complete accepted ledger and the actual owner's distribution review.
   ci:
     name: CI gates
     uses: ./.github/workflows/ci.yml
@@ -41,10 +45,35 @@ jobs:
     uses: ./.github/workflows/menu-browser.yml
     permissions:
       contents: read
+  native-controls:
+    name: packaged iOS and Android compilation and runtime
+    uses: ./.github/workflows/native-controls-port.yml
+    permissions:
+      contents: read
+  release-consumers:
+    name: installed tarball consumers
+    uses: ./.github/workflows/release-consumer.yml
+    permissions:
+      contents: read
+  windows-native:
+    name: Windows native compilation and UI Automation
+    uses: ./.github/workflows/winui-fabric.yml
+    permissions:
+      contents: read
+  macos-appkit:
+    name: AppKit native controls and window lifecycle
+    uses: ./.github/workflows/macos-appkit.yml
+    permissions:
+      contents: read
+  native-feel:
+    name: reference flows, captures and render measurements
+    uses: ./.github/workflows/native-feel-preview.yml
+    permissions:
+      contents: read
 
   release:
     name: build, test, pack and upload
-    needs: [ci, ui-browser, menu-browser]
+    needs: [ci, ui-browser, menu-browser, native-controls, release-consumers, windows-native, macos-appkit, native-feel]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -86,6 +115,8 @@ jobs:
         run: node tooling/verify-packages.mjs
       - name: Verify the public API surface
         run: node tooling/api-surface.mjs
+      - name: Verify reachable public declarations and dependency type boundaries
+        run: node tooling/api-signatures.mjs
       - name: Verify the complete component ledger and reviewed public exports
         run: node tooling/verify-component-program.mjs
 
@@ -96,25 +127,51 @@ jobs:
       - name: Install the dependency-free tarballs in a fresh project and import them
         run: node tooling/consumer-smoke.mjs "$RUNNER_TEMP/release"
 
-      # @nyc-tron/windows-fluent-fabric is nested outside the pnpm workspace
-      # because it pins RN 0.85 + react-native-windows 0.85, so pack-release
-      # does not discover it. It ships src/ on purpose: RNW codegen reads the
-      # typed spec through codegenConfig.jsSrcsDir when the consumer builds.
-      - name: Pack the Windows Fabric NavigationView adapter
-        working-directory: packages/windows-fluent/rnw-fabric
+      # Desktop runtime versions remain isolated. Reuse the exact archives
+      # installed by the successful native jobs; never repack after acceptance.
+      - name: Download the tested Windows package
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-fabric-tested-package
+          path: ${{ runner.temp }}/tested-windows
+      - name: Download the tested AppKit package
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-appkit-tested-package
+          path: ${{ runner.temp }}/tested-macos
+      - name: Verify and retain the exact tested desktop archives
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          actual=$(node -p 'require("./package.json").version')
-          if [ "$actual" != "$VERSION" ]; then echo "::error::windows-fluent-fabric version $actual does not match $VERSION"; exit 1; fi
-          npm install --no-audit --no-fund
-          npm run typecheck
-          npm run build
-          dir="$RUNNER_TEMP/release"
-          file=$(npm pack --pack-destination "$dir" --silent | tail -n1)
-          tar -tzf "$dir/$file" | grep -qx 'package/dist/index.js' || { echo "::error::dist missing from $file"; exit 1; }
-          (cd "$dir" && sha256sum "$file" >> SHA256SUMS)
-          cat "$dir/SHA256SUMS"
+          node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-windows" "$RUNNER_TEMP/release" @nyc-tron/windows-fluent-fabric "$VERSION" "$GITHUB_SHA"
+          node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-macos" "$RUNNER_TEMP/release" @nyc-tron/macos-appkit "$VERSION" "$GITHUB_SHA"
+
+      # Preserve the concrete fifteen-archive candidate before D2/D3 can block
+      # stable publication. The owner reviews these exact checksums, not a
+      # hypothetical package inventory. This action does not create a release.
+      - name: Retain the candidate archives and checksums for distribution review
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-candidate-${{ steps.version.outputs.tag }}
+          path: |
+            ${{ runner.temp }}/release/*.tgz
+            ${{ runner.temp }}/release/SHA256SUMS
+            ${{ runner.temp }}/release/*-tested-package.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Require actual stable-release acceptance and owner distribution review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: node tooling/release-readiness.mjs --version "$VERSION" --artifacts "$RUNNER_TEMP/release" --output "$RUNNER_TEMP/release/readiness.json"
+      - name: Retain the readiness result, including blocked stable candidates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-readiness-${{ steps.version.outputs.tag }}
+          path: ${{ runner.temp }}/release/readiness.json
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Create release and upload tarballs
         env:
@@ -145,7 +202,7 @@ jobs:
             cat "$dir/SHA256SUMS"
             echo '```'
             echo
-            echo "Not published to npm. NYC-Tron original code is MIT. Ported code keeps its upstream license; see THIRD_PARTY_NOTICES.md in the repository and in each tarball."
+            echo "Not published to npm. NYC-Tron original code is MIT. Ported code keeps its upstream license; see repository THIRD_PARTY_NOTICES.md and the notices included with each affected package."
             echo "Support tiers and what is not device-verified: docs/V1_DECISIONS.md."
           } > "$dir/NOTES.md"
           target=()

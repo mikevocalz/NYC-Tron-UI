@@ -1,0 +1,15 @@
+{
+  "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "sha256": "c0bc79c2db7bee755de2b87f75fdccb9b3b3c3fc6bf6ac00d81b9430efef8eb1",
+  "verified": true,
+  "archiveBytes": 64095,
+  "files": [
+    "consumer.json",
+    "installed-packages.json",
+    "app/package-lock.json",
+    "app/artifacts/bundle-inputs.json",
+    "app/artifacts/consumer-narrow.png",
+    "app/artifacts/results.json",
+    "app/artifacts/consumer-wide.png"
+  ]
+}

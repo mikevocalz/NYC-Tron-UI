@@ -2,6 +2,7 @@
 // and writes SHA256SUMS. Used by .github/workflows/release.yml and by hand:
 //
 //   node tooling/pack-release.mjs <out-dir> [--expect-version 0.1.0]
+//   node tooling/pack-release.mjs <out-dir> --packages core,windows-fluent
 //
 // Run `pnpm -r build` first. The packages stay "private": these tarballs are
 // GitHub Release assets installed by URL, never npm publishes.
@@ -18,10 +19,19 @@ if(expectIndex>=0&&!expectVersion)throw new Error("--expect-version needs a valu
 
 const root=resolve(".");
 const packagesRoot=join(root,"packages");
-const packages=readdirSync(packagesRoot,{withFileTypes:true})
+const availablePackages=readdirSync(packagesRoot,{withFileTypes:true})
   .filter(e=>e.isDirectory()&&existsSync(join(packagesRoot,e.name,"package.json")))
   .map(e=>e.name)
   .sort();
+// Native desktop consumers use these same staged notices, licenses, compiler
+// and pnpm pack behavior for their shared peer packages. Their release receipts
+// bind the resulting archive hashes; a raw npm pack is not interchangeable.
+const subsetIndex=args.indexOf("--packages");
+const subset=subsetIndex>=0?args[subsetIndex+1]?.split(","):undefined;
+if(subsetIndex>=0&&(!subset?.length||new Set(subset).size!==subset.length||subset.some(name=>!availablePackages.includes(name)))){
+  throw new Error("--packages must name unique workspace package directories: "+availablePackages.join(","));
+}
+const packages=subset?availablePackages.filter(name=>subset.includes(name)):availablePackages;
 
 rmSync(outDir,{recursive:true,force:true});
 mkdirSync(outDir,{recursive:true});

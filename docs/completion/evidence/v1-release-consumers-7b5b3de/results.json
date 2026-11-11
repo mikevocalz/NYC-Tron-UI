@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10",
+  "runId": 42752975794,
+  "runUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42752975794",
+  "pullRequestHead": "7b5b3deca420dcc9c7986ff93996f1f3a0a9b1df",
+  "consumers": {
+    "basic": {
+      "checkoutCommit": "1a5e0ad8033b51b9aefb16178158249a60291016",
+      "artifactId": 13734516772,
+      "artifactSha256": "ca12934b78fb8c7707aa14f5d3c4b4fb2eb7ed97ac5b922817df09b6e1604beb",
+      "runtime": {
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "react-native": "0.88.1",
+        "react-native-web": "0.21.4",
+        "zustand": "5.0.16"
+      },
+      "playwright": "1.62.1",
+      "browser": "Chrome Headless Shell 151.0.7922.34 / Playwright revision 1234",
+      "packages": {
+        "@nyc-tron/ui": {
+          "version": "1.0.0",
+          "sha256": "1eaf63d19582c330ac5d9aba5c18f30f843794ccccc2f5e418d4bd08018fd6aa"
+        }
+      },
+      "verifiedAbsentPeers": [
+        "@nyc-tron/core",
+        "@expo/ui",
+        "expo",
+        "react-native-skia",
+        "react-native-gesture-handler",
+        "@tanstack/react-table",
+        "expo-drag-drop-content-view",
+        "expo-linear-gradient",
+        "uniwind"
+      ],
+      "testStats": {
+        "startTime": "2026-11-10T04:01:46.667Z",
+        "duration": 1605.02,
+        "expected": 1,
+        "skipped": 1,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "screenshots": [
+        "basic-wide.png",
+        "basic-narrow.png"
+      ]
+    },
+    "expo-web": {
+      "checkoutCommit": "1a5e0ad8033b51b9aefb16178158249a60291016",
+      "artifactId": 13734620969,
+      "artifactSha256": "3efad2ef2d61cc3cb2c2f225a63e833af30619fbc594c87939dc549dd3cbc76a",
+      "runtime": {
+        "@expo/ui": "58.0.27",
+        "expo": "58.0.23",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "react-native": "0.88.1",
+        "react-native-web": "0.21.4",
+        "zustand": "5.0.16"
+      },
+      "playwright": "1.62.1",
+      "browser": "Chrome Headless Shell 151.0.7922.34 / Playwright revision 1234",
+      "packages": {
+        "@nyc-tron/core": {
+          "version": "1.0.0",
+          "sha256": "ad1ebe79f89345be3fd4be1f138b76b6fd668f32c5ccbe2d2ce20e9e55dd8cb5"
+        },
+        "@nyc-tron/expo-controls": {
+          "version": "1.0.0",
+          "sha256": "0cf9d2515337b3dedefceb0e518096098134ad3c37dafefeb54672cad7dc6c42"
+        },
+        "@nyc-tron/panes": {
+          "version": "1.0.0",
+          "sha256": "67c4e703e73d015ad002266d7ba732612103ca9593ed5cae811cc0540e2df7a1"
+        },
+        "@nyc-tron/ui": {
+          "version": "1.0.0",
+          "sha256": "1eaf63d19582c330ac5d9aba5c18f30f843794ccccc2f5e418d4bd08018fd6aa"
+        }
+      },
+      "verifiedAbsentPeers": [],
+      "testStats": {
+        "startTime": "2026-11-10T04:01:37.754Z",
+        "duration": 1836.4340000000002,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "screenshots": [
+        "expo-web-wide.png",
+        "expo-web-narrow.png"
+      ]
+    }
+  }
+}

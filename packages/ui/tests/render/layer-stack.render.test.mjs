@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
 import ts from "typescript";
+import * as sharedOverlays from "../../../core/src/overlays.ts";
 
 // Runs the real LayerStack with mocked RN hosts. Function components are
 // expanded in place so rows render; this proves props, labels and callbacks,
@@ -28,6 +29,8 @@ function harness({ rtl = false } = {}) {
     return context.currentValue;
   };
   const mocks = {
+    // Resolve the real peer-free implementation after its shared-owner extraction.
+    "@nyc-tron/core/overlays": sharedOverlays,
     react: { createContext, useContext, useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: fn => { layoutEffects.push(fn); },
       useMemo: f => f(), cloneElement: (el, props) => ({ ...el, props: { ...el.props, ...props } }) },
     "react/jsx-runtime": { jsx: element, jsxs: element },

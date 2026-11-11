@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10",
+  "candidateHead": "7aec1ec1f2feca483c11f3605929e6f526133bca",
+  "testedMergeRevision": "35c11b9b91bbc03014ccc0883536510ec07a0015",
+  "workflowRun": 42765514014,
+  "artifactId": 13741115807,
+  "artifactSha256": "607db57f51dc05ca083fabaf9feefe530990f75ea4c56b019fb8eb1e5105f1d8",
+  "overallStatus": "failed",
+  "observedResult": "media failed at the full-start PCM interval; Settings and Editor UI flows passed, pointer flow failed because event feedback was clipped",
+  "files": [
+    {
+      "path": "media-failure.txt",
+      "sha256": "e56b2329c55e00a1e5803cf74e94614c541a0ff8f429c392b89e58d9cc88f9e7",
+      "bytes": 277
+    },
+    {
+      "path": "media-metro.log",
+      "sha256": "210d9523743a873260d5f96a9d3159b705e37471426386a7db967c838b990d17",
+      "bytes": 586
+    },
+    {
+      "path": "native-artifact.json",
+      "sha256": "70eb6e384b600626e5bba42e0c93da3a69854a1c3242ff1cac8fa41efb7fc4ea",
+      "bytes": 261
+    },
+    {
+      "path": "ui-failure.txt",
+      "sha256": "8a3129c14e02da67d0a946c900f86150df3fe4c23a533a1e9f09636965185ff5",
+      "bytes": 470
+    },
+    {
+      "path": "media-native-report.json",
+      "sha256": "5fd3bf361477802732dff4c3b8b62aef61ae2c0a4a2167aee7e1dadd78dd3f22",
+      "bytes": 180
+    },
+    {
+      "path": "settings-report.xml",
+      "sha256": "947836130a5f4acbbc451db95d437ace92a3861bfdd28beddcd1ce4abba41017",
+      "bytes": 443
+    },
+    {
+      "path": "settings-hierarchy.json",
+      "sha256": "e2c7c04655432afb9b628a0ec44a18b62cc709a98e5864faa2a1f4caaeefd8f1",
+      "bytes": 124659
+    },
+    {
+      "path": "settings-saved.png",
+      "sha256": "66e9e9ef109fa42cae681a4b0c0025512d3214715f88ac34138edba0e9d3add3",
+      "bytes": 30669
+    },
+    {
+      "path": "editor-report.xml",
+      "sha256": "d7502819332c2255addb0774286ecfecffb5a29a6cd3958609cf35968e08f61d",
+      "bytes": 486
+    },
+    {
+      "path": "editor-hierarchy.json",
+      "sha256": "cc23c7fcfac84ceb301fcf0a7505cf7b38fd0c63c6a1e9da7539a84d185ee464",
+      "bytes": 151949
+    },
+    {
+      "path": "editor-saved.png",
+      "sha256": "1ea9d3c26d684066dc2e4b5a0ba9c85e89dfde01238544a6c50f10291a1580e2",
+      "bytes": 28953
+    }
+  ]
+}

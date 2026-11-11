@@ -1,0 +1,5 @@
+2026-11-10 06:17:47.738 NYCTronInstrumentsDemo[42320:114532] You've implemented -[<UIApplicationDelegate> application:performFetchWithCompletionHandler:], but you still need to add "fetch" to the list of your supported UIBackgroundModes in your Info.plist.
+2026-11-10 06:17:47.740 NYCTronInstrumentsDemo[42320:114532] You've implemented -[<UIApplicationDelegate> application:didReceiveRemoteNotification:fetchCompletionHandler:], but you still need to add "remote-notification" to the list of your supported UIBackgroundModes in your Info.plist.
+2026-11-10 06:17:47.742 NYCTronInstrumentsDemo[42320:114532] _setUpFeatureFlags called with release level 2
+2026-11-10 06:17:56.487 NYCTronInstrumentsDemo[42320:114830] [RCTMultipartDataTask] GET http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example
+com.nyctron.instruments.example: 42320

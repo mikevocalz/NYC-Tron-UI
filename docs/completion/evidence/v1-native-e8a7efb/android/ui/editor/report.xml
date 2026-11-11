@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="emulator-5554" tests="1" failures="0" time="46.429" timestamp="2026-11-10T14:43:58">
+    <testcase id="Editor native draft route retention and save" name="Editor native draft route retention and save" classname="Editor native draft route retention and save" file="tooling/native/ui-flows/editor.yaml" time="46.414" timestamp="2026-11-10T14:43:58" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/nitro-forge",
+  "candidateHead": "f5469d03cf2153a8f694ae61d911861264e9216d",
+  "testedMergeRevision": "7cc6c15805b20ae69804be9cbf526ae48a4f1a63",
+  "workflowRun": 42765520077,
+  "result": "passed",
+  "artifactId": 13740926359,
+  "artifactSha256": "9c05e057c89e4ec4e6a32e3e775b91566045a3154b66125f984f01aa5dc90a3b",
+  "scope": "Downloaded receipt/provenance/manifest integrity and OS termination records verified. Native app/APK payload bytes were hashed by CI; the app binary is not included in this report artifact.",
+  "limits": "Actual simulator/emulator restart and generated-binding checks only; no physical-device, sudden-power-loss, screen-reader speech or full eight-platform acceptance claim. iOS screenshot capture was unavailable on its multi-display simulator.",
+  "files": [
+    {
+      "path": "verification.json",
+      "bytes": 1688,
+      "sha256": "5201292e80fb144b9a66950f8f72699e360eea5c3c8cebf0db805120e23d6031"
+    },
+    {
+      "path": "artifact-metadata.json",
+      "bytes": 1086,
+      "sha256": "a4a6a92eb355498082b3f728225b775b0591f6fe835474240306999fdc6d8eb3"
+    },
+    {
+      "path": "result.json",
+      "bytes": 1784,
+      "sha256": "28b829a5ec5de1d901b90df526b776762525f3b297ce6970c25bb125ce1c7852"
+    },
+    {
+      "path": "before-process-restart.json",
+      "bytes": 535,
+      "sha256": "c9af912069eb85ce99eecf23d3a9d35ef76cf0a56f80005c62207fd9dd93a0f8"
+    },
+    {
+      "path": "invocation.json",
+      "bytes": 300,
+      "sha256": "8cd759ef5e215c4138f45c4d8231382602498c4497f4b9c3b5c2a046626d217c"
+    },
+    {
+      "path": "receipt-restart-required.json",
+      "bytes": 662,
+      "sha256": "5ec45999da9c472082774131a802d39a2b5eaf152ce5139b6aa6b98037862a66"
+    },
+    {
+      "path": "receipt-complete.json",
+      "bytes": 1120,
+      "sha256": "cea71a708feaf52a454721aa71d1eaf8ff36a3457eccabd6e68ac0fb228e89ad"
+    },
+    {
+      "path": "native-artifact.json",
+      "bytes": 261,
+      "sha256": "99ebb8646d6c50f1d80d5fe2b8ffa7ec08abf710199c2eb88d28eb508c885480"
+    },
+    {
+      "path": "steps.jsonl",
+      "bytes": 72585,
+      "sha256": "0bb17a548a57cee40893cbe8180986d72dbeeb10b093d1832d4d9080bb7e0b5a"
+    },
+    {
+      "path": "screen-1.png",
+      "bytes": 27938,
+      "sha256": "4303001cb4e3af887fe78dd623b013f14c66c2c4aaf07225ee20e5617dc37ce1"
+    },
+    {
+      "path": "screen-2.png",
+      "bytes": 44870,
+      "sha256": "ba257fa4d03f07c565b3464d0e45c7e69b8867b3684a388112cad7f648d44c6b"
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+name: NYC-Tron AppKit native host
+
+on:
+  pull_request:
+    paths:
+      - 'packages/macos-appkit/**'
+      - 'packages/core/**'
+      - 'examples/macos-appkit/**'
+      - 'tooling/macos-appkit/**'
+      - 'tooling/pack-release.mjs'
+      - 'tooling/api-signatures.mjs'
+      - 'docs/api-signatures-macos.json'
+      - 'THIRD_PARTY_NOTICES.md'
+      - 'licenses/**'
+      - '.github/workflows/macos-appkit.yml'
+      - 'pnpm-lock.yaml'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appkit-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  packages:
+    name: Canonical core release archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Install the pinned workspace compiler
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+      - name: Build and pack core with release provenance
+        run: |
+          node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs tooling/macos-appkit/patch-expo-device-name.test.mjs
+          corepack pnpm --filter @nyc-tron/core build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-appkit-shared-packages
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/appkit-shared/
+  native:
+    name: Spark 0.0.2 ARM64 AppKit compile and native acceptance
+    needs: packages
+    # GitHub's macos-15 label is ARM64; macos-15-intel is a different lane.
+    # Assert the actual architecture below rather than treating the label as proof.
+    runs-on: macos-15
+    timeout-minutes: 55
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      SPARK_XCODEBUILD_JOBS: '3'
+      # Expo 55 requires Xcode 26.2+. macos-15 defaults to 16.4, whose
+      # Swift compiler cannot parse Expo's isolated protocol conformances.
+      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Verify native ARM64 host and Apple build tools
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = arm64
+          node -e 'if(process.platform!=="darwin"||process.arch!=="arm64")throw Error("Expected native macOS ARM64 Node")'
+          test -d "$DEVELOPER_DIR"
+          mkdir -p "$RUNNER_TEMP/appkit-toolchain"
+          xcodebuild -version > "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          xcrun swift --version >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          xcrun --sdk macosx --show-sdk-path >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          cat "$RUNNER_TEMP/appkit-toolchain/versions.txt"
+          node -e 'const fs=require("node:fs"); const text=fs.readFileSync(process.env.RUNNER_TEMP+"/appkit-toolchain/versions.txt","utf8"); if(!/^Xcode 26\.2\n/m.test(text))throw Error("Expected selected Xcode 26.2")'
+          cat > "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" <<'SWIFT'
+          protocol AppKitHostProbe { func update() }
+          @MainActor final class AppKitHost: @MainActor AppKitHostProbe {
+            func update() {}
+          }
+          SWIFT
+          xcrun swiftc -typecheck -swift-version 6 "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" 2>&1 | tee "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.log"
+          pod --version
+      - uses: actions/download-artifact@v4
+        with:
+          name: macos-appkit-shared-packages
+          path: ${{ runner.temp }}/appkit-shared
+      - name: Build and install archive consumer outside the monorepo
+        run: node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
+      - name: Verify the installed AppKit public declaration snapshot
+        run: node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+      - name: Verify the private Spark transport with native Foundation and socketpair
+        run: node tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"
+      - name: Compile a standalone native AppKit reference
+        working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
+        env:
+          APPKIT_BUILD_LOG: ${{ runner.temp }}/appkit-build-console/build-console.log
+          APPKIT_BUILD_RESULT: ${{ runner.temp }}/appkit-build-console/build-result.json
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$APPKIT_BUILD_LOG")"
+          test ! -e "$APPKIT_BUILD_LOG"
+          build_status=0
+          (set -o noclobber; npm run build > "$APPKIT_BUILD_LOG" 2>&1) || build_status=$?
+          export APPKIT_BUILD_EXIT_CODE="$build_status"
+          reporting_status=0
+          node --input-type=module <<'NODE' || reporting_status=$?
+          import { createHash } from "node:crypto";
+          import { open, stat, writeFile } from "node:fs/promises";
+          const exitCode = Number(process.env.APPKIT_BUILD_EXIT_CODE);
+          if (!Number.isInteger(exitCode) || exitCode < 0 || exitCode > 255) throw new Error("Invalid build exit status");
+          if (!/^[0-9a-f]{40}$/.test(process.env.GITHUB_SHA ?? "")) throw new Error("Missing actual checkout revision");
+          const file = await open(process.env.APPKIT_BUILD_LOG, "r");
+          const digest = createHash("sha256");
+          let before, after, bytes = 0;
+          try {
+            before = await file.stat();
+            if (!before.isFile() || !Number.isSafeInteger(before.size)) throw new Error("Build transcript is not a bounded regular file");
+            for await (const chunk of file.createReadStream({ autoClose: false })) {
+              bytes += chunk.length;
+              if (bytes > before.size) throw new Error("Build transcript grew during hashing");
+              digest.update(chunk);
+            }
+            after = await file.stat();
+          } finally { await file.close(); }
+          const current = await stat(process.env.APPKIT_BUILD_LOG);
+          for (const snapshot of [after, current]) {
+            if (snapshot.dev !== before.dev || snapshot.ino !== before.ino || snapshot.size !== before.size ||
+                snapshot.mtimeMs !== before.mtimeMs || snapshot.ctimeMs !== before.ctimeMs) {
+              throw new Error("Build transcript changed during hashing");
+            }
+          }
+          if (bytes !== before.size) throw new Error("Build transcript byte count changed");
+          const result = { schemaVersion: 1, sourceRevision: process.env.GITHUB_SHA,
+            command: ["npm", "run", "build"], exitCode, outcome: exitCode === 0 ? "success" : "failure",
+            transcript: { filename: "build-console.log", bytes, sha256: digest.digest("hex"), complete: true, normalized: false } };
+          await writeFile(process.env.APPKIT_BUILD_RESULT, JSON.stringify(result, null, 2) + "\n", { flag: "wx" });
+          console.log("NYCTRON_APPKIT_BUILD_RESULT_BEGIN");
+          console.log(JSON.stringify(result));
+          console.log("NYCTRON_APPKIT_BUILD_RESULT_END");
+          NODE
+          if [ "$build_status" -ne 0 ]; then
+            tail -c 32768 "$APPKIT_BUILD_LOG" || true
+            exit "$build_status"
+          fi
+          exit "$reporting_status"
+      - name: Exercise actual native controls and window lifetimes
+        id: native
+        working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
+        env:
+          APPKIT_EVIDENCE: ${{ runner.temp }}/nyc-tron-appkit-evidence
+          APPKIT_TESTED_PACKAGE: ${{ runner.temp }}/nyc-tron-appkit-tested-package
+        run: npm run verify:native
+      - name: Retain build and native evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-appkit-native-evidence
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/nyc-tron-appkit-evidence/
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/package-preparation.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-device-name/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.mm
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.log
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/logs/
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/commands.jsonl
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/selection-report.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/version
+            ${{ runner.temp }}/appkit-toolchain/
+            ${{ runner.temp }}/appkit-build-console/
+      - name: Retain the exact natively tested distribution
+        if: success() && steps.native.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-appkit-tested-package
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/nyc-tron-appkit-tested-package/

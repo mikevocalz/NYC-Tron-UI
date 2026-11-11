@@ -1,6 +1,7 @@
 /**
- * Audit registry, not a completion claim. These are cross-app NYC-Tron component
- * contracts; engine-backed behavior still lives in Nitro Forge.
+ * Historical design/audit registry, not a current completion claim. Current
+ * source ownership and acceptance live in docs/completion/library-progress.json.
+ * These are cross-app NYC-Tron contracts; engine-backed behavior lives in Forge.
  */
 export type ComponentStage="prototype"|"contract"|"planned";
 export type AdvancedComponent=Readonly<{

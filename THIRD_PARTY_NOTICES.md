@@ -175,8 +175,9 @@ Consumers that bundle its executable code must retain its notices and this
 source-availability statement. The dependency closure also installs
 `@types/dom-mediacapture-transform` 0.1.12 and `@types/dom-webcodecs` 0.1.13
 (MIT, Copyright Microsoft Corporation; declaration packages). Full detail:
-`packages/platform-services/THIRD_PARTY.md`. The repository owner confirms MPL
-compliance for tarball distribution (see `docs/V1_DECISIONS.md`, D2).
+`packages/platform-services/THIRD_PARTY.md`. Owner distribution-review status is
+tracked in `docs/V1_DECISIONS.md`, D2; this notice records provenance and source
+availability, not an owner compliance attestation.
 
 ## React Native Windows sample pattern
 
@@ -185,6 +186,18 @@ pattern of the React Native Windows 0.85 sample
 `packages/sample-custom-component/windows/SampleCustomComponent/ComboBox.cpp`.
 MIT, Copyright (c) Microsoft Corporation and contributors. Text:
 `licenses/REACT-NATIVE-WINDOWS-MIT.txt`.
+
+## Legend Spark and the isolated AppKit host
+
+`packages/macos-appkit/spark` imports Legend Spark 0.0.2 as an exact peer.
+Its controls and window bindings are original NYC-Tron code; Spark's source
+and native runtime are installed separately. The AppKit consumer retains
+Spark's Expo 55 / React Native 0.83 / Nitro Modules 0.37.0 runtime and the
+official release's matching patched SDK archives. The preparation receipt
+records those archives and their verified hashes. They are not copied into
+the NYC-Tron adapter archive. Exact dependency versions, upstream locations
+and the native test-code boundary are recorded in
+`packages/macos-appkit/spark/THIRD_PARTY_NOTICES.md`.
 
 ## Reviewed, no code used
 

@@ -59,6 +59,16 @@
       "types": "./dist/pane-plan.d.ts",
       "react-native": "./dist/pane-plan.js",
       "default": "./dist/pane-plan.js"
+    },
+    "./window-lifecycle": {
+      "types": "./dist/window-lifecycle.d.ts",
+      "react-native": "./dist/window-lifecycle.js",
+      "default": "./dist/window-lifecycle.js"
+    },
+    "./overlays": {
+      "types": "./dist/overlays.d.ts",
+      "react-native": "./dist/overlays.js",
+      "default": "./dist/overlays.js"
     }
   },
   "scripts": {

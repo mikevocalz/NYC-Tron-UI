@@ -5,6 +5,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import ts from "typescript";
+import * as sharedOverlays from "../../core/src/overlays.ts";
 
 // Execute the exported components with mocked native hosts. These checks
 // prove appearance forwarding and retained JS state, not OS pixels or a11y.
@@ -17,6 +18,8 @@ function harness(file,os){
   const element=(type,props,key)=>({type,props,key});
   const modifier=new Proxy({}, {get:(_,name)=>(...args)=>({name,args})});
   const mocks={
+    // Resolve the real peer-free implementation after its shared-owner extraction.
+    "@nyc-tron/core/overlays": sharedOverlays,
     react:{
       useRef:value=>refs[cursor++]??(refs[cursor-1]={current:value}),
       useEffect:()=>{},useLayoutEffect:()=>{},useMemo:fn=>fn(),
@@ -134,6 +137,17 @@ test("theme changes preserve an in-progress slider preview and its commit callba
     if(os==="ios")changed.props.onEditingChanged(false);else changed.props.onValueChangeFinished();
     assert.deepEqual(commits,[42]);
   }
+});
+
+test("iOS slider provides native SwiftUI content for Expo's label Slot",()=>{
+  const tree=harness("NativeSliderField.native.tsx","ios").render(slider);
+  const label=find(tree,node=>node.type==="SwiftUISlider").props.label;
+  // SDK 58 puts this ReactNode directly in a native Slot. A bare string (or
+  // an RN Text child) is not SwiftUI text and caused the actual iOS LogBox.
+  assert.equal(label.type,"SwiftUIText");
+  assert.equal(label.props.children,"Opacity");
+  const caption=find(tree,node=>node.type==="Text"&&node.props.children==="Opacity");
+  assert.equal(caption.props.accessibilityElementsHidden,true);
 });
 
 test("theme changes retain an expanded Android split-button menu",()=>{

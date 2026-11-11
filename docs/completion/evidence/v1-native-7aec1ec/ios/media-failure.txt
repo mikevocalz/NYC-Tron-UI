@@ -1,0 +1,3 @@
+Error: Timed out waiting for the installed native decoder's actual result; inspect /Users/runner/work/_temp/nyc-tron-native-consumer/runtime-ios
+    at waitFor (file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-media-acceptance.mjs:48:9)
+    at async file:///Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/run-media-acceptance.mjs:144:18

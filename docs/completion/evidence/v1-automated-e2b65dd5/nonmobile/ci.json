@@ -1,0 +1,241 @@
+{
+  "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "scope": "Six nonnative required gates; iOS/Android native lanes tracked separately.",
+  "manifestSha256": "b8b9f19c31ad02992c7caf1bbf56d33b817f4a00a6fc0134bda387aeee70695a",
+  "archiveCount": 14,
+  "packageAudit": {
+    "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+    "archiveCount": 14,
+    "manifestSha256": "b8b9f19c31ad02992c7caf1bbf56d33b817f4a00a6fc0134bda387aeee70695a",
+    "byteIdenticalNonManifestFiles": 3315,
+    "packageDrift": false,
+    "verifiedAt": "2026-11-10T06:50:59.934131+00:00"
+  },
+  "updatedAt": "2026-11-10T06:51:16.445Z",
+  "runs": [
+    {
+      "id": 42770189124,
+      "name": "WinUI 3 NavigationView in RNW Fabric",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 129675906944,
+          "name": "VS 2026 RNW 0.85 XAML Fabric native C++ compile",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        },
+        {
+          "id": 129675907282,
+          "name": "Fabric codegen and source gates",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13741557399,
+          "name": "winui-fabric-uia-smoke",
+          "bytes": 85171,
+          "sha256": "9bfbe0855350b526753b604f728ab7ae5f1ef93d73d79d774e8094c4faa6b5d6",
+          "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642"
+        }
+      ]
+    },
+    {
+      "id": 42770189171,
+      "name": "NYC-Tron installed release consumers",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 129675906719,
+          "name": "basic installed tarball consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        },
+        {
+          "id": 129675906970,
+          "name": "expo-web installed tarball consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13741856026,
+          "name": "release-consumer-basic",
+          "bytes": 64095,
+          "sha256": "c0bc79c2db7bee755de2b87f75fdccb9b3b3c3fc6bf6ac00d81b9430efef8eb1",
+          "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642"
+        },
+        {
+          "id": 13741801194,
+          "name": "release-consumer-expo-web",
+          "bytes": 117297,
+          "sha256": "f36e23c5c061dd481af67339e78eae9ead72eeb5673806f03d9c6b8262a6490a",
+          "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642"
+        }
+      ]
+    },
+    {
+      "id": 42770189218,
+      "name": "NYC-Tron rendered web instrument acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 129675906507,
+          "name": "chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13742136303,
+          "name": "ui-browser-captures",
+          "bytes": 22074871,
+          "sha256": "c319770b0a90c4070539ef8675da8fc8796c828611ce8172f5684d7d5f6c74e3",
+          "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642"
+        }
+      ]
+    },
+    {
+      "id": 42770189328,
+      "name": "NYC-Tron source, exports and types",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 129675907044,
+          "name": "workspace TypeScript",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        },
+        {
+          "id": 129675907194,
+          "name": "pure contracts and dependency boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        },
+        {
+          "id": 129675907326,
+          "name": "tests and pack on Windows",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        }
+      ],
+      "artifacts": []
+    },
+    {
+      "id": 42770189392,
+      "name": "NYC-Tron rendered web overlay acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 129675910051,
+          "name": "chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13741666228,
+          "name": "overlay-renders",
+          "bytes": 280598,
+          "sha256": "94a6ff1a9583389bf57efab7a06609cfe2e3ce5a453880e19d270d7c2f646030",
+          "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642"
+        }
+      ]
+    },
+    {
+      "id": 42770189493,
+      "name": "NYC-Tron native feel reference",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 129675910766,
+          "name": "reference",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": []
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13741416872,
+          "name": "native-feel-reference-captures",
+          "bytes": 1118137,
+          "sha256": "962e5c73c208714ecc96ed6c2ea20aea4ef9d8fcf9dbc92b6b7114f86a2399d0",
+          "sourceRevision": "e2b65dd5e9288b193b6bfd807d6003b184b8c642"
+        }
+      ]
+    }
+  ],
+  "stableReleaseApprovalChanged": false,
+  "actualWindowsUnitResults": {
+    "jobId": 129675907326,
+    "tests": 1173,
+    "passed": 1173,
+    "failed": 0,
+    "skipped": 0,
+    "tarballsPacked": 13,
+    "consumerSubpathsImported": 15
+  },
+  "reference": {
+    "jobId": 129675910766,
+    "model": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    "browserCasesPassed": 29
+  },
+  "status": "passed",
+  "completedAt": "2026-11-10T06:51:16.445Z",
+  "broadBrowser": {
+    "jobId": 129675906507,
+    "browserCasesPassed": 686
+  },
+  "windows": {
+    "jobId": 129675906944,
+    "verifiedSteps": [
+      {
+        "name": "Compile actual Windows consumer executable",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Deploy the packaged consumer the way run-windows does",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "UI Automation smoke test of the packaged consumer",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "artifactEvidence": "IDs, sizes and SHA256 digests are GitHub artifact metadata for the exact source revision. These artifact archives were not downloaded by this monitoring task."
+}

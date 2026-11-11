@@ -3,5 +3,5 @@
   "compilerOptions": {
     "types": ["react"]
   },
-  "include": ["AccountScreen.tsx"]
+  "include": ["*.ts", "*.tsx"]
 }

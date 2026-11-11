@@ -1,0 +1,57 @@
+{
+  "kind": "expo-native",
+  "sourceCommit": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+  "packages": {
+    "@nyc-tron/core": {
+      "version": "1.0.0",
+      "sha256": "25e41cd6cfddfd93a75cd24da2dea740f117cafe5043edc9c0dc7c852b4490a0",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/core"
+    },
+    "@nyc-tron/expo-controls": {
+      "version": "1.0.0",
+      "sha256": "24db24d50dfc136ea9f9d85df6269612bf5f0f518f444b4192af58d54715fffd",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/expo-controls"
+    },
+    "@nyc-tron/hardware-keys": {
+      "version": "1.0.0",
+      "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/hardware-keys"
+    },
+    "@nyc-tron/native-charts": {
+      "version": "1.0.0",
+      "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-charts"
+    },
+    "@nyc-tron/native-controls": {
+      "version": "1.0.0",
+      "sha256": "0756629d2ee99eca9ada1293d23b780a88470f7b2729c1611be623608b6fe23b",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-controls"
+    },
+    "@nyc-tron/native-navigation": {
+      "version": "1.0.0",
+      "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/native-navigation"
+    },
+    "@nyc-tron/panes": {
+      "version": "1.0.0",
+      "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/panes"
+    },
+    "@nyc-tron/platform-services": {
+      "version": "1.0.0",
+      "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/platform-services"
+    },
+    "@nyc-tron/reserved-regions": {
+      "version": "1.0.0",
+      "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/reserved-regions"
+    },
+    "@nyc-tron/ui": {
+      "version": "1.0.0",
+      "sha256": "c888260e10844d5a1d4f8efe1c4799dcf7325f7071edb47582ba6056d584fba0",
+      "directory": "/home/runner/work/_temp/nyc-tron-native-consumer/app/node_modules/@nyc-tron/ui"
+    }
+  },
+  "absentPeers": []
+}

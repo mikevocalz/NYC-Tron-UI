@@ -21,6 +21,7 @@ export interface UsableRegionsInput {
   /** All current native fold/division features in the same units. */
   readonly features: readonly FoldFeature[];
 }
+/** A usable rectangle relative to the measured container's origin, not the window. */
 export type UsableRect = Rect;
 const valid = (v: Rect) =>
   [v.x,v.y,v.width,v.height].every(Number.isFinite) && v.width >= 0 && v.height >= 0;
@@ -59,6 +60,7 @@ function cutAtFeature(region:Rect,feature:FoldFeature):Rect[] {
     {x:region.x,y:after,width:region.width,height:bottom(region)-after}
   ].filter(positive);
 }
+/** Subtract window-space obstructions and return container-local layout rectangles. */
 export function resolveUsableRegions(input:UsableRegionsInput):UsableRect[] {
   if(!valid(input.container))throw new RangeError("Invalid container");
   const container=input.container;

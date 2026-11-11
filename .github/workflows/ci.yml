@@ -49,6 +49,8 @@ jobs:
         run: node tooling/verify-packages.mjs
       - name: Verify the public API surface against docs/api-surface.json
         run: node tooling/api-surface.mjs
+      - name: Verify reachable public declarations and dependency type boundaries
+        run: node tooling/api-signatures.mjs
       - name: Verify the complete component ledger and reviewed public exports
         run: node tooling/verify-component-program.mjs
       - name: Pack every package and check release tarball contents

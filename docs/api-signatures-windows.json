@@ -1,0 +1,615 @@
+{
+  "format": 1,
+  "typescript": "5.9.3",
+  "packages": {
+    "@nyc-tron/windows-fluent-fabric": {
+      ".": [
+        {
+          "target": "./dist/index.d.ts",
+          "conditions": {
+            "types": "./dist/index.d.ts",
+            "react-native": "./src/index.ts",
+            "default": "./dist/index.js"
+          },
+          "symbols": {
+            "Destination": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination"
+            ],
+            "TronNavigationView": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationView"
+            ],
+            "TronNavigationViewProps": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationViewProps"
+            ],
+            "validateDestinations": [
+              "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#validateDestinations"
+            ]
+          }
+        }
+      ],
+      "./navigation-binding": [
+        {
+          "target": "./dist/navigation-binding.d.ts",
+          "conditions": {
+            "types": "./dist/navigation-binding.d.ts",
+            "react-native": "./src/navigation-binding.ts",
+            "default": "./dist/navigation-binding.js"
+          },
+          "symbols": {
+            "WindowsNavigationBinding": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#WindowsNavigationBinding"
+            ],
+            "createWindowsNavigationBinding": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#createWindowsNavigationBinding"
+            ],
+            "navigationBindingOwner": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#navigationBindingOwner"
+            ]
+          }
+        }
+      ],
+      "./navigation-host": [
+        {
+          "target": "./dist/navigation-host.windows.d.ts",
+          "conditions": {
+            "types": "./dist/navigation-host.windows.d.ts",
+            "react-native": "./src/navigation-host.windows.tsx",
+            "default": "./dist/navigation-host.windows.js"
+          },
+          "symbols": {
+            "WindowsNavigationBinding": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#WindowsNavigationBinding"
+            ],
+            "WindowsNavigationHost": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-host.windows.d.ts#WindowsNavigationHost"
+            ],
+            "WindowsNavigationHostProps": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-host.windows.d.ts#WindowsNavigationHostProps"
+            ],
+            "createWindowsNavigationBinding": [
+              "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#createWindowsNavigationBinding"
+            ]
+          }
+        }
+      ],
+      "./window-controller": [
+        {
+          "target": "./dist/window-controller.d.ts",
+          "conditions": {
+            "types": "./dist/window-controller.d.ts",
+            "react-native": "./src/window-controller.ts",
+            "default": "./dist/window-controller.js"
+          },
+          "symbols": {
+            "WindowsDesktopTransport": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-controller.d.ts#WindowsDesktopTransport"
+            ],
+            "connectWindowsWindowHost": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-controller.d.ts#connectWindowsWindowHost"
+            ]
+          }
+        }
+      ],
+      "./window-types": [
+        {
+          "target": "./dist/window-types.d.ts",
+          "conditions": {
+            "types": "./dist/window-types.d.ts",
+            "react-native": "./src/window-types.ts",
+            "default": "./dist/window-types.js"
+          },
+          "symbols": {
+            "WindowsCloseRequest": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest"
+            ],
+            "WindowsDesktopLayout": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopLayout"
+            ],
+            "WindowsDesktopSnapshot": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopSnapshot"
+            ],
+            "WindowsObservedDisplay": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedDisplay"
+            ],
+            "WindowsObservedWindow": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow"
+            ],
+            "WindowsOpenWindow": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow"
+            ],
+            "WindowsWindowHost": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost"
+            ],
+            "WindowsWindowHostOptions": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHostOptions"
+            ],
+            "WindowsWindowOwner": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowOwner"
+            ]
+          }
+        }
+      ],
+      "./windows": [
+        {
+          "target": "./dist/windows.d.ts",
+          "conditions": {
+            "types": "./dist/windows.d.ts",
+            "react-native": "./src/windows.ts",
+            "default": "./dist/windows.js"
+          },
+          "symbols": {
+            "WindowsCloseRequest": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest"
+            ],
+            "WindowsDesktopLayout": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopLayout"
+            ],
+            "WindowsDesktopSnapshot": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopSnapshot"
+            ],
+            "WindowsObservedDisplay": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedDisplay"
+            ],
+            "WindowsObservedWindow": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow"
+            ],
+            "WindowsOpenWindow": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow"
+            ],
+            "WindowsWindowHost": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost"
+            ],
+            "WindowsWindowHostOptions": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHostOptions"
+            ],
+            "WindowsWindowOwner": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowOwner"
+            ],
+            "createWindowsWindowHost": [
+              "@nyc-tron/windows-fluent-fabric/dist/windows.d.ts#createWindowsWindowHost"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "declarations": {
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination": {
+      "signatures": [
+        "export interface Destination {\n    readonly id: string;\n    readonly label: string;\n    readonly glyph?: string;\n    readonly disabled?: boolean;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationView": {
+      "signatures": [
+        "export declare function TronNavigationView({ items, footerItems, selectedId, paneMode, paneOpen, paneTitle, settingsVisible, onSelectionRequested, onPaneOpenRequested, onSettingsRequested, onNativeError, style }: TronNavigationViewProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationViewProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationViewProps": {
+      "signatures": [
+        "export interface TronNavigationViewProps {\n    readonly items: readonly Destination[];\n    readonly footerItems?: readonly Destination[];\n    readonly selectedId: string | null;\n    readonly paneMode?: \"auto\" | \"expanded\" | \"compact\" | \"minimal\";\n    readonly paneOpen: boolean;\n    readonly paneTitle?: string;\n    readonly settingsVisible?: boolean;\n    readonly onSelectionRequested: (id: string) => void;\n    readonly onPaneOpenRequested: (open: boolean) => void;\n    readonly onSettingsRequested?: () => void;\n    readonly onNativeError?: (error: Error) => void;\n    readonly style?: StyleProp<ViewStyle>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination",
+        "react-native@0.85.3/Libraries/StyleSheet/StyleSheet.d.ts#StyleProp",
+        "react-native@0.85.3/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@5.9.3/lib/lib.es2022.error.d.ts#Error",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Error"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#validateDestinations": {
+      "signatures": [
+        "export declare function validateDestinations(items: readonly Destination[], footer: readonly Destination[], selectedId: string | null): void;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#Destination"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#Listener": {
+      "signatures": [
+        "type Listener = () => void;"
+      ],
+      "references": []
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#NavigationBindingOwner": {
+      "signatures": [
+        "declare class NavigationBindingOwner {\n    private snapshot;\n    private readonly changes;\n    private readonly events;\n    private attached;\n    readonly getSnapshot: () => Snapshot;\n    readonly subscribe: (listener: Listener) => (() => void);\n    private requireLive;\n    private update;\n    readonly transport: WindowsNativeNavigationTransport;\n    attach(token: object): () => void;\n    emit(token: object, event: WindowsNativeNavigationEvent): void;\n    dispose(): void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#Listener",
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#Snapshot",
+        "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNativeNavigationEvent",
+        "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNativeNavigationTransport"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#Snapshot": {
+      "signatures": [
+        "interface Snapshot extends WindowsNavigationState {\n    readonly disposed: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNavigationState"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#WindowsNavigationBinding": {
+      "signatures": [
+        "export interface WindowsNavigationBinding {\n    readonly transport: WindowsNativeNavigationTransport;\n    dispose(): void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNativeNavigationTransport"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#createWindowsNavigationBinding": {
+      "signatures": [
+        "export declare function createWindowsNavigationBinding(): WindowsNavigationBinding;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#WindowsNavigationBinding"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#navigationBindingOwner": {
+      "signatures": [
+        "export declare function navigationBindingOwner(binding: WindowsNavigationBinding): NavigationBindingOwner;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#NavigationBindingOwner",
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#WindowsNavigationBinding"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-host.windows.d.ts#WindowsNavigationHost": {
+      "signatures": [
+        "export declare function WindowsNavigationHost({ binding, style, onNativeError }: WindowsNavigationHostProps): import(\"react\").JSX.Element | null;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-host.windows.d.ts#WindowsNavigationHostProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/navigation-host.windows.d.ts#WindowsNavigationHostProps": {
+      "signatures": [
+        "export interface WindowsNavigationHostProps {\n    readonly binding: WindowsNavigationBinding;\n    readonly style?: StyleProp<ViewStyle>;\n    readonly onNativeError?: (error: Error) => void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/navigation-binding.d.ts#WindowsNavigationBinding",
+        "react-native@0.85.3/Libraries/StyleSheet/StyleSheet.d.ts#StyleProp",
+        "react-native@0.85.3/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@5.9.3/lib/lib.es2022.error.d.ts#Error",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Error"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-controller.d.ts#WindowsDesktopTransport": {
+      "signatures": [
+        "export interface WindowsDesktopTransport {\n    connect(primaryWindowId: string, componentName: string): Promise<string>;\n    read(ownerToken: string): Promise<string>;\n    open(ownerToken: string, request: string): Promise<string>;\n    move(ownerToken: string, id: string, request: string): Promise<string>;\n    focus(ownerToken: string, id: string): Promise<string>;\n    minimize(ownerToken: string, id: string): Promise<string>;\n    restore(ownerToken: string, id: string): Promise<string>;\n    requestClose(ownerToken: string, id: string): Promise<string>;\n    resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;\n    dispose(ownerToken: string): Promise<void>;\n    onSnapshot(listener: (json: string) => void): {\n        remove(): void;\n    };\n    onError(listener: (message: string) => void): {\n        remove(): void;\n    };\n}"
+      ],
+      "references": [
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-controller.d.ts#connectWindowsWindowHost": {
+      "signatures": [
+        "export declare function connectWindowsWindowHost(transport: WindowsDesktopTransport, options: WindowsWindowHostOptions): Promise<WindowsWindowHost>;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-controller.d.ts#WindowsDesktopTransport",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHostOptions",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest": {
+      "signatures": [
+        "export interface WindowsCloseRequest {\n    readonly id: string;\n    readonly generation: string;\n    readonly token: string;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopLayout": {
+      "signatures": [
+        "export interface WindowsDesktopLayout {\n    readonly schema: 1;\n    readonly referenceDpi: number;\n    readonly layout: LayoutSnapshot;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#LayoutSnapshot"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopSnapshot": {
+      "signatures": [
+        "export interface WindowsDesktopSnapshot {\n    readonly schema: 1;\n    readonly ownerToken: string;\n    readonly sequence: number;\n    readonly referenceDpi: number;\n    readonly windows: readonly WindowsObservedWindow[];\n    readonly displays: readonly WindowsObservedDisplay[];\n    readonly focusedId: string | null;\n    readonly pendingCloses: readonly WindowsCloseRequest[];\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedDisplay",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedDisplay": {
+      "signatures": [
+        "export interface WindowsObservedDisplay extends DisplayInfo {\n    readonly pixelBounds: Rect;\n    readonly pixelWorkArea: Rect;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DisplayInfo"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow": {
+      "signatures": [
+        "export interface WindowsObservedWindow extends WindowRecord {\n    readonly generation: string;\n    readonly primary: boolean;\n    readonly pixelRect: Rect;\n    readonly dpi: number;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRecord"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow": {
+      "signatures": [
+        "export interface WindowsOpenWindow {\n    readonly id: string;\n    readonly title: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost": {
+      "signatures": [
+        "export interface WindowsWindowHost {\n    snapshot(): WindowsDesktopSnapshot;\n    refresh(): Promise<WindowsDesktopSnapshot>;\n    open(spec: WindowsOpenWindow): Promise<WindowsObservedWindow>;\n    move(id: string, target: {\n        readonly displayId: string;\n        readonly rect: Rect;\n    }): Promise<void>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    restore(id: string): Promise<void>;\n    requestClose(id: string): Promise<void>;\n    resolveClose(request: WindowsCloseRequest, accepted: boolean): Promise<void>;\n    captureLayout(): WindowsDesktopLayout;\n    restoreLayout(snapshot: WindowsDesktopLayout): Promise<void>;\n    beginDrag(sourceId: string, payload: unknown): Outcome;\n    dragOver(token: string, targetId: string | null): Outcome;\n    drop(token: string, targetId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): Promise<Outcome>;\n    cancelDrag(token: string): Outcome;\n    dispose(): Promise<void>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DragOffer",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopLayout",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsDesktopSnapshot",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHostOptions": {
+      "signatures": [
+        "export interface WindowsWindowHostOptions {\n    readonly primaryWindowId: string;\n    readonly componentName: string;\n    readonly owner: WindowsWindowOwner;\n    readonly onCloseRequested: (request: WindowsCloseRequest) => void;\n    readonly onError?: (error: Error) => void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowOwner",
+        "typescript@5.9.3/lib/lib.es2022.error.d.ts#Error",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Error"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowOwner": {
+      "signatures": [
+        "export interface WindowsWindowOwner {\n    getState(): WindowRegistryState;\n    commit(state: WindowRegistryState): void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRegistryState"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/windows.d.ts#createWindowsWindowHost": {
+      "signatures": [
+        "export declare function createWindowsWindowHost(options: WindowsWindowHostOptions): Promise<WindowsWindowHost>;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHostOptions",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    }
+  },
+  "externalTypes": {
+    "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/folds.d.ts",
+      "symbol": "Rect",
+      "signatures": [
+        "export interface Rect {\n    readonly x: number;\n    readonly y: number;\n    readonly width: number;\n    readonly height: number;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DisplayInfo": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "DisplayInfo",
+      "signatures": [
+        "export interface DisplayInfo {\n    readonly id: string;\n    readonly bounds: Rect;\n    readonly reserved?: readonly Rect[];\n    readonly primary?: boolean;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DragOffer": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "DragOffer",
+      "signatures": [
+        "export interface DragOffer {\n    readonly sourceId: string;\n    readonly targetId: string;\n    readonly payload: unknown;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#LayoutSnapshot": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "LayoutSnapshot",
+      "signatures": [
+        "export interface LayoutSnapshot {\n    readonly version: 1;\n    readonly windows: readonly SnapshotWindow[];\n    readonly focusedId: string | null;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#Outcome": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "Outcome",
+      "signatures": [
+        "export interface Outcome {\n    readonly state: WindowRegistryState;\n    readonly ok: boolean;\n    readonly reason?: RejectReason;\n    readonly token?: string;\n    readonly offer?: DragOffer;\n    readonly transfer?: DragOffer;\n    readonly accepted?: boolean;\n    readonly cancelledToken?: string;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRecord": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "WindowRecord",
+      "signatures": [
+        "export interface WindowRecord {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRegistryState": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "WindowRegistryState",
+      "signatures": [
+        "export interface WindowRegistryState {\n    readonly windows: readonly WindowRecord[];\n    readonly focusedId: string | null;\n    readonly drag: DragSession | null;\n    readonly tokenSeq: number;\n}"
+      ]
+    },
+    "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNativeNavigationEvent": {
+      "package": "@nyc-tron/windows-fluent",
+      "version": "1.0.0",
+      "file": "dist/types.d.ts",
+      "symbol": "WindowsNativeNavigationEvent",
+      "signatures": [
+        "export type WindowsNativeNavigationEvent = {\n    readonly type: \"destinationInvoked\";\n    readonly id: string;\n} | {\n    readonly type: \"paneOpenChanged\";\n    readonly open: boolean;\n} | {\n    readonly type: \"settingsInvoked\";\n};"
+      ]
+    },
+    "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNativeNavigationTransport": {
+      "package": "@nyc-tron/windows-fluent",
+      "version": "1.0.0",
+      "file": "dist/types.d.ts",
+      "symbol": "WindowsNativeNavigationTransport",
+      "signatures": [
+        "export interface WindowsNativeNavigationTransport {\n    setDestinations(items: readonly WindowsDestination[], footerItems: readonly WindowsDestination[]): void;\n    setSelectedId(selectedId: string | null): void;\n    setPaneMode(mode: WindowsPaneMode): void;\n    setPaneOpen(open: boolean): void;\n    setPaneTitle(title: string): void;\n    setSettingsVisible(enabled: boolean): void;\n    subscribe(onEvent: (event: WindowsNativeNavigationEvent) => void): () => void;\n}"
+      ]
+    },
+    "@nyc-tron/windows-fluent@1.0.0/dist/types.d.ts#WindowsNavigationState": {
+      "package": "@nyc-tron/windows-fluent",
+      "version": "1.0.0",
+      "file": "dist/types.d.ts",
+      "symbol": "WindowsNavigationState",
+      "signatures": [
+        "export interface WindowsNavigationState {\n    readonly items: readonly WindowsDestination[];\n    readonly footerItems?: readonly WindowsDestination[];\n    readonly selectedId: string | null;\n    readonly paneMode: WindowsPaneMode;\n    readonly paneOpen: boolean;\n    readonly paneTitle?: string;\n    readonly settingsVisible?: boolean;\n}"
+      ]
+    },
+    "@types/react@19.3.0/index.d.ts#$module": {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "file": "index.d.ts",
+      "symbol": "$module",
+      "signatures": []
+    },
+    "@types/react@19.3.0/index.d.ts#React.JSX": {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "file": "index.d.ts",
+      "symbol": "React.JSX",
+      "signatures": []
+    },
+    "@types/react@19.3.0/index.d.ts#React.JSX.Element": {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "file": "index.d.ts",
+      "symbol": "React.JSX.Element",
+      "signatures": [
+        "interface Element extends React.ReactElement<any, any> {\n}"
+      ]
+    },
+    "react-native@0.85.3/Libraries/StyleSheet/StyleSheet.d.ts#StyleProp": {
+      "package": "react-native",
+      "version": "0.85.3",
+      "file": "Libraries/StyleSheet/StyleSheet.d.ts",
+      "symbol": "StyleProp",
+      "signatures": [
+        "export type StyleProp<T> = T | RecursiveArray<T | Falsy> | Falsy;"
+      ]
+    },
+    "react-native@0.85.3/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle": {
+      "package": "react-native",
+      "version": "0.85.3",
+      "file": "Libraries/StyleSheet/StyleSheetTypes.d.ts",
+      "symbol": "ViewStyle",
+      "signatures": [
+        "export interface ViewStyle extends FlexStyle, ShadowStyleIOS, TransformsStyle {\n    backfaceVisibility?: 'visible' | 'hidden' | undefined;\n    backgroundColor?: ColorValue | undefined;\n    borderBlockColor?: ColorValue | undefined;\n    borderBlockEndColor?: ColorValue | undefined;\n    borderBlockStartColor?: ColorValue | undefined;\n    borderBottomColor?: ColorValue | undefined;\n    borderBottomEndRadius?: AnimatableNumericValue | string | undefined;\n    borderBottomLeftRadius?: AnimatableNumericValue | string | undefined;\n    borderBottomRightRadius?: AnimatableNumericValue | string | undefined;\n    borderBottomStartRadius?: AnimatableNumericValue | string | undefined;\n    borderColor?: ColorValue | undefined;\n    borderCurve?: 'circular' | 'continuous' | undefined;\n    borderEndColor?: ColorValue | undefined;\n    borderEndEndRadius?: AnimatableNumericValue | string | undefined;\n    borderEndStartRadius?: AnimatableNumericValue | string | undefined;\n    borderLeftColor?: ColorValue | undefined;\n    borderRadius?: AnimatableNumericValue | string | undefined;\n    borderRightColor?: ColorValue | undefined;\n    borderStartColor?: ColorValue | undefined;\n    borderStartEndRadius?: AnimatableNumericValue | string | undefined;\n    borderStartStartRadius?: AnimatableNumericValue | string | undefined;\n    borderStyle?: 'solid' | 'dotted' | 'dashed' | undefined;\n    borderTopColor?: ColorValue | undefined;\n    borderTopEndRadius?: AnimatableNumericValue | string | undefined;\n    borderTopLeftRadius?: AnimatableNumericValue | string | undefined;\n    borderTopRightRadius?: AnimatableNumericValue | string | undefined;\n    borderTopStartRadius?: AnimatableNumericValue | string | undefined;\n    outlineColor?: ColorValue | undefined;\n    outlineOffset?: AnimatableNumericValue | undefined;\n    outlineStyle?: 'solid' | 'dotted' | 'dashed' | undefined;\n    outlineWidth?: AnimatableNumericValue | undefined;\n    opacity?: AnimatableNumericValue | undefined;\n    elevation?: number | undefined;\n    pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto' | undefined;\n    isolation?: 'auto' | 'isolate' | undefined;\n    cursor?: CursorValue | undefined;\n    boxShadow?: ReadonlyArray<BoxShadowValue> | string | undefined;\n    filter?: ReadonlyArray<FilterFunction> | string | undefined;\n    mixBlendMode?: BlendMode | undefined;\n    experimental_backgroundImage?: ReadonlyArray<BackgroundImageValue> | string | undefined;\n    experimental_backgroundSize?: ReadonlyArray<BackgroundSizeValue> | string | undefined;\n    experimental_backgroundPosition?: ReadonlyArray<BackgroundPositionValue> | string | undefined;\n    experimental_backgroundRepeat?: ReadonlyArray<BackgroundRepeatValue> | string | undefined;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2015.iterable.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2015.promise.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "Promise: PromiseConstructor"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2015.symbol.wellknown.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n    readonly [Symbol.toStringTag]: string;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2018.promise.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n    finally(onfinally?: (() => void) | undefined | null): Promise<T>;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2022.error.d.ts#Error": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2022.error.d.ts",
+      "symbol": "Error",
+      "signatures": [
+        "interface Error {\n    cause?: unknown;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es5.d.ts#Error": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es5.d.ts",
+      "symbol": "Error",
+      "signatures": [
+        "interface Error {\n    name: string;\n    message: string;\n    stack?: string;\n}",
+        "Error: ErrorConstructor"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es5.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es5.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;\n    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;\n}"
+      ]
+    }
+  }
+}

@@ -4,7 +4,8 @@ import {placePopover,hasUsableRegion,type Rect2D} from "./popover-position.ts";
 import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {joinClasses} from "../styles.ts";
-export type CommandMenuItem=Readonly<{id:string;label:string;description?:string;disabled?:boolean;danger?:boolean}>;
+import type { CommandMenuItem } from "@nyc-tron/core/overlays";
+export type { CommandMenuItem } from "@nyc-tron/core/overlays";
 export interface CommandPopoverProps{
  scope?:string;
  visible:boolean;

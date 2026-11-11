@@ -5,6 +5,7 @@ import {fileURLToPath} from "node:url";
 import {dirname,resolve} from "node:path";
 import {runInNewContext} from "node:vm";
 import ts from "typescript";
+import * as sharedOverlays from "../../../core/src/overlays.ts";
 import {auditAccessibility} from "../../src/components/shell/a11y-audit.ts";
 
 // N-06 per-control screen-reader audit. Each control renders once on a
@@ -21,6 +22,8 @@ function loader(os="ios"){
   const element=(type,props,key)=>({type,props,key});
   const store=init=>{let value=init();return {getState:()=>value,setState:n=>{value={...value,...(typeof n==="function"?n(value):n)};},subscribe:()=>()=>{}};};
   const mocks={
+    // Resolve the real peer-free implementation after its shared-owner extraction.
+    "@nyc-tron/core/overlays": sharedOverlays,
     react:{
       useRef:v=>{const i=cursor++;return slots[i]??(slots[i]={current:v});},
       useEffect:()=>{cursor++;},useLayoutEffect:()=>{cursor++;},

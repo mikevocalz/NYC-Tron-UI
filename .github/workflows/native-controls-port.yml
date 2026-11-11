@@ -10,10 +10,21 @@ on:
       - "packages/core/**"
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
+      - "examples/native-feel/**"
+      - "tooling/consumer*"
+      - "tooling/consumer-fixtures/**"
+      - "tooling/pack-release.mjs"
+      - "tooling/native/**"
+      - "tooling/tests/media-acceptance.test.mjs"
+      - "tooling/tests/native-ui-acceptance.test.mjs"
+      - "tooling/tests/native-ui-transport.test.mjs"
+      - "tooling/tests/native-artifact.test.mjs"
+      - "tooling/tests/metro-warmup.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
       - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
   push:
     branches:
       - "feat/audiokit-native-instruments-2026-11-04"
@@ -28,11 +39,24 @@ on:
       - "packages/core/**"
       - "packages/native-charts/**"
       - "examples/native-instruments/**"
+      - "examples/native-feel/**"
+      - "tooling/consumer*"
+      - "tooling/consumer-fixtures/**"
+      - "tooling/pack-release.mjs"
+      - "tooling/native/**"
+      - "tooling/tests/media-acceptance.test.mjs"
+      - "tooling/tests/native-ui-acceptance.test.mjs"
+      - "tooling/tests/native-ui-transport.test.mjs"
+      - "tooling/tests/native-artifact.test.mjs"
+      - "tooling/tests/metro-warmup.test.mjs"
       - ".github/workflows/native-controls-port.yml"
       - "packages/expo-controls/**"
       - "packages/ui/**"
       - "pnpm-workspace.yaml"
+      - "pnpm-lock.yaml"
   workflow_dispatch:
+  # The release calls this exact workflow at the same candidate commit.
+  workflow_call:
 concurrency:
   group: nyc-tron-native-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -55,6 +79,11 @@ jobs:
       - run: node --test packages/reserved-regions/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
+      - run: node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
+      - run: node --test tooling/tests/native-ui-acceptance.test.mjs
+      - run: node --test tooling/tests/native-ui-transport.test.mjs
+      - run: node --test tooling/tests/native-artifact.test.mjs
+      - run: node --test tooling/tests/metro-warmup.test.mjs
       - run: node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs
       - run: corepack pnpm --dir packages/native-controls typecheck
       - run: corepack pnpm --dir packages/native-navigation typecheck
@@ -104,6 +133,7 @@ jobs:
                    package/android/build.gradle package/android/src/main/AndroidManifest.xml \
                    package/android/src/main/res/xml/nyctron_file_paths.xml \
                    package/android/src/main/java/com/nyctron/platformservices/NYCTronDocumentsModule.kt \
+                   package/android/src/main/java/com/nyctron/platformservices/IsoBmffTimeline.java \
                    package/expo-module.config.json package/dist/index.native.js package/dist/haptics/index.native.js; do
             echo "$entries" | grep -qx "$f" || { echo "missing $f"; exit 1; }
           done
@@ -121,11 +151,15 @@ jobs:
           done
 
   android:
-    name: Android native Compose compile
+    name: Android installed-tarball compile, media and native UI
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
+    env:
+      NYC_TRON_ACCEPTANCE: reference
     steps:
       - uses: actions/checkout@v4
+      - name: Set the consumer location on this runner
+        run: echo "NYC_TRON_CONSUMER=$RUNNER_TEMP/nyc-tron-native-consumer" >> "$GITHUB_ENV"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -133,99 +167,244 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
+      - name: Verify bounded native MP4 track timelines
+        run: node tooling/native/verify-media-timeline.mjs
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
+      - name: Build and pack this candidate for a clean Expo consumer
+        run: |
+          corepack pnpm build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
+          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" expo-native
+          node tooling/consumer-release.mjs install "$NYC_TRON_CONSUMER"
+      - name: Typecheck the installed public API and bundle its Android entry
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app
+        run: |
+          npm run typecheck
+          npx --no-install expo export --platform android --output-dir "$RUNNER_TEMP/nyc-tron-android-js"
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
       - name: Expo development app native generation
-        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform android --no-install --non-interactive
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app
+        run: npx --no-install expo prebuild --platform android --no-install --non-interactive
         env:
           EXPO_NO_TELEMETRY: "1"
           CI: "1"
       - name: Native Kotlin / Compose debug build (instruments + Vico charts)
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/android
         run: |
-          cd examples/native-instruments/android
           chmod +x ./gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Native pointer capture and video owner are in the APK
+        run: |
+          apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
+          unzip -o -q "$apk" 'classes*.dex' -d /tmp/instruments-dex
+          for cls in NYCTronInstrumentsModule TronPointerCaptureView TronVideoOwner; do
+            grep -aq "com/nyctron/instruments/$cls" /tmp/instruments-dex/classes*.dex \
+              || { echo "$cls not compiled into the APK"; exit 1; }
+          done
       - name: Reserved-regions v2 module is in the APK
         run: |
-          apk=$(find examples/native-instruments/android/app/build/outputs/apk/debug -name '*.apk' -print -quit)
+          apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' -d /tmp/regions-dex
           # grep -c over a single dex prints a bare count, so test the bytes directly.
-          cat /tmp/regions-dex/classes*.dex | grep -aq 'com/nyctron/reservedregions/NYCTronReservedRegionsModule' \
+          grep -aq 'com/nyctron/reservedregions/NYCTronReservedRegionsModule' /tmp/regions-dex/classes*.dex \
             || { echo "NYCTronReservedRegionsModule not compiled into the APK"; exit 1; }
       - name: Hardware-keys v2 module is in the APK
         run: |
-          apk=$(find examples/native-instruments/android/app/build/outputs/apk/debug -name '*.apk' -print -quit)
+          apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' -d /tmp/keys-dex
           for cls in NYCTronHardwareKeysModule UnhandledKeyAttacher; do
-            cat /tmp/keys-dex/classes*.dex | grep -aq "com/nyctron/hardwarekeys/$cls" \
+            grep -aq "com/nyctron/hardwarekeys/$cls" /tmp/keys-dex/classes*.dex \
               || { echo "$cls not compiled into the APK"; exit 1; }
           done
-      - name: Platform-services v2 modules and FileProvider are in the APK
+      - name: Platform-services v2 modules, media decoder and FileProvider are in the APK
         run: |
-          apk=$(find examples/native-instruments/android/app/build/outputs/apk/debug -name '*.apk' -print -quit)
+          apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
           unzip -o -q "$apk" 'classes*.dex' AndroidManifest.xml -d /tmp/services-apk
-          for cls in NYCTronHapticsModule NYCTronDocumentsModule NYCTronPlaybackSessionModule NYCTronFileProvider; do
-            cat /tmp/services-apk/classes*.dex | grep -aq "com/nyctron/platformservices/$cls" \
+          for cls in NYCTronHapticsModule NYCTronDocumentsModule NYCTronPlaybackSessionModule NYCTronMediaDecoderModule NYCTronFileProvider; do
+            grep -aq "com/nyctron/platformservices/$cls" /tmp/services-apk/classes*.dex \
               || { echo "$cls not compiled into the APK"; exit 1; }
           done
           # The binary manifest stores strings as UTF-16LE; strip the zero bytes to read them.
           tr -d '\000' < /tmp/services-apk/AndroidManifest.xml | grep -aq 'nyctron.files' \
             || { echo "NYCTronFileProvider authority not merged into the app manifest"; exit 1; }
       - name: Vico resolved at the pinned version
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/android
         run: |
-          cd examples/native-instruments/android
           ./gradlew :nyc-tron-native-charts:dependencies --configuration debugRuntimeClasspath --no-daemon \
             | tee /tmp/charts-deps.txt
           grep -q 'com.patrykandpatrick.vico:compose-m3:3.2.3' /tmp/charts-deps.txt
+      - name: Install the pinned official native UI test driver
+        run: |
+          node tooling/native/install-maestro.mjs "$RUNNER_TEMP/nyc-tron-maestro"
+          echo "MAESTRO_BIN=$RUNNER_TEMP/nyc-tron-maestro/maestro/bin/maestro" >> "$GITHUB_ENV"
+      - name: Execute the installed decoder and OS-driven UI on Android
+        shell: bash
+        run: |
+          set -euo pipefail
+          export ANDROID_USER_HOME="$RUNNER_TEMP/nyc-tron-android-user"
+          export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
+          mkdir -p "$ANDROID_AVD_HOME"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "system-images;android-35;google_apis;x86_64" "emulator" "platform-tools"
+          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd --force -n NYCTronMediaAcceptance -k "system-images;android-35;google_apis;x86_64" --path "$ANDROID_AVD_HOME/NYCTronMediaAcceptance.avd"
+          "$ANDROID_HOME/emulator/emulator" -list-avds | grep -Fx 'NYCTronMediaAcceptance'
+          if [[ -e /dev/kvm ]]; then sudo chmod 666 /dev/kvm; fi
+          "$ANDROID_HOME/emulator/emulator" -avd NYCTronMediaAcceptance -port 5554 -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 3072 > "$RUNNER_TEMP/nyc-tron-media-emulator.log" 2>&1 &
+          nyc_tron_emulator_pid=$!
+          trap 'kill "$nyc_tron_emulator_pid" 2>/dev/null || true' EXIT
+          apk=$(find "$NYC_TRON_CONSUMER/app/android/app/build/outputs/apk/debug" -name '*.apk' -print -quit)
+          test -n "$apk"
+          # Each runner owns its app/Metro lifetime. Collect both independent
+          # results from this build even when one fails; either failure blocks CI.
+          media_status=0
+          node tooling/native/run-media-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER" || media_status=$?
+          ui_status=0
+          node tooling/native/run-ui-acceptance.mjs android "$apk" "$NYC_TRON_CONSUMER" || ui_status=$?
+          test "$media_status" -eq 0 && test "$ui_status" -eq 0
+      - name: Save installed-package evidence and the Android acceptance build
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-release-consumer-android
+          path: |
+            ${{ runner.temp }}/nyc-tron-native-consumer/consumer.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/installed-packages.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/app/package-lock.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/app/android/app/build/outputs/apk/debug/*.apk
+            ${{ runner.temp }}/nyc-tron-android-js/metadata.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-android
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-android
+            ${{ runner.temp }}/nyc-tron-maestro/provenance.json
+            ${{ runner.temp }}/nyc-tron-media-emulator.log
+          retention-days: 7
 
   ios:
-    name: iOS native SwiftUI simulator compile
+    name: iOS installed-tarball compile, media and native UI
     runs-on: macos-latest
-    timeout-minutes: 55
+    timeout-minutes: 90
+    env:
+      NYC_TRON_ACCEPTANCE: reference
     steps:
       - uses: actions/checkout@v4
+      - name: Set the consumer location on this runner
+        run: echo "NYC_TRON_CONSUMER=$RUNNER_TEMP/nyc-tron-native-consumer" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: "24.19.0"
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
+      - name: Build and pack this candidate for a clean Expo consumer
+        run: |
+          corepack pnpm build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
+          node tooling/consumer-release.mjs prepare "$RUNNER_TEMP/nyc-tron-packs" "$NYC_TRON_CONSUMER" expo-native
+          node tooling/consumer-release.mjs install "$NYC_TRON_CONSUMER"
+      - name: Typecheck the installed public API and bundle its iOS entry
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app
+        run: |
+          npm run typecheck
+          npx --no-install expo export --platform ios --output-dir "$RUNNER_TEMP/nyc-tron-ios-js"
+        env:
+          EXPO_NO_TELEMETRY: "1"
+          CI: "1"
       - name: Generate native iOS development app
-        run: corepack pnpm --dir examples/native-instruments exec expo prebuild --platform ios --no-install --non-interactive
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app
+        run: npx --no-install expo prebuild --platform ios --no-install --non-interactive
         env:
           EXPO_NO_TELEMETRY: "1"
           CI: "1"
       - name: Resolve native pods and SwiftUI bridge
-        working-directory: examples/native-instruments/ios
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
           pod install
           grep -q "NYCTronCharts" Podfile.lock || { echo "NYCTronCharts pod not linked"; exit 1; }
       - name: Build iOS simulator without code signing
-        working-directory: examples/native-instruments/ios
+        id: ios_build
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
           workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
           if [ -z "$workspace" ]; then echo "Missing iOS workspace"; exit 1; fi
           scheme=$(basename "$workspace" .xcworkspace)
           xcodebuild -workspace "$workspace" -scheme "$scheme" \
             -configuration Debug -sdk iphonesimulator \
+            -derivedDataPath "$RUNNER_TEMP/nyc-tron-ios-derived" \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO build | tee /tmp/xcodebuild.log
           test "${PIPESTATUS[0]}" -eq 0
       - name: Reserved-regions pod compiled with the macro plugin
-        working-directory: examples/native-instruments/ios
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
           grep -q 'NYCTronReservedRegions' Podfile.lock || { echo "NYCTronReservedRegions pod not installed"; exit 1; }
           grep -q 'NYCTronReservedRegionsModule.swift' /tmp/xcodebuild.log || { echo "module source not compiled"; exit 1; }
+      - name: Native pointer capture and video surface compiled
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
+        run: |
+          grep -q 'NYCTronInstruments' Podfile.lock || { echo "NYCTronInstruments pod not installed"; exit 1; }
+          for f in TronPointerCaptureView.swift TronPointerInputView.swift TronVideoPlayerView.swift; do
+            grep -q "$f" /tmp/xcodebuild.log || { echo "$f not compiled"; exit 1; }
+          done
       - name: Hardware-keys pod compiled with the macro plugin
-        working-directory: examples/native-instruments/ios
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
           grep -q 'NYCTronHardwareKeys' Podfile.lock || { echo "NYCTronHardwareKeys pod not installed"; exit 1; }
           for f in NYCTronHardwareKeysModule.swift HardwareKeyRouter.swift UIViewController+hardwareKeyCommand.swift; do
             grep -q "$f" /tmp/xcodebuild.log || { echo "$f not compiled"; exit 1; }
           done
       - name: Platform-services pod compiled with the macro plugin
-        working-directory: examples/native-instruments/ios
+        working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
           grep -q 'NYCTronPlatformServices' Podfile.lock || { echo "NYCTronPlatformServices pod not installed"; exit 1; }
-          for f in NYCTronHapticsModule.swift NYCTronDocumentsModule.swift NYCTronPlaybackSessionModule.swift DocumentPickerSession.swift; do
+          for f in NYCTronHapticsModule.swift NYCTronDocumentsModule.swift NYCTronPlaybackSessionModule.swift NYCTronMediaDecoderModule.swift DocumentPickerSession.swift; do
             grep -q "$f" /tmp/xcodebuild.log || { echo "$f not compiled"; exit 1; }
           done
+      - name: Archive the simulator app for interaction acceptance
+        run: |
+          app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          test -n "$app"
+          ditto -c -k --keepParent "$app" "$RUNNER_TEMP/nyc-tron-ios-simulator.zip"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Install the pinned official native UI test driver
+        id: ios_ui_driver
+        run: |
+          node tooling/native/install-maestro.mjs "$RUNNER_TEMP/nyc-tron-maestro"
+          echo "MAESTRO_BIN=$RUNNER_TEMP/nyc-tron-maestro/maestro/bin/maestro" >> "$GITHUB_ENV"
+      - name: Boot one simulator for both native acceptance runners
+        id: ios_boot
+        run: node tooling/native/prewarm-ios.mjs
+      - name: Execute the installed native decoder on iOS
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          test -n "$app"
+          node tooling/native/run-media-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
+      - name: Execute the reference and pointer UI through XCTest touches
+        if: ${{ !cancelled() && steps.ios_build.outcome == 'success' && steps.ios_ui_driver.outcome == 'success' && steps.ios_boot.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          test -n "$app"
+          node tooling/native/run-ui-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
+      - name: Save installed-package evidence and the iOS acceptance build
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-release-consumer-ios
+          path: |
+            ${{ runner.temp }}/nyc-tron-native-consumer/consumer.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/installed-packages.json
+            ${{ runner.temp }}/nyc-tron-native-consumer/app/package-lock.json
+            ${{ runner.temp }}/nyc-tron-ios-js/metadata.json
+            ${{ runner.temp }}/nyc-tron-ios-simulator.zip
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ios
+            ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-ios
+            ${{ runner.temp }}/nyc-tron-ios-boot
+            ${{ runner.temp }}/nyc-tron-maestro/provenance.json
+            /tmp/xcodebuild.log
+          retention-days: 7

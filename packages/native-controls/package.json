@@ -42,6 +42,17 @@
       "types": "./dist/NativeVideoPlayer.d.ts",
       "react-native": "./dist/NativeVideoPlayer.js",
       "default": "./dist/NativeVideoPlayer.js"
+    },
+    "./pointer-input": {
+      "types": "./dist/pointer-input.d.ts",
+      "react-native": "./dist/pointer-input.js",
+      "default": "./dist/pointer-input.js"
+    },
+    "./NativePointerInput": {
+      "types": "./dist/NativePointerInput.d.ts",
+      "browser": "./dist/NativePointerInput.web.js",
+      "react-native": "./dist/NativePointerInput.js",
+      "default": "./dist/NativePointerInput.js"
     }
   },
   "scripts": {

@@ -7,10 +7,16 @@ on:
       - "packages/ui/src/components/layout/**"
       - "packages/expo-controls/**"
       - "packages/ui/tests/browser/native-feel.spec.mjs"
+      - "packages/ui/tests/browser/reference-app.spec.mjs"
+      - "packages/ui/tests/browser/pointer-input.spec.mjs"
+      - "packages/ui/tests/browser/fixtures/pointer-input.tsx"
+      - "packages/native-controls/**"
+      - "packages/ui/tests/browser/fixtures/reference-app.tsx"
       - "packages/ui/tests/browser/fixtures/native-feel.tsx"
       - "packages/ui/tests/browser/theme.css"
       - ".github/workflows/native-feel-preview.yml"
       - "pnpm-lock.yaml"
+  workflow_call:
 
 permissions:
   contents: read
@@ -29,14 +35,18 @@ jobs:
       - name: Install browser harness and Chromium
         working-directory: packages/ui/tests/browser
         run: npm ci --ignore-scripts --no-audit --no-fund && npx --no-install playwright install --with-deps chromium
+      - name: Verify reference async state ownership
+        run: node --test examples/native-feel/tests/reference-model.test.mjs
       - name: Exercise the reference screen and capture desktop and phone layouts
         working-directory: packages/ui/tests/browser
-        run: npx --no-install playwright test native-feel.spec.mjs
+        run: npx --no-install playwright test native-feel.spec.mjs reference-app.spec.mjs pointer-input.spec.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: native-feel-reference-captures
           path: |
             packages/ui/tests/browser/shots/native-feel-*.png
+            packages/ui/tests/browser/shots/reference-*.png
+            packages/ui/tests/browser/shots/reference-render-timings.json
             packages/ui/tests/browser/test-results/
           retention-days: 14

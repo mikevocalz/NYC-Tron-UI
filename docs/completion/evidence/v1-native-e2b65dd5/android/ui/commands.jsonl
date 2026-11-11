@@ -1,0 +1,16 @@
+{"file":"git","args":["-C","/home/runner/work/NYC-Tron-UI/NYC-Tron-UI","rev-parse","HEAD"],"elapsedMs":8,"status":0}
+{"file":"/opt/hostedtoolcache/node/24.19.0/x64/bin/node","args":["/home/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/consumer-release.mjs","check-install","/home/runner/work/_temp/nyc-tron-native-consumer"],"elapsedMs":73,"status":0}
+{"file":"/home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro","args":["--version"],"elapsedMs":3862,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","shell","getprop","sys.boot_completed"],"elapsedMs":29,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","shell","getprop","ro.build.version.sdk"],"elapsedMs":20,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","reverse","tcp:8081","tcp:8081"],"elapsedMs":6,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","install","-r","/home/runner/work/_temp/nyc-tron-native-consumer/app/android/app/build/outputs/apk/debug/app-debug.apk"],"elapsedMs":5111,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","shell","am","force-stop","com.nyctron.instruments.example"],"elapsedMs":178,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","shell","am","start","-n","com.nyctron.instruments.example/.MainActivity"],"elapsedMs":251,"status":0}
+{"file":"/home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro","args":["--device","emulator-5554","--platform","android","--no-ansi","test","--no-reinstall-driver","--format","junit","--output","/home/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-android/settings/report.xml","--test-output-dir","/home/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-android/settings/artifacts","--debug-output","/home/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-android/settings/debug","/home/runner/work/NYC-Tron-UI/NYC-Tron-UI/tooling/native/ui-flows/settings.yaml"],"elapsedMs":25162,"status":1}
+{"file":"/home/runner/work/_temp/nyc-tron-maestro/maestro/bin/maestro","args":["--device","emulator-5554","--platform","android","--no-ansi","hierarchy","--no-reinstall-driver"],"elapsedMs":11795,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","shell","screencap","-p","/sdcard/nyc-tron-ui-final.png"],"elapsedMs":438,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","pull","/sdcard/nyc-tron-ui-final.png","/home/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-android/final.png"],"elapsedMs":17,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","logcat","-d","-t","2000"],"elapsedMs":45,"status":0}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","reverse","--remove","tcp:8081"],"elapsedMs":7,"status":1}
+{"file":"/usr/local/lib/android/sdk/platform-tools/adb","args":["-s","emulator-5554","shell","am","force-stop","com.nyctron.instruments.example"],"elapsedMs":153,"status":0}

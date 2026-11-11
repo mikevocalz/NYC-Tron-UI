@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "runId": 42770189195,
+  "artifactId": 13741894753,
+  "headSha": "e2b65dd5e9288b193b6bfd807d6003b184b8c642",
+  "checkoutRevision": "cbe2ad15a8bad0ffb4c9a1b2dfca509973930976",
+  "tree": "f14ee19e0c18217246f27332217bd58be5df376c",
+  "mediaStatus": "passed",
+  "mediaChecks": [
+    "fixture-bytes",
+    "native-probe",
+    "frame-presentation-and-jpeg",
+    "bounded-frame-scaling",
+    "pcm-bytes-and-signal",
+    "pcm-resampling-and-tail",
+    "complete-presentation-index",
+    "indexed-frame-and-rejection",
+    "normalized-errors",
+    "cancelled-consumer",
+    "cache-deletion-and-recovery"
+  ],
+  "observed": {
+    "durationUs": 2000000,
+    "frameTimeUs": 500000,
+    "indexFrames": 40,
+    "indexedTimeUs": 1050000,
+    "pcmFrames": 24000,
+    "resampledFrames": 8000,
+    "upsampledFrames": 48000,
+    "fullResampledFrames": 32000,
+    "tailFrames": 4000,
+    "pcmPeak": 0.12998878955841064,
+    "pcmRms": 0.08835971083538909
+  },
+  "nativeArtifactSha256": "5a987ff9445a5ae2850b71bca12288e44ae114388c176109d6fdd825e29c34f0",
+  "recomputedExtractedAppPayload": true,
+  "uiStatus": "failed",
+  "uiFailure": "First Settings tap cancelled by simulator Recap digitizer race; no successful Settings/Editor/pointer receipt",
+  "observedFailureGeometry": {
+    "host": {
+      "left": 0,
+      "top": 62,
+      "right": 402,
+      "bottom": 840
+    },
+    "header": {
+      "left": 0,
+      "top": 62,
+      "right": 402,
+      "bottom": 134
+    },
+    "tabs": {
+      "left": 0,
+      "top": 775,
+      "right": 402,
+      "bottom": 840
+    }
+  },
+  "warmup": {
+    "media": {
+      "status": "ready",
+      "elapsedMs": 31960,
+      "bytes": 4626330,
+      "sha256": "b1419d660e6ae8466728ad9412e5ce02c78d7f8bce727314beb13b0372b8de29"
+    },
+    "reference": {
+      "schema": 1,
+      "phase": "metro-bundle-warmup",
+      "platform": "ios",
+      "entry": "reference",
+      "url": "http://localhost:8081/.expo/.virtual-metro-entry.bundle?platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.nyctron.instruments.example",
+      "startedAt": "2026-11-10T07:00:52.745Z",
+      "timeoutMs": 360000,
+      "maxBytes": 67108864,
+      "status": "ready",
+      "bytes": 5401071,
+      "httpStatus": 200,
+      "contentType": "application/javascript; charset=UTF-8",
+      "sha256": "3ae97d31d8635f3f9b554302da83030399a05430bb87bd666152ba58485e1059",
+      "elapsedMs": 9252
+    }
+  }
+}

@@ -5,6 +5,7 @@ import {fileURLToPath} from "node:url";
 import {dirname,resolve} from "node:path";
 import {runInNewContext} from "node:vm";
 import ts from "typescript";
+import * as sharedOverlays from "../../../core/src/overlays.ts";
 
 // Runs the real KeyboardShortcutHUD on a mocked iOS host with a fake
 // ChordRecorder. It proves the native recording contract (Change starts the
@@ -20,6 +21,8 @@ function harness(os){
   const store=init=>{let value=init();const subs=new Set();
     return {getState:()=>value,setState:next=>{value={...value,...(typeof next==="function"?next(value):next)};subs.forEach(s=>s());}};};
   const mocks={
+    // Resolve the real peer-free implementation after its shared-owner extraction.
+    "@nyc-tron/core/overlays": sharedOverlays,
     react:{
       useRef:v=>{const i=cursor++;return slots[i]??(slots[i]={current:v});},
       useEffect:(fn,deps)=>{const i=cursor++;const prev=slots[i];

@@ -1,0 +1,731 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "aa68e5ceb6875e02f73ee48dbdfa1c22641540d1",
+  "archives": [
+    {
+      "name": "@nyc-tron/core",
+      "filename": "nyc-tron-core-1.0.0.tgz",
+      "bytes": 49411,
+      "sha256": "7da37c7b4eb32abbc380a2e74e5c0560fe001da31e9f957e093117c6973b9771",
+      "files": [
+        {
+          "path": "dist/advanced-catalog.d.ts",
+          "bytes": 1091,
+          "sha256": "d3a3653ac4b1f33023abd1f28bb0c3294d428cb48d1a71ef02a22542af367ebd"
+        },
+        {
+          "path": "dist/advanced-catalog.d.ts.map",
+          "bytes": 815,
+          "sha256": "164a07268b745cd41242fc1e035b332e863dff5b46b86821c6e4ec361619f293"
+        },
+        {
+          "path": "dist/advanced-catalog.js",
+          "bytes": 5199,
+          "sha256": "7be603faace859427c7a8bb310bd68c56eb35e2138154a7a2acdb60d7c38a27c"
+        },
+        {
+          "path": "dist/advanced-catalog.js.map",
+          "bytes": 4330,
+          "sha256": "68a9c629bea209119e834531736054da5a4f64cc8e2d14a40710bbd8b4a9cad0"
+        },
+        {
+          "path": "dist/folds.d.ts",
+          "bytes": 6489,
+          "sha256": "c41ec8d3e1726b56c3000d7b75d6be3ba1644c5ba0907e9a99ccb52ec876a77f"
+        },
+        {
+          "path": "dist/folds.d.ts.map",
+          "bytes": 3442,
+          "sha256": "a39a5ae500ce2095e671fd8f41320a4c711779b7333fd9f911a6adcef59113a0"
+        },
+        {
+          "path": "dist/folds.js",
+          "bytes": 11942,
+          "sha256": "9ef4419971e1b6e392ed1b92234f712c026e19fcda9300b0e0606468b564f8a0"
+        },
+        {
+          "path": "dist/folds.js.map",
+          "bytes": 12569,
+          "sha256": "22231e714afb906ae53926a3bd9c48559c81e40e5fdf758a3332af2572e3f26a"
+        },
+        {
+          "path": "dist/index.d.ts",
+          "bytes": 268,
+          "sha256": "9c9823e364882e32962ef6152a69fe2fdffcdb5592bd9ed19c0b0755fea09e3b"
+        },
+        {
+          "path": "dist/index.d.ts.map",
+          "bytes": 257,
+          "sha256": "1a2e8129d1e402f4dacd6910b021c48a07621e6d964bb582235716c6ea281fd9"
+        },
+        {
+          "path": "dist/index.js",
+          "bytes": 266,
+          "sha256": "e4dc86305265c4040fb97d79710838f9dc0f6ea531a9f6897d7b2fc92f15b3b8"
+        },
+        {
+          "path": "dist/index.js.map",
+          "bytes": 255,
+          "sha256": "c7f6081657edd5a164f63dbf4f2185c8b24cff18ebb5def2aeeb79d0ad3135e5"
+        },
+        {
+          "path": "dist/navigation.d.ts",
+          "bytes": 2124,
+          "sha256": "8be7e8ea31c46711810d6bcbb9c0eea12d07e4a31635b517dcad5b4578fabcdb"
+        },
+        {
+          "path": "dist/navigation.d.ts.map",
+          "bytes": 1684,
+          "sha256": "f515f78136688148af465dc516968f1c96e21f4590ff0c1d1aaf3c52f204c618"
+        },
+        {
+          "path": "dist/navigation.js",
+          "bytes": 1683,
+          "sha256": "4b1b126cbd608cfa74097b60ab485ce0cc37d8c9c6ee740e72111d9703c30e22"
+        },
+        {
+          "path": "dist/navigation.js.map",
+          "bytes": 1669,
+          "sha256": "75d1a8ad4bb502a0653741382c561f0cad2b634521e4e09da080e0e284b4e8ba"
+        },
+        {
+          "path": "dist/pane-plan.d.ts",
+          "bytes": 1699,
+          "sha256": "be11f440dc193f677af8ae280502242bf2fed732ae26c4470a054a925a008dce"
+        },
+        {
+          "path": "dist/pane-plan.d.ts.map",
+          "bytes": 1524,
+          "sha256": "634a1397acfad72cbfd899a16d7018cb3441492600d645d75b4aeae18e4bfa22"
+        },
+        {
+          "path": "dist/pane-plan.js",
+          "bytes": 6093,
+          "sha256": "25a8929051f5d03c935a50243e788cd8c6abc3ecfa7cb90529df6a6e8b1cc2e7"
+        },
+        {
+          "path": "dist/pane-plan.js.map",
+          "bytes": 6813,
+          "sha256": "13cd43876a4366a9e953907832f500d87afb0ff59acbf680bac321057939f825"
+        },
+        {
+          "path": "dist/presets/infrax.d.ts",
+          "bytes": 1172,
+          "sha256": "1287a3418ce0c10bec87f91a6935fe65e72e7fb8856d8b771d4318a3ea6c7567"
+        },
+        {
+          "path": "dist/presets/infrax.d.ts.map",
+          "bytes": 594,
+          "sha256": "9efc33e4e45f0512b55eac05f718f0ab5f8eefb649da514160ca1b9abedffd0d"
+        },
+        {
+          "path": "dist/presets/infrax.js",
+          "bytes": 1925,
+          "sha256": "b0074cc0a82e59b143191472f9636c8b3129a5301c75ccb95de5533ee961c922"
+        },
+        {
+          "path": "dist/presets/infrax.js.map",
+          "bytes": 1533,
+          "sha256": "3f25b0808036196ceac9e9571be5a3452b90b4bfb296027ac378ccd270b84e2f"
+        },
+        {
+          "path": "dist/spatial-interactions.d.ts",
+          "bytes": 2485,
+          "sha256": "ab11dd20f01a131befea350910b00ca8b46236a213ed8c8c9e9728fe568f8dae"
+        },
+        {
+          "path": "dist/spatial-interactions.d.ts.map",
+          "bytes": 1866,
+          "sha256": "bce4a400e326cc5b5cc7df2aa49bbab7381618d4ff4c7f38f55c8c2248c5b710"
+        },
+        {
+          "path": "dist/spatial-interactions.js",
+          "bytes": 4390,
+          "sha256": "dc648d449433169a67458c2805c7dd5943c938100db75d840043099496d87d28"
+        },
+        {
+          "path": "dist/spatial-interactions.js.map",
+          "bytes": 5199,
+          "sha256": "6b31288b21b03a83b4b7c314a23d2cac0d73d45525131add3c171695493419da"
+        },
+        {
+          "path": "dist/spatial.d.ts",
+          "bytes": 734,
+          "sha256": "776351e3fbf43156146c297db08ff2c2dab1c3834e10224c8172cd056fe4623f"
+        },
+        {
+          "path": "dist/spatial.d.ts.map",
+          "bytes": 636,
+          "sha256": "877af439794ea3122695a109331903fd5472236326a688cad2c753dd3cafcf3d"
+        },
+        {
+          "path": "dist/spatial.js",
+          "bytes": 923,
+          "sha256": "75ba9f2a4f82492cb3aa322dafc67aff19c6f489ef3aaff70c8da78eaabfd2ff"
+        },
+        {
+          "path": "dist/spatial.js.map",
+          "bytes": 1083,
+          "sha256": "387a1a3abcff26bf5f2372cd2e0275bd64c0e6e2e54b65d9d4391b078ef27b99"
+        },
+        {
+          "path": "dist/theme.d.ts",
+          "bytes": 3622,
+          "sha256": "96043a042be6415ac1dbc984a1bbea1b28c02346ff4f4fb59f5fae074799ca65"
+        },
+        {
+          "path": "dist/theme.d.ts.map",
+          "bytes": 1966,
+          "sha256": "069bf8274b7a9dd99d201aada5be230783a1c015b8e4b4b1371c363414e58044"
+        },
+        {
+          "path": "dist/theme.js",
+          "bytes": 3476,
+          "sha256": "6b0aee1c4d7215f5452d1799145e3339685f75495bafee5693b4e02df5ff169e"
+        },
+        {
+          "path": "dist/theme.js.map",
+          "bytes": 3358,
+          "sha256": "3d7f661844e4a9565463af604ba91ab6b1fdb31b8cfe7952e0eb127d9f12486f"
+        },
+        {
+          "path": "dist/window-lifecycle.d.ts",
+          "bytes": 9145,
+          "sha256": "21ab2cd7c1b60c2b5599eb44d7d233cc0a53982442a0a33c94459f065d6831bb"
+        },
+        {
+          "path": "dist/window-lifecycle.d.ts.map",
+          "bytes": 4403,
+          "sha256": "bfc5c22559d720210df115d86b52059273e3d90119ba20476fbd21c4eb0ec32f"
+        },
+        {
+          "path": "dist/window-lifecycle.js",
+          "bytes": 16829,
+          "sha256": "8584297f973997d0d865f4996692ab8fa9cf4fadb9fb85afedff21d06ad1ebfc"
+        },
+        {
+          "path": "dist/window-lifecycle.js.map",
+          "bytes": 20457,
+          "sha256": "f38cfdbe9955eef55cfd8998e991527420a6a48a907baa51c0b6c4c2da2186bb"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1081,
+          "sha256": "9f0b3f26b53590a83dedb17168ead23fcff30809c02d0354869776fed8a51f35"
+        },
+        {
+          "path": "licenses/AudioKit-Controls-MIT.txt",
+          "bytes": 1075,
+          "sha256": "6f055cb3892b39dd3628335ab65de8b14c70932fd4906062f4259203371d71e4"
+        },
+        {
+          "path": "licenses/FilmCraft-LICENSE-APACHE.txt",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "licenses/FilmCraft-LICENSE-MIT.txt",
+          "bytes": 1101,
+          "sha256": "d2d8416f0883694c23b473e26372506e9e11f5f41b55a92b7388dab921d9a207"
+        },
+        {
+          "path": "licenses/FilmCraft-NOTICE.txt",
+          "bytes": 2309,
+          "sha256": "064ee5f42673743509a59e55330fb649153f4fbdf285b062c00f01f65b56ccc6"
+        },
+        {
+          "path": "licenses/GridCraft-Apache-2.0.txt",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "licenses/GridCraft-MIT.txt",
+          "bytes": 1101,
+          "sha256": "a87109bbb1ad43ca3920a5d7ff3806863b7e8470a73f4ded97a1447ac93333f5"
+        },
+        {
+          "path": "licenses/GridCraft-NOTICE.txt",
+          "bytes": 1245,
+          "sha256": "b97197bc5492f3c2af8085b6ab988b5343e89795f4b041ca9ef81c8e1380f91b"
+        },
+        {
+          "path": "licenses/NEONBLADE-MIT.txt",
+          "bytes": 1067,
+          "sha256": "f8470b2c9697bdca06a948f47630d9d5ac1badf5967481cfb2c925b0d4858e0d"
+        },
+        {
+          "path": "licenses/NYC-MON-MIT.txt",
+          "bytes": 1069,
+          "sha256": "4dc0c96e1e30891d3b9334821a2941c135df52f72745d6ddc959ee89551f637a"
+        },
+        {
+          "path": "licenses/PdfCraft-Apache-2.0.txt",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "licenses/PdfCraft-MIT.txt",
+          "bytes": 1100,
+          "sha256": "cd7032ea33b71427f188e34ffb4aee9d6868a57fd196037c5c8b2be03a2a0352"
+        },
+        {
+          "path": "licenses/PdfCraft-NOTICE.txt",
+          "bytes": 4383,
+          "sha256": "e79114ab80f693a1e38ea4afcdd7a681636a08777578cc34db7937f9dcdcf314"
+        },
+        {
+          "path": "licenses/ProCraft-LICENSE-APACHE.txt",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "licenses/ProCraft-LICENSE-MIT.txt",
+          "bytes": 1100,
+          "sha256": "da9bd364f924c1a13ea34f49b04d4e54ca43285aa9a5633834d75e873bc09eb5"
+        },
+        {
+          "path": "licenses/ProCraft-NOTICE.txt",
+          "bytes": 1887,
+          "sha256": "82ba9b72e74014ff7ae6dabb439334d7e1c0e4222d8400483f8280926d3b8a73"
+        },
+        {
+          "path": "licenses/REACT-NATIVE-SKIA-MIT.txt",
+          "bytes": 1099,
+          "sha256": "0f640925534e9644a79e942b814510fb757e5727bd3648d49fe685fea640c8ea"
+        },
+        {
+          "path": "licenses/REACT-NATIVE-WINDOWS-MIT.txt",
+          "bytes": 1203,
+          "sha256": "ae18d974eb97bbd8549e7f5229db7b48830e20232b0551fbb605a284293b7074"
+        },
+        {
+          "path": "licenses/WordCraft-Apache-2.0.txt",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "licenses/WordCraft-MIT.txt",
+          "bytes": 1101,
+          "sha256": "fc257de83c44ae49e4aad1cf777b886794be3ac9c8d00c010ef55935d5bbeba5"
+        },
+        {
+          "path": "licenses/WordCraft-NOTICE.txt",
+          "bytes": 2292,
+          "sha256": "11e495f038ac9d11cffbd13bcdc4f8967f8ba63e487a6940ae3c9e5ceed2d9fd"
+        },
+        {
+          "path": "package.json",
+          "bytes": 2331,
+          "sha256": "eb675d9e7fb95e0481e69e08c71c3090737fcb20a20eeab3baf1646a07575c44"
+        },
+        {
+          "path": "README.md",
+          "bytes": 1508,
+          "sha256": "79a6f0330ec007659dd834f5ab4cc7b3271c90e16977214765fe985b8343fc1c"
+        },
+        {
+          "path": "THIRD_PARTY_NOTICES.md",
+          "bytes": 645,
+          "sha256": "62da40517d46373e2adfd3f5ed519882dfefafdf30abebe081eb2371431d8a1f"
+        }
+      ]
+    },
+    {
+      "name": "@nyc-tron/windows-fluent",
+      "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+      "bytes": 11281,
+      "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73",
+      "files": [
+        {
+          "path": "dist/controller.d.ts",
+          "bytes": 1216,
+          "sha256": "873dd529dddac63e6ecfdb866d0f1d6aeeb76507f9e41d35db0bbe306d4dfade"
+        },
+        {
+          "path": "dist/controller.d.ts.map",
+          "bytes": 603,
+          "sha256": "063398362bdb02de3141d08a4b7388226635e7e201a0bdf9e6fa3e8165fe9273"
+        },
+        {
+          "path": "dist/controller.js",
+          "bytes": 3455,
+          "sha256": "d3d6355d743c9ce41965346da6fa4fb84f7baf0c013fd534a8f64cbee1302a83"
+        },
+        {
+          "path": "dist/controller.js.map",
+          "bytes": 2789,
+          "sha256": "f72fdd7caf01e687c6edd6261e858599892a58238d45c3d7f106ea69da4f4d6f"
+        },
+        {
+          "path": "dist/index.d.ts",
+          "bytes": 421,
+          "sha256": "3a29527fda310b94b3aafedf264b6defd0235c9803c0b88151a3335f35019c94"
+        },
+        {
+          "path": "dist/index.d.ts.map",
+          "bytes": 338,
+          "sha256": "f5f51e969896f559af141a202084e95d971f4eccc856d281f127cfcb9463e59a"
+        },
+        {
+          "path": "dist/index.js",
+          "bytes": 163,
+          "sha256": "e6490da1902982baed580af70eb24f9cc02168c933e9d00ba229f18a318791c9"
+        },
+        {
+          "path": "dist/index.js.map",
+          "bytes": 188,
+          "sha256": "94ec00e2435601382c79f2b8e18cf2e36d7c92dfe45faf1d2cae7a45f5f3a864"
+        },
+        {
+          "path": "dist/types.d.ts",
+          "bytes": 1853,
+          "sha256": "3d0a4d013efcc00597e4615992127fce4eb4ee34572bcb34ca0de1870e714881"
+        },
+        {
+          "path": "dist/types.d.ts.map",
+          "bytes": 1458,
+          "sha256": "670bf7f3b938affe2db06211676ecbcce1705ece4135dc0f75aac8530d3d257f"
+        },
+        {
+          "path": "dist/types.js",
+          "bytes": 891,
+          "sha256": "302babd2901f27cc21e35ba11faf48f7eadba120fb4b2849462b45778b448a8d"
+        },
+        {
+          "path": "dist/types.js.map",
+          "bytes": 989,
+          "sha256": "c91c42e2f43482b93e9f1c83ebeb4073a7430e76e3adabdea818eddd1f540e09"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1081,
+          "sha256": "9f0b3f26b53590a83dedb17168ead23fcff30809c02d0354869776fed8a51f35"
+        },
+        {
+          "path": "package.json",
+          "bytes": 1447,
+          "sha256": "3a25b8c84280af5349da87cb654e9e63478b592dbd5eb86f0df747975ce66334"
+        },
+        {
+          "path": "README.md",
+          "bytes": 5731,
+          "sha256": "0013c77a70724e4ac9ec5610c6aedc79355a6a91221b381ff512a7ea9885735e"
+        },
+        {
+          "path": "THIRD_PARTY_NOTICES.md",
+          "bytes": 357,
+          "sha256": "60ef2668cd5a44929182c3129bd31fe3a607d573953b42c30022060e8ebdd363"
+        },
+        {
+          "path": "windows/NYCTron.Fluent.WinUI3/NYCTron.Fluent.WinUI3.csproj",
+          "bytes": 610,
+          "sha256": "3b4baab5609276433d36d83a34864ed0c49f58236608b2b8d408f56813b3b6f4"
+        },
+        {
+          "path": "windows/NYCTron.Fluent.WinUI3/TronDestination.cs",
+          "bytes": 703,
+          "sha256": "108654f5d730cbb715a6d77d424a9d382b703850b7af3c1fccf3bcc8dd981874"
+        },
+        {
+          "path": "windows/NYCTron.Fluent.WinUI3/TronNavigationShell.xaml",
+          "bytes": 809,
+          "sha256": "37ebcf0af8dedbc98574fdc556181cbd57fac2eac9df1debbf5d9f90492d683f"
+        },
+        {
+          "path": "windows/NYCTron.Fluent.WinUI3/TronNavigationShell.xaml.cs",
+          "bytes": 9566,
+          "sha256": "23602f4179dba184241a61bc9fb65c3ad6d1da415dffd756d07821a0aa001bd1"
+        }
+      ]
+    },
+    {
+      "name": "@nyc-tron/windows-fluent-fabric",
+      "filename": "nyc-tron-windows-fluent-fabric-1.0.0.tgz",
+      "bytes": 38818,
+      "sha256": "a5c22ea5cfa8f936f1078257d3cd72b4df350e2aeece3326d577e36606f91c69",
+      "files": [
+        {
+          "path": "dist/index.d.ts",
+          "bytes": 179,
+          "sha256": "4f0dc94b26bcf85c7f3f80cd313d8636e1688e3e0440581e0722f4c0913e365a"
+        },
+        {
+          "path": "dist/index.js",
+          "bytes": 89,
+          "sha256": "e2288f3b802de0c1fa0710d50fc37b3b20eda784dd72ba3302e86dfc8503e9f7"
+        },
+        {
+          "path": "dist/NativeTronDesktop.d.ts",
+          "bytes": 1043,
+          "sha256": "a0fe226e55d3d818fe84942095ee489c20b4b6e5af502ce6bb9270d1b394440a"
+        },
+        {
+          "path": "dist/NativeTronDesktop.js",
+          "bytes": 116,
+          "sha256": "f1c3e14867f9a9c1927d84f6b69bbaca21790f4f91502f2b77d95b6051e832f5"
+        },
+        {
+          "path": "dist/navigation-binding.d.ts",
+          "bytes": 1433,
+          "sha256": "5b584fdd734de42294f00bd914114d49929eea825f4dee23806318dde6abcd92"
+        },
+        {
+          "path": "dist/navigation-binding.js",
+          "bytes": 4735,
+          "sha256": "bd832a181d5e88f27d6cb02a17314d0c71b99898c7efef57f8ab8de3964f5268"
+        },
+        {
+          "path": "dist/navigation-host.windows.d.ts",
+          "bytes": 709,
+          "sha256": "4190753472bd123910723d37ff174a01a8f13a39dfde2bdb29214b234dc17100"
+        },
+        {
+          "path": "dist/navigation-host.windows.js",
+          "bytes": 1329,
+          "sha256": "0fbcf8c8063ef4a388bdfc5eecb9d49129068f430a04806f3349b37e01ce9078"
+        },
+        {
+          "path": "dist/TronNavigationView.windows.d.ts",
+          "bytes": 1518,
+          "sha256": "2c1a9110dc106eb8610c5c28f3eb29711f20fa1e1eba44904314ac2b26fc7792"
+        },
+        {
+          "path": "dist/TronNavigationView.windows.js",
+          "bytes": 2740,
+          "sha256": "2f97a5105767ccd15bfbd2e6ece2b4b3937c005166cc73216e35424abb0202eb"
+        },
+        {
+          "path": "dist/TronNavigationViewNativeComponent.d.ts",
+          "bytes": 949,
+          "sha256": "5e9077015df9dc7c37f574e0c66ce5014fa584f3766235313e73bc37309ee7e7"
+        },
+        {
+          "path": "dist/TronNavigationViewNativeComponent.js",
+          "bytes": 415,
+          "sha256": "eb15133fb25e8619206615a47a095721be90e216e6ad745d4b278ce8c0d9e8ff"
+        },
+        {
+          "path": "dist/window-controller.d.ts",
+          "bytes": 1321,
+          "sha256": "781bf91fb6b16b0fefd79b478ca65d2dbc13145f40a9f0135ddd96d649401ed7"
+        },
+        {
+          "path": "dist/window-controller.js",
+          "bytes": 11662,
+          "sha256": "a978938b457f22b22c4270a983b094507c6d8cc5c58ede26fd225f97ff6dc922"
+        },
+        {
+          "path": "dist/window-protocol.d.ts",
+          "bytes": 860,
+          "sha256": "64a60d1b0763d9bab157e23ec0bd2477c8e5ae3246eb96cf00cacd4f8a0d02a5"
+        },
+        {
+          "path": "dist/window-protocol.js",
+          "bytes": 4850,
+          "sha256": "eac3dc6962a4b92f85cae36edd4d08e937f5e60114c111c79cc7004042a4b00e"
+        },
+        {
+          "path": "dist/window-types.d.ts",
+          "bytes": 3922,
+          "sha256": "632ec9f7499f2450ed88361e0df9741b869c396cd6b31905df6440bd790a0041"
+        },
+        {
+          "path": "dist/window-types.js",
+          "bytes": 11,
+          "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "path": "dist/windows.d.ts",
+          "bytes": 336,
+          "sha256": "2080698d88f7199ff9f6af8670ebd34794de69b7a7eae71398a15897cacb60e5"
+        },
+        {
+          "path": "dist/windows.js",
+          "bytes": 501,
+          "sha256": "e39c839f071d664f42368d0853124859118314ad8647e2da9936c583d426dd58"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1102,
+          "sha256": "269e43cc15ad2dd3d8af92eaece56902f6e648c2debf82e7f21bf706184596ac"
+        },
+        {
+          "path": "licenses/REACT-NATIVE-WINDOWS-MIT.txt",
+          "bytes": 1228,
+          "sha256": "815994ebe648433a0e06fe9c91320985c686b5ce8d1235f62fe427fb5b82dd69"
+        },
+        {
+          "path": "package.json",
+          "bytes": 3123,
+          "sha256": "f19ddd9608eaaa4b9d2b24768ce60a3f414797c74ba50ce10ace0572470b34b3"
+        },
+        {
+          "path": "react-native.config.js",
+          "bytes": 346,
+          "sha256": "397799b4b4603cb18bc83ee2fd743c5b3edf9267bdb16ba2cc21d7ab2c2014e4"
+        },
+        {
+          "path": "README.md",
+          "bytes": 12012,
+          "sha256": "ca98ff69880bc64a5bea6a4ef05f2c3c90d953bae8edc7e5e4ac7095505a3674"
+        },
+        {
+          "path": "src/index.ts",
+          "bytes": 175,
+          "sha256": "ad08800919e4e06cf16c64c1ed943073d8fdaa3573ee6937e49f6f18659538f5"
+        },
+        {
+          "path": "src/NativeTronDesktop.ts",
+          "bytes": 1106,
+          "sha256": "2aa385c0729c3c07f4120c65bec4684c0d108ffa150ab25999d8cfa9cdc0c50e"
+        },
+        {
+          "path": "src/navigation-binding.ts",
+          "bytes": 5202,
+          "sha256": "c184005b2fe9a4405fa0a64a334ce3745d1d98451b3d7a723421bf28f877ddd1"
+        },
+        {
+          "path": "src/navigation-host.windows.tsx",
+          "bytes": 1646,
+          "sha256": "c2cccc64fa7882cc6cb1964c2ff02fdfb940a31e0d0e196c423e838e632549c9"
+        },
+        {
+          "path": "src/TronNavigationView.windows.tsx",
+          "bytes": 3532,
+          "sha256": "d162fa956cc9086fc8f28248ddfd3c3067ef3956daf3d7866fcab6ddfdeff6c5"
+        },
+        {
+          "path": "src/TronNavigationViewNativeComponent.ts",
+          "bytes": 1257,
+          "sha256": "8a8be5b9dfb97b451f3912615ed7b76c66e4a71992ea4dbba4e6dcf14ca79da2"
+        },
+        {
+          "path": "src/window-controller.ts",
+          "bytes": 12037,
+          "sha256": "5301bbc5819874b9db74973791f8354e2e8444476379a00c0ce2c8e917153ed0"
+        },
+        {
+          "path": "src/window-protocol.ts",
+          "bytes": 5104,
+          "sha256": "34c50f745600c239b62c3e2765e6eae829d036fb500343f857a3b74fe5450695"
+        },
+        {
+          "path": "src/window-types.ts",
+          "bytes": 3863,
+          "sha256": "9f9ed7af8122b0ce02c2bfa124d52eb68fe82159330fc09b1fd143d9e4ac8f04"
+        },
+        {
+          "path": "src/windows.ts",
+          "bytes": 683,
+          "sha256": "cef5f6a044f326a1b4b4cbf17c283bd3032af41df4425e78adc937ae6a1f34ef"
+        },
+        {
+          "path": "THIRD_PARTY_NOTICES.md",
+          "bytes": 920,
+          "sha256": "73c6d24acf6b39fdb35246ec46c64cc665c573b09a48ad22bad7ceff255b650d"
+        },
+        {
+          "path": "windows/ExperimentalFeatures.props",
+          "bytes": 323,
+          "sha256": "2fd58b066a4f85018026b843840215ae1d3a473a25cd0d3bd30b594da3451ead"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/DesktopGeometry.cpp",
+          "bytes": 4124,
+          "sha256": "571ea61614b4ec89c73cb29375425bfc3a3d80fd1054259369da14f2ac270af7"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/DesktopGeometry.h",
+          "bytes": 623,
+          "sha256": "5cccb975a15354359f9b4e257567c53305cb90b0ada9df87ef224e356e8ced4f"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/DesktopSession.cpp",
+          "bytes": 13115,
+          "sha256": "2f92b0e5409fb6f84eec1cd4884654f29e5fda1188e2d17fce09f86a6892e30d"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/DesktopSession.h",
+          "bytes": 2029,
+          "sha256": "7267e970794fdf4366f0395148d4e4f7ca619eb022dfcaf1b7abb2521ea06bee"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/NYCTronFluentFabric.def",
+          "bytes": 139,
+          "sha256": "977e9935ad54895460620923f5eeed9987fb31e3af5a779437f90b5c950e6682"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/NYCTronFluentFabric.rc",
+          "bytes": 23,
+          "sha256": "da87d50bcf4bfb98d5c20adb304be213e1d3d57491ed01e9b08809d566a247a3"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/NYCTronFluentFabric.vcxproj",
+          "bytes": 6536,
+          "sha256": "136d13bd89003b72d9c4c2de48c12480e297fc517289ffe0b3e6bb5761473dee"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/pch.cpp",
+          "bytes": 65,
+          "sha256": "c2725a283301eccb3d3f591199aa5ba1af8c4c957d5f6cce39304e556cd8bb16"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/pch.h",
+          "bytes": 434,
+          "sha256": "6050e80ddf38098426b8ada71f13971fbc9660340dddf80378e28b76b0b8d221"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/ReactPackageProvider.cpp",
+          "bytes": 589,
+          "sha256": "6e6eef79228d4226c7246985f97f9e4e8a272e9bc8bd4310ec12c49a3439077c"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/ReactPackageProvider.h",
+          "bytes": 599,
+          "sha256": "7e9348014a107368aebc741c6cd7bd59d66c22b5723255f6f7acc1f3452a66ad"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/ReactPackageProvider.idl",
+          "bytes": 202,
+          "sha256": "656e951f2e969debdadee165c410c6dce241e04ff42c64f3d00d4956dc5d8af3"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/resource.h",
+          "bytes": 14,
+          "sha256": "aecb9819eb04bf5ad6cd2535cfac9b1bed5ef7946e551eff2224759862e16294"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/targetver.h",
+          "bytes": 38,
+          "sha256": "e596c4975111819e8e2baed4d4bd57d0d01df720abf1070c0443f29a86d362b2"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/TronDesktop.cpp",
+          "bytes": 4593,
+          "sha256": "8d017eff2d99a9acf5afd5c11450286781a0ea1e06ea80f23b07cfa61dabfe82"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/TronDesktop.h",
+          "bytes": 2083,
+          "sha256": "56e9dbdf51875214630339cdf279208644acc7533ee8340e8777d441ed6456f4"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/TronNavigationView.cpp",
+          "bytes": 16699,
+          "sha256": "5beff80879f49a119e80a4a6501f8aa28f24f3ed4e3d24f8ad270a33f573a538"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric/TronNavigationView.h",
+          "bytes": 349,
+          "sha256": "3373d9b79b77feb7a19c4e2ba927f4e9acae9cf499c00954e214ab428b5dd837"
+        },
+        {
+          "path": "windows/NYCTronFluentFabric.sln",
+          "bytes": 972,
+          "sha256": "f0542c994d8979f1a98b10ee57a68a85ee9df3783f28a245a44f30eac5608257"
+        }
+      ]
+    }
+  ],
+  "installedFromArchives": true
+}

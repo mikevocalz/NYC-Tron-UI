@@ -1,0 +1,6 @@
+{
+  "message": "FORGE_NATIVE_RUNTIME_PASS {\"schema\":1,\"platform\":\"android\",\"revision\":\"7cc6c15805b20ae69804be9cbf526ae48a4f1a63\",\"runId\":\"ada23ddc-51e9-4b94-92e3-2fa01232978d\",\"processToken\":\"1794291757897-0.8558435674489356\",\"checks\":[\"mmkv-v4-native-binary-ownership\",\"mmkv-v4-yjs-roundtrip\",\"mmkv-v4-process-reopen\",\"mmkv-v4-scope-isolation\",\"mmkv-v4-corruption-preserved\",\"mmkv-v4-explicit-recovery\",\"mmkv-v4-all-engine-snapshot-reopen\",\"binary-input-output-ownership\",\"restore-input-ownership\",\"cache-copy-lru-bounds\",\"cache-fifo-close\",\"running-and-queued-cancellation\",\"task-progress-result-ownership\",\"document-fifo-close\",\"output-survives-document-close\"],\"engineKinds\":[\"prism\",\"cadence\",\"splice\",\"folio\",\"pitch\",\"tally\",\"quill\",\"photo\",\"motion\",\"design\",\"draft\"],\"storage\":{\"bindings\":\"react-native-mmkv@4.3.2 + Nitro 120 port\",\"core\":\"io.github.zhongwuzw:mmkv@2.4.1\"},\"elapsedMs\":302}",
+  "platform": "android",
+  "revision": "7cc6c15805b20ae69804be9cbf526ae48a4f1a63",
+  "runId": "ada23ddc-51e9-4b94-92e3-2fa01232978d"
+}

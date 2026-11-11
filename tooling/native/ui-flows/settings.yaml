@@ -1,0 +1,53 @@
+appId: com.nyctron.instruments.example
+name: Settings native edit and save
+---
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "Library"
+    timeout: 90000
+- tapOn: "Settings"
+- assertVisible: "Workspace preferences"
+- assertVisible: "Workspace name"
+- tapOn:
+    id: "reference-workspace-name"
+- eraseText: 100
+- inputText: "Native UI workspace"
+# iOS hideKeyboard swipes at screen center, inside this focused input on the
+# observed iPhone. Tap the static heading without submitting/saving the draft.
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - assertVisible:
+          id: "delete"
+      - tapOn: "Workspace preferences"
+      - assertNotVisible:
+          id: "delete"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Save settings"
+    direction: DOWN
+    timeout: 20000
+- tapOn: "Save settings"
+- scrollUntilVisible:
+    element:
+      text: "Preferences saved for this session."
+    direction: DOWN
+    timeout: 20000
+- assertVisible: "Preferences saved for this session."
+- assertVisible:
+    id: "reference-workspace-title"
+    text: "Native UI workspace"
+- takeScreenshot: settings-saved
+- scrollUntilVisible:
+    element:
+      id: "reference-workspace-name"
+    direction: UP
+    timeout: 20000
+- assertVisible: "Workspace name"

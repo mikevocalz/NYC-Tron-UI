@@ -1,0 +1,18 @@
+appId: com.nyctron.instruments.example
+name: Native pointer touch lifecycle
+---
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "Input drawing surface"
+    timeout: 90000
+- assertVisible: "Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0."
+- swipe:
+    from:
+      text: "Input drawing surface"
+      point: "25%, 50%"
+    direction: RIGHT
+    duration: 700
+- assertVisible: "Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0."
+- assertVisible: "Input source: touch. Last event: up."
+- takeScreenshot: pointer-touch

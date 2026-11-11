@@ -1,0 +1,21 @@
+{
+  "archiveSha256": "852358c7b2560064de29e14789a1ab2a173a83e3e21c33b729aeffd1705af9c9",
+  "headSha": "e8a7efb9f0971746d01c68532540c65af502de9f",
+  "testedMergeSha": "0a041ca97b08958ba7c6577dbdee3d99382dbc38",
+  "runId": 42834403759,
+  "jobId": 129892655235,
+  "artifactId": 13773108615,
+  "apkSha256": "13581f958cfc457b4644dcf485febd6230b125de8c20fe17df7bbd99bf2a0df8",
+  "mediaChecks": 11,
+  "uiFlows": [
+    "settings",
+    "editor",
+    "pointer",
+    "pointer-cancel"
+  ],
+  "verifiedReceiptHashes": true,
+  "verifiedHierarchyHashes": true,
+  "verifiedScreenshotHashes": true,
+  "verifiedNativePayload": true,
+  "transportRecoveries": []
+}

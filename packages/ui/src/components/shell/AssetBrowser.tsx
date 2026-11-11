@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, type ComponentRef } from "react";
+import { useLayoutEffect, useMemo, useRef, type ComponentRef, type ReactNode } from "react";
 import { FlatList, Image, Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
@@ -24,18 +24,26 @@ export interface AssetBrowserProps extends Omit<ViewProps, "children"> {
   readonly onNavigate: (locationId: string, signal: AbortSignal) => void | Promise<void>;
   readonly loading?: boolean;
   readonly error?: string;
-  readonly height?: number;
+  /** A fixed viewport in points, or the available height of a bounded parent. */
+  readonly height?: number | "fill";
+  /** Content that scrolls before the asset location, search and sort controls. */
+  readonly header?: ReactNode;
+  /** Content that scrolls after the asset actions and error message. */
+  readonly footer?: ReactNode;
+  /** App-owned loading, error or empty content when the filtered list is empty. */
+  readonly emptyState?: ReactNode;
   readonly className?: string;
   readonly unstyled?: boolean;
 }
 
 /** Paged, controlled asset list. The app owns filesystem/catalog access and selection. */
 export function AssetBrowser({ locationId, revision, entries, path, selectedIds, selectionMode = "single", onSelectionChange,
-  onOpen, onNavigate, loading = false, error, height = 360, className, unstyled = false, style, ...rest }: AssetBrowserProps) {
+  onOpen, onNavigate, loading = false, error, height = 360, header: before, footer: after, emptyState,
+  className, unstyled = false, style, ...rest }: AssetBrowserProps) {
   const multipleSelection = selectionMode === "multiple";
   if (selectionMode === "single" && selectedIds.length > 1) throw new TypeError("A single-selection asset browser accepts at most one selected ID");
   if (new Set(path.map(item => item.id)).size !== path.length || path.some(item => !item.id || !item.label.trim())) throw new TypeError("Asset locations need distinct IDs and labels");
-  if (!Number.isFinite(height) || height < 44) throw new RangeError("Asset height must be at least 44");
+  if (height !== "fill" && (!Number.isFinite(height) || height < 44)) throw new RangeError("Asset height must be at least 44");
   if (new Set(selectedIds).size !== selectedIds.length || selectedIds.some(id => !id)) throw new TypeError("Selected asset IDs must be distinct and nonempty");
   const local = useRef<StoreApi<{ query: string; sort: AssetSort; anchor: string | null; headerHeight: number }> | null>(null);
   local.current ??= createStore(() => ({ query: "", sort: "name" as AssetSort, anchor: null as string | null, headerHeight: 0 }));
@@ -85,6 +93,7 @@ export function AssetBrowser({ locationId, revision, entries, path, selectedIds,
     const height = Math.ceil(event.nativeEvent.layout.height);
     if (Number.isFinite(height) && height !== local.current!.getState().headerHeight) local.current!.setState({ headerHeight: height });
   }}>
+    {before}
     <View accessibilityRole="toolbar" accessibilityLabel="Asset location" style={{ flexDirection: "row", flexWrap: "wrap", gap: 4 }}>
       {path.map(item => <Button key={item.id} title={item.label} disabled={busy || item.id === locationId} unstyled={unstyled}
         onPress={() => { void action.run(`navigate:${item.id}`, signal => onNavigate(item.id, signal)); }}/>) }
@@ -100,12 +109,15 @@ export function AssetBrowser({ locationId, revision, entries, path, selectedIds,
       {action.pending ? <Button title="Cancel asset request" onPress={action.cancel} unstyled={unstyled}/> : null}
     </View>
     <ErrorMessage {...(error || action.error ? { message: error || action.error! } : {})} unstyled={unstyled}/>
+    {after}
   </View>;
-  return <View {...rest} style={style} {...{ className: joinClasses(className) }}>
-    <FlatList ref={list} data={visible} keyExtractor={entry => entry.id} initialNumToRender={12} windowSize={5} style={{ height }}
+  return <View {...rest} style={height === "fill" ? [{ flex: 1, minHeight: 0, minWidth: 0 }, style] : style} {...{ className: joinClasses(className) }}>
+    <FlatList ref={list} data={visible} keyExtractor={entry => entry.id} initialNumToRender={12} windowSize={5}
+      style={height === "fill" ? { flex: 1, minHeight: 0 } : { height }}
+      {...(height === "fill" ? { keyboardShouldPersistTaps: "handled" as const } : {})}
       accessibilityLabel="Assets" ListHeaderComponent={header} ListFooterComponent={footer}
       onScrollToIndexFailed={info => list.current?.scrollToOffset({ offset: state.headerHeight + info.averageItemLength * info.index, animated: false })}
-      ListEmptyComponent={<Text {...{ className: joinClasses(styled && "text-text-muted") }}>{loading ? "Loading assets…" : state.query ? "No assets match" : "This location is empty"}</Text>}
+      ListEmptyComponent={emptyState === undefined ? <Text {...{ className: joinClasses(styled && "text-text-muted") }}>{loading ? "Loading assets…" : state.query ? "No assets match" : "This location is empty"}</Text> : <>{emptyState}</>}
       renderItem={({ item, index }) => <Pressable ref={node => {
         if (node) { rows.current.set(item.id, node); if (focusRequest.current === item.id) { (node as unknown as { focus?: () => void }).focus?.(); focusRequest.current = null; } }
         else rows.current.delete(item.id);

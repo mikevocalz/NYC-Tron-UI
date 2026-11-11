@@ -4895,11 +4895,20 @@
       "id": "N-01",
       "name": "NativePointerRouter",
       "phase": "P06",
-      "libraryScope": false,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/native-controls/src/NativePointerInput.tsx",
+        "packages/native-controls/src/NativePointerInput.web.tsx",
+        "packages/native-controls/src/pointer-input.ts",
+        "packages/native-controls/ios/TronPointerCaptureView.swift",
+        "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronPointerCaptureView.kt"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Touch, mouse, keyboard, stylus, hover and pressure."
+      "requirement": "Touch, mouse, keyboard, stylus, hover and pressure.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
     },
     {
       "id": "N-02",
@@ -4922,19 +4931,55 @@
       "phase": "P06",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "SDK-backed tracked input and 6DoF diagnostics."
+      "requirement": "SDK-backed tracked input and 6DoF diagnostics.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/spatial-ink/src/muse.ts"
+            ],
+            "publicExports": [
+              "@nitro-forge/spatial-ink"
+            ]
+          },
+          {
+            "repository": "mikevocalz/viro",
+            "revision": "e84a1a9a37168a835f7730e09016917b9d49c6ef",
+            "sourcePaths": [
+              "ios/ViroReact/VisionOS/ViroSpatialStylusPose.swift",
+              "ios/ViroReact/VisionOS/ViroImmersiveRenderer.swift",
+              "components/VisionOS/ViroVisionOSModule.ts"
+            ],
+            "publicExports": [
+              "@reactvision/react-viro:ViroVisionOSModule"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-04",
       "name": "PalmRejectionAndPrediction",
       "phase": "P06",
-      "libraryScope": false,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/native-controls/src/pointer-input.ts",
+        "packages/native-controls/ios/TronPointerCaptureView.swift",
+        "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronPointerCaptureView.kt"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Pressure/tilt, coalesced predicted strokes."
+      "requirement": "Pressure/tilt, coalesced predicted strokes.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
     },
     {
       "id": "N-05",
@@ -5012,9 +5057,28 @@
       "phase": "P18",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "Optional Viro/visionOS/PICO surface; not source of document truth."
+      "requirement": "Optional Viro/visionOS/PICO surface; not source of document truth.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/board/src/xr/presentation.ts",
+              "packages/board/src/xr/ViroDocumentSurface.tsx"
+            ],
+            "publicExports": [
+              "@nitro-forge/board/xr",
+              "@nitro-forge/board/xr/viro"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-10",
@@ -5022,9 +5086,33 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "MMKV v4 snapshots, atomic save and dirty status."
+      "requirement": "MMKV v4 snapshots, atomic save and dirty status.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/ignition/src/autosave.ts",
+              "packages/ignition/src/autosave-mmkv.ts",
+              "packages/board/src/offline-mmkv.ts",
+              "examples/native-cadence/patches/react-native-mmkv@4.3.2.patch",
+              "examples/native-cadence/verify-board-offline.ts",
+              "examples/native-cadence/verify-native-runtime.ts"
+            ],
+            "publicExports": [
+              "@nitro-forge/ignition/autosave",
+              "@nitro-forge/ignition/autosave/mmkv",
+              "@nitro-forge/board/offline/mmkv"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-11",
@@ -5032,9 +5120,32 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "Yjs where applicable, revision boundaries and conflicts."
+      "requirement": "Yjs where applicable, revision boundaries and conflicts.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/ignition/src/collaboration.ts",
+              "packages/ignition/src/collaboration-http.ts",
+              "packages/board/src/offline-yjs.ts",
+              "packages/board/src/offline-sync.ts"
+            ],
+            "publicExports": [
+              "@nitro-forge/ignition/collaboration",
+              "@nitro-forge/ignition/collaboration-http",
+              "@nitro-forge/board/offline/yjs",
+              "@nitro-forge/board/offline/sync"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-12",
@@ -5060,9 +5171,28 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "Cancelable decode/export/render without JS blocking."
+      "requirement": "Cancelable decode/export/render without JS blocking.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/ignition/src/specs/ForgeTask.nitro.ts",
+              "packages/ignition/cpp/NitroForgeV1/HybridForgeTask.hpp",
+              "packages/ignition/cpp/NitroForgeV1/SerialQueue.hpp"
+            ],
+            "publicExports": [
+              "@nitro-forge/ignition/nitro"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-14",
@@ -5070,9 +5200,28 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "Waveform peaks, preview frames, thumbnails and eviction."
+      "requirement": "Waveform peaks, preview frames, thumbnails and eviction.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/ignition/src/specs/ForgeMediaCache.nitro.ts",
+              "packages/ignition/cpp/NitroForgeV1/ByteCache.hpp",
+              "packages/ignition/cpp/NitroForgeV1/HybridForgeMediaCache.hpp"
+            ],
+            "publicExports": [
+              "@nitro-forge/ignition/nitro"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-15",
@@ -5080,9 +5229,27 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "One undo step per continuous gesture."
+      "requirement": "One undo step per continuous gesture.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/ignition/src/transactions.ts",
+              "rust/nf-sys/src/batch_tests.rs"
+            ],
+            "publicExports": [
+              "@nitro-forge/ignition/transactions"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-16",
@@ -5090,9 +5257,27 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "Shared bytes/ArrayBuffer handles; avoid giant base64 copies."
+      "requirement": "Shared bytes/ArrayBuffer handles; avoid giant base64 copies.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/ignition/src/specs/ForgeDocument.nitro.ts",
+              "packages/ignition/cpp/NitroForgeV1/HybridForgeDocument.hpp"
+            ],
+            "publicExports": [
+              "@nitro-forge/ignition/nitro"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-17",
@@ -5117,19 +5302,48 @@
       "phase": "P02",
       "libraryScope": false,
       "sourceCandidates": [],
-      "implementationReview": "pending",
+      "implementationReview": "implemented-external",
       "acceptance": "unverified",
-      "requirement": "Permission-aware timings, failures and debug traces."
+      "requirement": "Permission-aware timings, failures and debug traces.",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ],
+      "externalImplementation": {
+        "owners": [
+          {
+            "repository": "mikevocalz/nitro-forge",
+            "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+            "sourcePaths": [
+              "packages/telemetry/src/telemetry.ts",
+              "packages/telemetry/src/instrument.ts",
+              "packages/telemetry/src/testing.ts"
+            ],
+            "publicExports": [
+              "@nitro-forge/telemetry",
+              "@nitro-forge/telemetry/testing"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "N-19",
       "name": "NativeMediaDecoderSurface",
       "phase": "P03",
-      "libraryScope": false,
-      "sourceCandidates": [],
-      "implementationReview": "pending",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/platform-services/src/media/index.ts",
+        "packages/platform-services/src/media/index.native.ts",
+        "packages/platform-services/ios/NYCTronMediaDecoderModule.swift",
+        "packages/platform-services/android/src/main/java/com/nyctron/platformservices/AndroidMediaDecoder.kt",
+        "packages/native-controls/src/NativeVideoPlayer.tsx"
+      ],
+      "implementationReview": "implemented",
       "acceptance": "unverified",
-      "requirement": "Platform frame/audio decode and seek backed by media-time coordinates, with error surface. *Source candidate: `filmcraft/ui/editor/Player.kt`; requires verified implementation and license admission.*"
+      "requirement": "Platform frame/audio decode and seek backed by media-time coordinates, with error surface. *Source candidate: `filmcraft/ui/editor/Player.kt`; requires verified implementation and license admission.*",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
     },
     {
       "id": "N-20",

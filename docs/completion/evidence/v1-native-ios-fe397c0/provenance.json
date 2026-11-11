@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "headRevision": "fe397c02bab746ef4ecbcae0cf9d42176a2e53df",
+  "testedMergeRevision": "fa1ba2dfbfa08e610ed33f5731542aa8c734af0b",
+  "workflowUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42760178196",
+  "jobId": 129643765774,
+  "artifactId": 13737514068,
+  "artifactSha256": "d66f28940bb3dac349cef2dc1a7444ff4733cc1eea484ec31438c9789a75eb3b",
+  "result": "media-step-passed-ui-step-failed",
+  "limits": "Actual installed iOS simulator media execution. The separate UI flow failed after this pass; no complete native-job, physical-device or assistive-technology acceptance is inferred.",
+  "files": [
+    {
+      "path": "result.json",
+      "sha256": "3ba82af928b91566a5fb9caa8191886b18305007844d21785b8767f873e7106a",
+      "bytes": 4213
+    },
+    {
+      "path": "native-report.json",
+      "sha256": "3b684623bf87c62f5c6cc7e3dcbfa2e2e796e61f3518d6ab314f0f2eb9d5e19b",
+      "bytes": 898
+    },
+    {
+      "path": "screen.png",
+      "sha256": "01f73d033c7fa08c181097fc8798ed771f30e5a030346e6f4667e40512ee6c86",
+      "bytes": 295060
+    }
+  ],
+  "retrospectiveArtifactIdentity": {
+    "method": "Computed after extracting the simulator app from the verified original CI artifact; not emitted by that historical runner.",
+    "manifest": "native-artifact-after-download.json",
+    "manifestSha256": "583f9f01e3fa85f24fcfac33f5e5f400b11b898bdd769e73b884e13eb93928d4",
+    "completePayloadSha256": "583f9f01e3fa85f24fcfac33f5e5f400b11b898bdd769e73b884e13eb93928d4",
+    "debugDylibSha256": "61376082933043ab13a145eadb8d1e323f8410cf2aced2cdcaf1f4d6824ad523",
+    "historicalBinarySha256Scope": "debug launcher only"
+  }
+}

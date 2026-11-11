@@ -1,0 +1,1284 @@
+{
+  "format": 1,
+  "typescript": "5.9.3",
+  "packages": {
+    "@nyc-tron/macos-appkit": {
+      ".": [
+        {
+          "target": "./dist/window-controller.d.ts",
+          "conditions": {
+            "types": "./dist/window-controller.d.ts",
+            "default": "./dist/window-controller.js"
+          },
+          "symbols": {
+            "HostDisplay": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+            ],
+            "HostWindowEvent": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostWindowEvent"
+            ],
+            "Registration": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#Registration"
+            ],
+            "WindowController": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController"
+            ],
+            "WindowControllerOptions": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions"
+            ],
+            "WindowTransport": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowTransport"
+            ],
+            "createWindowController": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#createWindowController"
+            ],
+            "toSharedBounds": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#toSharedBounds"
+            ],
+            "toSparkBounds": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#toSparkBounds"
+            ],
+            "validateDisplays": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#validateDisplays"
+            ]
+          }
+        }
+      ],
+      "./anchored-inspector": [
+        {
+          "target": "./dist/anchored-inspector.d.ts",
+          "conditions": {
+            "types": "./dist/anchored-inspector.d.ts",
+            "react-native": "./src/anchored-inspector.tsx",
+            "default": "./dist/anchored-inspector.js"
+          },
+          "symbols": {
+            "AnchoredInspector": [
+              "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspector"
+            ],
+            "AnchoredInspectorProps": [
+              "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspectorProps"
+            ]
+          }
+        }
+      ],
+      "./button": [
+        {
+          "target": "./dist/button.d.ts",
+          "conditions": {
+            "types": "./dist/button.d.ts",
+            "react-native": "./src/button.tsx",
+            "default": "./dist/button.js"
+          },
+          "symbols": {
+            "Button": [
+              "@nyc-tron/macos-appkit/dist/button.d.ts#Button"
+            ],
+            "ButtonProps": [
+              "@nyc-tron/macos-appkit/dist/button.d.ts#ButtonProps"
+            ]
+          }
+        }
+      ],
+      "./context-menu": [
+        {
+          "target": "./dist/context-menu.d.ts",
+          "conditions": {
+            "types": "./dist/context-menu.d.ts",
+            "react-native": "./src/context-menu.ts",
+            "default": "./dist/context-menu.js"
+          },
+          "symbols": {
+            "ContextMenuOptions": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions"
+            ],
+            "ContextMenuResult": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult"
+            ],
+            "MenuAction": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuAction"
+            ],
+            "MenuItem": [
+              "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuItem"
+            ],
+            "showContextMenu": [
+              "@nyc-tron/macos-appkit/dist/context-menu.d.ts#showContextMenu"
+            ]
+          }
+        }
+      ],
+      "./drag-drop": [
+        {
+          "target": "./dist/drag-drop.d.ts",
+          "conditions": {
+            "types": "./dist/drag-drop.d.ts",
+            "react-native": "./src/drag-drop.tsx",
+            "default": "./dist/drag-drop.js"
+          },
+          "symbols": {
+            "DragDropView": [
+              "@nyc-tron/macos-appkit/dist/drag-drop.d.ts#DragDropView"
+            ],
+            "DragDropViewProps": [
+              "@legendapp/spark-drag-drop@0.0.2/src/index.tsx#DragDropViewProps"
+            ],
+            "DragEndEvent": [
+              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragEndEvent"
+            ],
+            "DragOperation": [
+              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragOperation"
+            ],
+            "DragPayload": [
+              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragPayload"
+            ],
+            "DropEvent": [
+              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DropEvent"
+            ]
+          }
+        }
+      ],
+      "./menus": [
+        {
+          "target": "./dist/menus.d.ts",
+          "conditions": {
+            "types": "./dist/menus.d.ts",
+            "react-native": "./src/menus.ts",
+            "default": "./dist/menus.js"
+          },
+          "symbols": {
+            "Menu": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu"
+            ],
+            "MenuAction": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuAction"
+            ],
+            "MenuIcon": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuIcon"
+            ],
+            "MenuItem": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuItem"
+            ],
+            "MenuLifecycleEvent": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuLifecycleEvent"
+            ],
+            "MenuLocation": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuLocation"
+            ],
+            "MenuOptions": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions"
+            ],
+            "MenuPlacement": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuPlacement"
+            ],
+            "MenuRole": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuRole"
+            ],
+            "MenuRootItem": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuRootItem"
+            ],
+            "MenuTarget": [
+              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuTarget"
+            ],
+            "MenuUpdate": [
+              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuUpdate"
+            ],
+            "createMenu": [
+              "@nyc-tron/macos-appkit/dist/menus.d.ts#createMenu"
+            ]
+          }
+        }
+      ],
+      "./popover": [
+        {
+          "target": "./dist/popover.d.ts",
+          "conditions": {
+            "types": "./dist/popover.d.ts",
+            "react-native": "./src/popover.tsx",
+            "default": "./dist/popover.js"
+          },
+          "symbols": {
+            "Popover": [
+              "@nyc-tron/macos-appkit/dist/popover.d.ts#Popover"
+            ],
+            "PopoverPresentationRejection": [
+              "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection"
+            ],
+            "PopoverProps": [
+              "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps"
+            ]
+          }
+        }
+      ],
+      "./segmented-control": [
+        {
+          "target": "./dist/segmented-control.d.ts",
+          "conditions": {
+            "types": "./dist/segmented-control.d.ts",
+            "react-native": "./src/segmented-control.tsx",
+            "default": "./dist/segmented-control.js"
+          },
+          "symbols": {
+            "SegmentedControl": [
+              "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControl"
+            ],
+            "SegmentedControlProps": [
+              "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControlProps"
+            ]
+          }
+        }
+      ],
+      "./select": [
+        {
+          "target": "./dist/select.d.ts",
+          "conditions": {
+            "types": "./dist/select.d.ts",
+            "react-native": "./src/select.tsx",
+            "default": "./dist/select.js"
+          },
+          "symbols": {
+            "Select": [
+              "@nyc-tron/macos-appkit/dist/select.d.ts#Select"
+            ],
+            "SelectProps": [
+              "@nyc-tron/macos-appkit/dist/select.d.ts#SelectProps"
+            ]
+          }
+        }
+      ],
+      "./sidebar": [
+        {
+          "target": "./dist/sidebar.d.ts",
+          "conditions": {
+            "types": "./dist/sidebar.d.ts",
+            "react-native": "./src/sidebar.tsx",
+            "default": "./dist/sidebar.js"
+          },
+          "symbols": {
+            "Sidebar": [
+              "@nyc-tron/macos-appkit/dist/sidebar.d.ts#Sidebar"
+            ],
+            "SidebarItem": [
+              "@nyc-tron/macos-appkit/dist/sidebar.d.ts#SidebarItem"
+            ],
+            "SidebarItemData": [
+              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemData"
+            ],
+            "SidebarItemProps": [
+              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemProps"
+            ],
+            "SidebarProps": [
+              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarProps"
+            ],
+            "SidebarSelectionEvent": [
+              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarSelectionEvent"
+            ]
+          }
+        }
+      ],
+      "./split-view": [
+        {
+          "target": "./dist/split-view.d.ts",
+          "conditions": {
+            "types": "./dist/split-view.d.ts",
+            "react-native": "./src/split-view.tsx",
+            "default": "./dist/split-view.js"
+          },
+          "symbols": {
+            "SplitView": [
+              "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitView"
+            ],
+            "SplitViewProps": [
+              "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitViewProps"
+            ],
+            "SplitViewResizeEvent": [
+              "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewResizeEvent"
+            ]
+          }
+        }
+      ],
+      "./text-field": [
+        {
+          "target": "./dist/text-field.d.ts",
+          "conditions": {
+            "types": "./dist/text-field.d.ts",
+            "react-native": "./src/text-field.tsx",
+            "default": "./dist/text-field.js"
+          },
+          "symbols": {
+            "TextField": [
+              "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextField"
+            ],
+            "TextFieldProps": [
+              "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextFieldProps"
+            ]
+          }
+        }
+      ],
+      "./tooltip": [
+        {
+          "target": "./dist/tooltip.d.ts",
+          "conditions": {
+            "types": "./dist/tooltip.d.ts",
+            "react-native": "./src/tooltip.tsx",
+            "default": "./dist/tooltip.js"
+          },
+          "symbols": {
+            "Tooltip": [
+              "@nyc-tron/macos-appkit/dist/tooltip.d.ts#Tooltip"
+            ],
+            "TooltipProps": [
+              "@nyc-tron/macos-appkit/dist/tooltip.d.ts#TooltipProps"
+            ]
+          }
+        }
+      ],
+      "./window-controller": [
+        {
+          "target": "./dist/window-controller.d.ts",
+          "conditions": {
+            "types": "./dist/window-controller.d.ts",
+            "default": "./dist/window-controller.js"
+          },
+          "symbols": {
+            "HostDisplay": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+            ],
+            "HostWindowEvent": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostWindowEvent"
+            ],
+            "Registration": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#Registration"
+            ],
+            "WindowController": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController"
+            ],
+            "WindowControllerOptions": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions"
+            ],
+            "WindowTransport": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowTransport"
+            ],
+            "createWindowController": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#createWindowController"
+            ],
+            "toSharedBounds": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#toSharedBounds"
+            ],
+            "toSparkBounds": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#toSparkBounds"
+            ],
+            "validateDisplays": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#validateDisplays"
+            ]
+          }
+        }
+      ],
+      "./windows": [
+        {
+          "target": "./dist/windows.d.ts",
+          "conditions": {
+            "types": "./dist/windows.d.ts",
+            "react-native": "./src/windows.ts",
+            "default": "./dist/windows.js"
+          },
+          "symbols": {
+            "HostDisplay": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+            ],
+            "WindowController": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController"
+            ],
+            "WindowControllerOptions": [
+              "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions"
+            ],
+            "WindowInfo": [
+              "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo"
+            ],
+            "WindowOpenOptions": [
+              "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions"
+            ],
+            "WindowUpdateOptions": [
+              "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions"
+            ],
+            "createMacOSWindowHost": [
+              "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowHost"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "declarations": {
+    "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspector": {
+      "signatures": [
+        "export declare function AnchoredInspector(props: AnchoredInspectorProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspectorProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspectorProps": {
+      "signatures": [
+        "export type AnchoredInspectorProps = PopoverProps;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/button.d.ts#Button": {
+      "signatures": [
+        "export declare function Button(props: ButtonProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/button.d.ts#ButtonProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/button.d.ts#ButtonProps": {
+      "signatures": [
+        "export type ButtonProps = SparkButtonProps;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/types.ts#ButtonProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/context-menu.d.ts#showContextMenu": {
+      "signatures": [
+        "export declare function showContextMenu(options: ContextMenuOptions): Promise<ContextMenuResult>;"
+      ],
+      "references": [
+        "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions",
+        "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/drag-drop.d.ts#DragDropView": {
+      "signatures": [
+        "export declare function DragDropView(props: DragDropViewProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@legendapp/spark-drag-drop@0.0.2/src/index.tsx#DragDropViewProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/menus.d.ts#createMenu": {
+      "signatures": [
+        "export declare function createMenu(options: MenuOptions): Promise<Menu>;"
+      ],
+      "references": [
+        "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu",
+        "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/popover.d.ts#Popover": {
+      "signatures": [
+        "export declare function Popover({ scope, open, onOpenChange, onPresentationRejected, accessibilityLabel, anchor, usableRegions, children, width, maxHeight, animated, testID }: PopoverProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection": {
+      "signatures": [
+        "export interface PopoverPresentationRejection {\n    reason: 'outside-usable-region';\n    bounds: Rect2D;\n    region: Rect2D;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/overlays.d.ts#Rect2D"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps": {
+      "signatures": [
+        "export interface PopoverProps {\n    scope?: string;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    onPresentationRejected?: (rejection: PopoverPresentationRejection) => void;\n    accessibilityLabel: string;\n    anchor: Rect2D;\n    usableRegions: readonly Rect2D[];\n    children: ReactNode;\n    width?: number;\n    maxHeight?: number;\n    animated?: boolean;\n    testID?: string;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/overlays.d.ts#Rect2D",
+        "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection",
+        "@types/react@19.2.18/index.d.ts#React.ReactNode"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControl": {
+      "signatures": [
+        "export declare function SegmentedControl(props: SegmentedControlProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControlProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControlProps": {
+      "signatures": [
+        "export type SegmentedControlProps = SparkSegmentedControlProps;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/types.ts#SegmentedControlProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/select.d.ts#Select": {
+      "signatures": [
+        "export declare function Select(props: SelectProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/select.d.ts#SelectProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/select.d.ts#SelectProps": {
+      "signatures": [
+        "export type SelectProps = SparkSelectProps;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/types.ts#SelectProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/sidebar.d.ts#Sidebar": {
+      "signatures": [
+        "export declare function Sidebar(props: SidebarProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/sidebar.d.ts#SidebarItem": {
+      "signatures": [
+        "export declare function SidebarItem(props: SidebarItemProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitView": {
+      "signatures": [
+        "export declare function SplitView(props: SplitViewProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitViewProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitViewProps": {
+      "signatures": [
+        "export type SplitViewProps = SidebarSplitViewProps;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextField": {
+      "signatures": [
+        "export declare function TextField(props: TextFieldProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextFieldProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextFieldProps": {
+      "signatures": [
+        "export type TextFieldProps = TextInputProps;"
+      ],
+      "references": [
+        "@legendapp/spark-ui@0.0.2/src/types.ts#TextInputProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/tooltip.d.ts#Tooltip": {
+      "signatures": [
+        "export declare function Tooltip({ label, disabled, accessibilityHint, ...props }: TooltipProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/tooltip.d.ts#TooltipProps",
+        "@types/react@19.2.18/index.d.ts#$module",
+        "@types/react@19.2.18/index.d.ts#React.JSX",
+        "@types/react@19.2.18/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/tooltip.d.ts#TooltipProps": {
+      "signatures": [
+        "export interface TooltipProps extends ViewProps {\n    label: string;\n    disabled?: boolean;\n}"
+      ],
+      "references": [
+        "react-native@0.83.10/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay": {
+      "signatures": [
+        "export interface HostDisplay {\n    readonly id: string;\n    readonly primary: boolean;\n    readonly origin: {\n        readonly x: number;\n        readonly y: number;\n    };\n    readonly bounds: Rect;\n    readonly scaleFactor: number;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostWindowEvent": {
+      "signatures": [
+        "export type HostWindowEvent = 'focusChanged' | 'boundsChanged' | 'visibilityChanged' | 'fullscreenChanged' | 'closed';"
+      ],
+      "references": []
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#Registration": {
+      "signatures": [
+        "export interface Registration {\n    remove(): Promise<void>;\n}"
+      ],
+      "references": [
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController": {
+      "signatures": [
+        "export type WindowController = ReturnType<typeof createWindowController>;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#createWindowController",
+        "typescript@5.9.3/lib/lib.es5.d.ts#ReturnType"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions": {
+      "signatures": [
+        "export interface WindowControllerOptions {\n    beforeClose?: (windowId: string) => boolean | Promise<boolean>;\n    onError?: (error: unknown) => void;\n}"
+      ],
+      "references": [
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowTransport": {
+      "signatures": [
+        "export interface WindowTransport {\n    open(options: WindowOpenOptions): Promise<WindowInfo>;\n    get(id: string): Promise<WindowInfo>;\n    close(id: string): Promise<CloseResult>;\n    show(id: string, options?: {\n        focus?: boolean;\n    }): Promise<void>;\n    minimize(id: string): Promise<void>;\n    bounds(id: string, bounds: WindowBounds): Promise<void>;\n    options(id: string, options: WindowUpdateOptions): Promise<void>;\n    listen(id: string, event: HostWindowEvent, listener: () => void): Promise<Registration>;\n    beforeClose(id: string, allow: () => boolean | Promise<boolean>): Promise<Registration>;\n    displays(): Promise<readonly HostDisplay[]>;\n    displayChanges(listener: () => void): Promise<Registration>;\n}"
+      ],
+      "references": [
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostWindowEvent",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#Registration",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#createWindowController": {
+      "signatures": [
+        "export declare function createWindowController(transport: WindowTransport, options?: WindowControllerOptions): {\n    getSnapshot: () => WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    start: () => Promise<void>;\n    attach(id: string): Promise<void>;\n    open(input: WindowOpenOptions): Promise<WindowRecord>;\n    close(id: string): Promise<CloseResult>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    setBounds(id: string, displayId: string, rect: Rect): Promise<void>;\n    setOptions(id: string, value: WindowUpdateOptions): Promise<void>;\n    refresh(id: string): Promise<void>;\n    reflow: () => Promise<LayoutSnapshot>;\n    snapshot: () => LayoutSnapshot;\n    restore(snapshot: LayoutSnapshot): Promise<LayoutSnapshot>;\n    beginDrag(sourceId: string, payload: unknown): Outcome;\n    dragOver(token: string, targetId: string | null): Outcome;\n    drop(token: string, targetId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): Promise<Outcome>;\n    cancelDrag(token: string): Outcome;\n    dispose(): Promise<void>;\n};"
+      ],
+      "references": [
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions",
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DragOffer",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#LayoutSnapshot",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRecord",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRegistryState",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowTransport",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#toSharedBounds": {
+      "signatures": [
+        "export declare function toSharedBounds(bounds: WindowBounds, displays: readonly HostDisplay[]): Rect;"
+      ],
+      "references": [
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds",
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#toSparkBounds": {
+      "signatures": [
+        "export declare function toSparkBounds(displayId: string, rect: Rect, displays: readonly HostDisplay[]): WindowBounds;"
+      ],
+      "references": [
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds",
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-controller.d.ts#validateDisplays": {
+      "signatures": [
+        "export declare function validateDisplays(value: unknown): readonly HostDisplay[];"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowHost": {
+      "signatures": [
+        "export declare function createMacOSWindowHost(options?: WindowControllerOptions): {\n    getSnapshot: () => import(\"@nyc-tron/core/window-lifecycle\").WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    start: () => Promise<void>;\n    attach(id: string): Promise<void>;\n    open(input: spark.WindowOpenOptions): Promise<import(\"@nyc-tron/core/window-lifecycle\").WindowRecord>;\n    close(id: string): Promise<spark.CloseResult>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    setBounds(id: string, displayId: string, rect: import(\"@nyc-tron/core/folds\").Rect): Promise<void>;\n    setOptions(id: string, value: spark.WindowUpdateOptions): Promise<void>;\n    refresh(id: string): Promise<void>;\n    reflow: () => Promise<import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot>;\n    snapshot: () => import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot;\n    restore(snapshot: import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot): Promise<import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot>;\n    beginDrag(sourceId: string, payload: unknown): import(\"@nyc-tron/core/window-lifecycle\").Outcome;\n    dragOver(token: string, targetId: string | null): import(\"@nyc-tron/core/window-lifecycle\").Outcome;\n    drop(token: string, targetId: string, approve: (offer: import(\"@nyc-tron/core/window-lifecycle\").DragOffer) => boolean | Promise<boolean>): Promise<import(\"@nyc-tron/core/window-lifecycle\").Outcome>;\n    cancelDrag(token: string): import(\"@nyc-tron/core/window-lifecycle\").Outcome;\n    dispose(): Promise<void>;\n};"
+      ],
+      "references": [
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions",
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions",
+        "@legendapp/spark@0.0.2/windows.ts#$module",
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#$module",
+        "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#$module",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DragOffer",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#LayoutSnapshot",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRecord",
+        "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRegistryState",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    }
+  },
+  "externalTypes": {
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "ContextMenuOptions",
+      "signatures": [
+        "export interface ContextMenuOptions {\n    items: readonly MenuItem[];\n    windowId: string;\n    position: {\n        x: number;\n        y: number;\n    };\n}"
+      ]
+    },
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "ContextMenuResult",
+      "signatures": [
+        "export type ContextMenuResult = {\n    canceled: true;\n} | {\n    canceled: false;\n    itemId: string;\n};"
+      ]
+    },
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuAction": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "MenuAction",
+      "signatures": [
+        "export type MenuAction = Extract<SharedMenuAction, {\n    type: \"action\";\n}>;"
+      ]
+    },
+    "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuItem": {
+      "package": "@legendapp/spark-context-menu",
+      "version": "0.0.2",
+      "file": "src/index.ts",
+      "symbol": "MenuItem",
+      "signatures": [
+        "export type MenuItem = {\n    type: \"separator\";\n} | (ContextMenuEntry & {\n    type: \"action\";\n}) | (ContextMenuEntry & {\n    type: \"checkbox\";\n    checked: boolean;\n});"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuIcon": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuIcon",
+      "signatures": [
+        "export type MenuIcon = {\n    type: \"symbol\";\n    name: string;\n} | {\n    type: \"image\";\n    path: string;\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuLocation": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuLocation",
+      "signatures": [
+        "export type MenuLocation = \"app\" | \"file\" | \"edit\" | \"view\" | \"window\" | \"help\";"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuPlacement": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuPlacement",
+      "signatures": [
+        "export type MenuPlacement = {\n    before: MenuTarget;\n    after?: never;\n} | {\n    after: MenuTarget;\n    before?: never;\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuRole": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuRole",
+      "signatures": [
+        "export type MenuRole = \"new\" | \"open\" | \"save\" | \"saveAs\" | \"clearRecentDocuments\" | \"about\" | \"settings\" | \"services\" | \"hide\" | \"hideOthers\" | \"showAll\" | \"quit\" | \"undo\" | \"redo\" | \"cut\" | \"copy\" | \"paste\" | \"selectAll\" | \"minimize\" | \"zoom\" | \"close\" | \"toggleFullscreen\";"
+      ]
+    },
+    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuTarget": {
+      "package": "@legendapp/spark-desktop-app",
+      "version": "0.0.2",
+      "file": "src/contracts/menu.ts",
+      "symbol": "MenuTarget",
+      "signatures": [
+        "export type MenuTarget = {\n    id: string;\n} | {\n    role: MenuRole;\n} | {\n    menu: MenuLocation;\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult": {
+      "package": "@legendapp/spark-desktop-windows",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "CloseResult",
+      "signatures": [
+        "export type CloseResult = {\n    closed: true;\n} | {\n    closed: false;\n    reason: \"vetoed\";\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds": {
+      "package": "@legendapp/spark-desktop-windows",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "WindowBounds",
+      "signatures": [
+        "export interface WindowBounds extends Size {\n    displayId: DisplayId;\n    x: number;\n    y: number;\n}"
+      ]
+    },
+    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo": {
+      "package": "@legendapp/spark-desktop-windows",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "WindowInfo",
+      "signatures": [
+        "export interface WindowInfo {\n    id: WindowId;\n    kind: \"window\" | \"overlay\";\n    title: string;\n    parentId: WindowId | null;\n    modal: boolean;\n    visible: boolean;\n    focused: boolean;\n    minimized: boolean;\n    maximized: boolean;\n    fullscreen: boolean;\n    bounds: WindowBounds;\n}"
+      ]
+    },
+    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions": {
+      "package": "@legendapp/spark-desktop-windows",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "WindowOpenOptions",
+      "signatures": [
+        "export type WindowOpenOptions = WindowKind & WindowAppearanceOptions & {\n    id: WindowId;\n    component: string;\n    props?: Record<string, unknown>;\n    size?: Size;\n    position?: {\n        displayId: DisplayId;\n        x: number;\n        y: number;\n    };\n    show?: boolean;\n    restoreBounds?: boolean;\n    macos?: MacOSWindowOptions;\n};"
+      ]
+    },
+    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions": {
+      "package": "@legendapp/spark-desktop-windows",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "WindowUpdateOptions",
+      "signatures": [
+        "export interface WindowUpdateOptions extends WindowAppearanceOptions {\n    macos?: MacOSWindowUpdateOptions;\n}"
+      ]
+    },
+    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragEndEvent": {
+      "package": "@legendapp/spark-drag-drop",
+      "version": "0.0.2",
+      "file": "src/contracts.ts",
+      "symbol": "DragEndEvent",
+      "signatures": [
+        "export type DragEndEvent = {\n    accepted: true;\n    operation: DragOperation;\n} | {\n    accepted: false;\n    operation: \"none\";\n};"
+      ]
+    },
+    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragOperation": {
+      "package": "@legendapp/spark-drag-drop",
+      "version": "0.0.2",
+      "file": "src/contracts.ts",
+      "symbol": "DragOperation",
+      "signatures": [
+        "export type DragOperation = \"copy\" | \"move\" | \"link\";"
+      ]
+    },
+    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragPayload": {
+      "package": "@legendapp/spark-drag-drop",
+      "version": "0.0.2",
+      "file": "src/contracts.ts",
+      "symbol": "DragPayload",
+      "signatures": [
+        "export interface DragPayload {\n    files?: readonly string[];\n    text?: string;\n    urls?: readonly string[];\n    data?: Readonly<Record<string, string>>;\n}"
+      ]
+    },
+    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DropEvent": {
+      "package": "@legendapp/spark-drag-drop",
+      "version": "0.0.2",
+      "file": "src/contracts.ts",
+      "symbol": "DropEvent",
+      "signatures": [
+        "export interface DropEvent extends DragPayload, DragOverEvent {\n}"
+      ]
+    },
+    "@legendapp/spark-drag-drop@0.0.2/src/index.tsx#DragDropViewProps": {
+      "package": "@legendapp/spark-drag-drop",
+      "version": "0.0.2",
+      "file": "src/index.tsx",
+      "symbol": "DragDropViewProps",
+      "signatures": [
+        "export interface DragDropViewProps extends ViewProps, DragOptions {\n    disabled?: boolean;\n    source?: DragPayload;\n    onDrop?: (event: DropEvent) => void;\n    onDragEnter?: (event: DropEvent) => void;\n    onDragOver?: (event: DragOverEvent) => void;\n    onDragLeave?: () => void;\n    onDragEnd?: (event: DragEndEvent) => void;\n    onError?: (error: SparkError) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "Menu",
+      "signatures": [
+        "export interface Menu extends AsyncRegistration {\n    readonly id: string;\n    update(options: MenuUpdate): Promise<void>;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuAction": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuAction",
+      "signatures": [
+        "export type MenuAction = Extract<SharedMenuAction, {\n    type: \"action\";\n}>;"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuItem": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuItem",
+      "signatures": [
+        "export type MenuItem = MenuLeaf | (Omit<Extract<MenuInputItem, {\n    type: \"submenu\";\n}>, \"items\"> & {\n    items: readonly MenuItem[];\n});"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuLifecycleEvent": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuLifecycleEvent",
+      "signatures": [
+        "export interface MenuLifecycleEvent {\n    menuId: string;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuOptions",
+      "signatures": [
+        "export interface MenuOptions extends MenuUpdate {\n    id: string;\n    onAction?: (action: MenuAction) => void;\n    onOpen?: (event: MenuLifecycleEvent) => void;\n    onClose?: (event: MenuLifecycleEvent) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuRootItem": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuRootItem",
+      "signatures": [
+        "export type MenuRootItem = Extract<MenuItem, {\n    type: \"submenu\";\n}>;"
+      ]
+    },
+    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuUpdate": {
+      "package": "@legendapp/spark-native-menu",
+      "version": "0.0.2",
+      "file": "src/api.ts",
+      "symbol": "MenuUpdate",
+      "signatures": [
+        "export interface MenuUpdate {\n    items: readonly MenuRootItem[];\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/appkit-split-view/index.tsx",
+      "symbol": "SidebarSplitViewProps",
+      "signatures": [
+        "export interface SidebarSplitViewProps extends Omit<SpecializedViewProps, \"children\"> {\n    sidebar: ReactNode;\n    content: ReactNode;\n    list?: ReactNode;\n    children?: never;\n    appearance?: SidebarSplitViewAppearance;\n    contentMinWidth?: number;\n    sidebarMinWidth?: number;\n    sidebarWidth?: number;\n    listMinWidth?: number;\n    listWidth?: number;\n    sidebarCollapsed?: boolean;\n    initialPaneMetrics?: SidebarSplitViewPaneMetrics;\n    titleBar?: SplitViewTitleBarOptions;\n    onResize?: (event: SidebarSplitViewResizeEvent) => void;\n    onSidebarCollapsedChange?: (collapsed: boolean) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewResizeEvent": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/appkit-split-view/index.tsx",
+      "symbol": "SidebarSplitViewResizeEvent",
+      "signatures": [
+        "export interface SidebarSplitViewResizeEvent extends SidebarSplitViewPaneMetrics, SidebarSplitViewPaneOrigins {\n    listHeight: number;\n    listWidth: number;\n    height: number;\n    phase: \"provisional\" | \"ready\";\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemData": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/sidebar/index.tsx",
+      "symbol": "SidebarItemData",
+      "signatures": [
+        "export interface SidebarItemData {\n    id: string;\n    label: string;\n    selectable?: boolean;\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/sidebar/index.tsx",
+      "symbol": "SidebarItemProps",
+      "signatures": [
+        "export interface SidebarItemProps extends SpecializedViewProps {\n    id: string;\n    rowHeight?: SidebarRowHeight;\n    selectable?: boolean;\n    onContextMenu?: (event: SidebarContextMenuEvent) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/sidebar/index.tsx",
+      "symbol": "SidebarProps",
+      "signatures": [
+        "export type SidebarProps = SidebarBaseProps & ({\n    items: readonly SidebarItemData[];\n    children?: never;\n} | {\n    items?: never;\n    children: ReactNode;\n});"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarSelectionEvent": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/sidebar/index.tsx",
+      "symbol": "SidebarSelectionEvent",
+      "signatures": [
+        "export interface SidebarSelectionEvent {\n    id: string | null;\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/types.ts#ButtonProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "ButtonProps",
+      "signatures": [
+        "export interface ButtonProps extends ControlProps {\n    children: string;\n    onPress?: () => void;\n    variant?: \"default\" | \"bordered\" | \"borderless\";\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/types.ts#SegmentedControlProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "SegmentedControlProps",
+      "signatures": [
+        "export interface SegmentedControlProps extends SelectProps {\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/types.ts#SelectProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "SelectProps",
+      "signatures": [
+        "export interface SelectProps extends ControlProps {\n    options: readonly SelectOption[];\n    value: string;\n    onValueChange: (value: string) => void;\n}"
+      ]
+    },
+    "@legendapp/spark-ui@0.0.2/src/types.ts#TextInputProps": {
+      "package": "@legendapp/spark-ui",
+      "version": "0.0.2",
+      "file": "src/types.ts",
+      "symbol": "TextInputProps",
+      "signatures": [
+        "export type TextInputProps = ControlledTextInputProps | UncontrolledTextInputProps;"
+      ]
+    },
+    "@legendapp/spark@0.0.2/windows.ts#$module": {
+      "package": "@legendapp/spark",
+      "version": "0.0.2",
+      "file": "windows.ts",
+      "symbol": "$module",
+      "signatures": []
+    },
+    "@nyc-tron/core@1.0.0/dist/folds.d.ts#$module": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/folds.d.ts",
+      "symbol": "$module",
+      "signatures": []
+    },
+    "@nyc-tron/core@1.0.0/dist/folds.d.ts#Rect": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/folds.d.ts",
+      "symbol": "Rect",
+      "signatures": [
+        "export interface Rect {\n    readonly x: number;\n    readonly y: number;\n    readonly width: number;\n    readonly height: number;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/overlays.d.ts#Rect2D": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/overlays.d.ts",
+      "symbol": "Rect2D",
+      "signatures": [
+        "export type Rect2D = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n}>;"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#$module": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "$module",
+      "signatures": []
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#DragOffer": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "DragOffer",
+      "signatures": [
+        "export interface DragOffer {\n    readonly sourceId: string;\n    readonly targetId: string;\n    readonly payload: unknown;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#LayoutSnapshot": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "LayoutSnapshot",
+      "signatures": [
+        "export interface LayoutSnapshot {\n    readonly version: 1;\n    readonly windows: readonly SnapshotWindow[];\n    readonly focusedId: string | null;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#Outcome": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "Outcome",
+      "signatures": [
+        "export interface Outcome {\n    readonly state: WindowRegistryState;\n    readonly ok: boolean;\n    readonly reason?: RejectReason;\n    readonly token?: string;\n    readonly offer?: DragOffer;\n    readonly transfer?: DragOffer;\n    readonly accepted?: boolean;\n    readonly cancelledToken?: string;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRecord": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "WindowRecord",
+      "signatures": [
+        "export interface WindowRecord {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0/dist/window-lifecycle.d.ts#WindowRegistryState": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "dist/window-lifecycle.d.ts",
+      "symbol": "WindowRegistryState",
+      "signatures": [
+        "export interface WindowRegistryState {\n    readonly windows: readonly WindowRecord[];\n    readonly focusedId: string | null;\n    readonly drag: DragSession | null;\n    readonly tokenSeq: number;\n}"
+      ]
+    },
+    "@types/react@19.2.18/index.d.ts#$module": {
+      "package": "@types/react",
+      "version": "19.2.18",
+      "file": "index.d.ts",
+      "symbol": "$module",
+      "signatures": []
+    },
+    "@types/react@19.2.18/index.d.ts#React.JSX": {
+      "package": "@types/react",
+      "version": "19.2.18",
+      "file": "index.d.ts",
+      "symbol": "React.JSX",
+      "signatures": []
+    },
+    "@types/react@19.2.18/index.d.ts#React.JSX.Element": {
+      "package": "@types/react",
+      "version": "19.2.18",
+      "file": "index.d.ts",
+      "symbol": "React.JSX.Element",
+      "signatures": [
+        "interface Element extends React.ReactElement<any, any> {\n}"
+      ]
+    },
+    "@types/react@19.2.18/index.d.ts#React.ReactNode": {
+      "package": "@types/react",
+      "version": "19.2.18",
+      "file": "index.d.ts",
+      "symbol": "React.ReactNode",
+      "signatures": [
+        "type ReactNode = ReactElement | string | number | bigint | Iterable<ReactNode> | ReactPortal | boolean | null | undefined | DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES[keyof DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES] | Promise<AwaitedReactNode>;"
+      ]
+    },
+    "react-native@0.83.10/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps": {
+      "package": "react-native",
+      "version": "0.83.10",
+      "file": "Libraries/Components/View/ViewPropTypes.d.ts",
+      "symbol": "ViewProps",
+      "signatures": [
+        "export interface ViewProps extends ViewPropsAndroid, ViewPropsIOS, GestureResponderHandlers, Touchable, PointerEvents, AccessibilityProps {\n    children?: React.ReactNode | undefined;\n    hitSlop?: null | Insets | number | undefined;\n    id?: string | undefined;\n    needsOffscreenAlphaCompositing?: boolean | undefined;\n    onLayout?: ((event: LayoutChangeEvent) => void) | undefined;\n    pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto' | undefined;\n    removeClippedSubviews?: boolean | undefined;\n    style?: StyleProp<ViewStyle> | undefined;\n    testID?: string | undefined;\n    nativeID?: string | undefined;\n    collapsable?: boolean | undefined;\n    collapsableChildren?: boolean | undefined;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2015.iterable.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2015.promise.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "Promise: PromiseConstructor"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2015.symbol.wellknown.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n    readonly [Symbol.toStringTag]: string;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es2018.promise.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n    finally(onfinally?: (() => void) | undefined | null): Promise<T>;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es5.d.ts#Promise": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es5.d.ts",
+      "symbol": "Promise",
+      "signatures": [
+        "interface Promise<T> {\n    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;\n    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es5.d.ts#ReturnType": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es5.d.ts",
+      "symbol": "ReturnType",
+      "signatures": [
+        "type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;"
+      ]
+    }
+  }
+}

@@ -1,72 +1,110 @@
-# v1.0.0 decisions
+# v1.0.0 decisions and release conditions
 
-Each surface below is BUILD, STRIKE or DEFER. A deferral names its blocker so
-nobody closes it with the wrong fix. Revisit a row when its condition changes.
+Updated 2026-11-10. This is a release candidate; package versions alone do not
+mean that a v1 tag or release exists. The user approved completing all twelve
+previously deferred N rows. That direction supersedes the 2026-11-09 blanket
+scope deferral. Implementation ownership and recorded acceptance remain
+separate.
 
-Date recorded: 2026-11-09. Baseline: `0.1.0-alpha.4` plus PR #54.
+## D1. Distribution: GitHub Release tarballs
 
-## D1. Distribution: BUILD tarball releases, DEFER npm
+The distribution channel is fifteen GitHub Release tarballs with
+`SHA256SUMS`, installed by immutable release URL. The thirteen workspace
+packages are produced by `tooling/pack-release.mjs`. The two desktop packages,
+`@nyc-tron/windows-fluent-fabric` and `@nyc-tron/macos-appkit`, are built and
+tested separately in their RNW 0.85 and Spark / Expo 55 lanes. The release
+downloads the exact archives installed by those native consumer jobs and
+verifies their checksums, package identities and candidate revision before
+including them. It does not repack either archive after its native test.
+Every distributable manifest is
+`private: true`, has version `1.0.0`, declares `MIT`, and includes `LICENSE`.
 
-v1.0.0 ships as GitHub Release tarballs with `SHA256SUMS`, installed by release
-URL, the same channel as alpha.1 to alpha.4. Packages stay `private: true` and
-`tooling/verify-packages.mjs` keeps enforcing that.
+The release job requires the source/package checks, browser suites, installed
+tarball consumers, iOS/Android native build/runtime jobs, actual Windows native
+compilation and UI Automation, AppKit native controls/window lifecycle, and reference captures/render measurements from
+the same candidate.
+It rejects mismatched package versions and an existing release instead of
+replacing its assets. No tag or release has been created as part of this
+candidate work.
 
-npm publishing is deferred. Blockers, all owner actions:
+npm distribution remains a separate owner decision: scope ownership, the
+recorded distribution review in D2, and a policy for currently uncapped peer
+ranges must be settled first. Tested runtime pins are documented in
+[Support policy](SUPPORT.md); a broad peer range is not proof of support for
+every matching runtime.
 
-- Claim the `@nyc-tron` npm scope.
-- Sign off on the license review in D2, including the MPL-2.0 `mediabunny`
-  dependency of `@nyc-tron/platform-services`.
-- Decide on a support policy for peer ranges (`react-native >=0.88.0` is
-  uncapped today).
+## D2. Licensing and provenance
 
-AGENTS.md rule 9 stays in force until those three are done.
+MIT metadata and the original-code license are present at the repository root
+and in all fifteen packages. Ported code retains the upstream terms recorded
+in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), package notices, and
+their accompanying license texts. The pack gate verifies declared notices and
+license files are actually present in the produced archives. Exact is a design
+reference; its Contract/Rust runtime is not copied into NYC-Tron.
 
-## D2. License: BUILD MIT for NYC-Tron original code
+`@nyc-tron/platform-services` imports unmodified `mediabunny` 1.65.2 under
+MPL-2.0. Its package contains the license and a source-availability statement
+with the exact npm archive, upstream commit, and integrity value. See
+[the dependency notice](../packages/platform-services/THIRD_PARTY.md) and
+[release evidence](completion/reports/V1-RELEASE-GATES.md#licensing-and-distribution-review).
+These are verifiable packaging facts. They do not establish an owner distribution
+sign-off. The previously required owner distribution review is tracked in
+[distribution-review.json](completion/distribution-review.json) and remains
+`pending`. Stable publication checks an actual comment by the repository owner
+through GitHub's API, approving the exact version and SHA-256 of the produced
+fifteen-archive `SHA256SUMS`. Changing a local status field cannot satisfy this
+gate. The archives are retained as a CI artifact before the check, so they can
+be reviewed even when stable publication is blocked. The
+[release evidence report](completion/reports/V1-RELEASE-GATES.md#stable-publication-gate)
+documents the record and approval statement; none is submitted or inferred here.
 
-Five packages already carry `MIT, Copyright (c) 2026 NYC-Tron UI contributors`.
-v1 applies that text to the repo root and every package, and adds
-`"license": "MIT"` to every manifest.
+## D3. Scope: finish the complete component program with its proper owners
 
-Ported code keeps its upstream license and header. `THIRD_PARTY_NOTICES.md`
-lists every ported file (ArtCraft family: MIT or Apache-2.0 at the user's
-option; Floating UI; AudioKit Controls; Skia; Vico by Maven reference).
+All 341 rows in the canonical component program are in the completion target.
+The twelve rows below are active work, rather than outside-scope deferrals:
 
-`mediabunny` (MPL-2.0) is used unmodified as a runtime dependency. Its license
-text ships in `packages/platform-services/third-party/mediabunny`. The owner
-confirms that this satisfies MPL-2.0 for tarball distribution before the tag.
-
-## D3. Scope: v1 is the library, with stated support tiers
-
-v1.0.0 means the 329 library-scope components are implemented, exported and
-covered by Node, mocked-render and Chromium tests, and that iOS SwiftUI and
-Android Compose sources compile in CI.
-
-It does not mean device-accepted. All 341 ledger rows keep
-`acceptance: "unverified"` until evidence exists. The README and release notes
-say so. Nothing in v1 changes that field without a recorded run.
-
-| Tier | Contents | Evidence today |
+| Rows | Required capability | Implementation ownership |
 |---|---|---|
-| Supported | Web (React Native Web), iOS SwiftUI controls, Android Compose controls, shared TS packages | Node, Chromium, native compile in CI; two passing iOS and Android scenario runs for overlays |
-| Experimental | `@nyc-tron/windows-fluent` and `windows-fluent-fabric` (RN 0.85 lane), native charts, native media decoding | Compiles on `windows-2025`; UIA smoke test; no Narrator, high-contrast or resize runs |
-| Not included | AppKit/macOS adapter, multi-window native bridge, visionOS, Quest, PICO | No code or no proof |
+| N-01, N-04 | Native pointer data; palm rejection and prediction boundaries | NYC-Tron native input and pure input contracts, with real device input evidence |
+| N-03, N-09 | Tracked 6DoF and XR presentation | Muse/Forge platform owners; pinned source and runtime evidence |
+| N-10, N-11 | Offline/autosave and collaboration | Forge document/session owners |
+| N-13, N-14, N-15, N-16, N-18 | Scheduling, media cache, undo transactions, binary data and telemetry | Forge service owners and their integration evidence |
+| N-19 | Actual media decoding and presentation lifecycle | NYC-Tron platform-services/native host plus Forge integration |
 
-The Windows adapter ships in lockstep with the same version number, because
-`tooling/pack-release.mjs` requires one version per tag. It is labelled
-experimental and cannot be installed alongside the RN 0.88 packages.
+The complete per-row mapping, pinned external implementations, and remaining
+platform evidence belong in
+[V1-PLATFORM-CLOSURE.md](completion/reports/V1-PLATFORM-CLOSURE.md). Engine code
+is not copied into the UI package to change an implementation count. The
+canonical ledger is not rewritten by a release summary.
 
-## Struck and deferred rows
+Source coverage does not establish acceptance on every required platform.
+An `acceptance: "accepted"` change needs evidence for the claimed interaction,
+host and runtime. Browser geometry tests, native compilation, simulator
+interaction, physical pen/fold/headset input, and screen-reader speech are
+different records. Previous blanket deferrals are not a reason to skip the
+approved work, and a successful compile is not a replacement for its runtime
+checks. Support claims remain bounded by [SUPPORT.md](SUPPORT.md) and the
+candidate's actual evidence.
 
-| Item | Disposition | Condition to revisit |
-|---|---|---|
-| 12 N-rows (N-01, N-03, N-04, N-09, N-10, N-11, N-13, N-14, N-15, N-16, N-18, N-19) | DEFER | Engine and platform integration is owned by Forge #63; not library scope |
-| Device acceptance for any row | DEFER | A physical device or emulator run is recorded in `docs/completion/evidence` |
-| AppKit/macOS adapter (issue #4) | STRIKE for v1 | A macOS runner and an Apple desktop for sign-off |
-| WinUI menus, popovers, tooltips (issue #4) | DEFER | Narrator and focus checks on a Windows machine with a desktop session |
-| Native multi-window bridge (issue #4) | DEFER | Device run; the pure TypeScript lifecycle contract is in v1 |
-| Skia and desktop chart renderers (issue #7) | DEFER | Rendering checks on Windows and macOS |
-| Narrator, VoiceOver, TalkBack speech checks | DEFER | A screen reader on hardware |
-| Foldable hinge runs, stylus and pen input | DEFER | A foldable Android device or Surface Duo; a stylus |
-| iOS 27.1 `reservedRegions` runtime run | DEFER | An iOS 27.1 device or simulator |
-| Performance budgets for 1,048,576 x 16,384 sheets | DEFER | Device benchmarking |
-| npm publishing | DEFER | See D1 |
+`tooling/release-readiness.mjs` enforces this boundary before stable publication:
+every one of the immutable 341 rows must be `accepted`, and the component
+validator requires completed implementation plus existing passed evidence on
+all eight required platforms. Prerelease packaging can retain pending work and
+the pending owner review. It does not promote either status or claim stable
+readiness.
+
+## D4. Conditions for the candidate
+
+| Area | Required evidence |
+|---|---|
+| Release and native compilation | Reusable iOS/Android jobs consume this candidate's tarballs; release also waits for Windows native compilation/UIA, AppKit controls/window lifecycle, and reference captures/render measurements. Both desktop archives are preserved from the successful native consumer jobs. |
+| Clean consumers | A basic UI app without unrelated optional peers, an Expo/web app, and the native reference app install actual archives outside the checkout |
+| Reference flows | Settings, library/detail, editor/inspector and media flows preserve authored state through adaptive layout |
+| Native interaction and accessibility | Actual platform interaction reports, cancellation/lifecycle behavior, keyboard and assistive-technology checks for the claimed targets |
+| Public API stability | Export-key snapshot, reachable declaration/type graph, ordered export conditions, and separate RNW and AppKit declaration snapshots |
+| Performance | Reproducible measurements with fixture, runtime, hardware, sample count and limits; no inherited Exact speed claim |
+| Documentation and distribution | Accurate candidate/support status, bundled licenses/notices, migration instructions, verified archive contents, and the recorded owner distribution review |
+
+Commands, observed results and commit-specific CI links are in
+[V1-RELEASE-GATES.md](completion/reports/V1-RELEASE-GATES.md). A green run on an
+earlier commit is evidence for that commit, not approval for a later candidate.
