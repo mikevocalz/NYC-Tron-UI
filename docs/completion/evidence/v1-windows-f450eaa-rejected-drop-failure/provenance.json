@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10 23:58:13 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "head": "f450eaa21589bcc72e6d25f31a1b205e7015ff01",
+    "tree": "0ddf3e304dc2e1265baeaa24984674bd5985a64b",
+    "actualMerge": "3765f328a994524b530c8876b8e2228c2d36a878",
+    "parents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "f450eaa21589bcc72e6d25f31a1b205e7015ff01"
+    ],
+    "actualMergeTreeEqualsHelper": true
+  },
+  "workflow": {
+    "runId": 42924119449,
+    "sourceJobId": 130206100824,
+    "nativeJobId": 130206543842,
+    "source": "success",
+    "nativeCompile": "success",
+    "consumerCompile": "success",
+    "deployment": "success",
+    "uia": "failure",
+    "testedDistributionRetention": "skipped",
+    "testedDistributionUpload": "skipped"
+  },
+  "failure": {
+    "message": "UIA element named 'Native drag result: none/rejected' did not appear within 30 s",
+    "processId": 5280,
+    "mainWindowHandle": 589990,
+    "ownedProcessAlive": true,
+    "finalDescendants": 51,
+    "matchingCrashRecords": 0,
+    "actualFinalResultLabel": null,
+    "nativeTargetEventCount": null,
+    "originalUiTreeInspected": false,
+    "originalNativeTraceInspected": false
+  },
+  "nativeJobLog": {
+    "path": "native-job.log",
+    "characters": 332409,
+    "utf8Bytes": 333924,
+    "sha256": "76c67cb3331713e5478bde6d42a63b92581685f231801ffb1796f051fd681bc6",
+    "gitBlob": "68a1b8e9af4888d1e3ba3f15e1aba5aa4fa007ce",
+    "completeDecodedConnectorLog": true,
+    "independentRetrievalMatched": true,
+    "lineEndingsPreserved": true
+  },
+  "derivedEnvironmentLogSummary": {
+    "path": "environment-log-summary.json",
+    "utf8Bytes": 10324,
+    "sha256": "151b3fcacda339e0da078d24a705954338bbbb92defa42425788f8949f143e20",
+    "gitBlob": "791fdea32af2c210538c1578210cb88bfc4fcd92",
+    "completeMarkerEnvelopes": 1,
+    "derivation": "Exact JSON log line with only timestamp prefix and log line ending removed; no newline added.",
+    "parsedFieldsEqualOriginalLog": true,
+    "isCompleteOriginalEnvironmentFile": false
+  },
+  "producerReportedOriginalEnvironmentFile": {
+    "filename": "drag-environment-01.json",
+    "bytes": 51975,
+    "sha256": "8cce32aaee71bc16638982bc01e2ee677a7bec42b38965033e768a08bea34f13",
+    "independentlyExtracted": false,
+    "independentlyRehashed": false
+  },
+  "producerReportedRuntimeArtifact": {
+    "id": 13813502001,
+    "name": "winui-fabric-uia-smoke",
+    "bytes": 336049,
+    "sha256": "cba55827d11cb982b6da7da83a31f473e9a22a719d7536b36440113359ca0863",
+    "uploadReportedFiles": 39,
+    "independentlyDownloadedBytesVerified": false,
+    "membersExtracted": false,
+    "membersVerified": false
+  },
+  "environmentInterpretation": {
+    "tokenIsElevated": null,
+    "tokenElevationFailure": 24,
+    "tokenElevationFailureStage": "not recorded",
+    "integrityRid": 12288,
+    "elevationType": 1,
+    "uiAccess": 0,
+    "enableLua": 1,
+    "dragFailureCauseEstablished": false,
+    "hiddenInputSiteRegistrationDefectEstablished": false,
+    "moduleHashScope": "files at the two already-loaded module paths, not in-memory images"
+  },
+  "remaining": {
+    "fullOriginalRuntimeArtifactInspection": true,
+    "combinedCandidateValidation": true,
+    "completeNativeAcceptance": true,
+    "allEightPlatformAcceptance": true,
+    "exactOwnerDistributionApproval": true,
+    "releaseCreated": false,
+    "tagCreated": false
+  }
+}

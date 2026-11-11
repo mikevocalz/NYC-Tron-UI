@@ -135,6 +135,62 @@ jobs:
           node packages/windows-fluent/rnw-fabric/scripts/prepare-consumer.mjs $consumer "$env:RUNNER_TEMP/windows-shared"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           "WIN_CONSUMER=$consumer" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Validate diagnostic scripts with the UIA PowerShell runtime
+        working-directory: ${{ env.WIN_CONSUMER }}
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          $evidence = Join-Path $env:RUNNER_TEMP "uia-smoke"
+          New-Item -ItemType Directory -Force $evidence | Out-Null
+          $receipt = [ordered]@{
+            schemaVersion = 1; sourceRevision = $env:GITHUB_SHA; status = "running"
+            capturedAt = [DateTime]::UtcNow.ToString("o")
+            powershellVersion = $PSVersionTable.PSVersion.ToString()
+            powershellEdition = $PSVersionTable.PSEdition
+            clrVersion = [Environment]::Version.ToString()
+            processIs64Bit = [Environment]::Is64BitProcess
+            productionCSharpCompilation = "not-run"
+            scripts = [System.Collections.Generic.List[object]]::new()
+            checks = [System.Collections.Generic.List[object]]::new()
+          }
+          $compatibilityFailure = $null
+          try {
+            if ($PSVersionTable.PSEdition -ne "Desktop" -or $PSVersionTable.PSVersion.Major -ne 5 -or $PSVersionTable.PSVersion.Minor -ne 1 -or -not [Environment]::Is64BitProcess) {
+              throw "These checks must use the same Windows PowerShell 5.1 x64 runtime as native UIA"
+            }
+            foreach ($relative in @("scripts\uia-smoke.ps1", "scripts\uia-drag-input.ps1", "scripts\uia-drag-environment.ps1", "tests\native-drag-environment.test.ps1", "tests\native-drag-input.test.ps1")) {
+              $path = (Resolve-Path -LiteralPath $relative).Path
+              $tokens = $null; $parseErrors = $null
+              [System.Management.Automation.Language.Parser]::ParseFile($path, [ref]$tokens, [ref]$parseErrors) | Out-Null
+              $receipt.scripts.Add(@{ path = $relative; sha256 = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant(); parseErrorCount = @($parseErrors).Count })
+              if (@($parseErrors).Count -ne 0) { throw "Diagnostic script failed Windows PowerShell parsing: $relative" }
+            }
+            . .\scripts\uia-drag-environment.ps1
+            Initialize-DragEnvironmentReader
+            $receipt.productionCSharpCompilation = "passed"
+            # Each mock suite owns fake types. Separate 5.1 processes keep those
+            # apart from the real P/Invoke declarations compiled above.
+            $engine = Join-Path $PSHOME "powershell.exe"
+            foreach ($testName in @("native-drag-environment", "native-drag-input")) {
+              $resultDirectory = Join-Path $evidence ("portable-" + $testName)
+              & $engine -NoLogo -NoProfile -NonInteractive -File ".\tests\$testName.test.ps1" -OutputDirectory $resultDirectory
+              $code = $LASTEXITCODE
+              $receipt.checks.Add(@{ name = $testName; exitCode = $code; status = $(if ($code -eq 0) { "passed" } else { "failed" }) })
+              if ($code -ne 0) { throw "Diagnostic regression failed: $testName (exit $code)" }
+            }
+            $receipt.status = "passed"
+          } catch {
+            $compatibilityFailure = $_
+            $receipt.status = "failed"
+            $receipt.error = @{ type = $_.Exception.GetType().FullName; message = $_.Exception.Message }
+            throw
+          } finally {
+            try { $receipt | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 (Join-Path $evidence "diagnostic-compatibility.json") }
+            catch {
+              if ($null -eq $compatibilityFailure) { throw }
+              Write-Host "Could not retain diagnostic compatibility receipt; primary failure remains unchanged."
+            }
+          }
       - name: Generate native code from the installed package
         working-directory: ${{ env.WIN_CONSUMER }}/node_modules/@nyc-tron/windows-fluent-fabric
         shell: pwsh

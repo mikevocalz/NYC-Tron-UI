@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10 23:42:30 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "head": "f450eaa21589bcc72e6d25f31a1b205e7015ff01",
+  "actualCheckout": "3765f328a994524b530c8876b8e2228c2d36a878",
+  "tree": "0ddf3e304dc2e1265baeaa24984674bd5985a64b",
+  "parents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "f450eaa21589bcc72e6d25f31a1b205e7015ff01"
+  ],
+  "allJobLogsConfirmCheckout": true,
+  "independentFullLogDigestsMatch": true,
+  "logs": [
+    {
+      "name": "overlay-job.log",
+      "kind": "overlay",
+      "runId": 42924119465,
+      "jobId": 130206100772,
+      "passed": 32,
+      "skipped": 0,
+      "bytes": 43683,
+      "characters": 40849,
+      "sha256": "2c89f0b4afe4591eae257fe3ba53900ca94edebb192b6c04fafb9c4411773776",
+      "gitBlob": "0ad2ca8bdefadb96c2e84e18d40a6278c7e7b51a"
+    },
+    {
+      "name": "instrument-job.log",
+      "kind": "instrument",
+      "runId": 42924119412,
+      "jobId": 130206100789,
+      "passed": 686,
+      "skipped": 0,
+      "bytes": 148260,
+      "characters": 141360,
+      "sha256": "56d4763b718196367a0bdfdadab4fc5ee59cbf7fefe13eb17fd074c8c2e34138",
+      "gitBlob": "1ac7b77ffe4e30f9d5ed0125792b42b4fe74fd3e"
+    },
+    {
+      "name": "expo-consumer-job.log",
+      "kind": "expo",
+      "runId": 42924119515,
+      "jobId": 130206100867,
+      "passed": 2,
+      "skipped": 0,
+      "bytes": 48243,
+      "characters": 45587,
+      "sha256": "65e16457de8759c710ba193726d195286574981af5e837224fde5140717ded1c",
+      "gitBlob": "664108054518b2d7f1cd589bf9fa0cb1e8078241"
+    },
+    {
+      "name": "basic-consumer-job.log",
+      "kind": "basic",
+      "runId": 42924119515,
+      "jobId": 130206101226,
+      "passed": 1,
+      "skipped": 1,
+      "bytes": 48238,
+      "characters": 45584,
+      "sha256": "420a79df7f1bb2243bf16cf5a3eae2b82f8635f755d5a3d389646502515b73b4",
+      "gitBlob": "a016bea28cfb52aa4c32e969f935efdf1ae09a84"
+    }
+  ],
+  "basicSkippedCase": "Expo browser exports: installed picker and panes work through the browser export conditions",
+  "expoSkippedCaseActuallyPassed": true,
+  "alias": {
+    "path": "packages/expo-controls/tests/browser/server.mjs",
+    "oldGitBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+    "newGitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+    "origin": "2899ffdedf98e2a86c077f15aa1baf6401c07b80",
+    "delta": "one added core overlay alias; real source and assertions unchanged"
+  },
+  "originalArtifactBytesRehashed": false,
+  "originalArchiveMembersInspected": false,
+  "renderedPngsIndependentlyViewed": false,
+  "localBrowserRunClaimed": false,
+  "frozenCombinedCandidateValidation": false,
+  "nativeWindowsAcceptanceEstablished": false
+}

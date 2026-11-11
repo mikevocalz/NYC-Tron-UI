@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-10 23:36:30 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "base": "5a9709d9f7c7aa819d36fd68729f11e0cf3295b8",
+    "baseTree": "7562beb4363bbc54797b75a41f6d9525eb008faf",
+    "head": "f450eaa21589bcc72e6d25f31a1b205e7015ff01",
+    "tree": "0ddf3e304dc2e1265baeaa24984674bd5985a64b",
+    "actualMerge": "3765f328a994524b530c8876b8e2228c2d36a878",
+    "actualMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "f450eaa21589bcc72e6d25f31a1b205e7015ff01"
+    ],
+    "fullTreeLeavesVerified": 2075,
+    "nonforcedExpectedHeadLease": true,
+    "localFetchPerformed": false
+  },
+  "authoredFiles": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+      "gitBlob": "54c3dee9cce38f8a7ae143ea2fbfd4c34b43b7bd",
+      "bytes": 43426,
+      "sha256": "382fb5ed34860b3f24d8913062abf1dd551db4ff795dfc50ebb89a6887f01b5e",
+      "oldGitBlob": "48153919572ac0d2bb408cf63d175264232ad334"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-drag-input.ps1",
+      "gitBlob": "08d4a2bf9b165251c974f86db4743994e126a7b8",
+      "bytes": 11839,
+      "sha256": "1ca2b289d9e6ad1c67d093b8299fa355499debc67fa6484b85d277d907e92056",
+      "oldGitBlob": "198bc31043e20efc79444d11228974bbf7c4a8d2"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-input.test.ps1",
+      "gitBlob": "acbe9d3334c66d2f7868e7de135aa0f0179178a1",
+      "bytes": 11398,
+      "sha256": "09421e728189d6fb522c4e32e75be167078987f9e5531ccb5a00bbb3b721587e",
+      "oldGitBlob": "cfbfbb83d7c6fce77369684a87c23cb593d135e0"
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-drag-environment.ps1",
+      "gitBlob": "728d0f5407ee6822f98798eb88b7dddc9cf66646",
+      "bytes": 30463,
+      "sha256": "b7c23f5c4348373d810cd6cc6f924c8d39a916dc7b92ebdbdc56a84a210367c9",
+      "oldGitBlob": null
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/tests/native-drag-environment.test.ps1",
+      "gitBlob": "284cb31bf03aa65c5b1a1ed8d03b9909d0d2c5fa",
+      "bytes": 17698,
+      "sha256": "c0a3f8b25bd0dc070f14744b95494f3ba9309cd96bddeff56b3332480f5eb040",
+      "oldGitBlob": null
+    },
+    {
+      "path": ".github/workflows/winui-fabric.yml",
+      "gitBlob": "fdb10bb03ee27635973d0010bacf543a2e612b6e",
+      "bytes": 16285,
+      "sha256": "db32130d0d7d184610917358396a6b84cac51782fcf0d44fd8c4c224e034bd80",
+      "oldGitBlob": "43455f3d06ce7c02943f90cb020003d08facd428"
+    }
+  ],
+  "existingBrowserAlias": {
+    "path": "packages/expo-controls/tests/browser/server.mjs",
+    "oldGitBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+    "gitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+    "bytes": 5021,
+    "sha256": "c959c3cafca4f1ab7b62088fffb673b485e54035594f3d4ac3e57b7fa126a819",
+    "origin": "2899ffdedf98e2a86c077f15aa1baf6401c07b80",
+    "exactSingleLineBackport": true
+  },
+  "aggregateWorkflow": {
+    "path": ".github/workflows/winui-fabric.yml",
+    "oldGitBlob": "22202c44b7d5a0b1d168fa4b1c73856b0af50743",
+    "gitBlob": "7332c96514fefc1d54bacef61689289fd51b5bed",
+    "gateLinesAdded": 56,
+    "existingBytesPreserved": true,
+    "helperWholeFileReplacement": false
+  },
+  "validation": {
+    "sourceRun": 42924119449,
+    "sourceJob": 130206100824,
+    "sourceStatus": "success",
+    "sourceSuites": [
+      {
+        "tests": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "name": "native-source subset invocation"
+      },
+      {
+        "tests": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "name": "full source/adapter suite, including the same 13 native-source checks"
+      }
+    ],
+    "apiSubpaths": 8,
+    "reachableDeclarations": 44,
+    "nativeJob": 130206543842,
+    "powerShellCompatibilityStep": "success",
+    "requiredPowerShellEdition": "Desktop",
+    "requiredPowerShellVersion": "5.1",
+    "requiredProcessBits": 64,
+    "requiredEnvironmentRegressions": 8,
+    "requiredInputRegressions": 7,
+    "installedCodegen": "success",
+    "rnwApplicationGeneration": "success",
+    "nativeCompilation": "success",
+    "nativeUiAcceptance": "failure",
+    "fullNativeLogRetained": true,
+    "priorLocalTestsReusedForReconstructedSource": false,
+    "distinctSourceChecks": 49,
+    "overlapNote": "The initial 13-check invocation is included within the later 49-check suite; the two invocations do not establish 62 distinct checks.",
+    "consumerExecutableCompilation": "success",
+    "deployment": "success",
+    "nativeFirstFailure": "UIA element named 'Native drag result: none/rejected' did not appear within 30 s",
+    "completedNativeReceipt": "../v1-windows-f450eaa-rejected-drop-failure/README.md",
+    "historicalJobMetadataScope": "job-metadata.json preserves the earlier 2026-11-10 23:36:30 UTC native-compiling snapshot; completed jobs and full native log are in the completed native receipt.",
+    "renderedBrowserReceipt": "../v1-web-f450eaa-rendered-and-consumer-pass/README.md"
+  },
+  "originalSourceLog": {
+    "path": "source-job.log",
+    "bytes": 31871,
+    "characters": 31713,
+    "sha256": "6ac76df49074c7e5d5b30b3f94139ee5f696abedea06f7f2255ede4b2392ab38",
+    "gitBlob": "280eb9fed98f917e46d0ec3cbfb7613d841c2216",
+    "independentRetrievalDigestMatched": true
+  },
+  "release": {
+    "umbrellaHeldAt": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "sourceFrozen": false,
+    "releaseOrTagCreated": false,
+    "stableDistributionApproved": false
+  },
+  "updatedAt": "2026-11-10 23:58:13 UTC"
+}

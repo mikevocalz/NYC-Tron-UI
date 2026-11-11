@@ -114,14 +114,73 @@ the complete ZIP and complete native log are independently verified and retained
 The exact tested merge is `ea5f13f4ecff638c7c1d062403c62e2227fa9513`, whose
 tree matches the published helper tree `7562beb4363bbc54797b75a41f6d9525eb008faf`.
 
-The helper's separate [browser overlay failure](../evidence/v1-web-overlay-5a9709d-bundle-failure/README.md)
-occurred before browser assertions: its source fixture lacked the exact
+The reviewed follow-up at `f450eaa2` adds a bounded read-only environment
+diagnostic before pointer input. It observes actual owned HWND parent chains,
+process-token elevation/integrity/UIAccess, EnableLUA and only two already-loaded
+Microsoft UI module files. It preserves original first-observation JSON and
+prints a selected, hashed log summary with explicit omissions. UIA and Win32
+class labels remain distinct, and a missing UIA handle is never guessed.
+The existing final endpoint recheck and native gesture/outcome assertions remain.
+
+Its [source checkpoint](../evidence/v1-windows-f450eaa-environment-source/README.md)
+retains the complete original source-job log and exact reconstruction identities.
+[Run 42924119449](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42924119449),
+actual merge `3765f328a994524b530c8876b8e2228c2d36a878`, passed the 13-check
+native-source gate and the full 49-check source/adapter suite, including those
+same 13 checks. These are 49 distinct checks, not an additive 62. Types, packing
+and the eight-subpath/44-declaration API snapshot passed. The required Windows
+PowerShell Desktop 5.1 x64 step passed actual script parsing, production diagnostic
+C# compilation and all eight environment plus seven input regressions.
+
+The [completed native receipt](../evidence/v1-windows-f450eaa-rejected-drop-failure/README.md)
+records successful installed codegen, RNW application generation, native library
+and actual executable compilation, and deployment. UIA reached the required
+rejected-drop result wait after the source drag-start step, then failed:
+`UIA element named 'Native drag result: none/rejected' did not appear within 30 s`.
+The owned process remained alive; the final traversal reported 51 descendants
+and the crash query reported zero matching Application Error/WER records.
+The complete original 333,924-byte native job log is independently verified.
+The actual final label, native target-event trace and full original environment
+file remain inside the unextracted runtime artifact; the previous 5a
+`none/cancelled` and zero-target-event observations are not attributed to this run.
+Passed-only Windows distribution retention and upload were skipped.
+
+The actual selected log summary records integrity RID 12288 (0x3000, high
+integrity), elevation type 1 (no linked token), UIAccess 0 and EnableLUA 1.
+The explicit TokenElevation query failed with Win32 error 24; its failing call
+stage was not recorded and TokenIsElevated is unknown. Microsoft documents
+[elevated/admin execution as unsupported for StartDragAsync](https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.uielement.startdragasync?view=windows-app-sdk-1.8).
+This is a compatibility concern requiring the successful process-token read,
+not a demonstrated cause of the observed drag failure. Both owned input-site
+chains stop deliberately at the foreign desktop boundary; hidden/zero-area
+input-site HWNDs alone do not establish bad drag registration. The diagnostic
+hashes identify files at the two loaded-module paths, not in-memory image bytes.
+
+The separate follow-up at `c3a52cfc25e90ea01f802c360cacfdc34f0f24b8` changes only
+the diagnostic scalar token buffers and its required compatibility regression.
+[Run 42926949889](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42926949889)
+passed source checks and the real owned compatibility-process token query,
+including all four observed fields and the borrowed-handle guard. At the
+2026-11-10 23:58:13 UTC snapshot, the app build and actual app-token/UIA outcome
+remain pending. Compatibility-process values do not substitute for the app's
+own token. No launcher, permission, timing, production drag or assertion change
+is made by that follow-up.
+
+The aggregate retains canonical workspace archive inputs, manifest checks and
+original archive retention; only the exact new compatibility step is inserted
+into that workflow. The helper also carries the existing reviewed core overlay
+alias correction. The [completed browser receipt](../evidence/v1-web-f450eaa-rendered-and-consumer-pass/README.md)
+retains four complete original logs from the same actual f450 merge: 32 overlay
+and 686 instrument tests passed; Expo passed two installed-consumer cases, while
+basic passed one and skipped the Expo-only case passed by the Expo lane.
+Artifact ZIPs/PNGs remain unextracted/unviewed. These helper passes do not replace
+the frozen combined candidate's browser or native results.
+
+The preceding 5a helper's separate [browser overlay failure](../evidence/v1-web-overlay-5a9709d-bundle-failure/README.md)
+occurred before browser assertions because its source fixture lacked the exact
 `@nyc-tron/core/overlays` alias. The aggregate already contains that one-line
-correction from `2899ffde`. Its actual fixture bundles and starts with the
-existing dependencies; local rendered assertions remain blocked by browser
-availability and socket permissions. The original helper log and exact source
-comparison are retained. Final browser acceptance still requires the frozen
-combined candidate's CI run.
+correction from `2899ffde`. The original failure log and exact source comparison
+remain retained. No local rendered assertion pass is claimed.
 
 ### AppKit: menu generations passed; latest native interaction gate failed
 
