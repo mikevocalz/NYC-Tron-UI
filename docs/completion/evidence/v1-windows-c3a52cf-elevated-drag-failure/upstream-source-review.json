@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "scope": "Static source-path and documented support-boundary review; no runtime call/guard result is inferred.",
+  "ownNativeSource": {
+    "repository": "mikevocalz/NYC-Tron-UI",
+    "revision": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8",
+    "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronDragSurface.cpp",
+    "gitBlob": "d86f3b1454d93996606faa11d2f25fa7a9fea7d1",
+    "automaticCanDrag": true,
+    "dragStartingAndDropCompletedHandlers": true
+  },
+  "currentLoadedPathFile": {
+    "name": "Microsoft.UI.Xaml.dll",
+    "bytes": 15083832,
+    "sha256": "a544aaf30ee1863e0f502658f30e8d1a9543ebb142c8be956a346cd1343c0190",
+    "identityKind": "loaded-module-path-file",
+    "matchesPreviouslyVerifiedOfficialPe": true,
+    "inMemoryImageHashClaimed": false
+  },
+  "priorIdentityReceipts": {
+    "repository": "mikevocalz/NYC-Tron-UI",
+    "publishedAt": "6947e57c6dfbc17dccbe7ae4e182e801180f257a",
+    "folder": "docs/completion/evidence/v1-windows-0ae548a-native-crash/analysis",
+    "files": [
+      {
+        "path": "binary-provenance.json",
+        "gitBlob": "5525d16f813f826e379cd3f5e1d4c8868efd8d9b"
+      },
+      {
+        "path": "symbol-provenance.json",
+        "gitBlob": "53dd6bd4fb725944a4f6eb5e5093ae0dce32313e"
+      },
+      {
+        "path": "exact-source-provenance.json",
+        "gitBlob": "b44ea011573b5ac709756071d5798bdb7ada123d"
+      }
+    ],
+    "codeViewGuid": "b67e2c8f-9cb0-bb7c-a4ba-bf5e9b4d41d0",
+    "imageAge": 2,
+    "dbiAge": 2,
+    "pdbInfoAge": 4,
+    "pdbSha256": "67849090687683533dfc2d4bf5646e0d2246cbda34410ce5c61d0f2ffd05de3f",
+    "sourceServerRevision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+    "individualC13ChecksumValidatedFile": "InputServices.cpp",
+    "newlyFetchedFilesIndividuallyC13Validated": false
+  },
+  "primaryDocumentation": {
+    "url": "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.uielement.startdragasync?view=windows-app-sdk-1.8",
+    "restriction": "Elevated/admin execution is unsupported for StartDragAsync."
+  },
+  "upstreamFiles": [
+    {
+      "repository": "microsoft/microsoft-ui-xaml",
+      "revision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+      "path": "src/dxaml/xcp/dxaml/lib/AutomaticDragHelper.cpp",
+      "gitBlob": "0e24d6ab27a2aa5f27dfbf98cb27711b91d4abeb",
+      "utf8Bytes": 13932,
+      "sha256": "081ae01ac72d6e7b4b8b0341a056aecaf69a11d83d5092c25c423c4ea0538a38",
+      "url": "https://github.com/microsoft/microsoft-ui-xaml/blob/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/dxaml/lib/AutomaticDragHelper.cpp"
+    },
+    {
+      "repository": "microsoft/microsoft-ui-xaml",
+      "revision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+      "path": "src/dxaml/xcp/dxaml/lib/UIElement_Partial_DragDrop.cpp",
+      "gitBlob": "3bed05fee0ac9a8d283509d0983b6666a22a091b",
+      "utf8Bytes": 12621,
+      "sha256": "42a77982e2d1feddd8e853e1880fc91d4624b281340af82c113ff9c061b97c82",
+      "url": "https://github.com/microsoft/microsoft-ui-xaml/blob/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/dxaml/lib/UIElement_Partial_DragDrop.cpp"
+    },
+    {
+      "repository": "microsoft/microsoft-ui-xaml",
+      "revision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+      "path": "src/dxaml/xcp/dxaml/lib/StartDragAsyncOperation.cpp",
+      "gitBlob": "a5457ed1cd587ea9b9d9154c34892121e55b7a63",
+      "utf8Bytes": 10503,
+      "sha256": "7ee135cc69afc7924eb46f99b7d4573173deacc14b4a52bfd7669fa030ca29ef",
+      "url": "https://github.com/microsoft/microsoft-ui-xaml/blob/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/dxaml/lib/StartDragAsyncOperation.cpp"
+    },
+    {
+      "repository": "microsoft/microsoft-ui-xaml",
+      "revision": "eb74b62692d9cdef17575bc11ebd3514ec6cd5b6",
+      "path": "src/dxaml/xcp/dxaml/lib/DragStartingEventArgs_Partial.cpp",
+      "gitBlob": "df51b9627d5c77f80a24cfc1f9558c165c28ddfd",
+      "utf8Bytes": 7773,
+      "sha256": "b80beb7986b4f49aef2bd4fda2b41df8b99d45915efb5edce6ba4bd50f56add6",
+      "url": "https://github.com/microsoft/microsoft-ui-xaml/blob/eb74b62692d9cdef17575bc11ebd3514ec6cd5b6/src/dxaml/xcp/dxaml/lib/DragStartingEventArgs_Partial.cpp"
+    }
+  ],
+  "sourcePath": [
+    {
+      "file": "UIElement_Partial_DragDrop.cpp",
+      "finding": "NotifyCanDragChanged configures the automatic helper; StartDragAsyncImpl constructs the start operation and raises DragStarting."
+    },
+    {
+      "file": "AutomaticDragHelper.cpp",
+      "finding": "The mouse/pen movement threshold path directly calls the owner's StartDragAsync."
+    },
+    {
+      "file": "DragStartingEventArgs_Partial.cpp",
+      "finding": "The noncancelled event path calls StartIfNeeded on the start operation."
+    },
+    {
+      "file": "StartDragAsyncOperation.cpp",
+      "finding": "StartIfNeededImpl calls lower-level StartAsync and guards a null returned operation; its comment/error identifies the elevated-process limitation."
+    }
+  ],
+  "conclusions": {
+    "automaticPathUsesDocumentedApi": true,
+    "currentAppIsElevated": true,
+    "documentedSupportBoundaryApplies": true,
+    "needsEligibleUnelevatedSession": true,
+    "eligibleExistingShellEstablished": false,
+    "actualGuardExecutionObserved": false,
+    "timeoutCauseProven": false,
+    "actualFinalResultLabelObserved": false,
+    "sourceOrSecurityConfigurationChangedByReview": false
+  }
+}

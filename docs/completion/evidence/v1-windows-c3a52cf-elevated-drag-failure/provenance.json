@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11 00:04:03 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "head": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8",
+    "tree": "3d38ebbc0f68124cfc1b7ec654382931bf1a7cf2",
+    "actualMerge": "a79c975bd77834ab80f1fe3fda022009ecd48de0",
+    "actualMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+    ],
+    "sameTreeVerified": true
+  },
+  "workflow": {
+    "runId": 42926949889,
+    "sourceJobId": 130215725384,
+    "nativeJobId": 130216123785,
+    "source": "success",
+    "realCompatibilityProcessTokenQuery": "success",
+    "nativeCompile": "success",
+    "consumerCompile": "success",
+    "deployment": "success",
+    "uia": "failure",
+    "testedDistributionRetention": "skipped",
+    "testedDistributionUpload": "skipped"
+  },
+  "failure": {
+    "message": "UIA element named 'Native drag result: none/rejected' did not appear within 30 s",
+    "processId": 4868,
+    "mainWindowHandle": 459140,
+    "ownedProcessAlive": true,
+    "finalDescendants": 51,
+    "matchingCrashRecords": 0,
+    "actualFinalResultLabel": null,
+    "nativeTargetEventCount": null,
+    "originalUiTreeInspected": false,
+    "originalNativeTraceInspected": false
+  },
+  "actualAppToken": {
+    "sourceRevision": "a79c975bd77834ab80f1fe3fda022009ecd48de0",
+    "capturedAt": "2026-11-11T00:02:59.6461746Z",
+    "processId": 4868,
+    "processStartedAt": "2026-11-11T00:02:42.8786375Z",
+    "processStable": true,
+    "security": {
+      "status": "queried",
+      "processId": 4868,
+      "access": "TOKEN_QUERY",
+      "win32Error": null,
+      "errorType": null,
+      "tokenCloseError": null,
+      "fields": {
+        "elevation": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "elevationType": {
+          "status": "observed",
+          "value": 1,
+          "win32Error": null,
+          "errorType": null
+        },
+        "integrityRid": {
+          "status": "observed",
+          "value": 12288,
+          "win32Error": null,
+          "errorType": null
+        },
+        "uiAccess": {
+          "status": "observed",
+          "value": 0,
+          "win32Error": null,
+          "errorType": null
+        }
+      }
+    },
+    "enableLua": {
+      "status": "observed",
+      "hive": "LocalMachine",
+      "view": "Registry64",
+      "valueName": "EnableLUA",
+      "kind": "DWord",
+      "value": 1
+    },
+    "tokenIsElevatedObserved": true
+  },
+  "sourceLog": {
+    "path": "source-job.log",
+    "characters": 31622,
+    "utf8Bytes": 31780,
+    "sha256": "cea904328c8fdb93fd05d4b0949f674dfac9b7270b287ba845103cb4880c0e52",
+    "gitBlob": "c03456e576d7e5d594cd21cb3f336401c1369317",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "nativeLog": {
+    "path": "native-job.log",
+    "characters": 335884,
+    "utf8Bytes": 337399,
+    "sha256": "8d41ef526eec0f105d14b4f83e54210bc37c893d0543644083758bd3ec90558b",
+    "gitBlob": "b487b25da6b00205db5bacdad38d9656da90b43c",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "derivedSummary": {
+    "path": "environment-log-summary.json",
+    "utf8Bytes": 10319,
+    "sha256": "b67603cc48d1c3487003de6509699d9043e722cb02b199135a5a78019e33ffc4",
+    "gitBlob": "5bf3a0cbe1da5358b37a8cf0c5a602f18fc401a7",
+    "completeMarkerEnvelopes": 1,
+    "onlyTimestampAndLogLineEndingRemoved": true,
+    "newlineAdded": false,
+    "isCompleteOriginalEnvironmentFile": false
+  },
+  "producerReportedOriginalEnvironmentFile": {
+    "filename": "drag-environment-01.json",
+    "bytes": 51970,
+    "sha256": "b4f0bf1b8a17a6993a6ff0638e633910e1bad5a5bd25ca0646741fc8f3411ee2",
+    "independentlyExtracted": false,
+    "independentlyRehashed": false
+  },
+  "producerReportedArtifact": {
+    "id": 13814737077,
+    "name": "winui-fabric-uia-smoke",
+    "bytes": 334258,
+    "sha256": "4e13f2a29c1e457de2f22de4b679cd67211c70d50023ffed50555e6b0b8c69cb",
+    "uploadReportedFiles": 39,
+    "originalBytesVerified": false,
+    "membersExtracted": false,
+    "screenshotsViewed": false
+  },
+  "limits": {
+    "actualFailureCauseEstablished": false,
+    "automaticDragApiRestrictionEquivalenceEstablished": true,
+    "eligibleUnelevatedShellEstablished": false,
+    "localExecutionEnvironmentAvailable": false,
+    "localFetchPerformed": false,
+    "fullNativeGatePassed": false,
+    "finalCombinedCandidatePassed": false,
+    "allEightPlatformsAccepted": false,
+    "ownerApprovedDistribution": false,
+    "releaseCreated": false,
+    "tagCreated": false,
+    "documentedElevatedDragSupportBoundaryEstablished": true,
+    "nullAsyncOperationGuardObserved": false
+  },
+  "upstreamSourceReview": "upstream-source-review.json"
+}

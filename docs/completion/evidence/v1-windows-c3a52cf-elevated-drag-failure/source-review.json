@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperCommit": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8",
+  "helperTree": "3d38ebbc0f68124cfc1b7ec654382931bf1a7cf2",
+  "parentCommit": "f450eaa21589bcc72e6d25f31a1b205e7015ff01",
+  "helperFiles": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-drag-environment.ps1",
+      "oldGitBlob": "728d0f5407ee6822f98798eb88b7dddc9cf66646",
+      "gitBlob": "721e781922999ec95f9246719b2678edd41fbc64",
+      "utf8Bytes": 30764,
+      "sha256": "187d8ae87c1c510dbe998c09ecb27a468d6052b34461bc0071ce465a0431ec2a"
+    },
+    {
+      "path": ".github/workflows/winui-fabric.yml",
+      "oldGitBlob": "fdb10bb03ee27635973d0010bacf543a2e612b6e",
+      "gitBlob": "e779a774fe38f84cf425cc7755ea3e81d92cdd36",
+      "utf8Bytes": 18915,
+      "sha256": "958c6e641c2853d4096aa6c0d845aef275ec169f4870fef2347a7a3a9f3c96e0"
+    }
+  ],
+  "aggregateWorkflow": {
+    "path": ".github/workflows/winui-fabric.yml",
+    "oldGitBlob": "7332c96514fefc1d54bacef61689289fd51b5bed",
+    "gitBlob": "988737b29372fdb4b7eaf69e5f1c8da85654a9e9",
+    "utf8Bytes": 20107,
+    "sha256": "c1b61309ff580b1bac31a13521076177b3549b3529252344949eb42885619c05",
+    "insertedLines": 33,
+    "removedLines": 0,
+    "exactPreimageRestoredByRemovingTwoInsertions": true,
+    "canonicalArchiveWiringPreserved": true
+  },
+  "verification": {
+    "independentSourceReviewPassed": true,
+    "fullBlobReadbackAndGitDigestsVerified": true,
+    "helperFullTreeLeavesVerified": 2075,
+    "actualMergeTreeAndOrderedParentsVerified": true,
+    "sourceInvocations": [
+      {
+        "checks": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "native-source subset"
+      },
+      {
+        "checks": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "full source/adapter suite including the same 13 native-source checks"
+      }
+    ],
+    "distinctSourceChecks": 49,
+    "powerShellEdition": "Desktop",
+    "powerShellVersion": "5.1",
+    "processBits": 64,
+    "realOwnedProcessTokenCheckPassed": true,
+    "environmentRegressionGroupsPassed": 8,
+    "inputRegressionGroupsPassed": 7,
+    "nativeLibraryAndConsumerCompilationPassed": true,
+    "actualAppTokenQueryPassed": true,
+    "strictUiAcceptancePassed": false
+  },
+  "unchanged": {
+    "launcher": true,
+    "securitySettings": true,
+    "nativeDragImplementation": true,
+    "gestureTiming": true,
+    "outcomeAssertions": true
+  }
+}

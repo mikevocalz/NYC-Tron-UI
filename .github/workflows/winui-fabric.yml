@@ -150,6 +150,7 @@ jobs:
             clrVersion = [Environment]::Version.ToString()
             processIs64Bit = [Environment]::Is64BitProcess
             productionCSharpCompilation = "not-run"
+            ownedProcessTokenCheck = [ordered]@{ scope = "compatibility-process"; status = "not-run"; observation = $null; ownerGuard = "not-run" }
             scripts = [System.Collections.Generic.List[object]]::new()
             checks = [System.Collections.Generic.List[object]]::new()
           }
@@ -168,6 +169,38 @@ jobs:
             . .\scripts\uia-drag-environment.ps1
             Initialize-DragEnvironmentReader
             $receipt.productionCSharpCompilation = "passed"
+            # Exercise the real read-only Win32 path against this process,
+            # separately from the mock suites and later UIA app observations.
+            $selfProcess = [System.Diagnostics.Process]::GetCurrentProcess()
+            $tokenFailure = $null
+            try {
+              $receipt.ownedProcessTokenCheck.status = "failed"
+              $selfToken = [NativeDragEnvironment]::Security($selfProcess.Handle, [uint32]$selfProcess.Id)
+              $receipt.ownedProcessTokenCheck.observation = $selfToken
+              if ($selfToken.status -ne "queried" -or $null -ne $selfToken.tokenCloseError) { throw "Could not query and close the owned process token" }
+              foreach ($name in @("elevation", "elevationType", "integrityRid", "uiAccess")) {
+                $field = $selfToken.fields[$name]
+                if ($field.status -ne "observed" -or $null -eq $field.value) { throw "Actual owned-process token query failed: $name (status=$($field.status), Win32Error=$($field.win32Error))" }
+              }
+              # TOKEN_ELEVATION defines zero versus nonzero, not only 0 or 1.
+              $receipt.ownedProcessTokenCheck.isElevated = $selfToken.fields["elevation"].value -ne 0
+              if ($selfToken.fields["elevationType"].value -notin @(1, 2, 3)) { throw "TokenElevationType returned an invalid enum value" }
+              # This checks the existing ownership guard and that querying did
+              # not close the borrowed process handle. No other PID is opened.
+              $wrongOwner = [NativeDragEnvironment]::Security($selfProcess.Handle, [uint32]($selfProcess.Id + 1))
+              if ($wrongOwner.status -ne "owned-process-handle-mismatch" -or $wrongOwner.fields.Count -ne 0) { throw "Owned process token guard did not reject the mismatched expected PID" }
+              $receipt.ownedProcessTokenCheck.ownerGuard = "passed"
+              $receipt.ownedProcessTokenCheck.status = "passed"
+              $receipt.checks.Add(@{ name = "native-owned-process-token-query"; status = "passed" })
+              Write-Host "PASS: actual owned Windows process token reads and borrowed-handle ownership guard"
+            } catch { $tokenFailure = $_; throw }
+            finally {
+              try { $selfProcess.Dispose() }
+              catch {
+                $receipt.ownedProcessTokenCheck.disposeErrorType = $_.Exception.GetType().FullName
+                if ($null -eq $tokenFailure) { throw }
+              }
+            }
             # Each mock suite owns fake types. Separate 5.1 processes keep those
             # apart from the real P/Invoke declarations compiled above.
             $engine = Join-Path $PSHOME "powershell.exe"

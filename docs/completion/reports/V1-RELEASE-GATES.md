@@ -1,6 +1,7 @@
 # v1 release-gate evidence
 
-Recorded 2026-11-10. This report covers distribution, installed consumers,
+Recorded 2026-11-10; current desktop/browser results updated 2026-11-11.
+This report covers distribution, installed consumers,
 public API declarations and provenance. The twelve native/Forge integration
 rows and their platform acceptance are tracked separately in
 [V1-PLATFORM-CLOSURE.md](V1-PLATFORM-CLOSURE.md). No tag, release, npm publish or
@@ -158,13 +159,61 @@ hashes identify files at the two loaded-module paths, not in-memory image bytes.
 
 The separate follow-up at `c3a52cfc25e90ea01f802c360cacfdc34f0f24b8` changes only
 the diagnostic scalar token buffers and its required compatibility regression.
-[Run 42926949889](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42926949889)
-passed source checks and the real owned compatibility-process token query,
-including all four observed fields and the borrowed-handle guard. At the
-2026-11-10 23:58:13 UTC snapshot, the app build and actual app-token/UIA outcome
-remain pending. Compatibility-process values do not substitute for the app's
-own token. No launcher, permission, timing, production drag or assertion change
-is made by that follow-up.
+Its [completed source and native receipt](../evidence/v1-windows-c3a52cf-elevated-drag-failure/README.md)
+retains the original 31,780-byte source log, original 337,399-byte native log,
+exact selected environment JSON line, completed metadata and reviewed source
+identities. [Run 42926949889](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42926949889)
+tested actual merge `a79c975bd77834ab80f1fe3fda022009ecd48de0`, with the same tree
+as the helper and independently verified ordered parents.
+
+The 13-check native-source invocation and full 49-check suite, including those
+13 checks, passed with zero failures/skips. The required Windows PowerShell
+Desktop 5.1 x64 gate passed the real owned compatibility-process token query
+and borrowed-handle guard, plus all eight environment and seven input groups.
+Installed codegen, RNW generation, native library compilation, actual executable
+compilation and deployment passed. The app's own TOKEN_QUERY now also succeeds:
+PID 4868 reports TokenIsElevated 1, elevation type 1, integrity RID 12288 and
+UIAccess 0, with no token-close error and stable process identity. This directly
+observes elevated app privileges; it is separate from the compatibility process
+and does not fill in the missing f450 observation.
+
+The native gate still failed the same required `none/rejected` result within
+30 seconds. The owned process/HWND remained alive, the final traversal reported
+51 descendants, and the crash query reported zero matching records. Passed-only
+archive retention/upload were skipped. The final actual label and original
+native target-event history remain uninspected inside artifact `13814737077`.
+Its metadata reports 334,258 bytes and SHA-256
+`4e13f2a29c1e457de2f22de4b679cd67211c70d50023ffed50555e6b0b8c69cb`;
+the ZIP and members have not been independently rehashed/extracted. No earlier
+`none/cancelled` or zero-event observation is assigned to this run.
+
+Microsoft's documented elevated/admin restriction applies to the automatic path
+used here: at the matching XAML PDB's source revision, CanDrag configures the
+automatic helper and its mouse/pen threshold path directly calls StartDragAsync.
+The start-operation source also records the elevated-process limitation.
+The [upstream source review](../evidence/v1-windows-c3a52cf-elevated-drag-failure/upstream-source-review.json)
+binds the current loaded-path file hash to the previously verified official PE,
+matching PDB and source-server revision, and identifies all four fetched source
+blobs. The earlier individual C13 checksum match is limited to InputServices.cpp.
+A supported unelevated interactive session is therefore required for further
+drag acceptance. The runtime does not show that the null-operation guard fired
+or caused this timeout; the actual cause and an eligible existing shell remain
+unproved. No launcher, security, production drag, gesture timing or strict
+assertion change is made.
+
+The [same-revision browser receipt](../evidence/v1-web-c3a52cf-rendered-and-consumer-pass/README.md)
+retains five complete original logs: 32 overlay, 29 reference-browser and 686
+instrument tests passed; three reference-model tests passed with zero failures
+or skips. Expo passed two installed-consumer cases; basic passed one and skipped
+the Expo-only case passed by the Expo lane. All logs identify the actual c3
+merge. Original render ZIPs/PNGs remain unextracted/unviewed, and these helper
+passes do not establish the final combined candidate.
+
+The exact c3 aggregate workflow merge adds only the same two reviewed blocks
+(33 lines), preserving canonical archive inputs, verification and retention.
+Removing them restores preimage `7332c96514fefc1d54bacef61689289fd51b5bed`;
+the result is `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. The already reviewed
+token-query helper is blob `721e781922999ec95f9246719b2678edd41fbc64`.
 
 The aggregate retains canonical workspace archive inputs, manifest checks and
 original archive retention; only the exact new compatibility step is inserted

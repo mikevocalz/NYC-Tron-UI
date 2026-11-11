@@ -1,0 +1,527 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed normalized connector jobs and artifact metadata; archive digests remain producer-reported.",
+  "runs": [
+    {
+      "runId": 42926949948,
+      "jobs": [
+        {
+          "id": 130215724441,
+          "name": "chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 42926949948,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install isolated browser test dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Exercise the rendered RN web menu, popover, command palette and tooltip",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 7
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13814242878,
+          "name": "overlay-renders",
+          "size_in_bytes": 280598,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814242878",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814242878/zip",
+          "expired": false,
+          "created_at": "2026-11-10T23:54:10Z",
+          "expires_at": "2026-11-24T23:54:09Z",
+          "updated_at": "2026-11-10T23:54:10Z",
+          "digest": "sha256:42df013012e4ea14f46eb8c8fbdf0b5496f50531b82b4543d28f1c49e867c835",
+          "workflow_run": {
+            "id": 42926949948,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-windows-interactions-nov10",
+            "head_sha": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+          }
+        }
+      ]
+    },
+    {
+      "runId": 42926949921,
+      "jobs": [
+        {
+          "id": 130215724514,
+          "name": "reference",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 42926949921,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install pinned workspace and compile public components",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install browser harness and Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Verify reference async state ownership",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Exercise the reference screen and capture desktop and phone layouts",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13814203167,
+          "name": "native-feel-reference-captures",
+          "size_in_bytes": 1117850,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814203167",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814203167/zip",
+          "expired": false,
+          "created_at": "2026-11-10T23:54:09Z",
+          "expires_at": "2026-11-24T23:54:07Z",
+          "updated_at": "2026-11-10T23:54:09Z",
+          "digest": "sha256:299ca50232f26dcd1ac111240c2b5c4409b7d31899f35971f4e541cba5111381",
+          "workflow_run": {
+            "id": 42926949921,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-windows-interactions-nov10",
+            "head_sha": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+          }
+        }
+      ]
+    },
+    {
+      "runId": 42926949979,
+      "jobs": [
+        {
+          "id": 130215724430,
+          "name": "chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 42926949979,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install workspace optional peers used by the fixtures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Build public package exports used by shell consumers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install isolated browser test dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Exercise instruments, NativeSeekBar, LayerStack, content, form and navigation primitives, InkToolbar, studio shell, spreadsheet, mixer, office controls and the pairing dialog in React Native Web",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13814358055,
+          "name": "ui-browser-captures",
+          "size_in_bytes": 22082337,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814358055",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814358055/zip",
+          "expired": false,
+          "created_at": "2026-11-11T00:00:33Z",
+          "expires_at": "2026-11-18T00:00:31Z",
+          "updated_at": "2026-11-11T00:00:33Z",
+          "digest": "sha256:2ec7a6de30f7b2dabd155208328df8494df66696450fd1826675f44b453b0237",
+          "workflow_run": {
+            "id": 42926949979,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-windows-interactions-nov10",
+            "head_sha": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+          }
+        }
+      ]
+    },
+    {
+      "runId": 42926949959,
+      "jobs": [
+        {
+          "id": 130215725439,
+          "name": "basic installed tarball consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 42926949959,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set the consumer location on this runner",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install and build the candidate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install actual release tarballs in a project outside the repository",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Exercise the installed components in React Native Web",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Save the dependency evidence, results and captures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            }
+          ]
+        },
+        {
+          "id": 130215725740,
+          "name": "expo-web installed tarball consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 42926949959,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Set the consumer location on this runner",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install and build the candidate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install actual release tarballs in a project outside the repository",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Exercise the installed components in React Native Web",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Save the dependency evidence, results and captures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13814472406,
+          "name": "release-consumer-basic",
+          "size_in_bytes": 64095,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814472406",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814472406/zip",
+          "expired": false,
+          "created_at": "2026-11-10T23:54:58Z",
+          "expires_at": "2026-11-17T23:54:57Z",
+          "updated_at": "2026-11-10T23:54:58Z",
+          "digest": "sha256:58fd6aba0d1f1ee78cbe5bd4bf0de6f7be654a9ac1f39376472e69c043ad3603",
+          "workflow_run": {
+            "id": 42926949959,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-windows-interactions-nov10",
+            "head_sha": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+          }
+        },
+        {
+          "id": 13814402693,
+          "name": "release-consumer-expo-web",
+          "size_in_bytes": 117362,
+          "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814402693",
+          "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13814402693/zip",
+          "expired": false,
+          "created_at": "2026-11-10T23:54:56Z",
+          "expires_at": "2026-11-17T23:54:55Z",
+          "updated_at": "2026-11-10T23:54:56Z",
+          "digest": "sha256:bdb3d9365c703c966fec435b3edece28ba3cb9fc9d8aca23e3993bc918e14841",
+          "workflow_run": {
+            "id": 42926949959,
+            "repository_id": 1446064781,
+            "head_repository_id": 1446064781,
+            "head_branch": "codex/v1-windows-interactions-nov10",
+            "head_sha": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+          }
+        }
+      ]
+    }
+  ]
+}

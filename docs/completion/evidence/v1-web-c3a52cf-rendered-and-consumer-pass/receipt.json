@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11 00:04:03 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperHead": "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8",
+  "actualMerge": "a79c975bd77834ab80f1fe3fda022009ecd48de0",
+  "tree": "3d38ebbc0f68124cfc1b7ec654382931bf1a7cf2",
+  "actualMergeParents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "c3a52cfc25e90ea01f802c360cacfdc34f0f24b8"
+  ],
+  "lanes": [
+    {
+      "lane": "overlay",
+      "runId": 42926949948,
+      "jobId": 130215724441,
+      "conclusion": "success",
+      "result": {
+        "browserPassed": 32,
+        "browserSkipped": 0
+      },
+      "originalLog": {
+        "path": "overlay-job.log",
+        "characters": 40849,
+        "utf8Bytes": 43683,
+        "sha256": "dc0efc3e3e304df15d504f1a88e88cdd52d8bbfcc4fd4d70d3be1bcc5bc63a9e",
+        "gitBlob": "a6836324c63fc45ae7f52230616a85f1e8b5e8a9",
+        "fullDecodedLog": true,
+        "actualCheckoutObserved": "a79c975bd77834ab80f1fe3fda022009ecd48de0"
+      },
+      "artifactMetadata": [
+        {
+          "id": 13814242878,
+          "name": "overlay-renders",
+          "bytes": 280598,
+          "sha256": "42df013012e4ea14f46eb8c8fbdf0b5496f50531b82b4543d28f1c49e867c835",
+          "independentlyRehashed": false,
+          "zipExtracted": false,
+          "pngsViewed": false
+        }
+      ]
+    },
+    {
+      "lane": "reference",
+      "runId": 42926949921,
+      "jobId": 130215724514,
+      "conclusion": "success",
+      "result": {
+        "modelPassed": 3,
+        "modelFailed": 0,
+        "modelSkipped": 0,
+        "browserPassed": 29,
+        "browserSkipped": 0
+      },
+      "originalLog": {
+        "path": "reference-job.log",
+        "characters": 46522,
+        "utf8Bytes": 49420,
+        "sha256": "f4dcacc58f0b9fe3d831417a52d30803c3b931233c882f24b84991c29c1a2a56",
+        "gitBlob": "66a8aea404e46eff972598e8d27f3d8a8578050e",
+        "fullDecodedLog": true,
+        "actualCheckoutObserved": "a79c975bd77834ab80f1fe3fda022009ecd48de0"
+      },
+      "artifactMetadata": [
+        {
+          "id": 13814203167,
+          "name": "native-feel-reference-captures",
+          "bytes": 1117850,
+          "sha256": "299ca50232f26dcd1ac111240c2b5c4409b7d31899f35971f4e541cba5111381",
+          "independentlyRehashed": false,
+          "zipExtracted": false,
+          "pngsViewed": false
+        }
+      ]
+    },
+    {
+      "lane": "instrument",
+      "runId": 42926949979,
+      "jobId": 130215724430,
+      "conclusion": "success",
+      "result": {
+        "browserPassed": 686,
+        "browserSkipped": 0
+      },
+      "originalLog": {
+        "path": "instrument-job.log",
+        "characters": 141448,
+        "utf8Bytes": 148348,
+        "sha256": "8552799b128e023a9cf72df94620c30d1856b604fa2d82595c9ad3237574c774",
+        "gitBlob": "a8ba4ce486668f7ca69991ef275eaa8f8f354fd9",
+        "fullDecodedLog": true,
+        "actualCheckoutObserved": "a79c975bd77834ab80f1fe3fda022009ecd48de0"
+      },
+      "artifactMetadata": [
+        {
+          "id": 13814358055,
+          "name": "ui-browser-captures",
+          "bytes": 22082337,
+          "sha256": "2ec7a6de30f7b2dabd155208328df8494df66696450fd1826675f44b453b0237",
+          "independentlyRehashed": false,
+          "zipExtracted": false,
+          "pngsViewed": false
+        }
+      ]
+    },
+    {
+      "lane": "basic",
+      "runId": 42926949959,
+      "jobId": 130215725439,
+      "conclusion": "success",
+      "result": {
+        "browserPassed": 1,
+        "browserSkipped": 1,
+        "skippedCase": "Expo browser exports > installed picker and panes work through the browser export conditions"
+      },
+      "originalLog": {
+        "path": "basic-job.log",
+        "characters": 45581,
+        "utf8Bytes": 48235,
+        "sha256": "1b4de1a87c3df36af7a14ecc0994fa579517e03439d77989efa94f4c8b2e4407",
+        "gitBlob": "b476aa0ede63668c8d787c6309ab1cc855f26805",
+        "fullDecodedLog": true,
+        "actualCheckoutObserved": "a79c975bd77834ab80f1fe3fda022009ecd48de0"
+      },
+      "artifactMetadata": [
+        {
+          "id": 13814472406,
+          "name": "release-consumer-basic",
+          "bytes": 64095,
+          "sha256": "58fd6aba0d1f1ee78cbe5bd4bf0de6f7be654a9ac1f39376472e69c043ad3603",
+          "independentlyRehashed": false,
+          "zipExtracted": false,
+          "pngsViewed": false
+        }
+      ]
+    },
+    {
+      "lane": "expo",
+      "runId": 42926949959,
+      "jobId": 130215725740,
+      "conclusion": "success",
+      "result": {
+        "browserPassed": 2,
+        "browserSkipped": 0
+      },
+      "originalLog": {
+        "path": "expo-job.log",
+        "characters": 45499,
+        "utf8Bytes": 48155,
+        "sha256": "c7d0e5e043397d2ab2adb3714c9db8d5631fdecbd27c2c0fd5cbbe67c40b6baa",
+        "gitBlob": "a3d62f92fd31f4bbe9bdfcd9d8c8f57228caf778",
+        "fullDecodedLog": true,
+        "actualCheckoutObserved": "a79c975bd77834ab80f1fe3fda022009ecd48de0"
+      },
+      "artifactMetadata": [
+        {
+          "id": 13814402693,
+          "name": "release-consumer-expo-web",
+          "bytes": 117362,
+          "sha256": "bdb3d9365c703c966fec435b3edece28ba3cb9fc9d8aca23e3993bc918e14841",
+          "independentlyRehashed": false,
+          "zipExtracted": false,
+          "pngsViewed": false
+        }
+      ]
+    }
+  ],
+  "basicSkippedCasePassedByExpoLane": true,
+  "limits": {
+    "originalArtifactBytesIndependentlyVerified": false,
+    "artifactMembersExtracted": false,
+    "screenshotsViewed": false,
+    "localBrowserAcceptanceClaimed": false,
+    "combinedCandidateAcceptanceClaimed": false,
+    "nativeWindowsAcceptanceClaimed": false,
+    "allEightPlatformsAccepted": false
+  }
+}
