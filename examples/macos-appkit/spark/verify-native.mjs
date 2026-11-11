@@ -977,6 +977,107 @@ function reportStartupFailure() {
   }
 }
 
+// Failure-only observation of responses already returned to show's unchanged
+// polling predicate. This never requests activation, focus, or another snapshot.
+function projectShowResponse(value, expectedProcessId) {
+  const record = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  const boolean = input => typeof input === 'boolean' ? input : null;
+  const pid = input => Number.isSafeInteger(input) && input > 0;
+  const matchesPid = input => pid(input) && pid(expectedProcessId) ? input === expectedProcessId : null;
+  return {
+    assertions: {
+      processIdMatches: matchesPid(record.processId),
+      activationPolicyRegular: Number.isSafeInteger(record.activationPolicy) ? record.activationPolicy === 0 : null,
+      canBecomeKey: boolean(record.canBecomeKey),
+    },
+    conjunction: {
+      visible: boolean(record.visible), key: boolean(record.key),
+      applicationActive: boolean(record.applicationActive),
+      frontmostProcessMatches: matchesPid(record.frontmostProcessId),
+    },
+  };
+}
+function createShowObservation(window, expectedProcessId) {
+  return { owner: window === 'main' || window === 'document-1' ? window : null,
+    expectedProcessId: Number.isSafeInteger(expectedProcessId) && expectedProcessId > 0 ? expectedProcessId : null,
+    returnedResponses: 0, stateChanges: 0, retained: [], last: null, lastSignature: null,
+    captureFailed: false, countOverflow: false };
+}
+function captureShowResponse(observation, value) {
+  try {
+    const increment = name => {
+      if (Number.isSafeInteger(observation[name]) && observation[name] < Number.MAX_SAFE_INTEGER) observation[name]++;
+      else { observation[name] = null; observation.countOverflow = true; }
+    };
+    increment('returnedResponses');
+    let state;
+    try { state = projectShowResponse(value, observation.expectedProcessId); }
+    catch { observation.captureFailed = true; state = projectShowResponse(null, observation.expectedProcessId); }
+    const signature = JSON.stringify(state);
+    const changed = observation.last !== null && signature !== observation.lastSignature;
+    if (changed) increment('stateChanges');
+    const record = { response: observation.returnedResponses, changed, state };
+    if (observation.last === null || changed) {
+      observation.retained.push(record);
+      // First response + latest six changes; reserve the eighth slot for last.
+      if (observation.retained.length > 7) observation.retained.splice(1, observation.retained.length - 7);
+    }
+    observation.last = record; observation.lastSignature = signature;
+  } catch { observation.captureFailed = true; }
+}
+function showObservationSummary(observation) {
+  const selected = observation.retained.slice();
+  if (observation.last && selected.at(-1) !== observation.last) selected.push(observation.last);
+  const retainedChanges = selected.filter(record => record.changed).length;
+  return {
+    schemaVersion: 1, status: 'failed-show-poll', diagnosticOnly: true,
+    sourceRevision: typeof revision === 'string' && /^[a-f0-9]{40}$/.test(revision) ? revision : null,
+    owner: observation.owner, expectedProcessId: observation.expectedProcessId,
+    scope: 'already-returned-show-inspect-responses', recordLimit: 8, consoleByteLimit: 8192,
+    selection: 'first-and-last-response-plus-latest-state-changes',
+    returnedResponses: observation.returnedResponses, stateChanges: observation.stateChanges,
+    selectedRecords: selected.length,
+    omittedResponses: Number.isSafeInteger(observation.returnedResponses) ? observation.returnedResponses - selected.length : null,
+    omittedStateChanges: Number.isSafeInteger(observation.stateChanges) ? observation.stateChanges - retainedChanges : null,
+    captureFailed: observation.captureFailed, countOverflow: observation.countOverflow,
+    records: selected.map(record => ({
+      response: record.response, first: record === observation.retained[0], last: record === observation.last,
+      stateChange: record.changed, assertions: record.state.assertions, conjunction: record.state.conjunction,
+    })),
+  };
+}
+function reportShowFailure(observation) {
+  try {
+    const summary = showObservationSummary(observation);
+    const filename = 'window-show-failure.json';
+    const original = { filename, writeStatus: 'not-attempted', writeErrorCode: null };
+    const report = { ...summary, original };
+    const encode = () => 'NYCTRON_WINDOW_SHOW_EVIDENCE_BEGIN\n' + JSON.stringify(report) + '\nNYCTRON_WINDOW_SHOW_EVIDENCE_END\n';
+    if (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit) {
+      report.omittedResponses = summary.returnedResponses;
+      report.omittedStateChanges = summary.stateChanges;
+      report.selectedRecords = 0; report.records = [];
+      report.status = 'failed-show-poll-details-omitted';
+    }
+    if (Buffer.byteLength(encode(), 'utf8') > summary.consoleByteLimit) return;
+    // The original file is observation data only; write status belongs to the
+    // console receipt. A duplicate failure cannot replace the first file.
+    const { original: omittedWriteStatus, ...fileRecord } = report;
+    try {
+      writeFileSync(join(output, filename), JSON.stringify(fileRecord) + '\n', { flag: 'wx' });
+      original.writeStatus = 'retained';
+    } catch (error) {
+      original.writeStatus = 'failed';
+      original.writeErrorCode = ['EACCES', 'EPERM', 'EEXIST', 'ENOSPC', 'EIO', 'ENOENT'].includes(error?.code) ? error.code : 'other';
+    }
+    const envelope = encode();
+    if (Buffer.byteLength(envelope, 'utf8') <= summary.consoleByteLimit) console.info(envelope.slice(0, -1));
+  } catch {
+    // Diagnostic projection, file, and console failures never replace the
+    // original show assertion, inspect rejection, or timeout object.
+  }
+}
+
 async function waitFor(check, label, timeoutMs = 20000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
@@ -992,13 +1093,20 @@ async function show(window = 'main', observeStartupRequest = false) {
   const request = await (observeStartupRequest ? observeInitialWindowRequest(response) : response);
   assert.equal(request.activationPath, 'NSWorkspace.openApplication');
   assert.equal(request.processId, child.pid, 'Workspace activation must retain the launched acceptance process');
-  return waitFor(async () => {
-    const observed = await inspect(undefined, window);
-    assert.equal(observed.processId, child.pid);
-    assert.equal(observed.activationPolicy, 0, 'Interactive acceptance requires regular AppKit activation policy');
-    assert.equal(observed.canBecomeKey, true, 'The requested owner must be able to become key');
-    return observed.visible && observed.key && observed.applicationActive && observed.frontmostProcessId === child.pid ? observed : undefined;
-  }, `visible, key and active native owner window (${window})`);
+  const observation = createShowObservation(window, child.pid);
+  try {
+    return await waitFor(async () => {
+      const observed = await inspect(undefined, window);
+      captureShowResponse(observation, observed);
+      assert.equal(observed.processId, child.pid);
+      assert.equal(observed.activationPolicy, 0, 'Interactive acceptance requires regular AppKit activation policy');
+      assert.equal(observed.canBecomeKey, true, 'The requested owner must be able to become key');
+      return observed.visible && observed.key && observed.applicationActive && observed.frontmostProcessId === child.pid ? observed : undefined;
+    }, `visible, key and active native owner window (${window})`);
+  } catch (error) {
+    reportShowFailure(observation);
+    throw error;
+  }
 }
 const control = (testID, action, options = {}, window = 'main') => driver.request('tron.control', { testID, action, window, ...options });
 const mounted = testID => driver.request('waitFor', { testID, timeoutMs: 20000 });
