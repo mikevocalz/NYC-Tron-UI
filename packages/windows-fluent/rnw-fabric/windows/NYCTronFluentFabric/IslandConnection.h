@@ -42,6 +42,7 @@ class IslandConnection final {
     transform.m42 = translation.y;
     m_site.LocalToParentTransformMatrix(transform);
   }
+  winrt::Microsoft::UI::Content::ChildSiteLink Site() const noexcept { return m_site; }
   void Close() noexcept {
     // Clear ownership before either close can dispatch a native callback.
     // Closing the island can implicitly close its link; still release both

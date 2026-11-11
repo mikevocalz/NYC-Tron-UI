@@ -433,7 +433,14 @@ try {
       Write-Host "Process exited before showing a window."
       throw "Consumer process exited before creating a window"
     }
-    $window = $AE::RootElement.FindFirst($Tree::Children, $processCondition)
+    # Startup can expose a transient InputSiteWindowClass top-level element for this
+    # process before the real window (runs 42979339503 and 42982441629: "Unsupported
+    # Pattern" on WindowPattern). Accept only an element that supports WindowPattern.
+    $window = $null
+    foreach ($candidate in $AE::RootElement.FindAll($Tree::Children, $processCondition)) {
+      $pattern = $null
+      if ($candidate.TryGetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern, [ref]$pattern)) { $window = $candidate; break }
+    }
     if ($null -eq $window) { Start-Sleep -Milliseconds 500 }
   }
   if ($null -eq $window) { throw "No top-level window for process $($process.Id) within 90 s" }

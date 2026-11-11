@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 
 // Recovery is restricted to the first Settings navigation, before any edit or
@@ -96,9 +96,8 @@ export async function withInitialUiTransportRecovery({ attempt, classify, recove
 /** Snapshot every original driver artifact before recovery; preserve live files separately. */
 export function retainInitialUiTransportFailure({ output, eligibility, error, sourceCommit, nativeArtifact }) {
   const initial = join(output, "settings"), retained = join(output, "settings-initial-transport-failure");
-  const live = join(output, "settings-initial-transport-live");
   const receipt = join(output, "transport-recovery.json"), originalLog = join(output, "settings-maestro.log");
-  if (!existsSync(initial) || existsSync(retained) || existsSync(live) || existsSync(receipt)) throw new Error("Initial UI transport evidence cannot be replaced");
+  if (!existsSync(initial) || existsSync(retained) || existsSync(receipt)) throw new Error("Initial UI transport evidence cannot be replaced");
   if (["maestro-command.log", "commands-before-recovery.jsonl", "runner-failure.txt"].some(name => existsSync(join(initial, name))))
     throw new Error("Initial UI transport evidence conflicts with retained runner metadata");
   const digest = file => createHash("sha256").update(readFileSync(file)).digest("hex");
@@ -107,10 +106,10 @@ export function retainInitialUiTransportFailure({ output, eligibility, error, so
     ? walk(join(directory, entry.name)) : [join(directory, entry.name)]);
   const files = walk(initial);
   if (!files.length) throw new Error("Initial UI failure has no original artifacts");
-  const snapshot = { phase: "before recovery", startedAt: new Date().toISOString(), liveDirectory: path(live) };
-  // Renaming alone leaves existing driver file descriptors attached to the
-  // retained files. Keep those live inodes, then write independent snapshots.
-  renameSync(initial, live);
+  const snapshot = { phase: "before recovery", startedAt: new Date().toISOString(), liveDirectory: path(initial) };
+  // Driver handles can outlive the command and prevent a directory rename on
+  // Windows. Keep those live files in place and copy independent snapshots;
+  // the retry writes to its own directory and command log.
   const originals = [];
   const retainFile = (source, destination, sourceFile) => {
     const bytes = readFileSync(source);
@@ -120,11 +119,10 @@ export function retainInitialUiTransportFailure({ output, eligibility, error, so
   };
   for (const file of files) {
     const name = relative(initial, file);
-    retainFile(join(live, name), join(retained, name), path(file));
+    retainFile(file, join(retained, name), path(file));
   }
   if (existsSync(originalLog)) {
-    renameSync(originalLog, join(live, "maestro-command.log"));
-    retainFile(join(live, "maestro-command.log"), join(retained, "maestro-command.log"), path(originalLog));
+    retainFile(originalLog, join(retained, "maestro-command.log"), path(originalLog));
   }
   const commands = join(output, "commands.jsonl");
   if (existsSync(commands)) retainFile(commands, join(retained, "commands-before-recovery.jsonl"), path(commands));
