@@ -81,6 +81,56 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit help-tag text result and browser pass
+
+The [completed a685 native receipt](../evidence/v1-appkit-a685bd1-help-tag-text-failure/README.md)
+records head `a685bd17d3023307181371a9c042bfbc1530c232`, actual merge
+`778ab991afb4dfe48b405800dc4b79e4bca97939`, and matching tree
+`0b3c93477329d5db0076e0f6a54c6afa2dbcd3b8`.
+[Run 42944976627](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42944976627)
+passed all eleven source tests and sixteen consumer tests with zero
+failures/skips, installed API verification, the seven-case native
+Foundation/socketpair probe and standalone native compilation. Application
+acceptance then failed the unchanged wait for
+`new visible native help-tag text after the posted pointer reaches the trigger`.
+
+Initial activation succeeded in this run: client request 2 received a matching
+successful `tron.window` response; the native trace recorded matching process
+and bundle identities and an active, key, visible prepared reply. This does
+not explain or resolve the earlier f157 startup timeout. The reporting-only
+candidate changed neither activation behavior nor its 35-second client deadline.
+
+The selected tooltip observation for PID 30952 reports both permissions true,
+an active/key/visible owner, an untruncated traversal, and the actual cursor
+inside the trigger with pointer motion finished. The outside baseline had
+zero help tags. The last hover observation contained one nonempty
+`AXHelpTag`, window 41, whose corresponding window was visible and onscreen.
+Its `textMatchesExpected` was false and the matching shown-tag count was zero.
+That is an unmet captured-strings predicate, not an absent native tag or proof
+that the displayed text was wrong. The original captured strings and pixels
+remain uninspected; the collection path and actual displayed text are not
+resolved by this selected summary.
+
+The complete source/native logs, 19,151/79,188 UTF-8 bytes, were independently
+retrieved and rehashed. Exact build, startup and tooltip JSON lines are retained
+without reserialization. The original timestamped tooltip block preserves its
+single JSON record and all nine interleaved stderr lines. The startup reporter
+correctly marked its command-prefix read incomplete and emitted no whole-file
+commands hash. Compiler, fixed live-log snapshot, original process/sample,
+original tooltip and ZIP hashes remain producer-reported until those bytes can
+be inspected. Native artifact 13822004903 reports 46 files and 1,472,767 bytes;
+its original members and screenshots remain unextracted/unviewed. Tooltip
+capture/dismissal and later acceptance gates were not promoted, and passed-only
+AppKit distribution remained skipped.
+
+The same actual merge passed all **32 rendered overlay tests** in
+[run 42944976784](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42944976784),
+job 130275485356. The [completed browser receipt](../evidence/v1-web-a685bd1-overlay-pass/README.md)
+retains the independently rehashed complete 43,810-byte log and completed
+metadata. Render artifact 13822033472 reports 280,598 bytes; its ZIP/PNGs remain
+unextracted/unviewed. This helper browser pass does not satisfy the outstanding
+native desktop, final combined-candidate or physical-device gates.
+
 ### November 11 AppKit startup failure and browser correction
 
 The completed follow-up at head

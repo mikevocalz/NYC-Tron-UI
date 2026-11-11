@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "evidenceStatus": "native-compile-passed-runtime-tooltip-text-predicate-failed",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "runId": 42944976627,
+  "sourceJobId": 130275485575,
+  "nativeJobId": 130275751812,
+  "sourceRevision": "778ab991afb4dfe48b405800dc4b79e4bca97939",
+  "candidateHead": "a685bd17d3023307181371a9c042bfbc1530c232",
+  "tree": "0b3c93477329d5db0076e0f6a54c6afa2dbcd3b8",
+  "verifiedRetrievedContent": [
+    {
+      "filename": "source-job.log",
+      "bytes": 19151,
+      "sha256": "4266dfe48fe84eb23633c04ecfda42a2cd986a3af02f9bab0c1eb0769208a30e",
+      "gitBlob": "72cef58ee8cec22eac5f84389a21e4b3ce686977",
+      "scope": "Complete decoded source-job log returned by the GitHub connector; retained without text edits."
+    },
+    {
+      "filename": "native-job.log",
+      "bytes": 79188,
+      "sha256": "b14b587431abafe08331cc8c323c925e36376de5fa2c33f01f15714750ec2248",
+      "gitBlob": "9744b2175dca3cb995b82977c4e4afef21b8dfd4",
+      "scope": "Complete decoded native-job log returned by the GitHub connector; retained without text edits."
+    },
+    {
+      "filename": "build-result.raw.json",
+      "bytes": 318,
+      "sha256": "8674813142273160d5cc473b249992b44e93b1ee9918d213c036be8e8aa5a201",
+      "gitBlob": "3036ab2eabf6fd6d86d0ea1d4495daed945afbd0",
+      "scope": "Exact single JSON log line after removing its GitHub timestamp prefix; no newline appended or reserialization."
+    },
+    {
+      "filename": "startup-summary.raw.json",
+      "bytes": 22624,
+      "sha256": "33a869c6d1055d59f0ec029e1de992ce8819b1052a4df1a1d60886f73cc0e97a",
+      "gitBlob": "22407246270a7432b60333199c57da4fec946bc3",
+      "scope": "Exact single JSON log line after removing its GitHub timestamp prefix; no newline appended or reserialization."
+    },
+    {
+      "filename": "tooltip-summary.raw.json",
+      "bytes": 2931,
+      "sha256": "f43f475310569b49745e8c14b286951e666fb9d99f863b82c2ca980a4f335166",
+      "gitBlob": "080ffe5e74cc42de6770b5346822bcb43670fd2e",
+      "scope": "Exact single JSON log line after removing its GitHub timestamp prefix; no newline appended or reserialization."
+    },
+    {
+      "filename": "tooltip-envelope.log",
+      "bytes": 3801,
+      "sha256": "0e921b3505c1ea358c09a2bbdf5943bbe9d805c5d9c1ea373d5b7c822b9b0db5",
+      "gitBlob": "318881a2967187606b5482fa1b0989fbf6956412",
+      "scope": "Original timestamped marker-to-marker block including the unique JSON line, all nine interleaved stderr lines, and final newline."
+    }
+  ],
+  "extraction": {
+    "standaloneMarkerMatching": true,
+    "onlyGithubTimestampPrefixRemovedFromJsonLines": true,
+    "jsonReserialized": false,
+    "jsonFilesHaveAddedTrailingNewline": false,
+    "build": {
+      "markerPairs": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    "startup": {
+      "markerPairs": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    "tooltip": {
+      "markerPairs": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 9,
+      "preservedTimestampedBlock": "tooltip-envelope.log",
+      "interleavingIsNotAnAdditionalJsonRecord": true
+    }
+  },
+  "completedChecks": {
+    "source": {
+      "tests": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "nativeConsumer": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "installedApiStep": "passed",
+    "foundationSocketpair": {
+      "reportedOriginalAndPatchedCases": 7,
+      "outcome": "passed",
+      "applicationAcceptanceSeparate": true
+    },
+    "standaloneCompile": "passed",
+    "nativeAcceptance": "failed",
+    "passedOnlyDistribution": "skipped"
+  },
+  "runtime": {
+    "processId": 30952,
+    "firstReportedFailure": {
+      "message": "Timed out waiting for new visible native help-tag text after the posted pointer reaches the trigger",
+      "throwLine": 394,
+      "callLine": 540,
+      "file": "verify-native.mjs",
+      "nodeVersion": "24.19.0"
+    },
+    "initialShow": {
+      "clientCommand": "tron.window",
+      "requestId": 2,
+      "responseId": 2,
+      "ok": true,
+      "identitySameProcess": true,
+      "identitySameBundle": true,
+      "replyPrepared": {
+        "ok": true,
+        "policy": 0,
+        "applicationActive": true,
+        "key": true,
+        "visible": true
+      },
+      "earlierF157FailureCauseResolved": false
+    },
+    "tooltip": {
+      "permission": {
+        "postEventsAllowed": true,
+        "accessibilityTrusted": true
+      },
+      "baseline": {
+        "phase": null,
+        "postEventsAllowed": true,
+        "accessibilityTrusted": true,
+        "ownerVisible": true,
+        "ownerKey": true,
+        "applicationActive": true,
+        "traversalTruncated": false,
+        "cursorInsideTrigger": false,
+        "pointerRunning": false,
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        },
+        "cursor": {
+          "x": 529,
+          "y": 514
+        },
+        "helpTags": {
+          "total": 0,
+          "inspected": 0,
+          "inspectionLimit": 128,
+          "inspectionTruncated": false,
+          "matchingExpectedTextCount": 0,
+          "matchingShownTagPredicateCount": 0,
+          "retainedLimit": 0,
+          "recordsOmitted": 0,
+          "records": null
+        },
+        "windows": {
+          "total": 2,
+          "retainedLimit": 0,
+          "recordsOmitted": 2,
+          "records": null
+        }
+      },
+      "lastObservation": {
+        "phase": "hover",
+        "postEventsAllowed": true,
+        "accessibilityTrusted": true,
+        "ownerVisible": true,
+        "ownerKey": true,
+        "applicationActive": true,
+        "traversalTruncated": false,
+        "cursorInsideTrigger": true,
+        "pointerRunning": false,
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        },
+        "cursor": {
+          "x": 329,
+          "y": 384
+        },
+        "helpTags": {
+          "total": 1,
+          "inspected": 1,
+          "inspectionLimit": 128,
+          "inspectionTruncated": false,
+          "matchingExpectedTextCount": 0,
+          "matchingShownTagPredicateCount": 0,
+          "retainedLimit": 8,
+          "recordsOmitted": 0,
+          "records": [
+            {
+              "index": 0,
+              "windowNumber": 41,
+              "role": "AXHelpTag",
+              "textMatchesExpected": false,
+              "roleIsHelpTag": true,
+              "tagFrameNonempty": true,
+              "windowFrameNonempty": true,
+              "matchesShownTagPredicate": false,
+              "frame": {
+                "x": 329,
+                "y": 347,
+                "width": 213,
+                "height": 18
+              },
+              "windowFrame": {
+                "x": 329,
+                "y": 347,
+                "width": 213,
+                "height": 18
+              }
+            }
+          ]
+        },
+        "windows": {
+          "total": 3,
+          "retainedLimit": 12,
+          "recordsOmitted": 0,
+          "records": [
+            {
+              "number": 24,
+              "visible": true,
+              "onscreen": true,
+              "frame": {
+                "x": 0,
+                "y": 62,
+                "width": 1024,
+                "height": 681
+              },
+              "roles": [
+                "AXWindow",
+                "AXSplitGroup",
+                "AXButton",
+                "AXUnknown",
+                "AXScrollArea",
+                "other",
+                "AXGroup",
+                "AXTable",
+                "other",
+                "AXTextArea",
+                "AXTextField",
+                "other"
+              ],
+              "rolesOmitted": 2
+            },
+            {
+              "number": 30,
+              "visible": false,
+              "onscreen": false,
+              "frame": {
+                "x": 0,
+                "y": 0,
+                "width": 500,
+                "height": 500
+              },
+              "roles": null,
+              "rolesOmitted": null
+            },
+            {
+              "number": 41,
+              "visible": true,
+              "onscreen": true,
+              "frame": {
+                "x": 329,
+                "y": 347,
+                "width": 213,
+                "height": 18
+              },
+              "roles": [
+                "AXHelpTag",
+                "AXUnknown"
+              ],
+              "rolesOmitted": 0
+            }
+          ]
+        }
+      },
+      "pointerRequests": {
+        "initialExit": {
+          "action": "leave",
+          "ok": true,
+          "targetPoint": {
+            "x": 529,
+            "y": 514
+          },
+          "triggerFrame": {
+            "x": 249,
+            "y": 366,
+            "width": 160,
+            "height": 36
+          }
+        },
+        "enter": {
+          "action": "enter",
+          "ok": true,
+          "targetPoint": {
+            "x": 329,
+            "y": 384
+          },
+          "triggerFrame": {
+            "x": 249,
+            "y": 366,
+            "width": 160,
+            "height": 36
+          }
+        },
+        "exit": null
+      },
+      "observedHelpTagCount": 1,
+      "observedHelpTagRole": "AXHelpTag",
+      "observedHelpTagWindowNumber": 41,
+      "capturedStringsExpectedTextPredicate": false,
+      "matchingShownTagPredicateCount": 0,
+      "rawCapturedStringsInspected": false,
+      "wrongDisplayedTextEstablished": false,
+      "tagAbsenceEstablished": false,
+      "interpretation": "A nonempty native AXHelpTag was observed while the pointer was inside the trigger and the owner was active/key/visible. The selected projection reports that its captured strings did not satisfy the exact expected-text predicate. The actual captured strings and displayed text have not been inspected."
+    },
+    "processFailureProjection": {
+      "status": "projected",
+      "processId": 30952,
+      "observedAt": "2026-11-11T02:34:56.283Z",
+      "exitCode": null,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "beforeSample": {
+        "observedAt": "2026-11-11T02:34:56.287Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "afterSample": {
+        "observedAt": "2026-11-11T02:35:00.854Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "sample": {
+        "observedAt": null,
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true,
+        "durationSeconds": 2,
+        "intervalMilliseconds": 10,
+        "threadGroups": 7,
+        "hasThreadStacks": true,
+        "file": "native-process-sample.txt",
+        "sha256": "6dc45813fa64d54e317ad6aa1297b92cd763e3681db0836ab8ed7cd1e3714385",
+        "digestScope": "producer-recorded-sample-file-not-reread",
+        "stacksDoNotEstablishHealth": true
+      }
+    },
+    "processProjectionBoundary": "Child exit/signal fields and ps/sample outcomes are producer observations. Seven reported thread groups do not establish application health; original sample bytes were not inspected."
+  },
+  "producerReportedFiles": [
+    {
+      "filename": "build-console.log",
+      "bytes": 12329230,
+      "sha256": "54ef1a49938b9ef3081854d371a2cac537fe42252999edf3296fa5ca4ea31352",
+      "complete": true,
+      "normalized": false,
+      "scope": "Producer-reported complete compiler transcript; original transcript bytes unavailable for independent verification."
+    },
+    {
+      "filename": "startup-app-log-snapshot.log",
+      "bytes": 474945,
+      "sha256": "a9a6553e0cb58c91577657a98e2e098eb5e66c4577e4e8a477852f6604e24480",
+      "scope": "Producer-reported fixed wx snapshot of a live app-log prefix; not the eventual app.log hash.",
+      "snapshotRetained": true,
+      "eventualAppLogHash": false
+    },
+    {
+      "filename": "native-process-failure.json",
+      "bytes": 1320,
+      "sha256": "18b6d9c10d867d800e96279eeab1170987ebef9a28302a5618dadf0d84cdfb7d",
+      "scope": "Producer-reported complete stable read of the original process receipt; original bytes not independently read."
+    },
+    {
+      "filename": "native-process-sample.txt",
+      "sha256": "6dc45813fa64d54e317ad6aa1297b92cd763e3681db0836ab8ed7cd1e3714385",
+      "scope": "Producer-recorded sample-file digest; the reporter did not reread sample bytes and no independent sample inspection occurred."
+    },
+    {
+      "filename": "tooltip-hover.json",
+      "bytes": 6042,
+      "sha256": "0db88ea84d71c44ac54a088ce8a7e98dce9443da67cdc61bb0be46f33b8c4e13",
+      "scope": "Producer-reported complete read for the typed tooltip summary; original JSON and raw captured strings not independently read."
+    }
+  ],
+  "producerReportedCommandRead": {
+    "filename": "commands.jsonl",
+    "sourceBytesBefore": 555041,
+    "sourceBytesAfter": 555041,
+    "readBytes": 262145,
+    "readByteLimit": 262145,
+    "projectionByteLimit": 262144,
+    "completeOriginalFile": false,
+    "originalSha256": null,
+    "truncated": true,
+    "partialTrailingLine": true,
+    "scannedCompleteLines": 424,
+    "selectedRecords": 32,
+    "scope": "Only the bounded prefix was projected. No whole-file commands digest and no complete command-tail claim."
+  },
+  "producerReportedArtifacts": [
+    {
+      "artifactId": 13822102266,
+      "name": "macos-appkit-shared-packages",
+      "bytes": 51323,
+      "sha256": "5046c51aee83aba1548d4b3241382835f04fbb1d72899afc2c1f4a1a36607dc1",
+      "independentlyHashed": false
+    },
+    {
+      "artifactId": 13822004903,
+      "name": "macos-appkit-native-evidence",
+      "bytes": 1472767,
+      "sha256": "3181f50de6d97d31d2fb2942e5225e4fc851dc2542c4ea4f6f5813d131265b3b",
+      "independentlyHashed": false
+    }
+  ],
+  "limitations": [
+    "Only the retrieved complete decoded job logs and exact extracted log strings have independently computed content hashes in this receipt.",
+    "The downloaded artifact is represented by a reusable file reference. Its raw ZIP and members remain uninspected because the execution environment is unavailable.",
+    "No original screenshots, raw help-tag strings, process sample, full commands file or compiler transcript were independently inspected.",
+    "The initial show completed in this run; this does not explain or resolve the earlier f157 startup timeout.",
+    "No claim is made that the displayed tooltip text was wrong, that no native help tag appeared, or that the AX captured-strings path is correct.",
+    "Tooltip capture/dismissal and later acceptance gates were not promoted after the shown-text timeout. The passed-only tested archive was not produced.",
+    "No native behavior, deadline, permission, assertion, launcher or cleanup change, rerun, reference update or release action is part of this receipt."
+  ]
+}

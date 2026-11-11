@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "representation": "Normalized connector-returned metadata for this target workflow run, job and artifact; not a raw complete GitHub API response",
+  "workflowRun": {
+    "id": 42944976784,
+    "name": "NYC-Tron rendered web overlay acceptance",
+    "status": "completed",
+    "conclusion": "success",
+    "run_number": 298,
+    "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42944976784/jobs",
+    "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42944976784/logs",
+    "workflow_id": 407783843
+  },
+  "jobs": [
+    {
+      "id": 130275485356,
+      "name": "chromium",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42944976784,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install isolated browser test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Exercise the rendered RN web menu, popover, command palette and tooltip",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13822033472,
+      "name": "overlay-renders",
+      "size_in_bytes": 280598,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13822033472",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13822033472/zip",
+      "expired": false,
+      "created_at": "2026-11-11T02:18:10Z",
+      "expires_at": "2026-11-25T02:18:09Z",
+      "updated_at": "2026-11-11T02:18:10Z",
+      "digest": "sha256:c36b9d2db7f81b2268742ac6441d947a4c92336531cdbad244edd243f026508e",
+      "workflow_run": {
+        "id": 42944976784,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-appkit-interactions-nov10",
+        "head_sha": "a685bd17d3023307181371a9c042bfbc1530c232"
+      }
+    }
+  ]
+}
