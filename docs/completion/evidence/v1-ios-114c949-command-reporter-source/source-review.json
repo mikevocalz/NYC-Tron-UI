@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "kind": "ios-command-reporter-source-review",
+  "recordedAtUTC": "2026-11-11 14:34:09 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "base": {
+    "commit": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9"
+  },
+  "files": [
+    {
+      "path": "tooling/native/report-ios-command-output.mjs",
+      "operation": "add",
+      "before": null,
+      "mode": "100644",
+      "gitBlob": "114c9490410b7b1598b6ec416b14a35cfb3dc233",
+      "bytes": 21491,
+      "sha256": "399a09ca060a67892e7f70ff1fa5a025d4aa5ff962a0223d33cb86ef485cb17a"
+    },
+    {
+      "path": "tooling/tests/ios-command-output.test.mjs",
+      "operation": "add",
+      "before": null,
+      "mode": "100644",
+      "gitBlob": "e240477f92344c1ef506c0afbc27aff60e407e52",
+      "bytes": 15584,
+      "sha256": "efaee3ad37508eea6b2c9575e3f7b6373b8d14735f5c1d1050925487806dbe09"
+    }
+  ],
+  "intent": "Retain and project existing command-output evidence; not an iOS product fix, explanation of Transport closed, new execution path, retry or acceptance relaxation.",
+  "companionWorkflow": {
+    "path": ".github/workflows/native-controls-port.yml",
+    "before": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+    "candidate": "c6c51423a0fcbab4768751bd8f1e04d2939f20fe",
+    "author": "forge_gap_audit",
+    "receipt": "../v1-ios-c6c5142-command-output-source/README.md",
+    "scope": "Separately reviewed capture/upload changes only; not authored by this reporter contribution."
+  },
+  "cli": "node \"$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs\" <build|ui> <shell-exit-status> \"$NYC_TRON_CONSUMER\"",
+  "statusInterpretation": {
+    "range": [
+      0,
+      255
+    ],
+    "representation": "canonical decimal string",
+    "scope": "capture-setup-or-command-or-redirection-result",
+    "doesNotEstablish": [
+      "command execution",
+      "native signal",
+      "workflow-step status",
+      "input freshness"
+    ]
+  },
+  "retainedSource": {
+    "wrapperStreams": "Fixed top-level files are read as raw bytes. The reporter does not prove the wrapper command executed, the file was freshly produced, or its producer stopped writing.",
+    "nestedRecords": "Existing fixed-flow report.xml and a unique commands.json within that flow's bounded directory are inspected. The runner's existing text logs remain UTF-8 decoded and capped by its unchanged spawnSync maxBuffer.",
+    "completeRead": "Requires bounded EOF, matching regular-file identity/size/mtime/ctime observations and successful descriptor close. This remains sampled, not atomic or a proof of command provenance.",
+    "partialRead": "bytesRead may include one over-limit probe; hashedBytes binds the exact hashed prefix/read sequence. A partial input is not parsed as a complete JSON/XML document.",
+    "unknowns": "Missing, denied, symlink, nonregular, changing, ambiguous, unconfirmed-close and over-budget cases remain explicit; no unavailable fact becomes a passing result."
+  },
+  "projection": {
+    "fixedFieldsOnly": true,
+    "rawPathsArgumentsTextErrorMessagesEmitted": false,
+    "unknownsExplicit": true,
+    "flowSlotsAndAttemptNumbers": "Configured evidence locations; not observations of execution or recovery counts.",
+    "junitCounts": "Supported structural XML observations; never an acceptance pass/failure verdict.",
+    "commandSelection": "First failed record within bounded top-level array order; no unobserved tail or chronological inference."
+  },
+  "budgets": {
+    "streamReadBytes": 8388608,
+    "commandReadBytes": 1048576,
+    "junitReadBytes": 262144,
+    "extraFileProbeBytes": 1,
+    "directoryEntriesPerFlow": 128,
+    "extraDirectoryEntryProbe": 1,
+    "directoryDepth": 5,
+    "commandRecords": 256,
+    "xmlTokens": 4096,
+    "xmlDepth": 24,
+    "summaryFileBytes": 32768,
+    "fullMarkerInclusiveConsoleBytes": 8192
+  },
+  "retention": {
+    "originalsChanged": false,
+    "summaryWrite": "Exclusive fixed phase-summary.json; no overwrite or replacement on duplicate.",
+    "hash": "Actual successful closed-file readback must match the intended bytes before the retained summary hash is reported.",
+    "fullTypedSummaryByteLimit": 32768,
+    "console": "Complete marker-inclusive envelope <=8192 bytes; oversized summaries use valid fixed fallback metadata with explicit row omissions.",
+    "errorIsolation": "Read/write/close/hash/readback/console failures are secondary to the unchanged wrapper result. The reporter does not set process.exitCode or execute commands."
+  },
+  "unchanged": {
+    "runner": {
+      "path": "tooling/native/run-ui-acceptance.mjs",
+      "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+      "bytes": 17132,
+      "sha256": "e61511ef69eb25b8153184acb694265946bf7e675cfcdca01dde08c61af3536e",
+      "changed": false
+    },
+    "commandArguments": true,
+    "driverPin": true,
+    "recoveryClassifier": true,
+    "retryAllowance": true,
+    "timeouts": true,
+    "nativeAndSemanticAssertions": true,
+    "hierarchyAndCaptureActions": true,
+    "processAndSimulatorCleanup": true,
+    "workflowTriggers": true,
+    "runnerOrLauncherOrSecurityConfiguration": true
+  },
+  "checks": {
+    "authoredNodeUnitDesigns": 8,
+    "evaluatedInThisEnvironment": "V8 with explicit Node API compatibility shims and mocked IO",
+    "result": {
+      "status": "passed",
+      "designCount": 8,
+      "groups": [
+        "iOS reporter validates CLI facts without inferring launch, workflow status or signal",
+        "closed raw byte reads preserve exact-limit EOF and a known independent SHA",
+        "over-limit, changed, denied, symlink and close-failed inputs never claim a complete hash",
+        "command projection keeps fixed assertion facts, unknowns, limits and private text separation",
+        "JUnit projection counts structure while ignoring names/messages/CDATA and refusing malformed input",
+        "fixed flow discovery refuses duplicate, symlink, depth-limited and entry-limited command inputs",
+        "exclusive summaries hash actual readback and reporter errors cannot alter the supplied result",
+        "complete console envelopes obey the byte budget and oversized summaries stay valid with omissions"
+      ],
+      "variants": [
+        {
+          "pathModel": "posix",
+          "status": "passed",
+          "designCount": 8,
+          "assertions": 148,
+          "ordinaryEnvelopeBytes": 4603,
+          "summaryBytes": 4351
+        },
+        {
+          "pathModel": "windows-separators",
+          "status": "passed",
+          "designCount": 8,
+          "assertions": 148,
+          "ordinaryEnvelopeBytes": 4603,
+          "summaryBytes": 4351
+        }
+      ],
+      "scope": "The same eight authored Node unit-test designs evaluated under POSIX and Windows-separator path models in V8, with explicit Buffer/crypto/path/assert shims and mocked file IO. These are environment variants, not sixteen independent designs; no Node process, real filesystem, actual Windows/macOS, shell, XCTest, native UI, simulator or iOS execution."
+    },
+    "independentReview": {
+      "reviewer": "final_gate_review",
+      "status": "approved final114c/e240/ef0",
+      "scope": "Fresh identities/readback, exact test-only path normalization, IO/hash/status/privacy/unknown/budget/error review and reproduction of the same eight designs under both separator models."
+    },
+    "sourceParse": "Full reporter and test bodies passed V8 parse-only checks after imports/import.meta were neutralized; this is not a Node module execution.",
+    "actualNodeOrFilesystemOrNativeExecution": false,
+    "rootReview": {
+      "status": "approved final114c/e240/ef0",
+      "scope": "Full source, exact hashedBytes correction, mock-only separator normalization, and reproduction of the same eight designs in both models; no Node/OS execution claim."
+    }
+  },
+  "reviewCorrections": [
+    {
+      "sourceBefore": "60bb8434e61bca510d8749de5d09de45bbc7c718",
+      "sourceAfter": "114c9490410b7b1598b6ec416b14a35cfb3dc233",
+      "reason": "Explicit hashedBytes removes ambiguity between an over-limit probe and the hashed prefix. No read-budget or command change."
+    },
+    {
+      "testsBefore": "edae2974ef572fa1d7581b5c42c11f0e834086ea",
+      "testsAfter": "e240477f92344c1ef506c0afbc27aff60e407e52",
+      "reason": "Six fixture-only normalization spans make mock paths consistent under default POSIX and Windows separators; production reporter unchanged by this correction."
+    }
+  ],
+  "testDiscovery": [
+    {
+      "path": "package.json",
+      "gitBlob": "a792d0c6af732fceebd047e7fa58afcff7acd083"
+    },
+    {
+      "path": "tooling/run-tests.mjs",
+      "gitBlob": "952bf2d06cf3982a2e170a690d1cd966ab417175"
+    },
+    {
+      "path": "tooling/test-files.mjs",
+      "gitBlob": "327d9c2b8cc9ab40cc1cd5d3a1bc5a10fdc3cefa"
+    }
+  ],
+  "reproducibility": {
+    "manifest": {
+      "path": "addition-manifest.json",
+      "gitBlob": "262b639cc79ccd812560a9b8bdc6b166f4a0e4af",
+      "bytes": 8049,
+      "sha256": "fb174c5a5f4741370d63a6a99ff7d2c13cf028db8e4cb02b48b109b1087774d1"
+    },
+    "harness": {
+      "path": "review-checks.js",
+      "gitBlob": "ef0c6c100fe6802a1eff6cc44d1ee0ad5dce90b2",
+      "bytes": 9598,
+      "sha256": "df46a6f0a412dbfe773f6a968e73f505c8ef1e47552763b6de957ed746bd803c"
+    },
+    "invocation": "await eval(harnessText)({source: reporterText, tests: testsText})"
+  },
+  "primaryContract": {
+    "url": "https://github.com/nodejs/node/blob/v24.x/doc/api/child_process.md",
+    "inspectedDocumentBlob": "453046205b7e3685b90bf90ef26e5a3935322563",
+    "scope": "Documents captured-output encoding and maxBuffer termination/truncation; no runtime version/behavior is inferred from a documentation read."
+  },
+  "publication": {
+    "sourceOnly": true,
+    "refsChangedByAuthor": false,
+    "ciDispatchedByAuthor": false,
+    "composedCommit": null,
+    "publicationUnverified": true
+  },
+  "limitations": [
+    "Static flow/attempt slots do not establish that any flow ran or that a recovery happened.",
+    "JUnit structural counts and top-level command-array metadata do not replace the existing strict acceptance checks.",
+    "A failed record selected from a bounded prefix is not a claim about the uninspected tail or the chronological last failure.",
+    "No raw path, arbitrary argument, entered text, test name, error message or native signal inference is emitted by the typed reporter.",
+    "Full raw top-level streams remain the companion workflow's capture responsibility; these source checks do not prove successful runtime capture.",
+    "The same eight designs run under two path models are not sixteen independent designs and are not actual Windows/macOS/Node/iOS tests.",
+    "Original iOS log retrieval failures and the earlier native touch failure remain undiagnosed."
+  ]
+}

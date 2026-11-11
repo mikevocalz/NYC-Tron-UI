@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "title": "Windows 8a5007d native RTL consumer source checkpoint",
+  "scope": "Source review and portable models for the navigation probe consumer; four-file helper binding is recorded separately from actual execution.",
+  "recordedAt": "2026-11-11T12:44:46Z",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "publishedHelper": {
+    "commit": "8a5007d197539c782e065f1b59daf3fe5ed752ec",
+    "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+    "parents": [
+      "782ed3911dd35950797f7417fed813f5fa669c4e"
+    ],
+    "pullRequest": 63,
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/pull/63",
+    "base": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+    "draft": true,
+    "publication": {
+      "at": "2026-11-11T12:39:08Z",
+      "refHeadPostreadAt": "2026-11-11T12:39:51Z",
+      "bodyPostreadAt": "2026-11-11T12:40:06Z",
+      "reportedBy": "root; fresh nonforced publication and exact postreads"
+    },
+    "generatedMerge": {
+      "commit": "e7901ec687e96a240a7b820baef50318fde40ddd",
+      "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+      "parents": [
+        "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+        "8a5007d197539c782e065f1b59daf3fe5ed752ec"
+      ],
+      "metadataIndependentlyFetched": true,
+      "actualJobCheckout": "unverified at this source checkpoint"
+    },
+    "runs": {
+      "source": 43022193456,
+      "native": 43022193331,
+      "scope": "Ordinary changed-source CI started; no completed original logs or native geometry result are assigned by this receipt."
+    }
+  },
+  "source": {
+    "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+    "before": {
+      "git": "877c51ea1e16918968a6929e389c1f61f4a4e23d",
+      "bytes": 33096,
+      "sha256": "2786f4a63776ec3e1bbd6fcd3af0313c967228a188a50a49cba68f99bc3f1074"
+    },
+    "after": {
+      "git": "fc36388876504e8c51578933abde326ddfd275b2",
+      "bytes": 55497,
+      "sha256": "7164d2e99217b905bc5de280225d7c33a090704e3d14e5893135f755d1d26c24"
+    },
+    "editCount": 10,
+    "manifest": {
+      "file": "consumer-edit-manifest.json",
+      "git": "15d84edce40ee47cd897a295a2adc5a151290273",
+      "bytes": 71229,
+      "sha256": "5caa84841f979ae96f0864083c336020cc73fd856e8249571d46a7fef0d38341"
+    }
+  },
+  "helperTree": {
+    "status": "passed",
+    "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+    "leaves": 3153,
+    "directories": 514,
+    "changed": [
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/prepare-host.mjs",
+        "before": "83759b80bea450cf9e823ef7fdcf1b88d65d9ba2",
+        "after": "07bc119118d38befb91f8aecfc94a67a96adfec4",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+        "before": "877c51ea1e16918968a6929e389c1f61f4a4e23d",
+        "after": "fc36388876504e8c51578933abde326ddfd275b2",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronNavigationView.cpp",
+        "before": "c23cc7f146477a00669921e3f4826e8ff9f39d69",
+        "after": "0f450e13031f974641e940cb97f550e83405a517",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+        "before": null,
+        "after": "25555353791ca4b35f1be51e7566c2062ecc8091",
+        "mode": "100644",
+        "type": "blob"
+      }
+    ],
+    "unchanged": 3149,
+    "comparisonBase": "7eb00e6b03fdec748227d03db04b232eb93a28d8",
+    "parents": [
+      "782ed3911dd35950797f7417fed813f5fa669c4e"
+    ],
+    "scope": "Full recursive remote tree was not truncated. Every directory hash including root, all leaf modes/types/IDs and the sole parent match. Root and Forge independently approved before publication; author independently recomputed/read back after publication."
+  },
+  "nativeFixture": {
+    "separateSourceReceipt": "../v1-windows-2555535-navigation-probe-source/README.md",
+    "protocol": {
+      "git": "0deeae3c8708a97059b97c14bb7062793d9401b2",
+      "bytes": 7058,
+      "sha256": "08efba1939911fbfc566295a014a52f9407040a4e82b6204b7209b17f9e5e285"
+    },
+    "component": "0f450e13031f974641e940cb97f550e83405a517",
+    "header": "25555353791ca4b35f1be51e7566c2062ecc8091",
+    "preparer": "07bc119118d38befb91f8aecfc94a67a96adfec4",
+    "independentConsumerAuthorReview": "The private IUnknown ABI uses one fixed IID and matching HRESULT/noexcept signatures; a real IInspectable object is stored in the property bag. Borrowed inputs are AddRef'd, visual/site/template objects stay weak, tickets contain generation only, first thread ownership uses CAS, and copied entries plus identity/generation checks reject reentrant or stale lifetimes. The owned subclass is removed on WM_NCDESTROY. This was a source review, not compiled or executed verification."
+  },
+  "dependencyPaths": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+      "git": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+      "relationship": "Calls the child in its existing scope after four strict drag scenarios; retains process.Handle, ownedProcessId, ownedProcessStartTime, AppUserModelId and NativeWindow methods. No parent edit."
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-native-drag-trace.ps1",
+      "git": "60870a22f0af9808c39e2969c8edfc9370b34d2b",
+      "bytes": 4285,
+      "sha256": "ed46ebf1b0f44156e8697339b9c51911347bc8a09c51d6ee0cd995cd64a4fcb4",
+      "relationship": "Existing Resolve-NativeDragTracePath validates AppUserModelId, resolves one PackageFamilyName and derives the exact LocalState directory. The new consumer discards only the old drag filename and forms the fixed PID/creation probe prefix."
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+      "git": "25555353791ca4b35f1be51e7566c2062ecc8091",
+      "relationship": "Separate native source review; observation-only fixed protocol. Native execution remains unverified."
+    }
+  ],
+  "design": {
+    "reason": "The independently retained 782 and combined 9a runs completed their bounded Raw UIA search with zero qualifying Icon peers. That does not establish an absent rendered icon or a layout defect. The native fixture observes actual template visuals instead.",
+    "binding": "Existing held process handle, exact PID and creation FILETIME, parent UTC start time, retained owner HWND/native thread/runtime ID, sourceRevision, fresh native GUID session and exact request sequence/phase. Native generation/role/component identities must remain unchanged.",
+    "io": "Fixed LocalState filenames derived via the existing owned AUMID resolver. Requests use CREATE_NEW temp files, complete flush/close and a non-replacing move. Ready/responses require disk/non-reparse/non-directory handles, exact resolved path, no shared write/delete, complete bounded stable reads and strict UTF-8. Each retained exclusive copy is read back and hash/byte-count compared.",
+    "schema": "Duplicate/case-aliased keys and unsupported grammar are rejected before PS5.1 ConvertFrom-Json. The exact typed schema rejects missing/extra/mismatched headers, malformed or incomplete counts, stale generations and invalid Int32 rectangles. Unavailable native failures are stored as a fixed enum or null; raw response bytes remain separate.",
+    "timing": "One initial phase-1 response window is bounded to ten seconds. The original RTL action and status wait remain in order. Every phase-2 and final observation uses the same original ten-second deadline, with the original 100 ms outer poll. Missing-file checks sleep 10 ms; no sequence is retried or replayed.",
+    "geometry": "Strict finite positive checked-edge RectInt32 physical screen rectangles, containing owner/navigation/toggle/icon bounds, native sequential stability and bracketed same-owner geometry. The exact old left-half to right-half and stable containing-rectangle predicate is retained.",
+    "preservation": "24 original action statements and the 4,455-byte later drawer/contrast/catch/finally/restoration/result tail are exact, apart from the secondary summary-call name. Borrowed GET contrast and owned SET allocation/free are unchanged. No compact-width mutation, UIA Icon inference, process search, provider reacquisition, focus/activation/input change, workflow edit, timeout extension or acceptance relaxation.",
+    "reporting": "The same fixed console markers now project captured native state only. Full UTF-8 envelope including its final newline is capped at 8 KiB; overflow is explicit, errors stay secondary. All ready/request/response captures use fixed output filenames, exact original bytes and hashes. Console omits raw session GUID, paths, exception text and arbitrary native data."
+  },
+  "checks": {
+    "artifact": {
+      "file": "consumer-review-checks.js",
+      "git": "1e0054e46ee51404f5da3ecac793d48e57fc6b12",
+      "bytes": 36006,
+      "sha256": "2fb6bc7fa8556b5408b24bff0125763984cd99a99af54147b2bded0d0c75639f"
+    },
+    "invocation": "Evaluate the complete JavaScript artifact, then call its returned function with {source: fc363 text, preimage: 877c text, manifest: parsed consumer-edit-manifest, traceSource: 60870 text, smokeSource: aa548 text}.",
+    "author": {
+      "status": "passed",
+      "scope": "Seven portable source/lexical/contract/IO/lifecycle/projection model designs; no PowerShell parser, C# compilation, .NET, UIA, filesystem or native execution",
+      "groups": [
+        {
+          "name": "Exact identities, ten inverses, protected actions and lexical delimiters",
+          "status": "passed"
+        },
+        {
+          "name": "Fixed resolver, borrowed-process ownership and protocol grammar",
+          "status": "passed"
+        },
+        {
+          "name": "Strict ready/reply fields, generation and unavailable unknowns",
+          "status": "passed"
+        },
+        {
+          "name": "Strict physical geometry and unchanged mirrored-layout requirements",
+          "status": "passed"
+        },
+        {
+          "name": "Bounded complete IO, atomic publication, exclusive retention and errors",
+          "status": "passed"
+        },
+        {
+          "name": "One-shot phase binding, fresh replies and one shared RTL deadline",
+          "status": "passed"
+        },
+        {
+          "name": "Typed query-free bounded summary, unknowns, privacy and secondary errors",
+          "status": "passed"
+        }
+      ],
+      "assertions": 215,
+      "metrics": {
+        "ordinaryEnvelope": 2599,
+        "maximumEnvelope": 4447,
+        "fallbackEnvelope": 187,
+        "rawBytes": 359,
+        "hash": "9adf50a63556c8db7892ef7e8322c3f4e88bc80afd85df8c85c9cae7dd697d36",
+        "sourceBytes": 55497,
+        "edits": 10,
+        "originalActionStatements": 24
+      }
+    },
+    "reproduction": {
+      "forge": {
+        "status": "passed",
+        "scope": "Reproduced the same seven author designs and all 215 assertions on independently fetched exact inputs; modeled envelopes 2,599 / 4,447 / 187 bytes. Not seven additional designs."
+      },
+      "root": {
+        "status": "passed",
+        "reproducedAt": "2026-11-11T12:42:05Z",
+        "scope": "Independently reproduced the same seven author designs and 215 assertions on exact fc363/877c/15d84/60870/aa548 inputs; modeled envelopes 2,599 / 4,447 / 187 bytes, model raw record 359 bytes with SHA256 9adf50a63556c8db7892ef7e8322c3f4e88bc80afd85df8c85c9cae7dd697d36. Ten edits and 24 preserved action statements matched. This repeats the same designs and is not native execution."
+      }
+    },
+    "interpretation": "C# and PowerShell delimiters were checked lexically, not parsed or compiled by their actual runtimes. Contract, file IO, lifecycle and summary checks are portable models supported by exact source assertions; no model is an actual Windows filesystem, message, UIA or native result.",
+    "recordedAfterPublication": true,
+    "publicationBoundary": "The portable consumer models were still being packaged when root published after the completed independent source/tree reviews. Their later passing results do not imply that they had already passed at publication."
+  },
+  "limits": [
+    "Native C++ compilation, actual PowerShell parsing, C# Add-Type compilation, file/message exchange and physical geometry remain unverified at this source checkpoint.",
+    "Retry-window deadlines do not cancel synchronous UIA or filesystem calls. Matching sequential rectangles do not prove atomicity or render completion.",
+    "The fixed native protocol is private acceptance instrumentation, not a public package API, access-control boundary or public accessibility/VoiceOver/Narrator completeness claim.",
+    "No accepted final native archive, eligible unelevated host, release gate or physical user interaction is established by source/model results."
+  ],
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew",
+      "supports": "Read sharing, CREATE_NEW, OPEN_EXISTING and OPEN_REPARSE_POINT contracts."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew",
+      "supports": "Resolved handle path versus symbolic link path; fixed DOS path result."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-postmessagew",
+      "supports": "Asynchronous posting, HWND and scalar parameters; posting is not a completion acknowledgment."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.io.file.move",
+      "supports": "The two-string overload refuses an existing destination."
+    }
+  ],
+  "refWritesByAuthor": false,
+  "workflowDispatchesByAuthor": false
+}

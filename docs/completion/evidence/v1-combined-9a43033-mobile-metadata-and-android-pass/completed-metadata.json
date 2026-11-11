@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-workflow-metadata-with-partial-original-log-retrieval",
+  "observedAtUTC": "2026-11-11 12:46:09 UTC",
+  "run": 43015171227,
+  "attempt": 1,
+  "source": {
+    "head": "9a430338d8336283b230203a8555257798fcd62c",
+    "availableOriginalCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ],
+    "iosActualOriginalCheckoutObserved": false
+  },
+  "jobs": [
+    {
+      "id": 130504313955,
+      "run_id": 43015171227,
+      "name": "TypeScript / source contracts / canonical workspace pack",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T11:49:54Z",
+      "completed_at": "2026-11-11T11:51:03Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 4,
+          "name": "Run corepack enable",
+          "conclusion": "success"
+        },
+        {
+          "number": 5,
+          "name": "Run corepack pnpm install --frozen-lockfile",
+          "conclusion": "success"
+        },
+        {
+          "number": 6,
+          "name": "Run node --test packages/native-controls/tests/*.test.mjs packages/native-navigation/tests/*.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 7,
+          "name": "Run node --test packages/reserved-regions/tests/*.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 8,
+          "name": "Run node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 9,
+          "name": "Run node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 10,
+          "name": "Run node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 11,
+          "name": "Run node --test tooling/tests/native-ui-acceptance.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 12,
+          "name": "Run node --test tooling/tests/native-ui-transport.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 13,
+          "name": "Run node --test tooling/tests/native-artifact.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 14,
+          "name": "Run node --test tooling/tests/metro-warmup.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 15,
+          "name": "Run node --test tooling/tests/workspace-pack-artifact.test.mjs tooling/tests/consumer-release.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 16,
+          "name": "Run node --experimental-strip-types --test packages/native-charts/tests/*.test.mjs",
+          "conclusion": "success"
+        },
+        {
+          "number": 17,
+          "name": "Run corepack pnpm --dir packages/native-controls typecheck",
+          "conclusion": "success"
+        },
+        {
+          "number": 18,
+          "name": "Run corepack pnpm --dir packages/native-navigation typecheck",
+          "conclusion": "success"
+        },
+        {
+          "number": 19,
+          "name": "Run corepack pnpm --dir packages/native-charts typecheck",
+          "conclusion": "success"
+        },
+        {
+          "number": 20,
+          "name": "Run corepack pnpm build",
+          "conclusion": "success"
+        },
+        {
+          "number": 21,
+          "name": "Run corepack pnpm --dir packages/native-controls build",
+          "conclusion": "success"
+        },
+        {
+          "number": 22,
+          "name": "Run corepack pnpm --dir packages/native-navigation build",
+          "conclusion": "success"
+        },
+        {
+          "number": 23,
+          "name": "Run corepack pnpm --dir examples/native-instruments typecheck",
+          "conclusion": "success"
+        },
+        {
+          "number": 24,
+          "name": "Pack all thirteen workspace packages once for native acceptance and release",
+          "conclusion": "success"
+        },
+        {
+          "number": 25,
+          "name": "Run tar -tzf \"$RUNNER_TEMP\"/nyc-tron-packs/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'",
+          "conclusion": "success"
+        },
+        {
+          "number": 26,
+          "name": "Reserved-regions tarball carries both native modules and no Gradle output",
+          "conclusion": "success"
+        },
+        {
+          "number": 27,
+          "name": "Hardware-keys tarball carries both native modules and no Gradle output",
+          "conclusion": "success"
+        },
+        {
+          "number": 28,
+          "name": "Platform-services tarball carries all three native modules, the FileProvider and no Gradle output",
+          "conclusion": "success"
+        },
+        {
+          "number": 29,
+          "name": "Native charts pack contents",
+          "conclusion": "success"
+        },
+        {
+          "number": 30,
+          "name": "Bind the canonical archives to this exact checkout",
+          "conclusion": "success"
+        },
+        {
+          "number": 31,
+          "name": "Retain the canonical workspace archives",
+          "conclusion": "success"
+        },
+        {
+          "number": 61,
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 62,
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 63,
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 130504855738,
+      "run_id": 43015171227,
+      "name": "Android installed-tarball compile, media and native UI",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T11:51:05Z",
+      "completed_at": "2026-11-11T12:08:56Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 3,
+          "name": "Set the consumer location on this runner",
+          "conclusion": "success"
+        },
+        {
+          "number": 4,
+          "name": "Run actions/setup-java@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 5,
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 6,
+          "name": "Verify bounded native MP4 track timelines",
+          "conclusion": "success"
+        },
+        {
+          "number": 7,
+          "name": "Run corepack enable",
+          "conclusion": "success"
+        },
+        {
+          "number": 8,
+          "name": "Run corepack pnpm install --frozen-lockfile",
+          "conclusion": "success"
+        },
+        {
+          "number": 9,
+          "name": "Download the canonical workspace archives",
+          "conclusion": "success"
+        },
+        {
+          "number": 10,
+          "name": "Verify and install the canonical archives in a clean Expo consumer",
+          "conclusion": "success"
+        },
+        {
+          "number": 11,
+          "name": "Typecheck the installed public API and bundle its Android entry",
+          "conclusion": "success"
+        },
+        {
+          "number": 12,
+          "name": "Expo development app native generation",
+          "conclusion": "success"
+        },
+        {
+          "number": 13,
+          "name": "Native Kotlin / Compose debug build (instruments + Vico charts)",
+          "conclusion": "success"
+        },
+        {
+          "number": 14,
+          "name": "Native pointer capture and video owner are in the APK",
+          "conclusion": "success"
+        },
+        {
+          "number": 15,
+          "name": "Reserved-regions v2 module is in the APK",
+          "conclusion": "success"
+        },
+        {
+          "number": 16,
+          "name": "Hardware-keys v2 module is in the APK",
+          "conclusion": "success"
+        },
+        {
+          "number": 17,
+          "name": "Platform-services v2 modules, media decoder and FileProvider are in the APK",
+          "conclusion": "success"
+        },
+        {
+          "number": 18,
+          "name": "Vico resolved at the pinned version",
+          "conclusion": "success"
+        },
+        {
+          "number": 19,
+          "name": "Install the pinned official native UI test driver",
+          "conclusion": "success"
+        },
+        {
+          "number": 20,
+          "name": "Execute the installed decoder and OS-driven UI on Android",
+          "conclusion": "success"
+        },
+        {
+          "number": 21,
+          "name": "Save installed-package evidence and the Android acceptance build",
+          "conclusion": "success"
+        },
+        {
+          "number": 40,
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 41,
+          "name": "Post Run actions/setup-java@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 42,
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 43,
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 130504855756,
+      "run_id": 43015171227,
+      "name": "iOS installed-tarball compile, media and native UI",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T11:51:06Z",
+      "completed_at": "2026-11-11T12:24:59Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 3,
+          "name": "Set the consumer location on this runner",
+          "conclusion": "success"
+        },
+        {
+          "number": 4,
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 5,
+          "name": "Run corepack enable",
+          "conclusion": "success"
+        },
+        {
+          "number": 6,
+          "name": "Run corepack pnpm install --frozen-lockfile",
+          "conclusion": "success"
+        },
+        {
+          "number": 7,
+          "name": "Download the canonical workspace archives",
+          "conclusion": "success"
+        },
+        {
+          "number": 8,
+          "name": "Verify and install the canonical archives in a clean Expo consumer",
+          "conclusion": "success"
+        },
+        {
+          "number": 9,
+          "name": "Typecheck the installed public API and bundle its iOS entry",
+          "conclusion": "success"
+        },
+        {
+          "number": 10,
+          "name": "Generate native iOS development app",
+          "conclusion": "success"
+        },
+        {
+          "number": 11,
+          "name": "Resolve native pods and SwiftUI bridge",
+          "conclusion": "success"
+        },
+        {
+          "number": 12,
+          "name": "Build iOS simulator without code signing",
+          "conclusion": "success"
+        },
+        {
+          "number": 13,
+          "name": "Reserved-regions pod compiled with the macro plugin",
+          "conclusion": "success"
+        },
+        {
+          "number": 14,
+          "name": "Native pointer capture and video surface compiled",
+          "conclusion": "success"
+        },
+        {
+          "number": 15,
+          "name": "Hardware-keys pod compiled with the macro plugin",
+          "conclusion": "success"
+        },
+        {
+          "number": 16,
+          "name": "Platform-services pod compiled with the macro plugin",
+          "conclusion": "success"
+        },
+        {
+          "number": 17,
+          "name": "Archive the simulator app for interaction acceptance",
+          "conclusion": "success"
+        },
+        {
+          "number": 18,
+          "name": "Run actions/setup-java@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 19,
+          "name": "Install the pinned official native UI test driver",
+          "conclusion": "success"
+        },
+        {
+          "number": 20,
+          "name": "Boot one simulator for both native acceptance runners",
+          "conclusion": "success"
+        },
+        {
+          "number": 21,
+          "name": "Execute the installed native decoder on iOS",
+          "conclusion": "success"
+        },
+        {
+          "number": 22,
+          "name": "Execute the reference and pointer UI through XCTest touches",
+          "conclusion": "success"
+        },
+        {
+          "number": 23,
+          "name": "Save installed-package evidence and the iOS acceptance build",
+          "conclusion": "success"
+        },
+        {
+          "number": 44,
+          "name": "Post Run actions/setup-java@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 45,
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 46,
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "number": 47,
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13854881259,
+      "name": "native-release-consumer-ios",
+      "size_in_bytes": 69813740,
+      "digest": "sha256:a4c7fdaee7bef047bfcfaa11112b7a50865cb37ab5d617b478272c49ef114ec7",
+      "expired": false,
+      "originalZipInspected": false
+    },
+    {
+      "id": 13853148285,
+      "name": "native-release-consumer-android",
+      "size_in_bytes": 121381710,
+      "digest": "sha256:6c30fbe5c74bd4261102d878cde48869eb93060077d9b2fc4fcf27c8360e6b66",
+      "expired": false,
+      "originalZipInspected": false
+    },
+    {
+      "id": 13851898513,
+      "name": "native-workspace-packages",
+      "size_in_bytes": 2209953,
+      "digest": "sha256:0eac3e445ff17627d135ea15ac28428c9bfe7e419cc6c41bdaf8053577c6d27d",
+      "expired": false,
+      "originalZipInspected": false
+    }
+  ],
+  "iosLogRetrieval": {
+    "job": 130504855756,
+    "attemptedReads": 2,
+    "result": "tool transport closed",
+    "tool": "github_fetch_workflow_job_logs",
+    "completeOriginalRetrieved": false,
+    "exactOriginalHash": null,
+    "notJobFailure": true
+  }
+}

@@ -1,0 +1,901 @@
+{
+  "schemaVersion": 1,
+  "kind": "reviewed-desktop-observation-and-compiler-followup",
+  "recordedAtUTC": "2026-11-11 13:03:17 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "base": {
+    "commit": "9a430338d8336283b230203a8555257798fcd62c",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "leafCount": 3314,
+    "directoryHashCount": 537
+  },
+  "sourceOverlay": {
+    "tree": "135ba87aa71b51349b5a264c413c58061ab020ab",
+    "leafCount": 3315,
+    "directoryHashCount": 538,
+    "replacements": 7,
+    "additions": 1,
+    "unchangedBaseLeaves": 3307,
+    "scope": "Eight reviewed source changes only. Existing report and evidence retain base identities in this intermediate tree."
+  },
+  "sourceChanges": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronNavigationView.cpp",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "c23cc7f146477a00669921e3f4826e8ff9f39d69",
+        "bytes": 19232,
+        "sha256": "9fa521bf02c028440096fbcbf4efa683f5b2a449ed95a5d777fafb1aeada0744"
+      },
+      "after": {
+        "gitBlob": "0f450e13031f974641e940cb97f550e83405a517",
+        "bytes": 22007,
+        "sha256": "ec5d708fa702994fb875f057da23745419bb9b6382f7c4a9012d20b137284dcd"
+      }
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+      "type": "blob",
+      "mode": "100644",
+      "before": null,
+      "after": {
+        "gitBlob": "00f6ff5f1735c81a5268855a5fb33627f5112cd7",
+        "bytes": 30240,
+        "sha256": "cfa10130880d4adc0089abc3b923d81ecabfd4394de476d282e0fed15d0fc3ea"
+      }
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/prepare-host.mjs",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "83759b80bea450cf9e823ef7fdcf1b88d65d9ba2",
+        "bytes": 4639,
+        "sha256": "4c98de60f2e10c6dfec84033a670318422bf6ba33f91647431e88f20f960ca0b"
+      },
+      "after": {
+        "gitBlob": "07bc119118d38befb91f8aecfc94a67a96adfec4",
+        "bytes": 6058,
+        "sha256": "aa848290814813f380b151a1bbbf839d8795c307dcb017eb58c39ec23d16cf84"
+      }
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-navigation-accessibility.ps1",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "877c51ea1e16918968a6929e389c1f61f4a4e23d",
+        "bytes": 33096,
+        "sha256": "2786f4a63776ec3e1bbd6fcd3af0313c967228a188a50a49cba68f99bc3f1074"
+      },
+      "after": {
+        "gitBlob": "fc36388876504e8c51578933abde326ddfd275b2",
+        "bytes": 55497,
+        "sha256": "7164d2e99217b905bc5de280225d7c33a090704e3d14e5893135f755d1d26c24"
+      }
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "42776ef0157ad390af0b139a8080993082d243f3",
+        "bytes": 351,
+        "sha256": "24394f2b62af5c64b53c018dc0f60e2f7a93db27c161edf0646a430d59c15424"
+      },
+      "after": {
+        "gitBlob": "ac9c7077d62cb52650ee5ee36bba1f6b383a4a5f",
+        "bytes": 516,
+        "sha256": "000b3a7c94d355fcbc79c49c474757311d2b79d81c0a23582236ed504b2c6e05"
+      }
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+        "bytes": 13581,
+        "sha256": "794e30f71b429f3dbc1248ad0935224fbb9fe955652a7218b38d614eec5f3d92"
+      },
+      "after": {
+        "gitBlob": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+        "bytes": 25122,
+        "sha256": "79af800a514f55f64938494f4a14ca6496cf2036a1b53328181e7805805a63e2"
+      }
+    },
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "bytes": 78317,
+        "sha256": "46f7f49b1fb00e0d303f9f81d37c9f0f007d5bbfadc9ce7efb8bef0ac55d31c8"
+      },
+      "after": {
+        "gitBlob": "6eaeab02acb6af6635a368101bce514bc0c89549",
+        "bytes": 78701,
+        "sha256": "a37b7cefbfe910de05e96c6e06ecab8d090cb823e8857cf17f7c2b0bb7b8d5d8"
+      }
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "type": "blob",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+        "bytes": 128984,
+        "sha256": "06da9207bda3fec1b8b599d1de1517c64e124683ba2718800078ef5b2b24b298"
+      },
+      "after": {
+        "gitBlob": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+        "bytes": 133456,
+        "sha256": "4c706372c05aa8f7086f3ea6a9cc50339845bb551ee42724b0a1e6831e38a01b"
+      }
+    }
+  ],
+  "preparedHelpers": [
+    {
+      "platform": "windows",
+      "commit": "da083ffeba811701a889aa337455ba75212d6f70",
+      "tree": "ebe44b791dddbcd95970b9d3d87404c3e4da8591",
+      "orderedParents": [
+        "8a5007d197539c782e065f1b59daf3fe5ed752ec"
+      ],
+      "leaves": 3153,
+      "directoryHashes": 514,
+      "changedLeaves": 1,
+      "unchangedLeaves": 3152,
+      "change": "Remove only six bytes ` final` from the historical Hook declaration; other three observer files are inherited unchanged from 8a.",
+      "published": false,
+      "nativeExecution": false
+    },
+    {
+      "platform": "macos",
+      "commit": "4b75661bdcfbc6159cc87a5b6bec8ecba6f2a586",
+      "tree": "82cf32fbc8ca952d8aa714330f642c9dd8e65896",
+      "orderedParents": [
+        "f8c180be8af630886274f71313fa229ea6074001"
+      ],
+      "leaves": 2050,
+      "directoryHashes": 284,
+      "changedLeaves": 4,
+      "unchangedLeaves": 2046,
+      "change": "Typed current, branch and actual show/containment observations; nine exact reversible edits preserve runtime action ordering and acceptance predicate.",
+      "published": false,
+      "nativeExecution": false
+    }
+  ],
+  "sourceReview": {
+    "windowsNative": {
+      "receipt": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source/README.md",
+      "scope": "Historical 255553 header source and preparer/model review; seven groups, 168 assertions, fourteen actual JavaScript preparation cases with mocked IO, seventeen geometry models; no C++ execution. The later non-final correction is separately bound."
+    },
+    "windowsConsumer": {
+      "receipt": "docs/completion/evidence/v1-windows-8a5007d-native-rtl-source/README.md",
+      "scope": "Seven source/lexical/protocol/IO/lifecycle/geometry/projection model designs; 215 assertions. No actual PowerShell parser, C# compiler, .NET, filesystem, UIA or WinRT execution is asserted."
+    },
+    "windowsCompilerCorrection": {
+      "receipt": "docs/completion/evidence/v1-windows-00f6ff5-hook-compiler-source/README.md",
+      "editManifest": "51bf4888adc04d55fa716d95c83213a7f28e1cf8",
+      "uniqueForwardAndInverse": true,
+      "bytesRemoved": 6,
+      "newCompilationPending": true
+    },
+    "macosDiagnostic": {
+      "receipt": "docs/completion/evidence/v1-appkit-ecd9f22-presentation-observation-source/README.md",
+      "scope": "Same eight V8/source/mock designs independently reproduced. 400 requests over 20000 mock milliseconds; envelopes 6753 and 7990 bytes. No Objective-C, AppKit or filesystem execution.",
+      "independentSourceApprovalUTC": "2026-11-11 12:52:02 UTC"
+    }
+  },
+  "completedEvidence": [
+    {
+      "head": "9a430338d8336283b230203a8555257798fcd62c",
+      "actualCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+      "tree": "434f2cfa1a001bcec73788462e42957206819328",
+      "orderedParents": [
+        "ac5d69585a52a6e945dc996ea08030e190574699",
+        "9a430338d8336283b230203a8555257798fcd62c"
+      ],
+      "sourceRun": 43015171052,
+      "sourcePassedPerHost": 1204,
+      "windows": {
+        "run": 43015171470,
+        "result": "failure before RTL: Raw icon peer unavailable; complete 46-node walk; High/elevated application and shell are ineligible"
+      },
+      "macos": {
+        "run": 43015170958,
+        "result": "native compiled; later document popover not shown across 369 responses; internal rejection branch and actual frame unobserved"
+      },
+      "android": {
+        "run": 43015171227,
+        "decoderChecks": 11,
+        "osUiFlows": 4,
+        "recoveryCount": null,
+        "originalAvailable": true
+      },
+      "ios": {
+        "run": 43015171227,
+        "jobMetadata": "success",
+        "originalAvailable": false,
+        "completedLogReadErrors": 2,
+        "checkCounts": null,
+        "recoveryCount": null,
+        "actualCheckoutLineObserved": false
+      }
+    },
+    {
+      "head": "8a5007d197539c782e065f1b59daf3fe5ed752ec",
+      "actualCheckout": "e7901ec687e96a240a7b820baef50318fde40ddd",
+      "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+      "orderedParents": [
+        "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+        "8a5007d197539c782e065f1b59daf3fe5ed752ec"
+      ],
+      "sourceRun": 43022193456,
+      "sourcePassedPerHost": 1204,
+      "nativeRun": 43022193331,
+      "nativeResult": "Installed package compile passed; example compile failed C2338 because private Hook was final. Deploy, UIA and tested distribution skipped.",
+      "nativeOriginal": "7cd597b6ae32070abdd4493d333ae004565d70cb",
+      "executedHeader": "25555353791ca4b35f1be51e7566c2062ecc8091",
+      "newHeaderNotExecutedInThatRun": "00f6ff5f1735c81a5268855a5fb33627f5112cd7"
+    }
+  ],
+  "report": {
+    "path": "docs/completion/reports/V1-RELEASE-GATES.md",
+    "before": {
+      "gitBlob": "e6842e36098997ee8dff8afb4a12c07d79dcddb1",
+      "bytes": 156790,
+      "sha256": "e2659fef068f39794312791b3c602c73e851b52933a6a9354072ece56d342dd7"
+    },
+    "after": {
+      "gitBlob": "09bf7bd8f000ea5c24d767d45b7b38260cebf582",
+      "bytes": 170224,
+      "sha256": "fd94d9698b128f0c7a0b3471f257a41f17d63f8fc37d006eff326f872c481263"
+    },
+    "newPrefixBytes": 13434,
+    "historicalSuffixBytes": 156790,
+    "historicalSuffixPreservedExactly": true,
+    "interpretation": "New prefix is current; entire previous report remains byte-identical historical content."
+  },
+  "retainedEvidence": {
+    "newFolders": 11,
+    "newFiles": 64,
+    "newBytes": 2810553,
+    "priorCommittedFiles": 161,
+    "priorCommittedBytes": 7135952,
+    "encoding": "Original decoded UTF-8 bytes retained exactly, including BOM/CRLF/JSON and original timestamps where present; no normalization of originals.",
+    "folders": [
+      {
+        "folder": "docs/completion/evidence/v1-combined-9a43033-source-pass",
+        "files": 6,
+        "bytes": 438822,
+        "readmeGitBlob": "1de3e9db76fb9d4bca0f2e93a67fb210a0c15cf7"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable",
+        "files": 7,
+        "bytes": 471463,
+        "readmeGitBlob": "88a9c66043b6a9aaa7add6f71933e95176f59db3"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown",
+        "files": 11,
+        "bytes": 229069,
+        "readmeGitBlob": "c6dd0b539b0ba5fcdc409d770bc9a47dca66d9b1"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source",
+        "files": 5,
+        "bytes": 82741,
+        "readmeGitBlob": "5fe674b94618c058452043ec0f898dd693e00ccb"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass",
+        "files": 8,
+        "bytes": 362644,
+        "readmeGitBlob": "00cc03fa575ad3a527de073647f9b68ade4a28db"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-combined-9a43033-mobile-metadata-and-android-pass",
+        "files": 5,
+        "bytes": 360250,
+        "readmeGitBlob": "4bf14d878f5aacadd78512453e63c54ade47bebd"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-8a5007d-native-rtl-source",
+        "files": 4,
+        "bytes": 129657,
+        "readmeGitBlob": "06ca793bb8759a47ee1a11fa452b2765aeebcbde"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-appkit-ecd9f22-presentation-observation-source",
+        "files": 4,
+        "bytes": 107943,
+        "readmeGitBlob": "4e9c670b8d01f8c0c4787b9e4bde5303b1aca6a7"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-8a5007d-source-pass",
+        "files": 6,
+        "bytes": 446716,
+        "readmeGitBlob": "fcfc074f1395743cc7699a661c4ab39f0df7cd4b"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure",
+        "files": 6,
+        "bytes": 175771,
+        "readmeGitBlob": "fa83ceafdd155565e806737eebabe3d029570d55"
+      },
+      {
+        "folder": "docs/completion/evidence/v1-windows-00f6ff5-hook-compiler-source",
+        "files": 2,
+        "bytes": 5477,
+        "readmeGitBlob": "43ba3c8c8c1bfbc931dac86720d87889d02afca8"
+      }
+    ],
+    "files": [
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-source-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1de3e9db76fb9d4bca0f2e93a67fb210a0c15cf7",
+        "bytes": 2722,
+        "sha256": "46470ae83cdc7f4cea1e77197a07f12f074a81f085aeba4a47c919ef8178083c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-source-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "44c406f71ec36cd8ca323aabed7f148a938d4364",
+        "bytes": 7462,
+        "sha256": "019555a5577a6ac754d77631f59e79bc5180cb25c69c0c9dca328b34799946a7"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-source-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "5f433206fb4e833259c390caf924b1d2d3772997",
+        "bytes": 12034,
+        "sha256": "16003a24fdf63487e0b2b4fc840adef5777f2b388cbd29f342072e1a811074cb"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-source-pass/linux-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1e97de4b18ab1d34f70f0110d805b6d91af324d1",
+        "bytes": 156150,
+        "sha256": "b8284d19dedd556283a19b8ad229ba5163c1c017debb0226ef877c18e3467498"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-source-pass/windows-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "25e0322788dbc397d47bc3fca94a5beb0a97855d",
+        "bytes": 198160,
+        "sha256": "7a7f2b98589cceeb483346f9960c5bd363465177b8af63a3d1279f67211d8609"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-source-pass/types-and-pack-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "7ed2d5175b24908ff0d7e1aa1acf914f754bc765",
+        "bytes": 62294,
+        "sha256": "61afb0c737637a5f0293a526a3225f56ebef4415e1523f692e517940793109e6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "88a9c66043b6a9aaa7add6f71933e95176f59db3",
+        "bytes": 7093,
+        "sha256": "8f5e7dad2549a09df2f23aa4f3ecf813fc5c0a818d9a258b8b302c8aeb2627e9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "94fcfe1db9fe5d022edcf49cefe6c8ee29f222fd",
+        "bytes": 20223,
+        "sha256": "88a5cccc9f07537a35c2cdada4b6438ba1d62c72a3bbfe9d683731ef16fd0127"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/workflow-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "ca6f639ee3a822a024bb6d02728d2999d207c31c",
+        "bytes": 13377,
+        "sha256": "291f5770be41867e0ac09dc5673a88b56700f8ee91f5fbb7f77497dae6fe89a8"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "08adc7dfc677cfd53fa7f8c5ee60eb8e1f362c22",
+        "bytes": 31862,
+        "sha256": "b558dcd0284495efe6ba7ea1944e16b0c5a318dfcffb41ab87869d76b4af2f0c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "c44b560511c2c48024f95e6e3017c322e28bfa1b",
+        "bytes": 397321,
+        "sha256": "d9c01733645362e28c1393e15282b67b1998a00f9ba4ad3034809247518a9725"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/rtl-witness.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1b092ffaaf26379472f38043cd11c267caa49e09",
+        "bytes": 724,
+        "sha256": "16ba0a38d799f711fb4dd141f32eeb6b64e8f514da317471335fb844fbc3ebb2"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable/rtl-witness-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "838c771d8c60b53f44b89aee9c9756ea4fe774ff",
+        "bytes": 863,
+        "sha256": "b9c20c0854ccf39863bc176c5d3a57911091da29b3b5b8a4831a8301ade5c939"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "20005db8d349a3d6a11e1e5894c404d1f2908614",
+        "bytes": 19626,
+        "sha256": "3dabf68e8cc8fd9cc59ddf39c2393ea619f670d6850ed831404c3c2c567a18c0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1fb25f7a90debe34762f6ff82c902d0cb6ddc9a1",
+        "bytes": 93895,
+        "sha256": "3fdf9c8c0bff3c056e4596e5c9732046140da898da9efc0343f8902564575d90"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/build-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6c0231571c0ceba5f978665155ba7e7a697ad06d",
+        "bytes": 318,
+        "sha256": "1fdae705187226fdf7673c55753c7394a67118bc4b5dd30aa0b7706fdbd48905"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/startup-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "329d5e4c19b68f8d75035a33760e1ee6610e0d1a",
+        "bytes": 28903,
+        "sha256": "d54a3c12de2d071ed12e4a534ba4c8b94f594424da859e676bae2cea686253ab"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/startup-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "f6d2d19d628f039972cf26ea33960bca152f10de",
+        "bytes": 29861,
+        "sha256": "2dd33b5e1fcfd30bce476adfc065595fcff5963b47cc6cb0d2f7f7c40bb8decf"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/tooltip-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "3384e46a8b37d0a6f61d22fec506db53f2de6f31",
+        "bytes": 9152,
+        "sha256": "6686b2ff46cdfc194216d915468a2916504fab8e8b001f9652565fbc99f2edff"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/popover-show-summary.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "347a37ce86a04a56628e39063dd26c6ebd5fa7d1",
+        "bytes": 1995,
+        "sha256": "27073beac31dcfc05bb0aeb62166cac9f7dde75619911177539f9862196573bc"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/popover-show-envelope.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "a0b38c2b762bd5789384fee8321f7c1594124caf",
+        "bytes": 2153,
+        "sha256": "d07722a879ec6c9d1b8c3ab00ef93166b727b51ffc4e83bade323ae93de4a6ae"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "c6dd0b539b0ba5fcdc409d770bc9a47dca66d9b1",
+        "bytes": 7765,
+        "sha256": "719eb222403133f8fc38a4fa19faf1145630d40c52f3bd28e1e505fd9485e810"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6b189a799189742e83a9b3f2d09f7ddce13e8141",
+        "bytes": 23672,
+        "sha256": "1f6b42a955be924508076f56d0391919f50e8be4b52532e9f289eeb7f858fc44"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "33028b2cefd29cb39d5508ac8b1023b9480d9b07",
+        "bytes": 11729,
+        "sha256": "b410ff1b2bf3e150dd49406f0ca9a26505ba407559718188cc8143601f739c4b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "5fe674b94618c058452043ec0f898dd693e00ccb",
+        "bytes": 8038,
+        "sha256": "e888c9485797b2a82d27df2199bb42fb25c9f20bd5680bfdf82db64077a78f3c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "f01f3ecf73a07ba466955a3c79162048728cfe6f",
+        "bytes": 9932,
+        "sha256": "51b0f6062c48af6ec7d650281945e6ee5fe4ac48847990d214617d9a263a146e"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "46dec5356df73aae0fb3a62feb4ca90fbdad19c0",
+        "bytes": 42744,
+        "sha256": "48c093010ae6d56ad7a71f832f8d1b8ac14944173476efb9f81999828935a67c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source/source-review-harness.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "c6d06341d60157b357dd294b50ed34fc66d95ee5",
+        "bytes": 14969,
+        "sha256": "d9f9e28f7ddd24645f86b8cead5cd4d40153841f65eaf8f026f4702d2b07f721"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source/protocol.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "0deeae3c8708a97059b97c14bb7062793d9401b2",
+        "bytes": 7058,
+        "sha256": "08efba1939911fbfc566295a014a52f9407040a4e82b6204b7209b17f9e5e285"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/overlay-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "b65397f70874d08ead14e1c11951fde7f5b1b180",
+        "bytes": 43810,
+        "sha256": "393a41dd3a9c9d12baa831f66153172fcbc912b72cbeb71cafe37e4f3f933b2b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/instruments-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "4f14f1b021a0955acefe0086620d6b5e81870486",
+        "bytes": 148591,
+        "sha256": "f41fa45786c75665c9cf867c9d3d3c1affd3c656dbd5fb48b270d4c84c166e35"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/reference-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "23fee86e61c6832a7bf1fc447846a0ab455edee2",
+        "bytes": 49716,
+        "sha256": "8046776ffc9844892089a01783bb466861327cd669d1d426c64a62cf21aa1b8b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/installed-expo-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "10e7872aaeae830d1c74132e80014ffa1c5d6958",
+        "bytes": 49283,
+        "sha256": "21927a96651b4c1c72ebc15d0566ad3779a7273e5877a8b135ead9c24b93847c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/installed-basic-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "d6ee3a74bbda45725aa3b6134c2ed63348cf754e",
+        "bytes": 49278,
+        "sha256": "3d84dfe2968cf2fde2cc84a3d9ea7c4ab7b6d66f43271362a7529495514c8ca1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "00cc03fa575ad3a527de073647f9b68ade4a28db",
+        "bytes": 2022,
+        "sha256": "f0e5aab430f16b22b06854be9aa14e2cf251ac39fd437fb10b171628e4b77901"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "da2e808a8e9883b81900f9f1311254ab20b88443",
+        "bytes": 6412,
+        "sha256": "12ba96fc9c6ba3252bf7c07eddd488db6fb40f21e100074507e475fb3b43ee66"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-browser-and-consumers-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6c21fa6e9a4ca93e88cf5d1aeadd5fac4f650d69",
+        "bytes": 13532,
+        "sha256": "5ae8b1d9821f1e1aeb636806158cc049de77ab61f3c420904ad3742cb2f7d3a4"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-mobile-metadata-and-android-pass/source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "f8cb7279963b9ea945c85932f7cfc62d68678943",
+        "bytes": 57938,
+        "sha256": "ea4c267367e67dbc96782b67670fd7a2e0e760d37bc0abae6c2c5caf5e8de698"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-mobile-metadata-and-android-pass/android-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "2f9222164dd69755c015550f09b09d5d94c4ff70",
+        "bytes": 281576,
+        "sha256": "c195ab82e7b8625345221b220230d682d0fa09ad7e4d666e560726916ffb6057"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-mobile-metadata-and-android-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "4bf14d878f5aacadd78512453e63c54ade47bebd",
+        "bytes": 2179,
+        "sha256": "883904c04f4c39027a4c2d694e12cfc11fc7536698384fd81eb0a15269473343"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-mobile-metadata-and-android-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "4c832e5cce336e78e25e56444c3478e2c5eb973c",
+        "bytes": 3237,
+        "sha256": "f3ffb963909b83d843f07cfc4b9aeb1cccf859f456252eef0dce08dfa6f7d8b0"
+      },
+      {
+        "path": "docs/completion/evidence/v1-combined-9a43033-mobile-metadata-and-android-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "3c2da0dcca1bbf175db2466ef35a4cb01dc0d012",
+        "bytes": 15320,
+        "sha256": "d8998b4e301116d36100e0b75baec27b8c634cd0d6d88a3cb92598b1ee5de0df"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-rtl-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "06ca793bb8759a47ee1a11fa452b2765aeebcbde",
+        "bytes": 8435,
+        "sha256": "1608f0c9139cd39ad3989290d7375e3a11c0288b66d776dc2479bba75e3008e6"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-rtl-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "36eb24cd2e9c5e16810706c143d4009a7604973d",
+        "bytes": 13987,
+        "sha256": "44a634ab10f7067754862e30785f2b52dc8a3d357597a8bb09e4335583fad4e4"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-rtl-source/consumer-edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "15d84edce40ee47cd897a295a2adc5a151290273",
+        "bytes": 71229,
+        "sha256": "5caa84841f979ae96f0864083c336020cc73fd856e8249571d46a7fef0d38341"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-rtl-source/consumer-review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "1e0054e46ee51404f5da3ecac793d48e57fc6b12",
+        "bytes": 36006,
+        "sha256": "2fb6bc7fa8556b5408b24bff0125763984cd99a99af54147b2bded0d0c75639f"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ecd9f22-presentation-observation-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "4e9c670b8d01f8c0c4787b9e4bde5303b1aca6a7",
+        "bytes": 5305,
+        "sha256": "34760dbdae7e070827fdb93cb591c6902b6ad351384838ee9c0d820a72b4b1b3"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ecd9f22-presentation-observation-source/source-review.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6e5b759117e7a752149108a10227a80743e7343f",
+        "bytes": 11818,
+        "sha256": "8907b4159bf0c9e952582d2448a2a4a5e445f9f4d4b7e63dd172ab93bef2c79d"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ecd9f22-presentation-observation-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "9b34d6399593db04af527bcad6d02243a2b40a57",
+        "bytes": 36082,
+        "sha256": "4fd6baef5dafaf0909f8864d21d21fcef3205c311f61c84cee5c7aac5a74c081"
+      },
+      {
+        "path": "docs/completion/evidence/v1-appkit-ecd9f22-presentation-observation-source/review-checks.js",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "69233fb8caa6275b5e12aa779ffcdcd35b23e7ce",
+        "bytes": 54738,
+        "sha256": "be193f6511a5889029b865e8d05a3824120d64613ae5aa116329cc9e1608dbea"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-source-pass/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "fcfc074f1395743cc7699a661c4ab39f0df7cd4b",
+        "bytes": 3344,
+        "sha256": "fad9f40a5768a71393b292577cf4059ee87a7808fb949325858b119d31aa37b9"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-source-pass/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "aa7dec1ccdd78bd6fb5833eeb855668ee43b3099",
+        "bytes": 14442,
+        "sha256": "e1535a95bc12b3a4e0279f5c3e23933ed93a25810847f3f13bb37c0d4c829841"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-source-pass/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "4c9d1055b0538748b9f93fd652039e93f59269ba",
+        "bytes": 12101,
+        "sha256": "6d06b158ac4c91fd490ef7142032b342d7162e79b9b7843212fad8f1d1bfc642"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-source-pass/linux-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "a0558c9b6f5c8a040bbfb9ad36c86ec053594987",
+        "bytes": 156165,
+        "sha256": "119703c9d7500630d540a61f99d13abbd791f441bb82988b6ea0957a357b4da8"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-source-pass/windows-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "e7c4eea66babd9a85bddd34eb9dfc5b88610145f",
+        "bytes": 198280,
+        "sha256": "f23bedf6334da6e87c5360a27649ccfe2a07f79ccc295b54aac4505905ceef91"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-source-pass/typescript-pack-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "98dbfd82ec4b8f14145d37750f811f313a91085c",
+        "bytes": 62384,
+        "sha256": "359775839d80608a886c841cb3a7fb32c8938b94fa996d152e8af481c53de44b"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "fa83ceafdd155565e806737eebabe3d029570d55",
+        "bytes": 3530,
+        "sha256": "f81a56e75b2291aee5f15f3c210831ca188811ca586714c6cb5d59edd429aa52"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure/provenance.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "ea47640b67d1de0b074c2ced03d52c9dfe9cb2eb",
+        "bytes": 7305,
+        "sha256": "ce659a8f1b31774e18846d75520b3073e571ef69a261450656391ebf8e406bc1"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure/completed-metadata.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "5779c14594e600d89cc7b8a2597f734a29db911f",
+        "bytes": 13812,
+        "sha256": "7f6a9ce8a2173bb600957a1bdc444cd9e902648932ddc4972d9ecf06358ef319"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure/fabric-source-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "6a2bd5d19ba18eadb49eead96dd82e401019f024",
+        "bytes": 31857,
+        "sha256": "a95871bf868b7221244374d4e56ca73af391a9a9b73b29f92d49dbac2fa99923"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure/native-job.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "7cd597b6ae32070abdd4493d333ae004565d70cb",
+        "bytes": 116428,
+        "sha256": "536b9667f12de35d563f95c32004aa2fb7369cb3ec1fb28ff7d0492c28d0429c"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-8a5007d-native-compile-failure/compiler-excerpt.log",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "766ab565d795bf569d9bc92b4a6e2660079da3b4",
+        "bytes": 2839,
+        "sha256": "65a4c4c65fd391ba030c41207ba29733c995c2e27ccd150c23a8b3dbe7d18335"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-00f6ff5-hook-compiler-source/README.md",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "43ba3c8c8c1bfbc931dac86720d87889d02afca8",
+        "bytes": 3157,
+        "sha256": "a2e548c0e94bd9636d19cda98ee53deca6d6bf818ed189bcaa86a47c0f7d603a"
+      },
+      {
+        "path": "docs/completion/evidence/v1-windows-00f6ff5-hook-compiler-source/edit-manifest.json",
+        "mode": "100644",
+        "type": "blob",
+        "gitBlob": "51bf4888adc04d55fa716d95c83213a7f28e1cf8",
+        "bytes": 2320,
+        "sha256": "7e6cb375eb735dc5854b375e142e171784d0dd21638c4b74a8315193bc2b1d30"
+      }
+    ]
+  },
+  "protectedScope": {
+    "canonicalIds": 341,
+    "localImplementations": 332,
+    "pinnedExternalImplementations": 9,
+    "partial": 0,
+    "sourcePending": 0,
+    "acceptedAcrossAllEight": 0,
+    "platforms": [
+      "ios",
+      "android",
+      "web",
+      "macos",
+      "windows",
+      "visionos",
+      "quest",
+      "pico"
+    ],
+    "ledger": {
+      "path": "docs/completion/v1-issue-status.md",
+      "gitBlob": "0deceb5313a0453aaa5cc1a5ecbbdfdec21f3e97"
+    },
+    "forgePin": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+    "viroPin": "e84a1a9a37168a835f7730e09016917b9d49c6ef",
+    "workflowDefinitionsChanged": false,
+    "hostConfigurationChanged": false
+  },
+  "publication": {
+    "targetDraftPullRequest": 64,
+    "branch": "codex/v1-reviewed-closure-nov11",
+    "expectedParent": "9a430338d8336283b230203a8555257798fcd62c",
+    "force": false,
+    "required": "Fresh ref lease; full leaf/type/mode/directory-hash/ordered-parent independent gates and exact postread. Ordinary changed-source pull-request CI only.",
+    "candidateCommitIdentity": "Bound externally after this manifest is committed; no self-referential hash."
+  },
+  "remainingGates": [
+    "Exact corrected combined-source and desktop execution; eligible supported native hosts.",
+    "Original final fifteen tested archives (thirteen workspace and two desktop), matching peer hashes and seventeen imports.",
+    "Physical-device, speech and performance evidence for the original eight-platform scope.",
+    "Owner approval of the original final archive manifest before main merge, tag, release or npm publication.",
+    "Unretrieved iOS original and uninspected archive/member/pixel evidence remain explicit limits."
+  ],
+  "claimsNotMade": [
+    "No previous source pass transfers to this new combined source.",
+    "No observer protocol, template icon geometry or RTL execution is inferred from models or compilation.",
+    "No Mac presentation cause is inferred from shown=false; the next diagnostic must observe it.",
+    "No ZIP byte/member/pixel verification is inferred from producer digests or uploader counts.",
+    "No elevated Windows fixture result establishes supported-host acceptance."
+  ]
+}

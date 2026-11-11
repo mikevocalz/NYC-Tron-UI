@@ -1,0 +1,573 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-browser-and-installed-consumer-metadata",
+  "recordedAtUTC": "2026-11-11 13:21:55 UTC",
+  "source": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ]
+  },
+  "runs": [
+    {
+      "id": 43026784346,
+      "name": "NYC-Tron rendered web overlay acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+      "attempt": 1,
+      "event": "pull_request",
+      "createdAt": "2026-11-11T13:10:47Z",
+      "updatedAt": "2026-11-11T13:12:00Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43026784346"
+    },
+    {
+      "id": 43026784430,
+      "name": "NYC-Tron rendered web instrument acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+      "attempt": 1,
+      "event": "pull_request",
+      "createdAt": "2026-11-11T13:10:47Z",
+      "updatedAt": "2026-11-11T13:18:36Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43026784430"
+    },
+    {
+      "id": 43026784298,
+      "name": "NYC-Tron installed release consumers",
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+      "attempt": 1,
+      "event": "pull_request",
+      "createdAt": "2026-11-11T13:10:47Z",
+      "updatedAt": "2026-11-11T13:13:22Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43026784298"
+    }
+  ],
+  "jobs": [
+    {
+      "lane": "overlay",
+      "id": 130543376188,
+      "name": "chromium",
+      "runId": 43026784346,
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-11-11T13:11:06Z",
+      "completedAt": "2026-11-11T13:11:59Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:07Z",
+          "completedAt": "2026-11-11T13:11:08Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:08Z",
+          "completedAt": "2026-11-11T13:11:10Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:10Z",
+          "completedAt": "2026-11-11T13:11:15Z"
+        },
+        {
+          "number": 4,
+          "name": "Install isolated browser test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:15Z",
+          "completedAt": "2026-11-11T13:11:16Z"
+        },
+        {
+          "number": 5,
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:16Z",
+          "completedAt": "2026-11-11T13:11:43Z"
+        },
+        {
+          "number": 6,
+          "name": "Exercise the rendered RN web menu, popover, command palette and tooltip",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:43Z",
+          "completedAt": "2026-11-11T13:11:54Z"
+        },
+        {
+          "number": 7,
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T13:11:54Z",
+          "completedAt": "2026-11-11T13:11:54Z"
+        },
+        {
+          "number": 8,
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:54Z",
+          "completedAt": "2026-11-11T13:11:56Z"
+        },
+        {
+          "number": 15,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:56Z",
+          "completedAt": "2026-11-11T13:11:56Z"
+        },
+        {
+          "number": 16,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:56Z",
+          "completedAt": "2026-11-11T13:11:56Z"
+        },
+        {
+          "number": 17,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:56Z",
+          "completedAt": "2026-11-11T13:11:56Z"
+        }
+      ]
+    },
+    {
+      "lane": "instruments",
+      "id": 130543375913,
+      "name": "chromium",
+      "runId": 43026784430,
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-11-11T13:11:06Z",
+      "completedAt": "2026-11-11T13:18:36Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:06Z",
+          "completedAt": "2026-11-11T13:11:07Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:07Z",
+          "completedAt": "2026-11-11T13:11:10Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:10Z",
+          "completedAt": "2026-11-11T13:11:16Z"
+        },
+        {
+          "number": 4,
+          "name": "Install workspace optional peers used by the fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:16Z",
+          "completedAt": "2026-11-11T13:11:26Z"
+        },
+        {
+          "number": 5,
+          "name": "Build public package exports used by shell consumers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:26Z",
+          "completedAt": "2026-11-11T13:11:46Z"
+        },
+        {
+          "number": 6,
+          "name": "Install isolated browser test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:46Z",
+          "completedAt": "2026-11-11T13:11:49Z"
+        },
+        {
+          "number": 7,
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:49Z",
+          "completedAt": "2026-11-11T13:12:10Z"
+        },
+        {
+          "number": 8,
+          "name": "Exercise instruments, NativeSeekBar, LayerStack, content, form and navigation primitives, InkToolbar, studio shell, spreadsheet, mixer, office controls and the pairing dialog in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:12:10Z",
+          "completedAt": "2026-11-11T13:18:31Z"
+        },
+        {
+          "number": 9,
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:18:31Z",
+          "completedAt": "2026-11-11T13:18:33Z"
+        },
+        {
+          "number": 17,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:18:33Z",
+          "completedAt": "2026-11-11T13:18:33Z"
+        },
+        {
+          "number": 18,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:18:33Z",
+          "completedAt": "2026-11-11T13:18:34Z"
+        },
+        {
+          "number": 19,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:18:34Z",
+          "completedAt": "2026-11-11T13:18:34Z"
+        }
+      ]
+    },
+    {
+      "lane": "basic",
+      "id": 130543375191,
+      "name": "basic installed tarball consumer",
+      "runId": 43026784298,
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-11-11T13:11:06Z",
+      "completedAt": "2026-11-11T13:13:07Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:07Z",
+          "completedAt": "2026-11-11T13:11:08Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:08Z",
+          "completedAt": "2026-11-11T13:11:11Z"
+        },
+        {
+          "number": 3,
+          "name": "Set the consumer location on this runner",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:11Z",
+          "completedAt": "2026-11-11T13:11:11Z"
+        },
+        {
+          "number": 4,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:11Z",
+          "completedAt": "2026-11-11T13:11:16Z"
+        },
+        {
+          "number": 5,
+          "name": "Install the pinned consumer tooling",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:16Z",
+          "completedAt": "2026-11-11T13:11:26Z"
+        },
+        {
+          "number": 6,
+          "name": "Build and pack the standalone pull request candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:26Z",
+          "completedAt": "2026-11-11T13:12:21Z"
+        },
+        {
+          "number": 7,
+          "name": "Download the release producer's canonical archives",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T13:12:21Z",
+          "completedAt": "2026-11-11T13:12:21Z"
+        },
+        {
+          "number": 8,
+          "name": "Install actual release tarballs in a project outside the repository",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:12:21Z",
+          "completedAt": "2026-11-11T13:12:38Z"
+        },
+        {
+          "number": 9,
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:12:38Z",
+          "completedAt": "2026-11-11T13:12:59Z"
+        },
+        {
+          "number": 10,
+          "name": "Exercise the installed components in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:12:59Z",
+          "completedAt": "2026-11-11T13:13:01Z"
+        },
+        {
+          "number": 11,
+          "name": "Save the dependency evidence, results and captures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:01Z",
+          "completedAt": "2026-11-11T13:13:03Z"
+        },
+        {
+          "number": 21,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:03Z",
+          "completedAt": "2026-11-11T13:13:03Z"
+        },
+        {
+          "number": 22,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:03Z",
+          "completedAt": "2026-11-11T13:13:03Z"
+        },
+        {
+          "number": 23,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:03Z",
+          "completedAt": "2026-11-11T13:13:04Z"
+        }
+      ]
+    },
+    {
+      "lane": "expo",
+      "id": 130543375522,
+      "name": "expo-web installed tarball consumer",
+      "runId": 43026784298,
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-11-11T13:11:06Z",
+      "completedAt": "2026-11-11T13:13:21Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:07Z",
+          "completedAt": "2026-11-11T13:11:09Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:09Z",
+          "completedAt": "2026-11-11T13:11:11Z"
+        },
+        {
+          "number": 3,
+          "name": "Set the consumer location on this runner",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:11Z",
+          "completedAt": "2026-11-11T13:11:11Z"
+        },
+        {
+          "number": 4,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:11Z",
+          "completedAt": "2026-11-11T13:11:16Z"
+        },
+        {
+          "number": 5,
+          "name": "Install the pinned consumer tooling",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:16Z",
+          "completedAt": "2026-11-11T13:11:26Z"
+        },
+        {
+          "number": 6,
+          "name": "Build and pack the standalone pull request candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:11:26Z",
+          "completedAt": "2026-11-11T13:12:23Z"
+        },
+        {
+          "number": 7,
+          "name": "Download the release producer's canonical archives",
+          "status": "completed",
+          "conclusion": "skipped",
+          "startedAt": "2026-11-11T13:12:23Z",
+          "completedAt": "2026-11-11T13:12:23Z"
+        },
+        {
+          "number": 8,
+          "name": "Install actual release tarballs in a project outside the repository",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:12:23Z",
+          "completedAt": "2026-11-11T13:12:51Z"
+        },
+        {
+          "number": 9,
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:12:51Z",
+          "completedAt": "2026-11-11T13:13:13Z"
+        },
+        {
+          "number": 10,
+          "name": "Exercise the installed components in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:13Z",
+          "completedAt": "2026-11-11T13:13:16Z"
+        },
+        {
+          "number": 11,
+          "name": "Save the dependency evidence, results and captures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:16Z",
+          "completedAt": "2026-11-11T13:13:17Z"
+        },
+        {
+          "number": 21,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:17Z",
+          "completedAt": "2026-11-11T13:13:18Z"
+        },
+        {
+          "number": 22,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:18Z",
+          "completedAt": "2026-11-11T13:13:18Z"
+        },
+        {
+          "number": 23,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-11-11T13:13:18Z",
+          "completedAt": "2026-11-11T13:13:18Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13857776085,
+      "name": "overlay-renders",
+      "bytes": 280598,
+      "producerDigest": "sha256:2568f65296f0d91f1f125d25def71992b6f540b991b202d68393a8d92efc1852",
+      "expired": false,
+      "createdAt": "2026-11-11T13:11:56Z",
+      "workflowRun": {
+        "id": 43026784346,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-reviewed-closure-nov11",
+        "head_sha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+      }
+    },
+    {
+      "id": 13857493832,
+      "name": "ui-browser-captures",
+      "bytes": 22090643,
+      "producerDigest": "sha256:5ce449028506d84d95bb55dc1b50019436c56eb3247d4195498103a8094e997b",
+      "expired": false,
+      "createdAt": "2026-11-11T13:18:33Z",
+      "workflowRun": {
+        "id": 43026784430,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-reviewed-closure-nov11",
+        "head_sha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+      }
+    },
+    {
+      "id": 13858820517,
+      "name": "release-consumer-basic",
+      "bytes": 64093,
+      "producerDigest": "sha256:82944ed61fab3c824b43d76a8c9f6137b671598638158b1cf5ed4bafd73f26d6",
+      "expired": false,
+      "createdAt": "2026-11-11T13:13:03Z",
+      "workflowRun": {
+        "id": 43026784298,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-reviewed-closure-nov11",
+        "head_sha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+      }
+    },
+    {
+      "id": 13857835868,
+      "name": "release-consumer-expo-web",
+      "bytes": 117629,
+      "producerDigest": "sha256:40147b3f629a61b753750991d2120d8fda91393f1913a2068f9672f3c5c869ff",
+      "expired": false,
+      "createdAt": "2026-11-11T13:13:17Z",
+      "workflowRun": {
+        "id": 43026784298,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-reviewed-closure-nov11",
+        "head_sha": "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+      }
+    }
+  ],
+  "artifactBoundary": "API/producer reports only. Archive bytes, member lists, screenshots and pixels have not been inspected."
+}

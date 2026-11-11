@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "kind": "ios-command-reporter-addition-manifest",
+  "recordedAtUTC": "2026-11-11 14:32:25 UTC",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "base": {
+    "commit": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9"
+  },
+  "changes": [
+    {
+      "path": "tooling/native/report-ios-command-output.mjs",
+      "operation": "add",
+      "before": null,
+      "mode": "100644",
+      "gitBlob": "114c9490410b7b1598b6ec416b14a35cfb3dc233",
+      "bytes": 21491,
+      "sha256": "399a09ca060a67892e7f70ff1fa5a025d4aa5ff962a0223d33cb86ef485cb17a"
+    },
+    {
+      "path": "tooling/tests/ios-command-output.test.mjs",
+      "operation": "add",
+      "before": null,
+      "mode": "100644",
+      "gitBlob": "e240477f92344c1ef506c0afbc27aff60e407e52",
+      "bytes": 15584,
+      "sha256": "efaee3ad37508eea6b2c9575e3f7b6373b8d14735f5c1d1050925487806dbe09"
+    }
+  ],
+  "inverse": "Remove exactly the two added paths. This author's contribution changes no existing source file.",
+  "existingRunner": {
+    "path": "tooling/native/run-ui-acceptance.mjs",
+    "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+    "bytes": 17132,
+    "sha256": "e61511ef69eb25b8153184acb694265946bf7e675cfcdca01dde08c61af3536e",
+    "changed": false
+  },
+  "workflowComposition": {
+    "path": ".github/workflows/native-controls-port.yml",
+    "before": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+    "candidate": "c6c51423a0fcbab4768751bd8f1e04d2939f20fe",
+    "author": "forge_gap_audit",
+    "receipt": "../v1-ios-c6c5142-command-output-source/README.md",
+    "scope": "Separately reviewed capture/upload changes only; not authored by this reporter contribution."
+  },
+  "contract": {
+    "command": "node \"$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs\" <build|ui> <shell-exit-status> \"$NYC_TRON_CONSUMER\"",
+    "phases": [
+      "build",
+      "ui"
+    ],
+    "status": {
+      "range": [
+        0,
+        255
+      ],
+      "representation": "canonical decimal string",
+      "scope": "capture-setup-or-command-or-redirection-result",
+      "doesNotEstablish": [
+        "command execution",
+        "native signal",
+        "workflow-step status",
+        "input freshness"
+      ]
+    },
+    "fixedInputs": {
+      "build": [
+        "/tmp/xcodebuild.log",
+        "<consumer>/ios-command-output/build-stderr.log"
+      ],
+      "ui": [
+        "<consumer>/ios-command-output/ui-stdout.log",
+        "<consumer>/ios-command-output/ui-stderr.log"
+      ],
+      "flowSlots": [
+        "settings",
+        "settings-retry",
+        "editor",
+        "pointer"
+      ],
+      "flowFiles": [
+        "<consumer>/runtime-ui-ios/<fixed-flow>/report.xml",
+        "unique commands.json found only within the bounded fixed-flow directory"
+      ]
+    },
+    "output": "<consumer>/ios-command-output/<fixed-phase>-summary.json, exclusive creation and closed readback",
+    "buildStepPolicy": "The companion wrapper passes actual xcodebuild/capture status to the reporter, then retains the historical terminal test's zero/one step normalization.",
+    "uiStepPolicy": "The companion wrapper returns the saved UI runner/capture status exactly.",
+    "reportingFailure": "Secondary; the companion wrapper guards the reporter and preserves its saved result. There is no retry or fallback native execution."
+  },
+  "limits": {
+    "streamReadBytes": 8388608,
+    "commandReadBytes": 1048576,
+    "junitReadBytes": 262144,
+    "extraFileProbeBytes": 1,
+    "directoryEntriesPerFlow": 128,
+    "extraDirectoryEntryProbe": 1,
+    "directoryDepth": 5,
+    "commandRecords": 256,
+    "xmlTokens": 4096,
+    "xmlDepth": 24,
+    "summaryFileBytes": 32768,
+    "fullMarkerInclusiveConsoleBytes": 8192
+  },
+  "projection": {
+    "fixedFieldsOnly": true,
+    "rawPathsArgumentsTextErrorMessagesEmitted": false,
+    "unknownsExplicit": true,
+    "flowSlotsAndAttemptNumbers": "Configured evidence locations; not observations of execution or recovery counts.",
+    "junitCounts": "Supported structural XML observations; never an acceptance pass/failure verdict.",
+    "commandSelection": "First failed record within bounded top-level array order; no unobserved tail or chronological inference."
+  },
+  "hashing": {
+    "full": "EOF within budget, matching before/after/current regular-file observations and successful close; not an atomic snapshot or a proof of capture freshness.",
+    "partial": "Explicit bounded-prefix or observed-read-sequence scope. bytesRead includes any extra probe; hashedBytes states exactly the bytes covered by sha256.",
+    "unconfirmed": "Absent SHA and null hashedBytes.",
+    "summary": "The receipt hash is computed from the successfully retained and closed file's actual readback, not intended serialization."
+  },
+  "tests": {
+    "path": "tooling/tests/ios-command-output.test.mjs",
+    "designCount": 8,
+    "assertionsPerVariant": 148,
+    "variants": [
+      "posix",
+      "windows-separators"
+    ],
+    "discovery": [
+      {
+        "path": "package.json",
+        "gitBlob": "a792d0c6af732fceebd047e7fa58afcff7acd083",
+        "bytes": 999,
+        "sha256": "3b69bc24173c03ef29808aae7e7af013a29bc844421a6cc03bee1d43c7fb3434",
+        "lines": [
+          {
+            "line": 12,
+            "text": "    \"test\": \"node tooling/run-tests.mjs\","
+          }
+        ]
+      },
+      {
+        "path": "tooling/run-tests.mjs",
+        "gitBlob": "952bf2d06cf3982a2e170a690d1cd966ab417175",
+        "bytes": 537,
+        "sha256": "a016056fb162f7f7cc8d1e346b1025fffc9773c914de090945e175b1a22a1c6e",
+        "lines": [
+          {
+            "line": 1,
+            "text": "// Runs every discovered test file in one node --test invocation. CI, the"
+          },
+          {
+            "line": 4,
+            "text": "import { discoverTests } from \"./test-files.mjs\";"
+          },
+          {
+            "line": 6,
+            "text": "const files = discoverTests();"
+          },
+          {
+            "line": 11,
+            "text": "const result = spawnSync(process.execPath, [\"--experimental-strip-types\", \"--test\", ...files], { stdio: \"inherit\" });"
+          }
+        ]
+      },
+      {
+        "path": "tooling/test-files.mjs",
+        "gitBlob": "327d9c2b8cc9ab40cc1cd5d3a1bc5a10fdc3cefa",
+        "bytes": 1444,
+        "sha256": "9d0ef2a49b9559738938fec89662daec905eacb6efb17327e32266d09026d008",
+        "lines": [
+          {
+            "line": 1,
+            "text": "// Single source of truth for which test files run. Every *.test.mjs / *.test.js"
+          },
+          {
+            "line": 3,
+            "text": "// tooling tests. Playwright suites (browser/) and fixtures need their own"
+          },
+          {
+            "line": 11,
+            "text": "const skipDirs = new Set([\"browser\", \"fixtures\", \"node_modules\"]);"
+          },
+          {
+            "line": 19,
+            "text": "    } else if (/\\.test\\.(mjs|js)$/.test(entry.name)) {"
+          },
+          {
+            "line": 25,
+            "text": "export function discoverTests() {"
+          }
+        ]
+      }
+    ],
+    "workflowStepAdded": false
+  },
+  "harness": {
+    "path": "review-checks.js",
+    "gitBlob": "ef0c6c100fe6802a1eff6cc44d1ee0ad5dce90b2",
+    "bytes": 9598,
+    "sha256": "df46a6f0a412dbfe773f6a968e73f505c8ef1e47552763b6de957ed746bd803c",
+    "invocation": "await eval(harnessText)({source: reporterText, tests: testsText})",
+    "scope": "The same eight authored Node unit-test designs evaluated under POSIX and Windows-separator path models in V8, with explicit Buffer/crypto/path/assert shims and mocked file IO. These are environment variants, not sixteen independent designs; no Node process, real filesystem, actual Windows/macOS, shell, XCTest, native UI, simulator or iOS execution."
+  },
+  "sourceOnly": {
+    "refsChanged": false,
+    "ciDispatched": false,
+    "actualNodeExecution": false,
+    "actualFilesystemExecution": false,
+    "shellExecution": false,
+    "iosExecution": false
+  }
+}

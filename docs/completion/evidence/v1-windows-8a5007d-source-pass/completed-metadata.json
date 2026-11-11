@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "kind": "normalized-completed-source-workflow-metadata",
+  "observedAtUTC": "2026-11-11 12:48:24 UTC",
+  "source": {
+    "head": "8a5007d197539c782e065f1b59daf3fe5ed752ec",
+    "actualCheckout": "e7901ec687e96a240a7b820baef50318fde40ddd",
+    "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "8a5007d197539c782e065f1b59daf3fe5ed752ec"
+    ]
+  },
+  "workflow": {
+    "id": 43022193456,
+    "name": "NYC-Tron source, exports and types",
+    "path": ".github/workflows/ci.yml",
+    "event": "pull_request",
+    "head_sha": "8a5007d197539c782e065f1b59daf3fe5ed752ec",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-11T12:39:13Z",
+    "updated_at": "2026-11-11T12:42:31Z",
+    "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43022193456"
+  },
+  "jobs": [
+    {
+      "id": 130527857223,
+      "run_id": 43022193456,
+      "name": "pure contracts and dependency boundaries",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T12:39:15Z",
+      "completed_at": "2026-11-11T12:40:24Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:16Z",
+          "completed_at": "2026-11-11T12:39:17Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:17Z",
+          "completed_at": "2026-11-11T12:39:18Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:18Z",
+          "completed_at": "2026-11-11T12:39:23Z"
+        },
+        {
+          "number": 4,
+          "name": "Install source-test tooling",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:23Z",
+          "completed_at": "2026-11-11T12:39:33Z"
+        },
+        {
+          "number": 5,
+          "name": "Build packages the tests import",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:33Z",
+          "completed_at": "2026-11-11T12:39:53Z"
+        },
+        {
+          "number": 6,
+          "name": "All unit, contract and mocked-render tests",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:53Z",
+          "completed_at": "2026-11-11T12:40:22Z"
+        },
+        {
+          "number": 11,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:22Z",
+          "completed_at": "2026-11-11T12:40:22Z"
+        },
+        {
+          "number": 12,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:22Z",
+          "completed_at": "2026-11-11T12:40:23Z"
+        },
+        {
+          "number": 13,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:23Z",
+          "completed_at": "2026-11-11T12:40:23Z"
+        }
+      ]
+    },
+    {
+      "id": 130527857598,
+      "run_id": 43022193456,
+      "name": "tests and pack on Windows",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T12:39:15Z",
+      "completed_at": "2026-11-11T12:42:31Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:16Z",
+          "completed_at": "2026-11-11T12:39:17Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:17Z",
+          "completed_at": "2026-11-11T12:39:23Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:23Z",
+          "completed_at": "2026-11-11T12:39:31Z"
+        },
+        {
+          "number": 4,
+          "name": "Enable corepack",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:31Z",
+          "completed_at": "2026-11-11T12:39:32Z"
+        },
+        {
+          "number": 5,
+          "name": "Install local workspace",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:32Z",
+          "completed_at": "2026-11-11T12:40:02Z"
+        },
+        {
+          "number": 6,
+          "name": "Build every package",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:02Z",
+          "completed_at": "2026-11-11T12:40:27Z"
+        },
+        {
+          "number": 7,
+          "name": "All unit, contract and mocked-render tests",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:27Z",
+          "completed_at": "2026-11-11T12:41:42Z"
+        },
+        {
+          "number": 8,
+          "name": "Verify distributable subpaths and dependency boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:41:42Z",
+          "completed_at": "2026-11-11T12:41:44Z"
+        },
+        {
+          "number": 9,
+          "name": "Pack every package and check release tarball contents",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:41:44Z",
+          "completed_at": "2026-11-11T12:42:24Z"
+        },
+        {
+          "number": 10,
+          "name": "Install the dependency-free tarballs in a fresh project and import them",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:42:24Z",
+          "completed_at": "2026-11-11T12:42:27Z"
+        },
+        {
+          "number": 19,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:42:27Z",
+          "completed_at": "2026-11-11T12:42:27Z"
+        },
+        {
+          "number": 20,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:42:27Z",
+          "completed_at": "2026-11-11T12:42:29Z"
+        },
+        {
+          "number": 21,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:42:29Z",
+          "completed_at": "2026-11-11T12:42:29Z"
+        }
+      ]
+    },
+    {
+      "id": 130527857738,
+      "run_id": 43022193456,
+      "name": "workspace TypeScript",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T12:39:16Z",
+      "completed_at": "2026-11-11T12:41:06Z",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:17Z",
+          "completed_at": "2026-11-11T12:39:18Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:18Z",
+          "completed_at": "2026-11-11T12:39:20Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:20Z",
+          "completed_at": "2026-11-11T12:39:25Z"
+        },
+        {
+          "number": 4,
+          "name": "Enable corepack",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:25Z",
+          "completed_at": "2026-11-11T12:39:25Z"
+        },
+        {
+          "number": 5,
+          "name": "Install local workspace",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:25Z",
+          "completed_at": "2026-11-11T12:39:35Z"
+        },
+        {
+          "number": 6,
+          "name": "Compile independent package distributions in dependency order",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:35Z",
+          "completed_at": "2026-11-11T12:39:55Z"
+        },
+        {
+          "number": 7,
+          "name": "Typecheck packages against built peer workspaces",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:39:55Z",
+          "completed_at": "2026-11-11T12:40:25Z"
+        },
+        {
+          "number": 8,
+          "name": "Verify distributable subpaths and dependency boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:25Z",
+          "completed_at": "2026-11-11T12:40:26Z"
+        },
+        {
+          "number": 9,
+          "name": "Verify the public API surface against docs/api-surface.json",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:26Z",
+          "completed_at": "2026-11-11T12:40:26Z"
+        },
+        {
+          "number": 10,
+          "name": "Verify reachable public declarations and dependency type boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:26Z",
+          "completed_at": "2026-11-11T12:40:28Z"
+        },
+        {
+          "number": 11,
+          "name": "Verify the complete component ledger and reviewed public exports",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:28Z",
+          "completed_at": "2026-11-11T12:40:29Z"
+        },
+        {
+          "number": 12,
+          "name": "Pack every package and check release tarball contents",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:40:29Z",
+          "completed_at": "2026-11-11T12:41:02Z"
+        },
+        {
+          "number": 13,
+          "name": "Install the dependency-free tarballs in a fresh project and import them",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:41:02Z",
+          "completed_at": "2026-11-11T12:41:03Z"
+        },
+        {
+          "number": 25,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:41:03Z",
+          "completed_at": "2026-11-11T12:41:03Z"
+        },
+        {
+          "number": 26,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:41:03Z",
+          "completed_at": "2026-11-11T12:41:03Z"
+        },
+        {
+          "number": 27,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:41:03Z",
+          "completed_at": "2026-11-11T12:41:03Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    "total_count": 0,
+    "artifacts": [],
+    "scope": "Fresh API returned no source-workflow artifacts; log-printed tarball hashes are producer-reported, and their original bytes were not inspected."
+  }
+}

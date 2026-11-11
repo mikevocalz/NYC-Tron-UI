@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "status": "source-reviewed-native-unexecuted",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "folder": "docs/completion/evidence/v1-windows-2555535-navigation-probe-source",
+  "baselineCommit": "782ed3911dd35950797f7417fed813f5fa669c4e",
+  "scope": {
+    "sourceFiles": 3,
+    "consumer": "Separate fourth PowerShell source under authoring/review; not part of this receipt's native approval",
+    "publication": "Immutable blobs only; no new tree, ref, PR, workflow dispatch or rerun by author",
+    "nativeExecution": false,
+    "powerShellExecution": false
+  },
+  "sources": [
+    {
+      "path": "packages/windows-fluent/rnw-fabric/windows/NYCTronFluentFabric/TronNavigationView.cpp",
+      "before": {
+        "gitBlob": "c23cc7f146477a00669921e3f4826e8ff9f39d69",
+        "bytes": 19232,
+        "sha256": "9fa521bf02c028440096fbcbf4efa683f5b2a449ed95a5d777fafb1aeada0744"
+      },
+      "after": {
+        "gitBlob": "0f450e13031f974641e940cb97f550e83405a517",
+        "bytes": 22007,
+        "sha256": "ec5d708fa702994fb875f057da23745419bb9b6382f7c4a9012d20b137284dcd"
+      }
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+      "before": null,
+      "after": {
+        "gitBlob": "25555353791ca4b35f1be51e7566c2062ecc8091",
+        "bytes": 30246,
+        "sha256": "0e7ad4782abbd04c0790e1e2edc5c1a96b2f05373aa98bc577a36c8636941d33"
+      }
+    },
+    {
+      "path": "packages/windows-fluent/rnw-fabric/example/scripts/prepare-host.mjs",
+      "before": {
+        "gitBlob": "83759b80bea450cf9e823ef7fdcf1b88d65d9ba2",
+        "bytes": 4639,
+        "sha256": "4c98de60f2e10c6dfec84033a670318422bf6ba33f91647431e88f20f960ca0b"
+      },
+      "after": {
+        "gitBlob": "07bc119118d38befb91f8aecfc94a67a96adfec4",
+        "bytes": 6058,
+        "sha256": "aa848290814813f380b151a1bbbf839d8795c307dcb017eb58c39ec23d16cf84"
+      }
+    }
+  ],
+  "artifacts": {
+    "editManifest": {
+      "gitBlob": "46dec5356df73aae0fb3a62feb4ca90fbdad19c0",
+      "bytes": 42744,
+      "sha256": "48c093010ae6d56ad7a71f832f8d1b8ac14944173476efb9f81999828935a67c"
+    },
+    "reviewChecks": {
+      "gitBlob": "c6d06341d60157b357dd294b50ed34fc66d95ee5",
+      "bytes": 14969,
+      "sha256": "d9f9e28f7ddd24645f86b8cead5cd4d40153841f65eaf8f026f4702d2b07f721"
+    },
+    "protocol": {
+      "gitBlob": "0deeae3c8708a97059b97c14bb7062793d9401b2",
+      "bytes": 7058,
+      "sha256": "08efba1939911fbfc566295a014a52f9407040a4e82b6204b7209b17f9e5e285"
+    }
+  },
+  "checks": {
+    "entryPoint": "reviewNativeNavigationFixture(input)",
+    "inputs": {
+      "navigationBefore": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "c23cc7f146477a00669921e3f4826e8ff9f39d69"
+      },
+      "navigationAfter": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "0f450e13031f974641e940cb97f550e83405a517"
+      },
+      "header": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "25555353791ca4b35f1be51e7566c2062ecc8091"
+      },
+      "prepareBefore": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "83759b80bea450cf9e823ef7fdcf1b88d65d9ba2"
+      },
+      "prepareAfter": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "07bc119118d38befb91f8aecfc94a67a96adfec4"
+      },
+      "manifest": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "46dec5356df73aae0fb3a62feb4ca90fbdad19c0",
+        "parse": "JSON"
+      },
+      "hostTemplate": {
+        "repo": "microsoft/react-native-windows",
+        "blob": "a0ba16d9687d8aa654c4f7bbb2cf32bc0ddeba94"
+      },
+      "propertyBag": {
+        "repo": "microsoft/react-native-windows",
+        "blob": "b592c30bb0a2ea0c2444fcb66e05d910fd89a145"
+      },
+      "libraryPch": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "b71fe46782ee66787935b7f95e2380b06d0098ce"
+      },
+      "appPch": {
+        "repo": "microsoft/react-native-windows",
+        "blob": "364879013f3f215b74d37b566a95e8b0bdee95a5"
+      },
+      "prepareConsumer": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "8200977ec0b80bcf4cd5308539b783caced6a746"
+      },
+      "packageJson": {
+        "repo": "mikevocalz/NYC-Tron-UI",
+        "blob": "7a6f6d7aed57a17d0a08f45018de3e72e9d00713"
+      }
+    },
+    "result": {
+      "schemaVersion": 1,
+      "status": "passed",
+      "scope": "V8 actual JavaScript preparer transforms with mocked IO; exact source/inverse checks and geometry models only. No C++, WinRT, PowerShell, Windows file IO or native execution.",
+      "groups": [
+        {
+          "name": "Exact native/preparer edits and addition identity",
+          "status": "passed"
+        },
+        {
+          "name": "Exact private COM ABI and cross-module ownership contract",
+          "status": "passed"
+        },
+        {
+          "name": "Weak registry and exact mount/thread ownership source guards",
+          "status": "passed"
+        },
+        {
+          "name": "Actual preparer JavaScript with mocked file/URL boundary",
+          "status": "passed"
+        },
+        {
+          "name": "Finite rectangle and checked pixel extent models (not native execution)",
+          "status": "passed"
+        },
+        {
+          "name": "Bounded observation protocol source guards and privacy",
+          "status": "passed"
+        },
+        {
+          "name": "Example-only distribution and unchanged provider registration",
+          "status": "passed"
+        }
+      ],
+      "assertions": 168,
+      "preparationCases": 14,
+      "geometryCases": 17
+    },
+    "independentReproduction": {
+      "reviewer": "root",
+      "sameDesigns": true,
+      "groups": 7,
+      "assertions": 168,
+      "preparationCases": 14,
+      "geometryCases": 17,
+      "scope": "V8 source/static and mocked IO only"
+    }
+  },
+  "review": {
+    "root": "Independent exact-byte/hash, six+one forward/inverse edits, complete header, ABI, pinned sources, owner/lifecycle/geometry/file protocol, seven same-design harness groups; no blocker in three files",
+    "desktop": "Independent public API/ABI and weak-registry/root-coordinate review; requested retained/current ChildSiteLink.IsClosed guards, applied",
+    "final": "Independent native ABI/lifetime review; requested first-thread compare_exchange_strong before unsynchronized mutable state, applied; consumer review separate"
+  },
+  "limits": {
+    "registryEntries": 8,
+    "generations": 128,
+    "visualNodes": 512,
+    "visualDepth": 24,
+    "requests": 128,
+    "requestUtf8Bytes": 2048,
+    "responseUtf8Bytes": 8192
+  },
+  "invariants": [
+    "Inert shipping hook when private example property absent",
+    "No strong registry reference to unmounted visuals",
+    "Exact ticket/generation removal on Unmounted and before destruction close",
+    "Exact current live ChildSiteLink, component, island/root, native owner and UI thread checks",
+    "Complete unique actual template traversal; no accessibility mutation",
+    "Null-target visual TransformBounds and same-root RectInt32 converter, no manual scale",
+    "Stable means matching sequential observations, not atomic or render-complete",
+    "Fixed app-local complete immutable file/message protocol with source, process creation, fresh session, owner and sequence/phase identity",
+    "No arbitrary path/actions/provider text through protocol",
+    "Original provider registration and all component logic outside six edits preserved"
+  ],
+  "primary": {
+    "rnwTag": "react-native-windows_v0.85.0",
+    "propertyBag": {
+      "path": "vnext/Microsoft.ReactNative.Cxx/ReactPropertyBag.h",
+      "gitBlob": "b592c30bb0a2ea0c2444fcb66e05d910fd89a145",
+      "warning": "ReactNonAbiValue must remain in the same DLL/EXE; cross-module use may cause a security bug or crash."
+    },
+    "mountedLink": {
+      "path": "vnext/Microsoft.ReactNative/Fabric/Composition/ContentIslandComponentView.cpp",
+      "gitBlob": "46f404be61f81208026db87ca12c7eff16dd6c89",
+      "boundary": "ChildSiteLink returns null while !isMounted; native fixture also unregisters on Unmounted and checks exact retained/current nonclosed link."
+    },
+    "libraryPch": "b71fe46782ee66787935b7f95e2380b06d0098ce",
+    "officialAppPch": "364879013f3f215b74d37b566a95e8b0bdee95a5",
+    "cppWinRTDeclaredDefaultMinimum": "2.0.230706.1",
+    "cppWinRTCommit": "297454ee285476f16bf11425bd60daf4593b66ee",
+    "cppWinRTDependencyProps": "f2c34cc60eb2bba525b93c1d398b14020e27f8ac",
+    "comSupport": "https://learn.microsoft.com/en-us/windows/apps/develop/cpp-winrt/author-coclasses",
+    "siteClosed": "https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.content.childsitelink.isclosed?view=windows-app-sdk-1.8"
+  },
+  "limitations": [
+    "No C++/WinRT compile or Windows runtime executed in this review environment.",
+    "Observer geometry is sampled sequentially, not atomic or compositor-complete; converter returns rounded RectInt32 physical pixels.",
+    "PostMessage/file protocol is fixed observation within the owned packaged example, not an authentication/security boundary against code with same-user app-local write access.",
+    "No supported-host promotion, physical drag fix, crash-causality claim or tested archive receipt.",
+    "A Raw UIA Icon peer remains absent in inspected782/combined outcomes; this observer uses real template visuals without adding accessibility peers.",
+    "New header is outside package files inventory (example fixture); shipping component hook remains inert when the example property is absent. No workflow, dependencies, launcher/security, layout/template, focus or accessibility changes.",
+    "New four-file integration and native run remain pending; this receipt makes no claim about the separate PowerShell consumer's readiness.",
+    "Native synchronous observation/Windows API calls have not been executed here; source budgets do not make synchronous platform calls cancellable."
+  ]
+}

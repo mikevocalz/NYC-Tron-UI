@@ -1,0 +1,38 @@
+2026-11-11T13:20:59.8808055Z ##[group]Run & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+2026-11-11T13:20:59.8809421Z [36;1m& .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"[0m
+2026-11-11T13:20:59.8864446Z shell: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -command ". '{0}'"
+2026-11-11T13:20:59.8864764Z env:
+2026-11-11T13:20:59.8864940Z   WIN_CONSUMER: D:\a\_temp\tron-windows-consumer
+2026-11-11T13:20:59.8865212Z   CONSUMER_AUMID: NYCTronWindowsExample_0505czgxka2we!App
+2026-11-11T13:20:59.8865456Z ##[endgroup]
+2026-11-11T13:21:00.6688388Z App-scoped WER mini dump enabled=True for NYCTronWindowsExample.exe; 
+2026-11-11T13:21:00.6968533Z Launching shell:AppsFolder\NYCTronWindowsExample_0505czgxka2we!App
+2026-11-11T13:21:03.4382758Z Process exited before showing a window.
+2026-11-11T13:21:03.4427264Z UIA smoke failed: Consumer process exited before creating a window
+2026-11-11T13:21:03.5873619Z Failure process observation: process=1860, exited=True, exitCode=-1073741819, HWND=0, exists=False, windowProcess=0
+2026-11-11T13:21:03.5913278Z Installed Windows App Runtime packages:
+2026-11-11T13:21:03.9239445Z   Microsoft.WindowsAppRuntime.CBS.1.6_6000.690.32.100_x64__8wekyb3d8bbwe
+2026-11-11T13:21:03.9245877Z   Microsoft.WindowsAppRuntime.CBS.1.8_8000.694.2228.100_x64__8wekyb3d8bbwe
+2026-11-11T13:21:03.9253210Z   Microsoft.WindowsAppRuntime.1.8_8000.859.21.0_x64__8wekyb3d8bbwe
+2026-11-11T13:21:04.1426241Z Matching Application Error/WER records: 1
+2026-11-11T13:21:04.1446224Z Faulting application name: NYCTronWindowsExample.exe, version: 0.0.0.0, time stamp: 0x6af46b66
+2026-11-11T13:21:04.1447053Z Faulting module name: NYCTronWindowsExample.exe, version: 0.0.0.0, time stamp: 0x6af46b66
+2026-11-11T13:21:04.1447903Z Exception code: 0xc0000005
+2026-11-11T13:21:04.1448220Z Fault offset: 0x0000000000004e8c
+2026-11-11T13:21:04.1448568Z Faulting process id: 0x744
+2026-11-11T13:21:04.1448922Z Faulting application start time: 0x1DD71DF7EAD04D0
+2026-11-11T13:21:04.1449627Z Faulting application path: D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample.Package\bin\x64\Release\AppX\NYCTronWindowsExample\NYCTronWindowsExample.exe
+2026-11-11T13:21:04.1450551Z Faulting module path: D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample.Package\bin\x64\Release\AppX\NYCTronWindowsExample\NYCTronWindowsExample.exe
+2026-11-11T13:21:04.1451128Z Report Id: ac1fed68-8459-4b50-b7a2-1a03bfc793c6
+2026-11-11T13:21:04.1451497Z Faulting package full name: NYCTronWindowsExample_1.0.0.0_x64__0505czgxka2we
+2026-11-11T13:21:04.1451849Z Faulting package-relative application ID: App
+2026-11-11T13:21:04.2680063Z Saved screenshot D:\a\_temp\uia-smoke\failure-desktop.png
+2026-11-11T13:21:04.3234728Z App-scoped WER settings restored=True; 
+2026-11-11T13:21:04.4132191Z Consumer process exited before creating a window
+2026-11-11T13:21:04.4132917Z At D:\a\_temp\tron-windows-consumer\scripts\uia-smoke.ps1:434 char:7
+2026-11-11T13:21:04.4133320Z +       throw "Consumer process exited before creating a window"
+2026-11-11T13:21:04.4133652Z +       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-11-11T13:21:04.4134097Z     + CategoryInfo          : OperationStopped: (Consumer proces...eating a window:String) [], RuntimeException
+2026-11-11T13:21:04.4134583Z     + FullyQualifiedErrorId : Consumer process exited before creating a window
+2026-11-11T13:21:04.4134887Z  
+2026-11-11T13:21:04.4427868Z ##[error]Process completed with exit code 1.

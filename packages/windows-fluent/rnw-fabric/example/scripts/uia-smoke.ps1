@@ -68,6 +68,307 @@ public static class NativeWindow {
     if (SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT))) != 1) throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
   }
 }
+
+public static class NativeStartupTrace {
+  const int ByteLimit = 16384, RecordLimit = 64, RowLimit = 512, MaxPath = 260;
+  [StructLayout(LayoutKind.Sequential)] struct FT { public uint low, high; }
+  [StructLayout(LayoutKind.Sequential)] struct INFO {
+    public uint attributes; public FT creation, access, write;
+    public uint volume, sizeHigh, sizeLow, links, indexHigh, indexLow;
+  }
+  [DllImport("kernel32.dll", SetLastError=true)] static extern uint GetProcessId(IntPtr process);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool GetProcessTimes(IntPtr process, out FT created, out FT exited, out FT kernel, out FT user);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, SetLastError=true)] static extern uint GetTempPathW(uint size, System.Text.StringBuilder path);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
+  static extern Microsoft.Win32.SafeHandles.SafeFileHandle CreateFileW(string path, uint access, uint share, IntPtr security, uint disposition, uint flags, IntPtr template);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern uint GetFileType(Microsoft.Win32.SafeHandles.SafeFileHandle file);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool GetFileInformationByHandle(Microsoft.Win32.SafeHandles.SafeFileHandle file, out INFO info);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
+  static extern uint GetFinalPathNameByHandleW(Microsoft.Win32.SafeHandles.SafeFileHandle file, System.Text.StringBuilder path, uint size, uint flags);
+  static readonly System.Globalization.CultureInfo Invariant = System.Globalization.CultureInfo.InvariantCulture;
+  static readonly string[] Stages = new string[] {
+"configure-entry",
+    "observer-factory-before",
+    "observer-constructor-body-entry",
+    "observer-process-times-before",
+    "observer-process-times-returned",
+    "observer-creation-string-before",
+    "observer-creation-string-returned",
+    "observer-session-guid-before",
+    "observer-session-guid-returned",
+    "observer-session-string-before",
+    "observer-session-string-returned",
+    "application-data-before",
+    "application-data-returned",
+    "observer-prefix-before",
+    "observer-prefix-returned",
+    "message-registration-before",
+    "message-registration-returned",
+    "observer-constructor-body-exit",
+    "observer-factory-returned",
+    "property-set-before",
+    "property-set-returned",
+    "configure-exception",
+    "hook-key-before",
+    "hook-key-returned",
+    "hook-constructor-body-entry",
+    "hook-constructor-body-exit",
+    "hook-register-entry",
+    "hook-register-returned",
+    "hook-register-unavailable",
+    "hook-register-exception",
+    "observer-register-entry",
+    "register-projection-before",
+    "register-projection-returned",
+    "register-context-before",
+    "register-context-returned",
+    "register-dispatcher-before",
+    "register-dispatcher-returned",
+    "register-owner-before",
+    "register-owner-returned",
+    "register-ticket-before",
+    "register-ticket-returned",
+    "register-subclass-before",
+    "register-subclass-returned",
+    "register-ready-before",
+    "register-ready-returned",
+    "observer-register-returned",
+    "window-message-entry",
+    "window-message-scope-exit",
+    "trace-limit"
+    };
+  public sealed class Snapshot {
+    public string status = "unavailable", creationFileTime, sha256;
+    public bool? identityMatched, processExited, fileExists, stable;
+    public int? sourceBytes, win32Error;
+    public byte[] bytes;
+  }
+  public sealed class Row {
+    public uint sequence, threadId;
+    public string stage;
+    public bool contentionObservedThroughRow;
+  }
+  public sealed class Parsed {
+    public string status = "unavailable";
+    public bool? recordStreamComplete;
+    public int? verifiedCompleteRows, partialTailBytes;
+    public Row[] rows = new Row[0];
+  }
+  static ulong Time(FT value) { return ((ulong)value.high << 32) | value.low; }
+  static bool Same(INFO a, INFO b) {
+    return a.attributes == b.attributes && a.volume == b.volume &&
+      a.indexHigh == b.indexHigh && a.indexLow == b.indexLow &&
+      a.sizeHigh == b.sizeHigh && a.sizeLow == b.sizeLow &&
+      a.creation.high == b.creation.high && a.creation.low == b.creation.low &&
+      a.write.high == b.write.high && a.write.low == b.write.low && a.links == b.links;
+  }
+  public static string Hash(byte[] bytes) {
+    using (var hash = System.Security.Cryptography.SHA256.Create())
+      return BitConverter.ToString(hash.ComputeHash(bytes)).Replace("-", "").ToLowerInvariant();
+  }
+  public static Snapshot Read(IntPtr process, uint expectedId, string savedStart, string revision) {
+    var result = new Snapshot();
+    try {
+      if (process == IntPtr.Zero || expectedId == 0 || revision == null ||
+          !System.Text.RegularExpressions.Regex.IsMatch(revision, @"\A[0-9a-f]{40}\z")) {
+        result.status = "identity-input-unavailable"; return result;
+      }
+      DateTime start;
+      if (!DateTime.TryParseExact(savedStart, "o", Invariant, System.Globalization.DateTimeStyles.RoundtripKind, out start) ||
+          start.Kind != DateTimeKind.Utc || start.ToString("o", Invariant) != savedStart) {
+        result.status = "start-time-unavailable"; return result;
+      }
+      FT created, exited, kernel, user;
+      uint actualId = GetProcessId(process);
+      if (actualId == 0) { result.status = "process-id-query-failed"; result.win32Error = Marshal.GetLastWin32Error(); return result; }
+      if (actualId != expectedId) { result.status = "process-identity-mismatch"; result.identityMatched = false; return result; }
+      if (!GetProcessTimes(process, out created, out exited, out kernel, out user)) {
+        result.status = "process-time-query-failed"; result.win32Error = Marshal.GetLastWin32Error(); return result;
+      }
+      ulong fileTime = Time(created);
+      if (fileTime == 0 || fileTime != (ulong)start.ToFileTimeUtc()) {
+        result.status = "process-identity-mismatch"; result.identityMatched = false; return result;
+      }
+      result.identityMatched = true;
+      result.creationFileTime = fileTime.ToString(Invariant);
+      uint wait = WaitForSingleObject(process, 0);
+      if (wait != 0) {
+        result.status = wait == 258 ? "process-not-exited" : "process-exit-unconfirmed";
+        result.processExited = wait == 258 ? (bool?)false : null;
+        if (wait == 0xffffffff) result.win32Error = Marshal.GetLastWin32Error();
+        return result;
+      }
+      result.processExited = true;
+      var directory = new System.Text.StringBuilder(MaxPath + 1);
+      uint count = GetTempPathW(MaxPath + 1, directory);
+      if (count == 0 || count >= MaxPath + 1) {
+        result.status = "temp-path-unavailable"; return result;
+      }
+      string path = directory.ToString() + "nyctron-startup-" + revision + "-" +
+        expectedId.ToString(Invariant) + "-" + result.creationFileTime + ".jsonl";
+      if (path.Length >= MaxPath || !System.IO.Path.IsPathRooted(path)) {
+        result.status = "temp-path-unavailable"; return result;
+      }
+      byte[] data;
+      using (var file = CreateFileW(path, 0x80000000, 1, IntPtr.Zero, 3, 0x00200080, IntPtr.Zero)) {
+        if (file.IsInvalid) {
+          int error = Marshal.GetLastWin32Error();
+          result.status = error == 2 || error == 3 ? "source-missing" : "source-open-failed";
+          result.fileExists = error == 2 || error == 3 ? (bool?)false : null;
+          result.win32Error = error; return result;
+        }
+        result.fileExists = true;
+        INFO before, after;
+        if (GetFileType(file) != 1 || !GetFileInformationByHandle(file, out before) ||
+            (before.attributes & (0x10u | 0x400u)) != 0) {
+          result.status = "source-kind-unavailable"; return result;
+        }
+        var resolved = new System.Text.StringBuilder(MaxPath + 5);
+        uint pathCount = GetFinalPathNameByHandleW(file, resolved, MaxPath + 5, 0);
+        string finalPath = resolved.ToString();
+        if (finalPath.StartsWith(@"\\?\", StringComparison.Ordinal)) finalPath = finalPath.Substring(4);
+        if (pathCount == 0 || pathCount >= MaxPath + 5 ||
+            !String.Equals(finalPath, System.IO.Path.GetFullPath(path), StringComparison.OrdinalIgnoreCase)) {
+          result.status = "source-path-mismatch"; return result;
+        }
+        if (before.sizeHigh != 0 || before.sizeLow > ByteLimit) {
+          result.status = "source-oversize"; return result;
+        }
+        result.sourceBytes = (int)before.sizeLow;
+        data = new byte[(int)before.sizeLow];
+        using (var stream = new System.IO.FileStream(file, System.IO.FileAccess.Read, 4096, false)) {
+          int offset = 0;
+          while (offset < data.Length) {
+            int read = stream.Read(data, offset, data.Length - offset);
+            if (read == 0) { result.status = "source-short-read"; return result; }
+            offset += read;
+          }
+          if (stream.ReadByte() != -1 || !GetFileInformationByHandle(file, out after) || !Same(before, after)) {
+            result.status = "source-changed"; result.stable = false; return result;
+          }
+        }
+      }
+      // No data/hash is published until the owned read handle has closed.
+      result.sha256 = Hash(data);
+      result.bytes = data;
+      result.stable = true;
+      result.status = "snapshot-read";
+    } catch {
+      result.status = "source-read-failed";
+      result.bytes = null; result.sha256 = null; result.stable = null;
+    }
+    return result;
+  }
+  public static bool SaveExclusive(string path, byte[] bytes) {
+    if (bytes == null || bytes.Length > ByteLimit) return false;
+    try {
+      using (var stream = new System.IO.FileStream(path, System.IO.FileMode.CreateNew,
+          System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read)) {
+        stream.Write(bytes, 0, bytes.Length);
+        stream.Flush(true);
+        stream.Position = 0;
+        int offset = 0;
+        var buffer = new byte[Math.Min(4096, Math.Max(1, bytes.Length))];
+        while (offset < bytes.Length) {
+          int read = stream.Read(buffer, 0, Math.Min(buffer.Length, bytes.Length - offset));
+          if (read == 0) return false;
+          for (int i = 0; i < read; ++i) if (buffer[i] != bytes[offset + i]) return false;
+          offset += read;
+        }
+        if (stream.ReadByte() != -1) return false;
+      }
+      return true;
+    } catch { return false; }
+  }
+  sealed class Token { public char kind; public string value; }
+  static readonly System.Text.RegularExpressions.Regex Pair = new System.Text.RegularExpressions.Regex(
+    @"\G[ \t]*""(?<key>[A-Za-z][A-Za-z0-9]*)""[ \t]*:[ \t]*(?:""(?<s>[A-Za-z0-9-]*)""|(?<n>0|[1-9][0-9]*)|(?<b>true|false))[ \t]*",
+    System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+  static readonly string[] Keys = new string[] {
+    "schemaVersion", "sourceRevision", "processId", "creationFileTime",
+    "sequence", "threadId", "stage", "contentionObservedThroughRow"
+  };
+  static bool Number(System.Collections.Generic.Dictionary<string, Token> values, string key, out uint number) {
+    number = 0; Token token;
+    return values.TryGetValue(key, out token) && token.kind == 'n' &&
+      UInt32.TryParse(token.value, System.Globalization.NumberStyles.None, Invariant, out number);
+  }
+  static string StringValue(System.Collections.Generic.Dictionary<string, Token> values, string key) {
+    Token token; return values.TryGetValue(key, out token) && token.kind == 's' ? token.value : null;
+  }
+  static Row ParseRow(string line, string revision, uint pid, string creation, out string failure) {
+    failure = "malformed-record";
+    if (line.Length < 2 || line[0] != '{' || line[line.Length - 1] != '}') return null;
+    var values = new System.Collections.Generic.Dictionary<string, Token>(StringComparer.Ordinal);
+    int at = 1;
+    while (at < line.Length - 1) {
+      var match = Pair.Match(line, at);
+      if (!match.Success || match.Index != at) return null;
+      string key = match.Groups["key"].Value;
+      if (Array.IndexOf(Keys, key) < 0 || values.ContainsKey(key)) return null;
+      char kind = match.Groups["s"].Success ? 's' : match.Groups["n"].Success ? 'n' : 'b';
+      values.Add(key, new Token { kind = kind, value = match.Groups[kind.ToString()].Value });
+      at += match.Length;
+      if (at == line.Length - 1) break;
+      if (line[at] != ',' || ++at == line.Length - 1) return null;
+    }
+    uint schema, process, sequence, thread;
+    if (at != line.Length - 1 || values.Count != Keys.Length ||
+        !Number(values, "schemaVersion", out schema) || schema != 1 ||
+        !Number(values, "processId", out process) || process == 0 ||
+        !Number(values, "sequence", out sequence) || sequence == 0 || sequence > RecordLimit ||
+        !Number(values, "threadId", out thread) || thread == 0) return null;
+    string source = StringValue(values, "sourceRevision"), created = StringValue(values, "creationFileTime");
+    ulong creationNumber;
+    if (source == null || !System.Text.RegularExpressions.Regex.IsMatch(source, @"\A[0-9a-f]{40}\z") ||
+        created == null || !UInt64.TryParse(created, System.Globalization.NumberStyles.None, Invariant, out creationNumber) ||
+        creationNumber == 0 || creationNumber.ToString(Invariant) != created) return null;
+    if (source != revision || process != pid || created != creation) { failure = "record-identity-mismatch"; return null; }
+    string stage = StringValue(values, "stage");
+    Token contention;
+    if (stage == null || Array.IndexOf(Stages, stage) < 0 || !values.TryGetValue("contentionObservedThroughRow", out contention) ||
+        contention.kind != 'b') return null;
+    failure = null;
+    return new Row { sequence = sequence, threadId = thread, stage = stage,
+      contentionObservedThroughRow = contention.value == "true" };
+  }
+  public static Parsed Parse(byte[] bytes, string revision, uint pid, string creation) {
+    var result = new Parsed();
+    try {
+      if (bytes == null || bytes.Length > ByteLimit) { result.status = "byte-limit"; return result; }
+      foreach (byte value in bytes) if (value > 127) { result.status = "non-ascii-record"; return result; }
+      var records = new System.Collections.Generic.List<Row>();
+      int start = 0;
+      for (int at = 0; at < bytes.Length; ++at) {
+        if (bytes[at] != 10) continue;
+        if (at - start + 1 > RowLimit) { result.status = "record-size-limit"; return result; }
+        if (records.Count >= RecordLimit) { result.status = "record-limit"; return result; }
+        if (records.Count != 0 && records[records.Count - 1].stage == "trace-limit") {
+          result.status = "terminal-record-followed"; return result;
+        }
+        string failure;
+        var row = ParseRow(System.Text.Encoding.ASCII.GetString(bytes, start, at - start), revision, pid, creation, out failure);
+        if (row == null) { result.status = failure; return result; }
+        if (row.sequence != records.Count + 1) { result.status = "sequence-mismatch"; return result; }
+        if (records.Count >= RecordLimit - 1 && row.stage != "trace-limit") { result.status = "ordinary-record-limit"; return result; }
+        records.Add(row);
+        start = at + 1;
+      }
+      int tail = bytes.Length - start;
+      if (tail >= RowLimit) { result.status = "record-size-limit"; return result; }
+      if (tail != 0 && records.Count != 0 && records[records.Count - 1].stage == "trace-limit") {
+        result.status = "terminal-record-followed"; return result;
+      }
+      result.rows = records.ToArray();
+      result.verifiedCompleteRows = records.Count;
+      result.partialTailBytes = tail;
+      result.recordStreamComplete = bytes.Length == 0 ? (bool?)null : tail == 0;
+      result.status = tail != 0 ? "partial-tail" : bytes.Length == 0 ? "empty-file" : "validated-records";
+    } catch { result.status = "record-parse-failed"; }
+    return result;
+  }
+}
 "@
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 . "$PSScriptRoot\uia-crash-dumps.ps1"
@@ -400,6 +701,101 @@ function Save-FailureStatus($failure, $nativeProcess, [IntPtr]$originalWindowHan
   Write-Host "Failure process observation: process=$($status.processId), exited=$($status.hasExited), exitCode=$($status.exitCode), HWND=$($status.originalWindowHandle), exists=$($status.windowExists), windowProcess=$($status.windowProcessId)"
 }
 
+# Failure-only observation. The handle is borrowed from the retained Process object;
+# collection never reopens a PID and never adds a process action or wait loop.
+function Save-NativeStartupTrace([IntPtr]$ownedHandle, [uint32]$nativeProcessId, [string]$savedStart, [string]$revision) {
+  $source = if ($revision -cmatch '\A[0-9a-f]{40}\z') { $revision } else { $null }
+  $id = if ($nativeProcessId -gt 0) { $nativeProcessId } else { $null }
+  $summary = [ordered]@{
+    schemaVersion = 1; scope = "derived-startup-trace-subset"
+    sourceRevision = $source; processId = $id; creationFileTime = $null
+    observation = [ordered]@{
+      status = "unavailable"; identityMatched = $null; processExited = $null
+      fileExists = $null; stableRead = $null; win32Error = $null
+    }
+    original = [ordered]@{
+      name = "native-startup-trace.jsonl"; retained = $false; bytes = $null; sha256 = $null
+    }
+    records = [ordered]@{
+      status = "unavailable"; recordStreamComplete = $null; verifiedCompleteRows = $null
+      partialTailBytes = $null; selectedRows = 0; omittedRows = $null; items = @()
+    }
+    limits = [ordered]@{ sourceBytes = 16384; records = 64; rowBytes = 512; selectedRows = 24; outputBytes = 8192 }
+    interpretation = [ordered]@{
+      selection = "first-8-and-last-16-validated-complete-rows"
+      originalScope = "closed-stable-read-time-file-snapshot"
+      prefixOnlyWhenPartialTail = $true; noFinalizedFooter = $true
+      missingFileDoesNotProveConfigureAbsent = $true
+      parentAndChildTempPathsMayDiffer = $true
+      contentionIsKnownOnlyThroughEachRow = $true
+      missingReturnedMarkerDoesNotProveCallDidNotReturn = $true
+      tracingMayPerturbStartup = $true; noCausalAttribution = $true
+    }
+  }
+  try {
+    $snapshot = [NativeStartupTrace]::Read($ownedHandle, $nativeProcessId, $savedStart, $revision)
+    $summary.creationFileTime = $snapshot.creationFileTime
+    $summary.observation.status = $snapshot.status
+    $summary.observation.identityMatched = $snapshot.identityMatched
+    $summary.observation.processExited = $snapshot.processExited
+    $summary.observation.fileExists = $snapshot.fileExists
+    $summary.observation.stableRead = $snapshot.stable
+    $summary.observation.win32Error = $snapshot.win32Error
+    if ($snapshot.status -eq "snapshot-read") {
+      $retained = [NativeStartupTrace]::SaveExclusive((Join-Path $OutDir "native-startup-trace.jsonl"), $snapshot.bytes)
+      if (-not $retained) {
+        $summary.observation.status = "raw-retention-failed"
+      } else {
+        $summary.original.retained = $true
+        $summary.original.bytes = $snapshot.sourceBytes
+        $summary.original.sha256 = $snapshot.sha256
+        $parsed = [NativeStartupTrace]::Parse($snapshot.bytes, $revision, $nativeProcessId, $snapshot.creationFileTime)
+        $summary.records.status = $parsed.status
+        $summary.records.recordStreamComplete = $parsed.recordStreamComplete
+        $summary.records.verifiedCompleteRows = $parsed.verifiedCompleteRows
+        $summary.records.partialTailBytes = $parsed.partialTailBytes
+        $rows = @($parsed.rows)
+        $selected = @(for ($index = 0; $index -lt $rows.Count; $index++) {
+          if ($index -lt 8 -or $index -ge [Math]::Max(8, $rows.Count - 16)) {
+            $row = $rows[$index]
+            [ordered]@{
+              sequence = $row.sequence; threadId = $row.threadId; stage = $row.stage
+              contentionObservedThroughRow = $row.contentionObservedThroughRow
+            }
+          }
+        })
+        $summary.records.items = $selected
+        $summary.records.selectedRows = $selected.Count
+        if ($null -ne $parsed.verifiedCompleteRows) {
+          $summary.records.omittedRows = $parsed.verifiedCompleteRows - $selected.Count
+        }
+      }
+    }
+  } catch {
+    $summary.observation.status = "collector-failed"
+  }
+  try {
+    $json = $summary | ConvertTo-Json -Depth 8 -Compress
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($json + [Environment]::NewLine)
+    $summaryRetained = [NativeStartupTrace]::SaveExclusive((Join-Path $OutDir "native-startup-trace-summary.json"), $bytes)
+    $envelope = [ordered]@{
+      schemaVersion = 1; summaryRetained = $summaryRetained
+      summaryName = "native-startup-trace-summary.json"; projection = $summary
+    }
+    $body = $envelope | ConvertTo-Json -Depth 10 -Compress
+    $begin = "NYC_TRON_WINDOWS_STARTUP_TRACE_BEGIN"
+    $end = "NYC_TRON_WINDOWS_STARTUP_TRACE_END"
+    $output = $begin + [Environment]::NewLine + $body + [Environment]::NewLine + $end
+    if ([System.Text.Encoding]::UTF8.GetByteCount($output + [Environment]::NewLine) -gt 8192) {
+      $body = '{"schemaVersion":1,"scope":"derived-startup-trace-subset","status":"output-limit","outputByteLimit":8192}'
+      $output = $begin + [Environment]::NewLine + $body + [Environment]::NewLine + $end
+    }
+    Write-Host $output
+  } catch {
+    try { Write-Host "Native startup trace observation unavailable." } catch {}
+  }
+}
+
 $started = Get-Date
 $process = $null
 $window = $null
@@ -407,6 +803,8 @@ $ownedWindowHandle = [IntPtr]::Zero
 $ownedProcessId = 0
 $ownedProcessStartTime = ""
 $crashCapture = $null
+$startupTraceFailureObserved = $false
+$ownedProcessHandle = [IntPtr]::Zero
 try {
   $crashCapture = Enable-OwnedCrashDump "$ProcessName.exe" (Join-Path $OutDir "crash-dumps")
   try { Save-CrashDumpReceipt $crashCapture $OutDir $ownedProcessId }
@@ -424,7 +822,7 @@ try {
   # Retain a process handle while alive so ExitCode remains observable after a
   # later failure, instead of trying to reopen an already terminated PID.
   $ownedProcessId = $process.Id
-  $null = $process.Handle
+  $ownedProcessHandle = $process.Handle
   $ownedProcessStartTime = $process.StartTime.ToUniversalTime().ToString("o")
   $processCondition = New-Object System.Windows.Automation.PropertyCondition($AE::ProcessIdProperty, $process.Id)
   $deadline = (Get-Date).AddSeconds(90)
@@ -691,6 +1089,7 @@ try {
   Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"
 } catch {
   $primaryFailure = $_
+  $startupTraceFailureObserved = $true
   Write-Host "UIA smoke failed: $($primaryFailure.Exception.Message)"
   try { Save-FailureStatus $primaryFailure $process $ownedWindowHandle $ownedProcessStartTime }
   catch { Write-Host "Could not retain process/window failure status: $($_.Exception.Message)" }
@@ -721,4 +1120,8 @@ try {
   catch { Write-Host "WER setting restoration unavailable: $($_.Exception.Message)" }
   try { Save-CrashDumpReceipt $crashCapture $OutDir $ownedProcessId }
   catch { Write-Host "Could not retain crash-dump receipt: $($_.Exception.Message)" }
+  if ($startupTraceFailureObserved) {
+    try { Save-NativeStartupTrace $ownedProcessHandle $ownedProcessId $ownedProcessStartTime $env:GITHUB_SHA }
+    catch { try { Write-Host "Native startup trace observation unavailable." } catch {} }
+  }
 }

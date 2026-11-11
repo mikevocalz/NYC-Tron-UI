@@ -354,12 +354,23 @@ jobs:
           workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
           if [ -z "$workspace" ]; then echo "Missing iOS workspace"; exit 1; fi
           scheme=$(basename "$workspace" .xcworkspace)
-          xcodebuild -workspace "$workspace" -scheme "$scheme" \
-            -configuration Debug -sdk iphonesimulator \
-            -derivedDataPath "$RUNNER_TEMP/nyc-tron-ios-derived" \
-            -destination 'generic/platform=iOS Simulator' \
-            CODE_SIGNING_ALLOWED=NO build | tee /tmp/xcodebuild.log
-          test "${PIPESTATUS[0]}" -eq 0
+          nyc_tron_ios_output="$NYC_TRON_CONSUMER/ios-command-output"
+          if mkdir -p "$nyc_tron_ios_output"; then
+            if xcodebuild -workspace "$workspace" -scheme "$scheme" \
+              -configuration Debug -sdk iphonesimulator \
+              -derivedDataPath "$RUNNER_TEMP/nyc-tron-ios-derived" \
+              -destination 'generic/platform=iOS Simulator' \
+              CODE_SIGNING_ALLOWED=NO build > /tmp/xcodebuild.log 2> "$nyc_tron_ios_output/build-stderr.log"; then
+              nyc_tron_build_status=0
+            else
+              nyc_tron_build_status=$?
+            fi
+          else
+            nyc_tron_build_status=$?
+            printf '%s\n' 'iOS build output capture setup failed before command execution.' >&2 || :
+          fi
+          node "$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs" build "$nyc_tron_build_status" "$NYC_TRON_CONSUMER" || :
+          test "$nyc_tron_build_status" -eq 0
       - name: Reserved-regions pod compiled with the macro plugin
         working-directory: ${{ runner.temp }}/nyc-tron-native-consumer/app/ios
         run: |
@@ -417,7 +428,19 @@ jobs:
           set -euo pipefail
           app=$(find "$RUNNER_TEMP/nyc-tron-ios-derived/Build/Products/Debug-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
           test -n "$app"
-          node tooling/native/run-ui-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER"
+          nyc_tron_ios_output="$NYC_TRON_CONSUMER/ios-command-output"
+          if mkdir -p "$nyc_tron_ios_output"; then
+            if node tooling/native/run-ui-acceptance.mjs ios "$app" "$NYC_TRON_CONSUMER" > "$nyc_tron_ios_output/ui-stdout.log" 2> "$nyc_tron_ios_output/ui-stderr.log"; then
+              nyc_tron_ui_status=0
+            else
+              nyc_tron_ui_status=$?
+            fi
+          else
+            nyc_tron_ui_status=$?
+            printf '%s\n' 'iOS UI output capture setup failed before command execution.' >&2 || :
+          fi
+          node "$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs" ui "$nyc_tron_ui_status" "$NYC_TRON_CONSUMER" || :
+          exit "$nyc_tron_ui_status"
       - name: Save installed-package evidence and the iOS acceptance build
         if: always()
         uses: actions/upload-artifact@v4
@@ -435,6 +458,7 @@ jobs:
             ${{ runner.temp }}/nyc-tron-ios-simulator.zip
             ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ios
             ${{ runner.temp }}/nyc-tron-native-consumer/runtime-ui-ios
+            ${{ runner.temp }}/nyc-tron-native-consumer/ios-command-output
             ${{ runner.temp }}/nyc-tron-ios-boot
             ${{ runner.temp }}/nyc-tron-maestro/provenance.json
             /tmp/xcodebuild.log

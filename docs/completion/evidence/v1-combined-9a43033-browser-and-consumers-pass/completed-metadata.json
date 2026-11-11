@@ -1,0 +1,450 @@
+{
+  "schemaVersion": 1,
+  "kind": "normalized-completed-metadata",
+  "observedAtUTC": "2026-11-11 12:33:18 UTC",
+  "source": {
+    "head": "9a430338d8336283b230203a8555257798fcd62c",
+    "actualCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ]
+  },
+  "attempt": 1,
+  "workflows": [
+    {
+      "key": "overlay",
+      "jobs": [
+        {
+          "id": 130504313242,
+          "run_id": 43015171043,
+          "name": "chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:54Z",
+          "completed_at": "2026-11-11T11:50:32Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Install isolated browser test dependencies",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Install Chromium",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Exercise the rendered RN web menu, popover, command palette and tooltip",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Run actions/upload-artifact@v4",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 8,
+              "name": "Run actions/upload-artifact@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 15,
+              "name": "Post Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 16,
+              "name": "Post Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13852875937,
+          "name": "overlay-renders",
+          "size_in_bytes": 280598,
+          "digest": "sha256:8060b39ca33497057d1634ca0119bcee68fa38d1893ea6317a4dd67d0276c032",
+          "expired": false,
+          "archiveInspected": false
+        }
+      ]
+    },
+    {
+      "key": "instruments",
+      "jobs": [
+        {
+          "id": 130504313087,
+          "run_id": 43015170984,
+          "name": "chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:54Z",
+          "completed_at": "2026-11-11T11:56:00Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Install workspace optional peers used by the fixtures",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Build public package exports used by shell consumers",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Install isolated browser test dependencies",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Install Chromium",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Exercise instruments, NativeSeekBar, LayerStack, content, form and navigation primitives, InkToolbar, studio shell, spreadsheet, mixer, office controls and the pairing dialog in React Native Web",
+              "conclusion": "success"
+            },
+            {
+              "number": 9,
+              "name": "Run actions/upload-artifact@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 17,
+              "name": "Post Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 18,
+              "name": "Post Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 19,
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13853071308,
+          "name": "ui-browser-captures",
+          "size_in_bytes": 22075283,
+          "digest": "sha256:ea41403154682b9b860a5fe2dc232b1ac492e5d887319a495a22e679ada0bebf",
+          "expired": false,
+          "archiveInspected": false
+        }
+      ]
+    },
+    {
+      "key": "reference",
+      "jobs": [
+        {
+          "id": 130504313397,
+          "run_id": 43015171074,
+          "name": "reference",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:54Z",
+          "completed_at": "2026-11-11T11:51:26Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Install pinned workspace and compile public components",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Install browser harness and Chromium",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Verify reference async state ownership",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Exercise the reference screen and capture desktop and phone layouts",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Run actions/upload-artifact@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 15,
+              "name": "Post Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 16,
+              "name": "Post Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 17,
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13851848952,
+          "name": "native-feel-reference-captures",
+          "size_in_bytes": 1118033,
+          "digest": "sha256:6d4229408dc5d9abb7f0c7715fbdf041001d1b91333b82f066265d5aae20f596",
+          "expired": false,
+          "archiveInspected": false
+        }
+      ]
+    },
+    {
+      "key": "installed_consumers",
+      "jobs": [
+        {
+          "id": 130504313229,
+          "run_id": 43015171019,
+          "name": "expo-web installed tarball consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:54Z",
+          "completed_at": "2026-11-11T11:51:42Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Set the consumer location on this runner",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Install the pinned consumer tooling",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Build and pack the standalone pull request candidate",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Download the release producer's canonical archives",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 8,
+              "name": "Install actual release tarballs in a project outside the repository",
+              "conclusion": "success"
+            },
+            {
+              "number": 9,
+              "name": "Install Chromium",
+              "conclusion": "success"
+            },
+            {
+              "number": 10,
+              "name": "Exercise the installed components in React Native Web",
+              "conclusion": "success"
+            },
+            {
+              "number": 11,
+              "name": "Save the dependency evidence, results and captures",
+              "conclusion": "success"
+            },
+            {
+              "number": 21,
+              "name": "Post Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 22,
+              "name": "Post Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 23,
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 130504313591,
+          "run_id": 43015171019,
+          "name": "basic installed tarball consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:54Z",
+          "completed_at": "2026-11-11T11:51:32Z",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Set the consumer location on this runner",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Install the pinned consumer tooling",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Build and pack the standalone pull request candidate",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Download the release producer's canonical archives",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 8,
+              "name": "Install actual release tarballs in a project outside the repository",
+              "conclusion": "success"
+            },
+            {
+              "number": 9,
+              "name": "Install Chromium",
+              "conclusion": "success"
+            },
+            {
+              "number": 10,
+              "name": "Exercise the installed components in React Native Web",
+              "conclusion": "success"
+            },
+            {
+              "number": 11,
+              "name": "Save the dependency evidence, results and captures",
+              "conclusion": "success"
+            },
+            {
+              "number": 21,
+              "name": "Post Run actions/setup-node@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 22,
+              "name": "Post Run actions/checkout@v4",
+              "conclusion": "success"
+            },
+            {
+              "number": 23,
+              "name": "Complete job",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13852411960,
+          "name": "release-consumer-basic",
+          "size_in_bytes": 64096,
+          "digest": "sha256:80dba06aa1cf44aa76812f4ba6fa7299b1afc9b5b736200150901e12d92a5369",
+          "expired": false,
+          "archiveInspected": false
+        },
+        {
+          "id": 13851873597,
+          "name": "release-consumer-expo-web",
+          "size_in_bytes": 117425,
+          "digest": "sha256:0dc78506e804258a540a9072bcc01338b27c89df844797daa1571ea32d646ec6",
+          "expired": false,
+          "archiveInspected": false
+        }
+      ]
+    }
+  ]
+}

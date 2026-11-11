@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-combined-browser-and-consumer-pass",
+  "recordedAtUTC": "2026-11-11 13:21:55 UTC",
+  "source": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualCheckout": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ]
+  },
+  "originals": [
+    {
+      "lane": "overlay",
+      "run": 43026784346,
+      "attempt": 1,
+      "job": 130543376188,
+      "file": "overlay-job.log",
+      "gitBlob": "11e373ce23ce9ab1232ef30cce57158fd14dfd58",
+      "bytes": 43806,
+      "sha256": "423831ef1ca301490ec5d5e6cb66df9a56f91cc8490b6161c675b2c5ab2bbbcf",
+      "passed": 32,
+      "skipped": 0,
+      "exactOriginalLines": [
+        {
+          "line": 123,
+          "text": "2026-11-11T13:11:10.3185919Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        },
+        {
+          "line": 412,
+          "text": "2026-11-11T13:11:54.9344865Z   32 passed (11.4s)"
+        }
+      ]
+    },
+    {
+      "lane": "instruments",
+      "run": 43026784430,
+      "attempt": 1,
+      "job": 130543375913,
+      "file": "instruments-job.log",
+      "gitBlob": "88b9db41f9f082a998bcb31bc1a52067d8e83f83",
+      "bytes": 148387,
+      "sha256": "cf693fd579cbab8187ce8f950c14e39a485fad53b2600f11ac0f859a43032120",
+      "passed": 686,
+      "skipped": 0,
+      "exactOriginalLines": [
+        {
+          "line": 123,
+          "text": "2026-11-11T13:11:10.2710903Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        },
+        {
+          "line": 1127,
+          "text": "2026-11-11T13:18:31.1415929Z   686 passed (6.3m)"
+        }
+      ]
+    },
+    {
+      "lane": "basic",
+      "run": 43026784298,
+      "attempt": 1,
+      "job": 130543375191,
+      "file": "installed-basic-job.log",
+      "gitBlob": "a6f615dd56be6f43ad559ab9c6b56020e849786a",
+      "bytes": 49366,
+      "sha256": "061045519340b207758020759b7db839139c7ea88d8b1f95da5446bda37376a3",
+      "passed": 1,
+      "skipped": 1,
+      "exactOriginalLines": [
+        {
+          "line": 124,
+          "text": "2026-11-11T13:11:11.6272316Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        },
+        {
+          "line": 228,
+          "text": "2026-11-11T13:12:21.7358413Z Wrote 13 tarballs and SHA256SUMS to /home/runner/work/_temp/nyc-tron-packs"
+        },
+        {
+          "line": 488,
+          "text": "2026-11-11T13:13:01.8852720Z   -  2 [chromium] › consumer.spec.mjs:33:3 › Expo browser exports › installed picker and panes work through the browser export conditions"
+        },
+        {
+          "line": 490,
+          "text": "2026-11-11T13:13:01.9321875Z   1 skipped"
+        },
+        {
+          "line": 491,
+          "text": "2026-11-11T13:13:01.9322359Z   1 passed (1.6s)"
+        }
+      ]
+    },
+    {
+      "lane": "expo",
+      "run": 43026784298,
+      "attempt": 1,
+      "job": 130543375522,
+      "file": "installed-expo-job.log",
+      "gitBlob": "07870cf94e44867ed0bb863bc4bf5152d792f90b",
+      "bytes": 49372,
+      "sha256": "4cdfecbb9db3e25fc6230b4569209d7d4de65c39277bd84a357a882ac710bd5d",
+      "passed": 2,
+      "skipped": 0,
+      "exactOriginalLines": [
+        {
+          "line": 124,
+          "text": "2026-11-11T13:11:11.4130903Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        },
+        {
+          "line": 228,
+          "text": "2026-11-11T13:12:23.1946279Z Wrote 13 tarballs and SHA256SUMS to /home/runner/work/_temp/nyc-tron-packs"
+        },
+        {
+          "line": 488,
+          "text": "2026-11-11T13:13:16.4576081Z   ✓  2 [chromium] › consumer.spec.mjs:33:3 › Expo browser exports › installed picker and panes work through the browser export conditions (411ms)"
+        },
+        {
+          "line": 490,
+          "text": "2026-11-11T13:13:16.5024002Z   2 passed (2.1s)"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "file": "completed-metadata.json",
+    "gitBlob": "7730fa2be2e2672d229d391635037c3b6c3dd69d",
+    "bytes": 18762,
+    "sha256": "2d2db17d1ca81212be8ed9fd096e006ffadc031eccd7899bdb14ae2fa42f25c1"
+  },
+  "preservation": "Complete original decoded UTF-8 content retained and read back exactly, including original timestamps, BOM and line endings; no original rewriting.",
+  "scope": [
+    "Four completed original jobs at the exact combined checkout; counts remain separate by suite.",
+    "The basic consumer's skipped test is labeled Expo browser exports in the original; the Expo job passes both tests.",
+    "Installed consumers build their own PR tarballs; canonical release producer download steps are skipped. These are not the original final fifteen tested archives.",
+    "Artifact digests, sizes and uploader counts are metadata; ZIP bytes/members, pixels and physical interaction have not been independently inspected.",
+    "Earlier reference-browser results remain their own source-bound receipt and are not transferred here.",
+    "No native desktop, supported-host, physical-device, speech, performance or owner-manifest acceptance is implied."
+  ]
+}

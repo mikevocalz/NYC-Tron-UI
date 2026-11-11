@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "status": "independently-reviewed-source-only",
+  "path": ".github/workflows/native-controls-port.yml",
+  "preimage": {
+    "gitBlob": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+    "bytes": 24929,
+    "sha256": "c41cf7bbfcb3d27f7322474dc84d41028e07c3ab5778c4ed3102dfbdf65f7aed"
+  },
+  "candidate": {
+    "gitBlob": "c6c51423a0fcbab4768751bd8f1e04d2939f20fe",
+    "bytes": 26243,
+    "sha256": "42a89920560c87eb92c77bd0042bfa7b3642a45103929b9a0924db4419a8a00f"
+  },
+  "manifest": {
+    "gitBlob": "273825d5e83ff43ded700a916290a18d24df7bec",
+    "bytes": 7566,
+    "sha256": "340c4b60333469ffc5b568811fec80f1d5e39ded2fb77de7380d8c182f33ada6"
+  },
+  "checks": {
+    "gitBlob": "8cad3b606a542633b0a8b0579ed80ca7e9ec1d40",
+    "bytes": 10426,
+    "sha256": "f621819b4f36b29ce2b7995a7bfbaf88d6303eae2d50be697f519ccbd1350729"
+  },
+  "reproductionResult": {
+    "status": "passed",
+    "scope": "Four source/portable status-contract review groups only; no YAML/Bash execution, Node filesystem operations, XCTest, simulator or native execution.",
+    "assertions": 116,
+    "statusCases": 24,
+    "groups": [
+      "Exact source identities and three unique forward/inverse transforms",
+      "Once-only command tokens, fixed streams, status guards, existing gates and runtime freshness preservation",
+      "Portable status contract: reporter failure stays secondary; build0/1 differs from UI exact status; setup is not native execution",
+      "Static general-suite discovery of the reporter test without workflow source-step edits"
+    ],
+    "identities": {
+      "preimage": {
+        "gitBlob": "624bcf9c74ddfb89a43ca7e303560331c258cafb",
+        "bytes": 24929,
+        "sha256": "c41cf7bbfcb3d27f7322474dc84d41028e07c3ab5778c4ed3102dfbdf65f7aed"
+      },
+      "candidate": {
+        "gitBlob": "c6c51423a0fcbab4768751bd8f1e04d2939f20fe",
+        "bytes": 26243,
+        "sha256": "42a89920560c87eb92c77bd0042bfa7b3642a45103929b9a0924db4419a8a00f"
+      }
+    }
+  },
+  "independentReview": {
+    "root": "Read and independently reproduced the three exact forward/inverse changes, then reproduced the same four source/status-model groups: 116 assertions and 24 combinations. Approved capture/status/gate semantics. No Bash/native execution.",
+    "finalGate": "Read complete wrapper delta and independently matched all identities and three forward/inverse replacements, then reproduced the same four source/status-model groups: 116 assertions and 24 combinations. Approved once-only commands, fixed paths, status preservation and one artifact sibling. No Bash/native execution."
+  },
+  "sourceContext": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualMerge": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "iosRun": 43026784330,
+    "iosJob": 130544275678,
+    "observedBoundary": "Completed metadata reports successful simulator build/decoder and failed touch step. Two original job-log reads returned Transport closed; underlying cause, exact assertion/counts and actual original iOS checkout line remain unknown."
+  },
+  "contract": {
+    "reporter": "node \"$GITHUB_WORKSPACE/tooling/native/report-ios-command-output.mjs\" <build|ui> <shell-status> \"$NYC_TRON_CONSUMER\"",
+    "build": {
+      "stdout": "/tmp/xcodebuild.log",
+      "stderr": "<consumer>/ios-command-output/build-stderr.log",
+      "savedStatus": "nyc_tron_build_status",
+      "terminalGate": "test \"$nyc_tron_build_status\" -eq 0",
+      "interpretation": "Reporter receives command/redirection/setup shell status; the step retains the original effective0/1 xcodebuild-status test. A nonzero value does not independently establish that xcodebuild launched."
+    },
+    "ui": {
+      "stdout": "<consumer>/ios-command-output/ui-stdout.log",
+      "stderr": "<consumer>/ios-command-output/ui-stderr.log",
+      "savedStatus": "nyc_tron_ui_status",
+      "terminalGate": "exit \"$nyc_tron_ui_status\"",
+      "interpretation": "Reporter receives command/redirection/setup shell status; exact saved UI status determines step exit. A nonzero value does not independently establish that Node launched."
+    },
+    "setup": "Only mkdir -p of the fixed sibling folder; no runtime-ui-ios creation. Failed setup prints a fixed marker, preserves its failure status and does not run the native command. No fallback or retry.",
+    "reporting": "Reporter is called once after the attempted command/setup settles and shell redirections close; || : makes a reporter failure secondary. Fixed capture files may be absent or partial. Existing files/status alone do not establish execution or complete/fresh command output.",
+    "upload": "One new sibling directory in the existing always() iOS evidence upload; existing /tmp/xcodebuild.log and runtime-ui-ios paths remain."
+  },
+  "unchangedRunUi": {
+    "path": "tooling/native/run-ui-acceptance.mjs",
+    "identity": {
+      "gitBlob": "3cac0f88b939d1ed1619396bd1fc2aa58f6061af",
+      "bytes": 17132,
+      "sha256": "e61511ef69eb25b8153184acb694265946bf7e675cfcdca01dde08c61af3536e"
+    },
+    "inspection": "Source uses exclusive mkdirSync(runtime-ui-ios), internal UTF-8-decoded stdout+stderr concatenation for subprocess logs, original first-error throw and cleanup; none modified. Raw top-level captured streams must be distinguished from these existing decoded nested logs."
+  },
+  "testDiscovery": {
+    "candidateFile": "tooling/tests/ios-command-output.test.mjs",
+    "sourceRevision": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "identities": {
+      "discovery": {
+        "gitBlob": "327d9c2b8cc9ab40cc1cd5d3a1bc5a10fdc3cefa",
+        "bytes": 1444,
+        "sha256": "9d0ef2a49b9559738938fec89662daec905eacb6efb17327e32266d09026d008"
+      },
+      "package": {
+        "gitBlob": "a792d0c6af732fceebd047e7fa58afcff7acd083",
+        "bytes": 999,
+        "sha256": "3b69bc24173c03ef29808aae7e7af013a29bc844421a6cc03bee1d43c7fb3434"
+      },
+      "testRunner": {
+        "gitBlob": "952bf2d06cf3982a2e170a690d1cd966ab417175",
+        "bytes": 537,
+        "sha256": "a016056fb162f7f7cc8d1e346b1025fffc9773c914de090945e175b1a22a1c6e"
+      }
+    },
+    "interpretation": "Static source confirms root pnpm test routes through tooling/run-tests.mjs and discoverTests() recursively includes tooling/tests/*.test.mjs. No extra native-workflow source step is added; actual new-test execution remains CI pending."
+  },
+  "preservation": [
+    "All original xcodebuild option/argument tokens, workspace/scheme discovery, working directory and environment",
+    "Original node run-ui-acceptance command arguments exactly once, launcher/driver/security/assertions/deadlines/retry logic unchanged",
+    "All triggers, runner choice, source/Android steps, other iOS steps and original artifact paths",
+    "Build step0/1 normalization distinct from raw saved command status; UI exact saved status",
+    "No ZIP extraction, local/alternate execution, workflow dispatch, rerun, ref or PR changes"
+  ],
+  "interpretation": [
+    "These edits change output capture and reporting, not an established native failure cause.",
+    "A shell status may come from mkdir setup or redirection rather than the native command; it does not independently establish launch.",
+    "Actual xcodebuild status is sent to the reporter, while the final test retains build-step0/1 normalization; UI exits the exact saved status.",
+    "Reporter failure is secondary and cannot replace the saved status. Capture files may be missing, stale or partial; presence alone proves neither launch nor complete/fresh output.",
+    "Top-level workflow capture bytes are distinct from the existing runner's UTF-8-decoded, concatenated nested subprocess logs.",
+    "The new reporter and its tests are separate source artifacts; this receipt does not claim their implementation/native runtime passed."
+  ],
+  "notExecuted": [
+    "YAML parser or actionlint in this environment",
+    "Bash shell scripts",
+    "Node filesystem/subprocess capture",
+    "Xcode build",
+    "XCTest/Maestro UI",
+    "iOS simulator/physical device",
+    "Any new workflow run, rerun, dispatch or artifact extraction"
+  ]
+}

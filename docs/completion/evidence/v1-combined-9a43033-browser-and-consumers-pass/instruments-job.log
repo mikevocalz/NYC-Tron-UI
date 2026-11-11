@@ -1,0 +1,1177 @@
+﻿2026-11-11T11:49:55.1810974Z Current runner version: '2.338.2'
+2026-11-11T11:49:55.1852607Z ##[group]Runner Image Provisioner
+2026-11-11T11:49:55.1853401Z Hosted Compute Agent
+2026-11-11T11:49:55.1853884Z Version: 20261028.624
+2026-11-11T11:49:55.1854418Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T11:49:55.1855069Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T11:49:55.1855626Z Worker ID: {0f8a9d17-8f93-482c-a7ce-516892908dcc}
+2026-11-11T11:49:55.1856308Z Region: eastus2
+2026-11-11T11:49:55.1856764Z Cloud: Azure
+2026-11-11T11:49:55.1857191Z ##[endgroup]
+2026-11-11T11:49:55.1858329Z ##[group]Operating System
+2026-11-11T11:49:55.1858846Z Ubuntu
+2026-11-11T11:49:55.1859345Z 26.04.1
+2026-11-11T11:49:55.1859782Z LTS
+2026-11-11T11:49:55.1860305Z ##[endgroup]
+2026-11-11T11:49:55.1860928Z ##[group]Runner Image
+2026-11-11T11:49:55.1861677Z Image: ubuntu-26.04
+2026-11-11T11:49:55.1862213Z Version: 20261101.186.1
+2026-11-11T11:49:55.1863239Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-11T11:49:55.1864492Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-11T11:49:55.1865300Z ##[endgroup]
+2026-11-11T11:49:55.1866251Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T11:49:55.1868026Z Contents: read
+2026-11-11T11:49:55.1868565Z Metadata: read
+2026-11-11T11:49:55.1869036Z ##[endgroup]
+2026-11-11T11:49:55.1870779Z Secret source: Actions
+2026-11-11T11:49:55.1871764Z Cache mode: write
+2026-11-11T11:49:55.1872593Z Prepare workflow directory
+2026-11-11T11:49:55.2194297Z Prepare all required actions
+2026-11-11T11:49:55.2231518Z Getting action download info
+2026-11-11T11:49:55.3895084Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T11:49:55.5547090Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T11:49:55.7742167Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-11T11:49:56.0139149Z Complete job name: chromium
+2026-11-11T11:49:56.1045565Z ##[group]Run actions/checkout@v4
+2026-11-11T11:49:56.1046946Z with:
+2026-11-11T11:49:56.1047600Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T11:49:56.1053157Z   token: ***
+2026-11-11T11:49:56.1053572Z   ssh-strict: true
+2026-11-11T11:49:56.1053966Z   ssh-user: git
+2026-11-11T11:49:56.1054359Z   persist-credentials: true
+2026-11-11T11:49:56.1054803Z   clean: true
+2026-11-11T11:49:56.1055214Z   sparse-checkout-cone-mode: true
+2026-11-11T11:49:56.1055695Z   fetch-depth: 1
+2026-11-11T11:49:56.1056079Z   fetch-tags: false
+2026-11-11T11:49:56.1056487Z   show-progress: true
+2026-11-11T11:49:56.1056885Z   lfs: false
+2026-11-11T11:49:56.1057244Z   submodules: false
+2026-11-11T11:49:56.1057645Z   set-safe-directory: true
+2026-11-11T11:49:56.1058088Z   allow-unsafe-pr-checkout: false
+2026-11-11T11:49:56.1058868Z ##[endgroup]
+2026-11-11T11:49:56.3367177Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T11:49:56.3369568Z ##[group]Getting Git version info
+2026-11-11T11:49:56.3370475Z Working directory is '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T11:49:56.3371750Z [command]/usr/bin/git version
+2026-11-11T11:49:56.3392349Z git version 2.56.0
+2026-11-11T11:49:56.3414572Z ##[endgroup]
+2026-11-11T11:49:56.3420527Z Temporarily overriding HOME='/home/runner/work/_temp/4b0a3512-9a3b-49f5-ab4b-0e2c7dc87b86' before making global git config changes
+2026-11-11T11:49:56.3422992Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T11:49:56.3425575Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T11:49:56.3480404Z Deleting the contents of '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T11:49:56.3482881Z ##[group]Initializing the repository
+2026-11-11T11:49:56.3487615Z [command]/usr/bin/git init /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T11:49:56.6935772Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T11:49:56.6937986Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T11:49:56.6939287Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T11:49:56.6940439Z hint: call:
+2026-11-11T11:49:56.6941409Z hint:
+2026-11-11T11:49:56.6942404Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T11:49:56.6943529Z hint:
+2026-11-11T11:49:56.6944541Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T11:49:56.6945911Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T11:49:56.6947448Z hint:
+2026-11-11T11:49:56.6948248Z hint: 	git branch -m <name>
+2026-11-11T11:49:56.6949068Z hint:
+2026-11-11T11:49:56.6950239Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T11:49:56.6952503Z Initialized empty Git repository in /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T11:49:56.6963050Z [command]/usr/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T11:49:56.7000631Z ##[endgroup]
+2026-11-11T11:49:56.7002537Z ##[group]Disabling automatic garbage collection
+2026-11-11T11:49:56.7005497Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T11:49:56.7036644Z ##[endgroup]
+2026-11-11T11:49:56.7038785Z ##[group]Setting up auth
+2026-11-11T11:49:56.7041733Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T11:49:56.7071476Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T11:49:56.9843181Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T11:49:56.9877928Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T11:49:57.0113191Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T11:49:57.0142466Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T11:49:57.0374421Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T11:49:57.0408294Z ##[endgroup]
+2026-11-11T11:49:57.0410174Z ##[group]Fetching the repository
+2026-11-11T11:49:57.0416508Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e8f8c19db909a53f3054976449a7571b2a0524e9:refs/remotes/pull/64/merge
+2026-11-11T11:49:59.1735732Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T11:49:59.1737036Z  * [new ref]         e8f8c19db909a53f3054976449a7571b2a0524e9 -> pull/64/merge
+2026-11-11T11:49:59.1739880Z ##[endgroup]
+2026-11-11T11:49:59.1740500Z ##[group]Determining the checkout info
+2026-11-11T11:49:59.1740977Z ##[endgroup]
+2026-11-11T11:49:59.1741510Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T11:49:59.1822331Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T11:49:59.1847964Z ##[group]Checking out the ref
+2026-11-11T11:49:59.1850945Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/64/merge
+2026-11-11T11:49:59.4363417Z Note: switching to 'refs/remotes/pull/64/merge'.
+2026-11-11T11:49:59.4363827Z 
+2026-11-11T11:49:59.4364108Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-11T11:49:59.4364657Z changes and commit them, and you can discard any commits you make in this
+2026-11-11T11:49:59.4441576Z state without impacting any branches by switching back to a branch.
+2026-11-11T11:49:59.4441976Z 
+2026-11-11T11:49:59.4442267Z If you want to create a new branch to retain commits you create, you may
+2026-11-11T11:49:59.4442913Z do so (now or later) by using -c with the switch command. Example:
+2026-11-11T11:49:59.4443707Z 
+2026-11-11T11:49:59.4443857Z   git switch -c <new-branch-name>
+2026-11-11T11:49:59.4444084Z 
+2026-11-11T11:49:59.4444223Z Or undo this operation with:
+2026-11-11T11:49:59.4444406Z 
+2026-11-11T11:49:59.4444526Z   git switch -
+2026-11-11T11:49:59.4444761Z 
+2026-11-11T11:49:59.4445119Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-11T11:49:59.4445475Z 
+2026-11-11T11:49:59.4445865Z HEAD is now at e8f8c19 Merge 9a430338d8336283b230203a8555257798fcd62c into ac5d69585a52a6e945dc996ea08030e190574699
+2026-11-11T11:49:59.4447448Z ##[endgroup]
+2026-11-11T11:49:59.4448197Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T11:49:59.4450896Z e8f8c19db909a53f3054976449a7571b2a0524e9
+2026-11-11T11:49:59.4690344Z ##[group]Run actions/setup-node@v4
+2026-11-11T11:49:59.4690612Z with:
+2026-11-11T11:49:59.4690800Z   node-version: 24.19.0
+2026-11-11T11:49:59.4691005Z   always-auth: false
+2026-11-11T11:49:59.4691396Z   check-latest: false
+2026-11-11T11:49:59.4693377Z   token: ***
+2026-11-11T11:49:59.4693570Z ##[endgroup]
+2026-11-11T11:49:59.6019150Z Attempting to download 24.19.0...
+2026-11-11T11:49:59.6131526Z (node:2198) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T11:49:59.6132645Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:50:00.1185474Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-11T11:50:00.4858629Z Extracting ...
+2026-11-11T11:50:00.5005800Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/91435289-3a75-44a8-b651-9e3ab56cdbfc -f /home/runner/work/_temp/49775ae1-52ba-4668-8d77-8ef109552fd0
+2026-11-11T11:50:01.1711389Z Adding to the cache ...
+2026-11-11T11:50:03.9989056Z ##[group]Environment details
+2026-11-11T11:50:04.1982958Z node: v24.19.0
+2026-11-11T11:50:04.1983290Z npm: 11.17.0
+2026-11-11T11:50:04.1983528Z yarn: 1.22.22
+2026-11-11T11:50:04.1984066Z ##[endgroup]
+2026-11-11T11:50:04.2172559Z ##[group]Run corepack enable && corepack pnpm install --frozen-lockfile --ignore-scripts
+2026-11-11T11:50:04.2173112Z [36;1mcorepack enable && corepack pnpm install --frozen-lockfile --ignore-scripts[0m
+2026-11-11T11:50:04.2223079Z shell: /usr/bin/bash -e {0}
+2026-11-11T11:50:04.2223307Z ##[endgroup]
+2026-11-11T11:50:05.2432843Z Scope: all 16 workspace projects
+2026-11-11T11:50:05.2873340Z Lockfile is up to date, resolution step is skipped
+2026-11-11T11:50:05.3195489Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-11-11T11:50:05.3634386Z Packages: +537
+2026-11-11T11:50:05.3635222Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-11T11:50:06.3222263Z Progress: resolved 537, reused 0, downloaded 30, added 8
+2026-11-11T11:50:07.3223134Z Progress: resolved 537, reused 0, downloaded 239, added 158
+2026-11-11T11:50:08.3621437Z Progress: resolved 537, reused 0, downloaded 425, added 315
+2026-11-11T11:50:09.3624408Z Progress: resolved 537, reused 0, downloaded 451, added 329
+2026-11-11T11:50:10.3629639Z Progress: resolved 537, reused 0, downloaded 462, added 333
+2026-11-11T11:50:11.3634310Z Progress: resolved 537, reused 0, downloaded 466, added 333
+2026-11-11T11:50:12.3762800Z Progress: resolved 537, reused 0, downloaded 505, added 351
+2026-11-11T11:50:13.3657381Z Progress: resolved 537, reused 0, downloaded 518, added 536
+2026-11-11T11:50:13.7186901Z Progress: resolved 537, reused 0, downloaded 519, added 537, done
+2026-11-11T11:50:14.2989661Z 
+2026-11-11T11:50:14.2990395Z devDependencies:
+2026-11-11T11:50:14.2990742Z + @types/react 19.3.0
+2026-11-11T11:50:14.2991220Z + typescript 6.0.3
+2026-11-11T11:50:14.2991367Z 
+2026-11-11T11:50:14.3646743Z Done in 9.3s using pnpm v10.32.1
+2026-11-11T11:50:14.4615302Z ##[group]Run corepack pnpm build
+2026-11-11T11:50:14.4615600Z [36;1mcorepack pnpm build[0m
+2026-11-11T11:50:14.4663109Z shell: /usr/bin/bash -e {0}
+2026-11-11T11:50:14.4663333Z ##[endgroup]
+2026-11-11T11:50:14.7370475Z 
+2026-11-11T11:50:14.7376022Z > nyc-tron-ui@0.1.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T11:50:14.7377784Z > pnpm -r --if-present build
+2026-11-11T11:50:14.7378150Z 
+2026-11-11T11:50:15.0197661Z Scope: 15 of 16 workspace projects
+2026-11-11T11:50:15.0312297Z packages/core build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:15.0317191Z packages/geometry build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:15.0371022Z packages/icons build$ node -e "const f=require('node:fs');f.rmSync('dist',{recursive:true,force:true});f.cpSync('src','dist',{recursive:true})"
+2026-11-11T11:50:15.0372203Z packages/native-charts build$ tsc -p tsconfig.build.json
+2026-11-11T11:50:15.0942075Z packages/icons build: Done
+2026-11-11T11:50:15.0943151Z packages/native-controls build$ tsc -p tsconfig.build.json
+2026-11-11T11:50:16.7082611Z packages/geometry build: Done
+2026-11-11T11:50:16.7100109Z packages/native-navigation build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:17.3673597Z packages/core build: Done
+2026-11-11T11:50:17.3725088Z packages/platform-services build$ tsc -p tsconfig.build.json
+2026-11-11T11:50:17.5792243Z packages/native-charts build: Done
+2026-11-11T11:50:17.5822306Z packages/windows-fluent build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:17.6412419Z packages/native-controls build: Done
+2026-11-11T11:50:18.4323293Z packages/native-navigation build: Done
+2026-11-11T11:50:18.5752829Z packages/windows-fluent build: Done
+2026-11-11T11:50:19.1184254Z packages/platform-services build: Done
+2026-11-11T11:50:19.1188379Z packages/panes build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:19.1190140Z packages/reserved-regions build$ tsc -p tsconfig.build.json
+2026-11-11T11:50:19.1192004Z packages/ui build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:20.5763036Z packages/reserved-regions build: Done
+2026-11-11T11:50:20.6157562Z packages/panes build: Done
+2026-11-11T11:50:28.9427580Z packages/ui build: Done
+2026-11-11T11:50:28.9431458Z packages/expo-controls build$ tsc --project tsconfig.build.json
+2026-11-11T11:50:28.9433582Z packages/hardware-keys build$ tsc -p tsconfig.build.json
+2026-11-11T11:50:29.8870197Z packages/hardware-keys build: Done
+2026-11-11T11:50:30.5157984Z packages/expo-controls build: Done
+2026-11-11T11:50:30.5376005Z ##[group]Run npm ci --ignore-scripts --no-audit --no-fund
+2026-11-11T11:50:30.5376577Z [36;1mnpm ci --ignore-scripts --no-audit --no-fund[0m
+2026-11-11T11:50:30.5422232Z shell: /usr/bin/bash -e {0}
+2026-11-11T11:50:30.5422462Z ##[endgroup]
+2026-11-11T11:50:32.2500200Z 
+2026-11-11T11:50:32.2500777Z added 62 packages in 2s
+2026-11-11T11:50:32.2920781Z ##[group]Run npx --no-install playwright install --with-deps chromium
+2026-11-11T11:50:32.2921412Z [36;1mnpx --no-install playwright install --with-deps chromium[0m
+2026-11-11T11:50:32.2969947Z shell: /usr/bin/bash -e {0}
+2026-11-11T11:50:32.2970172Z ##[endgroup]
+2026-11-11T11:50:32.8815144Z Installing dependencies...
+2026-11-11T11:50:32.8885375Z Switching to root user to install dependencies...
+2026-11-11T11:50:32.9582605Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-11T11:50:33.0032893Z Hit:2 http://azure.archive.ubuntu.com/ubuntu resolute InRelease
+2026-11-11T11:50:33.0064621Z Get:3 http://azure.archive.ubuntu.com/ubuntu resolute-updates InRelease [137 kB]
+2026-11-11T11:50:33.0099637Z Get:4 http://azure.archive.ubuntu.com/ubuntu resolute-backports InRelease [137 kB]
+2026-11-11T11:50:33.0109024Z Get:5 http://azure.archive.ubuntu.com/ubuntu resolute-security InRelease [137 kB]
+2026-11-11T11:50:33.0110544Z Get:6 https://packages.microsoft.com/ubuntu/26.04/prod resolute InRelease [3964 B]
+2026-11-11T11:50:33.0413856Z Get:7 http://azure.archive.ubuntu.com/ubuntu resolute-updates/main amd64v3 Packages [869 kB]
+2026-11-11T11:50:33.0599654Z Get:8 http://azure.archive.ubuntu.com/ubuntu resolute-updates/main Translation-en [195 kB]
+2026-11-11T11:50:33.0608544Z Get:9 http://azure.archive.ubuntu.com/ubuntu resolute-updates/universe amd64v3 Packages [390 kB]
+2026-11-11T11:50:33.0630978Z Get:10 http://azure.archive.ubuntu.com/ubuntu resolute-updates/universe Translation-en [122 kB]
+2026-11-11T11:50:33.0675852Z Get:11 http://azure.archive.ubuntu.com/ubuntu resolute-updates/restricted amd64v3 Packages [603 kB]
+2026-11-11T11:50:33.0681046Z Get:13 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main armhf Packages [1077 B]
+2026-11-11T11:50:33.0682373Z Get:12 http://azure.archive.ubuntu.com/ubuntu resolute-updates/restricted Translation-en [125 kB]
+2026-11-11T11:50:33.0721884Z Get:14 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main arm64 Packages [140 kB]
+2026-11-11T11:50:33.0803188Z Get:15 http://azure.archive.ubuntu.com/ubuntu resolute-security/main amd64v3 Packages [718 kB]
+2026-11-11T11:50:33.0818488Z Get:16 http://azure.archive.ubuntu.com/ubuntu resolute-security/main Translation-en [157 kB]
+2026-11-11T11:50:33.0838473Z Get:17 http://azure.archive.ubuntu.com/ubuntu resolute-security/universe amd64v3 Packages [212 kB]
+2026-11-11T11:50:33.0846750Z Get:18 http://azure.archive.ubuntu.com/ubuntu resolute-security/universe Translation-en [70.7 kB]
+2026-11-11T11:50:33.0855577Z Get:21 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main amd64 Packages [154 kB]
+2026-11-11T11:50:33.1285125Z Get:19 http://azure.archive.ubuntu.com/ubuntu resolute-security/restricted amd64v3 Packages [586 kB]
+2026-11-11T11:50:33.1310362Z Get:20 http://azure.archive.ubuntu.com/ubuntu resolute-security/restricted Translation-en [121 kB]
+2026-11-11T11:50:35.9539184Z Fetched 4878 kB in 0s (13.7 MB/s)
+2026-11-11T11:50:36.5059208Z Reading package lists...
+2026-11-11T11:50:36.5280948Z Reading package lists...
+2026-11-11T11:50:36.6764504Z Building dependency tree...
+2026-11-11T11:50:36.6772298Z Reading state information...
+2026-11-11T11:50:36.7081769Z libasound2t64 is already the newest version (1.2.15.3-1ubuntu1.1).
+2026-11-11T11:50:36.7082191Z libasound2t64 set to manually installed.
+2026-11-11T11:50:36.7082616Z libatk-bridge2.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-11T11:50:36.7083023Z libatk-bridge2.0-0t64 set to manually installed.
+2026-11-11T11:50:36.7083388Z libatk1.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-11T11:50:36.7083730Z libatk1.0-0t64 set to manually installed.
+2026-11-11T11:50:36.7084083Z libatspi2.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-11T11:50:36.7084417Z libatspi2.0-0t64 set to manually installed.
+2026-11-11T11:50:36.7084729Z libcairo2 is already the newest version (1.18.4-3).
+2026-11-11T11:50:36.7085029Z libcairo2 set to manually installed.
+2026-11-11T11:50:36.7085874Z libcups2t64 is already the newest version (2.4.16-1ubuntu1.3).
+2026-11-11T11:50:36.7086217Z libcups2t64 set to manually installed.
+2026-11-11T11:50:36.7086534Z libdbus-1-3 is already the newest version (1.16.2-2ubuntu4).
+2026-11-11T11:50:36.7086842Z libdbus-1-3 set to manually installed.
+2026-11-11T11:50:36.7087128Z libdrm2 is already the newest version (2.4.131-1).
+2026-11-11T11:50:36.7087418Z libdrm2 set to manually installed.
+2026-11-11T11:50:36.7087727Z libgbm1 is already the newest version (26.0.8-1ubuntu0.3).
+2026-11-11T11:50:36.7088037Z libgbm1 set to manually installed.
+2026-11-11T11:50:36.7088356Z libglib2.0-0t64 is already the newest version (2.88.0-1ubuntu0.1).
+2026-11-11T11:50:36.7088693Z libglib2.0-0t64 set to manually installed.
+2026-11-11T11:50:36.7089028Z libnspr4 is already the newest version (2:4.38.2-1ubuntu1).
+2026-11-11T11:50:36.7089337Z libnspr4 set to manually installed.
+2026-11-11T11:50:36.7089649Z libnss3 is already the newest version (2:3.120-1ubuntu2.2).
+2026-11-11T11:50:36.7089953Z libnss3 set to manually installed.
+2026-11-11T11:50:36.7090260Z libpango-1.0-0 is already the newest version (1.57.0-1).
+2026-11-11T11:50:36.7090577Z libpango-1.0-0 set to manually installed.
+2026-11-11T11:50:36.7090907Z libx11-6 is already the newest version (2:1.8.13-1ubuntu0.1).
+2026-11-11T11:50:36.7091435Z libx11-6 set to manually installed.
+2026-11-11T11:50:36.7091902Z libxcb1 is already the newest version (1.17.0-2ubuntu1).
+2026-11-11T11:50:36.7092196Z libxcb1 set to manually installed.
+2026-11-11T11:50:36.7092525Z libxcomposite1 is already the newest version (1:0.4.6-1build1).
+2026-11-11T11:50:36.7093004Z libxcomposite1 set to manually installed.
+2026-11-11T11:50:36.7093345Z libxdamage1 is already the newest version (1:1.1.7-1).
+2026-11-11T11:50:36.7093659Z libxdamage1 set to manually installed.
+2026-11-11T11:50:36.7093972Z libxext6 is already the newest version (2:1.3.4-1build3).
+2026-11-11T11:50:36.7094265Z libxext6 set to manually installed.
+2026-11-11T11:50:36.7094577Z libxfixes3 is already the newest version (1:6.0.0-2build2).
+2026-11-11T11:50:36.7094881Z libxfixes3 set to manually installed.
+2026-11-11T11:50:36.7095189Z libxkbcommon0 is already the newest version (1.13.1-1).
+2026-11-11T11:50:36.7095504Z libxkbcommon0 set to manually installed.
+2026-11-11T11:50:36.7095834Z libxrandr2 is already the newest version (2:1.5.4-1build1).
+2026-11-11T11:50:36.7096143Z libxrandr2 set to manually installed.
+2026-11-11T11:50:36.7096451Z xvfb is already the newest version (2:21.1.22-1ubuntu1.3).
+2026-11-11T11:50:36.7096847Z fonts-noto-color-emoji is already the newest version (2.051-1build1).
+2026-11-11T11:50:36.7097265Z libfontconfig1 is already the newest version (2.17.1-3ubuntu1).
+2026-11-11T11:50:36.7097599Z libfontconfig1 set to manually installed.
+2026-11-11T11:50:36.7097977Z libfreetype6 is already the newest version (2.14.2+dfsg-1ubuntu0.2).
+2026-11-11T11:50:36.7098313Z libfreetype6 set to manually installed.
+2026-11-11T11:50:36.7098659Z fonts-liberation is already the newest version (1:2.1.5-3build1).
+2026-11-11T11:50:36.7099001Z fonts-liberation set to manually installed.
+2026-11-11T11:50:36.7568188Z Solving dependencies...
+2026-11-11T11:50:36.8390285Z The following additional packages will be installed:
+2026-11-11T11:50:36.8390662Z   xfonts-encodings xfonts-utils
+2026-11-11T11:50:36.8397159Z Recommended packages:
+2026-11-11T11:50:36.8397496Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-11-11T11:50:36.8610929Z The following NEW packages will be installed:
+2026-11-11T11:50:36.8611672Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-11-11T11:50:36.8628871Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-11-11T11:50:36.8629396Z   xfonts-utils
+2026-11-11T11:50:36.8815149Z 0 upgraded, 9 newly installed, 0 to remove and 52 not upgraded.
+2026-11-11T11:50:36.8815729Z Need to get 21.9 MB of archives.
+2026-11-11T11:50:36.8816289Z After this operation, 80.2 MB of additional disk space will be used.
+2026-11-11T11:50:36.8816933Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-11T11:50:36.9839043Z Get:2 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-ipafont-gothic all 00303-23ubuntu1 [3703 kB]
+2026-11-11T11:50:37.1572749Z Get:3 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 fonts-freefont-ttf all 20211204+svn4273-4build1 [5656 kB]
+2026-11-11T11:50:37.3502485Z Get:4 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-tlwg-loma-otf all 1:0.7.3-1build1 [106 kB]
+2026-11-11T11:50:37.4357149Z Get:5 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-unifont all 1:16.0.04-1build1 [3169 kB]
+2026-11-11T11:50:37.6056502Z Get:6 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-wqy-zenhei all 0.9.45-8build1 [7863 kB]
+2026-11-11T11:50:37.9076795Z Get:7 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 xfonts-encodings all 1:1.0.5-0ubuntu3 [576 kB]
+2026-11-11T11:50:38.0072496Z Get:8 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 xfonts-utils amd64 1:7.7+7build1 [97.3 kB]
+2026-11-11T11:50:38.0940411Z Get:9 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 xfonts-cyrillic all 1:1.0.5+nmu1build1 [384 kB]
+2026-11-11T11:50:38.1883976Z Get:10 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 xfonts-scalable all 1:1.0.3-1.3build1 [304 kB]
+2026-11-11T11:50:38.4615094Z Fetched 21.9 MB in 1s (16.5 MB/s)
+2026-11-11T11:50:38.4810235Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-11-11T11:50:38.5015357Z (Reading database ... 
+2026-11-11T11:50:38.5015710Z (Reading database ... 5%
+2026-11-11T11:50:38.5015974Z (Reading database ... 10%
+2026-11-11T11:50:38.5016222Z (Reading database ... 15%
+2026-11-11T11:50:38.5016499Z (Reading database ... 20%
+2026-11-11T11:50:38.5016826Z (Reading database ... 25%
+2026-11-11T11:50:38.5017173Z (Reading database ... 30%
+2026-11-11T11:50:38.5017494Z (Reading database ... 35%
+2026-11-11T11:50:38.5017701Z (Reading database ... 40%
+2026-11-11T11:50:38.5017913Z (Reading database ... 45%
+2026-11-11T11:50:38.5018154Z (Reading database ... 50%
+2026-11-11T11:50:38.6096545Z (Reading database ... 55%
+2026-11-11T11:50:38.7967236Z (Reading database ... 60%
+2026-11-11T11:50:38.9590025Z (Reading database ... 65%
+2026-11-11T11:50:39.0950485Z (Reading database ... 70%
+2026-11-11T11:50:39.2566297Z (Reading database ... 75%
+2026-11-11T11:50:39.4756623Z (Reading database ... 80%
+2026-11-11T11:50:39.6578626Z (Reading database ... 85%
+2026-11-11T11:50:39.8250762Z (Reading database ... 90%
+2026-11-11T11:50:39.9611523Z (Reading database ... 95%
+2026-11-11T11:50:39.9611852Z (Reading database ... 100%
+2026-11-11T11:50:39.9612224Z (Reading database ... 213197 files and directories currently installed.)
+2026-11-11T11:50:39.9653726Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-23ubuntu1_all.deb ...
+2026-11-11T11:50:39.9777190Z Unpacking fonts-ipafont-gothic (00303-23ubuntu1) ...
+2026-11-11T11:50:40.1029954Z Selecting previously unselected package fonts-freefont-ttf.
+2026-11-11T11:50:40.1152640Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-4build1_all.deb ...
+2026-11-11T11:50:40.1158204Z Unpacking fonts-freefont-ttf (20211204+svn4273-4build1) ...
+2026-11-11T11:50:40.2064669Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-11-11T11:50:40.2187086Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1build1_all.deb ...
+2026-11-11T11:50:40.2192755Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1build1) ...
+2026-11-11T11:50:40.2379331Z Selecting previously unselected package fonts-unifont.
+2026-11-11T11:50:40.2501318Z Preparing to unpack .../3-fonts-unifont_1%3a16.0.04-1build1_all.deb ...
+2026-11-11T11:50:40.2653507Z Unpacking fonts-unifont (1:16.0.04-1build1) ...
+2026-11-11T11:50:40.4513407Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-11-11T11:50:40.4635653Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8build1_all.deb ...
+2026-11-11T11:50:40.4833022Z Unpacking fonts-wqy-zenhei (0.9.45-8build1) ...
+2026-11-11T11:50:40.6296192Z Selecting previously unselected package xfonts-encodings.
+2026-11-11T11:50:40.6419813Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu3_all.deb ...
+2026-11-11T11:50:40.6425756Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu3) ...
+2026-11-11T11:50:40.6818094Z Selecting previously unselected package xfonts-utils.
+2026-11-11T11:50:40.6942269Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+7build1_amd64v3.deb ...
+2026-11-11T11:50:40.6947840Z Unpacking xfonts-utils (1:7.7+7build1) ...
+2026-11-11T11:50:40.7271446Z Selecting previously unselected package xfonts-cyrillic.
+2026-11-11T11:50:40.7393038Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1build1_all.deb ...
+2026-11-11T11:50:40.7398842Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1build1) ...
+2026-11-11T11:50:40.7667004Z Selecting previously unselected package xfonts-scalable.
+2026-11-11T11:50:40.7790729Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3build1_all.deb ...
+2026-11-11T11:50:40.7796505Z Unpacking xfonts-scalable (1:1.0.3-1.3build1) ...
+2026-11-11T11:50:40.8234364Z Setting up fonts-wqy-zenhei (0.9.45-8build1) ...
+2026-11-11T11:50:40.8362020Z Setting up fonts-freefont-ttf (20211204+svn4273-4build1) ...
+2026-11-11T11:50:40.8375787Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1build1) ...
+2026-11-11T11:50:40.8389333Z Setting up xfonts-encodings (1:1.0.5-0ubuntu3) ...
+2026-11-11T11:50:40.8402626Z Setting up fonts-ipafont-gothic (00303-23ubuntu1) ...
+2026-11-11T11:50:40.8454119Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-11-11T11:50:40.8602569Z Setting up fonts-unifont (1:16.0.04-1build1) ...
+2026-11-11T11:50:40.8617150Z Setting up xfonts-utils (1:7.7+7build1) ...
+2026-11-11T11:50:40.8668141Z Setting up xfonts-cyrillic (1:1.0.5+nmu1build1) ...
+2026-11-11T11:50:40.9112041Z Setting up xfonts-scalable (1:1.0.3-1.3build1) ...
+2026-11-11T11:50:40.9465784Z Processing triggers for man-db (2.13.1-1build1) ...
+2026-11-11T11:50:40.9483601Z Not building database; man-db/auto-update is not 'true'.
+2026-11-11T11:50:40.9496409Z Processing triggers for fontconfig (2.17.1-3ubuntu1) ...
+2026-11-11T11:50:41.6850254Z 
+2026-11-11T11:50:41.6851273Z Running kernel seems to be up-to-date.
+2026-11-11T11:50:41.6851558Z 
+2026-11-11T11:50:41.6851665Z Restarting services...
+2026-11-11T11:50:41.6936190Z 
+2026-11-11T11:50:41.6936576Z Service restarts being deferred:
+2026-11-11T11:50:41.6938334Z  systemctl restart hosted-compute-agent.service
+2026-11-11T11:50:41.6938694Z 
+2026-11-11T11:50:41.6939392Z No containers need to be restarted.
+2026-11-11T11:50:41.6939626Z 
+2026-11-11T11:50:41.6939902Z No user sessions are running outdated binaries.
+2026-11-11T11:50:41.6940259Z 
+2026-11-11T11:50:41.6940703Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-11T11:50:42.5170191Z Downloading Chrome for Testing 151.0.7922.34 (playwright chromium v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip
+2026-11-11T11:50:43.4489762Z |                                                                                |   0% of 184.3 MiB
+2026-11-11T11:50:43.5740903Z |■■■■■■■■                                                                        |  10% of 184.3 MiB
+2026-11-11T11:50:43.6400698Z |■■■■■■■■■■■■■■■■                                                                |  20% of 184.3 MiB
+2026-11-11T11:50:43.7039704Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 184.3 MiB
+2026-11-11T11:50:43.7623816Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 184.3 MiB
+2026-11-11T11:50:43.8297364Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 184.3 MiB
+2026-11-11T11:50:43.8707791Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 184.3 MiB
+2026-11-11T11:50:43.9292591Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 184.3 MiB
+2026-11-11T11:50:43.9695226Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 184.3 MiB
+2026-11-11T11:50:44.0303555Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 184.3 MiB
+2026-11-11T11:50:44.1192826Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 184.3 MiB
+2026-11-11T11:50:46.3912878Z Chrome for Testing 151.0.7922.34 (playwright chromium v1234) downloaded to /home/runner/.cache/ms-playwright/chromium-1234
+2026-11-11T11:50:46.3916293Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-11-11T11:50:47.3312560Z |                                                                                |   0% of 2.3 MiB
+2026-11-11T11:50:47.3419858Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-11-11T11:50:47.3463098Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-11-11T11:50:47.3624030Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-11-11T11:50:47.3665635Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-11-11T11:50:47.3681838Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-11-11T11:50:47.3695794Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-11-11T11:50:47.3721528Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-11-11T11:50:47.3737409Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-11-11T11:50:47.3757839Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-11-11T11:50:47.3767093Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-11-11T11:50:47.4204713Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-11-11T11:50:47.4207010Z Downloading Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip
+2026-11-11T11:50:48.3432627Z |                                                                                |   0% of 114.7 MiB
+2026-11-11T11:50:48.4345459Z |■■■■■■■■                                                                        |  10% of 114.7 MiB
+2026-11-11T11:50:48.4897326Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.7 MiB
+2026-11-11T11:50:48.5349104Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.7 MiB
+2026-11-11T11:50:48.5714038Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.7 MiB
+2026-11-11T11:50:48.6100088Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.7 MiB
+2026-11-11T11:50:48.6508505Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.7 MiB
+2026-11-11T11:50:48.6893281Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.7 MiB
+2026-11-11T11:50:48.7385681Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.7 MiB
+2026-11-11T11:50:48.7681699Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.7 MiB
+2026-11-11T11:50:48.8101210Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+2026-11-11T11:50:50.4978238Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+2026-11-11T11:50:50.5305660Z ##[group]Run npm test
+2026-11-11T11:50:50.5305908Z [36;1mnpm test[0m
+2026-11-11T11:50:50.5350700Z shell: /usr/bin/bash -e {0}
+2026-11-11T11:50:50.5350928Z ##[endgroup]
+2026-11-11T11:50:50.6210085Z 
+2026-11-11T11:50:50.6210760Z > test
+2026-11-11T11:50:50.6211221Z > playwright test
+2026-11-11T11:50:50.6211421Z 
+2026-11-11T11:50:51.8146909Z [WebServer] ≈ tailwindcss v4.3.4
+2026-11-11T11:50:51.8147233Z [WebServer] 
+2026-11-11T11:50:51.8147446Z [WebServer] Done in 100ms
+2026-11-11T11:50:52.7232635Z 
+2026-11-11T11:50:52.7233287Z Running 686 tests using 2 workers
+2026-11-11T11:50:52.7233589Z 
+2026-11-11T11:50:55.3242886Z   ✓    2 [chromium] › analysis-shots.spec.mjs:6:3 › analysis light phone (728ms)
+2026-11-11T11:50:55.6282019Z   ✓    1 [chromium] › analysis.spec.mjs:7:1 › target radiogroup: click and arrow keys change the target once per press (1.0s)
+2026-11-11T11:50:55.8545018Z   ✓    3 [chromium] › analysis-shots.spec.mjs:6:3 › analysis light tablet (519ms)
+2026-11-11T11:50:56.3084792Z   ✓    4 [chromium] › analysis.spec.mjs:25:1 › rejected target change keeps the previous selection (669ms)
+2026-11-11T11:50:56.3956430Z   ✓    5 [chromium] › analysis-shots.spec.mjs:6:3 › analysis dark phone (521ms)
+2026-11-11T11:50:56.8690167Z   ✓    6 [chromium] › analysis.spec.mjs:34:1 › readouts, peak warning and accessible summaries (549ms)
+2026-11-11T11:50:56.9573750Z   ✓    7 [chromium] › analysis-shots.spec.mjs:6:3 › analysis dark tablet (545ms)
+2026-11-11T11:50:57.4694515Z   ✓    9 [chromium] › analysis-shots.spec.mjs:13:1 › analysis rtl phone (501ms)
+2026-11-11T11:50:57.6020503Z   ✓    8 [chromium] › analysis.spec.mjs:46:1 › states: measuring, error with retry, silent (720ms)
+2026-11-11T11:50:57.8018048Z   ✓   10 [chromium] › analysis-shots.spec.mjs:19:51 › analysis measuring phone (322ms)
+2026-11-11T11:50:58.1230567Z   ✓   12 [chromium] › analysis-shots.spec.mjs:19:51 › analysis error phone (308ms)
+2026-11-11T11:50:58.4648232Z   ✓   13 [chromium] › analysis-shots.spec.mjs:19:51 › analysis silent phone (328ms)
+2026-11-11T11:50:58.4972721Z   ✓   11 [chromium] › analysis.spec.mjs:61:1 › 44px radios and no horizontal scroll at 390px, LTR and RTL (882ms)
+2026-11-11T11:50:59.1651908Z   ✓   15 [chromium] › analysis.spec.mjs:73:1 › RTL keeps the time axis left to right and arrows follow reading order (651ms)
+2026-11-11T11:50:59.4446232Z   ✓   14 [chromium] › artboard.spec.mjs:6:133 › Replace artboard document cancels the held reorder (960ms)
+2026-11-11T11:50:59.7805966Z   ✓   16 [chromium] › automation-shots.spec.mjs:8:3 › automation capture light phone (596ms)
+2026-11-11T11:51:00.2325998Z   ✓   17 [chromium] › artboard.spec.mjs:6:133 › Toggle artboard editing cancels the held reorder (774ms)
+2026-11-11T11:51:00.2944455Z   ✓   18 [chromium] › automation-shots.spec.mjs:8:3 › automation capture light tablet (504ms)
+2026-11-11T11:51:00.7927037Z   ✓   20 [chromium] › automation-shots.spec.mjs:8:3 › automation capture dark phone (489ms)
+2026-11-11T11:51:01.1658422Z   ✓   19 [chromium] › artboard.spec.mjs:6:133 › Toggle artboard layout cancels the held reorder (922ms)
+2026-11-11T11:51:01.3336121Z   ✓   21 [chromium] › automation-shots.spec.mjs:8:3 › automation capture dark tablet (530ms)
+2026-11-11T11:51:01.7845997Z   ✓   23 [chromium] › automation-shots.spec.mjs:20:1 › automation capture rtl phone (439ms)
+2026-11-11T11:51:01.9622986Z   ✓   22 [chromium] › artboard.spec.mjs:6:133 › Reverse artboards externally cancels the held reorder (785ms)
+2026-11-11T11:51:02.3710008Z   ✓   24 [chromium] › automation-shots.spec.mjs:26:37 › automation capture mid-drag light (577ms)
+2026-11-11T11:51:02.5620285Z   ✓   25 [chromium] › artboard.spec.mjs:7:1 › document replacement abandons a typed artboard rename (589ms)
+2026-11-11T11:51:02.9893708Z   ✓   26 [chromium] › automation-shots.spec.mjs:26:37 › automation capture mid-drag dark (610ms)
+2026-11-11T11:51:03.1083362Z   ✓   27 [chromium] › artboard.spec.mjs:8:1 › document namespace changes the preview pixels even when page IDs and revisions match (535ms)
+2026-11-11T11:51:03.7995389Z   ✓   29 [chromium] › artboard.spec.mjs:9:1 › pending removal aborts on document replacement and leaves the new pages intact (681ms)
+2026-11-11T11:51:04.1471744Z   ✓   28 [chromium] › automation.spec.mjs:22:1 › dragging a point commits once, snapped and clamped between neighbours (1.1s)
+2026-11-11T11:51:04.4882255Z   ✓   30 [chromium] › artboard.spec.mjs:10:1 › host failure is visible and successful recovery removes exactly one page (679ms)
+2026-11-11T11:51:04.8509392Z   ✓   31 [chromium] › automation.spec.mjs:40:1 › Escape mid-drag restores the point without a commit (694ms)
+2026-11-11T11:51:05.6081958Z   ✓   33 [chromium] › automation.spec.mjs:53:1 › keyboard: arrows step value and time, Delete removes (748ms)
+2026-11-11T11:51:06.3970095Z   ✓   34 [chromium] › automation.spec.mjs:68:1 › click on empty lane adds a snapped point; Add point uses the cursor (778ms)
+2026-11-11T11:51:06.7543178Z   ✓   32 [chromium] › canvas-guides-shots.spec.mjs:9:3 › canvas guides capture light phone (2.2s)
+2026-11-11T11:51:07.1051302Z   ✓   35 [chromium] › automation.spec.mjs:90:1 › mode picker is a radio group; arrows move and commit (688ms)
+2026-11-11T11:51:07.6824061Z   ✓   37 [chromium] › automation.spec.mjs:104:1 › disabled lane and picker ignore input (566ms)
+2026-11-11T11:51:08.5172517Z   ✓   38 [chromium] › automation.spec.mjs:113:1 › a rejected commit leaves the committed point on screen (823ms)
+2026-11-11T11:51:09.4977647Z   ✓   39 [chromium] › automation.spec.mjs:123:1 › targets are at least 44px and the phone page never scrolls sideways (970ms)
+2026-11-11T11:51:09.7042712Z   ✓   36 [chromium] › canvas-guides-shots.spec.mjs:9:3 › canvas guides capture light tablet (2.9s)
+2026-11-11T11:51:10.2374418Z   ✓   40 [chromium] › automation.spec.mjs:134:1 › RTL mirrors the axis gutter but keeps time left to right (727ms)
+2026-11-11T11:51:11.2005916Z   ✓   42 [chromium] › canvas-guides.spec.mjs:8:1 › ruler keyboard adds one guide; Delete removes it (946ms)
+2026-11-11T11:51:11.7298840Z   ✓   41 [chromium] › canvas-guides-shots.spec.mjs:9:3 › canvas guides capture dark phone (2.0s)
+2026-11-11T11:51:13.2386444Z   ✓   43 [chromium] › canvas-guides.spec.mjs:19:1 › ruler drag previews, Escape cancels, release creates one guide (2.0s)
+2026-11-11T11:51:14.0313930Z   ✓   45 [chromium] › canvas-guides.spec.mjs:32:1 › pivot key changes its origin without moving the artwork (781ms)
+2026-11-11T11:51:14.5395782Z   ✓   44 [chromium] › canvas-guides-shots.spec.mjs:9:3 › canvas guides capture dark tablet (2.8s)
+2026-11-11T11:51:15.2242941Z   ✓   47 [chromium] › canvas-guides-shots.spec.mjs:39:1 › canvas guides capture rtl phone and focus (675ms)
+2026-11-11T11:51:15.4473159Z   ✓   46 [chromium] › canvas-guides.spec.mjs:40:1 › align emits once; locked selections report why without editing (1.4s)
+2026-11-11T11:51:16.4632431Z   ✓   48 [chromium] › canvas-guides-shots.spec.mjs:49:1 › canvas guides capture locked and empty states (1.2s)
+2026-11-11T11:51:16.9965545Z   ✓   49 [chromium] › canvas-guides.spec.mjs:50:64 › Replace ruler document cancels the held guide without committing (1.5s)
+2026-11-11T11:51:17.5433188Z   ✓   50 [chromium] › canvas-navigation.spec.mjs:5:1 › wheel deltas accumulate in one controlled gesture while the scene stays mounted (1.1s)
+2026-11-11T11:51:18.1974421Z   ✓   52 [chromium] › canvas-navigation.spec.mjs:6:1 › keyboard fit and repeated zoom requests retain focus and exact document geometry (642ms)
+2026-11-11T11:51:18.7652790Z   ✓   51 [chromium] › canvas-guides.spec.mjs:50:64 › Disable ruler cancels the held guide without committing (1.8s)
+2026-11-11T11:51:19.0654234Z   ✓   53 [chromium] › canvas-navigation.spec.mjs:7:1 › scope replacement cancels a pending wheel gesture without updating the next document (855ms)
+2026-11-11T11:51:19.4922900Z   ✓   54 [chromium] › canvas-guides.spec.mjs:51:1 › guide hit bands span the correct canvas dimension (712ms)
+2026-11-11T11:51:19.7553188Z   ✓   55 [chromium] › canvas-navigation.spec.mjs:8:1 › two touches translate and pinch together with one release commit (675ms)
+2026-11-11T11:51:20.5122164Z   ✓   56 [chromium] › canvas-guides.spec.mjs:53:63 › grid numeric draft is abandoned after Replace ruler document (1.0s)
+2026-11-11T11:51:20.6733301Z   ✓   57 [chromium] › canvas-navigation.spec.mjs:9:1 › disabled navigation ignores wheel and keyboard input (905ms)
+2026-11-11T11:51:21.4766906Z   ✓   59 [chromium] › canvas-navigation.spec.mjs:11:1 › held touches from a replaced document cannot edit its successor (793ms)
+2026-11-11T11:51:21.5239485Z   ✓   58 [chromium] › canvas-guides.spec.mjs:53:63 › grid numeric draft is abandoned after Disable ruler (1.0s)
+2026-11-11T11:51:22.1913209Z   ✓   60 [chromium] › canvas-navigation.spec.mjs:18:1 › Escape cancels held touches until a fresh gesture begins (696ms)
+2026-11-11T11:51:23.1936900Z   ✓   61 [chromium] › canvas-guides.spec.mjs:55:63 › pivot release cannot write after Replace ruler document (1.7s)
+2026-11-11T11:51:23.3138605Z   ✓   62 [chromium] › canvas-navigation.spec.mjs:22:1 › wheel input over the reserved hinge leaves the viewport unchanged (1.1s)
+2026-11-11T11:51:23.9015686Z   ✓   64 [chromium] › canvas-navigation.spec.mjs:24:1 › a third contact cancels the gesture without committing its preview (576ms)
+2026-11-11T11:51:24.6484243Z   ✓   63 [chromium] › canvas-guides.spec.mjs:55:63 › pivot release cannot write after Disable ruler (1.4s)
+2026-11-11T11:51:24.6826620Z   ✓   65 [chromium] › color-adjustments.spec.mjs:4:1 › curve keyboard/numeric edits, insertion and deletion commit real host points (764ms)
+2026-11-11T11:51:25.4383862Z   ✓   66 [chromium] › color-management.spec.mjs:3:1 › print and HDR channel edits retain profile identity and non-byte values (768ms)
+2026-11-11T11:51:25.7153554Z   ✓   67 [chromium] › color-adjustments.spec.mjs:8:1 › curve pointer previews commit once, Escape cancels, and scrolling remeasures the host (1.0s)
+2026-11-11T11:51:26.0126175Z   ✓   68 [chromium] › color-management.spec.mjs:7:1 › profile selection and measured gamut inspection reach the application (562ms)
+2026-11-11T11:51:26.3412607Z   ✓   69 [chromium] › color-adjustments.spec.mjs:13:1 › gradient insertion interpolates a real stop and its numeric position is editable (614ms)
+2026-11-11T11:51:26.5535124Z   ✓   70 [chromium] › color-management.spec.mjs:10:1 › theme bindings preserve the reference and explicit detach removes it (531ms)
+2026-11-11T11:51:27.0200823Z   ✓   71 [chromium] › color-adjustments.spec.mjs:16:1 › mesh edits retain topology and explain rejected folded geometry (668ms)
+2026-11-11T11:51:27.4519416Z   ✓   72 [chromium] › color-management.spec.mjs:13:1 › named ink edits have an explicit save boundary and visible provider errors (890ms)
+2026-11-11T11:51:27.8953732Z   ✓   73 [chromium] › color-adjustments.spec.mjs:19:1 › levels, grading and wrapping HSL edits reach controlled values (863ms)
+2026-11-11T11:51:28.0780769Z   ✓   74 [chromium] › color-management.spec.mjs:17:1 › proof cannot enable until a profile is chosen and retains rendering intent (615ms)
+2026-11-11T11:51:28.5266609Z   ✓   75 [chromium] › color-adjustments.spec.mjs:24:1 › scopes render only supplied decoded measurements and preserve mode selection (623ms)
+2026-11-11T11:51:28.7098967Z   ✓   76 [chromium] › color-management.spec.mjs:20:32 › color management fits a narrow ltr host (621ms)
+2026-11-11T11:51:29.1125882Z   ✓   77 [chromium] › color-adjustments.spec.mjs:27:1 › standalone SV and hue preserve the other color components (577ms)
+2026-11-11T11:51:29.4424024Z   ✓   78 [chromium] › color-management.spec.mjs:20:32 › color management fits a narrow rtl host (714ms)
+2026-11-11T11:51:30.0525784Z   ✓   80 [chromium] › color-management.spec.mjs:23:1 › Lab channels and conversion policy stay explicit and profile-preserving (595ms)
+2026-11-11T11:51:30.0666685Z   ✓   79 [chromium] › color-adjustments.spec.mjs:30:1 › eyedropper samples document coordinates and applies original profile channels (942ms)
+2026-11-11T11:51:30.7179734Z   ✓   81 [chromium] › color-management.spec.mjs:27:1 › gamut mapping never overwrites original channels and named ink retains overprint (657ms)
+2026-11-11T11:51:31.2445593Z   ✓   82 [chromium] › color-adjustments.spec.mjs:34:32 › adjustments fit narrow ltr panes (1.2s)
+2026-11-11T11:51:32.3913307Z   ✓   84 [chromium] › color-adjustments.spec.mjs:34:32 › adjustments fit narrow rtl panes (1.1s)
+2026-11-11T11:51:32.4703281Z   ✓   83 [chromium] › color-shots.spec.mjs:5:3 › color capture light phone (1.7s)
+2026-11-11T11:51:33.2353686Z   ✓   85 [chromium] › color-adjustments.spec.mjs:37:1 › gradient midpoint, interpolation, type and angle are actual controlled edits (835ms)
+2026-11-11T11:51:34.0290853Z   ✓   87 [chromium] › color-adjustments.spec.mjs:43:1 › curve presets target the selected RGB/Luma channel and identity reset commits exact endpoints (772ms)
+2026-11-11T11:51:34.1750046Z   ✓   86 [chromium] › color-shots.spec.mjs:5:3 › color capture light tablet (1.7s)
+2026-11-11T11:51:35.0469351Z   ✓   88 [chromium] › color-adjustments.spec.mjs:47:1 › lift gamma gain and RGB parade retain their control values and measured data (994ms)
+2026-11-11T11:51:35.5997654Z   ✓   90 [chromium] › color-adjustments.spec.mjs:51:1 › mesh default surface renders real interpolated multicolor pixels (540ms)
+2026-11-11T11:51:35.8882915Z   ✓   89 [chromium] › color-shots.spec.mjs:5:3 › color capture dark phone (1.7s)
+2026-11-11T11:51:36.6716117Z   ✓   91 [chromium] › color.spec.mjs:11:1 › disc drag previews, commits once, and the center keeps the hue (1.1s)
+2026-11-11T11:51:37.5753387Z   ✓   93 [chromium] › color.spec.mjs:28:1 › Escape mid-drag on the disc restores the color without a commit (899ms)
+2026-11-11T11:51:37.6368180Z   ✓   92 [chromium] › color-shots.spec.mjs:5:3 › color capture dark tablet (1.7s)
+2026-11-11T11:51:38.1592876Z   ✓   95 [chromium] › color-shots.spec.mjs:19:1 › color capture rtl phone (513ms)
+2026-11-11T11:51:38.4916918Z   ✓   94 [chromium] › color.spec.mjs:45:1 › brightness track drags and steps from the keyboard (908ms)
+2026-11-11T11:51:38.9068449Z   ✓   96 [chromium] › command-ownership.spec.mjs:4:1 › selection replacement closes tool variants and overflow without dispatching a stale command (724ms)
+2026-11-11T11:51:39.3639697Z   ✓   98 [chromium] › command-ownership.spec.mjs:5:1 › disabled controls close existing menus and prevent primary actions (445ms)
+2026-11-11T11:51:39.6262153Z   ✓   97 [chromium] › color.spec.mjs:58:1 › hue ring jumps on the ring and slows inside the hole (1.1s)
+2026-11-11T11:51:40.1069264Z   ✓   99 [chromium] › command-ownership.spec.mjs:6:1 › split primary, separate menu and gallery choices dispatch their exact controlled identities (733ms)
+2026-11-11T11:51:40.4805672Z   ✓  100 [chromium] › color.spec.mjs:76:1 › opacity accepts typed entry and keys, and rejects out-of-range text (846ms)
+2026-11-11T11:51:40.5347782Z   ✓  101 [chromium] › command-ownership.spec.mjs:7:1 › inline ribbon galleries support roving keyboard focus and controlled selection requests (416ms)
+2026-11-11T11:51:41.1966446Z   ✓  103 [chromium] › composition-tree.spec.mjs:3:1 › reveals selected nested layers, selects exact identities and collapses descendants (645ms)
+2026-11-11T11:51:41.3622964Z   ✓  102 [chromium] › color.spec.mjs:92:1 › channel fields commit one channel and keep the rest (873ms)
+2026-11-11T11:51:41.8510073Z   ✓  104 [chromium] › composition-tree.spec.mjs:4:1 › visibility updates reconcile actual host state and rejection leaves it unchanged (644ms)
+2026-11-11T11:51:42.0837263Z   ✓  105 [chromium] › color.spec.mjs:110:1 › foreground and background swap and reset (714ms)
+2026-11-11T11:51:42.3253758Z   ✓  106 [chromium] › composition-tree.spec.mjs:5:1 › document changes discard hierarchy selection and expansion from the previous scope (462ms)
+2026-11-11T11:51:42.8124056Z   ✓  107 [chromium] › color.spec.mjs:121:1 › swatch search, selection, empty result and recent colors (719ms)
+2026-11-11T11:51:43.0642838Z   ✓  108 [chromium] › eqdyn-shots.spec.mjs:7:3 › eqdyn light phone (726ms)
+2026-11-11T11:51:43.5233024Z   ✓  109 [chromium] › color.spec.mjs:139:1 › harmony rule and pick commit, contrast is spelled out (698ms)
+2026-11-11T11:51:43.6522463Z   ✓  110 [chromium] › eqdyn-shots.spec.mjs:7:3 › eqdyn light tablet (577ms)
+2026-11-11T11:51:44.1848933Z   ✓  112 [chromium] › eqdyn-shots.spec.mjs:7:3 › eqdyn dark phone (526ms)
+2026-11-11T11:51:44.7178807Z   ✓  113 [chromium] › eqdyn-shots.spec.mjs:7:3 › eqdyn dark tablet (522ms)
+2026-11-11T11:51:44.7978219Z   ✓  111 [chromium] › color.spec.mjs:150:1 › palette undocks past the threshold, moves, avoids the hinge and docks (1.3s)
+2026-11-11T11:51:45.2961018Z   ✓  114 [chromium] › eqdyn-shots.spec.mjs:15:1 › eqdyn rtl phone (569ms)
+2026-11-11T11:51:45.8023304Z   ✓  115 [chromium] › color.spec.mjs:178:1 › a floating drag moves the palette exactly as far as the pointer (987ms)
+2026-11-11T11:51:46.3525875Z   ✓  117 [chromium] › color.spec.mjs:195:1 › injected color renderer receives live brightness and retains the disc input owner (539ms)
+2026-11-11T11:51:46.7845784Z   ✓  118 [chromium] › color.spec.mjs:211:1 › harmony sample paints the same alpha used by its contrast calculation (422ms)
+2026-11-11T11:51:46.9492953Z   ✓  116 [chromium] › eqdyn-shots.spec.mjs:22:1 › eqdyn mid-drag and focus (1.6s)
+2026-11-11T11:51:47.6214606Z   ✓  120 [chromium] › forms-shots.spec.mjs:5:3 › forms light phone (661ms)
+2026-11-11T11:51:47.8784856Z   ✓  119 [chromium] › eqdyn.spec.mjs:20:1 › eq: a handle drag moves frequency and gain in one commit (1.1s)
+2026-11-11T11:51:48.2192523Z   ✓  121 [chromium] › forms-shots.spec.mjs:5:3 › forms light tablet (589ms)
+2026-11-11T11:51:48.7699202Z   ✓  123 [chromium] › forms-shots.spec.mjs:5:3 › forms dark phone (542ms)
+2026-11-11T11:51:49.2300470Z   ✓  124 [chromium] › forms-shots.spec.mjs:5:3 › forms dark tablet (451ms)
+2026-11-11T11:51:49.2473831Z   ✓  122 [chromium] › eqdyn.spec.mjs:34:1 › eq: Escape mid-drag cancels without a commit (1.4s)
+2026-11-11T11:51:49.6291769Z   ✓  125 [chromium] › forms-shots.spec.mjs:18:1 › forms rtl phone (389ms)
+2026-11-11T11:51:49.9934571Z   ✓  127 [chromium] › forms-shots.spec.mjs:24:1 › forms forced colors (355ms)
+2026-11-11T11:51:50.4462899Z   ✓  128 [chromium] › forms.spec.mjs:4:1 › segmented control is a radio group with roving focus and arrow selection (438ms)
+2026-11-11T11:51:50.7753897Z   ✓  129 [chromium] › forms.spec.mjs:18:1 › RTL flips horizontal arrows (319ms)
+2026-11-11T11:51:50.8943203Z   ✓  126 [chromium] › eqdyn.spec.mjs:45:1 › eq: keyboard steps commit once per key, Shift is fine, pass bands ignore gain keys (1.6s)
+2026-11-11T11:51:51.1747049Z   ✓  130 [chromium] › forms.spec.mjs:24:1 › pane tabs: tablist with selection following arrows (391ms)
+2026-11-11T11:51:51.5187726Z   ✓  132 [chromium] › forms.spec.mjs:33:1 › navigation tabs are links with aria-current, not tabs (335ms)
+2026-11-11T11:51:51.7760267Z   ✓  131 [chromium] › eqdyn.spec.mjs:65:1 › eq: band chips select, the readout follows, the on toggle commits (875ms)
+2026-11-11T11:51:52.2206158Z   ✓  133 [chromium] › forms.spec.mjs:40:1 › select: keyboard open, move, typeahead, pick, escape (694ms)
+2026-11-11T11:51:52.6692372Z   ✓  135 [chromium] › forms.spec.mjs:74:1 › list rows, icon toggle and toolbar arrows (431ms)
+2026-11-11T11:51:52.8603322Z   ✓  134 [chromium] › eqdyn.spec.mjs:77:1 › eq: a rejected commit keeps the committed band (1.1s)
+2026-11-11T11:51:53.4663675Z   ✓  136 [chromium] › forms.spec.mjs:90:1 › every interactive primitive is at least 44px (789ms)
+2026-11-11T11:51:54.4686120Z   ✓  138 [chromium] › gpu-canvas.spec.mjs:8:1 › actual CanvasKit surface paints, transforms and replaces the controlled document (985ms)
+2026-11-11T11:51:54.6534810Z   ✓  137 [chromium] › eqdyn.spec.mjs:88:1 › compressor: threshold drag and keys commit once; ratio stepper walks the stops (1.8s)
+2026-11-11T11:51:55.1705493Z   ✓  140 [chromium] › eqdyn.spec.mjs:108:1 › empty and disabled states are honest (507ms)
+2026-11-11T11:51:55.4133613Z   ✓  139 [chromium] › gpu-canvas.spec.mjs:14:1 › paused updates defer drawing until resume without rebuilding the surface (934ms)
+2026-11-11T11:51:56.1935623Z   ✓  141 [chromium] › eqdyn.spec.mjs:117:3 › targets are at least 44 px and nothing scrolls sideways (phone) (1.0s)
+2026-11-11T11:51:56.2144909Z   ✓  142 [chromium] › gpu-canvas.spec.mjs:16:1 › renderer failures close the recording, show an error and recover on a new revision (790ms)
+2026-11-11T11:51:56.9174089Z   ✓  144 [chromium] › hardware-keys.spec.mjs:12:1 › a bound chord runs its command from anywhere on the page (686ms)
+2026-11-11T11:51:57.1833109Z   ✓  143 [chromium] › eqdyn.spec.mjs:117:3 › targets are at least 44 px and nothing scrolls sideways (tablet) (977ms)
+2026-11-11T11:51:57.5660242Z   ✓  145 [chromium] › hardware-keys.spec.mjs:22:1 › a focused text field keeps typing and editing keys but still saves (637ms)
+2026-11-11T11:51:57.7285424Z   ✓  146 [chromium] › eqdyn.spec.mjs:134:1 › rtl keeps frequency and level axes left to right (539ms)
+2026-11-11T11:51:58.1982644Z   ✓  148 [chromium] › ink.spec.mjs:4:1 › tools are a radio group; picking one reports it once (456ms)
+2026-11-11T11:51:58.5363636Z   ✓  147 [chromium] › hardware-keys.spec.mjs:34:1 › rebinding in the sheet changes what the key does; the sheet owns keys while open (961ms)
+2026-11-11T11:51:58.6550344Z   ✓  149 [chromium] › ink.spec.mjs:14:1 › disabled redo explains itself instead of doing nothing silently (447ms)
+2026-11-11T11:51:59.0907205Z   ✓  151 [chromium] › ink.spec.mjs:24:1 › size steps, color picks and the pressure switch report host intent (424ms)
+2026-11-11T11:51:59.2463345Z   ✓  150 [chromium] › layer-blend.spec.mjs:5:1 › precise percent input preserves six-decimal alpha with one transaction (694ms)
+2026-11-11T11:51:59.5548905Z   ✓  152 [chromium] › ink.spec.mjs:34:1 › keyboard shortcuts run while focus is inside the toolbar (455ms)
+2026-11-11T11:52:00.0740344Z   ✓  154 [chromium] › ink.spec.mjs:46:1 › every control keeps a 44pt target (505ms)
+2026-11-11T11:52:00.2181428Z   ✓  153 [chromium] › layer-blend.spec.mjs:6:1 › blend capabilities disable unsupported choices and retain the chosen space and alpha policy (961ms)
+2026-11-11T11:52:00.5225752Z   ✓  155 [chromium] › ink.spec.mjs:61:3 › capture ink light phone (439ms)
+2026-11-11T11:52:00.6993443Z   ✓  156 [chromium] › layer-blend.spec.mjs:7:90 › Replace blend document retires an unfinished opacity entry (468ms)
+2026-11-11T11:52:01.0038094Z   ✓  157 [chromium] › ink.spec.mjs:61:3 › capture ink light tablet (471ms)
+2026-11-11T11:52:01.1967617Z   ✓  158 [chromium] › layer-blend.spec.mjs:7:90 › Next blend layer retires an unfinished opacity entry (488ms)
+2026-11-11T11:52:01.4534500Z   ✓  159 [chromium] › ink.spec.mjs:61:3 › capture ink dark phone (424ms)
+2026-11-11T11:52:01.6457387Z   ✓  160 [chromium] › layer-blend.spec.mjs:7:90 › Toggle blend editing retires an unfinished opacity entry (437ms)
+2026-11-11T11:52:01.9553093Z   ✓  161 [chromium] › ink.spec.mjs:61:3 › capture ink dark tablet (494ms)
+2026-11-11T11:52:02.2682320Z   ✓  163 [chromium] › ink.spec.mjs:72:1 › capture ink rtl phone (304ms)
+2026-11-11T11:52:02.2795899Z   ✓  162 [chromium] › layer-blend.spec.mjs:8:1 › a held opacity drag previews without a document write and Escape restores the committed alpha (623ms)
+2026-11-11T11:52:02.9863402Z   ✓  165 [chromium] › layer-blend.spec.mjs:9:1 › replacement aborts a pending policy change and rejects its late completion (690ms)
+2026-11-11T11:52:03.7336030Z   ✓  166 [chromium] › layer-blend.spec.mjs:10:1 › host rejection is visible and a new successful policy request clears it (732ms)
+2026-11-11T11:52:04.2215278Z   ✓  167 [chromium] › layer-blend.spec.mjs:11:1 › changing selected layer dismisses its old policy menu without applying an option (470ms)
+2026-11-11T11:52:04.9637665Z   ✓  168 [chromium] › layer-blend.spec.mjs:12:1 › narrow RTL layout keeps space and alpha controls within the pane (732ms)
+2026-11-11T11:52:05.4417508Z   ✓  164 [chromium] › layer-panels-shots.spec.mjs:11:3 › layer panels capture light phone (3.2s)
+2026-11-11T11:52:06.0874140Z   ✓  169 [chromium] › layer-panels.spec.mjs:19:1 › thumbnails: ready pixels, loading, empty and couldn't-render are distinct (1.1s)
+2026-11-11T11:52:08.3221579Z   ✓  170 [chromium] › layer-panels-shots.spec.mjs:11:3 › layer panels capture light tablet (2.9s)
+2026-11-11T11:52:08.7653728Z   ✓  171 [chromium] › layer-panels.spec.mjs:35:1 › a new revision keeps the previous preview until the new one arrives (2.7s)
+2026-11-11T11:52:10.5733174Z   ✓  173 [chromium] › layer-panels.spec.mjs:47:1 › mask editor: enable, undo, delete, then create from a selection only once one exists (1.8s)
+2026-11-11T11:52:11.2293266Z   ✓  172 [chromium] › layer-panels-shots.spec.mjs:11:3 › layer panels capture dark phone (2.9s)
+2026-11-11T11:52:12.1596642Z   ✓  174 [chromium] › layer-panels.spec.mjs:67:1 › refine: unavailable at zero, one refineMask with the typed amounts, keyboard Apply (1.6s)
+2026-11-11T11:52:13.3250435Z   ✓  176 [chromium] › layer-panels.spec.mjs:86:1 › locked layers keep every mask control visible with the reason (1.2s)
+2026-11-11T11:52:14.3599857Z   ✓  175 [chromium] › layer-panels-shots.spec.mjs:11:3 › layer panels capture dark tablet (3.1s)
+2026-11-11T11:52:14.7572602Z   ✓  177 [chromium] › layer-panels.spec.mjs:97:1 › clipping: the bottom layer explains itself; clipping a layer re-bases the ones above (1.4s)
+2026-11-11T11:52:15.4292088Z   ✓  178 [chromium] › layer-panels-shots.spec.mjs:34:1 › layer panels capture rtl phone (1.1s)
+2026-11-11T11:52:16.0417471Z   ✓  179 [chromium] › layer-panels.spec.mjs:115:1 › artboards: add beside the others, rename with F2, reorder with Alt+arrow, remove with Delete (1.3s)
+2026-11-11T11:52:16.5425179Z   ✓  180 [chromium] › layer-panels-shots.spec.mjs:40:1 › layer panels capture rtl tablet grid (1.1s)
+2026-11-11T11:52:17.2452081Z   ✓  182 [chromium] › layer-tree.spec.mjs:5:1 › nested groups collapse without changing document objects and expand to their original order (687ms)
+2026-11-11T11:52:17.3685430Z   ✓  181 [chromium] › layer-panels.spec.mjs:142:1 › artboards: dragging the grip reorders once on release; Escape cancels (1.3s)
+2026-11-11T11:52:18.0202821Z   ✓  183 [chromium] › layer-tree.spec.mjs:6:1 › parent locking blocks descendant edits while visibility and selection remain available (764ms)
+2026-11-11T11:52:18.5043328Z   ✓  184 [chromium] › layer-panels.spec.mjs:152:1 › artboards grid: two columns at 390, a drag right lands one cell over (1.1s)
+2026-11-11T11:52:18.6820024Z   ✓  185 [chromium] › layer-tree.spec.mjs:7:1 › reparent chooser moves an object once and excludes self/descendant group cycles (652ms)
+2026-11-11T11:52:19.2972026Z   ✓  187 [chromium] › layer-tree.spec.mjs:8:1 › keyboard reorder moves a whole collapsed group with its descendants intact (603ms)
+2026-11-11T11:52:19.8258373Z   ✓  186 [chromium] › layer-panels.spec.mjs:163:1 › compare split: arrow keys and a mouse drag commit once; Escape restores (1.3s)
+2026-11-11T11:52:20.1448796Z   ✓  188 [chromium] › layer-tree.spec.mjs:9:1 › drag reorder uses visible row height and commits the nested sibling insertion once (836ms)
+2026-11-11T11:52:20.8286761Z   ✓  190 [chromium] › layer-tree.spec.mjs:10:1 › inline opacity commits once on release and retains keyboard focus through acknowledgements (674ms)
+2026-11-11T11:52:21.3903676Z   ✓  189 [chromium] › layer-panels.spec.mjs:179:1 › compare modes: overlay opacity commits through the scrubber; a missing image says so (1.5s)
+2026-11-11T11:52:21.6534389Z   ✓  191 [chromium] › layer-tree.spec.mjs:11:104 › Replace layer document cancels a held layer drag (813ms)
+2026-11-11T11:52:22.4962219Z   ✓  193 [chromium] › layer-tree.spec.mjs:11:104 › Toggle layer editing cancels a held layer drag (831ms)
+2026-11-11T11:52:23.2633760Z   ✓  192 [chromium] › layer-panels.spec.mjs:193:1 › every control in the panels keeps a 44pt target (1.9s)
+2026-11-11T11:52:23.3345581Z   ✓  194 [chromium] › layer-tree.spec.mjs:11:104 › Lock selected layer externally cancels a held layer drag (827ms)
+2026-11-11T11:52:23.8826092Z   ✓  195 [chromium] › layers.spec.mjs:6:1 › kind sublines and thumbnails render; unlabelled kinds fall back (600ms)
+2026-11-11T11:52:24.1327294Z   ✓  196 [chromium] › layer-tree.spec.mjs:12:1 › host failure is shown and the next successful operation clears the error (784ms)
+2026-11-11T11:52:24.5198136Z   ✓  197 [chromium] › layers.spec.mjs:13:1 › the remove button deletes a layer at once and the host's undo restores it (611ms)
+2026-11-11T11:52:24.9115134Z   ✓  198 [chromium] › layer-tree.spec.mjs:13:1 › a pending host operation cannot admit a second mutation or report into the replacement document (769ms)
+2026-11-11T11:52:25.1028133Z   ✓  199 [chromium] › layers.spec.mjs:20:1 › keyboard: Tab reaches remove, Enter removes; Delete on a focused row removes (574ms)
+2026-11-11T11:52:25.5620043Z   ✓  201 [chromium] › layers.spec.mjs:32:1 › locked rows cannot be removed by button or key (450ms)
+2026-11-11T11:52:25.7946389Z   ✓  200 [chromium] › layer-tree.spec.mjs:14:1 › narrow RTL rows keep lock, group and visibility controls inside the panel (874ms)
+2026-11-11T11:52:26.3993507Z   ✓  202 [chromium] › mask-clip.spec.mjs:6:1 › same layer ID and mask revision in a new document never reuse the old preview (820ms)
+2026-11-11T11:52:26.6095684Z   ✓  203 [chromium] › media6.spec.mjs:3:1 › real browser decoder returns the decoded presentation timestamp at frame zero (802ms)
+2026-11-11T11:52:27.1780659Z   ✓  204 [chromium] › mask-clip.spec.mjs:7:1 › a late old-document thumbnail cannot overwrite the replacement document (770ms)
+2026-11-11T11:52:27.2731379Z   ✓  205 [chromium] › media6.spec.mjs:4:1 › real WebAudio returns resampled PCM over the requested span (649ms)
+2026-11-11T11:52:27.7565888Z   ✓  206 [chromium] › mask-clip.spec.mjs:8:91 › Replace mask document retires an incomplete refine entry (569ms)
+2026-11-11T11:52:28.0734651Z   ✓  207 [chromium] › media6.spec.mjs:5:1 › waiting interruption cannot resume and recovered recording requires an explicit decision (786ms)
+2026-11-11T11:52:28.2883862Z   ✓  208 [chromium] › mask-clip.spec.mjs:8:91 › Toggle mask locking retires an incomplete refine entry (522ms)
+2026-11-11T11:52:28.7723307Z   ✓  209 [chromium] › media6.spec.mjs:6:1 › output loss never resumes until the person requests it (685ms)
+2026-11-11T11:52:28.7875449Z   ✓  210 [chromium] › mask-clip.spec.mjs:8:91 › Toggle mask editing retires an incomplete refine entry (487ms)
+2026-11-11T11:52:29.4692634Z   ✓  212 [chromium] › mask-clip.spec.mjs:9:1 › locking prevents refine reset and inherited clipping edits while retaining their reasons (669ms)
+2026-11-11T11:52:29.8034087Z   ✓  211 [chromium] › media6.spec.mjs:7:112 › recovery capture light phone (1.0s)
+2026-11-11T11:52:30.3888762Z   ✓  213 [chromium] › mask-clip.spec.mjs:10:1 › mask error is shown, recovery applies once and selection creation stays unavailable until selected (910ms)
+2026-11-11T11:52:30.8062227Z   ✓  214 [chromium] › media6.spec.mjs:7:112 › recovery capture light tablet (990ms)
+2026-11-11T11:52:31.0503707Z   ✓  215 [chromium] › mask-clip.spec.mjs:11:1 › a pending mask mutation aborts at document replacement without a late edit (653ms)
+2026-11-11T11:52:31.5940475Z   ✓  217 [chromium] › mask-clip.spec.mjs:12:1 › a clipping press held across document replacement cannot toggle the reused ID (532ms)
+2026-11-11T11:52:31.8331503Z   ✓  216 [chromium] › media6.spec.mjs:7:112 › recovery capture dark phone (1.0s)
+2026-11-11T11:52:32.2065172Z   ✓  218 [chromium] › mask-clip.spec.mjs:13:1 › clipping host failure is visible and an unlocked retry toggles one transaction (603ms)
+2026-11-11T11:52:32.7977513Z   ✓  220 [chromium] › midi2-shots.spec.mjs:9:3 › capture midi2 light phone (581ms)
+2026-11-11T11:52:32.9101849Z   ✓  219 [chromium] › media6.spec.mjs:7:112 › recovery capture dark tablet (1.1s)
+2026-11-11T11:52:33.3001269Z   ✓  221 [chromium] › midi2-shots.spec.mjs:9:3 › capture midi2 light tablet (492ms)
+2026-11-11T11:52:33.7993285Z   ✓  223 [chromium] › midi2-shots.spec.mjs:9:3 › capture midi2 dark phone (489ms)
+2026-11-11T11:52:34.0167975Z   ✓  222 [chromium] › media6.spec.mjs:9:1 › a rejected host resume stays open and explains the failure (1.1s)
+2026-11-11T11:52:34.3054793Z   ✓  224 [chromium] › midi2-shots.spec.mjs:9:3 › capture midi2 dark tablet (499ms)
+2026-11-11T11:52:34.8248543Z   ✓  226 [chromium] › midi2-shots.spec.mjs:21:1 › capture midi2 rtl phone (510ms)
+2026-11-11T11:52:35.0988813Z   ✓  225 [chromium] › media6.spec.mjs:11:1 › browser without WebCodecs labels the frame-zero seek fallback explicitly (1.1s)
+2026-11-11T11:52:35.5816107Z   ✓  227 [chromium] › midi2-shots.spec.mjs:34:37 › capture midi2 mid-line-draw light phone (747ms)
+2026-11-11T11:52:35.8013692Z   ✓  228 [chromium] › midi2.spec.mjs:25:1 › line draw: preview while dragging, one batch on release, decreasing left to right (683ms)
+2026-11-11T11:52:36.3166499Z   ✓  229 [chromium] › midi2-shots.spec.mjs:34:37 › capture midi2 mid-line-draw dark phone (723ms)
+2026-11-11T11:52:36.6757389Z   ✓  230 [chromium] › midi2.spec.mjs:46:1 › line draw: Escape mid-drag cancels with no commit and restores the bars (863ms)
+2026-11-11T11:52:37.5569660Z   ✓  232 [chromium] › midi2.spec.mjs:55:1 › line draw: a line that matches the current heights commits nothing (871ms)
+2026-11-11T11:52:38.2193220Z   ✓  233 [chromium] › midi2.spec.mjs:64:1 › line draw in RTL: reversed drag still gives earlier notes the left end (653ms)
+2026-11-11T11:52:38.3701726Z   ✓  231 [chromium] › mixer.spec.mjs:19:1 › console: fader and pan drags commit once; mute and solo toggle (2.0s)
+2026-11-11T11:52:38.9306785Z   ✓  234 [chromium] › midi2.spec.mjs:73:1 › rejected batch keeps the committed velocities (699ms)
+2026-11-11T11:52:39.5704059Z   ✓  236 [chromium] › midi2.spec.mjs:81:1 › keyboard: tool radios, ramp from the selected note, bars tool restores single drags (630ms)
+2026-11-11T11:52:40.0199904Z   ✓  235 [chromium] › mixer.spec.mjs:40:1 › piano roll: drag moves time and pitch in one commit, grip resizes, keys edit (1.6s)
+2026-11-11T11:52:40.2709161Z   ✓  237 [chromium] › midi2.spec.mjs:100:1 › channel: picker for the selected note, labels name channels, keys and buttons commit once (686ms)
+2026-11-11T11:52:40.7825950Z   ✓  239 [chromium] › midi2.spec.mjs:126:1 › targets are at least 44 px and the phone layout does not scroll sideways (496ms)
+2026-11-11T11:52:41.5956140Z   ✓  240 [chromium] › mixer2-shots.spec.mjs:10:3 › capture mixer2 light phone (791ms)
+2026-11-11T11:52:41.7675944Z   ✓  238 [chromium] › mixer.spec.mjs:57:1 › velocity lane and step sequencer commit per gesture (1.7s)
+2026-11-11T11:52:42.2859791Z   ✓  241 [chromium] › mixer2-shots.spec.mjs:10:3 › capture mixer2 light tablet (682ms)
+2026-11-11T11:52:42.9029395Z   ✓  243 [chromium] › mixer2-shots.spec.mjs:10:3 › capture mixer2 dark phone (604ms)
+2026-11-11T11:52:43.4683180Z   ✓  244 [chromium] › mixer2-shots.spec.mjs:10:3 › capture mixer2 dark tablet (555ms)
+2026-11-11T11:52:44.3021517Z   ✓  245 [chromium] › mixer2-shots.spec.mjs:20:3 › capture mixer2 clipped channel and soloed group light (826ms)
+2026-11-11T11:52:45.1687899Z   ✓  246 [chromium] › mixer2-shots.spec.mjs:20:3 › capture mixer2 clipped channel and soloed group dark (860ms)
+2026-11-11T11:52:45.7022371Z   ✓  247 [chromium] › mixer2-shots.spec.mjs:30:1 › capture mixer2 rtl phone (526ms)
+2026-11-11T11:52:46.6123534Z   ✓  248 [chromium] › mixer2.spec.mjs:19:1 › group solo and mute: one commit per press, mixed state, solo silencing follows (896ms)
+2026-11-11T11:52:46.6531686Z   ✓  242 [chromium] › mixer.spec.mjs:70:1 › tempo: tap tempo commits once when tapping stops; time signature commits (4.9s)
+2026-11-11T11:52:47.5134131Z   ✓  249 [chromium] › mixer2.spec.mjs:43:1 › solo safe: toggle commits once and keeps the track audible under another solo (893ms)
+2026-11-11T11:52:48.0695867Z   ✓  250 [chromium] › mixer.spec.mjs:84:1 › waveform: sideways drag scrolls the window, a click seeks (1.4s)
+2026-11-11T11:52:48.5462109Z   ✓  251 [chromium] › mixer2.spec.mjs:58:1 › bus strips: balance slider, routing text, fader drag commits once, Escape-free keys (1.0s)
+2026-11-11T11:52:49.2013322Z   ✓  252 [chromium] › mixer.spec.mjs:95:3 › capture mixer light phone (1.1s)
+2026-11-11T11:52:49.6922108Z   ✓  253 [chromium] › mixer2.spec.mjs:75:1 › meters: display only, clipped channel named in text, absent when not passed (1.1s)
+2026-11-11T11:52:50.4545739Z   ✓  254 [chromium] › mixer.spec.mjs:95:3 › capture mixer light tablet (1.2s)
+2026-11-11T11:52:50.8654746Z   ✓  255 [chromium] › mixer2.spec.mjs:99:3 › 44px targets and no page scroll: phone (1.2s)
+2026-11-11T11:52:51.6202885Z   ✓  256 [chromium] › mixer.spec.mjs:95:3 › capture mixer dark phone (1.2s)
+2026-11-11T11:52:52.0339856Z   ✓  257 [chromium] › mixer2.spec.mjs:99:3 › 44px targets and no page scroll: tablet (1.2s)
+2026-11-11T11:52:52.8532819Z   ✓  258 [chromium] › mixer.spec.mjs:95:3 › capture mixer dark tablet (1.2s)
+2026-11-11T11:52:53.5356035Z   ✓  259 [chromium] › motion-curves.spec.mjs:5:1 › Bezier handle drag previews, commits once and Escape cancels a later gesture (1.5s)
+2026-11-11T11:52:53.7506256Z   ✓  260 [chromium] › mixer.spec.mjs:107:1 › capture mixer rtl phone (890ms)
+2026-11-11T11:52:54.4056848Z   ✓  261 [chromium] › motion-curves.spec.mjs:8:1 › numeric key edits retain other keys and property limits, add/subdivide and delete are exact (862ms)
+2026-11-11T11:52:54.7858099Z   ✓  262 [chromium] › motion-effects.spec.mjs:4:1 › ordered effects reconcile bypass, favorite, move and remove host mutations (1.0s)
+2026-11-11T11:52:55.2353741Z   ✓  263 [chromium] › motion-curves.spec.mjs:11:1 › speed graph changes temporal influence and preserves undefined tangent slopes (815ms)
+2026-11-11T11:52:55.6823150Z   ✓  264 [chromium] › motion-effects.spec.mjs:5:1 › inspector commits numbers and explicit text drafts, then resets to host defaults (885ms)
+2026-11-11T11:52:56.0553194Z   ✓  265 [chromium] › motion-curves.spec.mjs:14:1 › time remap supports reverse and freeze while keeping source time bounded (807ms)
+2026-11-11T11:52:56.4631936Z   ✓  266 [chromium] › motion-effects.spec.mjs:6:1 › library additions and selected presets use stable host identities (770ms)
+2026-11-11T11:52:56.9573224Z   ✓  267 [chromium] › motion-curves.spec.mjs:17:1 › a document switch cancels captured curve editing before a late release (889ms)
+2026-11-11T11:52:57.5425798Z   ✓  269 [chromium] › motion-expression.spec.mjs:3:1 › completion inserts host text and reference insertion respects the saved native selection (572ms)
+2026-11-11T11:52:57.7062246Z   ✓  268 [chromium] › motion-effects.spec.mjs:7:1 › provider rejection leaves authoritative state intact and cancellation prevents a late write (1.2s)
+2026-11-11T11:52:58.3254312Z   ✓  270 [chromium] › motion-expression.spec.mjs:4:1 › diagnostics select exact text and only current successful validation permits apply (775ms)
+2026-11-11T11:52:58.9988315Z   ✓  271 [chromium] › motion-effects.spec.mjs:8:1 › a document boundary cancels pending writes and discards text drafts (1.3s)
+2026-11-11T11:52:59.2513855Z   ✓  272 [chromium] › motion-expression.spec.mjs:5:1 › typing invalidates late completion responses while literal text and emoji survive native editing (918ms)
+2026-11-11T11:52:59.9172992Z   ✓  273 [chromium] › motion-node-graph.spec.mjs:6:1 › typed ports reject mismatches, duplicates and cycles before requesting a host mutation (906ms)
+2026-11-11T11:53:00.4040605Z   ✓  274 [chromium] › motion-expression.spec.mjs:6:1 › language service errors remain visible and cancelled validation cannot authorize apply (1.1s)
+2026-11-11T11:53:01.2203578Z   ✓  275 [chromium] › motion-node-graph.spec.mjs:7:1 › node inspector moves exact coordinates and add/remove/disconnect remain host controlled (1.3s)
+2026-11-11T11:53:01.4537244Z   ✓  276 [chromium] › motion-expression.spec.mjs:7:1 › document replacement aborts a pending apply and resets native editor text (1.0s)
+2026-11-11T11:53:01.9973359Z   ✓  277 [chromium] › motion-node-graph.spec.mjs:8:1 › canvas dragging commits once and rejected movement resets to the authoritative node position (768ms)
+2026-11-11T11:53:02.1153622Z   ✓  278 [chromium] › motion-path.spec.mjs:4:1 › anchor previews and commits use the same snapped point and preserve tangent offsets (650ms)
+2026-11-11T11:53:02.7546324Z   ✓  280 [chromium] › motion-path.spec.mjs:5:1 › tangent direction snapping retains dragged length and keyboard editing remains available (631ms)
+2026-11-11T11:53:03.3485225Z   ✓  281 [chromium] › motion-path.spec.mjs:6:1 › Escape and document replacement discard active path work (586ms)
+2026-11-11T11:53:03.7888942Z   ✓  282 [chromium] › motion-queue.spec.mjs:3:1 › sequence enqueue preserves rational rate, alpha and output profile (429ms)
+2026-11-11T11:53:03.9106712Z   ✓  279 [chromium] › motion-node-graph.spec.mjs:9:1 › cancelled mutations and document changes prevent late writes and discard in-flight gestures (1.9s)
+2026-11-11T11:53:04.2633079Z   ✓  283 [chromium] › motion-queue.spec.mjs:6:1 › invalid output names stay editable and cannot enqueue (456ms)
+2026-11-11T11:53:04.3786780Z   ✓  284 [chromium] › motion-node-graph.spec.mjs:10:1 › canvas port mismatch provides feedback and graph controls fit a narrow pane (457ms)
+2026-11-11T11:53:04.8295769Z   ✓  285 [chromium] › motion-queue.spec.mjs:9:1 › queue reorder leaves the active job in place; cancelling reports an exact identity (559ms)
+2026-11-11T11:53:05.0333047Z   ✓  286 [chromium] › motion-settings.spec.mjs:4:1 › 3D entry preserves full rotations and untouched coordinates; reset is explicit (641ms)
+2026-11-11T11:53:05.4242955Z   ✓  287 [chromium] › motion-queue.spec.mjs:12:1 › cancelled enqueue cannot mark a late provider return as a queued render (582ms)
+2026-11-11T11:53:05.7896253Z   ✓  288 [chromium] › motion-settings.spec.mjs:7:1 › camera rejects a degenerate target visibly, then commits a valid depth (748ms)
+2026-11-11T11:53:05.9726126Z   ✓  289 [chromium] › motion-queue.spec.mjs:15:1 › easing choices preserve overshoot while unsupported springs remain unavailable (536ms)
+2026-11-11T11:53:06.3151971Z   ✓  290 [chromium] › motion-settings.spec.mjs:10:1 › matte sources exclude self and cycles while preserving selected alpha/luma intent (516ms)
+2026-11-11T11:53:06.4396715Z   ✓  291 [chromium] › motion-queue.spec.mjs:20:1 › a spring-capable evaluator receives the complete physical preset (456ms)
+2026-11-11T11:53:06.8113298Z   ✓  292 [chromium] › motion-settings.spec.mjs:13:1 › particle seed and gravity are retained exactly without starting a simulator (485ms)
+2026-11-11T11:53:07.3228492Z   ✓  293 [chromium] › motion-timeline.spec.mjs:5:1 › Shift selects across tracks and dragging commits one bounded group translation (870ms)
+2026-11-11T11:53:07.4473752Z   ✓  294 [chromium] › multi-selection.spec.mjs:5:1 › Shift selects an ordered range and Command toggles without losing the anchor (620ms)
+2026-11-11T11:53:07.9038941Z   ✓  296 [chromium] › multi-selection.spec.mjs:6:1 › native-equivalent add/remove buttons support multiple selection without a modifier (445ms)
+2026-11-11T11:53:08.0493217Z   ✓  295 [chromium] › motion-timeline.spec.mjs:8:1 › Control toggles a selected key and the virtual key list retains the same group (713ms)
+2026-11-11T11:53:08.3450555Z   ✓  297 [chromium] › multi-selection.spec.mjs:7:1 › keyboard range selection and repeated toggles keep their focused row (429ms)
+2026-11-11T11:53:08.8527793Z   ✓  299 [chromium] › multi-selection.spec.mjs:8:1 › mixed numeric values apply one transaction to the complete selection (497ms)
+2026-11-11T11:53:08.9528418Z   ✓  298 [chromium] › motion-timeline.spec.mjs:11:1 › Escape and a composition switch cancel active group drags (896ms)
+2026-11-11T11:53:09.4126388Z   ✓  300 [chromium] › multi-selection.spec.mjs:9:1 › group and ungroup issue one host transaction and preserve member identities (547ms)
+2026-11-11T11:53:09.4763159Z   ✓  301 [chromium] › motion-timeline.spec.mjs:14:1 › editing playhead text cannot trigger a timeline delete shortcut (513ms)
+2026-11-11T11:53:09.9088647Z   ✓  302 [chromium] › multi-selection.spec.mjs:10:91 › Replace multi-selection document rejects an unfinished shared property draft (485ms)
+2026-11-11T11:53:10.0182661Z   ✓  303 [chromium] › motion-timeline.spec.mjs:17:1 › group deletion is one atomic edit and retains unselected properties and keys (527ms)
+2026-11-11T11:53:10.3372539Z   ✓  304 [chromium] › multi-selection.spec.mjs:10:91 › Toggle multi-selection editing rejects an unfinished shared property draft (418ms)
+2026-11-11T11:53:10.7146970Z   ✓  305 [chromium] › native-feel.spec.mjs:72:1 › Native feel reference › account content fits intermediate widths and changes arrangement at its measured content boundary (681ms)
+2026-11-11T11:53:10.8480022Z   ✓  306 [chromium] › multi-selection.spec.mjs:11:1 › read-only selection keeps selection changes available but refuses document mutation (501ms)
+2026-11-11T11:53:11.0629705Z   ✓  307 [chromium] › native-feel.spec.mjs:81:1 › Native feel reference › a narrow pane in a desktop window keeps its single-column arrangement (340ms)
+2026-11-11T11:53:11.6515535Z   ✓  309 [chromium] › native-feel.spec.mjs:93:1 › Native feel reference › resizing retains the actual input element, focus and an unsaved draft (581ms)
+2026-11-11T11:53:11.9418333Z   ✓  308 [chromium] › multi-selection.spec.mjs:12:1 › lasso reuses the public marquee and host centre-hit policy (1.1s)
+2026-11-11T11:53:12.3993473Z   ✓  310 [chromium] › native-feel.spec.mjs:113:1 › Native feel reference › blank-name validation recovers, local save updates the preview and reset restores the saved draft (738ms)
+2026-11-11T11:53:12.5903144Z   ✓  311 [chromium] › multi-selection.spec.mjs:13:1 › RTL and narrow panes retain labelled 44-point selection targets (637ms)
+2026-11-11T11:53:12.9772363Z   ✓  312 [chromium] › native-feel.spec.mjs:145:1 › Native feel reference › appearance supports radio-keyboard navigation, explicit native Host themes and returning to system (566ms)
+2026-11-11T11:53:13.3194532Z   ✓  313 [chromium] › office-shots.spec.mjs:5:3 › office slides capture light phone (715ms)
+2026-11-11T11:53:13.3816998Z   ✓  314 [chromium] › native-feel.spec.mjs:176:3 › Native feel reference › RTL account content remains bounded at 390 (398ms)
+2026-11-11T11:53:13.7955109Z   ✓  316 [chromium] › native-feel.spec.mjs:176:3 › Native feel reference › RTL account content remains bounded at 1440 (405ms)
+2026-11-11T11:53:13.9093807Z   ✓  315 [chromium] › office-shots.spec.mjs:5:3 › office slides capture light tablet (578ms)
+2026-11-11T11:53:14.3000754Z   ✓  317 [chromium] › native-feel.spec.mjs:190:3 › Native feel reference › large text preserves bounded content and reachable actions at 390 (497ms)
+2026-11-11T11:53:14.4733152Z   ✓  318 [chromium] › office-shots.spec.mjs:5:3 › office slides capture dark phone (556ms)
+2026-11-11T11:53:14.8603342Z   ✓  319 [chromium] › native-feel.spec.mjs:190:3 › Native feel reference › large text preserves bounded content and reachable actions at 834 (551ms)
+2026-11-11T11:53:15.0205498Z   ✓  320 [chromium] › office-shots.spec.mjs:5:3 › office slides capture dark tablet (543ms)
+2026-11-11T11:53:15.2813349Z   ✓  321 [chromium] › native-feel.spec.mjs:212:3 › Native feel reference › capture native feel desktop light (406ms)
+2026-11-11T11:53:15.5322800Z   ✓  322 [chromium] › office-shots.spec.mjs:5:3 › office document capture light phone (497ms)
+2026-11-11T11:53:15.7453120Z   ✓  323 [chromium] › native-feel.spec.mjs:212:3 › Native feel reference › capture native feel desktop dark (433ms)
+2026-11-11T11:53:16.0092816Z   ✓  324 [chromium] › office-shots.spec.mjs:5:3 › office document capture light tablet (455ms)
+2026-11-11T11:53:16.2032588Z   ✓  325 [chromium] › native-feel.spec.mjs:212:3 › Native feel reference › capture native feel phone light (449ms)
+2026-11-11T11:53:16.5607072Z   ✓  326 [chromium] › office-shots.spec.mjs:5:3 › office document capture dark phone (538ms)
+2026-11-11T11:53:16.6203860Z   ✓  327 [chromium] › native-feel.spec.mjs:212:3 › Native feel reference › capture native feel phone dark (405ms)
+2026-11-11T11:53:17.0684411Z   ✓  328 [chromium] › office-shots.spec.mjs:5:3 › office document capture dark tablet (498ms)
+2026-11-11T11:53:17.5113104Z   ✓  330 [chromium] › office-shots.spec.mjs:5:3 › office pdf capture light phone (433ms)
+2026-11-11T11:53:17.5781510Z   ✓  329 [chromium] › office.spec.mjs:13:3 › J slides › J-05 canvas: select, drag with snapping, nudge, rotate, delete (915ms)
+2026-11-11T11:53:17.9956591Z   ✓  331 [chromium] › office-shots.spec.mjs:5:3 › office pdf capture light tablet (475ms)
+2026-11-11T11:53:18.3839367Z   ✓  332 [chromium] › office.spec.mjs:38:3 › J slides › J-05 canvas: slide space is not mirrored in RTL (797ms)
+2026-11-11T11:53:18.4499170Z   ✓  333 [chromium] › office-shots.spec.mjs:5:3 › office pdf capture dark phone (443ms)
+2026-11-11T11:53:18.9026230Z   ✓  335 [chromium] › office-shots.spec.mjs:5:3 › office pdf capture dark tablet (442ms)
+2026-11-11T11:53:19.0555526Z   ✓  334 [chromium] › office.spec.mjs:54:3 › J slides › J-05 canvas: corner resize keeps one commit; a cancelled drag reports nothing (661ms)
+2026-11-11T11:53:19.4760673Z   ✓  336 [chromium] › office-shots.spec.mjs:15:47 › office slides capture rtl phone (563ms)
+2026-11-11T11:53:19.8008353Z   ✓  337 [chromium] › office.spec.mjs:65:3 › J slides › J-01 filmstrip: Alt+Down moves a slide, Delete removes, New slide appends (738ms)
+2026-11-11T11:53:19.9690986Z   ✓  338 [chromium] › office-shots.spec.mjs:15:47 › office document capture rtl phone (483ms)
+2026-11-11T11:53:20.4174500Z   ✓  340 [chromium] › office-shots.spec.mjs:15:47 › office pdf capture rtl phone (440ms)
+2026-11-11T11:53:20.5925415Z   ✓  339 [chromium] › office.spec.mjs:79:3 › J slides › J-01 filmstrip: grip drag reorders on a horizontal phone strip (782ms)
+2026-11-11T11:53:21.4071457Z   ✓  341 [chromium] › office-shots.spec.mjs:21:37 › office states capture light phone (981ms)
+2026-11-11T11:53:21.5727003Z   ✓  342 [chromium] › office.spec.mjs:90:3 › J slides › J-02 sorter: range select, block move, delete guard (973ms)
+2026-11-11T11:53:22.4655367Z   ✓  343 [chromium] › office-shots.spec.mjs:21:37 › office states capture dark phone (1.0s)
+2026-11-11T11:53:22.6464546Z   ✓  344 [chromium] › office.spec.mjs:107:3 › J slides › J-09 animation pane: validation, engine rejection keeps the form, add and remove (1.1s)
+2026-11-11T11:53:23.0577064Z   ✓  345 [chromium] › overlay-ownership.spec.mjs:5:1 › context menus close on target replacement without selecting the reused command (575ms)
+2026-11-11T11:53:23.3925922Z   ✓  346 [chromium] › office.spec.mjs:131:3 › H documents › H-03 ribbon: mixed bold turns on, color and size commit, paragraph style (737ms)
+2026-11-11T11:53:23.6080463Z   ✓  347 [chromium] › overlay-ownership.spec.mjs:6:1 › palette scope replacement resets its query and executes only the current command owner (539ms)
+2026-11-11T11:53:24.0097588Z   ✓  348 [chromium] › office.spec.mjs:148:3 › H documents › H-07 lists: nesting policy, Shift+Tab outdent, renumbered preview (609ms)
+2026-11-11T11:53:24.1675748Z   ✓  349 [chromium] › overlay-ownership.spec.mjs:7:1 › shortcut recording is abandoned when the workspace changes (548ms)
+2026-11-11T11:53:24.5608971Z   ✓  351 [chromium] › overlay-ownership.spec.mjs:8:1 › recording clock changes are outside the polite activity announcement (383ms)
+2026-11-11T11:53:24.7183145Z   ✓  350 [chromium] › office.spec.mjs:161:3 › H documents › H-15 outline: jump, collapse, current heading, pages (698ms)
+2026-11-11T11:53:25.3633174Z   ✓  353 [chromium] › office.spec.mjs:176:3 › H documents › H-21 read aloud: play, keys, skip, speed, stop (638ms)
+2026-11-11T11:53:25.9094080Z   ✓  352 [chromium] › overlay-ownership.spec.mjs:9:1 › export suppresses duplicate pending submission and exposes a provider rejection in the usable pane (1.3s)
+2026-11-11T11:53:26.4033049Z   ✓  354 [chromium] › office.spec.mjs:197:3 › K PDF › K-04 search: page-ordered hits from the current page, wrap, toggles, no match (1.0s)
+2026-11-11T11:53:26.8266421Z   ✓  356 [chromium] › office.spec.mjs:225:3 › K PDF › K-06 toolbar: only engine tools, letter shortcuts, Escape to Select (416ms)
+2026-11-11T11:53:26.9221738Z   ✓  355 [chromium] › overlay-ownership.spec.mjs:10:1 › a late export rejection cannot become the replacement document error (1.0s)
+2026-11-11T11:53:27.4382341Z   ✓  358 [chromium] › overlay-ownership.spec.mjs:11:1 › an open trigger popover remeasures on viewport resize and retains usable controls (504ms)
+2026-11-11T11:53:27.5589811Z   ✓  357 [chromium] › office.spec.mjs:238:3 › K PDF › K-07 comments: filter, reply, resolve, delete (723ms)
+2026-11-11T11:53:28.0331964Z   ✓  359 [chromium] › overlay-ownership.spec.mjs:12:1 › native menu web presentation closes on scope replacement and dispatches only its current owner (583ms)
+2026-11-11T11:53:28.0941627Z   ✓  360 [chromium] › office.spec.mjs:255:3 › K PDF › K-07 comments: a failed reply keeps the draft and says why (523ms)
+2026-11-11T11:53:28.7609560Z   ✓  361 [chromium] › overlay-ownership.spec.mjs:13:1 › temporarily empty usable regions hide overlays without crashing and recover their controls (719ms)
+2026-11-11T11:53:28.8760097Z   ✓  362 [chromium] › office.spec.mjs:264:3 › K PDF › K-18 read aloud: page steps and the no-voice state (767ms)
+2026-11-11T11:53:29.3554014Z   ✓  363 [chromium] › overlay-ownership.spec.mjs:14:1 › file metadata toggles and format choices support keyboard operation and exact settings (583ms)
+2026-11-11T11:53:29.8113905Z   ✓  364 [chromium] › pairing.spec.mjs:16:1 › stop and close reach different callbacks; a linked dialog closes without stop (917ms)
+2026-11-11T11:53:29.8705863Z   ✓  365 [chromium] › panel-layout.spec.mjs:2:49 › layers preserves the app-authored flex panel geometry (502ms)
+2026-11-11T11:53:30.1606124Z   ✓  366 [chromium] › pairing.spec.mjs:33:1 › system-pairing lists the host's steps in order and opens Settings (340ms)
+2026-11-11T11:53:30.2431819Z   ✓  367 [chromium] › panel-layout.spec.mjs:2:49 › mask preserves the app-authored flex panel geometry (359ms)
+2026-11-11T11:53:30.6447072Z   ✓  369 [chromium] › panel-layout.spec.mjs:2:49 › artboards preserves the app-authored flex panel geometry (393ms)
+2026-11-11T11:53:31.7717449Z   ✓  370 [chromium] › photo-catalog.spec.mjs:3:1 › 10,000-photo page virtualizes and retains off-page selection on toggle and open (1.1s)
+2026-11-11T11:53:32.3102535Z   ✓  371 [chromium] › photo-catalog.spec.mjs:8:1 › capture dates reject impossible and reversed intervals without changing host filters (530ms)
+2026-11-11T11:53:32.4563557Z   ✓  368 [chromium] › pairing.spec.mjs:41:1 › idle shows the intro; every control is at least 44px; no horizontal scroll (2.3s)
+2026-11-11T11:53:32.8603043Z   ✓  372 [chromium] › photo-catalog.spec.mjs:12:1 › EXIF range enablement and clearing preserve explicit absence (539ms)
+2026-11-11T11:53:33.3340417Z   ✓  374 [chromium] › photo-catalog.spec.mjs:15:1 › canonical photo comparison uses actual decoded images and shared wipe keys (467ms)
+2026-11-11T11:53:33.8183244Z   ✓  375 [chromium] › photo-catalog.spec.mjs:20:1 › metadata preserves source values and commits only the separate annotation (474ms)
+2026-11-11T11:53:34.4871542Z   ✓  376 [chromium] › photo-develop.spec.mjs:4:1 › photo ratings preserve independent color label and exclusive pick/reject (653ms)
+2026-11-11T11:53:35.0032879Z   ✓  373 [chromium] › pairing.spec.mjs:54:68 › captures light phone (2.5s)
+2026-11-11T11:53:35.3298778Z   ✓  377 [chromium] › photo-develop.spec.mjs:8:1 › develop commits precise exposure and one band while retaining original settings (827ms)
+2026-11-11T11:53:36.1325760Z   ✓  379 [chromium] › photo-develop.spec.mjs:13:1 › copy/paste restores exact settings as a single host revision (790ms)
+2026-11-11T11:53:36.6387525Z   ✓  380 [chromium] › photo-develop.spec.mjs:17:1 › invalid settings paste reports an error and retains the photo (496ms)
+2026-11-11T11:53:37.3111669Z   ✓  381 [chromium] › photo-develop.spec.mjs:20:1 › changing photos cancels pending paste and discards late completion (666ms)
+2026-11-11T11:53:37.5298299Z   ✓  378 [chromium] › pairing.spec.mjs:54:68 › captures light tablet (2.5s)
+2026-11-11T11:53:37.9785171Z   ✓  382 [chromium] › photo-develop.spec.mjs:23:1 › lens values stay disabled until enabled and profile identity is retained (658ms)
+2026-11-11T11:53:38.4740205Z   ✓  384 [chromium] › photo-develop.spec.mjs:28:1 › switching photos discards a numeric draft before its old field can blur (474ms)
+2026-11-11T11:53:39.1876228Z   ✓  385 [chromium] › photo-masks.spec.mjs:4:1 › brush path previews and commits once with normalized image samples (701ms)
+2026-11-11T11:53:39.7693348Z   ✓  386 [chromium] › photo-masks.spec.mjs:7:1 › Escape cancels an active brush without a late release commit (572ms)
+2026-11-11T11:53:40.0487897Z   ✓  383 [chromium] › pairing.spec.mjs:54:68 › captures dark phone (2.5s)
+2026-11-11T11:53:40.2775540Z   ✓  387 [chromium] › photo-masks.spec.mjs:10:1 › numeric mask and retouch stamps use one shared bounded input contract (495ms)
+2026-11-11T11:53:40.8379978Z   ✓  389 [chromium] › photo-masks.spec.mjs:13:1 › gradient mask uses geometry-only handles and commits source-pixel keyboard nudges (549ms)
+2026-11-11T11:53:41.3028226Z   ✓  390 [chromium] › photo-masks.spec.mjs:16:1 › range sampling retains original profile floats and declared combine policy (456ms)
+2026-11-11T11:53:41.8524570Z   ✓  391 [chromium] › photo-masks.spec.mjs:19:1 › late document range samples cannot change another photo (541ms)
+2026-11-11T11:53:42.4625649Z   ✓  392 [chromium] › photo-masks.spec.mjs:23:1 › gradient coverage pixels update during geometry preview and release commits once (602ms)
+2026-11-11T11:53:42.5978287Z   ✓  388 [chromium] › pairing.spec.mjs:54:68 › captures dark tablet (2.5s)
+2026-11-11T11:53:43.0613602Z   ✓  393 [chromium] › photo-masks.spec.mjs:28:1 › changing photos abandons a captured gradient drag before its late release (589ms)
+2026-11-11T11:53:43.6506375Z   ✓  395 [chromium] › photo-workflow.spec.mjs:3:1 › tap preview, favorite and explicit batch apply preserve photo identities (577ms)
+2026-11-11T11:53:43.9433743Z   ✓  394 [chromium] › pairing.spec.mjs:63:1 › captures RTL (1.3s)
+2026-11-11T11:53:44.2083197Z   ✓  396 [chromium] › photo-workflow.spec.mjs:6:1 › preset import/export retains versioned settings and refuses duplicate identity (546ms)
+2026-11-11T11:53:44.5934792Z   ✓  397 [chromium] › pointer-input.spec.mjs:9:3 › Pointer input browser adapter › actual mouse capture commits outside the surface with logical coordinates (635ms)
+2026-11-11T11:53:44.6762907Z   ✓  398 [chromium] › photo-workflow.spec.mjs:9:1 › malformed import cannot reach the preset library (460ms)
+2026-11-11T11:53:45.0250505Z   ✓  399 [chromium] › pointer-input.spec.mjs:29:3 › Pointer input browser adapter › keyboard observation and focus loss cancel an unfinished mouse stroke (423ms)
+2026-11-11T11:53:45.2086183Z   ✓  400 [chromium] › photo-workflow.spec.mjs:12:1 › photo version compare and original restore preserve snapshot data (518ms)
+2026-11-11T11:53:45.5266682Z   ✓  401 [chromium] › pointer-input.spec.mjs:48:3 › Pointer input browser adapter › synthetic pen-hover contract clears on unmount before a real browser touch (493ms)
+2026-11-11T11:53:45.8183099Z   ✓  402 [chromium] › photo-workflow.spec.mjs:15:1 › batch export captures exact watermark and metadata privacy intent (602ms)
+2026-11-11T11:53:46.2765883Z   ✓  403 [chromium] › precision-ownership.spec.mjs:4:89 › slider abandons a held gesture across scope replacement without a stale commit or preview (734ms)
+2026-11-11T11:53:46.3163303Z   ✓  404 [chromium] › photo-workflow.spec.mjs:20:1 › cancelled import cannot mutate the library after its reader completes late (485ms)
+2026-11-11T11:53:46.8334409Z   ✓  406 [chromium] › primitives.spec.mjs:17:3 › content and feedback primitives › the semantic set renders real landmarks, headings, paragraphs and links (501ms)
+2026-11-11T11:53:47.0073533Z   ✓  405 [chromium] › precision-ownership.spec.mjs:4:89 › range abandons a held gesture across scope replacement without a stale commit or preview (721ms)
+2026-11-11T11:53:47.3603709Z   ✓  407 [chromium] › primitives.spec.mjs:35:3 › content and feedback primitives › banners announce politely unless asked, and close from a 44pt control (515ms)
+2026-11-11T11:53:47.5783581Z   ✓  408 [chromium] › precision-ownership.spec.mjs:4:89 › knob abandons a held gesture across scope replacement without a stale commit or preview (561ms)
+2026-11-11T11:53:47.7367656Z   ✓  409 [chromium] › primitives.spec.mjs:50:3 › content and feedback primitives › an error message renders only with a message and is an alert (366ms)
+2026-11-11T11:53:48.1586111Z   ✓  411 [chromium] › primitives.spec.mjs:55:3 › content and feedback primitives › empty state has a heading and a live exit (413ms)
+2026-11-11T11:53:48.1668930Z   ✓  410 [chromium] › precision-ownership.spec.mjs:5:1 › fractional step entry retains exact values and repeated key commits retain focus (574ms)
+2026-11-11T11:53:48.6344267Z   ✓  412 [chromium] › primitives.spec.mjs:61:3 › content and feedback primitives › drops are filtered by accept and report one enter (463ms)
+2026-11-11T11:53:48.6749581Z   ✓  413 [chromium] › precision-ownership.spec.mjs:6:1 › inspector scope replacement discards a draft even when selection titles repeat (488ms)
+2026-11-11T11:53:49.1781721Z   ✓  414 [chromium] › primitives.spec.mjs:70:3 › content and feedback primitives › the browse path opens the system chooser and delivers files (528ms)
+2026-11-11T11:53:49.5675334Z   ✓  416 [chromium] › primitives.spec.mjs:87:3 › content and feedback primitives › NightScope keeps its subtree dark on a light page (377ms)
+2026-11-11T11:53:49.6308759Z   ✓  415 [chromium] › precision-ownership.spec.mjs:7:1 › disable and unmount cancel a held gesture without calling another owner (935ms)
+2026-11-11T11:53:50.1053495Z   ✓  417 [chromium] › primitives.spec.mjs:94:3 › content and feedback primitives › key/value pairs go two-up only in a wide pane (523ms)
+2026-11-11T11:53:50.4016218Z   ✓  418 [chromium] › precision-ownership.spec.mjs:9:109 › canonical scrubber rejects a held release after Replace precision scope (759ms)
+2026-11-11T11:53:50.5887092Z   ✓  419 [chromium] › primitives.spec.mjs:104:1 › right-to-left mirrors the banner and record layout (476ms)
+2026-11-11T11:53:51.1492928Z   ✓  421 [chromium] › primitives.spec.mjs:117:3 › capture primitives light phone (552ms)
+2026-11-11T11:53:51.1769894Z   ✓  420 [chromium] › precision-ownership.spec.mjs:9:109 › canonical scrubber rejects a held release after Toggle precision availability (765ms)
+2026-11-11T11:53:51.8515645Z   ✓  422 [chromium] › primitives.spec.mjs:117:3 › capture primitives light tablet (693ms)
+2026-11-11T11:53:51.9459338Z   ✓  423 [chromium] › precision-ownership.spec.mjs:9:109 › canonical scrubber rejects a held release after Unmount precision controls (758ms)
+2026-11-11T11:53:52.4385240Z   ✓  424 [chromium] › primitives.spec.mjs:117:3 › capture primitives dark phone (578ms)
+2026-11-11T11:53:52.6170564Z   ✓  425 [chromium] › precision-ownership.spec.mjs:10:1 › canonical scrubber retains focus through controlled keyboard acknowledgements (661ms)
+2026-11-11T11:53:53.1353034Z   ✓  426 [chromium] › primitives.spec.mjs:117:3 › capture primitives dark tablet (688ms)
+2026-11-11T11:53:53.3917776Z   ✓  427 [chromium] › precision-ownership.spec.mjs:12:1 › late async scrub rejection cannot show an error on the next document (764ms)
+2026-11-11T11:53:53.6488086Z   ✓  428 [chromium] › primitives.spec.mjs:133:1 › capture primitives forced colors (501ms)
+2026-11-11T11:53:55.5282738Z   ✓  430 [chromium] › routing-shots.spec.mjs:15:3 › routing capture light phone (1.8s)
+2026-11-11T11:53:56.0562715Z   ✓  429 [chromium] › reference-app.spec.mjs:40:3 › Complete native feel reference › library shows loading, failure recovery, selection and saved empty state (2.6s)
+2026-11-11T11:53:57.3976711Z   ✓  431 [chromium] › routing-shots.spec.mjs:15:3 › routing capture light tablet (1.9s)
+2026-11-11T11:53:58.8324777Z   ✓  432 [chromium] › reference-app.spec.mjs:66:3 › Complete native feel reference › editor keeps the same draft input across routes and viewport changes (2.8s)
+2026-11-11T11:53:59.2515573Z   ✓  433 [chromium] › routing-shots.spec.mjs:15:3 › routing capture dark phone (1.8s)
+2026-11-11T11:54:00.3123611Z   ✓  434 [chromium] › reference-app.spec.mjs:118:3 › Complete native feel reference › settings validate, save, restore and carry appearance through navigation (1.5s)
+2026-11-11T11:54:01.0761581Z   ✓  435 [chromium] › routing-shots.spec.mjs:15:3 › routing capture dark tablet (1.8s)
+2026-11-11T11:54:01.7794696Z   ✓  437 [chromium] › routing-shots.spec.mjs:24:1 › routing capture rtl phone (693ms)
+2026-11-11T11:54:02.0553650Z   ✓  436 [chromium] › reference-app.spec.mjs:141:3 › Complete native feel reference › real browser frame decode recovers and saves a note against decoded time (1.7s)
+2026-11-11T11:54:03.1100686Z   ✓  438 [chromium] › routing-shots.spec.mjs:28:1 › routing capture narrow pane, no buses, error (1.3s)
+2026-11-11T11:54:03.8193430Z   ✓  440 [chromium] › routing.spec.mjs:22:1 › matrix grid: output radios commit once per press and per arrow key (694ms)
+2026-11-11T11:54:05.0540009Z   ✓  441 [chromium] › routing.spec.mjs:41:1 › send slider: drag commits once, Escape cancels, keys step, Delete removes, Add adds (1.2s)
+2026-11-11T11:54:05.3424993Z   ✓  439 [chromium] › reference-app.spec.mjs:166:3 › Complete native feel reference › all routes stay bounded at narrow, intermediate and wide sizes (3.3s)
+2026-11-11T11:54:05.6654932Z   ✓  442 [chromium] › routing.spec.mjs:67:1 › matrix measures its container: a narrow pane gets cards on a tablet (602ms)
+2026-11-11T11:54:06.3898379Z   ✓  443 [chromium] › reference-app.spec.mjs:184:3 › Complete native feel reference › large text and RTL retain reachable actions (1.0s)
+2026-11-11T11:54:06.7565888Z   ✓  444 [chromium] › routing.spec.mjs:76:1 › phone: cards, 44 px targets, no horizontal page scroll (1.1s)
+2026-11-11T11:54:07.5072204Z   ✓  446 [chromium] › routing.spec.mjs:95:1 › empty states: no tracks, no buses with an exit (740ms)
+2026-11-11T11:54:08.2016987Z   ✓  447 [chromium] › routing.spec.mjs:106:1 › rejected commits leave the committed routing on screen (676ms)
+2026-11-11T11:54:08.7226895Z   ✓  448 [chromium] › routing.spec.mjs:119:1 › disabled: every control refuses input (510ms)
+2026-11-11T11:54:09.5373878Z   ✓  449 [chromium] › routing.spec.mjs:128:1 › insert rack: bypass, move by button and keys, remove, add from the picker (808ms)
+2026-11-11T11:54:10.0117025Z   ✓  450 [chromium] › routing.spec.mjs:154:1 › insert rack: a full chain disables Add and says why (463ms)
+2026-11-11T11:54:10.6277130Z   ✓  445 [chromium] › reference-app.spec.mjs:198:3 › Complete native feel reference › records repeatable development render p50 and p95 without an invented budget (4.2s)
+2026-11-11T11:54:10.8633465Z   ✓  451 [chromium] › routing.spec.mjs:164:1 › preset browser: search filters, radio applies, arrows apply, empty result clears (842ms)
+2026-11-11T11:54:11.6892063Z   ✓  453 [chromium] › routing.spec.mjs:187:1 › preset browser: loading and error text, retry (812ms)
+2026-11-11T11:54:12.4073716Z   ✓  452 [chromium] › reference-app.spec.mjs:230:5 › Complete native feel reference › capture reference library in light and dark (1.8s)
+2026-11-11T11:54:12.6652370Z   ✓  454 [chromium] › scrubber.spec.mjs:13:1 › a horizontal drag previews and commits once on release (959ms)
+2026-11-11T11:54:13.4536816Z   ✓  456 [chromium] › scrubber.spec.mjs:23:1 › moving up switches to fine precision and shows it (772ms)
+2026-11-11T11:54:13.9517303Z   ✓  455 [chromium] › reference-app.spec.mjs:230:5 › Complete native feel reference › capture reference editor in light and dark (1.5s)
+2026-11-11T11:54:14.2962494Z   ✓  457 [chromium] › scrubber.spec.mjs:31:1 › Escape mid-drag restores the value without committing (832ms)
+2026-11-11T11:54:15.0424500Z   ✓  459 [chromium] › scrubber.spec.mjs:42:1 › arrow keys, buttons and text entry each commit once (738ms)
+2026-11-11T11:54:15.5644028Z   ✓  460 [chromium] › scrubber.spec.mjs:54:1 › disabled scrubber exposes its state and ignores input (508ms)
+2026-11-11T11:54:15.7632849Z   ✓  458 [chromium] › reference-app.spec.mjs:230:5 › Complete native feel reference › capture reference media in light and dark (1.8s)
+2026-11-11T11:54:16.3892987Z   ✓  461 [chromium] › scrubber.spec.mjs:60:1 › grab handle reorders on release and Escape cancels (812ms)
+2026-11-11T11:54:16.9059722Z   ✓  463 [chromium] › seekbar.spec.mjs:6:3 › transport is one row under the slider at 390px (501ms)
+2026-11-11T11:54:17.3037756Z   ✓  462 [chromium] › reference-app.spec.mjs:230:5 › Complete native feel reference › capture reference settings in light and dark (1.5s)
+2026-11-11T11:54:17.4760791Z   ✓  464 [chromium] › seekbar.spec.mjs:6:3 › transport is one row under the slider at 834px (561ms)
+2026-11-11T11:54:18.0939269Z   ✓  466 [chromium] › seekbar.spec.mjs:23:1 › frame buttons step the controlled frame (611ms)
+2026-11-11T11:54:18.1870358Z   ✓  465 [chromium] › reference-app.spec.mjs:245:5 › Complete native feel reference › capture reference phone light (874ms)
+2026-11-11T11:54:18.5394682Z   ✓  467 [chromium] › seekbar.spec.mjs:35:1 › timecode uses the theme text token in dark mode on a light OS (438ms)
+2026-11-11T11:54:18.9982948Z   ✓  469 [chromium] › seekbar.spec.mjs:42:1 › transport stays inside the card at 390px (446ms)
+2026-11-11T11:54:19.0265570Z   ✓  468 [chromium] › reference-app.spec.mjs:245:5 › Complete native feel reference › capture reference phone dark (829ms)
+2026-11-11T11:54:20.0091432Z   ✓  471 [chromium] › selection-bounds.spec.mjs:7:1 › corner resize previews one captured edit and commits once with the opposite corner fixed (959ms)
+2026-11-11T11:54:20.1634412Z   ✓  470 [chromium] › seekbar.spec.mjs:51:1 › dragging the slider previews and commits once on release (1.2s)
+2026-11-11T11:54:20.7038037Z   ✓  473 [chromium] › seekbar.spec.mjs:66:1 › an arrow key on the focused slider commits once (531ms)
+2026-11-11T11:54:20.9451241Z   ✓  472 [chromium] › selection-bounds.spec.mjs:8:1 › keyboard moves retain focus through controlled acknowledgements and Escape cancels a drag (928ms)
+2026-11-11T11:54:21.7395425Z   ✓  475 [chromium] › selection-bounds.spec.mjs:9:84 › Replace selection document retires the held resize without a stale commit (783ms)
+2026-11-11T11:54:22.5586601Z   ✓  476 [chromium] › selection-bounds.spec.mjs:9:84 › Toggle selection availability retires the held resize without a stale commit (811ms)
+2026-11-11T11:54:23.1533742Z   ✓  474 [chromium] › selection-tools-shots.spec.mjs:6:3 › selection-tools capture light phone (2.4s)
+2026-11-11T11:54:23.3690563Z   ✓  477 [chromium] › selection-bounds.spec.mjs:10:1 › small selections retain 44-point compact move/resize/rotation controls (799ms)
+2026-11-11T11:54:24.2473493Z   ✓  479 [chromium] › selection-bounds.spec.mjs:11:1 › rotation follows the handle around the pivot and commits a quarter turn (865ms)
+2026-11-11T11:54:25.0726349Z   ✓  480 [chromium] › selection-bounds.spec.mjs:12:1 › a separating hinge moves all compact hit targets into a supplied usable pane (818ms)
+2026-11-11T11:54:25.5817817Z   ✓  478 [chromium] › selection-tools-shots.spec.mjs:6:3 › selection-tools capture light tablet (2.4s)
+2026-11-11T11:54:26.1236415Z   ✓  481 [chromium] › selection-bounds.spec.mjs:14:1 › two-finger navigation can begin on a selection handle without committing its single-pointer edit (1.0s)
+2026-11-11T11:54:27.3762647Z   ✓  483 [chromium] › selection-bounds.spec.mjs:16:1 › the active one-pointer canvas pan tool owns touches over selection handles (1.2s)
+2026-11-11T11:54:27.9352958Z   ✓  484 [chromium] › selection-tools.spec.mjs:13:1 › marquee: a drag commits one selectRegion and undo restores the selection (544ms)
+2026-11-11T11:54:27.9750913Z   ✓  482 [chromium] › selection-tools-shots.spec.mjs:6:3 › selection-tools capture dark phone (2.4s)
+2026-11-11T11:54:28.9266354Z   ✓  485 [chromium] › selection-tools.spec.mjs:25:1 › marquee: Shift adds, Alt subtracts, Escape cancels a drag (980ms)
+2026-11-11T11:54:29.8046261Z   ✓  487 [chromium] › selection-tools.spec.mjs:46:1 › marquee: polygon closes on the first point and lasso closes on release (868ms)
+2026-11-11T11:54:30.2559958Z   ✓  488 [chromium] › selection-tools.spec.mjs:59:1 › marquee: keyboard alternative builds a rectangle; deselect explains itself (440ms)
+2026-11-11T11:54:30.3570272Z   ✓  486 [chromium] › selection-tools-shots.spec.mjs:6:3 › selection-tools capture dark tablet (2.4s)
+2026-11-11T11:54:31.0729862Z   ✓  489 [chromium] › selection-tools.spec.mjs:77:1 › wand: a click sends one magicWand; edge tools wait for a selection (804ms)
+2026-11-11T11:54:31.4509688Z   ✓  490 [chromium] › selection-tools-shots.spec.mjs:36:1 › selection-tools capture rtl phone (1.1s)
+2026-11-11T11:54:31.6733010Z   ✓  491 [chromium] › selection-tools.spec.mjs:96:1 › wand: keyboard aim and layer sampling without a layer (590ms)
+2026-11-11T11:54:32.3623551Z   ✓  492 [chromium] › shell-commands-shots.spec.mjs:6:3 › shell commands light phone (894ms)
+2026-11-11T11:54:32.5275101Z   ✓  493 [chromium] › selection-tools.spec.mjs:110:1 › color drop: drop on the canvas fills once; outside or Escape puts it back (848ms)
+2026-11-11T11:54:33.0273057Z   ✓  495 [chromium] › selection-tools.spec.mjs:133:1 › color drop: keyboard aim fills at the crosshair; disabled says why (489ms)
+2026-11-11T11:54:33.3775641Z   ✓  494 [chromium] › shell-commands-shots.spec.mjs:6:3 › shell commands light tablet (1.0s)
+2026-11-11T11:54:34.0971447Z   ✓  496 [chromium] › selection-tools.spec.mjs:145:1 › reference: drag moves once per release; pin and lock refuse with a reason (1.1s)
+2026-11-11T11:54:34.2813708Z   ✓  497 [chromium] › shell-commands-shots.spec.mjs:6:3 › shell commands dark phone (895ms)
+2026-11-11T11:54:34.7024938Z   ✓  498 [chromium] › selection-tools.spec.mjs:166:1 › reference: keyboard moves, resizes and removes; placement and add (594ms)
+2026-11-11T11:54:35.3163782Z   ✓  499 [chromium] › shell-commands-shots.spec.mjs:6:3 › shell commands dark tablet (1.0s)
+2026-11-11T11:54:35.5713610Z   ✓  500 [chromium] › selection-tools.spec.mjs:183:1 › gestures: conflicts block Save until resolved; Save and Cancel commit once (857ms)
+2026-11-11T11:54:35.7532900Z   ✓  501 [chromium] › shell-commands-shots.spec.mjs:25:1 › shell commands rtl phone (427ms)
+2026-11-11T11:54:36.2274840Z   ✓  503 [chromium] › shell-commands-shots.spec.mjs:31:1 › shell commands forced colors (462ms)
+2026-11-11T11:54:36.7427749Z   ✓  504 [chromium] › shell-commands-shots.spec.mjs:38:1 › shell commands apple keycaps (506ms)
+2026-11-11T11:54:37.5900679Z   ✓  502 [chromium] › selection-tools.spec.mjs:206:1 › every control keeps a 44pt target (2.0s)
+2026-11-11T11:54:37.8919991Z   ✓  505 [chromium] › shell-commands.spec.mjs:10:1 › ribbon tabs switch by arrow keys, toggles report state, galleries pick inline and from More (1.1s)
+2026-11-11T11:54:37.9954120Z   ✓  506 [chromium] › selection-tools.spec.mjs:221:1 › reference short radio labels retain a 44pt touch target (396ms)
+2026-11-11T11:54:38.5483546Z   ✓  507 [chromium] › shell-commands.spec.mjs:35:1 › split button primary and flyout are separate targets (647ms)
+2026-11-11T11:54:38.9143482Z   ✓  508 [chromium] › shell-consumers.spec.mjs:3:1 › asset search, natural ordering, keyboard selection, navigation and open reach the controlled catalog (904ms)
+2026-11-11T11:54:39.3063345Z   ✓  509 [chromium] › shell-commands.spec.mjs:52:1 › context menu opens from right-click, Shift+F10 and the Menu key, and the target keeps its press (746ms)
+2026-11-11T11:54:39.5083509Z   ✓  510 [chromium] › shell-consumers.spec.mjs:23:1 › history undo, redo and direct restore use the host cursor and revision (586ms)
+2026-11-11T11:54:40.1746360Z   ✓  512 [chromium] › shell-consumers.spec.mjs:34:1 › find navigates actual UTF-16 ranges and replacement changes the controlled document (656ms)
+2026-11-11T11:54:40.2298506Z   ✓  511 [chromium] › shell-commands.spec.mjs:75:1 › presets preview on hover and focus, select, favorite and filter (911ms)
+2026-11-11T11:54:40.8713349Z   ✓  513 [chromium] › shell-consumers.spec.mjs:47:1 › progress stays at its reported value and pause, resume, cancel and dismiss use host actions (681ms)
+2026-11-11T11:54:41.4156437Z   ✓  515 [chromium] › shell-consumers.spec.mjs:60:67 › shell consumers fit 320px ltr (537ms)
+2026-11-11T11:54:41.4706395Z   ✓  514 [chromium] › shell-commands.spec.mjs:96:1 › shortcut sheet searches, records a binding, refuses bare keys and asks before replacing (1.2s)
+2026-11-11T11:54:42.0209135Z   ✓  517 [chromium] › shell-commands.spec.mjs:125:1 › the a11y layer tracks input modality and announces through a live region (536ms)
+2026-11-11T11:54:42.0233483Z   ✓  516 [chromium] › shell-consumers.spec.mjs:60:67 › shell consumers fit 834px ltr (596ms)
+2026-11-11T11:54:42.4686911Z   ✓  518 [chromium] › shell-commands.spec.mjs:136:1 › the a11y layer follows reduced motion and forced colors (433ms)
+2026-11-11T11:54:42.6156632Z   ✓  519 [chromium] › shell-consumers.spec.mjs:60:67 › shell consumers fit 320px rtl (583ms)
+2026-11-11T11:54:43.1852736Z   ✓  521 [chromium] › shell-consumers.spec.mjs:60:67 › shell consumers fit 834px rtl (561ms)
+2026-11-11T11:54:43.4186629Z   ✓  520 [chromium] › shell-commands.spec.mjs:142:1 › command controls are at least 44 by 44 points (940ms)
+2026-11-11T11:54:44.1619963Z   ✓  522 [chromium] › shell-inspector-shots.spec.mjs:6:3 › shell inspector light phone (963ms)
+2026-11-11T11:54:44.2644977Z   ✓  523 [chromium] › shell-inspector.spec.mjs:10:1 › unit input converts units, steps with arrows and reports parse errors in place (830ms)
+2026-11-11T11:54:44.8534111Z   ✓  525 [chromium] › shell-inspector.spec.mjs:30:1 › time fields accept frames and seconds together (580ms)
+2026-11-11T11:54:45.0793327Z   ✓  524 [chromium] › shell-inspector-shots.spec.mjs:6:3 › shell inspector light tablet (907ms)
+2026-11-11T11:54:45.8069391Z   ✓  526 [chromium] › shell-inspector.spec.mjs:40:1 › slider field drags with one commit, steps by key and resets (943ms)
+2026-11-11T11:54:45.9204966Z   ✓  527 [chromium] › shell-inspector-shots.spec.mjs:6:3 › shell inspector dark phone (830ms)
+2026-11-11T11:54:46.6016041Z   ✓  528 [chromium] › shell-inspector.spec.mjs:59:1 › slider drag cancels on Escape without committing (785ms)
+2026-11-11T11:54:46.8163033Z   ✓  529 [chromium] › shell-inspector-shots.spec.mjs:6:3 › shell inspector dark tablet (884ms)
+2026-11-11T11:54:47.1638065Z   ✓  531 [chromium] › shell-inspector-shots.spec.mjs:21:41 › shell inspector none selection (340ms)
+2026-11-11T11:54:47.5523877Z   ✓  530 [chromium] › shell-inspector.spec.mjs:71:1 › range ends move independently, never cross, and accept typed values (943ms)
+2026-11-11T11:54:47.6220071Z   ✓  532 [chromium] › shell-inspector-shots.spec.mjs:21:41 › shell inspector multiple selection (444ms)
+2026-11-11T11:54:48.0901995Z   ✓  534 [chromium] › shell-inspector-shots.spec.mjs:27:1 › shell inspector rtl phone (459ms)
+2026-11-11T11:54:48.3868818Z   ✓  533 [chromium] › shell-inspector.spec.mjs:94:1 › rotary knob drags up to raise, keys step, and the field takes exact entry (819ms)
+2026-11-11T11:54:48.5655639Z   ✓  535 [chromium] › shell-inspector-shots.spec.mjs:33:1 › shell inspector forced colors (463ms)
+2026-11-11T11:54:49.2349248Z   ✓  537 [chromium] › shell-layout-shots.spec.mjs:6:3 › shell layout light phone (655ms)
+2026-11-11T11:54:49.3333724Z   ✓  536 [chromium] › shell-inspector.spec.mjs:111:1 › sections collapse, switch off their rows, and reset only when modified (936ms)
+2026-11-11T11:54:49.8512884Z   ✓  538 [chromium] › shell-layout-shots.spec.mjs:6:3 › shell layout light tablet (605ms)
+2026-11-11T11:54:50.0768860Z   ✓  539 [chromium] › shell-inspector.spec.mjs:129:1 › search filters rows by label and keywords and opens collapsed sections (733ms)
+2026-11-11T11:54:50.4009674Z   ✓  540 [chromium] › shell-layout-shots.spec.mjs:6:3 › shell layout dark phone (543ms)
+2026-11-11T11:54:50.6703688Z   ✓  541 [chromium] › shell-inspector.spec.mjs:146:1 › selection states change the heading, the mixed marker and the empty state (584ms)
+2026-11-11T11:54:51.0497634Z   ✓  542 [chromium] › shell-layout-shots.spec.mjs:6:3 › shell layout dark tablet (638ms)
+2026-11-11T11:54:51.2170426Z   ✓  543 [chromium] › shell-inspector.spec.mjs:155:1 › an overridden row reverts to inherited (532ms)
+2026-11-11T11:54:51.4827286Z   ✓  544 [chromium] › shell-layout-shots.spec.mjs:20:1 › shell layout rtl phone (423ms)
+2026-11-11T11:54:51.9097530Z   ✓  546 [chromium] › shell-layout-shots.spec.mjs:26:1 › shell layout rtl tablet (419ms)
+2026-11-11T11:54:52.2527329Z   ✓  545 [chromium] › shell-inspector.spec.mjs:161:1 › inspector controls are at least 44 by 44 points (1.0s)
+2026-11-11T11:54:52.3723040Z   ✓  547 [chromium] › shell-layout-shots.spec.mjs:32:1 › shell layout hinge tablet (451ms)
+2026-11-11T11:54:52.8054650Z   ✓  549 [chromium] › shell-layout-shots.spec.mjs:38:1 › shell layout forced colors (424ms)
+2026-11-11T11:54:52.8556253Z   ✓  548 [chromium] › shell-layout.spec.mjs:10:1 › splitter keys step, jump to limits and commit once each (585ms)
+2026-11-11T11:54:53.6869204Z   ✓  550 [chromium] › shots.spec.mjs:5:3 › capture light phone (863ms)
+2026-11-11T11:54:53.7873673Z   ✓  551 [chromium] › shell-layout.spec.mjs:22:1 › splitter drag previews, commits on release, and Escape cancels (918ms)
+2026-11-11T11:54:54.2015572Z   ✓  552 [chromium] › shots.spec.mjs:18:3 › capture seek bar light phone (504ms)
+2026-11-11T11:54:54.2981390Z   ✓  553 [chromium] › shell-layout.spec.mjs:40:1 › the divider seats on a hinge and steps clear of it (503ms)
+2026-11-11T11:54:54.7560765Z   ✓  555 [chromium] › shell-layout.spec.mjs:53:1 › in RTL the start pane is on the right and ArrowLeft grows it (449ms)
+2026-11-11T11:54:55.1526596Z   ✓  554 [chromium] › shots.spec.mjs:5:3 › capture light tablet (927ms)
+2026-11-11T11:54:55.4436042Z   ✓  556 [chromium] › shell-layout.spec.mjs:63:1 › document tabs move focus, reorder, close and announce unsaved changes (676ms)
+2026-11-11T11:54:55.6882984Z   ✓  557 [chromium] › shots.spec.mjs:18:3 › capture seek bar light tablet (517ms)
+2026-11-11T11:54:56.0368077Z   ✓  558 [chromium] › shell-layout.spec.mjs:79:1 › tool rail selects tools and opens a variant flyout from the keyboard (578ms)
+2026-11-11T11:54:56.5641325Z   ✓  559 [chromium] › shots.spec.mjs:5:3 › capture dark phone (866ms)
+2026-11-11T11:54:56.9622818Z   ✓  560 [chromium] › shell-layout.spec.mjs:94:1 › dock stacks switch tabs and move panels through the options menu (917ms)
+2026-11-11T11:54:57.0452599Z   ✓  561 [chromium] › shots.spec.mjs:18:3 › capture seek bar dark phone (472ms)
+2026-11-11T11:54:57.8125726Z   ✓  562 [chromium] › shell-layout.spec.mjs:110:1 › dragging a floating panel's grip onto an edge docks it (842ms)
+2026-11-11T11:54:57.9216734Z   ✓  563 [chromium] › shots.spec.mjs:5:3 › capture dark tablet (865ms)
+2026-11-11T11:54:58.4391450Z   ✓  565 [chromium] › shots.spec.mjs:18:3 › capture seek bar dark tablet (508ms)
+2026-11-11T11:54:58.6412941Z   ✓  564 [chromium] › shell-layout.spec.mjs:124:1 › status bar zoom steps, zoom presets and unit menu commit (817ms)
+2026-11-11T11:54:59.0734706Z   ✓  567 [chromium] › shell-layout.spec.mjs:138:1 › phone width merges every panel into one stack under the workspace (419ms)
+2026-11-11T11:54:59.0752179Z   ✓  566 [chromium] › shots.spec.mjs:27:3 › capture layers light phone (625ms)
+2026-11-11T11:54:59.7883485Z   ✓  569 [chromium] › shots.spec.mjs:27:3 › capture layers light tablet (706ms)
+2026-11-11T11:55:00.1039127Z   ✓  568 [chromium] › shell-layout.spec.mjs:147:1 › every shell control is at least 44 by 44 points (1.0s)
+2026-11-11T11:55:00.5046280Z   ✓  570 [chromium] › shots.spec.mjs:27:3 › capture layers dark phone (708ms)
+2026-11-11T11:55:01.0661836Z   ✓  571 [chromium] › spreadsheet.spec.mjs:11:1 › I-01 a 1,048,576-row sheet renders a bounded window while scrolling (941ms)
+2026-11-11T11:55:01.1943030Z   ✓  572 [chromium] › shots.spec.mjs:27:3 › capture layers dark tablet (679ms)
+2026-11-11T11:55:01.7765025Z   ✓  574 [chromium] › shots.spec.mjs:37:1 › capture layers rtl phone (571ms)
+2026-11-11T11:55:02.2635723Z   ✓  575 [chromium] › shots.spec.mjs:44:1 › capture forced colors (478ms)
+2026-11-11T11:55:02.7491503Z   ✓  573 [chromium] › spreadsheet.spec.mjs:27:1 › I-02 dragging the fill handle and Ctrl+D both call onFillRange (1.7s)
+2026-11-11T11:55:02.8919734Z   ✓  576 [chromium] › studio-gaps.spec.mjs:13:3 › layer rows fit a 320pt panel with name and remove visible (613ms)
+2026-11-11T11:55:03.3983201Z   ✓  578 [chromium] › studio-gaps.spec.mjs:13:3 › layer rows fit a 360pt panel with name and remove visible (500ms)
+2026-11-11T11:55:03.4843193Z   ✓  577 [chromium] › spreadsheet.spec.mjs:47:1 › I-06 references are outlined in the grid and colored in the formula text (721ms)
+2026-11-11T11:55:03.8492591Z   ✓  579 [chromium] › studio-gaps.spec.mjs:13:3 › layer rows fit a 390pt panel with name and remove visible (437ms)
+2026-11-11T11:55:04.4558504Z   ✓  581 [chromium] › studio-gaps.spec.mjs:34:1 › narrow rows: the readout opens a scrubber that previews, commits once and restores focus (598ms)
+2026-11-11T11:55:04.8355811Z   ✓  582 [chromium] › studio-gaps.spec.mjs:52:1 › a locked row's readout is disabled (371ms)
+2026-11-11T11:55:05.1250140Z   ✓  580 [chromium] › spreadsheet.spec.mjs:58:1 › I-08 sheet tabs select, add, rename with validation and engine errors, and remove (1.6s)
+2026-11-11T11:55:05.4080904Z   ✓  583 [chromium] › studio-gaps.spec.mjs:58:1 › one short tab shows its whole label in a narrow pane (566ms)
+2026-11-11T11:55:05.9037200Z   ✓  585 [chromium] › studio-gaps.spec.mjs:65:1 › a compact TabBar beside a header action sizes to its tab and keeps the action in the pane (486ms)
+2026-11-11T11:55:06.0913319Z   ✓  584 [chromium] › spreadsheet.spec.mjs:90:1 › I-13 chart builder: type gallery, range errors and a live summary (953ms)
+2026-11-11T11:55:06.3523166Z   ✓  586 [chromium] › studio-gaps.spec.mjs:73:1 › a compact TabBar beside a flexible title takes the room its labels need first (439ms)
+2026-11-11T11:55:06.7954483Z   ✓  588 [chromium] › studio-gaps.spec.mjs:80:1 › a few tabs that fit keep whole labels (435ms)
+2026-11-11T11:55:07.1901829Z   ✓  587 [chromium] › spreadsheet.spec.mjs:104:1 › I-14 sparkline editor validates fields and draws in its cell (1.1s)
+2026-11-11T11:55:07.3363717Z   ✓  589 [chromium] › studio-gaps.spec.mjs:88:1 › tabs that cannot fit truncate instead of overflowing the pane (532ms)
+2026-11-11T11:55:07.8608015Z   ✓  591 [chromium] › studio-gaps.spec.mjs:99:1 › grouped select: headings name each group and keyboard order runs through every group (516ms)
+2026-11-11T11:55:08.5470541Z   ✓  592 [chromium] › studio-gaps.spec.mjs:118:3 › capture studio gaps light 320 (679ms)
+2026-11-11T11:55:08.8345901Z   ✓  590 [chromium] › spreadsheet.spec.mjs:119:1 › I-17 freeze commands and a keyboard-adjustable split divider (1.6s)
+2026-11-11T11:55:09.0541006Z   ✓  593 [chromium] › studio-gaps.spec.mjs:118:3 › capture studio gaps light 360 (497ms)
+2026-11-11T11:55:09.7166777Z   ✓  595 [chromium] › studio-gaps.spec.mjs:118:3 › capture studio gaps light 390 (654ms)
+2026-11-11T11:55:09.8952070Z   ✓  594 [chromium] › spreadsheet.spec.mjs:137:1 › I-20 cards open, step and edit a field through the commit callback (1.1s)
+2026-11-11T11:55:10.4842978Z   ✓  596 [chromium] › studio-gaps.spec.mjs:118:3 › capture studio gaps dark 320 (757ms)
+2026-11-11T11:55:10.9354716Z   ✓  598 [chromium] › studio-gaps.spec.mjs:118:3 › capture studio gaps dark 360 (442ms)
+2026-11-11T11:55:11.3512910Z   ✓  597 [chromium] › spreadsheet.spec.mjs:160:3 › capture spreadsheet light phone (1.4s)
+2026-11-11T11:55:11.7464755Z   ✓  599 [chromium] › studio-gaps.spec.mjs:118:3 › capture studio gaps dark 390 (801ms)
+2026-11-11T11:55:12.2792258Z   ✓  601 [chromium] › studio-gaps.spec.mjs:139:1 › capture studio gaps rtl 320 (526ms)
+2026-11-11T11:55:12.8037297Z   ✓  602 [chromium] › thumbnail-ownership.spec.mjs:2:1 › a late old-document raster cannot replace a new document with the same layer ID (508ms)
+2026-11-11T11:55:12.9185229Z   ✓  600 [chromium] › spreadsheet.spec.mjs:160:3 › capture spreadsheet light tablet (1.6s)
+2026-11-11T11:55:13.2746234Z   ✓  603 [chromium] › thumbnail-ownership.spec.mjs:3:1 › invalid resolved output displays a retryable error and a repaired provider recovers (459ms)
+2026-11-11T11:55:13.6856285Z   ✓  605 [chromium] › thumbnail-ownership.spec.mjs:5:1 › compact failed previews can be retried from keyboard without adding a clipped button (401ms)
+2026-11-11T11:55:14.3743053Z   ✓  604 [chromium] › spreadsheet.spec.mjs:160:3 › capture spreadsheet dark phone (1.4s)
+2026-11-11T11:55:14.5857578Z   ✓  606 [chromium] › timeline-shots.spec.mjs:5:3 › timeline capture light phone (890ms)
+2026-11-11T11:55:15.5073028Z   ✓  608 [chromium] › timeline-shots.spec.mjs:5:3 › timeline capture light tablet (910ms)
+2026-11-11T11:55:16.0062832Z   ✓  607 [chromium] › spreadsheet.spec.mjs:160:3 › capture spreadsheet dark tablet (1.6s)
+2026-11-11T11:55:16.3372508Z   ✓  609 [chromium] › timeline-shots.spec.mjs:5:3 › timeline capture dark phone (820ms)
+2026-11-11T11:55:16.8039579Z   ✓  610 [chromium] › spreadsheet.spec.mjs:173:1 › capture spreadsheet rtl phone (789ms)
+2026-11-11T11:55:17.2972008Z   ✓  611 [chromium] › timeline-shots.spec.mjs:5:3 › timeline capture dark tablet (937ms)
+2026-11-11T11:55:17.5689736Z   ✓  612 [chromium] › timeline.spec.mjs:18:1 › dragging the selected clip moves it once, through the engine's moveClip (746ms)
+2026-11-11T11:55:17.7824930Z   ✓  613 [chromium] › timeline-shots.spec.mjs:18:1 › timeline capture rtl phone (474ms)
+2026-11-11T11:55:18.3616057Z   ✓  614 [chromium] › timeline.spec.mjs:31:1 › a move onto a neighbour shows the overlap and commits nothing (783ms)
+2026-11-11T11:55:19.6226665Z   ✓  616 [chromium] › timeline.spec.mjs:44:1 › trims commit once and apply in the order the engine needs (1.3s)
+2026-11-11T11:55:20.1539082Z   ✓  615 [chromium] › timeline2-shots.spec.mjs:5:3 › timeline cluster 2 capture light phone (2.4s)
+2026-11-11T11:55:20.3459616Z   ✓  617 [chromium] › timeline.spec.mjs:67:1 › split at playhead and the razor both split once (713ms)
+2026-11-11T11:55:20.8308990Z   ✓  619 [chromium] › timeline.spec.mjs:78:1 › split is disabled with a reason when nothing is under the playhead (474ms)
+2026-11-11T11:55:21.7975563Z   ✓  620 [chromium] › timeline.spec.mjs:84:1 › ruler drag scrubs and seeks once; the playhead steps by frame and second (956ms)
+2026-11-11T11:55:22.5126061Z   ✓  618 [chromium] › timeline2-shots.spec.mjs:5:3 › timeline cluster 2 capture light tablet (2.3s)
+2026-11-11T11:55:22.7408478Z   ✓  621 [chromium] › timeline.spec.mjs:102:1 › seek bar Escape restores the frame without seeking (934ms)
+2026-11-11T11:55:23.9095324Z   ✓  623 [chromium] › timeline.spec.mjs:115:1 › transport, timecode entry, format switch and playback rate (1.2s)
+2026-11-11T11:55:24.7122663Z   ✓  624 [chromium] › timeline.spec.mjs:146:1 › in and out marks set at the playhead and adjust by key (792ms)
+2026-11-11T11:55:24.8234732Z   ✓  622 [chromium] › timeline2-shots.spec.mjs:5:3 › timeline cluster 2 capture dark phone (2.3s)
+2026-11-11T11:55:26.1452478Z   ✓  625 [chromium] › timeline.spec.mjs:166:1 › zoom, fit and lane panning change the view without committing edits (1.4s)
+2026-11-11T11:55:26.7588366Z   ✓  627 [chromium] › timeline.spec.mjs:200:1 › clips select by click, nudge by key and announce their state (604ms)
+2026-11-11T11:55:27.2999808Z   ✓  626 [chromium] › timeline2-shots.spec.mjs:5:3 › timeline cluster 2 capture dark tablet (2.5s)
+2026-11-11T11:55:27.3146140Z   ✓  628 [chromium] › timeline.spec.mjs:211:1 › NTSC drop-frame timecode round-trips through the field (543ms)
+2026-11-11T11:55:28.0224398Z   ✓  630 [chromium] › timeline.spec.mjs:219:1 › Ctrl+wheel zooms at the pointer and Shift+wheel scrolls (696ms)
+2026-11-11T11:55:28.0822828Z   ✓  629 [chromium] › timeline2-shots.spec.mjs:27:1 › timeline cluster 2 capture rtl phone (769ms)
+2026-11-11T11:55:28.5651574Z   ✓  632 [chromium] › unit-boundary.spec.mjs:2:1 › disabling a focused numeric field discards its draft before blur (466ms)
+2026-11-11T11:55:28.8620202Z   ✓  631 [chromium] › timeline2.spec.mjs:6:1 › shuttle clears held K when focus leaves before keyup (824ms)
+2026-11-11T11:55:28.9739910Z   ✓  633 [chromium] › unit-boundary.spec.mjs:5:1 › changing numeric document scope drops a draft even when the committed value is unchanged (398ms)
+2026-11-11T11:55:29.3380841Z   ✓  635 [chromium] › unit-boundary.spec.mjs:10:1 › focus/blur and Enter without editing preserve full precision behind rounded display text (355ms)
+2026-11-11T11:55:29.6993214Z   ✓  636 [chromium] › unit-boundary.spec.mjs:13:1 › arrow stepping starts from a valid typed draft and commits once (352ms)
+2026-11-11T11:55:30.3884813Z   ✓  634 [chromium] › timeline2.spec.mjs:15:1 › track rename Enter then blur commits once while the engine response is pending (1.5s)
+2026-11-11T11:55:31.0401052Z   ✓  637 [chromium] › vector-shots.spec.mjs:6:3 › vector capture light phone (1.3s)
+2026-11-11T11:55:31.7203118Z   ✓  638 [chromium] › timeline2.spec.mjs:24:1 › slip nudge edits once and a locked clip refuses editing (1.3s)
+2026-11-11T11:55:32.5032505Z   ✓  639 [chromium] › vector-shots.spec.mjs:6:3 › vector capture light tablet (1.5s)
+2026-11-11T11:55:32.7575054Z   ✓  640 [chromium] › timeline2.spec.mjs:34:1 › loop drag previews, cancels with Escape, then commits once on release (1.0s)
+2026-11-11T11:55:33.7954407Z   ✓  642 [chromium] › timeline2.spec.mjs:47:1 › transition preset and marker edits emit their matching operations (1.0s)
+2026-11-11T11:55:33.9201683Z   ✓  641 [chromium] › vector-shots.spec.mjs:6:3 › vector capture dark phone (1.4s)
+2026-11-11T11:55:34.7497552Z   ✓  643 [chromium] › timeline2.spec.mjs:57:1 › batch shift and speed each emit one transaction (943ms)
+2026-11-11T11:55:35.3832212Z   ✓  644 [chromium] › vector-shots.spec.mjs:6:3 › vector capture dark tablet (1.4s)
+2026-11-11T11:55:35.6017505Z   ✓  645 [chromium] › timeline2.spec.mjs:65:32 › phone ltr keeps the page contained and track settings reachable (840ms)
+2026-11-11T11:55:35.9959476Z   ✓  646 [chromium] › vector-shots.spec.mjs:28:1 › vector capture rtl phone (603ms)
+2026-11-11T11:55:36.4444997Z   ✓  647 [chromium] › timeline2.spec.mjs:65:32 › phone rtl keeps the page contained and track settings reachable (832ms)
+2026-11-11T11:55:36.6573815Z   ✓  648 [chromium] › vector.spec.mjs:23:3 › PenNodeEditor › dragging a node previews, then commits one setPathNode on release (645ms)
+2026-11-11T11:55:37.2859228Z   ✓  650 [chromium] › vector.spec.mjs:36:3 › PenNodeEditor › Escape cancels a node drag without committing (619ms)
+2026-11-11T11:55:38.2288451Z   ✓  651 [chromium] › vector.spec.mjs:44:3 › PenNodeEditor › smooth handles stay collinear, symmetric mirror, Alt breaks to a corner (935ms)
+2026-11-11T11:55:38.5286728Z   ✓  649 [chromium] › timeline2.spec.mjs:74:1 › marker fields commit once with a pending response and Escape discards the next draft (2.1s)
+2026-11-11T11:55:39.5188884Z   ✓  653 [chromium] › workspace-continuity.spec.mjs:7:1 › canvas identity survives every mode and viewport change while document state survives reopening (975ms)
+2026-11-11T11:55:39.7088518Z   ✓  652 [chromium] › vector.spec.mjs:69:3 › PenNodeEditor › tapping the outline inserts a node; Delete removes it; host undo restores (1.5s)
+2026-11-11T11:55:40.1862371Z   ✓  655 [chromium] › vector.spec.mjs:84:3 › PenNodeEditor › splitting a curve sends the whole path so the shape is unchanged (467ms)
+2026-11-11T11:55:40.4967334Z   ✓  654 [chromium] › workspace-continuity.spec.mjs:8:1 › presets save actual mode/layout state, support full Unicode names, restore focus and undo deletion (969ms)
+2026-11-11T11:55:40.6453403Z   ✓  656 [chromium] › vector.spec.mjs:92:3 › PenNodeEditor › arrow keys nudge the focused node by 1, Shift by 10, one commit per press (450ms)
+2026-11-11T11:55:41.3063989Z   ✓  658 [chromium] › vector.spec.mjs:101:3 › PenNodeEditor › kind and close commands commit; unavailable ones say why (651ms)
+2026-11-11T11:55:41.5874302Z   ✓  657 [chromium] › workspace-continuity.spec.mjs:9:1 › changing documents closes rename/delete dialogs even when both documents reuse preset identities (1.1s)
+2026-11-11T11:55:41.8487987Z   ✓  659 [chromium] › vector.spec.mjs:122:3 › GradientOnCanvasHandles › dragging the end handle rotates the gradient with one setFill (533ms)
+2026-11-11T11:55:42.6033448Z   ✓  661 [chromium] › vector.spec.mjs:132:3 › GradientOnCanvasHandles › stops drag along the rail, the rail adds a stop, Delete removes, Escape cancels (741ms)
+2026-11-11T11:55:42.8592733Z   ✓  660 [chromium] › workspace-continuity.spec.mjs:10:1 › mode/revision replacement closes a draft, and rapid text input applies once to its intended preset (1.3s)
+2026-11-11T11:55:43.0310624Z   ✓  662 [chromium] › vector.spec.mjs:151:3 › GradientOnCanvasHandles › two stops cannot be deleted; the reason is shown (419ms)
+2026-11-11T11:55:43.6471737Z   ✓  663 [chromium] › workspace-continuity.spec.mjs:11:1 › mode and document boundaries cancel active divider drags without a layout write (779ms)
+2026-11-11T11:55:43.7677053Z   ✓  664 [chromium] › vector.spec.mjs:160:3 › GradientOnCanvasHandles › radial: focal point stays inside the circle and keys nudge the center (727ms)
+2026-11-11T11:55:44.2887131Z   ✓  665 [chromium] › workspace-continuity.spec.mjs:12:1 › controlled divider acknowledgements retain focus for repeated keyboard steps and saved mode layouts (632ms)
+2026-11-11T11:55:44.6917646Z   ✓  666 [chromium] › vector.spec.mjs:176:3 › FillStrokeInspector › fill type, colors, stroke settings and dash patterns commit their ops (913ms)
+2026-11-11T11:55:45.6447624Z   ✓  668 [chromium] › vector.spec.mjs:188:3 › FillStrokeInspector › a custom dash is validated before it commits (945ms)
+2026-11-11T11:55:45.9473287Z   ✓  667 [chromium] › workspace5-shots.spec.mjs:2:110 › workspace5 capture light phone (1.6s)
+2026-11-11T11:55:46.0325174Z   ✓  669 [chromium] › vector.spec.mjs:203:3 › FillStrokeInspector › a shape layer keeps a solid fill and explains the rest (379ms)
+2026-11-11T11:55:46.6338065Z   ✓  671 [chromium] › vector.spec.mjs:211:3 › FillStrokeInspector › turning the stroke off and on (591ms)
+2026-11-11T11:55:47.2245876Z   ✓  672 [chromium] › vector.spec.mjs:221:3 › ShapeBuilder › combining needs two sibling, unlocked shapes or paths and says why not (580ms)
+2026-11-11T11:55:47.3830932Z   ✓  670 [chromium] › workspace5-shots.spec.mjs:2:110 › workspace5 capture light tablet (1.4s)
+2026-11-11T11:55:47.9788222Z   ✓  673 [chromium] › vector.spec.mjs:233:3 › ShapeBuilder › union, change op, operand rows, release and expand map to engine ops (745ms)
+2026-11-11T11:55:48.7714336Z   ✓  674 [chromium] › workspace5-shots.spec.mjs:2:110 › workspace5 capture dark phone (1.4s)
+2026-11-11T11:55:49.5875898Z   ✓  675 [chromium] › vector.spec.mjs:250:1 › every vector control keeps a 44pt target at 390px and the page does not scroll sideways (1.6s)
+2026-11-11T11:55:49.9382636Z   ✓  677 [chromium] › vector.spec.mjs:264:1 › canvas geometry is not mirrored in RTL (341ms)
+2026-11-11T11:55:50.2523376Z   ✓  676 [chromium] › workspace5-shots.spec.mjs:2:110 › workspace5 capture dark tablet (1.5s)
+2026-11-11T11:55:50.6312919Z   ✓  678 [chromium] › workspace5.spec.mjs:3:1 › workspace changes modes and sizes without remounting its document canvas (676ms)
+2026-11-11T11:55:50.8933641Z   ✓  679 [chromium] › workspace5-shots.spec.mjs:6:1 › workspace5 RTL capture (632ms)
+2026-11-11T11:55:51.5250745Z   ✓  680 [chromium] › workspace5.spec.mjs:10:1 › presets save, rename validation and delete respect built-in boundaries (886ms)
+2026-11-11T11:55:52.1400942Z   ✓  681 [chromium] › workspace5.spec.mjs:18:1 › contextual actions overflow and change with selection (607ms)
+2026-11-11T11:55:52.8110911Z   ✓  682 [chromium] › workspace5.spec.mjs:22:1 › export validates names, unavailable destinations and duplicate submission (661ms)
+2026-11-11T11:55:53.3803985Z   ✓  683 [chromium] › workspace5.spec.mjs:25:1 › import opens the actual web picker and hands selected files to the host (560ms)
+2026-11-11T11:55:54.3852580Z   ✓  684 [chromium] › workspace5.spec.mjs:28:1 › color draft cancel and apply each close once (997ms)
+2026-11-11T11:55:55.2882455Z   ✓  685 [chromium] › workspace5.spec.mjs:31:1 › presenter stroke commits once; Escape cancels and eraser removes one gesture (895ms)
+2026-11-11T11:55:56.3003767Z   ✓  686 [chromium] › workspace5.spec.mjs:36:1 › phone and RTL remain contained (1.0s)
+2026-11-11T11:55:56.6920651Z 
+2026-11-11T11:55:56.6927194Z   686 passed (5.1m)
+2026-11-11T11:55:56.7271312Z ##[group]Run actions/upload-artifact@v4
+2026-11-11T11:55:56.7271572Z with:
+2026-11-11T11:55:56.7271753Z   name: ui-browser-captures
+2026-11-11T11:55:56.7272071Z   path: packages/ui/tests/browser/shots/
+packages/ui/tests/browser/test-results/
+
+2026-11-11T11:55:56.7272405Z   retention-days: 7
+2026-11-11T11:55:56.7272592Z   if-no-files-found: warn
+2026-11-11T11:55:56.7272785Z   compression-level: 6
+2026-11-11T11:55:56.7273136Z   overwrite: false
+2026-11-11T11:55:56.7273318Z   include-hidden-files: false
+2026-11-11T11:55:56.7273524Z ##[endgroup]
+2026-11-11T11:55:56.8643498Z (node:10253) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T11:55:56.8644855Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:55:56.9228194Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-11T11:55:56.9230892Z The least common ancestor is /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/packages/ui/tests/browser. This will be the root directory of the artifact
+2026-11-11T11:55:56.9232050Z With the provided path, there will be 435 files uploaded
+2026-11-11T11:55:56.9236910Z Artifact name is valid!
+2026-11-11T11:55:56.9237596Z Root directory input is valid!
+2026-11-11T11:55:57.2636482Z Beginning upload of artifact content to blob storage
+2026-11-11T11:55:57.5716878Z (node:10253) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-11T11:55:57.7807930Z Uploaded bytes 8388608
+2026-11-11T11:55:58.0195008Z Uploaded bytes 16777216
+2026-11-11T11:55:58.1497342Z Uploaded bytes 22075283
+2026-11-11T11:55:58.1626218Z Finished uploading artifact content to blob storage!
+2026-11-11T11:55:58.1626957Z SHA256 digest of uploaded artifact zip is ea41403154682b9b860a5fe2dc232b1ac492e5d887319a495a22e679ada0bebf
+2026-11-11T11:55:58.1628269Z Finalizing artifact upload
+2026-11-11T11:55:58.4911015Z Artifact ui-browser-captures.zip successfully finalized. Artifact ID 13853071308
+2026-11-11T11:55:58.4912148Z Artifact ui-browser-captures has been successfully uploaded! Final size is 22075283 bytes. Artifact ID is 13853071308
+2026-11-11T11:55:58.4916813Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43015170984/artifacts/13853071308
+2026-11-11T11:55:58.5190246Z Post job cleanup.
+2026-11-11T11:55:58.6177155Z (node:10265) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T11:55:58.6177821Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T11:55:58.6336627Z Post job cleanup.
+2026-11-11T11:55:58.7071971Z [command]/usr/bin/git version
+2026-11-11T11:55:58.7112028Z git version 2.56.0
+2026-11-11T11:55:58.7143008Z Temporarily overriding HOME='/home/runner/work/_temp/896fb4b6-615c-4823-972f-303b81ea1208' before making global git config changes
+2026-11-11T11:55:58.7144383Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T11:55:58.7148091Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T11:55:58.7193597Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T11:55:58.7229354Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T11:55:58.7514493Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T11:55:58.7542771Z http.https://github.com/.extraheader
+2026-11-11T11:55:58.7561287Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T11:55:58.7600078Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T11:55:58.7930133Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T11:55:58.7970149Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T11:55:58.8354203Z Cleaning up orphan processes
+2026-11-11T11:55:58.8652685Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

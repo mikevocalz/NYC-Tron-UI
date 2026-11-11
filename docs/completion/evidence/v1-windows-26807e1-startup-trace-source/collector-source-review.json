@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-11T14:06:54Z",
+  "title": "Failure-only collection of the owned Windows startup trace",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "checkpoint": {
+    "kind": "reviewed immutable source objects; combined integration and native execution pending",
+    "branchWritten": false,
+    "treeCreatedByAuthor": false,
+    "ciDispatched": false
+  },
+  "source": {
+    "path": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+    "preimage": {
+      "gitBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+      "utf8Bytes": 44768,
+      "sha256": "1898d0668faffe31c283a0cbfe84ed03e46526b4c80d4c2532cda5b947ecaa85"
+    },
+    "candidate": {
+      "gitBlob": "51a86756bfb8305c7ada28f77fa952fe772afcb7",
+      "utf8Bytes": 66219,
+      "sha256": "fbb7f7c3c758315492c4e64183c4d5a3d13585b3ad7184725969314ea7b5dcfc"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "collector-edit-manifest.json",
+      "gitBlob": "84c3bcbdc1c06d65545ca56bf9be46e3b55dbd3b",
+      "utf8Bytes": 27445,
+      "sha256": "6e7336cb5888e5644255df6bdf8992c1371837ed3815477ac7604c921acf0923"
+    },
+    {
+      "path": "collector-review-checks.js",
+      "gitBlob": "6abcd80ce6970c7a2ce021dbc92331e0c27fe289",
+      "utf8Bytes": 28136,
+      "sha256": "e5132b15b7df47ef1c1d6160e18d5fae7f2eb7148985ba56e279798dccfc2bed"
+    }
+  ],
+  "nativeContract": {
+    "sourcePath": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+    "header": {
+      "gitBlob": "26807e1426f40a83b5664871b1dbb82b7bc5cf19",
+      "utf8Bytes": 41674,
+      "sha256": "38f29c17da9c9b8bcd651148b79f4d668935b55c248390684604d39fbc59ae0f"
+    },
+    "protocol": {
+      "gitBlob": "b982f6fdf349d251f48c6ec0aebbeb5e42c3ee33",
+      "utf8Bytes": 3362,
+      "sha256": "64934bbca2e11a18a3ff1b53555c3a4d046a53ad93b875a5c45f86ada81da0fa"
+    },
+    "relatedReceipt": "docs/completion/evidence/v1-windows-26807e1-startup-trace-source/",
+    "divisionOfReview": "This file documents only the collector and its agreement with the fixed native contract. The native-source-review, native-edit-manifest, protocol and native-review-checks files document the separate header change.",
+    "rowFields": [
+      "schemaVersion",
+      "sourceRevision",
+      "processId",
+      "creationFileTime",
+      "sequence",
+      "threadId",
+      "stage",
+      "contentionObservedThroughRow"
+    ],
+    "stageCount": 49,
+    "records": 64,
+    "ordinaryRecords": 63,
+    "sourceBytes": 16384,
+    "rowBytes": 512
+  },
+  "motivation": {
+    "observedFailure": "The completed fc901 Windows native execution compiled and deployed, but the owned application exited before the first-window observation with access violation 0xc0000005. The retained outcome did not establish a faulting function or a COM/property-bag ownership defect.",
+    "change": "Collect the native trace only after an existing failure and existing cleanup. The trace can identify retained source boundaries; it does not itself identify the corrupting/faulting call or establish a startup repair.",
+    "noBehavioralFixClaim": true
+  },
+  "changes": [
+    "Add a bounded C# helper to the existing Add-Type block for exact process identity checks, one fixed source-file read, exclusive artifact retention and strict flat ASCII JSONL validation.",
+    "Add one PowerShell helper that produces only typed fixed metadata and selected validated rows.",
+    "Initialize a failure flag and borrowed IntPtr; retain the result of the one existing Process.Handle access at its original position before saved StartTime acquisition.",
+    "Set the failure flag immediately after the original primary ErrorRecord assignment.",
+    "Invoke collection only at the end of the original finally, after retained-process cleanup, drag-trace retention, WER restoration and crash receipt."
+  ],
+  "exactScope": {
+    "reversibleEdits": 6,
+    "fullForward": true,
+    "fullInverse": true,
+    "originalHandleAccessorEvaluations": 1,
+    "originalPrimaryFailureAssignmentAndRethrowPreserved": true,
+    "protected": [
+      "Launch and process-selection behavior",
+      "UIA/input/native actions and assertions",
+      "Original polling deadlines and sleeps",
+      "Passed result and screenshots",
+      "Crash/WER setup and restoration",
+      "Original process-stop and drag-trace retention order",
+      "Existing failure diagnostics and ErrorRecord rethrow"
+    ],
+    "portabilityRefinement": {
+      "supersededCandidate": "e538ef05b93e6bd07bea33f642623fe8ddd94cec",
+      "spans": 3,
+      "byteDelta": -101,
+      "description": "Replace HashSet<string> with a fixed string[] and Array.IndexOf for exact closed membership. This avoids relying on an implicit System.Core compiler reference; no compiler failure was observed here.",
+      "allOtherBytesUnchanged": true
+    }
+  },
+  "processAndPathBinding": {
+    "borrowedHandle": "The original Handle query result is retained while the Process object remains held. The collector never reopens a PID or closes that borrowed process handle.",
+    "confirmation": "GetProcessId and GetProcessTimes must match the saved PID and round-trip UTC StartTime, including full 100 ns FILETIME precision. A zero-time WaitForSingleObject must confirm the process exited; Stop-Process completion alone is not used as evidence.",
+    "sourceRevision": "Exactly the lowercase 40-hex GITHUB_SHA observed by the smoke script.",
+    "filename": "nyctron-startup-<sourceRevision>-<decimal PID>-<canonical decimal creation FILETIME>.jsonl",
+    "resolver": "Parent GetTempPathW(MAX_PATH + 1), no fallback/search, combined UTF-16 path length strictly below MAX_PATH.",
+    "noNewProcessAction": true,
+    "noNewStartupAction": true,
+    "unknowns": "Unconfirmed identity or exit prevents file access. Parent and child temp environments may differ; a missing file does not prove Configure was not entered."
+  },
+  "retention": {
+    "source": "One fixed disk file opened read-only without write/delete sharing, rejecting directory/reparse attributes and mismatched final handle path. Size is at most 16,384 bytes; EOF, identity, size, creation/write metadata and link count are checked around the read.",
+    "afterClose": "Bytes and SHA-256 are exposed only after the owned source read handle closes. This is a stable read-time snapshot, not a claim of uninterrupted pathname identity after closure.",
+    "rawArtifact": "native-startup-trace.jsonl",
+    "summaryArtifact": "native-startup-trace-summary.json",
+    "exclusive": "CreateNew only under existing OutDir; no overwrite, retry or deletion. Raw bytes are flushed, read back and closed before row projection is allowed. A failed write may leave a partial new artifact but is never reported retained.",
+    "wholeHash": "The raw SHA-256 covers all bytes of the bounded complete source-file snapshot, including an incomplete final JSONL record if present. It is not a hash of the selected console subset.",
+    "malformed": "Unknown/duplicate keys, wrong types, noncanonical identity, foreign complete rows, invalid sequence, non-ASCII, row/byte cap violations and records after trace-limit suppress all row projection.",
+    "partialTail": "All exact bytes remain retained. Only a fully validated preceding row prefix may be projected, with partialTailBytes and recordStreamComplete=false. Empty files have status empty-file and unknown stream completeness."
+  },
+  "projection": {
+    "selection": "First eight and last sixteen complete validated rows, without duplication; at most 24 with explicit omissions.",
+    "publicFields": "Fixed source revision, PID, decimal creation FILETIME, statuses, booleans/null, numeric counts/error codes, raw-byte SHA, fixed artifact names and exact closed stage labels. No raw paths, exception text, process strings, credentials or arbitrary row content.",
+    "markers": [
+      "NYC_TRON_WINDOWS_STARTUP_TRACE_BEGIN",
+      "NYC_TRON_WINDOWS_STARTUP_TRACE_END"
+    ],
+    "utf8EnvelopeLimit": 8192,
+    "overflow": "A fixed output-limit envelope declares outputByteLimit=8192; it does not manufacture a pass or complete trace.",
+    "secondaryErrors": "Collector, retention, JSON and console errors stay inside guarded diagnostic paths and cannot replace the original primary ErrorRecord.",
+    "interpretation": "No finalized native footer; a complete JSONL file is not proof that startup completed. The contention boolean is known only through that row. Missing returned markers may reflect an earlier guard/exception, omitted trace, cap or write failure rather than a callee that never returned. Tracing and synchronous IO can perturb timing and have no guaranteed wall-time bound."
+  },
+  "validation": {
+    "author": {
+      "status": "passed",
+      "designs": 6,
+      "assertions": 174,
+      "scope": "Six source/portable contract/model designs only; no PowerShell parser, C# compiler, .NET/Win32 IO, process, UIA or native execution.",
+      "groups": [
+        "Exact source identities, six inverses, protected actions/error/cleanup order and fixed API/vocabulary contracts",
+        "Portable owned-handle identity and fixed-path contract, exact FILETIME strings and unknown exit states",
+        "Portable strict ASCII JSONL model: canonical identity, exact types/keys, malformed suppression, partial tails and record limits",
+        "Deterministic stable-read/close/hash and exclusive-retention models, unavailable ownership and IO failures",
+        "Portable typed projection, deterministic omissions, raw-byte binding and complete CRLF envelope limits",
+        "Explicit non-PowerShell lifecycle model: failure-only placement, original Error identity and cleanup isolation"
+      ],
+      "metrics": {
+        "ordinaryEnvelopeBytes": 1432,
+        "sixtyFourRecordEnvelopeBytes": 3894,
+        "fallbackEnvelopeBytes": 181,
+        "maximumRows": 64,
+        "selectedRows": 24,
+        "omittedRows": 40
+      }
+    },
+    "root": {
+      "status": "passed",
+      "sourceReview": "Full helper/wrapper review, all six exact transforms/inverses, narrow portability delta and primary error/cleanup preservation.",
+      "reproduction": "Reproduced the same final six author designs on exact 51a867/aa548/84c3/b982 with 174 assertions and matching 1,432/3,894/181 B envelopes."
+    },
+    "forge": {
+      "status": "passed",
+      "sourceReview": "Independent source/protocol/owned-handle/FILETIME/fixed-file/parser/retention/error-path review; exact six inverses and all 49 labels matched.",
+      "reproduction": "Reproduced the same final six author designs with matching 174 assertions and envelope metrics."
+    },
+    "accounting": "The three executions reproduce the same six designs; they are not eighteen independently designed tests or native passes.",
+    "invocation": "Evaluate collector-review-checks.js as a parenthesized expression; call the returned function with raw exact texts {source:51a86756..., preimage:aa54819d..., manifest:84c3bcbd..., protocol:b982f6fd...}.",
+    "executionNotPerformed": [
+      "PowerShell parsing/execution",
+      "C# compilation",
+      "Actual .NET/Win32 process or file IO",
+      "UI Automation",
+      "Native application startup",
+      "New CI run"
+    ]
+  },
+  "publicationBoundary": "Only immutable source, manifest and check objects have been authored/read back for review. Root owns any later combined tree/ref/PR publication. No new native result is asserted at this checkpoint."
+}

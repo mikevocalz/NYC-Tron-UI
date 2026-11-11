@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-source-suite-and-package-gates",
+  "recordedAtUTC": "2026-11-11 12:48:24 UTC",
+  "source": {
+    "head": "8a5007d197539c782e065f1b59daf3fe5ed752ec",
+    "actualCheckout": "e7901ec687e96a240a7b820baef50318fde40ddd",
+    "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "8a5007d197539c782e065f1b59daf3fe5ed752ec"
+    ]
+  },
+  "workflow": {
+    "run": 43022193456,
+    "attempt": 1,
+    "event": "pull_request",
+    "conclusion": "success"
+  },
+  "results": [
+    {
+      "key": "linux",
+      "job": 130527857223,
+      "tests": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMilliseconds": 28725.865814
+    },
+    {
+      "key": "windows",
+      "job": 130527857598,
+      "tests": 1204,
+      "passed": 1204,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMilliseconds": 73969.1656,
+      "packedWorkspacePackages": 13,
+      "importedExportSubpaths": 17
+    },
+    {
+      "key": "typescript_pack",
+      "job": 130527857738,
+      "apiPackages": 13,
+      "apiSubpaths": 619,
+      "reachableDeclarations": 3306,
+      "ledger": {
+        "canonicalIds": 341,
+        "localImplementations": 332,
+        "pinnedExternalImplementations": 9,
+        "partial": 0,
+        "pending": 0,
+        "acceptedWithAllEightPlatformProofs": 0
+      },
+      "packedWorkspacePackages": 13,
+      "importedExportSubpaths": 17
+    }
+  ],
+  "logs": [
+    {
+      "name": "linux-source-job.log",
+      "job": 130527857223,
+      "key": "linux",
+      "gitBlob": "a0558c9b6f5c8a040bbfb9ad36c86ec053594987",
+      "bytes": 156165,
+      "sha256": "119703c9d7500630d540a61f99d13abbd791f441bb82988b6ea0957a357b4da8",
+      "lfRecords": 1438,
+      "encoding": "Exact decoded UTF-8 bytes; original BOM/CRLF preserved where present",
+      "evidenceLines": [
+        {
+          "line": 119,
+          "text": "2026-11-11T12:39:18.9716808Z HEAD is now at e7901ec Merge 8a5007d197539c782e065f1b59daf3fe5ed752ec into 25a6af6d020e34d790f6a4f3d9f117738b252f1e"
+        },
+        {
+          "line": 122,
+          "text": "2026-11-11T12:39:18.9796629Z e7901ec687e96a240a7b820baef50318fde40ddd"
+        },
+        {
+          "line": 1377,
+          "text": "2026-11-11T12:40:22.6768223Z ✔ retention preserves the failed JUnit, native logs and screenshots byte for byte, without overwriting them on rerun (9.238734ms)"
+        },
+        {
+          "line": 1378,
+          "text": "2026-11-11T12:40:22.6769378Z ✔ retained snapshots survive writes through an already-open driver log and include hidden debug evidence (4.642356ms)"
+        },
+        {
+          "line": 1382,
+          "text": "2026-11-11T12:40:22.6773973Z ✔ stable cannot publish from pending, incomplete or locally forged distribution review (1511.879296ms)"
+        },
+        {
+          "line": 1412,
+          "text": "2026-11-11T12:40:22.6804066Z ℹ tests 1204"
+        },
+        {
+          "line": 1414,
+          "text": "2026-11-11T12:40:22.6804644Z ℹ pass 1204"
+        },
+        {
+          "line": 1415,
+          "text": "2026-11-11T12:40:22.6804851Z ℹ fail 0"
+        },
+        {
+          "line": 1416,
+          "text": "2026-11-11T12:40:22.6805057Z ℹ cancelled 0"
+        },
+        {
+          "line": 1417,
+          "text": "2026-11-11T12:40:22.6805272Z ℹ skipped 0"
+        },
+        {
+          "line": 1419,
+          "text": "2026-11-11T12:40:22.6805716Z ℹ duration_ms 28725.865814"
+        }
+      ]
+    },
+    {
+      "name": "windows-source-job.log",
+      "job": 130527857598,
+      "key": "windows",
+      "gitBlob": "e7c4eea66babd9a85bddd34eb9dfc5b88610145f",
+      "bytes": 198280,
+      "sha256": "f23bedf6334da6e87c5360a27649ccfe2a07f79ccc295b54aac4505905ceef91",
+      "lfRecords": 1828,
+      "encoding": "Exact decoded UTF-8 bytes; original BOM/CRLF preserved where present",
+      "evidenceLines": [
+        {
+          "line": 106,
+          "text": "2026-11-11T12:39:23.3913021Z HEAD is now at e7901ec Merge 8a5007d197539c782e065f1b59daf3fe5ed752ec into 25a6af6d020e34d790f6a4f3d9f117738b252f1e"
+        },
+        {
+          "line": 109,
+          "text": "2026-11-11T12:39:23.5091084Z e7901ec687e96a240a7b820baef50318fde40ddd"
+        },
+        {
+          "line": 1380,
+          "text": "2026-11-11T12:41:08.1059235Z ✔ retention preserves the failed JUnit, native logs and screenshots byte for byte, without overwriting them on rerun (295.3216ms)"
+        },
+        {
+          "line": 1381,
+          "text": "2026-11-11T12:41:08.1061360Z ✔ retained snapshots survive writes through an already-open driver log and include hidden debug evidence (123.3206ms)"
+        },
+        {
+          "line": 1385,
+          "text": "2026-11-11T12:41:42.1446635Z ✔ stable cannot publish from pending, incomplete or locally forged distribution review (17594.3625ms)"
+        },
+        {
+          "line": 1417,
+          "text": "2026-11-11T12:41:42.1650647Z ℹ tests 1204"
+        },
+        {
+          "line": 1419,
+          "text": "2026-11-11T12:41:42.1651249Z ℹ pass 1204"
+        },
+        {
+          "line": 1420,
+          "text": "2026-11-11T12:41:42.1651534Z ℹ fail 0"
+        },
+        {
+          "line": 1421,
+          "text": "2026-11-11T12:41:42.1651849Z ℹ cancelled 0"
+        },
+        {
+          "line": 1422,
+          "text": "2026-11-11T12:41:42.1652159Z ℹ skipped 0"
+        },
+        {
+          "line": 1424,
+          "text": "2026-11-11T12:41:42.1652798Z ℹ duration_ms 73969.1656"
+        },
+        {
+          "line": 1787,
+          "text": "2026-11-11T12:42:24.2217849Z nyc-tron-core-1.0.0.tgz  @nyc-tron/core  68 files  sha256 2079abe606dadde1d0d34cba4a4a31820f289cd893f2ad1e0a5c85a20914992c"
+        },
+        {
+          "line": 1788,
+          "text": "2026-11-11T12:42:24.2220531Z nyc-tron-expo-controls-1.0.0.tgz  @nyc-tron/expo-controls  140 files  sha256 0af9242ddff4c9d1c7a71808a194a68307b4de250311fe96b2c8b1ecaf6f58d0"
+        },
+        {
+          "line": 1789,
+          "text": "2026-11-11T12:42:24.2223487Z nyc-tron-geometry-1.0.0.tgz  @nyc-tron/geometry  19 files  sha256 28f8ce71bd22fa1590999d11699804f0b70d7da91553bc57270618572a6bcf91"
+        },
+        {
+          "line": 1790,
+          "text": "2026-11-11T12:42:24.2225861Z nyc-tron-hardware-keys-1.0.0.tgz  @nyc-tron/hardware-keys  67 files  sha256 afa9972cb46aa51485874c5d679580fa08f64476a4c5f7f4d15342d365efa178"
+        },
+        {
+          "line": 1791,
+          "text": "2026-11-11T12:42:24.2227878Z nyc-tron-icons-1.0.0.tgz  @nyc-tron/icons  17 files  sha256 dcadfdc21d51fc88f645460d9967066298622f4dbdeb4f50ea1c6ed49402ff78"
+        },
+        {
+          "line": 1792,
+          "text": "2026-11-11T12:42:24.2230107Z nyc-tron-native-charts-1.0.0.tgz  @nyc-tron/native-charts  43 files  sha256 472ffd4d03a0f2dd2ffa6174eab3331ffc637136a153e7a9c36718c9418b6553"
+        },
+        {
+          "line": 1793,
+          "text": "2026-11-11T12:42:24.2232055Z nyc-tron-native-controls-1.0.0.tgz  @nyc-tron/native-controls  76 files  sha256 4fd0ac5d18388d3687b3c6f6c034988b44dd98c7d5933843ee2dad80547f38c3"
+        },
+        {
+          "line": 1794,
+          "text": "2026-11-11T12:42:24.2234068Z nyc-tron-native-navigation-1.0.0.tgz  @nyc-tron/native-navigation  31 files  sha256 f7bdae21ce9bd2bde414c7d77aa791f1c57974c934487471d38e82aaf23d3a1d"
+        },
+        {
+          "line": 1795,
+          "text": "2026-11-11T12:42:24.2235872Z nyc-tron-panes-1.0.0.tgz  @nyc-tron/panes  40 files  sha256 0e79d0501f58cd89078d7c256b20ca6303c609e5b88931b4e001bf425f41bef4"
+        },
+        {
+          "line": 1796,
+          "text": "2026-11-11T12:42:24.2237699Z nyc-tron-platform-services-1.0.0.tgz  @nyc-tron/platform-services  228 files  sha256 85521ad865fda01cb59c7f5636e0bd0f34ed1d1f3e7b8c9c957130875783d81c"
+        },
+        {
+          "line": 1797,
+          "text": "2026-11-11T12:42:24.2239673Z nyc-tron-reserved-regions-1.0.0.tgz  @nyc-tron/reserved-regions  43 files  sha256 81c4c1f0c5e6c59ec0e3dd753f48fdd1c59268e9f8d9a2421f536a42b6866171"
+        },
+        {
+          "line": 1798,
+          "text": "2026-11-11T12:42:24.2241405Z nyc-tron-ui-1.0.0.tgz  @nyc-tron/ui  2516 files  sha256 d6509a9ac910a950d724daf24bb49df6603dbcdc2579b87a2c02c47893cd9d0d"
+        },
+        {
+          "line": 1799,
+          "text": "2026-11-11T12:42:24.2243125Z nyc-tron-windows-fluent-1.0.0.tgz  @nyc-tron/windows-fluent  20 files  sha256 71417ed170abbc265788226295e2bddddfcc5ae13a874d2890ba8864ff8e1014"
+        },
+        {
+          "line": 1809,
+          "text": "2026-11-11T12:42:27.1034200Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent"
+        }
+      ]
+    },
+    {
+      "name": "typescript-pack-job.log",
+      "job": 130527857738,
+      "key": "typescript_pack",
+      "gitBlob": "98dbfd82ec4b8f14145d37750f811f313a91085c",
+      "bytes": 62384,
+      "sha256": "359775839d80608a886c841cb3a7fb32c8938b94fa996d152e8af481c53de44b",
+      "lfRecords": 660,
+      "encoding": "Exact decoded UTF-8 bytes; original BOM/CRLF preserved where present",
+      "evidenceLines": [
+        {
+          "line": 119,
+          "text": "2026-11-11T12:39:20.5381592Z HEAD is now at e7901ec Merge 8a5007d197539c782e065f1b59daf3fe5ed752ec into 25a6af6d020e34d790f6a4f3d9f117738b252f1e"
+        },
+        {
+          "line": 122,
+          "text": "2026-11-11T12:39:20.5446642Z e7901ec687e96a240a7b820baef50318fde40ddd"
+        },
+        {
+          "line": 606,
+          "text": "2026-11-11T12:40:26.3591998Z API surface matches snapshot: 13 packages, 619 export subpaths."
+        },
+        {
+          "line": 611,
+          "text": "2026-11-11T12:40:28.5892923Z API signatures match: 13 packages, 619 subpaths, 3306 reachable declarations."
+        },
+        {
+          "line": 616,
+          "text": "2026-11-11T12:40:29.2048302Z Component program: 341 canonical IDs; 332 local implementations, 0 partial, 9 pinned external implementations, 0 pending; 0 accepted with all eight platform proofs."
+        },
+        {
+          "line": 621,
+          "text": "2026-11-11T12:41:02.7586073Z nyc-tron-core-1.0.0.tgz  @nyc-tron/core  68 files  sha256 dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
+        },
+        {
+          "line": 622,
+          "text": "2026-11-11T12:41:02.7588008Z nyc-tron-expo-controls-1.0.0.tgz  @nyc-tron/expo-controls  140 files  sha256 b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824"
+        },
+        {
+          "line": 623,
+          "text": "2026-11-11T12:41:02.7592783Z nyc-tron-geometry-1.0.0.tgz  @nyc-tron/geometry  19 files  sha256 ca80f9e7c69950df97ce5db6c44302fa3debc17cdf96ceb8ec6a443f393b3fa5"
+        },
+        {
+          "line": 624,
+          "text": "2026-11-11T12:41:02.7594221Z nyc-tron-hardware-keys-1.0.0.tgz  @nyc-tron/hardware-keys  67 files  sha256 0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912"
+        },
+        {
+          "line": 625,
+          "text": "2026-11-11T12:41:02.7595540Z nyc-tron-icons-1.0.0.tgz  @nyc-tron/icons  17 files  sha256 68667fed555a073b05f100df8736774f5bbc6f169e074f8124df68457a251b07"
+        },
+        {
+          "line": 626,
+          "text": "2026-11-11T12:41:02.7596862Z nyc-tron-native-charts-1.0.0.tgz  @nyc-tron/native-charts  43 files  sha256 6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76"
+        },
+        {
+          "line": 627,
+          "text": "2026-11-11T12:41:02.7598271Z nyc-tron-native-controls-1.0.0.tgz  @nyc-tron/native-controls  76 files  sha256 2832c3ba7c33cd55c59d336ba48102f6a00e743e392ee33157831683ec1da258"
+        },
+        {
+          "line": 628,
+          "text": "2026-11-11T12:41:02.7600088Z nyc-tron-native-navigation-1.0.0.tgz  @nyc-tron/native-navigation  31 files  sha256 cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85"
+        },
+        {
+          "line": 629,
+          "text": "2026-11-11T12:41:02.7601267Z nyc-tron-panes-1.0.0.tgz  @nyc-tron/panes  40 files  sha256 cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9"
+        },
+        {
+          "line": 630,
+          "text": "2026-11-11T12:41:02.7602436Z nyc-tron-platform-services-1.0.0.tgz  @nyc-tron/platform-services  228 files  sha256 c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650"
+        },
+        {
+          "line": 631,
+          "text": "2026-11-11T12:41:02.7603765Z nyc-tron-reserved-regions-1.0.0.tgz  @nyc-tron/reserved-regions  43 files  sha256 e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2"
+        },
+        {
+          "line": 632,
+          "text": "2026-11-11T12:41:02.7604928Z nyc-tron-ui-1.0.0.tgz  @nyc-tron/ui  2516 files  sha256 f48b2e1a315c34132d18c0c4cb1ceda44fcd40403fe2aeec0d1bd313720ade40"
+        },
+        {
+          "line": 633,
+          "text": "2026-11-11T12:41:02.7606015Z nyc-tron-windows-fluent-1.0.0.tgz  @nyc-tron/windows-fluent  20 files  sha256 e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73"
+        },
+        {
+          "line": 641,
+          "text": "2026-11-11T12:41:03.4201418Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent"
+        }
+      ]
+    }
+  ],
+  "scope": [
+    "The two host lanes execute the same 1,204-design suite, not 2,408 distinct tests.",
+    "Actual checkout is verified in all three complete original logs. Generated merge tree/ordered parents are independently fetched and match the candidate tree.",
+    "The original Linux/Windows pack reports list 13 workspace archives each; their printed SHA values differ across these hosts and are not asserted interchangeable or a canonical release inventory.",
+    "No source-workflow artifacts are listed by the API; no original tarball/ZIP/dependency payload is independently inspected by this receipt.",
+    "The prior retention and release-readiness test cases execute and pass on both hosts; see exact original lines.",
+    "The separate Fabric source/native workflow and its 13/49 checks are not included in this six-file source receipt.",
+    "No C++/WinUI/PowerShell/native UIA/geometry/drag/physical device/runtime acceptance transfers from this source pass; final 15 archives and owner approval remain separate."
+  ]
+}

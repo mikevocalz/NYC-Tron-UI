@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-mobile-source-and-android-originals-with-ios-failure-metadata",
+  "recordedAtUTC": "2026-11-11T13:56:11Z",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "head": "fc901030ba1e0eed1b399ad0a3100529bf97e52f",
+    "actualCheckoutObservedInSourceAndAndroid": "255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6",
+    "tree": "5acadef01a5fcafa3600949e7c50e730aa3663e9",
+    "orderedMergeParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "fc901030ba1e0eed1b399ad0a3100529bf97e52f"
+    ],
+    "iosActualCheckoutFromOriginal": null,
+    "iosIdentityScope": "Completed job metadata identifies head fc90103; its original log was unavailable, so no actual checkout line was independently observed."
+  },
+  "workflow": {
+    "runId": 43026784330,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "originalFiles": [
+    {
+      "name": "source-job.log",
+      "gitBlob": "ab9845df3585ede770de6f775b938ea6e403b411",
+      "bytes": 58104,
+      "sha256": "5b8b091becfcdb6a8af94c5e737cf994f5dd69a99fe5f54fe8f13bde30b48c2f",
+      "jobId": 130543376260
+    },
+    {
+      "name": "android-job.log",
+      "gitBlob": "e81f1ac7fdeab797b19f073cf32c3d9ff98b720e",
+      "bytes": 281920,
+      "sha256": "64f755df43ea9182c7b15ec6c59332c03eb30430338085c69b4732dcc9435101",
+      "jobId": 130544275610
+    }
+  ],
+  "selectedExactLines": [
+    {
+      "file": "source-job.log",
+      "lines": [
+        {
+          "line": 123,
+          "text": "2026-11-11T13:11:10.2311932Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        },
+        {
+          "line": 555,
+          "text": "2026-11-11T13:12:30.6015572Z Wrote 13 tarballs and SHA256SUMS to /home/runner/work/_temp/nyc-tron-packs"
+        }
+      ]
+    },
+    {
+      "file": "android-job.log",
+      "lines": [
+        {
+          "line": 127,
+          "text": "2026-11-11T13:12:41.2084489Z 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6"
+        },
+        {
+          "line": 2739,
+          "text": "2026-11-11T13:28:45.8541483Z Native android decoder passed 11 checks at 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6. Evidence: /home/runner/work/_temp/nyc-tron-native-consumer/runtime-android"
+        },
+        {
+          "line": 2740,
+          "text": "2026-11-11T13:31:31.3445227Z Native android UI passed 4 actual OS-driven flows at 255b63f5800cfbd2cbc7fa27ed6e1cad477c14c6. Evidence: /home/runner/work/_temp/nyc-tron-native-consumer/runtime-ui-android"
+        }
+      ]
+    }
+  ],
+  "observed": {
+    "source": {
+      "jobId": 130543376260,
+      "conclusion": "success",
+      "workspaceTarballs": 13
+    },
+    "android": {
+      "jobId": 130544275610,
+      "conclusion": "success",
+      "decoderChecks": 11,
+      "actualOSDrivenUIFlows": 4,
+      "recoveryCount": null,
+      "recoveryScope": "No explicit recovery count was observed; zero is not inferred."
+    },
+    "ios": {
+      "jobId": 130544275678,
+      "conclusion": "failure",
+      "completedAt": "2026-11-11T13:40:30Z",
+      "scope": "Step conclusions from completed API metadata only; no original test count, recovery count, failing assertion or actual checkout line.",
+      "simulatorBuildStep": 12,
+      "simulatorBuildConclusion": "success",
+      "decoderStep": 21,
+      "decoderConclusion": "success",
+      "touchStep": 22,
+      "touchConclusion": "failure",
+      "touchCompletedAt": "2026-11-11T13:39:34Z",
+      "retainedEvidenceStep": 23,
+      "retainedEvidenceConclusion": "success"
+    }
+  },
+  "iosOriginalRetrieval": {
+    "dedicatedCompletedReadAttempts": 2,
+    "results": [
+      {
+        "attempt": "first",
+        "recordedAtUTC": "2026-11-11T13:46:47Z",
+        "isError": true,
+        "text": "tool call error: tool call failed for `codex_apps/github.fetch_workflow_job_logs`\n\nCaused by:\n    Transport closed"
+      },
+      {
+        "attempt": "second",
+        "recordedAtUTC": null,
+        "secondReadWindowUTC": "2026-11-11T13:54:34Z..2026-11-11T13:56:11Z",
+        "isError": true,
+        "text": "tool call error: tool call failed for `codex_apps/github.fetch_workflow_job_logs`\n\nCaused by:\n    Transport closed"
+      }
+    ],
+    "availability": "unavailable",
+    "cause": "The connector reported Transport closed; no underlying cause was established.",
+    "noUnchangedRerun": true
+  },
+  "artifactBoundary": "Artifacts are producer metadata only. No ZIP extraction, member inspection, installed-byte equality, physical-device result, final archive acceptance or release approval is asserted."
+}
