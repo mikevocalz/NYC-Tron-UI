@@ -69,7 +69,7 @@ const acceptanceTransport = nativeAcceptance ? await patchDriverTransport(destin
 const acceptanceDeviceName = nativeAcceptance ? await patchExpoDeviceName(destination) : undefined;
 // Execute Spark's native patch-provenance and Metro graph gates before Xcode.
 run(process.execPath, ['node_modules/@legendapp/spark/bin/spark.cjs', 'analyze']);
-const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': '1.0.0', '@nyc-tron/macos-appkit': '1.0.0' };
+const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': core.version, '@nyc-tron/macos-appkit': adapter.version };
 for (const [name, expected] of Object.entries(pins)) {
   const path = join(destination, 'node_modules', name);
   if ((await lstat(path)).isSymbolicLink()) throw new Error(`Acceptance dependency is a source link: ${name}`);
