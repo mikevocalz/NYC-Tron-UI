@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "scope": "actual-rendered-Chromium-overlay-run",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "workflow": {
+    "id": 42951265312,
+    "workflowId": 407783843,
+    "runNumber": 299,
+    "attempt": 1,
+    "name": "NYC-Tron rendered web overlay acceptance",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265312"
+  },
+  "job": {
+    "id": 130295860429,
+    "name": "chromium",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265312/job/130295860429"
+  },
+  "source": {
+    "helperCommit": "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b",
+    "helperTree": "bc0c0f2d8c96965ed54b429bd5269c4c7081bc64",
+    "actualCheckout": "32e6234e6f00ff873132f81498d3f78f2488ad8f",
+    "actualCheckoutTree": "bc0c0f2d8c96965ed54b429bd5269c4c7081bc64",
+    "actualCheckoutParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b"
+    ],
+    "fullTreeLeavesVerified": 2048,
+    "treeObjectsIncludingRootRecomputed": 284,
+    "allDirectoryObjectHashesMatched": true,
+    "workflowPath": ".github/workflows/menu-browser.yml",
+    "workflowGitBlob": "2dc4658620b43618b48f284626474ea7eb3fc02c",
+    "fixtureServer": {
+      "path": "packages/expo-controls/tests/browser/server.mjs",
+      "gitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+      "unchangedFromA685": true
+    }
+  },
+  "actualChecks": {
+    "runner": "Chromium through Playwright",
+    "totalAnnounced": 32,
+    "passed": 32,
+    "individuallyMatchedPassLines": 32,
+    "uniqueTestNumbers": 32,
+    "failed": 0,
+    "skipped": 0,
+    "reportedDurationSeconds": 10.3,
+    "renderingCases": 20,
+    "interactionCases": 12,
+    "workers": 2,
+    "summary": "32 passed (10.3s)",
+    "scope": "RN web overlay/menu/popover/command-palette/tooltip rendering and pointer/keyboard/focus behavior"
+  },
+  "originalLog": {
+    "file": "browser-job.log",
+    "retrieval": "Complete decoded job log, retained without trimming, newline normalization or ANSI removal",
+    "stringLength": 40974,
+    "utf8Bytes": 43808,
+    "sha256": "668cd0d6d7a0a6269ffdc689ca3ef821acb0f60e71faa5d7c47d2a168942adf2",
+    "gitBlob": "3429c6d95fa4efbe49ffc7ff96c7c90edc02f624",
+    "authorIndependentlyRetrievedAndHashed": true,
+    "reviewer": "desktop_host_audit",
+    "supportingLogLines": {
+      "actualCheckout": 123,
+      "testCount": 377,
+      "resultSummary": 412,
+      "uploadedFileCount": 425,
+      "artifactDigest": 432,
+      "artifactIdAndSize": 435
+    }
+  },
+  "metadata": {
+    "file": "workflow-metadata.json",
+    "gitBlob": "374d52ca9400ee7d9a7da0b294a518e67ee9a4a3",
+    "utf8Bytes": 3544,
+    "sha256": "e686c4fed47d1ba49717ff29ce34f1feac16a860121c603307f2ae68f7f99917",
+    "normalized": true
+  },
+  "artifact": {
+    "id": 13824009318,
+    "name": "overlay-renders",
+    "reportedBytes": 280598,
+    "reportedUploadedFiles": 20,
+    "reportedSha256": "b35096aeebc5f18aebdc1806345c208ccc4e474c4cc5d6309525ea88cf48b938",
+    "digestAgreement": "Upload log and GitHub artifact metadata agree",
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13824009318",
+    "archiveDownloadUrl": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13824009318/zip",
+    "createdAt": "2026-11-11T03:13:58Z",
+    "expiresAt": "2026-11-25T03:13:57Z",
+    "expiredAtRetrieval": false,
+    "originalZipRetrieved": false,
+    "originalZipHashIndependentlyVerified": false,
+    "membersExtracted": false,
+    "pngsViewed": false,
+    "limitation": "ZIP bytes and PNG members remain unextracted and unviewed; size and SHA256 are producer/API-reported."
+  },
+  "boundaries": {
+    "browserPassDoesNotEstablishAppKitNativeAcceptance": true,
+    "nativeDiagnosticChangesNotExercisedByBrowserRun": true,
+    "frozenCombinedCandidateTestedByThisRun": false,
+    "physicalDeviceAcceptanceClaimed": false,
+    "distributionApprovalChanged": false
+  },
+  "authorActions": {
+    "readOnlyRetrievalAndVerification": true,
+    "immutableReceiptBlobsOnly": true,
+    "sourceChanges": false,
+    "workflowDispatch": false,
+    "treeCommitRefOrPrWrites": false
+  }
+}

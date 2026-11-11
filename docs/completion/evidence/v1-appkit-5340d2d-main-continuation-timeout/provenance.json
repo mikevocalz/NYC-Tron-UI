@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "completed-native-run-failure",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "helperHead": "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b",
+    "actualMerge": "32e6234e6f00ff873132f81498d3f78f2488ad8f",
+    "tree": "bc0c0f2d8c96965ed54b429bd5269c4c7081bc64",
+    "orderedMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b"
+    ],
+    "sourceFiles": [
+      {
+        "path": ".github/workflows/macos-appkit.yml",
+        "gitBlob": "ed8c5a2c8eb06e68b920413836c8cd32fadcf198",
+        "bytes": 9750,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "gitBlob": "5a7c3b5c293dced56ad7dc4d28cfee75015288a4",
+        "bytes": 56818,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "gitBlob": "0b0555a2cb0c37867418600bf9c9fbfbd77e6566",
+        "bytes": 70151,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/driver-client.mjs",
+        "gitBlob": "0365653c0b6f4ee12f1022b31ee905127d2b6023",
+        "bytes": 4393,
+        "mode": "100644"
+      }
+    ]
+  },
+  "workflow": {
+    "runId": 42951265207,
+    "runAttempt": 1,
+    "sourceJobId": 130295860357,
+    "nativeJobId": 130296002996,
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265207"
+  },
+  "independentlyInspected": {
+    "scope": "Complete decoded job log strings returned by the GitHub connector and the exact text envelopes extracted from those strings. UTF-8 byte hashes below are independently recomputed; original artifact member bytes are outside this scope.",
+    "files": [
+      {
+        "name": "source-job.log",
+        "kind": "complete-decoded-GitHub-job-log",
+        "jobId": 130295860357,
+        "bytes": 19321,
+        "sha256": "46b5adf608b75e167d4e2b8e82de9cdb3028d9b7b7561df60270a4b39a3a2641",
+        "gitBlob": "4e9d2acc3b98f1859b1f01e8c55d08a410b79f05"
+      },
+      {
+        "name": "native-job.log",
+        "kind": "complete-decoded-GitHub-job-log",
+        "jobId": 130296002996,
+        "bytes": 65275,
+        "sha256": "9747c8f908041042c9d6c56986682ccfbea6479dee39cdc9c04a2fe4a42de17b",
+        "gitBlob": "146c34001478cfe4a29425165fbc34e59dbcbe78"
+      },
+      {
+        "name": "build-console-summary.json",
+        "kind": "exact-timestamp-stripped-JSON-line-without-added-newline",
+        "bytes": 318,
+        "sha256": "38aa8fa595b2804a1dcc552a3dfe9be0c8445b8c074872e5993144d26ebcaf03",
+        "gitBlob": "49c4cff17aa1f85865ff2b66b45866a6279c2c22"
+      },
+      {
+        "name": "startup-console-summary.json",
+        "kind": "exact-timestamp-stripped-JSON-line-without-added-newline",
+        "bytes": 11885,
+        "sha256": "3cc704cfc30b6bff333dbcd8ab284a7311bb2277a2c6fdae433b873a84848a61",
+        "gitBlob": "6a5d7099b60a5a0c28e5538ebb984055da2d2b3d"
+      },
+      {
+        "name": "startup-console-block.txt",
+        "kind": "exact-timestamped-marker-block-including-one-interleaved-stderr-line",
+        "bytes": 12140,
+        "sha256": "115bb69181de5d23449e16ead38e8c03c1e31ffea22a822cf2948f12496215c7",
+        "gitBlob": "bd71ec43ae66c71d5f235a3aa025f1a8352c2c12"
+      }
+    ],
+    "completedMetadata": {
+      "filename": "github-metadata.json",
+      "bytes": 8133,
+      "sha256": "c6f77e2facf1972d1484f79888e53526df9e22ef2643d199afb4d25f2210e47c",
+      "gitBlob": "82b30b88237510b421707267f02c6277f09825ad"
+    },
+    "extraction": {
+      "timestampRemoval": "Remove only the exact GitHub timestamp prefix from each candidate line; require standalone exact BEGIN and END marker lines. Do not accept marker strings echoed within shell source.",
+      "rawJson": "Retain each unique complete JSON line verbatim after timestamp removal, without parsing/reserializing it or adding a newline.",
+      "build": {
+        "beginCount": 1,
+        "endCount": 1,
+        "jsonLines": 1,
+        "interleavedNonJsonLines": 0
+      },
+      "startup": {
+        "beginCount": 1,
+        "endCount": 1,
+        "jsonLines": 1,
+        "interleavedNonJsonLines": 1,
+        "originalTimestampedBlockRetained": true,
+        "interleavedStderrLine": "2026-11-11T03:34:51.8255650Z file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/driver-client.mjs:36"
+      },
+      "tooltip": {
+        "beginCount": 0,
+        "endCount": 0,
+        "status": "absent-before-tooltip-stage"
+      }
+    }
+  },
+  "observedOutcome": {
+    "sourceTests": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "consumerTests": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "installedPublicApiCheck": "passed",
+    "nativeFoundationSocketpairProbe": {
+      "casesPassed": 7,
+      "applicationAcceptanceSeparate": true
+    },
+    "standaloneNativeCompile": {
+      "exitCode": 0,
+      "outcome": "success"
+    },
+    "nativeRuntimeStep": "failed",
+    "firstFailure": "Native driver response timed out awaiting tron.window (request 2)",
+    "processId": 43799,
+    "initialShowAcceptedWithinDeadline": false,
+    "tooltipStageReached": false,
+    "newTooltipGetterDiagnosticsObserved": false,
+    "nativeEvidenceUploadFileCount": 45,
+    "passedOnlyNativeDistribution": "skipped",
+    "reactRootMainCheckReached": false,
+    "actualReactMountState": null
+  },
+  "reportedPhaseObservations": {
+    "source": "Typed projection of the read-time app.log prefix and complete stable command file; raw emitted JSON retained separately.",
+    "timestampsAreWallClockObservations": true,
+    "monotonicElapsedTimeNotEstablished": true,
+    "clientRequest": {
+      "line": 7,
+      "phase": "request-started",
+      "at": "2026-11-11T03:34:11.314Z",
+      "command": "tron.window",
+      "requestId": 2,
+      "responseId": null,
+      "ok": null,
+      "protocol": null
+    },
+    "clientFailure": {
+      "line": 8,
+      "phase": "request-failed",
+      "at": "2026-11-11T03:34:46.318Z",
+      "command": "tron.window",
+      "requestId": 2,
+      "responseId": null,
+      "ok": null,
+      "protocol": null
+    },
+    "clientWallClockIntervalSeconds": 35.004,
+    "workspaceCompletion": {
+      "line": 16,
+      "phase": "workspace-completion-received",
+      "atEpochSeconds": 1794368051.428266,
+      "mainThread": false,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": true,
+        "hasError": false,
+        "sameProcess": null,
+        "sameBundle": null,
+        "ok": null
+      },
+      "state": {
+        "policy": null,
+        "applicationActive": null,
+        "visible": null,
+        "key": null,
+        "miniaturized": null,
+        "canBecomeKey": null
+      }
+    },
+    "workspaceMainContinuation": {
+      "line": 17,
+      "phase": "workspace-main-continuation",
+      "atEpochSeconds": 1794368087.035872,
+      "mainThread": true,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": null,
+        "hasError": null,
+        "sameProcess": null,
+        "sameBundle": null,
+        "ok": null
+      },
+      "state": {
+        "policy": 0,
+        "applicationActive": false,
+        "visible": true,
+        "key": false,
+        "miniaturized": false,
+        "canBecomeKey": true
+      }
+    },
+    "identityChecked": {
+      "line": 18,
+      "phase": "identity-checked",
+      "atEpochSeconds": 1794368087.03687,
+      "mainThread": true,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": null,
+        "hasError": null,
+        "sameProcess": true,
+        "sameBundle": true,
+        "ok": null
+      },
+      "state": {
+        "policy": null,
+        "applicationActive": null,
+        "visible": null,
+        "key": null,
+        "miniaturized": null,
+        "canBecomeKey": null
+      }
+    },
+    "lateReplyPrepared": {
+      "line": 21,
+      "phase": "reply-prepared",
+      "atEpochSeconds": 1794368087.041072,
+      "mainThread": true,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": null,
+        "hasError": null,
+        "sameProcess": null,
+        "sameBundle": null,
+        "ok": true
+      },
+      "state": {
+        "policy": 0,
+        "applicationActive": false,
+        "visible": true,
+        "key": false,
+        "miniaturized": null,
+        "canBecomeKey": null
+      }
+    },
+    "lateTransportSend": {
+      "line": 24,
+      "phase": "send-completed",
+      "atEpochSeconds": 1794368087.042486,
+      "mainThread": false,
+      "sequence": 2,
+      "command": "tron.window",
+      "details": {
+        "parsed": null,
+        "dictionary": null,
+        "nilResponse": null,
+        "validJSONObject": null,
+        "hasError": null,
+        "threwException": null,
+        "replacedWithFailure": false,
+        "bytes": 158,
+        "errno": null,
+        "errorCode": null
+      }
+    },
+    "lateResponseWasNotAcceptedByTimedOutClient": true,
+    "blockedThreadOrStack": null,
+    "rootCauseEstablished": false,
+    "completionMarkerToMainContinuationMarkerWallClockIntervalSecondsRounded6": 35.607606,
+    "markerSemantics": {
+      "driverGitBlob": "5a7c3b5c293dced56ad7dc4d28cfee75015288a4",
+      "callbackTimestampCapturedBeforeJsonSerializationAndLogging": true,
+      "callbackTraceReturnsBeforeMainContinuationEnqueue": true,
+      "explicitEnqueueMarkerPresent": false,
+      "callbackTraceDurationMeasured": false,
+      "preEnqueueDelayMeasured": false,
+      "mainQueueWaitDurationMeasured": false,
+      "markerIntervalProvesMainQueueStarvationOrBlocking": false,
+      "whyMarkerIntervalWasLong": null
+    },
+    "reactMountObservation": {
+      "verifierGitBlob": "0b0555a2cb0c37867418600bf9c9fbfbd77e6566",
+      "sourceOrder": "await show(); then await mounted('root-main')",
+      "rootMainCheckReached": false,
+      "actualReactMountState": null
+    }
+  },
+  "reportedProjectionCoverage": {
+    "activation": {
+      "matched": 10,
+      "selected": 10,
+      "omitted": 0,
+      "outputOmitted": 0,
+      "malformed": 0,
+      "pidMismatch": 0
+    },
+    "transport": {
+      "matched": 10,
+      "selected": 10,
+      "omitted": 0,
+      "outputOmitted": 0,
+      "malformed": 0,
+      "pidMismatch": 0
+    },
+    "commands": {
+      "matched": 8,
+      "selected": 8,
+      "omitted": 0,
+      "outputOmitted": 0,
+      "malformed": 0
+    },
+    "eventualLiveLogMayContainLaterAppends": true
+  },
+  "producerReportedOriginalInputs": {
+    "independentlyInspected": false,
+    "compilerTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329156,
+      "sha256": "fe6fe2cb4d52f2966af0dbd830d355d2928411daccb66473c43a2f7c9404404b",
+      "complete": true,
+      "normalized": false,
+      "scope": "producer-reported complete compiler transcript; raw bytes not retrieved"
+    },
+    "appLogRead": {
+      "filename": "app.log",
+      "status": "snapshot-retained",
+      "readByteLimit": 1048576,
+      "readBytes": 5113,
+      "sourceLive": true,
+      "sourceBytesBefore": 5113,
+      "sourceBytesAfter": 5113,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": false,
+      "originalSha256": null,
+      "truncated": false,
+      "laterAppendsPossible": true,
+      "unreadBytesObserved": 0,
+      "snapshot": {
+        "filename": "startup-app-log-snapshot.log",
+        "kind": "read-time-prefix-from-live-app-log",
+        "offset": 0,
+        "bytes": 5113,
+        "sha256": "1ae997d8ee76d4fd82c9e9af07fac58f373e78187cd15fd10804582dfc5f0965",
+        "retained": true,
+        "eventualAppLogHash": false
+      }
+    },
+    "commandsRead": {
+      "filename": "commands.jsonl",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 841,
+      "sourceLive": false,
+      "sourceBytesBefore": 841,
+      "sourceBytesAfter": 841,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "a739ac22b9ae7f58d4054d46d5dd98cd9e893bf64c269e35490486354fc97d9d",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null
+    },
+    "processFailureRead": {
+      "filename": "native-process-failure.json",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 1321,
+      "sourceLive": false,
+      "sourceBytesBefore": 1321,
+      "sourceBytesAfter": 1321,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "b7515b5f76ef4b7a66cddb6aea695b608be792e5f50e1aaa21579fb5be8bd326",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null,
+      "jsonStatus": "parsed"
+    },
+    "sample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 25,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "1b0793a638829a1f05c75e2e31707c14b0bf9a67af5f6a9c97d4ea8710014d06",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true,
+      "scope": "producer-recorded sample metadata and digest; sample file and thread stacks not inspected"
+    },
+    "artifact": {
+      "id": 13826131506,
+      "name": "macos-appkit-native-evidence",
+      "bytes": 1425183,
+      "sha256": "9a3ac4c5ef52911c0235d6ffd7ba274817c0546ceb9d9a3c8391eb5c9b8f3499",
+      "uploadedFileCount": 45,
+      "rawZipInspected": false,
+      "membersInspected": false
+    },
+    "runtimeProcessProjection": {
+      "status": "projected",
+      "processId": 43799,
+      "observedAt": "2026-11-11T03:34:46.321Z",
+      "exitCode": null,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "beforeSample": {
+        "observedAt": "2026-11-11T03:34:46.335Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "afterSample": {
+        "observedAt": "2026-11-11T03:34:51.666Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "sample": {
+        "observedAt": null,
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true,
+        "durationSeconds": 2,
+        "intervalMilliseconds": 10,
+        "threadGroups": 25,
+        "hasThreadStacks": true,
+        "file": "native-process-sample.txt",
+        "sha256": "1b0793a638829a1f05c75e2e31707c14b0bf9a67af5f6a9c97d4ea8710014d06",
+        "digestScope": "producer-recorded-sample-file-not-reread",
+        "stacksDoNotEstablishHealth": true
+      }
+    }
+  },
+  "limits": [
+    "The late matching process/bundle and visible window do not turn the timed-out initial show into acceptance; reported applicationActive and key remained false.",
+    "The callback-marker timestamp precedes JSON serialization/logging and dispatch_async enqueue. No enqueue marker or tracing/pre-enqueue duration is recorded. The marker interval does not measure main-queue wait or prove queue starvation, blocking, a blocked stack, deadlock, NSWorkspace defect, permission failure, activation root cause, or causal timing.",
+    "The full compiler transcript, live-log snapshot, command/process originals, sample and artifact bytes have producer-reported hashes only; those hashes are not independently recomputed from the originals here.",
+    "The app.log hash binds an exclusively retained read-time prefix snapshot, not the eventual live app.log.",
+    "No tooltip envelope was produced because the sequential initial-show request failed before tooltip acceptance; new native tooltip code compiled but was not exercised.",
+    "Sample exit zero and thread-stack metadata do not establish application health; the original sample stacks are uninspected.",
+    "Later native interaction gates, package acceptance and release acceptance remain held. No deadline, activation behavior, permission, assertion or cleanup was changed by this evidence receipt.",
+    "The separately retained 32-case browser pass is a browser outcome and does not replace native acceptance.",
+    "The verifier failed while awaiting show() before mounted('root-main'); actual React mounting remains unknown."
+  ]
+}

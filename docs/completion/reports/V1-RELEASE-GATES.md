@@ -81,6 +81,56 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit completed startup result and browser pass
+
+The [completed 5340 native receipt](../evidence/v1-appkit-5340d2d-main-continuation-timeout/README.md)
+records actual merge `32e6234e6f00ff873132f81498d3f78f2488ad8f`,
+matching helper `5340d2d96412d0fcc5dc7cce21ced037d2de5c7b` and tree
+`bc0c0f2d8c96965ed54b429bd5269c4c7081bc64`.
+[Run 42951265207](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265207)
+passed eleven source checks, sixteen consumer checks, installed API verification
+(15 subpaths / 33 reachable declarations), the seven-case actual native
+Foundation/socketpair probe and standalone native compilation.
+Runtime acceptance failed on initial `tron.window` request 2 at the unchanged
+35-second client deadline. The verifier had not reached its root-main mount
+check or allocated tooltip evidence; actual React mounting remains unknown.
+The new tooltip diagnostics compiled but were not exercised.
+
+The owned PID 43799 reported a non-main workspace-completion callback marker
+with an application and no error. Its main-continuation marker followed about
+35.608 seconds later, after the client's recorded 35.004-second request interval.
+The callback timestamp is captured before JSON serialization/logging and before
+`dispatch_async`; there is no enqueue marker or measured tracing/pre-enqueue
+duration. This wall-clock marker interval does not establish main-queue wait,
+starvation, blocking, a blocked stack or the precise timeout cause.
+The late reply verified the same process and bundle and observed a visible
+window, with `applicationActive: false` and `key: false`.
+All ten matching activation records, ten transport records and eight command
+records were retained without reported malformed or omitted matches.
+
+Complete source/native logs of 19,321/65,275 UTF-8 bytes were independently
+retrieved and rehashed. The exact 318-byte build and 11,885-byte startup JSON
+lines retain their original bytes. The original 12,140-byte startup marker
+block preserves its one interleaved stderr line. The app-log hash describes a
+5,113-byte retained read-time prefix, with later appends still possible.
+The process sample's original stack text remains uninspected; its producer
+metadata cannot establish application health or explain the marker interval.
+
+The failed run uploaded 45 evidence files. Native artifact 13826131506
+(1,425,183 bytes) and original compiler/snapshot/command/process/sample hashes
+remain producer/API-reported until their original bytes are independently
+inspected. Passed-only tested-distribution retention was skipped.
+
+The separate [5340 browser receipt](../evidence/v1-web-5340d2d-overlay-pass/README.md)
+records [run 42951265312](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265312)
+at the same actual merge: all 32 Chromium cases passed, comprising twenty
+rendering and twelve interaction cases, with no failures or skips.
+Its complete 43,808-byte log was independently retrieved and rehashed.
+Artifact 13824009318 reports twenty PNGs and 280,598 ZIP bytes; original
+ZIP/PNG bytes remain uninspected. Browser acceptance does not replace the
+held native gates. The earlier source checkpoint and a685 tooltip result
+below remain separately identified historical records.
+
 ### November 11 AppKit text-collection source follow-up
 
 The [source checkpoint](../evidence/v1-appkit-5340d2d-text-collection-source/README.md)
