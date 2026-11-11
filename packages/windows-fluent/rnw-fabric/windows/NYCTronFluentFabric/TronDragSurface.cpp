@@ -92,6 +92,27 @@ struct NativeDragRegion : Xaml::Controls::ContentControlT<NativeDragRegion> {
     return winrt::make<NativeDragRegionAutomationPeer>(static_cast<Xaml::FrameworkElement>(*this));
   }
 };
+// Escape during a native drag. The Microsoft.UI.Input.DragDrop loop that carries
+// a XAML drag between islands does not cancel on Escape sent to this window
+// (run 42980627512: the drop was still delivered after Escape). A thread-local
+// keyboard hook records the key while a native drag is in flight, and the drop
+// target refuses the drop when it was seen. It only observes; the key is passed on.
+struct EscapeWatch {
+  static inline HHOOK hook{nullptr};
+  static inline bool seen{false};
+  static inline uint32_t count{0};
+  static LRESULT CALLBACK Proc(int code, WPARAM wparam, LPARAM lparam) {
+    if (code == HC_ACTION && wparam == VK_ESCAPE && (lparam & (1u << 31)) == 0) { seen = true; ++count; }
+    return CallNextHookEx(hook, code, wparam, lparam);
+  }
+  static void Begin() noexcept {
+    seen = false; count = 0;
+    if (!hook) hook = SetWindowsHookExW(WH_KEYBOARD, Proc, nullptr, GetCurrentThreadId());
+  }
+  static void End() noexcept {
+    if (hook) { UnhookWindowsHookEx(hook); hook = nullptr; }
+  }
+};
 // The OS drag reaches this nested XAML island only through the RNW parent
 // island's Microsoft.UI.Input.DragDrop target. RNW's parent island sets none, so
 // the input system finds no target and XAML never raises DragEnter. This proxy
@@ -140,6 +161,7 @@ struct TronDragSurfaceComponentView
   void Destroy() noexcept {
     if (std::exchange(m_disposed, true)) return;
     ReleaseParentDropObserver();
+    EscapeWatch::End();
     m_mounted = false;
     m_loaded = false;
     Trace("surface-destroying");
@@ -205,6 +227,7 @@ struct TronDragSurfaceComponentView
           if (self->m_disposed || self->m_request.empty()) return;
           const auto result = args.DropResult();
           self->Trace("source-drop-completed");
+          EscapeWatch::End();
           auto effect = result == Transfer::DataPackageOperation::Move ? "move" : result == Transfer::DataPackageOperation::Copy ? "copy" : result == Transfer::DataPackageOperation::Link ? "link" : result == Transfer::DataPackageOperation::None ? "none" : "unknown";
           if (auto broker = Broker::Find(self->m_owner)) broker->NativeCompleted(self->m_request, effect);
           self->m_request.clear();
@@ -247,6 +270,7 @@ struct TronDragSurfaceComponentView
       number(L"surface", static_cast<double>(m_diagnosticSurface));
       boolean(L"disposed", m_disposed); boolean(L"mounted", m_mounted); boolean(L"loadedEvent", m_loaded);
       boolean(L"inputReady", InputReady());
+      boolean(L"escapeSeen", EscapeWatch::seen); number(L"escapeCount", EscapeWatch::count); boolean(L"escapeHook", EscapeWatch::hook != nullptr);
       try {
         if (m_surface) {
           boolean(L"isLoaded", m_surface.IsLoaded()); boolean(L"enabled", m_surface.IsEnabled());
@@ -341,6 +365,7 @@ struct TronDragSurfaceComponentView
       record.SetNamedValue(L"stage", Json::JsonValue::CreateStringValue(winrt::to_hstring(stage)));
       record.SetNamedValue(L"inside", Json::JsonValue::CreateBooleanValue(inside));
       record.SetNamedValue(L"allowed", Json::JsonValue::CreateBooleanValue(allowed));
+      record.SetNamedValue(L"escapeSeen", Json::JsonValue::CreateBooleanValue(EscapeWatch::seen));
       const wchar_t* keys[6] = {L"x", L"y", L"siteX", L"siteY", L"siteWidth", L"siteHeight"};
       for (int i = 0; i < 6; ++i) if (std::isfinite(geometry[i])) record.SetNamedValue(keys[i], Json::JsonValue::CreateNumberValue(geometry[i]));
       nyctron::desktop::NativeDragTrace::Record(m_owner, record);
@@ -361,7 +386,7 @@ struct TronDragSurfaceComponentView
         return Transfer::DataPackageOperation::None;
       }
       const auto nonce = NonceFrom(info.Data());
-      allowed = inside && InputReady() && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation);
+      allowed = !EscapeWatch::seen && inside && InputReady() && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation);
       if (kind == 3) {
         TraceParentDrop("parent-drop-drop", geometry, inside, allowed);
         if (!allowed) { (*complete)(Transfer::DataPackageOperation::None); return Transfer::DataPackageOperation::None; }
@@ -422,6 +447,7 @@ struct TronDragSurfaceComponentView
     } catch (...) { Error("Native drag surface properties are invalid"); }
   }
   void Starting(Xaml::DragStartingEventArgs const& args) noexcept {
+    EscapeWatch::Begin();
     Trace("source-starting");
     std::shared_ptr<DragDeferral> completion;
     try {
