@@ -30,6 +30,9 @@ public static class NativeDragEnvironment {
   }
   public static Dictionary<long,WindowRecord> Records=new Dictionary<long,WindowRecord>();
   public static List<long> Queries=new List<long>();
+  public static object ShellFixture;
+  public static int ShellQueries;
+  public static object ExistingShell(IntPtr process,uint processId,long created,IntPtr window) { ShellQueries++; return ShellFixture; }
   public static WindowRecord Window(IntPtr handle,uint expectedProcess) {
     long id=handle.ToInt64(); Queries.Add(id);
     if (Records.ContainsKey(id)) return Records[id];
@@ -130,6 +133,74 @@ $modules=Get-DragModuleIdentityRecord $moduleProcess 77 $expectedStarted
 Assert ($modules.modules[0].status -eq 'query-failed' -and $modules.modules[0].errorType -and $modules.modules[1].status -eq 'not-loaded') "Missing file/query failure was conflated with an unloaded module"
 Write-Output 'PASS: PID/start/exit guards and per-module query errors remain explicit'
 
+
+function ShellFixture {
+  $observation = @{
+    status='queried'; identityStable=$true; errors=@{}
+    shellWindowHandle=100; shellWindowHandleAfter=100; shellProcessId=88; shellProcessIdAfter=88; shellThreadId=900; shellThreadIdAfter=900
+    shellSecurity=@{ status='queried'; tokenCloseError=$null; fields=@{
+      elevation=@{ status='observed'; value=0 }; integrityRid=@{ status='observed'; value=8192 }; uiAccess=@{ status='observed'; value=0 } } }
+  foreach ($name in @('shellToDriver','shellToApp')) {
+    $observation[$name]=@{ status='queried'; identityStable=$true; errors=@{}; sameSession=$true
+      leftSession=@{ status='observed'; value=3 }; rightSession=@{ status='observed'; value=3 }; sameUser=@{ status='observed'; value=$true } }
+  }
+  foreach ($name in @('appDesktop','driverDesktop','shellDesktop')) { $observation[$name]=@{ status='observed'; receivesInput=$true; threadId=900 } }
+  return $observation
+}
+$eligible=Get-DragShellReviewEligibility (ShellFixture)
+Assert ($eligible.eligibleForActivationReview -and $eligible.status -eq 'eligible-for-review' -and $eligible.purpose -eq 'eligibility-for-activation-review' -and $eligible.snapshotOnly -and $eligible.predicates.Count -eq 12) "A complete supported fixture lost its review-only scope"
+foreach ($case in @('elevated','integrity','uiaccess','different-user','different-session','non-input-desktop','changed-identity','close-failure','missing-query','token-open-no-fields','no-shell','denied','unknown-session')) {
+  $fixture=ShellFixture
+  switch ($case) {
+    'elevated' { $fixture.shellSecurity.fields.elevation.value=1; $fixture.shellToDriver.sameUser=@{ status='not-requested-unsupported-shell' }; $fixture.shellToApp.sameUser=@{ status='not-requested-unsupported-shell' } }
+    'integrity' { $fixture.shellSecurity.fields.integrityRid.value=12288 }
+    'uiaccess' { $fixture.shellSecurity.fields.uiAccess.value=1 }
+    'different-user' { $fixture.shellToDriver.sameUser.value=$false }
+    'different-session' { $fixture.shellToApp.sameSession=$false }
+    'non-input-desktop' { $fixture.shellDesktop.receivesInput=$false }
+    'changed-identity' { $fixture.identityStable=$false }
+    'close-failure' { $fixture.errors=@{ shellProcessClose=6 } }
+    'missing-query' { $fixture.shellSecurity.fields.elevation=@{ status='query-failed'; win32Error=5 } }
+    'token-open-no-fields' { $fixture.shellSecurity=@{ status='token-open-failed'; fields=@{}; win32Error=5 } }
+    'no-shell' { $fixture=@{ status='shell-absent'; identityStable=$false; errors=@{} } }
+    'denied' { $fixture=@{ status='shell-process-open-failed'; identityStable=$false; errors=@{ shellProcessOpen=5 } } }
+    'unknown-session' { $fixture.shellToDriver.sameSession=$null }
+  }
+  $review=Get-DragShellReviewEligibility $fixture
+  Assert (-not $review.eligibleForActivationReview -and $review.status -ne 'eligible-for-review') "Unsupported or unknown shell fixture became eligible: $case"
+  if ($case -in @('no-shell','denied','missing-query','token-open-no-fields','unknown-session')) {
+    Assert (@($review.predicates | Where-Object { -not $_.observed }).Count -gt 0) "Unavailable observation was reported as a fully known predicate: $case"
+  }
+}
+$review=Get-DragShellReviewEligibility $null
+Assert (-not $review.eligibleForActivationReview -and $review.status -eq 'observation-incomplete') "An absent observation became an eligible shell"
+Write-Output 'PASS: shell review eligibility requires every observed identity, scalar, user/session and input-desktop predicate'
+
+$ownedShellProcess=[pscustomobject]@{ Id=77; HasExited=$false; StartTime=$started; Handle=[IntPtr]1234; RefreshCount=0 }
+$ownedShellProcess | Add-Member ScriptMethod Refresh { $this.RefreshCount++ }
+[NativeDragEnvironment]::ShellFixture=ShellFixture
+[NativeDragEnvironment]::ShellQueries=0
+$shellRecord=Get-DragExistingShellRecord $ownedShellProcess 78 $expectedStarted ([IntPtr]500)
+Assert ($shellRecord.status -eq 'owned-process-identity-unverified' -and [NativeDragEnvironment]::ShellQueries -eq 0) "Shell observation bypassed the app PID guard"
+$shellRecord=Get-DragExistingShellRecord $ownedShellProcess 77 'different-start' ([IntPtr]500)
+Assert ($shellRecord.status -eq 'owned-process-identity-unverified' -and [NativeDragEnvironment]::ShellQueries -eq 0) "Shell observation bypassed the app creation guard"
+$ownedShellProcess.HasExited=$true
+$shellRecord=Get-DragExistingShellRecord $ownedShellProcess 77 $expectedStarted ([IntPtr]500)
+Assert ($shellRecord.status -eq 'owned-process-identity-unverified' -and [NativeDragEnvironment]::ShellQueries -eq 0) "Shell observation queried after app exit"
+$ownedShellProcess.HasExited=$false
+$shellRecord=Get-DragExistingShellRecord $ownedShellProcess 77 $expectedStarted ([IntPtr]500)
+Assert ($shellRecord.review.eligibleForActivationReview -and [NativeDragEnvironment]::ShellQueries -eq 1 -and $shellRecord.userDataRetained -eq 'equality-only') "Verified app fixture did not reach the bounded native observation"
+$shellRecord.observation.privateFixture='DO-NOT-LOG-SHELL'
+$shellRecord.observation.shellSecurity.fields.elevation.privateFixture='DO-NOT-LOG-TOKEN'
+$shellRecord.observation.shellToDriver.sameUser.privateFixture='DO-NOT-LOG-SID'
+$shellRecord.observation.shellToDriver.privateFixture='DO-NOT-LOG-COMPARISON'
+$shellRecord.observation.shellDesktop.privateFixture='DO-NOT-LOG-DESKTOP'
+$script:shellSummaryFixture=$shellRecord
+$selectedShell=Select-DragLogShell (($shellRecord | ConvertTo-Json -Depth 12) | ConvertFrom-Json)
+$selectedJson=$selectedShell | ConvertTo-Json -Depth 12 -Compress
+Assert (-not $selectedJson.Contains('DO-NOT-LOG') -and $selectedShell.observation.shellToDriver.sameUser.value -and $selectedShell.observation.shellToDriver.leftSession.value -eq 3 -and $selectedShell.observation.shellDesktop.receivesInput -and $selectedShell.review.predicates.Count -eq 12) "Shell summary lost necessary equality/session/input fields or leaked unlisted data"
+Write-Output 'PASS: shell observation binds the existing app identity and emits only selected equality/session/native fields'
+
 function Get-DragEnvironmentRecord($endpoints,$nativeProcess,$expectedStartedAt) {
   return [ordered]@{ schemaVersion=1; diagnosticOnly=$true; status='queried'; processId=77
     security=@{ status='token-open-failed'; win32Error=5 }; enableLua=@{ status='value-absent' } }
@@ -159,7 +230,7 @@ $script:topologyFixture = @(1..20 | ForEach-Object {
 $script:topologyRoot = @{ windowHandle=500; parentHandle=999; ancestorParentHandle=0; rootHandle=500; processId=77; exists=$true; owned=$true; status='observed'; className='FixtureRoot'; errors=@{} }
 function Get-DragEnvironmentRecord($endpoints,$nativeProcess,$expectedStartedAt) {
   return [ordered]@{ schemaVersion=1; diagnosticOnly=$true; status='queried'; processId=77
-    privateFixture='DO-NOT-LOG-ROOT'
+    privateFixture='DO-NOT-LOG-ROOT'; existingShell=$script:shellSummaryFixture
     security=@{ status='queried'; fields=@{ elevation=@{ status='observed'; value=1; privateFixture='DO-NOT-LOG-FIELD' } } }
     source=@{ status='input-site-not-found'; uiaVisited=2 }; target=@{ status='input-site-not-found'; uiaVisited=2 }
     mainChildren=@{ status='completed'; limit=128; visited=20; limitReached=$false; root=$script:topologyRoot; rootAfter=$script:topologyRoot; children=$script:topologyFixture; omittedFixture=('x' * 40000) }
@@ -175,6 +246,7 @@ $logBytes=[System.Text.Encoding]::UTF8.GetByteCount(($lines -join '')) + 6
 Assert ($summary.status -eq 'summary' -and $logBytes -le 32768 -and $summary.originalBytes -gt 32768) "Full original size incorrectly suppressed or overflowed the essential summary"
 Assert ($summary.originalSha256 -eq (Get-FileHash $summaryPath -Algorithm SHA256).Hash.ToLowerInvariant()) "Readback hash did not bind the closed original file bytes"
 Assert ($summary.summary.security.fields.elevation.value -eq 1 -and $summary.omittedOriginalSections -contains 'source.uiaAncestors' -and $summary.compactedOriginalSections -contains 'mainChildren' -and -not $lines[1].Contains('DO-NOT-LOG')) "Summary lost required fields, omission labels or its field allowlist"
+Assert ($summary.summary.existingShell.review.eligibleForActivationReview -and $summary.summary.existingShell.observation.shellToDriver.sameUser.value -and $summary.summary.existingShell.observation.shellDesktop.receivesInput) "The bounded original-file summary lost shell review observations"
 $topology=$summary.summary.mainChildren
 Assert ($summary.summary.source.status -eq 'input-site-not-found' -and $topology.summaryLimit -eq 16 -and $topology.originalChildCount -eq 20 -and $topology.selectedChildCount -eq 16 -and $topology.omittedChildCount -eq 4 -and $topology.omittedChildren) "A zero UIA handle lost the bounded native topology or its omission counts"
 Assert ($topology.selection -eq 'owned-children-first-then-enumeration' -and $topology.children[0].windowHandle -eq 601 -and $topology.children[0].className -eq 'FixtureChild' -and $topology.children[0].parentHandle -eq 700 -and $topology.children[0].ancestorParentHandle -eq 500 -and $topology.children[0].rootHandle -eq 500 -and $topology.children[0].owned -and $topology.children[0].errors.GetWindowRect -eq 5) "Compacted topology lost observed native relationships, query errors or native enumeration order"
@@ -206,4 +278,4 @@ function Get-DragEnvironmentRecord($endpoints,$nativeProcess,$expectedStartedAt)
 Save-DragEnvironmentRecord 7 $null $null $path
 Assert ((Get-FileHash $path -Algorithm SHA256).Hash -eq $original) "Failed destination affected the original receipt"
 Write-Output 'PASS: byte/attempt limits and write failures preserve original evidence without throwing'
-Write-Output "All eight portable environment regressions passed. Actual Windows queries remain unexecuted by these mocks. Receipts: $OutputDirectory"
+Write-Output "All ten portable environment regressions passed. Actual Windows queries remain unexecuted by these mocks. Receipts: $OutputDirectory"

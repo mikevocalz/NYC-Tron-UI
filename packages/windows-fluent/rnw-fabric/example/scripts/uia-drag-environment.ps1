@@ -27,6 +27,19 @@ public static class NativeDragEnvironment {
   [DllImport("advapi32.dll")] static extern IntPtr GetSidSubAuthorityCount(IntPtr sid);
   [DllImport("advapi32.dll")] static extern IntPtr GetSidSubAuthority(IntPtr sid, uint index);
   [StructLayout(LayoutKind.Sequential)] struct RECT { public int Left, Top, Right, Bottom; }
+
+  [DllImport("kernel32.dll")] static extern IntPtr GetCurrentProcess();
+  [DllImport("kernel32.dll")] static extern uint GetCurrentProcessId();
+  [DllImport("kernel32.dll")] static extern uint GetCurrentThreadId();
+  [DllImport("kernel32.dll", SetLastError=true)] static extern IntPtr OpenProcess(uint access, bool inherit, uint processId);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool GetProcessTimes(IntPtr process, out long created, out long exited, out long kernel, out long user);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool GetExitCodeProcess(IntPtr process, out uint exitCode);
+  [DllImport("user32.dll")] static extern IntPtr GetShellWindow();
+  [DllImport("user32.dll", SetLastError=true)] static extern IntPtr GetThreadDesktop(uint thread);
+  [DllImport("user32.dll", EntryPoint="GetUserObjectInformationW", SetLastError=true)] static extern bool GetUserObjectInformation(IntPtr handle, int index, out int value, uint bytes, out uint needed);
+  [DllImport("advapi32.dll")] static extern bool EqualSid(IntPtr left, IntPtr right);
+  [StructLayout(LayoutKind.Sequential)] struct TokenUserHeader { public IntPtr Sid; public uint Attributes; }
+
   public sealed class WindowRecord {
     public long windowHandle, parentHandle, ancestorParentHandle, rootHandle;
     public uint processId, threadId;
@@ -147,7 +160,53 @@ public static class NativeDragEnvironment {
     finally { if (buffer!=IntPtr.Zero) Marshal.FreeHGlobal(buffer); }
     return result;
   }
-  public static object Security(IntPtr processHandle,uint expectedProcess) {
+
+  public sealed class SecurityRecord {
+    public string status, access, errorType;
+    public uint processId;
+    public Dictionary<string,TokenField> fields;
+    public int? win32Error, tokenCloseError;
+  }
+  public sealed class ProcessIdentity {
+    public string status="unavailable", createdAt, errorType;
+    public uint processId;
+    public uint? exitCode;
+    public long? creationFileTime;
+    public int? win32Error;
+  }
+  public sealed class BooleanObservation {
+    public string status="unavailable", errorType;
+    public bool? value;
+    public int? win32Error;
+  }
+  public sealed class DesktopObservation {
+    public string status="unavailable", errorType;
+    public uint threadId;
+    public bool? receivesInput;
+    public int? win32Error;
+  }
+  public sealed class ProcessComparison {
+    public string status="unavailable", errorType;
+    public ProcessIdentity leftBefore, rightBefore, leftAfter, rightAfter;
+    public TokenField leftSession, rightSession;
+    public bool? sameSession;
+    public BooleanObservation sameUser=new BooleanObservation();
+    public bool identityStable;
+    public Dictionary<string,int> errors=new Dictionary<string,int>();
+  }
+  public sealed class ShellObservation {
+    public string status="unavailable", errorType;
+    public long shellWindowHandle, shellWindowHandleAfter, appWindowHandle;
+    public uint shellProcessId, shellThreadId, shellProcessIdAfter, shellThreadIdAfter, appThreadId, appThreadIdAfter;
+    public ProcessIdentity appBefore, appAfter, driverBefore, driverAfter, shellBefore, shellAfter;
+    public SecurityRecord shellSecurity;
+    public DesktopObservation appDesktop, driverDesktop, shellDesktop;
+    public ProcessComparison shellToDriver, shellToApp;
+    public bool identityStable;
+    public Dictionary<string,int> errors=new Dictionary<string,int>();
+  }
+
+  public static SecurityRecord Security(IntPtr processHandle,uint expectedProcess) {
     var fields=new Dictionary<string,TokenField>();
     IntPtr token=IntPtr.Zero; string status="unavailable", errorType=null; int? error=null, closeError=null;
     try {
@@ -168,8 +227,212 @@ public static class NativeDragEnvironment {
       }
     } catch (Exception failure) { status="query-failed"; errorType=failure.GetType().FullName; }
     finally { if (token!=IntPtr.Zero && !CloseHandle(token)) closeError=Marshal.GetLastWin32Error(); }
-    return new { status=status, processId=expectedProcess, access="TOKEN_QUERY", fields=fields, win32Error=error, errorType=errorType, tokenCloseError=closeError };
+    return new SecurityRecord { status=status, processId=expectedProcess, access="TOKEN_QUERY", fields=fields, win32Error=error, errorType=errorType, tokenCloseError=closeError };
   }
+
+  static ProcessIdentity Identity(IntPtr handle,uint expectedProcess,long expectedCreation) {
+    var result=new ProcessIdentity { processId=expectedProcess };
+    try {
+      if (handle==IntPtr.Zero || expectedProcess==0) { result.status="process-handle-absent"; return result; }
+      SetLastError(0);
+      uint actual=GetProcessId(handle);
+      if (actual==0) { result.status="process-query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result; }
+      if (actual!=expectedProcess) { result.status="process-handle-mismatch"; return result; }
+      long created,exited,kernel,user;
+      SetLastError(0);
+      if (!GetProcessTimes(handle,out created,out exited,out kernel,out user)) {
+        result.status="process-time-query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result;
+      }
+      result.creationFileTime=created;
+      result.createdAt=DateTime.FromFileTimeUtc(created).ToString("o");
+      if (expectedCreation>0 && created!=expectedCreation) { result.status="process-creation-mismatch"; return result; }
+      uint exitCode;
+      SetLastError(0);
+      if (!GetExitCodeProcess(handle,out exitCode)) {
+        result.status="process-exit-query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result;
+      }
+      // This is a sampled reported-active observation, not an atomic guarantee.
+      // The exit FILETIME is undefined while running and is never interpreted.
+      result.exitCode=exitCode;
+      result.status=exitCode==259 ? "observed-active" : "process-exited";
+    } catch (Exception error) { result.status="query-failed"; result.errorType=error.GetType().FullName; }
+    return result;
+  }
+  static bool Stable(ProcessIdentity before,ProcessIdentity after) {
+    return before!=null && after!=null && before.status=="observed-active" && after.status=="observed-active" &&
+      before.processId==after.processId && before.creationFileTime.HasValue && before.creationFileTime==after.creationFileTime;
+  }
+  static DesktopObservation Desktop(uint threadId) {
+    var result=new DesktopObservation { threadId=threadId };
+    try {
+      if (threadId==0) { result.status="thread-unavailable"; return result; }
+      SetLastError(0);
+      IntPtr desktop=GetThreadDesktop(threadId);
+      if (desktop==IntPtr.Zero) { result.status="desktop-query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result; }
+      // GetThreadDesktop lends this handle. Never close or change it, compare
+      // its numeric value with another handle, or query its name or user SID.
+      int receivesInput; uint needed;
+      SetLastError(0);
+      if (!GetUserObjectInformation(desktop,6,out receivesInput,4,out needed)) {
+        result.status="input-query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result;
+      }
+      if (needed!=4) { result.status="invalid-input-size"; return result; }
+      result.receivesInput=receivesInput!=0; result.status="observed";
+    } catch (Exception error) { result.status="query-failed"; result.errorType=error.GetType().FullName; }
+    return result;
+  }
+  static bool BoundedUserSid(IntPtr buffer,uint actual,out IntPtr sid) {
+    sid=IntPtr.Zero;
+    int header=Marshal.SizeOf(typeof(TokenUserHeader));
+    if (buffer==IntPtr.Zero || actual<header || actual>4096) return false;
+    IntPtr candidate=Marshal.ReadIntPtr(buffer);
+    ulong origin=unchecked((ulong)buffer.ToInt64()), address=unchecked((ulong)candidate.ToInt64());
+    if (candidate==IntPtr.Zero || address<origin) return false;
+    ulong offset=address-origin;
+    // Validate the pointer and complete header/count within the returned bytes
+    // before allowing either IsValidSid or EqualSid to read native memory.
+    if (offset<(ulong)header || offset>(ulong)actual-8) return false;
+    byte count=Marshal.ReadByte(candidate,1);
+    if (count>15 || offset+8UL+4UL*count>actual || !IsValidSid(candidate)) return false;
+    sid=candidate;
+    return true;
+  }
+  static BooleanObservation ReadUserSid(IntPtr token,out IntPtr buffer,out IntPtr sid) {
+    var result=new BooleanObservation();
+    buffer=IntPtr.Zero; sid=IntPtr.Zero;
+    try {
+      uint needed;
+      SetLastError(0);
+      bool sized=GetTokenInformation(token,1,IntPtr.Zero,0,out needed);
+      int error=Marshal.GetLastWin32Error();
+      if (!sized && error!=122) { result.status="query-failed"; result.win32Error=error; return result; }
+      if (needed<Marshal.SizeOf(typeof(TokenUserHeader)) || needed>4096) { result.status="invalid-size"; return result; }
+      buffer=Marshal.AllocHGlobal((int)needed);
+      uint actual;
+      SetLastError(0);
+      if (!GetTokenInformation(token,1,buffer,needed,out actual)) {
+        result.status="query-failed"; result.win32Error=Marshal.GetLastWin32Error(); return result;
+      }
+      if (actual>needed || !BoundedUserSid(buffer,actual,out sid)) { result.status="invalid-user-buffer"; return result; }
+      result.status="observed";
+    } catch (Exception error) { result.status="query-failed"; result.errorType=error.GetType().FullName; }
+    return result;
+  }
+  public static ProcessComparison CompareProcessIdentity(IntPtr leftHandle,uint leftProcess,IntPtr rightHandle,uint rightProcess,bool compareUsers) {
+    var result=new ProcessComparison();
+    IntPtr leftToken=IntPtr.Zero,rightToken=IntPtr.Zero,leftBuffer=IntPtr.Zero,rightBuffer=IntPtr.Zero;
+    try {
+      result.leftBefore=Identity(leftHandle,leftProcess,0);
+      result.rightBefore=Identity(rightHandle,rightProcess,0);
+      if (result.leftBefore.status!="observed-active" || result.rightBefore.status!="observed-active") { result.status="process-identity-unverified"; return result; }
+      SetLastError(0);
+      if (!OpenProcessToken(leftHandle,0x0008,out leftToken)) { result.status="left-token-open-failed"; result.errors["leftTokenOpen"]=Marshal.GetLastWin32Error(); return result; }
+      SetLastError(0);
+      if (!OpenProcessToken(rightHandle,0x0008,out rightToken)) { result.status="right-token-open-failed"; result.errors["rightTokenOpen"]=Marshal.GetLastWin32Error(); return result; }
+      result.leftSession=ReadTokenField(leftToken,12,false);
+      result.rightSession=ReadTokenField(rightToken,12,false);
+      if (result.leftSession.status=="observed" && result.rightSession.status=="observed")
+        result.sameSession=result.leftSession.value==result.rightSession.value;
+      if (!compareUsers) result.sameUser.status="not-requested-unsupported-shell";
+      else {
+        IntPtr leftSid,rightSid;
+        var left=ReadUserSid(leftToken,out leftBuffer,out leftSid);
+        var right=ReadUserSid(rightToken,out rightBuffer,out rightSid);
+        if (left.status!="observed") { result.sameUser=left; result.sameUser.status="left-user-"+left.status; }
+        else if (right.status!="observed") { result.sameUser=right; result.sameUser.status="right-user-"+right.status; }
+        else {
+          // Both bounded, validated SID buffers stay allocated through EqualSid.
+          // Only this equality result leaves the method, never SID data.
+          result.sameUser.value=EqualSid(leftSid,rightSid);
+          result.sameUser.status="observed";
+        }
+      }
+      result.status="queried";
+    } catch (Exception error) { result.status="query-failed"; result.errorType=error.GetType().FullName; }
+    finally {
+      if (leftBuffer!=IntPtr.Zero) Marshal.FreeHGlobal(leftBuffer);
+      if (rightBuffer!=IntPtr.Zero) Marshal.FreeHGlobal(rightBuffer);
+      if (leftToken!=IntPtr.Zero && !CloseHandle(leftToken)) result.errors["leftTokenClose"]=Marshal.GetLastWin32Error();
+      if (rightToken!=IntPtr.Zero && !CloseHandle(rightToken)) result.errors["rightTokenClose"]=Marshal.GetLastWin32Error();
+      result.leftAfter=Identity(leftHandle,leftProcess,0);
+      result.rightAfter=Identity(rightHandle,rightProcess,0);
+      result.identityStable=Stable(result.leftBefore,result.leftAfter) && Stable(result.rightBefore,result.rightAfter);
+    }
+    return result;
+  }
+  public static ShellObservation ExistingShell(IntPtr appHandle,uint appProcess,long expectedAppCreation,IntPtr appWindow) {
+    var result=new ShellObservation { appWindowHandle=appWindow.ToInt64() };
+    IntPtr driverHandle=GetCurrentProcess(),shellHandle=IntPtr.Zero,shellWindow=IntPtr.Zero;
+    uint driverProcess=GetCurrentProcessId(),appWindowProcess=0;
+    bool shellObserved=false;
+    try {
+      if (expectedAppCreation<=0) { result.status="app-creation-unavailable"; return result; }
+      result.appBefore=Identity(appHandle,appProcess,expectedAppCreation);
+      result.driverBefore=Identity(driverHandle,driverProcess,0);
+      if (result.appBefore.status!="observed-active" || result.driverBefore.status!="observed-active") { result.status="owned-process-identity-unverified"; return result; }
+      SetLastError(0);
+      result.appThreadId=GetWindowThreadProcessId(appWindow,out appWindowProcess);
+      if (result.appThreadId==0) { appWindowProcess=0; result.errors["appWindowBefore"]=Marshal.GetLastWin32Error(); }
+      if (result.appThreadId==0 || appWindowProcess!=appProcess) { result.status="app-window-unverified"; return result; }
+      result.appDesktop=Desktop(result.appThreadId);
+      result.driverDesktop=Desktop(GetCurrentThreadId());
+      shellObserved=true;
+      shellWindow=GetShellWindow();
+      result.shellWindowHandle=shellWindow.ToInt64();
+      // NULL has a documented meaning: no shell. No stale last error is read.
+      if (shellWindow==IntPtr.Zero) { result.status="shell-absent"; return result; }
+      SetLastError(0);
+      result.shellThreadId=GetWindowThreadProcessId(shellWindow,out result.shellProcessId);
+      if (result.shellThreadId==0) {
+        result.shellProcessId=0; result.status="shell-window-query-failed";
+        result.errors["shellWindowBefore"]=Marshal.GetLastWin32Error(); return result;
+      }
+      SetLastError(0);
+      shellHandle=OpenProcess(0x1000,false,result.shellProcessId);
+      if (shellHandle==IntPtr.Zero) { result.status="shell-process-open-failed"; result.errors["shellProcessOpen"]=Marshal.GetLastWin32Error(); return result; }
+      result.shellBefore=Identity(shellHandle,result.shellProcessId,0);
+      if (result.shellBefore.status!="observed-active") { result.status="shell-process-identity-unverified"; return result; }
+      result.shellSecurity=Security(shellHandle,result.shellProcessId);
+      result.shellDesktop=Desktop(result.shellThreadId);
+      var security=result.shellSecurity;
+      bool readUsers=security.status=="queried" && !security.tokenCloseError.HasValue &&
+        security.fields.ContainsKey("elevation") && security.fields["elevation"].status=="observed" && security.fields["elevation"].value==0 &&
+        security.fields.ContainsKey("integrityRid") && security.fields["integrityRid"].status=="observed" && security.fields["integrityRid"].value==8192 &&
+        security.fields.ContainsKey("uiAccess") && security.fields["uiAccess"].status=="observed" && security.fields["uiAccess"].value==0;
+      result.shellToDriver=CompareProcessIdentity(shellHandle,result.shellProcessId,driverHandle,driverProcess,readUsers);
+      result.shellToApp=CompareProcessIdentity(shellHandle,result.shellProcessId,appHandle,appProcess,readUsers);
+      result.status="queried";
+    } catch (Exception error) { result.status="query-failed"; result.errorType=error.GetType().FullName; }
+    finally {
+      try {
+        result.appAfter=Identity(appHandle,appProcess,expectedAppCreation);
+        result.driverAfter=Identity(driverHandle,driverProcess,0);
+        if (shellHandle!=IntPtr.Zero) result.shellAfter=Identity(shellHandle,result.shellProcessId,0);
+        IntPtr finalWindow=shellObserved ? GetShellWindow() : IntPtr.Zero;
+        result.shellWindowHandleAfter=finalWindow.ToInt64();
+        if (finalWindow!=IntPtr.Zero) {
+          SetLastError(0);
+          result.shellThreadIdAfter=GetWindowThreadProcessId(finalWindow,out result.shellProcessIdAfter);
+          if (result.shellThreadIdAfter==0) { result.shellProcessIdAfter=0; result.errors["shellWindowAfter"]=Marshal.GetLastWin32Error(); }
+        }
+        uint finalAppProcess=0;
+        if (result.appThreadId!=0 && appWindowProcess==appProcess) {
+          SetLastError(0);
+          result.appThreadIdAfter=GetWindowThreadProcessId(appWindow,out finalAppProcess);
+          if (result.appThreadIdAfter==0) { finalAppProcess=0; result.errors["appWindowAfter"]=Marshal.GetLastWin32Error(); }
+        }
+        result.identityStable=Stable(result.appBefore,result.appAfter) && Stable(result.driverBefore,result.driverAfter) && Stable(result.shellBefore,result.shellAfter) &&
+          shellWindow!=IntPtr.Zero && finalWindow==shellWindow && result.shellProcessIdAfter==result.shellProcessId &&
+          result.shellThreadIdAfter!=0 && result.shellThreadIdAfter==result.shellThreadId &&
+          finalAppProcess==appProcess && result.appThreadIdAfter!=0 && result.appThreadIdAfter==result.appThreadId;
+      } catch (Exception error) { result.status="query-failed"; result.errorType=error.GetType().FullName; result.identityStable=false; }
+      finally { if (shellHandle!=IntPtr.Zero && !CloseHandle(shellHandle)) result.errors["shellProcessClose"]=Marshal.GetLastWin32Error(); }
+      // appHandle is borrowed; GetCurrentProcess and GetThreadDesktop return
+      // borrowed handles. They are never closed or used to change any state.
+    }
+    return result;
+  }
+
 }
 "@
 }
@@ -316,16 +579,123 @@ function Get-DragModuleIdentityRecord($nativeProcess, [uint32]$expectedProcessId
   return $record
 }
 
+
+function Get-DragShellReviewEligibility($observation) {
+  $predicates = [System.Collections.Generic.List[object]]::new()
+  $security = $observation.shellSecurity
+  $predicates.Add(@{ name = "stable-owned-identities"; observed = $observation.status -eq "queried"
+    value = $observation.identityStable -eq $true })
+  $predicates.Add(@{ name = "shell-query-handles-closed"; observed = $observation.status -eq "queried" -and $null -ne $observation.errors
+    value = $null -ne $observation.errors -and $observation.errors.Count -eq 0 })
+  foreach ($condition in @(@("elevation", 0, "shell-not-elevated"), @("integrityRid", 8192, "shell-medium-integrity"), @("uiAccess", 0, "shell-no-uiaccess"))) {
+    $field = $null
+    if ($null -ne $security -and $security.status -eq "queried" -and $null -ne $security.fields -and $security.fields.ContainsKey([string]$condition[0])) {
+      $field = $security.fields[$condition[0]]
+    }
+    $observed = $null -ne $security -and $security.status -eq "queried" -and $null -eq $security.tokenCloseError -and
+      $null -ne $field -and $field.status -eq "observed" -and $null -ne $field.value
+    $predicates.Add(@{ name = $condition[2]; observed = $observed; value = $observed -and $field.value -eq $condition[1] })
+  }
+  foreach ($name in @("shellToDriver", "shellToApp")) {
+    $comparison = $observation.$name
+    $stable = $null -ne $comparison -and $comparison.status -eq "queried" -and $comparison.identityStable -eq $true -and
+      $null -ne $comparison.errors -and $comparison.errors.Count -eq 0
+    $predicates.Add(@{ name = "$name-same-session"; observed = $stable -and $null -ne $comparison.sameSession
+      value = $stable -and $comparison.sameSession -eq $true })
+    $predicates.Add(@{ name = "$name-same-user"; observed = $stable -and $comparison.sameUser.status -eq "observed" -and $null -ne $comparison.sameUser.value
+      value = $stable -and $comparison.sameUser.value -eq $true })
+  }
+  foreach ($name in @("shellDesktop", "driverDesktop", "appDesktop")) {
+    $desktop = $observation.$name
+    $observed = $null -ne $desktop -and $desktop.status -eq "observed" -and $null -ne $desktop.receivesInput
+    $predicates.Add(@{ name = "$name-receives-input"; observed = $observed; value = $observed -and $desktop.receivesInput -eq $true })
+  }
+  $unknown = @($predicates | Where-Object { -not $_.observed }).Count
+  $negative = @($predicates | Where-Object { $_.observed -and -not $_.value }).Count
+  $eligible = $unknown -eq 0 -and $negative -eq 0
+  return [ordered]@{ purpose = "eligibility-for-activation-review"; snapshotOnly = $true; eligibleForActivationReview = $eligible
+    status = $(if ($eligible) { "eligible-for-review" } elseif ($negative -gt 0) { "observed-ineligible" } else { "observation-incomplete" })
+    predicates = $predicates.ToArray() }
+}
+
+function Get-DragExistingShellRecord($nativeProcess, [uint32]$expectedProcessId, [string]$expectedStartedAt, [IntPtr]$ownedWindowHandle) {
+  $record = [ordered]@{ status = "unavailable"; scope = "existing-shell-only"; processOpenAccess = "PROCESS_QUERY_LIMITED_INFORMATION"
+    tokenOpenAccess = "TOKEN_QUERY"; userDataRetained = "equality-only"; observation = $null; review = $null }
+  try {
+    Initialize-DragEnvironmentReader
+    $nativeProcess.Refresh()
+    if ($nativeProcess.HasExited -or $nativeProcess.Id -ne $expectedProcessId -or [string]::IsNullOrEmpty($expectedStartedAt) -or
+        $nativeProcess.StartTime.ToUniversalTime().ToString("o") -ne $expectedStartedAt) {
+      $record.status = "owned-process-identity-unverified"
+    } else {
+      $creation = $nativeProcess.StartTime.ToUniversalTime().ToFileTimeUtc()
+      $record.observation = [NativeDragEnvironment]::ExistingShell($nativeProcess.Handle, $expectedProcessId, $creation, $ownedWindowHandle)
+      $record.status = $record.observation.status
+    }
+  } catch { $record.status = "query-failed"; $record.errorType = $_.Exception.GetType().FullName; $record.hresult = $_.Exception.HResult }
+  $record.review = Get-DragShellReviewEligibility $record.observation
+  return $record
+}
+
+function Select-DragLogProcessIdentity($value) {
+  return (Select-DragLogFields $value @("status", "processId", "createdAt", "creationFileTime", "exitCode", "win32Error", "errorType"))
+}
+
+function Select-DragLogShell($value) {
+  $selected = Select-DragLogFields $value @("status", "scope", "processOpenAccess", "tokenOpenAccess", "userDataRetained", "errorType", "hresult")
+  if ($null -eq $selected) { return $null }
+  $selected.review = Select-DragLogFields $value.review @("purpose", "snapshotOnly", "eligibleForActivationReview", "status")
+  if ($null -ne $selected.review) {
+    $selected.review.predicates = @($value.review.predicates | Select-Object -First 12 | ForEach-Object {
+      Select-DragLogFields $_ @("name", "observed", "value")
+    })
+  }
+  $original = $value.observation
+  $observation = Select-DragLogFields $original @("status", "errorType", "shellWindowHandle", "shellWindowHandleAfter", "shellProcessId", "shellProcessIdAfter",
+    "shellThreadId", "shellThreadIdAfter", "appWindowHandle", "appThreadId", "appThreadIdAfter", "identityStable")
+  $selected.observation = $observation
+  if ($null -eq $observation) { return $selected }
+  $observation.errors = Select-DragLogFields $original.errors @("appWindowBefore", "appWindowAfter", "shellWindowBefore", "shellWindowAfter", "shellProcessOpen", "shellProcessClose")
+  foreach ($name in @("appBefore", "appAfter", "driverBefore", "driverAfter", "shellBefore", "shellAfter")) {
+    $observation[$name] = Select-DragLogProcessIdentity $original.$name
+  }
+  foreach ($name in @("appDesktop", "driverDesktop", "shellDesktop")) {
+    $observation[$name] = Select-DragLogFields $original.$name @("status", "threadId", "receivesInput", "win32Error", "errorType")
+  }
+  $security = $original.shellSecurity
+  $observation.shellSecurity = Select-DragLogFields $security @("status", "processId", "access", "win32Error", "errorType", "tokenCloseError")
+  if ($null -ne $observation.shellSecurity) {
+    $observation.shellSecurity.fields = [ordered]@{}
+    foreach ($name in @("elevation", "elevationType", "integrityRid", "uiAccess")) {
+      $observation.shellSecurity.fields[$name] = Select-DragLogFields $security.fields.$name @("status", "value", "win32Error", "errorType")
+    }
+  }
+  foreach ($name in @("shellToDriver", "shellToApp")) {
+    $comparison = $original.$name
+    $chosen = Select-DragLogFields $comparison @("status", "errorType", "identityStable", "sameSession")
+    $observation[$name] = $chosen
+    if ($null -ne $chosen) {
+      foreach ($field in @("leftSession", "rightSession")) {
+        $chosen[$field] = Select-DragLogFields $comparison.$field @("status", "value", "win32Error", "errorType")
+      }
+      $chosen.sameUser = Select-DragLogFields $comparison.sameUser @("status", "value", "win32Error", "errorType")
+      $chosen.errors = Select-DragLogFields $comparison.errors @("leftTokenOpen", "rightTokenOpen", "leftTokenClose", "rightTokenClose")
+    }
+  }
+  return $selected
+}
+
 function Get-DragEnvironmentRecord($endpoints, $nativeProcess, [string]$expectedStartedAt) {
   Initialize-DragEnvironmentReader
   $ownerId = [uint32]$nativeProcess.Id
   $record = [ordered]@{ schemaVersion = 1; sourceRevision = $env:GITHUB_SHA; capturedAt = [DateTime]::UtcNow.ToString("o")
     processId = $ownerId; status = "queried"; diagnosticOnly = $true; security = $null; enableLua = $null
-    source = $null; target = $null; mainChildren = $null; documentChildren = $null; loadedModules = $null }
+    source = $null; target = $null; mainChildren = $null; documentChildren = $null; loadedModules = $null; existingShell = $null }
   try { $record.security = [NativeDragEnvironment]::Security($nativeProcess.Handle, $ownerId) }
   catch { $record.security = @{ status = "query-failed"; errorType = $_.Exception.GetType().FullName; hresult = $_.Exception.HResult } }
   $record.enableLua = Get-DragEnableLuaRecord
   $record.loadedModules = Get-DragModuleIdentityRecord $nativeProcess $ownerId $expectedStartedAt
+  $record.existingShell = Get-DragExistingShellRecord $nativeProcess $ownerId $expectedStartedAt ([IntPtr]$endpoints.main.windowHandle)
   $record.source = Get-DragInputSiteRecord $endpoints.sourceElement $ownerId
   $record.target = Get-DragInputSiteRecord $endpoints.targetElement $ownerId
   foreach ($entry in @(@("mainChildren", $endpoints.main.windowHandle), @("documentChildren", $endpoints.secondary.windowHandle))) {
@@ -392,6 +762,7 @@ function Select-DragLogSnapshot($value) {
       $selected.security.fields[$name] = Select-DragLogFields $value.security.fields.$name @("status", "value", "win32Error", "errorType")
     }
   }
+  $selected.existingShell = Select-DragLogShell $value.existingShell
   $selected.enableLua = Select-DragLogFields $value.enableLua @("status", "hive", "view", "valueName", "kind", "value", "errorType", "hresult", "closeErrorType")
   foreach ($name in @("source", "target")) {
     $original = $value.$name
