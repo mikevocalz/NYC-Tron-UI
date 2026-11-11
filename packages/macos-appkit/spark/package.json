@@ -62,6 +62,31 @@
       "react-native": "./src/drag-drop.tsx",
       "default": "./dist/drag-drop.js"
     },
+    "./menus": {
+      "types": "./dist/menus.d.ts",
+      "react-native": "./src/menus.ts",
+      "default": "./dist/menus.js"
+    },
+    "./context-menu": {
+      "types": "./dist/context-menu.d.ts",
+      "react-native": "./src/context-menu.ts",
+      "default": "./dist/context-menu.js"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip.d.ts",
+      "react-native": "./src/tooltip.tsx",
+      "default": "./dist/tooltip.js"
+    },
+    "./popover": {
+      "types": "./dist/popover.d.ts",
+      "react-native": "./src/popover.tsx",
+      "default": "./dist/popover.js"
+    },
+    "./anchored-inspector": {
+      "types": "./dist/anchored-inspector.d.ts",
+      "react-native": "./src/anchored-inspector.tsx",
+      "default": "./dist/anchored-inspector.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -86,9 +111,12 @@
   },
   "codegenConfig": {
     "name": "NYCTronAppKitSpec",
-    "type": "modules",
+    "type": "all",
     "jsSrcsDir": "src",
     "ios": {
+      "componentProvider": {
+        "NYCTronPopover": "NYCTronPopoverComponentView"
+      },
       "modulesProvider": {
         "NativeNYCTronDisplays": "NYCTronDisplays"
       }
