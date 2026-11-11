@@ -108,6 +108,27 @@ function Native-Pane {
   if ($null -eq $largest) { throw "The native navigation landmark is absent" }
   return $largest
 }
+# Lists every element named "NYC-Tron" with the fields Native-Pane chooses by, which one it
+# picks, and the ancestors of the pick. Diagnostic only.
+function Describe-Pane([string]$label) {
+  try {
+    $condition = New-Object System.Windows.Automation.PropertyCondition($ae::NameProperty, "NYC-Tron")
+    $picked = Native-Pane
+    $walker = [System.Windows.Automation.TreeWalker]::RawViewWalker
+    foreach ($item in $Window.FindAll($tree::Descendants, $condition)) {
+      $c = $item.Current; $r = $c.BoundingRectangle
+      $mark = if ([string]::Join(",", $item.GetRuntimeId()) -eq [string]::Join(",", $picked.GetRuntimeId())) { "PICKED" } else { "other" }
+      Crumb ("pane[{0}] {1} type={2} id='{3}' class='{4}' rect={5},{6} {7}x{8} area={9} offscreen={10}" -f $label, $mark, $c.ControlType.ProgrammaticName, $c.AutomationId, $c.ClassName, [int]$r.X, [int]$r.Y, [int]$r.Width, [int]$r.Height, [int]($r.Width*$r.Height), $c.IsOffscreen)
+    }
+    $chain = @(); $node = $walker.GetParent($picked)
+    for ($i = 0; $i -lt 5 -and $null -ne $node; $i++) {
+      $c = $node.Current; $r = $c.BoundingRectangle
+      $chain += ("{0}:'{1}':'{2}':{3}x{4}" -f $c.ControlType.ProgrammaticName, $c.Name, $c.AutomationId, [int]$r.Width, [int]$r.Height)
+      $node = $walker.GetParent($node)
+    }
+    Crumb ("pane[{0}] picked ancestors: {1}" -f $label, ($chain -join " < "))
+  } catch { Crumb ("pane[{0}] describe failed: {1}" -f $label, $_.Exception.Message) }
+}
 try {
   $windowPattern.SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Maximized)
   [NativeWindow]::SetForegroundWindow($handle) | Out-Null
@@ -195,14 +216,24 @@ try {
 
   $stage = "native-pane-collapse-and-restore"
   Crumb "pane: begin"
+  Describe-Pane "before-close"
   Invoke-Button $Window "Close pane"
+  Crumb "pane: Close pane pressed"
   Find-ByName $Window "Open pane" | Out-Null
+  Crumb "pane: Open pane label found"
   Start-Sleep -Milliseconds 500
+  Describe-Pane "closed-500ms"
   $closedWidth = (Native-Pane).Current.BoundingRectangle.Width
+  Crumb "pane: closedWidth=$closedWidth"
   Invoke-Button $Window "Open pane"
+  Crumb "pane: Open pane pressed"
   Find-ByName $Window "Close pane" | Out-Null
+  Crumb "pane: Close pane label found"
   Start-Sleep -Milliseconds 500
+  Describe-Pane "open-500ms"
   $openWidth = (Native-Pane).Current.BoundingRectangle.Width
+  Crumb "pane: openWidth=$openWidth"
+  try { Save-DragTraceCheckpoint "nav-pane" } catch {}
   if ($closedWidth -ge $openWidth-100) { throw "The actual native drawer did not collapse and expand" }
   Assert-Selection $homeItem $workspace "workspace" $stage
   $checks.Add(@{ name=$stage; closedWidth=$closedWidth; openWidth=$openWidth })
