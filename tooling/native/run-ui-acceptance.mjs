@@ -84,13 +84,13 @@ function allFiles(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory()
     ? allFiles(join(directory, entry.name)) : [join(directory, entry.name)]);
 }
-function initialSettingsTransportFailure() {
+function initialTransportFailure(name) {
   try {
-    const files = allFiles(join(output, "settings"));
+    const files = allFiles(join(output, name));
     const commands = files.filter(file => file.endsWith(sep + "commands.json"));
     const simulator = files.filter(file => file.endsWith(sep + "device-simulator.log"));
     if (commands.length !== 1 || platform === "ios" && simulator.length !== 1) return null;
-    const eligibility = classifyInitialUiTransportFailure({ platform, flow: "settings", appId: bundle, deviceId,
+    const eligibility = classifyInitialUiTransportFailure({ platform, flow: name, appId: bundle, deviceId,
       commands: json(commands[0]), simulatorLog: simulator[0] ? readFileSync(simulator[0], "utf8") : undefined });
     return eligibility ? { ...eligibility, sourceFiles: { commands: commands[0].slice(output.length + 1),
       ...(simulator[0] ? { simulatorLog: simulator[0].slice(output.length + 1) } : {}) } } : null;
@@ -208,17 +208,22 @@ try {
     capture = () => { run("xcrun", ["simctl", "io", deviceId, "screenshot", join(output, "final.png")], { optional: true }); };
   }
   await startMetro("reference"); launch();
-  let recoveryReceipt;
-  await withInitialUiTransportRecovery({
-    attempt: () => flow("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"]),
-    classify: initialSettingsTransportFailure,
-    recover: async (eligibility, error) => {
-      recoveryReceipt = retainInitialUiTransportFailure({ output, eligibility, error, sourceCommit: revision, nativeArtifact });
-      if (platform === "android") recoveryReceipt.readiness = await recoverAndroidTransport();
-    },
-  });
-  if (recoveryReceipt) transportRecoveries.push({ ...recoveryReceipt, status: "recovered", attempts: 2 });
-  flow("editor", ["Cover headline"], ["editor-draft", "editor-saved"]);
+  // At most one evidence-bound recovery per flow, each limited to that flow's
+  // first tab tap (see ui-transport.mjs). Any other failure is final.
+  const recoverable = async (name, labels, screenshots) => {
+    let recoveryReceipt;
+    await withInitialUiTransportRecovery({
+      attempt: () => flow(name, labels, screenshots),
+      classify: () => initialTransportFailure(name),
+      recover: async (eligibility, error) => {
+        recoveryReceipt = retainInitialUiTransportFailure({ output, flow: name, eligibility, error, sourceCommit: revision, nativeArtifact });
+        if (platform === "android") recoveryReceipt.readiness = await recoverAndroidTransport();
+      },
+    });
+    if (recoveryReceipt) transportRecoveries.push({ ...recoveryReceipt, flow: name, status: "recovered", attempts: 2 });
+  };
+  await recoverable("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"]);
+  await recoverable("editor", ["Cover headline"], ["editor-draft", "editor-saved"]);
   stopApp(); await stopMetro();
   await startMetro("pointer"); launch();
   const pointer = flow("pointer", ["Input drawing surface", "Input source: touch. Last event: up."], ["pointer-touch"]);

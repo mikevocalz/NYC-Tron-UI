@@ -41,13 +41,18 @@ package archive hashes, simulator/emulator identity and pinned tool identity.
 Command receipts, Metro logs, screenshots and failure hierarchies are retained
 when a gate fails. An older output directory cannot be reused as a new result.
 
-The first Settings flow permits **one** evidence-bound transport recovery. On
-Android, eligibility requires the initial launch command to fail with the
-target emulator's exact `device offline` error, before any app assertion. The
-runner waits for ADB and boot readiness, restores its Metro reverse mapping,
-and observes the same installed app's resumed Activity. On iOS, eligibility
-requires the first Settings navigation tap and the immediately following
-assertion to match the recorded attempt. That tap's time window must contain a
+The Settings and Editor flows each permit **one** evidence-bound transport
+recovery. On Android, only Settings qualifies: eligibility requires the initial
+launch command to fail with the target emulator's exact `device offline` error,
+before any app assertion. The runner waits for ADB and boot readiness, restores
+its Metro reverse mapping, and observes the same installed app's resumed
+Activity.
+
+On iOS, eligibility covers only the flow's first tab tap and the assertion
+right after it. For Settings that is launch, `Library` visible, tap `Settings`,
+then the failed `Workspace preferences` assertion. For Editor it is launch, tap
+`Editor`, then the failed `Quiet forms` assertion. Any other command before or
+between them disqualifies the failure. That tap's time window must contain a
 Recap registration, unknown sender, nonempty cancelled contact and cancelled
 path for the same sender/contact and app package. This is the observed
 [upstream simulator transport race](https://github.com/mobile-dev-inc/Maestro/issues/3686),
@@ -55,12 +60,23 @@ not evidence that a completed tap reached the app; Maestro's
 [settled-screen comparison](https://github.com/mobile-dev-inc/Maestro/issues/3685)
 can report a change without checking one.
 
+Editor was added after the same race hit its first tab tap. Release run
+43046836104 on `main` at `11c1ce8` failed with `Assertion is false: "Quiet
+forms" is visible`. Its simulator log shows a Recap digitizer added at
+15:43:24.241, `unknown senderID: 0x1013418000008` at 15:43:24.246, and
+`cancel -- digitizer did disappear` plus `canceling paths` for pathIndex 2 in
+the app's scene at 15:43:24.478. That was inside the 15:43:19.539 to
+15:43:24.913 tap window, so the OS cancelled the touch before the app received
+it, and the app stayed on Settings. PR #58's attempt-2 run (42857968753) failed
+on the same tap with the same signature.
+
 Every original failed report, screenshot and log is moved intact into
-`settings-initial-transport-failure`, hashed, and referenced by
-`transport-recovery.json` before another attempt. The installed app payload is
-unchanged. The complete Settings flow then runs with the same semantic
-assertions, and any second failure is final. Editor, pointer, later edits,
-ordinary assertion failures and unproven cancellations are never retried.
+`<flow>-initial-transport-failure`, hashed, and referenced by a receipt
+(`transport-recovery.json` for Settings, `editor-transport-recovery.json` for
+Editor) before another attempt. The installed app payload is unchanged. The
+complete flow then runs again with the same semantic assertions, and any
+second failure is final. Pointer, later taps, edits, saves, ordinary assertion
+failures and unproven cancellations are never retried.
 Only a successful full suite produces `result.json`, which records any recovery
 alongside the fresh successful flow receipts.
 
