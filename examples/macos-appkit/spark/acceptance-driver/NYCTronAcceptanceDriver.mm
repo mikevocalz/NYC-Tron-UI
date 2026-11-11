@@ -181,23 +181,165 @@ static NSArray *AccessibilityNodes(id root, BOOL *truncated) {
   }
   return nodes;
 }
-static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated) {
+// Read metadata stays separate from acceptance strings. These limits are shared
+// by every help tag in one observation; they bound reads, not elapsed time.
+struct HelpTagDiagnosticBudget { NSUInteger currentDetails = 0, legacyNodes = 0; };
+struct HelpTagReadRecord {
+  NSUInteger node = 0, field = 0, calls = 0, state = 0, kind = 0, length = 0;
+  BOOL normalized = NO;
+};
+static NSDictionary *HelpTagReadDetail(const HelpTagReadRecord &read, NSString *text) {
+  static NSString *const fields[] = { @"value", @"label", @"title", @"text-field-value" };
+  static NSString *const states[] = { @"unavailable", @"nil", @"captured" };
+  static NSString *const kinds[] = { @"none", @"string", @"attributed-string", @"other" };
+  id matches = NSNull.null;
+  NSString *metadataStatus = @"observed";
+  @try {
+    if (read.normalized) matches = @((read.length == 37) && [text isEqualToString:@"Save this document's local checkpoint"]);
+  } @catch (__unused NSException *exception) { metadataStatus = @"exception"; }
+  return @{ @"node": @(read.node), @"field": fields[read.field], @"read": states[read.state], @"calls": @(read.calls),
+    @"kind": kinds[read.kind], @"normalized": @(read.normalized), @"length": read.normalized ? @(read.length) : NSNull.null,
+    @"nonempty": read.normalized ? @(read.length > 0) : NSNull.null, @"exactExpected": matches, @"metadataStatus": metadataStatus };
+}
+static NSArray<NSString *> *HelpTagStrings(id root, BOOL *truncated, HelpTagDiagnosticBudget *budget, NSDictionary *__autoreleasing *diagnostic) {
   NSMutableOrderedSet<NSString *> *strings = [NSMutableOrderedSet new];
-  for (id node in AccessibilityNodes(root, truncated)) {
+  NSArray *nodes = AccessibilityNodes(root, truncated);
+  HelpTagReadRecord details[16] = {};
+  NSString *__strong detailTexts[16] = {};
+  NSUInteger detailCount = 0, nodeIndex = 0, calls = 0, unavailable = 0, nilReads = 0, captured = 0;
+  NSUInteger stringValues = 0, attributedValues = 0, otherValues = 0, normalizedNil = 0, empty = 0, nonempty = 0;
+  for (id node in nodes) {
     NSMutableArray *values = [NSMutableArray new];
-    if ([node respondsToSelector:@selector(accessibilityValue)] && [node accessibilityValue]) [values addObject:[node accessibilityValue]];
-    if ([node respondsToSelector:@selector(accessibilityLabel)] && [node accessibilityLabel]) [values addObject:[node accessibilityLabel]];
-    if ([node respondsToSelector:@selector(accessibilityTitle)] && [node accessibilityTitle]) [values addObject:[node accessibilityTitle]];
-    if ([node isKindOfClass:NSTextField.class]) [values addObject:((NSTextField *)node).stringValue];
-    for (id value in values) {
-      NSString *text = [value isKindOfClass:NSAttributedString.class] ? [value string] : ([value isKindOfClass:NSString.class] ? value : nil);
-      if (text.length) [strings addObject:text];
+    HelpTagReadRecord reads[4] = {};
+    NSUInteger fields[4] = {}, valueCount = 0;
+    NSString *__strong normalizedTexts[4] = {};
+    // Keep the original presence probe and captured read, including its
+    // addObject:nil exception if a getter changes between those two reads.
+    if ([node respondsToSelector:@selector(accessibilityValue)]) {
+      reads[0].calls = 1; reads[0].state = 1;
+      if ([node accessibilityValue]) {
+        [values addObject:[node accessibilityValue]]; fields[valueCount++] = 0;
+        reads[0].calls = 2; reads[0].state = 2;
+      }
     }
+    if ([node respondsToSelector:@selector(accessibilityLabel)]) {
+      reads[1].calls = 1; reads[1].state = 1;
+      if ([node accessibilityLabel]) {
+        [values addObject:[node accessibilityLabel]]; fields[valueCount++] = 1;
+        reads[1].calls = 2; reads[1].state = 2;
+      }
+    }
+    if ([node respondsToSelector:@selector(accessibilityTitle)]) {
+      reads[2].calls = 1; reads[2].state = 1;
+      if ([node accessibilityTitle]) {
+        [values addObject:[node accessibilityTitle]]; fields[valueCount++] = 2;
+        reads[2].calls = 2; reads[2].state = 2;
+      }
+    }
+    if ([node isKindOfClass:NSTextField.class]) {
+      [values addObject:((NSTextField *)node).stringValue]; fields[valueCount++] = 3;
+      reads[3].calls = 1; reads[3].state = 2;
+    }
+    NSUInteger valueIndex = 0;
+    for (id value in values) {
+      BOOL attributed = [value isKindOfClass:NSAttributedString.class];
+      BOOL plain = !attributed && [value isKindOfClass:NSString.class];
+      NSString *text = attributed ? [value string] : (plain ? value : nil);
+      NSUInteger length = text.length;
+      if (length) [strings addObject:text];
+      NSUInteger field = fields[valueIndex++];
+      reads[field].kind = attributed ? 2 : (plain ? 1 : 3);
+      reads[field].normalized = text != nil; reads[field].length = length;
+      normalizedTexts[field] = text;
+    }
+    // Only primitive bookkeeping and bounded retained references are added
+    // during collection. Formatting/equality and legacy reads follow it.
+    for (NSUInteger field = 0; field < 4; field++) {
+      HelpTagReadRecord &read = reads[field];
+      read.node = nodeIndex; read.field = field; calls += read.calls;
+      if (read.state == 0) unavailable++;
+      else if (read.state == 1) nilReads++;
+      else {
+        captured++;
+        if (read.kind == 1) stringValues++;
+        else if (read.kind == 2) attributedValues++;
+        else otherValues++;
+        if (!read.normalized) normalizedNil++;
+        else if (read.length) nonempty++;
+        else empty++;
+      }
+      if (budget->currentDetails < 16) {
+        details[detailCount] = read; detailTexts[detailCount++] = normalizedTexts[field];
+        budget->currentDetails++;
+      }
+    }
+    nodeIndex++;
   }
-  return strings.array;
+  NSArray<NSString *> *result = strings.array;
+  // Every original read, normalization and ordered-set operation above keeps
+  // its failure behavior. Only the added observations are exception-contained.
+  @try {
+    NSMutableArray *currentRows = [NSMutableArray new], *legacyRows = [NSMutableArray new];
+    for (NSUInteger index = 0; index < detailCount; index++) [currentRows addObject:HelpTagReadDetail(details[index], detailTexts[index])];
+    NSUInteger considered = 0, attempted = 0, returned = 0, thrown = 0, selectorExceptions = 0, metadataExceptions = 0;
+    for (id node in nodes) {
+      if (budget->legacyNodes >= 8) break;
+      budget->legacyNodes++; NSUInteger index = considered++;
+      BOOL selectorReturned = NO, supported = NO, readReturned = NO;
+      id value = nil;
+      @try {
+        supported = [node respondsToSelector:@selector(accessibilityAttributeValue:)];
+        selectorReturned = YES;
+        if (supported) {
+          attempted++;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+          value = [node accessibilityAttributeValue:NSAccessibilityValueAttribute];
+#pragma clang diagnostic pop
+          returned++; readReturned = YES;
+        }
+      } @catch (__unused NSException *exception) {
+        if (selectorReturned && supported) thrown++; else selectorExceptions++;
+      }
+      NSString *state = !selectorReturned ? @"selector-exception" : !supported ? @"unavailable" : !readReturned ? @"read-exception" : value ? @"returned" : @"nil";
+      NSString *kind = @"none", *metadataStatus = @"observed";
+      id length = NSNull.null, hasText = NSNull.null, hasContent = NSNull.null, matches = NSNull.null;
+      @try {
+        if (readReturned && value) {
+          BOOL attributed = [value isKindOfClass:NSAttributedString.class];
+          BOOL plain = !attributed && [value isKindOfClass:NSString.class];
+          NSString *text = attributed ? [value string] : (plain ? value : nil);
+          kind = attributed ? @"attributed-string" : plain ? @"string" : @"other";
+          hasText = @(text != nil);
+          if (text) {
+            NSUInteger size = text.length;
+            length = @(size); hasContent = @(size > 0);
+            matches = @((size == 37) && [text isEqualToString:@"Save this document's local checkpoint"]);
+          }
+        }
+      } @catch (__unused NSException *exception) {
+        metadataExceptions++; metadataStatus = @"exception";
+        kind = @"unknown"; length = NSNull.null; hasText = NSNull.null; hasContent = NSNull.null; matches = NSNull.null;
+      }
+      [legacyRows addObject:@{ @"node": @(index), @"read": state, @"kind": kind, @"normalized": hasText,
+        @"length": length, @"nonempty": hasContent, @"exactExpected": matches, @"metadataStatus": metadataStatus }];
+    }
+    *diagnostic = @{ @"schemaVersion": @1, @"status": @"observed", @"nodes": @(nodeIndex),
+      @"current": @{ @"fieldSlots": @(nodeIndex * 4), @"calls": @(calls), @"unavailable": @(unavailable), @"nil": @(nilReads), @"captured": @(captured),
+        @"string": @(stringValues), @"attributedString": @(attributedValues), @"other": @(otherValues), @"normalizedNil": @(normalizedNil),
+        @"empty": @(empty), @"nonempty": @(nonempty), @"retainedStrings": @(result.count), @"detailLimit": @16,
+        @"detailsOmitted": @(nodeIndex * 4 - detailCount), @"rows": currentRows },
+      @"legacy": @{ @"diagnosticOnly": @YES, @"nodeLimit": @8, @"nodesConsidered": @(considered), @"supportedReadsAttempted": @(attempted),
+        @"returned": @(returned), @"thrown": @(thrown), @"selectorExceptions": @(selectorExceptions), @"metadataExceptions": @(metadataExceptions),
+        @"nodesOmitted": @(nodeIndex - considered), @"rows": legacyRows } };
+  } @catch (__unused NSException *exception) {
+    // Missing diagnostics stay unknown to the reporter; strings remain exact.
+  }
+  return result;
 }
 static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
   BOOL truncated = NO;
+  HelpTagDiagnosticBudget diagnosticBudget;
   NSMutableArray *windows = [NSMutableArray new], *helpTags = [NSMutableArray new];
   for (NSWindow *window in NSApp.windows) {
     if (windows.count >= 64) { truncated = YES; break; }
@@ -211,7 +353,14 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       if (role.length) [roles addObject:role];
       if (![role isEqual:(__bridge NSString *)kAXHelpTagRole]) continue;
       NSRect frame = [node respondsToSelector:@selector(accessibilityFrame)] ? [node accessibilityFrame] : NSZeroRect;
-      [helpTags addObject:@{ @"windowNumber": @(window.windowNumber), @"windowFrame": RectDictionary(window.frame), @"frame": RectDictionary(frame), @"role": [node accessibilityRole], @"strings": HelpTagStrings(node, &truncated) }];
+      NSDictionary *textDiagnostic = nil;
+      [helpTags addObject:@{ @"windowNumber": @(window.windowNumber), @"windowFrame": RectDictionary(window.frame), @"frame": RectDictionary(frame), @"role": [node accessibilityRole], @"strings": HelpTagStrings(node, &truncated, &diagnosticBudget, &textDiagnostic) }];
+      @try {
+        if (textDiagnostic) {
+          NSMutableDictionary *tag = [helpTags.lastObject mutableCopy];
+          tag[@"textReadDiagnostic"] = textDiagnostic; helpTags[helpTags.count - 1] = tag;
+        }
+      } @catch (__unused NSException *exception) {}
     }
     record[@"roles"] = roles.array;
   }
