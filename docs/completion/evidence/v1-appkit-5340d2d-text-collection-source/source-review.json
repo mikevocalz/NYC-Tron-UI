@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 1,
+  "kind": "appkit-help-tag-read-diagnostic-source-review",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "baseCommit": "a685bd17d3023307181371a9c042bfbc1530c232",
+  "candidateCommit": "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b",
+  "publicationStatus": "published-source-checkpoint; native compilation and runtime unobserved at this receipt",
+  "purpose": "Distinguish unavailable, nil, non-text, empty, nonempty and exact-required-text read observations on an already observed native help-tag subtree without changing acceptance strings or predicates.",
+  "motivation": {
+    "runId": 42944976627,
+    "nativeJobId": 130275751812,
+    "checkout": "778ab991afb4dfe48b405800dc4b79e4bca97939",
+    "fullNativeLog": {
+      "gitBlob": "9744b2175dca3cb995b82977c4e4afef21b8dfd4",
+      "bytes": 79188,
+      "sha256": "b14b587431abafe08331cc8c323c925e36376de5fa2c33f01f15714750ec2248"
+    },
+    "observed": {
+      "permissionsTrue": true,
+      "cursorInsideTrigger": true,
+      "ownerVisible": true,
+      "ownerKey": true,
+      "applicationActive": true,
+      "clearedPointerSequenceFlag": true,
+      "nativeHelpTagWindowNumber": 41,
+      "nativeHelpTagFrame": {
+        "x": 329,
+        "y": 347,
+        "width": 213,
+        "height": 18
+      },
+      "expectedTextMatch": false
+    },
+    "limits": [
+      "The approved prior summary omitted original strings; a false expected-text predicate does not distinguish an empty array from different collected strings.",
+      "The original runtime ZIP remains unextracted.",
+      "The cleared pointer-sequence flag is not an OS event-delivery acknowledgment.",
+      "No extraction or production binding defect is established by this evidence."
+    ]
+  },
+  "sourceFiles": [
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "before": {
+        "gitBlob": "b01dccc74827a61ce5b2cfe3ededeca5c001b045",
+        "bytes": 48695,
+        "sha256": "5ab191e285b5e7732385ab313fa046bff828a9efc6904619ac60f4d9733f0446"
+      },
+      "after": {
+        "gitBlob": "5a7c3b5c293dced56ad7dc4d28cfee75015288a4",
+        "bytes": 56818,
+        "sha256": "147b4db02de2c4ad14b6c6635dfb128f6990c921dcc88a58947e133cec07bcc1"
+      },
+      "diff": {
+        "added": 159,
+        "removed": 10,
+        "firstChangedLine": 184,
+        "lastBeforeLine": 214,
+        "lastAfterLine": 363
+      }
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "before": {
+        "gitBlob": "e773cfb2661e80f01daa400f14cd09b903e6b087",
+        "bytes": 65792,
+        "sha256": "a90bd7925658a053391a6f6b9cbcf1979f8d90f306a670fb93f271c74bab5aa0"
+      },
+      "after": {
+        "gitBlob": "0b0555a2cb0c37867418600bf9c9fbfbd77e6566",
+        "bytes": 70151,
+        "sha256": "3fcb607df111d2ef556ac4835043c7c42f175c4fb5bc1a35f47494ea131c7acf"
+      },
+      "diff": {
+        "added": 56,
+        "removed": 2,
+        "firstChangedLine": 117,
+        "lastBeforeLine": 195,
+        "lastAfterLine": 249
+      }
+    }
+  ],
+  "requiredText": {
+    "literal": "Save this document's local checkpoint",
+    "utf16Length": 37,
+    "scope": "private acceptance fixture",
+    "classificationOnly": true
+  },
+  "nativePreservation": {
+    "modernFields": [
+      "accessibilityValue",
+      "accessibilityLabel",
+      "accessibilityTitle",
+      "NSTextField.stringValue"
+    ],
+    "modernGetterCalls": {
+      "unavailable": 0,
+      "modernNil": 1,
+      "modernNonnil": 2,
+      "textField": 1
+    },
+    "normalization": "The original NSAttributedString.string, NSString type check and text.length read execute once in their original order; diagnostic details reuse their results.",
+    "traversal": "The same single AccessibilityNodes(root,truncated) call remains immediately after original strings allocation. Added legacy reads use that retained node array and do not traverse again.",
+    "originalFailures": "Original getters, addObject:nil, normalization and ordered-set insertion remain outside diagnostic catches.",
+    "returnValue": "The original strings.array is obtained before all diagnostic formatting, exact-value classification and legacy reads. Its order, deduplication and contents remain unchanged.",
+    "roleReads": {
+      "before": 2,
+      "after": 2,
+      "extraRoleReads": false
+    },
+    "currentDetails": {
+      "scope": "one TooltipObservation across all help tags",
+      "limit": 16,
+      "aggregateCounts": "Count the original bounded collection even after detailed rows are omitted."
+    },
+    "legacy": {
+      "diagnosticOnly": true,
+      "api": "accessibilityAttributeValue:NSAccessibilityValueAttribute",
+      "scope": "already traversed nodes after original collection",
+      "consideredNodeLimit": 8,
+      "globalPerObservation": true,
+      "counters": [
+        "nodesConsidered",
+        "supportedReadsAttempted",
+        "returned",
+        "thrown",
+        "selectorExceptions",
+        "metadataExceptions",
+        "nodesOmitted"
+      ],
+      "returnedCountIncludesNil": true,
+      "unavailableAndExceptionsAreExplicit": true,
+      "addedReadAndMetadataExceptionsContained": true,
+      "noAcceptanceText": true,
+      "duration": "The read-count limit is not a duration guarantee. Existing deadlines remain unchanged."
+    },
+    "attachment": "The added dictionary construction and help-tag metadata attachment are guarded. Missing metadata projects unknown rather than observed-empty success."
+  },
+  "projection": {
+    "summaryFunctions": [
+      "tooltipFailureSummary",
+      "reportTooltipFailure"
+    ],
+    "stringInspectionLimit": 128,
+    "currentDetailRowsPerObservation": 16,
+    "legacyDetailRowsPerObservation": 8,
+    "helpTagInspectionLimit": 128,
+    "retainedHelpTagRecords": 8,
+    "retainedWindowRecords": 12,
+    "fixedTypedAllowlist": true,
+    "missingCountsAreExplicitNull": true,
+    "originalReadByteLimit": 1048577,
+    "originalCompleteFileLimit": 1048576,
+    "completeEnvelopeByteLimit": 16384,
+    "trimming": "If the envelope exceeds its existing limit, remove only the new detailed read rows first and increase their omission counts. Keep aggregate metadata and existing latest-observation predicates. The pre-existing generic over-limit fallback remains.",
+    "originalBytes": "The reporter continues to hash the exact original tooltip-hover.json file bytes and never writes the file.",
+    "noRawText": true,
+    "noClassNames": true,
+    "noArbitraryErrorStrings": true,
+    "noAdditionalFiles": true,
+    "unchanged": [
+      "modern strings acceptance",
+      "hover target and commands",
+      "capture gate",
+      "dismissal gate",
+      "permissions",
+      "activation order",
+      "35-second session timeout",
+      "native assertion deadlines",
+      "startup reporter",
+      "cleanup and primary failure"
+    ]
+  },
+  "checks": {
+    "author": {
+      "scope": "V8 selectors and mocked synchronous IO, plus static native-source inspection",
+      "groups": [
+        {
+          "name": "exact preimages, only two function regions in verifier, full V8 syntax",
+          "status": "passed"
+        },
+        {
+          "name": "native source preserves original call order, normalization and unguarded failures",
+          "status": "passed"
+        },
+        {
+          "name": "empty, missing, null and malformed strings stay distinguishable",
+          "status": "passed"
+        },
+        {
+          "name": "bounded typed string counts and exact literal semantics",
+          "status": "passed"
+        },
+        {
+          "name": "current/legacy nil, unavailable and exceptions cannot become empty success",
+          "status": "passed"
+        },
+        {
+          "name": "known numeric zero survives while missing or malformed counts remain unknown",
+          "status": "passed"
+        },
+        {
+          "name": "shared row budgets hold across tags with explicit omissions",
+          "status": "passed"
+        },
+        {
+          "name": "legacy-positive metadata never changes existing acceptance predicates",
+          "status": "passed"
+        },
+        {
+          "name": "privacy allowlist rejects text, classes, paths, arbitrary fields and error strings",
+          "status": "passed"
+        },
+        {
+          "name": "full envelope binds exact closed original bytes without writes",
+          "status": "passed"
+        },
+        {
+          "name": "eight-tag normal shape trims only details while preserving last observation",
+          "status": "passed"
+        },
+        {
+          "name": "oversized original geometry retains explicit generic fallback within limit",
+          "status": "passed"
+        },
+        {
+          "name": "bounded exact-limit and over-limit original reads preserve complete hash boundary",
+          "status": "passed"
+        },
+        {
+          "name": "missing, nonregular, malformed, schema and IO failures remain secondary",
+          "status": "passed"
+        }
+      ],
+      "measuredEnvelopeBytes": {
+        "normalEnvelopeBytes": 4240,
+        "trimmedEnvelopeBytes": 13674
+      }
+    },
+    "root": {
+      "reproducedSameAuthorGroups": 14,
+      "independentlyRetrievedSourceAndHarness": true,
+      "matchingEnvelopeMeasurements": true,
+      "independentExactInverseChecks": true,
+      "counting": "This reproduces the same author group designs; it is not fourteen additional independently designed groups."
+    },
+    "independentNativeReview": {
+      "root": "approved source-level preservation and inverse",
+      "forge": "Approved full native preservation, public API boundary and exact native/verifier inverse; reproduced the same fourteen author group designs."
+    },
+    "independentProjectionReview": {
+      "desktop": {
+        "status": "approved",
+        "independentlyDesignedGroups": 10,
+        "areas": [
+          "missing aggregate objects and explicit null fields",
+          "typed read states",
+          "legacy-positive non-acceptance",
+          "shared row caps and omissions",
+          "privacy",
+          "original file bytes/hash",
+          "detail trimming",
+          "generic fallback",
+          "secondary error isolation"
+        ],
+        "reproducedSameAuthorGroups": 14,
+        "matchingEnvelopeMeasurements": true,
+        "scope": "V8 selectors and mocked synchronous IO only; no native compilation or execution"
+      }
+    },
+    "runtime": {
+      "objectiveCCompilation": "not executed by this source review",
+      "appKitExecution": "not executed by this source review",
+      "nodeFilesystemExecution": "not executed",
+      "osInput": "not executed",
+      "actualNativeAcceptance": "pending"
+    },
+    "groupCounting": "There are fourteen author-designed groups and ten separately designed desktop-review groups. Root, Forge and desktop reproductions of the fourteen author groups confirm reproducibility; they are not additional test designs."
+  },
+  "harness": {
+    "path": "review-checks.js",
+    "gitBlob": "6fb0893b6dde8b4e933e5d8a5884250c9e420147",
+    "bytes": 26564,
+    "sha256": "628d934284a78e34e391e886e79048a2b4572bcc68f428868bd2f093605a0d25",
+    "entryPoint": "reviewHelpTagDiagnostics(driverBefore, driverAfter, verifierBefore, verifierAfter)",
+    "inputs": "Pass the complete exact source strings identified in sourceFiles. Fixture records and the filesystem/console adapters are synthetic; the native collector is inspected as source text."
+  },
+  "guidance": [
+    {
+      "kind": "repository",
+      "path": "AGENTS.md",
+      "gitBlob": "c5b6c617e5ff001b338d032f355cd251232474a6"
+    },
+    {
+      "kind": "program",
+      "path": "docs/completion/PROGRAM.md",
+      "gitBlob": "b06f44057c70907f44b075c0cdd1a8b5149b3721"
+    },
+    {
+      "kind": "skill",
+      "repository": "mikevocalz/nyc-mon",
+      "path": "skills/mikevocalz-foldable-layouts/SKILL.md",
+      "gitBlob": "d60f539b263863027ec7593ffaea38304ad1e5d8",
+      "application": "Preserve existing state/window/runtime ownership and distinguish source from platform evidence; no layout changes."
+    },
+    {
+      "kind": "skill",
+      "repository": "mikevocalz/nyc-mon",
+      "path": "skills/no-ai-slop/SKILL.md",
+      "gitBlob": "e2008aa08d688846b0373b83d7c3d33b85eaabdd",
+      "application": "Direct wording and specific evidence boundaries."
+    },
+    {
+      "kind": "official-expo-skill",
+      "repository": "expo/skills",
+      "path": "plugins/expo/skills/expo-overview/SKILL.md",
+      "gitBlob": "8d4fc1a52c7207d76826162bb349f59e87367a94",
+      "application": "Preserve pinned SDK55 desktop isolation; no dependencies or deployment changes."
+    },
+    {
+      "kind": "official-expo-skill",
+      "repository": "expo/skills",
+      "path": "plugins/expo/skills/expo-module/SKILL.md",
+      "gitBlob": "ade758421aee5fd5cf7d948cf6baae156d3a3c7b",
+      "application": "Reviewed for native ownership; no Expo module/scaffolding changes apply to this private AppKit diagnostic."
+    }
+  ],
+  "apiSources": [
+    {
+      "url": "https://developer.apple.com/documentation/accessibility/integrating-accessibility-into-your-app.md",
+      "supports": "Deprecated key-based accessibility APIs may coexist with the current protocol API; current implementations take precedence.",
+      "doesNotEstablish": "That the legacy value exposes this observed help tag's rendered text."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/objectivec/nsobject-swift.class/accessibilityattributevalue(_:).md",
+      "supports": "The public nullable legacy attribute-value getter."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nsaccessibility-c.protocol/accessibilityvalue.md",
+      "supports": "The modern value property's nullable id type."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nsaccessibility-c.protocol/accessibilitychildren.md",
+      "supports": "The modern children property's nullable array and documented accessibility descendants."
+    }
+  ],
+  "acceptance": {
+    "nativeTooltipAcceptance": "not established by this source review",
+    "nativeDragAcceptance": "not established by this source review",
+    "ledgerPromoted": false,
+    "releaseApproved": false
+  },
+  "candidateTree": "bc0c0f2d8c96965ed54b429bd5269c4c7081bc64",
+  "treeVerification": {
+    "commit": "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b",
+    "tree": "bc0c0f2d8c96965ed54b429bd5269c4c7081bc64",
+    "parent": "a685bd17d3023307181371a9c042bfbc1530c232",
+    "leaves": 2048,
+    "trees": 284,
+    "changed": [
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "old": "b01dccc74827a61ce5b2cfe3ededeca5c001b045",
+        "new": "5a7c3b5c293dced56ad7dc4d28cfee75015288a4"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "old": "e773cfb2661e80f01daa400f14cd09b903e6b087",
+        "new": "0b0555a2cb0c37867418600bf9c9fbfbd77e6566"
+      }
+    ],
+    "allTreeHashesMatch": true
+  },
+  "publication": {
+    "reportedBy": "root",
+    "publishedAt": "2026-11-11T03:13:06Z",
+    "expectedPriorHead": "a685bd17d3023307181371a9c042bfbc1530c232",
+    "force": false,
+    "leasedRefPostReadVerified": true,
+    "prHeadAndActualMergeVerification": "pending at this source checkpoint",
+    "actualMerge": null,
+    "newWorkflowRun": null
+  },
+  "pinnedRuntime": {
+    "examplePackageBlob": "89b2aa5aae57828552e7c94179085bed6cb68a54",
+    "adapterPackageBlob": "60c13358821980cda180e6ff2af801f1f232a5cf",
+    "spark": "0.0.2",
+    "expo": "55.0.32",
+    "reactNative": "0.83.10",
+    "reactNativeMacOS": "0.83.0",
+    "dependencyChanges": false
+  }
+}

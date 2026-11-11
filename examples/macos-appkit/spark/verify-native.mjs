@@ -114,9 +114,47 @@ function tooltipFailureSummary(evidence) {
   const nonempty = value => Number.isFinite(value?.width) && Number.isFinite(value?.height) ? value.width > 0 && value.height > 0 : null;
   const conjunction = values => values.includes(false) ? false : values.every(value => value === true) ? true : null;
   const motion = value => isRecord(value) ? { action: allowed(value.action, ['enter', 'leave']), ok: boolean(value.ok), targetPoint: point(value.targetPoint), triggerFrame: frame(value.triggerFrame) } : null;
+  const countValue = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
+  const counts = (value, fields) => Object.fromEntries(fields.map(field => [field, isRecord(value) ? countValue(value[field]) : null]));
+  const stringCollection = value => {
+    const array = Array.isArray(value) ? value : null, inspected = array?.slice(0, 128);
+    const strings = inspected?.filter(text => typeof text === 'string');
+    return { type: array ? 'array' : value === undefined ? 'missing' : value === null ? 'null' : 'other',
+      total: array?.length ?? null, inspected: inspected?.length ?? null, inspectionLimit: 128, complete: array ? array.length <= 128 : null,
+      inspectedStringCount: strings?.length ?? null, inspectedNonStringCount: inspected ? inspected.length - strings.length : null,
+      inspectedEmptyCount: strings?.filter(text => text.length === 0).length ?? null,
+      inspectedNonemptyCount: strings?.filter(text => text.length > 0).length ?? null,
+      inspectedExactExpectedCount: strings?.filter(text => text === "Save this document's local checkpoint").length ?? null };
+  };
+  const readDiagnostic = (value, budget) => {
+    if (!isRecord(value) || value.schemaVersion !== 1 || value.status !== 'observed') return null;
+    const rows = (value, legacy) => {
+      if (!Array.isArray(value)) return { total: null, omitted: null, records: null };
+      const key = legacy ? 'legacy' : 'current', selected = value.slice(0, budget[key]);
+      budget[key] -= selected.length;
+      return { total: value.length, omitted: value.length - selected.length, records: selected.map(row => {
+        if (!isRecord(row)) return null;
+        const read = allowed(row.read, legacy ? ['unavailable', 'nil', 'returned', 'selector-exception', 'read-exception'] : ['unavailable', 'nil', 'captured']);
+        const metadataStatus = allowed(row.metadataStatus, ['observed', 'exception']);
+        const returned = read === (legacy ? 'returned' : 'captured');
+        const normalized = returned ? boolean(row.normalized) : null;
+        return { node: countValue(row.node), ...(legacy ? {} : { field: allowed(row.field, ['value', 'label', 'title', 'text-field-value']), calls: countValue(row.calls) }),
+          read, kind: returned ? allowed(row.kind, ['none', 'string', 'attributed-string', 'other', 'unknown']) : null,
+          normalized, length: normalized === true ? countValue(row.length) : null,
+          nonempty: normalized === true ? boolean(row.nonempty) : null,
+          exactExpected: normalized === true && metadataStatus === 'observed' ? boolean(row.exactExpected) : null, metadataStatus };
+      }) };
+    };
+    return { schemaVersion: 1, status: 'observed', nodes: countValue(value.nodes),
+      current: { ...counts(value.current, ['fieldSlots', 'calls', 'unavailable', 'nil', 'captured', 'string', 'attributedString', 'other', 'normalizedNil', 'empty', 'nonempty', 'retainedStrings', 'detailLimit', 'detailsOmitted']),
+        rows: rows(value.current?.rows, false) },
+      legacy: { ...counts(value.legacy, ['nodeLimit', 'nodesConsidered', 'supportedReadsAttempted', 'returned', 'thrown', 'selectorExceptions', 'metadataExceptions', 'nodesOmitted']),
+        diagnosticOnly: boolean(value.legacy?.diagnosticOnly), rows: rows(value.legacy?.rows, true) } };
+  };
   const observation = (value, includeRecords) => {
     if (!isRecord(value)) return null;
     const tags = Array.isArray(value.helpTags) ? value.helpTags : null;
+    const detailBudget = { current: 16, legacy: 8 };
     const inspected = tags?.slice(0, 128).map((tag, index) => {
       const textMatchesExpected = Array.isArray(tag?.strings) && tag.strings.every(text => typeof text === 'string')
         ? tag.strings.includes("Save this document's local checkpoint") : null;
@@ -124,7 +162,9 @@ function tooltipFailureSummary(evidence) {
       const tagFrameNonempty = nonempty(tag?.frame), windowFrameNonempty = nonempty(tag?.windowFrame);
       return { index, windowNumber: integer(tag?.windowNumber), role: allowed(tag?.role, roles), textMatchesExpected, roleIsHelpTag,
         tagFrameNonempty, windowFrameNonempty, matchesShownTagPredicate: conjunction([textMatchesExpected, roleIsHelpTag, tagFrameNonempty, windowFrameNonempty]),
-        frame: frame(tag?.frame), windowFrame: frame(tag?.windowFrame) };
+        frame: frame(tag?.frame), windowFrame: frame(tag?.windowFrame),
+        stringCollection: includeRecords && index < 8 ? stringCollection(tag?.strings) : null,
+        textReadDiagnostic: includeRecords && index < 8 ? readDiagnostic(tag?.textReadDiagnostic, detailBudget) : null };
     }) ?? null;
     const count = field => tags && tags.length <= 128 && inspected.every(tag => typeof tag[field] === 'boolean')
       ? inspected.filter(tag => tag[field]).length : null;
@@ -163,7 +203,7 @@ function reportTooltipFailure() {
   const originalByteLimit = 1024 * 1024, logByteLimit = 16 * 1024;
   const report = {
     schemaVersion: 1, status: 'unavailable', sourceRevision: revision, processId: Number.isSafeInteger(child.pid) ? child.pid : null,
-    diagnosticOnly: true, selection: 'allowlisted-derived-tooltip-subset', outputSummaryOmitted: false, logByteLimit,
+    diagnosticOnly: true, selection: 'allowlisted-derived-tooltip-subset', outputSummaryOmitted: false, diagnosticRowsOmittedForByteLimit: false, logByteLimit,
     omittedOriginalFields: ['error', 'reason', 'boundary', 'coordinates', 'helpTags.strings', 'windows.class', 'capture'],
     original: { filename: 'tooltip-hover.json', bytes: null, sha256: null, completeRead: null, readByteLimit: originalByteLimit + 1 }
   };
@@ -193,6 +233,20 @@ function reportTooltipFailure() {
   } catch { report.status = 'readback-unavailable'; }
   try {
     let message = begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';
+    if (Buffer.byteLength(message, 'utf8') > logByteLimit && report.summary?.observation) {
+      // Drop only new detail rows first. Keep their omission counts, aggregate
+      // observations and the original latest tooltip predicates visible.
+      for (const tag of report.summary.observation.helpTags.records ?? []) {
+        for (const kind of ['current', 'legacy']) {
+          const rows = tag.textReadDiagnostic?.[kind]?.rows;
+          if (Array.isArray(rows?.records) && rows.records.length) {
+            rows.omitted += rows.records.length; rows.records = [];
+            report.diagnosticRowsOmittedForByteLimit = true;
+          }
+        }
+      }
+      message = begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';
+    }
     if (Buffer.byteLength(message, 'utf8') > logByteLimit) {
       delete report.summary; report.status = 'omitted-over-log-limit'; report.outputSummaryOmitted = true;
       message = begin + '\n' + JSON.stringify(report) + '\n' + end + '\n';

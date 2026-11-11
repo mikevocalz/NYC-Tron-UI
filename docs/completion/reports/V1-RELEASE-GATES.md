@@ -81,6 +81,48 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit text-collection source follow-up
+
+The [source checkpoint](../evidence/v1-appkit-5340d2d-text-collection-source/README.md)
+records published helper `5340d2d96412d0fcc5dc7cce21ced037d2de5c7b` and
+tree `bc0c0f2d8c96965ed54b429bd5269c4c7081bc64`. Exactly two private
+acceptance files changed: `NYCTronAcceptanceDriver.mm` and `verify-native.mjs`.
+The collector preserves its original traversal, current getter order and
+counts, single normalization, string order/deduplication and original
+exceptions. The strict tooltip shown, capture and dismissal gates remain
+unchanged.
+
+After obtaining the original strings array, the driver adds guarded read
+metadata and a separate diagnostic-only public
+`accessibilityAttributeValue:NSAccessibilityValueAttribute` query on already
+traversed nodes. Legacy values never enter acceptance strings. The shared
+per-observation caps are 16 current detail records and eight legacy nodes
+considered. Aggregate counts, nil, unavailable, returned, thrown and omitted
+states remain distinct. The read-count cap is not a duration guarantee;
+existing deadlines remain unchanged.
+
+Failure reporting adds typed string/read/count/exact-literal classifications,
+with missing or malformed values kept explicitly unknown and raw text omitted.
+The complete envelope remains capped at 16 KiB. If needed, it drops the new
+detail rows first, preserving omission counts, aggregate metadata and the
+latest original predicates before the existing generic over-limit fallback.
+Original retained JSON bytes and the primary failure remain unchanged.
+
+All 14 author-designed source/mock review groups passed. Root, Forge and the
+desktop reviewer reproduced those same 14 designs; those reproductions are not
+additional test designs. The desktop reviewer separately passed ten
+independently designed V8/mock-IO groups. Native compilation and runtime were
+unobserved at the historical source checkpoint.
+
+The subsequent actual merge `32e6234e6f00ff873132f81498d3f78f2488ad8f`
+has the same reviewed tree and verified ordered parents `0edd5f30` then
+`5340d2d`. In [run 42951265207](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265207),
+[source job 130295860357](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42951265207/job/130295860357)
+passed eleven tests with zero failures, skips or cancellations; its complete
+19,321-byte log confirms that checkout. At this follow-up check, native job
+130296002996 was compiling, with no completed native compilation or runtime
+result recorded. The historical source-only receipt remains unchanged.
+
 ### November 11 AppKit help-tag text result and browser pass
 
 The [completed a685 native receipt](../evidence/v1-appkit-a685bd1-help-tag-text-failure/README.md)
@@ -102,7 +144,7 @@ candidate changed neither activation behavior nor its 35-second client deadline.
 
 The selected tooltip observation for PID 30952 reports both permissions true,
 an active/key/visible owner, an untruncated traversal, and the actual cursor
-inside the trigger with pointer motion finished. The outside baseline had
+inside the trigger with the pointer-sequence flag cleared. The outside baseline had
 zero help tags. The last hover observation contained one nonempty
 `AXHelpTag`, window 41, whose corresponding window was visible and onscreen.
 Its `textMatchesExpected` was false and the matching shown-tag count was zero.
