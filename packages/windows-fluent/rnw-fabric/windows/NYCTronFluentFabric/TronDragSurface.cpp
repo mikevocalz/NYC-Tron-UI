@@ -7,12 +7,17 @@
 #include "codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h"
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Input.DragDrop.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Foundation.Numerics.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include <winrt/Windows.UI.h>
+#include <chrono>
+#include <functional>
+#include <memory>
 #include <stdexcept>
 #include <utility>
 #include <cmath>
@@ -86,6 +91,33 @@ struct NativeDragRegion : Xaml::Controls::ContentControlT<NativeDragRegion> {
     // enabled state and focus support, with an explicit non-Button identity.
     return winrt::make<NativeDragRegionAutomationPeer>(static_cast<Xaml::FrameworkElement>(*this));
   }
+};
+// The OS drag reaches this nested XAML island only through the RNW parent
+// island's Microsoft.UI.Input.DragDrop target. RNW's parent island sets none, so
+// the input system finds no target and XAML never raises DragEnter. This proxy
+// is the parent island's drop target for target surfaces and forwards to the same
+// broker calls the XAML DragEnter/DragOver/Drop handlers make.
+namespace InputDnD = winrt::Microsoft::UI::Input::DragDrop;
+using DropComplete = std::shared_ptr<std::function<void(Transfer::DataPackageOperation)>>;
+struct ParentDropTarget : winrt::implements<ParentDropTarget, InputDnD::IDropOperationTarget> {
+  using Handler = std::function<Transfer::DataPackageOperation(int, InputDnD::DragInfo const&, DropComplete)>;
+  explicit ParentDropTarget(Handler handler) : m_handler(std::move(handler)) {}
+  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> EnterAsync(InputDnD::DragInfo info, InputDnD::DragUIOverride) { co_return m_handler(0, info, nullptr); }
+  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> OverAsync(InputDnD::DragInfo info, InputDnD::DragUIOverride) { co_return m_handler(1, info, nullptr); }
+  winrt::Windows::Foundation::IAsyncAction LeaveAsync(InputDnD::DragInfo info) { m_handler(2, info, nullptr); co_return; }
+  winrt::Windows::Foundation::IAsyncOperation<Transfer::DataPackageOperation> DropAsync(InputDnD::DragInfo info) {
+    winrt::handle signal{CreateEventW(nullptr, TRUE, FALSE, nullptr)};
+    auto result = std::make_shared<Transfer::DataPackageOperation>(Transfer::DataPackageOperation::None);
+    auto complete = std::make_shared<std::function<void(Transfer::DataPackageOperation)>>([result, raw = signal.get()](Transfer::DataPackageOperation value) { *result = value; SetEvent(raw); });
+    const auto immediate = m_handler(3, info, complete);
+    if (!signal) co_return immediate;
+    if (immediate != Transfer::DataPackageOperation::None) co_return immediate;
+    // The broker resolves the drop on the UI thread within its 30 s deadline.
+    co_await winrt::resume_on_signal(signal.get(), std::chrono::seconds(35));
+    co_return *result;
+  }
+ private:
+  Handler m_handler;
 };
 // Acquired and completed on the UI dispatcher. Every exit, including exceptions in
 // property setters, releases the framework deferral once; no nested message pump.
@@ -271,11 +303,80 @@ struct TronDragSurfaceComponentView
       const auto parent = site.Parent();
       if (!parent || parent.IsClosed()) { Trace("parent-drop-observer-unavailable"); return; }
       m_parentDropManager = winrt::Microsoft::UI::Input::DragDrop::DragDropManager::GetForIsland(parent);
-      m_parentDropToken = m_parentDropManager.TargetRequested([weak = get_weak()](auto const&, auto const&) {
-        if (auto self = weak.get()) self->Trace("parent-target-requested");
+      m_parentDropToken = m_parentDropManager.TargetRequested([weak = get_weak()](auto const&, InputDnD::DropOperationTargetRequestedEventArgs const& args) {
+        auto self = weak.get(); if (!self) return;
+        self->Trace("parent-target-requested");
+        try {
+          args.SetTarget(winrt::make<ParentDropTarget>([weak](int kind, InputDnD::DragInfo const& info, DropComplete complete) {
+            auto owner = weak.get();
+            return owner ? owner->ParentDrop(kind, info, std::move(complete)) : Transfer::DataPackageOperation::None;
+          }));
+          self->Trace("parent-target-set");
+        } catch (...) { self->Trace("parent-target-set-failed"); }
       });
       Trace("parent-drop-observer-attached");
     } catch (...) { Trace("parent-drop-observer-failed"); }
+  }
+  // Hit test in the parent island's coordinates: the child site's translation
+  // and ActualSize are expressed there, as is DragInfo.Position.
+  bool ParentPositionInside(InputDnD::DragInfo const& info, double (&out)[6]) const {
+    const auto site = m_connection.Site();
+    const auto position = info.Position();
+    const auto transform = site.LocalToParentTransformMatrix();
+    const auto size = site.ActualSize();
+    out[0] = position.X; out[1] = position.Y; out[2] = transform.m41; out[3] = transform.m42; out[4] = size.x; out[5] = size.y;
+    return position.X >= out[2] && position.Y >= out[3] && position.X < out[2] + out[4] && position.Y < out[3] + out[5];
+  }
+  static std::string NonceFrom(Transfer::DataPackageView const& view) {
+    if (!view.Contains(PrivateFormat)) return "";
+    auto properties = view.Properties();
+    if (!properties.HasKey(NonceProperty)) return "";
+    auto value = winrt::unbox_value<winrt::hstring>(properties.Lookup(NonceProperty));
+    return value.empty() || value.size() > 256 ? "" : winrt::to_string(value);
+  }
+  void TraceParentDrop(char const* stage, double const (&geometry)[6], bool inside, bool allowed) const noexcept {
+    if (!nyctron::desktop::NativeDragTrace::Enabled(m_owner)) return;
+    try {
+      Json::JsonObject record;
+      record.SetNamedValue(L"stage", Json::JsonValue::CreateStringValue(winrt::to_hstring(stage)));
+      record.SetNamedValue(L"inside", Json::JsonValue::CreateBooleanValue(inside));
+      record.SetNamedValue(L"allowed", Json::JsonValue::CreateBooleanValue(allowed));
+      const wchar_t* keys[6] = {L"x", L"y", L"siteX", L"siteY", L"siteWidth", L"siteHeight"};
+      for (int i = 0; i < 6; ++i) if (std::isfinite(geometry[i])) record.SetNamedValue(keys[i], Json::JsonValue::CreateNumberValue(geometry[i]));
+      nyctron::desktop::NativeDragTrace::Record(m_owner, record);
+    } catch (...) {}
+  }
+  // kind: 0 enter, 1 over, 2 leave, 3 drop. Mirrors Hover/Drop above, with the
+  // same broker checks; the position test replaces XAML's own hit test.
+  Transfer::DataPackageOperation ParentDrop(int kind, InputDnD::DragInfo const& info, DropComplete complete) noexcept {
+    double geometry[6] = {};
+    bool inside = false, allowed = false;
+    try {
+      inside = m_role == "target" && ParentPositionInside(info, geometry);
+      auto broker = Broker::Find(m_owner);
+      if (kind == 2) {
+        if (InputReady() && broker) broker->Leave(m_window, m_generation);
+        TraceParentDrop("parent-drop-leave", geometry, inside, false);
+        m_parentInside = false;
+        return Transfer::DataPackageOperation::None;
+      }
+      const auto nonce = NonceFrom(info.Data());
+      allowed = inside && InputReady() && m_surface.IsEnabled() && broker && broker->CanTarget(nonce, m_window, m_generation);
+      if (kind == 3) {
+        TraceParentDrop("parent-drop-drop", geometry, inside, allowed);
+        if (!allowed) { (*complete)(Transfer::DataPackageOperation::None); return Transfer::DataPackageOperation::None; }
+        broker->Offer(nonce, m_window, m_generation, [complete](bool accepted) {
+          (*complete)(accepted ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None);
+        });
+        // Offer resolves later through Resolve; DropAsync waits on the signal.
+        return Transfer::DataPackageOperation::None;
+      }
+      if (allowed) broker->Hover(nonce, m_window, m_generation);
+      else if (m_parentInside && broker) broker->Leave(m_window, m_generation);
+      if (kind == 0 || allowed != m_parentInside) TraceParentDrop(kind == 0 ? "parent-drop-enter" : "parent-drop-over", geometry, inside, allowed);
+      m_parentInside = allowed;
+      return allowed ? Transfer::DataPackageOperation::Move : Transfer::DataPackageOperation::None;
+    } catch (...) { TraceParentDrop("parent-drop-failed", geometry, inside, allowed); if (kind == 3 && complete) { try { (*complete)(Transfer::DataPackageOperation::None); } catch (...) {} } return Transfer::DataPackageOperation::None; }
   }
   void ReleaseParentDropObserver() noexcept {
     try { if (m_parentDropManager) { m_parentDropManager.TargetRequested(m_parentDropToken); m_parentDropManager.Close(); } } catch (...) {}
@@ -400,7 +501,7 @@ struct TronDragSurfaceComponentView
   }
   Xaml::XamlIsland m_island{nullptr}; Xaml::Controls::ContentControl m_surface{nullptr}; Xaml::Controls::TextBlock m_label{nullptr};
   nyctron::islands::IslandConnection m_connection;
-  winrt::Microsoft::UI::Input::DragDrop::DragDropManager m_parentDropManager{nullptr}; winrt::event_token m_parentDropToken{};
+  winrt::Microsoft::UI::Input::DragDrop::DragDropManager m_parentDropManager{nullptr}; winrt::event_token m_parentDropToken{}; bool m_parentInside{false};
   winrt::com_ptr<Codegen::TronDragSurfaceProps> m_props;
   std::string m_owner, m_window, m_generation, m_role, m_scope, m_request;
   std::vector<std::string> m_errors; bool m_disposed{false}, m_mounted{false}, m_loaded{false};
