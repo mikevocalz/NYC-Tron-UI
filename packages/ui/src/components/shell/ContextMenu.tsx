@@ -1,5 +1,5 @@
 import {useRef,useLayoutEffect,type ComponentRef,type ReactNode} from "react";
-import {Pressable,useWindowDimensions,type GestureResponderEvent,type PressableProps} from "react-native";
+import {Platform,Pressable,useWindowDimensions,type GestureResponderEvent,type PressableProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
@@ -55,6 +55,11 @@ export function ContextMenu({
   const store=local.current;
   const anchor=useStore(store,s=>s.anchor);
   const target=useRef<ComponentRef<typeof Pressable>>(null);
+  const wasOpen=useRef(false);
+  useLayoutEffect(()=>{
+    if(wasOpen.current&&!anchor&&(String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon"))target.current?.focus?.();
+    wasOpen.current=anchor!==undefined;
+  },[anchor]);
   const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
   const usable=!disabled&&items.some(i=>!i.disabled)&&hasUsableRegion(regions);
   const boundary=JSON.stringify([scope,revision,disabled]);
@@ -99,7 +104,7 @@ export function ContextMenu({
       style={state=>[{minWidth:44,minHeight:44},typeof style==="function"?style(state):style]}>
       {children}
     </Pressable>
-    {anchor&&usable?<CommandPopover visible accessibilityLabel={"Actions for "+label} anchor={anchor} usableRegions={regions}
+    {anchor&&usable?<CommandPopover testID={rest.testID?`${rest.testID}-menu`:undefined} visible accessibilityLabel={"Actions for "+label} anchor={anchor} usableRegions={regions}
       items={items} onSelect={select} onDismiss={()=>store.setState({anchor:undefined})}/>:null}
   </>;
 }

@@ -37,6 +37,8 @@ export interface SelectBaseProps extends Omit<ViewProps,"children"|"role"> {
   hint?:string;
   errorText?:string;
   className?:string;
+  /** Additional app-owned classes for the visible caption. */
+  labelClassName?:string;
   triggerClassName?:string;
   unstyled?:boolean;
 }
@@ -71,10 +73,12 @@ const optionLabel=(o:SelectOption)=>o.label??o.value;
 export function Select(props:SelectProps){
   const {
     label,value,onValueChange,disabled=false,placeholder="Choose…",hint,errorText,
-    className,triggerClassName,unstyled=false,testID,options:_options,groups,...rest
+    className,labelClassName,triggerClassName,unstyled=false,testID,options:_options,groups,...rest
   }=props;
   const options=selectOptions(props);
   const styled=!unstyled,web=Platform.OS==="web";
+  const qt=String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon";
+  const keyboard=web||qt;
   const id=useId().replace(/:/g,"");
   const local=useRef<StoreApi<OpenState>|null>(null);
   if(!local.current)local.current=createStore<OpenState>(()=>({open:false,active:-1}));
@@ -89,7 +93,7 @@ export function Select(props:SelectProps){
   const hide=()=>store.setState({open:false,active:-1});
   const pick=(i:number)=>{
     const o=options[i];
-    if(!o||o.disabled)return;
+    if(disabled||!o||o.disabled||!store.getState().open)return;
     hide();
     if(o.value!==value)onValueChange(o.value);
   };
@@ -99,31 +103,35 @@ export function Select(props:SelectProps){
     // RNW passes the DOM keyup itself; a synthetic event carries it on nativeEvent.
     const e=event as {type?:unknown;nativeEvent?:{type?:unknown}}|undefined;
     const type=String(e?.nativeEvent?.type??e?.type??"");
-    if(web&&type.startsWith("key"))return;
-    if(open)hide();else show();
+    if(keyboard&&type.startsWith("key"))return;
+    if(store.getState().open)hide();else show();
   };
   const onKeyDown=(event:unknown)=>{
     if(disabled)return;
     const k=webKey(event);
     if(isModified(k))return;
     const activates=k.key==="Enter"||k.key===" ";
-    if(!open){
+    const state=store.getState();
+    if(!state.open){
       if(activates||k.key==="ArrowDown"||k.key==="ArrowUp"){k.preventDefault();show();}
       return;
     }
-    if(activates){k.preventDefault();pick(active);return;}
-    if(k.key==="Escape"){k.preventDefault();hide();return;}
+    if(activates){k.preventDefault();pick(state.active);return;}
+    if(k.key==="Escape"){
+      k.preventDefault();(event as {stopPropagation?:()=>void}).stopPropagation?.();hide();return;
+    }
     if(k.key==="Tab"){hide();return;}
-    const next=nextChoiceIndex(active,k.key,off,{axis:"vertical",wrap:false});
+    const next=nextChoiceIndex(state.active,k.key,off,{axis:"vertical",wrap:false});
     if(next!==null){k.preventDefault();store.setState({active:next});return;}
-    const hit=typeaheadIndex(options.map(optionLabel),off,active,k.key);
+    const hit=typeaheadIndex(options.map(optionLabel),off,state.active,k.key);
     if(hit>=0)store.setState({active:hit});
   };
   const listId=id+"-list",optionId=(i:number)=>id+"-opt-"+i;
   const shown=selected?optionLabel(selected):placeholder;
   const message=errorText??hint;
+  const triggerKeyboard=keyboard?{onKeyDown,onBlur:hide}:{};
   const triggerWeb=web?{
-    nativeID:id+"-trigger",onKeyDown,onBlur:hide,
+    nativeID:id+"-trigger",
     "aria-haspopup":"listbox","aria-expanded":open,
     "aria-controls":open?listId:undefined,
     "aria-activedescendant":open&&active>=0?optionId(active):undefined,
@@ -136,6 +144,7 @@ export function Select(props:SelectProps){
       aria-selected={isSelected} aria-disabled={o.disabled||undefined} disabled={o.disabled}
       accessibilityState={{selected:isSelected,disabled:!!o.disabled}}
       onPress={()=>pick(i)}
+      {...(keyboard&&!web?{focusable:false}:{})}
       // Keep focus on the trigger so its blur fires only when focus really leaves.
       {...(web?{tabIndex:-1,onMouseDown:(e:{preventDefault:()=>void})=>e.preventDefault()}:{})}
       {...{className:joinClasses("min-h-11 w-full justify-center",
@@ -146,7 +155,10 @@ export function Select(props:SelectProps){
         styled&&(isSelected?"text-on-primary font-semibold":"text-text"))}}>{optionLabel(o)}</Text>
     </Pressable>;
   };
-  const list=<View {...(testID?{testID:`${testID}-list`}:{})} role={"listbox" as never} nativeID={listId} aria-label={label}
+  // RN's native Role enum has list/option, but no listbox. Qt preserves the
+  // named accessible container and its option children; mobile grouping stays
+  // with the host. Web retains the APG listbox relationship above.
+  const list=<View {...(testID?{testID:`${testID}-list`}:{})} role={web?("listbox" as never):"list"} accessible={qt||undefined} nativeID={listId} aria-label={label}
     {...{className:joinClasses("w-full",
       web?"absolute left-0 right-0 top-full z-50 mt-1":"mt-1",
       styled&&"overflow-hidden rounded-control border border-border bg-surface-raised shadow-md")}}>
@@ -165,14 +177,14 @@ export function Select(props:SelectProps){
     </ScrollView>
   </View>;
   return <View {...rest} {...{className:joinClasses("w-full min-w-0 gap-2",open&&web&&"relative z-50",className)}}>
-    <Text nativeID={id+"-label"} {...{className:joinClasses(styled&&"text-sm font-semibold text-text")}}>{label}</Text>
+    <Text nativeID={id+"-label"} {...{className:joinClasses(styled&&"text-sm font-semibold text-text",labelClassName)}}>{label}</Text>
     <View {...{className:"relative w-full"}}>
       <Pressable role="combobox" testID={testID}
         accessibilityLabel={web?label:label+", "+shown}
         accessibilityHint={message}
         accessibilityState={{disabled,expanded:open}}
         disabled={disabled} onPress={onTriggerPress}
-        {...triggerWeb}
+        {...triggerKeyboard} {...triggerWeb}
         {...{className:joinClasses("min-h-12 w-full flex-row items-center gap-2",
           styled&&"rounded-control border bg-surface-sunken px-3 focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(errorText?"border-danger":"border-border"),

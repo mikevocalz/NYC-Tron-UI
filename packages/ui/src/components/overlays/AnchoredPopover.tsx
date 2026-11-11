@@ -1,5 +1,5 @@
 import {useRef,useLayoutEffect,useMemo,type ComponentRef} from "react";
-import {Modal,Pressable,View,useWindowDimensions,type ViewProps} from "react-native";
+import {Modal,Platform,Pressable,View,useWindowDimensions,type ViewProps} from "react-native";
 import {placePopover,hasUsableRegion,type Rect2D} from "./popover-position.ts";
 import {cycleFocusIndex} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
@@ -58,11 +58,14 @@ function PopoverSurface({scope="popover",open,onOpenChange,anchor,usableRegions,
   const focusFirst=()=>{if(open&&committed.current?.token===token&&committed.current.available)(stops()[0]??node())?.focus?.();};
   const onKeyDown=(event:KeyEvent)=>{
     if(!open||(committed.current?.token!==token||!committed.current?.available))return;
-    const data=event.nativeEvent as unknown as {key:string;shiftKey?:boolean};
-    if(data.key!=="Tab")return;
-    event.preventDefault();
+    const data=(event.nativeEvent??event) as unknown as {key:string;shiftKey?:boolean};
+    if(data.key==="Escape"){event.preventDefault?.();event.stopPropagation?.();close();return;}
+    // Native hosts own their Tab chain. DOM traversal must never trap a Qt
+    // keyboard on this fallback surface when its children are native items.
+    if(data.key!=="Tab"||Platform.OS!=="web")return;
+    event.preventDefault?.();
     const list=stops();
-    if(!list.length){node()?.focus();return;}
+    if(!list.length){node()?.focus?.();return;}
     const active=(globalThis as {document?:{activeElement:unknown}}).document?.activeElement;
     const next=cycleFocusIndex(list.length,list.findIndex(element=>element===active),!!data.shiftKey);
     list[next]?.focus();
@@ -82,7 +85,7 @@ function PopoverSurface({scope="popover",open,onOpenChange,anchor,usableRegions,
         style={{position:"absolute",left:0,right:0,top:0,bottom:0}}/>
       <View ref={surface} testID={testID} role="dialog" aria-modal aria-label={accessibilityLabel}
         // The surface itself is the fallback focus target when the content has no controls.
-        {...{tabIndex:-1}} onKeyDown={onKeyDown}
+        {...{tabIndex:-1}} focusable onKeyDown={onKeyDown}
         {...{className:joinClasses("rounded-control bg-surface-raised border border-border",className)}}
         style={{position:"absolute",left:position.x,top:position.y,width:position.width,
           maxHeight:position.height,overflow:"hidden"}}>

@@ -1,5 +1,5 @@
 import {useLayoutEffect,useRef,type ComponentRef,type ReactNode,type Ref} from "react";
-import {Pressable,useWindowDimensions,type PressableProps} from "react-native";
+import {Platform,Pressable,useWindowDimensions,type PressableProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
@@ -68,6 +68,11 @@ export function MenuButton({
     });
   };
   const shown=anchor?.scope===editScope&&!off?anchor:undefined;
+  const wasOpen=useRef(false);
+  useLayoutEffect(()=>{
+    if(wasOpen.current&&!shown&&(String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon"))ref.current?.focus?.();
+    wasOpen.current=shown!==undefined;
+  },[shown]);
   return <>
     <Pressable {...rest} ref={node=>{
       ref.current=node;
@@ -86,7 +91,7 @@ export function MenuButton({
       style={style}>
       {children}
     </Pressable>
-    {shown?<CommandPopover scope={editScope} key={shown.request} visible accessibilityLabel={label} anchor={shown.rect} usableRegions={regions}
+    {shown?<CommandPopover testID={rest.testID?`${rest.testID}-popover`:undefined} scope={editScope} key={shown.request} visible accessibilityLabel={label} anchor={shown.rect} usableRegions={regions}
       items={items} width={menuWidth} onSelect={id=>{const p=committed.current;if(owns(shown)&&p?.items.some(item=>item.id===id&&!item.disabled))p.onSelect(id);}}
       onDismiss={()=>{if(owns(shown))store.setState({anchor:undefined});}}/>:null}
   </>;

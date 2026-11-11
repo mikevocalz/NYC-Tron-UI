@@ -21,8 +21,13 @@ export interface FocusAndA11yLayerProps {
 }
 
 type Sub={remove:()=>void};
+type LayerState=A11yState&{readFailure?:{error:unknown}};
 type MediaQuery={matches:boolean;addEventListener?:(t:"change",l:(e:{matches:boolean})=>void)=>void;removeEventListener?:(t:"change",l:(e:{matches:boolean})=>void)=>void};
 type WebDocument={documentElement:{dataset:Record<string,string|undefined>};addEventListener:(t:string,l:(e:never)=>void,c?:boolean)=>void;removeEventListener:(t:string,l:(e:never)=>void,c?:boolean)=>void};
+function unavailableQtPreference(error:unknown):boolean{
+  const code=(error as {code?:string}|null)?.code;
+  return code==="ERR_QT_ACCESSIBILITY_UNSUPPORTED"||code==="ERR_QT_ACCESSIBILITY_UNAVAILABLE";
+}
 
 /**
  * Mount once near the app root. It reads reduce motion, screen-reader state
@@ -38,28 +43,48 @@ type WebDocument={documentElement:{dataset:Record<string,string|undefined>};addE
  * web.
  */
 export function FocusAndA11yLayer({children,initial}:FocusAndA11yLayerProps){
-  const ref=useRef<StoreApi<A11yState>|null>(null);
-  if(!ref.current)ref.current=createStore<A11yState>(()=>initialA11yState(initial));
+  const ref=useRef<StoreApi<LayerState>|null>(null);
+  if(!ref.current)ref.current=createStore<LayerState>(()=>initialA11yState(initial));
   const store=ref.current;
   const announcement=useStore(store,s=>s.announcement);
+  const readFailure=useStore(store,s=>s.readFailure);
 
   useEffect(()=>{
     let alive=true;
     const subs:Sub[]=[];
     const set=(patch:Partial<A11yPreferences>)=>{if(alive)store.setState(patch);};
-    // Reading a preference can reject on platforms that lack it; the default (false) then stands.
-    AccessibilityInfo.isReduceMotionEnabled?.().then(v=>set({reduceMotion:v}),()=>undefined);
-    AccessibilityInfo.isScreenReaderEnabled?.().then(v=>set({screenReader:v}),()=>undefined);
-    subs.push(AccessibilityInfo.addEventListener("reduceMotionChanged",v=>set({reduceMotion:!!v})));
-    subs.push(AccessibilityInfo.addEventListener("screenReaderChanged",v=>set({screenReader:!!v})));
+    const fail=(error:unknown):never=>{
+      alive=false;
+      for(const sub of subs.splice(0)){
+        try{sub.remove();}catch{/* Preserve the originating failure while releasing the other subscriptions. */}
+      }
+      throw error;
+    };
+    // An unsupported Qt preference keeps the app's initial value. It must not
+    // prevent independent supported preferences from subscribing. Unexpected
+    // Qt read failures outside those known codes reach the React error boundary.
+    // Other platforms retain their existing rejected-read fallback.
+    const read=(query:()=>Promise<boolean>|undefined,receive:(value:boolean)=>void)=>{
+      try{query()?.then(receive,error=>{
+        if(alive&&(String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon")&&!unavailableQtPreference(error))store.setState({readFailure:{error}});
+      });}catch(error){if(!unavailableQtPreference(error))fail(error);}
+    };
+    const listen=(event:"reduceMotionChanged"|"screenReaderChanged"|"darkerSystemColorsChanged"|"highTextContrastChanged",receive:(value:boolean)=>void)=>{
+      try{subs.push(AccessibilityInfo.addEventListener(event,receive));}
+      catch(error){if(!unavailableQtPreference(error))fail(error);}
+    };
+    read(()=>AccessibilityInfo.isReduceMotionEnabled?.(),v=>set({reduceMotion:v}));
+    read(()=>AccessibilityInfo.isScreenReaderEnabled?.(),v=>set({screenReader:v}));
+    listen("reduceMotionChanged",v=>set({reduceMotion:!!v}));
+    listen("screenReaderChanged",v=>set({screenReader:!!v}));
     // React Native Web has no darker-colors or high-contrast-text API; web reads forced colors below.
     if(Platform.OS==="ios"){
-      AccessibilityInfo.isDarkerSystemColorsEnabled().then(v=>set({highContrast:v}),()=>undefined);
-      subs.push(AccessibilityInfo.addEventListener("darkerSystemColorsChanged",v=>set({highContrast:!!v})));
+      read(()=>AccessibilityInfo.isDarkerSystemColorsEnabled(),v=>set({highContrast:v}));
+      listen("darkerSystemColorsChanged",v=>set({highContrast:!!v}));
     }
-    if(Platform.OS==="android"){
-      AccessibilityInfo.isHighTextContrastEnabled().then(v=>set({highContrast:v}),()=>undefined);
-      subs.push(AccessibilityInfo.addEventListener("highTextContrastChanged",v=>set({highContrast:!!v})));
+    if(Platform.OS==="android"||String(Platform.OS)==="qnx"||String(Platform.OS)==="marathon"){
+      read(()=>AccessibilityInfo.isHighTextContrastEnabled(),v=>set({highContrast:v}));
+      listen("highTextContrastChanged",v=>set({highContrast:!!v}));
     }
     if(Platform.OS==="web"){
       const g=globalThis as unknown as {matchMedia?:(q:string)=>MediaQuery;document?:WebDocument};
@@ -95,10 +120,14 @@ export function FocusAndA11yLayer({children,initial}:FocusAndA11yLayerProps){
   },[store]);
 
   useEffect(()=>{
-    if(announcement&&Platform.OS!=="web")AccessibilityInfo.announceForAccessibility(announcement.text);
+    if(announcement&&Platform.OS!=="web"){
+      try{AccessibilityInfo.announceForAccessibility(announcement.text);}
+      catch(error){if(!unavailableQtPreference(error))throw error;}
+    }
   },[announcement]);
 
   const value=useMemo<A11yContextValue>(()=>({store,announce:(text,politeness)=>queueAnnouncement(store,text,politeness)}),[store]);
+  if(readFailure)throw readFailure.error;
   return <A11yContext.Provider value={value}>
     {children}
     {Platform.OS==="web"?<View pointerEvents="none"

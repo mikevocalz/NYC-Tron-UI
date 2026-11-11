@@ -11,7 +11,8 @@ export interface NativeDropdownOption {
 }
 /**
  * Options under a section header: a SwiftUI `Section` on iOS, a heading row
- * between dividers in the Material menu on Android, a labelled group on web.
+ * between dividers in the Material menu on Android, a labelled group in the
+ * shared web/QNX/Marathon selector.
  * @see {@linkcode NativeDropdownGroupsChoice.groups}
  */
 export type NativeDropdownGroup=OptionGroup<NativeDropdownOption>;
