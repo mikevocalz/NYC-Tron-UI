@@ -1,0 +1,455 @@
+﻿2026-11-11T04:23:17.3833021Z Current runner version: '2.338.2'
+2026-11-11T04:23:17.3859778Z ##[group]Runner Image Provisioner
+2026-11-11T04:23:17.3860735Z Hosted Compute Agent
+2026-11-11T04:23:17.3861441Z Version: 20261028.624
+2026-11-11T04:23:17.3862082Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T04:23:17.3862889Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T04:23:17.3863591Z Worker ID: {1326699f-9258-4d2c-a878-06d0ee6558cf}
+2026-11-11T04:23:17.3864308Z Region: westus2
+2026-11-11T04:23:17.3864909Z Cloud: Azure
+2026-11-11T04:23:17.3865449Z ##[endgroup]
+2026-11-11T04:23:17.3866946Z ##[group]Operating System
+2026-11-11T04:23:17.3867773Z Ubuntu
+2026-11-11T04:23:17.3868294Z 26.04.1
+2026-11-11T04:23:17.3868845Z LTS
+2026-11-11T04:23:17.3869523Z ##[endgroup]
+2026-11-11T04:23:17.3870124Z ##[group]Runner Image
+2026-11-11T04:23:17.3870786Z Image: ubuntu-26.04
+2026-11-11T04:23:17.3871357Z Version: 20261101.186.1
+2026-11-11T04:23:17.3872694Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-11T04:23:17.3874279Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-11T04:23:17.3875330Z ##[endgroup]
+2026-11-11T04:23:17.3876436Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T04:23:17.3878774Z Contents: read
+2026-11-11T04:23:17.3879598Z Metadata: read
+2026-11-11T04:23:17.3880294Z ##[endgroup]
+2026-11-11T04:23:17.3882600Z Secret source: Actions
+2026-11-11T04:23:17.3883649Z Cache mode: write
+2026-11-11T04:23:17.3884818Z Prepare workflow directory
+2026-11-11T04:23:17.4313134Z Prepare all required actions
+2026-11-11T04:23:17.4364036Z Getting action download info
+2026-11-11T04:23:17.7685905Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T04:23:17.9154674Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T04:23:17.9908201Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-11T04:23:18.1724780Z Complete job name: chromium
+2026-11-11T04:23:18.2638700Z ##[group]Run actions/checkout@v4
+2026-11-11T04:23:18.2640075Z with:
+2026-11-11T04:23:18.2640641Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:18.2644707Z   token: ***
+2026-11-11T04:23:18.2645371Z   ssh-strict: true
+2026-11-11T04:23:18.2645991Z   ssh-user: git
+2026-11-11T04:23:18.2646440Z   persist-credentials: true
+2026-11-11T04:23:18.2646933Z   clean: true
+2026-11-11T04:23:18.2647378Z   sparse-checkout-cone-mode: true
+2026-11-11T04:23:18.2647908Z   fetch-depth: 1
+2026-11-11T04:23:18.2648331Z   fetch-tags: false
+2026-11-11T04:23:18.2648762Z   show-progress: true
+2026-11-11T04:23:18.2649203Z   lfs: false
+2026-11-11T04:23:18.2649852Z   submodules: false
+2026-11-11T04:23:18.2650293Z   set-safe-directory: true
+2026-11-11T04:23:18.2650790Z   allow-unsafe-pr-checkout: false
+2026-11-11T04:23:18.2651686Z ##[endgroup]
+2026-11-11T04:23:18.5337142Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:18.5339246Z ##[group]Getting Git version info
+2026-11-11T04:23:18.5340434Z Working directory is '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T04:23:18.5341503Z [command]/usr/bin/git version
+2026-11-11T04:23:18.5365337Z git version 2.56.0
+2026-11-11T04:23:18.5390571Z ##[endgroup]
+2026-11-11T04:23:18.5405723Z Temporarily overriding HOME='/home/runner/work/_temp/09d034f1-061f-45b2-827f-d78b103839aa' before making global git config changes
+2026-11-11T04:23:18.5408083Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T04:23:18.5411961Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:23:18.5479891Z Deleting the contents of '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T04:23:18.5485275Z ##[group]Initializing the repository
+2026-11-11T04:23:18.5490398Z [command]/usr/bin/git init /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:23:18.5597511Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T04:23:18.5599815Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T04:23:18.5601331Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T04:23:18.5602516Z hint: call:
+2026-11-11T04:23:18.5603137Z hint:
+2026-11-11T04:23:18.5603931Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T04:23:18.5604906Z hint:
+2026-11-11T04:23:18.5605817Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T04:23:18.5607320Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T04:23:18.5608708Z hint:
+2026-11-11T04:23:18.5609576Z hint: 	git branch -m <name>
+2026-11-11T04:23:18.5610411Z hint:
+2026-11-11T04:23:18.5611463Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T04:23:18.5613422Z Initialized empty Git repository in /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T04:23:18.5627187Z [command]/usr/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:18.5678827Z ##[endgroup]
+2026-11-11T04:23:18.5680259Z ##[group]Disabling automatic garbage collection
+2026-11-11T04:23:18.5683718Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T04:23:18.5722099Z ##[endgroup]
+2026-11-11T04:23:18.5723344Z ##[group]Setting up auth
+2026-11-11T04:23:18.5731173Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T04:23:18.5773664Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T04:23:18.6265281Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T04:23:18.6303430Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T04:23:18.6588827Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T04:23:18.6626760Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T04:23:18.6922850Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T04:23:18.6965981Z ##[endgroup]
+2026-11-11T04:23:18.6966991Z ##[group]Fetching the repository
+2026-11-11T04:23:18.7050545Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +96e7558fbb859a2430b0f192bb5f11e940229cfa:refs/remotes/pull/59/merge
+2026-11-11T04:23:19.3236018Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T04:23:19.3238479Z  * [new ref]         96e7558fbb859a2430b0f192bb5f11e940229cfa -> pull/59/merge
+2026-11-11T04:23:19.3252592Z ##[endgroup]
+2026-11-11T04:23:19.3254005Z ##[group]Determining the checkout info
+2026-11-11T04:23:19.3255434Z ##[endgroup]
+2026-11-11T04:23:19.3264396Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T04:23:19.3316069Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T04:23:19.3349090Z ##[group]Checking out the ref
+2026-11-11T04:23:19.3353835Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/59/merge
+2026-11-11T04:23:19.4874601Z Note: switching to 'refs/remotes/pull/59/merge'.
+2026-11-11T04:23:19.4876173Z 
+2026-11-11T04:23:19.4877324Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-11T04:23:19.4880334Z changes and commit them, and you can discard any commits you make in this
+2026-11-11T04:23:19.4883103Z state without impacting any branches by switching back to a branch.
+2026-11-11T04:23:19.4884685Z 
+2026-11-11T04:23:19.4885818Z If you want to create a new branch to retain commits you create, you may
+2026-11-11T04:23:19.4887592Z do so (now or later) by using -c with the switch command. Example:
+2026-11-11T04:23:19.4889802Z 
+2026-11-11T04:23:19.4890269Z   git switch -c <new-branch-name>
+2026-11-11T04:23:19.4891084Z 
+2026-11-11T04:23:19.4891645Z Or undo this operation with:
+2026-11-11T04:23:19.4892449Z 
+2026-11-11T04:23:19.4893009Z   git switch -
+2026-11-11T04:23:19.4893674Z 
+2026-11-11T04:23:19.4894745Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-11T04:23:19.4896110Z 
+2026-11-11T04:23:19.4897697Z HEAD is now at 96e7558 Merge 12e35b48f75408ac4da4f8130853148ef00a5881 into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-11T04:23:19.4903450Z ##[endgroup]
+2026-11-11T04:23:19.4942469Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T04:23:19.4971375Z 96e7558fbb859a2430b0f192bb5f11e940229cfa
+2026-11-11T04:23:19.5389145Z ##[group]Run actions/setup-node@v4
+2026-11-11T04:23:19.5390725Z with:
+2026-11-11T04:23:19.5391648Z   node-version: 24.19.0
+2026-11-11T04:23:19.5392723Z   always-auth: false
+2026-11-11T04:23:19.5393760Z   check-latest: false
+2026-11-11T04:23:19.5405107Z   token: ***
+2026-11-11T04:23:19.5406065Z ##[endgroup]
+2026-11-11T04:23:19.6942939Z Attempting to download 24.19.0...
+2026-11-11T04:23:19.7099147Z (node:2863) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T04:23:19.7104492Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T04:23:20.2092533Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-11T04:23:20.7173607Z Extracting ...
+2026-11-11T04:23:20.7333746Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/4ae0722f-879b-4303-b0cb-c2829ebd0648 -f /home/runner/work/_temp/bbc54f52-be25-4cad-992f-2de06f7738c0
+2026-11-11T04:23:21.5244070Z Adding to the cache ...
+2026-11-11T04:23:23.3147262Z ##[group]Environment details
+2026-11-11T04:23:23.6027493Z node: v24.19.0
+2026-11-11T04:23:23.6028442Z npm: 11.17.0
+2026-11-11T04:23:23.6028883Z yarn: 1.22.22
+2026-11-11T04:23:23.6030095Z ##[endgroup]
+2026-11-11T04:23:23.6382123Z ##[group]Run npm ci --ignore-scripts --no-audit --no-fund
+2026-11-11T04:23:23.6382701Z [36;1mnpm ci --ignore-scripts --no-audit --no-fund[0m
+2026-11-11T04:23:23.6440411Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:23.6440730Z ##[endgroup]
+2026-11-11T04:23:25.4636938Z 
+2026-11-11T04:23:25.4644911Z added 32 packages in 2s
+2026-11-11T04:23:25.5129221Z ##[group]Run npx --no-install playwright install --with-deps chromium
+2026-11-11T04:23:25.5130335Z [36;1mnpx --no-install playwright install --with-deps chromium[0m
+2026-11-11T04:23:25.5199967Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:25.5200407Z ##[endgroup]
+2026-11-11T04:23:26.3364252Z Installing dependencies...
+2026-11-11T04:23:26.3470028Z Switching to root user to install dependencies...
+2026-11-11T04:23:26.5182054Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-11T04:23:26.5361740Z Get:3 https://packages.microsoft.com/ubuntu/26.04/prod resolute InRelease [3964 B]
+2026-11-11T04:23:26.5666072Z Hit:2 http://azure.archive.ubuntu.com/ubuntu resolute InRelease
+2026-11-11T04:23:26.5744940Z Get:4 http://azure.archive.ubuntu.com/ubuntu resolute-updates InRelease [137 kB]
+2026-11-11T04:23:26.5866213Z Get:5 http://azure.archive.ubuntu.com/ubuntu resolute-backports InRelease [137 kB]
+2026-11-11T04:23:26.6002555Z Get:6 http://azure.archive.ubuntu.com/ubuntu resolute-security InRelease [137 kB]
+2026-11-11T04:23:26.6334998Z Get:7 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main armhf Packages [1077 B]
+2026-11-11T04:23:26.6473823Z Get:8 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main arm64 Packages [140 kB]
+2026-11-11T04:23:26.6532506Z Get:9 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main amd64 Packages [154 kB]
+2026-11-11T04:23:26.6821512Z Get:10 http://azure.archive.ubuntu.com/ubuntu resolute-updates/main amd64v3 Packages [869 kB]
+2026-11-11T04:23:26.6881568Z Get:11 http://azure.archive.ubuntu.com/ubuntu resolute-updates/main Translation-en [195 kB]
+2026-11-11T04:23:26.6884288Z Get:12 http://azure.archive.ubuntu.com/ubuntu resolute-updates/universe amd64v3 Packages [390 kB]
+2026-11-11T04:23:26.6912585Z Get:13 http://azure.archive.ubuntu.com/ubuntu resolute-updates/universe Translation-en [122 kB]
+2026-11-11T04:23:26.6984519Z Get:14 http://azure.archive.ubuntu.com/ubuntu resolute-updates/restricted amd64v3 Packages [603 kB]
+2026-11-11T04:23:26.6986422Z Get:15 http://azure.archive.ubuntu.com/ubuntu resolute-updates/restricted Translation-en [125 kB]
+2026-11-11T04:23:26.7171005Z Get:16 http://azure.archive.ubuntu.com/ubuntu resolute-security/main amd64v3 Packages [718 kB]
+2026-11-11T04:23:26.7201641Z Get:17 http://azure.archive.ubuntu.com/ubuntu resolute-security/main Translation-en [157 kB]
+2026-11-11T04:23:26.7219240Z Get:18 http://azure.archive.ubuntu.com/ubuntu resolute-security/universe amd64v3 Packages [212 kB]
+2026-11-11T04:23:26.7239084Z Get:19 http://azure.archive.ubuntu.com/ubuntu resolute-security/universe Translation-en [70.7 kB]
+2026-11-11T04:23:26.7737227Z Get:20 http://azure.archive.ubuntu.com/ubuntu resolute-security/restricted amd64v3 Packages [586 kB]
+2026-11-11T04:23:26.7770966Z Get:21 http://azure.archive.ubuntu.com/ubuntu resolute-security/restricted Translation-en [121 kB]
+2026-11-11T04:23:32.2620446Z Fetched 4878 kB in 1s (9148 kB/s)
+2026-11-11T04:23:33.0034235Z Reading package lists...
+2026-11-11T04:23:33.0316776Z Reading package lists...
+2026-11-11T04:23:33.2339700Z Building dependency tree...
+2026-11-11T04:23:33.2347808Z Reading state information...
+2026-11-11T04:23:33.2764972Z libasound2t64 is already the newest version (1.2.15.3-1ubuntu1.1).
+2026-11-11T04:23:33.2766442Z libasound2t64 set to manually installed.
+2026-11-11T04:23:33.2770648Z libatk-bridge2.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-11T04:23:33.2771369Z libatk-bridge2.0-0t64 set to manually installed.
+2026-11-11T04:23:33.2772083Z libatk1.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-11T04:23:33.2772757Z libatk1.0-0t64 set to manually installed.
+2026-11-11T04:23:33.2773396Z libatspi2.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-11T04:23:33.2774019Z libatspi2.0-0t64 set to manually installed.
+2026-11-11T04:23:33.2774569Z libcairo2 is already the newest version (1.18.4-3).
+2026-11-11T04:23:33.2775102Z libcairo2 set to manually installed.
+2026-11-11T04:23:33.2776292Z libcups2t64 is already the newest version (2.4.16-1ubuntu1.3).
+2026-11-11T04:23:33.2776929Z libcups2t64 set to manually installed.
+2026-11-11T04:23:33.2777523Z libdbus-1-3 is already the newest version (1.16.2-2ubuntu4).
+2026-11-11T04:23:33.2778082Z libdbus-1-3 set to manually installed.
+2026-11-11T04:23:33.2778604Z libdrm2 is already the newest version (2.4.131-1).
+2026-11-11T04:23:33.2779115Z libdrm2 set to manually installed.
+2026-11-11T04:23:33.2779939Z libgbm1 is already the newest version (26.0.8-1ubuntu0.3).
+2026-11-11T04:23:33.2780494Z libgbm1 set to manually installed.
+2026-11-11T04:23:33.2781110Z libglib2.0-0t64 is already the newest version (2.88.0-1ubuntu0.1).
+2026-11-11T04:23:33.2781709Z libglib2.0-0t64 set to manually installed.
+2026-11-11T04:23:33.2782338Z libnspr4 is already the newest version (2:4.38.2-1ubuntu1).
+2026-11-11T04:23:33.2782899Z libnspr4 set to manually installed.
+2026-11-11T04:23:33.2783473Z libnss3 is already the newest version (2:3.120-1ubuntu2.2).
+2026-11-11T04:23:33.2784047Z libnss3 set to manually installed.
+2026-11-11T04:23:33.2784611Z libpango-1.0-0 is already the newest version (1.57.0-1).
+2026-11-11T04:23:33.2785172Z libpango-1.0-0 set to manually installed.
+2026-11-11T04:23:33.2785775Z libx11-6 is already the newest version (2:1.8.13-1ubuntu0.1).
+2026-11-11T04:23:33.2786361Z libx11-6 set to manually installed.
+2026-11-11T04:23:33.2786911Z libxcb1 is already the newest version (1.17.0-2ubuntu1).
+2026-11-11T04:23:33.2787452Z libxcb1 set to manually installed.
+2026-11-11T04:23:33.2788075Z libxcomposite1 is already the newest version (1:0.4.6-1build1).
+2026-11-11T04:23:33.2789036Z libxcomposite1 set to manually installed.
+2026-11-11T04:23:33.2789776Z libxdamage1 is already the newest version (1:1.1.7-1).
+2026-11-11T04:23:33.2790338Z libxdamage1 set to manually installed.
+2026-11-11T04:23:33.2790924Z libxext6 is already the newest version (2:1.3.4-1build3).
+2026-11-11T04:23:33.2791476Z libxext6 set to manually installed.
+2026-11-11T04:23:33.2792074Z libxfixes3 is already the newest version (1:6.0.0-2build2).
+2026-11-11T04:23:33.2792641Z libxfixes3 set to manually installed.
+2026-11-11T04:23:33.2793193Z libxkbcommon0 is already the newest version (1.13.1-1).
+2026-11-11T04:23:33.2793768Z libxkbcommon0 set to manually installed.
+2026-11-11T04:23:33.2794363Z libxrandr2 is already the newest version (2:1.5.4-1build1).
+2026-11-11T04:23:33.2794924Z libxrandr2 set to manually installed.
+2026-11-11T04:23:33.2795503Z xvfb is already the newest version (2:21.1.22-1ubuntu1.3).
+2026-11-11T04:23:33.2796242Z fonts-noto-color-emoji is already the newest version (2.051-1build1).
+2026-11-11T04:23:33.2797014Z libfontconfig1 is already the newest version (2.17.1-3ubuntu1).
+2026-11-11T04:23:33.2797616Z libfontconfig1 set to manually installed.
+2026-11-11T04:23:33.2798277Z libfreetype6 is already the newest version (2.14.2+dfsg-1ubuntu0.2).
+2026-11-11T04:23:33.2798906Z libfreetype6 set to manually installed.
+2026-11-11T04:23:33.2799722Z fonts-liberation is already the newest version (1:2.1.5-3build1).
+2026-11-11T04:23:33.2800366Z fonts-liberation set to manually installed.
+2026-11-11T04:23:33.3478005Z Solving dependencies...
+2026-11-11T04:23:33.4596717Z The following additional packages will be installed:
+2026-11-11T04:23:33.4597452Z   xfonts-encodings xfonts-utils
+2026-11-11T04:23:33.4604810Z Recommended packages:
+2026-11-11T04:23:33.4605320Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-11-11T04:23:33.4972465Z The following NEW packages will be installed:
+2026-11-11T04:23:33.4973637Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-11-11T04:23:33.4981529Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-11-11T04:23:33.4982423Z   xfonts-utils
+2026-11-11T04:23:33.5230696Z 0 upgraded, 9 newly installed, 0 to remove and 52 not upgraded.
+2026-11-11T04:23:33.5231487Z Need to get 21.9 MB of archives.
+2026-11-11T04:23:33.5232265Z After this operation, 80.2 MB of additional disk space will be used.
+2026-11-11T04:23:33.5233128Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-11T04:23:33.6138561Z Get:2 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-ipafont-gothic all 00303-23ubuntu1 [3703 kB]
+2026-11-11T04:23:33.7664790Z Get:3 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 fonts-freefont-ttf all 20211204+svn4273-4build1 [5656 kB]
+2026-11-11T04:23:33.9648343Z Get:4 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-tlwg-loma-otf all 1:0.7.3-1build1 [106 kB]
+2026-11-11T04:23:34.0362722Z Get:5 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-unifont all 1:16.0.04-1build1 [3169 kB]
+2026-11-11T04:23:34.1751471Z Get:6 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-wqy-zenhei all 0.9.45-8build1 [7863 kB]
+2026-11-11T04:23:34.4176908Z Get:7 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 xfonts-encodings all 1:1.0.5-0ubuntu3 [576 kB]
+2026-11-11T04:23:34.4991978Z Get:8 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 xfonts-utils amd64 1:7.7+7build1 [97.3 kB]
+2026-11-11T04:23:34.5710826Z Get:9 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 xfonts-cyrillic all 1:1.0.5+nmu1build1 [384 kB]
+2026-11-11T04:23:34.6525710Z Get:10 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 xfonts-scalable all 1:1.0.3-1.3build1 [304 kB]
+2026-11-11T04:23:35.4396325Z Fetched 21.9 MB in 1s (19.0 MB/s)
+2026-11-11T04:23:35.5022472Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-11-11T04:23:35.6736016Z (Reading database ... 
+2026-11-11T04:23:35.6736731Z (Reading database ... 5%
+2026-11-11T04:23:35.6737863Z (Reading database ... 10%
+2026-11-11T04:23:35.6738503Z (Reading database ... 15%
+2026-11-11T04:23:35.6739080Z (Reading database ... 20%
+2026-11-11T04:23:35.6740121Z (Reading database ... 25%
+2026-11-11T04:23:35.6740934Z (Reading database ... 30%
+2026-11-11T04:23:35.6741539Z (Reading database ... 35%
+2026-11-11T04:23:35.6742120Z (Reading database ... 40%
+2026-11-11T04:23:35.6742690Z (Reading database ... 45%
+2026-11-11T04:23:35.6743280Z (Reading database ... 50%
+2026-11-11T04:23:36.1947350Z (Reading database ... 55%
+2026-11-11T04:23:36.4996000Z (Reading database ... 60%
+2026-11-11T04:23:36.7338083Z (Reading database ... 65%
+2026-11-11T04:23:37.0214597Z (Reading database ... 70%
+2026-11-11T04:23:37.2636484Z (Reading database ... 75%
+2026-11-11T04:23:37.7190641Z (Reading database ... 80%
+2026-11-11T04:23:38.3202155Z (Reading database ... 85%
+2026-11-11T04:23:38.9703163Z (Reading database ... 90%
+2026-11-11T04:23:39.5752555Z (Reading database ... 95%
+2026-11-11T04:23:39.5753058Z (Reading database ... 100%
+2026-11-11T04:23:39.5753671Z (Reading database ... 213197 files and directories currently installed.)
+2026-11-11T04:23:39.5801281Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-23ubuntu1_all.deb ...
+2026-11-11T04:23:39.5910082Z Unpacking fonts-ipafont-gothic (00303-23ubuntu1) ...
+2026-11-11T04:23:39.6885095Z Selecting previously unselected package fonts-freefont-ttf.
+2026-11-11T04:23:39.7028873Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-4build1_all.deb ...
+2026-11-11T04:23:39.7036510Z Unpacking fonts-freefont-ttf (20211204+svn4273-4build1) ...
+2026-11-11T04:23:39.8032336Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-11-11T04:23:39.8175695Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1build1_all.deb ...
+2026-11-11T04:23:39.8183874Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1build1) ...
+2026-11-11T04:23:39.8430495Z Selecting previously unselected package fonts-unifont.
+2026-11-11T04:23:39.8573820Z Preparing to unpack .../3-fonts-unifont_1%3a16.0.04-1build1_all.deb ...
+2026-11-11T04:23:39.8582579Z Unpacking fonts-unifont (1:16.0.04-1build1) ...
+2026-11-11T04:23:39.9727527Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-11-11T04:23:39.9874957Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8build1_all.deb ...
+2026-11-11T04:23:40.0023891Z Unpacking fonts-wqy-zenhei (0.9.45-8build1) ...
+2026-11-11T04:23:40.0959089Z Selecting previously unselected package xfonts-encodings.
+2026-11-11T04:23:40.1103258Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu3_all.deb ...
+2026-11-11T04:23:40.1110565Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu3) ...
+2026-11-11T04:23:40.1545868Z Selecting previously unselected package xfonts-utils.
+2026-11-11T04:23:40.1691116Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+7build1_amd64v3.deb ...
+2026-11-11T04:23:40.1698635Z Unpacking xfonts-utils (1:7.7+7build1) ...
+2026-11-11T04:23:40.2386859Z Selecting previously unselected package xfonts-cyrillic.
+2026-11-11T04:23:40.2532854Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1build1_all.deb ...
+2026-11-11T04:23:40.2542132Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1build1) ...
+2026-11-11T04:23:40.2921842Z Selecting previously unselected package xfonts-scalable.
+2026-11-11T04:23:40.3071190Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3build1_all.deb ...
+2026-11-11T04:23:40.3079939Z Unpacking xfonts-scalable (1:1.0.3-1.3build1) ...
+2026-11-11T04:23:40.3566929Z Setting up fonts-wqy-zenhei (0.9.45-8build1) ...
+2026-11-11T04:23:40.3728844Z Setting up fonts-freefont-ttf (20211204+svn4273-4build1) ...
+2026-11-11T04:23:40.3750211Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1build1) ...
+2026-11-11T04:23:40.3767791Z Setting up xfonts-encodings (1:1.0.5-0ubuntu3) ...
+2026-11-11T04:23:40.3786265Z Setting up fonts-ipafont-gothic (00303-23ubuntu1) ...
+2026-11-11T04:23:40.3857828Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-11-11T04:23:40.3874615Z Setting up fonts-unifont (1:16.0.04-1build1) ...
+2026-11-11T04:23:40.3894072Z Setting up xfonts-utils (1:7.7+7build1) ...
+2026-11-11T04:23:40.3952614Z Setting up xfonts-cyrillic (1:1.0.5+nmu1build1) ...
+2026-11-11T04:23:40.4778252Z Setting up xfonts-scalable (1:1.0.3-1.3build1) ...
+2026-11-11T04:23:40.5217382Z Processing triggers for man-db (2.13.1-1build1) ...
+2026-11-11T04:23:40.5290381Z Not building database; man-db/auto-update is not 'true'.
+2026-11-11T04:23:40.5307571Z Processing triggers for fontconfig (2.17.1-3ubuntu1) ...
+2026-11-11T04:23:42.0300072Z 
+2026-11-11T04:23:42.0300773Z Running kernel seems to be up-to-date.
+2026-11-11T04:23:42.0301263Z 
+2026-11-11T04:23:42.0301514Z Restarting services...
+2026-11-11T04:23:42.0399770Z 
+2026-11-11T04:23:42.0400615Z Service restarts being deferred:
+2026-11-11T04:23:42.0403300Z  systemctl restart hosted-compute-agent.service
+2026-11-11T04:23:42.0403726Z 
+2026-11-11T04:23:42.0404513Z No containers need to be restarted.
+2026-11-11T04:23:42.0404892Z 
+2026-11-11T04:23:42.0405238Z No user sessions are running outdated binaries.
+2026-11-11T04:23:42.0405613Z 
+2026-11-11T04:23:42.0420732Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-11T04:23:43.2594955Z Downloading Chrome for Testing 151.0.7922.34 (playwright chromium v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip
+2026-11-11T04:23:44.2733645Z |                                                                                |   0% of 184.3 MiB
+2026-11-11T04:23:44.5085808Z |■■■■■■■■                                                                        |  10% of 184.3 MiB
+2026-11-11T04:23:44.6400273Z |■■■■■■■■■■■■■■■■                                                                |  20% of 184.3 MiB
+2026-11-11T04:23:44.7492318Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 184.3 MiB
+2026-11-11T04:23:44.8273296Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 184.3 MiB
+2026-11-11T04:23:44.9401522Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 184.3 MiB
+2026-11-11T04:23:45.0406660Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 184.3 MiB
+2026-11-11T04:23:45.1433663Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 184.3 MiB
+2026-11-11T04:23:45.2403888Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 184.3 MiB
+2026-11-11T04:23:45.3668018Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 184.3 MiB
+2026-11-11T04:23:45.4421576Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 184.3 MiB
+2026-11-11T04:23:48.4215576Z Chrome for Testing 151.0.7922.34 (playwright chromium v1234) downloaded to /home/runner/.cache/ms-playwright/chromium-1234
+2026-11-11T04:23:48.4221048Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-11-11T04:23:49.4519083Z |                                                                                |   0% of 2.3 MiB
+2026-11-11T04:23:49.4643959Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-11-11T04:23:49.4691990Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-11-11T04:23:49.4730362Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-11-11T04:23:49.4756417Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-11-11T04:23:49.4769562Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-11-11T04:23:49.4782902Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-11-11T04:23:49.4803209Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-11-11T04:23:49.4820866Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-11-11T04:23:49.4835578Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-11-11T04:23:49.4866312Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-11-11T04:23:49.5532083Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-11-11T04:23:49.5553716Z Downloading Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip
+2026-11-11T04:23:50.5943690Z |                                                                                |   0% of 114.7 MiB
+2026-11-11T04:23:50.7379192Z |■■■■■■■■                                                                        |  10% of 114.7 MiB
+2026-11-11T04:23:50.8175465Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.7 MiB
+2026-11-11T04:23:50.8998400Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.7 MiB
+2026-11-11T04:23:50.9651794Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.7 MiB
+2026-11-11T04:23:51.0456485Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.7 MiB
+2026-11-11T04:23:51.0874432Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.7 MiB
+2026-11-11T04:23:51.1250401Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.7 MiB
+2026-11-11T04:23:51.1781720Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.7 MiB
+2026-11-11T04:23:51.2325108Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.7 MiB
+2026-11-11T04:23:51.2751360Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+2026-11-11T04:23:53.4029160Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+2026-11-11T04:23:53.4374409Z ##[group]Run npm test
+2026-11-11T04:23:53.4374686Z [36;1mnpm test[0m
+2026-11-11T04:23:53.4428503Z shell: /usr/bin/bash -e {0}
+2026-11-11T04:23:53.4428775Z ##[endgroup]
+2026-11-11T04:23:53.5487516Z 
+2026-11-11T04:23:53.5488027Z > test
+2026-11-11T04:23:53.5488534Z > playwright test
+2026-11-11T04:23:53.5488810Z 
+2026-11-11T04:23:54.9247043Z 
+2026-11-11T04:23:54.9248106Z Running 32 tests using 2 workers
+2026-11-11T04:23:54.9248401Z 
+2026-11-11T04:23:57.9151808Z   ✓   1 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (light, phone) (724ms)
+2026-11-11T04:23:58.0790430Z   ✓   2 [chromium] › menu.spec.mjs:5:1 › keyboard opens at first item, skips disabled branches, wraps, and restores focus on Escape (884ms)
+2026-11-11T04:23:58.6049970Z   ✓   3 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (light, phone) (659ms)
+2026-11-11T04:23:58.7454849Z   ✓   4 [chromium] › menu.spec.mjs:27:1 › up arrow opens at the last item and Space activates the focused checkbox (609ms)
+2026-11-11T04:23:59.2530838Z   ✓   5 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (light, phone) (622ms)
+2026-11-11T04:23:59.4092237Z   ✓   6 [chromium] › menu.spec.mjs:38:1 › pointer cannot invoke disabled actions or descendants and enabled selection closes the menu (642ms)
+2026-11-11T04:23:59.8307521Z   ✓   8 [chromium] › menu.spec.mjs:53:1 › outside close button dismisses without invoking an action (404ms)
+2026-11-11T04:23:59.9337341Z   ✓   7 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (light, phone) (657ms)
+2026-11-11T04:24:00.4102599Z   ✓   9 [chromium] › menu.spec.mjs:61:1 › Tab and Shift+Tab stay inside the open action menu and Escape returns focus to the trigger (557ms)
+2026-11-11T04:24:00.4942139Z   ✓  10 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (light, phone) (531ms)
+2026-11-11T04:24:00.9232989Z   ✓  11 [chromium] › menu.spec.mjs:77:1 › selecting a menu item with the keyboard returns focus to the trigger (493ms)
+2026-11-11T04:24:01.0376581Z   ✓  12 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (dark, phone) (517ms)
+2026-11-11T04:24:01.5018413Z   ✓  13 [chromium] › menu.spec.mjs:85:1 › web NativePopover is placed below the anchor, cycles Tab and restores focus (561ms)
+2026-11-11T04:24:01.5573919Z   ✓  14 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (dark, phone) (497ms)
+2026-11-11T04:24:02.0851891Z   ✓  15 [chromium] › menu.spec.mjs:106:1 › CommandPopover focuses the first enabled item, skips disabled on Tab and restores focus (568ms)
+2026-11-11T04:24:02.1751856Z   ✓  16 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (dark, phone) (593ms)
+2026-11-11T04:24:02.6371441Z   ✓  17 [chromium] › menu.spec.mjs:121:1 › CommandPalette filters, moves with arrows, runs with Enter and restores focus (537ms)
+2026-11-11T04:24:02.8091704Z   ✓  18 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (dark, phone) (615ms)
+2026-11-11T04:24:03.2721336Z   ✓  19 [chromium] › menu.spec.mjs:141:1 › CommandPalette keeps Tab inside, never activates disabled commands and Escape closes (624ms)
+2026-11-11T04:24:03.3316855Z   ✓  20 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (dark, phone) (498ms)
+2026-11-11T04:24:03.8038950Z   ✓  22 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (light, tablet) (460ms)
+2026-11-11T04:24:04.1516887Z   ✓  21 [chromium] › menu.spec.mjs:164:1 › tooltip appears after the focus delay, describes the control and hides on Escape and blur (862ms)
+2026-11-11T04:24:04.3006104Z   ✓  23 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (light, tablet) (484ms)
+2026-11-11T04:24:04.8615379Z   ✓  25 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (light, tablet) (548ms)
+2026-11-11T04:24:04.9361540Z   ✓  24 [chromium] › menu.spec.mjs:178:1 › trigger-form popover anchors to its measured trigger and hands focus back (767ms)
+2026-11-11T04:24:05.4313628Z   ✓  26 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (light, tablet) (561ms)
+2026-11-11T04:24:05.8157225Z   ✓  27 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (light, tablet) (374ms)
+2026-11-11T04:24:06.2010442Z   ✓  28 [chromium] › overlays-visual.spec.mjs:18:3 › popover renders inside the viewport (dark, tablet) (374ms)
+2026-11-11T04:24:06.6158226Z   ✓  29 [chromium] › overlays-visual.spec.mjs:18:3 › commands renders inside the viewport (dark, tablet) (402ms)
+2026-11-11T04:24:07.0376077Z   ✓  30 [chromium] › overlays-visual.spec.mjs:18:3 › palette renders inside the viewport (dark, tablet) (411ms)
+2026-11-11T04:24:07.5920112Z   ✓  31 [chromium] › overlays-visual.spec.mjs:18:3 › tooltip renders inside the viewport (dark, tablet) (544ms)
+2026-11-11T04:24:07.9828451Z   ✓  32 [chromium] › overlays-visual.spec.mjs:18:3 › trigger-popover renders inside the viewport (dark, tablet) (380ms)
+2026-11-11T04:24:08.0565002Z 
+2026-11-11T04:24:08.0570427Z   32 passed (13.9s)
+2026-11-11T04:24:08.0966364Z ##[group]Run actions/upload-artifact@v4
+2026-11-11T04:24:08.0966672Z with:
+2026-11-11T04:24:08.0966871Z   name: overlay-renders
+2026-11-11T04:24:08.0967190Z   path: packages/expo-controls/tests/browser/test-results/**/*.png
+2026-11-11T04:24:08.0967547Z   retention-days: 14
+2026-11-11T04:24:08.0967770Z   if-no-files-found: warn
+2026-11-11T04:24:08.0968008Z   compression-level: 6
+2026-11-11T04:24:08.0968240Z   overwrite: false
+2026-11-11T04:24:08.0968450Z   include-hidden-files: false
+2026-11-11T04:24:08.0968685Z ##[endgroup]
+2026-11-11T04:24:08.2836269Z (node:3868) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T04:24:08.2837811Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T04:24:08.2980628Z With the provided path, there will be 20 files uploaded
+2026-11-11T04:24:08.2986529Z Artifact name is valid!
+2026-11-11T04:24:08.2987241Z Root directory input is valid!
+2026-11-11T04:24:08.7108082Z Beginning upload of artifact content to blob storage
+2026-11-11T04:24:08.7620320Z (node:3868) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-11T04:24:09.2964440Z Uploaded bytes 280598
+2026-11-11T04:24:09.3714797Z Finished uploading artifact content to blob storage!
+2026-11-11T04:24:09.3716358Z SHA256 digest of uploaded artifact zip is 9b4f3f7049772daccafd7549a63f3973d44507ae983b617be21533c06fce9ea6
+2026-11-11T04:24:09.3717487Z Finalizing artifact upload
+2026-11-11T04:24:09.7620036Z Artifact overlay-renders.zip successfully finalized. Artifact ID 13828491988
+2026-11-11T04:24:09.7621598Z Artifact overlay-renders has been successfully uploaded! Final size is 280598 bytes. Artifact ID is 13828491988
+2026-11-11T04:24:09.7629172Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884313/artifacts/13828491988
+2026-11-11T04:24:09.7839173Z Post job cleanup.
+2026-11-11T04:24:09.9139865Z (node:3881) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T04:24:09.9141079Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T04:24:09.9357587Z Post job cleanup.
+2026-11-11T04:24:10.0388900Z [command]/usr/bin/git version
+2026-11-11T04:24:10.0437549Z git version 2.56.0
+2026-11-11T04:24:10.0487942Z Temporarily overriding HOME='/home/runner/work/_temp/66876416-2369-4288-be2d-9787ecf45218' before making global git config changes
+2026-11-11T04:24:10.0492069Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T04:24:10.0495432Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T04:24:10.0547933Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T04:24:10.0614681Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T04:24:10.0988815Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T04:24:10.1081335Z http.https://github.com/.extraheader
+2026-11-11T04:24:10.1083438Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T04:24:10.1182032Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T04:24:10.1501203Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T04:24:10.1539216Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T04:24:10.1982595Z Cleaning up orphan processes
+2026-11-11T04:24:10.2514264Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

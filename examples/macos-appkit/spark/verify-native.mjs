@@ -291,6 +291,15 @@ function startupProject(kind, value) {
     const state = object(details.state) ? details.state : details;
     result.state = { policy: [0, 1, 2].includes(state.policy) ? state.policy : null };
     for (const key of ['applicationActive', 'visible', 'key', 'miniaturized', 'canBecomeKey']) result.state[key] = bool(state[key]);
+    if (value.phase === 'workspace-main-continuation') {
+      const timing = object(details.timing) ? details.timing : {}, knownClock = timing.clock === 'CACurrentMediaTime';
+      result.timing = { clock: knownClock ? 'CACurrentMediaTime' : null,
+        clockExcludesSystemSleep: knownClock && timing.clockExcludesSystemSleep === true ? true : null,
+        intervalsAreNotQueueResidence: knownClock && timing.intervalsAreNotQueueResidence === true ? true : null,
+        intervalsDoNotEstablishCause: knownClock && timing.intervalsDoNotEstablishCause === true ? true : null,
+        completionTraceElapsedSeconds: knownClock ? number(timing.completionTraceElapsedSeconds) : null,
+        submissionStartToMainEntrySeconds: knownClock ? number(timing.submissionStartToMainEntrySeconds) : null };
+    }
   }
   return result;
 }

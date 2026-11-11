@@ -81,6 +81,61 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit activation-timing source follow-up
+
+The [timing source checkpoint](../evidence/v1-appkit-12e35b4-activation-timing-source/README.md)
+records helper `12e35b48f75408ac4da4f8130853148ef00a5881`, tree
+`d4352a6aba7cca7a9b898b6c25c9e4a5d729587d` and sole parent
+`5340d2d96412d0fcc5dc7cce21ced037d2de5c7b`.
+Exactly two private acceptance files change. Root and the independent reviewer
+verified every leaf and directory hash, all 2,048 leaves / 284 tree objects,
+the sole parent and exact inverses restoring both prior source files.
+
+The preceding startup projection could not distinguish time around callback
+logging from time beginning at dispatch submission. The driver now takes
+three immutable `CACurrentMediaTime` samples: before the existing completion
+trace, immediately before the unchanged dispatch call, and as the first
+statement of its main block. No logger or metadata work intervenes between the
+submission sample and dispatch. Only the existing guarded continuation trace
+gains the two finite, nonnegative elapsed observations and fixed clock metadata.
+The original window-state getter still runs once inside that guard.
+
+The clock excludes system sleep. The trace interval includes any descheduling;
+submission-start to main-entry includes caller descheduling, block-copy/API
+work and elapsed time until entry. Neither interval establishes pure queue
+residence, a blocked stack or the timeout cause. Raw monotonic samples are
+not emitted. Invalid native durations become `NSNull`; missing, malformed
+or unrecognized projected timing values remain explicit `null`.
+The verifier changes only its nine-line continuation-phase projection.
+Activation operations/options/order, deadlines, owner/foreground checks,
+tooltip gates, file/hash/snapshot limits, cleanup and passed-only archive gates
+remain unchanged.
+
+Ten author-designed V8/mock-IO/static review groups passed and were reproduced
+by root and the independent reviewer as the same ten designs. Separate typed
+selector checks also passed. Ordinary and trimmed full envelopes measured
+4,311 and 32,614 bytes; the latest timing observation survives under the
+unchanged 32 KiB cap. These are source/mock checks, not actual Node filesystem,
+Objective-C compilation or native interaction results.
+
+The subsequent actual merge `96e7558fbb859a2430b0f192bb5f11e940229cfa`
+has the reviewed tree and verified ordered parents `0edd5f30` then
+`12e35b48`. [Run 42958884494](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884494)
+[source job 130320429814](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884494/job/130320429814)
+passed eleven tests with zero failures, skips or cancellations, confirmed
+from its complete 19,235-byte log. Native compilation and runtime were not
+completed at this source-integration checkpoint.
+
+The separate [12e browser receipt](../evidence/v1-web-12e35b4-overlay-pass/README.md)
+records [run 42958884313](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884313)
+at the same actual merge. All 32 Chromium cases passed, comprising twenty
+rendering and twelve interaction cases, with no failures or skips.
+Its complete 43,806-byte log was independently retrieved and rehashed.
+Artifact 13828491988 reports twenty files and 280,598 ZIP bytes; original
+ZIP/PNG bytes remain uninspected. The historical source-only receipt
+preserves its publication-time boundary; the earlier completed native failure
+below remains a separate outcome.
+
 ### November 11 AppKit completed startup result and browser pass
 
 The [completed 5340 native receipt](../evidence/v1-appkit-5340d2d-main-continuation-timeout/README.md)

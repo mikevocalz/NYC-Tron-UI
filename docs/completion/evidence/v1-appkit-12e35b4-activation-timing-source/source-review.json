@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-only-activation-timing-observation",
+  "checkpoint": {
+    "at": "2026-11-11T04:23:08Z",
+    "publication": "published-by-root-with-fresh-expected-parent-lease-nonforced-update-and-post-read-verification",
+    "helperCommit": "12e35b48f75408ac4da4f8130853148ef00a5881",
+    "helperTree": "d4352a6aba7cca7a9b898b6c25c9e4a5d729587d",
+    "orderedParents": [
+      "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b"
+    ],
+    "actualPullRequestMerge": "unverified-at-this-checkpoint",
+    "nativeCompilation": "unobserved-for-this-candidate-at-this-checkpoint",
+    "nativeExecution": "unobserved-for-this-candidate-at-this-checkpoint",
+    "acceptancePromoted": false
+  },
+  "source": [
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "preimage": "5a7c3b5c293dced56ad7dc4d28cfee75015288a4",
+      "gitBlob": "209e0ebfee4b9ba7fe902b64ec1bd09ae108b000",
+      "bytes": 58123,
+      "sha256": "6de2030b82c0881cc9eb39307da72c0a985a4f90a6bdc11568bae3e752fcadf9",
+      "netLinesAdded": 16,
+      "scope": "one explicit QuartzCore/CAMediaTiming.h import, three immutable clock samples, existing guarded continuation trace details only"
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "preimage": "0b0555a2cb0c37867418600bf9c9fbfbd77e6566",
+      "gitBlob": "2d9efdb7834b3ee461bf00e3fecbcc5c11b43964",
+      "bytes": 70956,
+      "sha256": "489685c674ced00fdd831043f315e7698991fcca5b9b0e4f9ad4d1920d6bb74b",
+      "netLinesAdded": 9,
+      "scope": "startupProject activation branch, workspace-main-continuation typed timing projection only"
+    }
+  ],
+  "preimages": {
+    "sourceCommit": "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b",
+    "driver": {
+      "gitBlob": "5a7c3b5c293dced56ad7dc4d28cfee75015288a4",
+      "bytes": 56818,
+      "sha256": "147b4db02de2c4ad14b6c6635dfb128f6990c921dcc88a58947e133cec07bcc1"
+    },
+    "verifier": {
+      "gitBlob": "0b0555a2cb0c37867418600bf9c9fbfbd77e6566",
+      "bytes": 70151,
+      "sha256": "3fcb607df111d2ef556ac4835043c7c42f175c4fb5bc1a35f47494ea131c7acf"
+    }
+  },
+  "trigger": {
+    "runId": 42951265207,
+    "nativeJobId": 130296002996,
+    "actualCheckout": "32e6234e6f00ff873132f81498d3f78f2488ad8f",
+    "processId": 43799,
+    "observedFailure": "Native driver response timed out awaiting tron.window (request 2)",
+    "boundary": "The verifier had not reached its root-main mount check or allocated tooltip evidence.",
+    "fullNativeLog": {
+      "gitBlob": "146c34001478cfe4a29425165fbc34e59dbcbe78",
+      "bytes": 65275,
+      "sha256": "9747c8f908041042c9d6c56986682ccfbea6479dee39cdc9c04a2fe4a42de17b"
+    },
+    "originalStartupProjection": {
+      "gitBlob": "6a5d7099b60a5a0c28e5538ebb984055da2d2b3d",
+      "bytes": 11885,
+      "sha256": "3cc704cfc30b6bff333dbcd8ab284a7311bb2277a2c6fdae433b873a84848a61"
+    },
+    "existingObservation": "The off-main callback marker precedes its own details serialization and NSLog, and precedes dispatch submission. The later main-continuation marker cannot isolate those intervals.",
+    "causeEstablished": false,
+    "extractedOriginalSample": false,
+    "originalSampleThreadCountIsNotAStackDiagnosis": true
+  },
+  "design": {
+    "clock": "CACurrentMediaTime",
+    "units": "seconds",
+    "monotonic": true,
+    "clockExcludesSystemSleep": true,
+    "samples": [
+      {
+        "name": "completionTraceStarted",
+        "position": "first completion-handler statement, before the existing callback TraceActivation"
+      },
+      {
+        "name": "submissionStarted",
+        "position": "after the existing callback TraceActivation and immediately before unchanged dispatch_async; no intervening executable work"
+      },
+      {
+        "name": "mainEntered",
+        "position": "first main-block statement, before its existing TraceActivation or AppKit state reads"
+      }
+    ],
+    "emittedPhase": "workspace-main-continuation",
+    "durations": {
+      "completionTraceElapsedSeconds": "submissionStarted minus completionTraceStarted; includes trace work and any descheduling in that interval",
+      "submissionStartToMainEntrySeconds": "mainEntered minus submissionStarted; includes caller descheduling, block copy/submission work and delay until main-block entry, not pure queue residence"
+    },
+    "emittedInterpretationFlags": [
+      "clockExcludesSystemSleep",
+      "intervalsAreNotQueueResidence",
+      "intervalsDoNotEstablishCause"
+    ],
+    "rawMonotonicSamplesEmitted": false,
+    "immutableCapturedScalars": true,
+    "dispatchReturnSample": false,
+    "sharedAtomicOrBlockMutationAdded": false,
+    "nativeInvalidDuration": "NSNull when nonfinite or negative",
+    "verifierValidation": "Exact clock identifier required. Numeric values are accepted only without coercion when finite, nonnegative and no greater than Number.MAX_SAFE_INTEGER. Missing/invalid values remain explicit null; fixed interpretation flags require literal true.",
+    "timingOutsideContinuationPhase": false,
+    "acceptanceUse": false,
+    "causeInference": false
+  },
+  "preservation": {
+    "nativeOperations": "Activation API/options, dispatch, reply, same-process/bundle checks and original window operations remain unchanged.",
+    "originalStateRead": "Exactly one existing ActivationWindowState(window) invocation in the continuation; still inside the same lazy diagnostic guard.",
+    "diagnostics": "No additional trace calls or trace counter changes. Elapsed arithmetic and metadata construction stay inside the existing TraceActivation exception guard.",
+    "verifier": "Original epoch timestamps, phase lists, source/PID binding, file/hash/snapshot behavior, strict checks, catch/rethrow and cleanup are unchanged.",
+    "nativeTraceEventLimit": 128,
+    "startupConsoleByteLimit": 32768,
+    "tooltipConsoleByteLimit": 16384,
+    "timeoutChange": false,
+    "retryAdded": false,
+    "permissionOrPolicyBypass": false,
+    "shippingApiOrSdkChange": false,
+    "workflowChange": false,
+    "ledgerChange": false,
+    "nativeTraceSerializedJsonByteLimit": 2048
+  },
+  "validation": {
+    "author": {
+      "scope": "V8 selectors, mocked synchronous IO, source inverses and static native-source invariants only",
+      "groups": [
+        {
+          "name": "exact input identities and two-file source inverses",
+          "status": "passed"
+        },
+        {
+          "name": "native sample positions, immutable captures, original trace/state counts and verifier syntax",
+          "status": "passed"
+        },
+        {
+          "name": "typed valid zero/positive durations preserve epoch and existing window state",
+          "status": "passed"
+        },
+        {
+          "name": "missing, malformed and unrecognized clocks keep every timing field explicitly unknown",
+          "status": "passed"
+        },
+        {
+          "name": "no numeric coercion or invalid-duration promotion, fixed metadata remains typed",
+          "status": "passed"
+        },
+        {
+          "name": "timing is phase-local and does not expose arbitrary callback/log content",
+          "status": "passed"
+        },
+        {
+          "name": "mocked fixed-file IO retains exact snapshot bytes and hashes with new timing projection",
+          "status": "passed"
+        },
+        {
+          "name": "PID filtering, historical records and bounded selection preserve explicit coverage",
+          "status": "passed"
+        },
+        {
+          "name": "snapshot collisions and read/reporting failures remain secondary to the original error",
+          "status": "passed"
+        },
+        {
+          "name": "max-width timing records respect existing full-envelope cap and retain latest observation",
+          "status": "passed"
+        }
+      ],
+      "groupCount": 10,
+      "measuredEnvelopeBytes": {
+        "normalEnvelopeBytes": 4311,
+        "trimmedEnvelopeBytes": 32614
+      },
+      "nativeExecution": false,
+      "nodeFilesystemExecution": false,
+      "objectiveCCompilation": false
+    },
+    "sourceIdentity": {
+      "exactCodeBlobReadback": true,
+      "exactTwoFileInverse": true,
+      "wholeVerifierV8Syntax": "passed after removing imports and replacing import.meta.url for parse only"
+    },
+    "independentReviews": [
+      {
+        "reviewer": "root",
+        "scope": "exact source inverses, timing placement, typed projection and privacy",
+        "independentlySelectedCases": 34
+      },
+      {
+        "reviewer": "forge_gap_audit",
+        "scope": "native API/order/guard/state preservation plus independently designed V8 selectors",
+        "independentSelectorGroups": 7
+      },
+      {
+        "reviewer": "desktop_host_audit",
+        "scope": "typed unknowns, privacy, continuation-only projection and unchanged reporter implementation",
+        "independentSelectorGroups": 8
+      }
+    ],
+    "sameHarnessReproductions": [
+      {
+        "reviewer": "root",
+        "authorGroupsReproduced": 10,
+        "normalEnvelopeBytes": 4311,
+        "trimmedEnvelopeBytes": 32614
+      },
+      {
+        "reviewer": "forge_gap_audit",
+        "authorGroupsReproduced": 10,
+        "normalEnvelopeBytes": 4311,
+        "trimmedEnvelopeBytes": 32614
+      }
+    ],
+    "reproductionCounting": "The two reproductions reran the same ten author designs; they are not twenty additional test designs or native passes.",
+    "preparedTreeReviews": {
+      "reviewers": [
+        "root",
+        "forge_gap_audit"
+      ],
+      "leaves": 2048,
+      "treeObjects": 284,
+      "changedLeaves": 2,
+      "orderedParentVerified": true
+    }
+  },
+  "harness": {
+    "path": "review-checks.js",
+    "gitBlob": "31339f137fa4bdaac19f61fb39a1a3a63f4ddd45",
+    "bytes": 28943,
+    "sha256": "b6f0b21489f50f85bed74d9694917c7ac20d053ee8fc56678dafce44908e2328",
+    "entryPoint": "reviewActivationTiming(driverBefore, driverAfter, verifierBefore, verifierAfter)",
+    "inputs": "Use the exact four Git-blob strings in the source/preimage identities above.",
+    "requiresNodeOrNativeExecution": false
+  },
+  "references": [
+    {
+      "url": "https://developer.apple.com/documentation/quartzcore/cacurrentmediatime().md",
+      "supports": "CACurrentMediaTime returns mach_absolute_time converted to seconds."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/driverkit/mach_absolute_time.md",
+      "supports": "The underlying C clock is monotonic and does not increment during system sleep."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/dispatch/dispatch_async",
+      "supports": "Asynchronous submission copies the block and does not wait for invocation; this does not supply a queue-residence measurement."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nsworkspace/openapplication(at:configuration:completionhandler:).md",
+      "supports": "The completion handler runs on a concurrent queue; original main-queue handoff remains intact."
+    }
+  ]
+}
