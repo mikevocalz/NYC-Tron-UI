@@ -690,7 +690,11 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       if ([action isEqual:@"arrange"]) {
         NSRect area = primary.visibleFrame;
         CGFloat width = MIN(720, (NSWidth(area) - 24) / 2), height = MIN(760, NSHeight(area) - 16);
-        if (width < 540 || height < 420) { reply(Failure(@"Primary display is too small for two unobscured native drag surfaces")); return; }
+        // 460x420 is the document window's declared minSize (App.tsx openDocument),
+        // so both windows stay at or above a size the app itself allows. The two
+        // frames still sit side by side without overlap inside visibleFrame.
+        NSLog(@"NYCTronPointer arrange screen=%@ visible=%@ width=%.0f height=%.0f", NSStringFromRect(primary.frame), NSStringFromRect(area), width, height);
+        if (width < 460 || height < 420) { reply(Failure(@"Primary display is too small for two unobscured native drag surfaces")); return; }
         [sourceWindow setFrame:NSMakeRect(NSMinX(area) + 8, NSMinY(area) + 8, width, height) display:YES];
         [targetWindow setFrame:NSMakeRect(NSMaxX(area) - width - 8, NSMinY(area) + 8, width, height) display:YES];
         [NSApp activateIgnoringOtherApps:YES]; [targetWindow orderFront:nil]; [sourceWindow makeKeyAndOrderFront:nil];
