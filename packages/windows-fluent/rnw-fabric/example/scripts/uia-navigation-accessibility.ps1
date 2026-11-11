@@ -45,6 +45,11 @@ public static class NavigationAccessibilityNative {
 }
 "@ -ReferencedAssemblies System, System.Drawing
 
+# Flushed per call so a crash of this process still leaves the last completed step on disk.
+$crumbPath = Join-Path $OutDir "navigation-breadcrumbs.log"
+function Crumb([string]$message) {
+  try { [System.IO.File]::AppendAllText($crumbPath, ("{0} {1}`r`n" -f (Get-Date).ToUniversalTime().ToString("o"), $message)) } catch {}
+}
 $ae = [System.Windows.Automation.AutomationElement]
 $tree = [System.Windows.Automation.TreeScope]
 $checks = New-Object System.Collections.Generic.List[object]
@@ -113,6 +118,7 @@ try {
   $checks.Add(@{ name=$stage; focusedName=$settings.Current.Name; nativeRuntimeId=(Runtime-Id $settings) })
 
   $stage = "resize-retains-selection-and-focus"
+  Crumb "resize: begin"
   $windowPattern.SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Normal)
   $work = [System.Windows.Forms.Screen]::FromHandle($handle).WorkingArea
   $wide = [Math]::Min(1080, $work.Width-32)
@@ -142,25 +148,45 @@ try {
   $checks.Add(@{ name=$stage; observedBounds=$rects; nativeRuntimeId=$identity })
 
   $stage = "native-rtl-and-physical-left-pane"
+  Crumb "rtl: begin"
   $pane = Native-Pane
+  Crumb "rtl: pane found"
   $ltr = (Find-Id "TogglePaneButton").Current.BoundingRectangle
+  Crumb "rtl: ltr toggle rect x=$($ltr.X)"
   Invoke-Button $Window "Use RTL navigation"
+  Crumb "rtl: button pressed"
   Find-ByName $Window "Navigation direction: rtl" | Out-Null
+  Crumb "rtl: direction text found"
   $deadline = (Get-Date).AddSeconds(10)
   do {
     Start-Sleep -Milliseconds 100
     $rtl = (Find-Id "TogglePaneButton").Current.BoundingRectangle
   } while ($rtl.X -le $ltr.X+20 -and (Get-Date) -lt $deadline)
+  Crumb "rtl: toggle poll finished x=$($rtl.X)"
+  # The toggle rebuilds the provider tree. The pane, Home and Workspace elements
+  # held from before it refer to destroyed providers, so reacquire them before
+  # reading any property. The checks below are unchanged.
+  $pane = Native-Pane
+  Crumb "rtl: pane reacquired"
+  $homeItem = Find-ByName $Window "Home"
+  $workspace = Find-ByName $Window "Workspace"
+  Crumb "rtl: selection items reacquired"
   $paneRect = $pane.Current.BoundingRectangle; $hostRect = $Window.Current.BoundingRectangle
+  Crumb "rtl: pane rect left=$($paneRect.Left) right=$($paneRect.Right)"
   if ($rtl.X -le $ltr.X+20) { throw "The actual native pane toggle did not mirror for RTL" }
   if ($paneRect.Right -gt $hostRect.Left+$hostRect.Width/2) { throw "RTL moved the Windows drawer away from the physical left" }
   Assert-Selection $homeItem $workspace "workspace" $stage
   Save-Screenshot "navigation-rtl" $Window
   $checks.Add(@{ name=$stage; ltrToggleX=$ltr.X; rtlToggleX=$rtl.X; paneLeft=$paneRect.Left; paneRight=$paneRect.Right; hostLeft=$hostRect.Left })
+  Crumb "rtl: checks passed"
   Invoke-Button $Window "Use LTR navigation"
   Find-ByName $Window "Navigation direction: ltr" | Out-Null
+  Crumb "ltr: restored"
+  $homeItem = Find-ByName $Window "Home"
+  $workspace = Find-ByName $Window "Workspace"
 
   $stage = "native-pane-collapse-and-restore"
+  Crumb "pane: begin"
   Invoke-Button $Window "Close pane"
   Find-ByName $Window "Open pane" | Out-Null
   Start-Sleep -Milliseconds 500
@@ -174,6 +200,7 @@ try {
   $checks.Add(@{ name=$stage; closedWidth=$closedWidth; openWidth=$openWidth })
 
   $stage = "high-contrast-native-repaint-and-input"
+  Crumb "contrast: begin"
   if (($contrast.Flags -band 2) -eq 0) { throw "High contrast is unavailable in this Windows desktop session" }
   [NavigationAccessibilityNative]::SetContrast($contrast, $false)
   Wait-Contrast $false | Out-Null
@@ -186,7 +213,9 @@ try {
   $w = [int]([Math]::Max($a.Right,$b.Right)-[Math]::Min($a.Left,$b.Left))
   $h = [int]([Math]::Max($a.Bottom,$b.Bottom)-[Math]::Min($a.Top,$b.Top))
   [NavigationAccessibilityNative]::SetContrast($contrast, $true)
+  Crumb "contrast: enabled requested"
   $enabled = Wait-Contrast $true
+  Crumb "contrast: enabled observed flags=$($enabled.Flags)"
   Assert-Selection $homeItem $workspace "workspace" $stage
   $workspace.SetFocus(); Wait-Focus $workspace
   Save-Screenshot "navigation-high-contrast" $Window

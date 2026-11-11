@@ -372,6 +372,25 @@ function Write-Diagnostics($since, [int]$expectedProcessId = 0) {
   $records | ForEach-Object { Write-Host $_.message }
 }
 
+# Durable drag evidence. Copies the live native trace (the app keeps running) and
+# prints its Escape fields to the job log, so a later crash of this process
+# cannot lose them. Diagnostic only: a failure here never changes the result.
+function Save-DragTraceCheckpoint([string]$label) {
+  try {
+    Save-NativeDragTrace $AppUserModelId $ownedProcessId $OutDir $false
+    $copied = Join-Path $OutDir "native-drag-trace.jsonl"
+    if (Test-Path -LiteralPath $copied) {
+      Copy-Item -LiteralPath $copied -Destination (Join-Path $OutDir "native-drag-trace-$label.jsonl") -Force
+      foreach ($line in [System.IO.File]::ReadAllLines($copied, [System.Text.Encoding]::UTF8)) {
+        $r = $line | ConvertFrom-Json
+        if ($r.stage -like "parent-drop-*" -or $r.stage -in @("source-starting", "source-drop-completed", "broker-native-completed", "broker-offer", "broker-resolve")) {
+          Write-Host ("[trace-$label] seq={0} stage={1} effect={2} escapeSeen={3} escapeCount={4} escapeHook={5} allowed={6}" -f $r.sequence, $r.stage, $r.effect, $r.escapeSeen, $r.escapeCount, $r.escapeHook, $r.allowed)
+        }
+      }
+    }
+  } catch { Write-Host "Native drag trace checkpoint '$label' unavailable: $($_.Exception.Message)" }
+}
+
 function Save-FailureStatus($failure, $nativeProcess, [IntPtr]$originalWindowHandle, [string]$originalProcessStartTime) {
   $status = [ordered]@{
     schemaVersion = 1; status = "failed"; sourceRevision = $env:GITHUB_SHA
@@ -649,6 +668,7 @@ try {
   Find-ByName $window "Native drag result: none/cancelled" | Out-Null
   Find-ByName $window "Document owner: main" | Out-Null
   Find-ByName $window "Authorized transfers: 0" | Out-Null
+  Save-DragTraceCheckpoint "after-drag2"
 
   Invoke-Button $window "Delay native drop approval"
   Find-ByName $window "Native drop policy: delay" | Out-Null
@@ -673,6 +693,7 @@ try {
   Find-ByName $document "Document owner: document" | Out-Null
   Find-ByName $window "Authorized transfers: 1" | Out-Null
   Save-Screenshot "11-native-drag-accepted" $document
+  Save-DragTraceCheckpoint "after-drag4"
   $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
   [NativeWindow]::SetForegroundWindow([IntPtr]$window.Current.NativeWindowHandle) | Out-Null
   Invoke-Button $window "Show native navigation checks"
