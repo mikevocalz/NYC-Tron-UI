@@ -26,6 +26,7 @@ const bundle=await build({entryPoints:[resolve(here,"fixture.tsx")],bundle:true,
   alias:{"react-native":"react-native-web",
     // Same source the expo-controls tsconfig maps; the kit is not an npm dependency here.
     "@nyc-tron/ui":resolve(here,"../../../ui/src"),
+    // Public core geometry shared by the UI overlays; use its real source in this isolated lane.
     "@nyc-tron/core/overlays":resolve(here,"../../../core/src/overlays.ts"),
     // One React and one Zustand even when a workspace install left copies in packages/*/node_modules.
     "react":resolve(here,"node_modules/react"),"react-dom":resolve(here,"node_modules/react-dom"),
