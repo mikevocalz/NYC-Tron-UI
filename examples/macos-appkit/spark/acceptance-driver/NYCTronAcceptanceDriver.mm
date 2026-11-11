@@ -1,4 +1,5 @@
 #import <AppKit/AppKit.h>
+#import <QuartzCore/CAMediaTiming.h>
 #include <atomic>
 #include <math.h>
 #import <RNDesktopApp/SparkTestDriver.h>
@@ -752,11 +753,26 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
         configuration.promptsUserIfNeeded = NO;
         TraceActivation(@"workspace-request-entered", operation, nil);
         [NSWorkspace.sharedWorkspace openApplicationAtURL:bundleURL configuration:configuration completionHandler:^(NSRunningApplication *application, NSError *error) {
+          const CFTimeInterval completionTraceStarted = CACurrentMediaTime();
           TraceActivation(@"workspace-completion-received", operation, ^{ return @{ @"hasApplication": @(application != nil), @"hasError": @(error != nil) }; });
           // NSWorkspace completes on a concurrent queue; window operations and
           // the observed activation state must return to AppKit's main queue.
+          const CFTimeInterval submissionStarted = CACurrentMediaTime();
           dispatch_async(dispatch_get_main_queue(), ^{
-            TraceActivation(@"workspace-main-continuation", operation, ^{ return ActivationWindowState(window); });
+            const CFTimeInterval mainEntered = CACurrentMediaTime();
+            TraceActivation(@"workspace-main-continuation", operation, ^{
+              // This clock excludes system sleep. Both intervals include any
+              // descheduling; submission-to-entry also includes dispatch work.
+              // Neither duration isolates queue residence or establishes cause.
+              double completionTraceElapsedSeconds = submissionStarted - completionTraceStarted;
+              double submissionStartToMainEntrySeconds = mainEntered - submissionStarted;
+              return @{ @"state": ActivationWindowState(window), @"timing": @{
+                @"clock": @"CACurrentMediaTime", @"clockExcludesSystemSleep": @YES,
+                @"intervalsAreNotQueueResidence": @YES, @"intervalsDoNotEstablishCause": @YES,
+                @"completionTraceElapsedSeconds": isfinite(completionTraceElapsedSeconds) && completionTraceElapsedSeconds >= 0 ? @(completionTraceElapsedSeconds) : NSNull.null,
+                @"submissionStartToMainEntrySeconds": isfinite(submissionStartToMainEntrySeconds) && submissionStartToMainEntrySeconds >= 0 ? @(submissionStartToMainEntrySeconds) : NSNull.null
+              } };
+            });
             if (error || !application) {
               TraceActivation(@"workspace-rejected", operation, ^{ return @{ @"hasApplication": @(application != nil), @"hasError": @(error != nil) }; });
               reply(Failure([NSString stringWithFormat:@"Workspace activation failed: %@", error.localizedDescription ?: @"No running application returned"])); return;
