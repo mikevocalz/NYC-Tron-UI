@@ -249,6 +249,32 @@ struct TronNavigationViewComponentView
     m_updatingFromJs = false;
   }
 
+  // Run 42996235176: in the open pane the template stretches TogglePaneButton over the
+  // whole pane (offset 0, width 320; 48 in the compact pane). FlowDirection reaches it
+  // (RightToLeft) and the hamburger glyph moves, but the button's own rectangle cannot,
+  // so the native toggle does not mirror. Give it the compact pane's width at the
+  // leading edge, which is the left edge in LTR and the right edge in RTL.
+  void ConstrainToggleButton() noexcept {
+    try {
+      namespace Media = winrt::Microsoft::UI::Xaml::Media;
+      std::vector<winrt::Microsoft::UI::Xaml::DependencyObject> queue{m_navigation};
+      for (size_t i = 0; i < queue.size() && i < 400; ++i) {
+        const auto count = Media::VisualTreeHelper::GetChildrenCount(queue[i]);
+        for (int32_t child = 0; child < count; ++child) {
+          auto node = Media::VisualTreeHelper::GetChild(queue[i], child);
+          if (auto element = node.try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>()) {
+            if (element.Name() == L"TogglePaneButton") {
+              element.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Left);
+              element.Width(m_navigation.CompactPaneLength());
+              return;
+            }
+          }
+          queue.push_back(node);
+        }
+      }
+    } catch (...) {}
+  }
+
   // Diagnostic only. Records the isRTL prop this view received, the FlowDirection
   // XAML holds after it is applied, and where the pane toggle sits inside the
   // NavigationView, read once now and once after layout has run.
@@ -338,11 +364,12 @@ struct TronNavigationViewComponentView
       m_paneOpen = props.paneOpen.value_or(false);
       m_navigation.IsPaneOpen(m_paneOpen);
       m_updatingFromJs = false;
+      ConstrainToggleButton();
       TraceDirection("nav-props-applied", props.isRTL);
       if (m_navigation.DispatcherQueue()) {
         const std::optional<bool> received = props.isRTL;
         m_navigation.DispatcherQueue().TryEnqueue(winrt::Microsoft::UI::Dispatching::DispatcherQueuePriority::Low, [weak = get_weak(), received]() noexcept {
-          if (auto self = weak.get()) if (!self->m_disposed) self->TraceDirection("nav-after-layout", received);
+          if (auto self = weak.get()) if (!self->m_disposed) { self->ConstrainToggleButton(); self->TraceDirection("nav-after-layout", received); }
         });
       }
     } catch (...) {
