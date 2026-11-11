@@ -10,6 +10,7 @@ export interface NavigationState {
   pendingId:string|null;
   paneOpen:boolean;
   settingsOpen:boolean;
+  direction:"ltr"|"rtl";
   status:string;
   nativeError:string|null;
   requestRoute:(id:string)=>void;
@@ -18,11 +19,12 @@ export interface NavigationState {
   setPaneOpen:(open:boolean)=>void;
   openSettings:()=>void;
   closeSettings:()=>void;
+  setDirection:(direction:"ltr"|"rtl")=>void;
   reportNativeError:(error:Error)=>void;
 }
 export function createNavigationStore() {
  return createStore<NavigationState>((set,get)=>({
-  selectedId:"home",pendingId:null,paneOpen:true,settingsOpen:false,status:"Home",nativeError:null,
+  selectedId:"home",pendingId:null,paneOpen:true,settingsOpen:false,direction:"ltr",status:"Home",nativeError:null,
   requestRoute:(id)=>{
    const destination=destinations.find(item=>item.id===id);
    if(!destination||("disabled" in destination&&destination.disabled)||id===get().selectedId)return;
@@ -36,6 +38,7 @@ export function createNavigationStore() {
   setPaneOpen:(paneOpen)=>set({paneOpen}),
   openSettings:()=>set({settingsOpen:true}),
   closeSettings:()=>set({settingsOpen:false}),
+  setDirection:(direction)=>set({direction}),
   reportNativeError:(error)=>set({nativeError:error.message}),
  }));
 }

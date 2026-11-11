@@ -46,6 +46,16 @@
       "types": "./dist/window-types.d.ts",
       "react-native": "./src/window-types.ts",
       "default": "./dist/window-types.js"
+    },
+    "./overlays": {
+      "types": "./dist/overlays.windows.d.ts",
+      "react-native": "./src/overlays.windows.tsx",
+      "default": "./dist/overlays.windows.js"
+    },
+    "./drag-drop": {
+      "types": "./dist/drag-drop.windows.d.ts",
+      "react-native": "./src/drag-drop.windows.tsx",
+      "default": "./dist/drag-drop.windows.js"
     }
   },
   "files": [

@@ -1,4 +1,5 @@
 import { createStore } from "zustand/vanilla";
+import { TurboModuleRegistry, type TurboModule } from "react-native";
 import { createWindowRegistry, type WindowRegistryState } from "@nyc-tron/core/window-lifecycle";
 import { createWindowsWindowHost, type WindowsWindowHost } from "@nyc-tron/windows-fluent-fabric/windows";
 
@@ -15,6 +16,12 @@ export const desktop = createStore<DesktopState>(() => ({
 }));
 let native: WindowsWindowHost | undefined;
 let connecting: Promise<void> | undefined;
+// The acceptance app opts into the internal generated module hook. It is not
+// part of WindowsWindowHost or any public package export, and accepts no path.
+interface NativeDragDiagnosticHook extends TurboModule {
+  enableNativeDragDiagnostics(ownerToken: string): Promise<void>;
+}
+export const getNativeHost = () => native;
 export const failDesktop = (error: unknown) => desktop.setState({ status: `Native desktop error: ${error instanceof Error ? error.message : String(error)}` });
 export function connectDesktop() {
   return connecting ??= createWindowsWindowHost({
@@ -28,7 +35,11 @@ export function connectDesktop() {
       }).catch(failDesktop);
     },
     onError: failDesktop,
-  }).then(host => { native = host; desktop.setState({ ready: true, status: "Native desktop connected" }); });
+  }).then(async host => {
+    native = host;
+    await TurboModuleRegistry.getEnforcing<NativeDragDiagnosticHook>("TronDesktop").enableNativeDragDiagnostics(host.snapshot().ownerToken);
+    desktop.setState({ ready: true, status: "Native desktop connected" });
+  });
 }
 export async function openDocument() {
   await connectDesktop();

@@ -15,5 +15,11 @@ export interface Spec extends TurboModule {
   dispose(ownerToken: string): Promise<void>;
   readonly onSnapshot: CodegenTypes.EventEmitter<string>;
   readonly onError: CodegenTypes.EventEmitter<string>;
+  startNativeDrag(ownerToken: string, sourceId: string, token: string, requestId: string): Promise<string>;
+  resolveNativeDrop(ownerToken: string, token: string, requestId: string, accepted: boolean): Promise<boolean>;
+  cancelNativeDrag(ownerToken: string, requestOrToken: string): Promise<void>;
+  /** Private acceptance hook; never exported by a public package subpath. */
+  enableNativeDragDiagnostics(ownerToken: string): Promise<void>;
+  readonly onNativeDrag: CodegenTypes.EventEmitter<string>;
 }
 export default TurboModuleRegistry.getEnforcing<Spec>("TronDesktop");
