@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
+import { mkdir as mkdirAsync } from 'node:fs/promises';
 import { createHash, randomBytes } from 'node:crypto';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync, appendFileSync, readdirSync, lstatSync, readlinkSync, copyFileSync, openSync, closeSync, readSync, fstatSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
@@ -78,9 +79,294 @@ writeFileSync(join(output, 'invocation.json'), JSON.stringify({ sourceRevision: 
 function assertRunning() {
   if (launchError || child.exitCode !== null || child.signalCode !== null) throw new Error(`Native application exited before acceptance: ${launchError?.message ?? child.exitCode ?? child.signalCode}`);
 }
+let initialStartupObservation;
+function startupObservationLive(owner, pid) {
+  return child === owner && owner.pid === pid && Number.isSafeInteger(pid) && pid > 0 &&
+    !launchError && owner.exitCode === null && owner.signalCode === null;
+}
+function startupObservationProcess(command, args, timeoutMs, pending) {
+  const record = { attemptedAt: new Date().toISOString(), processId: null, spawnObserved: false, spawnFailed: false,
+    requestPendingAtAttempt: pending(), requestPendingAtSpawnEvent: null, spawnedAt: null, exitObserved: false,
+    exitedAt: null, closeObserved: false, closedAt: null, exitCode: null, signal: null, errorCode: null,
+    timedOut: false, outputLimit: false, stdoutBytes: 0, stderrBytes: 0, termRequested: false, killRequested: false,
+    cleanupUnconfirmed: false, cleanupLimitReached: false, captureFailed: false, settledAt: null };
+  let subprocess, timeout, escalation, cleanup, settled = false, stopping = false, stdout = [], stderr = [];
+  const limit = 64 * 1024, errors = ['EACCES', 'EPERM', 'ENOENT', 'ESRCH', 'EINVAL', 'EIO'];
+  let finish;
+  const promise = new Promise(resolveResult => {
+    finish = () => {
+      if (settled) return;
+      settled = true; clearTimeout(timeout); clearTimeout(escalation); clearTimeout(cleanup);
+      record.settledAt = new Date().toISOString();
+      let text = ''; try { text = Buffer.concat(stdout).toString('utf8'); } catch { record.captureFailed = true; }
+      resolveResult({ record, stdout: text });
+    };
+    const signal = name => {
+      if (!subprocess || record.exitObserved || record.closeObserved || !Number.isSafeInteger(subprocess.pid)) return;
+      if (name === 'SIGTERM') record.termRequested = true; else record.killRequested = true;
+      try { subprocess.kill(name); } catch (error) { record.errorCode = errors.includes(error?.code) ? error.code : null; }
+    };
+    const stop = () => {
+      if (settled || stopping) return;
+      stopping = true; signal('SIGTERM');
+      escalation = setTimeout(() => signal('SIGKILL'), 500);
+      cleanup = setTimeout(() => {
+        record.cleanupLimitReached = true; record.cleanupUnconfirmed = !record.closeObserved;
+        // Signal delivery is not terminal-state evidence. Do not keep Node
+        // alive indefinitely on diagnostic pipes after bounded cleanup.
+        try { subprocess?.stdout?.destroy(); subprocess?.stderr?.destroy(); subprocess?.unref(); } catch {}
+        finish();
+      }, 1000);
+    };
+    try {
+      subprocess = spawn(command, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+      record.processId = Number.isSafeInteger(subprocess.pid) && subprocess.pid > 0 ? subprocess.pid : null;
+      const collect = (kind, chunks, bytes) => {
+        try {
+          const key = kind + 'Bytes', previous = record[key];
+          record[key] = Math.min(Number.MAX_SAFE_INTEGER, previous + bytes.length);
+          const remaining = Math.max(0, limit - previous);
+          if (remaining) chunks.push(Buffer.from(bytes.subarray(0, remaining)));
+          if (record[key] > limit) { record.outputLimit = true; stop(); }
+        } catch { record.captureFailed = true; stop(); }
+      };
+      subprocess.stdout.on('data', bytes => collect('stdout', stdout, bytes));
+      subprocess.stderr.on('data', bytes => collect('stderr', stderr, bytes));
+      subprocess.stdout.on('error', stop); subprocess.stderr.on('error', stop);
+      subprocess.on('spawn', () => {
+        record.spawnObserved = true; record.spawnedAt = new Date().toISOString();
+        record.requestPendingAtSpawnEvent = pending();
+      });
+      subprocess.on('error', error => {
+        record.errorCode = errors.includes(error?.code) ? error.code : null;
+        if (!record.spawnObserved && record.processId === null) record.spawnFailed = true;
+        stop();
+      });
+      subprocess.on('exit', (code, observedSignal) => {
+        record.exitObserved = true; record.exitedAt = new Date().toISOString();
+        record.exitCode = Number.isInteger(code) ? code : null;
+        record.signal = ['SIGTERM', 'SIGKILL', 'SIGABRT', 'SIGSEGV', 'SIGBUS', 'SIGILL', 'SIGTRAP'].includes(observedSignal) ? observedSignal : null;
+      });
+      subprocess.on('close', (code, observedSignal) => {
+        record.closeObserved = true; record.cleanupUnconfirmed = false; record.closedAt = new Date().toISOString();
+        record.exitCode = Number.isInteger(code) ? code : null;
+        record.signal = ['SIGTERM', 'SIGKILL', 'SIGABRT', 'SIGSEGV', 'SIGBUS', 'SIGILL', 'SIGTRAP'].includes(observedSignal) ? observedSignal : null;
+        finish();
+      });
+      timeout = setTimeout(() => { record.timedOut = true; stop(); }, timeoutMs);
+    } catch (error) {
+      record.errorCode = errors.includes(error?.code) ? error.code : null;
+      if (record.processId !== null) stop();
+      else { record.spawnFailed = true; finish(); }
+    }
+  });
+  return { record, promise };
+}
+function startupObservationIdentity(text, pid, parentPid, expectedCommand) {
+  const lines = text.split(/\r?\n/).filter(line => line.trim());
+  const match = lines.length === 1 ? lines[0].match(/^\s*(\d+)\s+(\d+)\s+(.+?)\s*$/) : null;
+  const observedPid = match ? Number(match[1]) : null, observedParent = match ? Number(match[2]) : null;
+  return { kind: 'pid-ppid-ps-comm-argv0-not-mapped-executable', parsed: !!match && Number.isSafeInteger(observedPid) && Number.isSafeInteger(observedParent),
+    processId: Number.isSafeInteger(observedPid) ? observedPid : null,
+    parentProcessId: Number.isSafeInteger(observedParent) ? observedParent : null,
+    matchesPid: match ? observedPid === pid : null, matchesParent: match ? observedParent === parentPid : null,
+    matchesExpectedCommand: match ? match[3] === expectedCommand : null };
+}
+function startupObservationSample(text, pid, applicationName) {
+  const result = { status: 'unavailable', headerProcessId: null, headerCount: 0, analysisProcessId: null, analysisHeaderCount: 0, mainThreadGroups: 0,
+    lineScanLimit: 4096, lineByteLimit: 8192, scannedLines: 0, unscannedLines: 0, oversizedLines: 0, frameLimit: 32, parsedFrameLines: 0,
+    unparsedFrameLines: 0, omittedFrameLines: 0, frames: [] };
+  const all = text.split(/\r?\n/);
+  const headers = all.filter(line => /^Process:/.test(line));
+  result.headerCount = headers.length;
+  const header = headers.length === 1 && headers[0].length <= 4096 ? headers[0].match(/^Process:\s+.+\[(\d+)\]\s*$/) : null;
+  if (!header || !Number.isSafeInteger(Number(header[1]))) { result.status = 'ambiguous-or-invalid-process-header'; return result; }
+  result.headerProcessId = Number(header[1]);
+  if (result.headerProcessId !== pid) { result.status = 'process-header-mismatch'; return result; }
+  const analyses = all.filter(line => line.startsWith('Analysis of sampling '));
+  result.analysisHeaderCount = analyses.length;
+  if (analyses.length) {
+    const declarations = analyses.length === 1 && analyses[0].length <= 4096 ? [...analyses[0].matchAll(/\(pid (\d+)\)/g)] : [];
+    if (declarations.length !== 1 || !Number.isSafeInteger(Number(declarations[0][1]))) { result.status = 'ambiguous-or-invalid-analysis-header'; return result; }
+    result.analysisProcessId = Number(declarations[0][1]);
+    if (result.analysisProcessId !== pid) { result.status = 'process-declarations-mismatch'; return result; }
+  }
+  const graph = all.indexOf('Call graph:');
+  if (graph < 0) { result.status = 'call-graph-unavailable'; return result; }
+  const endOffset = all.slice(graph + 1).findIndex(line => line.startsWith('Total number in stack'));
+  const graphLines = all.slice(graph + 1, endOffset < 0 ? undefined : graph + 1 + endOffset);
+  const main = /^\s+\d+\s+Thread_\d+\s+DispatchQueue_\d+:\s+com\.apple\.main-thread\s+\(serial\)\s*$/;
+  result.mainThreadGroups = graphLines.filter(line => main.test(line)).length;
+  if (result.mainThreadGroups !== 1) { result.status = 'ambiguous-or-missing-main-thread'; return result; }
+  const start = graphLines.findIndex(line => main.test(line));
+  const next = graphLines.slice(start + 1).findIndex(line => /^\s+\d+\s+Thread_/.test(line));
+  const lines = graphLines.slice(start + 1, next < 0 ? undefined : start + 1 + next);
+  result.unscannedLines = Math.max(0, lines.length - result.lineScanLimit);
+  const images = ['AppKit', 'Foundation', 'CoreFoundation', 'HIToolbox', 'QuartzCore', 'dyld', 'libdyld.dylib',
+    'libdispatch.dylib', 'libsystem_kernel.dylib', 'libsystem_pthread.dylib', 'libsystem_c.dylib',
+    'libsystem_trace.dylib', 'libsystem_platform.dylib', 'libsystem_malloc.dylib', 'libxpc.dylib'];
+  const symbols = ['start', 'NSApplicationMain', '-[NSApplication run]',
+    '-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]',
+    '_DPSNextEvent', '_BlockUntilNextEventMatchingListInModeWithFilter', 'ReceiveNextEventCommon', 'RunCurrentEventLoopInMode',
+    'CFRunLoopRunSpecific', '__CFRunLoopRun', '__CFRunLoopServiceMachPort', '__CFRunLoopDoBlocks', '__CFRUNLOOP_IS_CALLING_OUT_TO_A_BLOCK__',
+    'mach_msg', 'mach_msg_overwrite', 'mach_msg2_internal', 'mach_msg2_trap', '_dispatch_main_queue_drain',
+    '_dispatch_main_queue_callback_4CF', '_dispatch_client_callout', '_dispatch_call_block_and_release',
+    'dispatch_async', '_dispatch_async_f_slow', '__DISPATCH_WAIT_FOR_QUEUE__', '_dispatch_sync_f_slow',
+    'NSLog', 'NSLogv', '_NSLogv', '_CFLogvEx3', '_CFLogvEx2', '_os_log_impl',
+    '__ulock_wait', '__ulock_wait2', '__psynch_mutexwait', '__psynch_cvwait', 'semaphore_wait_trap', 'semaphore_timedwait_trap'];
+  for (const line of lines.slice(0, result.lineScanLimit)) {
+    result.scannedLines++;
+    if (Buffer.byteLength(line, 'utf8') > result.lineByteLimit) { result.oversizedLines++; continue; }
+    const match = line.match(/^([ +!|:.\t-]*)(\d+)\s+(.+?)\s{2,}\(in ([^)\r\n]+)\)\s+(?:\+\s+(\d+)|load address 0x[a-fA-F0-9]+\s+\+\s+(0x[a-fA-F0-9]+))\s+\[0x[a-fA-F0-9]+\]\s*$/);
+    if (!match) { if (line.trim()) result.unparsedFrameLines++; continue; }
+    const count = Number(match[2]), offset = Number(match[5] ?? match[6]);
+    if (!Number.isSafeInteger(count) || count < 0 || !Number.isSafeInteger(offset) || offset < 0) { result.unparsedFrameLines++; continue; }
+    result.parsedFrameLines++;
+    if (result.frames.length >= result.frameLimit) { result.omittedFrameLines++; continue; }
+    result.frames.push({ count, depthColumns: match[1].length, image: images.includes(match[4]) ? match[4] : match[4] === applicationName ? 'owned-application' : 'unknown',
+      symbol: symbols.includes(match[3]) ? match[3] : 'unknown', offset, offsetKind: match[5] === undefined ? 'image-relative' : 'symbol-relative' });
+  }
+  result.status = 'projected-main-thread';
+  return result;
+}
+function readStartupObservationSample(observation) {
+  const file = join(output, 'startup-predeadline', 'sample.txt'), cap = 1024 * 1024;
+  const result = { file: 'startup-predeadline/sample.txt', status: 'unavailable', processingByteLimit: cap,
+    readByteLimit: cap + 1, bytesRead: 0, originalBytes: null, completeStableRead: false, originalSha256: null,
+    prefixBytes: null, prefixSha256: null, digestScope: null, parsed: null };
+  if (!observation.sample?.closeObserved || !observation.sample.spawnObserved) { result.status = 'sampler-close-or-spawn-unconfirmed'; return result; }
+  let fd, bytes, before, after, current, failed = false;
+  try {
+    if (!lstatSync(file).isFile()) throw Error('not regular');
+    fd = openSync(file, 'r'); before = fstatSync(fd);
+    if (!before.isFile() || !Number.isSafeInteger(before.size) || before.size < 0) throw Error('invalid size');
+    const buffer = Buffer.alloc(cap + 1);
+    while (result.bytesRead < buffer.length) {
+      const count = readSync(fd, buffer, result.bytesRead, buffer.length - result.bytesRead, result.bytesRead);
+      if (!count) break; result.bytesRead += count;
+    }
+    bytes = buffer.subarray(0, result.bytesRead); after = fstatSync(fd); current = lstatSync(file);
+    result.originalBytes = before.size;
+    result.completeStableRead = bytes.length <= cap && bytes.length === before.size && current.isFile() &&
+      [after, current].every(value => value.dev === before.dev && value.ino === before.ino && value.size === before.size &&
+        value.mtimeMs === before.mtimeMs && value.ctimeMs === before.ctimeMs);
+  } catch { failed = true; result.status = 'read-unavailable'; }
+  finally { if (fd !== undefined) { try { closeSync(fd); } catch { failed = true; result.status = 'close-unavailable'; } } }
+  if (failed) { result.completeStableRead = false; return result; }
+  if (result.completeStableRead) {
+    result.originalSha256 = hash(bytes); result.digestScope = 'complete-stable-file-after-sampler-close';
+    result.status = 'complete-stable-read';
+    result.parsed = startupObservationSample(bytes.toString('utf8'), observation.processId, executable.split('/').at(-1));
+  } else {
+    const prefix = bytes.subarray(0, cap);
+    result.prefixBytes = prefix.length; result.prefixSha256 = hash(prefix);
+    result.digestScope = 'read-prefix-only-not-whole-file'; result.status = 'incomplete-or-changing-read';
+  }
+  return result;
+}
+function reportStartupObservation(observation) {
+  try {
+    const record = { schemaVersion: 1, sourceRevision: revision, processId: observation.processId,
+      diagnosticOnly: true, samplingMayPerturbScheduling: true, nativeAcceptancePermitted: false,
+      firstRequestOnly: true, command: 'tron.window', action: 'show', triggerAfterMs: 10000,
+      requestedDurationSeconds: 2, requestedIntervalMilliseconds: 10, samplerTimeoutMs: 8000, cleanupGraceMs: 1000,
+      armedAt: observation.armedAt, firedAt: observation.firedAt, settledAt: observation.settledAt,
+      requestOutcome: observation.requestOutcome, status: observation.status, statusScope: 'observer-task-outcome', reportedAt: new Date().toISOString(),
+      ownerLiveAtFire: observation.ownerLiveAtFire, ownerLiveBeforeSample: observation.ownerLiveBeforeSample,
+      ownerLiveAfterObservation: observation.ownerLiveAfterObservation,
+      preflight: observation.preflight, identity: observation.identity, sample: observation.sample,
+      skipPostFailureSample: observation.skipPostFailureSample, original: readStartupObservationSample(observation) };
+    const begin = 'NYCTRON_STARTUP_SAMPLE_BEGIN', end = 'NYCTRON_STARTUP_SAMPLE_END', limit = 16 * 1024;
+    record.consoleByteLimit = limit;
+    const encode = () => begin + '\n' + JSON.stringify(record) + '\n' + end + '\n';
+    let envelope = encode();
+    if (Buffer.byteLength(envelope, 'utf8') > limit && record.original.parsed) {
+      record.original.parsed.omittedForOutputLimit = record.original.parsed.frames.length;
+      record.original.parsed.frames = []; envelope = encode();
+    }
+    try { writeFileSync(join(output, 'startup-predeadline.json'), JSON.stringify(record, null, 2) + '\n', { flag: 'wx' }); } catch {}
+    if (Buffer.byteLength(envelope, 'utf8') <= limit) console.info(envelope.slice(0, -1));
+  } catch {
+    // This reporting path cannot replace the original request rejection.
+  }
+}
+async function observeInitialWindowRequest(request) {
+  const owner = child, pid = child.pid, parentPid = process.pid;
+  let pending = true, observation, timer, task;
+  // Attach both handlers immediately, before any timer/preflight work.
+  const outcome = Promise.resolve(request).then(
+    value => { pending = false; return { resolved: true, value }; },
+    error => { pending = false; return { resolved: false, error }; });
+  try {
+    observation = initialStartupObservation = { processId: Number.isSafeInteger(pid) && pid > 0 ? pid : null, fired: false, diagnosticOnly: false, armedAt: new Date().toISOString(),
+      firedAt: null, settledAt: null, requestOutcome: null, status: 'armed', ownerLiveAtFire: null,
+      ownerLiveBeforeSample: null, ownerLiveAfterObservation: null, preflight: null, identity: null,
+      sample: null, skipPostFailureSample: false };
+    timer = setTimeout(() => {
+      if (!pending) return;
+      // Conservative latch precedes every observer, directory or subprocess.
+      observation.fired = true; observation.diagnosticOnly = true; observation.firedAt = new Date().toISOString();
+      task = (async () => {
+        try {
+          observation.ownerLiveAtFire = startupObservationLive(owner, pid);
+          if (!observation.ownerLiveAtFire) { observation.status = 'owner-unavailable'; return; }
+          observation.status = 'preparing-output';
+          let directoryTimer;
+          try {
+            await Promise.race([mkdirAsync(join(output, 'startup-predeadline'), { mode: 0o700 }),
+              new Promise((_, reject) => { directoryTimer = setTimeout(() => reject(Error('directory timeout')), 2000); })]);
+          } finally { clearTimeout(directoryTimer); }
+          if (!pending || !startupObservationLive(owner, pid)) { observation.status = 'request-or-owner-settled-before-preflight'; return; }
+          observation.status = 'preflight';
+          const query = startupObservationProcess('/bin/ps', ['-ww', '-p', String(pid), '-o', 'pid=,ppid=,comm='], 2000, () => pending);
+          observation.preflight = query.record;
+          const result = await query.promise;
+          if (!pending) { observation.status = 'request-settled-during-preflight'; return; }
+          if (!result.record.closeObserved || result.record.exitCode !== 0 || result.record.outputLimit || result.record.captureFailed) { observation.status = 'preflight-unavailable'; return; }
+          observation.identity = startupObservationIdentity(result.stdout, pid, parentPid, executable);
+          observation.ownerLiveBeforeSample = startupObservationLive(owner, pid);
+          if (!observation.ownerLiveBeforeSample || observation.identity.matchesPid !== true ||
+              observation.identity.matchesParent !== true || observation.identity.matchesExpectedCommand !== true) {
+            observation.status = 'owned-identity-unverified'; return;
+          }
+          observation.status = 'sampling';
+          const sample = startupObservationProcess('/usr/bin/sample', [String(pid), '2', '10', '-file', join(output, 'startup-predeadline', 'sample.txt')], 8000, () => pending);
+          observation.sample = sample.record;
+          await sample.promise;
+          observation.status = sample.record.closeObserved ? 'sampler-closed' : 'sampler-cleanup-unconfirmed';
+        } catch { observation.status = 'observation-unavailable'; }
+      })();
+    }, 10000);
+  } catch { clearTimeout(timer); }
+  const result = await outcome;
+  clearTimeout(timer);
+  if (observation) {
+    try {
+      observation.settledAt = new Date().toISOString(); observation.requestOutcome = result.resolved ? 'resolved' : 'rejected';
+      // No diagnostic task is awaited until the original request has settled.
+      try { if (task) await task; } catch {}
+      observation.ownerLiveAfterObservation = startupObservationLive(owner, pid);
+      observation.skipPostFailureSample = !!observation.sample && !observation.sample.closeObserved &&
+        !(observation.sample.spawnFailed && observation.sample.processId === null);
+      if (observation.fired) reportStartupObservation(observation);
+    } catch {
+      // Unknown cleanup must not overlap the existing postfailure sampler.
+      observation.skipPostFailureSample = !!observation.sample && !observation.sample.closeObserved;
+    }
+  }
+  if (!result.resolved) throw result.error;
+  if (observation?.fired) {
+    const error = new Error('Initial activation was observed by the startup watchdog; this run is diagnostic-only and cannot establish native acceptance.');
+    error.code = 'E_STARTUP_DIAGNOSTIC_ONLY'; throw error;
+  }
+  return result.value;
+}
+
 function retainProcessFailure() {
   const processState = { processId: child.pid, exitCode: child.exitCode, signalCode: child.signalCode, launchError: launchError?.message, observedAt: new Date().toISOString() };
-  if (Number.isInteger(child.pid) && child.exitCode === null && child.signalCode === null) {
+  if (initialStartupObservation?.skipPostFailureSample) {
+    processState.sample = { status: 'skipped-predeadline-sampler-close-unconfirmed', diagnosticOnly: true };
+  } else if (Number.isInteger(child.pid) && child.exitCode === null && child.signalCode === null) {
     const processSnapshot = () => {
       const result = spawnSync('/bin/ps', ['-p', String(child.pid), '-o', 'pid=,ppid=,state=,comm='], { encoding: 'utf8', timeout: 2000, maxBuffer: 64 * 1024 });
       return { observedAt: new Date().toISOString(), exitCode: result.status, signal: result.signal, error: result.error?.message, stdout: result.stdout, stderr: result.stderr };
@@ -457,8 +743,9 @@ async function waitFor(check, label, timeoutMs = 20000) {
   throw new Error(`Timed out waiting for ${label}`);
 }
 const inspect = (testID, window = 'main') => driver.request('tron.inspect', { window, ...(testID ? { testID } : {}) });
-async function show(window = 'main') {
-  const request = await driver.request('tron.window', { window, action: 'show' });
+async function show(window = 'main', observeStartupRequest = false) {
+  const response = driver.request('tron.window', { window, action: 'show' });
+  const request = await (observeStartupRequest ? observeInitialWindowRequest(response) : response);
   assert.equal(request.activationPath, 'NSWorkspace.openApplication');
   assert.equal(request.processId, child.pid, 'Workspace activation must retain the launched acceptance process');
   return waitFor(async () => {
@@ -517,7 +804,7 @@ try {
   // waiting for its React content; Spark's stock driver leaves it hidden with
   // prohibited activation for offscreen capture. show() still requires this
   // exact process/bundle and observed key/active/frontmost state.
-  await show();
+  await show('main', true);
   await mounted('root-main'); await status('Native workspace ready');
   const native = await inspect();
   assert.equal(native.hasSplitView, true); assert.equal(native.hasTableView, true);
