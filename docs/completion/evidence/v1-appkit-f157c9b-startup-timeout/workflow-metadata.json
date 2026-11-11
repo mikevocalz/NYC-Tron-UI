@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "metadataSource": "GitHub connector normalized completed job, artifact and head-workflow responses; GitHub commit object for actual merge.",
+  "jobs": {
+    "jobs": [
+      {
+        "id": 130253832763,
+        "name": "Canonical core release archive",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42938338972,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install the pinned workspace compiler",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Build and pack core with release provenance",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          }
+        ]
+      },
+      {
+        "id": 130254009404,
+        "name": "Spark 0.0.2 ARM64 AppKit compile and native acceptance",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 42938338972,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Verify native ARM64 host and Apple build tools",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/download-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Build and install archive consumer outside the monorepo",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Verify the installed AppKit public declaration snapshot",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Verify the private Spark transport with native Foundation and socketpair",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Compile a standalone native AppKit reference",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Exercise actual native controls and window lifetimes",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 10
+          },
+          {
+            "name": "Retain build and native evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Retain the exact natively tested distribution",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 12
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 23
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25
+          }
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "artifacts": [
+      {
+        "id": 13820233523,
+        "name": "macos-appkit-native-evidence",
+        "size_in_bytes": 1416533,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13820233523",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13820233523/zip",
+        "expired": false,
+        "created_at": "2026-11-11T01:44:30Z",
+        "expires_at": "2026-11-25T01:44:27Z",
+        "updated_at": "2026-11-11T01:44:30Z",
+        "digest": "sha256:014581509683a6b294ba66bb434cb76df06647152a31621917ef4549b91b6847",
+        "workflow_run": {
+          "id": 42938338972,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-appkit-interactions-nov10",
+          "head_sha": "f157c9bf207f8ceae890e299f9667b56ab78360d"
+        }
+      },
+      {
+        "id": 13818383946,
+        "name": "macos-appkit-shared-packages",
+        "size_in_bytes": 51323,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13818383946",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13818383946/zip",
+        "expired": false,
+        "created_at": "2026-11-11T01:21:40Z",
+        "expires_at": "2026-11-25T01:21:39Z",
+        "updated_at": "2026-11-11T01:21:40Z",
+        "digest": "sha256:0c33d0d84470adfee1d05870b2bfc7f6086be6d48dc1f75fbc5fa20da0a13c1f",
+        "workflow_run": {
+          "id": 42938338972,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-appkit-interactions-nov10",
+          "head_sha": "f157c9bf207f8ceae890e299f9667b56ab78360d"
+        }
+      }
+    ]
+  },
+  "headWorkflows": {
+    "workflow_runs": [
+      {
+        "id": 42938338972,
+        "name": "NYC-Tron AppKit native host",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_number": 16,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938338972/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938338972/logs",
+        "workflow_id": 413427679
+      },
+      {
+        "id": 42938339032,
+        "name": "NYC-Tron native feel reference",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 26,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339032/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339032/logs",
+        "workflow_id": 412829196
+      },
+      {
+        "id": 42938338987,
+        "name": "NYC-Tron source, exports and types",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 437,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938338987/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938338987/logs",
+        "workflow_id": 407296758
+      },
+      {
+        "id": 42938339072,
+        "name": "NYC-Tron installed release consumers",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 51,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339072/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339072/logs",
+        "workflow_id": 412862812
+      },
+      {
+        "id": 42938339059,
+        "name": "NYC-Tron rendered web instrument acceptance",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 275,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339059/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339059/logs",
+        "workflow_id": 408305507
+      },
+      {
+        "id": 42938339031,
+        "name": "NYC-Tron rendered web overlay acceptance",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 297,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339031/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339031/logs",
+        "workflow_id": 407783843
+      },
+      {
+        "id": 42938339029,
+        "name": "NYC-Tron native controls",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 256,
+        "jobs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339029/jobs",
+        "logs_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42938339029/logs",
+        "workflow_id": 407370070
+      }
+    ]
+  },
+  "headWorkflowScope": "Conclusions are metadata only except the separately inspected complete source, native and rendered-overlay job logs. No additional test totals or interaction acceptance are inferred.",
+  "actualMerge": {
+    "sha": "6d6b913c771e49385e5a57c9737b66fbeb07a9a7",
+    "node_id": "C_kwDOVjEyjdoAKDZkNmI5MTNjNzcxZTQ5Mzg1ZTVhNTdjOTczN2I2NmZiZWIwN2E5YTc",
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits/6d6b913c771e49385e5a57c9737b66fbeb07a9a7",
+    "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/commit/6d6b913c771e49385e5a57c9737b66fbeb07a9a7",
+    "author": {
+      "name": "Michael Allen",
+      "email": "mikefacesny@gmail.com",
+      "date": "2026-11-11T01:21:14Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-11-11T01:21:14Z"
+    },
+    "tree": {
+      "sha": "ac12abeb27d91dcb978492d9aad187c4f198e3b5",
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/trees/ac12abeb27d91dcb978492d9aad187c4f198e3b5"
+    },
+    "message": "Merge f157c9bf207f8ceae890e299f9667b56ab78360d into 0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "parents": [
+      {
+        "sha": "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits/0edd5f302e99877191ba9a412c5c060571a5f6c9",
+        "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/commit/0edd5f302e99877191ba9a412c5c060571a5f6c9"
+      },
+      {
+        "sha": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/git/commits/f157c9bf207f8ceae890e299f9667b56ab78360d",
+        "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/commit/f157c9bf207f8ceae890e299f9667b56ab78360d"
+      }
+    ],
+    "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq88MKCRC1aQ7uu5UhlAAA71oQAKC7jjJ03znsN0YLk7gXnNHc\nx+5mRpiaxk/z+WP68f+Xrd8XOo9KLrOFIAuYiAXnZrUg5amKvFg7sMRADqYS6epu\njJPu/xC0n7rPefizXB1rEYbyI90UTokCwpJWY+ZWKttA708VrClrhz8+CuThpjuO\njRW5UZFcsWxXe1cw+hu3uf7Wgal8Yl7kTuM0cDsG9iAb5Jn8+76J0DB0Wmwai6+S\nm/8vY7wsW4R30XgQoTcH47rcprj8BrbF+FabTJSjeB9heZCDvGPNB/3YMH3BDvDc\na5s2qedqoi6Ll3T+4DbzZXCDGdIiY3DdRaQbQN+HVINNl4v9Om5AuZUhPIufNYmT\nLRaIoExyKaDSrkER/FUbtC/yKQNsc+E+Wlmob9RrGNaFhh4u2F/xnIa4IDfbNNdE\n+041DS3E4lybqyulX4bAaY/3K/K8LDNlpj0bVTkyp6YGimDIKaLnSWj8hPhuuaKa\n1bsK+Uc8JEkvUlLofk3A+QaNDzLVBANFBABotVQnZ7I5SSn4040aZSodSACipr8V\nKe6h68NJ2LiD++24EeIB6LI2jW1rDbw94aYfWWfb5dtRW+LmB8jh8Koe/icTHAHi\ntfUxeg34vwFJJFCdoBcYSZZEHhKz2eXxpIkk/7d/ijelIkIiQjYwKoJ3OKzaFDLm\nns1HAoaG7D71ckkL7brq\n=MNa4\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree ac12abeb27d91dcb978492d9aad187c4f198e3b5\nparent 0edd5f302e99877191ba9a412c5c060571a5f6c9\nparent f157c9bf207f8ceae890e299f9667b56ab78360d\nauthor Michael Allen <mikefacesny@gmail.com> 1794360074 +0000\ncommitter GitHub <noreply@github.com> 1794360074 +0000\n\nMerge f157c9bf207f8ceae890e299f9667b56ab78360d into 0edd5f302e99877191ba9a412c5c060571a5f6c9\n",
+      "verified_at": "2026-11-11T01:21:15Z"
+    }
+  }
+}

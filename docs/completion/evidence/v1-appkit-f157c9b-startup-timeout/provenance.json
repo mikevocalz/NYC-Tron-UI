@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helper": {
+    "head": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+    "parent": "3891ee1788e6722c922ef431c576f507c5591f60",
+    "tree": "ac12abeb27d91dcb978492d9aad187c4f198e3b5",
+    "actualMerge": "6d6b913c771e49385e5a57c9737b66fbeb07a9a7",
+    "actualMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "f157c9bf207f8ceae890e299f9667b56ab78360d"
+    ],
+    "sameTreeVerified": true,
+    "fullTreeLeavesVerified": 2048,
+    "changedPaths": [
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "oldGitBlob": "35414d7cd7e91e907698ea68538c7ec9de1913c2",
+        "gitBlob": "deeedf41711c84dbcca0029104e5ea03e6b55a2c"
+      },
+      {
+        "path": "packages/expo-controls/tests/browser/server.mjs",
+        "oldGitBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+        "gitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9"
+      }
+    ]
+  },
+  "workflow": {
+    "runId": 42938338972,
+    "sourceJobId": 130253832763,
+    "nativeJobId": 130254009404,
+    "source": "success",
+    "sourceTests": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0
+    },
+    "cleanConsumerPreparation": "success",
+    "installedApi": "success",
+    "installedApiCounts": {
+      "subpaths": 15,
+      "reachableDeclarations": 33
+    },
+    "foundationSocketpairProbe": "success",
+    "nativeCompilation": "success",
+    "compileStartedAt": "2026-11-11T01:25:13Z",
+    "compileCompletedAt": "2026-11-11T01:43:44Z",
+    "nativeInteractionAcceptance": "failure",
+    "runtimeStartedAt": "2026-11-11T01:43:44Z",
+    "runtimeCompletedAt": "2026-11-11T01:44:26Z",
+    "evidenceUpload": "success",
+    "testedDistributionUpload": "skipped"
+  },
+  "failure": {
+    "message": "Native driver response timed out awaiting tron.window (request 2)",
+    "sourceLocation": "examples/macos-appkit/spark/driver-client.mjs:36:43",
+    "clientGitBlob": "0365653c0b6f4ee12f1022b31ee905127d2b6023",
+    "activationDriverGitBlob": "b01dccc74827a61ce5b2cfe3ededeca5c001b045",
+    "command": "tron.window",
+    "requestId": 2,
+    "responseTimeoutMs": 35000,
+    "activationPhase": null,
+    "nativeRequestReceiptObserved": false,
+    "lateReplyObserved": false,
+    "originalActivationTraceInspected": false,
+    "originalClientTranscriptInspected": false,
+    "originalProcessMetadataInspected": false,
+    "originalProcessSampleInspected": false
+  },
+  "sourceFlowInference": {
+    "basis": "Verified source order plus the first thrown request-2 timeout; original runtime JSON and native phase trace remain unextracted.",
+    "authenticatedReadyAwaitCompleted": true,
+    "pingAwaitCompleted": true,
+    "rootMainMountCheckReached": false,
+    "actualReactMountState": null,
+    "menuAssertionsReached": false,
+    "tooltipEvidenceAllocated": false,
+    "tooltipAcceptanceReached": false,
+    "laterPopoverAndDragChecksReached": false,
+    "interactionGroupCompletionEstablished": false
+  },
+  "tooltipConsole": {
+    "envelopeCount": 0,
+    "expectedForFailureBeforeEvidenceAllocation": true,
+    "newTooltipObservationEstablished": false,
+    "reporterBehaviorAcceptedByNativeRun": false
+  },
+  "sourceLog": {
+    "path": "source-job.log",
+    "characters": 19288,
+    "utf8Bytes": 19328,
+    "sha256": "96b8d8007908227b0a57a169fc0a93556b6a6569fbd7f946826eb688972a5304",
+    "gitBlob": "b2b3fcb8299cb1702948d1cdcc29e9b70c5a9c26",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "nativeLog": {
+    "path": "native-job.log",
+    "characters": 53218,
+    "utf8Bytes": 53466,
+    "sha256": "0a2057205499734cab358f8b9f5b07f4026a9825022cea7f9daecbe35eedef6c",
+    "gitBlob": "8e2ae20a9d10d3cdbf2d1f087c3dcf61aa6594a2",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "derivedBuildSummary": {
+    "path": "build-result-log-summary.json",
+    "characters": 318,
+    "utf8Bytes": 318,
+    "sha256": "03a31c79cae90a893a3da4b7074fc39a9bfb34e96190290a59097743fa844163",
+    "gitBlob": "37498466d3a66c34e66fd148524ffaaffaa17327",
+    "completeMarkerEnvelopes": 1,
+    "onlyTimestampAndLogLineEndingRemoved": true,
+    "newlineAdded": false,
+    "isOriginalBuildResultFile": false
+  },
+  "producerReportedCompilerTranscript": {
+    "filename": "build-console.log",
+    "bytes": 12329248,
+    "sha256": "45a25d2b6102fdf1c93344c48e8b6b7e2758be1b0d4a7558cb3e116e7d94d455",
+    "complete": true,
+    "normalized": false,
+    "independentlyExtracted": false,
+    "independentlyRehashed": false
+  },
+  "producerReportedArtifact": {
+    "id": 13820233523,
+    "name": "macos-appkit-native-evidence",
+    "bytes": 1416533,
+    "sha256": "014581509683a6b294ba66bb434cb76df06647152a31621917ef4549b91b6847",
+    "uploadReportedFiles": 44,
+    "originalBytesVerified": false,
+    "membersExtracted": false,
+    "screenshotsViewed": false
+  },
+  "otherWorkflows": {
+    "metadataSnapshotIncluded": true,
+    "completedSuccessfulCount": 6,
+    "countsOrNativeAcceptanceInferredFromMetadata": false,
+    "renderedOverlayPassReceipt": "../v1-web-f157c9b-overlay-pass/README.md"
+  },
+  "limits": {
+    "startupFailureCauseEstablished": false,
+    "failedActivationPhaseEstablished": false,
+    "historical8feReplyOrThreadStateAssignedToThisRun": false,
+    "tooltipFailureCauseEstablished": false,
+    "localExecutionEnvironmentAvailable": false,
+    "localGitFetchPerformed": false,
+    "fullNativeGatePassed": false,
+    "finalCombinedCandidatePassed": false,
+    "allEightPlatformsAccepted": false,
+    "ownerApprovedDistribution": false,
+    "releaseCreated": false,
+    "tagCreated": false
+  }
+}

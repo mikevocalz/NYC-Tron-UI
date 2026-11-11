@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "source-review-and-V8-mocked-IO-only",
+  "sourceOnly": true,
+  "baseCommit": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+  "verifier": {
+    "path": "examples/macos-appkit/spark/verify-native.mjs",
+    "preimageGitBlob": "deeedf41711c84dbcca0029104e5ea03e6b55a2c",
+    "gitBlob": "e773cfb2661e80f01daa400f14cd09b903e6b087",
+    "utf8Bytes": 65792,
+    "sha256": "a90bd7925658a053391a6f6b9cbcf1979f8d90f306a670fb93f271c74bab5aa0",
+    "addedBlock": {
+      "firstLine": 206,
+      "lastLine": 386,
+      "functions": [
+        "startupProject",
+        "startupStream",
+        "startupProcess",
+        "readStartupInput",
+        "reportStartupFailure"
+      ]
+    },
+    "edits": [
+      "Add fstatSync to the existing node:fs import",
+      "Insert bounded reporting helper functions before the unchanged waitFor function",
+      "Call reportStartupFailure after the original failure.json write and before the original throw"
+    ],
+    "exactPreimageRestoredByRemovingThreeEdits": true,
+    "insertedLines": 183,
+    "removedLines": 1,
+    "followupFromInitialCandidate": {
+      "gitBlob": "b63bc707b8d6c433c37d33863809c3967b04bf87",
+      "changedLines": 2,
+      "addedBytes": 70,
+      "change": "Both command and process ISO-time selectors now require canonical Date round-trip equality; no other candidate bytes changed"
+    }
+  },
+  "triggeringEvidence": {
+    "runId": 42938338972,
+    "helperCommit": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+    "nativeLogGitBlob": "8e2ae20a9d10d3cdbf2d1f087c3dcf61aa6594a2",
+    "nativeLogUtf8Bytes": 53466,
+    "nativeLogSha256": "0a2057205499734cab358f8b9f5b07f4026a9825022cea7f9daecbe35eedef6c",
+    "basis": "Completed original log independently matched by root and the AppKit owner; source control flow independently inspected",
+    "firstFailure": "Native driver response timed out awaiting tron.window (request 2)",
+    "controlFlowBoundary": "The verifier had not reached mounted('root-main') or allocated tooltipEvidence. This does not establish that React content never mounted.",
+    "originalArtifactUnextracted": true,
+    "underlyingCauseEstablished": false
+  },
+  "reporting": {
+    "markerBegin": "NYCTRON_STARTUP_EVIDENCE_BEGIN",
+    "markerEnd": "NYCTRON_STARTUP_EVIDENCE_END",
+    "consoleUtf8ByteLimit": 32768,
+    "markersAndNewlinesIncluded": true,
+    "sourceRevisionAndOwnedProcessIdBound": true,
+    "diagnosticOnly": true,
+    "appLog": {
+      "input": "app.log",
+      "readByteLimit": 1048576,
+      "range": "prefix up to the source size observed at open, limited to one MiB",
+      "snapshot": "startup-app-log-snapshot.log",
+      "createMode": "wx",
+      "sha256Scope": "exact bytes retained in the read-time prefix snapshot",
+      "eventualAppLogHashClaim": false,
+      "sourceMayStillAppend": true,
+      "beforeAfterSizeAndIdentityObservations": true,
+      "failedRetentionSuppressesSnapshotProjection": true,
+      "existingSnapshotNeverOverwritten": true
+    },
+    "completedInputs": {
+      "filenames": [
+        "commands.jsonl",
+        "native-process-failure.json"
+      ],
+      "completeFileByteLimit": 262144,
+      "readByteLimit": 262145,
+      "fullFileHashRequiresCompleteStableRead": true,
+      "changingOrOversizedInputHasNoCompleteFileHash": true,
+      "processJsonProjectedOnlyAfterCompleteStableRead": true
+    },
+    "perStream": {
+      "lineUtf8ByteLimit": 8192,
+      "lineScanLimit": 4096,
+      "recordSelection": "first sixteen and last sixteen matching records within the scanned prefix, without duplicate indexes",
+      "recordLimit": 32,
+      "incompleteTrailingLinesDiscarded": true,
+      "unscannedLinesAndOmissionCountsExplicit": true,
+      "oldestRecordsRemovedToFitOutputLimit": true
+    },
+    "traceBinding": "Only the two fixed NSLog prefixes with the exact owned PID in the native log header are accepted",
+    "activationFields": "Fixed phases, local operation, epoch time, main-thread Boolean and typed policy/window/callback/identity fields",
+    "transportFields": "Fixed phases/commands, local sequence, epoch time, main-thread Boolean and selected Boolean/byte/error-code fields",
+    "commandFields": "Fixed phases/commands, ISO time, safe numeric request/response IDs and typed ok/protocol values",
+    "processFields": "Owned PID, observation times, nullable exit status with availability, fixed signal names, sampler timings/thread count/typed hasThreadStacks and validated producer-recorded sample digest",
+    "sampleFileNotReread": true,
+    "unknownBooleansRemainNull": true,
+    "noRawArgumentsResponseValuesCredentialsStdoutStderrPathsOrErrorText": true,
+    "absentTraceDoesNotProveNonexecution": true,
+    "threadStacksDoNotEstablishHealth": true,
+    "newReportingErrorsRemainSecondary": true
+  },
+  "verification": {
+    "addedBlockSyntaxParsedInV8": true,
+    "exactSourceBlobCreatedAndReadBack": true,
+    "authorChecks": {
+      "scope": "V8 source selectors and mocked bounded filesystem/console only; no Node filesystem, macOS or native acceptance execution",
+      "passed": 19,
+      "failed": 0,
+      "checks": [
+        {
+          "name": "strict typed selectors and fixed vocabulary",
+          "status": "passed"
+        },
+        {
+          "name": "canonical ISO validators reject normalized invalid calendar dates",
+          "status": "passed"
+        },
+        {
+          "name": "nested activation state and transport classifications",
+          "status": "passed"
+        },
+        {
+          "name": "owned NSLog PID and complete line parsing",
+          "status": "passed"
+        },
+        {
+          "name": "process projection PID, unknown status and sampler digest scope",
+          "status": "passed"
+        },
+        {
+          "name": "exact original digests, retained snapshot and no secret console content",
+          "status": "passed",
+          "envelopeUtf8Bytes": 5629
+        },
+        {
+          "name": "live append preserves bounded initial prefix and labels change",
+          "status": "passed"
+        },
+        {
+          "name": "source replacement remains a captured descriptor snapshot",
+          "status": "passed"
+        },
+        {
+          "name": "wx collision preserves prior bytes and does not claim a fresh snapshot",
+          "status": "passed"
+        },
+        {
+          "name": "missing inputs remain explicit unavailable observations",
+          "status": "passed"
+        },
+        {
+          "name": "invalid JSON and invalid typed observations remain distinct",
+          "status": "passed"
+        },
+        {
+          "name": "hard read caps and overflow never publish a complete partial hash",
+          "status": "passed"
+        },
+        {
+          "name": "changing command and process files cannot receive complete-file digests",
+          "status": "passed"
+        },
+        {
+          "name": "exact complete-file cap accepts only the full EOF-terminated read",
+          "status": "passed"
+        },
+        {
+          "name": "line scan and record retention budgets disclose omissions",
+          "status": "passed"
+        },
+        {
+          "name": "complete 32 KiB envelope trims records while retaining latest stages",
+          "status": "passed",
+          "envelopeUtf8Bytes": 32766
+        },
+        {
+          "name": "all new IO/reporting failures preserve primary error and cleanup",
+          "status": "passed"
+        },
+        {
+          "name": "empty originals differ from missing originals",
+          "status": "passed"
+        },
+        {
+          "name": "authentic historical timeout and late-send records stay separate",
+          "status": "passed"
+        }
+      ],
+      "reproducibleCode": {
+        "gitBlob": "0820ec9ea22b8fbcc70c78c7aeee3ca0a4ac95b0",
+        "utf8Bytes": 27845,
+        "sha256": "afd670ea94154a04dd1a800d3597c90b6c6ab1546fcc7f88172e4012d6e86114",
+        "entryPoint": "reviewStartupReporter(candidateSource, { app, commands, process })"
+      }
+    },
+    "historicalFixtures": {
+      "appLog": "3949183f89bbdbaefbbe6fee066fe3c1664f7a4b",
+      "commands": "f6f93527325fcc1c67adc0f766f728d1b004498a",
+      "processFailure": "44e2eefd3a36794f846ea1fad043feb6cd54771b"
+    },
+    "independentReview": {
+      "reviewer": "desktop_host_audit",
+      "initialSourceGitBlob": "b63bc707b8d6c433c37d33863809c3967b04bf87",
+      "initialFullSourceApproved": true,
+      "independentlyAuthoredV8MockIoGroupsPassed": 12,
+      "failed": 0,
+      "finalSourceGitBlob": "e773cfb2661e80f01daa400f14cd09b903e6b087",
+      "finalSourceApproved": true,
+      "canonicalIsoFollowup": {
+        "independentDateCasesPassed": 9,
+        "bothHelpersAndNestedProcessTimesChecked": true,
+        "exactTwoLine70ByteDeltaVerified": true
+      },
+      "exactInverseAndHashesVerified": true,
+      "preparedHelperTreeAndSoleParentVerified": true
+    },
+    "localNodeFilesystemExecution": false,
+    "localNativeOrAppKitExecution": false,
+    "newCiRuntimeOutcomeEstablished": false,
+    "wholeVerifierV8Syntax": {
+      "passed": true,
+      "importsExcluded": true,
+      "importMetaReplacedForParseOnly": true,
+      "bodyNotInvoked": true
+    },
+    "rootReview": {
+      "wholeVerifierV8SyntaxParsed": true,
+      "importsExcludedAndImportMetaSubstitutedForParseOnly": true,
+      "independentlyDesignedSelectorGroupsPassed": 9,
+      "canonicalIsoFollowupReviewed": true,
+      "sameAuthorHarnessReproduced": {
+        "gitBlob": "0820ec9ea22b8fbcc70c78c7aeee3ca0a4ac95b0",
+        "passed": 19,
+        "failed": 0,
+        "independentlyFetchedHistoricalFixtures": true,
+        "countsAreReproductionNotAdditionalDistinctTestDesigns": true
+      },
+      "nativeOrNodeFilesystemExecution": false
+    }
+  },
+  "unchanged": {
+    "originalEvidenceWrites": true,
+    "activationPolicyAndOrdering": true,
+    "nativeCommands": true,
+    "clientResponseTimeout35000ms": true,
+    "gestureDeadlines": true,
+    "permissions": true,
+    "strictNativeAssertions": true,
+    "processSamplingBeforeDriverClose": true,
+    "primaryErrorRethrow": true,
+    "driverCloseAndAppTermination": true,
+    "passedOnlyDistributionGates": true,
+    "acceptanceLedger": true
+  },
+  "publication": {
+    "helperCommitPublishedByRoot": true,
+    "publishedAtUtc": "2026-11-11T02:17:14Z",
+    "authorActions": "immutable candidate, reproducible check and source-review blobs only",
+    "authorTreeCommitRefOrPrWrites": false,
+    "workflowRun": 42944976627,
+    "workflowUrl": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42944976627",
+    "workflowStatusAtReceiptCheckpoint": {
+      "sourceJob": {
+        "id": 130275485575,
+        "status": "completed",
+        "conclusion": "success",
+        "basis": "workflow metadata independently observed by root; complete original log retrieval pending"
+      },
+      "nativeJob": {
+        "id": 130275751812,
+        "status": "queued",
+        "nativeRuntimeOutcome": "unobserved"
+      }
+    },
+    "receiptBoundary": "Published source checkpoint; workflow completion metadata does not substitute for original log review or native interactions"
+  },
+  "preparedHelper": {
+    "commit": "a685bd17d3023307181371a9c042bfbc1530c232",
+    "tree": "0b3c93477329d5db0076e0f6a54c6afa2dbcd3b8",
+    "parent": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+    "fullTreeLeaves": 2048,
+    "changedPaths": 1,
+    "status": "published source checkpoint; actual native runtime outcome remains unobserved at this receipt checkpoint",
+    "identitiesVerifiedBy": [
+      "root",
+      "final_gate_review",
+      "desktop_host_audit"
+    ],
+    "treeObjectsIndependentlyRecomputed": 284
+  },
+  "actualMerge": {
+    "sha": "778ab991afb4dfe48b405800dc4b79e4bca97939",
+    "tree": "0b3c93477329d5db0076e0f6a54c6afa2dbcd3b8",
+    "parents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "a685bd17d3023307181371a9c042bfbc1530c232"
+    ],
+    "identitiesIndependentlyVerifiedBy": [
+      "root",
+      "final_gate_review"
+    ]
+  }
+}

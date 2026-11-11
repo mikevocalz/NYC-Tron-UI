@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "helperHead": "f157c9bf207f8ceae890e299f9667b56ab78360d",
+  "helperTree": "ac12abeb27d91dcb978492d9aad187c4f198e3b5",
+  "actualCheckout": "6d6b913c771e49385e5a57c9737b66fbeb07a9a7",
+  "actualMergeParents": [
+    "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+    "f157c9bf207f8ceae890e299f9667b56ab78360d"
+  ],
+  "actualMergeTreeVerified": true,
+  "workflow": {
+    "runId": 42938339031,
+    "jobId": 130253832511,
+    "status": "success",
+    "browserTestsPassed": 32
+  },
+  "alias": {
+    "path": "packages/expo-controls/tests/browser/server.mjs",
+    "oldGitBlob": "4fdde0ddb7c1a3befdc00dc89038d4ea9af7d606",
+    "gitBlob": "2687299e55689f6fca67d7a8904eb85923d2aaa9",
+    "insertedBytes": 77,
+    "insertedLines": 1,
+    "aggregateAlreadyContainedExactFix": true
+  },
+  "originalLog": {
+    "path": "browser-job.log",
+    "characters": 40973,
+    "utf8Bytes": 43807,
+    "sha256": "c54772dea9715a69dbc2968d5d744adc3f2fc375dee8742ce75c5ec1bdbcfdb4",
+    "gitBlob": "fe15b4c6867c827f84da704092c3123d966bb47b",
+    "fullOriginalDecodedLog": true,
+    "independentRetrievalMatched": true
+  },
+  "producerReportedArtifact": {
+    "id": 13820060342,
+    "name": "overlay-renders",
+    "bytes": 280598,
+    "sha256": "b36366551fa4560ab142a2961c3033123b996e6e25a8462dde8b8c9e164c6926",
+    "originalZipBytesVerified": false,
+    "membersExtracted": false,
+    "screenshotsViewed": false
+  },
+  "limits": {
+    "nativeTooltipAcceptanceEstablishedByThisRun": false,
+    "finalCombinedCandidatePassed": false,
+    "allEightPlatformsAccepted": false,
+    "ownerApprovedDistribution": false,
+    "releaseCreated": false
+  }
+}

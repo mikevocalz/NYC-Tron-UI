@@ -81,6 +81,86 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit startup failure and browser correction
+
+The completed follow-up at head
+`f157c9bf207f8ceae890e299f9667b56ab78360d`,
+actual merge `6d6b913c771e49385e5a57c9737b66fbeb07a9a7`,
+tree `ac12abeb27d91dcb978492d9aad187c4f198e3b5`, has a
+[separate startup-failure receipt](../evidence/v1-appkit-f157c9b-startup-timeout/README.md).
+The actual merge's full 2,048-leaf tree and ordered parents were independently
+verified. Native run 42938338972 passed all eleven source checks with zero
+failures/skips, clean installed-consumer/API verification, the actual
+Foundation/socketpair probe and native compilation. Runtime then failed
+`Native driver response timed out awaiting tron.window (request 2)`.
+
+The verifier had not reached its root-main mount check or allocated tooltip
+evidence.
+The absence of a tooltip summary is expected; this run provides no new tooltip
+observation. The original activation trace, client transcript and process
+sample remain unextracted, so the failed activation phase and thread state
+during the request are unknown. Historical 8fe late-reply observations are not
+assigned to this run. The inspected current source and historical evidence
+do not yet justify changing the activation behavior or its unchanged
+35-second client deadline.
+
+The complete original source/native job logs are 19,328/53,466 UTF-8 bytes and
+were independently retrieved and rehashed. The exact selected build summary
+records exit zero and a producer-reported 12,329,248-byte original compiler
+transcript. Runtime artifact 13820233523 reports 1,416,533 bytes and 44 uploaded
+files. Its original ZIP members and the compiler transcript remain unextracted
+and independently unverified; their reported hashes remain distinct from the
+inspected log identities. Passed-only AppKit distribution was skipped.
+
+The same helper's corrected browser fixture passed all 32 rendered overlay
+tests in run 42938339031, job 130253832511, at that exact actual merge.
+The [completed browser receipt](../evidence/v1-web-f157c9b-overlay-pass/README.md)
+retains the full original 43,807-byte log and normalized completed metadata.
+This closes the missing `@nyc-tron/core/overlays` alias failure in that run.
+Artifact 13820060342 reports 280,598 bytes; the rendered ZIP and PNGs remain
+unextracted/unviewed. These helper results do not replace final combined
+candidate verification, native desktop acceptance or physical-device gates.
+
+### November 11 bounded startup evidence
+
+The source-reviewed follow-up at helper
+`a685bd17d3023307181371a9c042bfbc1530c232`, tree
+`0b3c93477329d5db0076e0f6a54c6afa2dbcd3b8`, changes only the private
+`verify-native.mjs` reporter. Its complete 2,048-leaf tree differs from f157
+at that one path. The [source review](../evidence/v1-appkit-a685bd1-startup-observation-source/README.md)
+keeps implementation review separate from the next native run.
+
+The reporter executes after the existing failure capture and before the
+original exception is rethrown and the owned driver/app are closed. It reads
+only the existing app log, command transcript and process-failure JSON.
+The live app log contributes at most a 1 MiB prefix, retained once with
+exclusive creation as `startup-app-log-snapshot.log`. Its digest identifies
+those captured bytes, never the eventual original app log. File-change,
+identity, truncation and unread-byte observations remain explicit.
+
+The command and process reads are capped at 256 KiB plus one overflow byte.
+Only complete reads with consistent observed file metadata receive a
+whole-file digest. The projection selects fixed phases, commands, owned-PID
+records and typed values; arbitrary payloads, errors and paths are omitted.
+Missing values remain distinct from observed false or zero. ISO timestamps
+must round-trip exactly, so normalized invalid calendar dates are rejected.
+The first/last selection operates within a 4,096-line scanned prefix, with
+an 8,192-byte line limit and explicit omitted/unscanned counts.
+
+The complete console envelope is capped at 32 KiB including markers and
+newlines. Reproducible V8/mock checks exercised real trimming to 32,766 bytes,
+snapshot conflicts, changing files, exact/over read caps, PID filtering,
+unknown values and secondary errors. Those checks use in-memory adapters;
+they do not execute Node filesystem or native AppKit operations. Root also
+verified the complete verifier's syntax in V8 with its module-only syntax
+adapted for parsing, and exact reversal restores the prior verifier bytes.
+
+The native application and driver, activation sequence, single-session
+protocol, 35-second client deadline, permissions, gestures, assertions,
+existing evidence writes, cleanup and passed-only archive gates are unchanged.
+No startup cause, native correction or acceptance pass is inferred from this
+source-only diagnostic. Actual runtime results remain separately required.
+
 ### November 11 AppKit compile and tooltip-hover result
 
 The [completed 3891 run](../evidence/v1-appkit-3891ee1-tooltip-hover-failure/README.md)

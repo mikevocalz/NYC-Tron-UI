@@ -1,0 +1,601 @@
+﻿2026-11-11T01:21:46.9290520Z Current runner version: '2.338.2'
+2026-11-11T01:21:46.9610050Z ##[group]Runner Image Provisioner
+2026-11-11T01:21:46.9611060Z Hosted Compute Agent
+2026-11-11T01:21:46.9611620Z Version: 20261103.629
+2026-11-11T01:21:46.9612100Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-11T01:21:46.9612700Z Build Date: 2026-11-03T17:26:59Z
+2026-11-11T01:21:46.9613220Z Worker ID: {ab68ab0d-a870-4b57-bf73-7a90fcce7808}
+2026-11-11T01:21:46.9613710Z Region: westus
+2026-11-11T01:21:46.9614170Z Cloud: MacCloud
+2026-11-11T01:21:46.9614630Z ##[endgroup]
+2026-11-11T01:21:46.9615830Z ##[group]Operating System
+2026-11-11T01:21:46.9616310Z macOS
+2026-11-11T01:21:46.9616750Z 15.8.2
+2026-11-11T01:21:46.9617330Z 24H232
+2026-11-11T01:21:46.9617830Z ##[endgroup]
+2026-11-11T01:21:46.9618490Z ##[group]Runner Image
+2026-11-11T01:21:46.9618980Z Image: macos-15-arm64
+2026-11-11T01:21:46.9619640Z Version: 20261104.0514.1
+2026-11-11T01:21:46.9627940Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20261104.0514/images/macos/macos-15-arm64-Readme.md
+2026-11-11T01:21:46.9629200Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20261104.0514
+2026-11-11T01:21:46.9630110Z ##[endgroup]
+2026-11-11T01:21:46.9631170Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T01:21:46.9633680Z Contents: read
+2026-11-11T01:21:46.9634170Z Metadata: read
+2026-11-11T01:21:46.9634660Z ##[endgroup]
+2026-11-11T01:21:46.9636780Z Secret source: Actions
+2026-11-11T01:21:46.9637470Z Cache mode: write
+2026-11-11T01:21:46.9638010Z Prepare workflow directory
+2026-11-11T01:21:47.0191930Z Prepare all required actions
+2026-11-11T01:21:47.0314820Z Getting action download info
+2026-11-11T01:21:47.5124400Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T01:21:47.9384990Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T01:21:48.1622100Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-11-11T01:21:48.7100070Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-11T01:21:49.0495860Z Complete job name: Spark 0.0.2 ARM64 AppKit compile and native acceptance
+2026-11-11T01:21:49.1557250Z ##[group]Run actions/checkout@v4
+2026-11-11T01:21:49.1558840Z with:
+2026-11-11T01:21:49.1559210Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T01:21:49.1562260Z   token: ***
+2026-11-11T01:21:49.1562590Z   ssh-strict: true
+2026-11-11T01:21:49.1562980Z   ssh-user: git
+2026-11-11T01:21:49.1563390Z   persist-credentials: true
+2026-11-11T01:21:49.1573380Z   clean: true
+2026-11-11T01:21:49.1574530Z   sparse-checkout-cone-mode: true
+2026-11-11T01:21:49.1575680Z   fetch-depth: 1
+2026-11-11T01:21:49.1576590Z   fetch-tags: false
+2026-11-11T01:21:49.1577850Z   show-progress: true
+2026-11-11T01:21:49.1578240Z   lfs: false
+2026-11-11T01:21:49.1578840Z   submodules: false
+2026-11-11T01:21:49.1579280Z   set-safe-directory: true
+2026-11-11T01:21:49.1579930Z   allow-unsafe-pr-checkout: false
+2026-11-11T01:21:49.1581420Z env:
+2026-11-11T01:21:49.1581740Z   CI: 1
+2026-11-11T01:21:49.1582510Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:21:49.1582880Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:21:49.1583570Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:21:49.1584190Z ##[endgroup]
+2026-11-11T01:21:49.7334270Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T01:21:49.7335880Z ##[group]Getting Git version info
+2026-11-11T01:21:49.7336470Z Working directory is '/Users/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T01:21:49.7362820Z [command]/opt/homebrew/bin/git version
+2026-11-11T01:21:49.7936410Z git version 2.56.0
+2026-11-11T01:21:49.7966180Z ##[endgroup]
+2026-11-11T01:21:49.7986970Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/8c816d6e-d93d-4dd4-95d0-a214459e413a/.gitconfig'
+2026-11-11T01:21:49.7999690Z Temporarily overriding HOME='/Users/runner/work/_temp/8c816d6e-d93d-4dd4-95d0-a214459e413a' before making global git config changes
+2026-11-11T01:21:49.8003730Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T01:21:49.8008490Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T01:21:49.8302990Z Deleting the contents of '/Users/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T01:21:49.8310450Z ##[group]Initializing the repository
+2026-11-11T01:21:49.8313540Z [command]/opt/homebrew/bin/git init /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T01:21:49.8739090Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T01:21:49.8744190Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T01:21:49.8745320Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T01:21:49.8746040Z hint: call:
+2026-11-11T01:21:49.8746450Z hint:
+2026-11-11T01:21:49.8747600Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T01:21:49.8748210Z hint:
+2026-11-11T01:21:49.8748720Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T01:21:49.8773370Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T01:21:49.8876460Z hint:
+2026-11-11T01:21:49.8980840Z hint: 	git branch -m <name>
+2026-11-11T01:21:49.9098070Z hint:
+2026-11-11T01:21:49.9120710Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T01:21:49.9123270Z Initialized empty Git repository in /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T01:21:49.9127530Z [command]/opt/homebrew/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T01:21:49.9129120Z ##[endgroup]
+2026-11-11T01:21:49.9129720Z ##[group]Disabling automatic garbage collection
+2026-11-11T01:21:49.9130280Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-11T01:21:49.9131980Z ##[endgroup]
+2026-11-11T01:21:49.9132620Z ##[group]Setting up auth
+2026-11-11T01:21:49.9133370Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T01:21:49.9242450Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T01:21:50.1523120Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T01:21:50.1611260Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T01:21:50.3572300Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T01:21:50.3574680Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T01:21:50.5858740Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T01:21:50.6182060Z ##[endgroup]
+2026-11-11T01:21:50.6280240Z ##[group]Fetching the repository
+2026-11-11T01:21:50.6285960Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6d6b913c771e49385e5a57c9737b66fbeb07a9a7:refs/remotes/pull/59/merge
+2026-11-11T01:21:51.8924160Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T01:21:51.9053280Z  * [new ref]         6d6b913c771e49385e5a57c9737b66fbeb07a9a7 -> pull/59/merge
+2026-11-11T01:21:51.9266340Z ##[endgroup]
+2026-11-11T01:21:51.9267580Z ##[group]Determining the checkout info
+2026-11-11T01:21:51.9268880Z ##[endgroup]
+2026-11-11T01:21:51.9270240Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-11T01:21:51.9272780Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T01:21:51.9276800Z ##[group]Checking out the ref
+2026-11-11T01:21:51.9277770Z [command]/opt/homebrew/bin/git checkout --progress --force refs/remotes/pull/59/merge
+2026-11-11T01:21:52.3949220Z HEAD is now at 6d6b913 Merge f157c9bf207f8ceae890e299f9667b56ab78360d into 0edd5f302e99877191ba9a412c5c060571a5f6c9
+2026-11-11T01:21:52.3975700Z ##[endgroup]
+2026-11-11T01:21:52.4103910Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-11T01:21:52.4205070Z 6d6b913c771e49385e5a57c9737b66fbeb07a9a7
+2026-11-11T01:21:52.4592890Z ##[group]Run actions/setup-node@v4
+2026-11-11T01:21:52.4593220Z with:
+2026-11-11T01:21:52.4593470Z   node-version: 24.19.0
+2026-11-11T01:21:52.4593740Z   always-auth: false
+2026-11-11T01:21:52.4593980Z   check-latest: false
+2026-11-11T01:21:52.4595990Z   token: ***
+2026-11-11T01:21:52.4596160Z env:
+2026-11-11T01:21:52.4596310Z   CI: 1
+2026-11-11T01:21:52.4596470Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:21:52.4596670Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:21:52.4596950Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:21:52.4597280Z ##[endgroup]
+2026-11-11T01:21:52.7557080Z Attempting to download 24.19.0...
+2026-11-11T01:21:52.7738350Z (node:1916) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T01:21:52.7748310Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T01:21:53.4986840Z Acquiring 24.19.0 - arm64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-darwin-arm64.tar.gz
+2026-11-11T01:21:54.1541410Z Extracting ...
+2026-11-11T01:21:54.1732300Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/3ec4a786-a8e1-46d9-b740-337cc6bb2e72 -f /Users/runner/work/_temp/c2a6dbda-7928-4254-96f2-6a97ced67ed0
+2026-11-11T01:21:56.2030090Z Adding to the cache ...
+2026-11-11T01:21:59.3188920Z ##[group]Environment details
+2026-11-11T01:22:00.1648140Z node: v24.19.0
+2026-11-11T01:22:00.1682410Z npm: 11.17.0
+2026-11-11T01:22:00.1710690Z yarn: 1.22.22
+2026-11-11T01:22:00.1752580Z ##[endgroup]
+2026-11-11T01:22:00.2397870Z ##[group]Run set -euo pipefail
+2026-11-11T01:22:00.2398640Z [36;1mset -euo pipefail[0m
+2026-11-11T01:22:00.2399500Z [36;1mtest "$(uname -m)" = arm64[0m
+2026-11-11T01:22:00.2400090Z [36;1mnode -e 'if(process.platform!=="darwin"||process.arch!=="arm64")throw Error("Expected native macOS ARM64 Node")'[0m
+2026-11-11T01:22:00.2400750Z [36;1mtest -d "$DEVELOPER_DIR"[0m
+2026-11-11T01:22:00.2401050Z [36;1mmkdir -p "$RUNNER_TEMP/appkit-toolchain"[0m
+2026-11-11T01:22:00.2401550Z [36;1mxcodebuild -version > "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T01:22:00.2402040Z [36;1mxcrun swift --version >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T01:22:00.2402650Z [36;1mxcrun --sdk macosx --show-sdk-path >> "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T01:22:00.2403210Z [36;1mcat "$RUNNER_TEMP/appkit-toolchain/versions.txt"[0m
+2026-11-11T01:22:00.2404220Z [36;1mnode -e 'const fs=require("node:fs"); const text=fs.readFileSync(process.env.RUNNER_TEMP+"/appkit-toolchain/versions.txt","utf8"); if(!/^Xcode 26\.2\n/m.test(text))throw Error("Expected selected Xcode 26.2")'[0m
+2026-11-11T01:22:00.2406030Z [36;1mcat > "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" <<'SWIFT'[0m
+2026-11-11T01:22:00.2407500Z [36;1mprotocol AppKitHostProbe { func update() }[0m
+2026-11-11T01:22:00.2408820Z [36;1m@MainActor final class AppKitHost: @MainActor AppKitHostProbe {[0m
+2026-11-11T01:22:00.2409770Z [36;1m  func update() {}[0m
+2026-11-11T01:22:00.2410480Z [36;1m}[0m
+2026-11-11T01:22:00.2410980Z [36;1mSWIFT[0m
+2026-11-11T01:22:00.2413030Z [36;1mxcrun swiftc -typecheck -swift-version 6 "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.swift" 2>&1 | tee "$RUNNER_TEMP/appkit-toolchain/isolated-conformance.log"[0m
+2026-11-11T01:22:00.2415090Z [36;1mpod --version[0m
+2026-11-11T01:22:00.2560640Z shell: /bin/bash -e {0}
+2026-11-11T01:22:00.2561080Z env:
+2026-11-11T01:22:00.2574450Z   CI: 1
+2026-11-11T01:22:00.2575850Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:22:00.2576460Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:22:00.2579040Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:22:00.2580840Z ##[endgroup]
+2026-11-11T01:22:08.6056450Z Xcode 26.2
+2026-11-11T01:22:08.6057460Z Build version 17C52
+2026-11-11T01:22:08.6058540Z Apple Swift version 6.2.3 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+2026-11-11T01:22:08.6059020Z Target: arm64-apple-macosx15.0
+2026-11-11T01:22:08.6059840Z /Applications/Xcode_26.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk
+2026-11-11T01:22:14.0991760Z 1.17.0
+2026-11-11T01:22:14.1034620Z swift-driver version: 1.127.14.1 
+2026-11-11T01:22:14.1445230Z ##[group]Run actions/download-artifact@v4
+2026-11-11T01:22:14.1445720Z with:
+2026-11-11T01:22:14.1446040Z   name: macos-appkit-shared-packages
+2026-11-11T01:22:14.1446370Z   path: /Users/runner/work/_temp/appkit-shared
+2026-11-11T01:22:14.1447110Z   merge-multiple: false
+2026-11-11T01:22:14.1447430Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T01:22:14.1447760Z   run-id: 42938338972
+2026-11-11T01:22:14.1447970Z env:
+2026-11-11T01:22:14.1448330Z   CI: 1
+2026-11-11T01:22:14.1448510Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:22:14.1448800Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:22:14.1449170Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:22:14.1449600Z ##[endgroup]
+2026-11-11T01:22:14.4124580Z Downloading single artifact
+2026-11-11T01:22:14.4386890Z (node:2205) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T01:22:14.4390640Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T01:22:14.7300050Z Preparing to download the following artifacts:
+2026-11-11T01:22:14.7303180Z - macos-appkit-shared-packages (ID: 13818383946, Size: 51323, Expected Digest: sha256:0c33d0d84470adfee1d05870b2bfc7f6086be6d48dc1f75fbc5fa20da0a13c1f)
+2026-11-11T01:22:14.9980340Z Redirecting to blob download url: https://productionresultssa0.blob.core.windows.net/actions-results/8710a8c1-e30b-8574-a8ef-1c02fe9fe1ed/workflow-job-run-6d748a28-b0e3-58eb-ad86-7afac8dafabd/artifacts/f955b4ef80b1133a3a670032e9aa603b16bb296bd37718508b89f68db22454fa.zip
+2026-11-11T01:22:14.9982060Z Starting download of artifact to: /Users/runner/work/_temp/appkit-shared
+2026-11-11T01:22:15.3405790Z (node:2205) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-11T01:22:15.4118880Z SHA256 digest of downloaded artifact is 0c33d0d84470adfee1d05870b2bfc7f6086be6d48dc1f75fbc5fa20da0a13c1f
+2026-11-11T01:22:15.4120740Z Artifact download completed successfully.
+2026-11-11T01:22:15.4122060Z Total of 1 artifact(s) downloaded
+2026-11-11T01:22:15.4123500Z Download artifact has finished successfully
+2026-11-11T01:22:15.4307140Z ##[group]Run node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
+2026-11-11T01:22:15.4308320Z [36;1mnode tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"[0m
+2026-11-11T01:22:15.4389710Z shell: /bin/bash -e {0}
+2026-11-11T01:22:15.4390190Z env:
+2026-11-11T01:22:15.4390760Z   CI: 1
+2026-11-11T01:22:15.4390990Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:22:15.4391390Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:22:15.4391670Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:22:15.4392100Z ##[endgroup]
+2026-11-11T01:22:55.9132110Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-11T01:22:58.4556850Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-11-11T01:23:01.3669790Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:01.6002830Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:01.6019270Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:01.6053190Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:01.9476410Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:02.2156850Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:02.5494480Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:02.8136600Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:02.9771190Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:03.2141260Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T01:23:03.3124130Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T01:23:04.6604530Z npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+2026-11-11T01:23:07.1036380Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:07.1480870Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:23:29.7189120Z 
+2026-11-11T01:23:29.7192700Z > nyc-tron-appkit-reference@1.0.0 postinstall
+2026-11-11T01:23:29.7198450Z > node node_modules/@legendapp/spark/init-template.cjs
+2026-11-11T01:23:29.7217460Z 
+2026-11-11T01:23:30.7686540Z 
+2026-11-11T01:23:30.7687380Z added 1073 packages in 1m
+2026-11-11T01:23:32.5469310Z Prepared hash-verified native inputs from the Spark 0.0.2 release manifest.
+2026-11-11T01:23:35.7430880Z 
+2026-11-11T01:23:35.7532520Z > nyc-tron-appkit-reference@1.0.0 postinstall
+2026-11-11T01:23:35.7599000Z > node node_modules/@legendapp/spark/init-template.cjs
+2026-11-11T01:23:35.7600990Z 
+2026-11-11T01:23:36.6575740Z 
+2026-11-11T01:23:36.6577110Z added 4 packages, and changed 2 packages in 4s
+2026-11-11T01:23:38.7388490Z ✔ NSScreen-to-core mapping is reversible across negative origins and mixed scale (1.894542ms)
+2026-11-11T01:23:38.7407100Z ✔ native open stays hidden until observation and the app close guard are installed (1.298458ms)
+2026-11-11T01:23:38.7408760Z ✔ native close veto preserves registry/document ownership and an allowed close removes observers (0.691583ms)
+2026-11-11T01:23:38.7409730Z ✔ failed native resize does not commit imaginary geometry (1.533542ms)
+2026-11-11T01:23:38.7411020Z ✔ minimize cancels a pending host-approved drop and late approval cannot move a document (0.816916ms)
+2026-11-11T01:23:38.7411910Z ✔ only an accepted current drop yields a transfer, no document data is copied (0.5645ms)
+2026-11-11T01:23:38.7412920Z ✔ old native events cannot close a reopened window with the same logical ID (0.410833ms)
+2026-11-11T01:23:38.7414340Z ✔ dispose during asynchronous native listener acquisition releases the late handle and rolls back created window (0.249042ms)
+2026-11-11T01:23:38.7416610Z ✔ native display reflow uses observed work area and retains document/window identity (0.787375ms)
+2026-11-11T01:23:38.7453610Z ✔ layout restoration preserves native identities and applies minimization, focus and current display bounds (1.017334ms)
+2026-11-11T01:23:38.7455530Z ✔ restore rejects unknown window IDs before mutation and owns the submitted layout (0.497333ms)
+2026-11-11T01:23:38.7456940Z ✔ restore records the saved three-window order when the focused window is unchanged (0.924542ms)
+2026-11-11T01:23:38.7458370Z ✔ a failed restore reports only the native changes that actually completed (0.481542ms)
+2026-11-11T01:23:38.7459930Z ✔ display removal remembers the home through focus notifications and returns when the display reconnects (1.173666ms)
+2026-11-11T01:23:38.7461750Z ✔ disposing while a display read is pending prevents a later native resize (0.203917ms)
+2026-11-11T01:23:38.7466250Z ✔ disposal drains asynchronous removal after a native close event (0.205584ms)
+2026-11-11T01:23:38.7467520Z ℹ tests 16
+2026-11-11T01:23:38.7468400Z ℹ suites 0
+2026-11-11T01:23:38.7470270Z ℹ pass 16
+2026-11-11T01:23:38.7471110Z ℹ fail 0
+2026-11-11T01:23:38.7471800Z ℹ cancelled 0
+2026-11-11T01:23:38.7472500Z ℹ skipped 0
+2026-11-11T01:23:38.7475090Z ℹ todo 0
+2026-11-11T01:23:38.7476280Z ℹ duration_ms 106.598875
+2026-11-11T01:23:38.7993150Z AppKit package exports, native source, notices and isolated peers verified.
+2026-11-11T01:23:39.2867840Z npm notice
+2026-11-11T01:23:39.2874910Z npm notice 📦  @nyc-tron/macos-appkit@1.0.0
+2026-11-11T01:23:39.2875390Z npm notice Tarball Contents
+2026-11-11T01:23:39.2878420Z npm notice 1.1kB LICENSE
+2026-11-11T01:23:39.2878960Z npm notice 762B NYCTronAppKit.podspec
+2026-11-11T01:23:39.2879560Z npm notice 18.1kB README.md
+2026-11-11T01:23:39.2883050Z npm notice 1.3kB THIRD_PARTY_NOTICES.md
+2026-11-11T01:23:39.2883930Z nyc-tron-macos-appkit-1.0.0.tgz
+2026-11-11T01:23:39.2884420Z npm notice 289B dist/anchored-inspector.d.ts
+2026-11-11T01:23:39.2885050Z npm notice 258B dist/anchored-inspector.js
+2026-11-11T01:23:39.2885630Z npm notice 290B dist/button.d.ts
+2026-11-11T01:23:39.2886210Z npm notice 422B dist/button.js
+2026-11-11T01:23:39.2886650Z npm notice 399B dist/context-menu.d.ts
+2026-11-11T01:23:39.2887170Z npm notice 417B dist/context-menu.js
+2026-11-11T01:23:39.2887660Z npm notice 372B dist/drag-drop.d.ts
+2026-11-11T01:23:39.2888180Z npm notice 452B dist/drag-drop.js
+2026-11-11T01:23:39.2888840Z npm notice 424B dist/menus.d.ts
+2026-11-11T01:23:39.2890270Z npm notice 377B dist/menus.js
+2026-11-11T01:23:39.2890720Z npm notice 234B dist/native-availability.d.ts
+2026-11-11T01:23:39.2891340Z npm notice 410B dist/native-availability.js
+2026-11-11T01:23:39.2891920Z npm notice 194B dist/NativeNYCTronDisplays.d.ts
+2026-11-11T01:23:39.2892690Z npm notice 117B dist/NativeNYCTronDisplays.js
+2026-11-11T01:23:39.2893590Z npm notice 1.1kB dist/NYCTronPopoverNativeComponent.d.ts
+2026-11-11T01:23:39.2898970Z npm notice 112B dist/NYCTronPopoverNativeComponent.js
+2026-11-11T01:23:39.2899700Z npm notice 1.3kB dist/popover.d.ts
+2026-11-11T01:23:39.2901770Z npm notice 3.6kB dist/popover.js
+2026-11-11T01:23:39.2903620Z npm notice 350B dist/segmented-control.d.ts
+2026-11-11T01:23:39.2906610Z npm notice 483B dist/segmented-control.js
+2026-11-11T01:23:39.2908950Z npm notice 290B dist/select.d.ts
+2026-11-11T01:23:39.2910630Z npm notice 422B dist/select.js
+2026-11-11T01:23:39.2912550Z npm notice 462B dist/sidebar.d.ts
+2026-11-11T01:23:39.2914900Z npm notice 596B dist/sidebar.js
+2026-11-11T01:23:39.2916010Z npm notice 402B dist/split-view.d.ts
+2026-11-11T01:23:39.2917160Z npm notice 425B dist/split-view.js
+2026-11-11T01:23:39.2918750Z npm notice 280B dist/text-field.d.ts
+2026-11-11T01:23:39.2919950Z npm notice 441B dist/text-field.js
+2026-11-11T01:23:39.2920950Z npm notice 423B dist/tooltip.d.ts
+2026-11-11T01:23:39.2921750Z npm notice 658B dist/tooltip.js
+2026-11-11T01:23:39.2922770Z npm notice 4.3kB dist/window-controller.d.ts
+2026-11-11T01:23:39.2923980Z npm notice 19.6kB dist/window-controller.js
+2026-11-11T01:23:39.2930060Z npm notice 2.0kB dist/windows.d.ts
+2026-11-11T01:23:39.2931180Z npm notice 1.4kB dist/windows.js
+2026-11-11T01:23:39.2932290Z npm notice 119B macos/NYCTronDisplays.h
+2026-11-11T01:23:39.2933380Z npm notice 2.0kB macos/NYCTronDisplays.mm
+2026-11-11T01:23:39.2934550Z npm notice 351B macos/NYCTronPopover.h
+2026-11-11T01:23:39.2935820Z npm notice 11.5kB macos/NYCTronPopover.mm
+2026-11-11T01:23:39.2937330Z npm notice 2.7kB macos/NYCTronPopoverComponentDescriptor.h
+2026-11-11T01:23:39.2938860Z npm notice 3.9kB package.json
+2026-11-11T01:23:39.2944810Z npm notice 197B react-native.config.cjs
+2026-11-11T01:23:39.2945490Z npm notice 1.6kB scripts/check-package.mjs
+2026-11-11T01:23:39.2948870Z npm notice 299B src/anchored-inspector.tsx
+2026-11-11T01:23:39.2952460Z npm notice 460B src/button.tsx
+2026-11-11T01:23:39.2952960Z npm notice 626B src/context-menu.ts
+2026-11-11T01:23:39.2953430Z npm notice 560B src/drag-drop.tsx
+2026-11-11T01:23:39.2953780Z npm notice 626B src/menus.ts
+2026-11-11T01:23:39.2954290Z npm notice 495B src/native-availability.ts
+2026-11-11T01:23:39.2957540Z npm notice 254B src/NativeNYCTronDisplays.ts
+2026-11-11T01:23:39.2962070Z npm notice 1.1kB src/NYCTronPopoverNativeComponent.ts
+2026-11-11T01:23:39.2962630Z npm notice 4.5kB src/popover.tsx
+2026-11-11T01:23:39.2965630Z npm notice 571B src/segmented-control.tsx
+2026-11-11T01:23:39.2966900Z npm notice 460B src/select.tsx
+2026-11-11T01:23:39.2970210Z npm notice 727B src/sidebar.tsx
+2026-11-11T01:23:39.2970630Z npm notice 571B src/split-view.tsx
+2026-11-11T01:23:39.2974460Z npm notice 466B src/text-field.tsx
+2026-11-11T01:23:39.2975570Z npm notice 789B src/tooltip.tsx
+2026-11-11T01:23:39.3023790Z npm notice 18.7kB src/window-controller.ts
+2026-11-11T01:23:39.3026110Z npm notice 1.6kB src/windows.ts
+2026-11-11T01:23:39.3034460Z npm notice Tarball Details
+2026-11-11T01:23:39.3143480Z npm notice name: @nyc-tron/macos-appkit
+2026-11-11T01:23:39.3266950Z npm notice version: 1.0.0
+2026-11-11T01:23:39.3394260Z npm notice filename: nyc-tron-macos-appkit-1.0.0.tgz
+2026-11-11T01:23:39.3441430Z npm notice package size: 33.7 kB
+2026-11-11T01:23:39.3443420Z npm notice unpacked size: 119.9 kB
+2026-11-11T01:23:39.3451620Z npm notice shasum: 8c49bfe114e9faebb3734678601778ea0b7e22e7
+2026-11-11T01:23:39.3456670Z npm notice integrity: sha512-Zr7AiBYG+1ehM[...]LNBTtF5+d+ahQ==
+2026-11-11T01:23:39.3459700Z npm notice total files: 63
+2026-11-11T01:23:39.3460370Z npm notice
+2026-11-11T01:24:01.1003440Z 
+2026-11-11T01:24:01.1005250Z up to date in 14s
+2026-11-11T01:24:08.4324880Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-11T01:24:08.6414730Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-11-11T01:24:08.7450580Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.7574120Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.7584800Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.7709580Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.7816450Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.7983220Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.8080040Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.8184900Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:08.8238820Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:09.4442390Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T01:24:09.4444760Z npm warn deprecated @xmldom/xmldom@0.7.13: this version has critical issues, please update to the latest version
+2026-11-11T01:24:11.1789530Z npm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+2026-11-11T01:24:12.3909610Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:12.3944430Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-11T01:24:22.7074480Z 
+2026-11-11T01:24:22.7142430Z > nyc-tron-appkit-reference@1.0.0 postinstall
+2026-11-11T01:24:22.7193060Z > node node_modules/@legendapp/spark/init-template.cjs
+2026-11-11T01:24:22.7389600Z 
+2026-11-11T01:24:23.6664380Z 
+2026-11-11T01:24:23.6841410Z added 1128 packages in 22s
+2026-11-11T01:24:26.1008070Z Initialized the Spark 0.0.2 starter with its official template/migration helpers.
+2026-11-11T01:24:28.6160830Z Analyzing production JavaScript…
+2026-11-11T01:24:28.6164680Z Log: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/logs/1794360268613-90771935-d6ea-4d8d-b305-8f730c9d16eb-cli.log
+2026-11-11T01:24:32.0621430Z Expo Autolinking module resolution enabled
+2026-11-11T01:24:33.7469520Z Starting Metro Bundler
+2026-11-11T01:24:33.7473240Z 
+2026-11-11T01:24:34.4411380Z macos ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+2026-11-11T01:24:37.9511550Z macos ./index.ts ▓▓▓▓▓▓░░░░░░░░░░ 41.3% (105/239)
+2026-11-11T01:24:41.4790260Z macos ./index.ts ▓▓▓▓▓▓▓░░░░░░░░░ 47.0% (336/495)
+2026-11-11T01:24:45.0159840Z macos ./index.ts ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 80.9% (536/596)
+2026-11-11T01:24:48.5492610Z macos ./index.ts ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 94.6% (643/661)
+2026-11-11T01:24:51.1205560Z macos Bundled 16613ms index.ts (662 modules)
+2026-11-11T01:24:51.1357700Z Writing bundle output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.js
+2026-11-11T01:24:51.1837400Z Writing sourcemap output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.map
+2026-11-11T01:24:51.3429380Z Done writing bundle output
+2026-11-11T01:24:51.3529160Z Done writing sourcemap output
+2026-11-11T01:24:55.0685530Z Analyzing production JavaScript finished (26.5s).
+2026-11-11T01:24:55.2511720Z Analyzing production JavaScript…
+2026-11-11T01:24:55.2609430Z Log: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/logs/1794360295250-b4b69782-06b1-4187-ba5c-c2e4894925f8-cli.log
+2026-11-11T01:24:57.9681720Z Expo Autolinking module resolution enabled
+2026-11-11T01:25:00.5808270Z Starting Metro Bundler
+2026-11-11T01:25:00.5809240Z 
+2026-11-11T01:25:01.6547510Z macos ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+2026-11-11T01:25:02.9343510Z macos Bundled 1291ms index.ts (645 modules)
+2026-11-11T01:25:02.9463020Z Writing bundle output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.js
+2026-11-11T01:25:02.9740110Z Writing sourcemap output to: /Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/analysis/app.map
+2026-11-11T01:25:03.0760950Z Done writing bundle output
+2026-11-11T01:25:03.0863000Z Done writing sourcemap output
+2026-11-11T01:25:06.6717000Z Analyzing production JavaScript finished (11.4s).
+2026-11-11T01:25:06.8250100Z {
+2026-11-11T01:25:06.8294200Z   "included": [
+2026-11-11T01:25:06.8315210Z     "@expo/dom-webview",
+2026-11-11T01:25:06.8347550Z     "@expo/log-box",
+2026-11-11T01:25:06.8363830Z     "@legendapp/spark-context-menu",
+2026-11-11T01:25:06.8366960Z     "@legendapp/spark-desktop-app",
+2026-11-11T01:25:06.8367950Z     "@legendapp/spark-desktop-windows",
+2026-11-11T01:25:06.8393360Z     "@legendapp/spark-drag-drop",
+2026-11-11T01:25:06.8423970Z     "@legendapp/spark-native-menu",
+2026-11-11T01:25:06.8427350Z     "@legendapp/spark-system",
+2026-11-11T01:25:06.8449430Z     "@legendapp/spark-ui",
+2026-11-11T01:25:06.8451450Z     "@nyc-tron/appkit-acceptance-driver",
+2026-11-11T01:25:06.8452330Z     "@nyc-tron/macos-appkit",
+2026-11-11T01:25:06.8459520Z     "expo",
+2026-11-11T01:25:06.8468160Z     "expo-asset",
+2026-11-11T01:25:06.8475790Z     "expo-constants",
+2026-11-11T01:25:06.8476280Z     "expo-desktop-modules-core",
+2026-11-11T01:25:06.8476720Z     "expo-desktop-stubs",
+2026-11-11T01:25:06.8477260Z     "expo-file-system",
+2026-11-11T01:25:06.8483550Z     "expo-font",
+2026-11-11T01:25:06.8487000Z     "expo-keep-awake",
+2026-11-11T01:25:06.8488850Z     "expo-modules-core",
+2026-11-11T01:25:06.8489140Z     "react-native",
+2026-11-11T01:25:06.8489420Z     "react-native-macos",
+2026-11-11T01:25:06.8489710Z     "react-native-nitro-modules"
+2026-11-11T01:25:06.8490030Z   ],
+2026-11-11T01:25:06.8490260Z   "excluded": [
+2026-11-11T01:25:06.8490490Z     "@legendapp/spark-audio",
+2026-11-11T01:25:06.8490830Z     "@legendapp/spark-clipboard",
+2026-11-11T01:25:06.8491190Z     "@legendapp/spark-codex",
+2026-11-11T01:25:06.8491480Z     "@legendapp/spark-desktop-links",
+2026-11-11T01:25:06.8491850Z     "@legendapp/spark-desktop-shortcuts",
+2026-11-11T01:25:06.8492230Z     "@legendapp/spark-file-dialog",
+2026-11-11T01:25:06.8492570Z     "@legendapp/spark-file-system",
+2026-11-11T01:25:06.8492920Z     "@legendapp/spark-global-shortcuts",
+2026-11-11T01:25:06.8493270Z     "@legendapp/spark-message-dialog",
+2026-11-11T01:25:06.8493590Z     "@legendapp/spark-notifications",
+2026-11-11T01:25:06.8493980Z     "@legendapp/spark-processes",
+2026-11-11T01:25:06.8494480Z     "@legendapp/spark-secure-storage",
+2026-11-11T01:25:06.8494780Z     "@legendapp/spark-tray",
+2026-11-11T01:25:06.8495120Z     "@legendapp/spark-updates",
+2026-11-11T01:25:06.8495540Z     "@react-native-runtimes/core"
+2026-11-11T01:25:06.8495800Z   ]
+2026-11-11T01:25:06.8496310Z }
+2026-11-11T01:25:07.1114690Z Prepared installed AppKit consumer at /Users/runner/work/_temp/nyc-tron-appkit-consumer
+2026-11-11T01:25:07.1827940Z ##[group]Run node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+2026-11-11T01:25:07.1829330Z [36;1mnode tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json[0m
+2026-11-11T01:25:07.4065950Z shell: /bin/bash -e {0}
+2026-11-11T01:25:07.4066260Z env:
+2026-11-11T01:25:07.4066470Z   CI: 1
+2026-11-11T01:25:07.4066720Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:25:07.4068920Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:25:07.4069310Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:25:07.4069660Z ##[endgroup]
+2026-11-11T01:25:08.8653640Z API signatures match: 1 packages, 15 subpaths, 33 reachable declarations.
+2026-11-11T01:25:08.9190780Z ##[group]Run node tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"
+2026-11-11T01:25:08.9191650Z [36;1mnode tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"[0m
+2026-11-11T01:25:08.9245690Z shell: /bin/bash -e {0}
+2026-11-11T01:25:08.9246100Z env:
+2026-11-11T01:25:08.9246310Z   CI: 1
+2026-11-11T01:25:08.9246820Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:25:08.9247140Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:25:08.9247550Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:25:08.9248070Z ##[endgroup]
+2026-11-11T01:25:13.5916620Z Pinned Spark transport: seven original/patched native cases, trace privacy and explicit closed-peer failure passed. Native application acceptance remains separate.
+2026-11-11T01:25:13.6187360Z ##[group]Run set -euo pipefail
+2026-11-11T01:25:13.6188350Z [36;1mset -euo pipefail[0m
+2026-11-11T01:25:13.6189200Z [36;1mmkdir -p "$(dirname "$APPKIT_BUILD_LOG")"[0m
+2026-11-11T01:25:13.6190100Z [36;1mtest ! -e "$APPKIT_BUILD_LOG"[0m
+2026-11-11T01:25:13.6190810Z [36;1mbuild_status=0[0m
+2026-11-11T01:25:13.6191780Z [36;1m(set -o noclobber; npm run build > "$APPKIT_BUILD_LOG" 2>&1) || build_status=$?[0m
+2026-11-11T01:25:13.6193110Z [36;1mexport APPKIT_BUILD_EXIT_CODE="$build_status"[0m
+2026-11-11T01:25:13.6193990Z [36;1mreporting_status=0[0m
+2026-11-11T01:25:13.6195040Z [36;1mnode --input-type=module <<'NODE' || reporting_status=$?[0m
+2026-11-11T01:25:13.6195970Z [36;1mimport { createHash } from "node:crypto";[0m
+2026-11-11T01:25:13.6197030Z [36;1mimport { open, stat, writeFile } from "node:fs/promises";[0m
+2026-11-11T01:25:13.6200040Z [36;1mconst exitCode = Number(process.env.APPKIT_BUILD_EXIT_CODE);[0m
+2026-11-11T01:25:13.6201700Z [36;1mif (!Number.isInteger(exitCode) || exitCode < 0 || exitCode > 255) throw new Error("Invalid build exit status");[0m
+2026-11-11T01:25:13.6203530Z [36;1mif (!/^[0-9a-f]{40}$/.test(process.env.GITHUB_SHA ?? "")) throw new Error("Missing actual checkout revision");[0m
+2026-11-11T01:25:13.6204990Z [36;1mconst file = await open(process.env.APPKIT_BUILD_LOG, "r");[0m
+2026-11-11T01:25:13.6206110Z [36;1mconst digest = createHash("sha256");[0m
+2026-11-11T01:25:13.6207100Z [36;1mlet before, after, bytes = 0;[0m
+2026-11-11T01:25:13.6208440Z [36;1mtry {[0m
+2026-11-11T01:25:13.6209330Z [36;1m  before = await file.stat();[0m
+2026-11-11T01:25:13.6210880Z [36;1m  if (!before.isFile() || !Number.isSafeInteger(before.size)) throw new Error("Build transcript is not a bounded regular file");[0m
+2026-11-11T01:25:13.6212550Z [36;1m  for await (const chunk of file.createReadStream({ autoClose: false })) {[0m
+2026-11-11T01:25:13.6213100Z [36;1m    bytes += chunk.length;[0m
+2026-11-11T01:25:13.6213580Z [36;1m    if (bytes > before.size) throw new Error("Build transcript grew during hashing");[0m
+2026-11-11T01:25:13.6214170Z [36;1m    digest.update(chunk);[0m
+2026-11-11T01:25:13.6214610Z [36;1m  }[0m
+2026-11-11T01:25:13.6214960Z [36;1m  after = await file.stat();[0m
+2026-11-11T01:25:13.6215350Z [36;1m} finally { await file.close(); }[0m
+2026-11-11T01:25:13.6215750Z [36;1mconst current = await stat(process.env.APPKIT_BUILD_LOG);[0m
+2026-11-11T01:25:13.6216220Z [36;1mfor (const snapshot of [after, current]) {[0m
+2026-11-11T01:25:13.6216780Z [36;1m  if (snapshot.dev !== before.dev || snapshot.ino !== before.ino || snapshot.size !== before.size ||[0m
+2026-11-11T01:25:13.6217360Z [36;1m      snapshot.mtimeMs !== before.mtimeMs || snapshot.ctimeMs !== before.ctimeMs) {[0m
+2026-11-11T01:25:13.6217940Z [36;1m    throw new Error("Build transcript changed during hashing");[0m
+2026-11-11T01:25:13.6218370Z [36;1m  }[0m
+2026-11-11T01:25:13.6218610Z [36;1m}[0m
+2026-11-11T01:25:13.6219050Z [36;1mif (bytes !== before.size) throw new Error("Build transcript byte count changed");[0m
+2026-11-11T01:25:13.6219690Z [36;1mconst result = { schemaVersion: 1, sourceRevision: process.env.GITHUB_SHA,[0m
+2026-11-11T01:25:13.6220290Z [36;1m  command: ["npm", "run", "build"], exitCode, outcome: exitCode === 0 ? "success" : "failure",[0m
+2026-11-11T01:25:13.6221090Z [36;1m  transcript: { filename: "build-console.log", bytes, sha256: digest.digest("hex"), complete: true, normalized: false } };[0m
+2026-11-11T01:25:13.6221920Z [36;1mawait writeFile(process.env.APPKIT_BUILD_RESULT, JSON.stringify(result, null, 2) + "\n", { flag: "wx" });[0m
+2026-11-11T01:25:13.6222520Z [36;1mconsole.log("NYCTRON_APPKIT_BUILD_RESULT_BEGIN");[0m
+2026-11-11T01:25:13.6222880Z [36;1mconsole.log(JSON.stringify(result));[0m
+2026-11-11T01:25:13.6223300Z [36;1mconsole.log("NYCTRON_APPKIT_BUILD_RESULT_END");[0m
+2026-11-11T01:25:13.6223680Z [36;1mNODE[0m
+2026-11-11T01:25:13.6223900Z [36;1mif [ "$build_status" -ne 0 ]; then[0m
+2026-11-11T01:25:13.6225290Z [36;1m  tail -c 32768 "$APPKIT_BUILD_LOG" || true[0m
+2026-11-11T01:25:13.6225640Z [36;1m  exit "$build_status"[0m
+2026-11-11T01:25:13.6225950Z [36;1mfi[0m
+2026-11-11T01:25:13.6226390Z [36;1mexit "$reporting_status"[0m
+2026-11-11T01:25:13.6353860Z shell: /bin/bash -e {0}
+2026-11-11T01:25:13.6354690Z env:
+2026-11-11T01:25:13.6355480Z   CI: 1
+2026-11-11T01:25:13.6356000Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:25:13.6356950Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:25:13.6357760Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:25:13.6359150Z   APPKIT_BUILD_LOG: /Users/runner/work/_temp/appkit-build-console/build-console.log
+2026-11-11T01:25:13.6360900Z   APPKIT_BUILD_RESULT: /Users/runner/work/_temp/appkit-build-console/build-result.json
+2026-11-11T01:25:13.6361950Z ##[endgroup]
+2026-11-11T01:43:43.9860250Z NYCTRON_APPKIT_BUILD_RESULT_BEGIN
+2026-11-11T01:43:43.9927410Z {"schemaVersion":1,"sourceRevision":"6d6b913c771e49385e5a57c9737b66fbeb07a9a7","command":["npm","run","build"],"exitCode":0,"outcome":"success","transcript":{"filename":"build-console.log","bytes":12329248,"sha256":"45a25d2b6102fdf1c93344c48e8b6b7e2758be1b0d4a7558cb3e116e7d94d455","complete":true,"normalized":false}}
+2026-11-11T01:43:44.0026570Z NYCTRON_APPKIT_BUILD_RESULT_END
+2026-11-11T01:43:44.0805400Z ##[group]Run npm run verify:native
+2026-11-11T01:43:44.0805900Z [36;1mnpm run verify:native[0m
+2026-11-11T01:43:44.4455360Z shell: /bin/bash -e {0}
+2026-11-11T01:43:44.4455640Z env:
+2026-11-11T01:43:44.4455910Z   CI: 1
+2026-11-11T01:43:44.4456110Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:43:44.4456470Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:43:44.4456870Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:43:44.4457370Z   APPKIT_EVIDENCE: /Users/runner/work/_temp/nyc-tron-appkit-evidence
+2026-11-11T01:43:44.4458040Z   APPKIT_TESTED_PACKAGE: /Users/runner/work/_temp/nyc-tron-appkit-tested-package
+2026-11-11T01:43:44.4461550Z ##[endgroup]
+2026-11-11T01:43:45.0608210Z 
+2026-11-11T01:43:45.0709670Z > nyc-tron-appkit-reference@1.0.0 verify:native
+2026-11-11T01:43:45.0814440Z > node verify-native.mjs
+2026-11-11T01:43:45.0915880Z 
+2026-11-11T01:44:26.4287410Z file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/driver-client.mjs:36
+2026-11-11T01:44:26.4395230Z       const timer = setTimeout(() => fail(new Error(`Native driver response timed out awaiting ${stage}`)), responseTimeoutMs);
+2026-11-11T01:44:26.4498780Z                                           ^
+2026-11-11T01:44:26.4518400Z 
+2026-11-11T01:44:26.4519020Z Error: Native driver response timed out awaiting tron.window (request 2)
+2026-11-11T01:44:26.4521260Z     at Timeout.<anonymous> (file:///Users/runner/work/_temp/nyc-tron-appkit-consumer/driver-client.mjs:36:43)
+2026-11-11T01:44:26.4522150Z     at listOnTimeout (node:internal/timers:635:17)
+2026-11-11T01:44:26.4522750Z     at process.processTimers (node:internal/timers:571:7)
+2026-11-11T01:44:26.4524250Z 
+2026-11-11T01:44:26.4526840Z Node.js v24.19.0
+2026-11-11T01:44:26.4676960Z ##[error]Process completed with exit code 1.
+2026-11-11T01:44:26.5002330Z ##[group]Run actions/upload-artifact@v4
+2026-11-11T01:44:26.5002740Z with:
+2026-11-11T01:44:26.5002980Z   name: macos-appkit-native-evidence
+2026-11-11T01:44:26.5003200Z   if-no-files-found: warn
+2026-11-11T01:44:26.5003450Z   retention-days: 14
+2026-11-11T01:44:26.5006670Z   path: /Users/runner/work/_temp/nyc-tron-appkit-evidence/
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/package-preparation.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/package-lock.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/spark-sdk-inputs.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/*.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/*.mm
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/*.log
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/logs/
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/commands.jsonl
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/selection-report.json
+/Users/runner/work/_temp/nyc-tron-appkit-consumer/.spark/version
+/Users/runner/work/_temp/appkit-toolchain/
+/Users/runner/work/_temp/appkit-build-console/
+
+2026-11-11T01:44:26.5009630Z   compression-level: 6
+2026-11-11T01:44:26.5009930Z   overwrite: false
+2026-11-11T01:44:26.5010150Z   include-hidden-files: false
+2026-11-11T01:44:26.5010450Z env:
+2026-11-11T01:44:26.5010710Z   CI: 1
+2026-11-11T01:44:26.5011000Z   EXPO_NO_TELEMETRY: 1
+2026-11-11T01:44:26.5011230Z   SPARK_XCODEBUILD_JOBS: 3
+2026-11-11T01:44:26.5011640Z   DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+2026-11-11T01:44:26.5011970Z ##[endgroup]
+2026-11-11T01:44:27.3714370Z (node:48158) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T01:44:27.3817050Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T01:44:27.4636480Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-11T01:44:27.4639070Z The least common ancestor is /Users/runner/work/_temp. This will be the root directory of the artifact
+2026-11-11T01:44:27.4639760Z With the provided path, there will be 44 files uploaded
+2026-11-11T01:44:27.4640180Z Artifact name is valid!
+2026-11-11T01:44:27.4640440Z Root directory input is valid!
+2026-11-11T01:44:28.5794930Z Beginning upload of artifact content to blob storage
+2026-11-11T01:44:28.9560610Z (node:48158) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-11T01:44:29.7854530Z Uploaded bytes 1416533
+2026-11-11T01:44:29.8678310Z Finished uploading artifact content to blob storage!
+2026-11-11T01:44:29.8679620Z SHA256 digest of uploaded artifact zip is 014581509683a6b294ba66bb434cb76df06647152a31621917ef4549b91b6847
+2026-11-11T01:44:29.8682540Z Finalizing artifact upload
+2026-11-11T01:44:30.3141380Z Artifact macos-appkit-native-evidence.zip successfully finalized. Artifact ID 13820233523
+2026-11-11T01:44:30.3142340Z Artifact macos-appkit-native-evidence has been successfully uploaded! Final size is 1416533 bytes. Artifact ID is 13820233523
+2026-11-11T01:44:30.3159100Z Artifact download URL: https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42938338972/artifacts/13820233523
+2026-11-11T01:44:30.3425660Z Post job cleanup.
+2026-11-11T01:44:30.4982690Z [command]/opt/homebrew/bin/git version
+2026-11-11T01:44:30.5462630Z git version 2.56.0
+2026-11-11T01:44:30.5486300Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/e0442796-d277-49a3-b8cb-61362cc0f49b/.gitconfig'
+2026-11-11T01:44:30.5496520Z Temporarily overriding HOME='/Users/runner/work/_temp/e0442796-d277-49a3-b8cb-61362cc0f49b' before making global git config changes
+2026-11-11T01:44:30.5497480Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T01:44:30.5498320Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T01:44:30.5651730Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T01:44:30.5729960Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T01:44:30.7191430Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T01:44:30.7272570Z http.https://github.com/.extraheader
+2026-11-11T01:44:30.7279460Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T01:44:30.7384550Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T01:44:30.8526300Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T01:44:30.8607400Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T01:44:30.9723810Z Cleaning up orphan processes
+2026-11-11T01:44:33.8574460Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/download-artifact@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
