@@ -50,7 +50,8 @@ run(process.execPath, ['node_modules/typescript/bin/tsc', '-p', 'adapter-source/
 run(process.execPath, ['--test', ...((await readdir(join(destination, 'adapter-source/tests'))).filter(f => f.endsWith('.test.mjs')).map(f => join('adapter-source/tests', f)))]);
 run(process.execPath, ['scripts/check-package.mjs'], join(destination, 'adapter-source'));
 run('npm', ['pack', '--ignore-scripts', '--pack-destination', join(destination, 'vendor')], join(destination, 'adapter-source'));
-manifest.dependencies['@nyc-tron/macos-appkit'] = 'file:vendor/nyc-tron-macos-appkit-1.0.0.tgz';
+const adapter = JSON.parse(await readFile(join(repo, 'packages/macos-appkit/spark/package.json'), 'utf8'));
+manifest.dependencies['@nyc-tron/macos-appkit'] = `file:vendor/nyc-tron-macos-appkit-${adapter.version}.tgz`;
 await writeFile(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
 // Acceptance must install the distribution, never retain the bootstrap source symlink.
 await rm(join(destination, 'node_modules'), { recursive: true });

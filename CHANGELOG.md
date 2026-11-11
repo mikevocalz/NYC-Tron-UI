@@ -5,6 +5,30 @@ All notable changes to this project are recorded here. The format follows
 all 14 packages together, because `tooling/pack-release.mjs` requires one
 version per tag.
 
+## [1.0.0-rc.1] - Unreleased
+
+Prerelease cut from `main` at `3b80c1e`. All 15 packed packages carry version
+`1.0.0-rc.1`. Stable `1.0.0` is blocked: the v1.0.0 release run on `main`
+(Actions run 43067371839) stopped at `tooling/release-readiness.mjs` with
+"341 of 341 components lack accepted eight-platform proof; owner distribution
+review is pending". The prerelease channel claims neither eight-platform
+acceptance nor owner distribution review. Every row in
+`docs/completion/library-progress.json` keeps its recorded acceptance status.
+
+Changes since `v0.1.0-alpha.4`, by merged pull request. The [1.0.0] section
+below lists them in detail.
+
+- Reusable components and platform UI for the 341-component program (#54).
+- MIT license, release gates, paste support and v1.0.0 docs (#55).
+- Native appearance, adaptive content and a web reference app (#56).
+- Reference flows, native input and release acceptance gates (#57).
+- Shared controls routed to Qt targets; audit of all 341 capabilities (#58).
+- Native AppKit menus, popovers, tooltips and drag acceptance (#59).
+- Native WinUI overlays, drag and navigation acceptance (#60).
+- Android cancellation fix; canonical mobile archives verified (#61).
+- AppKit drag acceptance waits for laid-out drag surfaces (#65).
+- iOS touch-cancel recovery extended to the first Editor tab tap (#66).
+
 ## [1.0.0] - Unreleased
 
 Built from `v0.1.0-alpha.4` plus 127 commits (`git log v0.1.0-alpha.4..HEAD`
@@ -130,5 +154,6 @@ Published 2026-11-06T03:56:20Z (2026-11-05 in US Eastern time).
 
 See the [GitHub release](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4).
 
+[1.0.0-rc.1]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0-rc.1
 [1.0.0]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0
 [0.1.0-alpha.4]: https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4
