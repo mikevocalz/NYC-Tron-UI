@@ -55,6 +55,7 @@ using namespace facebook::react;
     _popover = [NSPopover new];
     _popover.behavior = NSPopoverBehaviorTransient;
     _popover.delegate = self;
+    [self observePopoverNotifications];
     NYCTronPopoverContentController *controller = [NYCTronPopoverContentController new];
     controller.view = _content; controller.popover = _popover;
     _popover.contentViewController = controller;
@@ -146,6 +147,7 @@ using namespace facebook::react;
   if (_owner != self.window) {
     [self closeSilently];
     [NSNotificationCenter.defaultCenter removeObserver:self];
+    [self observePopoverNotifications];
     _owner = self.window;
     if (_owner) {
       for (NSNotificationName name in @[NSWindowDidResizeNotification, NSWindowDidMoveNotification, NSWindowDidBecomeKeyNotification, NSWindowDidMiniaturizeNotification, NSWindowDidDeminiaturizeNotification, NSWindowDidChangeOcclusionStateNotification]) {
@@ -192,6 +194,14 @@ using namespace facebook::react;
 - (void)unmountChildComponentView:(RCTUIView<RCTComponentViewProtocol> *)childComponentView index:(NSInteger)index {
   [childComponentView removeFromSuperview];
   [self schedulePresentation];
+}
+- (void)observePopoverNotifications {
+  for (NSNotificationName name in @[NSPopoverWillCloseNotification, NSPopoverDidCloseNotification]) {
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(popoverNotificationObserved:) name:name object:_popover];
+  }
+}
+- (void)popoverNotificationObserved:(NSNotification *)notification {
+  NSLog(@"NYCTronPopover phase=center-%@ delegateIsSelf=%d", notification.name, _popover.delegate == self);
 }
 - (void)emitDismissIfUserInitiated {
   // AppKit posts popoverDidClose only after the close animation completes. The

@@ -458,10 +458,23 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NYCTronPopoverComponentView *component = (NYCTronPopoverComponentView *)view;
       NSPopover *popover = component.nativePopover;
       NSView *content = popover.contentViewController.view;
-      if ([request[@"action"] isEqual:@"escape"]) [popover.contentViewController tryToPerform:@selector(cancelOperation:) with:nil];
-      else if ([request[@"action"] isEqual:@"close"]) [popover performClose:nil];
+      NSMutableDictionary *closeTrace = nil;
+      if ([request[@"action"] isEqual:@"escape"] || [request[@"action"] isEqual:@"close"]) {
+        BOOL escape = [request[@"action"] isEqual:@"escape"];
+        closeTrace = [@{ @"shownBefore": @(popover.shown), @"animates": @(popover.animates), @"behavior": @(popover.behavior),
+          @"delegateClass": popover.delegate ? NSStringFromClass([(id)popover.delegate class]) : @"nil",
+          @"delegateIsComponent": @(popover.delegate == (id)component),
+          @"controllerClass": NSStringFromClass(popover.contentViewController.class),
+          @"controllerResponds": @([popover.contentViewController respondsToSelector:@selector(cancelOperation:)]),
+          @"popoverWindowVisible": @(content.window.visible) } mutableCopy];
+        if (escape) closeTrace[@"performed"] = @([popover.contentViewController tryToPerform:@selector(cancelOperation:) with:nil]);
+        else [popover performClose:nil];
+        closeTrace[@"shownAfter"] = @(popover.shown);
+        NSLog(@"NYCTronPopoverDriver close-trace %@", closeTrace);
+      }
       NSMutableArray *classes = [NSMutableArray new]; Classes(content, classes);
       NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": RectDictionary(component.nativeAllowedRegion) } mutableCopy];
+      if (closeTrace) result[@"closeTrace"] = closeTrace;
       if (popover.shown && content.window) result[@"frame"] = RectDictionary(OwnerCoordinates(owner, content.window.frame));
       reply(result);
     });
