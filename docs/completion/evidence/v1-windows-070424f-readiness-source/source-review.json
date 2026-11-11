@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "aggregate-only Windows readiness source reconciliation",
+  "sourcePath": "packages/windows-fluent/rnw-fabric/example/scripts/uia-smoke.ps1",
+  "inputs": {
+    "aggregatePreimage": {
+      "bytes": 43426,
+      "sha256": "382fb5ed34860b3f24d8913062abf1dd551db4ff795dfc50ebb89a6887f01b5e",
+      "gitBlob": "54c3dee9cce38f8a7ae143ea2fbfd4c34b43b7bd"
+    },
+    "externalReadiness": {
+      "commit": "ac5d69585a52a6e945dc996ea08030e190574699",
+      "bytes": 14220,
+      "sha256": "63f250315257f87d9b02df248a0fbd739426d6996d7ed2d0c837654b91dc23f3",
+      "gitBlob": "8bd25374b1c3a24911d13b0a2e8e40b0b5d9f0f4"
+    },
+    "candidate": {
+      "bytes": 44307,
+      "sha256": "60ba5d0a72ea23d47123507f3baa0059ac3bd78a4843a102db0e9391cdbc417a",
+      "gitBlob": "070424fa54f1645cc6be02187647f84732a6b53c"
+    }
+  },
+  "sourceDelta": {
+    "utf8Bytes": 881,
+    "lineFeedCharacters": 16,
+    "exactTransformCount": 4
+  },
+  "transforms": [
+    {
+      "order": 1,
+      "id": "insert-focus-retry-helper",
+      "before": "function Save-Screenshot([string]$name, $target) {",
+      "after": "# Retry focus on the same control within this window. Synchronous UIA calls\n# are not cancelled by the deadline; exhaustion rethrows the last focus error.\nfunction Set-ElementFocus($element, $window, [int]$timeoutSec = 10) {\n  $handle = if ($null -ne $window) { [IntPtr]$window.Current.NativeWindowHandle } else { [IntPtr]$element.Current.NativeWindowHandle }\n  $deadline = (Get-Date).AddSeconds($timeoutSec)\n  $lastErrorRecord = $null\n  do {\n    if ($handle -ne [IntPtr]::Zero) { [NativeWindow]::SetForegroundWindow($handle) | Out-Null }\n    try { $element.SetFocus(); return } catch { $lastErrorRecord = $_ }\n    Start-Sleep -Milliseconds 250\n  } while ((Get-Date) -lt $deadline)\n  throw $lastErrorRecord\n}\n\nfunction Save-Screenshot([string]$name, $target) {",
+      "forwardPreimageOccurrences": 1,
+      "inversePreimageOccurrences": 1
+    },
+    {
+      "order": 2,
+      "id": "capture-retry-window",
+      "before": "    [NativeWindow]::SetForegroundWindow($handle) | Out-Null\n    $deadline = (Get-Date).AddSeconds(5)\n    $ready = $false\n    while ((Get-Date) -lt $deadline) {\n      $before = $target.Current.BoundingRectangle",
+      "after": "    # Retry foreground activation within this window; success still requires\n    # observed foreground ownership and stable, positive bounds.\n    $deadline = (Get-Date).AddSeconds(10)\n    $ready = $false\n    while ((Get-Date) -lt $deadline) {\n      [NativeWindow]::SetForegroundWindow($handle) | Out-Null\n      $before = $target.Current.BoundingRectangle",
+      "forwardPreimageOccurrences": 1,
+      "inversePreimageOccurrences": 1
+    },
+    {
+      "order": 3,
+      "id": "button-keyboard-fallback-focus",
+      "before": "    $button.SetFocus()",
+      "after": "    Set-ElementFocus $button $root",
+      "forwardPreimageOccurrences": 1,
+      "inversePreimageOccurrences": 1
+    },
+    {
+      "order": 4,
+      "id": "navigation-home-focus",
+      "before": "  $homeItem.SetFocus()",
+      "after": "  Set-ElementFocus $homeItem $window",
+      "forwardPreimageOccurrences": 1,
+      "inversePreimageOccurrences": 1
+    }
+  ],
+  "inversion": {
+    "method": "Apply the four transformations in reverse order, replacing each exact after string with its before string",
+    "byteExact": true,
+    "restoredPreimageGitBlob": "54c3dee9cce38f8a7ae143ea2fbfd4c34b43b7bd",
+    "restoredPreimageSha256": "382fb5ed34860b3f24d8913062abf1dd551db4ff795dfc50ebb89a6887f01b5e"
+  },
+  "behavior": {
+    "focusRetry": {
+      "defaultWindowSeconds": 10,
+      "retrySleepMilliseconds": 250,
+      "callSites": [
+        "Set-ElementFocus $button $root",
+        "Set-ElementFocus $homeItem $window"
+      ],
+      "sameControlAcrossRetries": true,
+      "caughtValue": "$_",
+      "retainedVariable": "$lastErrorRecord",
+      "exhaustionStatement": "throw $lastErrorRecord",
+      "errorMessageReplacement": false,
+      "postFailureElementNameRead": false,
+      "newDiagnosticOutput": false,
+      "topLevelWindowFocusCallAdded": false
+    },
+    "captureRetry": {
+      "previousWindowSeconds": 5,
+      "newWindowSeconds": 10,
+      "foregroundRequest": "Moved into the existing screenshot polling loop",
+      "foregroundWindowEqualityPredicateUnchanged": true,
+      "stablePositiveBoundsPredicateUnchanged": true,
+      "popupNullTargetPathUnchanged": true
+    },
+    "synchronousCallsCancelled": false,
+    "retryWindowIsHardElapsedBound": false
+  },
+  "preservation": {
+    "unchangedExistingTopLevelFunctions": [
+      "Save-Tree",
+      "Refresh-OwnedWindow",
+      "Find-ByName",
+      "Test-Selected",
+      "Assert-Selection",
+      "Process-ElementCondition",
+      "Find-ProcessElement",
+      "Wait-ProcessElementHidden",
+      "Invoke-NativeElement",
+      "Assert-NativeValue",
+      "Save-PopupScreenshot",
+      "Move-NativePointer",
+      "Assert-PointerPlacement",
+      "Arrange-DragWindows",
+      "Write-Diagnostics",
+      "Save-FailureStatus"
+    ],
+    "changedExistingTopLevelFunctions": [
+      "Save-Screenshot",
+      "Invoke-Button",
+      "Request-Workspace"
+    ],
+    "actionCatchFinallyTail": {
+      "anchor": "$started = Get-Date",
+      "bytes": 19930,
+      "sha256": "77d33b5877e174409eb103a54202483bb454a961952c68ed4955cb054462e48d",
+      "byteIdentical": true
+    },
+    "typedVisibleButtonSelectorUnchanged": true,
+    "invokePatternPathUnchanged": true,
+    "ownedWindowRefreshUnchanged": true,
+    "popupCaptureUnchanged": true,
+    "nativeInteractionAssertionsUnchanged": true,
+    "dragAndEnvironmentCodeUnchanged": true,
+    "failureAndFinallyCodeUnchanged": true,
+    "passedOnlyArchiveGateUnchanged": true,
+    "workflowUnchanged": true
+  },
+  "reviews": [
+    {
+      "reviewer": "author",
+      "scope": "Exact UTF-8/Git/SHA identities; four unique transformations and full inverse; unchanged functions, action tail and acceptance predicates; immutable blob readback",
+      "sourceOnly": true
+    },
+    {
+      "reviewer": "root",
+      "scope": "Independently fetched full source and hashes; reconstructed all four transforms and exact inverse; verified +881 bytes/+16 LF and unchanged action/catch/finally tail",
+      "sourceOnly": true,
+      "approval": "approved as reported in review handoff"
+    },
+    {
+      "reviewer": "independent desktop reviewer",
+      "scope": "Independently fetched candidate/preimage; verified full hashes, four transforms/inverse, retained ErrorRecord, absence of stale Name read/top-level focus, and unchanged foreground/stable-positive-bounds gates",
+      "sourceOnly": true,
+      "approval": "approved as reported in review handoff"
+    }
+  ],
+  "executionBoundary": {
+    "powerShellParserExecuted": false,
+    "powerShellRuntimeExecuted": false,
+    "windowsUiaExecuted": false,
+    "nativeAcceptancePassed": false,
+    "testedArchiveProduced": false,
+    "elevatedHostDragCauseEstablished": false,
+    "elevatedHostDragFixEstablished": false,
+    "newRuntimeTestCount": null
+  },
+  "preservedRequirements": {
+    "nextHostPath": "docs/completion/evidence/v1-windows-0578582-elevated-existing-shell/NEXT_HOST.md",
+    "nextHostGitBlob": "d8784ea2bdd0b1d2f5b89ce890c8a4f46f820add",
+    "nextHostChanged": false,
+    "originalReceiptsChanged": false,
+    "originalArchiveRequirementsChanged": false,
+    "eligibleInteractiveHostStillRequired": true,
+    "nativeGatesStillRequired": true
+  },
+  "actions": {
+    "immutableBlobsAndReadbackOnly": true,
+    "pr60Updated": false,
+    "workflowUpdated": false,
+    "treeCommitOrRefWritten": false,
+    "ciRunTriggered": false,
+    "launcherChanged": false,
+    "hostPermissionsOrSecurityChanged": false,
+    "scope": "Authoring and static source review before aggregate integration"
+  },
+  "references": {
+    "sourceApi": "https://learn.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.setfocus?view=netframework-4.8.1",
+    "foregroundApi": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setforegroundwindow",
+    "powerShellThrowSource": "https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/reference/5.1/Microsoft.PowerShell.Core/About/about_Throw.md"
+  },
+  "receipt": {
+    "readme": {
+      "file": "README.md",
+      "bytes": 4478,
+      "sha256": "e518bb1d1c1640491be3ea2766f4b829cacfe52ada3829184ef87653c87e907a",
+      "gitBlob": "91571a5bdef574ea2b4a21c4ca418c1e829763a5"
+    },
+    "reviewFile": "source-review.json",
+    "totalFiles": 2,
+    "reviewDoesNotHashItself": true
+  }
+}

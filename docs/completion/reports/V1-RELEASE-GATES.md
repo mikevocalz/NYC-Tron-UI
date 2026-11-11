@@ -13,6 +13,38 @@ The latest completed desktop attempts still failed their complete native gates.
 The original failures, supported corrections and new native runs have separate
 receipts; a source or compiler pass does not substitute for interaction results.
 
+### November 11 Windows readiness source reconciliation
+
+The [source receipt](../evidence/v1-windows-070424f-readiness-source/README.md)
+records reviewed UIA script blob `070424fa54f1645cc6be02187647f84732a6b53c`
+against aggregate preimage `54c3dee9cce38f8a7ae143ea2fbfd4c34b43b7bd`.
+It reconciles the readiness changes from the separately advanced umbrella
+`ac5d69585a52a6e945dc996ea08030e190574699` and its Windows script
+`8bd25374b1c3a24911d13b0a2e8e40b0b5d9f0f4`, while retaining the aggregate's
+later owned-window, input, drag and failure diagnostics.
+
+Only four exact transformations change the script: a focus-retry helper,
+its two focusable-control callers, and the screenshot foreground retry.
+The helper keeps the last caught ErrorRecord and rethrows it on exhaustion,
+without reading an unavailable element's name or replacing the error with
+a new message. Screenshot capture requests foreground again during a
+ten-second retry window and still requires actual foreground HWND equality
+and the unchanged stable, positive rectangle predicate.
+These retry windows do not cancel synchronous UIA or native calls.
+
+Root and independent review reproduced the exact transforms and inverse.
+The candidate is 44,307 bytes, 881 bytes / 16 LF larger than the preimage;
+all other existing functions and the complete action/catch/finally sequence
+remain byte-identical. The typed visible-button selector, InvokePattern path,
+popup capture behavior, native interaction assertions and passed-only
+distribution boundary remain unchanged.
+
+This candidate has not been parsed or executed by PowerShell or run on a
+Windows host. Source review establishes neither a fix for the observed
+elevated-host drag failure nor native acceptance. PR60 remains at its tested
+`0578582686e483003db64e252e4ea65f0b48c093` head. The eligible-host requirements,
+original failed-run evidence and original-archive requirements remain in force.
+
 ### November 11 Windows diagnostic follow-up
 
 The corrected read-only observation is integrated from helper
