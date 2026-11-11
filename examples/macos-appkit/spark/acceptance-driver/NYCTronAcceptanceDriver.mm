@@ -125,6 +125,15 @@ static NYCTronProtocolDrag *ProtocolDrag;
 static NSInteger NextProtocolDrag;
 static NSDictionary *PointerSession;
 static BOOL PointerRunning;
+// Outcome evidence for a posted pointer drag, returned by tron.pointer status.
+// It reads the drag view's state; it does not wrap or replace its methods.
+static NSMutableDictionary *PointerObservation;
+static NSDictionary *DragViewState(NSView *view) {
+  @try {
+    return @{ @"mouseDown": [view valueForKey:@"_mouseDown"] ?: NSNull.null, @"dragging": [view valueForKey:@"_dragging"] ?: NSNull.null,
+      @"disabled": [view valueForKey:@"_disabled"] ?: NSNull.null, @"sourceCount": @([[view valueForKey:@"_source"] count]) };
+  } @catch (NSException *exception) { return @{ @"unavailable": exception.name ?: @"exception" }; }
+}
 static __weak RCTSurfaceTouchHandler *ResponderHandler;
 static __weak NSView *ResponderTarget;
 static __weak NSWindow *ResponderWindow;
@@ -424,6 +433,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       result[@"help"] = view.accessibilityHelp ?: @"";
       result[@"windowClass"] = NSStringFromClass(window.class);
       result[@"viewBounds"] = RectDictionary(view.bounds);
+      result[@"contentFrame"] = RectDictionary([view convertRect:view.bounds toView:window.contentView]);
       result[@"visibleRect"] = RectDictionary(view.visibleRect);
       result[@"fullyVisible"] = @(![view isHiddenOrHasHiddenAncestor] && NSContainsRect(view.visibleRect, view.bounds));
       result[@"contentBounds"] = RectDictionary(window.contentView.bounds);
@@ -667,7 +677,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       BOOL postEvents = CGPreflightPostEventAccess();
       NSString *action = request[@"action"];
       if (!action || [action isEqual:@"status"]) {
-        reply(@{ @"ok": @YES, @"postEventsAllowed": @(postEvents), @"accessibilityTrusted": (AXIsProcessTrusted() ? @YES : @NO), @"running": @(PointerRunning), @"session": PointerSession ?: (id)NSNull.null }); return;
+        reply(@{ @"ok": @YES, @"postEventsAllowed": @(postEvents), @"accessibilityTrusted": (AXIsProcessTrusted() ? @YES : @NO), @"running": @(PointerRunning), @"session": PointerSession ?: (id)NSNull.null, @"observation": PointerObservation ?: (id)NSNull.null }); return;
       }
       if (!postEvents) { reply(Failure(@"CGPreflightPostEventAccess denied event posting; no permission prompt or synthetic gesture was attempted")); return; }
       if (PointerRunning || ProtocolDrag) { reply(Failure(@"Another pointer or protocol action is active")); return; }
@@ -717,6 +727,16 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NSPoint targetPoint = [targetWindow convertPointToScreen:[target convertPoint:NSMakePoint(NSMidX(targetVisible), NSMidY(targetVisible)) toView:nil]];
       CGPoint start = QuartzPoint(sourcePoint, primary), end = QuartzPoint(targetPoint, primary);
       PointerSession = nil; PointerRunning = YES;
+      NSMutableDictionary *observation = [@{ @"beforePost": DragViewState(source), @"sourceContentFrame": RectDictionary([source convertRect:source.bounds toView:sourceWindow.contentView]),
+        @"sourceContentBounds": RectDictionary(sourceWindow.contentView.bounds), @"down": @0, @"dragged": @0, @"up": @0, @"downOnSource": @NO } mutableCopy];
+      PointerObservation = observation;
+      __weak NSView *weakSource = source;
+      id monitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown | NSEventMaskLeftMouseDragged | NSEventMaskLeftMouseUp) handler:^NSEvent *(NSEvent *event) {
+        NSString *key = event.type == NSEventTypeLeftMouseDown ? @"down" : event.type == NSEventTypeLeftMouseDragged ? @"dragged" : @"up";
+        observation[key] = @([observation[key] integerValue] + 1);
+        if (event.type == NSEventTypeLeftMouseDown) observation[@"downOnSource"] = @(event.window == weakSource.window && [event.window.contentView.superview hitTest:event.locationInWindow] == weakSource);
+        return event;
+      }];
       PostPointer(kCGEventMouseMoved, start, 0.10);
       PostPointer(kCGEventLeftMouseDown, start, 0.20);
       for (NSInteger step = 1; step <= 24; step++) {
@@ -724,7 +744,13 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
         PostPointer(kCGEventLeftMouseDragged, CGPointMake(start.x + (end.x - start.x) * fraction, start.y + (end.y - start.y) * fraction), 0.25 + 0.05 * step);
       }
       PostPointer(kCGEventLeftMouseUp, end, 1.65);
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ PointerRunning = NO; });
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [NSEvent removeMonitor:monitor];
+        NSView *view = weakSource;
+        observation[@"afterRelease"] = view ? DragViewState(view) : @{ @"unavailable": @"source view released" };
+        observation[@"sessionBegan"] = @(PointerSession != nil);
+        PointerRunning = NO;
+      });
       reply(@{ @"ok": @YES, @"started": @YES, @"boundary": @"CGEvent-posted-pointer", @"sourcePoint": @{ @"x": @(start.x), @"y": @(start.y) }, @"targetPoint": @{ @"x": @(end.x), @"y": @(end.y) } });
     });
     SparkTestDriverRegisterCommand(@"tron.control", ^(NSDictionary *request, SparkTestDriverReply reply) {

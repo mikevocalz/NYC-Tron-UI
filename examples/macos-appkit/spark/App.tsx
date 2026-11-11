@@ -284,8 +284,12 @@ function Surface({ windowId, main }: { windowId: string; main: boolean }) {
       </View>}
     </View>
   </ScrollView>;
+  // The split view must fit the narrowest window this reference supports: the
+  // 460 point document minimum, which the pointer acceptance also uses for two
+  // side-by-side windows. 180 + divider + 260 fits; the former 320 content
+  // minimum needed 501 points, more than an arranged 500 point window.
   return <View ref={root} testID={`root-${windowId}`} onLayout={measureRegion} style={{ flex: 1 }}>
-    {main ? <SplitView style={{ flex: 1 }} appearance={appearance} sidebarWidth={220} sidebarMinWidth={180} contentMinWidth={320}
+    {main ? <SplitView style={{ flex: 1 }} appearance={appearance} sidebarWidth={220} sidebarMinWidth={180} contentMinWidth={260}
       sidebar={<Sidebar testID="navigation" accessibilityLabel="Workspace navigation" style={{ flex: 1 }} selectedId={selected}
         items={[{ id: 'document', label: 'Document' }, { id: 'preferences', label: 'Preferences' }, { id: 'locked', label: 'Protected destination' }]}
         onSelectionChange={event => requestSelection(event.id)} onError={fail} />}
