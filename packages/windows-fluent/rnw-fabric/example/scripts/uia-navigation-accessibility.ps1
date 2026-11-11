@@ -12,14 +12,15 @@ public static class NavigationAccessibilityNative {
   public sealed class Contrast { public uint Flags; public string Scheme; }
   [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Unicode)]
   private static extern bool SystemParametersInfoW(uint action, uint size, ref HC data, uint flags);
-  [DllImport("kernel32.dll")] private static extern IntPtr LocalFree(IntPtr memory);
   [DllImport("user32.dll", SetLastError=true)]
   public static extern bool SetWindowPos(IntPtr window, IntPtr after, int x, int y, int width, int height, uint flags);
   public static Contrast ReadContrast() {
     HC value = new HC { size = (uint)Marshal.SizeOf(typeof(HC)) };
     if (!SystemParametersInfoW(0x42, value.size, ref value, 0)) throw new Win32Exception(Marshal.GetLastWin32Error());
-    try { return new Contrast { Flags=value.flags, Scheme=Marshal.PtrToStringUni(value.scheme) }; }
-    finally { if (value.scheme != IntPtr.Zero) LocalFree(value.scheme); }
+    // Do not LocalFree value.scheme. Run 42990880283 faulted in this call with
+    // 0xC0000374 right after SPI_SETHIGHCONTRAST restored the original mode. The
+    // string is a few bytes per call in a short-lived runner process.
+    return new Contrast { Flags=value.flags, Scheme=Marshal.PtrToStringUni(value.scheme) };
   }
   public static void SetContrast(Contrast original, bool enabled) {
     // Apply to this disposable runner session and notify native controls; do not persist a profile change.
