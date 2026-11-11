@@ -6,6 +6,7 @@ import { dirname, resolve, join, relative, isAbsolute, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { copySharedCore } from './shared-archives.mjs';
 import { patchDriverTransport } from './patch-driver-transport.mjs';
+import { patchExpoDeviceName } from './patch-expo-device-name.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const revision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' });
@@ -64,6 +65,7 @@ run(process.execPath, [join(repo, 'tooling/macos-appkit/initialize-spark-project
 // This diagnosed transport repair is private to the generated acceptance app.
 // The adapter/core archives and the installed SDK in ordinary references stay intact.
 const acceptanceTransport = nativeAcceptance ? await patchDriverTransport(destination, sourceRevision) : undefined;
+const acceptanceDeviceName = nativeAcceptance ? await patchExpoDeviceName(destination) : undefined;
 // Execute Spark's native patch-provenance and Metro graph gates before Xcode.
 run(process.execPath, ['node_modules/@legendapp/spark/bin/spark.cjs', 'analyze']);
 const pins = { '@legendapp/spark': '0.0.2', 'react-native': '0.83.10', 'react-native-macos': '0.83.0', react: '19.2.0', expo: '55.0.32', 'react-native-nitro-modules': '0.37.0', '@nyc-tron/core': '1.0.0', '@nyc-tron/macos-appkit': '1.0.0' };
@@ -100,6 +102,6 @@ for (const file of (await readdir(join(destination, 'vendor'))).filter(f => f.en
 }
 await rm(join(destination, '.archive-verification'), { recursive: true });
 if (archives.find(archive => archive.packageName === sharedCore.packageName)?.sha256 !== sharedCore.sha256) throw new Error('The tested core archive differs from the canonical shared input');
-const preparation = { schema: 1, sourceRevision, installedFromArchives: true, sharedCore, pins, archives, ...(acceptanceTransport ? { acceptanceTransport } : {}) };
+const preparation = { schema: 1, sourceRevision, installedFromArchives: true, sharedCore, pins, archives, ...(acceptanceTransport ? { acceptanceTransport } : {}), ...(acceptanceDeviceName ? { acceptanceDeviceName } : {}) };
 await writeFile(join(destination, 'package-preparation.json'), JSON.stringify(preparation, null, 2) + '\n');
 console.log(`Prepared installed AppKit consumer at ${destination}`);

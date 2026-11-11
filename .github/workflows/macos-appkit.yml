@@ -40,7 +40,7 @@ jobs:
           corepack pnpm install --frozen-lockfile --ignore-scripts
       - name: Build and pack core with release provenance
         run: |
-          node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs
+          node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs tooling/macos-appkit/patch-expo-device-name.test.mjs
           corepack pnpm --filter @nyc-tron/core build
           node tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core
       - uses: actions/upload-artifact@v4
@@ -171,6 +171,7 @@ jobs:
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-device-name/*.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.mm
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.log
             ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE
