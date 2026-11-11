@@ -1,0 +1,1112 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "representation": "Normalized completed workflow/job/artifact metadata, exact original-log observations and source-derived consumer configuration; not verbatim complete API responses.",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "head": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+    "headParent": "a957d4059b8a86735f2c152371eb7a2c2bd4e4ae",
+    "actualMerge": "d329a921bf3ee6183d94bc83204451bf2bc7cc93",
+    "mergeOrderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "8e5ee2e3c153d04f67f5d53983b308554a4f969c"
+    ],
+    "tree": "04c43947361d463940ccfe7cbb02ca8b48382929",
+    "allLeavesVerified": 2050,
+    "treeObjectsRecomputed": 284,
+    "checkoutLines": {
+      "workspace": 122,
+      "windows": 109,
+      "contracts": 122,
+      "basicConsumer": 123,
+      "expoWebConsumer": 123
+    }
+  },
+  "workflows": [
+    {
+      "id": 42982526846,
+      "name": "NYC-Tron source, exports and types",
+      "path": ".github/workflows/ci.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 452,
+      "run_attempt": 1,
+      "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+      "head_branch": "codex/v1-appkit-interactions-nov10",
+      "created_at": "2026-11-11T07:51:13Z",
+      "run_started_at": "2026-11-11T07:51:13Z",
+      "updated_at": "2026-11-11T07:53:34Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42982526846"
+    },
+    {
+      "id": 42982526713,
+      "name": "NYC-Tron installed release consumers",
+      "path": ".github/workflows/release-consumer.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 63,
+      "run_attempt": 1,
+      "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+      "head_branch": "codex/v1-appkit-interactions-nov10",
+      "created_at": "2026-11-11T07:51:13Z",
+      "run_started_at": "2026-11-11T07:51:13Z",
+      "updated_at": "2026-11-11T07:53:24Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42982526713"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 130396022441,
+      "name": "workspace TypeScript",
+      "run_id": 42982526846,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Enable corepack",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install local workspace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Compile independent package distributions in dependency order",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Typecheck packages against built peer workspaces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify distributable subpaths and dependency boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Verify the public API surface against docs/api-surface.json",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Verify reachable public declarations and dependency type boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Verify the complete component ledger and reviewed public exports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Pack every package and check release tarball contents",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Install the dependency-free tarballs in a fresh project and import them",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27
+        }
+      ]
+    },
+    {
+      "id": 130396022791,
+      "name": "tests and pack on Windows",
+      "run_id": 42982526846,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Enable corepack",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install local workspace",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Build every package",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "All unit, contract and mocked-render tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify distributable subpaths and dependency boundaries",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Pack every package and check release tarball contents",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Install the dependency-free tarballs in a fresh project and import them",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        }
+      ]
+    },
+    {
+      "id": 130396022881,
+      "name": "pure contracts and dependency boundaries",
+      "run_id": 42982526846,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install source-test tooling",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Build packages the tests import",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "All unit, contract and mocked-render tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 130396022031,
+      "name": "basic installed tarball consumer",
+      "run_id": 42982526713,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set the consumer location on this runner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install and build the candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install actual release tarballs in a project outside the repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Exercise the installed components in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Save the dependency evidence, results and captures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    },
+    {
+      "id": 130396022358,
+      "name": "expo-web installed tarball consumer",
+      "run_id": 42982526713,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set the consumer location on this runner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install and build the candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install actual release tarballs in a project outside the repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Exercise the installed components in React Native Web",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Save the dependency evidence, results and captures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    }
+  ],
+  "observations": {
+    "workspace": {
+      "jobId": 130396022441,
+      "compiledAndTypechecked": true,
+      "packages": 13,
+      "validatedConditionalExports": 619,
+      "validatedEsmFiles": 750,
+      "apiExportSubpaths": 619,
+      "reachableDeclarations": 3306,
+      "program": {
+        "canonicalIds": 341,
+        "localImplementations": 332,
+        "pinnedExternalImplementations": 9,
+        "partial": 0,
+        "pending": 0,
+        "acceptedWithAllEightPlatformProofs": 0
+      },
+      "packedArchives": 13,
+      "dependencyFreeInstalledPackages": [
+        "@nyc-tron/core",
+        "@nyc-tron/geometry",
+        "@nyc-tron/windows-fluent"
+      ],
+      "importedSubpaths": 17,
+      "logLines": {
+        "exports": 247,
+        "apiSurface": 604,
+        "apiSignatures": 609,
+        "componentProgram": 614,
+        "archiveStart": 619,
+        "archiveEnd": 631,
+        "packCount": 632,
+        "imports": 639
+      }
+    },
+    "contracts": {
+      "jobId": 130396022881,
+      "tests": 1187,
+      "passed": 1187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 17083.080003,
+      "summaryLogLines": {
+        "start": 1393,
+        "end": 1400
+      }
+    },
+    "windows": {
+      "jobId": 130396022791,
+      "tests": 1187,
+      "passed": 1187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 32849.4614,
+      "packedArchives": 13,
+      "dependencyFreeInstalledPackages": [
+        "@nyc-tron/core",
+        "@nyc-tron/geometry",
+        "@nyc-tron/windows-fluent"
+      ],
+      "importedSubpaths": 17,
+      "summaryLogLines": {
+        "start": 1391,
+        "end": 1398
+      },
+      "packCountLogLine": 1774,
+      "importsLogLine": 1783
+    },
+    "basicConsumer": {
+      "jobId": 130396022031,
+      "preparedOutsideRepository": true,
+      "verifiedInstalledReleaseTarballs": 1,
+      "sourceConfiguredPackages": [
+        "@nyc-tron/ui"
+      ],
+      "typecheckAndWebBuildPassed": true,
+      "workspaceImportsUsed": false,
+      "chromium": {
+        "scheduled": 2,
+        "passed": 1,
+        "skipped": 1,
+        "reportedDurationSeconds": 2.3,
+        "passedCase": "installed UI works without workspace sources and keeps the field through reflow",
+        "skippedCase": "Expo browser exports › installed picker and panes work through the browser export conditions"
+      },
+      "logLines": {
+        "prepared": 228,
+        "verifiedFirst": 231,
+        "verifiedSecond": 232,
+        "built": 237,
+        "scheduled": 470,
+        "passedCase": 472,
+        "skippedCase": 473,
+        "skipCount": 475,
+        "passCount": 476,
+        "artifactFileCount": 498
+      },
+      "artifactId": 13838371400,
+      "uploadedFilesReported": 7
+    },
+    "expoWebConsumer": {
+      "jobId": 130396022358,
+      "preparedOutsideRepository": true,
+      "verifiedInstalledReleaseTarballs": 4,
+      "sourceConfiguredPackages": [
+        "@nyc-tron/ui",
+        "@nyc-tron/core",
+        "@nyc-tron/panes",
+        "@nyc-tron/expo-controls"
+      ],
+      "typecheckAndWebBuildPassed": true,
+      "workspaceImportsUsed": false,
+      "chromium": {
+        "scheduled": 2,
+        "passed": 2,
+        "skipped": 0,
+        "reportedDurationSeconds": 2.1,
+        "passedCases": [
+          "installed UI works without workspace sources and keeps the field through reflow",
+          "Expo browser exports › installed picker and panes work through the browser export conditions"
+        ]
+      },
+      "logLines": {
+        "prepared": 230,
+        "verifiedFirst": 233,
+        "verifiedSecond": 234,
+        "built": 239,
+        "scheduled": 472,
+        "passedCases": [
+          474,
+          475
+        ],
+        "passCount": 477,
+        "artifactFileCount": 499
+      },
+      "artifactId": 13838132805,
+      "uploadedFilesReported": 7
+    }
+  },
+  "archiveProducerReports": {
+    "workspace": [
+      {
+        "filename": "nyc-tron-core-1.0.0.tgz",
+        "packageName": "@nyc-tron/core",
+        "files": 68,
+        "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355",
+        "logLine": 619
+      },
+      {
+        "filename": "nyc-tron-expo-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/expo-controls",
+        "files": 140,
+        "sha256": "b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824",
+        "logLine": 620
+      },
+      {
+        "filename": "nyc-tron-geometry-1.0.0.tgz",
+        "packageName": "@nyc-tron/geometry",
+        "files": 19,
+        "sha256": "ca80f9e7c69950df97ce5db6c44302fa3debc17cdf96ceb8ec6a443f393b3fa5",
+        "logLine": 621
+      },
+      {
+        "filename": "nyc-tron-hardware-keys-1.0.0.tgz",
+        "packageName": "@nyc-tron/hardware-keys",
+        "files": 67,
+        "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+        "logLine": 622
+      },
+      {
+        "filename": "nyc-tron-icons-1.0.0.tgz",
+        "packageName": "@nyc-tron/icons",
+        "files": 17,
+        "sha256": "68667fed555a073b05f100df8736774f5bbc6f169e074f8124df68457a251b07",
+        "logLine": 623
+      },
+      {
+        "filename": "nyc-tron-native-charts-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-charts",
+        "files": 43,
+        "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+        "logLine": 624
+      },
+      {
+        "filename": "nyc-tron-native-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-controls",
+        "files": 76,
+        "sha256": "7464ce8c7d911dc7bcecbb4b96bb8d1cb12723c39e5b656e918dbcfe52437062",
+        "logLine": 625
+      },
+      {
+        "filename": "nyc-tron-native-navigation-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-navigation",
+        "files": 31,
+        "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+        "logLine": 626
+      },
+      {
+        "filename": "nyc-tron-panes-1.0.0.tgz",
+        "packageName": "@nyc-tron/panes",
+        "files": 40,
+        "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+        "logLine": 627
+      },
+      {
+        "filename": "nyc-tron-platform-services-1.0.0.tgz",
+        "packageName": "@nyc-tron/platform-services",
+        "files": 228,
+        "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+        "logLine": 628
+      },
+      {
+        "filename": "nyc-tron-reserved-regions-1.0.0.tgz",
+        "packageName": "@nyc-tron/reserved-regions",
+        "files": 43,
+        "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+        "logLine": 629
+      },
+      {
+        "filename": "nyc-tron-ui-1.0.0.tgz",
+        "packageName": "@nyc-tron/ui",
+        "files": 2516,
+        "sha256": "f48b2e1a315c34132d18c0c4cb1ceda44fcd40403fe2aeec0d1bd313720ade40",
+        "logLine": 630
+      },
+      {
+        "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+        "packageName": "@nyc-tron/windows-fluent",
+        "files": 20,
+        "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73",
+        "logLine": 631
+      }
+    ],
+    "windows": [
+      {
+        "filename": "nyc-tron-core-1.0.0.tgz",
+        "packageName": "@nyc-tron/core",
+        "files": 68,
+        "sha256": "2079abe606dadde1d0d34cba4a4a31820f289cd893f2ad1e0a5c85a20914992c",
+        "logLine": 1761
+      },
+      {
+        "filename": "nyc-tron-expo-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/expo-controls",
+        "files": 140,
+        "sha256": "0af9242ddff4c9d1c7a71808a194a68307b4de250311fe96b2c8b1ecaf6f58d0",
+        "logLine": 1762
+      },
+      {
+        "filename": "nyc-tron-geometry-1.0.0.tgz",
+        "packageName": "@nyc-tron/geometry",
+        "files": 19,
+        "sha256": "28f8ce71bd22fa1590999d11699804f0b70d7da91553bc57270618572a6bcf91",
+        "logLine": 1763
+      },
+      {
+        "filename": "nyc-tron-hardware-keys-1.0.0.tgz",
+        "packageName": "@nyc-tron/hardware-keys",
+        "files": 67,
+        "sha256": "afa9972cb46aa51485874c5d679580fa08f64476a4c5f7f4d15342d365efa178",
+        "logLine": 1764
+      },
+      {
+        "filename": "nyc-tron-icons-1.0.0.tgz",
+        "packageName": "@nyc-tron/icons",
+        "files": 17,
+        "sha256": "dcadfdc21d51fc88f645460d9967066298622f4dbdeb4f50ea1c6ed49402ff78",
+        "logLine": 1765
+      },
+      {
+        "filename": "nyc-tron-native-charts-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-charts",
+        "files": 43,
+        "sha256": "472ffd4d03a0f2dd2ffa6174eab3331ffc637136a153e7a9c36718c9418b6553",
+        "logLine": 1766
+      },
+      {
+        "filename": "nyc-tron-native-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-controls",
+        "files": 76,
+        "sha256": "78ea05ee517a68dd6a96cdb9e7d083327d7252d747645806d9e10dcb13bd215e",
+        "logLine": 1767
+      },
+      {
+        "filename": "nyc-tron-native-navigation-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-navigation",
+        "files": 31,
+        "sha256": "f7bdae21ce9bd2bde414c7d77aa791f1c57974c934487471d38e82aaf23d3a1d",
+        "logLine": 1768
+      },
+      {
+        "filename": "nyc-tron-panes-1.0.0.tgz",
+        "packageName": "@nyc-tron/panes",
+        "files": 40,
+        "sha256": "0e79d0501f58cd89078d7c256b20ca6303c609e5b88931b4e001bf425f41bef4",
+        "logLine": 1769
+      },
+      {
+        "filename": "nyc-tron-platform-services-1.0.0.tgz",
+        "packageName": "@nyc-tron/platform-services",
+        "files": 228,
+        "sha256": "85521ad865fda01cb59c7f5636e0bd0f34ed1d1f3e7b8c9c957130875783d81c",
+        "logLine": 1770
+      },
+      {
+        "filename": "nyc-tron-reserved-regions-1.0.0.tgz",
+        "packageName": "@nyc-tron/reserved-regions",
+        "files": 43,
+        "sha256": "81c4c1f0c5e6c59ec0e3dd753f48fdd1c59268e9f8d9a2421f536a42b6866171",
+        "logLine": 1771
+      },
+      {
+        "filename": "nyc-tron-ui-1.0.0.tgz",
+        "packageName": "@nyc-tron/ui",
+        "files": 2516,
+        "sha256": "d6509a9ac910a950d724daf24bb49df6603dbcdc2579b87a2c02c47893cd9d0d",
+        "logLine": 1772
+      },
+      {
+        "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+        "packageName": "@nyc-tron/windows-fluent",
+        "files": 20,
+        "sha256": "71417ed170abbc265788226295e2bddddfcc5ae13a874d2890ba8864ff8e1014",
+        "logLine": 1773
+      }
+    ],
+    "basicConsumer": [
+      {
+        "filename": "nyc-tron-core-1.0.0.tgz",
+        "packageName": "@nyc-tron/core",
+        "files": 68,
+        "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355",
+        "logLine": 206
+      },
+      {
+        "filename": "nyc-tron-expo-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/expo-controls",
+        "files": 140,
+        "sha256": "b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824",
+        "logLine": 207
+      },
+      {
+        "filename": "nyc-tron-geometry-1.0.0.tgz",
+        "packageName": "@nyc-tron/geometry",
+        "files": 19,
+        "sha256": "ca80f9e7c69950df97ce5db6c44302fa3debc17cdf96ceb8ec6a443f393b3fa5",
+        "logLine": 208
+      },
+      {
+        "filename": "nyc-tron-hardware-keys-1.0.0.tgz",
+        "packageName": "@nyc-tron/hardware-keys",
+        "files": 67,
+        "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+        "logLine": 209
+      },
+      {
+        "filename": "nyc-tron-icons-1.0.0.tgz",
+        "packageName": "@nyc-tron/icons",
+        "files": 17,
+        "sha256": "68667fed555a073b05f100df8736774f5bbc6f169e074f8124df68457a251b07",
+        "logLine": 210
+      },
+      {
+        "filename": "nyc-tron-native-charts-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-charts",
+        "files": 43,
+        "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+        "logLine": 211
+      },
+      {
+        "filename": "nyc-tron-native-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-controls",
+        "files": 76,
+        "sha256": "7464ce8c7d911dc7bcecbb4b96bb8d1cb12723c39e5b656e918dbcfe52437062",
+        "logLine": 212
+      },
+      {
+        "filename": "nyc-tron-native-navigation-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-navigation",
+        "files": 31,
+        "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+        "logLine": 213
+      },
+      {
+        "filename": "nyc-tron-panes-1.0.0.tgz",
+        "packageName": "@nyc-tron/panes",
+        "files": 40,
+        "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+        "logLine": 214
+      },
+      {
+        "filename": "nyc-tron-platform-services-1.0.0.tgz",
+        "packageName": "@nyc-tron/platform-services",
+        "files": 228,
+        "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+        "logLine": 215
+      },
+      {
+        "filename": "nyc-tron-reserved-regions-1.0.0.tgz",
+        "packageName": "@nyc-tron/reserved-regions",
+        "files": 43,
+        "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+        "logLine": 216
+      },
+      {
+        "filename": "nyc-tron-ui-1.0.0.tgz",
+        "packageName": "@nyc-tron/ui",
+        "files": 2516,
+        "sha256": "f48b2e1a315c34132d18c0c4cb1ceda44fcd40403fe2aeec0d1bd313720ade40",
+        "logLine": 217
+      },
+      {
+        "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+        "packageName": "@nyc-tron/windows-fluent",
+        "files": 20,
+        "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73",
+        "logLine": 218
+      }
+    ],
+    "expoWebConsumer": [
+      {
+        "filename": "nyc-tron-core-1.0.0.tgz",
+        "packageName": "@nyc-tron/core",
+        "files": 68,
+        "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355",
+        "logLine": 208
+      },
+      {
+        "filename": "nyc-tron-expo-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/expo-controls",
+        "files": 140,
+        "sha256": "b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824",
+        "logLine": 209
+      },
+      {
+        "filename": "nyc-tron-geometry-1.0.0.tgz",
+        "packageName": "@nyc-tron/geometry",
+        "files": 19,
+        "sha256": "ca80f9e7c69950df97ce5db6c44302fa3debc17cdf96ceb8ec6a443f393b3fa5",
+        "logLine": 210
+      },
+      {
+        "filename": "nyc-tron-hardware-keys-1.0.0.tgz",
+        "packageName": "@nyc-tron/hardware-keys",
+        "files": 67,
+        "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912",
+        "logLine": 211
+      },
+      {
+        "filename": "nyc-tron-icons-1.0.0.tgz",
+        "packageName": "@nyc-tron/icons",
+        "files": 17,
+        "sha256": "68667fed555a073b05f100df8736774f5bbc6f169e074f8124df68457a251b07",
+        "logLine": 212
+      },
+      {
+        "filename": "nyc-tron-native-charts-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-charts",
+        "files": 43,
+        "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76",
+        "logLine": 213
+      },
+      {
+        "filename": "nyc-tron-native-controls-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-controls",
+        "files": 76,
+        "sha256": "7464ce8c7d911dc7bcecbb4b96bb8d1cb12723c39e5b656e918dbcfe52437062",
+        "logLine": 214
+      },
+      {
+        "filename": "nyc-tron-native-navigation-1.0.0.tgz",
+        "packageName": "@nyc-tron/native-navigation",
+        "files": 31,
+        "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85",
+        "logLine": 215
+      },
+      {
+        "filename": "nyc-tron-panes-1.0.0.tgz",
+        "packageName": "@nyc-tron/panes",
+        "files": 40,
+        "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9",
+        "logLine": 216
+      },
+      {
+        "filename": "nyc-tron-platform-services-1.0.0.tgz",
+        "packageName": "@nyc-tron/platform-services",
+        "files": 228,
+        "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650",
+        "logLine": 217
+      },
+      {
+        "filename": "nyc-tron-reserved-regions-1.0.0.tgz",
+        "packageName": "@nyc-tron/reserved-regions",
+        "files": 43,
+        "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2",
+        "logLine": 218
+      },
+      {
+        "filename": "nyc-tron-ui-1.0.0.tgz",
+        "packageName": "@nyc-tron/ui",
+        "files": 2516,
+        "sha256": "f48b2e1a315c34132d18c0c4cb1ceda44fcd40403fe2aeec0d1bd313720ade40",
+        "logLine": 219
+      },
+      {
+        "filename": "nyc-tron-windows-fluent-1.0.0.tgz",
+        "packageName": "@nyc-tron/windows-fluent",
+        "files": 20,
+        "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73",
+        "logLine": 220
+      }
+    ]
+  },
+  "archiveComparison": {
+    "scope": "Compare filenames/package names/file counts/SHA-256 values printed by each completed job; original tarballs not independently retrieved or hashed here.",
+    "workspaceBasicAndExpoWebReportsMatch": true,
+    "windowsReportsDifferFromWorkspaceForPackages": 13,
+    "windowsFileCountsMatchWorkspace": true,
+    "causeOfHashDifferenceEstablished": false,
+    "finalReleaseManifestEqualityEstablished": false
+  },
+  "consumerSourceConfiguration": {
+    "scriptPath": "tooling/consumer-release.mjs",
+    "scriptGitBlob": "24fba0d445440b399e36ee86c7b6cd7fce71b808",
+    "packageSelectionLines": [
+      63,
+      64
+    ],
+    "smokeScriptPath": "tooling/consumer-smoke.mjs",
+    "smokeScriptGitBlob": "67a8ced1e59e2ee477d1e32b26832a59d6585fdb",
+    "actualArchiveManifestsInspectedByReceiptAuthor": false,
+    "sourceConfiguredPackageNamesAreNotSeparateRawManifestInspection": true
+  },
+  "artifacts": {
+    "sourceWorkflowReportedArtifacts": [],
+    "installedConsumerArtifacts": [
+      {
+        "id": 13838371400,
+        "name": "release-consumer-basic",
+        "size_in_bytes": 64098,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838371400",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838371400/zip",
+        "expired": false,
+        "created_at": "2026-11-11T07:52:36Z",
+        "expires_at": "2026-11-18T07:52:35Z",
+        "updated_at": "2026-11-11T07:52:36Z",
+        "digest": "sha256:9e7f25d4f600466edcb6be586e11f18b1d16a739b064491bbca6ab2dce8b4898",
+        "workflow_run": {
+          "id": 42982526713,
+          "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+          "head_branch": "codex/v1-appkit-interactions-nov10"
+        }
+      },
+      {
+        "id": 13838132805,
+        "name": "release-consumer-expo-web",
+        "size_in_bytes": 117308,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838132805",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838132805/zip",
+        "expired": false,
+        "created_at": "2026-11-11T07:53:19Z",
+        "expires_at": "2026-11-18T07:53:18Z",
+        "updated_at": "2026-11-11T07:53:19Z",
+        "digest": "sha256:0cc02ec46e7108d54a19a2b0226181ff04c7c6e1fc48f883ed3173e5b4ad1618",
+        "workflow_run": {
+          "id": 42982526713,
+          "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+          "head_branch": "codex/v1-appkit-interactions-nov10"
+        }
+      }
+    ]
+  },
+  "scopeBoundary": {
+    "comparedAggregate": "e8395372bd163ea97ecf84e026538c68822aac5c",
+    "comparedAggregateTree": "d5c63294d01a4d7e651930b07e8cb817466a80f2",
+    "nonDocNonMarkdownChangedLeaves": 86,
+    "comparisonFilter": "Exclude docs/** and .md/.markdown paths (case-insensitive); compare remaining leaf IDs, modes and types.",
+    "comparisonIndependentlyReproduced": true,
+    "helperResultsTransferredToAggregate": false,
+    "aggregateHistorical1199Replaced": false,
+    "aggregateCurrentExpectedTestCountIsNotAnObservedRun": true,
+    "exactReleaseCommitAndManifestProvenanceRemainSeparate": true
+  },
+  "retainedOriginalLogs": [
+    {
+      "filename": "workspace-types-pack.log",
+      "bytes": 62207,
+      "sha256": "9dd87911a752b5df106873b94c83be7bbf514adcd01033d6409a867785e9d03f",
+      "gitBlob": "b453d6b95fff3bef8e4de81e9584713b1b7dadd3"
+    },
+    {
+      "filename": "windows-tests-pack.log",
+      "bytes": 194923,
+      "sha256": "54e7821844f33da5a215e7dbfc06e75c44c63df9b5a666ad1161b6a2f846e0db",
+      "gitBlob": "dd3903313e775bed3e2f2a71bbaecdc6ff605248"
+    },
+    {
+      "filename": "linux-contract-tests.log",
+      "bytes": 153538,
+      "sha256": "d1ed313f4665e9bf8496c290cbae69832a8afcd2b69470af3222a1a6f3c1ac41",
+      "gitBlob": "58e2d7a7e49aee0cda7021001116ab071fa4bed6"
+    },
+    {
+      "filename": "basic-installed-consumer.log",
+      "bytes": 48183,
+      "sha256": "a5a94a2864912fd9ab62f1839f0db09fe44c7aa38e3454c5cd8ed5a7b55eee41",
+      "gitBlob": "f6e095b2dca97652213c1181d61ccf1bf7692814"
+    },
+    {
+      "filename": "expo-web-installed-consumer.log",
+      "bytes": 48364,
+      "sha256": "bc6e3a1ba3a56838240367898f7baed5e43beceaa3838775831f3d19ba2e7557",
+      "gitBlob": "c8658bab4501d29717976274eb60a71937e8aebd"
+    }
+  ],
+  "archiveInspection": {
+    "sourceTarballsRetrieved": false,
+    "sourceTarballsIndependentlyHashed": false,
+    "consumerZipArchivesRetrieved": false,
+    "consumerZipDigestsIndependentlyVerified": false,
+    "archiveMembersExtracted": false,
+    "renderedCaptureImagesViewed": false
+  },
+  "boundaries": [
+    "The two 1,187-test executions are the helper's suite on different runners, not 2,374 distinct tests or a replacement for the aggregate's historical 1,199.",
+    "The helper differs from aggregate e839 in 86 non-documentation/non-Markdown leaf paths; passes do not transfer.",
+    "The 341-row checker reports implementation inventory, with 0 rows possessing all eight platform proofs; it is not all-platform acceptance.",
+    "Packing 13 archives is separate from importing 17 dependency-free subpaths or verifying 1/4 installed consumer tarballs.",
+    "Basic Chromium has 1 passed and 1 skipped; expo-web has 2 passed. Skipped is not passed.",
+    "Printed archive hashes are producer observations; Windows differs from the three Linux pack reports, with no cause or final-manifest equality inferred.",
+    "These source/browser runs do not establish AppKit or Windows native interaction, physical-platform, owner or release acceptance."
+  ]
+}

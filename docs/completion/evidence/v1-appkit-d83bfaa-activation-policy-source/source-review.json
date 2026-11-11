@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-source-correction-native-validation-pending",
+  "preparedAt": "2026-11-11 08:38:05 UTC",
+  "scope": "Private AppKit acceptance-driver activation-policy predicate. This receipt records source review of an immutable blob, not a published commit or a successful run of the correction.",
+  "candidate": {
+    "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+    "preimage": {
+      "gitBlob": "6f119bca252082f18f573370e853bf2e86128934",
+      "bytes": 60268,
+      "sha256": "83d8569de1b6e4fe1c895b51bf3c3292364d09c657acaef07be3e19ff9bf163f"
+    },
+    "replacement": {
+      "gitBlob": "d83bfaa57bec5eda7111f40b4a41069f8396bdef",
+      "bytes": 60484,
+      "sha256": "7e2b735a33911cc60336dbfbb8ce1577f2a3a62e9715cd4cdf8637e23179b0b0"
+    },
+    "commit": null,
+    "publicationVerified": false
+  },
+  "originalCompletedAttempt": {
+    "runId": 42985584907,
+    "runAttempt": 1,
+    "nativeJobId": 130406050238,
+    "head": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+    "actualCheckout": "3f9d3ad376bd6b4514ca691997c56dfc74888bec",
+    "checkoutTree": "9ac7c175174b52dbb0bdc987ea199f30214d4c62",
+    "checkoutParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "0bee669639a5d9ffaa7c456343344ccd42283c04"
+    ],
+    "executedDriver": "6f119bca252082f18f573370e853bf2e86128934",
+    "executedVerifier": "f21e9349b35922ad689a2f6320ed651b5557de64",
+    "attemptMetadata": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/1",
+    "attemptJobsMetadata": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/1/jobs",
+    "result": {
+      "standaloneCompilation": "success",
+      "nativeInteraction": "failure",
+      "testedDistribution": "skipped"
+    },
+    "independentlyRetrievedNativeLog": {
+      "gitBlob": "b39e919ef2e6bb806412c53e1103cf17b875a024",
+      "bytes": 80367,
+      "sha256": "1466980748f763d112ac54738a8092c6b690c4a934cbe6ba15ee0c70355a1bd1"
+    },
+    "exactTimestampStrippedStartupJson": {
+      "gitBlob": "a214aa75259fa19ff0a4bbe7309f1790d210d9aa",
+      "bytes": 23562,
+      "sha256": "76c0da2236bbef80558945bd560af5ad46257d15bcbdf975ce52cb1d75613c4b"
+    },
+    "startupEnvelope": {
+      "standaloneBeginMarkers": 1,
+      "standaloneEndMarkers": 1,
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0,
+      "rawJsonReserialized": false
+    },
+    "observed": {
+      "processId": 25836,
+      "activationOperation": 2,
+      "phaseOrder": [
+        "policy-entered",
+        "policy-returned"
+      ],
+      "mainThread": true,
+      "policyBefore": 0,
+      "policyAfter": 0,
+      "policyMeaning": "NSApplicationActivationPolicyRegular",
+      "applicationActiveBeforeAndAfter": true,
+      "documentWindowVisibleBeforeAndAfter": false,
+      "documentWindowKeyBeforeAndAfter": false,
+      "setterReturned": false,
+      "requestId": 164,
+      "command": "tron.window",
+      "requestStartedAt": "2026-11-11T08:27:52.704Z",
+      "responseAt": "2026-11-11T08:27:52.705Z",
+      "responseOk": false,
+      "firstFailure": "tron.window: The native test host refused interactive activation policy",
+      "verifierFailureLocation": "verify-native.mjs:1212:3",
+      "sourceLocationMeaning": "await show('document-1'); the fixture rejects the setter Boolean before its existing NSWorkspace activation call"
+    },
+    "originalFileBoundary": "The complete Actions log and exact console JSON substring were independently retrieved and hashed. App-log snapshot, commands, sample, compiler output, images and original artifact bytes remain producer-reported/uninspected here.",
+    "causality": "The observed rejection path is established. The reason AppKit returned false, and whether the document window would pass subsequent activation checks, are not established."
+  },
+  "sourceChange": {
+    "uniqueReversibleTransforms": 1,
+    "transform": {
+      "from": "        if (!policyAccepted) { reply(Failure(@\"The native test host refused interactive activation policy\")); return; }",
+      "to": "        // The setter reports a policy-switch result. Require the observed policy;\n        // a false return alone does not establish that the required state is absent.\n        if (NSApp.activationPolicy != NSApplicationActivationPolicyRegular) { reply(Failure(@\"The native test host refused interactive activation policy\")); return; }"
+    },
+    "inverseRestoresPreimage": true,
+    "actualSetterCallUnchanged": true,
+    "actualSetterReturnTraceUnchanged": true,
+    "condition": "NSApp.activationPolicy != NSApplicationActivationPolicyRegular",
+    "subsequentSource": "Byte-identical from the existing Sonoma/NSWorkspace activation comment through EOF, including same-process/bundle and native window-state work.",
+    "strictVerifierUnchanged": true,
+    "errorPathWhenObservedPolicyIsWrong": "Same Failure message, reply and return; no retry or deadline change."
+  },
+  "primaryContracts": [
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nsapplication/setactivationpolicy(_:).md",
+      "meaning": "The Boolean reports whether the activation-policy switch succeeded."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nsapplication/activationpolicy().md",
+      "meaning": "Returns the app's current activation policy."
+    }
+  ],
+  "review": {
+    "script": {
+      "filename": "review-checks.js",
+      "gitBlob": "82c4b151b7dbe8c298e0e3c0c571cfd8a1968f46",
+      "bytes": 10505,
+      "sha256": "4501a02fbb91d98713796e035ca697835c502b46ba322cbf0118121119ee48a6"
+    },
+    "invocation": "Evaluate the complete review-checks.js file, then call the returned function with {source, preimage, nativeLog}, each exact decoded text for its pinned Git blob.",
+    "extractedComparisonCases": [
+      {
+        "setterReturn": false,
+        "observedPolicy": 0,
+        "rejected": false,
+        "continuationPermittedByPredicate": true
+      },
+      {
+        "setterReturn": false,
+        "observedPolicy": 1,
+        "rejected": true,
+        "continuationPermittedByPredicate": false
+      },
+      {
+        "setterReturn": false,
+        "observedPolicy": 2,
+        "rejected": true,
+        "continuationPermittedByPredicate": false
+      },
+      {
+        "setterReturn": true,
+        "observedPolicy": 0,
+        "rejected": false,
+        "continuationPermittedByPredicate": true
+      },
+      {
+        "setterReturn": true,
+        "observedPolicy": 1,
+        "rejected": true,
+        "continuationPermittedByPredicate": false
+      },
+      {
+        "setterReturn": true,
+        "observedPolicy": 2,
+        "rejected": true,
+        "continuationPermittedByPredicate": false
+      }
+    ],
+    "checks": "Exact source/log/JSON identities; one forward/inverse transform; real setter/raw-return trace and strict activation tail unchanged; six extracted-comparison cases; exact original operation2/rejection observations.",
+    "result": "passed",
+    "executionBoundary": "V8 source-expression and original-text checks only. No Objective-C++ compilation, AppKit API call, Node filesystem execution, or native run of the replacement.",
+    "remaining": "Compose with separately reviewed source, verify the exact final tree, and run native compile/interaction acceptance under root's publication authority."
+  }
+}

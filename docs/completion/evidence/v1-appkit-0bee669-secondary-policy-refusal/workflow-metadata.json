@@ -1,0 +1,748 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "observedAt": "2026-11-11 08:32:39 UTC",
+  "representation": "Normalized completed attempt-specific workflow/job/artifact metadata and exact-source console observations; not verbatim full API responses.",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "workflowRunAttempt": {
+    "id": 42985584907,
+    "name": "NYC-Tron AppKit native host",
+    "path": ".github/workflows/macos-appkit.yml",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "run_number": 30,
+    "run_attempt": 1,
+    "workflow_id": 413427679,
+    "head_sha": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "created_at": "2026-11-11T08:15:21Z",
+    "run_started_at": "2026-11-11T08:15:21Z",
+    "updated_at": "2026-11-11T08:28:10Z",
+    "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42985584907"
+  },
+  "attemptSelection": {
+    "runEndpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/1",
+    "jobsEndpoint": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/1/jobs?per_page=100",
+    "outerRunMayRepresentLaterAttempt": true,
+    "sourceJobId": 130405869688,
+    "nativeJobId": 130406050238,
+    "artifactAssociation": "Artifact ID and digest matched the completed attempt-1 native upload lines 579/586/588/589; the run-level artifact listing was filtered to those observed IDs.",
+    "noRerunOrDispatchByReceiptAuthor": true
+  },
+  "source": {
+    "head": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+    "tree": "9ac7c175174b52dbb0bdc987ea199f30214d4c62",
+    "headOrderedParents": [
+      "27b9d27000a7d02192e70e8c6eeed502f6f578a8"
+    ],
+    "actualMerge": "3f9d3ad376bd6b4514ca691997c56dfc74888bec",
+    "mergeOrderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "0bee669639a5d9ffaa7c456343344ccd42283c04"
+    ],
+    "actualSourceCheckout": "3f9d3ad376bd6b4514ca691997c56dfc74888bec",
+    "sourceCheckoutLogLine": 123,
+    "actualNativeCheckout": "3f9d3ad376bd6b4514ca691997c56dfc74888bec",
+    "nativeCheckoutLogLine": 113,
+    "commitAndMergeMetadataIndependentlyRetrieved": true,
+    "completeTreeVerification": {
+      "reviewer": "root",
+      "leafCount": 2050,
+      "treeObjectCount": 284,
+      "scope": "Previously independently verified by root; this receipt author rechecked immutable commit/merge metadata and original log checkouts."
+    },
+    "acceptanceDriverGitBlob": "6f119bca252082f18f573370e853bf2e86128934",
+    "shippingPopoverGitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+    "verifierGitBlob": "f21e9349b35922ad689a2f6320ed651b5557de64",
+    "currentCollectorPermitsPrivateAppKitIvarText": true,
+    "earlierShownTagPrivateReadProvenanceRetainedInConsole": false,
+    "baseSnapshot": "ac5d69585a52a6e945dc996ea08030e190574699",
+    "earlierHead": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+    "interveningCommit": "27b9d27000a7d02192e70e8c6eeed502f6f578a8",
+    "changeScope": "External close-state diagnostics and named owner-window observer removal; this outcome does not independently establish the claimed notification-removal cause."
+  },
+  "jobs": [
+    {
+      "id": 130405869688,
+      "name": "Canonical core release archive",
+      "run_id": 42985584907,
+      "run_attempt": 1,
+      "head_sha": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T08:15:27Z",
+      "completed_at": "2026-11-11T08:15:50Z",
+      "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/job/130405869688",
+      "runner_name": "GitHub Actions 1000050390",
+      "runner_group_name": "GitHub Actions",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-11T08:15:27Z",
+          "completed_at": "2026-11-11T08:15:28Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-11T08:15:28Z",
+          "completed_at": "2026-11-11T08:15:29Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-11T08:15:29Z",
+          "completed_at": "2026-11-11T08:15:33Z"
+        },
+        {
+          "name": "Install the pinned workspace compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-11T08:15:33Z",
+          "completed_at": "2026-11-11T08:15:42Z"
+        },
+        {
+          "name": "Build and pack core with release provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-11T08:15:42Z",
+          "completed_at": "2026-11-11T08:15:46Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-11T08:15:46Z",
+          "completed_at": "2026-11-11T08:15:47Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-11T08:15:47Z",
+          "completed_at": "2026-11-11T08:15:48Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-11T08:15:48Z",
+          "completed_at": "2026-11-11T08:15:48Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-11T08:15:48Z",
+          "completed_at": "2026-11-11T08:15:48Z"
+        }
+      ]
+    },
+    {
+      "id": 130406050238,
+      "name": "Spark 0.0.2 ARM64 AppKit compile and native acceptance",
+      "run_id": 42985584907,
+      "run_attempt": 1,
+      "head_sha": "0bee669639a5d9ffaa7c456343344ccd42283c04",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-11T08:15:52Z",
+      "completed_at": "2026-11-11T08:28:10Z",
+      "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/job/130406050238",
+      "runner_name": "GitHub Actions 1000050394",
+      "runner_group_name": "GitHub Actions",
+      "labels": [
+        "macos-15"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-11T08:15:52Z",
+          "completed_at": "2026-11-11T08:15:54Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-11T08:15:54Z",
+          "completed_at": "2026-11-11T08:15:56Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-11T08:15:56Z",
+          "completed_at": "2026-11-11T08:16:02Z"
+        },
+        {
+          "name": "Verify native ARM64 host and Apple build tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-11T08:16:02Z",
+          "completed_at": "2026-11-11T08:16:11Z"
+        },
+        {
+          "name": "Run actions/download-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-11T08:16:11Z",
+          "completed_at": "2026-11-11T08:16:12Z"
+        },
+        {
+          "name": "Build and install archive consumer outside the monorepo",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-11T08:16:12Z",
+          "completed_at": "2026-11-11T08:17:55Z"
+        },
+        {
+          "name": "Verify the installed AppKit public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-11T08:17:55Z",
+          "completed_at": "2026-11-11T08:17:56Z"
+        },
+        {
+          "name": "Verify the private Spark transport with native Foundation and socketpair",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-11T08:17:56Z",
+          "completed_at": "2026-11-11T08:17:59Z"
+        },
+        {
+          "name": "Compile a standalone native AppKit reference",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-11T08:17:59Z",
+          "completed_at": "2026-11-11T08:27:45Z"
+        },
+        {
+          "name": "Exercise actual native controls and window lifetimes",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 10,
+          "started_at": "2026-11-11T08:27:45Z",
+          "completed_at": "2026-11-11T08:27:56Z"
+        },
+        {
+          "name": "Retain build and native evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-11T08:27:56Z",
+          "completed_at": "2026-11-11T08:27:58Z"
+        },
+        {
+          "name": "Retain the exact natively tested distribution",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2026-11-11T08:27:58Z",
+          "completed_at": "2026-11-11T08:27:58Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 23,
+          "started_at": "2026-11-11T08:27:58Z",
+          "completed_at": "2026-11-11T08:27:58Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-11T08:27:58Z",
+          "completed_at": "2026-11-11T08:27:59Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-11-11T08:27:59Z",
+          "completed_at": "2026-11-11T08:28:01Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13839409875,
+      "name": "macos-appkit-native-evidence",
+      "size_in_bytes": 1654656,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13839409875",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13839409875/zip",
+      "expired": false,
+      "created_at": "2026-11-11T08:27:59Z",
+      "expires_at": "2026-11-25T08:27:57Z",
+      "updated_at": "2026-11-11T08:27:59Z",
+      "digest": "sha256:dc9acc0886c50878f04edd12427a3839f06fab9d946e0f18a5a0c9f02db1c6a6",
+      "workflow_run": {
+        "id": 42985584907,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-appkit-interactions-nov10",
+        "head_sha": "0bee669639a5d9ffaa7c456343344ccd42283c04"
+      }
+    },
+    {
+      "id": 13838694385,
+      "name": "macos-appkit-shared-packages",
+      "size_in_bytes": 51323,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838694385",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838694385/zip",
+      "expired": false,
+      "created_at": "2026-11-11T08:15:47Z",
+      "expires_at": "2026-11-25T08:15:47Z",
+      "updated_at": "2026-11-11T08:15:47Z",
+      "digest": "sha256:416a2b64a56f3b7c30bbe5a154913f2f228fda6fd18ea980624a318ab3308ed5",
+      "workflow_run": {
+        "id": 42985584907,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-appkit-interactions-nov10",
+        "head_sha": "0bee669639a5d9ffaa7c456343344ccd42283c04"
+      }
+    }
+  ],
+  "observedOutcome": {
+    "source": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 473.210467,
+      "summaryLogLines": [
+        186,
+        188,
+        189,
+        190,
+        191,
+        193
+      ]
+    },
+    "installedConsumer": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 75.59575,
+      "summaryLogLines": [
+        250,
+        252,
+        253,
+        254,
+        255,
+        257
+      ]
+    },
+    "installedApi": {
+      "status": "matched",
+      "typedSubpaths": 15,
+      "reachableDeclarations": 33,
+      "logLine": 441
+    },
+    "nativeTransportProbe": {
+      "status": "passed",
+      "cases": 7,
+      "logLine": 451
+    },
+    "compile": "success",
+    "buildExitCode": 0,
+    "runtime": "failure",
+    "firstFailure": "tron.window: The native test host refused interactive activation policy",
+    "firstFailureLogLine": 533,
+    "showHelperVerifierLine": 959,
+    "failingCallVerifierLine": 1212,
+    "runtimeExitCode": 1,
+    "runtimeExitCodeLogLine": 544,
+    "initialStartupSucceeded": true,
+    "inspectorStatusAndNativeCloseAssertionsReturned": true,
+    "separatelyObservedPopoverDidCloseWitness": false,
+    "completeNativeNotificationLogInspected": false,
+    "documentRootMountAndTwoWindowCountAssertionsReturned": true,
+    "secondaryWindowShowPassed": false,
+    "laterSecondaryFocusResizeAndDragChecksReached": false,
+    "currentCandidateTooltipSummaryStatus": "passed",
+    "predeadlineSampleEnvelopePresent": false,
+    "testedDistributionUpload": "skipped",
+    "fullNativeAcceptanceEstablished": false,
+    "notificationRemovalCauseEstablished": false
+  },
+  "initialStartup": {
+    "processId": 25836,
+    "requestId": 2,
+    "command": "tron.window",
+    "startedAt": "2026-11-11T08:27:46.449Z",
+    "responseAt": "2026-11-11T08:27:46.665Z",
+    "derivedRecordedIntervalSeconds": 0.216,
+    "ok": true,
+    "sameProcess": true,
+    "sameBundle": true,
+    "visible": true,
+    "key": true,
+    "applicationActive": true,
+    "timing": {
+      "clock": "CACurrentMediaTime",
+      "clockExcludesSystemSleep": true,
+      "intervalsAreNotQueueResidence": true,
+      "intervalsDoNotEstablishCause": true,
+      "completionTraceElapsedSeconds": 0.00012249999997493433,
+      "submissionStartToMainEntrySeconds": 0.14556766666669319
+    },
+    "historicalCauseEstablished": false
+  },
+  "secondaryShow": {
+    "operation": 2,
+    "requestId": 164,
+    "command": "tron.window",
+    "targetFromExecutedVerifier": "document-1",
+    "startedAt": "2026-11-11T08:27:52.704Z",
+    "responseAt": "2026-11-11T08:27:52.705Z",
+    "ok": false,
+    "derivedRecordedResponseIntervalSeconds": 0.001,
+    "activationRecords": [
+      {
+        "line": 860,
+        "phase": "policy-entered",
+        "atEpochSeconds": 1794385672.704862,
+        "mainThread": true,
+        "operation": 2,
+        "details": {
+          "accepted": null,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": false,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        }
+      },
+      {
+        "line": 861,
+        "phase": "policy-returned",
+        "atEpochSeconds": 1794385672.705236,
+        "mainThread": true,
+        "operation": 2,
+        "details": {
+          "accepted": false,
+          "hasApplication": null,
+          "hasError": null,
+          "sameProcess": null,
+          "sameBundle": null,
+          "ok": null
+        },
+        "state": {
+          "policy": 0,
+          "applicationActive": true,
+          "visible": false,
+          "key": false,
+          "miniaturized": false,
+          "canBecomeKey": true
+        }
+      }
+    ],
+    "sourceCallLine": 1212,
+    "recordedPolicyBefore": 0,
+    "recordedPolicyAfter": 0,
+    "policyCallAccepted": false,
+    "requestTimedOut": false,
+    "laterSecondaryForegroundCheckReached": false,
+    "refusalCauseEstablished": false
+  },
+  "earlierAssertions": {
+    "basis": "Executed verifier control flow and first failure stack, not complete raw command/capture inspection",
+    "verifierGitBlob": "f21e9349b35922ad689a2f6320ed651b5557de64",
+    "returned": [
+      {
+        "lines": [
+          1139,
+          1163
+        ],
+        "observation": "Synthetic-native ordinary React responder measurement/move/release assertions returned; this is not a physical pointer gesture."
+      },
+      {
+        "lines": [
+          1164,
+          1175
+        ],
+        "observation": "Shared inspector edits, owner resize, content/editor identity and active editing assertions returned."
+      },
+      {
+        "lines": [
+          1176,
+          1178
+        ],
+        "observation": "Escape command, application dismissal status, native shown=false wait and original opener first-responder identity assertion returned."
+      },
+      {
+        "lines": [
+          1179,
+          1187
+        ],
+        "observation": "Reopen retained content/field identity/value, controlled close status and shown=false wait, then owner resize returned."
+      },
+      {
+        "lines": [
+          1190,
+          1199
+        ],
+        "observation": "Controlled sidebar rejection/selection and native appearance assertions returned."
+      },
+      {
+        "lines": [
+          1201,
+          1208
+        ],
+        "observation": "Native text acceptance/rollback and collection selection assertions returned."
+      },
+      {
+        "lines": [
+          1210,
+          1211
+        ],
+        "observation": "Document-1 root mount and two-real-window-count wait returned."
+      }
+    ],
+    "separateDidCloseNotificationWitness": false
+  },
+  "tooltipConsoleBoundary": {
+    "status": "passed",
+    "sourcePermitsPrivateTextRead": true,
+    "publicAccessibilityOnlyExactTextProved": false,
+    "selectedObservation": "lastObservation",
+    "selectedPhase": "outside-after-hover",
+    "earlierShownTagSelected": false,
+    "permissions": {
+      "postEventsAllowed": true,
+      "accessibilityTrusted": true
+    },
+    "pointerRequests": {
+      "initialExit": {
+        "action": "leave",
+        "ok": true,
+        "targetPoint": {
+          "x": 529,
+          "y": 514
+        },
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        }
+      },
+      "enter": {
+        "action": "enter",
+        "ok": true,
+        "targetPoint": {
+          "x": 329,
+          "y": 384
+        },
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        }
+      },
+      "exit": {
+        "action": "leave",
+        "ok": true,
+        "targetPoint": {
+          "x": 529,
+          "y": 514
+        },
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        }
+      }
+    },
+    "finalCursorInsideTrigger": false,
+    "finalPointerSequenceFlag": false,
+    "finalHelpTagCount": 0,
+    "finalHelpTagWindow41": {
+      "number": 41,
+      "visible": false,
+      "onscreen": false,
+      "frame": {
+        "x": 329,
+        "y": 347,
+        "width": 213,
+        "height": 18
+      },
+      "roles": null,
+      "rolesOmitted": null
+    },
+    "originalTooltipFile": {
+      "filename": "tooltip-hover.json",
+      "bytes": 32230,
+      "sha256": "0695d25673540a7d6bcd37161d66f4a419a42138eaab5b75ec888fcf5517bafb",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    },
+    "originalTooltipFileIndependentlyInspected": false
+  },
+  "projectionCoverage": {
+    "activation": {
+      "scannedLines": 864,
+      "matchedRecords": 12,
+      "selectedRecords": 12,
+      "omittedRecords": 0,
+      "malformedRecords": 0,
+      "pidMismatchRecords": 0
+    },
+    "transport": {
+      "scannedLines": 864,
+      "matchedRecords": 820,
+      "selectedRecords": 32,
+      "omittedRecords": 788,
+      "malformedRecords": 0,
+      "pidMismatchRecords": 0
+    },
+    "commands": {
+      "completeAtRead": true,
+      "scannedLines": 332,
+      "matchedRecords": 332,
+      "selectedRecords": 32,
+      "omittedRecords": 300,
+      "unscannedLines": 0,
+      "malformedRecords": 0
+    }
+  },
+  "retainedOriginalLogs": [
+    {
+      "filename": "source-job.log",
+      "bytes": 19614,
+      "sha256": "18930c31d6bc6a1c77f08c2af02efb70f6b19019ddc3a6ee9a6cc9bf8ac28442",
+      "gitBlob": "142302be32d13db6f5b8356054474fae554531c7"
+    },
+    {
+      "filename": "native-job.log",
+      "bytes": 80367,
+      "sha256": "1466980748f763d112ac54738a8092c6b690c4a934cbe6ba15ee0c70355a1bd1",
+      "gitBlob": "b39e919ef2e6bb806412c53e1103cf17b875a024"
+    }
+  ],
+  "extraction": [
+    {
+      "marker": "NYCTRON_APPKIT_BUILD_RESULT",
+      "startLine": 509,
+      "endLine": 511,
+      "jsonLine": 510,
+      "interleavedLineCount": 0,
+      "json": {
+        "filename": "build-result.json",
+        "bytes": 318,
+        "sha256": "a0f5e79465ba36a7ea53fed7d97e4842a07469c4e637c66b918b7298dc5f550f",
+        "gitBlob": "f19ae1a2902fe31f77c6543e6790cb72b05d15f7"
+      },
+      "block": {
+        "filename": "build-result-envelope.log",
+        "bytes": 472,
+        "sha256": "e3b3b5bac0ba0d33ceaef48952142050ab4555ca9f1830849abae970b96ffbe3",
+        "gitBlob": "29f4c4d125c5cd9e3f5281cbb38889027e12f365"
+      }
+    },
+    {
+      "marker": "NYCTRON_TOOLTIP_EVIDENCE",
+      "startLine": 527,
+      "endLine": 540,
+      "jsonLine": 528,
+      "interleavedLineCount": 11,
+      "json": {
+        "filename": "tooltip-evidence.json",
+        "bytes": 2799,
+        "sha256": "f26f4ee989de4c53da12435911582f05a37f22292fbc3ea4182678eb116f9cac",
+        "gitBlob": "fc94c2a5691e7d801fd715e5ee3f62759d39ecaa"
+      },
+      "block": {
+        "filename": "tooltip-evidence-envelope.log",
+        "bytes": 3956,
+        "sha256": "81cdd2ac2e5b8759e1348b5cc3b1e02922d763734c082fa578f9ccac381babcc",
+        "gitBlob": "35f98f482d5e84e9f4e8e9e620fdb6657b10ac3b"
+      }
+    },
+    {
+      "marker": "NYCTRON_STARTUP_EVIDENCE",
+      "startLine": 541,
+      "endLine": 543,
+      "jsonLine": 542,
+      "interleavedLineCount": 0,
+      "json": {
+        "filename": "startup-evidence.json",
+        "bytes": 23562,
+        "sha256": "76c0da2236bbef80558945bd560af5ad46257d15bcbdf975ce52cb1d75613c4b",
+        "gitBlob": "a214aa75259fa19ff0a4bbe7309f1790d210d9aa"
+      },
+      "block": {
+        "filename": "startup-evidence-envelope.log",
+        "bytes": 23710,
+        "sha256": "0f34680ad09c3596382894df2c6236fc59c89b87e4a4ea4d73b1da4bbff0090d",
+        "gitBlob": "8f18622fc934c87ccbf99342c34e8470910653b2"
+      }
+    }
+  ],
+  "archiveReviewBoundary": {
+    "nativeEvidenceUploadedFilesReported": 53,
+    "nativeEvidenceUploadedFilesLogLine": 579,
+    "originalArchivesRetrieved": false,
+    "originalArchiveHashesIndependentlyVerified": false,
+    "membersExtracted": false,
+    "rawCompilerOutputInspected": false,
+    "rawTooltipFileInspected": false,
+    "rawProcessSampleInspected": false,
+    "artifactSizesAndDigests": "producer/API-reported"
+  },
+  "boundaries": [
+    "This receipt concerns completed workflow run 42985584907 attempt 1 only. An externally started later attempt is separate and is not assigned any result here.",
+    "Prior inspector-status, native shown=false, opener identity, reopen and controlled-close assertions returned by executed-source control flow. The bounded console is not an independent popoverDidClose notification witness and does not establish the historical failure cause.",
+    "Initial activation succeeded; the later document-1 show failed with a structured policy-refusal reply, not a client timeout. Policy numeric value 0 was recorded before and after an accepted=false return.",
+    "The current collector permits private AppKit ivar text. The passing tooltip status is not public-accessibility-only or VoiceOver text proof; the console selects only the final outside-after-hover observation.",
+    "The complete stable command-file read reports 332 matching rows but projects only 32 and omits 300. Complete read does not mean complete command history is present in this receipt.",
+    "Original compiler transcript, tooltip JSON, live app-log snapshot, full commands, process-failure file, sample, captures and ZIP remain uninspected; their identities are producer/API-reported.",
+    "Source13, installed-consumer16, API15/33, native transport7, compilation, reached native interactions and full native acceptance are separate gates.",
+    "Secondary-window foreground/retained-state/resize and cross-window drag assertions after line1212 were not reached; tested-distribution upload was skipped. No final native, physical-platform, combined release or owner approval is established."
+  ]
+}

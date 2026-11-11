@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-only-private-tooltip-provenance-review",
+  "checkpoint": {
+    "asOf": "2026-11-11T08:04:31Z",
+    "state": "prepared-unpublished",
+    "repository": "mikevocalz/NYC-Tron-UI",
+    "preparedCommit": "ff7e579c8a6a0863fe9e294458f0a125ec3e64eb",
+    "tree": "d7ba1cd7f23a68a75fa6c78657909347e5541185",
+    "orderedParents": [
+      "8e5ee2e3c153d04f67f5d53983b308554a4f969c"
+    ],
+    "publicationVerified": false,
+    "actualMerge": null,
+    "actualNativeCompilation": null,
+    "actualNativeRuntime": null,
+    "reason": "Publication was held while the existing 8e5 native run remained active. This receipt does not attribute that run or the earlier a957 tooltip result to the correction."
+  },
+  "sourceBaseline": {
+    "authoredAgainst": "a957d4059b8a86735f2c152371eb7a2c2bd4e4ae",
+    "preparedOn": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+    "threePreimagesUnchangedAtPreparedParent": true,
+    "concurrentExternalChange": {
+      "scope": "shipping NYCTronPopover.mm implementation only",
+      "blob": "ed832b570fff105114885e22dae134e1ac8597d4",
+      "preserved": true,
+      "authoredByThisCorrection": false,
+      "bytes": 12171,
+      "sha256": "24d9d358243a47a3ff624049b410be45d8312a5706e5543f437d751976162b6f",
+      "separatelyReviewedBy": [
+        "root",
+        "desktop"
+      ],
+      "sourceBehavior": "Moves the token/silent-gated dismissal notification to willClose, keeps focus handling in didClose, adds duplicate-token guarding and generated-token logging.",
+      "outcomeLimit": "The existing 8e5 run was still active at this checkpoint. The private tooltip correction is not an inspector fix or proof of the earlier timeout's cause."
+    }
+  },
+  "files": [
+    {
+      "key": "native",
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "preimage": "b87bf12633490c1e0f4c17ee081fcd8fcc165919",
+      "gitBlob": "7dc176162c59c879a90fb12d9ebdf070eae62125",
+      "bytes": 66766,
+      "sha256": "79cea13e4598c8571888275c92fe69772ecb60f68193a9de69935db222eafcf7",
+      "preimageBytes": 59339,
+      "preimageSha256": "933deb9410f9c74e0c05b51dc3f44940d7fe4bf675f4d6fef4025ceb6c674614"
+    },
+    {
+      "key": "verifier",
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "preimage": "f21e9349b35922ad689a2f6320ed651b5557de64",
+      "gitBlob": "94a5582ed63893b00b165d9ae93e580fb9e52bc9",
+      "bytes": 112019,
+      "sha256": "7e490e8c57774261924c07b825548e846670799564dcb8a2619eb6cdc0d588ba",
+      "preimageBytes": 108899,
+      "preimageSha256": "066e1f55509f9e8cde7564c37a47b77e9f904f4d8ee34b381d1ce8cc8673ca8f"
+    },
+    {
+      "key": "readme",
+      "path": "packages/macos-appkit/spark/README.md",
+      "preimage": "5978122a5d665c27ffeffe865e0fbae61b64a7ab",
+      "gitBlob": "ce95b08424288985ed6cb1e1b2169f67056941cc",
+      "bytes": 19469,
+      "sha256": "75beb83db383c90dea906e43c7b5a0618c6504453e472c10f15fb51335145094",
+      "preimageBytes": 18487,
+      "preimageSha256": "6c5f944e748f38b27e2f3cdb4f4f1d85b7d494cbb1d2fb5275e2bf2a1e528ae1"
+    }
+  ],
+  "motivatingEvidence": [
+    {
+      "head": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+      "nativeLog": {
+        "gitBlob": "10b8f022b6958683a9d74cc2ffc903b3c6f9c5dd",
+        "bytes": 82804,
+        "sha256": "dc2ec799319cb873783a1f81b4abd9fdb4c5666a9cc6485ea4698c5fc0ad319e"
+      },
+      "consoleProjection": {
+        "gitBlob": "b1ca1c763ae3fec21653cd97caf3c688fc05f8e2",
+        "bytes": 6126,
+        "sha256": "b1f183ab2811a0ab5e16ee70ea1daac27e8cc1b65f5a5534e1a10a3367b03050"
+      },
+      "observed": "Visible AXHelpTag with empty collected strings: three traversed nodes, nine modern value/label/title calls returning nil, three text-field slots unavailable, and three legacy AXValue reads returning nil without exceptions.",
+      "limit": "This does not enumerate every public accessibility attribute and does not show a nonmatching string. The original tooltip JSON and artifact ZIP were not inspected by this source review."
+    },
+    {
+      "head": "a957d4059b8a86735f2c152371eb7a2c2bd4e4ae",
+      "nativeLog": {
+        "gitBlob": "7e260eccab08ae3c0f3f120116398a874504ee03",
+        "bytes": 79104,
+        "sha256": "e12a0d72d65bf247ddf83b318001afbf3066f12ee9162f2030049d099cbd4881"
+      },
+      "observed": "The existing private-enabled verifier reported the tooltip sequence passed, then timed out waiting for Native inspector dismissed. Its console projection retained the final outside-after-hover observation but omitted the earlier shown observation.",
+      "limit": "The original 32,230-byte tooltip JSON was uninspected. The shown private-text source was not independently reconstructed from that console projection. The following native dismissal assertion was not reached, so the timeout does not establish that the native popover remained open."
+    }
+  ],
+  "nativeCorrection": {
+    "publicCollection": "AccessibilityNodes traversal, original public getter calls and exception propagation, normalization, length checks, and ordered-set operations are unchanged. The interleaved a957 private block is replaced by a separate private pass after the public count snapshot.",
+    "accounting": {
+      "currentRetainedStrings": "Public ordered-set count before the private pass.",
+      "privateUniqueStringsAdded": "Difference in the combined ordered-set count across the private pass; a duplicate is zero.",
+      "combinedRetainedStrings": "Final public plus admitted private ordered-set count.",
+      "privateAcceptedValues": "Number of eligible nonempty private values admitted; this may exceed unique additions."
+    },
+    "privateEligibility": [
+      "Use the actual dynamic Class from object_getClass for the exact NSCustomToolTipDrawView name check and the same Class for ivar lookup.",
+      "Require the observed view.window to equal the selected help-tag window; missing or mismatched identity is not replaced with an owner identity.",
+      "Require the view to be the selected contentView or its descendant and the selected window to be visible, nonminiaturized, alpha-positive and occlusion-visible.",
+      "Require the view not to be hidden through its ancestor chain, with finite nonempty bounds and visibleRect intersection.",
+      "Require a finite nonempty clipped rectangle converted into the selected window's coordinates.",
+      "Require an object-typed _attributedString ivar and a post-read repeat of the same window/subtree/visibility/geometry eligibility before admitting nonempty text."
+    ],
+    "boundaries": {
+      "privateNodesPerObservation": 8,
+      "privateDetailRowsPerObservation": 4,
+      "globalAcrossHelpTags": true,
+      "countsContinueWithinCollectorBudget": true,
+      "unknownData": "Missing private diagnostics and failed/ineligible read values remain explicit unknowns; they are not empty successful reads.",
+      "exceptionScope": "Only the added private read/metadata path is guarded; original public exceptions are not swallowed.",
+      "privateLayout": "Host/version dependent, with no public API promise for this private class or ivar.",
+      "temporalLimit": "The two eligibility observations bracket the private read; they do not prove continuous visibility, rendering, or pixel content.",
+      "durationLimit": "Read-count limits are not a wall-time guarantee."
+    }
+  },
+  "verifierCorrection": {
+    "newProjection": "Typed private counts and details, combined count, and the existing saved shown.observation are projected alongside the retained last/final observation.",
+    "explicitUnknowns": true,
+    "retainedPrivateRowsPerObservation": 4,
+    "acceptancePredicateUnchanged": true,
+    "expectedText": "Save this document's local checkpoint",
+    "observedSourceIsNotAcceptanceSubstitute": "A diagnostic exactExpected flag cannot replace the original strings-array, AXHelpTag role, frame, cursor/owner, and dismissal checks.",
+    "originalReadByteLimit": 1048577,
+    "originalAcceptedByteLimit": 1048576,
+    "fullConsoleEnvelopeByteLimit": 16384,
+    "trimming": "When the full envelope is too large, current/legacy/private detail rows are removed from both shown and last/final snapshots with omission counts retained. If it still exceeds the cap, the unchanged explicit omitted-over-log-limit summary applies.",
+    "privacy": "No raw tooltip strings, class names, arbitrary descriptions, paths, exception text, or added free-form payload fields are projected.",
+    "failureBehavior": "Original JSON bytes, original native commands, timeouts, strict assertions, startup/watchdog reporters, and primary failure/cleanup behavior remain unchanged."
+  },
+  "readmeCorrection": "Qualifies the limited retained 79a getter observation and uninspected external attribute-enumeration claim; documents selected-window private provenance and host/version/private-layout limits without public AX, VoiceOver, or independent pixel verification claims.",
+  "validation": {
+    "author": {
+      "designGroups": [
+        {
+          "name": "exact three-file identities, inverses and unchanged public collection",
+          "status": "passed"
+        },
+        {
+          "name": "native source placement, runtime identity and guarded eligibility invariants",
+          "status": "passed"
+        },
+        {
+          "name": "separate public/private counts, duplicates and unchanged exact-text predicate",
+          "status": "passed"
+        },
+        {
+          "name": "shown provenance and final disappearance remain independent",
+          "status": "passed"
+        },
+        {
+          "name": "missing, failed and malformed private metadata stays typed and private",
+          "status": "passed"
+        },
+        {
+          "name": "private rows share the four-row cap within each observation",
+          "status": "passed"
+        },
+        {
+          "name": "bounded report binds exact original bytes and keeps shown plus final metadata",
+          "status": "passed"
+        },
+        {
+          "name": "one 16 KiB envelope trims both snapshots and preserves explicit over-limit fallback",
+          "status": "passed"
+        }
+      ],
+      "scope": "Eight V8 source/typed-projection/mock-report designs; no Node filesystem, Objective-C++, AppKit or native runtime execution.",
+      "metrics": {
+        "normalEnvelopeBytes": 8143,
+        "trimmedEnvelopeBytes": 15946,
+        "fallbackEnvelopeBytes": 643
+      },
+      "immutableReadbackReproduced": true,
+      "fullVerifierV8Syntax": true,
+      "exactThreeFileInverse": true,
+      "publicLoopAndTraversalByteEquality": true,
+      "nativeChecksAreStaticOnly": true
+    },
+    "root": {
+      "independentPureProjectionAndSourceGroups": 6,
+      "finalDynamicClassDeltaVerified": true,
+      "reproducedAuthorDesigns": 8,
+      "reproductionMetrics": {
+        "normalEnvelopeBytes": 8143,
+        "trimmedEnvelopeBytes": 15946,
+        "fallbackEnvelopeBytes": 643
+      },
+      "scope": "Source/V8-only review; the eight reproduced designs are the author's same designs."
+    },
+    "desktop": {
+      "independentSelectorGroups": 7,
+      "independentMockIoGroups": 4,
+      "independentMetrics": {
+        "normalEnvelopeBytes": 6859,
+        "trimmedEnvelopeBytes": 12095,
+        "fallbackEnvelopeBytes": 643
+      },
+      "reproducedAuthorDesigns": 8,
+      "reproductionMetrics": {
+        "normalEnvelopeBytes": 8143,
+        "trimmedEnvelopeBytes": 15946,
+        "fallbackEnvelopeBytes": 643
+      },
+      "scope": "V8 selectors and mocked IO, not Node filesystem or native execution."
+    },
+    "forge": {
+      "nativeSourceReview": "Approved exact final 7dc source, runtime-class/ivar consistency, selected-window before/after eligibility, separate public count, bounded private metadata, and exact inverse to b87.",
+      "scope": "Static native-source review only."
+    },
+    "fullTreeReview": {
+      "reviewers": [
+        "root",
+        "desktop"
+      ],
+      "leaves": 2050,
+      "directoryHashes": 284,
+      "changedPaths": 3,
+      "orderedParentsVerified": true,
+      "otherPathsUnchanged": true
+    },
+    "countInterpretation": "Reproductions repeat the same eight author designs. Independent review groups can overlap the same behaviors. These counts are not additive distinct native acceptance checks.",
+    "unexecuted": [
+      "Objective-C++ compilation",
+      "Swift compilation for this correction",
+      "AppKit/native runtime",
+      "Actual Node filesystem/reporting operations",
+      "A new tooltip/private-source observation on this correction"
+    ],
+    "supersededCandidate": {
+      "native": "4c0e005929f83753eda57cbe045044d3ad424073",
+      "reason": "Replaced the class selector with one object_getClass result shared by exact-class and ivar lookup.",
+      "finalDeltaBytes": 36
+    }
+  },
+  "reproducibility": {
+    "file": "review-checks.js",
+    "gitBlob": "519bf417c95b9eec4b7ff32b897924aeed72da0b",
+    "bytes": 46316,
+    "sha256": "a225b896f0d4e4a9b8047a14587f9e4646b199f5099b133344046ffd8268b9c6",
+    "invocation": "Evaluate the complete script in a fresh V8 isolate. Call its returned function with exact decoded strings {native, verifier, readme, nativePreimage, verifierPreimage, readmePreimage} for the six pinned Git blobs. It embeds the unique reversible edits and synthetic fixtures.",
+    "testData": "Synthetic tooltip observations; no private runtime strings are embedded.",
+    "runtime": "Plain JavaScript/V8; no Node or OS dependencies."
+  },
+  "sourceReferences": [
+    {
+      "url": "https://developer.apple.com/documentation/objectivec/object_getivar(_:_:).md",
+      "scope": "Public Objective-C runtime accessor contract only; no contract for the private AppKit class or ivar."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/objectivec/ivar_gettypeencoding(_:).md",
+      "scope": "Public runtime type metadata contract only."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/objectivec/class_getinstancevariable(_:_:).md",
+      "scope": "Public runtime lookup contract only."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nsaccessibility-c.protocol/accessibilitychildren.md",
+      "scope": "Semantic accessibility traversal; does not guarantee an AXHelpTag text value."
+    }
+  ],
+  "authority": {
+    "allowedWrites": "Immutable source, review artifact, and receipt blobs only.",
+    "treeCommitRefPrOrWorkflowDispatchByAuthor": false,
+    "publicationOwner": "root"
+  },
+  "acceptanceStatus": "No native acceptance promotion. This is a historical prepared source checkpoint."
+}

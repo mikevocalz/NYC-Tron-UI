@@ -13,6 +13,116 @@ The complete native desktop gates remain open for the reviewed combined candidat
 Original failures, source corrections, cancellations and native outcomes have
 separate receipts; source or compiler passes do not establish interaction results.
 
+### November 11 AppKit inspector progress and second-window activation
+
+[Completed attempt 1 of run 42985584907](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42985584907/attempts/1)
+tested external helper `0bee669639a5d9ffaa7c456343344ccd42283c04` through
+actual merge `3f9d3ad376bd6b4514ca691997c56dfc74888bec`, tree
+`9ac7c175174b52dbb0bdc987ea199f30214d4c62`. The complete 2,050-leaf map,
+all 284 tree hashes and ordered merge parents were independently verified.
+The thirteen source checks, sixteen installed-consumer tests, API declarations
+and seven native transport-probe cases passed; standalone compilation succeeded.
+
+The original native log reaches verifier line 1212, `show('document-1')`,
+after the earlier inspector assertions returned: application dismissal status,
+native hidden state, exact opener responder identity, reopening, retained
+content identity and edits, and controlled close. The subsequent sidebar,
+appearance and controlled-text checks also returned. This is an inference from
+the exact executed source and error stack; the detailed interaction artifacts
+and screenshot pixels remain uninspected. The tooltip summary reports a pass
+under the existing private-enabled collector, with the same public-accessibility
+and shown-text-provenance limitations described below.
+
+The first failure is `tron.window: The native test host refused interactive
+activation policy`. The typed startup projection records activation operation 2
+with the app's policy already Regular before and after the setter, active true,
+and the second document window not visible or key. The setter returned false.
+The current fixture rejects that Boolean before requesting NSWorkspace
+activation. This establishes the fixture's observed rejection path, not why
+AppKit returned false or whether the second window would subsequently activate.
+The separate first activation succeeded in 0.216 seconds with matching process
+and bundle. Later document-window, newer-window focus and drag acceptance did
+not execute. The complete native gate failed and tested-distribution upload
+was skipped. Later attempts are separate evidence.
+
+The [eleven-file completed-attempt receipt](../evidence/v1-appkit-0bee669-secondary-policy-refusal/README.md)
+retains both complete logs, three exact JSON payloads and timestamped envelopes,
+and completed attempt metadata. The tooltip envelope preserves eleven
+interleaved stderr lines. The command file was completely read by the producer,
+but its typed console selection retains only 32 of 332 records; the original
+command file is not independently inspected. Compiler output, tooltip JSON,
+sample, captures and original ZIP remain uninspected. Their identities are
+producer/API-reported.
+
+The preceding [8e completed-run receipt](../evidence/v1-appkit-8e5ee2e-inspector-status-timeout/README.md)
+records a separate actual outcome on merge `d329a921bf3ee6183d94bc83204451bf2bc7cc93`.
+Compilation and tooltip checks passed, but the application dismissal-status
+wait still timed out before the separate native visibility check. Initial
+activation succeeded in 0.801 seconds. The source changed dismissal emission
+to will-close; the later 0bee source narrows owner-notification removal and
+adds close traces. Neither the earlier failure's cause nor a particular
+notification delivery history is established by these console records.
+
+This publication retains outcomes and source-review receipts. It does not
+adopt the external shipping popover or private-text implementation into the
+reviewed aggregate. The [prepared activation-policy correction](../evidence/v1-appkit-d83bfaa-activation-policy-source/source-review.json)
+tests the actual required Regular policy while preserving the setter trace and
+all later same-process, same-bundle and interactive-window checks. Its one
+reversible source transform and six extracted-comparison cases were reproduced;
+the corrected Objective-C++ and native continuation remain unexecuted. A separate
+completion observation will place the exact existing focus assertions after
+the matching native did-close event. Those changes require their own exact-source
+and native validation; no completed result is transferred to them.
+
+### November 11 full source and installed-consumer checkpoint
+
+The [eight-file source and installed-consumer receipt](../evidence/v1-source-8e5ee2e-installed-consumers/README.md)
+records completed source run 42982526846 and consumer run 42982526713, both on
+actual merge `d329a921bf3ee6183d94bc83204451bf2bc7cc93`.
+The inventory check finds all 341 original IDs implemented: 332 local and nine
+pinned external, with no pending source rows and no row accepted across all
+eight platforms. This includes the twelve requested native/Forge rows.
+
+Linux and Windows each pass the same 1,187-test source suite; these are separate
+executions, not 2,374 distinct tests. Workspace verification reports thirteen
+packages, 619 conditional exports, 750 ESM modules, 619 API subpaths and
+3,306 declarations. Thirteen release archives and seventeen dependency-free
+installed imports pass their checks. The basic installed consumer passes its
+typecheck/build and one browser test with one skip; Expo web passes its
+typecheck/build and two browser tests.
+
+All thirteen producer archive hashes agree across the three Linux jobs.
+All thirteen Windows producer hashes differ despite matching archive names,
+package names and file counts. No cause or final shared-manifest equality is
+inferred. Original tarball and browser-artifact bytes and pixels remain
+uninspected. This helper differs from the reviewed aggregate in 86 non-doc,
+non-Markdown leaves, so its source results do not certify the combined candidate
+or replace its earlier 1,199-test checkpoint.
+
+### November 11 prepared private-tooltip source correction
+
+The [three-file source receipt](../evidence/v1-appkit-ff7e579-private-tooltip-source/README.md)
+records prepared, unpublished commit `ff7e579c8a6a0863fe9e294458f0a125ec3e64eb`,
+tree `d7ba1cd7f23a68a75fa6c78657909347e5541185`, with sole parent
+`8e5ee2e3c153d04f67f5d53983b308554a4f969c`. Its complete 2,050-leaf map
+and 284 tree hashes were independently verified. The live helper advanced
+before publication, so this receipt remains a historical source-review
+checkpoint, not a published helper or actual native result.
+
+The correction preserves the public text traversal, separates public counts
+from private additions, binds the exact draw view to its selected visible
+help-tag window before and after the read, and bounds private nodes/details.
+Typed shown and final observations remain within the existing 16 KiB console
+envelope. The exact-text, role, geometry, cursor, disappearance and timeout
+requirements remain. Private storage still does not establish public
+accessibility, VoiceOver or inspected pixels.
+
+The same eight author-designed source/V8 checks were reproduced independently;
+additional selector and mocked-I/O reviews overlap and are not additive native
+test counts. No Objective-C++, full native application, screenshot or original
+archive execution is claimed for this prepared correction. Reconciliation with
+the newer helper and subsequent exact-source acceptance remain separate work.
+
 ### November 11 AppKit tooltip progress and inspector status timeout
 
 [Completed run 42979226147](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42979226147)

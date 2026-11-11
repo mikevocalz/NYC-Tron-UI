@@ -1,0 +1,398 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "Completed source, packaging and installed-browser workflows for helper8e; distinct from aggregate and native platform acceptance.",
+  "source": {
+    "head": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+    "headParent": "a957d4059b8a86735f2c152371eb7a2c2bd4e4ae",
+    "actualMerge": "d329a921bf3ee6183d94bc83204451bf2bc7cc93",
+    "mergeOrderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "8e5ee2e3c153d04f67f5d53983b308554a4f969c"
+    ],
+    "tree": "04c43947361d463940ccfe7cbb02ca8b48382929",
+    "allLeavesVerified": 2050,
+    "treeObjectsRecomputed": 284,
+    "checkoutLines": {
+      "workspace": 122,
+      "windows": 109,
+      "contracts": 122,
+      "basicConsumer": 123,
+      "expoWebConsumer": 123
+    }
+  },
+  "workflows": [
+    {
+      "id": 42982526846,
+      "name": "NYC-Tron source, exports and types",
+      "path": ".github/workflows/ci.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 452,
+      "run_attempt": 1,
+      "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+      "head_branch": "codex/v1-appkit-interactions-nov10",
+      "created_at": "2026-11-11T07:51:13Z",
+      "run_started_at": "2026-11-11T07:51:13Z",
+      "updated_at": "2026-11-11T07:53:34Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42982526846"
+    },
+    {
+      "id": 42982526713,
+      "name": "NYC-Tron installed release consumers",
+      "path": ".github/workflows/release-consumer.yml",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 63,
+      "run_attempt": 1,
+      "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+      "head_branch": "codex/v1-appkit-interactions-nov10",
+      "created_at": "2026-11-11T07:51:13Z",
+      "run_started_at": "2026-11-11T07:51:13Z",
+      "updated_at": "2026-11-11T07:53:24Z",
+      "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42982526713"
+    }
+  ],
+  "jobIds": [
+    {
+      "id": 130396022441,
+      "name": "workspace TypeScript",
+      "runId": 42982526846,
+      "conclusion": "success"
+    },
+    {
+      "id": 130396022791,
+      "name": "tests and pack on Windows",
+      "runId": 42982526846,
+      "conclusion": "success"
+    },
+    {
+      "id": 130396022881,
+      "name": "pure contracts and dependency boundaries",
+      "runId": 42982526846,
+      "conclusion": "success"
+    },
+    {
+      "id": 130396022031,
+      "name": "basic installed tarball consumer",
+      "runId": 42982526713,
+      "conclusion": "success"
+    },
+    {
+      "id": 130396022358,
+      "name": "expo-web installed tarball consumer",
+      "runId": 42982526713,
+      "conclusion": "success"
+    }
+  ],
+  "observations": {
+    "workspace": {
+      "jobId": 130396022441,
+      "compiledAndTypechecked": true,
+      "packages": 13,
+      "validatedConditionalExports": 619,
+      "validatedEsmFiles": 750,
+      "apiExportSubpaths": 619,
+      "reachableDeclarations": 3306,
+      "program": {
+        "canonicalIds": 341,
+        "localImplementations": 332,
+        "pinnedExternalImplementations": 9,
+        "partial": 0,
+        "pending": 0,
+        "acceptedWithAllEightPlatformProofs": 0
+      },
+      "packedArchives": 13,
+      "dependencyFreeInstalledPackages": [
+        "@nyc-tron/core",
+        "@nyc-tron/geometry",
+        "@nyc-tron/windows-fluent"
+      ],
+      "importedSubpaths": 17,
+      "logLines": {
+        "exports": 247,
+        "apiSurface": 604,
+        "apiSignatures": 609,
+        "componentProgram": 614,
+        "archiveStart": 619,
+        "archiveEnd": 631,
+        "packCount": 632,
+        "imports": 639
+      }
+    },
+    "contracts": {
+      "jobId": 130396022881,
+      "tests": 1187,
+      "passed": 1187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 17083.080003,
+      "summaryLogLines": {
+        "start": 1393,
+        "end": 1400
+      }
+    },
+    "windows": {
+      "jobId": 130396022791,
+      "tests": 1187,
+      "passed": 1187,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 32849.4614,
+      "packedArchives": 13,
+      "dependencyFreeInstalledPackages": [
+        "@nyc-tron/core",
+        "@nyc-tron/geometry",
+        "@nyc-tron/windows-fluent"
+      ],
+      "importedSubpaths": 17,
+      "summaryLogLines": {
+        "start": 1391,
+        "end": 1398
+      },
+      "packCountLogLine": 1774,
+      "importsLogLine": 1783
+    },
+    "basicConsumer": {
+      "jobId": 130396022031,
+      "preparedOutsideRepository": true,
+      "verifiedInstalledReleaseTarballs": 1,
+      "sourceConfiguredPackages": [
+        "@nyc-tron/ui"
+      ],
+      "typecheckAndWebBuildPassed": true,
+      "workspaceImportsUsed": false,
+      "chromium": {
+        "scheduled": 2,
+        "passed": 1,
+        "skipped": 1,
+        "reportedDurationSeconds": 2.3,
+        "passedCase": "installed UI works without workspace sources and keeps the field through reflow",
+        "skippedCase": "Expo browser exports › installed picker and panes work through the browser export conditions"
+      },
+      "logLines": {
+        "prepared": 228,
+        "verifiedFirst": 231,
+        "verifiedSecond": 232,
+        "built": 237,
+        "scheduled": 470,
+        "passedCase": 472,
+        "skippedCase": 473,
+        "skipCount": 475,
+        "passCount": 476,
+        "artifactFileCount": 498
+      },
+      "artifactId": 13838371400,
+      "uploadedFilesReported": 7
+    },
+    "expoWebConsumer": {
+      "jobId": 130396022358,
+      "preparedOutsideRepository": true,
+      "verifiedInstalledReleaseTarballs": 4,
+      "sourceConfiguredPackages": [
+        "@nyc-tron/ui",
+        "@nyc-tron/core",
+        "@nyc-tron/panes",
+        "@nyc-tron/expo-controls"
+      ],
+      "typecheckAndWebBuildPassed": true,
+      "workspaceImportsUsed": false,
+      "chromium": {
+        "scheduled": 2,
+        "passed": 2,
+        "skipped": 0,
+        "reportedDurationSeconds": 2.1,
+        "passedCases": [
+          "installed UI works without workspace sources and keeps the field through reflow",
+          "Expo browser exports › installed picker and panes work through the browser export conditions"
+        ]
+      },
+      "logLines": {
+        "prepared": 230,
+        "verifiedFirst": 233,
+        "verifiedSecond": 234,
+        "built": 239,
+        "scheduled": 472,
+        "passedCases": [
+          474,
+          475
+        ],
+        "passCount": 477,
+        "artifactFileCount": 499
+      },
+      "artifactId": 13838132805,
+      "uploadedFilesReported": 7
+    }
+  },
+  "archiveComparison": {
+    "scope": "Compare filenames/package names/file counts/SHA-256 values printed by each completed job; original tarballs not independently retrieved or hashed here.",
+    "workspaceBasicAndExpoWebReportsMatch": true,
+    "windowsReportsDifferFromWorkspaceForPackages": 13,
+    "windowsFileCountsMatchWorkspace": true,
+    "causeOfHashDifferenceEstablished": false,
+    "finalReleaseManifestEqualityEstablished": false
+  },
+  "consumerSourceConfiguration": {
+    "scriptPath": "tooling/consumer-release.mjs",
+    "scriptGitBlob": "24fba0d445440b399e36ee86c7b6cd7fce71b808",
+    "packageSelectionLines": [
+      63,
+      64
+    ],
+    "smokeScriptPath": "tooling/consumer-smoke.mjs",
+    "smokeScriptGitBlob": "67a8ced1e59e2ee477d1e32b26832a59d6585fdb",
+    "actualArchiveManifestsInspectedByReceiptAuthor": false,
+    "sourceConfiguredPackageNamesAreNotSeparateRawManifestInspection": true
+  },
+  "scopeBoundary": {
+    "comparedAggregate": "e8395372bd163ea97ecf84e026538c68822aac5c",
+    "comparedAggregateTree": "d5c63294d01a4d7e651930b07e8cb817466a80f2",
+    "nonDocNonMarkdownChangedLeaves": 86,
+    "comparisonFilter": "Exclude docs/** and .md/.markdown paths (case-insensitive); compare remaining leaf IDs, modes and types.",
+    "comparisonIndependentlyReproduced": true,
+    "helperResultsTransferredToAggregate": false,
+    "aggregateHistorical1199Replaced": false,
+    "aggregateCurrentExpectedTestCountIsNotAnObservedRun": true,
+    "exactReleaseCommitAndManifestProvenanceRemainSeparate": true
+  },
+  "archiveProducerReportsFile": "workflow-metadata.json",
+  "archiveProducerLists": [
+    "workspace",
+    "windows",
+    "basicConsumer",
+    "expoWebConsumer"
+  ],
+  "archiveReportsEachContainPackages": 13,
+  "retainedFiles": [
+    {
+      "filename": "workspace-types-pack.log",
+      "bytes": 62207,
+      "sha256": "9dd87911a752b5df106873b94c83be7bbf514adcd01033d6409a867785e9d03f",
+      "gitBlob": "b453d6b95fff3bef8e4de81e9584713b1b7dadd3"
+    },
+    {
+      "filename": "windows-tests-pack.log",
+      "bytes": 194923,
+      "sha256": "54e7821844f33da5a215e7dbfc06e75c44c63df9b5a666ad1161b6a2f846e0db",
+      "gitBlob": "dd3903313e775bed3e2f2a71bbaecdc6ff605248"
+    },
+    {
+      "filename": "linux-contract-tests.log",
+      "bytes": 153538,
+      "sha256": "d1ed313f4665e9bf8496c290cbae69832a8afcd2b69470af3222a1a6f3c1ac41",
+      "gitBlob": "58e2d7a7e49aee0cda7021001116ab071fa4bed6"
+    },
+    {
+      "filename": "basic-installed-consumer.log",
+      "bytes": 48183,
+      "sha256": "a5a94a2864912fd9ab62f1839f0db09fe44c7aa38e3454c5cd8ed5a7b55eee41",
+      "gitBlob": "f6e095b2dca97652213c1181d61ccf1bf7692814"
+    },
+    {
+      "filename": "expo-web-installed-consumer.log",
+      "bytes": 48364,
+      "sha256": "bc6e3a1ba3a56838240367898f7baed5e43beceaa3838775831f3d19ba2e7557",
+      "gitBlob": "c8658bab4501d29717976274eb60a71937e8aebd"
+    },
+    {
+      "filename": "workflow-metadata.json",
+      "bytes": 36176,
+      "sha256": "13feb89610520ec38c70a1c40275999b896380f9e5bd721d2445d4ea3cb594f4",
+      "gitBlob": "dbf3f01764523900ef577a0609d42e5e5413041c"
+    },
+    {
+      "filename": "README.md",
+      "bytes": 7051,
+      "sha256": "574ed52423326d96ea8a985ecdbccaa8379d973972529443c0133a36465d5ccc",
+      "gitBlob": "2ed70778db7102bd80cb274fe0bb54b233d938d1"
+    }
+  ],
+  "artifacts": {
+    "sourceWorkflowReportedArtifacts": [],
+    "installedConsumerArtifacts": [
+      {
+        "id": 13838371400,
+        "name": "release-consumer-basic",
+        "size_in_bytes": 64098,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838371400",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838371400/zip",
+        "expired": false,
+        "created_at": "2026-11-11T07:52:36Z",
+        "expires_at": "2026-11-18T07:52:35Z",
+        "updated_at": "2026-11-11T07:52:36Z",
+        "digest": "sha256:9e7f25d4f600466edcb6be586e11f18b1d16a739b064491bbca6ab2dce8b4898",
+        "workflow_run": {
+          "id": 42982526713,
+          "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+          "head_branch": "codex/v1-appkit-interactions-nov10"
+        }
+      },
+      {
+        "id": 13838132805,
+        "name": "release-consumer-expo-web",
+        "size_in_bytes": 117308,
+        "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838132805",
+        "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13838132805/zip",
+        "expired": false,
+        "created_at": "2026-11-11T07:53:19Z",
+        "expires_at": "2026-11-18T07:53:18Z",
+        "updated_at": "2026-11-11T07:53:19Z",
+        "digest": "sha256:0cc02ec46e7108d54a19a2b0226181ff04c7c6e1fc48f883ed3173e5b4ad1618",
+        "workflow_run": {
+          "id": 42982526713,
+          "head_sha": "8e5ee2e3c153d04f67f5d53983b308554a4f969c",
+          "head_branch": "codex/v1-appkit-interactions-nov10"
+        }
+      }
+    ]
+  },
+  "archiveInspection": {
+    "sourceTarballsRetrieved": false,
+    "sourceTarballsIndependentlyHashed": false,
+    "consumerZipArchivesRetrieved": false,
+    "consumerZipDigestsIndependentlyVerified": false,
+    "archiveMembersExtracted": false,
+    "renderedCaptureImagesViewed": false
+  },
+  "verification": {
+    "fiveCompleteLogsFetchedOnlyAfterTheirJobsCompleted": true,
+    "allFiveActualCheckoutHashesMatched": true,
+    "fullHelperTreeAndActualMergeOrderedParentsIndependentlyVerified": true,
+    "rawLogByteTotals": 507215,
+    "completeDecodedLogsIndependentlyHashed": true,
+    "immutableRawLogReadbacksExact": true,
+    "normalizedMetadataJsonParsedAndReadBackExact": true,
+    "allFourPrintedArchiveListsCompared": true,
+    "aggregateSourceScopeDifferenceCountIndependentlyReproduced": true,
+    "newLocalOrRemoteTestsRunByReceiptAuthor": false,
+    "originalArchiveOrImageInspectionClaimed": false
+  },
+  "boundaries": [
+    "The two 1,187-test executions are the helper's suite on different runners, not 2,374 distinct tests or a replacement for the aggregate's historical 1,199.",
+    "The helper differs from aggregate e839 in 86 non-documentation/non-Markdown leaf paths; passes do not transfer.",
+    "The 341-row checker reports implementation inventory, with 0 rows possessing all eight platform proofs; it is not all-platform acceptance.",
+    "Packing 13 archives is separate from importing 17 dependency-free subpaths or verifying 1/4 installed consumer tarballs.",
+    "Basic Chromium has 1 passed and 1 skipped; expo-web has 2 passed. Skipped is not passed.",
+    "Printed archive hashes are producer observations; Windows differs from the three Linux pack reports, with no cause or final-manifest equality inferred.",
+    "These source/browser runs do not establish AppKit or Windows native interaction, physical-platform, owner or release acceptance."
+  ],
+  "authorActions": {
+    "workflowDispatch": false,
+    "rerun": false,
+    "cancellation": false,
+    "sourceChanges": false,
+    "refChanges": false,
+    "prChanges": false,
+    "immutableEvidenceBlobCreation": true
+  },
+  "receipt": {
+    "directory": "docs/completion/evidence/v1-source-8e5ee2e-installed-consumers",
+    "filesIncludingThisProvenance": 8,
+    "provenanceDoesNotHashItself": true
+  }
+}
