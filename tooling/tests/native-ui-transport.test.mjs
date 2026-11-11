@@ -114,26 +114,33 @@ test("retention preserves the failed JUnit, native logs and screenshots byte for
     assert.deepEqual(bytes, Buffer.from(fixtures[item.sourceFile]));
     assert.equal(createHash("sha256").update(bytes).digest("hex"), item.sha256);
   }
-  mkdirSync(join(output, "settings"));
-  writeFileSync(join(output, "settings", "report.xml"), '<testcase status="SUCCESS"/>');
+  assert.equal(record.snapshot.liveDirectory, "settings");
+  mkdirSync(join(output, "settings-retry"));
+  writeFileSync(join(output, "settings-retry", "report.xml"), '<testcase status="SUCCESS"/>');
+  writeFileSync(join(output, "settings-retry-maestro.log"), "successful retry\n");
+  for (const [name, bytes] of Object.entries(fixtures)) assert.deepEqual(readFileSync(join(output, name)), Buffer.from(bytes));
   assert.match(readFileSync(join(output, retained.retainedDirectory, "report.xml"), "utf8"), /status="ERROR"/);
   assert.throws(() => retain({ output }), /cannot be replaced/);
 });
 
 test("retained snapshots survive writes through an already-open driver log and include hidden debug evidence", t => {
   const output = mkdtempSync(join(tmpdir(), "native-ui-live-log-"));
-  t.after(() => rmSync(output, { recursive: true, force: true }));
+  let descriptor;
+  t.after(() => {
+    if (descriptor !== undefined) closeSync(descriptor);
+    rmSync(output, { recursive: true, force: true });
+  });
   const relativeLog = join("debug", ".maestro", "tests", "attempt", "maestro.log");
   mkdirSync(join(output, "settings", "debug", ".maestro", "tests", "attempt"), { recursive: true });
   const original = "driver evidence before recovery\n";
   writeFileSync(join(output, "settings", relativeLog), original);
-  const descriptor = openSync(join(output, "settings", relativeLog), "r+");
-  t.after(() => closeSync(descriptor));
+  descriptor = openSync(join(output, "settings", relativeLog), "r+");
   const retained = retain({ output, eligibility: classify(android()), error: new Error("original"),
     sourceCommit: "2".repeat(40), nativeArtifact: { kind: "android-apk", sha256: "1".repeat(64) } });
   const receiptBytes = readFileSync(join(output, retained.file));
   const receipt = JSON.parse(receiptBytes);
   assert.equal(receipt.snapshot.phase, "before recovery");
+  assert.equal(receipt.snapshot.liveDirectory, "settings");
   assert.ok(Date.parse(receipt.snapshot.completedAt) >= Date.parse(receipt.snapshot.startedAt));
   const [snapshot] = receipt.originals;
   assert.equal(snapshot.sourceFile, "settings/debug/.maestro/tests/attempt/maestro.log");
