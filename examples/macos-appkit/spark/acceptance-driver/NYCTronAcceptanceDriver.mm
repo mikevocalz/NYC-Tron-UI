@@ -708,7 +708,33 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       [sourceWindow layoutIfNeeded]; [targetWindow layoutIfNeeded];
       NSRect sourceVisible = source.visibleRect, targetVisible = target.visibleRect;
       if (NSIsEmptyRect(sourceVisible) || NSIsEmptyRect(targetVisible)) { reply(Failure(@"A native drag surface is outside its visible scroll region")); return; }
-      NSPoint sourcePoint = [sourceWindow convertPointToScreen:[source convertPoint:NSMakePoint(NSMidX(sourceVisible), NSMidY(sourceVisible)) toView:nil]];
+      // The surface contains selectable text. A mouse-down on that text starts a
+      // text selection instead of the drag source, so start at a point whose
+      // hit-test result is the drag view itself (first such point from the left
+      // padding edge), falling back to the center.
+      NSPoint startInSource = NSMakePoint(NSMidX(sourceVisible), NSMidY(sourceVisible));
+      NSView *frameView = sourceWindow.contentView.superview;
+      NSView *centerHit = [frameView hitTest:[source convertPoint:startInSource toView:nil]];
+      BOOL foundOwnPoint = NO;
+      for (CGFloat fy = 0.5; fy <= 0.95 && !foundOwnPoint; fy += 0.15) {
+        for (CGFloat inset = 4; inset <= 12 && !foundOwnPoint; inset += 4) {
+          NSPoint candidate = NSMakePoint(NSMinX(sourceVisible) + inset, NSMinY(sourceVisible) + NSHeight(sourceVisible) * fy);
+          if ([frameView hitTest:[source convertPoint:candidate toView:nil]] == source) { startInSource = candidate; foundOwnPoint = YES; }
+        }
+      }
+      NSView *startHit = [frameView hitTest:[source convertPoint:startInSource toView:nil]];
+      NSLog(@"NYCTronPointer drag centerHit=%@ startHit=%@ ownPoint=%d start=%@ key=%d active=%d sourceKey=%d", NSStringFromClass(centerHit.class), NSStringFromClass(startHit.class), foundOwnPoint, NSStringFromPoint(startInSource), NSApp.keyWindow == sourceWindow, NSApp.active, sourceWindow.keyWindow);
+      if (!NSApp.active) [NSApp activateIgnoringOtherApps:YES];
+      if (!sourceWindow.keyWindow) [sourceWindow makeKeyAndOrderFront:nil];
+      __block NSInteger seenDown = 0, seenDragged = 0, seenUp = 0;
+      id monitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown | NSEventMaskLeftMouseDragged | NSEventMaskLeftMouseUp) handler:^NSEvent *(NSEvent *event) {
+        if (event.type == NSEventTypeLeftMouseDown) { seenDown++; NSLog(@"NYCTronPointer event=down window=%ld loc=%@ hit=%@", (long)event.windowNumber, NSStringFromPoint(event.locationInWindow), NSStringFromClass([event.window.contentView.superview hitTest:event.locationInWindow].class)); }
+        else if (event.type == NSEventTypeLeftMouseDragged) { if (++seenDragged == 1) NSLog(@"NYCTronPointer event=first-drag window=%ld loc=%@", (long)event.windowNumber, NSStringFromPoint(event.locationInWindow)); }
+        else { seenUp++; NSLog(@"NYCTronPointer event=up window=%ld down=%ld dragged=%ld", (long)event.windowNumber, (long)seenDown, (long)seenDragged); }
+        return event;
+      }];
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [NSEvent removeMonitor:monitor]; NSLog(@"NYCTronPointer events down=%ld dragged=%ld up=%ld", (long)seenDown, (long)seenDragged, (long)seenUp); });
+      NSPoint sourcePoint = [sourceWindow convertPointToScreen:[source convertPoint:startInSource toView:nil]];
       NSPoint targetPoint = [targetWindow convertPointToScreen:[target convertPoint:NSMakePoint(NSMidX(targetVisible), NSMidY(targetVisible)) toView:nil]];
       CGPoint start = QuartzPoint(sourcePoint, primary), end = QuartzPoint(targetPoint, primary);
       PointerSession = nil; PointerRunning = YES;
