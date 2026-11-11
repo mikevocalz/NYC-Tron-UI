@@ -764,7 +764,11 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       else if ([action isEqual:@"show"]) {
         NSUInteger operation = ++ActivationSequence;
         TraceActivation(@"policy-entered", operation, ^{ return ActivationWindowState(window); });
-        BOOL policyAccepted = [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+        // A second show finds the policy already Regular, and AppKit returns NO
+        // for that no-op (run 42985584907, operation 2: policy 0, accepted false).
+        // The requirement is the resulting policy, so check that.
+        if (NSApp.activationPolicy != NSApplicationActivationPolicyRegular) [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+        BOOL policyAccepted = NSApp.activationPolicy == NSApplicationActivationPolicyRegular;
         TraceActivation(@"policy-returned", operation, ^{ return @{ @"accepted": @(policyAccepted), @"state": ActivationWindowState(window) }; });
         if (!policyAccepted) { reply(Failure(@"The native test host refused interactive activation policy")); return; }
         // Sonoma ignores activateIgnoringOtherApps' old force flag. Use the
