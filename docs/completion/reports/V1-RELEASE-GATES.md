@@ -81,6 +81,69 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit predeadline main-thread sample and browser result
+
+The [completed watchdog outcome](../evidence/v1-appkit-8a24668-predeadline-main-wait/README.md)
+binds [run 42964459265](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42964459265)
+to actual checkout `e72dcda68234a6506dfef07dc18ffd3b8de9f916`,
+tree `e2ea092f9d21a0a1e4a87cd9413ed39b0beb314a`, matching helper
+`8a2466835e14b579002a7fbaa3a240aaaf16e059`.
+The exact ordered merge parents and complete helper tree were verified.
+
+The source job passed 11 tests, consumer preparation passed 16 tests,
+the installed API comparison matched 15 subpaths / 33 declarations,
+and the Foundation/socketpair probe passed seven cases. Native compilation
+succeeded, then initial show request 2 failed with the original
+`Native driver response timed out awaiting tron.window (request 2)`.
+The watchdog had fired, so the run is diagnostic-only. Tested-distribution
+upload was skipped. These source, inventory, transport and compile results
+do not establish native interaction acceptance.
+
+The owned app PID was 45713. The preflight matched the retained child,
+parent PID and expected `ps comm` argv[0]; it does not independently
+identify the mapped executable. The sampler spawned at 05:36:15.322 UTC
+while the request remained pending and closed at 05:36:20.585 with exit 0.
+The recorded process lifetime was 5.263 seconds; requested collection
+duration was two seconds, not a measured collection interval.
+Sampler close preceded command rejection by 19.720 seconds.
+Request rejection occurred 35.008 seconds after its recorded start;
+observer settlement occurred after 35.010 seconds.
+
+The exact console projection retains all 30 parsed main-thread frame rows
+with no malformed, oversized or omitted rows. Each carries count 164;
+these counts are not additive. The sampled branch reaches
+`semaphore_wait_trap`, through an owned-application image-relative offset
+355132 and unidentified intermediate frames. It establishes a sampled
+main-thread wait during the pending request, without identifying the owned
+function, wait owner or cause, or a continuous 35-second wait.
+Sampling may affect scheduling.
+
+The native clock separately reports completion-trace duration
+`0.0001279166665426601` seconds and submission-start-to-main-entry duration
+`35.33051962500008` seconds. Neither isolates queue residence.
+The late continuation matched the same PID and bundle; the owner was visible,
+while the application was inactive and the window not key.
+The verifier had not reached its mount check or menu, tooltip and drag checks;
+actual React mounting remains unknown.
+
+The 11-file outcome preserves complete source/native logs, completed metadata,
+three exact console JSON substrings and their timestamped envelopes.
+The startup envelope retains ten interleaved stderr lines.
+The producer reports a stable 231,664-byte sample, a 12,329,246-byte compiler
+transcript and native artifact 13831257705 with 47 uploaded files.
+Those original files and the original ZIP remain uninspected here;
+their reported hashes are distinct from independently verified log/payload bytes.
+The historical source-only checkpoint below remains unchanged.
+
+Separately, the [browser receipt](../evidence/v1-web-8a24668-overlay-pass/README.md)
+binds [run 42964459201](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42964459201)
+and job 130338331501 to the same actual checkout and tree.
+All 32 browser tests passed in 11.9 seconds: 20 rendering and 12 interaction
+cases, with 32 unique IDs, two workers and zero failures or skips.
+The complete browser log and metadata are retained. The original browser
+ZIP and PNG pixels remain uninspected. Browser results do not close the
+AppKit native gate, physical-device evidence or final combined-candidate gate.
+
 ### November 11 AppKit initial-request watchdog source
 
 The [watchdog source checkpoint](../evidence/v1-appkit-8a24668-startup-watchdog-source/README.md)

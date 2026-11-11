@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "representation": "Normalized completed workflow, job and artifact metadata retrieved through GitHub; not a verbatim complete API response.",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "jobsObservedAt": "2026-11-11 05:37:47 UTC",
+  "workflowRun": {
+    "id": 42964459265,
+    "name": "NYC-Tron AppKit native host",
+    "path": ".github/workflows/macos-appkit.yml",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "run_number": 20,
+    "run_attempt": 1,
+    "workflow_id": 413427679,
+    "head_sha": "8a2466835e14b579002a7fbaa3a240aaaf16e059",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "created_at": "2026-11-11T05:14:37Z",
+    "run_started_at": "2026-11-11T05:14:37Z",
+    "updated_at": "2026-11-11T05:37:05Z",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42964459265"
+  },
+  "source": {
+    "helperCommit": "8a2466835e14b579002a7fbaa3a240aaaf16e059",
+    "helperTree": "e2ea092f9d21a0a1e4a87cd9413ed39b0beb314a",
+    "actualCheckout": "e72dcda68234a6506dfef07dc18ffd3b8de9f916",
+    "actualCheckoutLogLine": 113,
+    "actualCheckoutTree": "e2ea092f9d21a0a1e4a87cd9413ed39b0beb314a",
+    "actualCheckoutParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "8a2466835e14b579002a7fbaa3a240aaaf16e059"
+    ]
+  },
+  "jobs": [
+    {
+      "id": 130338332082,
+      "name": "Canonical core release archive",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42964459265,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install the pinned workspace compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Build and pack core with release provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 130338474296,
+      "name": "Spark 0.0.2 ARM64 AppKit compile and native acceptance",
+      "status": "completed",
+      "conclusion": "failure",
+      "run_id": 42964459265,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify native ARM64 host and Apple build tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/download-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Build and install archive consumer outside the monorepo",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Verify the installed AppKit public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify the private Spark transport with native Foundation and socketpair",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Compile a standalone native AppKit reference",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Exercise actual native controls and window lifetimes",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 10
+        },
+        {
+          "name": "Retain build and native evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Retain the exact natively tested distribution",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 23
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13831257705,
+      "name": "macos-appkit-native-evidence",
+      "size_in_bytes": 1477151,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13831257705",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13831257705/zip",
+      "expired": false,
+      "created_at": "2026-11-11T05:36:47Z",
+      "expires_at": "2026-11-25T05:36:44Z",
+      "updated_at": "2026-11-11T05:36:47Z",
+      "digest": "sha256:f356798f2fc54c9a1db1cedc08bd5aeb8eddf92c9ea8774a9900b4f1430f5394",
+      "workflow_run": {
+        "id": 42964459265,
+        "head_sha": "8a2466835e14b579002a7fbaa3a240aaaf16e059",
+        "head_branch": "codex/v1-appkit-interactions-nov10"
+      }
+    },
+    {
+      "id": 13831215163,
+      "name": "macos-appkit-shared-packages",
+      "size_in_bytes": 51323,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13831215163",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13831215163/zip",
+      "expired": false,
+      "created_at": "2026-11-11T05:14:58Z",
+      "expires_at": "2026-11-25T05:14:57Z",
+      "updated_at": "2026-11-11T05:14:58Z",
+      "digest": "sha256:719399a28aa266d8f4470887d2fe1d3718d9ce0d76e9911d364320038f201940",
+      "workflow_run": {
+        "id": 42964459265,
+        "head_sha": "8a2466835e14b579002a7fbaa3a240aaaf16e059",
+        "head_branch": "codex/v1-appkit-interactions-nov10"
+      }
+    }
+  ],
+  "archiveReviewBoundary": {
+    "originalArchivesRetrieved": false,
+    "originalArchiveHashesIndependentlyVerified": false,
+    "membersExtracted": false,
+    "rawNativeSampleFilesInspected": false,
+    "artifactSizesAndDigests": "producer/API-reported"
+  }
+}
