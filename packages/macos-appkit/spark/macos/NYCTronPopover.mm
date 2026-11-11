@@ -94,11 +94,11 @@ using namespace facebook::react;
   return YES;
 }
 - (void)synchronizePresentation {
-  if (_closing) return;
-  if (!_visible || !_owner || !_content.subviews.count) { [self closeSilently]; return; }
-  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) return;
+  if (_closing) { NSLog(@"NYCTronPopover sync=skip-closing scope=%@", _scopeToken); return; }
+  if (!_visible || !_owner || !_content.subviews.count) { NSLog(@"NYCTronPopover sync=close-silent visible=%d owner=%d subviews=%lu scope=%@ shown=%d", _visible, _owner != nil, (unsigned long)_content.subviews.count, _scopeToken, _popover.shown); [self closeSilently]; return; }
+  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) { NSLog(@"NYCTronPopover sync=skip-token dismissed=%d rejected=%d scope=%@ presentation=%@", [_dismissedToken isEqual:_scopeToken], [_rejectedPresentationToken isEqual:_presentationToken], _scopeToken, _presentationToken); return; }
   NSView *positioningView = _owner.contentView;
-  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self closeSilently]; return; }
+  if (!positioningView || !_owner.visible || _owner.miniaturized) { NSLog(@"NYCTronPopover sync=owner-unavailable view=%d visible=%d mini=%d", positioningView != nil, _owner.visible, _owner.miniaturized); [self closeSilently]; return; }
   NSRect anchor = _anchor;
   // The public contract uses top-left owner-content coordinates.
   if (!positioningView.isFlipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);
@@ -113,6 +113,7 @@ using namespace facebook::react;
   // owner moves or resizes. Only the initial reveal is hidden for this check.
   if (presenting) _content.hidden = YES;
   [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge];
+  NSLog(@"NYCTronPopover sync=presented presenting=%d shown=%d anchor=%@ allowed=%@ content=%@ view=%@ scope=%@", presenting, _popover.shown, NSStringFromRect(anchor), NSStringFromRect(_allowedRegion), NSStringFromSize(_contentSize), NSStringFromRect(positioningView.bounds), _scopeToken);
   if (_popover.shown && _content.window) {
     [_content layoutSubtreeIfNeeded];
     // NSWindow.frame includes AppKit's popover border and arrow. The separate
@@ -120,6 +121,7 @@ using namespace facebook::react;
     NSRect screenRect = _content.window.frame;
     NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];
     if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);
+    NSLog(@"NYCTronPopover sync=placement actual=%@ allowed=%@ fits=%d", NSStringFromRect(actual), NSStringFromRect(_allowedRegion), NSContainsRect(_allowedRegion, actual));
     if (NSContainsRect(_allowedRegion, actual)) {
       // Initial controls remain hidden until the matching Fabric layout has
       // committed. A shown field stays visible through safe geometry changes.
