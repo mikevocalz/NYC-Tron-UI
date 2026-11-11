@@ -83,7 +83,9 @@ function Wait-Focus($element) {
 function Wait-Contrast([bool]$enabled) {
   $deadline = (Get-Date).AddSeconds(15)
   do {
+    Crumb "contrast: ReadContrast call"
     $observed = [NavigationAccessibilityNative]::ReadContrast()
+    Crumb "contrast: ReadContrast returned flags=$($observed.Flags) scheme=$($observed.Scheme)"
     if ((($observed.Flags -band 1) -ne 0) -eq $enabled) { Start-Sleep -Milliseconds 500; return $observed }
     Start-Sleep -Milliseconds 100
   } while ((Get-Date) -lt $deadline)
@@ -225,13 +227,18 @@ try {
   $result = "passed"
 } catch {
   $failure = $_.Exception.Message
+  Crumb "catch: $failure"
   throw
 } finally {
+  Crumb "finally: begin"
   try {
     [NavigationAccessibilityNative]::SetContrast($contrast, (($contrast.Flags -band 1) -ne 0))
+    Crumb "finally: SetContrast returned"
     Wait-Contrast (($contrast.Flags -band 1) -ne 0) | Out-Null
+    Crumb "finally: Wait-Contrast returned"
   } catch { $result="failed"; $failure="Could not restore original contrast mode: "+$_.Exception.Message }
   try {
+    Crumb "finally: restoring window bounds"
     if (-not [NavigationAccessibilityNative]::SetWindowPos($handle, [IntPtr]::Zero, [int]$originalRect.X, [int]$originalRect.Y, [int]$originalRect.Width, [int]$originalRect.Height, 0x14)) { throw "Native restoration of window bounds failed" }
     $windowPattern.SetWindowVisualState($originalState)
     $deadline = (Get-Date).AddSeconds(10)
@@ -243,7 +250,9 @@ try {
         [Math]::Abs($r.Width-$originalRect.Width) -lt 12 -and [Math]::Abs($r.Height-$originalRect.Height) -lt 12
     } while (-not $restored -and (Get-Date) -lt $deadline)
     if (-not $restored) { throw "Actual window bounds/state did not return to their original values" }
+    Crumb "finally: window bounds restored"
   } catch { $result="failed"; $failure="Could not restore original window bounds: "+$_.Exception.Message }
+  Crumb "finally: writing result"
   @{ status=$result; platform="windows"; sourceRevision=$env:GITHUB_SHA; processId=$Window.Current.ProcessId; stage=$stage; error=$failure; checks=$checks.ToArray(); completedAt=(Get-Date).ToUniversalTime().ToString("o") } |
     ConvertTo-Json -Depth 8 | Set-Content (Join-Path $OutDir "navigation-accessibility-result.json") -Encoding UTF8
   if ($result -ne "passed" -and $null -ne $failure) { throw $failure }
