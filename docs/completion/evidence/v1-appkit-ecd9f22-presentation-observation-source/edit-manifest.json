@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "title": "Private popover presentation-state observation; source-only candidate",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "preparedAgainst": {
+    "isolatedHelperParent": "f8c180be8af630886274f71313fa229ea6074001",
+    "isolatedHelperParentTree": "d6e3e01f3cc6dd3ea913f1135654bb08491211fb",
+    "executedCombinedHead": "9a430338d8336283b230203a8555257798fcd62c",
+    "executedCombinedTree": "434f2cfa1a001bcec73788462e42957206819328",
+    "actualMerge": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "sourcePreimagesMatchBothBaselines": true,
+    "noRefMoved": true,
+    "noCiDispatched": true
+  },
+  "observedNeed": {
+    "receiptFolder": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown",
+    "runId": 43015170958,
+    "attempt": 1,
+    "nativeJobId": 130504476939,
+    "nativeLogBlob": "1fb25f7a90debe34762f6ff82c902d0cb6ddc9a1",
+    "popoverSummaryBlob": "347a37ce86a04a56628e39063dd26c6ebd5fa7d1",
+    "actualFailure": "Timed out waiting for shown native NSPopover at document-1 before minimize",
+    "currentEvidence": "369 returned responses, one projected change, three selected records; shown=false, contentVisible true on first response then false",
+    "unknownCause": true,
+    "rationale": "Existing response identifies the failed predicate but not the component's current control state or last executed guard/show/containment path. No shipping behavior correction is claimed."
+  },
+  "files": [
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+      "preimage": "42776ef0157ad390af0b139a8080993082d243f3",
+      "gitBlob": "ac9c7077d62cb52650ee5ee36bba1f6b383a4a5f",
+      "bytes": 516,
+      "sha256": "000b3a7c94d355fcbc79c49c474757311d2b79d81c0a23582236ed504b2c6e05"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "preimage": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+      "gitBlob": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+      "bytes": 25122,
+      "sha256": "79af800a514f55f64938494f4a14ca6496cf2036a1b53328181e7805805a63e2"
+    },
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "preimage": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+      "gitBlob": "6eaeab02acb6af6635a368101bce514bc0c89549",
+      "bytes": 78701,
+      "sha256": "a37b7cefbfe910de05e96c6e06ecab8d090cb823e8857cf17f7c2b0bb7b8d5d8"
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "preimage": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+      "gitBlob": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+      "bytes": 133456,
+      "sha256": "4c706372c05aa8f7086f3ea6a9cc50339845bb551ee42724b0a1e6831e38a01b"
+    }
+  ],
+  "transforms": [
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+      "note": "declare internal read-only snapshot",
+      "before": "@property (nonatomic, readonly) NSRect nativeAllowedRegion;\n",
+      "after": "@property (nonatomic, readonly) NSRect nativeAllowedRegion;\n// Read-only private acceptance projection; no synchronization or presentation.\n- (NSDictionary * _Nullable)nativePresentationObservationForOwner:(NSWindow *)owner;\n"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "note": "add fixed private record types and finite projection helpers",
+      "before": "using namespace facebook::react;\n",
+      "after": "#include <cmath>\n\n// Fixed diagnostic slots only. Tokens and weak object identities remain private;\n// no diagnostic path calls layout, presentation, focus or a client callback.\nenum class NYCTronPresentationBranch {\n  Unknown, Closing, ContentPrerequisites, TokenSuppressed, OwnerUnavailable,\n  ShowEntered, ShowNotShown, ContentWindowUnavailable, CoordinatesPending,\n  CoordinatesReady, OutsideRegion\n};\nstruct NYCTronPresentationMark {\n  BOOL observed{NO}, ownerWasPresent{NO};\n  NSUInteger sequence{}, generation{}, lifetime{};\n  __weak NSWindow *owner = nil;\n  __weak NSView *content = nil;\n  __weak NSPopover *popover = nil;\n  NSString *scope = nil;\n  NSString *presentation = nil;\n  NSRect anchor{}, region{};\n  NSSize size{};\n  BOOL visible{NO}, above{NO};\n};\nstruct NYCTronPresentationBranchRecord {\n  NYCTronPresentationMark mark;\n  NYCTronPresentationBranch branch{NYCTronPresentationBranch::Unknown};\n};\nstruct NYCTronPresentationShowRecord {\n  NYCTronPresentationMark mark;\n  BOOL returned{NO}, shown{NO}, windowRead{NO}, hasWindow{NO};\n  BOOL containmentRead{NO}, contained{NO}, coordinatesRead{NO}, coordinatesReady{NO};\n  NSRect anchor{}, region{}, frame{};\n};\nstatic BOOL NYCTronDiagnosticTokenEqual(NSString *a, NSString *b) {\n  return a == b || (a && b && [a isEqualToString:b]);\n}\nstatic id NYCTronDiagnosticRect(NSRect rect) {\n  const double x = rect.origin.x, y = rect.origin.y, width = rect.size.width, height = rect.size.height;\n  if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(width) || !std::isfinite(height) ||\n      !std::isfinite(x + width) || !std::isfinite(y + height)) return NSNull.null;\n  return @{ @\"x\": @(x), @\"y\": @(y), @\"width\": @(width), @\"height\": @(height) };\n}\nstatic id NYCTronDiagnosticBranchName(NYCTronPresentationBranch branch) {\n  switch (branch) {\n    case NYCTronPresentationBranch::Closing: return @\"closing\";\n    case NYCTronPresentationBranch::ContentPrerequisites: return @\"content-prerequisites\";\n    case NYCTronPresentationBranch::TokenSuppressed: return @\"token-suppressed\";\n    case NYCTronPresentationBranch::OwnerUnavailable: return @\"owner-unavailable\";\n    case NYCTronPresentationBranch::ShowEntered: return @\"show-entered\";\n    case NYCTronPresentationBranch::ShowNotShown: return @\"show-not-shown\";\n    case NYCTronPresentationBranch::ContentWindowUnavailable: return @\"content-window-unavailable\";\n    case NYCTronPresentationBranch::CoordinatesPending: return @\"coordinates-pending\";\n    case NYCTronPresentationBranch::CoordinatesReady: return @\"coordinates-ready\";\n    case NYCTronPresentationBranch::OutsideRegion: return @\"outside-region\";\n    default: return NSNull.null;\n  }\n}\n\nusing namespace facebook::react;\n"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "note": "add two bounded diagnostic slots and nonwrapping private identity counters",
+      "before": "  NSUInteger _generation;\n",
+      "after": "  NSUInteger _generation;\n  NSUInteger _presentationObservationSequence, _presentationObservationLifetime;\n  BOOL _presentationObservationUnavailable;\n  NYCTronPresentationBranchRecord _presentationBranch;\n  NYCTronPresentationShowRecord _presentationShow;\n"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "note": "add guarded read-only snapshot and private capture helpers",
+      "before": "- (NSRect)nativeAllowedRegion { return _allowedRegion; }\n",
+      "after": "- (NSRect)nativeAllowedRegion { return _allowedRegion; }\n- (void)capturePresentationMark:(NYCTronPresentationMark *)mark {\n  @try {\n    if (_presentationObservationUnavailable || _presentationObservationSequence == NSUIntegerMax) {\n      _presentationObservationUnavailable = YES;\n      return;\n    }\n    mark->sequence = ++_presentationObservationSequence;\n    mark->generation = _generation; mark->lifetime = _presentationObservationLifetime;\n    mark->owner = _owner; mark->ownerWasPresent = _owner != nil;\n    mark->content = _content; mark->popover = _popover;\n    mark->scope = _scopeToken; mark->presentation = _presentationToken;\n    mark->anchor = _anchor; mark->region = _allowedRegion; mark->size = _contentSize;\n    mark->visible = _visible; mark->above = _above; mark->observed = YES;\n  } @catch (NSException *exception) { (void)exception; mark->observed = NO; }\n}\n- (void)observePresentationBranch:(NYCTronPresentationBranch)branch mark:(NYCTronPresentationMark const &)mark {\n  @try {\n    if (mark.observed && !_presentationObservationUnavailable && mark.lifetime == _presentationObservationLifetime) {\n      _presentationBranch.mark = mark; _presentationBranch.branch = branch;\n    }\n  } @catch (NSException *exception) { (void)exception; _presentationBranch.mark.observed = NO; }\n}\n- (NSDictionary *)presentationContext:(NYCTronPresentationMark const &)mark owner:(NSWindow *)owner {\n  if (!mark.observed || _presentationObservationUnavailable) return @{\n    @\"status\": @\"unavailable\", @\"sameGeneration\": NSNull.null, @\"sameLifetime\": NSNull.null,\n    @\"sameIdentity\": NSNull.null, @\"sameScopeToken\": NSNull.null,\n    @\"samePresentationToken\": NSNull.null, @\"sameParameters\": NSNull.null\n  };\n  BOOL lifetime = mark.lifetime == _presentationObservationLifetime;\n  BOOL identity = owner && _owner == owner && self.window == owner &&\n    (mark.ownerWasPresent ? mark.owner && mark.owner == _owner : !_owner) &&\n    mark.content && mark.content == _content && mark.popover && mark.popover == _popover;\n  BOOL scope = NYCTronDiagnosticTokenEqual(mark.scope, _scopeToken);\n  BOOL presentation = NYCTronDiagnosticTokenEqual(mark.presentation, _presentationToken);\n  BOOL parameters = NSEqualRects(mark.anchor, _anchor) && NSEqualRects(mark.region, _allowedRegion) &&\n    NSEqualSizes(mark.size, _contentSize) && mark.visible == _visible && mark.above == _above;\n  // Last executed records remain historical when controlled props/tokens change.\n  // Only recycle or actual owner/object identity loss invalidates their values.\n  return @{ @\"status\": lifetime && identity ? @\"observed\" : @\"stale\",\n    @\"sameGeneration\": @(mark.generation == _generation), @\"sameLifetime\": @(lifetime),\n    @\"sameIdentity\": @(identity), @\"sameScopeToken\": @(scope),\n    @\"samePresentationToken\": @(presentation), @\"sameParameters\": @(parameters) };\n}\n- (NSDictionary *)nativePresentationObservationForOwner:(NSWindow *)owner {\n  if (!NSThread.isMainThread) return nil;\n  @try {\n    id unknown = NSNull.null;\n    NSDictionary *current = @{\n      @\"controlledVisible\": @(_visible), @\"closing\": @(_closing), @\"silentClose\": @(_silentClose),\n      @\"hasOwner\": @(_owner != nil), @\"ownerMatchesCommand\": _owner ? @(_owner == owner) : unknown,\n      @\"componentWindowMatchesCommand\": self.window ? @(self.window == owner) : unknown,\n      @\"ownerVisible\": _owner ? @(_owner.visible) : unknown,\n      @\"ownerMiniaturized\": _owner ? @(_owner.miniaturized) : unknown,\n      @\"hasPositioningView\": _owner ? @(_owner.contentView != nil) : unknown,\n      @\"hasContent\": @(_content != nil), @\"hasChildren\": _content ? @(_content.subviews.count > 0) : unknown,\n      @\"hasContentWindow\": _content ? @(_content.window != nil) : unknown, @\"hasFabricState\": @(_state != nullptr),\n      @\"scopeTokenPresent\": @(_scopeToken != nil), @\"presentationTokenPresent\": @(_presentationToken != nil),\n      @\"presentedTokenMatches\": _scopeToken ? @([_presentedToken isEqual:_scopeToken]) : unknown,\n      @\"dismissedTokenMatches\": _scopeToken ? @([_dismissedToken isEqual:_scopeToken]) : unknown,\n      @\"rejectedTokenMatches\": _presentationToken ? @([_rejectedPresentationToken isEqual:_presentationToken]) : unknown,\n      @\"preferredEdge\": _above ? @\"above\" : @\"below\", @\"anchor\": NYCTronDiagnosticRect(_anchor),\n      @\"contentSize\": NYCTronDiagnosticRect(NSMakeRect(0, 0, _contentSize.width, _contentSize.height))\n    };\n    NSMutableDictionary *branch = [[self presentationContext:_presentationBranch.mark owner:owner] mutableCopy];\n    BOOL branchValid = [branch[@\"status\"] isEqual:@\"observed\"];\n    branch[@\"branch\"] = branchValid ? NYCTronDiagnosticBranchName(_presentationBranch.branch) : unknown;\n    NSMutableDictionary *show = [[self presentationContext:_presentationShow.mark owner:owner] mutableCopy];\n    BOOL showValid = [show[@\"status\"] isEqual:@\"observed\"];\n    show[@\"stage\"] = showValid ? (_presentationShow.returned ? @\"returned\" : @\"entered\") : unknown;\n    show[@\"shownAfterCall\"] = showValid && _presentationShow.returned ? @(_presentationShow.shown) : unknown;\n    show[@\"contentWindowPresent\"] = showValid && _presentationShow.windowRead ? @(_presentationShow.hasWindow) : unknown;\n    show[@\"contained\"] = showValid && _presentationShow.containmentRead ? @(_presentationShow.contained) : unknown;\n    show[@\"coordinatesReady\"] = showValid && _presentationShow.coordinatesRead ? @(_presentationShow.coordinatesReady) : unknown;\n    show[@\"anchor\"] = showValid ? NYCTronDiagnosticRect(_presentationShow.anchor) : unknown;\n    show[@\"region\"] = showValid ? NYCTronDiagnosticRect(_presentationShow.region) : unknown;\n    show[@\"actualFrame\"] = showValid && _presentationShow.containmentRead ? NYCTronDiagnosticRect(_presentationShow.frame) : unknown;\n    return @{ @\"schemaVersion\": @1, @\"status\": @\"observed\", @\"current\": current,\n      @\"lastBranch\": branch, @\"lastShow\": show };\n  } @catch (NSException *exception) { (void)exception; return nil; }\n}\n"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "note": "record existing guard/show/containment outcomes without changing their actions",
+      "before": "- (void)synchronizePresentation {\n  if (_closing) return;\n  if (!_visible || !_owner || !_content.subviews.count) { [self closeSilently]; return; }\n  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) return;\n  NSView *positioningView = _owner.contentView;\n  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self closeSilently]; return; }\n  NSRect anchor = _anchor;\n  // The public contract uses top-left owner-content coordinates.\n  if (!positioningView.isFlipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);\n  _content.frame = NSMakeRect(0, 0, _contentSize.width, _contentSize.height);\n  _popover.contentSize = _contentSize;\n  BOOL presenting = !_popover.shown;\n  if (presenting) { _opener = _owner.firstResponder; _presentedToken = [_scopeToken copy]; }\n  NSRectEdge edge = _above ? (positioningView.isFlipped ? NSMinYEdge : NSMaxYEdge) : (positioningView.isFlipped ? NSMaxYEdge : NSMinYEdge);\n  // AppKit may fit against a screen rather than an app-reserved region. Keep\n  // controls hidden until its actual placement satisfies the selected region.\n  // An already presented field must keep its responder/composition while the\n  // owner moves or resizes. Only the initial reveal is hidden for this check.\n  if (presenting) _content.hidden = YES;\n  [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge];\n  if (_popover.shown && _content.window) {\n    [_content layoutSubtreeIfNeeded];\n    // NSWindow.frame includes AppKit's popover border and arrow. The separate\n    // window shadow is an OS effect, not part of the interactive frame.\n    NSRect screenRect = _content.window.frame;\n    NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];\n    if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);\n    if (NSContainsRect(_allowedRegion, actual)) {\n      // Initial controls remain hidden until the matching Fabric layout has\n      // committed. A shown field stays visible through safe geometry changes.\n      if ([self synchronizeContentCoordinates]) _content.hidden = NO;\n    }\n    else {\n      _rejectedPresentationToken = [_presentationToken copy];\n      [self closeSilently];\n      auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);\n      if (emitter) {\n        NYCTronPopoverEventEmitter::OnPresentationRejected event;\n        event.scopeToken = _scopeToken.UTF8String ?: \"\";\n        event.presentationToken = _presentationToken.UTF8String ?: \"\";\n        event.x = actual.origin.x; event.y = actual.origin.y;\n        event.width = actual.size.width; event.height = actual.size.height;\n        event.regionX = _allowedRegion.origin.x; event.regionY = _allowedRegion.origin.y;\n        event.regionWidth = _allowedRegion.size.width; event.regionHeight = _allowedRegion.size.height;\n        emitter->onPresentationRejected(event);\n      }\n    }\n  }\n}\n",
+      "after": "- (void)synchronizePresentation {\n  NYCTronPresentationMark observation;\n  [self capturePresentationMark:&observation];\n  if (_closing) { [self observePresentationBranch:NYCTronPresentationBranch::Closing mark:observation]; return; }\n  if (!_visible || !_owner || !_content.subviews.count) { [self observePresentationBranch:NYCTronPresentationBranch::ContentPrerequisites mark:observation]; [self closeSilently]; return; }\n  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) { [self observePresentationBranch:NYCTronPresentationBranch::TokenSuppressed mark:observation]; return; }\n  NSView *positioningView = _owner.contentView;\n  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self observePresentationBranch:NYCTronPresentationBranch::OwnerUnavailable mark:observation]; [self closeSilently]; return; }\n  NSRect anchor = _anchor;\n  // The public contract uses top-left owner-content coordinates.\n  if (!positioningView.isFlipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);\n  _content.frame = NSMakeRect(0, 0, _contentSize.width, _contentSize.height);\n  _popover.contentSize = _contentSize;\n  BOOL presenting = !_popover.shown;\n  if (presenting) { _opener = _owner.firstResponder; _presentedToken = [_scopeToken copy]; }\n  NSRectEdge edge = _above ? (positioningView.isFlipped ? NSMinYEdge : NSMaxYEdge) : (positioningView.isFlipped ? NSMaxYEdge : NSMinYEdge);\n  // AppKit may fit against a screen rather than an app-reserved region. Keep\n  // controls hidden until its actual placement satisfies the selected region.\n  // An already presented field must keep its responder/composition while the\n  // owner moves or resizes. Only the initial reveal is hidden for this check.\n  if (presenting) _content.hidden = YES;\n  [self observePresentationBranch:NYCTronPresentationBranch::ShowEntered mark:observation];\n  @try {\n    _presentationShow = {};\n    _presentationShow.mark = observation; _presentationShow.anchor = anchor; _presentationShow.region = _allowedRegion;\n  } @catch (NSException *exception) { (void)exception; _presentationShow.mark.observed = NO; }\n  [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge];\n  // Cache only the two scalar results of the original short-circuit predicate.\n  BOOL shownAfterCall = _popover.shown;\n  BOOL contentWindowPresent = shownAfterCall && _content.window != nil;\n  if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {\n    _presentationShow.returned = YES; _presentationShow.shown = shownAfterCall;\n    _presentationShow.windowRead = shownAfterCall; _presentationShow.hasWindow = contentWindowPresent;\n  }\n  if (shownAfterCall && contentWindowPresent) {\n    [_content layoutSubtreeIfNeeded];\n    // NSWindow.frame includes AppKit's popover border and arrow. The separate\n    // window shadow is an OS effect, not part of the interactive frame.\n    NSRect screenRect = _content.window.frame;\n    NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];\n    if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);\n    if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {\n      _presentationShow.frame = actual; _presentationShow.region = _allowedRegion;\n      _presentationShow.containmentRead = YES;\n    }\n    if (NSContainsRect(_allowedRegion, actual)) {\n      if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) _presentationShow.contained = YES;\n      // Initial controls remain hidden until the matching Fabric layout has\n      // committed. A shown field stays visible through safe geometry changes.\n      BOOL coordinatesReady = [self synchronizeContentCoordinates];\n      if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {\n        _presentationShow.coordinatesRead = YES; _presentationShow.coordinatesReady = coordinatesReady;\n      }\n      [self observePresentationBranch:coordinatesReady ? NYCTronPresentationBranch::CoordinatesReady : NYCTronPresentationBranch::CoordinatesPending mark:observation];\n      if (coordinatesReady) _content.hidden = NO;\n    }\n    else {\n      [self observePresentationBranch:NYCTronPresentationBranch::OutsideRegion mark:observation];\n      _rejectedPresentationToken = [_presentationToken copy];\n      [self closeSilently];\n      auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);\n      if (emitter) {\n        NYCTronPopoverEventEmitter::OnPresentationRejected event;\n        event.scopeToken = _scopeToken.UTF8String ?: \"\";\n        event.presentationToken = _presentationToken.UTF8String ?: \"\";\n        event.x = actual.origin.x; event.y = actual.origin.y;\n        event.width = actual.size.width; event.height = actual.size.height;\n        event.regionX = _allowedRegion.origin.x; event.regionY = _allowedRegion.origin.y;\n        event.regionWidth = _allowedRegion.size.width; event.regionHeight = _allowedRegion.size.height;\n        emitter->onPresentationRejected(event);\n      }\n    }\n  } else {\n    [self observePresentationBranch:shownAfterCall ? NYCTronPresentationBranch::ContentWindowUnavailable : NYCTronPresentationBranch::ShowNotShown mark:observation];\n  }\n}\n"
+    },
+    {
+      "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+      "note": "invalidate diagnostic identities before unchanged recycle cleanup",
+      "before": "- (void)prepareForRecycle {\n",
+      "after": "- (void)prepareForRecycle {\n  // Recycle invalidates both diagnostic identities before the original cleanup.\n  if (_presentationObservationLifetime == NSUIntegerMax) _presentationObservationUnavailable = YES;\n  else ++_presentationObservationLifetime;\n  @try { _presentationBranch = {}; _presentationShow = {}; }\n  @catch (NSException *exception) { (void)exception; _presentationObservationUnavailable = YES; }\n"
+    },
+    {
+      "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+      "note": "attach guarded snapshot to existing popover response only",
+      "before": "      result[@\"closeObservation\"] = PopoverCloseObservationState(owner, component, popover);\n",
+      "after": "      result[@\"closeObservation\"] = PopoverCloseObservationState(owner, component, popover);\n      result[@\"presentationObservation\"] = NSNull.null;\n      @try {\n        NSDictionary *observation = [component nativePresentationObservationForOwner:owner];\n        if (observation) result[@\"presentationObservation\"] = observation;\n      } @catch (NSException *exception) { (void)exception;\n        // A read-only diagnostic failure cannot replace the existing response.\n      }\n"
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "note": "add own-data typed presentation-state projection",
+      "before": "function projectPopoverResponse(value, firstIdentity = null) {\n",
+      "after": "function projectPopoverPresentation(value) {\n  const read = (object, name) => {\n    if (!object || typeof object !== 'object' || Array.isArray(object)) return undefined;\n    const descriptor = Object.getOwnPropertyDescriptor(object, name);\n    return descriptor && Object.prototype.hasOwnProperty.call(descriptor, 'value') ? descriptor.value : undefined;\n  };\n  const boolean = item => typeof item === 'boolean' ? item : null;\n  const choice = (item, allowed) => allowed.includes(item) ? item : null;\n  const rectangle = item => {\n    const names = ['x', 'y', 'width', 'height'];\n    const values = names.map(name => read(item, name));\n    const finite = values.every(field => typeof field === 'number' && Number.isFinite(field));\n    const complete = finite && Number.isFinite(values[0] + values[2]) && Number.isFinite(values[1] + values[3]);\n    return { status: item == null ? 'missing' : complete ? 'observed' : 'invalid',\n      ...Object.fromEntries(names.map((name, index) =>\n        [name, typeof values[index] === 'number' && Number.isFinite(values[index]) ? values[index] : null])) };\n  };\n  const known = read(value, 'schemaVersion') === 1 && read(value, 'status') === 'observed';\n  const current = known ? read(value, 'current') : null;\n  const context = item => {\n    const status = choice(read(item, 'status'), ['observed', 'unavailable', 'stale']);\n    const sameGeneration = boolean(read(item, 'sameGeneration'));\n    const sameLifetime = boolean(read(item, 'sameLifetime'));\n    const sameIdentity = boolean(read(item, 'sameIdentity'));\n    const sameScopeToken = boolean(read(item, 'sameScopeToken'));\n    const samePresentationToken = boolean(read(item, 'samePresentationToken'));\n    const sameParameters = boolean(read(item, 'sameParameters'));\n    return { status, sameGeneration, sameLifetime, sameIdentity, sameScopeToken, samePresentationToken, sameParameters };\n  };\n  const qualified = item => item.status === 'observed' &&\n    item.sameLifetime === true && item.sameIdentity === true;\n  const branchSource = known ? read(value, 'lastBranch') : null;\n  const branch = context(branchSource);\n  const showSource = known ? read(value, 'lastShow') : null;\n  const show = context(showSource);\n  const showValid = qualified(show);\n  const stage = showValid ? choice(read(showSource, 'stage'), ['entered', 'returned']) : null;\n  const returned = stage === 'returned';\n  const contained = returned ? boolean(read(showSource, 'contained')) : null;\n  return {\n    schemaVersion: known ? 1 : null, status: known ? 'observed' : 'unavailable',\n    scope: 'current-fields-and-identity-qualified-last-executed-records',\n    lastRecordsAreHistorical: true,\n    showAnchorCoordinates: 'positioning-view', regionAndFrameCoordinates: 'owner-content-top-left',\n    current: {\n      ...Object.fromEntries(['controlledVisible', 'closing', 'silentClose', 'hasOwner', 'ownerMatchesCommand',\n        'componentWindowMatchesCommand', 'ownerVisible', 'ownerMiniaturized', 'hasPositioningView',\n        'hasContent', 'hasChildren', 'hasContentWindow', 'hasFabricState', 'scopeTokenPresent',\n        'presentationTokenPresent', 'presentedTokenMatches', 'dismissedTokenMatches', 'rejectedTokenMatches']\n        .map(name => [name, boolean(read(current, name))])),\n      preferredEdge: choice(read(current, 'preferredEdge'), ['above', 'below']),\n      anchor: rectangle(read(current, 'anchor')), contentSize: rectangle(read(current, 'contentSize')),\n    },\n    lastBranch: { ...branch, branch: qualified(branch) ? choice(read(branchSource, 'branch'),\n      ['closing', 'content-prerequisites', 'token-suppressed', 'owner-unavailable', 'show-entered',\n        'show-not-shown', 'content-window-unavailable', 'coordinates-pending', 'coordinates-ready', 'outside-region']) : null },\n    lastShow: { ...show, stage,\n      shownAfterCall: returned ? boolean(read(showSource, 'shownAfterCall')) : null,\n      contentWindowPresent: returned ? boolean(read(showSource, 'contentWindowPresent')) : null,\n      contained, coordinatesReady: contained === true ? boolean(read(showSource, 'coordinatesReady')) : null,\n      anchor: rectangle(showValid && stage !== null ? read(showSource, 'anchor') : null),\n      region: rectangle(showValid && stage !== null ? read(showSource, 'region') : null),\n      actualFrame: rectangle(contained !== null ? read(showSource, 'actualFrame') : null),\n    },\n  };\n}\nfunction projectPopoverResponse(value, firstIdentity = null) {\n"
+    },
+    {
+      "path": "examples/macos-appkit/spark/verify-native.mjs",
+      "note": "include typed presentation history in existing bounded failure records",
+      "before": "      frame, region, geometry: { frameNonempty, regionNonempty, frameInsideRegion },\n",
+      "after": "      frame, region, geometry: { frameNonempty, regionNonempty, frameInsideRegion },\n      presentation: projectPopoverPresentation(read(value, 'presentationObservation')),\n"
+    }
+  ],
+  "exactTransformCount": 9,
+  "review": {
+    "originalActionsPreserved": [
+      "All original synchronizePresentation guard expressions and early-return/close decisions.",
+      "Original showRelativeToRect arguments/call, layoutSubtreeIfNeeded, coordinate conversions and NSContainsRect predicate.",
+      "Original synchronizeContentCoordinates call and conditional content.hidden assignment.",
+      "Original rejection-token assignment, closeSilently invocation and rejection event payload/order.",
+      "All existing owner notifications, props/state/layout handling, focus restoration, source callbacks and native scheduling.",
+      "The driver's existing command/action semantics and response fields; only a guarded read-only presentationObservation field is added.",
+      "The complete verifier shownPopover/runtime suffix, existing20-second/50-ms polling, exact shown&&contentVisible predicate and original Error rethrow.",
+      "The existing first/last/recent-state selection, eight-record bound, exclusive failure file and complete8KiB console trimmer/error isolation."
+    ],
+    "scalarCache": {
+      "shownWindow": "The original post-show short-circuit property reads are cached as two BOOLs; _content.window is still read only when shown is true. There is no extra property read, object retention or replacement action.",
+      "coordinates": "The original single synchronizeContentCoordinates result is cached as BOOL; only the same true branch unhides content."
+    },
+    "nativeObservation": {
+      "storage": "one last-branch slot and one last-show slot per existing component; no history array, timer, new event observer or input action",
+      "current": "read-only fields from the exact component on the main thread; missing owner/content observations remain null where appropriate",
+      "markScope": "synchronizePresentation entry; existing schedule generation plus private nonwrapping sequence and recycle lifetime",
+      "updateOwnership": "show-result updates require the exact captured invocation sequence, so a nested/newer show cannot receive an older call's result",
+      "objectOwnership": "weak owner/content/popover references; no new strong native visual ownership",
+      "privateTokenStorage": "existing immutable token objects are retained only internally for equality; their values are never returned",
+      "historicalValidity": "same recycle lifetime and exact weak owner/content/popover plus expected-command-owner binding",
+      "historyQualifiers": "scope-token, presentation-token, input-parameter and schedule-generation equality are separate booleans; false equality preserves valid historical results and never labels them current",
+      "staleBoundary": "actual owner/object/lifetime mismatch, missing capture or diagnostic overflow masks branch/show/geometry values to unknown",
+      "recycle": "diagnostic identities invalidate before the original recycle cleanup; original cleanup remains unchanged",
+      "nativeExceptions": "new Objective-C observation/copy/dictionary operations are caught using named NSException variables; failed diagnostic reads leave the existing native response usable",
+      "branchLabels": [
+        "closing",
+        "content-prerequisites",
+        "token-suppressed",
+        "owner-unavailable",
+        "show-entered",
+        "show-not-shown",
+        "content-window-unavailable",
+        "coordinates-pending",
+        "coordinates-ready",
+        "outside-region"
+      ],
+      "geometry": "finite components and finite right/bottom extents only; actual show anchor uses positioning-view coordinates, while current anchor and actual frame/region use owner-content top-left coordinates",
+      "privacy": "no raw tokens, memory addresses, arbitrary text, error strings, usernames, source paths or unbounded arrays are emitted"
+    },
+    "verifierObservation": {
+      "ownDataPropertiesOnly": true,
+      "explicitBooleanOrNull": true,
+      "fixedEnumAllowlists": true,
+      "historicalRecordsExplicitlyLabeled": true,
+      "staleObjectAndLifetimeRecordsMasked": true,
+      "noExtraRpc": true,
+      "noForcedLayoutOrSynchronization": true,
+      "noNewActivationOrFocusAction": true,
+      "recordLimit": 8,
+      "consoleEnvelopeByteLimit": 8192,
+      "originalFailureIdentityPreserved": true,
+      "existingReporterUnchanged": true
+    }
+  },
+  "focusedChecks": {
+    "reproducibleHarness": {
+      "gitBlob": "69233fb8caa6275b5e12aa779ffcdcd35b23e7ce",
+      "bytes": 54738,
+      "sha256": "be193f6511a5889029b865e8d05a3824120d64613ae5aa116329cc9e1608dbea"
+    },
+    "invocation": "Evaluate review-checks.js to obtain its returned async function. Call it with {header,native,driver,verifier,headerPreimage,nativePreimage,driverPreimage,verifierPreimage} using the exact four candidate and four preimage source strings listed above.",
+    "authorDesignCount": 8,
+    "results": {
+      "scope": "eight author designs; pure V8/extracted-function mocks and native source inspection only; no Node filesystem, Objective-C, AppKit or CI execution",
+      "groups": [
+        "four exact identities, nine reversible edits, unchanged request/wait/recorder/runtime suffix and V8 parse only",
+        "native source-only observer/action/thread/lifetime review and four modeled scalar short-circuit comparisons; no Objective-C execution",
+        "typed current fields, false versus unknown, finite geometry, fixed enums and no token/pointer/arbitrary-text projection",
+        "historical generation/token/parameter changes retained; owner/object/recycle mismatch and never-captured records remain unknown",
+        "entered-versus-returned show stage, containment/readiness separation, overflow geometry and getter-free own-data access",
+        "actual extracted show/wait functions: unchanged 400 requests/20,000 mock ms, exact timeout identity and one-request success",
+        "request Error identity, exclusive first receipt, secondary write/log failure and throwing own-data projection isolation",
+        "eight-record and complete 8 KiB envelope limits, useful first/last history and exact post-trim omission accounting"
+      ],
+      "metrics": {
+        "polls": 400,
+        "commands": 400,
+        "mockMilliseconds": 20000,
+        "failureEnvelopeBytes": 6753,
+        "stressEnvelopeBytes": 7990,
+        "stressSelectedRecords": 3,
+        "stressOmittedRecordsForBytes": 4
+      }
+    },
+    "reproductionAccounting": "A reviewer rerun repeats these same eight designs; it does not add eight new designs or native runtime evidence.",
+    "actualNodeFilesystemExecution": false,
+    "actualObjectiveCCompilation": false,
+    "actualAppKitExecution": false
+  },
+  "sourceLimitations": [
+    "The JavaScript harness executes extracted production selector/poll/recorder functions under V8 with mock IO/time/native responses; it does not execute Node filesystem APIs or AppKit.",
+    "The four short-circuit comparisons are a JavaScript model plus exact native source-form inspection, not an Objective-C execution result.",
+    "Exact forward/inverse transforms verify the complete source bytes; they do not replace the required actual native compile and acceptance run.",
+    "Historical branch/containment observations must be interpreted with their object/lifetime binding and equality flags; they do not by themselves establish the cause of a current failure.",
+    "No new native result, host configuration change, permission change, retry, public JavaScript API, source ref or published PR is claimed."
+  ]
+}

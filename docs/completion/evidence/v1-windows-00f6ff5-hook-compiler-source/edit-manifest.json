@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "source-only compiler correction; new native compilation pending",
+  "path": "packages/windows-fluent/rnw-fabric/example/native/NavigationProbe.h",
+  "before": {
+    "gitBlob": "25555353791ca4b35f1be51e7566c2062ecc8091",
+    "bytes": 30246,
+    "sha256": "0e7ad4782abbd04c0790e1e2edc5c1a96b2f05373aa98bc577a36c8636941d33"
+  },
+  "after": {
+    "gitBlob": "00f6ff5f1735c81a5268855a5fb33627f5112cd7",
+    "bytes": 30240,
+    "sha256": "cfa10130880d4adc0089abc3b923d81ecabfd4394de476d282e0fed15d0fc3ea"
+  },
+  "edits": [
+    {
+      "label": "permit C++/WinRT make implementation derivation",
+      "before": "struct Hook final : winrt::implements<Hook, Object, NavigationProbeHook> {",
+      "after": "struct Hook : winrt::implements<Hook, Object, NavigationProbeHook> {"
+    }
+  ],
+  "actualEvidence": {
+    "workflow": 43022193331,
+    "job": 130528304650,
+    "attempt": 1,
+    "checkout": "e7901ec687e96a240a7b820baef50318fde40ddd",
+    "log": {
+      "gitBlob": "7cd597b6ae32070abdd4493d333ae004565d70cb",
+      "bytes": 116428,
+      "sha256": "536b9667f12de35d563f95c32004aa2fb7369cb3ec1fb28ff7d0492c28d0429c"
+    },
+    "errorLine": 990,
+    "instantiationLines": [
+      994,
+      995
+    ],
+    "code": "C2338",
+    "message": "C++/WinRT implementation types must not be final",
+    "site": "winrt::make<nyctron::fixture::Hook,std::shared_ptr<nyctron::fixture::Observer>>"
+  },
+  "primarySource": {
+    "repository": "microsoft/cppwinrt",
+    "commit": "297454ee285476f16bf11425bd60daf4593b66ee",
+    "path": "strings/base_implements.h",
+    "gitBlob": "0c0ff06849b8b7926e9912265ed075212a5a3c54",
+    "lines": [
+      1378,
+      1383
+    ],
+    "scope": "Pinned declared C++/WinRT 2.0.230706.1 source has the same make assertion; the executed generated header's actual failure and template context are independently in the retained native log. No installed generated-header byte identity is inferred."
+  },
+  "preserved": "Only the final specifier is removed. IInspectable/private ABI, ownership, callbacks, observations, caps, protocol, assertions, deadlines, source/preparer/consumer and all other header bytes remain identical.",
+  "validation": {
+    "uniqueForwardEdit": true,
+    "exactInverse": true,
+    "noCppCompilation": true,
+    "noNativeExecution": true
+  }
+}

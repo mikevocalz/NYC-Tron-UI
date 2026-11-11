@@ -54,6 +54,27 @@ edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
  return source.replace('#include "pch.h"','#include "pch.h"\n#include <winrt/NYCTronFluentFabric.h>')
   .replace(marker,marker+"\n  settings.PackageProviders().Append(winrt::NYCTronFluentFabric::ReactPackageProvider());");
 });
+// The observation fixture belongs only to this generated example. Its source
+// identity is the exact checkout already recorded by tarball preparation.
+const preparation=JSON.parse(readFileSync(new URL("package-preparation.json",root),"utf8"));
+if(preparation?.schemaVersion!==1 || preparation.installedFromArchives!==true ||
+ !/^[0-9a-f]{40}$/.test(preparation.sourceRevision ?? ""))
+ throw new Error("The native navigation fixture requires the exact prepared consumer revision");
+readFileSync(new URL("native/NavigationProbe.h",root),"utf8");
+edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
+ const marker="RegisterAutolinkedNativeModulePackages(settings.PackageProviders());";
+ const include='#include "../../native/NavigationProbe.h"';
+ const configured='nyctron::fixture::ConfigureNavigationProbe(settings, L"'+preparation.sourceRevision+'");';
+ if(source.includes("ConfigureNavigationProbe(")){
+  if(!source.includes(configured)||!source.includes(include))
+   throw new Error("Existing native navigation fixture has a different revision or include");
+  return source;
+ }
+ if(source.split(marker).length!==2 || source.split('#include "pch.h"').length!==2)
+  throw new Error("Official app fixture registration point changed");
+ if(!source.includes(include))source=source.replace('#include "pch.h"','#include "pch.h"\n'+include);
+ return source.replace(marker,configured+"\n  "+marker);
+});
 // The installed tarballs must resolve the consumer's one React runtime.
 // A project resolveRequest replaces the CLI's out-of-tree platform resolver
 // (framework defaults are merged under the project config), so this one

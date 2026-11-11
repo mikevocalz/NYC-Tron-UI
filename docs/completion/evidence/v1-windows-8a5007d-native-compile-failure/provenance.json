@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-native-compile-failure",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "head": "8a5007d197539c782e065f1b59daf3fe5ed752ec",
+    "actualCheckout": "e7901ec687e96a240a7b820baef50318fde40ddd",
+    "tree": "9f7d87a249edc25216dcbc11763b009eda825ba2",
+    "orderedParents": [
+      "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+      "8a5007d197539c782e065f1b59daf3fe5ed752ec"
+    ],
+    "testedHookHeader": "25555353791ca4b35f1be51e7566c2062ecc8091",
+    "laterCorrectionNotExecuted": "00f6ff5f1735c81a5268855a5fb33627f5112cd7"
+  },
+  "workflow": {
+    "id": 43022193331,
+    "attempt": 1,
+    "event": "pull_request",
+    "conclusion": "failure",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43022193331"
+  },
+  "jobs": {
+    "fabricSource": 130527856883,
+    "native": 130528304650
+  },
+  "originals": [
+    {
+      "file": "fabric-source-job.log",
+      "gitBlob": "6a2bd5d19ba18eadb49eead96dd82e401019f024",
+      "bytes": 31857,
+      "sha256": "a95871bf868b7221244374d4e56ca73af391a9a9b73b29f92d49dbac2fa99923",
+      "scope": "Complete decoded GitHub job log; exact returned UTF-8 bytes retained without newline normalization."
+    },
+    {
+      "file": "native-job.log",
+      "gitBlob": "7cd597b6ae32070abdd4493d333ae004565d70cb",
+      "bytes": 116428,
+      "sha256": "536b9667f12de35d563f95c32004aa2fb7369cb3ec1fb28ff7d0492c28d0429c",
+      "scope": "Complete decoded GitHub job log; exact returned UTF-8 bytes retained without newline normalization."
+    }
+  ],
+  "records": [
+    {
+      "file": "completed-metadata.json",
+      "gitBlob": "5779c14594e600d89cc7b8a2597f734a29db911f",
+      "bytes": 13812,
+      "sha256": "7f6a9ce8a2173bb600957a1bdc444cd9e902648932ddc4972d9ecf06358ef319"
+    },
+    {
+      "file": "compiler-excerpt.log",
+      "gitBlob": "766ab565d795bf569d9bc92b4a6e2660079da3b4",
+      "bytes": 2839,
+      "sha256": "65a4c4c65fd391ba030c41207ba29733c995c2e27ccd150c23a8b3dbe7d18335"
+    }
+  ],
+  "excerpt": {
+    "file": "compiler-excerpt.log",
+    "source": "native-job.log",
+    "firstLine": 981,
+    "lastLine": 1007,
+    "transformation": "Exact contiguous original lines, preserving original bytes and final newline; no line-number prefixes or redactions."
+  },
+  "observed": {
+    "sourceCheckout": {
+      "fabricSourceLines": [
+        120,
+        123
+      ],
+      "nativeLines": [
+        119,
+        122
+      ],
+      "sha": "e7901ec687e96a240a7b820baef50318fde40ddd"
+    },
+    "fabricSource": {
+      "conclusion": "success",
+      "sourceContracts": {
+        "tests": 13,
+        "passed": 13,
+        "failed": 0,
+        "durationMilliseconds": 69.597046,
+        "lines": [
+          160,
+          167
+        ]
+      },
+      "packageSuite": {
+        "tests": 49,
+        "passed": 49,
+        "failed": 0,
+        "durationMilliseconds": 150.576146,
+        "lines": [
+          266,
+          273
+        ]
+      },
+      "api": {
+        "packages": 1,
+        "subpaths": 8,
+        "reachableDeclarations": 44,
+        "line": 286
+      },
+      "countBoundary": "The 13 source contracts are also included in the 49-test package suite; these are not 62 distinct designs."
+    },
+    "nativePreCompile": {
+      "packageSuite": {
+        "tests": 49,
+        "passed": 49,
+        "failed": 0,
+        "durationMilliseconds": 267.8748,
+        "lines": [
+          225,
+          232
+        ]
+      },
+      "powerShellStep": 10,
+      "powerShellConclusion": "success",
+      "powerShellBoundary": "The completed Windows PowerShell 5.1 gate parsed selected diagnostic scripts, ran production C# token/ownership checks and explicitly labeled portable mock regressions. It did not deploy or exercise the new navigation observer."
+    },
+    "packageBuild": {
+      "step": 13,
+      "conclusion": "success",
+      "startedAt": "2026-11-11T12:42:18Z",
+      "completedAt": "2026-11-11T12:46:29Z"
+    },
+    "executableBuild": {
+      "step": 14,
+      "conclusion": "failure",
+      "startedAt": "2026-11-11T12:46:29Z",
+      "completedAt": "2026-11-11T12:47:36Z"
+    },
+    "firstCompilerError": {
+      "line": 990,
+      "code": "C2338",
+      "message": "C++/WinRT implementation types must not be final",
+      "generatedHeader": "Generated Files/winrt/base.h",
+      "generatedHeaderLine": 8038,
+      "instantiationLines": [
+        994,
+        995
+      ],
+      "sourceHeader": "NavigationProbe.h",
+      "sourceLine": 576,
+      "template": "winrt::make<nyctron::fixture::Hook,std::shared_ptr<nyctron::fixture::Observer>>"
+    },
+    "compilerDiagnosticBoundary": {
+      "reportedCompilerErrorCount": 1,
+      "probeHeaderC4244Warnings": [
+        {
+          "logLine": 981,
+          "sourceLine": 164
+        },
+        {
+          "logLine": 984,
+          "sourceLine": 165
+        },
+        {
+          "logLine": 987,
+          "sourceLine": 509
+        }
+      ],
+      "wrapperExit": {
+        "line": 1007,
+        "code": 1
+      },
+      "scope": "One compiler error was displayed in the complete original. This does not establish that no later compiler or runtime blockers remain. Nonfatal warnings were not changed by the narrow correction."
+    },
+    "skipped": [
+      {
+        "step": 15,
+        "name": "Deploy the packaged consumer the way run-windows does"
+      },
+      {
+        "step": 16,
+        "name": "UI Automation smoke test of the packaged consumer"
+      },
+      {
+        "step": 17,
+        "name": "Retain the exact package that passed native acceptance"
+      },
+      {
+        "step": 18,
+        "name": "Upload tested Windows distribution"
+      }
+    ],
+    "failedJobCompletedAt": "2026-11-11T12:47:44Z",
+    "runtimeWitnessEnvelopeCount": 0
+  },
+  "archiveBoundary": {
+    "evidenceArtifact": {
+      "id": 13856595491,
+      "bytes": 16346,
+      "producerReportedSha256": "4b16e5c068850c7ec035cf684b9ba2cba83242068fc88e843ab0d319e0fc60d4",
+      "producerReportedFileCount": 16,
+      "logLines": [
+        1026,
+        1031,
+        1033,
+        1035
+      ]
+    },
+    "sharedArtifact": {
+      "id": 13855043543,
+      "bytes": 62822,
+      "producerReportedSha256": "856ce32336002a68b3b000681d2da77d9df128dfc2f677be9802c5cb9190b31d"
+    },
+    "inspectedArchiveBytes": false,
+    "inspectedMembers": false,
+    "scope": "Artifact sizes/digests and 16-file upload count are producer/API reports, not independently rehashed ZIP or member observations. The successful always-upload step does not imply screenshots or a runtime pass."
+  },
+  "limits": [
+    "No deployment, application launch, native observer request/response, icon geometry, RTL action, drag, tooltip, screenshot or host-eligibility acceptance ran in this attempt.",
+    "No tested-package receipt or tested distribution was emitted by the skipped acceptance packaging steps.",
+    "The separate general source success receipt binds the same checkout but cannot substitute for native acceptance.",
+    "The one-keyword Hook correction is a later source-only change. This failure receipt preserves the original 255553 header and does not claim the correction has compiled.",
+    "No unchanged rerun, workflow dispatch, host/security/launcher change, ref mutation or alternate artifact extraction was performed for this receipt."
+  ]
+}

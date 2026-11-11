@@ -1,0 +1,391 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-combined-windows-native-metadata",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "Normalized API metadata retrieved after both attempt1 jobs completed; exact original logs and console excerpts are retained separately.",
+  "normalizedAt": "2026-11-11 12:03:02 UTC",
+  "run": {
+    "id": 43015171470,
+    "name": "WinUI 3 navigation and native desktop in RNW Fabric",
+    "head_branch": "codex/v1-reviewed-closure-nov11",
+    "head_sha": "9a430338d8336283b230203a8555257798fcd62c",
+    "path": ".github/workflows/winui-fabric.yml",
+    "run_number": 113,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43015171470",
+    "created_at": "2026-11-11T11:49:52Z",
+    "updated_at": "2026-11-11T12:00:16Z",
+    "run_attempt": 1,
+    "run_started_at": "2026-11-11T11:49:52Z"
+  },
+  "jobsTotalCount": 2,
+  "jobs": [
+    {
+      "id": 130504315570,
+      "name": "Fabric codegen and source gates",
+      "head_sha": "9a430338d8336283b230203a8555257798fcd62c",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-11T11:49:55Z",
+      "completed_at": "2026-11-11T11:50:49Z",
+      "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43015171470/job/130504315570",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:55Z",
+          "completed_at": "2026-11-11T11:49:56Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:56Z",
+          "completed_at": "2026-11-11T11:49:58Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:49:58Z",
+          "completed_at": "2026-11-11T11:50:02Z"
+        },
+        {
+          "number": 4,
+          "name": "Validate actual XAML Fabric native bridge sources",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:02Z",
+          "completed_at": "2026-11-11T11:50:02Z"
+        },
+        {
+          "number": 5,
+          "name": "Install isolated RNW 0.85 dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:02Z",
+          "completed_at": "2026-11-11T11:50:21Z"
+        },
+        {
+          "number": 6,
+          "name": "Build peer-free shared contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:21Z",
+          "completed_at": "2026-11-11T11:50:22Z"
+        },
+        {
+          "number": 7,
+          "name": "Validate Windows-only TypeScript",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:22Z",
+          "completed_at": "2026-11-11T11:50:24Z"
+        },
+        {
+          "number": 8,
+          "name": "Build dist and check the release tarball",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:24Z",
+          "completed_at": "2026-11-11T11:50:31Z"
+        },
+        {
+          "number": 9,
+          "name": "Verify the isolated RNW public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:31Z",
+          "completed_at": "2026-11-11T11:50:32Z"
+        },
+        {
+          "number": 10,
+          "name": "Build canonical shared release packages with the root compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:32Z",
+          "completed_at": "2026-11-11T11:50:46Z"
+        },
+        {
+          "number": 11,
+          "name": "Retain canonical shared archives for the native consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:46Z",
+          "completed_at": "2026-11-11T11:50:47Z"
+        },
+        {
+          "number": 21,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:47Z",
+          "completed_at": "2026-11-11T11:50:47Z"
+        },
+        {
+          "number": 22,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:47Z",
+          "completed_at": "2026-11-11T11:50:48Z"
+        },
+        {
+          "number": 23,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:48Z",
+          "completed_at": "2026-11-11T11:50:48Z"
+        }
+      ]
+    },
+    {
+      "id": 130504750313,
+      "name": "VS 2026 RNW 0.85 XAML Fabric native C++ compile",
+      "head_sha": "9a430338d8336283b230203a8555257798fcd62c",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-11T11:50:52Z",
+      "completed_at": "2026-11-11T12:00:15Z",
+      "html_url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43015171470/job/130504750313",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:54Z",
+          "completed_at": "2026-11-11T11:50:56Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:50:57Z",
+          "completed_at": "2026-11-11T11:51:05Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:51:05Z",
+          "completed_at": "2026-11-11T11:51:14Z"
+        },
+        {
+          "number": 4,
+          "name": "Install native-codegen dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:51:14Z",
+          "completed_at": "2026-11-11T11:51:53Z"
+        },
+        {
+          "number": 5,
+          "name": "Build source distribution and validate lifecycle contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:51:53Z",
+          "completed_at": "2026-11-11T11:51:58Z"
+        },
+        {
+          "number": 6,
+          "name": "Verify the isolated RNW public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:51:58Z",
+          "completed_at": "2026-11-11T11:51:59Z"
+        },
+        {
+          "number": 7,
+          "name": "Download the canonical shared package archives",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:51:59Z",
+          "completed_at": "2026-11-11T11:52:00Z"
+        },
+        {
+          "number": 8,
+          "name": "Verify the release producer's exact workspace archives",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-11T11:52:00Z",
+          "completed_at": "2026-11-11T11:52:00Z"
+        },
+        {
+          "number": 9,
+          "name": "Install the fresh consumer from canonical peers and the Fabric candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:52:00Z",
+          "completed_at": "2026-11-11T11:52:28Z"
+        },
+        {
+          "number": 10,
+          "name": "Validate diagnostic scripts with the UIA PowerShell runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:52:28Z",
+          "completed_at": "2026-11-11T11:52:36Z"
+        },
+        {
+          "number": 11,
+          "name": "Generate native code from the installed package",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:52:36Z",
+          "completed_at": "2026-11-11T11:52:44Z"
+        },
+        {
+          "number": 12,
+          "name": "Generate official RNW application and connect native package",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:52:44Z",
+          "completed_at": "2026-11-11T11:52:55Z"
+        },
+        {
+          "number": 13,
+          "name": "Build installed native C++/WinRT Fabric package",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:52:55Z",
+          "completed_at": "2026-11-11T11:57:16Z"
+        },
+        {
+          "number": 14,
+          "name": "Compile actual Windows consumer executable",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:57:16Z",
+          "completed_at": "2026-11-11T11:58:39Z"
+        },
+        {
+          "number": 15,
+          "name": "Deploy the packaged consumer the way run-windows does",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T11:58:39Z",
+          "completed_at": "2026-11-11T11:59:36Z"
+        },
+        {
+          "number": 16,
+          "name": "UI Automation smoke test of the packaged consumer",
+          "status": "completed",
+          "conclusion": "failure",
+          "started_at": "2026-11-11T11:59:36Z",
+          "completed_at": "2026-11-11T12:00:07Z"
+        },
+        {
+          "number": 17,
+          "name": "Retain the exact package that passed native acceptance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-11T12:00:07Z",
+          "completed_at": "2026-11-11T12:00:07Z"
+        },
+        {
+          "number": 18,
+          "name": "Upload tested Windows distribution",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-11T12:00:07Z",
+          "completed_at": "2026-11-11T12:00:07Z"
+        },
+        {
+          "number": 19,
+          "name": "Upload UI Automation screenshots",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:00:07Z",
+          "completed_at": "2026-11-11T12:00:08Z"
+        },
+        {
+          "number": 37,
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-11T12:00:08Z",
+          "completed_at": "2026-11-11T12:00:08Z"
+        },
+        {
+          "number": 38,
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:00:08Z",
+          "completed_at": "2026-11-11T12:00:11Z"
+        },
+        {
+          "number": 39,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-11T12:00:11Z",
+          "completed_at": "2026-11-11T12:00:11Z"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13853610088,
+      "name": "winui-fabric-uia-smoke",
+      "size_in_bytes": 455220,
+      "digest": "sha256:d0225e292bd1f9ad695c1116180d3367f999b50df76ae2a2ab902d0a4530c45e",
+      "created_at": "2026-11-11T12:00:08Z",
+      "expires_at": "2027-02-09T11:49:53Z",
+      "expired": false,
+      "workflow_run": {
+        "id": 43015171470,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-reviewed-closure-nov11",
+        "head_sha": "9a430338d8336283b230203a8555257798fcd62c"
+      }
+    },
+    {
+      "id": 13851783363,
+      "name": "windows-fabric-shared-packages",
+      "size_in_bytes": 62822,
+      "digest": "sha256:5afacbc025e38d947f4a68bf63dea857c604a2f42fd8127fa3e3c527ea2effb7",
+      "created_at": "2026-11-11T11:50:47Z",
+      "expires_at": "2027-02-09T11:49:53Z",
+      "expired": false,
+      "workflow_run": {
+        "id": 43015171470,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-reviewed-closure-nov11",
+        "head_sha": "9a430338d8336283b230203a8555257798fcd62c"
+      }
+    }
+  ],
+  "actualCheckout": {
+    "status": "verified",
+    "commit": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "parents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ],
+    "treeScope": "Same independently recomputed3314/537 tree."
+  },
+  "originalsNotInspected": [
+    "Artifact ZIP bytes and members",
+    "Original screenshots",
+    "Original environment JSON files",
+    "Original navigation result JSON",
+    "Original tested package archives"
+  ]
+}

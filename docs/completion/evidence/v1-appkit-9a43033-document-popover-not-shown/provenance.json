@@ -1,0 +1,709 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-native-acceptance-failure",
+  "folder": "docs/completion/evidence/v1-appkit-9a43033-document-popover-not-shown",
+  "recordedAtUTC": "2026-11-11 12:16:05 UTC",
+  "source": {
+    "helperHead": "9a430338d8336283b230203a8555257798fcd62c",
+    "helperSoleParent": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+    "actualCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "orderedMergeParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ],
+    "checkoutEvidence": {
+      "canonicalCoreLogLines": [
+        93,
+        95,
+        120,
+        123
+      ],
+      "nativeLogLines": [
+        100,
+        102,
+        110,
+        113
+      ]
+    },
+    "exactTreeLeaves": [
+      {
+        "path": ".github/workflows/macos-appkit.yml",
+        "gitBlob": "73a526c3768fa21b3d8a0b071db47ebfa9cc5bf8",
+        "bytes": 11091,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/App.tsx",
+        "gitBlob": "8826fb256b24b780450ee2634ad78dad457642dd",
+        "bytes": 20888,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "bytes": 78317,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "gitBlob": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+        "bytes": 128984,
+        "mode": "100644"
+      },
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+        "gitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+        "bytes": 13581,
+        "mode": "100644"
+      }
+    ],
+    "nativeSourceScope": "combined reviewed candidate; this receipt records execution of its generated merge, not execution of later or external branch heads",
+    "installedSdkSourceBytesInspected": false
+  },
+  "run": {
+    "id": 43015170958,
+    "attempt": 1,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "canonicalCoreJob": 130504313210,
+    "nativeJob": 130504476939,
+    "completedNativeAt": "2026-11-11T12:10:49Z",
+    "metadataFile": "completed-metadata.json"
+  },
+  "retainedFiles": [
+    {
+      "path": "source-job.log",
+      "origin": "complete original canonical core job130504313210 decoded text",
+      "gitBlob": "20005db8d349a3d6a11e1e5894c404d1f2908614",
+      "bytes": 19626,
+      "sha256": "3dabf68e8cc8fd9cc59ddf39c2393ea619f670d6850ed831404c3c2c567a18c0"
+    },
+    {
+      "path": "native-job.log",
+      "origin": "complete original native job130504476939 decoded text",
+      "gitBlob": "1fb25f7a90debe34762f6ff82c902d0cb6ddc9a1",
+      "bytes": 93895,
+      "sha256": "3fdf9c8c0bff3c056e4596e5c9732046140da898da9efc0343f8902564575d90"
+    },
+    {
+      "path": "build-summary.json",
+      "origin": "unique timestamp-stripped executed build JSON line",
+      "gitBlob": "6c0231571c0ceba5f978665155ba7e7a697ad06d",
+      "bytes": 318,
+      "sha256": "1fdae705187226fdf7673c55753c7394a67118bc4b5dd30aa0b7706fdbd48905"
+    },
+    {
+      "path": "startup-summary.json",
+      "origin": "unique timestamp-stripped startup JSON line",
+      "gitBlob": "329d5e4c19b68f8d75035a33760e1ee6610e0d1a",
+      "bytes": 28903,
+      "sha256": "d54a3c12de2d071ed12e4a534ba4c8b94f594424da859e676bae2cea686253ab"
+    },
+    {
+      "path": "startup-envelope.log",
+      "origin": "original timestamped startup block including ten interleaved stderr lines",
+      "gitBlob": "f6d2d19d628f039972cf26ea33960bca152f10de",
+      "bytes": 29861,
+      "sha256": "2dd33b5e1fcfd30bce476adfc065595fcff5963b47cc6cb0d2f7f7c40bb8decf"
+    },
+    {
+      "path": "tooltip-summary.json",
+      "origin": "unique timestamp-stripped tooltip JSON line",
+      "gitBlob": "3384e46a8b37d0a6f61d22fec506db53f2de6f31",
+      "bytes": 9152,
+      "sha256": "6686b2ff46cdfc194216d915468a2916504fab8e8b001f9652565fbc99f2edff"
+    },
+    {
+      "path": "popover-show-summary.json",
+      "origin": "unique timestamp-stripped popover-show JSON line",
+      "gitBlob": "347a37ce86a04a56628e39063dd26c6ebd5fa7d1",
+      "bytes": 1995,
+      "sha256": "27073beac31dcfc05bb0aeb62166cac9f7dde75619911177539f9862196573bc"
+    },
+    {
+      "path": "popover-show-envelope.log",
+      "origin": "original timestamped popover-show block, no interleaved lines",
+      "gitBlob": "a0b38c2b762bd5789384fee8321f7c1594124caf",
+      "bytes": 2153,
+      "sha256": "d07722a879ec6c9d1b8c3ab00ef93166b727b51ffc4e83bade323ae93de4a6ae"
+    }
+  ],
+  "retention": {
+    "originalLogs": "complete decoded job-log texts returned by GitHub; unchanged text bytes were hashed, stored as immutable Git blobs and read back exactly",
+    "jsonLines": "exact unique JSON line after removing only the GitHub timestamp prefix and original line terminator; not parsed and reserialized",
+    "markerRecognition": "standalone marker lines after exact timestamp-prefix removal; echoed workflow source is excluded",
+    "rawEnvelopeFiles": "preserve original timestamps, line endings and interleaved stderr",
+    "originalArtifactsDownloaded": false,
+    "originalArtifactsExtracted": false,
+    "originalArtifactPixelsInspected": false
+  },
+  "extraction": [
+    {
+      "kind": "build",
+      "beginLine": 509,
+      "jsonLine": 510,
+      "endLine": 511,
+      "jsonFile": "build-summary.json",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    {
+      "kind": "popover-show",
+      "beginLine": 527,
+      "jsonLine": 528,
+      "endLine": 529,
+      "jsonFile": "popover-show-summary.json",
+      "envelopeFile": "popover-show-envelope.log",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    {
+      "kind": "tooltip",
+      "beginLine": 530,
+      "jsonLine": 531,
+      "endLine": 532,
+      "jsonFile": "tooltip-summary.json",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 0
+    },
+    {
+      "kind": "startup",
+      "beginLine": 533,
+      "jsonLine": 534,
+      "endLine": 545,
+      "jsonFile": "startup-summary.json",
+      "envelopeFile": "startup-envelope.log",
+      "jsonLines": 1,
+      "interleavedNonJsonLines": 10,
+      "interleavedScope": "original Error stack, two blank stderr lines and Node version"
+    },
+    {
+      "kind": "window-show-failure",
+      "standaloneBeginMarkers": 0,
+      "standaloneEndMarkers": 0,
+      "scope": "absence of this diagnostic envelope is not a general health claim"
+    }
+  ],
+  "validation": {
+    "canonicalCore": {
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "source-job.log lines182-187",
+      "scope": "canonical core archive/native driver contract source suite"
+    },
+    "consumer": {
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "native-job.log lines250-255",
+      "scope": "consumer preparation source tests"
+    },
+    "installedApi": {
+      "status": "matched",
+      "packages": 1,
+      "subpaths": 15,
+      "reachableDeclarations": 33,
+      "evidence": "native-job.log line441"
+    },
+    "nativeTransport": {
+      "status": "passed",
+      "cases": 7,
+      "evidence": "native-job.log line451",
+      "scope": "original/patched Foundation/socketpair transport cases, separate from full application acceptance"
+    },
+    "compile": {
+      "status": "success",
+      "exitCode": 0,
+      "stepNumber": 10,
+      "startedAt": "2026-11-11T11:52:59Z",
+      "completedAt": "2026-11-11T12:09:51Z",
+      "buildSummary": "build-summary.json",
+      "compilerTranscriptInspected": false
+    },
+    "nativeExercise": {
+      "status": "failure",
+      "stepNumber": 11,
+      "startedAt": "2026-11-11T12:09:51Z",
+      "completedAt": "2026-11-11T12:10:28Z"
+    },
+    "retainEvidence": {
+      "status": "success",
+      "stepNumber": 12
+    },
+    "retainTestedDistribution": {
+      "status": "skipped",
+      "stepNumber": 13
+    }
+  },
+  "firstFailure": {
+    "message": "Timed out waiting for shown native NSPopover",
+    "logErrorLine": 539,
+    "exactVerifierBlob": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+    "sourceStack": [
+      {
+        "function": "waitFor",
+        "line": 1088,
+        "column": 9
+      },
+      {
+        "function": "shownPopover",
+        "line": 1280,
+        "column": 13
+      },
+      {
+        "function": "top-level document pre-minimize presentation",
+        "line": 1580,
+        "column": 33
+      }
+    ],
+    "owner": "document-1",
+    "invocation": "const beforeMinimizePopover = await shownPopover('document-1');",
+    "predicate": "current.shown && current.contentVisible",
+    "timeoutMilliseconds": 20000,
+    "pollDelayMilliseconds": 50,
+    "diagnosticSource": "already-returned tron.popover responses; no additional request or post-failure witness",
+    "originalTimeoutPreserved": true
+  },
+  "popoverObservation": {
+    "schemaVersion": 1,
+    "sourceRevision": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "scope": "already-returned-shown-popover-responses",
+    "returnedResponses": 369,
+    "stateChanges": 1,
+    "selectedRecords": 3,
+    "omittedResponses": 366,
+    "omittedStateChanges": 0,
+    "recordsOmittedForByteLimit": 0,
+    "captureFailed": false,
+    "countOverflow": false,
+    "recordLimit": 8,
+    "consoleByteLimit": 8192,
+    "rawJsonBytes": 1995,
+    "fullTimestampedEnvelopeBytes": 2153,
+    "records": [
+      {
+        "response": 1,
+        "first": true,
+        "last": false,
+        "stateChange": false,
+        "nativePopover": true,
+        "conjunction": {
+          "shown": false,
+          "contentVisible": true
+        },
+        "identity": {
+          "stringPresent": true,
+          "matchesFirstObserved": true
+        },
+        "frame": {
+          "status": "missing",
+          "x": null,
+          "y": null,
+          "width": null,
+          "height": null
+        },
+        "region": {
+          "status": "observed",
+          "x": 0,
+          "y": 0,
+          "width": 680,
+          "height": 592
+        },
+        "geometry": {
+          "frameNonempty": null,
+          "regionNonempty": true,
+          "frameInsideRegion": null
+        }
+      },
+      {
+        "response": 2,
+        "first": false,
+        "last": false,
+        "stateChange": true,
+        "nativePopover": true,
+        "conjunction": {
+          "shown": false,
+          "contentVisible": false
+        },
+        "identity": {
+          "stringPresent": true,
+          "matchesFirstObserved": true
+        },
+        "frame": {
+          "status": "missing",
+          "x": null,
+          "y": null,
+          "width": null,
+          "height": null
+        },
+        "region": {
+          "status": "observed",
+          "x": 0,
+          "y": 0,
+          "width": 680,
+          "height": 592
+        },
+        "geometry": {
+          "frameNonempty": null,
+          "regionNonempty": true,
+          "frameInsideRegion": null
+        }
+      },
+      {
+        "response": 369,
+        "first": false,
+        "last": true,
+        "stateChange": false,
+        "nativePopover": true,
+        "conjunction": {
+          "shown": false,
+          "contentVisible": false
+        },
+        "identity": {
+          "stringPresent": true,
+          "matchesFirstObserved": true
+        },
+        "frame": {
+          "status": "missing",
+          "x": null,
+          "y": null,
+          "width": null,
+          "height": null
+        },
+        "region": {
+          "status": "observed",
+          "x": 0,
+          "y": 0,
+          "width": 680,
+          "height": 592
+        },
+        "geometry": {
+          "frameNonempty": null,
+          "regionNonempty": true,
+          "frameInsideRegion": null
+        }
+      }
+    ],
+    "originalFileReported": {
+      "filename": "popover-show-failure.json",
+      "writeStatus": "retained",
+      "writeErrorCode": null
+    },
+    "originalFileReadHere": false,
+    "originalFileHashReported": false,
+    "interpretation": [
+      "All retained first/change/last records have nativePopover=true and shown=false. The first response has contentVisible=true; the sole projected change at response2 sets contentVisible=false; response369 remains false.",
+      "All projected state changes are retained;366 omitted responses are not366 omitted state changes.",
+      "The bounded content-identity string matches the first observed string. This is equality, not native liveness, ownership beyond the exact command binding, or object-retention proof.",
+      "A positive680-by592 region is observed; frame is missing while shown is false, so frame containment and the actual attempted placement are unknown.",
+      "These observations identify the failed presentation predicate; they do not establish a rejected-placement, React-state, close-callback, native-window or SDK cause."
+    ]
+  },
+  "sourceControlFlow": {
+    "basis": "sequential executed verifier source plus the actual failure stack; not a final successful full-suite report",
+    "alreadyReturned": [
+      {
+        "lines": [
+          1566,
+          1574
+        ],
+        "scope": "newer-document focus preservation, including object-bound close completion and exact document.key=true/main.key=false assertions"
+      },
+      {
+        "lines": [
+          1576,
+          1577
+        ],
+        "scope": "native close veto status and exactly two windows"
+      },
+      {
+        "line": 1578,
+        "scope": "save command and Saved in this local reference session status"
+      },
+      {
+        "line": 1579,
+        "scope": "document inspector press returned"
+      }
+    ],
+    "notReached": [
+      {
+        "lines": [
+          1581,
+          1592
+        ],
+        "scope": "pre-minimize content identity, minimization, close with minimized owner, deminiaturization, retained popover content and controlled close"
+      },
+      {
+        "lines": [
+          1593,
+          1600
+        ],
+        "scope": "remaining document capture/allowed close/reopen checks"
+      },
+      {
+        "firstLine": 1602,
+        "scope": "later physical-session pointer exercise"
+      },
+      {
+        "scope": "successful final result and exact natively tested distribution retention"
+      }
+    ],
+    "relevantSource": [
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+        "gitBlob": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+        "lines": [
+          78,
+          143
+        ],
+        "scope": "coordinate readiness; closing/visible/owner/token guards; showRelativeToRect; actual-region containment and rejection"
+      },
+      {
+        "path": "examples/macos-appkit/spark/App.tsx",
+        "gitBlob": "8826fb256b24b780450ee2634ad78dad457642dd",
+        "lines": [
+          175,
+          185,
+          219,
+          222
+        ],
+        "scope": "asynchronous anchor measurement and controlled inspector open/rejection callbacks"
+      },
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "gitBlob": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "lines": [
+          718,
+          745
+        ],
+        "scope": "actual nativePopover/shown/contentVisible/identity/frame/region response"
+      }
+    ],
+    "unobservedBranchFacts": [
+      "current React open state",
+      "anchor at the failed presentation",
+      "presentation rejection event",
+      "dismissal event responsible for the final state",
+      "actual attempted popover frame",
+      "specific internal guard or close branch"
+    ]
+  },
+  "tooltip": {
+    "status": "passed",
+    "processId": 38683,
+    "currentReadRetainedStrings": 0,
+    "legacyResultsExcludedFromAcceptance": true,
+    "privateAcceptedValues": 1,
+    "privateUniqueStringsAdded": 1,
+    "selectedHelpWindowNumber": 41,
+    "exactExpectedTextPredicate": true,
+    "privateSourceBoundBeforeAndAfter": true,
+    "sourceScope": "private AppKit draw-view collector, bound to the exact selected visible AXHelpTag window/content subtree before and after the read; not a public accessibility-text getter success",
+    "outsideAfterHoverHelpTags": 0,
+    "originalFile": {
+      "filename": "tooltip-hover.json",
+      "bytes": 43485,
+      "sha256": "81a1cc29eec12cb6aac5c8c1fc95145c6640df6837e96066a92f3e2d36785d40",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    },
+    "originalFileReadHere": false,
+    "rawSource": "tooltip-summary.json"
+  },
+  "startup": {
+    "processId": 38683,
+    "capturedAt": "2026-11-11T12:10:27.841Z",
+    "appLog": {
+      "filename": "app.log",
+      "status": "snapshot-retained",
+      "readByteLimit": 1048576,
+      "readBytes": 707846,
+      "sourceLive": true,
+      "sourceBytesBefore": 707846,
+      "sourceBytesAfter": 707846,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": false,
+      "originalSha256": null,
+      "truncated": false,
+      "laterAppendsPossible": true,
+      "unreadBytesObserved": 0,
+      "snapshot": {
+        "filename": "startup-app-log-snapshot.log",
+        "kind": "read-time-prefix-from-live-app-log",
+        "offset": 0,
+        "bytes": 707846,
+        "sha256": "30b299421335cd17fbe0ff34e492c9f63a790bd1c0e9298b76b1b6c156ce3a00",
+        "retained": true,
+        "eventualAppLogHash": false
+      }
+    },
+    "commands": {
+      "filename": "commands.jsonl",
+      "status": "incomplete-or-changing-read",
+      "readByteLimit": 262145,
+      "readBytes": 262145,
+      "sourceLive": false,
+      "sourceBytesBefore": 633266,
+      "sourceBytesAfter": 633266,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": false,
+      "completeOriginalFile": false,
+      "originalSha256": null,
+      "truncated": true,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 371121,
+      "snapshot": null,
+      "matchedRecords": 491,
+      "selectedRecords": 32,
+      "omittedRecords": 459,
+      "partialTrailingLine": true,
+      "lastRetainedRequestId": 244
+    },
+    "processFailure": {
+      "filename": "native-process-failure.json",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 1320,
+      "sourceLive": false,
+      "sourceBytesBefore": 1320,
+      "sourceBytesAfter": 1320,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "6c99af63ae66563d62cf98b3c3ebbca8423a674f8a6ff2613e0504ea378bf0f8",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null,
+      "jsonStatus": "parsed"
+    },
+    "activation": {
+      "matchedRecords": 28,
+      "selectedRecords": 28,
+      "omittedRecords": 0,
+      "initialWorkspaceIdentityChecked": {
+        "sameProcess": true,
+        "sameBundle": true
+      },
+      "initialReply": {
+        "ok": true,
+        "visible": true,
+        "key": true,
+        "applicationActive": true
+      },
+      "timing": {
+        "clock": "CACurrentMediaTime",
+        "clockExcludesSystemSleep": true,
+        "intervalsAreNotQueueResidence": true,
+        "intervalsDoNotEstablishCause": true,
+        "completionTraceElapsedSeconds": 0.00010266666663483193,
+        "submissionStartToMainEntrySeconds": 0.4607169166665699
+      }
+    },
+    "transport": {
+      "matchedRecords": 3025,
+      "selectedRecords": 32,
+      "omittedRecords": 2993
+    },
+    "applicationChildExitCodeAtObservation": null,
+    "applicationChildSignalAtObservation": null,
+    "psCommandBeforeAfterExitCodes": [
+      0,
+      0
+    ],
+    "processExitQualification": "null child exitCode is separate from successful ps commands; ps exit0 is not application exit0 or a full health conclusion",
+    "postFailureSample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 9,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "81b0a7d266c7d573c4847f228fd5a2a1d781ee1c07bb3fe64515c1324fbe2805",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true,
+      "originalBytesInspected": false
+    },
+    "scope": "selected typed startup/process records emitted on the later presentation failure; the initial startup request succeeded",
+    "remainingCommandsTailUnknown": true
+  },
+  "producerOnlyDigests": [
+    {
+      "source": "build-summary.json",
+      "kind": "original compiler transcript",
+      "filename": "build-console.log",
+      "bytes": 12329228,
+      "sha256": "8f429c196f5a1f93ffe02237dce6e59b7218ab09829e2f8aa90555e4c27eb10d",
+      "complete": true,
+      "normalized": false,
+      "originalBytesInspected": false
+    },
+    {
+      "source": "startup-summary.json",
+      "kind": "read-time-prefix-from-live-app-log",
+      "filename": "startup-app-log-snapshot.log",
+      "offset": 0,
+      "bytes": 707846,
+      "sha256": "30b299421335cd17fbe0ff34e492c9f63a790bd1c0e9298b76b1b6c156ce3a00",
+      "retained": true,
+      "eventualAppLogHash": false,
+      "originalBytesInspected": false
+    },
+    {
+      "source": "startup-summary.json",
+      "kind": "complete stable native-process-failure original file",
+      "bytes": 1320,
+      "sha256": "6c99af63ae66563d62cf98b3c3ebbca8423a674f8a6ff2613e0504ea378bf0f8",
+      "originalBytesInspected": false
+    },
+    {
+      "source": "startup-summary.json",
+      "kind": "post-failure sample",
+      "sha256": "81b0a7d266c7d573c4847f228fd5a2a1d781ee1c07bb3fe64515c1324fbe2805",
+      "originalBytesInspected": false
+    },
+    {
+      "source": "tooltip-summary.json",
+      "kind": "original tooltip evidence file",
+      "bytes": 43485,
+      "sha256": "81a1cc29eec12cb6aac5c8c1fc95145c6640df6837e96066a92f3e2d36785d40",
+      "originalBytesInspected": false
+    },
+    {
+      "source": "completed-metadata.json/native-job.log",
+      "kind": "native artifact ZIP",
+      "bytes": 1739281,
+      "sha256": "fa2658d38181fc56db48c41e9ae649edf496930275a4d8af2dcb0ac49adc81d7",
+      "originalBytesInspected": false
+    }
+  ],
+  "limitations": [
+    "Actual original logs and exact console payload/envelope bytes were independently hashed and retained; producer-reported hashes of unextracted files are not independent file inspection.",
+    "No original ZIP member, screenshot, full commands file, app.log/snapshot, sample stack, compiler transcript or installed SDK input archive was extracted or inspected here.",
+    "The new popover projection does not expose the failed presentation's native branch reason or React state and does not justify a shipping correction by itself.",
+    "Current failed values cannot be retroactively assigned to the prior bd3 run, whose corresponding response fields were unavailable.",
+    "Earlier focus and later tooltip results do not prove completion of the held minimize/physical-session/native distribution gates.",
+    "This receipt changes no source, native assertion, deadline, host setting, ref, PR, CI attempt or retry."
+  ],
+  "completedMetadata": {
+    "file": "completed-metadata.json",
+    "gitBlob": "33028b2cefd29cb39d5508ac8b1023b9480d9b07",
+    "bytes": 11729,
+    "sha256": "b410ff1b2bf3e150dd49406f0ca9a26505ba407559718188cc8143601f739c4b"
+  }
+}

@@ -741,6 +741,13 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": RectDictionary(component.nativeAllowedRegion) } mutableCopy];
       if (closeTrace) result[@"closeTrace"] = closeTrace;
       result[@"closeObservation"] = PopoverCloseObservationState(owner, component, popover);
+      result[@"presentationObservation"] = NSNull.null;
+      @try {
+        NSDictionary *observation = [component nativePresentationObservationForOwner:owner];
+        if (observation) result[@"presentationObservation"] = observation;
+      } @catch (NSException *exception) { (void)exception;
+        // A read-only diagnostic failure cannot replace the existing response.
+      }
       if (popover.shown && content.window) result[@"frame"] = RectDictionary(OwnerCoordinates(owner, content.window.frame));
       reply(result);
     });

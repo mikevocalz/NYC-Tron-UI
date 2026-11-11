@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-source-only",
+  "recordedAtUTC": "2026-11-11 12:49:09 UTC",
+  "scope": "Four-file bounded popover presentation observation; no native behavior correction or runtime pass",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "preparedHelper": {
+    "commit": "4b75661bdcfbc6159cc87a5b6bec8ecba6f2a586",
+    "tree": "82cf32fbc8ca952d8aa714330f642c9dd8e65896",
+    "orderedParents": [
+      "f8c180be8af630886274f71313fa229ea6074001"
+    ],
+    "parentTree": "d6e3e01f3cc6dd3ea913f1135654bb08491211fb",
+    "referencedOrPublishedAtThisCheckpoint": false,
+    "sourceFiles": [
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+        "preimage": "42776ef0157ad390af0b139a8080993082d243f3",
+        "gitBlob": "ac9c7077d62cb52650ee5ee36bba1f6b383a4a5f",
+        "bytes": 516,
+        "sha256": "000b3a7c94d355fcbc79c49c474757311d2b79d81c0a23582236ed504b2c6e05"
+      },
+      {
+        "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+        "preimage": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+        "gitBlob": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+        "bytes": 25122,
+        "sha256": "79af800a514f55f64938494f4a14ca6496cf2036a1b53328181e7805805a63e2"
+      },
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "preimage": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+        "gitBlob": "6eaeab02acb6af6635a368101bce514bc0c89549",
+        "bytes": 78701,
+        "sha256": "a37b7cefbfe910de05e96c6e06ecab8d090cb823e8857cf17f7c2b0bb7b8d5d8"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "preimage": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+        "gitBlob": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+        "bytes": 133456,
+        "sha256": "4c706372c05aa8f7086f3ea6a9cc50339845bb551ee42724b0a1e6831e38a01b"
+      }
+    ]
+  },
+  "integrationPlan": {
+    "target": "next combined candidate as a separate child of9a430338d8336283b230203a8555257798fcd62c",
+    "scope": "four reviewed Mac files; unrelated combined changes have separate receipts",
+    "separatePr62Publication": false,
+    "newCiStartedForThisPreparedHelper": false,
+    "actualNextCheckoutAndRuntime": "unverified"
+  },
+  "actualEvidence": {
+    "completedRun": 43015170958,
+    "attempt": 1,
+    "nativeJob": 130504476939,
+    "head": "9a430338d8336283b230203a8555257798fcd62c",
+    "actualCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "receiptFolder": "../v1-appkit-9a43033-document-popover-not-shown/",
+    "nativeLogBlob": "1fb25f7a90debe34762f6ff82c902d0cb6ddc9a1",
+    "popoverSummaryBlob": "347a37ce86a04a56628e39063dd26c6ebd5fa7d1",
+    "failure": "shown native NSPopover wait fordocument-1 before minimize",
+    "observation": {
+      "returnedResponses": 369,
+      "stateChanges": 1,
+      "selectedRecords": 3,
+      "shownInAllSelectedRecords": false,
+      "contentVisibleFirst": true,
+      "contentVisibleChangedAndLast": false
+    },
+    "reasonUnobserved": true,
+    "noRetroactiveSourceExecutionClaim": true
+  },
+  "behavior": {
+    "currentSnapshot": "main-thread read-only fields, typed booleans and finite geometry from the exact native component",
+    "historicalSlots": "one last executed branch plus one last actual show/containment/readiness record",
+    "validity": "exact weak owner/content/popover identity, expected-command-owner binding and recycle lifetime",
+    "separateQualifiers": [
+      "sameGeneration",
+      "sameScopeToken",
+      "samePresentationToken",
+      "sameParameters"
+    ],
+    "qualifierSemantics": "False scheduling/token/parameter equality does not erase a valid historical result; the records are explicitly historical and cannot be labeled current",
+    "invalidity": "unavailable capture, overflow, actual object/owner mismatch or recycle lifetime mismatch yields unknown historical fields",
+    "ownership": "weak native object references; internal token objects remain private; exact invocation sequence guards against an older call updating a newer show slot",
+    "output": "existing tron.popover response and existing first/last/recent-state failure capture; no extra request or post-failure RPC",
+    "privacy": "fixed labels, typed flags and finite rectangles only; no raw tokens, pointer strings, arbitrary text or exception messages",
+    "coordinates": "show anchor is in positioning-view coordinates; current anchor and actual frame/region are in owner-content top-left coordinates",
+    "preserved": [
+      "original show/layout/close/rejection/focus/scheduling behavior",
+      "original post-show short-circuit property-read order",
+      "single original coordinate-readiness call and conditional content reveal",
+      "all native event payloads and callback order",
+      "exact shown&&contentVisible acceptance predicate",
+      "20-second wait and50-millisecond polling",
+      "existing command sequence and later assertion/runtime/cleanup suffix",
+      "original timeout/request Error identity",
+      "eight-record limit, complete8192-byte console bound and exclusive first-file retention"
+    ],
+    "noWorkflowChange": true,
+    "noHostChange": true,
+    "noPermissionChange": true,
+    "noNewDependency": true,
+    "noPublicJavaScriptApiChange": true,
+    "nativeHeaderChange": "internal read-only diagnostic accessor only"
+  },
+  "sourceProof": {
+    "exactEditCount": 9,
+    "allFourForwardAndInverseTransformsMatch": true,
+    "treeReview": {
+      "checkedAtUTC": "2026-11-11 12:49:09 UTC",
+      "preparedCommit": "4b75661bdcfbc6159cc87a5b6bec8ecba6f2a586",
+      "orderedParents": [
+        "f8c180be8af630886274f71313fa229ea6074001"
+      ],
+      "before": {
+        "sha": "d6e3e01f3cc6dd3ea913f1135654bb08491211fb",
+        "untruncated": true,
+        "leaves": 2050,
+        "treeObjectsIncludingRoot": 284,
+        "allDirectoryHashesMatch": true
+      },
+      "after": {
+        "sha": "82cf32fbc8ca952d8aa714330f642c9dd8e65896",
+        "untruncated": true,
+        "leaves": 2050,
+        "treeObjectsIncludingRoot": 284,
+        "allDirectoryHashesMatch": true
+      },
+      "changed": [
+        {
+          "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+          "before": {
+            "sha": "7df9831d697b7815cd7662ea3317a331cf9570e7",
+            "mode": "100644",
+            "type": "blob"
+          },
+          "after": {
+            "sha": "6eaeab02acb6af6635a368101bce514bc0c89549",
+            "mode": "100644",
+            "type": "blob"
+          }
+        },
+        {
+          "path": "examples/macos-appkit/spark/verify-native.mjs",
+          "before": {
+            "sha": "f79ff69823912de0efb4b6664ede1f14627b9bda",
+            "mode": "100644",
+            "type": "blob"
+          },
+          "after": {
+            "sha": "f4e630f147d8bb7f5370531e778ed60acf03a802",
+            "mode": "100644",
+            "type": "blob"
+          }
+        },
+        {
+          "path": "packages/macos-appkit/spark/macos/NYCTronPopover.h",
+          "before": {
+            "sha": "42776ef0157ad390af0b139a8080993082d243f3",
+            "mode": "100644",
+            "type": "blob"
+          },
+          "after": {
+            "sha": "ac9c7077d62cb52650ee5ee36bba1f6b383a4a5f",
+            "mode": "100644",
+            "type": "blob"
+          }
+        },
+        {
+          "path": "packages/macos-appkit/spark/macos/NYCTronPopover.mm",
+          "before": {
+            "sha": "9e00e3d966569b5fc2c03dac2432fdfe67548177",
+            "mode": "100644",
+            "type": "blob"
+          },
+          "after": {
+            "sha": "ecd9f2235d17c4d3bf6a20143c385d72d0dfea63",
+            "mode": "100644",
+            "type": "blob"
+          }
+        }
+      ],
+      "unchangedLeaves": 2046,
+      "verdict": "approved exact four-file prepared tree; source/native execution remains separate"
+    },
+    "nativeValidationBoundary": "source inspection and modeled scalar comparison only; no Objective-C compilation or AppKit execution"
+  },
+  "focusedReview": {
+    "designs": 8,
+    "author": {
+      "status": "pass",
+      "scope": "pure V8/extracted-function mocks plus native source inspection",
+      "immutableHarnessReadbackReproduced": true
+    },
+    "root": {
+      "status": "pass",
+      "scope": "independent source review plus reproduction of the same eight designs; not eight additional designs"
+    },
+    "finalGate": {
+      "status": "pending-at-this-prepared-checkpoint",
+      "scope": "independent source/projection review remains separate"
+    },
+    "metrics": {
+      "polls": 400,
+      "commands": 400,
+      "mockMilliseconds": 20000,
+      "failureEnvelopeBytes": 6753,
+      "stressEnvelopeBytes": 7990,
+      "stressSelectedRecords": 3,
+      "stressOmittedRecordsForBytes": 4
+    },
+    "testGroups": [
+      "four exact identities, nine reversible edits, unchanged request/wait/recorder/runtime suffix and V8 parse only",
+      "native source-only observer/action/thread/lifetime review and four modeled scalar short-circuit comparisons; no Objective-C execution",
+      "typed current fields, false versus unknown, finite geometry, fixed enums and no token/pointer/arbitrary-text projection",
+      "historical generation/token/parameter changes retained; owner/object/recycle mismatch and never-captured records remain unknown",
+      "entered-versus-returned show stage, containment/readiness separation, overflow geometry and getter-free own-data access",
+      "actual extracted show/wait functions: unchanged 400 requests/20,000 mock ms, exact timeout identity and one-request success",
+      "request Error identity, exclusive first receipt, secondary write/log failure and throwing own-data projection isolation",
+      "eight-record and complete 8 KiB envelope limits, useful first/last history and exact post-trim omission accounting"
+    ],
+    "actualNodeFilesystemExecution": false,
+    "actualObjectiveCCompilation": false,
+    "actualAppKitRuntime": false
+  },
+  "files": [
+    {
+      "path": "edit-manifest.json",
+      "gitBlob": "9b34d6399593db04af527bcad6d02243a2b40a57",
+      "bytes": 36082,
+      "sha256": "4fd6baef5dafaf0909f8864d21d21fcef3205c311f61c84cee5c7aac5a74c081",
+      "scope": "exact original9b34 source, unchanged"
+    },
+    {
+      "path": "review-checks.js",
+      "gitBlob": "69233fb8caa6275b5e12aa779ffcdcd35b23e7ce",
+      "bytes": 54738,
+      "sha256": "be193f6511a5889029b865e8d05a3824120d64613ae5aa116329cc9e1608dbea",
+      "scope": "exact original69233 standalone harness, unchanged"
+    }
+  ],
+  "reproduction": {
+    "evaluation": "Evaluating review-checks.js returns an async review function.",
+    "arguments": [
+      "header",
+      "native",
+      "driver",
+      "verifier",
+      "headerPreimage",
+      "nativePreimage",
+      "driverPreimage",
+      "verifierPreimage"
+    ],
+    "sourceIdentity": "Each full source string must match the corresponding candidate/preimage Git identity listed above.",
+    "accounting": "Author and reviewer executions repeat the same eight designs. Mock poll counts, timing and file IO are not native runtime evidence."
+  },
+  "limitations": [
+    "The previous run's shown=false records do not establish the failing native branch, controlled React state or actual attempted placement.",
+    "This instrumentation is intended to observe that missing evidence and is not a presentation behavior fix.",
+    "A historical outside-region or other result must be interpreted with its separate current equality flags; it does not automatically explain a later presentation.",
+    "Only the next actual changed-source native compile/run can validate these Objective-C changes.",
+    "No ref, PR, dispatch or retry was performed by the source author."
+  ]
+}

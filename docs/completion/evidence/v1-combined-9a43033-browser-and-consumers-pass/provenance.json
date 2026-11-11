@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-combined-browser-evidence",
+  "recordedAtUTC": "2026-11-11 12:33:18 UTC",
+  "source": {
+    "head": "9a430338d8336283b230203a8555257798fcd62c",
+    "actualCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ]
+  },
+  "runAttempt": 1,
+  "results": [
+    {
+      "key": "overlay",
+      "run": 43015171043,
+      "job": 130504313242,
+      "name": "overlay-job.log",
+      "tests": 32,
+      "originalBlob": "b65397f70874d08ead14e1c11951fde7f5b1b180",
+      "evidenceLines": [
+        {
+          "line": 120,
+          "text": "2026-11-11T11:49:58.2119105Z HEAD is now at e8f8c19 Merge 9a430338d8336283b230203a8555257798fcd62c into ac5d69585a52a6e945dc996ea08030e190574699"
+        },
+        {
+          "line": 412,
+          "text": "2026-11-11T11:50:29.2259919Z   32 passed (9.2s)"
+        }
+      ]
+    },
+    {
+      "key": "instruments",
+      "run": 43015170984,
+      "job": 130504313087,
+      "name": "instruments-job.log",
+      "tests": 686,
+      "originalBlob": "4f14f1b021a0955acefe0086620d6b5e81870486",
+      "evidenceLines": [
+        {
+          "line": 120,
+          "text": "2026-11-11T11:49:59.4445865Z HEAD is now at e8f8c19 Merge 9a430338d8336283b230203a8555257798fcd62c into ac5d69585a52a6e945dc996ea08030e190574699"
+        },
+        {
+          "line": 1128,
+          "text": "2026-11-11T11:55:56.6927194Z   686 passed (5.1m)"
+        }
+      ]
+    },
+    {
+      "key": "reference",
+      "run": 43015171074,
+      "job": 130504313397,
+      "name": "reference-job.log",
+      "tests": 29,
+      "sourceModelTests": 3,
+      "originalBlob": "23fee86e61c6832a7bf1fc447846a0ab455edee2",
+      "evidenceLines": [
+        {
+          "line": 120,
+          "text": "2026-11-11T11:49:58.3470256Z HEAD is now at e8f8c19 Merge 9a430338d8336283b230203a8555257798fcd62c into ac5d69585a52a6e945dc996ea08030e190574699"
+        },
+        {
+          "line": 425,
+          "text": "2026-11-11T11:50:55.1052580Z ℹ tests 3"
+        },
+        {
+          "line": 427,
+          "text": "2026-11-11T11:50:55.1054259Z ℹ pass 3"
+        },
+        {
+          "line": 428,
+          "text": "2026-11-11T11:50:55.1054968Z ℹ fail 0"
+        },
+        {
+          "line": 430,
+          "text": "2026-11-11T11:50:55.1055477Z ℹ skipped 0"
+        },
+        {
+          "line": 473,
+          "text": "2026-11-11T11:51:23.2114083Z   29 passed (27.4s)"
+        }
+      ]
+    },
+    {
+      "key": "installed_expo",
+      "run": 43015171019,
+      "job": 130504313229,
+      "name": "installed-expo-job.log",
+      "tests": 2,
+      "originalBlob": "10e7872aaeae830d1c74132e80014ffa1c5d6958",
+      "evidenceLines": [
+        {
+          "line": 121,
+          "text": "2026-11-11T11:49:58.5633492Z HEAD is now at e8f8c19 Merge 9a430338d8336283b230203a8555257798fcd62c into ac5d69585a52a6e945dc996ea08030e190574699"
+        },
+        {
+          "line": 489,
+          "text": "2026-11-11T11:51:37.6934888Z   2 passed (2.0s)"
+        }
+      ]
+    },
+    {
+      "key": "installed_basic",
+      "run": 43015171019,
+      "job": 130504313591,
+      "name": "installed-basic-job.log",
+      "tests": 1,
+      "skipped": 1,
+      "originalBlob": "d6ee3a74bbda45725aa3b6134c2ed63348cf754e",
+      "evidenceLines": [
+        {
+          "line": 121,
+          "text": "2026-11-11T11:49:58.4273631Z HEAD is now at e8f8c19 Merge 9a430338d8336283b230203a8555257798fcd62c into ac5d69585a52a6e945dc996ea08030e190574699"
+        },
+        {
+          "line": 489,
+          "text": "2026-11-11T11:51:29.5245479Z   1 skipped"
+        },
+        {
+          "line": 490,
+          "text": "2026-11-11T11:51:29.5245818Z   1 passed (1.3s)"
+        }
+      ]
+    }
+  ],
+  "retainedFiles": [
+    {
+      "path": "overlay-job.log",
+      "gitBlob": "b65397f70874d08ead14e1c11951fde7f5b1b180",
+      "bytes": 43810,
+      "sha256": "393a41dd3a9c9d12baa831f66153172fcbc912b72cbeb71cafe37e4f3f933b2b",
+      "origin": "complete original completed-job decoded log; unchanged bytes; independent blob readback"
+    },
+    {
+      "path": "instruments-job.log",
+      "gitBlob": "4f14f1b021a0955acefe0086620d6b5e81870486",
+      "bytes": 148591,
+      "sha256": "f41fa45786c75665c9cf867c9d3d3c1affd3c656dbd5fb48b270d4c84c166e35",
+      "origin": "complete original completed-job decoded log; unchanged bytes; independent blob readback"
+    },
+    {
+      "path": "reference-job.log",
+      "gitBlob": "23fee86e61c6832a7bf1fc447846a0ab455edee2",
+      "bytes": 49716,
+      "sha256": "8046776ffc9844892089a01783bb466861327cd669d1d426c64a62cf21aa1b8b",
+      "origin": "complete original completed-job decoded log; unchanged bytes; independent blob readback"
+    },
+    {
+      "path": "installed-expo-job.log",
+      "gitBlob": "10e7872aaeae830d1c74132e80014ffa1c5d6958",
+      "bytes": 49283,
+      "sha256": "21927a96651b4c1c72ebc15d0566ad3779a7273e5877a8b135ead9c24b93847c",
+      "origin": "complete original completed-job decoded log; unchanged bytes; independent blob readback"
+    },
+    {
+      "path": "installed-basic-job.log",
+      "gitBlob": "d6ee3a74bbda45725aa3b6134c2ed63348cf754e",
+      "bytes": 49278,
+      "sha256": "3d84dfe2968cf2fde2cc84a3d9ea7c4ab7b6d66f43271362a7529495514c8ca1",
+      "origin": "complete original completed-job decoded log; unchanged bytes; independent blob readback"
+    }
+  ],
+  "limitations": [
+    "Rendered artifacts and pixels are unextracted and uninspected. Artifact API/upload SHA-256 values are producer reports, not independently hashed ZIPs.",
+    "Installed consumer jobs built separate pull-request candidate tarballs; release producer canonical-download steps were skipped. These are not the final original thirteen-plus-two archive inventory.",
+    "The basic job intentionally skipped the Expo-only export-conditions case; the Expo job passed that case. Shared consumer cases are not counted as distinct across both hosts.",
+    "This receipt proves its exact combined checkout only; later source heads and all-platform acceptance require their own evidence.",
+    "Physical device, assistive speech, performance, supported desktop host, complete desktop native acceptance and exact owner-manifest approval are separate."
+  ]
+}

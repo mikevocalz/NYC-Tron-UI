@@ -1,0 +1,27 @@
+2026-11-11T12:47:31.6603482Z D:\a\_temp\tron-windows-consumer\native\NavigationProbe.h(164,57): warning C4244: 'argument': conversion from 'int64_t' to 'double', possible loss of data [D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj]
+2026-11-11T12:47:31.6620902Z   (compiling source file '/NYCTronWindowsExample.cpp')
+2026-11-11T12:47:31.6621387Z   
+2026-11-11T12:47:31.6622745Z D:\a\_temp\tron-windows-consumer\native\NavigationProbe.h(165,58): warning C4244: 'argument': conversion from 'int64_t' to 'double', possible loss of data [D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj]
+2026-11-11T12:47:31.6623845Z   (compiling source file '/NYCTronWindowsExample.cpp')
+2026-11-11T12:47:31.6624148Z   
+2026-11-11T12:47:31.7336719Z D:\a\_temp\tron-windows-consumer\native\NavigationProbe.h(509,54): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj]
+2026-11-11T12:47:31.7338274Z   (compiling source file '/NYCTronWindowsExample.cpp')
+2026-11-11T12:47:31.7338668Z   
+2026-11-11T12:47:31.7757127Z D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample\x64\Release\Generated Files\winrt\base.h(8038,23): error C2338: static assertion failed: 'C++/WinRT implementation types must not be final' [D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample\NYCTronWindowsExample.vcxproj]
+2026-11-11T12:47:31.7769101Z   (compiling source file '/NYCTronWindowsExample.cpp')
+2026-11-11T12:47:31.7770387Z       D:\a\_temp\tron-windows-consumer\windows\NYCTronWindowsExample\x64\Release\Generated Files\winrt\base.h(8038,23):
+2026-11-11T12:47:31.7771067Z       the template instantiation context (the oldest one first) is
+2026-11-11T12:47:31.7771563Z           D:\a\_temp\tron-windows-consumer\native\NavigationProbe.h(576,49):
+2026-11-11T12:47:31.7772680Z           see reference to function template instantiation 'auto winrt::make<nyctron::fixture::Hook,std::shared_ptr<nyctron::fixture::Observer>>(std::shared_ptr<nyctron::fixture::Observer> &&)' being compiled
+2026-11-11T12:47:31.7773487Z   
+2026-11-11T12:47:32.1335618Z   AutolinkedNativeModules.g.cpp
+2026-11-11T12:47:32.1873265Z   JsiAbiApi.cpp
+2026-11-11T12:47:33.3466556Z   JsiApiContext.cpp
+2026-11-11T12:47:34.0284324Z   JsiValueHelpers.cpp
+2026-11-11T12:47:34.0710626Z   JSValue.cpp
+2026-11-11T12:47:34.4552180Z   JSValueTreeReader.cpp
+2026-11-11T12:47:34.6889433Z   JSValueTreeWriter.cpp
+2026-11-11T12:47:34.9776538Z   ModuleRegistration.cpp
+2026-11-11T12:47:35.0311808Z   ReactPromise.cpp
+2026-11-11T12:47:35.4329070Z   TurboModuleProvider.cpp
+2026-11-11T12:47:36.5170340Z ##[error]Process completed with exit code 1.

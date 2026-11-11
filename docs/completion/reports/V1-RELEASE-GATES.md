@@ -1,3 +1,203 @@
+# v1 release-gate evidence: desktop follow-up candidate
+
+Current checkpoint: 2026-11-11 13:01:37 UTC.
+
+## Implementation coverage and release boundary
+
+All **341 canonical capabilities are implemented: 332 locally and nine through
+pinned external integrations**. The twelve specifically requested capabilities
+are included: N-01 NativePointerRouter, N-04 PalmRejectionAndPrediction and N-19
+NativeMediaDecoderSurface locally; N-03 LogitechMuseSpatialInk, N-09
+XRPresentationAdapter, N-10 OfflineCheckpointAndAutosave, N-11
+CollaborationAdapter, N-13 LongTaskScheduler, N-14 MediaCache, N-15
+UndoTransactionCoordinator, N-16 NativeBinaryTransport and N-18
+TestAndTelemetryAdapter externally. The original eight-platform ledger still
+reports **zero partial, zero source-pending and zero rows accepted with all eight
+platform proofs**. Implementation completion does not close native, physical,
+distribution or owner-approval gates.
+
+This checkpoint prepares eight reviewed desktop source changes on combined head
+`9a430338d8336283b230203a8555257798fcd62c`: seven replacements and one new
+private Windows header. The source-only overlay tree is
+`135ba87aa71b51349b5a264c413c58061ab020ab`, with 3,315 leaves and 538 directory
+hashes; the other 3,307 baseline leaf identities, types and modes are unchanged.
+The [follow-up integration manifest](../evidence/v1-desktop-observation-integration-nov11/integration-manifest.json)
+binds the source identities, prepared helper commits, all newly retained receipts
+and this report. The final combined commit and native results must be bound
+separately; no preceding pass is transferred to the changed source.
+
+## Latest completed combined candidate: 9a430338
+
+All available completed originals below bind generated merge
+`e8f8c19db909a53f3054976449a7571b2a0524e9`, tree
+`434f2cfa1a001bcec73788462e42957206819328`, with ordered parents
+`ac5d69585a52a6e945dc996ea08030e190574699`, then
+`9a430338d8336283b230203a8555257798fcd62c`. The iOS result is explicitly
+metadata-only because its completed original could not be retrieved.
+
+| Gate | Completed evidence and boundary |
+|---|---|
+| General source, run 43015171052 attempt 1 | The same 1,204-test suite passed on Linux and Windows, with zero failed, cancelled or skipped tests. Types/API matched 13 packages, 619 subpaths and 3,306 declarations. Packing checks reported 13 archives and 17 fresh export imports. |
+| Browser and installed consumers | Overlay: 32 passes; instruments: 686; reference browser: 29, plus three separately labeled source models; installed Expo: two; installed basic: one pass and one Expo-only skip. Original logs bind the checkout. Canonical-release producer download steps were skipped; these PR archives do not establish the final distribution inventory. |
+| Android, native controls run 43015171227 attempt 1 | Completed originals explicitly report 11 decoder checks and four OS-driven UI flows. Recovery count remains unknown. Source and Android originals bind the checkout. |
+| iOS, same native controls run | Completed job/step metadata reports successful native build, decoder checks, UI flows and evidence retention. Two attempts to retrieve the completed original returned Transport closed. The original checkout line, check counts and recovery details are unobserved. |
+| AppKit, run 43015170958 attempt 1 | Core/source and native compilation passed. The later document-popover wait failed after 369 responses. Every retained response reported shown=false; the first had contentVisible=true, while the second and last had both false. The internal presentation/rejection branch and actual popover frame were not observed. |
+| Windows, run 43015171470 attempt 1 | Installed package and executable compilation and deployment passed. The complete bounded Raw UIA search found 46 nodes, one toggle and no qualifying Icon peer. It failed with icon-peer-unavailable(icon) before RTL interaction. The retained application and shell tokens were High/elevated and ineligible for supported-host acceptance. |
+
+The complete receipts are
+[source](../evidence/v1-combined-9a43033-source-pass/README.md),
+[browser and installed consumers](../evidence/v1-combined-9a43033-browser-and-consumers-pass/README.md),
+[mobile](../evidence/v1-combined-9a43033-mobile-metadata-and-android-pass/README.md),
+[AppKit](../evidence/v1-appkit-9a43033-document-popover-not-shown/README.md) and
+[Windows](../evidence/v1-combined-9a43033-windows-raw-icon-unavailable/README.md).
+Original logs, byte-preserved JSON and bounded diagnostic envelopes remain
+separate from normalized API metadata and commentary. Artifact digests, file
+counts and archive sizes are producer/API reports; archive bytes, members and
+pixels were not independently inspected.
+
+Earlier AppKit assertions that returned before the failing popover wait remain
+scoped to that exact execution. Minimize and later physical NSDraggingSession
+acceptance were not reached. Windows' four preceding drag scenarios returned by
+control flow in the 9a run, but this does not establish complete drag/UIA or
+supported-host acceptance, and that progress is not transferred to later runs.
+
+## Windows observer follow-up and concrete compiler correction
+
+The absence of a Raw Icon peer prevented measurement of the existing mirrored
+layout assertion. The reviewed fixture adds an opt-in private native observer
+that reads the actual template TogglePaneButton and AnimatedIcon. It uses a
+classic IUnknown ABI with a real IInspectable hook across the DLL/executable
+boundary, weak lifetime registrations and exact mount tickets. The example
+preparer installs it before module providers; the component remains inert when
+the property is absent. This header is private to the example and excluded from
+the shipping package file list.
+
+Observation requires the current mounted component/island/site relationship,
+the exact application process, window and UI thread, a complete bounded visual
+walk, matching XamlRoot and finite geometry. Coordinates use the owning
+XamlRoot's local-to-screen converter. Two equal samples are a stability check,
+not an atomic or render-complete guarantee. Fixed, bounded LocalFolder protocol
+files retain exact bytes, bind phase/generation/session/process identity and
+use exclusive publication. The protocol is diagnostic and is not an
+authentication boundary against a writer with the same application-local access.
+
+The PowerShell consumer retains the original ten-second shared RTL deadline
+and strict mirrored geometry predicate. Existing action statements, drag and
+later restoration assertions are preserved. Bounded file identity checks,
+duplicate-key rejection, typed unknowns and a query-free summary keep protocol
+failures explicit. Models do not substitute for the PowerShell parser, C#
+compilation, .NET, WinRT, UIA or actual filesystem execution.
+
+The larger four-file observer was published as PR63 head
+`8a5007d197539c782e065f1b59daf3fe5ed752ec`. Its actual merge
+`e7901ec687e96a240a7b820baef50318fde40ddd` has tree
+`9f7d87a249edc25216dcbc11763b009eda825ba2` and ordered parents 25a6 then 8a.
+[General source run 43022193456](../evidence/v1-windows-8a5007d-source-pass/README.md)
+passed the same 1,204-test suite on Linux and Windows, types/API, thirteen packs
+and seventeen imports. These are actual passes for 8a, not for this new child.
+
+[Native run 43022193331](../evidence/v1-windows-8a5007d-native-compile-failure/README.md)
+passed Fabric source and installed native package compilation, then failed
+example executable compilation with C2338: C++/WinRT implementation types must
+not be final. The complete original identifies winrt::make of the private Hook
+at NavigationProbe.h:576. Deployment, UIA and tested-distribution steps were
+skipped. No native observer request, geometry or RTL result ran in that attempt.
+The selected-script PowerShell gate did not parse or execute the new navigation
+consumer.
+
+The [narrow compiler correction](../evidence/v1-windows-00f6ff5-hook-compiler-source/README.md)
+removes exactly the six bytes ` final` from Hook, changing header blob
+`25555353791ca4b35f1be51e7566c2062ecc8091` to
+`00f6ff5f1735c81a5268855a5fb33627f5112cd7`. Every other header byte is identical.
+The complete failure log and official declared-version C++/WinRT source support
+this correction. The sole displayed compiler error does not establish that no
+later compiler or runtime blockers remain. Prepared source-only helper
+`da083ffeba811701a889aa337455ba75212d6f70`, tree
+`ebe44b791dddbcd95970b9d3d87404c3e4da8591`, has sole parent 8a, 3,153 leaves,
+514 directory hashes and 3,152 unchanged leaves. It has not been separately
+published or compiled.
+
+The [native observer source receipt](../evidence/v1-windows-2555535-navigation-probe-source/README.md)
+preserves seven review/model groups with 168 assertions, fourteen actual
+JavaScript preparer transformations under mocked I/O and seventeen geometry
+models. Its original header is the historical pre-correction 255553 version.
+The [consumer source receipt](../evidence/v1-windows-8a5007d-native-rtl-source/README.md)
+preserves seven model designs with 215 assertions. Independent reproduction
+checks the same designs, not additional distinct native tests. The six-byte
+compiler correction is a separate source gate. All actual C++/PowerShell/native
+results for the corrected combined source remain pending.
+
+## AppKit presentation observation follow-up
+
+The [four-file presentation diagnostic](../evidence/v1-appkit-ecd9f22-presentation-observation-source/README.md)
+adds typed current native fields and separately retained last-branch and
+last-actual-show observations to the existing popover reply. Weak owner,
+content and popover identities and recycle lifetime determine whether a
+historical observation is valid. Generation, presentation-token and parameter
+matches are separate booleans, so a later React close request does not erase
+the prior show/rejection record. Uncaptured, stale or invalid observations
+remain unknown. Raw tokens, pointers and arbitrary text are not emitted.
+
+The anchor is labeled in positioning-view coordinates; frame and region use
+owner-content top-left coordinates. Existing shown/window short-circuit reads
+and coordinate-readiness results are captured as scalars. The native
+show/layout/close/rejection/scheduling/focus/event order, existing RPC request
+sequence, shown-and-contentVisible predicate, twenty-second/fifty-millisecond
+wait and original failure identity remain unchanged. The diagnostic forces no
+layout and adds no RPC. Its existing eight-record and complete 8 KiB envelope
+limits, exclusive failure file and secondary-error behavior are preserved.
+
+Prepared helper `4b75661bdcfbc6159cc87a5b6bec8ecba6f2a586`, tree
+`82cf32fbc8ca952d8aa714330f642c9dd8e65896`, has sole parent
+`f8c180be8af630886274f71313fa229ea6074001`. Full review checked 2,050 leaves,
+284 directory hashes, four replacements and 2,046 unchanged leaves. Root and
+independent source review reproduced the same eight source/V8/mock designs,
+including 400 requests over 20,000 mock milliseconds and 6,753/7,990-byte
+modeled envelopes. No Objective-C, AppKit or filesystem execution is claimed.
+The source receipt preserves its own earlier checkpoint; final independent
+source approval followed at 12:52:02 UTC.
+
+The diagnostic is integrated directly into the combined branch. It has not
+been separately published to PR62. No behavioral repair is inferred from the
+previous shown=false observation; the next exact native run must establish
+which branch, readiness condition or containment check caused it.
+
+## Retention and remaining acceptance
+
+This follow-up retains **64 new evidence files across eleven folders, totaling
+2,810,553 bytes**, in addition to the 161 evidence files already committed in
+9a. Each file is bound by path, Git blob, UTF-8 byte count and SHA256 in the new
+integration manifest. Historical receipts are immutable and retain their own
+observation time and execution limits. This report prepends the current
+checkpoint and preserves the entire prior 156,790-byte report verbatim below.
+
+The original 341-row ledger, eight-platform scope, workflow definitions and
+pinned Forge/Viro revisions remain unchanged. Forge is pinned to
+cc4893b29f6182c71705a64785a41f5bbf3f5507 and Viro to
+e84a1a9a37168a835f7730e09016917b9d49c6ef. The separate Forge runtime result does
+not replace those bindings or supply physical-device evidence.
+
+Release remains blocked on exact current desktop acceptance on eligible
+supported hosts; the original fifteen tested archives (thirteen workspace plus
+two desktop), matching peer hashes and seventeen imports; required physical
+device, speech and performance proofs; and owner approval of the original
+final archive manifest. The iOS original and all uninspected archive/member/
+pixel evidence remain explicit retrieval or inspection limits. No main merge,
+tag, release or npm publication is authorized by this report.
+
+No host security, TCC, UAC, launcher, token, account or runner configuration is
+changed. There is no unchanged rerun, replacement executor or alternate
+artifact-extraction path. Ordinary changed-source pull-request CI provides the
+next source-bound observations.
+
+---
+
+## Historical report retained verbatim
+
+Everything following this boundary is the complete earlier report. Statements
+about a then-pending candidate describe that earlier checkpoint and do not
+override the current results above.
+
 # v1 release-gate evidence
 
 Recorded 2026-11-10; current desktop/browser results updated 2026-11-11.

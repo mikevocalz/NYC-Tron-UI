@@ -4,6 +4,62 @@
 #import <react/renderer/components/NYCTronAppKitSpec/EventEmitters.h>
 #import <react/renderer/components/NYCTronAppKitSpec/Props.h>
 
+#include <cmath>
+
+// Fixed diagnostic slots only. Tokens and weak object identities remain private;
+// no diagnostic path calls layout, presentation, focus or a client callback.
+enum class NYCTronPresentationBranch {
+  Unknown, Closing, ContentPrerequisites, TokenSuppressed, OwnerUnavailable,
+  ShowEntered, ShowNotShown, ContentWindowUnavailable, CoordinatesPending,
+  CoordinatesReady, OutsideRegion
+};
+struct NYCTronPresentationMark {
+  BOOL observed{NO}, ownerWasPresent{NO};
+  NSUInteger sequence{}, generation{}, lifetime{};
+  __weak NSWindow *owner = nil;
+  __weak NSView *content = nil;
+  __weak NSPopover *popover = nil;
+  NSString *scope = nil;
+  NSString *presentation = nil;
+  NSRect anchor{}, region{};
+  NSSize size{};
+  BOOL visible{NO}, above{NO};
+};
+struct NYCTronPresentationBranchRecord {
+  NYCTronPresentationMark mark;
+  NYCTronPresentationBranch branch{NYCTronPresentationBranch::Unknown};
+};
+struct NYCTronPresentationShowRecord {
+  NYCTronPresentationMark mark;
+  BOOL returned{NO}, shown{NO}, windowRead{NO}, hasWindow{NO};
+  BOOL containmentRead{NO}, contained{NO}, coordinatesRead{NO}, coordinatesReady{NO};
+  NSRect anchor{}, region{}, frame{};
+};
+static BOOL NYCTronDiagnosticTokenEqual(NSString *a, NSString *b) {
+  return a == b || (a && b && [a isEqualToString:b]);
+}
+static id NYCTronDiagnosticRect(NSRect rect) {
+  const double x = rect.origin.x, y = rect.origin.y, width = rect.size.width, height = rect.size.height;
+  if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(width) || !std::isfinite(height) ||
+      !std::isfinite(x + width) || !std::isfinite(y + height)) return NSNull.null;
+  return @{ @"x": @(x), @"y": @(y), @"width": @(width), @"height": @(height) };
+}
+static id NYCTronDiagnosticBranchName(NYCTronPresentationBranch branch) {
+  switch (branch) {
+    case NYCTronPresentationBranch::Closing: return @"closing";
+    case NYCTronPresentationBranch::ContentPrerequisites: return @"content-prerequisites";
+    case NYCTronPresentationBranch::TokenSuppressed: return @"token-suppressed";
+    case NYCTronPresentationBranch::OwnerUnavailable: return @"owner-unavailable";
+    case NYCTronPresentationBranch::ShowEntered: return @"show-entered";
+    case NYCTronPresentationBranch::ShowNotShown: return @"show-not-shown";
+    case NYCTronPresentationBranch::ContentWindowUnavailable: return @"content-window-unavailable";
+    case NYCTronPresentationBranch::CoordinatesPending: return @"coordinates-pending";
+    case NYCTronPresentationBranch::CoordinatesReady: return @"coordinates-ready";
+    case NYCTronPresentationBranch::OutsideRegion: return @"outside-region";
+    default: return NSNull.null;
+  }
+}
+
 using namespace facebook::react;
 
 @interface NYCTronPopoverContent : NSView
@@ -40,6 +96,10 @@ using namespace facebook::react;
   BOOL _closing;
   BOOL _restoreFocus;
   NSUInteger _generation;
+  NSUInteger _presentationObservationSequence, _presentationObservationLifetime;
+  BOOL _presentationObservationUnavailable;
+  NYCTronPresentationBranchRecord _presentationBranch;
+  NYCTronPresentationShowRecord _presentationShow;
 }
 - (instancetype)init {
   if (self = [super init]) {
@@ -64,6 +124,86 @@ using namespace facebook::react;
 }
 - (NSPopover *)nativePopover { return _popover; }
 - (NSRect)nativeAllowedRegion { return _allowedRegion; }
+- (void)capturePresentationMark:(NYCTronPresentationMark *)mark {
+  @try {
+    if (_presentationObservationUnavailable || _presentationObservationSequence == NSUIntegerMax) {
+      _presentationObservationUnavailable = YES;
+      return;
+    }
+    mark->sequence = ++_presentationObservationSequence;
+    mark->generation = _generation; mark->lifetime = _presentationObservationLifetime;
+    mark->owner = _owner; mark->ownerWasPresent = _owner != nil;
+    mark->content = _content; mark->popover = _popover;
+    mark->scope = _scopeToken; mark->presentation = _presentationToken;
+    mark->anchor = _anchor; mark->region = _allowedRegion; mark->size = _contentSize;
+    mark->visible = _visible; mark->above = _above; mark->observed = YES;
+  } @catch (NSException *exception) { (void)exception; mark->observed = NO; }
+}
+- (void)observePresentationBranch:(NYCTronPresentationBranch)branch mark:(NYCTronPresentationMark const &)mark {
+  @try {
+    if (mark.observed && !_presentationObservationUnavailable && mark.lifetime == _presentationObservationLifetime) {
+      _presentationBranch.mark = mark; _presentationBranch.branch = branch;
+    }
+  } @catch (NSException *exception) { (void)exception; _presentationBranch.mark.observed = NO; }
+}
+- (NSDictionary *)presentationContext:(NYCTronPresentationMark const &)mark owner:(NSWindow *)owner {
+  if (!mark.observed || _presentationObservationUnavailable) return @{
+    @"status": @"unavailable", @"sameGeneration": NSNull.null, @"sameLifetime": NSNull.null,
+    @"sameIdentity": NSNull.null, @"sameScopeToken": NSNull.null,
+    @"samePresentationToken": NSNull.null, @"sameParameters": NSNull.null
+  };
+  BOOL lifetime = mark.lifetime == _presentationObservationLifetime;
+  BOOL identity = owner && _owner == owner && self.window == owner &&
+    (mark.ownerWasPresent ? mark.owner && mark.owner == _owner : !_owner) &&
+    mark.content && mark.content == _content && mark.popover && mark.popover == _popover;
+  BOOL scope = NYCTronDiagnosticTokenEqual(mark.scope, _scopeToken);
+  BOOL presentation = NYCTronDiagnosticTokenEqual(mark.presentation, _presentationToken);
+  BOOL parameters = NSEqualRects(mark.anchor, _anchor) && NSEqualRects(mark.region, _allowedRegion) &&
+    NSEqualSizes(mark.size, _contentSize) && mark.visible == _visible && mark.above == _above;
+  // Last executed records remain historical when controlled props/tokens change.
+  // Only recycle or actual owner/object identity loss invalidates their values.
+  return @{ @"status": lifetime && identity ? @"observed" : @"stale",
+    @"sameGeneration": @(mark.generation == _generation), @"sameLifetime": @(lifetime),
+    @"sameIdentity": @(identity), @"sameScopeToken": @(scope),
+    @"samePresentationToken": @(presentation), @"sameParameters": @(parameters) };
+}
+- (NSDictionary *)nativePresentationObservationForOwner:(NSWindow *)owner {
+  if (!NSThread.isMainThread) return nil;
+  @try {
+    id unknown = NSNull.null;
+    NSDictionary *current = @{
+      @"controlledVisible": @(_visible), @"closing": @(_closing), @"silentClose": @(_silentClose),
+      @"hasOwner": @(_owner != nil), @"ownerMatchesCommand": _owner ? @(_owner == owner) : unknown,
+      @"componentWindowMatchesCommand": self.window ? @(self.window == owner) : unknown,
+      @"ownerVisible": _owner ? @(_owner.visible) : unknown,
+      @"ownerMiniaturized": _owner ? @(_owner.miniaturized) : unknown,
+      @"hasPositioningView": _owner ? @(_owner.contentView != nil) : unknown,
+      @"hasContent": @(_content != nil), @"hasChildren": _content ? @(_content.subviews.count > 0) : unknown,
+      @"hasContentWindow": _content ? @(_content.window != nil) : unknown, @"hasFabricState": @(_state != nullptr),
+      @"scopeTokenPresent": @(_scopeToken != nil), @"presentationTokenPresent": @(_presentationToken != nil),
+      @"presentedTokenMatches": _scopeToken ? @([_presentedToken isEqual:_scopeToken]) : unknown,
+      @"dismissedTokenMatches": _scopeToken ? @([_dismissedToken isEqual:_scopeToken]) : unknown,
+      @"rejectedTokenMatches": _presentationToken ? @([_rejectedPresentationToken isEqual:_presentationToken]) : unknown,
+      @"preferredEdge": _above ? @"above" : @"below", @"anchor": NYCTronDiagnosticRect(_anchor),
+      @"contentSize": NYCTronDiagnosticRect(NSMakeRect(0, 0, _contentSize.width, _contentSize.height))
+    };
+    NSMutableDictionary *branch = [[self presentationContext:_presentationBranch.mark owner:owner] mutableCopy];
+    BOOL branchValid = [branch[@"status"] isEqual:@"observed"];
+    branch[@"branch"] = branchValid ? NYCTronDiagnosticBranchName(_presentationBranch.branch) : unknown;
+    NSMutableDictionary *show = [[self presentationContext:_presentationShow.mark owner:owner] mutableCopy];
+    BOOL showValid = [show[@"status"] isEqual:@"observed"];
+    show[@"stage"] = showValid ? (_presentationShow.returned ? @"returned" : @"entered") : unknown;
+    show[@"shownAfterCall"] = showValid && _presentationShow.returned ? @(_presentationShow.shown) : unknown;
+    show[@"contentWindowPresent"] = showValid && _presentationShow.windowRead ? @(_presentationShow.hasWindow) : unknown;
+    show[@"contained"] = showValid && _presentationShow.containmentRead ? @(_presentationShow.contained) : unknown;
+    show[@"coordinatesReady"] = showValid && _presentationShow.coordinatesRead ? @(_presentationShow.coordinatesReady) : unknown;
+    show[@"anchor"] = showValid ? NYCTronDiagnosticRect(_presentationShow.anchor) : unknown;
+    show[@"region"] = showValid ? NYCTronDiagnosticRect(_presentationShow.region) : unknown;
+    show[@"actualFrame"] = showValid && _presentationShow.containmentRead ? NYCTronDiagnosticRect(_presentationShow.frame) : unknown;
+    return @{ @"schemaVersion": @1, @"status": @"observed", @"current": current,
+      @"lastBranch": branch, @"lastShow": show };
+  } @catch (NSException *exception) { (void)exception; return nil; }
+}
 - (void)closeSilently {
   if (_popover.shown) { _silentClose = YES; [_popover close]; }
 }
@@ -94,11 +234,13 @@ using namespace facebook::react;
   return YES;
 }
 - (void)synchronizePresentation {
-  if (_closing) return;
-  if (!_visible || !_owner || !_content.subviews.count) { [self closeSilently]; return; }
-  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) return;
+  NYCTronPresentationMark observation;
+  [self capturePresentationMark:&observation];
+  if (_closing) { [self observePresentationBranch:NYCTronPresentationBranch::Closing mark:observation]; return; }
+  if (!_visible || !_owner || !_content.subviews.count) { [self observePresentationBranch:NYCTronPresentationBranch::ContentPrerequisites mark:observation]; [self closeSilently]; return; }
+  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) { [self observePresentationBranch:NYCTronPresentationBranch::TokenSuppressed mark:observation]; return; }
   NSView *positioningView = _owner.contentView;
-  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self closeSilently]; return; }
+  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self observePresentationBranch:NYCTronPresentationBranch::OwnerUnavailable mark:observation]; [self closeSilently]; return; }
   NSRect anchor = _anchor;
   // The public contract uses top-left owner-content coordinates.
   if (!positioningView.isFlipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);
@@ -112,20 +254,43 @@ using namespace facebook::react;
   // An already presented field must keep its responder/composition while the
   // owner moves or resizes. Only the initial reveal is hidden for this check.
   if (presenting) _content.hidden = YES;
+  [self observePresentationBranch:NYCTronPresentationBranch::ShowEntered mark:observation];
+  @try {
+    _presentationShow = {};
+    _presentationShow.mark = observation; _presentationShow.anchor = anchor; _presentationShow.region = _allowedRegion;
+  } @catch (NSException *exception) { (void)exception; _presentationShow.mark.observed = NO; }
   [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge];
-  if (_popover.shown && _content.window) {
+  // Cache only the two scalar results of the original short-circuit predicate.
+  BOOL shownAfterCall = _popover.shown;
+  BOOL contentWindowPresent = shownAfterCall && _content.window != nil;
+  if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {
+    _presentationShow.returned = YES; _presentationShow.shown = shownAfterCall;
+    _presentationShow.windowRead = shownAfterCall; _presentationShow.hasWindow = contentWindowPresent;
+  }
+  if (shownAfterCall && contentWindowPresent) {
     [_content layoutSubtreeIfNeeded];
     // NSWindow.frame includes AppKit's popover border and arrow. The separate
     // window shadow is an OS effect, not part of the interactive frame.
     NSRect screenRect = _content.window.frame;
     NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];
     if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);
+    if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {
+      _presentationShow.frame = actual; _presentationShow.region = _allowedRegion;
+      _presentationShow.containmentRead = YES;
+    }
     if (NSContainsRect(_allowedRegion, actual)) {
+      if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) _presentationShow.contained = YES;
       // Initial controls remain hidden until the matching Fabric layout has
       // committed. A shown field stays visible through safe geometry changes.
-      if ([self synchronizeContentCoordinates]) _content.hidden = NO;
+      BOOL coordinatesReady = [self synchronizeContentCoordinates];
+      if (_presentationShow.mark.observed && _presentationShow.mark.sequence == observation.sequence) {
+        _presentationShow.coordinatesRead = YES; _presentationShow.coordinatesReady = coordinatesReady;
+      }
+      [self observePresentationBranch:coordinatesReady ? NYCTronPresentationBranch::CoordinatesReady : NYCTronPresentationBranch::CoordinatesPending mark:observation];
+      if (coordinatesReady) _content.hidden = NO;
     }
     else {
+      [self observePresentationBranch:NYCTronPresentationBranch::OutsideRegion mark:observation];
       _rejectedPresentationToken = [_presentationToken copy];
       [self closeSilently];
       auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);
@@ -140,6 +305,8 @@ using namespace facebook::react;
         emitter->onPresentationRejected(event);
       }
     }
+  } else {
+    [self observePresentationBranch:shownAfterCall ? NYCTronPresentationBranch::ContentWindowUnavailable : NYCTronPresentationBranch::ShowNotShown mark:observation];
   }
 }
 - (void)viewDidMoveToWindow {
@@ -239,6 +406,11 @@ using namespace facebook::react;
   [self schedulePresentation];
 }
 - (void)prepareForRecycle {
+  // Recycle invalidates both diagnostic identities before the original cleanup.
+  if (_presentationObservationLifetime == NSUIntegerMax) _presentationObservationUnavailable = YES;
+  else ++_presentationObservationLifetime;
+  @try { _presentationBranch = {}; _presentationShow = {}; }
+  @catch (NSException *exception) { (void)exception; _presentationObservationUnavailable = YES; }
   ++_generation; _visible = NO; [self closeSilently];
   if (_owner) {
     for (NSNotificationName name in @[NSWindowDidResizeNotification, NSWindowDidMoveNotification, NSWindowDidBecomeKeyNotification, NSWindowDidMiniaturizeNotification, NSWindowDidDeminiaturizeNotification, NSWindowDidChangeOcclusionStateNotification, NSWindowWillCloseNotification]) {

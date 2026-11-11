@@ -1,0 +1,660 @@
+﻿2026-11-11T12:39:17.6955137Z Current runner version: '2.338.2'
+2026-11-11T12:39:17.6978247Z ##[group]Runner Image Provisioner
+2026-11-11T12:39:17.6979820Z Hosted Compute Agent
+2026-11-11T12:39:17.6980513Z Version: 20261028.624
+2026-11-11T12:39:17.6981208Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T12:39:17.6981922Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T12:39:17.6982666Z Worker ID: {811eb218-39c5-429d-8075-9eefa4f4e859}
+2026-11-11T12:39:17.6983359Z Region: westus2
+2026-11-11T12:39:17.6983934Z Cloud: Azure
+2026-11-11T12:39:17.6984518Z ##[endgroup]
+2026-11-11T12:39:17.6985989Z ##[group]Operating System
+2026-11-11T12:39:17.6986846Z Ubuntu
+2026-11-11T12:39:17.6987371Z 26.04.1
+2026-11-11T12:39:17.6987913Z LTS
+2026-11-11T12:39:17.6988477Z ##[endgroup]
+2026-11-11T12:39:17.6989218Z ##[group]Runner Image
+2026-11-11T12:39:17.6989901Z Image: ubuntu-26.04
+2026-11-11T12:39:17.6990470Z Version: 20261101.186.1
+2026-11-11T12:39:17.6991815Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-11T12:39:17.6993414Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-11T12:39:17.6994429Z ##[endgroup]
+2026-11-11T12:39:17.6995521Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T12:39:17.6997425Z Contents: read
+2026-11-11T12:39:17.6998045Z Metadata: read
+2026-11-11T12:39:17.6998603Z ##[endgroup]
+2026-11-11T12:39:17.7000928Z Secret source: Actions
+2026-11-11T12:39:17.7001845Z Cache mode: write
+2026-11-11T12:39:17.7002666Z Prepare workflow directory
+2026-11-11T12:39:17.7333142Z Prepare all required actions
+2026-11-11T12:39:17.7390305Z Getting action download info
+2026-11-11T12:39:18.0637212Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T12:39:18.1995413Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-11T12:39:18.6256250Z Complete job name: workspace TypeScript
+2026-11-11T12:39:18.7154532Z ##[group]Run actions/checkout@v4
+2026-11-11T12:39:18.7155427Z with:
+2026-11-11T12:39:18.7155890Z   repository: mikevocalz/NYC-Tron-UI
+2026-11-11T12:39:18.7160070Z   token: ***
+2026-11-11T12:39:18.7160562Z   ssh-strict: true
+2026-11-11T12:39:18.7161004Z   ssh-user: git
+2026-11-11T12:39:18.7161453Z   persist-credentials: true
+2026-11-11T12:39:18.7161943Z   clean: true
+2026-11-11T12:39:18.7162395Z   sparse-checkout-cone-mode: true
+2026-11-11T12:39:18.7162921Z   fetch-depth: 1
+2026-11-11T12:39:18.7163352Z   fetch-tags: false
+2026-11-11T12:39:18.7163794Z   show-progress: true
+2026-11-11T12:39:18.7164350Z   lfs: false
+2026-11-11T12:39:18.7164892Z   submodules: false
+2026-11-11T12:39:18.7165345Z   set-safe-directory: true
+2026-11-11T12:39:18.7165848Z   allow-unsafe-pr-checkout: false
+2026-11-11T12:39:18.7166724Z ##[endgroup]
+2026-11-11T12:39:18.9859875Z Syncing repository: mikevocalz/NYC-Tron-UI
+2026-11-11T12:39:18.9862197Z ##[group]Getting Git version info
+2026-11-11T12:39:18.9863199Z Working directory is '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T12:39:18.9864285Z [command]/usr/bin/git version
+2026-11-11T12:39:18.9869993Z git version 2.56.0
+2026-11-11T12:39:18.9900402Z ##[endgroup]
+2026-11-11T12:39:18.9906286Z Temporarily overriding HOME='/home/runner/work/_temp/2c07d102-49d4-4e09-8ee1-9e00062566c6' before making global git config changes
+2026-11-11T12:39:18.9909335Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T12:39:18.9912278Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T12:39:18.9982728Z Deleting the contents of '/home/runner/work/NYC-Tron-UI/NYC-Tron-UI'
+2026-11-11T12:39:18.9986061Z ##[group]Initializing the repository
+2026-11-11T12:39:18.9990830Z [command]/usr/bin/git init /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T12:39:19.0099711Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T12:39:19.0101615Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T12:39:19.0103852Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T12:39:19.0105367Z hint: call:
+2026-11-11T12:39:19.0106290Z hint:
+2026-11-11T12:39:19.0107434Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T12:39:19.0108712Z hint:
+2026-11-11T12:39:19.0110180Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T12:39:19.0112064Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T12:39:19.0113659Z hint:
+2026-11-11T12:39:19.0114599Z hint: 	git branch -m <name>
+2026-11-11T12:39:19.0115630Z hint:
+2026-11-11T12:39:19.0116924Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T12:39:19.0119078Z Initialized empty Git repository in /home/runner/work/NYC-Tron-UI/NYC-Tron-UI/.git/
+2026-11-11T12:39:19.0125431Z [command]/usr/bin/git remote add origin https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T12:39:19.0219507Z ##[endgroup]
+2026-11-11T12:39:19.0220769Z ##[group]Disabling automatic garbage collection
+2026-11-11T12:39:19.0223897Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T12:39:19.0258705Z ##[endgroup]
+2026-11-11T12:39:19.0260014Z ##[group]Setting up auth
+2026-11-11T12:39:19.0266523Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T12:39:19.0301695Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T12:39:19.0819549Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T12:39:19.0847249Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T12:39:19.1117505Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T12:39:19.1151435Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T12:39:19.1415141Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T12:39:19.1454288Z ##[endgroup]
+2026-11-11T12:39:19.1464598Z ##[group]Fetching the repository
+2026-11-11T12:39:19.1467264Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e7901ec687e96a240a7b820baef50318fde40ddd:refs/remotes/pull/63/merge
+2026-11-11T12:39:20.2271901Z From https://github.com/mikevocalz/NYC-Tron-UI
+2026-11-11T12:39:20.2274705Z  * [new ref]         e7901ec687e96a240a7b820baef50318fde40ddd -> pull/63/merge
+2026-11-11T12:39:20.2280926Z ##[endgroup]
+2026-11-11T12:39:20.2283419Z ##[group]Determining the checkout info
+2026-11-11T12:39:20.2285793Z ##[endgroup]
+2026-11-11T12:39:20.2287023Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T12:39:20.2341206Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T12:39:20.2376925Z ##[group]Checking out the ref
+2026-11-11T12:39:20.2379741Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/63/merge
+2026-11-11T12:39:20.5352826Z Note: switching to 'refs/remotes/pull/63/merge'.
+2026-11-11T12:39:20.5359577Z 
+2026-11-11T12:39:20.5360735Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-11T12:39:20.5363494Z changes and commit them, and you can discard any commits you make in this
+2026-11-11T12:39:20.5365653Z state without impacting any branches by switching back to a branch.
+2026-11-11T12:39:20.5366788Z 
+2026-11-11T12:39:20.5367616Z If you want to create a new branch to retain commits you create, you may
+2026-11-11T12:39:20.5369793Z do so (now or later) by using -c with the switch command. Example:
+2026-11-11T12:39:20.5371004Z 
+2026-11-11T12:39:20.5371825Z   git switch -c <new-branch-name>
+2026-11-11T12:39:20.5373428Z 
+2026-11-11T12:39:20.5374278Z Or undo this operation with:
+2026-11-11T12:39:20.5375415Z 
+2026-11-11T12:39:20.5376156Z   git switch -
+2026-11-11T12:39:20.5376825Z 
+2026-11-11T12:39:20.5377990Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-11T12:39:20.5379644Z 
+2026-11-11T12:39:20.5381592Z HEAD is now at e7901ec Merge 8a5007d197539c782e065f1b59daf3fe5ed752ec into 25a6af6d020e34d790f6a4f3d9f117738b252f1e
+2026-11-11T12:39:20.5387215Z ##[endgroup]
+2026-11-11T12:39:20.5421933Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T12:39:20.5446642Z e7901ec687e96a240a7b820baef50318fde40ddd
+2026-11-11T12:39:20.5932951Z ##[group]Run actions/setup-node@v4
+2026-11-11T12:39:20.5934154Z with:
+2026-11-11T12:39:20.5935081Z   node-version: 24.19.0
+2026-11-11T12:39:20.5936086Z   always-auth: false
+2026-11-11T12:39:20.5937062Z   check-latest: false
+2026-11-11T12:39:20.5948028Z   token: ***
+2026-11-11T12:39:20.5949014Z ##[endgroup]
+2026-11-11T12:39:20.7382721Z Attempting to download 24.19.0...
+2026-11-11T12:39:20.7541176Z (node:2985) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T12:39:20.7544783Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T12:39:21.4475912Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-11T12:39:22.2251782Z Extracting ...
+2026-11-11T12:39:22.2396851Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/4b96ff93-eb4a-40ba-a2ea-f39eafd5d169 -f /home/runner/work/_temp/93dbad8b-4479-4e4e-a1e6-184a1a92bd3c
+2026-11-11T12:39:23.0040881Z Adding to the cache ...
+2026-11-11T12:39:24.6441836Z ##[group]Environment details
+2026-11-11T12:39:25.0097836Z node: v24.19.0
+2026-11-11T12:39:25.0098381Z npm: 11.17.0
+2026-11-11T12:39:25.0098959Z yarn: 1.22.22
+2026-11-11T12:39:25.0099717Z ##[endgroup]
+2026-11-11T12:39:25.0368093Z ##[group]Run corepack enable
+2026-11-11T12:39:25.0368457Z [36;1mcorepack enable[0m
+2026-11-11T12:39:25.0423646Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:39:25.0423992Z ##[endgroup]
+2026-11-11T12:39:25.1194206Z ##[group]Run corepack pnpm install --frozen-lockfile
+2026-11-11T12:39:25.1194675Z [36;1mcorepack pnpm install --frozen-lockfile[0m
+2026-11-11T12:39:25.1244903Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:39:25.1245184Z ##[endgroup]
+2026-11-11T12:39:26.3458033Z Scope: all 16 workspace projects
+2026-11-11T12:39:26.4070335Z Lockfile is up to date, resolution step is skipped
+2026-11-11T12:39:26.4489642Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-11-11T12:39:26.5239275Z Packages: +537
+2026-11-11T12:39:26.5240754Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-11T12:39:27.4501623Z Progress: resolved 537, reused 0, downloaded 86, added 28
+2026-11-11T12:39:28.4522132Z Progress: resolved 537, reused 0, downloaded 266, added 127
+2026-11-11T12:39:29.4804567Z Progress: resolved 537, reused 0, downloaded 441, added 261
+2026-11-11T12:39:30.4945296Z Progress: resolved 537, reused 0, downloaded 451, added 267
+2026-11-11T12:39:31.4950927Z Progress: resolved 537, reused 0, downloaded 463, added 271
+2026-11-11T12:39:32.4940297Z Progress: resolved 537, reused 0, downloaded 470, added 272
+2026-11-11T12:39:33.5528524Z Progress: resolved 537, reused 0, downloaded 518, added 345
+2026-11-11T12:39:34.5551701Z Progress: resolved 537, reused 0, downloaded 518, added 536
+2026-11-11T12:39:34.8810334Z Progress: resolved 537, reused 0, downloaded 519, added 537, done
+2026-11-11T12:39:35.3821208Z 
+2026-11-11T12:39:35.3822025Z devDependencies:
+2026-11-11T12:39:35.3822553Z + @types/react 19.3.0
+2026-11-11T12:39:35.3823013Z + typescript 6.0.3
+2026-11-11T12:39:35.3823259Z 
+2026-11-11T12:39:35.4822320Z Done in 9.4s using pnpm v10.32.1
+2026-11-11T12:39:35.5671660Z ##[group]Run corepack pnpm build
+2026-11-11T12:39:35.5671996Z [36;1mcorepack pnpm build[0m
+2026-11-11T12:39:35.5723550Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:39:35.5723806Z ##[endgroup]
+2026-11-11T12:39:35.8742470Z 
+2026-11-11T12:39:35.8743173Z > nyc-tron-ui@0.1.0 build /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T12:39:35.8743785Z > pnpm -r --if-present build
+2026-11-11T12:39:35.8743982Z 
+2026-11-11T12:39:36.2209895Z Scope: 15 of 16 workspace projects
+2026-11-11T12:39:36.2280112Z packages/core build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:36.2281563Z packages/geometry build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:36.2283532Z packages/icons build$ node -e "const f=require('node:fs');f.rmSync('dist',{recursive:true,force:true});f.cpSync('src','dist',{recursive:true})"
+2026-11-11T12:39:36.2285374Z packages/native-charts build$ tsc -p tsconfig.build.json
+2026-11-11T12:39:36.2879365Z packages/icons build: Done
+2026-11-11T12:39:36.2880461Z packages/native-controls build$ tsc -p tsconfig.build.json
+2026-11-11T12:39:37.9769993Z packages/geometry build: Done
+2026-11-11T12:39:37.9848359Z packages/native-navigation build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:38.9161574Z packages/native-charts build: Done
+2026-11-11T12:39:38.9184181Z packages/platform-services build$ tsc -p tsconfig.build.json
+2026-11-11T12:39:39.0020495Z packages/core build: Done
+2026-11-11T12:39:39.0039900Z packages/windows-fluent build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:39.4100433Z packages/native-controls build: Done
+2026-11-11T12:39:40.3535191Z packages/native-navigation build: Done
+2026-11-11T12:39:40.5164879Z packages/windows-fluent build: Done
+2026-11-11T12:39:41.1775969Z packages/platform-services build: Done
+2026-11-11T12:39:41.1780870Z packages/panes build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:41.1783169Z packages/reserved-regions build$ tsc -p tsconfig.build.json
+2026-11-11T12:39:41.1785424Z packages/ui build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:43.0440282Z packages/reserved-regions build: Done
+2026-11-11T12:39:43.3447598Z packages/panes build: Done
+2026-11-11T12:39:53.7010535Z packages/ui build: Done
+2026-11-11T12:39:53.7016003Z packages/expo-controls build$ tsc --project tsconfig.build.json
+2026-11-11T12:39:53.7018945Z packages/hardware-keys build$ tsc -p tsconfig.build.json
+2026-11-11T12:39:54.9560406Z packages/hardware-keys build: Done
+2026-11-11T12:39:55.7261152Z packages/expo-controls build: Done
+2026-11-11T12:39:55.7491304Z ##[group]Run corepack pnpm typecheck
+2026-11-11T12:39:55.7491652Z [36;1mcorepack pnpm typecheck[0m
+2026-11-11T12:39:55.7541804Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:39:55.7542055Z ##[endgroup]
+2026-11-11T12:39:56.0640486Z 
+2026-11-11T12:39:56.0641247Z > nyc-tron-ui@0.1.0 typecheck /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T12:39:56.0641836Z > pnpm -r --if-present typecheck
+2026-11-11T12:39:56.0642059Z 
+2026-11-11T12:39:56.3920459Z Scope: 15 of 16 workspace projects
+2026-11-11T12:39:56.3990126Z packages/core typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:39:56.3999400Z packages/icons typecheck$ node --check src/ForgeIcon.js && node --check src/TronIcon.js && node --check src/catalog.js && node --check src/glyphs.js && node --check src/state.js && node --check src/tokens.js && node --check src/index.js && tsc --project tsconfig.json
+2026-11-11T12:39:56.4002159Z packages/geometry typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:39:56.4005948Z packages/native-charts typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:39:58.1210071Z packages/geometry typecheck: Done
+2026-11-11T12:39:58.1241396Z packages/native-controls typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:39:58.2933120Z packages/icons typecheck: Done
+2026-11-11T12:39:58.3008213Z packages/native-navigation typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:39:58.6380554Z packages/core typecheck: Done
+2026-11-11T12:39:58.6471662Z packages/platform-services typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:39:58.6509647Z packages/native-charts typecheck: Done
+2026-11-11T12:39:58.6557172Z packages/windows-fluent typecheck$ tsc --noEmit --project tsconfig.json
+2026-11-11T12:40:00.4410143Z packages/native-controls typecheck: Done
+2026-11-11T12:40:00.5365369Z packages/windows-fluent typecheck: Done
+2026-11-11T12:40:00.6074711Z packages/native-navigation typecheck: Done
+2026-11-11T12:40:01.2470180Z packages/platform-services typecheck: Done
+2026-11-11T12:40:01.2475379Z packages/panes typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:40:01.2477552Z packages/reserved-regions typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:40:01.2480355Z packages/ui typecheck$ tsc --noEmit -p tsconfig.json && tsc --noEmit -p tests/tsconfig.slots.json
+2026-11-11T12:40:03.0005057Z packages/reserved-regions typecheck: Done
+2026-11-11T12:40:03.0091901Z packages/panes typecheck: Done
+2026-11-11T12:40:20.0019699Z packages/ui typecheck: Done
+2026-11-11T12:40:20.0024191Z packages/expo-controls typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:40:20.0026857Z packages/hardware-keys typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:40:21.2306258Z packages/hardware-keys typecheck: Done
+2026-11-11T12:40:22.2517380Z packages/expo-controls typecheck: Done
+2026-11-11T12:40:22.2521440Z examples/native-feel typecheck$ tsc --noEmit -p tsconfig.json
+2026-11-11T12:40:22.2523535Z examples/native-instruments typecheck$ tsc --noEmit
+2026-11-11T12:40:24.0599315Z examples/native-feel typecheck: Done
+2026-11-11T12:40:25.2427293Z examples/native-instruments typecheck: Done
+2026-11-11T12:40:25.2676339Z ##[group]Run node tooling/verify-packages.mjs
+2026-11-11T12:40:25.2676815Z [36;1mnode tooling/verify-packages.mjs[0m
+2026-11-11T12:40:25.2725638Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:40:25.2725895Z ##[endgroup]
+2026-11-11T12:40:26.2937879Z Packages: core, expo-controls, geometry, hardware-keys, icons, native-charts, native-controls, native-navigation, panes, platform-services, reserved-regions, ui, windows-fluent
+2026-11-11T12:40:26.2940357Z Validated 619 built conditional package exports and 750 ESM files.
+2026-11-11T12:40:26.2941451Z Subpaths that need an optional peer installed:
+2026-11-11T12:40:26.2942517Z   @nyc-tron/icons/native -> react, react-native, react-native-svg
+2026-11-11T12:40:26.2943622Z   @nyc-tron/icons/web -> react, react-native, react-native-svg
+2026-11-11T12:40:26.2944600Z   @nyc-tron/ui/components/shell/PaneSplitter -> zustand
+2026-11-11T12:40:26.2945670Z   @nyc-tron/ui/components/shell/AdaptiveDock -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2946804Z   @nyc-tron/ui/components/shell/ToolRail -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2947791Z   @nyc-tron/ui/components/shell/StatusBar -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2948670Z   @nyc-tron/ui/components/shell/MenuButton -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2949863Z   @nyc-tron/ui/components/shell/InspectorPanel -> zustand
+2026-11-11T12:40:26.2950614Z   @nyc-tron/ui/components/shell/InspectorSection -> zustand
+2026-11-11T12:40:26.2951383Z   @nyc-tron/ui/components/shell/PropertyRow -> zustand
+2026-11-11T12:40:26.2952163Z   @nyc-tron/ui/components/shell/UnitInput -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2953050Z   @nyc-tron/ui/components/shell/SliderField -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2953930Z   @nyc-tron/ui/components/shell/RangeSlider -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2954809Z   @nyc-tron/ui/components/shell/RotaryKnob -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2955589Z   @nyc-tron/ui/components/forge/WaveformLane -> zustand
+2026-11-11T12:40:26.2956363Z   @nyc-tron/ui/components/forge/NativeSeekBar -> @expo/ui, zustand
+2026-11-11T12:40:26.2957133Z   @nyc-tron/ui/components/forge/ColorChannels -> @expo/ui
+2026-11-11T12:40:26.2957770Z   @nyc-tron/ui/components/forge/audio/LevelFader -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.2958454Z   @nyc-tron/ui/components/forge/color/HsvPicker -> @expo/ui, expo-linear-gradient
+2026-11-11T12:40:26.2959201Z   @nyc-tron/ui/components/forge/color/AlphaSlider -> zustand
+2026-11-11T12:40:26.2959647Z   @nyc-tron/ui/components/forge/color/ColorWheel -> zustand
+2026-11-11T12:40:26.2960403Z   @nyc-tron/ui/components/forge/color/ColorDiscPicker -> zustand
+2026-11-11T12:40:26.2960880Z   @nyc-tron/ui/components/forge/color/ColorChannelFields -> zustand
+2026-11-11T12:40:26.2961334Z   @nyc-tron/ui/components/forge/color/SwatchGrid -> zustand
+2026-11-11T12:40:26.2961794Z   @nyc-tron/ui/components/forge/color/FloatingColorPalette -> zustand
+2026-11-11T12:40:26.2962335Z   @nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle -> zustand
+2026-11-11T12:40:26.2962884Z   @nyc-tron/ui/components/data/DataTable -> @tanstack/react-table, zustand
+2026-11-11T12:40:26.2963360Z   @nyc-tron/ui/components/forge/SpreadsheetGrid -> zustand
+2026-11-11T12:40:26.2963803Z   @nyc-tron/ui/components/forge/inputs/InstrumentKnob -> zustand
+2026-11-11T12:40:26.2964267Z   @nyc-tron/ui/components/forge/inputs/InstrumentXYPad -> zustand
+2026-11-11T12:40:26.2964677Z   @nyc-tron/ui/components/data/TreeGrid -> zustand
+2026-11-11T12:40:26.2965071Z   @nyc-tron/ui/components/forge/graph/PatchGraph -> zustand
+2026-11-11T12:40:26.2965688Z   @nyc-tron/ui/components/forge/graphics/ImageCropOverlay -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.2966325Z   @nyc-tron/ui/components/overlays/popover-position -> @nyc-tron/core
+2026-11-11T12:40:26.2966826Z   @nyc-tron/ui/components/overlays/CommandPopover -> @nyc-tron/core
+2026-11-11T12:40:26.2967352Z   @nyc-tron/ui/components/overlays/CommandPalette -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2968113Z   @nyc-tron/ui/components/overlays/AnchoredPopover -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2968648Z   @nyc-tron/ui/components/overlays/useTriggerAnchor -> zustand
+2026-11-11T12:40:26.2969324Z   @nyc-tron/ui/components/shell/SplitButton -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2969857Z   @nyc-tron/ui/components/shell/RibbonTabs -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2970367Z   @nyc-tron/ui/components/shell/ContextMenu -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2970839Z   @nyc-tron/ui/components/shell/PresetGallery -> zustand
+2026-11-11T12:40:26.2971427Z   @nyc-tron/ui/components/shell/KeyboardShortcutHUD -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2971959Z   @nyc-tron/ui/components/shell/FocusAndA11yLayer -> zustand
+2026-11-11T12:40:26.2972468Z   @nyc-tron/ui/components/forge/layers/LayerStack -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2973023Z   @nyc-tron/ui/components/forge/inputs/PrecisionScrubber -> zustand
+2026-11-11T12:40:26.2973616Z   @nyc-tron/ui/components/gestures/GestureHandlerDrag -> react-native-gesture-handler
+2026-11-11T12:40:26.2974174Z   @nyc-tron/ui/components/forge/ink/InkToolbar -> zustand
+2026-11-11T12:40:26.2974588Z   @nyc-tron/ui/components/content/KeyValueList -> zustand
+2026-11-11T12:40:26.2974998Z   @nyc-tron/ui/components/theme/NightScope -> uniwind
+2026-11-11T12:40:26.2975390Z   @nyc-tron/ui/components/files/DropZone -> zustand
+2026-11-11T12:40:26.2975784Z   @nyc-tron/ui/components/Select -> zustand
+2026-11-11T12:40:26.2976230Z   @nyc-tron/ui/components/forge/timeline/TimecodeDisplay -> zustand
+2026-11-11T12:40:26.2976764Z   @nyc-tron/ui/components/forge/timeline/TransportControls -> zustand
+2026-11-11T12:40:26.2977298Z   @nyc-tron/ui/components/forge/timeline/PlaybackRateMenu -> zustand
+2026-11-11T12:40:26.2977778Z   @nyc-tron/ui/components/forge/timeline/SeekBar -> zustand
+2026-11-11T12:40:26.2978257Z   @nyc-tron/ui/components/forge/timeline/TimelineRuler -> zustand
+2026-11-11T12:40:26.2978961Z   @nyc-tron/ui/components/forge/timeline/TimelinePlayhead -> zustand
+2026-11-11T12:40:26.2979493Z   @nyc-tron/ui/components/forge/timeline/InOutRangeHandles -> zustand
+2026-11-11T12:40:26.2980041Z   @nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll -> zustand
+2026-11-11T12:40:26.2980594Z   @nyc-tron/ui/components/forge/timeline/TimelineClipLane -> zustand
+2026-11-11T12:40:26.2981128Z   @nyc-tron/ui/components/forge/timeline/ClipTrimHandles -> zustand
+2026-11-11T12:40:26.2981842Z   @nyc-tron/ui/components/forge/timeline/RazorSplitTool -> zustand
+2026-11-11T12:40:26.2982381Z   @nyc-tron/ui/components/forge/timeline/SafeAreaOverlay -> zustand
+2026-11-11T12:40:26.2983067Z   @nyc-tron/ui/components/forge/spreadsheet/SheetTabs -> zustand
+2026-11-11T12:40:26.2983670Z   @nyc-tron/ui/components/forge/spreadsheet/ChartBuilder -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2984300Z   @nyc-tron/ui/components/forge/spreadsheet/SparklineEditor -> zustand
+2026-11-11T12:40:26.2984871Z   @nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls -> zustand
+2026-11-11T12:40:26.2985469Z   @nyc-tron/ui/components/forge/spreadsheet/SplitSpreadsheetView -> zustand
+2026-11-11T12:40:26.2986084Z   @nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView -> zustand
+2026-11-11T12:40:26.2986611Z   @nyc-tron/ui/components/forge/audio/PanControl -> zustand
+2026-11-11T12:40:26.2987097Z   @nyc-tron/ui/components/forge/audio/SoloMuteButtons -> zustand
+2026-11-11T12:40:26.2987705Z   @nyc-tron/ui/components/forge/audio/ChannelStrip -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.2988452Z   @nyc-tron/ui/components/forge/audio/MixingConsole -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.2989456Z   @nyc-tron/ui/components/forge/audio/TempoAndMetronome -> zustand
+2026-11-11T12:40:26.2989961Z   @nyc-tron/ui/components/forge/midi/MIDIPianoRoll -> zustand
+2026-11-11T12:40:26.2990434Z   @nyc-tron/ui/components/forge/midi/MIDIVelocityLane -> zustand
+2026-11-11T12:40:26.2990997Z   @nyc-tron/ui/components/forge/midi/StepSequencer -> zustand
+2026-11-11T12:40:26.2991642Z   @nyc-tron/ui/components/forge/office/ReadAloudTransport -> zustand
+2026-11-11T12:40:26.2992268Z   @nyc-tron/ui/components/forge/slides/SlideAnimationPane -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.2992816Z   @nyc-tron/ui/components/forge/slides/SlideCanvas -> zustand
+2026-11-11T12:40:26.2993279Z   @nyc-tron/ui/components/forge/slides/SlideFilmstrip -> zustand
+2026-11-11T12:40:26.2993764Z   @nyc-tron/ui/components/forge/slides/SlideSorter -> zustand
+2026-11-11T12:40:26.2994287Z   @nyc-tron/ui/components/forge/document/BulletsNumberingEditor -> zustand
+2026-11-11T12:40:26.2994899Z   @nyc-tron/ui/components/forge/document/DocumentReadAloudTransport -> zustand
+2026-11-11T12:40:26.2995507Z   @nyc-tron/ui/components/forge/document/NavigationOutline -> zustand
+2026-11-11T12:40:26.2996042Z   @nyc-tron/ui/components/forge/document/RichTextRibbon -> zustand
+2026-11-11T12:40:26.2996564Z   @nyc-tron/ui/components/forge/pdf/AnnotationToolbar -> zustand
+2026-11-11T12:40:26.2997082Z   @nyc-tron/ui/components/forge/pdf/CommentsThreadPanel -> zustand
+2026-11-11T12:40:26.2997617Z   @nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport -> zustand
+2026-11-11T12:40:26.2998140Z   @nyc-tron/ui/components/forge/pdf/TextSearchResults -> zustand
+2026-11-11T12:40:26.2998632Z   @nyc-tron/ui/components/forge/audio/RecordingTrack -> zustand
+2026-11-11T12:40:26.2999385Z   @nyc-tron/ui/components/forge/audio/AudioPreview -> zustand
+2026-11-11T12:40:26.2999910Z   @nyc-tron/ui/components/forge/timeline/JKLShuttleController -> zustand
+2026-11-11T12:40:26.3000443Z   @nyc-tron/ui/components/forge/timeline/LoopRangeBar -> zustand
+2026-11-11T12:40:26.3000930Z   @nyc-tron/ui/components/forge/timeline/TrackHeaders -> zustand
+2026-11-11T12:40:26.3001467Z   @nyc-tron/ui/components/forge/timeline/RollSlipSlideControls -> zustand
+2026-11-11T12:40:26.3002041Z   @nyc-tron/ui/components/forge/timeline/DragReorderAndRipple -> zustand
+2026-11-11T12:40:26.3002594Z   @nyc-tron/ui/components/forge/timeline/TransitionHandles -> zustand
+2026-11-11T12:40:26.3003129Z   @nyc-tron/ui/components/forge/timeline/TimelineMarkers -> zustand
+2026-11-11T12:40:26.3003718Z   @nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack -> zustand
+2026-11-11T12:40:26.3004348Z   @nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser -> zustand
+2026-11-11T12:40:26.3004905Z   @nyc-tron/ui/components/forge/timeline/BatchEditPanel -> zustand
+2026-11-11T12:40:26.3005471Z   @nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget -> zustand
+2026-11-11T12:40:26.3006102Z   @nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel -> zustand
+2026-11-11T12:40:26.3006906Z   @nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard -> zustand
+2026-11-11T12:40:26.3007473Z   @nyc-tron/ui/components/forge/canvas/AlignDistributePanel -> zustand
+2026-11-11T12:40:26.3007970Z   @nyc-tron/ui/components/forge/canvas/CanvasRuler -> zustand
+2026-11-11T12:40:26.3008464Z   @nyc-tron/ui/components/forge/canvas/SnapGridSettings -> zustand
+2026-11-11T12:40:26.3009259Z   @nyc-tron/ui/components/forge/canvas/TransformOriginHandle -> zustand
+2026-11-11T12:40:26.3009803Z   @nyc-tron/ui/components/forge/layers/ArtboardNavigator -> zustand
+2026-11-11T12:40:26.3010320Z   @nyc-tron/ui/components/forge/layers/CanvasCompareView -> zustand
+2026-11-11T12:40:26.3010835Z   @nyc-tron/ui/components/forge/layers/ClippingMaskControls -> zustand
+2026-11-11T12:40:26.3011404Z   @nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor -> zustand
+2026-11-11T12:40:26.3011969Z   @nyc-tron/ui/components/forge/selection/MagicSelectionControls -> zustand
+2026-11-11T12:40:26.3012535Z   @nyc-tron/ui/components/forge/selection/SelectionMarquee -> zustand
+2026-11-11T12:40:26.3013049Z   @nyc-tron/ui/components/forge/vector/FillStrokeInspector -> zustand
+2026-11-11T12:40:26.3013631Z   @nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles -> zustand
+2026-11-11T12:40:26.3014177Z   @nyc-tron/ui/components/forge/vector/PenNodeEditor -> zustand
+2026-11-11T12:40:26.3014804Z   @nyc-tron/ui/components/forge/vector/ShapeBuilder -> zustand
+2026-11-11T12:40:26.3015321Z   @nyc-tron/ui/components/forge/audio/AutomationLane -> zustand
+2026-11-11T12:40:26.3015894Z   @nyc-tron/ui/components/forge/audio/AutomationModePicker -> zustand
+2026-11-11T12:40:26.3016405Z   @nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix -> zustand
+2026-11-11T12:40:26.3016918Z   @nyc-tron/ui/components/forge/audio/DynamicsTransferGraph -> zustand
+2026-11-11T12:40:26.3017679Z   @nyc-tron/ui/components/forge/audio/EQFrequencyGraph -> zustand
+2026-11-11T12:40:26.3018397Z   @nyc-tron/ui/components/forge/audio/InsertEffectRack -> zustand
+2026-11-11T12:40:26.3020787Z   @nyc-tron/ui/components/forge/audio/LoudnessMeter -> zustand
+2026-11-11T12:40:26.3021515Z   @nyc-tron/ui/components/forge/audio/PluginPresetBrowser -> zustand
+2026-11-11T12:40:26.3022132Z   @nyc-tron/ui/components/forge/audio/SpectrogramView -> zustand
+2026-11-11T12:40:26.3022791Z   @nyc-tron/ui/components/forge/color/ColorPickerDialog -> @expo/ui, expo-linear-gradient, zustand
+2026-11-11T12:40:26.3023546Z   @nyc-tron/ui/components/forge/slides/PresenterInkOverlay -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3024194Z   @nyc-tron/ui/components/forge/slides/PresenterInkStrip -> zustand
+2026-11-11T12:40:26.3024744Z   @nyc-tron/ui/components/shell/ContextualToolbar -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3025299Z   @nyc-tron/ui/components/shell/WorkspaceHost -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3025878Z   @nyc-tron/ui/components/shell/WorkspacePresetSwitcher -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3026489Z   @nyc-tron/ui/components/files/FileImportExportSheet -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3027069Z   @nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog -> zustand
+2026-11-11T12:40:26.3027555Z   @nyc-tron/ui/components/shell/AssetBrowser -> zustand
+2026-11-11T12:40:26.3027950Z   @nyc-tron/ui/components/shell/HistoryPanel -> zustand
+2026-11-11T12:40:26.3028426Z   @nyc-tron/ui/components/shell/FindReplacePopover -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3029135Z   @nyc-tron/ui/components/shell/FindReplaceContent -> zustand
+2026-11-11T12:40:26.3029592Z   @nyc-tron/ui/components/shell/ToastAndProgress -> zustand
+2026-11-11T12:40:26.3030127Z   @nyc-tron/ui/components/forge/color/PrintColorChannels -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3030726Z   @nyc-tron/ui/components/forge/color/WideGamutChannels -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3031256Z   @nyc-tron/ui/components/forge/color/ColorSpaceChooser -> zustand
+2026-11-11T12:40:26.3031745Z   @nyc-tron/ui/components/forge/color/ThemeColorReferences -> zustand
+2026-11-11T12:40:26.3032529Z   @nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3033098Z   @nyc-tron/ui/components/forge/color/SoftProofControls -> zustand
+2026-11-11T12:40:26.3033619Z   @nyc-tron/ui/components/forge/color/LevelsEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3034194Z   @nyc-tron/ui/components/forge/color/ColorGradingWheels -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3034783Z   @nyc-tron/ui/components/forge/color/HSLSecondaryEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3035366Z   @nyc-tron/ui/components/forge/color/GradientStopEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3035929Z   @nyc-tron/ui/components/forge/color/CurvesEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3036412Z   @nyc-tron/ui/components/forge/color/SVColorField -> zustand
+2026-11-11T12:40:26.3036895Z   @nyc-tron/ui/components/forge/color/HueSlider -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3037455Z   @nyc-tron/ui/components/forge/color/GradientMeshEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3038031Z   @nyc-tron/ui/components/forge/color/EyedropperTool -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3038531Z   @nyc-tron/ui/components/shell/NumericScrubField -> zustand
+2026-11-11T12:40:26.3039327Z   @nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3040068Z   @nyc-tron/ui/components/forge/photo/ToneAndPresence -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3040683Z   @nyc-tron/ui/components/forge/photo/EightBandColorMixer -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3041295Z   @nyc-tron/ui/components/forge/photo/LensCorrectionPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3041848Z   @nyc-tron/ui/components/forge/photo/RatingAndFlagControl -> zustand
+2026-11-11T12:40:26.3042391Z   @nyc-tron/ui/components/forge/photo/RAWDevelopPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3042918Z   @nyc-tron/ui/components/forge/photo/PhotoLibraryGrid -> zustand
+2026-11-11T12:40:26.3043455Z   @nyc-tron/ui/components/forge/photo/CatalogFilterBar -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3044032Z   @nyc-tron/ui/components/forge/photo/BeforeAfterCompare -> zustand
+2026-11-11T12:40:26.3044541Z   @nyc-tron/ui/components/forge/photo/PhotoMetadataInspector -> zustand
+2026-11-11T12:40:26.3045035Z   @nyc-tron/ui/components/forge/photo/PresetFilmstrip -> zustand
+2026-11-11T12:40:26.3045493Z   @nyc-tron/ui/components/forge/photo/PresetManager -> zustand
+2026-11-11T12:40:26.3045995Z   @nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser -> zustand
+2026-11-11T12:40:26.3046570Z   @nyc-tron/ui/components/forge/photo/BatchExportPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3047142Z   @nyc-tron/ui/components/forge/photo/LocalMaskBrush -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3047740Z   @nyc-tron/ui/components/forge/photo/CleanupAndRetouchPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3048382Z   @nyc-tron/ui/components/forge/photo/LinearRadialGradientMask -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3049231Z   @nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3049870Z   @nyc-tron/ui/components/forge/motion/Transform3DInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3050497Z   @nyc-tron/ui/components/forge/motion/CameraAndLightControls -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3051114Z   @nyc-tron/ui/components/forge/motion/MatteAndMaskPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3051735Z   @nyc-tron/ui/components/forge/motion/ParticleEmitterControls -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3052313Z   @nyc-tron/ui/components/forge/motion/EasingPresetGallery -> zustand
+2026-11-11T12:40:26.3052861Z   @nyc-tron/ui/components/forge/motion/RenderQueuePanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3053455Z   @nyc-tron/ui/components/forge/motion/KeyframeValueGraph -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3054059Z   @nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3054784Z   @nyc-tron/ui/components/forge/motion/TimeRemapCurve -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3055390Z   @nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3055962Z   @nyc-tron/ui/components/forge/motion/CompositionLayerTree -> zustand
+2026-11-11T12:40:26.3056471Z   @nyc-tron/ui/components/forge/motion/MotionPathEditor -> zustand
+2026-11-11T12:40:26.3057035Z   @nyc-tron/ui/components/forge/motion/EffectStackAndInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3057593Z   @nyc-tron/ui/components/forge/motion/ExpressionEditor -> zustand
+2026-11-11T12:40:26.3058141Z   @nyc-tron/ui/components/forge/motion/NodeGraphEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3058950Z   @nyc-tron/ui/components/forge/canvas/CanvasPanZoom -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3059725Z   @nyc-tron/ui/components/forge/canvas/GPUCanvasViewport -> react-native-skia, zustand
+2026-11-11T12:40:26.3060407Z   @nyc-tron/ui/components/forge/selection/SelectionBounds -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3061103Z   @nyc-tron/ui/components/forge/selection/MultiSelectionControls -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3061740Z   @nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3062579Z   @nyc-tron/ui/components/forge/canvas/GuidedCropAndStraighten -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3063332Z   @nyc-tron/ui/components/forge/ink/BrushPresetBrowser -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3063930Z   @nyc-tron/ui/components/forge/ink/BrushDynamicsInspector -> zustand
+2026-11-11T12:40:26.3064612Z   @nyc-tron/ui/components/forge/ink/InkStrokePreview -> react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T12:40:26.3065257Z   @nyc-tron/ui/components/forge/ink/EraserModePicker -> zustand
+2026-11-11T12:40:26.3065720Z   @nyc-tron/ui/components/forge/ink/BrushTaperControl -> zustand
+2026-11-11T12:40:26.3066220Z   @nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter -> zustand
+2026-11-11T12:40:26.3066951Z   @nyc-tron/ui/components/forge/ink/BrushStabilizationPreview -> react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T12:40:26.3067626Z   @nyc-tron/ui/components/forge/timeline/MediaMonitor -> zustand
+2026-11-11T12:40:26.3068093Z   @nyc-tron/ui/components/forge/timeline/SourceMonitor -> zustand
+2026-11-11T12:40:26.3068567Z   @nyc-tron/ui/components/forge/timeline/ProgramMonitor -> zustand
+2026-11-11T12:40:26.3069266Z   @nyc-tron/ui/components/forge/timeline/VideoFilmstrip -> zustand
+2026-11-11T12:40:26.3069747Z   @nyc-tron/ui/components/forge/timeline/AudioClipWaveform -> zustand
+2026-11-11T12:40:26.3070287Z   @nyc-tron/ui/components/forge/timeline/MulticamAngleViewer -> zustand
+2026-11-11T12:40:26.3070809Z   @nyc-tron/ui/components/forge/timeline/RenderCacheIndicator -> zustand
+2026-11-11T12:40:26.3071356Z   @nyc-tron/ui/components/forge/timeline/PictureInPictureControls -> zustand
+2026-11-11T12:40:26.3071869Z   @nyc-tron/ui/components/forge/timeline/waveform-cache -> zustand
+2026-11-11T12:40:26.3072392Z   @nyc-tron/ui/components/forge/timeline/ExportMonitor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3073000Z   @nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3073593Z   @nyc-tron/ui/components/forge/timeline/VideoQualityInspector -> zustand
+2026-11-11T12:40:26.3074151Z   @nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector -> zustand
+2026-11-11T12:40:26.3074817Z   @nyc-tron/ui/components/forge/timeline/AutoReframeGuides -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3075465Z   @nyc-tron/ui/components/forge/timeline/CoverFramePicker -> zustand
+2026-11-11T12:40:26.3076049Z   @nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3076968Z   @nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3078642Z   @nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3080491Z   @nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3082160Z   @nyc-tron/ui/components/forge/timeline/StickerMotionLane -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3082939Z   @nyc-tron/ui/components/forge/audio/VerticalFader -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3083534Z   @nyc-tron/ui/components/forge/audio/NativeAudioTransport -> zustand
+2026-11-11T12:40:26.3084033Z   @nyc-tron/ui/components/forge/audio/RecordingArmButton -> zustand
+2026-11-11T12:40:26.3084511Z   @nyc-tron/ui/components/forge/audio/InputMonitorToggle -> zustand
+2026-11-11T12:40:26.3085014Z   @nyc-tron/ui/components/forge/audio/DeviceAndChannelPicker -> zustand
+2026-11-11T12:40:26.3085686Z   @nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3086329Z   @nyc-tron/ui/components/forge/audio/LiveRecordingWaveform -> zustand
+2026-11-11T12:40:26.3086820Z   @nyc-tron/ui/components/forge/audio/RealtimePeakMeter -> zustand
+2026-11-11T12:40:26.3087571Z   @nyc-tron/ui/components/forge/audio/SurroundPanView -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3088310Z   @nyc-tron/ui/components/forge/audio/PanAndBalanceControl -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3089149Z   @nyc-tron/ui/components/forge/audio/ClipGainEnvelope -> zustand
+2026-11-11T12:40:26.3089640Z   @nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade -> zustand
+2026-11-11T12:40:26.3090125Z   @nyc-tron/ui/components/forge/audio/LoopPunchRecording -> zustand
+2026-11-11T12:40:26.3090583Z   @nyc-tron/ui/components/forge/audio/SampleEditor -> zustand
+2026-11-11T12:40:26.3091057Z   @nyc-tron/ui/components/forge/audio/LatencyCalibrationPanel -> zustand
+2026-11-11T12:40:26.3091713Z   @nyc-tron/ui/components/forge/audio/TakePlaylistAndComping -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3092320Z   @nyc-tron/ui/components/forge/audio/AudioVideoSync -> zustand
+2026-11-11T12:40:26.3092798Z   @nyc-tron/ui/components/forge/audio/AudioProcessingPanel -> zustand
+2026-11-11T12:40:26.3093303Z   @nyc-tron/ui/components/forge/audio/VoiceIsolationPanel -> zustand
+2026-11-11T12:40:26.3093795Z   @nyc-tron/ui/components/forge/audio/NoiseReductionMonitor -> zustand
+2026-11-11T12:40:26.3094296Z   @nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel -> zustand
+2026-11-11T12:40:26.3094871Z   @nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3095464Z   @nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane -> zustand
+2026-11-11T12:40:26.3095981Z   @nyc-tron/ui/components/forge/audio/SoundEffectsLibrary -> zustand
+2026-11-11T12:40:26.3096706Z   @nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3097458Z   @nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin -> zustand
+2026-11-11T12:40:26.3098062Z   @nyc-tron/ui/components/forge/inputs/PropertyInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3098693Z   @nyc-tron/ui/components/forge/document/TypographyInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3099533Z   @nyc-tron/ui/components/forge/document/PageSetupPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3100160Z   @nyc-tron/ui/components/forge/document/HeadersFootersEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3100759Z   @nyc-tron/ui/components/forge/document/ParagraphStylesGallery -> zustand
+2026-11-11T12:40:26.3101357Z   @nyc-tron/ui/components/forge/document/TableLayoutInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3102112Z   @nyc-tron/ui/components/forge/document/InsertTableGrid -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3103171Z   @nyc-tron/ui/components/forge/document/ParagraphRuler -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3103854Z   @nyc-tron/ui/components/forge/document/CommentsAndReviewRail -> zustand
+2026-11-11T12:40:26.3104375Z   @nyc-tron/ui/components/forge/document/TrackChangesView -> zustand
+2026-11-11T12:40:26.3104966Z   @nyc-tron/ui/components/forge/document/TableOfContentsEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3105568Z   @nyc-tron/ui/components/forge/document/DictationSessionPanel -> zustand
+2026-11-11T12:40:26.3106167Z   @nyc-tron/ui/components/forge/document/TextWrapAndFrames -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3106744Z   @nyc-tron/ui/components/forge/document/LayoutSpreadNavigator -> zustand
+2026-11-11T12:40:26.3107269Z   @nyc-tron/ui/components/forge/document/MailMergeFieldPicker -> zustand
+2026-11-11T12:40:26.3107852Z   @nyc-tron/ui/components/forge/document/SpellGrammarPopover -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3108504Z   @nyc-tron/ui/components/forge/document/FootnoteCitationEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3109649Z   @nyc-tron/ui/components/forge/document/TextSelectionAndCaret -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3110303Z   @nyc-tron/ui/components/forge/document/PaginatedTextCanvas -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3111149Z   @nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid -> zustand
+2026-11-11T12:40:26.3111706Z   @nyc-tron/ui/components/forge/spreadsheet/FormulaBar -> zustand
+2026-11-11T12:40:26.3112169Z   @nyc-tron/ui/components/forge/spreadsheet/NameBox -> zustand
+2026-11-11T12:40:26.3112653Z   @nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete -> zustand
+2026-11-11T12:40:26.3113217Z   @nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer -> zustand
+2026-11-11T12:40:26.3113886Z   @nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3114685Z   @nyc-tron/ui/components/forge/spreadsheet/FillHandleAndAutoFill -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3115415Z   @nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3116008Z   @nyc-tron/ui/components/forge/spreadsheet/ValidationDropdown -> zustand
+2026-11-11T12:40:26.3116607Z   @nyc-tron/ui/components/forge/spreadsheet/TableStyleGallery -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3117268Z   @nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3117921Z   @nyc-tron/ui/components/forge/spreadsheet/SortFilterHeader -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3118538Z   @nyc-tron/ui/components/forge/spreadsheet/DataImportWizard -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3119498Z   @nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager -> zustand
+2026-11-11T12:40:26.3120167Z   @nyc-tron/ui/components/forge/spreadsheet/PivotFieldList -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3120789Z   @nyc-tron/ui/components/forge/spreadsheet/RangeComments -> zustand
+2026-11-11T12:40:26.3121272Z   @nyc-tron/ui/components/forge/inputs/AssetPresetGallery -> zustand
+2026-11-11T12:40:26.3121837Z   @nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3122467Z   @nyc-tron/ui/components/forge/slides/MasterLayoutEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3123203Z   @nyc-tron/ui/components/forge/slides/ShapePresetGallery -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3123913Z   @nyc-tron/ui/components/forge/slides/TransitionPicker -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3124500Z   @nyc-tron/ui/components/forge/slides/SlideNotesEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3125023Z   @nyc-tron/ui/components/forge/slides/PresenterView -> zustand
+2026-11-11T12:40:26.3125487Z   @nyc-tron/ui/components/forge/slides/RehearsalTimers -> zustand
+2026-11-11T12:40:26.3125998Z   @nyc-tron/ui/components/forge/slides/MorphPreview -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3126908Z   @nyc-tron/ui/components/forge/slides/MediaInsertInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3127533Z   @nyc-tron/ui/components/forge/slides/ChartAndTableEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3128174Z   @nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3129191Z   @nyc-tron/ui/components/forge/slides/InkAndLaserPointer -> react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T12:40:26.3129890Z   @nyc-tron/ui/components/forge/pdf/PDFPageLayoutSelector -> zustand
+2026-11-11T12:40:26.3130387Z   @nyc-tron/ui/components/forge/pdf/VirtualPDFPageViewer -> zustand
+2026-11-11T12:40:26.3130922Z   @nyc-tron/ui/components/forge/pdf/PDFTextSelection -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3131566Z   @nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3132139Z   @nyc-tron/ui/components/forge/inputs/OutlineTree -> zustand
+2026-11-11T12:40:26.3132576Z   @nyc-tron/ui/components/forge/pdf/BookmarkOutline -> zustand
+2026-11-11T12:40:26.3133223Z   @nyc-tron/ui/components/forge/pdf/PDFThumbnailSidebar -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3134179Z   @nyc-tron/ui/components/forge/pdf/PageReorderOrganizer -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3134856Z   @nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog -> zustand
+2026-11-11T12:40:26.3135406Z   @nyc-tron/ui/components/forge/pdf/HyperlinkInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3135985Z   @nyc-tron/ui/components/forge/pdf/PDFCompareOverlay -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3136574Z   @nyc-tron/ui/components/forge/pdf/PrintAndExportPreview -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3137135Z   @nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel -> zustand
+2026-11-11T12:40:26.3137628Z   @nyc-tron/ui/components/forge/pdf/RedactionReviewTool -> zustand
+2026-11-11T12:40:26.3138436Z   @nyc-tron/ui/components/forge/pdf/SignatureStampTool -> @nyc-tron/core, react-native-gesture-handler, react-native-skia, zustand
+2026-11-11T12:40:26.3139480Z   @nyc-tron/ui/components/forge/pdf/PDFFormFieldEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3140021Z   @nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment -> zustand
+2026-11-11T12:40:26.3140678Z   @nyc-tron/ui/components/forge/pdf/PDFScanSession -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3141466Z   @nyc-tron/ui/components/forge/inputs/PointEditor2D -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3142113Z   @nyc-tron/ui/components/forge/design/FrameAndComponentTree -> zustand
+2026-11-11T12:40:26.3142683Z   @nyc-tron/ui/components/forge/design/AutoLayoutInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3143328Z   @nyc-tron/ui/components/forge/design/HugFillFixedSizeControls -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3143954Z   @nyc-tron/ui/components/forge/design/ConstraintsPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3144572Z   @nyc-tron/ui/components/forge/design/ComponentVariantPicker -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3145138Z   @nyc-tron/ui/components/forge/design/ReusableStylesPanel -> zustand
+2026-11-11T12:40:26.3145681Z   @nyc-tron/ui/components/forge/design/VariablesAndModes -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3146435Z   @nyc-tron/ui/components/forge/design/PrototypeConnectionTool -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3147216Z   @nyc-tron/ui/components/forge/design/InteractionTriggerEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3147802Z   @nyc-tron/ui/components/forge/design/PrototypePreviewPlayer -> zustand
+2026-11-11T12:40:26.3148285Z   @nyc-tron/ui/components/forge/design/FlowOverview -> zustand
+2026-11-11T12:40:26.3148959Z   @nyc-tron/ui/components/forge/design/DevHandoffInspector -> zustand
+2026-11-11T12:40:26.3149663Z   @nyc-tron/ui/components/forge/design/CollaborationPresence -> zustand
+2026-11-11T12:40:26.3150142Z   @nyc-tron/ui/components/forge/design/CommentPins -> zustand
+2026-11-11T12:40:26.3150660Z   @nyc-tron/ui/components/forge/design/MultiExportSlices -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3151308Z   @nyc-tron/ui/components/forge/cad/Native3DViewport -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3151908Z   @nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo -> zustand
+2026-11-11T12:40:26.3152553Z   @nyc-tron/ui/components/forge/cad/TransformGizmo3D -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3153305Z   @nyc-tron/ui/components/forge/cad/UVEditor -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3153881Z   @nyc-tron/ui/components/forge/cad/TextureSetPanel -> zustand
+2026-11-11T12:40:26.3154420Z   @nyc-tron/ui/components/forge/cad/PBRMaterialInspector -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3155122Z   @nyc-tron/ui/components/forge/cad/TextureBrush3D -> @nyc-tron/core, react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3155820Z   @nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3156408Z   @nyc-tron/ui/components/forge/cad/BakingMapPanel -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3157146Z   @nyc-tron/ui/components/forge/cad/NodeGraphCanvas -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3157847Z   @nyc-tron/ui/components/forge/cad/NodeLibrarySearch -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3158419Z   @nyc-tron/ui/components/forge/cad/LiveNodeThumbnail -> zustand
+2026-11-11T12:40:26.3159074Z   @nyc-tron/ui/components/forge/cad/DraftingCommandLine -> zustand
+2026-11-11T12:40:26.3159611Z   @nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3160216Z   @nyc-tron/ui/components/forge/cad/DimensionsAndHatching -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3160809Z   @nyc-tron/ui/components/forge/cad/PaperSpaceLayout -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3161434Z   @nyc-tron/ui/components/forge/cad/ParametricConstraintEditor -> @nyc-tron/core, zustand
+2026-11-11T12:40:26.3162207Z   @nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl -> react-native-gesture-handler, zustand
+2026-11-11T12:40:26.3162943Z   @nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber -> @expo/ui, zustand
+2026-11-11T12:40:26.3194224Z ##[group]Run node tooling/api-surface.mjs
+2026-11-11T12:40:26.3194579Z [36;1mnode tooling/api-surface.mjs[0m
+2026-11-11T12:40:26.3243180Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:40:26.3243442Z ##[endgroup]
+2026-11-11T12:40:26.3591998Z API surface matches snapshot: 13 packages, 619 export subpaths.
+2026-11-11T12:40:26.3651806Z ##[group]Run node tooling/api-signatures.mjs
+2026-11-11T12:40:26.3652174Z [36;1mnode tooling/api-signatures.mjs[0m
+2026-11-11T12:40:26.3698400Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:40:26.3698657Z ##[endgroup]
+2026-11-11T12:40:28.5892923Z API signatures match: 13 packages, 619 subpaths, 3306 reachable declarations.
+2026-11-11T12:40:28.6524194Z ##[group]Run node tooling/verify-component-program.mjs
+2026-11-11T12:40:28.6524633Z [36;1mnode tooling/verify-component-program.mjs[0m
+2026-11-11T12:40:28.6574633Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:40:28.6574881Z ##[endgroup]
+2026-11-11T12:40:29.2048302Z Component program: 341 canonical IDs; 332 local implementations, 0 partial, 9 pinned external implementations, 0 pending; 0 accepted with all eight platform proofs.
+2026-11-11T12:40:29.2126955Z ##[group]Run node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
+2026-11-11T12:40:29.2127502Z [36;1mnode tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"[0m
+2026-11-11T12:40:29.2176644Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:40:29.2176901Z ##[endgroup]
+2026-11-11T12:41:02.7586073Z nyc-tron-core-1.0.0.tgz  @nyc-tron/core  68 files  sha256 dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355
+2026-11-11T12:41:02.7588008Z nyc-tron-expo-controls-1.0.0.tgz  @nyc-tron/expo-controls  140 files  sha256 b8df3e3ead19f004bb96c295c7c7bd45480fe3fe68b3e4f9552eda7dad525824
+2026-11-11T12:41:02.7592783Z nyc-tron-geometry-1.0.0.tgz  @nyc-tron/geometry  19 files  sha256 ca80f9e7c69950df97ce5db6c44302fa3debc17cdf96ceb8ec6a443f393b3fa5
+2026-11-11T12:41:02.7594221Z nyc-tron-hardware-keys-1.0.0.tgz  @nyc-tron/hardware-keys  67 files  sha256 0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912
+2026-11-11T12:41:02.7595540Z nyc-tron-icons-1.0.0.tgz  @nyc-tron/icons  17 files  sha256 68667fed555a073b05f100df8736774f5bbc6f169e074f8124df68457a251b07
+2026-11-11T12:41:02.7596862Z nyc-tron-native-charts-1.0.0.tgz  @nyc-tron/native-charts  43 files  sha256 6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76
+2026-11-11T12:41:02.7598271Z nyc-tron-native-controls-1.0.0.tgz  @nyc-tron/native-controls  76 files  sha256 2832c3ba7c33cd55c59d336ba48102f6a00e743e392ee33157831683ec1da258
+2026-11-11T12:41:02.7600088Z nyc-tron-native-navigation-1.0.0.tgz  @nyc-tron/native-navigation  31 files  sha256 cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85
+2026-11-11T12:41:02.7601267Z nyc-tron-panes-1.0.0.tgz  @nyc-tron/panes  40 files  sha256 cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9
+2026-11-11T12:41:02.7602436Z nyc-tron-platform-services-1.0.0.tgz  @nyc-tron/platform-services  228 files  sha256 c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650
+2026-11-11T12:41:02.7603765Z nyc-tron-reserved-regions-1.0.0.tgz  @nyc-tron/reserved-regions  43 files  sha256 e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2
+2026-11-11T12:41:02.7604928Z nyc-tron-ui-1.0.0.tgz  @nyc-tron/ui  2516 files  sha256 f48b2e1a315c34132d18c0c4cb1ceda44fcd40403fe2aeec0d1bd313720ade40
+2026-11-11T12:41:02.7606015Z nyc-tron-windows-fluent-1.0.0.tgz  @nyc-tron/windows-fluent  20 files  sha256 e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73
+2026-11-11T12:41:02.7606884Z Wrote 13 tarballs and SHA256SUMS to /home/runner/work/_temp/nyc-tron-packs
+2026-11-11T12:41:02.7665174Z ##[group]Run node tooling/consumer-smoke.mjs "$RUNNER_TEMP/nyc-tron-packs"
+2026-11-11T12:41:02.7665730Z [36;1mnode tooling/consumer-smoke.mjs "$RUNNER_TEMP/nyc-tron-packs"[0m
+2026-11-11T12:41:02.7714535Z shell: /usr/bin/bash -e {0}
+2026-11-11T12:41:02.7714790Z ##[endgroup]
+2026-11-11T12:41:03.3464185Z 
+2026-11-11T12:41:03.3464572Z added 3 packages in 415ms
+2026-11-11T12:41:03.4201418Z Imported 17 export subpaths from @nyc-tron/core, @nyc-tron/geometry, @nyc-tron/windows-fluent
+2026-11-11T12:41:03.4388589Z Post job cleanup.
+2026-11-11T12:41:03.5621336Z (node:4190) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T12:41:03.5622319Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T12:41:03.5805057Z Post job cleanup.
+2026-11-11T12:41:03.6689913Z [command]/usr/bin/git version
+2026-11-11T12:41:03.6735742Z git version 2.56.0
+2026-11-11T12:41:03.6779680Z Temporarily overriding HOME='/home/runner/work/_temp/a883c28a-40e1-49af-91c5-fe8a1c18b4a1' before making global git config changes
+2026-11-11T12:41:03.6781395Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T12:41:03.6783794Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/NYC-Tron-UI/NYC-Tron-UI
+2026-11-11T12:41:03.6824309Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T12:41:03.6863414Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T12:41:03.7189793Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T12:41:03.7210275Z http.https://github.com/.extraheader
+2026-11-11T12:41:03.7223061Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T12:41:03.7291071Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T12:41:03.7626124Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T12:41:03.7682860Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T12:41:03.8125935Z Cleaning up orphan processes
+2026-11-11T12:41:03.8524665Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

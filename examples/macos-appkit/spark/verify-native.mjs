@@ -1144,6 +1144,72 @@ function popoverCloseCompleted(current, armed) {
     observation.postDidCloseMainTurnObserved === true && observation.expired === false &&
     observation.released === false && observation.threadViolation === false && observation.overflowed === false;
 }
+function projectPopoverPresentation(value) {
+  const read = (object, name) => {
+    if (!object || typeof object !== 'object' || Array.isArray(object)) return undefined;
+    const descriptor = Object.getOwnPropertyDescriptor(object, name);
+    return descriptor && Object.prototype.hasOwnProperty.call(descriptor, 'value') ? descriptor.value : undefined;
+  };
+  const boolean = item => typeof item === 'boolean' ? item : null;
+  const choice = (item, allowed) => allowed.includes(item) ? item : null;
+  const rectangle = item => {
+    const names = ['x', 'y', 'width', 'height'];
+    const values = names.map(name => read(item, name));
+    const finite = values.every(field => typeof field === 'number' && Number.isFinite(field));
+    const complete = finite && Number.isFinite(values[0] + values[2]) && Number.isFinite(values[1] + values[3]);
+    return { status: item == null ? 'missing' : complete ? 'observed' : 'invalid',
+      ...Object.fromEntries(names.map((name, index) =>
+        [name, typeof values[index] === 'number' && Number.isFinite(values[index]) ? values[index] : null])) };
+  };
+  const known = read(value, 'schemaVersion') === 1 && read(value, 'status') === 'observed';
+  const current = known ? read(value, 'current') : null;
+  const context = item => {
+    const status = choice(read(item, 'status'), ['observed', 'unavailable', 'stale']);
+    const sameGeneration = boolean(read(item, 'sameGeneration'));
+    const sameLifetime = boolean(read(item, 'sameLifetime'));
+    const sameIdentity = boolean(read(item, 'sameIdentity'));
+    const sameScopeToken = boolean(read(item, 'sameScopeToken'));
+    const samePresentationToken = boolean(read(item, 'samePresentationToken'));
+    const sameParameters = boolean(read(item, 'sameParameters'));
+    return { status, sameGeneration, sameLifetime, sameIdentity, sameScopeToken, samePresentationToken, sameParameters };
+  };
+  const qualified = item => item.status === 'observed' &&
+    item.sameLifetime === true && item.sameIdentity === true;
+  const branchSource = known ? read(value, 'lastBranch') : null;
+  const branch = context(branchSource);
+  const showSource = known ? read(value, 'lastShow') : null;
+  const show = context(showSource);
+  const showValid = qualified(show);
+  const stage = showValid ? choice(read(showSource, 'stage'), ['entered', 'returned']) : null;
+  const returned = stage === 'returned';
+  const contained = returned ? boolean(read(showSource, 'contained')) : null;
+  return {
+    schemaVersion: known ? 1 : null, status: known ? 'observed' : 'unavailable',
+    scope: 'current-fields-and-identity-qualified-last-executed-records',
+    lastRecordsAreHistorical: true,
+    showAnchorCoordinates: 'positioning-view', regionAndFrameCoordinates: 'owner-content-top-left',
+    current: {
+      ...Object.fromEntries(['controlledVisible', 'closing', 'silentClose', 'hasOwner', 'ownerMatchesCommand',
+        'componentWindowMatchesCommand', 'ownerVisible', 'ownerMiniaturized', 'hasPositioningView',
+        'hasContent', 'hasChildren', 'hasContentWindow', 'hasFabricState', 'scopeTokenPresent',
+        'presentationTokenPresent', 'presentedTokenMatches', 'dismissedTokenMatches', 'rejectedTokenMatches']
+        .map(name => [name, boolean(read(current, name))])),
+      preferredEdge: choice(read(current, 'preferredEdge'), ['above', 'below']),
+      anchor: rectangle(read(current, 'anchor')), contentSize: rectangle(read(current, 'contentSize')),
+    },
+    lastBranch: { ...branch, branch: qualified(branch) ? choice(read(branchSource, 'branch'),
+      ['closing', 'content-prerequisites', 'token-suppressed', 'owner-unavailable', 'show-entered',
+        'show-not-shown', 'content-window-unavailable', 'coordinates-pending', 'coordinates-ready', 'outside-region']) : null },
+    lastShow: { ...show, stage,
+      shownAfterCall: returned ? boolean(read(showSource, 'shownAfterCall')) : null,
+      contentWindowPresent: returned ? boolean(read(showSource, 'contentWindowPresent')) : null,
+      contained, coordinatesReady: contained === true ? boolean(read(showSource, 'coordinatesReady')) : null,
+      anchor: rectangle(showValid && stage !== null ? read(showSource, 'anchor') : null),
+      region: rectangle(showValid && stage !== null ? read(showSource, 'region') : null),
+      actualFrame: rectangle(contained !== null ? read(showSource, 'actualFrame') : null),
+    },
+  };
+}
 function projectPopoverResponse(value, firstIdentity = null) {
   const read = (object, name) => {
     if (!object || typeof object !== 'object' || Array.isArray(object)) return undefined;
@@ -1177,6 +1243,7 @@ function projectPopoverResponse(value, firstIdentity = null) {
         matchesFirstObserved: identity !== null && firstIdentity !== null ? identity === firstIdentity : null,
       },
       frame, region, geometry: { frameNonempty, regionNonempty, frameInsideRegion },
+      presentation: projectPopoverPresentation(read(value, 'presentationObservation')),
     },
   };
 }

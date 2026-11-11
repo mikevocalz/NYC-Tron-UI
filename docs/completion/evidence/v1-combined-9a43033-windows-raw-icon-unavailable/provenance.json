@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-combined-windows-native-raw-icon-unavailable",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "path": "docs/completion/evidence/v1-combined-9a43033-windows-raw-icon-unavailable",
+  "source": {
+    "head": "9a430338d8336283b230203a8555257798fcd62c",
+    "soleParent": "25a6af6d020e34d790f6a4f3d9f117738b252f1e",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "actualCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "mergeOrderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ],
+    "actualCheckoutSourceLogLine": 123,
+    "actualCheckoutNativeLogLine": 134,
+    "navigationBlob": "877c51ea1e16918968a6929e389c1f61f4a4e23d",
+    "uiaSmokeBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+    "integrationManifest": "b52b554610d8dd6fd92e7b55c70a266c6240809c",
+    "scope": "This is the completed combined PR64 candidate's own native workflow, not a transferred helper result. The earlier 782 missing-Icon outcome is retained separately."
+  },
+  "run": {
+    "id": 43015171470,
+    "attempt": 1,
+    "event": "pull_request",
+    "conclusion": "failure",
+    "sourceJob": 130504315570,
+    "sourceJobConclusion": "success",
+    "sourceStartedAt": "2026-11-11T11:49:55Z",
+    "sourceCompletedAt": "2026-11-11T11:50:49Z",
+    "nativeJob": 130504750313,
+    "nativeJobConclusion": "failure",
+    "nativeStartedAt": "2026-11-11T11:50:52Z",
+    "nativeCompletedAt": "2026-11-11T12:00:15Z",
+    "separateGeneralSourceWorkflow": 43015171052
+  },
+  "records": [
+    {
+      "file": "source-job.log",
+      "gitBlob": "08adc7dfc677cfd53fa7f8c5ee60eb8e1f362c22",
+      "bytes": 31862,
+      "sha256": "b558dcd0284495efe6ba7ea1944e16b0c5a318dfcffb41ab87869d76b4af2f0c"
+    },
+    {
+      "file": "native-job.log",
+      "gitBlob": "c44b560511c2c48024f95e6e3017c322e28bfa1b",
+      "bytes": 397321,
+      "sha256": "d9c01733645362e28c1393e15282b67b1998a00f9ba4ad3034809247518a9725"
+    },
+    {
+      "file": "rtl-witness.json",
+      "gitBlob": "1b092ffaaf26379472f38043cd11c267caa49e09",
+      "bytes": 724,
+      "sha256": "16ba0a38d799f711fb4dd141f32eeb6b64e8f514da317471335fb844fbc3ebb2"
+    },
+    {
+      "file": "rtl-witness-envelope.log",
+      "gitBlob": "838c771d8c60b53f44b89aee9c9756ea4fe774ff",
+      "bytes": 863,
+      "sha256": "b9c20c0854ccf39863bc176c5d3a57911091da29b3b5b8a4831a8301ade5c939"
+    },
+    {
+      "file": "workflow-metadata.json",
+      "gitBlob": "ca6f639ee3a822a024bb6d02728d2999d207c31c",
+      "bytes": 13377,
+      "sha256": "291f5770be41867e0ac09dc5673a88b56700f8ee91f5fbb7f77497dae6fe89a8"
+    }
+  ],
+  "extraction": {
+    "logScope": "Complete decoded originals returned by the normal completed-job log endpoint; no newline or BOM rewriting.",
+    "source": {
+      "lineCount": 362,
+      "utf8BOM": true,
+      "lineEndings": "LF"
+    },
+    "native": {
+      "lineCount": 2004,
+      "utf8BOM": true,
+      "lineEndings": "CRLF"
+    },
+    "lineConvention": "One-based LF-delimited records, excluding the terminal empty split entry.",
+    "json": {
+      "file": "rtl-witness.json",
+      "fromNativeLine": 1927,
+      "operation": "Remove only the leading timestamp plus one space; retain exact JSON text and trailing CRLF.",
+      "reserialized": false
+    },
+    "envelope": {
+      "file": "rtl-witness-envelope.log",
+      "fromNativeLines": [
+        1926,
+        1928
+      ],
+      "operation": "Exact contiguous timestamped three-line span, including original CRLF.",
+      "interleavedNonJsonLines": 0
+    }
+  },
+  "observed": {
+    "firstRuntimeFailure": {
+      "message": "Native RTL witness: icon-peer-unavailable (icon)",
+      "summaryLine": 1935,
+      "errorLine": 1945,
+      "processExitCode": 1,
+      "exitLine": 1952
+    },
+    "typedWitness": {
+      "pollAttempts": 0,
+      "byteScope": "UTF-8 envelope including its trailing newline; excludes runner timestamps",
+      "limits": {
+        "nodes": 512,
+        "outputUtf8Bytes": 8192,
+        "runtimeIdIntegers": 32,
+        "pollSleepMilliseconds": 100,
+        "pollSeconds": 10,
+        "depth": 24
+      },
+      "ltr": null,
+      "method": "uia-raw-icon-physical-screen",
+      "binding": null,
+      "deadlineScope": "retry-window; synchronous UIA calls are not cancellable by it",
+      "summaryStatus": "captured-state",
+      "latest": null,
+      "status": "failed",
+      "schemaVersion": 1,
+      "discovery": {
+        "initial": {
+          "toggles": 1,
+          "namedAncestors": 1,
+          "icons": 0,
+          "nodesRead": 46,
+          "nodesDiscovered": 46,
+          "maxDepth": 9,
+          "complete": true
+        },
+        "final": null
+      },
+      "failure": {
+        "code": "icon-peer-unavailable",
+        "role": "icon"
+      },
+      "sourceRevision": "e8f8c19db909a53f3054976449a7571b2a0524e9"
+    },
+    "preceding": {
+      "fabricSource": {
+        "initialNativeSourceTests": {
+          "tests": 13,
+          "passed": 13,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "lines": [
+            160,
+            165
+          ]
+        },
+        "packageAndAdapterTests": {
+          "tests": 49,
+          "passed": 49,
+          "failed": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "lines": [
+            266,
+            271
+          ]
+        },
+        "counting": "The initial 13 are included in the later 49 package/adapter tests; they are not 62 distinct tests.",
+        "isolatedTypes": "passed",
+        "publicApi": {
+          "packages": 1,
+          "subpaths": 8,
+          "reachableDeclarations": 44,
+          "line": 286
+        },
+        "producerSharedArchives": {
+          "archives": 2,
+          "originalBinaryBytesInspected": false
+        }
+      },
+      "nativePackageUnitTests": {
+        "passed": 49,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "lines": [
+          237,
+          242
+        ],
+        "scope": "Repeats the package suite in the native job; not another 49 unique designs."
+      },
+      "publicApi": {
+        "packages": 1,
+        "typedSubpaths": 8,
+        "reachableDeclarations": 44,
+        "line": 249
+      },
+      "referenceOwnerTests": {
+        "passed": 5,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "lines": [
+          620,
+          625
+        ]
+      },
+      "installedNativeLibraryCompile": {
+        "status": "passed",
+        "completedAt": "2026-11-11T11:57:16Z"
+      },
+      "actualConsumerCompile": {
+        "status": "passed",
+        "completedAt": "2026-11-11T11:58:39Z"
+      },
+      "packagedDeployment": {
+        "status": "passed",
+        "completedAt": "2026-11-11T11:59:36Z"
+      },
+      "powerShellDiagnosticCompatibilityStep": {
+        "status": "passed",
+        "completedAt": "2026-11-11T11:52:36Z",
+        "explicitParserListIncludesNavigationScript": false,
+        "navigationScriptSubsequentlyParsedAndExecuted": true,
+        "actualSelfTokenQueryLine": 488,
+        "portableEnvironmentSummaryLine": 499,
+        "portableInputSummaryLine": 507,
+        "actualIdentityAndSidLines": [
+          508,
+          510
+        ],
+        "scope": "Mock-suite counts and actual token/SID checks are separate. The navigation script is not in this step's explicit parser list; its later execution is observed."
+      },
+      "dragBoundary": {
+        "controlFlowInferred": true,
+        "scriptBlob": "aa54819df02c2decfba2fb19e3b4d2a5aaabd554",
+        "scriptLines": [
+          632,
+          677
+        ],
+        "completedScenarios": [
+          "rejected drop retains main ownership and zero transfers",
+          "Escape cancellation retains main ownership and zero transfers",
+          "target close during pending approval prevents late transfer",
+          "accepted cross-window drop commits document ownership and exactly one transfer"
+        ],
+        "logWitnesses": [
+          {
+            "line": 1822,
+            "event": "rejection screenshot saved"
+          },
+          {
+            "line": 1915,
+            "event": "acceptance screenshot saved"
+          },
+          {
+            "line": 1916,
+            "event": "navigation fixture entered"
+          }
+        ],
+        "limitation": "The exact sequential source and original log establish that these strict assertions returned before navigation. Original per-drag receipts and PNGs remain uninspected; a saved screenshot is not image inspection."
+      },
+      "navigationBeforeFailure": {
+        "selectionLines": [
+          1917,
+          1919
+        ],
+        "resizeWidths": [
+          992,
+          772,
+          992
+        ],
+        "resizeSelectionLines": [
+          1920,
+          1921,
+          1922
+        ],
+        "resizeScreenshotSavedLine": 1923
+      }
+    },
+    "cleanup": {
+      "catchEnteredLine": 1924,
+      "finallyEnteredLine": 1925,
+      "contrastRestorationReturnedLine": 1930,
+      "windowRestorationReturnedLine": 1932,
+      "resultSerializationReturnedLine": 1934
+    },
+    "processAtFailure": {
+      "line": 1936,
+      "processId": 924,
+      "exited": false,
+      "exitCode": null,
+      "hwnd": 720964,
+      "windowExists": true,
+      "windowProcessId": 924
+    },
+    "matchingWerRecords": {
+      "line": 1941,
+      "count": 0,
+      "limitation": "Only the existing scoped lookup at failure; not a conclusion about all historical faults."
+    },
+    "unreached": [
+      "Use RTL navigation action",
+      "LTR/icon geometry snapshot",
+      "RTL geometry polling or acceptance",
+      "later drawer collapse/expand assertions",
+      "later high-contrast assertion and final native acceptance"
+    ],
+    "environment": [
+      {
+        "line": 1794,
+        "filename": "drag-environment-01.json",
+        "originalBytes": 81388,
+        "originalSha256": "0c6b5f3dd7eac0be2ce23c94adf2ff082c9024452176004bbc15e9cb17e9eec1",
+        "originalFileInspected": false,
+        "sourceRevision": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+        "processId": 924,
+        "token": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellProcessId": 7636,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "predicates": {
+            "observedTrue": 8,
+            "observedFalse": 2,
+            "unobserved": 2
+          }
+        },
+        "session": 2,
+        "enableLua": {
+          "status": "observed",
+          "hive": "LocalMachine",
+          "view": "Registry64",
+          "valueName": "EnableLUA",
+          "kind": "DWord",
+          "value": 1
+        }
+      },
+      {
+        "line": 1825,
+        "filename": "drag-environment-02.json",
+        "originalBytes": 81388,
+        "originalSha256": "fffe0144089686faf27a497d6e0702a66c8bbc801acfeb8bd86ee35d14185eaa",
+        "originalFileInspected": false,
+        "sourceRevision": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+        "processId": 924,
+        "token": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellProcessId": 7636,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "predicates": {
+            "observedTrue": 8,
+            "observedFalse": 2,
+            "unobserved": 2
+          }
+        },
+        "session": 2,
+        "enableLua": {
+          "status": "observed",
+          "hive": "LocalMachine",
+          "view": "Registry64",
+          "valueName": "EnableLUA",
+          "kind": "DWord",
+          "value": 1
+        }
+      },
+      {
+        "line": 1855,
+        "filename": "drag-environment-03.json",
+        "originalBytes": 81388,
+        "originalSha256": "8698ba50f9d02cde30e011c17f5a15b5c1ee478073838fc74a23620ec1e15cb1",
+        "originalFileInspected": false,
+        "sourceRevision": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+        "processId": 924,
+        "token": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellProcessId": 7636,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "predicates": {
+            "observedTrue": 8,
+            "observedFalse": 2,
+            "unobserved": 2
+          }
+        },
+        "session": 2,
+        "enableLua": {
+          "status": "observed",
+          "hive": "LocalMachine",
+          "view": "Registry64",
+          "valueName": "EnableLUA",
+          "kind": "DWord",
+          "value": 1
+        }
+      },
+      {
+        "line": 1887,
+        "filename": "drag-environment-04.json",
+        "originalBytes": 81388,
+        "originalSha256": "d61751ba00b608a0aeec10dc8ad072b42a1a61261a571f47497ca0f5a4774274",
+        "originalFileInspected": false,
+        "sourceRevision": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+        "processId": 924,
+        "token": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellProcessId": 7636,
+        "shellToken": {
+          "elevation": {
+            "status": "observed",
+            "value": 1
+          },
+          "elevationType": {
+            "status": "observed",
+            "value": 1
+          },
+          "integrityRid": {
+            "status": "observed",
+            "value": 12288
+          },
+          "uiAccess": {
+            "status": "observed",
+            "value": 0
+          }
+        },
+        "shellReview": {
+          "status": "observed-ineligible",
+          "eligibleForActivationReview": false,
+          "predicates": {
+            "observedTrue": 8,
+            "observedFalse": 2,
+            "unobserved": 2
+          }
+        },
+        "session": 2,
+        "enableLua": {
+          "status": "observed",
+          "hive": "LocalMachine",
+          "view": "Registry64",
+          "valueName": "EnableLUA",
+          "kind": "DWord",
+          "value": 1
+        }
+      }
+    ]
+  },
+  "artifacts": {
+    "entries": [
+      {
+        "id": 13853610088,
+        "name": "winui-fabric-uia-smoke",
+        "size_in_bytes": 455220,
+        "digest": "sha256:d0225e292bd1f9ad695c1116180d3367f999b50df76ae2a2ab902d0a4530c45e",
+        "created_at": "2026-11-11T12:00:08Z",
+        "expired": false,
+        "workflow_run": {
+          "id": 43015171470,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-reviewed-closure-nov11",
+          "head_sha": "9a430338d8336283b230203a8555257798fcd62c"
+        }
+      },
+      {
+        "id": 13851783363,
+        "name": "windows-fabric-shared-packages",
+        "size_in_bytes": 62822,
+        "digest": "sha256:5afacbc025e38d947f4a68bf63dea857c604a2f42fd8127fa3e3c527ea2effb7",
+        "created_at": "2026-11-11T11:50:47Z",
+        "expired": false,
+        "workflow_run": {
+          "id": 43015171470,
+          "repository_id": 1446064781,
+          "head_repository_id": 1446064781,
+          "head_branch": "codex/v1-reviewed-closure-nov11",
+          "head_sha": "9a430338d8336283b230203a8555257798fcd62c"
+        }
+      }
+    ],
+    "uiEvidence": {
+      "id": 13853610088,
+      "name": "winui-fabric-uia-smoke",
+      "sizeInBytes": 455220,
+      "reportedSha256": "d0225e292bd1f9ad695c1116180d3367f999b50df76ae2a2ab902d0a4530c45e",
+      "reportedFiles": 51,
+      "reportedFilesLine": 1972,
+      "reportedHashLine": 1979,
+      "downloaded": false,
+      "zipHashIndependentlyComputed": false,
+      "extracted": false,
+      "imagesViewed": false
+    },
+    "releaseProducerExactWorkspaceArchiveStep": "skipped",
+    "passedArchiveRetentionStep": "skipped",
+    "testedDistributionUploadStep": "skipped",
+    "testedPackageAccepted": false
+  },
+  "interpretation": {
+    "established": "The combined candidate completed native compilation and deployment, then its complete bounded owned Raw-view search observed one toggle, one named navigation ancestor and zero qualifying Icon AutomationId descendants. The strict missing-peer failure was preserved.",
+    "notEstablished": [
+      "absence or placement of the rendered XAML icon",
+      "wrong native RTL layout or complete underlying XAML visual-tree inspection",
+      "atomicity or render completion",
+      "cause or repair of any earlier heap-corruption failure",
+      "supported elevated-host drag or eligible interactive-shell activation",
+      "complete native/release/eight-platform acceptance"
+    ],
+    "earlierHelperResult": "The same boundary was previously observed on helper 782 at dad54be8. This receipt independently binds the new combined execution to e8f8c19 and retains its new original log, process observations and exact excerpt."
+  },
+  "preservation": {
+    "completeOriginalsFetchedAfterCompletion": true,
+    "completeOriginalLogsReadBackAndHashed": true,
+    "derivedJsonAndBlockReadBackAndHashed": true,
+    "apiMetadataNormalized": true,
+    "sourceChangedForReceipt": false,
+    "rerun": false,
+    "dispatch": false,
+    "refOrPrMutation": false,
+    "additionalHostOrSecurityChange": false
+  },
+  "limits": [
+    "The combined general source 1,204-test result is retained in its separate receipt and is not added to the package tests here.",
+    "All output excerpt byte hashes bind the retained console text, not unextracted original environment/result files or screenshots.",
+    "Original package archives, ZIP members, physical-device, speech, performance, supported-host and final owner-manifest gates remain separate."
+  ]
+}

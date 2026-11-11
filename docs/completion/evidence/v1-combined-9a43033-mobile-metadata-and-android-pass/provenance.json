@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "kind": "combined-mobile-available-originals-and-metadata",
+  "recordedAtUTC": "2026-11-11 12:46:09 UTC",
+  "source": {
+    "head": "9a430338d8336283b230203a8555257798fcd62c",
+    "availableOriginalCheckout": "e8f8c19db909a53f3054976449a7571b2a0524e9",
+    "tree": "434f2cfa1a001bcec73788462e42957206819328",
+    "orderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "9a430338d8336283b230203a8555257798fcd62c"
+    ],
+    "iosActualOriginalCheckoutObserved": false
+  },
+  "run": 43015171227,
+  "attempt": 1,
+  "retainedFiles": [
+    {
+      "path": "source-job.log",
+      "job": 130504313955,
+      "gitBlob": "f8cb7279963b9ea945c85932f7cfc62d68678943",
+      "bytes": 57938,
+      "sha256": "ea4c267367e67dbc96782b67670fd7a2e0e760d37bc0abae6c2c5caf5e8de698",
+      "origin": "complete original completed-job decoded log, unchanged bytes, immutable blob readback verified"
+    },
+    {
+      "path": "android-job.log",
+      "job": 130504855738,
+      "gitBlob": "2f9222164dd69755c015550f09b09d5d94c4ff70",
+      "bytes": 281576,
+      "sha256": "c195ab82e7b8625345221b220230d682d0fa09ad7e4d666e560726916ffb6057",
+      "origin": "complete original completed-job decoded log, unchanged bytes, immutable blob readback verified"
+    }
+  ],
+  "android": {
+    "nativeBuild": "success",
+    "decoderChecksReported": 11,
+    "uiFlowsReported": 4,
+    "evidenceLines": [
+      {
+        "line": 2735,
+        "scope": "native Android decoder pass summary"
+      },
+      {
+        "line": 2736,
+        "scope": "native Android OS-driven UI pass summary"
+      }
+    ],
+    "actualCheckoutObservedInCompleteOriginal": true,
+    "transportRecoveryCount": null,
+    "transportRecoveryCountScope": "Not reported by the available pass summary; zero recovery is not inferred."
+  },
+  "ios": {
+    "metadataConclusion": "success",
+    "nativeCompilationStep": 12,
+    "decoderStep": 21,
+    "uiStep": 22,
+    "artifactRetentionStep": 23,
+    "stepConclusions": "success in completed job metadata",
+    "completeOriginalRetrieved": false,
+    "decoderCheckCount": null,
+    "uiFlowCount": null,
+    "recoveryCount": null,
+    "actualOriginalCheckoutObserved": false,
+    "reason": "Two attempts to retrieve the completed original log returned tool transport-closed errors; this is an evidence retrieval boundary, not a failing CI job."
+  },
+  "workspace": {
+    "originalSourceLogRetained": true,
+    "canonicalPackArtifact": 13851898513,
+    "archiveCount": 13,
+    "exactArchiveContentsIndependentlyInspected": false
+  },
+  "limitations": [
+    "The two original available logs are independently rehashed; artifact API ZIP digests are producer-reported only.",
+    "Android/iOS app ZIPs, runtime JSON, UI-driver raw reports, screenshots, archive members and exact peer hashes are unextracted and uninspected here.",
+    "iOS workflow/step success does not supply missing original checkout, runtime counts, recovery details or individual evidence bytes.",
+    "No physical phone/tablet, pen/fold/headset, assistive speech, device performance, complete eight-platform acceptance or final fifteen-archive approval is established.",
+    "This exact run is not a later helper/combined head result."
+  ]
+}
