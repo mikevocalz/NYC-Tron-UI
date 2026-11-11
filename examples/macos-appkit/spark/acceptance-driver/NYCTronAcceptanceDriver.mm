@@ -834,10 +834,29 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
             TraceActivation(@"order-front-entered", operation, ^{ return ActivationWindowState(window); });
             [window makeKeyAndOrderFront:nil];
             TraceActivation(@"order-front-returned", operation, nil);
-            NSDictionary *result = @{ @"ok": @YES, @"activationPath": @"NSWorkspace.openApplication", @"processId": @(processId), @"activationPolicy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active), @"key": @(window.keyWindow), @"visible": @(window.visible) };
-            TraceActivation(@"reply-prepared", operation, ^{ return @{ @"ok": result[@"ok"], @"policy": result[@"activationPolicy"],
-              @"applicationActive": result[@"applicationActive"], @"key": result[@"key"], @"visible": result[@"visible"] }; });
-            reply(result);
+            // Run 43014783342 (operation 2): the reply reported key=true for the
+            // new document window, and an inspect 23 ms later reported key=false,
+            // which stayed false for 30 s. The cause of that loss is not shown
+            // by the logs. Reply only once the window has stayed visible, key
+            // and active across three checks 50 ms apart, re-requesting key when
+            // it is lost, for at most 20 checks. Otherwise fail the command.
+            __block NSInteger checks = 0, stable = 0;
+            __block void (^settle)(void) = nil;
+            settle = ^{
+              BOOL held = window.visible && !window.miniaturized && window.keyWindow && NSApp.active;
+              if (held) stable++;
+              else { stable = 0; if (!NSApp.active) [NSApp activateIgnoringOtherApps:YES]; [window makeKeyAndOrderFront:nil]; }
+              if (stable >= 3 || ++checks >= 20) {
+                NSDictionary *result = @{ @"ok": @(stable >= 3), @"activationPath": @"NSWorkspace.openApplication", @"processId": @(processId), @"activationPolicy": @(NSApp.activationPolicy), @"applicationActive": @(NSApp.active), @"key": @(window.keyWindow), @"visible": @(window.visible) };
+                TraceActivation(@"reply-prepared", operation, ^{ return @{ @"ok": result[@"ok"], @"policy": result[@"activationPolicy"],
+                  @"applicationActive": result[@"applicationActive"], @"key": result[@"key"], @"visible": result[@"visible"], @"settleChecks": @(checks), @"stable": @(stable) }; });
+                if (stable >= 3) reply(result);
+                else reply(Failure(@"The window did not stay visible, key and active after activation"));
+                settle = nil; return;
+              }
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), settle);
+            };
+            settle();
           });
         }];
         TraceActivation(@"workspace-request-returned", operation, nil);
