@@ -1,6 +1,7 @@
 # Third-party notices
 
-NYC-Tron owns the adapter, window controller, display geometry module and
+NYC-Tron owns the adapter, window controller, display geometry module,
+NSPopover Fabric binding and
 reference application under the repository's MIT license.
 
 The package imports these separately installed dependencies. Their source is

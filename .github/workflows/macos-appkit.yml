@@ -40,7 +40,7 @@ jobs:
           corepack pnpm install --frozen-lockfile --ignore-scripts
       - name: Build and pack core with release provenance
         run: |
-          node --test tooling/macos-appkit/shared-archives.test.mjs
+          node --test tooling/macos-appkit/shared-archives.test.mjs tooling/macos-appkit/driver-client.test.mjs tooling/macos-appkit/driver-transport.test.mjs tooling/macos-appkit/patch-expo-device-name.test.mjs
           corepack pnpm --filter @nyc-tron/core build
           node tooling/pack-release.mjs "$RUNNER_TEMP/appkit-shared" --packages core
       - uses: actions/upload-artifact@v4
@@ -96,9 +96,61 @@ jobs:
         run: node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
       - name: Verify the installed AppKit public declaration snapshot
         run: node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+      - name: Verify the private Spark transport with native Foundation and socketpair
+        run: node tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"
       - name: Compile a standalone native AppKit reference
         working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
-        run: npm run build
+        env:
+          APPKIT_BUILD_LOG: ${{ runner.temp }}/appkit-build-console/build-console.log
+          APPKIT_BUILD_RESULT: ${{ runner.temp }}/appkit-build-console/build-result.json
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$APPKIT_BUILD_LOG")"
+          test ! -e "$APPKIT_BUILD_LOG"
+          build_status=0
+          (set -o noclobber; npm run build > "$APPKIT_BUILD_LOG" 2>&1) || build_status=$?
+          export APPKIT_BUILD_EXIT_CODE="$build_status"
+          reporting_status=0
+          node --input-type=module <<'NODE' || reporting_status=$?
+          import { createHash } from "node:crypto";
+          import { open, stat, writeFile } from "node:fs/promises";
+          const exitCode = Number(process.env.APPKIT_BUILD_EXIT_CODE);
+          if (!Number.isInteger(exitCode) || exitCode < 0 || exitCode > 255) throw new Error("Invalid build exit status");
+          if (!/^[0-9a-f]{40}$/.test(process.env.GITHUB_SHA ?? "")) throw new Error("Missing actual checkout revision");
+          const file = await open(process.env.APPKIT_BUILD_LOG, "r");
+          const digest = createHash("sha256");
+          let before, after, bytes = 0;
+          try {
+            before = await file.stat();
+            if (!before.isFile() || !Number.isSafeInteger(before.size)) throw new Error("Build transcript is not a bounded regular file");
+            for await (const chunk of file.createReadStream({ autoClose: false })) {
+              bytes += chunk.length;
+              if (bytes > before.size) throw new Error("Build transcript grew during hashing");
+              digest.update(chunk);
+            }
+            after = await file.stat();
+          } finally { await file.close(); }
+          const current = await stat(process.env.APPKIT_BUILD_LOG);
+          for (const snapshot of [after, current]) {
+            if (snapshot.dev !== before.dev || snapshot.ino !== before.ino || snapshot.size !== before.size ||
+                snapshot.mtimeMs !== before.mtimeMs || snapshot.ctimeMs !== before.ctimeMs) {
+              throw new Error("Build transcript changed during hashing");
+            }
+          }
+          if (bytes !== before.size) throw new Error("Build transcript byte count changed");
+          const result = { schemaVersion: 1, sourceRevision: process.env.GITHUB_SHA,
+            command: ["npm", "run", "build"], exitCode, outcome: exitCode === 0 ? "success" : "failure",
+            transcript: { filename: "build-console.log", bytes, sha256: digest.digest("hex"), complete: true, normalized: false } };
+          await writeFile(process.env.APPKIT_BUILD_RESULT, JSON.stringify(result, null, 2) + "\n", { flag: "wx" });
+          console.log("NYCTRON_APPKIT_BUILD_RESULT_BEGIN");
+          console.log(JSON.stringify(result));
+          console.log("NYCTRON_APPKIT_BUILD_RESULT_END");
+          NODE
+          if [ "$build_status" -ne 0 ]; then
+            tail -c 32768 "$APPKIT_BUILD_LOG" || true
+            exit "$build_status"
+          fi
+          exit "$reporting_status"
       - name: Exercise actual native controls and window lifetimes
         id: native
         working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
@@ -118,11 +170,17 @@ jobs:
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-preparation.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/package-lock.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/spark-sdk-inputs.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-device-name/*.json
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.mm
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/*.log
+            ${{ runner.temp }}/nyc-tron-appkit-consumer/acceptance-transport/SPARK-LICENSE
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/logs/
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/commands.jsonl
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/selection-report.json
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/version
             ${{ runner.temp }}/appkit-toolchain/
+            ${{ runner.temp }}/appkit-build-console/
       - name: Retain the exact natively tested distribution
         if: success() && steps.native.outcome == 'success'
         uses: actions/upload-artifact@v4
