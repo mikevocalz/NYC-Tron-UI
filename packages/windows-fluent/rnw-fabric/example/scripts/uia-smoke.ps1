@@ -377,15 +377,21 @@ function Write-Diagnostics($since, [int]$expectedProcessId = 0) {
 # cannot lose them. Diagnostic only: a failure here never changes the result.
 function Save-DragTraceCheckpoint([string]$label) {
   try {
-    Save-NativeDragTrace $AppUserModelId $ownedProcessId $OutDir $false
-    $copied = Join-Path $OutDir "native-drag-trace.jsonl"
-    if (Test-Path -LiteralPath $copied) {
-      Copy-Item -LiteralPath $copied -Destination (Join-Path $OutDir "native-drag-trace-$label.jsonl") -Force
-      foreach ($line in [System.IO.File]::ReadAllLines($copied, [System.Text.Encoding]::UTF8)) {
-        $r = $line | ConvertFrom-Json
-        if ($r.stage -like "parent-drop-*" -or $r.stage -in @("source-starting", "source-drop-completed", "broker-native-completed", "broker-offer", "broker-resolve")) {
-          Write-Host ("[trace-$label] seq={0} stage={1} effect={2} escapeSeen={3} escapeCount={4} escapeHook={5} allowed={6}" -f $r.sequence, $r.stage, $r.effect, $r.escapeSeen, $r.escapeCount, $r.escapeHook, $r.allowed)
-        }
+    # The app still holds the trace open for writing, so Copy-Item and Get-FileHash
+    # fail on it (receipt reason native-trace-retention-error in run 42990880283).
+    # Read it through a stream that allows concurrent writers.
+    $source = Resolve-NativeDragTracePath $AppUserModelId $ownedProcessId
+    if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { Write-Host "Native drag trace checkpoint '$label': file absent"; return }
+    $destination = Join-Path $OutDir "native-drag-trace-$label.jsonl"
+    $input = [System.IO.File]::Open($source, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, ([System.IO.FileShare]::ReadWrite -bor [System.IO.FileShare]::Delete))
+    try {
+      $output = [System.IO.File]::Create($destination)
+      try { $input.CopyTo($output) } finally { $output.Dispose() }
+    } finally { $input.Dispose() }
+    foreach ($line in [System.IO.File]::ReadAllLines($destination, [System.Text.Encoding]::UTF8)) {
+      try { $r = $line | ConvertFrom-Json } catch { continue }
+      if ($r.stage -like "parent-drop-*" -or $r.stage -in @("source-starting", "source-drop-completed", "broker-native-completed", "broker-offer", "broker-resolve")) {
+        Write-Host ("[trace-$label] seq={0} stage={1} effect={2} escapeSeen={3} escapeCount={4} escapeHook={5} allowed={6}" -f $r.sequence, $r.stage, $r.effect, $r.escapeSeen, $r.escapeCount, $r.escapeHook, $r.allowed)
       }
     }
   } catch { Write-Host "Native drag trace checkpoint '$label' unavailable: $($_.Exception.Message)" }
