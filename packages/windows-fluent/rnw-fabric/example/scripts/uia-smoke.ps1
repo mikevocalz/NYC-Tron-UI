@@ -26,13 +26,29 @@ New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 $AE = [System.Windows.Automation.AutomationElement]
 $Tree = [System.Windows.Automation.TreeScope]
 
+# UIA SetFocus throws "Target element cannot receive focus" while the window is
+# still being maximized or has not yet been activated by the shell. Bring the
+# owning window to the foreground and retry for a bounded time; if focus is
+# never accepted the last UIA error is thrown, so the assertion stays strict.
+function Set-ElementFocus($element, $window, [int]$timeoutSec = 10) {
+  $handle = if ($null -ne $window) { [IntPtr]$window.Current.NativeWindowHandle } else { [IntPtr]$element.Current.NativeWindowHandle }
+  $deadline = (Get-Date).AddSeconds($timeoutSec)
+  $lastError = $null
+  do {
+    if ($handle -ne [IntPtr]::Zero) { [NativeWindow]::SetForegroundWindow($handle) | Out-Null }
+    try { $element.SetFocus(); return } catch { $lastError = $_.Exception.Message }
+    Start-Sleep -Milliseconds 250
+  } while ((Get-Date) -lt $deadline)
+  throw "Element '$($element.Current.Name)' could not receive focus within $timeoutSec s: $lastError"
+}
+
 function Save-Screenshot([string]$name, $target) {
   $rect = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
   if ($null -ne $target) {
     $handle = [IntPtr]$target.Current.NativeWindowHandle
     if ($handle -eq [IntPtr]::Zero) { throw "Screenshot target has no native top-level window" }
     [NativeWindow]::SetForegroundWindow($handle) | Out-Null
-    $target.SetFocus()
+    Set-ElementFocus $target $target
     $deadline = (Get-Date).AddSeconds(5)
     $ready = $false
     while ((Get-Date) -lt $deadline) {
@@ -106,7 +122,7 @@ function Invoke-Button($root, [string]$name) {
     Write-Host "Invoked '$name' through InvokePattern"
   } else {
     [NativeWindow]::SetForegroundWindow([IntPtr]$root.Current.NativeWindowHandle) | Out-Null
-    $button.SetFocus()
+    Set-ElementFocus $button $root
     Start-Sleep -Milliseconds 300
     [System.Windows.Forms.SendKeys]::SendWait(" ")
     Write-Host "Pressed '$name' with the keyboard (no InvokePattern)"
@@ -116,7 +132,7 @@ function Invoke-Button($root, [string]$name) {
 function Request-Workspace($window, $homeItem) {
   # Keyboard path: focus the committed item, move down one item, press Enter.
   [NativeWindow]::SetForegroundWindow([IntPtr]$window.Current.NativeWindowHandle) | Out-Null
-  $homeItem.SetFocus()
+  Set-ElementFocus $homeItem $window
   Start-Sleep -Milliseconds 300
   [System.Windows.Forms.SendKeys]::SendWait("{DOWN}")
   Start-Sleep -Milliseconds 300
