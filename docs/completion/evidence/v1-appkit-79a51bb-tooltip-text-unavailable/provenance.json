@@ -1,0 +1,569 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "Completed direct-head AppKit run; native startup success followed by strict tooltip-text timeout. No full native acceptance.",
+  "workflow": {
+    "id": 42975767901,
+    "name": "NYC-Tron AppKit native host",
+    "path": ".github/workflows/macos-appkit.yml",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "failure",
+    "run_number": 25,
+    "run_attempt": 1,
+    "workflow_id": 413427679,
+    "head_sha": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "created_at": "2026-11-11T06:55:10Z",
+    "run_started_at": "2026-11-11T06:55:10Z",
+    "updated_at": "2026-11-11T07:17:09Z",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42975767901"
+  },
+  "jobs": {
+    "source": 130374370504,
+    "native": 130374533751
+  },
+  "source": {
+    "commit": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "tree": "f5603b91fec3b9c9466fa0776ce0fff1f6be565e",
+    "parents": [
+      "8f1cf564afc9e178246eaa1825f392ebb68cf485"
+    ],
+    "actualSourceCheckout": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "sourceCheckoutLogLine": 107,
+    "actualNativeCheckout": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "nativeCheckoutLogLine": 114,
+    "checkoutKind": "direct head from workflow_dispatch",
+    "prMergeCommit": null,
+    "treeLeavesIndependentlyVerified": 2050,
+    "treeObjectsIndependentlyRecomputed": 284,
+    "workflowGitBlob": "c46871c2e8b065b478da8ed1946432a2d05502b9",
+    "verifierGitBlob": "4507f860155746bb6f1a3a9528dd0e74de5d6492",
+    "privateDeviceNamePatchGitBlob": "1db73096cf95827f5582d188580e74a482beb503",
+    "privatePreparationGitBlob": "43bbe4568fd25697881254c8976778bb75b6e972",
+    "distinctLaterReviewedHelper": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "distinctLaterRun": 42977406794
+  },
+  "chronology": {
+    "precedingDirectExperiment": "8f17a1fd7530d2907e28401063cd7b49841e8ebd",
+    "hostsExperimentRevert": "8f1cf564afc9e178246eaa1825f392ebb68cf485",
+    "thisDirectHead": "79a51bb7663bffe130568f81e276ded0e0b065b9",
+    "laterDistinctReviewedHelper": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "laterDistinctRun": 42977406794,
+    "historicalStartupCauseEstablished": false,
+    "laterCandidateCertifiedByThisRun": false
+  },
+  "completedGates": {
+    "source": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 486.712535,
+      "log": "source-job.log",
+      "summaryLines": {
+        "start": 170,
+        "end": 177
+      }
+    },
+    "installedConsumer": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "reportedDurationMilliseconds": 108.243958,
+      "log": "native-job.log",
+      "summaryLines": {
+        "start": 251,
+        "end": 258
+      }
+    },
+    "publicApi": {
+      "status": "matched",
+      "typedSubpaths": 15,
+      "reachableDeclarations": 33,
+      "logLine": 443
+    },
+    "nativeTransportProbe": {
+      "status": "passed",
+      "cases": 7,
+      "alsoReportsTracePrivacyAndClosedPeerFailure": true,
+      "logLine": 453
+    },
+    "compile": {
+      "status": "success",
+      "exitCode": 0,
+      "buildSummary": "build-result.json"
+    },
+    "runtime": {
+      "status": "failure"
+    },
+    "testedDistributionUpload": "skipped",
+    "countsAreNotAdditiveNativeAcceptanceTotal": true
+  },
+  "primaryFailure": {
+    "message": "Timed out waiting for new visible native help-tag text after the posted pointer reaches the trigger",
+    "log": "native-job.log",
+    "line": 538,
+    "waitForVerifierLine": 743,
+    "tooltipCallVerifierLine": 890,
+    "runtimeExitCode": 1,
+    "exitCodeLogLine": 544
+  },
+  "startup": {
+    "processId": 43685,
+    "requestId": 2,
+    "command": "tron.window",
+    "startedAt": "2026-11-11T07:16:22.776Z",
+    "responseAt": "2026-11-11T07:16:23.524Z",
+    "ok": true,
+    "derivedRecordedIntervalSeconds": 0.748,
+    "sameProcess": true,
+    "sameBundle": true,
+    "visible": true,
+    "key": true,
+    "applicationActive": true,
+    "timing": {
+      "clock": "CACurrentMediaTime",
+      "clockExcludesSystemSleep": true,
+      "intervalsAreNotQueueResidence": true,
+      "intervalsDoNotEstablishCause": true,
+      "completionTraceElapsedSeconds": 0.00009441666679776972,
+      "submissionStartToMainEntrySeconds": 0.5545028750000256
+    },
+    "predeadlineSampleEnvelopePresent": false,
+    "fullHistoricalCauseEstablished": false
+  },
+  "tooltip": {
+    "observationScope": "Retained last hover observation; not all earlier polls",
+    "summarySource": "tooltip-evidence.json",
+    "processId": 43685,
+    "permission": {
+      "postEventsAllowed": true,
+      "accessibilityTrusted": true
+    },
+    "pointerRequests": {
+      "initialExit": {
+        "action": "leave",
+        "ok": true,
+        "targetPoint": {
+          "x": 529,
+          "y": 514
+        },
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        }
+      },
+      "enter": {
+        "action": "enter",
+        "ok": true,
+        "targetPoint": {
+          "x": 329,
+          "y": 384
+        },
+        "triggerFrame": {
+          "x": 249,
+          "y": 366,
+          "width": 160,
+          "height": 36
+        }
+      },
+      "exit": null
+    },
+    "baselineHelpTags": 0,
+    "lastObservation": {
+      "ownerVisible": true,
+      "ownerKey": true,
+      "applicationActive": true,
+      "cursorInsideTrigger": true,
+      "pointerRunning": false,
+      "triggerFrame": {
+        "x": 249,
+        "y": 366,
+        "width": 160,
+        "height": 36
+      },
+      "cursor": {
+        "x": 329,
+        "y": 384
+      },
+      "traversalTruncated": false,
+      "helpTagCount": 1,
+      "helpTagWindowNumber": 41,
+      "role": "AXHelpTag",
+      "windowVisible": true,
+      "windowOnscreen": true,
+      "frame": {
+        "x": 329,
+        "y": 347,
+        "width": 213,
+        "height": 18
+      },
+      "windowFrame": {
+        "x": 329,
+        "y": 347,
+        "width": 213,
+        "height": 18
+      },
+      "textMatchesExpected": false,
+      "matchesShownTagPredicate": false,
+      "stringCollection": {
+        "type": "array",
+        "total": 0,
+        "inspected": 0,
+        "inspectionLimit": 128,
+        "complete": true,
+        "inspectedStringCount": 0,
+        "inspectedNonStringCount": 0,
+        "inspectedEmptyCount": 0,
+        "inspectedNonemptyCount": 0,
+        "inspectedExactExpectedCount": 0
+      },
+      "inspectedNodes": 3,
+      "current": {
+        "fieldSlots": 12,
+        "calls": 9,
+        "unavailable": 3,
+        "nil": 9,
+        "captured": 0,
+        "string": 0,
+        "attributedString": 0,
+        "other": 0,
+        "normalizedNil": 0,
+        "empty": 0,
+        "nonempty": 0,
+        "retainedStrings": 0,
+        "detailLimit": 16,
+        "detailsOmitted": 0
+      },
+      "legacy": {
+        "nodeLimit": 8,
+        "nodesConsidered": 3,
+        "supportedReadsAttempted": 3,
+        "returned": 3,
+        "thrown": 0,
+        "selectorExceptions": 0,
+        "metadataExceptions": 0,
+        "nodesOmitted": 0,
+        "diagnosticOnly": true
+      },
+      "allThreeLegacyReturnClassifications": "nil"
+    },
+    "interpretation": "A visible nonempty native help-tag object was observed, but the existing modern collector and separate legacy diagnostic produced no text on the inspected nodes; wrong displayed text and absence of a help tag are not established.",
+    "expectedTextPresentationProved": false,
+    "subsequentDismissalProved": false,
+    "laterDragAcceptanceProved": false
+  },
+  "diagnosticInputs": {
+    "appLog": {
+      "filename": "app.log",
+      "status": "snapshot-retained",
+      "readByteLimit": 1048576,
+      "readBytes": 456432,
+      "sourceLive": true,
+      "sourceBytesBefore": 456432,
+      "sourceBytesAfter": 456432,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": false,
+      "originalSha256": null,
+      "truncated": false,
+      "laterAppendsPossible": true,
+      "unreadBytesObserved": 0,
+      "snapshot": {
+        "filename": "startup-app-log-snapshot.log",
+        "kind": "read-time-prefix-from-live-app-log",
+        "offset": 0,
+        "bytes": 456432,
+        "sha256": "d0b327162dfd17ced2bf701e2eb6cdc82a2127e8c1d93fe313685380c8dbd660",
+        "retained": true,
+        "eventualAppLogHash": false
+      }
+    },
+    "commands": {
+      "filename": "commands.jsonl",
+      "status": "incomplete-or-changing-read",
+      "readByteLimit": 262145,
+      "readBytes": 262145,
+      "sourceLive": false,
+      "sourceBytesBefore": 1426827,
+      "sourceBytesAfter": 1426827,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": false,
+      "completeOriginalFile": false,
+      "originalSha256": null,
+      "truncated": true,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 1164682,
+      "snapshot": null
+    },
+    "processFailure": {
+      "filename": "native-process-failure.json",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 1320,
+      "sourceLive": false,
+      "sourceBytesBefore": 1320,
+      "sourceBytesAfter": 1320,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "81fa664afad7f1efa73c28774649b3e18d25973821213d101dc2a225044ffd13",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null,
+      "jsonStatus": "parsed"
+    },
+    "processSample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 7,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "d456a83c60af2584c1ed76c9020eb8ca93494176f171a9a2ab22f5e7da2a51d9",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true
+    },
+    "rawSampleInspected": false,
+    "threadGroupCountIsNotTestCountOrHealthProof": true,
+    "samplingDurationIsRequestedNotMeasured": true
+  },
+  "consoleExtraction": [
+    {
+      "marker": "NYCTRON_APPKIT_BUILD_RESULT",
+      "startLine": 511,
+      "endLine": 513,
+      "jsonLine": 512,
+      "interleavedLineCount": 0,
+      "json": {
+        "filename": "build-result.json",
+        "bytes": 318,
+        "sha256": "11ce5266e35a7b5787ae65dd308d4ec9ba2387a6feb917e9fcd81a9bf3395509",
+        "gitBlob": "c400b8a9d43f2a747eda7f68b88daadf3193c5b6"
+      },
+      "block": {
+        "filename": "build-result-envelope.log",
+        "bytes": 472,
+        "sha256": "e370576ee3fa98a3291a7a1a6b8cbc57fec97a42703a65d90f26a6d51f9954e6",
+        "gitBlob": "346c65ead4a67b1845e0dc47637ff57abd3c264b"
+      }
+    },
+    {
+      "marker": "NYCTRON_TOOLTIP_EVIDENCE",
+      "startLine": 529,
+      "endLine": 531,
+      "jsonLine": 530,
+      "interleavedLineCount": 0,
+      "json": {
+        "filename": "tooltip-evidence.json",
+        "bytes": 6126,
+        "sha256": "b1f183ab2811a0ab5e16ee70ea1daac27e8cc1b65f5a5534e1a10a3367b03050",
+        "gitBlob": "b1ca1c763ae3fec21653cd97caf3c688fc05f8e2"
+      },
+      "block": {
+        "filename": "tooltip-evidence-envelope.log",
+        "bytes": 6274,
+        "sha256": "24e5f0ceb28ea8b561f5e8daf63d31970bbf232fe3118e23c7e4dc94e24e961b",
+        "gitBlob": "f648615df9ceb830954e3874fe7e3085fa424cd8"
+      }
+    },
+    {
+      "marker": "NYCTRON_STARTUP_EVIDENCE",
+      "startLine": 532,
+      "endLine": 543,
+      "jsonLine": 533,
+      "interleavedLineCount": 9,
+      "json": {
+        "filename": "startup-evidence.json",
+        "bytes": 22882,
+        "sha256": "7fa9f9ca182f932bedd1cbed05444710a5ac6fbd5ebe5e10bb2df492c39da810",
+        "gitBlob": "e9c1ccdbe96bd95d3813d905c205eea8a90bbef5"
+      },
+      "block": {
+        "filename": "startup-evidence-envelope.log",
+        "bytes": 23752,
+        "sha256": "ca35ee1754fa59b3f1344bc0eb8167ac92ddf0ee2170aa738f639eb849adf497",
+        "gitBlob": "ff1a3543dae6bdce53d88657a4fd9a373931dce1"
+      }
+    }
+  ],
+  "producerReportedOriginals": {
+    "compilerTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329235,
+      "sha256": "9c25225f1d874e04a5b6dd9a099f8dfdad39904a25492e06831b899a2661a925",
+      "complete": true,
+      "normalized": false
+    },
+    "tooltipFile": {
+      "filename": "tooltip-hover.json",
+      "bytes": 12452,
+      "sha256": "b84ab768f7d7ed96a11f0bc395c6c0e6356e35092ab6a03398840f89b96229aa",
+      "completeRead": true,
+      "readByteLimit": 1048577
+    },
+    "appLogSnapshot": {
+      "filename": "startup-app-log-snapshot.log",
+      "kind": "read-time-prefix-from-live-app-log",
+      "offset": 0,
+      "bytes": 456432,
+      "sha256": "d0b327162dfd17ced2bf701e2eb6cdc82a2127e8c1d93fe313685380c8dbd660",
+      "retained": true,
+      "eventualAppLogHash": false
+    },
+    "processFailure": {
+      "filename": "native-process-failure.json",
+      "bytes": 1320,
+      "sha256": "81fa664afad7f1efa73c28774649b3e18d25973821213d101dc2a225044ffd13"
+    },
+    "processSample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 7,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "d456a83c60af2584c1ed76c9020eb8ca93494176f171a9a2ab22f5e7da2a51d9",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true
+    },
+    "nativeArtifact": {
+      "id": 13836268098,
+      "name": "macos-appkit-native-evidence",
+      "size_in_bytes": 1481905,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836268098",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836268098/zip",
+      "expired": false,
+      "created_at": "2026-11-11T07:16:53Z",
+      "expires_at": "2026-11-25T07:16:52Z",
+      "updated_at": "2026-11-11T07:16:53Z",
+      "digest": "sha256:c92cd3a986ac175c6cec6e0335c8dca9195e9651863e59cf16ade6cd4e2eb9da",
+      "workflow_run": {
+        "id": 42975767901,
+        "repository_id": 1446064781,
+        "head_repository_id": 1446064781,
+        "head_branch": "codex/v1-appkit-interactions-nov10",
+        "head_sha": "79a51bb7663bffe130568f81e276ded0e0b065b9"
+      }
+    },
+    "uploadedFilesReported": 47,
+    "uploadedFilesLogLine": 579,
+    "originalFilesRetrieved": false,
+    "archiveExtracted": false,
+    "archiveDigestIndependentlyVerified": false
+  },
+  "retainedFiles": [
+    {
+      "filename": "source-job.log",
+      "bytes": 18752,
+      "sha256": "201afd48295f99c8143113a7f123439cda64db531f429375c2b58925fc485d81",
+      "gitBlob": "a8493a6791fefe1a176632aa1de16f177b605259"
+    },
+    {
+      "filename": "native-job.log",
+      "bytes": 82804,
+      "sha256": "dc2ec799319cb873783a1f81b4abd9fdb4c5666a9cc6485ea4698c5fc0ad319e",
+      "gitBlob": "10b8f022b6958683a9d74cc2ffc903b3c6f9c5dd"
+    },
+    {
+      "filename": "build-result.json",
+      "bytes": 318,
+      "sha256": "11ce5266e35a7b5787ae65dd308d4ec9ba2387a6feb917e9fcd81a9bf3395509",
+      "gitBlob": "c400b8a9d43f2a747eda7f68b88daadf3193c5b6"
+    },
+    {
+      "filename": "build-result-envelope.log",
+      "bytes": 472,
+      "sha256": "e370576ee3fa98a3291a7a1a6b8cbc57fec97a42703a65d90f26a6d51f9954e6",
+      "gitBlob": "346c65ead4a67b1845e0dc47637ff57abd3c264b"
+    },
+    {
+      "filename": "tooltip-evidence.json",
+      "bytes": 6126,
+      "sha256": "b1f183ab2811a0ab5e16ee70ea1daac27e8cc1b65f5a5534e1a10a3367b03050",
+      "gitBlob": "b1ca1c763ae3fec21653cd97caf3c688fc05f8e2"
+    },
+    {
+      "filename": "tooltip-evidence-envelope.log",
+      "bytes": 6274,
+      "sha256": "24e5f0ceb28ea8b561f5e8daf63d31970bbf232fe3118e23c7e4dc94e24e961b",
+      "gitBlob": "f648615df9ceb830954e3874fe7e3085fa424cd8"
+    },
+    {
+      "filename": "startup-evidence.json",
+      "bytes": 22882,
+      "sha256": "7fa9f9ca182f932bedd1cbed05444710a5ac6fbd5ebe5e10bb2df492c39da810",
+      "gitBlob": "e9c1ccdbe96bd95d3813d905c205eea8a90bbef5"
+    },
+    {
+      "filename": "startup-evidence-envelope.log",
+      "bytes": 23752,
+      "sha256": "ca35ee1754fa59b3f1344bc0eb8167ac92ddf0ee2170aa738f639eb849adf497",
+      "gitBlob": "ff1a3543dae6bdce53d88657a4fd9a373931dce1"
+    },
+    {
+      "filename": "workflow-metadata.json",
+      "bytes": 11180,
+      "sha256": "482250e3b76394740f6cc3bb97c4b41eead9eb88d090a4a6c3fdc14caacbc9f7",
+      "gitBlob": "5b31b33c92c6b420ff09f2319cd953968c082948"
+    },
+    {
+      "filename": "README.md",
+      "bytes": 8105,
+      "sha256": "037797dda28e4a7d75969ad73c79ad6c37fe0d2f3df0259c5b56f7f3c8d77012",
+      "gitBlob": "8918ffa4f0550eb565b5a55c6f51c932d7ede4ed"
+    }
+  ],
+  "independentVerification": {
+    "completeDecodedSourceAndNativeLogsHashed": true,
+    "consoleJsonParsed": true,
+    "exactTimestampedEnvelopeExtraction": true,
+    "rawConsoleBlobsWrittenAndReadBackByteForByte": true,
+    "normalizedMetadataBlobWrittenAndReadBackByteForByte": true,
+    "sourceTreeAllLeavesAndTreeHashesVerified": true,
+    "sourceAndNativeCheckoutHashesObservedInTheirOriginalLogs": true,
+    "rootIndependentSourceLogMatchReported": true,
+    "otherReviewerRawArtifactVerificationClaimed": false
+  },
+  "boundaries": [
+    "The direct workflow_dispatch checkout is not the later reviewed helper or its PR merge.",
+    "The successful initial activation in this run does not prove the cause of historical startup delays or a private patch's causal effect.",
+    "The visible help-tag and cleared pointer-sequence flag are observed; exact expected text is not.",
+    "Modern and legacy nil read results describe only the inspected nodes in the retained last observation.",
+    "The startup command projection is a bounded prefix, not the entire command file.",
+    "Diagnostic-only console summaries do not convert this failed run into acceptance.",
+    "No raw compiler transcript, tooltip JSON, process sample, screenshot, archive or archive member was inspected.",
+    "No native passed package receipt or full release/eight-platform acceptance is established."
+  ],
+  "authorActions": {
+    "newNativeExecution": false,
+    "workflowDispatch": false,
+    "rerun": false,
+    "sourceChanges": false,
+    "refChanges": false,
+    "prChanges": false,
+    "immutableEvidenceBlobCreation": true
+  },
+  "receipt": {
+    "directory": "docs/completion/evidence/v1-appkit-79a51bb-tooltip-text-unavailable",
+    "filesIncludingThisProvenance": 11,
+    "provenanceDoesNotHashItself": true
+  }
+}

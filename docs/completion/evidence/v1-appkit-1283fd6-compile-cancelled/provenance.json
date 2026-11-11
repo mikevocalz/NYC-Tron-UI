@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "scope": "Completed AppKit PR-merge workflow with successful preparatory gates, cancelled compile step and skipped runtime acceptance.",
+  "workflow": {
+    "id": 42977406794,
+    "name": "NYC-Tron AppKit native host",
+    "path": ".github/workflows/macos-appkit.yml",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "run_number": 26,
+    "run_attempt": 1,
+    "workflow_id": 413427679,
+    "head_sha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "created_at": "2026-11-11T07:09:12Z",
+    "run_started_at": "2026-11-11T07:09:12Z",
+    "updated_at": "2026-11-11T07:24:47Z",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406794"
+  },
+  "jobs": {
+    "source": 130379594331,
+    "native": 130379756212
+  },
+  "source": {
+    "head": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "tree": "8bafabc7750c8a087a56a9a309fbd04f5ea0d377",
+    "headOrderedParents": [
+      "79a51bb7663bffe130568f81e276ded0e0b065b9",
+      "ac5d69585a52a6e945dc996ea08030e190574699"
+    ],
+    "actualMerge": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "mergeOrderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "1283fd6dea6cead03be7d0eb22863e02dbe648fd"
+    ],
+    "actualSourceCheckout": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "sourceCheckoutLogLine": 123,
+    "actualNativeCheckout": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "nativeCheckoutLogLine": 113,
+    "treeLeavesIndependentlyVerified": 2050,
+    "treeObjectsIndependentlyRecomputed": 284,
+    "direct79aOutcomeIsSeparate": true
+  },
+  "observedOutcome": {
+    "source": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 459.23365
+    },
+    "installedConsumer": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0
+    },
+    "installedApi": {
+      "status": "matched",
+      "typedSubpaths": 15,
+      "reachableDeclarations": 33
+    },
+    "nativeTransportProbe": {
+      "status": "passed",
+      "cases": 7
+    },
+    "compileStep": "cancelled",
+    "cancellationMessage": "The operation was canceled.",
+    "cancellationLogLine": 509,
+    "cancellationLogTimestamp": "2026-11-11T07:24:17.8062860Z",
+    "runtimeStep": "skipped",
+    "buildResultEnvelopePresent": false,
+    "startupEvidenceEnvelopePresent": false,
+    "tooltipEvidenceEnvelopePresent": false,
+    "startupSampleEnvelopePresent": false,
+    "actualRuntimeAcceptanceOutcome": null,
+    "testedDistributionUpload": "skipped",
+    "cancellationActorOrCauseEstablished": false
+  },
+  "originalLogMilestones": {
+    "sourceCheckout": 123,
+    "sourceSummary": {
+      "start": 185,
+      "end": 192
+    },
+    "nativeCheckout": 113,
+    "installedConsumerSummary": {
+      "start": 250,
+      "end": 257
+    },
+    "publicApiMatch": 441,
+    "nativeTransportProbe": 451,
+    "cancellation": 509,
+    "artifactFileCount": 545
+  },
+  "envelopeReview": {
+    "actualEnvelopes": [],
+    "count": 0,
+    "echoedShellMarkersAreNotEmittedEnvelopes": true,
+    "compilerTranscriptIdentityEstablished": false,
+    "successfulCompileEstablished": false,
+    "runtimeOutcomeEstablished": false
+  },
+  "retainedFiles": [
+    {
+      "filename": "source-job.log",
+      "bytes": 19521,
+      "sha256": "12cf24c97cdd3aa3c27e724cc5125c2cadd793228bfb9701db6caf933f97482a",
+      "gitBlob": "1a5a3ab4323db1fcfe3c1abc334075f2d82fbdeb"
+    },
+    {
+      "filename": "native-job.log",
+      "bytes": 51702,
+      "sha256": "4404defc5e94fe1672ee4a362bfdff51f01f9006e64ef91f780f7c46e0df1708",
+      "gitBlob": "3aa52087a1055d2477409c015dbe5972ff25d832"
+    },
+    {
+      "filename": "workflow-metadata.json",
+      "bytes": 10292,
+      "sha256": "1503c0d3f5835f371b3648ba42fa26888b33e3a4379a2f381d9ca54dabe209b6",
+      "gitBlob": "c11728eabc9a1823ce59d11766ea40dca990ca9b"
+    },
+    {
+      "filename": "README.md",
+      "bytes": 4052,
+      "sha256": "4a51a926e2dc75500a6e813ba70589ee61dbd1bef46fb14f21e811b0fc0f793d",
+      "gitBlob": "c0b0dcef0c960a0f695888243f7144ae3add5d4a"
+    }
+  ],
+  "producerReportedNativeArtifact": {
+    "id": 13836627511,
+    "name": "macos-appkit-native-evidence",
+    "size_in_bytes": 672407,
+    "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836627511",
+    "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836627511/zip",
+    "expired": false,
+    "created_at": "2026-11-11T07:24:21Z",
+    "expires_at": "2026-11-25T07:24:19Z",
+    "updated_at": "2026-11-11T07:24:21Z",
+    "digest": "sha256:0aa03e18f534cfa15b6276874a10c1916e12a8a99a2e0e1f06f743556640ca61",
+    "workflow_run": {
+      "id": 42977406794,
+      "head_sha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+      "head_branch": "codex/v1-appkit-interactions-nov10"
+    }
+  },
+  "archiveReviewBoundary": {
+    "nativeEvidenceUploadedFilesReported": 32,
+    "nativeEvidenceUploadedFilesLogLine": 545,
+    "originalArchivesRetrieved": false,
+    "originalArchiveHashesIndependentlyVerified": false,
+    "membersExtracted": false,
+    "rawCompilerOutputInspected": false,
+    "artifactSizesAndDigests": "producer/API-reported"
+  },
+  "verification": {
+    "fullUntruncatedSourceTreesIndependentlyRecomputed": true,
+    "helperAndMergeOrderedParentsVerified": true,
+    "actualSourceAndNativeCheckoutObservedInOriginalLogs": true,
+    "completeDecodedLogsIndependentlyHashed": true,
+    "normalizedMetadataJsonParsed": true,
+    "originalRecordImmutableBlobsReadBackByteForByte": true,
+    "rawArchiveOrCompilerInspectionClaimed": false
+  },
+  "boundaries": [
+    "This canceled PR-merge run is separate from the completed direct79a run.",
+    "The compile step was canceled; no successful compilation or application-runtime result is established.",
+    "No actual build-result or runtime diagnostic envelope was emitted; echoed shell marker source is not an emitted envelope.",
+    "Cancellation actor and cause are not established by these records.",
+    "Source/installed-consumer/API/native Foundation probe passes remain separate checks, not full native acceptance.",
+    "The archive was not extracted or inspected; size/digest are reported metadata.",
+    "No rerun, dispatch, cancellation, source change or ref/PR mutation was performed by this evidence author."
+  ],
+  "authorActions": {
+    "nativeExecution": false,
+    "workflowDispatch": false,
+    "rerun": false,
+    "cancellation": false,
+    "sourceChanges": false,
+    "refChanges": false,
+    "prChanges": false,
+    "immutableEvidenceBlobCreation": true
+  },
+  "receipt": {
+    "directory": "docs/completion/evidence/v1-appkit-1283fd6-compile-cancelled",
+    "filesIncludingThisProvenance": 5,
+    "provenanceDoesNotHashItself": true
+  }
+}

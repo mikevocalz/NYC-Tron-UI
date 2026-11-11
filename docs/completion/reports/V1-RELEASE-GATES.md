@@ -9,9 +9,60 @@ blanket device-acceptance claim is created by this report.
 
 ## Current desktop gate boundary
 
-The latest completed desktop attempts still failed their complete native gates.
-The original failures, supported corrections and new native runs have separate
-receipts; a source or compiler pass does not substitute for interaction results.
+The complete native desktop gates remain open for the reviewed combined candidate.
+Original failures, source corrections, cancellations and native outcomes have
+separate receipts; source or compiler passes do not establish interaction results.
+
+### November 11 AppKit startup progress, tooltip text and cancelled compile
+
+[Direct-head run 42975767901](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42975767901)
+checked out `79a51bb7663bffe130568f81e276ded0e0b065b9`, tree
+`f5603b91fec3b9c9466fa0776ce0fff1f6be565e`. Source13, consumer16,
+API15/33 and native transport-probe7 checks passed, followed by standalone
+compilation. The original first `tron.window` request succeeded in a recorded
+0.748 seconds. The owner became visible, active and key with matching process
+and bundle. This observation does not establish the cause of earlier waits or
+prove that the private Expo change caused the startup improvement.
+
+Runtime then failed at `Timed out waiting for new visible native help-tag text
+after the posted pointer reaches the trigger`. The retained last observation
+has both permissions true, the cursor inside the trigger and a new visible,
+onscreen `AXHelpTag` with nonempty tag/window frames. Its string collection is
+empty: three nodes, nine modern value/label/title reads returning nil, three
+unavailable text-field slots, and three separate legacy value reads returning
+nil without exceptions. This is unavailable text through those collector paths,
+not an observed wrong displayed string or absent native help tag. Exact-text
+presentation, subsequent dismissal and later drag acceptance remain unproved.
+
+The [79a outcome receipt](../evidence/v1-appkit-79a51bb-tooltip-text-unavailable/README.md)
+retains eleven files, including complete original logs and all six exact JSON/
+envelope records. The startup envelope preserves nine interleaved stderr lines.
+There is no predeadline sample envelope. Its command-history projection is a
+bounded prefix, not the complete command file. The original tooltip file,
+compiler transcript, later process sample, screenshots and ZIP remain
+uninspected. The run used external patch `1db73096`; it does not validate
+the corrected `1283fd6d` source or an unmodified Expo consumer.
+
+[Reviewed-helper run 42977406794](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406794)
+checked out exact merge `039390442b53ef8a44ca413246cb56ae29f3e095`.
+Its source13, consumer16, API15/33 and native transport-probe7 checks passed,
+but compilation was cancelled at 07:24:17.806 UTC. Runtime and tested-distribution
+steps were skipped; cancellation actor and cause are unknown. The
+[five-file cancellation receipt](../evidence/v1-appkit-1283fd6-compile-cancelled/README.md)
+preserves the complete logs and completed metadata. No actual build-result or
+runtime diagnostic envelope was emitted; echoed shell marker statements are
+not emitted results. The producer-reported 32-file artifact and compiler output
+remain uninspected. This run establishes no compilation success or native
+runtime outcome for the corrected candidate.
+
+The external helper subsequently advanced to `a957d405`, which adds private
+AppKit draw-view storage to accepted tooltip strings. That is a change to the
+acceptance text source and cannot certify public accessibility text exposure,
+VoiceOver or rendered pixels. At the 07:37 UTC checkpoint its thirteen source
+checks passed on actual merge `b296b206`, while native compilation continued.
+That external source is not included in this reviewed aggregate; its private
+text provenance and draw-view association are under review. All native,
+physical-platform and exact-manifest release conditions remain in force.
 
 ### November 11 AppKit hostname-run result and symbol diagnostic
 

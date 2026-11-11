@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-11",
+  "representation": "Normalized completed GitHub workflow/job/artifact metadata plus source-bound original-console observations; not a verbatim full API response.",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "jobsObservedAt": "2026-11-11 07:25:00 UTC",
+  "workflowRun": {
+    "id": 42977406794,
+    "name": "NYC-Tron AppKit native host",
+    "path": ".github/workflows/macos-appkit.yml",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "run_number": 26,
+    "run_attempt": 1,
+    "workflow_id": 413427679,
+    "head_sha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "head_branch": "codex/v1-appkit-interactions-nov10",
+    "created_at": "2026-11-11T07:09:12Z",
+    "run_started_at": "2026-11-11T07:09:12Z",
+    "updated_at": "2026-11-11T07:24:47Z",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42977406794"
+  },
+  "source": {
+    "head": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+    "tree": "8bafabc7750c8a087a56a9a309fbd04f5ea0d377",
+    "headOrderedParents": [
+      "79a51bb7663bffe130568f81e276ded0e0b065b9",
+      "ac5d69585a52a6e945dc996ea08030e190574699"
+    ],
+    "actualMerge": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "mergeOrderedParents": [
+      "ac5d69585a52a6e945dc996ea08030e190574699",
+      "1283fd6dea6cead03be7d0eb22863e02dbe648fd"
+    ],
+    "actualSourceCheckout": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "sourceCheckoutLogLine": 123,
+    "actualNativeCheckout": "039390442b53ef8a44ca413246cb56ae29f3e095",
+    "nativeCheckoutLogLine": 113,
+    "treeLeavesIndependentlyVerified": 2050,
+    "treeObjectsIndependentlyRecomputed": 284,
+    "direct79aOutcomeIsSeparate": true
+  },
+  "jobs": [
+    {
+      "id": 130379594331,
+      "name": "Canonical core release archive",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42977406794,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install the pinned workspace compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Build and pack core with release provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 130379756212,
+      "name": "Spark 0.0.2 ARM64 AppKit compile and native acceptance",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "run_id": 42977406794,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Verify native ARM64 host and Apple build tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/download-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Build and install archive consumer outside the monorepo",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Verify the installed AppKit public declaration snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify the private Spark transport with native Foundation and socketpair",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Compile a standalone native AppKit reference",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "number": 9
+        },
+        {
+          "name": "Exercise actual native controls and window lifetimes",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10
+        },
+        {
+          "name": "Retain build and native evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Retain the exact natively tested distribution",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 23
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13836627511,
+      "name": "macos-appkit-native-evidence",
+      "size_in_bytes": 672407,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836627511",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836627511/zip",
+      "expired": false,
+      "created_at": "2026-11-11T07:24:21Z",
+      "expires_at": "2026-11-25T07:24:19Z",
+      "updated_at": "2026-11-11T07:24:21Z",
+      "digest": "sha256:0aa03e18f534cfa15b6276874a10c1916e12a8a99a2e0e1f06f743556640ca61",
+      "workflow_run": {
+        "id": 42977406794,
+        "head_sha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+        "head_branch": "codex/v1-appkit-interactions-nov10"
+      }
+    },
+    {
+      "id": 13836181876,
+      "name": "macos-appkit-shared-packages",
+      "size_in_bytes": 51323,
+      "url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836181876",
+      "archive_download_url": "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/actions/artifacts/13836181876/zip",
+      "expired": false,
+      "created_at": "2026-11-11T07:09:35Z",
+      "expires_at": "2026-11-25T07:09:34Z",
+      "updated_at": "2026-11-11T07:09:35Z",
+      "digest": "sha256:861f4e05cc69cedb4bac59600d353c2f7f7bbd5385a4cd978b26135df5a89eff",
+      "workflow_run": {
+        "id": 42977406794,
+        "head_sha": "1283fd6dea6cead03be7d0eb22863e02dbe648fd",
+        "head_branch": "codex/v1-appkit-interactions-nov10"
+      }
+    }
+  ],
+  "observedOutcome": {
+    "source": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "reportedDurationMilliseconds": 459.23365
+    },
+    "installedConsumer": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0
+    },
+    "installedApi": {
+      "status": "matched",
+      "typedSubpaths": 15,
+      "reachableDeclarations": 33
+    },
+    "nativeTransportProbe": {
+      "status": "passed",
+      "cases": 7
+    },
+    "compileStep": "cancelled",
+    "cancellationMessage": "The operation was canceled.",
+    "cancellationLogLine": 509,
+    "cancellationLogTimestamp": "2026-11-11T07:24:17.8062860Z",
+    "runtimeStep": "skipped",
+    "buildResultEnvelopePresent": false,
+    "startupEvidenceEnvelopePresent": false,
+    "tooltipEvidenceEnvelopePresent": false,
+    "startupSampleEnvelopePresent": false,
+    "actualRuntimeAcceptanceOutcome": null,
+    "testedDistributionUpload": "skipped",
+    "cancellationActorOrCauseEstablished": false
+  },
+  "retainedOriginalLogs": [
+    {
+      "filename": "source-job.log",
+      "bytes": 19521,
+      "sha256": "12cf24c97cdd3aa3c27e724cc5125c2cadd793228bfb9701db6caf933f97482a",
+      "gitBlob": "1a5a3ab4323db1fcfe3c1abc334075f2d82fbdeb"
+    },
+    {
+      "filename": "native-job.log",
+      "bytes": 51702,
+      "sha256": "4404defc5e94fe1672ee4a362bfdff51f01f9006e64ef91f780f7c46e0df1708",
+      "gitBlob": "3aa52087a1055d2477409c015dbe5972ff25d832"
+    }
+  ],
+  "archiveReviewBoundary": {
+    "nativeEvidenceUploadedFilesReported": 32,
+    "nativeEvidenceUploadedFilesLogLine": 545,
+    "originalArchivesRetrieved": false,
+    "originalArchiveHashesIndependentlyVerified": false,
+    "membersExtracted": false,
+    "rawCompilerOutputInspected": false,
+    "artifactSizesAndDigests": "producer/API-reported"
+  },
+  "boundaries": [
+    "This canceled PR-merge run is separate from the completed direct79a run.",
+    "The compile step was canceled; no successful compilation or application-runtime result is established.",
+    "No actual build-result or runtime diagnostic envelope was emitted; echoed shell marker source is not an emitted envelope.",
+    "Cancellation actor and cause are not established by these records.",
+    "Source/installed-consumer/API/native Foundation probe passes remain separate checks, not full native acceptance.",
+    "The archive was not extracted or inspected; size/digest are reported metadata.",
+    "No rerun, dispatch, cancellation, source change or ref/PR mutation was performed by this evidence author."
+  ]
+}
