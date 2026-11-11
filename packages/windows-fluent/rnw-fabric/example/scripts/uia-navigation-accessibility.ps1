@@ -103,6 +103,11 @@ function Native-Pane {
   $largest = $null; $area = 0
   foreach ($item in $items) {
     $r = $item.Current.BoundingRectangle
+    # Run 42999747451: an offscreen "NYC-Tron" element (the pane title text block)
+    # reports Rect.Empty, X=Infinity and Width=-Infinity. Its "area" is
+    # (-Infinity)*(-Infinity) = +Infinity, so it always won the comparison and
+    # both widths read -Infinity. Only elements with a real rectangle compete.
+    if ($item.Current.IsOffscreen -or [double]::IsInfinity($r.Width) -or [double]::IsInfinity($r.Height) -or [double]::IsNaN($r.Width) -or $r.Width -le 0 -or $r.Height -le 0) { continue }
     if ($r.Width*$r.Height -gt $area) { $area = $r.Width*$r.Height; $largest = $item }
   }
   if ($null -eq $largest) { throw "The native navigation landmark is absent" }
@@ -118,12 +123,12 @@ function Describe-Pane([string]$label) {
     foreach ($item in $Window.FindAll($tree::Descendants, $condition)) {
       $c = $item.Current; $r = $c.BoundingRectangle
       $mark = if ([string]::Join(",", $item.GetRuntimeId()) -eq [string]::Join(",", $picked.GetRuntimeId())) { "PICKED" } else { "other" }
-      Crumb ("pane[{0}] {1} type={2} id='{3}' class='{4}' rect={5},{6} {7}x{8} area={9} offscreen={10}" -f $label, $mark, $c.ControlType.ProgrammaticName, $c.AutomationId, $c.ClassName, [int]$r.X, [int]$r.Y, [int]$r.Width, [int]$r.Height, [int]($r.Width*$r.Height), $c.IsOffscreen)
+      Crumb ("pane[{0}] {1} type={2} id='{3}' class='{4}' rect={5},{6} {7}x{8} area={9} offscreen={10}" -f $label, $mark, $c.ControlType.ProgrammaticName, $c.AutomationId, $c.ClassName, $r.X, $r.Y, $r.Width, $r.Height, ($r.Width*$r.Height), $c.IsOffscreen)
     }
     $chain = @(); $node = $walker.GetParent($picked)
     for ($i = 0; $i -lt 5 -and $null -ne $node; $i++) {
       $c = $node.Current; $r = $c.BoundingRectangle
-      $chain += ("{0}:'{1}':'{2}':{3}x{4}" -f $c.ControlType.ProgrammaticName, $c.Name, $c.AutomationId, [int]$r.Width, [int]$r.Height)
+      $chain += ("{0}:'{1}':'{2}':{3}x{4}" -f $c.ControlType.ProgrammaticName, $c.Name, $c.AutomationId, $r.Width, $r.Height)
       $node = $walker.GetParent($node)
     }
     Crumb ("pane[{0}] picked ancestors: {1}" -f $label, ($chain -join " < "))
