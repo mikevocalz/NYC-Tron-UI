@@ -68,18 +68,18 @@ export function isInside(p:DropPoint,r:DropRect):boolean{
  * `docWidth` x `docHeight` document, or `undefined` outside the target.
  */
 export function dropToDocument(p:DropPoint,r:DropRect,docWidth:number,docHeight:number):DropPoint|undefined{
-  if(!isInside(p,r)||r.width<=0||r.height<=0)return undefined;
-  const x=Math.min(docWidth-1,Math.max(0,Math.floor((p.x-r.x)*docWidth/r.width)));
-  const y=Math.min(docHeight-1,Math.max(0,Math.floor((p.y-r.y)*docHeight/r.height)));
+  if(![p.x,p.y,r.x,r.y,r.width,r.height,r.x+r.width,r.y+r.height,docWidth,docHeight].every(Number.isFinite)||docWidth<1||docHeight<1||!isInside(p,r)||r.width<=0||r.height<=0)return undefined;
+  const x=Math.min(docWidth-1,Math.max(0,Math.floor(((p.x-r.x)/r.width)*docWidth)));
+  const y=Math.min(docHeight-1,Math.max(0,Math.floor(((p.y-r.y)/r.height)*docHeight)));
   return {x,y};
 }
 
 /** Throws for settings the engine would reject. */
 export function validateDrop(p:{color:string;tolerance:number;width:number;height:number;documentWidth:number;documentHeight:number}):void{
-  if(p.color.trim()==="")throw new RangeError("Drop colour must not be blank");
+  if(p.color.trim()===""||p.color.length>4096)throw new RangeError("Drop colour must not be blank");
   if(!Number.isInteger(p.tolerance)||p.tolerance<0||p.tolerance>MAX_FILL_TOLERANCE)
     throw new RangeError(`Fill tolerance must be a whole number 0..${MAX_FILL_TOLERANCE}`);
-  if(![p.width,p.height,p.documentWidth,p.documentHeight].every(n=>Number.isFinite(n)&&n>0))
+  if(![p.width,p.height,p.documentWidth,p.documentHeight].every(n=>Number.isFinite(n)&&n>0)||p.documentWidth<1||p.documentHeight<1)
     throw new RangeError("Drop target and document sizes must be positive numbers");
 }
 

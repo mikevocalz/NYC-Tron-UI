@@ -270,3 +270,8 @@ test("sources keep the cluster's contracts",()=>{
  assert.ok(!/disabled=\{!available/.test(panel),"unavailable buttons stay pressable to explain why");
  assert.ok(panel.includes("PrecisionScrubber"),"spacing uses the existing PrecisionScrubber");
 });
+
+test('smart guide metadata is bounded and rejects ambiguous identities',()=>{const moving={x:0,y:0,w:10,h:10};assert.throws(()=>computeSmartGuides({moving,zoom:1,others:Array.from({length:50001},(_,i)=>({id:String(i),empty:true}))}),/budget/);assert.throws(()=>computeSmartGuides({moving,zoom:1,others:[{id:'same',empty:true},{id:'same',x:0,y:0,w:1,h:1}]}),/unique/);assert.throws(()=>computeSmartGuides({moving,zoom:1,others:[{id:'bad',x:NaN,y:0,w:1,h:1}]}),/finite/);});
+test('snapping validates guide and artboard metadata before calculation',()=>{const p={x:0,y:0},ctx={zoom:1,snap:DEFAULT_SNAP};assert.throws(()=>snapPoint(p,{...ctx,guides:[{id:'g',orientation:'horizontal',position:NaN}]}),/finite/);assert.throws(()=>snapPoint(p,{...ctx,artboards:[{id:'a',x:0,y:0,w:1,h:1},{id:'a',x:2,y:0,w:1,h:1}]}),/unique/);assert.throws(()=>validateGrid({spacing:32,subdivisions:4,visible:'yes'}),/boolean/);});
+
+test('smart-guide announcements reject oversized feedback and ignore inherited names',()=>{const result={rect:{x:0,y:0,w:10,h:10},dx:0,dy:0,alignments:[{axis:'x',value:0,from:0,to:10,feature:'start',targets:['toString']}],spacings:[]};assert.equal(smartGuideSummary(result,{}),'Left edge aligned with another layer');assert.throws(()=>smartGuideSummary({...result,alignments:Array(7).fill(result.alignments[0])}),/budget/);assert.throws(()=>smartGuideSummary({...result,spacings:[{axis:'x',gap:10,gaps:[{from:10,to:0,at:0}]}]}),/feedback/);});

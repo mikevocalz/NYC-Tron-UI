@@ -1,5 +1,6 @@
+import { decodeWebCodecsFrame } from "./webcodecs-frame.web.ts";
 import {
-  MediaDecodeError,fitWithin,frameSpan,interleave,normalizeAudioOptions,normalizeFrameOptions,toMediaDecodeError,
+  MediaDecodeError,withDecodeCancellation,fitWithin,frameSpan,interleave,normalizeAudioOptions,normalizeFrameOptions,toMediaDecodeError,
   type DecodedAudio,type DecodedFrame,type MediaDecodeErrorCode,type MediaDecoder,type MediaProbe,
 } from "./decoder.ts";
 
@@ -125,7 +126,7 @@ export function createPlatformMediaDecoder():MediaDecoder{
   return {
     isAvailable:typeof document!=="undefined",
     probe:guarded(probe),
-    decodeFrame:guarded(decodeFrame),
+    decodeFrame:guarded((uri, options) => withDecodeCancellation(options.signal, () => typeof VideoDecoder !== "undefined" ? decodeWebCodecsFrame(uri, options) : decodeFrame(uri, options))),
     decodeAudio:guarded(decodeAudio),
     clearCache:async()=>{},
   };

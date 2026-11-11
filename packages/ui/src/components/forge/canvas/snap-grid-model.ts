@@ -18,8 +18,8 @@
  * units and a magnetism strength added; point snapping and grid line layout
  * written new for SnapGridOverlay.
  */
-import {docToScreen,tidy,validateDocRect,visibleDocRect,type CanvasAxis,type CanvasViewport,type DocPoint,type DocRect} from "./canvas-viewport.ts";
-import type {CanvasGuide} from "./ruler-model.ts";
+import {docToScreen,tidy,validateDocRect,validateViewport,visibleDocRect,type CanvasAxis,type CanvasViewport,type DocPoint,type DocRect} from "./canvas-viewport.ts";
+import {validateGuides,type CanvasGuide} from "./ruler-model.ts";
 
 /** A square grid laid over the document. */
 export interface GridSettings {
@@ -69,6 +69,7 @@ export const DEFAULT_SNAP={enabled:true,toGrid:true,toGuides:true,toArtboards:tr
 
 /** Throws a `RangeError` naming the bad grid field. */
 export function validateGrid(grid:GridSettings):void{
+  if(typeof grid.visible!=="boolean")throw new RangeError("Grid visibility must be boolean");
   if(!Number.isFinite(grid.spacing)||grid.spacing<GRID_MIN_SPACING||grid.spacing>GRID_MAX_SPACING)
     throw new RangeError(`Grid spacing must be ${GRID_MIN_SPACING}..${GRID_MAX_SPACING} document pixels, got ${grid.spacing}`);
   if(!Number.isInteger(grid.subdivisions)||grid.subdivisions<1||grid.subdivisions>GRID_MAX_SUBDIVISIONS)
@@ -77,6 +78,7 @@ export function validateGrid(grid:GridSettings):void{
 }
 /** Throws a `RangeError` naming the bad snap field. */
 export function validateSnap(snap:SnapSettings):void{
+  if([snap.enabled,snap.toGrid,snap.toGuides,snap.toArtboards].some(v=>typeof v!=="boolean"))throw new RangeError("Snap targets must be boolean");
   if(!Number.isFinite(snap.thresholdPx)||snap.thresholdPx<SNAP_MIN_THRESHOLD||snap.thresholdPx>SNAP_MAX_THRESHOLD)
     throw new RangeError(`Snap threshold must be ${SNAP_MIN_THRESHOLD}..${SNAP_MAX_THRESHOLD} screen units, got ${snap.thresholdPx}`);
   if(!Number.isFinite(snap.strength)||snap.strength<0||snap.strength>1)
@@ -179,6 +181,10 @@ const checkContext=(ctx:SnapContext)=>{
   if(!Number.isFinite(ctx.zoom)||ctx.zoom<=0)throw new RangeError(`Canvas zoom must be a positive number, got ${ctx.zoom}`);
   validateSnap(ctx.snap);
   if(ctx.grid)validateGrid(ctx.grid);
+  if(ctx.guides)validateGuides(ctx.guides);
+  if((ctx.artboards?.length??0)>10000)throw new RangeError('At most 10000 snap artboards are supported');
+  const ids=new Set<string>();for(const board of ctx.artboards??[]){if(!board.id.trim()||board.id.length>512||ids.has(board.id))throw new RangeError('Snap artboards need unique bounded IDs');ids.add(board.id);validateDocRect(board);}
+
 };
 /** Result of {@linkcode snapPoint}. */
 export interface PointSnap {
@@ -227,7 +233,7 @@ export interface GridLine {
 }
 /** The grid lines an overlay draws at this viewport, bounded by {@linkcode GRID_MAX_LINES} per axis. */
 export function gridLines(grid:GridSettings,viewport:CanvasViewport):{vertical:GridLine[];horizontal:GridLine[]}{
-  validateGrid(grid);
+  validateGrid(grid);validateViewport(viewport);
   const step=gridStep(grid,viewport.zoom);
   if(!grid.visible||step===undefined)return {vertical:[],horizontal:[]};
   const r=visibleDocRect(viewport);
@@ -249,4 +255,12 @@ export function snapSummary(snap:{readonly x?:SnapHit;readonly y?:SnapHit}):stri
   const parts=[snap.x,snap.y].filter((h):h is SnapHit=>h!==undefined).map(name);
   if(!parts.length)return undefined;
   return "Snapped to "+[...new Set(parts)].join(" and ");
+}
+
+/** Reject invalid externally supplied snap feedback before projecting it into native views. */
+export function validateSnapHit(hit:SnapHit,axis:CanvasAxis):void{
+ const line=hit.line,source=line.source;
+ if(line.axis!==axis||!Number.isFinite(line.value)||!FEATURES.includes(hit.feature)||!['grid','guide','artboard'].includes(source.kind))throw new RangeError('Invalid snap feedback');
+ if(source.kind!=='grid'&&(!source.id.trim()||source.id.length>512))throw new RangeError('Invalid snap source identity');
+ if(source.kind==='artboard'&&!FEATURES.includes(source.edge))throw new RangeError('Invalid snap artboard feature');
 }

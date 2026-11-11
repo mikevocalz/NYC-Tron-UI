@@ -1,5 +1,7 @@
-import {useEffect,useRef,type ReactNode} from "react";
-import {Platform,View,type ViewProps} from "react-native";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useLayoutEffect,useRef,type ReactNode} from "react";
+import {Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {joinClasses} from "../../styles.ts";
@@ -18,6 +20,15 @@ import {
 } from "./vector-types.ts";
 import {CanvasKnob,LinePiece,NoticeLine,VectorButton,type CanvasKeyEvent,type DragModifiers} from "./vector-controls.tsx";
 
+/** Source contract for hosts that require scoped, focus-preserving canvas edits.
+ * Older alpha.4 artifacts omit this marker; availability must be detected at runtime. */
+export const PEN_NODE_EDITOR_CAPABILITIES = Object.freeze({
+  version: 1 as const,
+  scopedInteractions: true as const,
+  geometryCancellation: true as const,
+  stableGeometryFocus: true as const,
+});
+
 /** `setPathNode` intent: replace one node. */
 export interface SetPathNodeIntent extends NodeRef {
   readonly node:PathNode;
@@ -29,9 +40,14 @@ export interface SetClosedIntent {
 }
 
 /** Props for {@linkcode PenNodeEditor}. The path, selection and every edit are owned by the host. */
-export interface PenNodeEditorProps extends Omit<ViewProps,"children"> {
+export interface PenNodeEditorProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The path layer's subpaths, in content coordinates. */
   subpaths:readonly Subpath[];
+  /** Optional content-coordinate snapping. The host must return finite coordinates. */
+  editScope?:string;
+  editRevision?:string|number;
+  snapPoint?:(point:Point,ref:NodeRef)=>Point;
+  snapHandle?:(offset:HandleOffset,node:PathNode,ref:NodeRef)=>HandleOffset;
   /** Overlay size in points; place it over the canvas region the transform maps into. */
   width:number;
   height:number;
@@ -43,22 +59,22 @@ export interface PenNodeEditorProps extends Omit<ViewProps,"children"> {
   /** The path to draw during a drag; `undefined` when the drag ends or is cancelled. Never persist here. */
   onPreview?:(subpaths:readonly Subpath[]|undefined)=>void;
   /** A node or handle was dragged and released, or nudged by one key press. Maps to `setPathNode`. */
-  onSetPathNode:(intent:SetPathNodeIntent)=>void;
+  onSetPathNode:(intent:SetPathNodeIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /**
    * A tap on the outline or the "Add node" command split a segment. Maps to
    * `insertPathNode` when {@linkcode InsertNodeIntent.neighborsChanged} is false,
    * otherwise `setPathNodes` with {@linkcode InsertNodeIntent.subpaths}.
    */
-  onInsertNode:(intent:InsertNodeIntent)=>void;
+  onInsertNode:(intent:InsertNodeIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Delete, Backspace or the command removed a node. Maps to `removePathNode`. */
-  onRemoveNode:(ref:NodeRef)=>void;
+  onRemoveNode:(ref:NodeRef,signal?:AbortSignal)=>void|Promise<unknown>;
   /**
    * The node kind changed. Maps to `setNodeKind`, or to `setPathNode` with
    * {@linkcode NodeKindIntent.node} when {@linkcode NodeKindIntent.handlesChanged}.
    */
-  onSetNodeKind:(intent:NodeKindIntent)=>void;
+  onSetNodeKind:(intent:NodeKindIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /** The selected node's subpath was closed or opened. Maps to `setSubpathClosed`. */
-  onSetClosed:(intent:SetClosedIntent)=>void;
+  onSetClosed:(intent:SetClosedIntent,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Canvas content drawn under the overlay. It never takes touches while the editor is mounted. */
   children?:ReactNode;
   /** Show the node command bar under the overlay. @default true */
@@ -93,17 +109,32 @@ const sideLabel=(side:HandleSide)=>side==="in"?"Incoming handle":"Outgoing handl
  * Curves are drawn as short straight pieces sampled from the exact Bézier, so
  * the overlay needs no SVG dependency; the engine renders the real curve.
  */
-export function PenNodeEditor({
-  subpaths,width,height,transform=IDENTITY_TRANSFORM,selection,onSelectionChange,onPreview,onSetPathNode,
+export function PenNodeEditor({scope,revision,editScope,editRevision,...props}:PenNodeEditorProps){
+ const id=scope??editScope??'path-nodes',version=revision??editRevision??0;
+ const owner=JSON.stringify([...controlIdentity(id,version),props.disabledReason,props.width,props.height,props.transform]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ // Revision effects discard stale gestures without replacing the focused keyboard target.
+ return <PenNodeEditorBody key={id} {...props} editScope={id} editRevision={version} actionError={guard.error} busy={guard.pending}
+  onSelectionChange={value=>guard.current()?.onSelectionChange(value)} onPreview={value=>guard.current()?.onPreview?.(value)}
+  onSetPathNode={value=>guard.run('onSetPathNode',(host,signal)=>host.onSetPathNode(value,signal))}
+  onInsertNode={value=>guard.run('onInsertNode',(host,signal)=>host.onInsertNode(value,signal))}
+  onRemoveNode={value=>guard.run('onRemoveNode',(host,signal)=>host.onRemoveNode(value,signal))}
+  onSetNodeKind={value=>guard.run('onSetNodeKind',(host,signal)=>host.onSetNodeKind(value,signal))}
+  onSetClosed={value=>guard.run('onSetClosed',(host,signal)=>host.onSetClosed(value,signal))}
+/>;
+}
+function PenNodeEditorBody({
+  actionError=null,busy=false,disabledReason,
+  subpaths,snapPoint,snapHandle,editScope,editRevision,width,height,transform=IDENTITY_TRANSFORM,selection,onSelectionChange,onPreview,onSetPathNode,
   onInsertNode,onRemoveNode,onSetNodeKind,onSetClosed,children,showCommands=true,label="Path nodes",
   accentColor,className,unstyled=false,style,...rest
-}:PenNodeEditorProps){
+}:PenNodeEditorProps&{actionError?:string|null;busy?:boolean}){
   validateSubpaths(subpaths);
   validateTransform(transform);
   if(![width,height].every(Number.isFinite)||width<=0||height<=0)throw new RangeError("Invalid editor size");
-  const latest=useRef({subpaths,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
+  const latest=useRef({subpaths,snapPoint,snapHandle,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
     onRemoveNode,onSetNodeKind,onSetClosed});
-  latest.current={subpaths,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
+  latest.current={subpaths,snapPoint,snapHandle,transform,selection,onSelectionChange,onPreview,onSetPathNode,onInsertNode,
     onRemoveNode,onSetNodeKind,onSetClosed};
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({preview:null,notice:undefined}));
@@ -122,7 +153,9 @@ export function PenNodeEditor({
     store.setState({preview:null});
     latest.current.onPreview?.(undefined);
   };
-  useEffect(()=>()=>{if(drag.current)latest.current.onPreview?.(undefined);},[]);
+  useLayoutEffect(()=>()=>{drag.current=null;pressAt.current=null;if(store.getState().preview!==null){store.setState({preview:null});latest.current.onPreview?.(undefined);}},[store,editScope,editRevision]);
+  const geometryBoundary=JSON.stringify([subpaths,transform,width,height,disabledReason,busy]);
+  useLayoutEffect(()=>{drag.current=null;pressAt.current=null;clearPreview();},[geometryBoundary]);
   const cancelDrag=()=>{
     const d=drag.current;
     if(!d)return false;
@@ -131,11 +164,23 @@ export function PenNodeEditor({
     return true;
   };
   const begin=(target:Target)=>{
+    if(drag.current){cancelDrag();return;}
     const p=latest.current;
     drag.current={target,start:p.subpaths,node:nodeAt(p.subpaths,target.ref),moved:false,cancelled:false};
     const sel=p.selection;
     if(!sel||sel.subpath!==target.ref.subpath||sel.index!==target.ref.index)p.onSelectionChange(target.ref);
     store.setState({notice:undefined});
+  };
+  const snappedNode=(node:PathNode,ref:NodeRef):PathNode=>{
+    const point=latest.current.snapPoint?.({x:node.x,y:node.y},ref);
+    if(!point)return node;
+    if(![point.x,point.y].every(Number.isFinite))throw new RangeError("Snapped point must be finite");
+    return {...node,x:point.x,y:point.y};
+  };
+  const snappedHandle=(offset:HandleOffset,node:PathNode,ref:NodeRef):HandleOffset=>{
+    const next=latest.current.snapHandle?.(offset,node,ref)??offset;
+    if(next.length!==2||!next.every(Number.isFinite))throw new RangeError("Snapped handle must be finite");
+    return next;
   };
   const dragTo=(dx:number,dy:number,mods:DragModifiers)=>{
     const d=drag.current;
@@ -144,10 +189,10 @@ export function PenNodeEditor({
     d.moved=true;
     const c=deltaToContent(latest.current.transform,dx,dy);
     let node:PathNode;
-    if(d.target.kind==="node")node=moveNode(d.node,c.x,c.y);
+    if(d.target.kind==="node")node=snappedNode(moveNode(d.node,c.x,c.y),d.target.ref);
     else{
       const h=d.node[d.target.side] as HandleOffset;
-      node=moveHandle(d.node,d.target.side,[h[0]+c.x,h[1]+c.y],mods.alt||altHeld.current);
+      node=moveHandle(d.node,d.target.side,snappedHandle([h[0]+c.x,h[1]+c.y],d.node,d.target.ref),mods.alt||altHeld.current);
     }
     d.last=node;
     const next=replaceNode(d.start,d.target.ref,node);
@@ -207,11 +252,11 @@ export function PenNodeEditor({
     const p=latest.current;
     const node=nodeAt(p.subpaths,target.ref);
     let next:PathNode;
-    if(target.kind==="node")next=moveNode(node,delta.x,delta.y);
+    if(target.kind==="node")next=snappedNode(moveNode(node,delta.x,delta.y),target.ref);
     else{
       const h=node[target.side];
       if(!h)return;
-      next=moveHandle(node,target.side,[h[0]+delta.x,h[1]+delta.y],alt);
+      next=moveHandle(node,target.side,snappedHandle([h[0]+delta.x,h[1]+delta.y],node,target.ref),alt);
     }
     p.onSetPathNode({subpath:target.ref.subpath,index:target.ref.index,node:next});
   };
@@ -283,6 +328,8 @@ export function PenNodeEditor({
   const selSub=selected?shown[selected.subpath]:undefined;
   return <View {...rest} {...{onKeyDown:onRootKey,onKeyUp:onRootKeyUp,className:joinClasses("gap-2",className)}}
     style={[{alignSelf:"flex-start",maxWidth:"100%"},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Applying path change"}</Text>:null}
     <View {...canvasHandlers} accessibilityLabel={label} testID="pen-canvas"
       {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border")}}
       // Canvas geometry stays left to right in RTL documents.

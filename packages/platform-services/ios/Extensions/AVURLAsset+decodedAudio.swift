@@ -37,7 +37,11 @@ extension AVURLAsset {
       throw MediaDecodeFailure(.unsupportedFormat, "This audio cannot be converted to Float32 PCM")
     }
     reader.add(output)
-    reader.timeRange = CMTimeRange(start: CMTime(microseconds: request.startUs), duration: CMTime(microseconds: request.durationUs))
+    // Decode preroll and converter tail, then trim using the output PCM timestamps.
+    // Starting a resampler exactly at the requested boundary loses its filter delay.
+    let readStart = max(Int64(0), request.startUs - 1_000_000)
+    let readEnd = min(duration, request.startUs + request.durationUs + 100_000)
+    reader.timeRange = CMTimeRange(start: CMTime(microseconds: readStart), duration: CMTime(microseconds: readEnd - readStart))
     guard reader.startReading() else {
       throw MediaDecodeFailure(avError: reader.error ?? MediaDecodeFailure(.decodeFailed, "The reader did not start"))
     }
@@ -57,11 +61,18 @@ extension AVURLAsset {
     while frames < maxFrames, let buffer = output.copyNextSampleBuffer() {
       guard let block = CMSampleBufferGetDataBuffer(buffer) else { continue }
       let available = CMBlockBufferGetDataLength(block) / bytesPerFrame
-      let take = min(available, maxFrames - frames)
+      let bufferTime = CMSampleBufferGetPresentationTimeStamp(buffer).seconds
+      guard bufferTime.isFinite else { throw MediaDecodeFailure(.decodeFailed, "PCM timestamp is invalid") }
+      let nextTime = Double(request.startUs) / 1_000_000 + Double(frames) / sampleRate
+      let offsetFrames = max(0, Int(((nextTime - bufferTime) * sampleRate).rounded()))
+      if bufferTime - nextTime > 1.5 / sampleRate {
+        throw MediaDecodeFailure(.unsupportedFormat, "Discontinuous PCM timestamps require an edit-aware decoder")
+      }
+      let take = min(max(0, available - offsetFrames), maxFrames - frames)
       guard take > 0 else { continue }
       var bytes = Data(count: take * bytesPerFrame)
       let status = bytes.withUnsafeMutableBytes { raw in
-        CMBlockBufferCopyDataBytes(block, atOffset: 0, dataLength: raw.count, destination: raw.baseAddress!)
+        CMBlockBufferCopyDataBytes(block, atOffset: offsetFrames * bytesPerFrame, dataLength: raw.count, destination: raw.baseAddress!)
       }
       guard status == kCMBlockBufferNoErr else {
         throw MediaDecodeFailure(.decodeFailed, "Could not read a PCM buffer (\(status))")

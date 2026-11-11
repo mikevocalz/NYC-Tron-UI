@@ -22,6 +22,16 @@ const read=path=>readFileSync(join(root,path),"utf8");
 const kotlinDir="android/src/main/java/com/nyctron/hardwarekeys";
 const config=JSON.parse(read("expo-module.config.json"));
 
+test("SwiftPM package is shipped and preserves the pod's platform and module identity",()=>{
+  const pod=read("ios/NYCTronHardwareKeys.podspec"), spm=read("Package.swift");
+  const floor=pod.match(/ios: '([^']+)'/)[1];
+  const module=pod.match(/s\.name\s*=\s*'([^']+)'/)[1];
+  assert.ok(spm.includes(`.iOS("${floor}")`));
+  assert.ok(spm.includes(`name: "${module}"`));
+  assert.ok(JSON.parse(read("package.json")).files.includes("Package.swift"));
+  assert.match(spm,/path: "ios"/);
+});
+
 test("expo-module.config.json autolinks both platforms; android stays off the legacy list",()=>{
   assert.deepEqual(config.platforms,["apple","android"]);
   assert.deepEqual(config.apple?.modules,["NYCTronHardwareKeysModule"]);
@@ -144,23 +154,46 @@ function load(file,mocks){
 
 test("useKeySource registers the map's native bindings and dispatches resolved chords",()=>{
   const effects=[];
-  const ref={current:undefined};
-  const {useKeySource}=load("src/useHardwareKeyboard.ts",{react:{useRef:v=>{ref.current??=v;return ref;},useEffect:fn=>effects.push(fn)}});
+  const layouts=[],refs=[];
+  let cursor=0;
+  const {useKeySource}=load("src/useHardwareKeyboard.ts",{react:{
+    useRef:v=>refs[cursor++]??(refs[cursor-1]={current:v}),
+    useLayoutEffect:fn=>layouts.push(fn),useEffect:fn=>effects.push(fn),
+  }});
+  let layoutCleanup;
+  const render=(source,options)=>{cursor=0;useKeySource(source,options);};
+  const commit=()=>{layoutCleanup?.();layoutCleanup=layouts.pop()();};
   const map=createKeyboardMap([{id:"save",label:"Save",binding:"Mod+S"},{id:"brush",label:"Brush",binding:"B"}],false);
   let listener,registered,removed=0,typing=false;
   const source={addChordListener:l=>{listener=l;return {remove:()=>removed++};},
     registerBindings:list=>{registered=list.map(b=>b.binding);return {remove:()=>removed++};},isTextInputFocused:()=>typing};
   const ran=[];
-  useKeySource(source,{map,onCommand:e=>ran.push(e.id)});
+  render(source,{map,onCommand:e=>ran.push(e.id)});
+  commit();
   const cleanup=effects.pop()();
   assert.deepEqual(registered,["Mod+S","B"]);
   assert.equal(listener({key:"s",ctrlKey:true}),true);
   typing=true;
   assert.equal(listener({key:"b"}),false,"typing into a field never runs a bare-letter tool");
   assert.deepEqual(ran,["save"]);
+  typing=false;
+  render(source,{map,onCommand:e=>ran.push("updated:"+e.id)});
+  assert.equal(listener({key:"s",ctrlKey:true}),true);
+  assert.deepEqual(ran,["save","save"],"uncommitted render does not replace the callback");
+  commit();
+  assert.equal(listener({key:"s",ctrlKey:true}),true);
+  assert.equal(ran.at(-1),"updated:save","existing subscription uses the committed callback");
+  render(source,{map,enabled:false,onCommand:()=>assert.fail("disabled callback")});
+  commit();
+  assert.equal(listener({key:"s",ctrlKey:true}),false,"disabled commit blocks the old listener before passive cleanup");
+  render(source,{map,onCommand:()=>assert.fail("unmounted callback")});
+  commit();
+  layoutCleanup();
+  assert.equal(listener({key:"s",ctrlKey:true}),false,"layout cleanup blocks late chords");
   cleanup();
   assert.equal(removed,2);
-  useKeySource(undefined,{map,onCommand:()=>{}});
+  render(undefined,{map,onCommand:()=>{}});
+  commit();
   assert.equal(effects.pop()(),undefined,"no module linked: no subscription, no throw");
 });
 

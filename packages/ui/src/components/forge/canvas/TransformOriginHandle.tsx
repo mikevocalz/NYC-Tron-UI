@@ -1,5 +1,6 @@
-import {useRef} from "react";
+import {useLayoutEffect,useRef} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
+import {SelectionOutline} from "../selection/SelectionOutline.tsx";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {webKey} from "../../forms/choice-keys.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
@@ -13,6 +14,10 @@ import {
 
 /** Props for {@linkcode TransformOriginHandle}. */
 export interface TransformOriginHandleProps extends Omit<ViewProps,"children"> {
+  /** Hide the shared outline/anchor ink when composing with SelectionBounds. */
+  readonly showBounds?:boolean;
+  readonly scope?:string;
+  readonly revision?:string|number;
   readonly viewport:CanvasViewport;
   /** Document corners of the selection's transformed bounds (`layerBounds` `corners`, or `rectCorners` of its box). */
   readonly corners:BoundsCorners;
@@ -53,12 +58,22 @@ const HIT=44;
  * which snaps to 15° with Shift.
  */
 export function TransformOriginHandle({
-  viewport,corners,transform,unavailableReason,onSetOrigin,onPreview,disabled=false,className,unstyled=false,style,...rest
+  showBounds=true,scope="canvas-pivot",revision=0,viewport,corners,transform,unavailableReason,onSetOrigin:commitOrigin,onPreview:previewOrigin,disabled=false,className,unstyled=false,style,...rest
 }:TransformOriginHandleProps){
   validateViewport(viewport);
+  if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid pivot identity');
+  if(corners.length!==4||corners.some(c=>c.length!==2||!c.every(Number.isFinite)))throw new RangeError('Pivot bounds need four finite corners');
+  const boundary=JSON.stringify([scope,revision,viewport,corners,transform,disabled]);
+  const mounted=useRef(false),committed=useRef(boundary);
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
+  useLayoutEffect(()=>{committed.current=boundary;});
+  const valid=()=>mounted.current&&committed.current===boundary&&!disabled;
+  const onSetOrigin=(ox:number,oy:number)=>{if(valid())commitOrigin(ox,oy);};
+  const onPreview=(point:DocPoint|undefined)=>{if(valid())previewOrigin?.(point);};
   if(transform)validateTransform(transform);
   else if(!unavailableReason?.trim())throw new RangeError("TransformOriginHandle needs a transform, or an unavailableReason saying why there is none");
   const [state,store]=useLocalStore<Local>(()=>({drag:undefined}));
+  useLayoutEffect(()=>{store.set({drag:undefined});},[boundary]);
   const styled=!unstyled;
   const screenCorners=corners.map(c=>docPointToScreen(viewport,{x:c[0],y:c[1]}));
   const center=docPointToScreen(viewport,anchorPoint(corners,"center"));
@@ -69,7 +84,7 @@ export function TransformOriginHandle({
   // from where it was when the press began.
   const start=useRef({left:handleLeft,top:handleTop});
   const commitAt=(doc:DocPoint)=>{
-    if(!transform||disabled)return;
+    if(!valid()||!transform)return;
     const now=pivotInDoc(transform);
     if(Math.abs(now.x-doc.x)<1e-6&&Math.abs(now.y-doc.y)<1e-6)return;
     const {ox,oy}=originPayload(transform,doc);
@@ -83,16 +98,16 @@ export function TransformOriginHandle({
   const cancel=()=>{if(store.get().drag){store.set({drag:undefined});onPreview?.(undefined);}};
   const handlers=useLocalPointer({
     disabled:disabled||!transform,
-    onBegin:p=>{start.current={left:handleLeft,top:handleTop};
+    onBegin:p=>{if(!valid())return;start.current={left:handleLeft,top:handleTop};
       const d=place(p);store.set({drag:d});onPreview?.(d.at);},
-    onMove:p=>{if(!store.get().drag)return;const d=place(p);store.set({drag:d});onPreview?.(d.at);},
-    onRelease:p=>{if(!store.get().drag)return;const d=place(p);store.set({drag:undefined});onPreview?.(undefined);commitAt(d.at);},
+    onMove:p=>{if(!valid()||!store.get().drag)return;const d=place(p);store.set({drag:d});onPreview?.(d.at);},
+    onRelease:p=>{if(!valid()||!store.get().drag)return;const d=place(p);store.set({drag:undefined});onPreview?.(undefined);commitAt(d.at);},
     onCancel:cancel,
   });
   const onKeyDown=(event:unknown)=>{
     const k=webKey(event);
     if(k.key==="Escape"){cancel();return;}
-    if(!transform||disabled)return;
+    if(!valid()||!transform)return;
     const cmd=originKeyCommand(k.key,k.shiftKey===true);
     if(!cmd)return;
     k.preventDefault();
@@ -101,28 +116,23 @@ export function TransformOriginHandle({
   };
   const anchorNow=transform?currentAnchor(corners,transform):undefined;
   const step=(direction:1|-1)=>commitAt(anchorPoint(corners,cycleAnchor(anchorNow,direction)));
-  const edge=(a:DocPoint,b:DocPoint,i:number)=>{
-    const len=Math.hypot(b.x-a.x,b.y-a.y),angle=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
-    return <View key={"e"+i} {...{className:joinClasses(styled&&"bg-primary")}}
-      style={{position:"absolute",left:(a.x+b.x)/2-len/2,top:(a.y+b.y)/2-0.5,width:len,height:1,opacity:0.7,transform:[{rotate:`${angle}deg`}]}}/>;
-  };
   const dragAnchor=state.drag?.anchor;
   return <View {...rest} pointerEvents="box-none" {...{className:joinClasses(className)}}
     style={[{position:"absolute",left:0,top:0,width:viewport.width,height:viewport.height,overflow:"hidden",direction:"ltr"},style]}>
-    <View pointerEvents="none" style={{position:"absolute",left:0,top:0,right:0,bottom:0}}>
-      {screenCorners.map((a,i)=>edge(a,screenCorners[(i+1)%4]!,i))}
+    {showBounds?<View pointerEvents="none" style={{position:"absolute",left:0,top:0,right:0,bottom:0}}>
+      <SelectionOutline points={screenCorners} width={viewport.width} height={viewport.height} unstyled={unstyled}/>
       {ORIGIN_ANCHORS.map(anchor=>{
         const p=docPointToScreen(viewport,anchorPoint(corners,anchor));
         const hot=dragAnchor===anchor;
         return <View key={anchor} {...{className:joinClasses(styled&&"border",styled&&(hot?"bg-primary border-primary":"bg-surface-raised border-primary"))}}
           style={{position:"absolute",left:p.x-(hot?5:4),top:p.y-(hot?5:4),width:hot?10:8,height:hot?10:8}}/>;
       })}
-    </View>
+    </View>:null}
     {transform?<View {...handlers} collapsable={false}
       accessible accessibilityRole="adjustable" accessibilityLabel="Pivot"
       accessibilityHint="Drag to move the point the layer rotates and scales around. Arrow keys nudge it; keys 1 to 9 jump to the anchors."
       aria-valuetext={state.drag?(state.drag.anchor?`Pivot at ${ORIGIN_ANCHOR_LABELS[state.drag.anchor]}`:"Pivot moving"):originAccessibilityValue(corners,transform)}
-      accessibilityActions={[{name:"increment",label:"Next anchor"},{name:"decrement",label:"Previous anchor"},{name:"center",label:"Center the pivot"}]}
+      accessibilityActions={disabled?[]:[{name:"increment",label:"Next anchor"},{name:"decrement",label:"Previous anchor"},{name:"center",label:"Center the pivot"}]}
       onAccessibilityAction={e=>{
         const a=e.nativeEvent.actionName;
         if(a==="increment")step(1);else if(a==="decrement")step(-1);else if(a==="center")commitAt(anchorPoint(corners,"center"));

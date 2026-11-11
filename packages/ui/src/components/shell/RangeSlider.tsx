@@ -1,8 +1,8 @@
-import {useEffect,useRef,type ComponentRef} from "react";
+import {useLayoutEffect,useRef,type ComponentRef} from "react";
 import {I18nManager,Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {formatStepValue,type RangeConfig} from "../forge/inputs/precision.ts";
+import {assertRange,formatStepValue,stepDecimalPlaces,type RangeConfig} from "../forge/inputs/precision.ts";
 import {createDragController,type DragController} from "../gestures/drag-controller.ts";
 import type {DragPoint,DragTransport} from "../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../gestures/PanResponderDrag.tsx";
@@ -19,6 +19,8 @@ export type {RangeThumb,RangeValue} from "./slider-model.ts";
 
 /** Props for {@linkcode RangeSlider}. */
 export interface RangeSliderProps extends Omit<ViewProps,"children">,RangeConfig {
+  /** Document/parameter identity and host revision invalidate unfinished input. */
+  scope?:string;revision?:string|number;
   label:string;
   /** Committed `[low, high]`. */
   value:RangeValue;
@@ -50,12 +52,16 @@ type Local={preview:RangeValue|undefined;thumb:RangeThumb|undefined;track:{x:num
  * that accepts unit arithmetic.
  */
 export function RangeSlider({
-  label,value,min,max,step,detents,onPreview,onCommit,minGap=0,thumbLabels=["Minimum","Maximum"],unit,context,
+  scope="RangeSlider",revision=0,label,value,min,max,step,detents,onPreview,onCommit,minGap=0,thumbLabels=["Minimum","Maximum"],unit,context,
   disabled=false,hideLabel=false,transport:Transport=PanResponderDrag,className,unstyled=false,style,...rest
 }:RangeSliderProps){
   const styled=!unstyled;
   const range={min,max,step,detents};
+  assertRange(range);
+  if(!label.trim()||!scope.trim()||scope.length>512)throw new RangeError("Invalid control identity");
   const committed=normalizeRange(value,range,minGap);
+  const boundary=JSON.stringify([scope,revision,disabled,min,max,step,detents,value,context,unit,minGap]);
+  const mounted=useRef(false),gestureScope=useRef<string|null>(null);
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({preview:undefined,thumb:undefined,track:undefined,focus:undefined}));
   const store=local.current;
@@ -63,10 +69,12 @@ export function RangeSlider({
   const focus=useStore(store,s=>s.focus);
   const track=useRef<ComponentRef<typeof View>>(null);
   const rtl=useRef(I18nManager.isRTL);
-  const latest=useRef({committed,range,minGap,disabled,onPreview,onCommit});
-  latest.current={committed,range,minGap,disabled,onPreview,onCommit};
+  const latest=useRef({boundary,committed,range,minGap,disabled,onPreview,onCommit});
+  useLayoutEffect(()=>{latest.current={boundary,committed,range,minGap,disabled,onPreview,onCommit};});
+  const allowed=()=>mounted.current&&!disabled&&latest.current.boundary===boundary;
+  const validDrag=()=>mounted.current&&!latest.current.disabled&&gestureScope.current===latest.current.boundary;
   const measure=()=>track.current?.measureInWindow?.((x,_y,width)=>{
-    if(Number.isFinite(x)&&width>0)store.setState({track:{x,width}});
+    if(mounted.current&&latest.current.boundary===boundary&&Number.isFinite(x)&&Number.isFinite(width)&&width>0){const before=store.getState().track;if(before&&(before.x!==x||before.width!==width))controller.current?.cancel();store.setState({track:{x,width}});}
     rtl.current=nodeIsRTL(track.current)||I18nManager.isRTL;
   });
   const at=(point:DragPoint)=>{
@@ -76,8 +84,8 @@ export function RangeSlider({
   const pending=useRef<DragPoint|undefined>(undefined);
   const controller=useRef<DragController|null>(null);
   if(!controller.current)controller.current=createDragController({
-    disabled:()=>!!latest.current.disabled,
-    start:()=>{
+    disabled:()=>!mounted.current||!!latest.current.disabled,
+    start:()=>{gestureScope.current=latest.current.boundary;
       const p=latest.current;
       const v=pending.current?at(pending.current):undefined;
       const thumb=v===undefined?"high":nearestThumb(p.committed,v);
@@ -86,6 +94,7 @@ export function RangeSlider({
       p.onPreview?.(next);
     },
     move:point=>{
+      if(!validDrag())return;
       const s=store.getState(),p=latest.current,v=at(point);
       if(!s.thumb||v===undefined)return;
       const next=moveRangeThumb(s.preview??p.committed,s.thumb,v,p.range,p.minGap);
@@ -93,23 +102,26 @@ export function RangeSlider({
       p.onPreview?.(next);
     },
     commit:()=>{
+      const valid=validDrag();gestureScope.current=null;
       const next=store.getState().preview,p=latest.current;
       store.setState({preview:undefined,thumb:undefined});
-      if(next&&(next[0]!==p.committed[0]||next[1]!==p.committed[1]))p.onCommit(next);
-      else p.onPreview?.(p.committed);
+      if(valid&&next&&(next[0]!==p.committed[0]||next[1]!==p.committed[1]))p.onCommit(next);
+      else if(valid)p.onPreview?.(p.committed);
     },
     cancel:()=>{
+      const valid=validDrag();gestureScope.current=null;
       store.setState({preview:undefined,thumb:undefined});
-      latest.current.onPreview?.(latest.current.committed);
+      if(valid)latest.current.onPreview?.(latest.current.committed);
     },
   });
   const drag=controller.current;
-  useEffect(()=>()=>drag.cancel(),[drag]);
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;gestureScope.current=null;drag.cancel();};},[drag]);
+  useLayoutEffect(()=>{drag.cancel();measure();},[boundary,drag]);
 
   const shown=preview??committed;
   const [lo,hi]=[fractionOf(shown[0],range),fractionOf(shown[1],range)];
   const commitThumb=(thumb:RangeThumb,next:number)=>{
-    if(disabled)return;
+    if(!allowed())return;
     const result=moveRangeThumb(committed,thumb,next,range,minGap);
     if(result[0]!==committed[0]||result[1]!==committed[1])onCommit(result);
   };
@@ -119,6 +131,7 @@ export function RangeSlider({
     const v=shown[i];
     const name=`${label} ${thumbLabels[i]}`;
     const onKeyDown=(event:unknown)=>{
+      if(!allowed())return;
       const k=shellKey(event);
       if(k.key==="Escape"){drag.cancel();return;}
       if(k.ctrlKey||k.metaKey)return;
@@ -130,7 +143,7 @@ export function RangeSlider({
     return <View key={thumb} accessible accessibilityRole="adjustable" accessibilityLabel={name}
       aria-valuemin={thumb==="low"?min:committed[0]+minGap} aria-valuemax={thumb==="high"?max:committed[1]-minGap}
       aria-valuenow={v} aria-valuetext={formatStepValue(v,step)+(unit??"")} aria-disabled={disabled}
-      accessibilityActions={[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
+      accessibilityState={{disabled}} accessibilityActions={disabled?[]:[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
       onAccessibilityAction={event=>{
         if(event.nativeEvent.actionName==="increment")commitThumb(thumb,committed[i]+step);
         if(event.nativeEvent.actionName==="decrement")commitThumb(thumb,committed[i]-step);
@@ -145,16 +158,16 @@ export function RangeSlider({
   };
   const entry=(thumb:RangeThumb)=>{
     const i=thumbIndex[thumb];
-    return <UnitInput label={thumbLabels[i]} value={shown[i]} context={context}
+    return <UnitInput scope={boundary} label={thumbLabels[i]} value={shown[i]} context={context}
       min={thumb==="low"?min:committed[0]+minGap} max={thumb==="high"?max:committed[1]-minGap} step={step}
-      precision={Math.max(0,-Math.floor(Math.log10(step)))} disabled={disabled} unstyled={unstyled}
+      precision={Math.min(100,stepDecimalPlaces(step)+1)} disabled={disabled} unstyled={unstyled}
       onCommit={next=>commitThumb(thumb,next)} style={{flex:1,minWidth:96}}/>;
   };
   return <View {...rest} accessibilityLabel={label} {...{role:"group",className:joinClasses("gap-1",className)}}
     style={[{opacity:disabled?0.5:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{minHeight:24}}>{label}</Text>:null}
     <Transport disabled={disabled}
-      onBegin={point=>{pending.current=point;measure();drag.begin();}}
+      onBegin={point=>{if(!allowed())return;pending.current=point;measure();drag.begin();}}
       onMove={(point,touches)=>{if(touches===1)drag.move(point);else drag.cancel();}}
       onRelease={()=>drag.release()}
       onCancel={()=>drag.cancel()}>

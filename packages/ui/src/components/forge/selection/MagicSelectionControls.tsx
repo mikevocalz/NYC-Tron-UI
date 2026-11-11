@@ -1,4 +1,4 @@
-import {useRef,type ComponentRef,type ReactNode} from "react";
+import {useLayoutEffect,useRef,type ComponentRef,type ReactNode} from "react";
 import {PanResponder,Platform,Text,View,type GestureResponderEvent,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -7,6 +7,9 @@ import {SegmentedControl} from "../../SegmentedControl.tsx";
 import {joinClasses} from "../../styles.ts";
 import {PrecisionScrubber} from "../inputs/PrecisionScrubber.tsx";
 import {Crosshair,MarchingAnts} from "./selection-overlay.tsx";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {createCanvasResponder} from '../../gestures/canvas-responder.ts';
 import {SwitchRow} from "./switch-row.tsx";
 import {
  KEYBOARD_STEP,MAX_SELECTION_RADIUS,clampRadius,docRectToView,docToView,modeFromModifiers,validateMapping,viewToDoc,
@@ -26,7 +29,7 @@ export interface SelectionEdgeRadii {
 }
 
 /** Props for {@linkcode MagicSelectionControls}. */
-export interface MagicSelectionControlsProps extends Omit<ViewProps,"children"> {
+export interface MagicSelectionControlsProps extends Omit<ViewProps,"children">,ScopedControlProps {
   settings:MagicWandSettings;
   /** One call per committed scrubber change, toggle or sample choice. */
   onSettingsChange:(settings:MagicWandSettings)=>void;
@@ -37,12 +40,12 @@ export interface MagicSelectionControlsProps extends Omit<ViewProps,"children"> 
   radii:SelectionEdgeRadii;
   onRadiiChange:(radii:SelectionEdgeRadii)=>void;
   /** Grow, Shrink and Feather. Maps to `modifySelection`. One call per press. */
-  onModifySelection:(request:ModifySelectionRequest)=>void;
+  onModifySelection:(request:ModifySelectionRequest,signal?:AbortSignal)=>void|Promise<unknown>;
   /**
    * Refine edge (smooth, then feather). Optional: the Prism v2 contract has no
    * smoothing op, so without this handler the section explains that and stays off.
    */
-  onRefineEdge?:(request:RefineEdgeRequest)=>void;
+  onRefineEdge?:(request:RefineEdgeRequest,signal?:AbortSignal)=>void|Promise<unknown>;
   /** @default "Magic selection" */
   label?:string;
   className?:string;
@@ -56,35 +59,49 @@ export interface MagicSelectionControlsProps extends Omit<ViewProps,"children"> 
  * `modifySelection` per press and stay visibly disabled, with the reason, when
  * nothing is selected. Pair with {@linkcode MagicWandCanvas} for the clicks.
  */
-export function MagicSelectionControls({
+export function MagicSelectionControls({scope='magic-selection',revision=0,...props}:MagicSelectionControlsProps){
+ validateWandSettings(props.settings);
+ if(Object.values(props.radii).some(r=>!Number.isFinite(r)||r<0||r>MAX_SELECTION_RADIUS))throw new RangeError('Invalid selection radius');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.currentLayerName,props.hasSelection]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <MagicSelectionControlsBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onSettingsChange={value=>guard.current()?.onSettingsChange(value)} onRadiiChange={value=>guard.current()?.onRadiiChange(value)}
+  onModifySelection={value=>guard.run('modify',(host,signal)=>host.hasSelection?host.onModifySelection(value,signal):undefined)}
+  {...(props.onRefineEdge?{onRefineEdge:(value:RefineEdgeRequest)=>guard.run('refine',(host,signal)=>host.hasSelection?host.onRefineEdge?.(value,signal):undefined)}:{})}/>;
+}
+function MagicSelectionControlsBody({
  settings,onSettingsChange,currentLayerName,hasSelection,radii,onRadiiChange,onModifySelection,onRefineEdge,
- label="Magic selection",className,unstyled=false,...rest
-}:MagicSelectionControlsProps){
+ actionError=null,busy=false,disabledReason,label="Magic selection",className,unstyled=false,...rest
+}:MagicSelectionControlsProps&{actionError?:string|null;busy?:boolean}){
  validateWandSettings(settings);
  const styled=!unstyled;
+ const unavailable=busy||disabledReason!==undefined;
  const set=(patch:Partial<MagicWandSettings>)=>onSettingsChange({...settings,...patch});
  const setRadius=(key:keyof SelectionEdgeRadii)=>(v:number)=>onRadiiChange({...radii,[key]:clampRadius(v)});
- const growProblem=modifyProblem(hasSelection,radii.grow);
- const featherProblem=modifyProblem(hasSelection,radii.feather);
- const refineProblem=onRefineEdge===undefined?"Refine edge needs a smoothing operation this editor does not offer"
+ const growProblem=unavailable?(disabledReason??"Selection change in progress"):modifyProblem(hasSelection,radii.grow);
+ const featherProblem=unavailable?(disabledReason??"Selection change in progress"):modifyProblem(hasSelection,radii.feather);
+ const refineProblem=unavailable?(disabledReason??"Selection change in progress"):onRefineEdge===undefined?"Refine edge needs a smoothing operation this editor does not offer"
   :!hasSelection?"Nothing is selected":radii.smooth<1&&radii.feather<1?"Set a smooth or feather radius":undefined;
  const heading=(text:string)=><Text role="heading" aria-level={3}
   {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}} style={{paddingTop:4}}>{text}</Text>;
  const reason=(text:string|undefined)=>text?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{text}</Text>:null;
  const radiusScrubber=(key:keyof SelectionEdgeRadii,name:string)=><PrecisionScrubber label={name} unit=" px"
-  value={radii[key]} min={0} max={MAX_SELECTION_RADIUS} step={1} unstyled={unstyled} onCommit={setRadius(key)}/>;
+  value={radii[key]} disabled={unavailable} min={0} max={MAX_SELECTION_RADIUS} step={1} unstyled={unstyled} onCommit={setRadius(key)}/>;
 
  return <View {...rest} role="group" aria-label={label}
   {...{className:joinClasses("gap-3",styled&&"rounded-card border border-border bg-surface-raised p-3",className)}}>
+  {disabledReason?<Text accessibilityLiveRegion="polite">{disabledReason}</Text>:null}
+  {busy?<Text accessibilityLiveRegion="polite">Selection change in progress</Text>:null}
+  <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
   {heading("Magic wand")}
   <PrecisionScrubber label={`Tolerance (${formatTolerance(settings.tolerance)})`} value={settings.tolerance}
-   min={0} max={MAX_TOLERANCE} step={1} unstyled={unstyled} onCommit={v=>set({tolerance:Math.round(v)})}/>
-  <SwitchRow label="Contiguous" unstyled={unstyled} value={settings.contiguous}
+   disabled={unavailable} min={0} max={MAX_TOLERANCE} step={1} unstyled={unstyled} onCommit={v=>set({tolerance:Math.round(v)})}/>
+  <SwitchRow label="Contiguous" {...(unavailable?{disabledReason:disabledReason??"Selection change in progress"}:{})} unstyled={unstyled} value={settings.contiguous}
    detail={settings.contiguous?"Only pixels connected to the one you click":"Every matching pixel in the image"}
    onValueChange={contiguous=>set({contiguous})}/>
   <View style={{gap:4}}>
    <Text nativeID="wand-sample-label" {...{className:joinClasses(styled&&"text-text text-sm font-medium")}}>Sample</Text>
-   <SegmentedControl aria-label="Sample" value={settings.sample} unstyled={unstyled}
+   <SegmentedControl disabled={unavailable} aria-label="Sample" value={settings.sample} unstyled={unstyled}
     options={WAND_SAMPLES.map(o=>({value:o.value,label:o.value==="layer"&&currentLayerName?`Layer: ${currentLayerName}`:o.label,
      disabled:o.value==="layer"&&currentLayerName===undefined}))}
     onChange={(sample:WandSample)=>set({sample})}/>
@@ -116,7 +133,7 @@ export function MagicSelectionControls({
 }
 
 /** Props for {@linkcode MagicWandCanvas}. */
-export interface MagicWandCanvasProps extends Omit<ViewProps,"children"> {
+export interface MagicWandCanvasProps extends Omit<ViewProps,"children">,ScopedControlProps {
   settings:MagicWandSettings;
   /** Combine mode; Shift, Alt or both override it per click like the marquee. */
   mode:SelectionMode;
@@ -129,7 +146,7 @@ export interface MagicWandCanvasProps extends Omit<ViewProps,"children"> {
   /** Committed selection bounds, drawn as a dashed outline. */
   selectionBounds?:DocRect|undefined;
   /** Exactly once per click or keyboard Enter. Maps to `magicWand`. */
-  onMagicWand:(request:MagicWandRequest)=>void;
+  onMagicWand:(request:MagicWandRequest,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Why the wand is unavailable; clicks then show this instead. */
   disabledReason?:string;
   children?:ReactNode;
@@ -146,16 +163,23 @@ type WandLocal={cursor:DocPoint|null;notice:string|undefined;held:{shift:boolean
  * press Enter for a crosshair at the middle, move it with the arrows (Alt for
  * ten times the step) and press Enter to select there; Escape cancels.
  */
-export function MagicWandCanvas({
+export function MagicWandCanvas({scope='magic-wand',revision=0,...props}:MagicWandCanvasProps){
+ validateWandSettings(props.settings);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.settings,props.mode,props.currentLayerId,props.width,props.height,props.documentWidth,props.documentHeight]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <MagicWandCanvasBody key={owner} {...props} actionError={guard.error} {...(guard.pending?{disabledReason:'Selection change in progress'}:{})}
+  onMagicWand={value=>guard.run('wand',(host,signal)=>host.onMagicWand(value,signal))}/>;
+}
+function MagicWandCanvasBody({
  settings,mode,currentLayerId,width,height,documentWidth,documentHeight,selectionBounds,onMagicWand,disabledReason,
- children,label="Magic wand canvas",className,unstyled=false,style,...rest
-}:MagicWandCanvasProps){
+ actionError=null,children,label="Magic wand canvas",className,unstyled=false,style,...rest
+}:MagicWandCanvasProps&{actionError?:string|null}){
  validateWandSettings(settings);
  const mapping:ViewMapping={viewWidth:width,viewHeight:height,docWidth:documentWidth,docHeight:documentHeight};
  validateMapping(mapping);
  const blocked=disabledReason??wandProblem(settings,currentLayerId);
  const latest=useRef({settings,mode,currentLayerId,mapping,blocked,onMagicWand});
- latest.current={settings,mode,currentLayerId,mapping,blocked,onMagicWand};
+ useLayoutEffect(()=>{latest.current={settings,mode,currentLayerId,mapping,blocked,onMagicWand};});
  const local=useRef<StoreApi<WandLocal>|null>(null);
  if(!local.current)local.current=createStore<WandLocal>(()=>({cursor:null,notice:undefined,held:{shift:false,alt:false}}));
  const store=local.current;
@@ -173,15 +197,15 @@ export function MagicWandCanvas({
   p.onMagicWand(buildMagicWand(at[0],at[1],p.settings,m,p.currentLayerId));
  };
  const pan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
- if(!pan.current)pan.current=PanResponder.create({
-  onStartShouldSetPanResponder:()=>true,onMoveShouldSetPanResponder:()=>true,
+ if(!pan.current)pan.current=createCanvasResponder({
+  onStartShouldSetPanResponder:(_e,g)=>latest.current.blocked===undefined&&g.numberActiveTouches<=1,onMoveShouldSetPanResponder:()=>false,
   onPanResponderGrant:(e:GestureResponderEvent)=>{
    (surface.current as unknown as {focus?:()=>void}|null)?.focus?.();
    const n=e.nativeEvent as {shiftKey?:boolean;altKey?:boolean;locationX:number;locationY:number};
    const held=store.getState().held;
    press.current={view:[n.locationX,n.locationY],moved:false,mods:{shift:!!n.shiftKey||held.shift,alt:!!n.altKey||held.alt}};
   },
-  onPanResponderMove:(_e,g)=>{if(press.current&&Math.hypot(g.dx,g.dy)>6)press.current.moved=true;},
+  onPanResponderMove:(_e,g)=>{if(press.current&&(g.numberActiveTouches>1||Math.hypot(g.dx,g.dy)>6))press.current.moved=true;},
   onPanResponderRelease:()=>{
    const p=press.current;press.current=null;
    if(!p||p.moved)return;
@@ -222,6 +246,7 @@ export function MagicWandCanvas({
  };
  const cv=cursor?docToView(mapping,cursor):null;
  return <View {...rest} {...{className:joinClasses("gap-2",className)}} style={[{maxWidth:"100%"},style]}>
+  <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
   <View ref={surface} collapsable={false} {...pan.current.panHandlers}
    {...{onKeyDown,onKeyUp,focusable:true,
     className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border focus-visible:ring-2 focus-visible:ring-focus")}}

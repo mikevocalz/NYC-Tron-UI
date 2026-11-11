@@ -1,0 +1,29 @@
+steps:
+  - launch: com.nyctron.instruments.example
+  - await: { visible: { text: Search assets }, timeout: 15000 }
+  - await: { idle: true }
+  - tap: { text: overlays }
+  - await: { visible: { text: Native action menu section } }
+  - await: { text: { in: { text: Native overlay state }, contains: '"events":[]' } }
+  - await: { idle: true }
+  - tap: { text: Layer actions }
+  - await: { visible: { text: Rename layer } }
+  - await: { visible: { text: Locked action } }
+  - await: { idle: true }
+  - tap: { text: Rename layer }
+  - await: { text: { in: { text: Native overlay state }, contains: '"events":["menu:rename"]' } }
+  - await: { idle: true }
+  - tap: { id: native-overlay-component }
+  - await: { visible: { text: Popover, within: { id: native-overlay-component-list } } }
+  - await: { idle: true }
+  - tap: { text: Popover, within: { id: native-overlay-component-list } }
+  - await: { visible: { text: Native popover section } }
+  - await: { idle: true }
+  - tap: { text: Open layer properties }
+  - await: { visible: { text: Native layer properties } }
+  - await: { idle: true }
+  - tap: { text: Apply layer property }
+  - await: { hidden: { text: Native layer properties } }
+  - await: { text: { in: { text: Native overlay state }, contains: '"events":["menu:rename","popover:apply"]' } }
+  - await: { text: { in: { text: Native overlay state }, contains: '"open":false' } }
+  - await: { idle: true }

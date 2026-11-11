@@ -1,0 +1,29 @@
+steps:
+  - launch: ai.nyctron.p03bridge
+  - tool: await-ui-element
+    args:
+      bundleId: ai.nyctron.p03bridge
+      selector:
+        text: P03 BRIDGE
+      condition: text
+      expectedText: P03 BRIDGE PASS
+      timeoutMs: 15000
+  - await: {idle: true}
+  - tap:
+      id: p03-start-player
+  - tool: await-ui-element
+    args:
+      bundleId: ai.nyctron.p03bridge
+      selector:
+        text: P03 PLAYER
+      condition: visible
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      bundleId: ai.nyctron.p03bridge
+      selector:
+        text: P03 PLAYER
+      condition: text
+      expectedText: P03 PLAYER PASS
+      timeoutMs: 25000
+  - await: {idle: true}

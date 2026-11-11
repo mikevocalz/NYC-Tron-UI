@@ -1,0 +1,40 @@
+steps:
+  - launch: com.nyctron.instruments.example
+  - await: { visible: { text: Search assets }, timeout: 30000 }
+  - await: { idle: true }
+  - scroll-to: { target: { text: { matches: '^canvas$' } }, direction: right, within: { id: library-family-scroll } }
+  - await: { visible: { text: { matches: '^canvas$' } } }
+  - tap: { text: { matches: '^canvas$' } }
+  - await: { visible: { text: Next canvas document } }
+  - await: { idle: true }
+  - await: { text: { in: { text: Canvas navigation state }, contains: '"commits":[]' } }
+  - pinch: { on: { id: canvas-navigation-viewport }, scale: 2 }
+  - await: { text: { in: { text: Canvas navigation state }, contains: '"commits":["canvas-a:' } }
+  - tap: { text: Next canvas document }
+  - await: { text: { in: { text: Canvas navigation state }, contains: '"documentId":"canvas-b"' } }
+  - await: { idle: true }
+  - tap: { text: { matches: '^GPU$' } }
+  - await: { visible: { text: GPU document canvas }, timeout: 10000 }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"submissions":1' } }
+  - await: { idle: true }
+  - tap: { text: Zoom GPU canvas }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"zoom":2' } }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"submissions":2' } }
+  - tap: { text: Replace GPU document }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"document":1' } }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"submissions":3' } }
+  - tap: { text: Toggle GPU draw failure }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"error":"Sample renderer failed"' } }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"submissions":3' } }
+  - tap: { text: Toggle GPU draw failure }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"error":""' } }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"submissions":4' } }
+  - await: { idle: true }
+  - await: { visible: { text: GPU document canvas } }
+  - tap: { text: Toggle GPU draw failure }
+  - await: { visible: { text: Canvas rendering failed } }
+  - await: { idle: true }
+  - tap: { text: Toggle GPU draw failure }
+  - await: { hidden: { text: Canvas rendering failed } }
+  - await: { text: { in: { text: '"submissions"' }, contains: '"submissions":5' } }
+  - await: { idle: true }

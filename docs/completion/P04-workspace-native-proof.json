@@ -1,0 +1,309 @@
+{
+  "scope": "P04 workspace checkpoint, iOS simulator only; not eight-platform acceptance",
+  "device": "BBCC4078-E64D-4642-893B-ACF80ACB29A1",
+  "runs": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Running e2e test \"qa-tron-workspace-continuity\" on BBCC4078-E64D-4642-893B-ACF80ACB29A1 (31 steps)"
+        },
+        {
+          "type": "text",
+          "text": "[1] ✓ launch (4.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[2] ✓ await visible \"Search assets\" (1.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[3] ✓ idle (4.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[4] ✓ tap \"workspace\" (0.9s)"
+        },
+        {
+          "type": "text",
+          "text": "[5] ✓ await visible \"Canvas edits 0\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[6] ✓ await-ui-element (0.1s)"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"elapsed\": 71\n}"
+        },
+        {
+          "type": "text",
+          "text": "[7] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[8] ✓ tap \"Edit canvas state\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[9] ✓ await visible \"Canvas edits 1\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[10] ✓ tap \"Color\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[11] ✓ await id=workspace-continuity-state contains \"\\\"mode\\\":\\\"color\\\"\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[12] ✓ await visible \"Canvas edits 1\" (0.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[13] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[14] ✓ tap \"Next workspace document\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[15] ✓ await-ui-element (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"elapsed\": 539\n}"
+        },
+        {
+          "type": "text",
+          "text": "[16] ✓ await visible \"Canvas edits 0\" (0.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[17] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[18] ✓ tap \"Next workspace document\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[19] ✓ await id=workspace-continuity-state contains \"\\\"documentId\\\":\\\"document-a\\\"\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[20] ✓ await visible \"Canvas edits 1\" (0.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[21] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[22] ✓ tap \"Workspace preset: Custom layout\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[23] ✓ await visible \"Save layout as new preset\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[24] ✓ idle (0.6s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle."
+        },
+        {
+          "type": "text",
+          "text": "[25] ✓ tap \"Save layout as new preset\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[26] ✓ await visible \"Preset name\" (0.9s)"
+        },
+        {
+          "type": "text",
+          "text": "[27] ✓ idle (1.1s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle."
+        },
+        {
+          "type": "text",
+          "text": "[28] ✓ await-ui-element (0.1s)"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"elapsed\": 114\n}"
+        },
+        {
+          "type": "text",
+          "text": "[29] ✓ tap \"Save preset\" (0.4s)"
+        },
+        {
+          "type": "text",
+          "text": "[30] ✓ await visible \"Workspace preset: Custom layout copy\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[31] ✓ idle (0.8s)"
+        },
+        {
+          "type": "text",
+          "text": "PASS — 31 passed, 0 failed, 0 errored, 0 skipped (21.9s)"
+        }
+      ]
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Running e2e test \"qa-tron-workspace-continuity\" on BBCC4078-E64D-4642-893B-ACF80ACB29A1 (31 steps)"
+        },
+        {
+          "type": "text",
+          "text": "[1] ✓ launch (2.6s)"
+        },
+        {
+          "type": "text",
+          "text": "[2] ✓ await visible \"Search assets\" (1.4s)"
+        },
+        {
+          "type": "text",
+          "text": "[3] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[4] ✓ tap \"workspace\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[5] ✓ await visible \"Canvas edits 0\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[6] ✓ await-ui-element (0.1s)"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"elapsed\": 74\n}"
+        },
+        {
+          "type": "text",
+          "text": "[7] ✓ idle (0.6s)"
+        },
+        {
+          "type": "text",
+          "text": "[8] ✓ tap \"Edit canvas state\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[9] ✓ await visible \"Canvas edits 1\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[10] ✓ tap \"Color\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[11] ✓ await id=workspace-continuity-state contains \"\\\"mode\\\":\\\"color\\\"\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[12] ✓ await visible \"Canvas edits 1\" (0.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[13] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[14] ✓ tap \"Next workspace document\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[15] ✓ await-ui-element (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"elapsed\": 543\n}"
+        },
+        {
+          "type": "text",
+          "text": "[16] ✓ await visible \"Canvas edits 0\" (0.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[17] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[18] ✓ tap \"Next workspace document\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[19] ✓ await id=workspace-continuity-state contains \"\\\"documentId\\\":\\\"document-a\\\"\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[20] ✓ await visible \"Canvas edits 1\" (0.0s)"
+        },
+        {
+          "type": "text",
+          "text": "[21] ✓ idle (0.5s)"
+        },
+        {
+          "type": "text",
+          "text": "[22] ✓ tap \"Workspace preset: Custom layout\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[23] ✓ await visible \"Save layout as new preset\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[24] ✓ idle (0.6s)"
+        },
+        {
+          "type": "text",
+          "text": "[25] ✓ tap \"Save layout as new preset\" (0.4s)"
+        },
+        {
+          "type": "text",
+          "text": "[26] ✓ await visible \"Preset name\" (0.9s)"
+        },
+        {
+          "type": "text",
+          "text": "[27] ✓ idle (1.1s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle."
+        },
+        {
+          "type": "text",
+          "text": "[28] ✓ await-ui-element (0.1s)"
+        },
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"elapsed\": 119\n}"
+        },
+        {
+          "type": "text",
+          "text": "[29] ✓ tap \"Save preset\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[30] ✓ await visible \"Workspace preset: Custom layout copy\" (0.3s)"
+        },
+        {
+          "type": "text",
+          "text": "[31] ✓ idle (0.8s)"
+        },
+        {
+          "type": "text",
+          "text": "PASS — 31 passed, 0 failed, 0 errored, 0 skipped (15.8s)"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Small-region idle warnings occurred at the menu and focused name field. Loaded controls and default draft were checked explicitly; no loading indicator was observed. The runner does not classify the changing region.",
+    "Android workspace path, desktop and headset runtime acceptance remain unverified.",
+    "The fixture demonstrates controlled workspace state and canvas view identity, not a rendering engine.",
+    "ENOSPC interrupted the first recording. Only task-owned native build intermediates were removed. Failed/recovered walkthrough is not acceptance evidence.",
+    "Native save uses the offered Custom layout copy name. Unicode and rapid rename typing are covered by the browser regression, not this native run."
+  ]
+}

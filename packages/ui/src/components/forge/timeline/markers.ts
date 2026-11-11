@@ -13,6 +13,8 @@ export interface TimelineMarker {
   readonly frame:number;
   readonly durationFrames?:number;
   readonly name:string;
+  /** App-owned marker metadata, mapped to a supplied palette. */
+  readonly colorId?:string;
   readonly note?:string;
 }
 /** A marker change, in frames for the UI and seconds for the engine. */

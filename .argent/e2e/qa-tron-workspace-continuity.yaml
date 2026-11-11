@@ -1,0 +1,35 @@
+steps:
+  - launch: com.nyctron.instruments.example
+  - await: { visible: { text: Search assets }, timeout: 15000 }
+  - await: { idle: true }
+  - tap: { text: workspace }
+  - await: { visible: { text: Canvas edits 0 } }
+  - tool: await-ui-element
+    args: { condition: visible, selector: { text: Harbor, role: Heading } }
+  - await: { idle: true }
+  - tap: { text: Edit canvas state }
+  - await: { visible: { text: Canvas edits 1 } }
+  - tap: { text: Color }
+  - await: { text: { in: { id: workspace-continuity-state }, contains: '"mode":"color"' } }
+  - await: { visible: { text: Canvas edits 1 } }
+  - await: { idle: true }
+  - tap: { text: Next workspace document }
+  - tool: await-ui-element
+    args: { condition: visible, selector: { text: Studio, role: Heading } }
+  - await: { visible: { text: Canvas edits 0 } }
+  - await: { idle: true }
+  - tap: { text: Next workspace document }
+  - await: { text: { in: { id: workspace-continuity-state }, contains: '"documentId":"document-a"' } }
+  - await: { visible: { text: Canvas edits 1 } }
+  - await: { idle: true }
+  - tap: { text: 'Workspace preset: Custom layout' }
+  - await: { visible: { text: Save layout as new preset } }
+  - await: { idle: true }
+  - tap: { text: Save layout as new preset }
+  - await: { visible: { text: Preset name } }
+  - await: { idle: true }
+  - tool: await-ui-element
+    args: { condition: text, selector: { text: Preset name, role: TextField }, expectedText: Custom layout copy }
+  - tap: { text: Save preset }
+  - await: { visible: { text: 'Workspace preset: Custom layout copy' } }
+  - await: { idle: true }

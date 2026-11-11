@@ -1,0 +1,47 @@
+/Users/mikevocalz/recovered-work/2026-11-05/tron-complete/tooling/native/presentation-index-ios/Harness.swift:56:29: warning: 'tracks(withMediaType:)' was deprecated in iOS 16.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+ 54 |         catch {
+ 55 |           let reader = try AVAssetReader(asset: asset)
+ 56 |           let track = asset.tracks(withMediaType: .video)[0]
+    |                             `- warning: 'tracks(withMediaType:)' was deprecated in iOS 16.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+ 57 |           let output = AVAssetReaderTrackOutput(track: track, outputSettings: nil)
+ 58 |           reader.add(output)
+
+/Users/mikevocalz/recovered-work/2026-11-05/tron-complete/tooling/native/presentation-index-ios/Harness.swift:64:59: warning: 'duration' was deprecated in iOS 16.0: Use load(.duration) instead [#DeprecatedDeclaration]
+ 62 |             raw.append("\(CMSampleBufferGetPresentationTimeStamp(sample).seconds)/\(CMSampleBufferGetOutputPresentationTimeStamp(sample).seconds)")
+ 63 |           }
+ 64 |           evidence.append("DEBUG \(name) duration=\(asset.duration.seconds) samples=\(raw) mappings=\(track.segments.map { $0.timeMapping })")
+    |                                                           `- warning: 'duration' was deprecated in iOS 16.0: Use load(.duration) instead [#DeprecatedDeclaration]
+ 65 |           throw error
+ 66 |         }
+
+/Users/mikevocalz/recovered-work/2026-11-05/tron-complete/tooling/native/presentation-index-ios/Harness.swift:64:109: warning: 'segments' was deprecated in iOS 16.0: Use load(.segments) instead [#DeprecatedDeclaration]
+ 62 |             raw.append("\(CMSampleBufferGetPresentationTimeStamp(sample).seconds)/\(CMSampleBufferGetOutputPresentationTimeStamp(sample).seconds)")
+ 63 |           }
+ 64 |           evidence.append("DEBUG \(name) duration=\(asset.duration.seconds) samples=\(raw) mappings=\(track.segments.map { $0.timeMapping })")
+    |                                                                                                             `- warning: 'segments' was deprecated in iOS 16.0: Use load(.segments) instead [#DeprecatedDeclaration]
+ 65 |           throw error
+ 66 |         }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+/Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/platform-services/ios/Extensions/AVURLAsset+presentationIndex.swift:21:33: warning: 'duration' was deprecated in iOS 16.0: Use load(.duration) instead [#DeprecatedDeclaration]
+19 |       return scaled.value
+20 |     }
+21 |     let durationUs = try micros(duration)
+   |                                 `- warning: 'duration' was deprecated in iOS 16.0: Use load(.duration) instead [#DeprecatedDeclaration]
+22 |     guard durationUs > 0, let track = tracks(withMediaType: .video).first else {
+23 |       throw MediaDecodeFailure(.unsupportedFormat, "A finite video timeline is required.")
+
+/Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/platform-services/ios/Extensions/AVURLAsset+presentationIndex.swift:22:39: warning: 'tracks(withMediaType:)' was deprecated in iOS 16.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+20 |     }
+21 |     let durationUs = try micros(duration)
+22 |     guard durationUs > 0, let track = tracks(withMediaType: .video).first else {
+   |                                       `- warning: 'tracks(withMediaType:)' was deprecated in iOS 16.0: Use loadTracks(withMediaType:) instead [#DeprecatedDeclaration]
+23 |       throw MediaDecodeFailure(.unsupportedFormat, "A finite video timeline is required.")
+24 |     }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+/var/folders/37/s0s6qm2x3cx1mdsr_fv0y1pr0000gn/T/forge-p03-producer/P03Producer.app: replacing existing signature
+cfr [0, 33333, 66667, 100000, 133333, 166667, 200000, 233333, 266667, 300000, 333333, 366667]
+vfr [0, 100000, 200000, 233333, 300000, 400000, 466667, 500000, 600000, 700000, 800000, 900000]
+bframes [0, 33333, 66667, 100000, 133333, 166667, 200000, 233333, 266667, 300000, 333333, 366667]
+/var/folders/37/s0s6qm2x3cx1mdsr_fv0y1pr0000gn/T/forge-p03-producer/P03Producer.app

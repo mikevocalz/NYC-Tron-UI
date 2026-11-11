@@ -20,9 +20,31 @@ public final class NYCTronMediaDecoderModule: Module {
   }
 
   @JS
+  func presentationIndexV1(_ uri: String, _ maxFrames: Double) async throws -> PresentationIndexRecord {
+    try await decode {
+      let source = try MediaSource(uri: uri)
+      let index = try source.asset().presentationIndex(maxFrames: maxFrames)
+      return PresentationIndexRecord(durationUs: index.durationUs, timesUs: index.timesUs)
+    }
+  }
+
+  @JS
   func decodeFrame(_ uri: String, _ options: FrameRequestRecord) async throws -> DecodedFrameRecord {
     let request = try checked { try FrameRequest(options) }
     return try await decode { try MediaSource(uri: uri).asset().decodedFrame(request) }
+  }
+
+  @JS
+  func decodeIndexedFrameV1(_ uri: String, _ options: FrameRequestRecord) async throws -> DecodedFrameRecord {
+    let request = try checked { try FrameRequest(options) }
+    return try await decode {
+      let asset = try MediaSource(uri: uri).asset()
+      let index = try asset.presentationIndex(maxFrames: 200_000)
+      guard let time = index.presentationTime(microseconds: request.timeUs) else {
+        throw MediaDecodeFailure(.outOfRange, "No indexed frame has this presentation timestamp")
+      }
+      return try asset.decodedFrame(request, exactPresentationTime: time)
+    }
   }
 
   @JS

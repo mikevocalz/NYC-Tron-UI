@@ -1,4 +1,4 @@
-import {useRef,type ComponentRef,type ReactNode} from "react";
+import {useRef,useLayoutEffect,type ComponentRef,type ReactNode} from "react";
 import {I18nManager,Platform,Pressable,Text,useWindowDimensions,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -6,7 +6,7 @@ import {CommandPopover} from "../overlays/CommandPopover.tsx";
 import type {Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,rovingTarget,shellKey,type ShellAxis} from "./shell-keys.ts";
-import {shownVariantId,toolIsActive,type RailTool} from "./tool-rail-model.ts";
+import {shownVariantId,toolIsActive,validateRailTools,type RailTool} from "./tool-rail-model.ts";
 
 export type {RailTool,RailToolVariant,ToolIcon} from "./tool-rail-model.ts";
 export {shownVariantId,toolIsActive} from "./tool-rail-model.ts";
@@ -14,6 +14,8 @@ export {shownVariantId,toolIsActive} from "./tool-rail-model.ts";
 
 /** Props for {@linkcode ToolRail}. */
 export interface ToolRailProps extends Omit<ViewProps,"children"> {
+  /** Document/selection ownership; changing it abandons queued flyouts. */
+  scope?:string;revision?:string|number;disabled?:boolean;
   tools:readonly RailTool[];
   /** The active tool or variant id. */
   activeToolId:string|undefined;
@@ -32,7 +34,7 @@ export interface ToolRailProps extends Omit<ViewProps,"children"> {
   unstyled?:boolean;
 }
 
-type Flyout={toolId:string;anchor:Rect2D};
+type Flyout={toolId:string;anchor:Rect2D;boundary:string;request:number};
 
 /**
  * Compact professional tool palette. Each tool is a 44pt toggle button that
@@ -42,9 +44,10 @@ type Flyout={toolId:string;anchor:Rect2D};
  * arrow-key focus. The app owns the active tool and every shortcut binding.
  */
 export function ToolRail({
-  tools,activeToolId,onSelectTool,groupSelection,label="Tools",edge="left",expanded=false,usableRegions,
+  scope="tools",revision=0,disabled=false,tools,activeToolId,onSelectTool,groupSelection,label="Tools",edge="left",expanded=false,usableRegions,
   className,unstyled=false,style,...rest
 }:ToolRailProps){
+  validateRailTools(tools);
   const styled=!unstyled;
   const window=useWindowDimensions();
   const local=useRef<StoreApi<{flyout:Flyout|undefined;focus:number}>|null>(null);
@@ -55,18 +58,28 @@ export function ToolRail({
   const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
   const axis:ShellAxis=edge==="bottom"?"horizontal":"vertical";
   const activeIndex=tools.findIndex(t=>toolIsActive(t,activeToolId)&&!t.disabled);
-  const stop=focus>=0&&!tools[focus]?.disabled?focus:activeIndex>=0?activeIndex:tools.findIndex(t=>!t.disabled);
+  const stop=focus>=0&&tools[focus]&&!tools[focus]?.disabled?focus:activeIndex>=0?activeIndex:tools.findIndex(t=>!t.disabled);
   const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];
 
+  const boundary=JSON.stringify([scope,revision,disabled,edge,regions,tools.map(t=>[t.id,t.disabled,t.variants?.map(v=>v.id)])]);
+  const request=useRef(0);
+  const committed=useRef<{boundary:string;tools:readonly RailTool[];onSelectTool:typeof onSelectTool}|null>(null);
+  useLayoutEffect(()=>{committed.current={boundary,tools,onSelectTool};});
+  useLayoutEffect(()=>{request.current++;store.setState({flyout:undefined,focus:-1});},[boundary,store]);
+  useLayoutEffect(()=>()=>{committed.current=null;request.current++;},[]);
+  const current=()=>!disabled&&committed.current?.boundary===boundary?committed.current:null;
+  const select=(toolId:string,id:string)=>{const p=current(),tool=p?.tools.find(t=>t.id===toolId);if(tool&&!tool.disabled&&(tool.id===id||tool.variants?.some(v=>v.id===id)))p?.onSelectTool(id);};
   const openFlyout=(i:number)=>{
-    const tool=tools[i];
-    if(!tool?.variants?.length||tool.disabled)return;
+    const p=current(),tool=p?.tools.find(t=>t.id===tools[i]?.id);
+    if(!tool?.variants?.length||tool.disabled||!regions.some(r=>r.width>0&&r.height>0))return;
     const node=refs.current[i] as unknown as {measureInWindow?:(cb:(x:number,y:number,w:number,h:number)=>void)=>void}|null;
-    const show=(anchor:Rect2D)=>store.setState({flyout:{toolId:tool.id,anchor}});
-    if(node?.measureInWindow)node.measureInWindow((x,y,width,height)=>show({x,y,width,height}));
-    else show({x:0,y:0,width:44,height:44});
+    const ticket=++request.current;
+    node?.measureInWindow?.((x,y,width,height)=>{
+      if(current()&&request.current===ticket&&[x,y,width,height].every(Number.isFinite)&&width>0&&height>0)store.setState({flyout:{toolId:tool.id,anchor:{x,y,width,height},boundary,request:ticket}});
+    });
   };
   const onKeyDown=(i:number)=>(event:unknown)=>{
+    if(!current())return;
     const k=shellKey(event);
     if(k.altKey||k.ctrlKey||k.metaKey)return;
     const rtl=nodeIsRTL(k.target)||I18nManager.isRTL;
@@ -78,7 +91,7 @@ export function ToolRail({
     store.setState({focus:next});
     (refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();
   };
-  const flyoutTool=flyout?tools.find(t=>t.id===flyout.toolId):undefined;
+  const flyoutTool=flyout?.boundary===boundary&&!disabled?tools.find(t=>t.id===flyout.toolId&&!t.disabled):undefined;
   const horizontal=axis==="horizontal";
 
   return <View {...rest} accessibilityRole="toolbar" accessibilityLabel={label}
@@ -98,18 +111,18 @@ export function ToolRail({
       return <Pressable key={tool.id} ref={node=>{refs.current[i]=node;}}
         accessibilityRole="button" accessibilityLabel={name}
         accessibilityHint={[shortcut?"Shortcut "+shortcut:"",grouped?"Long press for more tools.":""].filter(Boolean).join(". ")||undefined}
-        accessibilityState={{selected:active,disabled:!!tool.disabled}} aria-pressed={active}
+        accessibilityState={{selected:active,disabled:disabled||!!tool.disabled}} aria-pressed={active}
         {...(grouped?{"aria-haspopup":"menu" as const}:{})}
         accessibilityActions={grouped?[{name:"activate"},{name:"showVariants",label:"More "+tool.label+" tools"}]:undefined}
         onAccessibilityAction={grouped?event=>{
-          if(event.nativeEvent.actionName==="activate")onSelectTool(current.id);
+          if(event.nativeEvent.actionName==="activate")select(tool.id,current.id);
           if(event.nativeEvent.actionName==="showVariants")openFlyout(i);
         }:undefined}
-        disabled={tool.disabled}
-        onPress={()=>onSelectTool(grouped?current.id:tool.id)}
+        disabled={disabled||tool.disabled}
+        onPress={()=>select(tool.id,grouped?current.id:tool.id)}
         onLongPress={grouped?()=>openFlyout(i):undefined}
         onFocus={()=>store.setState({focus:i})}
-        {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}:{})}
+        {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:!disabled&&i===stop?0:-1}:{})}
         {...{className:joinClasses("min-h-11 min-w-11 flex-row items-center gap-2",
           styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(active?"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]":"bg-transparent hover:bg-surface-sunken"),
@@ -129,7 +142,7 @@ export function ToolRail({
       usableRegions={regions} width={232}
       items={flyoutTool.variants.map(v=>({id:v.id,label:v.label,
         description:[v.id===activeToolId?"Current tool":"",v.shortcut?"Shortcut "+v.shortcut:""].filter(Boolean).join(", ")||undefined}))}
-      onSelect={id=>onSelectTool(id)}
+      onSelect={id=>{if(flyout.request===request.current)select(flyout.toolId,id);}}
       onDismiss={()=>store.setState({flyout:undefined})}/>:null}
   </View>;
 }

@@ -18,14 +18,15 @@ export function validatePatchGraph(nodes:readonly GraphNode[],edges:readonly Gra
  const byId=new Map<string,GraphNode>();
  for(const node of nodes){
    if(!node.id||byId.has(node.id)||!Number.isFinite(node.x)||!Number.isFinite(node.y))throw new Error("Invalid graph node: "+node.id);
-   if((node.width??200)<120)throw new Error("Node width below minimum: "+node.id);
+   if(!Number.isFinite(node.width??200)||(node.width??200)<120||(node.width??200)>4000)throw new Error("Node width below minimum: "+node.id);
+   if(!node.id.trim()||node.id.length>256||!node.title.trim()||node.title.length>512||node.inputs.length>64||node.outputs.length>64)throw new Error("Invalid graph node metadata: "+node.id);
    const ports=[...node.inputs,...node.outputs];
-   if(new Set(ports.map(p=>p.id)).size!==ports.length||ports.some(p=>!p.id||!p.dataType))throw new Error("Invalid graph ports: "+node.id);
+   if(new Set(ports.map(p=>p.id)).size!==ports.length||ports.some(p=>!p.id.trim()||p.id.length>256||!p.dataType.trim()||p.dataType.length>128||!p.label.trim()||p.label.length>512))throw new Error("Invalid graph ports: "+node.id);
    byId.set(node.id,node);
  }
  const seen=new Set<string>();
  for(const edge of edges){
-  if(!edge.id||seen.has(edge.id))throw new Error("Duplicate graph edge: "+edge.id);
+  if(!edge.id.trim()||edge.id.length>256||seen.has(edge.id))throw new Error("Duplicate graph edge: "+edge.id);
   seen.add(edge.id);
   const output=byId.get(edge.from.nodeId)?.outputs.find(p=>p.id===edge.from.portId);
   const input=byId.get(edge.to.nodeId)?.inputs.find(p=>p.id===edge.to.portId);

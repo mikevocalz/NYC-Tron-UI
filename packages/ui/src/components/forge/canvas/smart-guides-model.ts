@@ -162,6 +162,10 @@ export function computeSmartGuides({moving,others,movingIds=[],zoom,thresholdPx=
   validateDocRect(moving,"Moving rectangle");
   if(!Number.isFinite(zoom)||zoom<=0)throw new RangeError(`Canvas zoom must be a positive number, got ${zoom}`);
   if(!Number.isFinite(thresholdPx)||thresholdPx<0)throw new RangeError("Smart guide threshold must be a finite, non-negative number");
+  if(others.length>50000||movingIds.length>50000)throw new RangeError('Smart guide input exceeds the 50000-layer budget');
+  const ids=new Set<string>();
+  for(const entry of others){if(!entry.id.trim()||entry.id.length>512||ids.has(entry.id))throw new RangeError('Smart guide layers need unique bounded IDs');ids.add(entry.id);if(!('empty' in entry))validateDocRect(entry,'Smart guide bounds');}
+  if(movingIds.some(id=>!id.trim()||id.length>512))throw new RangeError('Invalid moving layer identity');
   if(!enabled)return {rect:moving,dx:0,dy:0,alignments:[],spacings:[]};
   const skip=new Set(movingIds);
   const cx=moving.x+moving.w/2,cy=moving.y+moving.h/2;
@@ -185,10 +189,23 @@ export function computeSmartGuides({moving,others,movingIds=[],zoom,thresholdPx=
  * layer names; unknown ids read as "another layer".
  */
 export function smartGuideSummary(result:SmartGuideResult,names:Readonly<Record<string,string>>={}):string|undefined{
+  validateSmartGuideResult(result);
   const featureName=(g:AlignmentGuide)=>g.axis==="x"
     ?{start:"Left edge",center:"Horizontal center",end:"Right edge"}[g.feature]
     :{start:"Top edge",center:"Vertical center",end:"Bottom edge"}[g.feature];
-  const parts=result.alignments.map(g=>`${featureName(g)} aligned with ${g.targets.map(t=>names[t]??"another layer").join(", ")}`);
+  const parts=result.alignments.map(g=>`${featureName(g)} aligned with ${g.targets.slice(0,3).map(t=>Object.hasOwn(names,t)?String(names[t]).slice(0,128):"another layer").join(", ")+(g.targets.length>3?` and ${g.targets.length-3} others`:"")}`);
   for(const s of result.spacings)parts.push(`Equal ${s.axis==="x"?"horizontal":"vertical"} spacing, ${s.gap} px`);
   return parts.length?parts.join(". "):undefined;
+}
+
+/** Validate externally supplied feedback before allocating native overlay views. */
+export function validateSmartGuideResult(result:SmartGuideResult):void{
+ validateDocRect(result.rect,'Smart guide result');
+ if(![result.dx,result.dy].every(Number.isFinite)||result.alignments.length>6||result.spacings.length>4)throw new RangeError('Invalid smart guide feedback budget');
+ for(const g of result.alignments){
+  if(!['x','y'].includes(g.axis)||!['start','center','end'].includes(g.feature)||![g.value,g.from,g.to].every(Number.isFinite)||g.to<g.from||g.targets.length>SMART_GUIDE_MAX_OTHERS||new Set(g.targets).size!==g.targets.length||g.targets.some(id=>!id.trim()||id.length>512))throw new RangeError('Invalid alignment feedback');
+ }
+ for(const g of result.spacings){
+  if(!['x','y'].includes(g.axis)||!Number.isFinite(g.gap)||g.gap<0||g.gaps.length>SMART_GUIDE_MAX_OTHERS+1||g.gaps.some(m=>![m.from,m.to,m.at].every(Number.isFinite)||m.to<m.from))throw new RangeError('Invalid spacing feedback');
+ }
 }

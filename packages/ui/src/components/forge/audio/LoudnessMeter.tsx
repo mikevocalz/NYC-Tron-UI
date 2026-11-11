@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 /*
  * Structural references (Mobbin, iOS, structure only):
  * - Apple Health, Headphone Audio Levels highlights: a measured value read
@@ -24,12 +26,14 @@ import {
 export type LoudnessStatus = "measuring" | "ready" | "error" | "silent";
 
 /** Props for {@linkcode LoudnessMeter}. Values come from the engine's `loudness` op. */
-export interface LoudnessMeterProps extends Omit<ViewProps, "children"> {
+export interface LoudnessMeterProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Name of the measured range, for example "Master, bars 1-17". Used as the group label. */
   readonly label: string;
   /** What to draw: a placeholder, the readings, an error or the silent message. */
   readonly status: LoudnessStatus;
   /** Gated integrated loudness, LUFS. `null` when silent or shorter than one block. */
+  readonly rmsDbfs?:number|null;
+  readonly onReset?:(signal?:AbortSignal)=>void|Promise<unknown>;
   readonly integratedLufs: number | null;
   /** Highest 3 s short-term loudness, LUFS. */
   readonly shortTermMaxLufs: number | null;
@@ -129,11 +133,17 @@ function Stat({ label, value, note, danger, unstyled }: {
  * The engine does not report loudness range (LRA) or true peak, so neither is
  * drawn. Sample peak can miss inter-sample overs.
  */
-export function LoudnessMeter({
+export function LoudnessMeter({scope='loudness',revision=0,...props}:LoudnessMeterProps){
+ if(props.momentaryLufs.length>100000||[props.integratedLufs,props.shortTermMaxLufs,props.momentaryMaxLufs,props.samplePeakDbfs,props.rmsDbfs,...props.momentaryLufs].some(n=>n!==undefined&&n!==null&&!Number.isFinite(n))||!Number.isFinite(props.stepSeconds)||props.stepSeconds<=0)throw new RangeError('Invalid loudness measurements');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.label,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <LoudnessMeterBody {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending} onTargetChange={props.onTargetChange?value=>guard.run('target',h=>h.onTargetChange?.(value)):undefined} onRetry={props.onRetry?()=>guard.run('retry',h=>h.onRetry?.()):undefined} onReset={props.onReset?()=>guard.run('reset',(h,s)=>h.onReset?.(s)):undefined}/>;
+}
+function LoudnessMeterBody({actionError,disabledReason,rmsDbfs,onReset,
+
   label, status, integratedLufs, shortTermMaxLufs, momentaryMaxLufs, samplePeakDbfs, momentaryLufs,
   stepSeconds, target = DEFAULT_LOUDNESS_TARGET, onTargetChange, targets = LOUDNESS_TARGETS, error, onRetry,
   disabled = false, historyHeight = 112, className, unstyled = false, style, ...props
-}: LoudnessMeterProps) {
+}: LoudnessMeterProps&{actionError?:string|null}) {
   const local = useRef<StoreApi<{width:number}> | null>(null);
   if (!local.current) local.current = createStore(() => ({width:0}));
   const store = local.current;
@@ -254,6 +264,8 @@ export function LoudnessMeter({
     {...{ className: joinClasses(!unstyled && "rounded-card border border-border bg-surface-raised", className) }}
     style={[{ padding: 16, gap: 14 }, style]}>
     {header}
-    {body}
+    <Text {...{className:!unstyled?'text-text':undefined}}>Measured RMS: {rmsDbfs===undefined||rmsDbfs===null?'Not reported':rmsDbfs.toFixed(2)+' dBFS'}</Text>
+    {onReset?<Button title="Reset host loudness integration" disabled={disabled} unstyled={unstyled} onPress={()=>onReset()}/>:null}
+    {body}<ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/>
   </View>;
 }

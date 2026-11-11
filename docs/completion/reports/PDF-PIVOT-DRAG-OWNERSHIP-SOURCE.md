@@ -1,0 +1,11 @@
+# PDF thumbnail and pivot drag source correction
+
+PDF thumbnails keep stable page-ID row identity across measured resize, font-scale, source order and pending changes. Rows use an explicit captured interaction boundary for gesture/accessibility admission. The parent owns one ref-held drag token, cancels it when layout/source/admission changes, and rejects old row finish/cancel callbacks before changing dragging state or calling the host. No native row or reorder handle is replaced to cancel a gesture.
+
+Pivot fields likewise retain field-ID row identity. Each drag has a unique imperative token and a source/geometry boundary. Begin measurement may publish an origin only to that token while it is in drag phase. Releasing before a measured origin cancels the operation. Release measurement may dispatch only while that exact token remains in drop phase and the measured root origin/geometry still match. Cancel, new drag, resize and source/admission changes invalidate old begin/release callbacks. A canceled or older callback cannot clear the newer dragging state. Token consumption precedes the authoritative scoped host call, whose admission is checked again after local state publication.
+
+The shared measured-drop owner retains at most one token and tiny measured origin in a ref; product fields, pages and assignments remain controlled props. Native handles and measured rectangles remain in refs, and existing per-instance Zustand stores keep only ephemeral display state. No backend operations, dependencies, app window dimensions or resource owners changed.
+
+The PDF pan retains its existing RNGH3 vertical activation/failure offsets and removes the incompatible simultaneous minDistance option. This follows the same pinned-runtime configuration restriction already covered for the vertical fader. This is a source correction, not proof that a native reorder was exercised.
+
+Validation: five focused helper/source tests passed for canceled/superseded begin measurements, drop-before-measure, pending-drop cancellation, obsolete token/new source protection and stable row identities. UI and slots TypeScript checks passed. Whitespace diff check passed. No browser/device/native acceptance or release activation was performed.

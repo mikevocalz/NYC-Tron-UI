@@ -37,6 +37,7 @@ const box=(r:OverlayRect)=>({position:"absolute" as const,left:r.x,top:r.y,width
 export function SafeAreaOverlay({
   aspect,safeArea="smpte",showSafeAreas=true,guide,showCenter=false,showThirds=false,className,unstyled=false,testID,style,...rest
 }:SafeAreaOverlayProps){
+  const initial=safeAreas({width:0,height:0},aspect,safeArea);if(guide!==undefined)guideRect(initial.picture,guide);
   const [size,store]=useLocalStore(()=>({width:0,height:0}));
   const styled=!unstyled;
   const areas=size.width>0?safeAreas(size,aspect,safeArea):undefined;
@@ -52,7 +53,7 @@ export function SafeAreaOverlay({
   ].filter(r=>r.width>0.5&&r.height>0.5):[];
   return <View {...rest} {...(testID?{testID}:{})} pointerEvents="none"
     accessibilityElementsHidden importantForAccessibility="no-hide-descendants" aria-hidden
-    onLayout={e=>store.set({width:e.nativeEvent.layout.width,height:e.nativeEvent.layout.height})}
+    onLayout={e=>{const {width,height}=e.nativeEvent.layout;if([width,height].every(Number.isFinite)&&width>=0&&height>=0)store.set({width,height});}}
     {...{className:joinClasses(className)}} style={[{position:"absolute",left:0,top:0,right:0,bottom:0,direction:"ltr"},style]}>
     {masks.map((r,i)=><View key={"m"+i} style={{...box(r),backgroundColor:MATTE,opacity:0.6}}/>)}
     {framed?<View {...{className:line}} style={{...box(framed),borderWidth:1}}/>:null}

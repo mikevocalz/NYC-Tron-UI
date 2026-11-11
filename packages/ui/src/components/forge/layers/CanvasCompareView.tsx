@@ -1,4 +1,6 @@
-import {useMemo,useRef} from "react";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useLayoutEffect,useMemo,useRef} from "react";
 import {Image,Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -13,7 +15,7 @@ import {
 } from "./compare-model.ts";
 
 /** Props for {@linkcode CanvasCompareView}. Mode, split and opacity are host state. */
-export interface CanvasCompareViewProps extends Omit<ViewProps,"children"> {
+export interface CanvasCompareViewProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** The earlier image (a snapshot `flatten`) or a reference picture; `null` until the host has one. */
   before:CompareSource|null;
   /** The current image (the live `flatten`); `null` until the host has one. */
@@ -29,12 +31,12 @@ export interface CanvasCompareViewProps extends Omit<ViewProps,"children"> {
   /** Each divider move during a drag; a cancelled drag sends the original value once more. */
   onSplitPreview?:(split:number)=>void;
   /** Once per drag release or key press. */
-  onSplitCommit:(split:number)=>void;
+  onSplitCommit:(split:number,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Opacity of `before` drawn over `after` in overlay mode, 0..1. */
   overlayOpacity:number;
   onOverlayOpacityPreview?:(opacity:number)=>void;
   /** Once per completed scrubber drag, nudge or typed value. */
-  onOverlayOpacityCommit:(opacity:number)=>void;
+  onOverlayOpacityCommit:(opacity:number,signal?:AbortSignal)=>void|Promise<unknown>;
   className?:string;
   unstyled?:boolean;
 }
@@ -51,10 +53,19 @@ const COL_RESIZE=(Platform.OS==="web"?{cursor:"col-resize"}:{}) as object;
  * pinned in a corner. Both images are fitted to the same frame so the split
  * and overlay line up.
  */
-export function CanvasCompareView({
-  before,after,beforeLabel="Before",afterLabel="After",mode,onModeChange,split,onSplitPreview,onSplitCommit,
+export function CanvasCompareView({scope='canvas-compare',revision=0,...props}:CanvasCompareViewProps){
+ normalizeFraction(props.split);normalizeFraction(props.overlayOpacity);
+ if(!COMPARE_MODES.some(o=>o.value===props.mode))throw new RangeError('Unknown comparison mode');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.mode]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <CanvasCompareViewBody key={owner} {...props} actionError={guard.error} busy={guard.pending}
+  onModeChange={value=>guard.current()?.onModeChange(value)} onSplitPreview={value=>guard.current()?.onSplitPreview?.(value)} onOverlayOpacityPreview={value=>guard.current()?.onOverlayOpacityPreview?.(value)}
+  onSplitCommit={value=>guard.run('split',(host,signal)=>host.onSplitCommit(value,signal))} onOverlayOpacityCommit={value=>guard.run('opacity',(host,signal)=>host.onOverlayOpacityCommit(value,signal))}/>;
+}
+function CanvasCompareViewBody({
+  actionError=null,busy=false,disabledReason,before,after,beforeLabel="Before",afterLabel="After",mode,onModeChange,split,onSplitPreview,onSplitCommit,
   overlayOpacity,onOverlayOpacityPreview,onOverlayOpacityCommit,className,unstyled=false,style,...rest
-}:CanvasCompareViewProps){
+}:CanvasCompareViewProps&{actionError?:string|null;busy?:boolean}){
   const local=useRef<StoreApi<Local>|null>(null);
   if(!local.current)local.current=createStore<Local>(()=>({width:0,height:0,split:null,opacity:null}));
   const store=local.current;
@@ -80,9 +91,11 @@ export function CanvasCompareView({
     store.setState({split:null});
     latest.current.onSplitPreview?.(latest.current.split);
   };
+  useLayoutEffect(()=>{cancelSplit();store.setState({opacity:null});},[before,after,mode,busy,disabledReason]);
   const onDividerKey=(event:KeyEventLike&{shiftKey?:boolean;nativeEvent?:{shiftKey?:boolean};preventDefault?:()=>void})=>{
     const key=keyboardKey(event);
     if(key==="Escape"){cancelSplit();return;}
+    if(busy||disabledReason!==undefined)return;
     const next=splitFromKey(latest.current.split,key,event.shiftKey??event.nativeEvent?.shiftKey??false);
     if(next===null)return;
     event.preventDefault?.();
@@ -139,7 +152,7 @@ export function CanvasCompareView({
           {frame.width-cut>72?chip(afterLabel,{right:width-frame.x-frame.width+8,top:frame.y+8}):null}
         </View>
         <PanResponderDrag
-          onBegin={p=>{drag.current={start:latest.current.split,from:p,frameWidth:frame.width};store.setState({split:latest.current.split});}}
+          onBegin={p=>{if(busy||disabledReason!==undefined)return;drag.current={start:latest.current.split,from:p,frameWidth:frame.width};store.setState({split:latest.current.split});}}
           onMove={(p,touches)=>{
             const d=drag.current;
             if(!d)return;
@@ -210,11 +223,14 @@ export function CanvasCompareView({
   };
 
   return <View {...rest} {...{className:joinClasses("min-w-0 gap-2",className)}} style={[{flex:1},style]}>
-    <SegmentedControl aria-label="Compare mode" options={COMPARE_MODES} value={mode} onChange={onModeChange} unstyled={unstyled}/>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
+    {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Applying comparison change"}</Text>:null}
+    <SegmentedControl disabled={busy||disabledReason!==undefined} aria-label="Compare mode" options={COMPARE_MODES} value={mode} onChange={onModeChange} unstyled={unstyled}/>
     <View onLayout={e=>{
         const {width:w,height:h}=e.nativeEvent.layout;
         const s=store.getState();
-        if(w!==s.width||h!==s.height)store.setState({width:w,height:h});
+        if(![w,h].every(Number.isFinite)||w<0||h<0)return;
+        if(w!==s.width||h!==s.height){cancelSplit();store.setState({width:w,height:h});}
       }}
       {...{className:joinClasses("overflow-hidden",styled&&"rounded-card bg-surface-sunken border border-border")}}
       style={{flex:1,minHeight:200,...NO_SELECT}}>
@@ -223,7 +239,7 @@ export function CanvasCompareView({
       </View>}
     </View>
     {mode==="overlay"?<PrecisionScrubber label={beforeLabel+" opacity"} unit="%" min={0} max={100} step={1}
-      value={Math.round(overlayOpacity*100)} disabled={missing!==undefined} unstyled={unstyled}
+      value={Math.round(overlayOpacity*100)} disabled={missing!==undefined||busy||disabledReason!==undefined} unstyled={unstyled}
       onPreview={v=>{const o=normalizeFraction(v/100);store.setState({opacity:v===Math.round(overlayOpacity*100)?null:o});onOverlayOpacityPreview?.(o);}}
       onCommit={v=>{store.setState({opacity:null});const o=normalizeFraction(v/100);if(o!==overlayOpacity)onOverlayOpacityCommit(o);}}/>:null}
   </View>;

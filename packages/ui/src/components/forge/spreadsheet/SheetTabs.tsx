@@ -1,3 +1,5 @@
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useRef } from "react";
 import { I18nManager, Pressable, ScrollView, Text, TextInput, View, type ViewProps } from "react-native";
 import { useStore } from "zustand";
@@ -14,7 +16,7 @@ import {
  * appears only when its callback is supplied, so an engine that cannot
  * duplicate or reorder sheets never shows those commands.
  */
-export interface SheetTabsProps extends Omit<ViewProps, "children"> {
+export interface SheetTabsProps extends Omit<ViewProps, "children">,ScopedControlProps {
   readonly tabs: readonly SheetTab[];
   readonly activeId: string;
   readonly onSelect: (id: string) => unknown;
@@ -30,6 +32,7 @@ export interface SheetTabsProps extends Omit<ViewProps, "children"> {
   readonly onToneChange?: (id: string, tone: SheetTabTone | undefined) => unknown;
   /** Reading direction for arrow keys. @default I18nManager.isRTL */
   readonly direction?: "ltr" | "rtl";
+  readonly disabled?:boolean;
   readonly className?: string;
   readonly unstyled?: boolean;
 }
@@ -71,10 +74,24 @@ function ActionButton({ label, text, onPress, disabled, unstyled, hint }: {
   </Pressable>;
 }
 
-export function SheetTabs({
+export function SheetTabs({scope='SheetTabs',revision=0,...props}:SheetTabsProps){
+ if(props.tabs.length>4096||new Set(props.tabs.map(t=>t.id)).size!==props.tabs.length||props.tabs.some(t=>!t.id.trim()||t.id.length>256||!t.name.trim()||t.name.length>64))throw new RangeError('Invalid worksheet tabs');
+ const identity=JSON.stringify(controlIdentity(scope,revision)),owner=JSON.stringify([identity,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <SheetTabsBody key={identity} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSelect={async(...args:Parameters<NonNullable<SheetTabsProps['onSelect']>>)=>{const ok=await guard.run('onSelect',h=>h.onSelect?.(...args));if(ok!==true)throw new Error('Sheet change did not complete');}}
+  onAdd={props.onAdd?async(...args:Parameters<NonNullable<SheetTabsProps['onAdd']>>)=>{const ok=await guard.run('onAdd',h=>h.onAdd?.(...args));if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+  onRename={props.onRename?async(...args:Parameters<NonNullable<SheetTabsProps['onRename']>>)=>{const ok=await guard.run('onRename',h=>{if(!h.tabs.some(t=>t.id===args[0]&&!t.isProtected))throw new Error('This sheet cannot be renamed');return h.onRename?.(...args);});if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+  onDuplicate={props.onDuplicate?async(...args:Parameters<NonNullable<SheetTabsProps['onDuplicate']>>)=>{const ok=await guard.run('onDuplicate',h=>h.onDuplicate?.(...args));if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+  onMove={props.onMove?async(...args:Parameters<NonNullable<SheetTabsProps['onMove']>>)=>{const ok=await guard.run('onMove',h=>{if(!h.tabs.some(t=>t.id===args[0]&&!t.isProtected)||!Number.isInteger(args[1])||args[1]<0||args[1]>=h.tabs.length)throw new Error('This sheet cannot be reordered');return h.onMove?.(...args);});if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+  onRemove={props.onRemove?async(...args:Parameters<NonNullable<SheetTabsProps['onRemove']>>)=>{const ok=await guard.run('onRemove',h=>{if(h.tabs.length<2||!h.tabs.some(t=>t.id===args[0]&&!t.isProtected))throw new Error('This sheet cannot be removed');return h.onRemove?.(...args);});if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+  onProtectedChange={props.onProtectedChange?async(...args:Parameters<NonNullable<SheetTabsProps['onProtectedChange']>>)=>{const ok=await guard.run('onProtectedChange',h=>h.onProtectedChange?.(...args));if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+  onToneChange={props.onToneChange?async(...args:Parameters<NonNullable<SheetTabsProps['onToneChange']>>)=>{const ok=await guard.run('onToneChange',h=>h.onToneChange?.(...args));if(ok!==true)throw new Error('Sheet change did not complete');}:undefined}
+ />;
+}
+function SheetTabsBody({actionError,disabledReason,disabled=false,
   tabs, activeId, onSelect, onAdd, onRename, onDuplicate, onMove, onRemove,
   onProtectedChange, onToneChange, direction, className, unstyled = false, ...props
-}: SheetTabsProps) {
+}: SheetTabsProps&{actionError?:string|null}) {
   const storeRef = useRef<StoreApi<Local> | null>(null);
   if (!storeRef.current) storeRef.current = createStore<Local>(() => ({
     renaming: undefined, draft: "", actionsOpen: false, confirmRemove: false, pending: false, error: null,
@@ -84,7 +101,7 @@ export function SheetTabs({
   const draft = useStore(store, s => s.draft);
   const actionsOpen = useStore(store, s => s.actionsOpen);
   const confirmRemove = useStore(store, s => s.confirmRemove);
-  const pending = useStore(store, s => s.pending);
+  const pending = useStore(store, s => s.pending)||disabled;
   const error = useStore(store, s => s.error);
   const tabRefs = useRef(new Map<string, { focus?: () => void }>());
   const rtl = direction ? direction === "rtl" : I18nManager.isRTL;
@@ -93,7 +110,7 @@ export function SheetTabs({
 
   // One action at a time; a rejected promise becomes the visible error.
   const run = async (action: () => unknown, after?: Partial<Local>) => {
-    if (store.getState().pending) return;
+    if (store.getState().pending||disabled) return;
     store.setState({ pending: true, error: null });
     try {
       await action();
@@ -233,10 +250,8 @@ export function SheetTabs({
         })}
       </View> : null}
     </View> : null}
-    {error ? <Text selectable accessibilityRole="alert" accessibilityLiveRegion="polite"
-      {...{ className: joinClasses(!unstyled && "text-danger") }} style={{ paddingHorizontal: 12, paddingVertical: 6 }}>{error}</Text> : null}
     {activeIndex < 0 && tabs.length > 0 ? <Text {...{ className: mutedClass }} style={{ paddingHorizontal: 12 }}>
       No sheet is selected.
     </Text> : null}
-  </View>;
+  <ErrorMessage message={actionError??error??disabledReason} unstyled={unstyled}/></View>;
 }

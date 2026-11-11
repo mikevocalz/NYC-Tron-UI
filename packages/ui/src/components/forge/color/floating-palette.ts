@@ -82,28 +82,18 @@ export function placeFloatingPalette(
   desired:PalettePosition,size:{readonly width:number;readonly height:number},
   bounds:PaletteRect,obstacles:readonly PaletteRect[]=[],
 ):PalettePlacement{
-  if(![desired.x,desired.y,size.width,size.height,bounds.x,bounds.y,bounds.width,bounds.height].every(Number.isFinite))
-    throw new RangeError("Palette placement needs finite numbers");
-  const clamp=(p:PalettePosition):PalettePosition=>({
-    x:clampAxis(p.x,size.width,bounds.x,bounds.width),
-    y:clampAxis(p.y,size.height,bounds.y,bounds.height),
-  });
-  const rect=(p:PalettePosition):PaletteRect=>({...p,...size});
-  const fits=(p:PalettePosition)=>
-    p.x>=bounds.x&&p.y>=bounds.y&&p.x+size.width<=bounds.x+bounds.width&&p.y+size.height<=bounds.y+bounds.height&&
-    obstacles.every(o=>!intersects(rect(p),o));
+  if(![desired.x,desired.y,size.width,size.height,bounds.x,bounds.y,bounds.width,bounds.height,bounds.x+bounds.width,bounds.y+bounds.height].every(Number.isFinite)||size.width<=0||size.height<=0||bounds.width<=0||bounds.height<=0||obstacles.length>64||obstacles.some(o=>![o.x,o.y,o.width,o.height,o.x+o.width,o.y+o.height].every(Number.isFinite)||o.width<0||o.height<0))
+    throw new RangeError("Palette placement needs bounded finite geometry");
+  const clamp=(p:PalettePosition):PalettePosition=>({x:clampAxis(p.x,size.width,bounds.x,bounds.width),y:clampAxis(p.y,size.height,bounds.y,bounds.height)});
+  const fits=(p:PalettePosition)=>p.x>=bounds.x&&p.y>=bounds.y&&p.x+size.width<=bounds.x+bounds.width&&p.y+size.height<=bounds.y+bounds.height&&obstacles.every(o=>!intersects({...p,...size},o));
   const start=clamp(desired);
   if(fits(start))return {position:start,overlapsObstacle:false};
-  const candidates:PalettePosition[]=[];
-  for(const o of obstacles){
-    if(!intersects(rect(start),o))continue;
-    candidates.push(
-      {x:o.x-size.width,y:start.y},{x:o.x+o.width,y:start.y},
-      {x:start.x,y:o.y-size.height},{x:start.x,y:o.y+o.height},
-    );
-  }
-  const travel=(p:PalettePosition)=>Math.hypot(p.x-start.x,p.y-start.y);
-  const best=candidates.map(clamp).filter(fits).sort((a,b)=>travel(a)-travel(b))[0];
+  // Every free axis-aligned placement can be slid to a bounds/obstacle edge.
+  // Search edge intersections too: moving around one fold may hit another.
+  const xs=new Set([start.x,bounds.x,bounds.x+bounds.width-size.width]),ys=new Set([start.y,bounds.y,bounds.y+bounds.height-size.height]);
+  for(const o of obstacles){xs.add(o.x-size.width);xs.add(o.x+o.width);ys.add(o.y-size.height);ys.add(o.y+o.height);}
+  let best:PalettePosition|undefined,distance=Infinity;
+  for(const x of xs)for(const y of ys){const at=clamp({x,y}),travel=Math.hypot(at.x-start.x,at.y-start.y);if(travel<distance&&fits(at)){best=at;distance=travel;}}
   return best?{position:best,overlapsObstacle:false}:{position:start,overlapsObstacle:true};
 }
 

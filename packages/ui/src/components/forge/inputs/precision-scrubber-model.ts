@@ -1,7 +1,6 @@
 import {advancePrecisionGesture,beginPrecisionGesture,clamp,formatStepValue,scrubPrecision,snapTypedPrecision,
   type PrecisionGesture,type ScrubMode} from "./precision.ts";
 import type {DragPoint} from "../../gestures/drag-transport.ts";
-import {cancelPreview} from "../cancel-preview.ts";
 
 /** Transient, view-local state of a {@linkcode PrecisionScrubber}. The committed value is always a prop. */
 export interface ScrubberState {
@@ -43,14 +42,19 @@ export function initialScrubberState(value:number,step:number):ScrubberState {
  */
 export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInputs){
   let gesture:PrecisionGesture|undefined;
+  let previewOwner:{value:number;notify?:((value:number)=>void)}|undefined;
+  let epoch=0,boundary:string|undefined;
+  const restorePreview=()=>{const previous=previewOwner;previewOwner=undefined;previous?.notify?.(previous.value);};
   const isBlocked=()=>!!inputs().disabled||store.getState().pending;
   const resting=()=>{
     const p=inputs();
     return {preview:p.value,draft:formatStepValue(p.value,p.step)};
   };
   const commit=async(next:number)=>{
-    const p=inputs();
+    const p=inputs(),requestEpoch=epoch,requestBoundary=boundary;
     if(p.disabled||store.getState().pending||!Number.isFinite(next))return;
+    restorePreview();
+    if(requestEpoch!==epoch||requestBoundary!==boundary||isBlocked())return;
     const clipped=clamp(next,p.min,p.max);
     if(Math.abs(clipped-p.value)<1e-10){
       store.setState({...resting(),editing:false,active:false});
@@ -58,12 +62,13 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
     }
     store.setState({pending:true,editing:false,active:false,preview:clipped,draft:formatStepValue(clipped,p.step),error:undefined});
     try{
+      if(requestEpoch!==epoch||requestBoundary!==boundary)return;
       await p.onCommit(clipped);
     }catch(error){
-      store.setState({error:error instanceof Error?error.message:"Could not apply value"});
+      if(requestEpoch===epoch)store.setState({error:error instanceof Error?error.message:"Could not apply value"});
     }finally{
       // The host supplies the committed value; never display a fabricated success.
-      store.setState({pending:false,...resting()});
+      if(requestEpoch===epoch)store.setState({pending:false,...resting()});
     }
   };
   // Advances the drag; a fine/coarse switch re-anchors there instead of rescaling the whole drag.
@@ -77,15 +82,18 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
     return {next:gesture.value,mode:gesture.mode};
   };
   const cancel=()=>{
-    const wasActive=gesture!==undefined||store.getState().active;
     gesture=undefined;
-    const p=inputs();
-    cancelPreview(p.value,()=>store.setState({active:false,mode:"normal",...resting()}),wasActive?p.onPreview:undefined);
+    store.setState({active:false,mode:"normal",...resting()});
+    restorePreview();
   };
-  return {
+  const model={
     begin(point:DragPoint){
       if(isBlocked())return;
-      gesture=beginPrecisionGesture(point,inputs().value);
+      const p=inputs(),startEpoch=epoch,startBoundary=boundary;
+      restorePreview();
+      if(startEpoch!==epoch||startBoundary!==boundary||isBlocked())return;
+      previewOwner={value:p.value,...(p.onPreview?{notify:p.onPreview}:{})};
+      gesture=beginPrecisionGesture(point,p.value);
       store.setState({active:true,error:undefined,mode:"normal"});
     },
     move(point:DragPoint,touches:number){
@@ -96,7 +104,7 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
       const s=store.getState();
       if(s.preview!==result.next||s.mode!==result.mode){
         store.setState({preview:result.next,mode:result.mode,draft:formatStepValue(result.next,inputs().step)});
-        inputs().onPreview?.(result.next);
+        previewOwner?.notify?.(result.next);
       }
     },
     release(point:DragPoint){
@@ -114,8 +122,8 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
       const p=inputs();
       return commit(scrubPrecision({min:p.min,max:p.max,step:p.step,startValue:p.value,deltaPixels:direction*SCRUB_PIXELS_PER_STEP,pixelsPerStep:SCRUB_PIXELS_PER_STEP}));
     },
-    startEditing(){store.setState({editing:true,draft:formatStepValue(store.getState().preview,inputs().step)});},
-    changeDraft(draft:string){store.setState({draft});},
+    startEditing(){if(isBlocked())return;store.setState({editing:true,draft:formatStepValue(store.getState().preview,inputs().step)});},
+    changeDraft(draft:string){if(isBlocked()||!store.getState().editing)return;store.setState({draft});},
     applyDraft(){
       const s=store.getState();
       if(!s.editing||isBlocked())return undefined;
@@ -128,12 +136,35 @@ export function createScrubberModel(store:ScrubberStore,inputs:()=>ScrubberInput
       const p=inputs();
       return commit(snapTypedPrecision(entered,p));
     },
+    /** Invalidate source/config work without destroying the mounted native input. */
+    admit(nextBoundary:string){
+      if(boundary===nextBoundary)return;
+      boundary=nextBoundary;const admissionEpoch=++epoch;
+      try{cancel();}finally{if(admissionEpoch===epoch)store.setState({...initialScrubberState(inputs().value,inputs().step)});}
+    },
+    invalidate(){const invalidationEpoch=++epoch;boundary=undefined;try{cancel();}finally{if(invalidationEpoch===epoch)store.setState({pending:false,editing:false,error:undefined});}},
+    /** Each rendered handler retains its own admission boundary. */
+    scoped(expected:string){
+      const valid=()=>boundary===expected;
+      return {
+        begin:(point:DragPoint)=>{if(valid())model.begin(point);},
+        move:(point:DragPoint,touches:number)=>{if(valid())model.move(point,touches);},
+        release:(point:DragPoint)=>valid()?model.release(point):undefined,
+        cancel:()=>{if(valid())model.cancel();},
+        nudge:(direction:-1|1)=>valid()?model.nudge(direction):undefined,
+        startEditing:()=>{if(valid())model.startEditing();},
+        changeDraft:(draft:string)=>{if(valid())model.changeDraft(draft);},
+        applyDraft:()=>valid()?model.applyDraft():undefined,
+        get dragging(){return valid()&&model.dragging;},
+      };
+    },
     /** Follow a new controlled value unless the user is mid-adjustment. */
     sync(){
       const s=store.getState();
       if(!s.active&&!s.editing&&!s.pending)store.setState(resting());
     },
   };
+  return model;
 }
 /** Handle returned by {@linkcode createScrubberModel}. */
 export type ScrubberModel=ReturnType<typeof createScrubberModel>;

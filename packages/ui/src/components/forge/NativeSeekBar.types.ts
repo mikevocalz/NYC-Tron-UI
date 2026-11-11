@@ -3,6 +3,8 @@ import type { FrameRate } from "./timebase.ts";
 
 /** Props shared by every {@linkcode NativeSeekBarProps} variant. */
 export interface NativeSeekBarBaseProps extends Omit<ViewProps,"children"> {
+  /** Stable media/document identity; change revision when replacing the source. */
+  readonly scope?:string;readonly revision?:string|number;
   /** The player's reported frame. The thumb and timecode show it except mid-drag. */
   readonly frame:number;
   readonly durationFrames:number;

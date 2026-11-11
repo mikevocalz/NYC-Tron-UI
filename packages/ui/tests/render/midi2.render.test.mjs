@@ -20,6 +20,7 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   let path = "root";
   let cursor = 0;
   const effects = [];
+  const layouts = [];
   const timers = [];
   const slot = init => {
     const k = path + "#" + cursor++;
@@ -37,6 +38,15 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   const mocks = {
     react: {
       useRef: v => slot(() => ({ current: v })),
+      createContext: value => ({_value:value}),
+      useContext: context => context._value,
+      useLayoutEffect: (fn, deps) => {
+        const s = slot(() => ({ deps: undefined, cleanup: undefined }));
+        if (!s.deps || !deps || deps.some((d, i) => d !== s.deps[i])) {
+          s.deps = deps;
+          layouts.push(() => { s.cleanup?.(); s.cleanup=fn(); });
+        }
+      },
       useEffect: (fn, deps) => {
         const s = slot(() => ({ deps: undefined }));
         if (!s.deps || !deps || deps.some((d, i) => d !== s.deps[i])) { s.deps = deps; effects.push(fn); }
@@ -61,7 +71,7 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   const context = {
     setTimeout: (fn, ms) => { const t = { fn, ms, live: true }; timers.push(t); return t; },
     clearTimeout: t => { if (t) t.live = false; },
-    Date,
+    Date, AbortController,
   };
   function load(file) {
     if (cache.has(file)) return cache.get(file);
@@ -96,7 +106,9 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
     module: rel => load(resolve(src, rel)),
     render: (Component, props) => {
       path = "root"; cursor = 0;
-      return expand({ type: Component, props, key: undefined }, "root");
+      const tree=expand({ type: Component, props, key: undefined }, "root");
+      for (const commit of layouts.splice(0)) commit();
+      return tree;
     },
     announced,
     flushEffects: () => { for (const fn of effects.splice(0)) fn(); },

@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import type {ReactNode} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {SegmentedControl} from "../../SegmentedControl.tsx";
@@ -13,7 +15,7 @@ import {
 } from "./align-distribute-model.ts";
 
 /** Props for {@linkcode AlignDistributePanel}. Every value is owned by the host. */
-export interface AlignDistributePanelProps extends Omit<ViewProps,"children"> {
+export interface AlignDistributePanelProps extends Omit<ViewProps,"children">,ScopedControlProps {
   /** Selected layers, in selection order. */
   readonly items:readonly AlignItem[];
   /** What align buttons align against. */
@@ -22,18 +24,18 @@ export interface AlignDistributePanelProps extends Omit<ViewProps,"children"> {
   /** The artboard "Artboard" aligns to, usually the one holding the selection. Omit when there is none. */
   readonly artboard?:{readonly id:string;readonly name:string};
   /** One `alignLayers` payload per press. */
-  readonly onAlign:(command:AlignCommand)=>void;
+  readonly onAlign:(command:AlignCommand,signal?:AbortSignal)=>void|Promise<unknown>;
   readonly distributeMode:DistributeMode;
   readonly onDistributeModeChange:(mode:DistributeMode)=>void;
   /** Fixed gap in document pixels for spacing mode; `undefined` spreads layers evenly between the outer two. */
   readonly spacing:number|undefined;
   readonly onSpacingChange:(spacing:number|undefined)=>void;
   /** One `distributeLayers` payload per press. */
-  readonly onDistribute:(command:DistributeCommand)=>void;
+  readonly onDistribute:(command:DistributeCommand,signal?:AbortSignal)=>void|Promise<unknown>;
   /** Where the single selected layer sits among its siblings (0 = bottom). Omit to leave arrange unavailable. */
   readonly stack?:StackPosition;
   /** One `moveLayer` payload per press. */
-  readonly onMoveLayer:(command:MoveLayerCommand)=>void;
+  readonly onMoveLayer:(command:MoveLayerCommand,signal?:AbortSignal)=>void|Promise<unknown>;
   readonly disabled?:boolean;
   className?:string;
   unstyled?:boolean;
@@ -48,14 +50,25 @@ export interface AlignDistributePanelProps extends Omit<ViewProps,"children"> {
  * unavailable, and the reason is shown under them and spoken on press. Each
  * press emits one payload shaped like the Prism op.
  */
-export function AlignDistributePanel({
-  items,reference,onReferenceChange,artboard,onAlign,distributeMode,onDistributeModeChange,spacing,onSpacingChange,
+export function AlignDistributePanel({scope='align-distribute',revision=0,...props}:AlignDistributePanelProps){
+ validateAlignItems(props.items);
+ if(!['selection','canvas','artboard'].includes(props.reference)||!['centers','spacing'].includes(props.distributeMode)||props.spacing!==undefined&&(!Number.isFinite(props.spacing)||props.spacing<0||props.spacing>DISTRIBUTE_MAX_SPACING))throw new RangeError('Invalid distribution settings');
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.items,props.artboard,props.stack]);
+ const guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <AlignDistributePanelBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onReferenceChange={v=>guard.current()?.onReferenceChange(v)} onDistributeModeChange={v=>guard.current()?.onDistributeModeChange(v)} onSpacingChange={v=>guard.current()?.onSpacingChange(v)}
+  onAlign={value=>guard.run('align',(host,signal)=>host.onAlign(value,signal))}
+  onDistribute={value=>guard.run('distribute',(host,signal)=>host.onDistribute(value,signal))}
+  onMoveLayer={value=>guard.run('arrange',(host,signal)=>host.onMoveLayer(value,signal))}/>;
+}
+function AlignDistributePanelBody({
+  actionError=null,disabledReason,items,reference,onReferenceChange,artboard,onAlign,distributeMode,onDistributeModeChange,spacing,onSpacingChange,
   onDistribute,stack,onMoveLayer,disabled=false,className,unstyled=false,...rest
-}:AlignDistributePanelProps){
+}:AlignDistributePanelProps&{actionError?:string|null}){
   validateAlignItems(items);
   const styled=!unstyled;
   const off=(reason:string):Availability=>({enabled:false,reason});
-  const gate=(a:Availability)=>disabled?off("Editing is paused"):a;
+  const gate=(a:Availability)=>disabled?off(disabledReason??"Editing is paused"):a;
   const align=gate(alignAvailability(items,reference,artboard!==undefined));
   const distribute=gate(distributeAvailability(items));
   const arrange=gate(arrangeAvailability(items,stack));
@@ -74,6 +87,7 @@ export function AlignDistributePanel({
   };
   return <View {...rest} accessibilityLabel="Align and arrange"
     {...{role:"group",className:joinClasses(styled&&"gap-4",className)}}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <View style={{gap:8}}>
       {heading("Align")}
       <SegmentedControl aria-label="Align relative to" value={reference} onChange={onReferenceChange} disabled={disabled} unstyled={unstyled}

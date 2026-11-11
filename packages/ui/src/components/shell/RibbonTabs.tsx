@@ -1,4 +1,4 @@
-import {useRef,type ComponentRef} from "react";
+import {useRef,useLayoutEffect,type ComponentRef} from "react";
 import {I18nManager,Platform,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import type {Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
@@ -12,6 +12,7 @@ export type {RibbonButton,RibbonCommand,RibbonGallery,RibbonGalleryItem,RibbonGr
 /** Props for {@linkcode RibbonTabs}. */
 export interface RibbonTabsProps extends Omit<ViewProps,"children"> {
   /** Tabs in order. Include a contextual tab only while its selection is active. */
+  scope?:string;revision?:string|number;disabled?:boolean;
   tabs:readonly RibbonTab[];
   activeTabId:string;
   onTabChange:(id:string)=>void;
@@ -38,7 +39,7 @@ export interface RibbonTabsProps extends Omit<ViewProps,"children"> {
  * dropping commands, and the panel can collapse to the tab row.
  */
 export function RibbonTabs({
-  tabs,activeTabId,onTabChange,onCommand,collapsed=false,onCollapsedChange,label="Ribbon",usableRegions,
+  scope="ribbon",revision=0,disabled=false,tabs,activeTabId,onTabChange,onCommand,collapsed=false,onCollapsedChange,label="Ribbon",usableRegions,
   className,unstyled=false,style,...rest
 }:RibbonTabsProps){
   validateRibbon(tabs);
@@ -46,11 +47,16 @@ export function RibbonTabs({
   const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
   const active=tabs.find(t=>t.id===activeTabId)??tabs[0];
   const activeIndex=active?tabs.indexOf(active):-1;
-  const pick=(id:string)=>{
-    if(id!==activeTabId)onTabChange(id);
-    if(collapsed)onCollapsedChange?.(false);
-  };
+  const boundary=JSON.stringify([scope,revision,disabled,active?.id,collapsed]);
+  const committed=useRef<{boundary:string;tabs:readonly RibbonTab[];active:typeof active;onTabChange:typeof onTabChange;onCommand:typeof onCommand;onCollapsedChange:typeof onCollapsedChange}|null>(null);
+  useLayoutEffect(()=>{committed.current={boundary,tabs,active,onTabChange,onCommand,onCollapsedChange};});
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const current=()=>!disabled&&committed.current?.boundary===boundary?committed.current:null;
+  const pick=(id:string)=>{const p=current();if(!p?.tabs.some(t=>t.id===id))return;if(id!==activeTabId)p.onTabChange(id);if(collapsed)p.onCollapsedChange?.(false);};
+  const invoke=(id:string,itemId?:string)=>{const p=current();if(!p||collapsed)return;const c=p.active?.groups.flatMap(g=>g.commands).find(c=>c.id===id);if(!c||c.kind!=="gallery"&&c.disabled)return;if(itemId!==undefined){if(c.kind==="button"||!c.items.some(i=>i.id===itemId&&!("disabled" in i&&i.disabled)))return;}else if(c.kind==="gallery")return;p.onCommand(id,itemId);};
+
   const onKeyDown=(i:number)=>(event:unknown)=>{
+    if(!current())return;
     const k=shellKey(event);
     if(k.altKey||k.ctrlKey||k.metaKey)return;
     const next=rovingTarget(i,k.key,tabs.map(()=>false),"horizontal",nodeIsRTL(k.target)||I18nManager.isRTL);
@@ -60,15 +66,15 @@ export function RibbonTabs({
     pick(tabs[next]!.id);
   };
   const command=(c:RibbonCommand)=>{
-    if(c.kind==="split")return <SplitButton key={c.id} label={c.label} icon={c.icon} items={c.items} disabled={c.disabled}
+    if(c.kind==="split")return <SplitButton editScope={boundary} key={c.id} label={c.label} icon={c.icon} items={c.items} disabled={disabled||c.disabled}
       usableRegions={usableRegions} unstyled={unstyled}
-      onPress={()=>onCommand(c.id)} onSelect={item=>onCommand(c.id,item)}/>;
-    if(c.kind==="gallery")return <Gallery key={c.id} gallery={c} styled={styled} usableRegions={usableRegions}
-      onPick={item=>onCommand(c.id,item)}/>;
+      onPress={()=>invoke(c.id)} onSelect={item=>invoke(c.id,item)}/>;
+    if(c.kind==="gallery")return <Gallery editScope={boundary} disabled={disabled} key={c.id} gallery={c} styled={styled} usableRegions={usableRegions}
+      onPick={item=>invoke(c.id,item)}/>;
     const toggle=c.pressed!==undefined;
-    return <Pressable key={c.id} accessibilityRole="button" accessibilityLabel={c.label} disabled={c.disabled}
-      accessibilityState={{disabled:!!c.disabled,...(toggle?{selected:c.pressed}:{})}} aria-pressed={toggle?c.pressed:undefined}
-      onPress={()=>onCommand(c.id)}
+    return <Pressable key={c.id} accessibilityRole="button" accessibilityLabel={c.label} disabled={disabled||c.disabled}
+      accessibilityState={{disabled:disabled||!!c.disabled,...(toggle?{selected:c.pressed}:{})}} aria-pressed={toggle?c.pressed:undefined}
+      onPress={()=>invoke(c.id)}
       {...{className:joinClasses("min-h-11 min-w-11 flex-row items-center gap-2 px-2",
         styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
         styled&&(c.pressed?"bg-primary/10 border border-focus":"hover:bg-surface-sunken"),c.disabled&&"opacity-40")}}>
@@ -86,9 +92,9 @@ export function RibbonTabs({
               {tab.contextualGroup?<Text numberOfLines={1} {...{className:joinClasses(styled&&"text-accent text-xs font-semibold")}}
                 style={{paddingHorizontal:12,paddingTop:2}} accessibilityElementsHidden importantForAccessibility="no">{tab.contextualGroup}</Text>:null}
               <Pressable ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
-                accessibilityLabel={ribbonTabLabel(tab)} accessibilityState={{selected:selected&&!collapsed}} aria-selected={selected&&!collapsed}
+                accessibilityLabel={ribbonTabLabel(tab)} disabled={disabled} accessibilityState={{selected:selected&&!collapsed,disabled}} aria-selected={selected&&!collapsed}
                 onPress={()=>pick(tab.id)}
-                {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:selected?0:-1}:{})}
+                {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:!disabled&&selected?0:-1}:{})}
                 {...{className:joinClasses("min-h-11 justify-center px-3",styled&&"focus-visible:ring-2 focus-visible:ring-focus",
                   styled&&tab.contextualGroup&&"border-t-2 border-accent")}}>
                 <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm",styled&&(selected?"text-text font-semibold":"text-text-muted"))}}>{tab.label}</Text>
@@ -102,7 +108,7 @@ export function RibbonTabs({
         </View>
       </ScrollView>
       {onCollapsedChange?<Pressable accessibilityRole="button" accessibilityLabel={collapsed?"Show ribbon commands":"Hide ribbon commands"}
-        aria-expanded={!collapsed} onPress={()=>onCollapsedChange(!collapsed)}
+        disabled={disabled} aria-expanded={!collapsed} onPress={()=>current()?.onCollapsedChange?.(!collapsed)}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}>
         <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
           style={{width:8,height:8,borderRightWidth:1.5,borderBottomWidth:1.5,transform:[{rotate:collapsed?"45deg":"-135deg"}],marginTop:collapsed?-4:4}}/>
@@ -122,13 +128,16 @@ export function RibbonTabs({
   </View>;
 }
 
-function Gallery({gallery,styled,onPick,usableRegions}:{gallery:RibbonGallery;styled:boolean;onPick:(id:string)=>void;usableRegions?:readonly Rect2D[]}){
+function Gallery({editScope,disabled,gallery,styled,onPick,usableRegions}:{editScope:string;disabled:boolean;gallery:RibbonGallery;styled:boolean;onPick:(id:string)=>void;usableRegions?:readonly Rect2D[]}){
   const shown=inlineGalleryItems(gallery);
+  const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
+  const selectedIndex=Math.max(0,shown.findIndex(i=>i.id===gallery.selectedId));
+  const onKeyDown=(index:number)=>(event:unknown)=>{if(disabled)return;const k=shellKey(event);if(k.altKey||k.ctrlKey||k.metaKey)return;const next=rovingTarget(index,k.key,shown.map(()=>false),"horizontal",nodeIsRTL(k.target)||I18nManager.isRTL);if(next===null)return;k.preventDefault();(refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();onPick(shown[next]!.id);};
   return <View accessibilityLabel={gallery.label} {...{role:"radiogroup"}} style={{flexDirection:"row",alignItems:"center",gap:2}}>
-    {shown.map(item=>{
+    {shown.map((item,index)=>{
       const on=item.id===gallery.selectedId;
-      return <Pressable key={item.id} accessibilityLabel={item.label} {...{role:"radio"}} aria-checked={on}
-        accessibilityState={{checked:on}} onPress={()=>onPick(item.id)}
+      return <Pressable key={item.id} ref={node=>{refs.current[index]=node;}} {...(Platform.OS==="web"?{onKeyDown:onKeyDown(index),tabIndex:!disabled&&index===selectedIndex?0:-1}:{})} accessibilityLabel={item.label} {...{role:"radio"}} aria-checked={on}
+        disabled={disabled} accessibilityState={{checked:on,disabled}} onPress={()=>onPick(item.id)}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",
           styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(on?"border border-focus bg-primary/10":"hover:bg-surface-sunken"))}}
@@ -137,7 +146,7 @@ function Gallery({gallery,styled,onPick,usableRegions}:{gallery:RibbonGallery;st
         <View pointerEvents="none">{item.preview}</View>
       </Pressable>;
     })}
-    {gallery.items.length>shown.length?<MenuButton label={`More ${gallery.label}`} usableRegions={usableRegions}
+    {gallery.items.length>shown.length?<MenuButton editScope={editScope} disabled={disabled} unstyled={!styled} label={`More ${gallery.label}`} usableRegions={usableRegions}
       items={gallery.items.map(i=>({id:i.id,label:i.label,description:i.id===gallery.selectedId?"Current":undefined}))}
       onSelect={onPick}>
       <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>More</Text>

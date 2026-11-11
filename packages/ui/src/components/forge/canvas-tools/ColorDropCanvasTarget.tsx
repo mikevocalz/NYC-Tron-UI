@@ -14,12 +14,15 @@
  * React Native component on theme tokens; fills are reported to the host as one
  * `onFill` instead of running in a view model; keyboard targeting added.
  */
-import {useEffect,useRef,type ComponentRef,type ReactNode} from "react";
+import {useEffect,useLayoutEffect,useRef,type ComponentRef,type ReactNode} from "react";
 import {PanResponder,Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {joinClasses} from "../../styles.ts";
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {createCanvasResponder} from '../../gestures/canvas-responder.ts';
 import {Crosshair} from "../selection/selection-overlay.tsx";
 import {
  DROP_DOT_SIZE,buildFill,classifyPress,clampToTarget,describeDropTarget,dropKeyMove,dropToDocument,
@@ -27,7 +30,7 @@ import {
 } from "./color-drop-model.ts";
 
 /** Props for {@linkcode ColorDropCanvasTarget}. */
-export interface ColorDropCanvasTargetProps extends Omit<ViewProps,"children"> {
+export interface ColorDropCanvasTargetProps extends Omit<ViewProps,"children">,ScopedControlProps {
  /** The colour on the chip, in any form the platform draws and the host's fill accepts. */
  color:string;
  /** Spoken and shown name of the colour, e.g. "Coral". */
@@ -43,7 +46,7 @@ export interface ColorDropCanvasTargetProps extends Omit<ViewProps,"children"> {
  documentWidth:number;
  documentHeight:number;
  /** Exactly once per drop on the canvas. Maps to `floodFill` on the host's current layer. */
- onFill:(request:FillRequest)=>void;
+ onFill:(request:FillRequest,signal?:AbortSignal)=>void|Promise<unknown>;
  /** Live target in document pixels during a drag or keyboard aim; `undefined` when off the canvas or ended. */
  onPreview?:(target:DropPoint|undefined)=>void;
  /** A tap on the chip without dragging, e.g. to open the colour picker. */
@@ -70,13 +73,21 @@ type Measurable={measureLayout?:(relativeTo:unknown,ok:(x:number,y:number,w:numb
  * a drag. Keyboard: focus the chip, press Enter to aim at the canvas centre,
  * move with the arrows (Alt for ten times the step), Enter to fill, Escape to cancel.
  */
-export function ColorDropCanvasTarget({
+export function ColorDropCanvasTarget({scope='color-drop',revision=0,...props}:ColorDropCanvasTargetProps&{actionError?:string|null}){
+ validateDrop(props);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.color,props.tolerance,props.contiguous,props.width,props.height,props.documentWidth,props.documentHeight]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <ColorDropCanvasTargetBody key={owner} {...props} actionError={guard.error} {...(guard.pending?{disabledReason:'Fill in progress'}:{})}
+  onFill={value=>guard.run('fill',(host,signal)=>host.onFill(value,signal))}
+  onChipPress={()=>guard.current()?.onChipPress?.()} onPreview={value=>guard.current()?.onPreview?.(value)}/>;
+}
+function ColorDropCanvasTargetBody({
  color,colorLabel,tolerance,contiguous,width,height,documentWidth,documentHeight,onFill,onPreview,onChipPress,
- disabledReason,children,className,unstyled=false,style,...rest
-}:ColorDropCanvasTargetProps){
+ actionError=null,disabledReason,children,className,unstyled=false,style,...rest
+}:ColorDropCanvasTargetProps&{actionError?:string|null}){
  validateDrop({color,tolerance,width,height,documentWidth,documentHeight});
  const latest=useRef({color,colorLabel,tolerance,contiguous,width,height,documentWidth,documentHeight,onFill,onPreview,onChipPress,disabledReason});
- latest.current={color,colorLabel,tolerance,contiguous,width,height,documentWidth,documentHeight,onFill,onPreview,onChipPress,disabledReason};
+ useLayoutEffect(()=>{latest.current={color,colorLabel,tolerance,contiguous,width,height,documentWidth,documentHeight,onFill,onPreview,onChipPress,disabledReason};});
  const local=useRef<StoreApi<Local>|null>(null);
  if(!local.current)local.current=createStore<Local>(()=>({drag:null,aim:null,notice:undefined}));
  const store=local.current;
@@ -90,12 +101,15 @@ export function ColorDropCanvasTarget({
  const press=useRef<{local:DropPoint;dragging:boolean;cancelled:boolean}|null>(null);
  const styled=!unstyled;
 
+ const measurement=useRef(0);
+ useEffect(()=>()=>{measurement.current++;},[]);
  const measure=()=>{
+  const ticket=++measurement.current;geometry.current=null;
   const r=root.current,c=chip.current as unknown as Measurable|null,t=target.current as unknown as Measurable|null;
   if(!r||!c?.measureLayout||!t?.measureLayout)return;
   let chipRect:DropRect|undefined;
-  c.measureLayout(r,(x,y,w,h)=>{chipRect={x,y,width:w,height:h};
-   t.measureLayout!(r,(tx,ty,tw,th)=>{geometry.current={chip:chipRect!,target:{x:tx,y:ty,width:tw,height:th}};});
+  c.measureLayout(r,(x,y,w,h)=>{if(ticket!==measurement.current)return;chipRect={x,y,width:w,height:h};
+   t.measureLayout!(r,(tx,ty,tw,th)=>{if(ticket!==measurement.current||![x,y,w,h,tx,ty,tw,th].every(Number.isFinite)||w<=0||h<=0||tw<=0||th<=0)return;geometry.current={chip:chipRect!,target:{x:tx,y:ty,width:tw,height:th}};});
   });
  };
  const docAt=(pointer:DropPoint)=>{
@@ -112,7 +126,7 @@ export function ColorDropCanvasTarget({
   if(s.drag||s.aim){store.setState({drag:null,aim:null,notice:message});latest.current.onPreview?.(undefined);}
  };
  const fill=(at:DropPoint)=>{
-  const p=latest.current;
+  const p=latest.current;if(p.disabledReason!==undefined)return;
   store.setState({drag:null,aim:null,notice:`Filled at ${at.x}, ${at.y} with ${p.colorLabel}`});
   p.onPreview?.(undefined);
   p.onFill(buildFill(at,p.color,p.tolerance,p.contiguous));
@@ -120,8 +134,8 @@ export function ColorDropCanvasTarget({
  useEffect(()=>()=>{const s=store.getState();if(s.drag||s.aim)latest.current.onPreview?.(undefined);},[store]);
 
  const pan=useRef<ReturnType<typeof PanResponder.create>|null>(null);
- if(!pan.current)pan.current=PanResponder.create({
-  onStartShouldSetPanResponder:()=>true,onMoveShouldSetPanResponder:()=>true,
+ if(!pan.current)pan.current=createCanvasResponder({
+  onStartShouldSetPanResponder:(_e,g)=>latest.current.disabledReason===undefined&&g.numberActiveTouches<=1,onMoveShouldSetPanResponder:()=>false,
   onPanResponderTerminationRequest:()=>false,
   onPanResponderGrant:e=>{
    (chip.current as unknown as {focus?:()=>void}|null)?.focus?.();
@@ -146,11 +160,12 @@ export function ColorDropCanvasTarget({
    store.setState({drag:{pointer,over},notice:undefined});
    if(prev?.x!==over?.x||prev?.y!==over?.y)latest.current.onPreview?.(over);
   },
-  onPanResponderRelease:()=>{
+  onPanResponderRelease:(_e,g)=>{
    const p=press.current;press.current=null;
    if(!p||p.cancelled)return;
    if(!p.dragging){latest.current.onChipPress?.();return;}
-   const over=store.getState().drag?.over;
+   const c=geometry.current?.chip;
+   const over=c?docAt({x:c.x+p.local.x+g.dx,y:c.y+p.local.y+g.dy}):undefined;
    if(over)fill(over);else endDrag("Dropped outside the canvas. Nothing was filled.");
   },
   onPanResponderTerminate:()=>{press.current=null;if(store.getState().drag)endDrag("Colour put back");},
@@ -195,6 +210,7 @@ export function ColorDropCanvasTarget({
 
  return <View ref={root} collapsable={false} {...rest} {...{className:joinClasses("gap-2",className)}}
   style={[{position:"relative",maxWidth:"100%"},style]}>
+  <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
   <View style={{flexDirection:"row",alignItems:"center",gap:10,minHeight:44}}>
    <View ref={chip} collapsable={false} {...pan.current.panHandlers}
     {...{onKeyDown,focusable:true}} accessible role="button"

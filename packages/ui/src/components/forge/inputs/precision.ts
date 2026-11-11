@@ -159,10 +159,15 @@ export function scaleTicks(value:number,min:number,max:number,count=31,majorEver
     return {position,major:i%majorEvery===0,reached:position<=reachedUpTo};
   });
 }
-/** Display a value with as many decimals as the step needs (fine mode adds one). */
+/** Decimal places required by a step, including fractional mantissas/exponents. */
+export function stepDecimalPlaces(step:number):number {
+  if(!Number.isFinite(step)||step<=0)throw new RangeError("Invalid precision step");
+  const [mantissa,exponent]=String(step).toLowerCase().split("e");
+  return Math.min(100,Math.max(0,(mantissa!.split(".")[1]?.length??0)-Number(exponent??0)));
+}
+/** Display the step's decimals plus one place for fine adjustment. */
 export function formatStepValue(value:number,step:number):string {
-  const places=step>=1?1:step>=0.1?2:step>=0.01?3:4;
-  return Number(value.toFixed(places)).toString();
+  return Number(value.toFixed(Math.min(100,stepDecimalPlaces(step)+1))).toString();
 }
 export function normalize(value:number,min:number,max:number):number {
   if(![min,max,value].every(Number.isFinite)||max<=min)throw new RangeError("Invalid normalization");

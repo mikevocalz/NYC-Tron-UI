@@ -1,3 +1,6 @@
+import {assertMidiNotes} from './note-grid.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { Pressable, ScrollView, Text, View, type KeyDownEvent, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { webToggleProps } from "../toggle-a11y.ts";
@@ -7,7 +10,7 @@ const HIT = 44;
 const NAME_COLUMN = 72;
 
 /** Props for {@linkcode StepSequencer}. */
-export interface StepSequencerProps extends Omit<ViewProps, "children"> {
+export interface StepSequencerProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed notes of the clip the grid edits. */
   readonly notes: readonly MidiNote[];
   /** One row per instrument, top to bottom. */
@@ -48,11 +51,20 @@ export interface StepSequencerProps extends Omit<ViewProps, "children"> {
  * Steps run left to right in every locale, like the piano roll. Lanes are
  * pitches, so a drum map is the app's `lanes` list.
  */
-export function StepSequencer({
+export function StepSequencer({scope='StepSequencer',revision=0,...props}:StepSequencerProps){
+ assertMidiNotes(props.notes,props.clipTicks);
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.clipTicks,props.steps,props.stepTicks,props.lanes,props.notes,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <StepSequencerBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onStepAdd={(...args:Parameters<StepSequencerProps['onStepAdd']>)=>guard.run('onStepAdd',h=>h.onStepAdd(...args))}
+  onStepRemove={(...args:Parameters<StepSequencerProps['onStepRemove']>)=>guard.run('onStepRemove',h=>h.onStepRemove(...args))}
+  onStepVelocity={(...args:Parameters<StepSequencerProps['onStepVelocity']>)=>guard.run('onStepVelocity',h=>h.onStepVelocity(...args))}
+ />;
+}
+function StepSequencerBody({actionError,disabledReason,
   notes, lanes, clipTicks, steps = 16, stepTicks = 240, stepsPerBeat = 4, velocity = 96, accentVelocity = 127,
   currentStep, onStepAdd, onStepRemove, onStepVelocity, disabled = false, label = "Step sequencer",
   className, unstyled = false, ...rest
-}: StepSequencerProps) {
+}: StepSequencerProps&{actionError?:string|null}) {
   if (!Number.isInteger(clipTicks) || steps * stepTicks > clipTicks) {
     throw new RangeError("steps * stepTicks must fit inside clipTicks");
   }
@@ -111,5 +123,5 @@ export function StepSequencer({
         </View>
       </ScrollView>
     </View>
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

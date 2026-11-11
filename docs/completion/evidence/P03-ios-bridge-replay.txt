@@ -1,0 +1,6 @@
+Argent qa-p03-decoder-bridge-singleton, unchanged3step path
+Device BBCC4078-E64D-4642-893B-ACF80ACB29A1 iOS27.1
+Scoped own simulator services recycled before pass1; Metro remained running.
+Pass1: launch5.4s, visible AX text3.5s, PASS text0.0s;3passed0failed0errored0skipped9.3s.
+Pass2: launch2.7s, visible AX text0.9s, PASS text0.9s;3passed0failed0errored0skipped4.8s.
+Native devtools connectedtrue after scoped service recycle. Flow intentionally retains recorded rawAX waits; no idle-based broaderQA completion claim.

@@ -1,11 +1,11 @@
-import {useEffect,useMemo,useRef,type ComponentRef} from "react";
+import {useLayoutEffect,useMemo,useRef,type ComponentRef} from "react";
 import {Modal,Platform,Pressable,ScrollView,Text,TextInput,View,type PressableProps,
  type TextInputKeyPressEvent} from "react-native";
 import {useStore} from "zustand";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {TextField} from "../TextField.tsx";
 import {joinClasses} from "../styles.ts";
-import {placePopover,type Rect2D} from "./popover-position.ts";
+import {placePopover,hasUsableRegion,type Rect2D} from "./popover-position.ts";
 import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {filterCommands,nextActiveCommand,reconcileActiveCommand,validateCommands,
@@ -14,6 +14,7 @@ export type {PaletteCommand} from "./command-filter.ts";
 
 export interface CommandPaletteProps{
  /** Controlled. The app owns the shortcut (for example Cmd/Ctrl+K) that sets this. */
+ scope?:string;revision?:string|number;
  open:boolean;
  onOpenChange:(open:boolean)=>void;
  /** Called with the chosen command; the palette then closes itself through onOpenChange(false). */
@@ -46,7 +47,7 @@ const ROW_HEIGHT=56;
  * focus returns to whatever opened it. Global shortcut registration is the
  * app's job.
  */
-export function CommandPalette({open,onOpenChange,onSelect,commands,anchor,usableRegions,
+export function CommandPalette({scope="command-palette",revision=0,open,onOpenChange,onSelect,commands,anchor,usableRegions,
  label="Command palette",placeholder="Type a command",emptyText="No matching commands",
  width=420,maxHeight=440,className,unstyled=false,testID}:CommandPaletteProps){
  validateCommands(commands);
@@ -60,15 +61,22 @@ export function CommandPalette({open,onOpenChange,onSelect,commands,anchor,usabl
  const activeId=reconcileActiveCommand(results,storedActive);
  const field=useRef<ComponentRef<typeof TextInput>>(null);
  const rows=useRef(new Map<string,ComponentRef<typeof View>>());
- useRestoreFocus(open);
+ const available=hasUsableRegion(usableRegions);
+ useRestoreFocus(open&&available);
  // Every opening starts from an empty search.
- useEffect(()=>{if(open)store.setState({query:"",activeId:undefined});},[open,store]);
+ const boundary=JSON.stringify([scope,revision,open]);
+ const committed=useRef<{boundary:string;available:boolean;results:typeof results;onOpenChange:typeof onOpenChange;onSelect:typeof onSelect}|null>(null);
+ useLayoutEffect(()=>{committed.current={boundary,available,results,onOpenChange,onSelect};});
+ useLayoutEffect(()=>{store.setState({query:"",activeId:undefined});},[boundary,store]);
+ useLayoutEffect(()=>()=>{committed.current=null;},[]);
+ const current=()=>open&&committed.current?.boundary===boundary&&committed.current.available?committed.current:null;
 
- const close=()=>onOpenChange(false);
+ const close=()=>current()?.onOpenChange(false);
  const run=(id:string|undefined)=>{
-  const command=id?results.find(item=>item.id===id):undefined;
+  const p=current();if(!p)return;
+  const command=id?p.results.find(item=>item.id===id):undefined;
   if(!command||command.disabled)return;
-  close();onSelect(command.id);
+  p.onOpenChange(false);p.onSelect(command.id);
  };
  const stops=[SEARCH,...results.filter(item=>!item.disabled).map(item=>item.id)];
  const focusStop=(id:string|undefined)=>{
@@ -76,35 +84,37 @@ export function CommandPalette({open,onOpenChange,onSelect,commands,anchor,usabl
   else if(id)rows.current.get(id)?.focus();
  };
  const onKey=(data:KeyData,from:string,prevent:()=>void)=>{
+  if(!current())return;
   if(data.altKey||data.ctrlKey||data.metaKey)return;
   if(data.key==="Tab"){prevent();focusStop(cycleFocusTarget(stops,from,!!data.shiftKey));return;}
   if(from!==SEARCH)return;
   const next=nextActiveCommand(results,activeId,data.key);
   if(next){prevent();store.setState({activeId:next});}
  };
- const position=placePopover(anchor,usableRegions,width,
-  Math.min(maxHeight,ROW_HEIGHT*Math.max(1,results.length)+96));
+ const position=available?placePopover(anchor,usableRegions,width,
+  Math.min(maxHeight,ROW_HEIGHT*Math.max(1,results.length)+96)):undefined;
  const listId=(testID??"command-palette")+"-results";
  const optionId=(id:string)=>listId+"-"+id;
 
+ if(!position)return null;
  return <Modal visible={open} transparent onRequestClose={close}
    animationType={Platform.OS==="web"?"none":"fade"} accessibilityViewIsModal>
   <View style={{flex:1}}>
    <Pressable accessibilityRole="button" accessibilityLabel="Close command palette" onPress={close}
      focusable={false}
-     style={{position:"absolute",top:0,right:0,bottom:0,left:0,backgroundColor:"rgba(0,0,0,0.32)"}}/>
+     {...{className:styled?"bg-text/30":undefined}} style={{position:"absolute",top:0,right:0,bottom:0,left:0}}/>
    <View testID={testID} role="dialog" aria-modal aria-label={label}
      {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised p-2 gap-2",className)}}
      style={{position:"absolute",left:position.x,top:position.y,width:position.width,
        maxHeight:position.height,overflow:"hidden"}}>
-    <TextField id={listId+"-search"} label={label} ref={field} value={query} autoFocus
+    <TextField id={listId+"-search"} label={label} ref={field} value={query} maxLength={2048} autoFocus
       placeholder={placeholder} autoCorrect={false} autoCapitalize="none"
       returnKeyType="go" submitBehavior="submit"
       // RN web reads only blurOnSubmit; without it Enter blurs the field and focus leaves the palette.
       {...{blurOnSubmit:false}}
       role="combobox" aria-expanded aria-controls={listId}
       {...{"aria-activedescendant":activeId?optionId(activeId):undefined,"aria-autocomplete":"list"}}
-      onChangeText={text=>store.setState({query:text,activeId:undefined})}
+      onChangeText={text=>{if(current())store.setState({query:text,activeId:undefined});}}
       onSubmitEditing={()=>run(activeId)}
       onKeyPress={(event:TextInputKeyPressEvent)=>onKey(event.nativeEvent as KeyData,SEARCH,
         ()=>event.preventDefault())}/>
@@ -126,7 +136,7 @@ export function CommandPalette({open,onOpenChange,onSelect,commands,anchor,usabl
           disabled={command.disabled}
           ref={node=>{if(node)rows.current.set(command.id,node);else rows.current.delete(command.id);}}
           onPress={()=>run(command.id)}
-          onHoverIn={()=>{if(!command.disabled)store.setState({activeId:command.id});}}
+          onHoverIn={()=>{if(current()&&!command.disabled)store.setState({activeId:command.id});}}
           {...{onKeyDown:(event:KeyEvent)=>onKey(event.nativeEvent as unknown as KeyData,command.id,
             ()=>{event.preventDefault();event.stopPropagation();})}}
           {...{className:joinClasses("rounded-control",styled&&(active?"bg-primary/10":"focus-visible:bg-primary/10"))}}

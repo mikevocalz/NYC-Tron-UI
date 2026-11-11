@@ -1,0 +1,15 @@
+# P05 artboard navigation and panel sizing
+
+B-14 retains the existing list/grid navigator and independent component/model exports. Selection/navigation, add, rename, remove and drag/keyboard reorder remain host-owned operations. Scope/revision and permission changes retire old editors and requests; layout, geometry and external order changes cancel a held reorder. Thumbnail identities now include the document namespace and forward an optional AbortSignal. Reusing page IDs and preview revisions in another document cannot reuse its pixels.
+
+The model bounds metadata, safe-integer thumbnail versions, grid/drop/key metrics and proposed additions. Additions stop at the render limit and reject coordinates where the required placement cannot be represented. Rename inputs follow the same 512-character name budget in artboard and layer rows. Pending host operations expose their state and failures; replacement aborts cooperative work and rejects stale UI results.
+
+Keyboard review fixed focus restoration around controlled reorder. The action owner now offers an opt-in pending policy that avoids disabling a focused control for synchronous or already-resolved acknowledgements; existing callers keep their previous default. Actual asynchronous work still blocks input, aborts at replacement and clears errors on a successful retry. The hook forwards that option, and artboard focus restoration waits for controls to be enabled.
+
+Consumer layout review found that ownership wrappers around LayerStack, MaskThumbnailAndEditor and ArtboardNavigator intercepted app-authored flex sizing. Their behavioral wrappers now return the original panel root directly, with status/errors inside that root. A 360-point host with a 44-point app header now leaves each panel the expected 316 points. The app window, orientation, theme and document state remain unchanged.
+
+Validation passed UI build/types, native consumer types, all 864 source tests and package verification of 450 conditional exports/560 emitted ESM files. The expanded browser run passed 51 of 52 cases; cold CanvasKit initialization exceeded the generic five-second readiness wait. The GPU lane now has an explicit bounded renderer-readiness gate and retains all pixel, submission, pause and failure/recovery assertions. Its final GPU/flat-layer/panel-layout rerun passed all ten cases. The remaining 51 expanded-run cases passed, including artboard document/permission/layout/order cancellation, pending removal, error recovery and the three sizing regressions. The sizing baseline failed all three before the root fix.
+
+The browser server now compiles only requested fixtures instead of compiling every unrelated fixture before it can listen. Target-size checks read one layout snapshot per panel instead of making separate browser calls for every edge and label. These changes address observed harness startup/audit timeouts; they do not establish product performance or physical GPU timing.
+
+Native runtime, physical accessibility and eight-platform acceptance remain open. Review count is 104 of 341. P05 continues with selection tools, vectors and remaining canvas controls.

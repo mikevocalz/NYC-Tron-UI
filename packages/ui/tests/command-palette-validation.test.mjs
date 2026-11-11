@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateRailTools,shownVariantId} from '../src/components/shell/tool-rail-model.ts';
+import {validateRibbon} from '../src/components/shell/ribbon-model.ts';
+import {validateDocumentTabs} from '../src/components/shell/document-tabs-model.ts';
+import {validateToolbarItems,splitOverflow} from '../src/components/shell/contextual-toolbar-model.ts';
+test('tool and document identities reject ambiguous palettes and malformed permissions',()=>{const shape={id:'shape',label:'Shape',icon:null,variants:[{id:'rect',label:'Rectangle',icon:null}]};validateRailTools([shape]);assert.throws(()=>validateRailTools([shape,{id:'rect',label:'Other',icon:null}]),/Duplicate/);assert.throws(()=>validateRailTools([{...shape,disabled:'no'}]),/availability/);assert.throws(()=>validateDocumentTabs([{id:'x',title:'X',closable:'no'}]),/flags/);assert.throws(()=>validateDocumentTabs(Array.from({length:1001},(_,i)=>({id:String(i),title:'Doc'}))),/Too many/);assert.equal(shownVariantId({...shape,id:'constructor'},{}),'rect');});
+test('ribbon menus reject duplicate choices and invalid inline counts',()=>{const gallery={kind:'gallery',id:'style',label:'Style',items:[{id:'a',label:'A',preview:null}]};const tabs=c=>[{id:'home',label:'Home',groups:[{id:'g',label:'Group',commands:[c]}]}];validateRibbon(tabs(gallery));assert.throws(()=>validateRibbon(tabs({...gallery,items:[...gallery.items,...gallery.items]})),/Duplicate/);assert.throws(()=>validateRibbon(tabs({...gallery,inline:1.5})),/inline/);assert.throws(()=>validateToolbarItems([{id:'a',label:'A',appliesTo:['']}]),/selection kinds/);assert.throws(()=>splitOverflow([],{widths:{},available:20,gap:0,overflowWidth:44,fallbackWidth:-1}),/geometry/);});

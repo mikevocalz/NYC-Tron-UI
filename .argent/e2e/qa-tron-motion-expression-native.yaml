@@ -1,0 +1,32 @@
+steps:
+  - launch: com.nyctron.instruments.example
+  - await: { visible: { text: Search assets }, timeout: 15000 }
+  - await: { idle: true }
+  - tap: { text: motion }
+  - await: { visible: { text: Motion component } }
+  - await: { idle: true }
+  - tap: { id: motion-component }
+  - await: { exists: { text: Expression } }
+  - await: { idle: true }
+  - scroll-to: { target: { text: Expression, within: { id: motion-component-list } }, direction: down }
+  - await: { idle: true }
+  - tap: { text: Expression, within: { id: motion-component-list } }
+  - await: { visible: { text: Expression source } }
+  - await: { idle: true }
+  - await: { text: { in: { text: Motion expression state }, contains: '"applies":0' } }
+  - tap: { text: Complete expression }
+  - await: { visible: { text: Insert completion Composition time } }
+  - await: { idle: true }
+  - tap: { text: Insert completion Composition time }
+  - await: { text: { in: { text: Motion expression state }, contains: '"value":"time"' } }
+  - await: { idle: true }
+  - tap: { text: Diagnostics }
+  - await: { visible: { text: Validate the current expression to see diagnostics } }
+  - await: { idle: true }
+  - tap: { text: Validate expression }
+  - await: { visible: { text: '0 errors, 0 warnings' } }
+  - await: { idle: true }
+  - tap: { text: Apply expression }
+  - await: { text: { in: { text: Motion expression state }, contains: '"applies":1' } }
+  - await: { text: { in: { text: Motion expression state }, contains: '"applied":"time"' } }
+  - await: { idle: true }

@@ -14,9 +14,21 @@ function harness({ rtl = false } = {}) {
   const refs = [];
   let cursor = 0;
   const responders = [];
+  const layoutEffects = [];
   const element = (type, props) => ({ type, props });
+  const contextToken = Symbol("mock React context");
+  const createContext = value => {
+    const context = { [contextToken]: true, currentValue: value };
+    context.Provider = context; // React 19 supports the context itself as provider.
+    context.Consumer = ({ children }) => children(context.currentValue);
+    return context;
+  };
+  const useContext = context => {
+    if (!context?.[contextToken]) throw new TypeError("useContext requires a context");
+    return context.currentValue;
+  };
   const mocks = {
-    react: { useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {},
+    react: { createContext, useContext, useRef: v => refs[cursor++] ?? (refs[cursor - 1] = { current: v }), useEffect: () => {}, useLayoutEffect: fn => { layoutEffects.push(fn); },
       useMemo: f => f(), cloneElement: (el, props) => ({ ...el, props: { ...el.props, ...props } }) },
     "react/jsx-runtime": { jsx: element, jsxs: element },
     "react-native": {
@@ -39,7 +51,7 @@ function harness({ rtl = false } = {}) {
         jsx: ts.JsxEmit.ReactJSX, verbatimModuleSyntax: false },
     }).outputText;
     cache.set(path, exports);
-    runInNewContext(code, { exports, require: name => mocks[name] ?? load(resolve(dirname(path), name)) },
+    runInNewContext(code, { exports, AbortController, require: name => mocks[name] ?? load(resolve(dirname(path), name)) },
       { filename: path });
     return exports;
   }
@@ -47,12 +59,18 @@ function harness({ rtl = false } = {}) {
   const expand = node => {
     if (Array.isArray(node)) return node.map(expand);
     if (!node || typeof node !== "object") return node;
+    if (node.type?.[contextToken]) {
+      const context = node.type, previous = context.currentValue;
+      context.currentValue = node.props.value;
+      try { return expand(node.props.children); }
+      finally { context.currentValue = previous; }
+    }
     if (typeof node.type === "function") return expand(node.type(node.props));
     const children = node.props?.children;
     return children === undefined ? node : { ...node, props: { ...node.props, children: expand(children) } };
   };
   return {
-    render: props => { cursor = 0; return expand(LayerStack(props)); },
+    render: props => { cursor = 0; layoutEffects.length = 0; const tree = expand(LayerStack(props)); for (const effect of layoutEffects) effect(); return tree; },
     // Each row creates its opacity responder, then its drag responder.
     opacityResponder: row => responders[row * 2],
   };
@@ -117,19 +135,23 @@ test("no onRemove means no remove control, action or key handling", () => {
   assert.equal(prevented, false, "Delete passes through when the host cannot remove");
 });
 
-test("onRemove adds a button, a screen-reader action and Delete/Backspace on the row", () => {
+test("onRemove adds a button, a screen-reader action and Delete/Backspace on the row", async () => {
   const removed = [];
   const tree = harness().render(props({ onRemove: id => removed.push(id) }));
   const button = byLabel(tree, "Remove Card");
   assert.equal(button.type, "Pressable");
   assert.equal(button.props.accessibilityRole, "button");
   button.props.onPress();
+  await new Promise(resolve => setImmediate(resolve));
   const main = rowMain(tree, "Card");
   assert.equal(main.props.accessibilityActions.find(a => a.name === "remove")?.label, "Remove");
   main.props.onAccessibilityAction({ nativeEvent: { actionName: "remove" } });
+  await new Promise(resolve => setImmediate(resolve));
   let prevented = 0;
-  for (const key of ["Delete", "Backspace", "Enter"])
+  for (const key of ["Delete", "Backspace", "Enter"]) {
     main.props.onKeyDown({ nativeEvent: { key }, preventDefault: () => { prevented++; } });
+    await new Promise(resolve => setImmediate(resolve));
+  }
   assert.deepEqual(removed, ["rect", "rect", "rect", "rect"], "button, action, Delete and Backspace; Enter is not remove");
   assert.equal(prevented, 2);
 });

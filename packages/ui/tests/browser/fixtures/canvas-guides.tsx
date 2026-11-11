@@ -19,7 +19,7 @@ import type {AlignCommand,AlignReferenceKind,DistributeCommand,DistributeMode,Mo
 // the engine; the log line records op names and payloads.
 type Layer={id:string;name:string;w:number;h:number;t:LayerTransform;locked?:boolean};
 type Doc={layers:Layer[];guides:CanvasGuide[];grid:GridSettings;snap:SnapSettings;origin:DocPoint};
-type Host={doc:Doc;past:Doc[];future:Doc[];selected:string[];unit:RulerUnit;reference:AlignReferenceKind;
+type Host={scope:number;rulerDisabled:boolean;doc:Doc;past:Doc[];future:Doc[];selected:string[];unit:RulerUnit;reference:AlignReferenceKind;
   mode:DistributeMode;spacing:number|undefined;size:{width:number;height:number};
   drag:{id:string;rect:DocRect;smart:SmartGuideResult|undefined;grid:{x?:SnapHit;y?:SnapHit}|undefined}|undefined;
   guidePreview:string;log:string[];nextGuide:number};
@@ -30,7 +30,7 @@ const layer=(id:string,name:string,x:number,y:number,w:number,h:number,locked=fa
 // Bottom to top, like moveLayer's indices.
 const layers=[layer("L4","Footer",60,620,480,100,params.get("lockfooter")!=="0"),layer("L2","Photo",60,220,220,220),
   layer("L3","Badge",340,240,120,120),layer("L1","Title",60,80,300,80)];
-const useHost=create<Host>(()=>({
+const useHost=create<Host>(()=>({scope:0,rulerDisabled:false,
   doc:{layers,guides:[{id:"g1",orientation:"horizontal",position:200},{id:"g2",orientation:"vertical",position:300}],
     grid:{spacing:40,subdivisions:4,visible:params.get("grid")!=="0"},snap:{...DEFAULT_SNAP},origin:{x:0,y:0}},
   past:[],future:[],selected:(params.get("select")??"L2").split(",").filter(Boolean),
@@ -170,11 +170,11 @@ function Canvas(){
       <SnapGridOverlay viewport={v} grid={s.doc.grid} snapped={s.drag?.grid}/>
       {s.doc.layers.map(l=><LayerBox key={l.id} l={l} v={v} selected={s.selected.includes(l.id)}/>)}
       <SmartGuides viewport={v} result={s.drag?.smart} names={Object.fromEntries(s.doc.layers.map(l=>[l.id,l.name]))}/>
-      {sel.length&&!s.drag?<TransformOriginHandle viewport={v}
+      {sel.length&&!s.drag?<TransformOriginHandle scope={String(s.scope)} disabled={s.rulerDisabled} viewport={v}
         corners={one?cornersOf(one):(()=>{const u=union(sel.map(boundsOf));return [[u.x,u.y],[u.x+u.w,u.y],[u.x+u.w,u.y+u.h],[u.x,u.y+u.h]] as const;})()}
         {...(one&&!one.locked?{transform:one.t}:{unavailableReason:one?`Unlock ${one.name} to move its pivot`:"Select one layer to move its pivot"})}
         onSetOrigin={(ox,oy)=>one&&setTransformOrigin(one.id,ox,oy)}/>:null}
-      <CanvasRuler viewport={v} unit={s.unit} dpi={150} origin={s.doc.origin} guides={s.doc.guides}
+      <CanvasRuler scope={String(s.scope)} disabled={s.rulerDisabled} viewport={v} unit={s.unit} dpi={150} origin={s.doc.origin} guides={s.doc.guides}
         onAddGuide={g=>{const id="g"+useHost.getState().nextGuide;useHost.setState(x=>({nextGuide:x.nextGuide+1}));
           commit(`addGuide ${g.orientation} ${g.position}`,d=>({...d,guides:[...d.guides,{id,...g}]}));}}
         onMoveGuide={(id,position)=>commit(`moveGuide ${id} ${position}`,d=>({...d,guides:d.guides.map(g=>g.id===id?{...g,position}:g)}))}
@@ -191,6 +191,8 @@ function Panels(){
   const idx=sel.length===1?s.doc.layers.findIndex(l=>l.id===sel[0]!.id):-1;
   return <View style={{gap:24,padding:16}}>
     <View style={{flexDirection:"row",gap:8,flexWrap:"wrap"}}>
+      <Pressable accessibilityRole="button" accessibilityLabel="Replace ruler document" onPress={()=>useHost.setState(v=>({scope:v.scope+1,guidePreview:""}))}><Text>Replace ruler document</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Disable ruler" onPress={()=>useHost.setState({rulerDisabled:true,guidePreview:""})}><Text>Disable ruler</Text></Pressable>
       <Pressable role="button" aria-label="Undo" onPress={undo} {...{className:"rounded-control border border-border bg-surface-raised"}}
         style={{minHeight:44,paddingHorizontal:12,justifyContent:"center"}}><Text {...{className:"text-text"}}>Undo</Text></Pressable>
       <Pressable role="button" aria-label="Redo" onPress={redo} {...{className:"rounded-control border border-border bg-surface-raised"}}
@@ -205,7 +207,7 @@ function Panels(){
       distributeMode={s.mode} onDistributeModeChange={mode=>useHost.setState({mode})}
       spacing={s.spacing} onSpacingChange={spacing=>useHost.setState({spacing})} onDistribute={distributeLayers}
       {...(idx>=0?{stack:{index:idx,count:s.doc.layers.length}}:{})} onMoveLayer={moveLayer}/>
-    <SnapGridSettings grid={s.doc.grid} snap={s.doc.snap}
+    <SnapGridSettings scope={String(s.scope)} disabled={s.rulerDisabled} grid={s.doc.grid} snap={s.doc.snap}
       onGridChange={grid=>commit(`grid ${grid.visible?"on":"off"} ${grid.spacing}/${grid.subdivisions}`,d=>({...d,grid}))}
       onSnapChange={snap=>commit(`snap ${snap.enabled?"on":"off"} ${[snap.toGrid&&"grid",snap.toGuides&&"guides",snap.toArtboards&&"artboards"].filter(Boolean).join("+")} ${snap.thresholdPx} ${snap.strength}`,d=>({...d,snap}))}/>
   </View>;

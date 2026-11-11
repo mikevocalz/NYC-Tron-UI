@@ -39,3 +39,13 @@ native changes. Preserve the existing Moyo and NYC-MON product contracts.
    acceptance are documented.
 10. **Honesty:** report unit/source checks separately from actual simulator,
     Surface Duo, headset, Windows or macOS native validation.
+
+## Writing and native skills
+
+User requirement (2026-11-06): apply `nyc-mon/skills/no-ai-slop/SKILL.md` to
+user-facing updates and documentation. Use the relevant React Native, Nitro v1,
+Swift/Kotlin/C++ and native testing skills before implementation or debugging.
+Keep each skill's platform/version guidance aligned with this repository's
+pinned runtime and preserve its state, window and ownership contracts.
+
+User requirement (2026-11-07): use subagents for scoped implementation and independent review. Apply relevant native, domain and project skills, and the no-ai-slop skill, to implementation and reports.

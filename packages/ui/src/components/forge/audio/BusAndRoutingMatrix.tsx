@@ -1,3 +1,6 @@
+import {Select} from '../../Select.tsx';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {valueAccessibility} from "../value-a11y.ts";
 /**
  * Bus and routing matrix (roster E-19).
@@ -31,9 +34,12 @@ const HIT = 44;
 const SLOP = 4;
 
 /** Props for {@linkcode BusAndRoutingMatrix}. */
-export interface BusAndRoutingMatrixProps extends Omit<ViewProps, "children"> {
+export interface BusAndRoutingMatrixProps extends Omit<ViewProps, "children">,ScopedControlProps {
   /** Committed routing of each source track, in display order. */
   readonly sources: readonly RoutingSource[];
+  readonly ioBindings?:readonly {sourceId:RouteId;inputId:string|null;sidechainId:string|null;inputs:readonly {id:string;label:string}[];sidechains:readonly {id:string;label:string}[]}[];
+  readonly onInputCommit?:(sourceId:RouteId,inputId:string|null)=>void|Promise<unknown>;
+  readonly onSidechainCommit?:(sourceId:RouteId,source:string|null)=>void|Promise<unknown>;
   /** Buses that sources can output or send to. Buses feed the master only. */
   readonly buses: readonly RoutingBus[];
   /**
@@ -90,10 +96,23 @@ function isRTL(): boolean {
  * accepts it and the matrix allows it: the bus then receives the track
  * twice, once at fader level and once at send level.
  */
-export function BusAndRoutingMatrix({
-  sources, buses, onOutputCommit, onSendCommit, onSendRemove, onSendChange, emptyAction,
+export function BusAndRoutingMatrix({scope='BusAndRoutingMatrix',revision=0,...props}:BusAndRoutingMatrixProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.sources.map(s=>s.id),props.buses.map(b=>b.id),props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <BusAndRoutingMatrixBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  emptyAction={props.emptyAction?{...props.emptyAction,onPress:()=>{guard.current()?.emptyAction?.onPress();}}:undefined}
+  onInputCommit={props.onInputCommit?(...args)=>guard.run('input',h=>{const b=h.ioBindings?.find(b=>b.sourceId===args[0]);return b&&(args[1]===null||b.inputs.some(v=>v.id===args[1]))?h.onInputCommit?.(...args):undefined;}):undefined}
+  onSidechainCommit={props.onSidechainCommit?(...args)=>guard.run('sidechain',h=>{const b=h.ioBindings?.find(b=>b.sourceId===args[0]);return b&&(args[1]===null||b.sidechains.some(v=>v.id===args[1]))?h.onSidechainCommit?.(...args):undefined;}):undefined}
+  onOutputCommit={(...args:Parameters<BusAndRoutingMatrixProps['onOutputCommit']>)=>guard.run('onOutputCommit',h=>h.onOutputCommit(...args))}
+  onSendCommit={(...args:Parameters<BusAndRoutingMatrixProps['onSendCommit']>)=>guard.run('onSendCommit',h=>h.onSendCommit(...args))}
+  onSendRemove={(...args:Parameters<BusAndRoutingMatrixProps['onSendRemove']>)=>guard.run('onSendRemove',h=>h.onSendRemove(...args))}
+  onSendChange={props.onSendChange?(...args:Parameters<NonNullable<BusAndRoutingMatrixProps['onSendChange']>>)=>{guard.current()?.onSendChange?.(...args);}:undefined}
+ />;
+}
+function BusAndRoutingMatrixBody({actionError,disabledReason,
+  sources, buses,ioBindings=[],onInputCommit,onSidechainCommit, onOutputCommit, onSendCommit, onSendRemove, onSendChange, emptyAction,
   disabled = false, label = "Routing", className, unstyled = false, onLayout, ...rest
-}: BusAndRoutingMatrixProps) {
+}: BusAndRoutingMatrixProps&{actionError?:string|null}) {
+  if(sources.length>256||buses.length>64||new Set(sources.map(s=>String(s.id))).size!==sources.length||new Set(buses.map(b=>String(b.id))).size!==buses.length||sources.some(s=>s.sends.length>64||s.sends.some(v=>!Number.isFinite(v.level)||v.level<0||v.level>1))||ioBindings.length>256||ioBindings.some(b=>!sources.some(s=>s.id===b.sourceId)||b.inputs.length>256||b.sidechains.length>256||new Set(b.inputs.map(v=>v.id)).size!==b.inputs.length||new Set(b.sidechains.map(v=>v.id)).size!==b.sidechains.length||[...b.inputs,...b.sidechains].some(v=>!v.id.trim()||v.id.length>512||!v.label.trim()||v.label.length>1024)))throw new RangeError('Invalid routing matrix');
   const styled = !unstyled;
   const local = useRef<StoreApi<{ width: number }> | null>(null);
   if (!local.current) local.current = createStore(() => ({ width: 0 }));
@@ -110,11 +129,7 @@ export function BusAndRoutingMatrix({
       description="Add a track to the project and its output and sends appear here."
       {...{ className: frame }} />;
   }
-  if (buses.length === 0) {
-    return <EmptyState {...rest} onLayout={onLayout} title="No buses yet"
-      description="Add a bus to route tracks into it. Until then every track plays through the master."
-      exitAction={emptyAction} {...{ className: frame }} />;
-  }
+
 
   const layout = routingLayout(width, buses.length);
   const muted = joinClasses(styled && "text-text-muted text-sm");
@@ -123,6 +138,12 @@ export function BusAndRoutingMatrix({
   });
   return <View {...rest} onLayout={measure} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: frame }} style={[{ opacity: width === 0 ? 0 : 1 }, rest.style]}>
+    {buses.length===0?<EmptyState title="No buses yet" description="Add a bus to send tracks to a shared output or effect." exitAction={disabled?undefined:emptyAction} unstyled={unstyled}/>:null}
+    {ioBindings.map(binding=><View key={String(binding.sourceId)} style={{gap:8,padding:8}}>
+     <Text {...{className:muted}}>{sources.find(s=>s.id===binding.sourceId)?.name} input and sidechain</Text>
+     {onInputCommit?<Select label="Track input" value={binding.inputId===null?'none':'source:'+binding.inputId} options={[{value:'none',label:'No input'},...binding.inputs.map(v=>({value:'source:'+v.id,label:v.label}))]} disabled={disabled} unstyled={unstyled} onValueChange={id=>onInputCommit(binding.sourceId,id==='none'?null:id.slice(7))}/>:null}
+     {onSidechainCommit?<Select label="Sidechain source" value={binding.sidechainId===null?'none':'source:'+binding.sidechainId} options={[{value:'none',label:'No sidechain'},...binding.sidechains.map(v=>({value:'source:'+v.id,label:v.label}))]} disabled={disabled} unstyled={unstyled} onValueChange={id=>onSidechainCommit(binding.sourceId,id==='none'?null:id.slice(7))}/>:null}
+    </View>)}
     {layout === "grid" ? <View>
       <View style={{ flexDirection: "row", paddingHorizontal: 12, paddingVertical: 10 }}
         {...{ className: joinClasses(styled && "border-b border-border") }}>
@@ -135,7 +156,7 @@ export function BusAndRoutingMatrix({
     </View> : <View style={{ padding: 12, gap: 12 }}>
       {sources.map(source => <SourceCard key={source.id} {...rowProps(source)} />)}
     </View>}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }
 
 type RowProps = {

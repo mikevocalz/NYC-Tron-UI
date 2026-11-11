@@ -11,6 +11,8 @@ export type {InspectorSelection} from "./inspector-model.ts";
 
 /** Props for {@linkcode InspectorPanel}. */
 export interface InspectorPanelProps extends Omit<ViewProps,"children"> {
+  /** Document/selection identity; changing it abandons property editor drafts. */
+  scope?:string;
   selection:InspectorSelection;
   /** {@linkcode InspectorSection}s and {@linkcode PropertyRow}s for the selection. */
   children?:ReactNode;
@@ -33,10 +35,12 @@ export interface InspectorPanelProps extends Omit<ViewProps,"children"> {
  * matching sections show expanded, and the match count is announced.
  */
 export function InspectorPanel({
-  selection,children,query="",onQueryChange,actions,emptyMessage="Select an object to see its properties.",
+  scope,selection,children,query="",onQueryChange,actions,emptyMessage="Select an object to see its properties.",
   className,unstyled=false,style,...rest
 }:InspectorPanelProps){
   const styled=!unstyled;
+  const selectionScope=scope??JSON.stringify(selection);
+  if(!selectionScope.trim()||selectionScope.length>4096)throw new RangeError("Invalid inspector scope");
   const registry=useRef<StoreApi<InspectorRegistryState>|null>(null);
   if(!registry.current)registry.current=createStore<InspectorRegistryState>(()=>({rows:{}}));
   const matches=useStore(registry.current,s=>matchingRowCount(s));
@@ -54,13 +58,13 @@ export function InspectorPanel({
         </View>
         {actions}
       </View>
-      {onQueryChange&&selection.kind!=="none"?<InspectorSearch query={query} onQueryChange={onQueryChange}
+      {onQueryChange&&selection.kind!=="none"?<InspectorSearch scope={selectionScope} query={query} onQueryChange={onQueryChange}
         summary={matchSummary(matches,query)} unstyled={unstyled}/>:null}
     </View>
     {selection.kind==="none"
       ?<View style={{padding:16}}><Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>{emptyMessage}</Text></View>
       :<ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{paddingBottom:16}}>
-        <InspectorPanelContext.Provider value={context}>{children}</InspectorPanelContext.Provider>
+        <InspectorPanelContext.Provider key={selectionScope} value={context}>{children}</InspectorPanelContext.Provider>
         {searching&&matches===0?<View style={{padding:16,gap:4}}>
           <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>{`Nothing matches "${query.trim()}".`}</Text>
           <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Try a shorter word, or clear the search to see every property.</Text>

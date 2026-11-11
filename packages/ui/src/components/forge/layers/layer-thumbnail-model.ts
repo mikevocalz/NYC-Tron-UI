@@ -37,7 +37,7 @@ export interface RasterPixels {
  * transparent raster shows the empty state.
  * @see {@linkcode ThumbnailSource}
  */
-export type ThumbnailLoader=(id:string,max:number)=>Promise<RasterPixels>;
+export type ThumbnailLoader=(id:string,max:number,signal?:AbortSignal)=>Promise<RasterPixels>;
 
 /**
  * What a `LayerThumbnail` draws. `pixels` is already in hand; `loader` is
@@ -47,7 +47,7 @@ export type ThumbnailLoader=(id:string,max:number)=>Promise<RasterPixels>;
  */
 export type ThumbnailSource=
   |{readonly kind:"pixels";readonly raster:RasterPixels}
-  |{readonly kind:"loader";readonly id:string;readonly revision:number;readonly load:ThumbnailLoader};
+  |{readonly kind:"loader";readonly scope?:string;readonly id:string;readonly revision:number;readonly load:ThumbnailLoader};
 
 /** A preview ready to draw. `uri` is a PNG data URI; `empty` means every pixel is transparent. */
 export interface ThumbnailImage {
@@ -81,6 +81,7 @@ export function validateRaster(raster:RasterPixels):void{
   const {width,height,pixels}=raster;
   if(!Number.isSafeInteger(width)||!Number.isSafeInteger(height)||width<1||height<1)
     throw new RangeError(`Raster size must be whole and positive: ${width}x${height}`);
+  if(width>4096||height>4096||width*height>4096*4096)throw new RangeError("Thumbnail raster exceeds the 4096-pixel input edge budget");
   if(!(pixels instanceof Uint8Array)||pixels.length!==width*height*4)
     throw new RangeError(`Raster needs ${width*height*4} RGBA bytes, got ${pixels?.length}`);
 }
@@ -118,7 +119,13 @@ export function decodeBase64(text:string):Uint8Array{
  * {@linkcode RasterPixels}, so a loader can be a one-line adapter.
  */
 export function rasterFromBase64(result:{readonly width:number;readonly height:number;readonly pixels_b64:string}):RasterPixels{
-  const raster={width:result.width,height:result.height,pixels:decodeBase64(result.pixels_b64)};
+  const {width,height}=result;
+  if(!Number.isSafeInteger(width)||!Number.isSafeInteger(height)||width<1||height<1||width>4096||height>4096)throw new RangeError('Thumbnail dimensions exceed the input budget');
+  const expected=width*height*4,encoded=4*Math.ceil(expected/3);
+  if(result.pixels_b64.length>encoded*2+1024)throw new RangeError(`Raster needs ${expected} RGBA bytes`);
+  const compact=result.pixels_b64.replace(/\s+/g,'');
+  if(compact.length!==encoded)throw new RangeError(`Raster needs ${expected} RGBA bytes`);
+  const raster={width,height,pixels:decodeBase64(compact)};
   validateRaster(raster);
   return raster;
 }
@@ -210,8 +217,16 @@ export function upscaleNearest(raster:RasterPixels,targetEdge:number):RasterPixe
 
 /** Ready-to-draw image for a raster at a display box of `targetEdge` device pixels. */
 export function rasterToImage(raster:RasterPixels,targetEdge=0):ThumbnailImage{
-  const empty=isRasterEmpty(raster);
-  const drawn=targetEdge>0?upscaleNearest(raster,targetEdge):raster;
+  validateRaster(raster);
+  if(!Number.isFinite(targetEdge)||targetEdge<0)throw new RangeError('Invalid thumbnail target edge');
+  const empty=isRasterEmpty(raster),edge=Math.max(1,Math.min(THUMBNAIL_MAX_EDGE,targetEdge||THUMBNAIL_MAX_EDGE));
+  let bounded=raster;
+  if(Math.max(raster.width,raster.height)>edge){
+    const ratio=edge/Math.max(raster.width,raster.height),width=Math.max(1,Math.floor(raster.width*ratio)),height=Math.max(1,Math.floor(raster.height*ratio)),pixels=new Uint8Array(width*height*4);
+    for(let y=0;y<height;y++)for(let x=0;x<width;x++){const source=(Math.min(raster.height-1,Math.floor((y+.5)*raster.height/height))*raster.width+Math.min(raster.width-1,Math.floor((x+.5)*raster.width/width)))*4;pixels.set(raster.pixels.subarray(source,source+4),(y*width+x)*4);}
+    bounded={width,height,pixels};
+  }
+  const drawn=targetEdge>0?upscaleNearest(bounded,edge):bounded;
   return {uri:"data:image/png;base64,"+encodeBase64(encodePng(drawn)),width:raster.width,height:raster.height,empty};
 }
 
@@ -267,90 +282,45 @@ export interface ThumbnailCache {
   subscribe(listener:()=>void):()=>void;
   /** Bytes of data URIs currently held. */
   readonly byteSize:number;
-  /** Drops every entry except loads in flight. */
+  /** Drops entries, aborts cooperative loaders and rejects late completions. */
   clear():void;
 }
 
-type Entry={state:ThumbnailState;bytes:number;inFlight:boolean};
-
+type Entry={id:string;revision:number;state:ThumbnailState;bytes:number;inFlight:boolean;abort:AbortController|undefined};
+const MISSING_THUMBNAIL:ThumbnailState={status:'loading'};
+/** Scoped cache keys keep host IDs unchanged at the loader boundary. */
+export function thumbnailCacheId(id:string,scope=''):string{
+ if(!id.trim()||id.length>2048||scope.length>2048)throw new RangeError('Invalid thumbnail identity');
+ return JSON.stringify([scope,id]);
+}
 /**
- * Creates a {@linkcode ThumbnailCache}. Eviction is least-recently-read once
- * there are more than `capacity` entries or `maxBytes` of data URIs; loads in
- * flight are never evicted. Keep `capacity` above the number of thumbnails on
- * screen at once, or visible previews evict each other and reload. The
- * default 512 covers a full `LayerStack` (500 rows) or `ArtboardNavigator` (300).
+ * Bounded LRU. Keep capacity above the simultaneously visible thumbnail count.
+ * At most maxPending loaders are admitted; clear aborts them and invalidates late results.
+ * Stale images live only in bounded entries, with conservative retained-byte accounting.
  */
-export function createThumbnailCache({capacity=512,maxBytes=32*1024*1024}:{capacity?:number;maxBytes?:number}={}):ThumbnailCache{
-  if(!Number.isSafeInteger(capacity)||capacity<1||!(maxBytes>0))throw new RangeError("Invalid thumbnail cache limits");
-  const entries=new Map<string,Entry>();
-  const latest=new Map<string,{revision:number;image:ThumbnailImage}>();
-  const listeners=new Set<()=>void>();
-  let bytes=0;
-  const keyOf=(id:string,revision:number,max:number)=>`${max}\u0000${revision}\u0000${id}`;
-  const emit=()=>{for(const l of [...listeners])l();};
-  const evict=()=>{
-    for(const [key,entry] of entries){
-      if(entries.size<=capacity&&bytes<=maxBytes)break;
-      if(entry.inFlight)continue;
-      entries.delete(key);bytes-=entry.bytes;
-    }
-  };
-  const staleFor=(id:string,revision:number)=>{
-    const last=latest.get(id);
-    return last&&last.revision<revision?last.image:undefined;
-  };
-  const touch=(key:string,entry:Entry)=>{entries.delete(key);entries.set(key,entry);};
-  const entryFor=(key:string,id:string,revision:number):Entry=>{
-    const found=entries.get(key);
-    if(found){touch(key,found);return found;}
-    const stale=staleFor(id,revision);
-    const entry:Entry={state:stale?{status:"loading",stale}:{status:"loading"},bytes:0,inFlight:false};
-    entries.set(key,entry);
-    evict();
-    return entry;
-  };
-  return {
-    get(id,revision,max){
-      return entryFor(keyOf(id,revision,max),id,revision).state;
-    },
-    request(id,revision,max,load){
-      const key=keyOf(id,revision,max);
-      const entry=entryFor(key,id,revision);
-      if(entry.inFlight||entry.state.status!=="loading")return;
-      entry.inFlight=true;
-      const settle=(state:ThumbnailState,size:number)=>{
-        const current=entries.get(key);
-        if(current!==entry)return;
-        entry.inFlight=false;entry.state=state;entry.bytes=size;bytes+=size;
-        evict();emit();
-      };
-      Promise.resolve().then(()=>load(id,max)).then(raster=>{
-        validateRaster(raster);
-        const image=rasterToImage(raster,max);
-        const last=latest.get(id);
-        if(!last||last.revision<=revision)latest.set(id,{revision,image});
-        settle({status:"ready",image},image.uri.length);
-      },(error:unknown)=>{
-        const message=error instanceof Error?error.message:String(error);
-        const stale=staleFor(id,revision);
-        settle(stale?{status:"error",message,stale}:{status:"error",message},0);
-      });
-    },
-    retry(id,revision,max){
-      const key=keyOf(id,revision,max);
-      const entry=entries.get(key);
-      if(entry?.state.status!=="error")return;
-      entries.delete(key);
-      emit();
-    },
-    subscribe(listener){listeners.add(listener);return ()=>{listeners.delete(listener);};},
-    get byteSize(){return bytes;},
-    clear(){
-      for(const [key,entry] of entries)if(!entry.inFlight){entries.delete(key);bytes-=entry.bytes;}
-      latest.clear();
-      emit();
-    },
-  };
+export function createThumbnailCache({capacity=512,maxBytes=32*1024*1024,maxPending=Math.min(32,capacity)}:{capacity?:number;maxBytes?:number;maxPending?:number}={}):ThumbnailCache{
+ if(!Number.isSafeInteger(capacity)||capacity<1||capacity>10000||!Number.isSafeInteger(maxBytes)||maxBytes<1||!Number.isSafeInteger(maxPending)||maxPending<1||maxPending>capacity)throw new RangeError('Invalid thumbnail cache limits');
+ const entries=new Map<string,Entry>(),listeners=new Set<()=>void>();let bytes=0,missing:ThumbnailState=MISSING_THUMBNAIL;
+ const keyOf=(id:string,revision:number,max:number)=>{if(!id.trim()||id.length>8192||!Number.isSafeInteger(revision)||revision<0||!Number.isInteger(max)||max<1||max>THUMBNAIL_MAX_EDGE)throw new RangeError('Invalid thumbnail request');return JSON.stringify([id,revision,max]);};
+ const emit=()=>{for(const listener of [...listeners])listener();};
+ const evict=(protectedKey?:string)=>{for(const [key,entry] of entries){if(entries.size<=capacity&&bytes<=maxBytes)break;if(entry.inFlight||key===protectedKey)continue;entries.delete(key);bytes-=entry.bytes;}};
+ const staleFor=(id:string,revision:number)=>{let found:{revision:number;image:ThumbnailImage}|undefined;for(const entry of entries.values()){if(entry.id!==id||entry.revision>=revision||entry.state.status!=='ready')continue;if(!found||found.revision<entry.revision)found={revision:entry.revision,image:entry.state.image};}return found?.image;};
+ const entryFor=(key:string,id:string,revision:number):Entry=>{const known=entries.get(key);if(known){entries.delete(key);entries.set(key,known);return known;}const stale=staleFor(id,revision);const entry:Entry={id,revision,state:stale?{status:'loading',stale}:missing,bytes:stale?.uri.length??0,inFlight:false,abort:undefined};entries.set(key,entry);bytes+=entry.bytes;evict();return entry;};
+ return {
+  get(id,revision,max){const key=keyOf(id,revision,max),entry=entryFor(key,id,revision);return entries.get(key)===entry?entry.state:missing;},
+  request(id,revision,max,load){
+   const key=keyOf(id,revision,max),entry=entryFor(key,id,revision);if(entries.get(key)!==entry||entry.inFlight||entry.state.status!=='loading')return;
+   const settle=(state:ThumbnailState)=>{if(entries.get(key)!==entry)return;bytes-=entry.bytes;entry.inFlight=false;entry.abort=undefined;entry.state=state;entry.bytes=(state.status==='ready'?state.image:state.stale)?.uri.length??0;bytes+=entry.bytes;evict(key);if(bytes>maxBytes){bytes-=entry.bytes;entry.bytes=0;entry.state={status:'error',message:'Preview cache byte capacity is busy. Retry when other previews finish.'};}emit();};
+   if([...entries.values()].filter(v=>v.inFlight).length>=maxPending){settle({status:'error',message:'Preview capacity is busy. Retry when other previews finish.',...(entry.state.stale?{stale:entry.state.stale}:{})});return;}
+   entry.inFlight=true;const abort=new AbortController();entry.abort=abort;
+   // Clear can invalidate a request before its loader microtask starts.
+   void Promise.resolve().then(()=>{if(abort.signal.aborted)throw new Error('Preview cancelled');return load(id,max,abort.signal);}).then(raster=>{if(abort.signal.aborted||entries.get(key)!==entry)return;validateRaster(raster);const image=rasterToImage(raster,max);if(image.uri.length>maxBytes)throw new RangeError('Preview exceeds the cache byte budget');settle({status:'ready',image});}).catch(error=>{if(abort.signal.aborted||entries.get(key)!==entry)return;const message=error instanceof Error?error.message:String(error),stale=entry.state.status==='ready'?undefined:entry.state.stale;settle({status:'error',message,...(stale?{stale}:{})});});
+  },
+  retry(id,revision,max){const key=keyOf(id,revision,max),entry=entries.get(key);if(entry?.state.status!=='error')return;entries.delete(key);bytes-=entry.bytes;emit();},
+  subscribe(listener){listeners.add(listener);return()=>{listeners.delete(listener);};},
+  get byteSize(){return bytes;},
+  clear(){for(const entry of entries.values())entry.abort?.abort();entries.clear();bytes=0;missing={status:'loading'};emit();},
+ };
 }
 
 /** The cache every `LayerThumbnail` uses unless it is given its own. */

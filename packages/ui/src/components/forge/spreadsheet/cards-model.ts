@@ -69,3 +69,14 @@ export function sheetCards(table: SheetRange, cells: CardCellValues): SheetCard[
   }
   return cards;
 }
+
+/** Resolve one visible card without allocating the table's other rows. */
+export function sheetCardAt(table:SheetRange,cells:CardCellValues,index:number):SheetCard{
+ if(![table.startRow,table.endRow,table.startColumn,table.endColumn,index].every(Number.isSafeInteger)||table.startRow<0||table.startColumn<0||table.endColumn<table.startColumn||table.endColumn-table.startColumn>=256||index<0||index>=table.endRow-table.startRow)throw new RangeError('Invalid card table or row index');
+ const row=table.startRow+index+1,fields:SheetCardField[]=[];
+ for(let column=table.startColumn;column<=table.endColumn;column++){
+  const name=text(cells[cellAddress(table.startRow,column)]?.computed).trim()||letters(column),address=cellAddress(row,column),cell=cells[address];
+  fields.push({name,address,raw:cell?.raw??'',display:text(cell?.computed)});
+ }
+ return {row,title:fields[0]!.display.trim()||'(blank)',fields};
+}

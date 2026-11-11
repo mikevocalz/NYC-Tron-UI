@@ -1,6 +1,6 @@
-import {useRef,type ComponentRef} from "react";
+import {useRef,useLayoutEffect,useMemo,type ComponentRef} from "react";
 import {Modal,Pressable,View,useWindowDimensions,type ViewProps} from "react-native";
-import {placePopover,type Rect2D} from "./popover-position.ts";
+import {placePopover,hasUsableRegion,type Rect2D} from "./popover-position.ts";
 import {cycleFocusIndex} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {useTriggerAnchor} from "./useTriggerAnchor.ts";
@@ -33,7 +33,7 @@ export function AnchoredPopover(props:PopoverProps){
 function TriggeredPopover(props:PopoverTriggerProps){
   const {open,onOpenChange,trigger,usableRegions}=props;
   const screen=useWindowDimensions();
-  const {ref,anchor,measured}=useTriggerAnchor(open);
+  const {ref,anchor,measured}=useTriggerAnchor(open,props.scope,JSON.stringify(usableRegions??null));
   const regions=usableRegions??windowRegions(screen.width,screen.height);
   return <>
     <View ref={ref} collapsable={false}>{renderPopoverTrigger(trigger,popoverTriggerState(open,onOpenChange))}</View>
@@ -43,19 +43,21 @@ function TriggeredPopover(props:PopoverTriggerProps){
 }
 
 type SurfaceProps=PopoverBaseProps&{anchor:Rect2D;usableRegions:readonly Rect2D[]};
-function PopoverSurface({open,onOpenChange,anchor,usableRegions,accessibilityLabel,children,
+function PopoverSurface({scope="popover",open,onOpenChange,anchor,usableRegions,accessibilityLabel,children,
   width=320,maxHeight=420,className,testID}:SurfaceProps){
   const surface=useRef<ComponentRef<typeof View>>(null);
-  useRestoreFocus(open);
-  const position=placePopover(anchor,usableRegions,width,maxHeight);
+  const available=hasUsableRegion(usableRegions);
+  useRestoreFocus(open&&available);
+  const position=available?placePopover(anchor,usableRegions,width,maxHeight):undefined;
   const node=()=>surface.current as unknown as FocusNode|null;
   const stops=()=>{
     const root=node();
     if(!root||typeof root.querySelectorAll!=="function")return [];
     return Array.from(root.querySelectorAll(TABBABLE)).filter(element=>element.getAttribute("aria-disabled")!=="true");
   };
-  const focusFirst=()=>{(stops()[0]??node())?.focus?.();};
+  const focusFirst=()=>{if(open&&committed.current?.token===token&&committed.current.available)(stops()[0]??node())?.focus?.();};
   const onKeyDown=(event:KeyEvent)=>{
+    if(!open||(committed.current?.token!==token||!committed.current?.available))return;
     const data=event.nativeEvent as unknown as {key:string;shiftKey?:boolean};
     if(data.key!=="Tab")return;
     event.preventDefault();
@@ -65,8 +67,13 @@ function PopoverSurface({open,onOpenChange,anchor,usableRegions,accessibilityLab
     const next=cycleFocusIndex(list.length,list.findIndex(element=>element===active),!!data.shiftKey);
     list[next]?.focus();
   };
-  const close=()=>onOpenChange(false);
+  const token=useMemo(()=>({}),[scope,open]);
+  const committed=useRef<{token:object;available:boolean;onOpenChange:typeof onOpenChange}|null>(null);
+  useLayoutEffect(()=>{committed.current={token,available,onOpenChange};});
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const close=()=>{if(open&&committed.current?.token===token&&committed.current.available)committed.current.onOpenChange(false);};
   // A fading web Modal keeps its focus trap live while it fades; close instantly.
+  if(!position)return null;
   return <Modal transparent visible={open} animationType="none" onRequestClose={close}
     onShow={focusFirst} accessibilityViewIsModal>
     <View style={{flex:1}}>

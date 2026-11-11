@@ -91,8 +91,11 @@ export type GestureConflict=
 
 /** Throws for catalogs the panel cannot show honestly. */
 export function validateGestureCatalog(gestures:readonly GestureDefinition[],actions:readonly QuickActionDefinition[]):void{
+  if(gestures.length>256||actions.length>256)throw new RangeError("Gesture catalog is too large");
+  const valid=(id:string,label:string)=>!!id.trim()&&id.length<=512&&!!label.trim()&&label.length<=1024;
   const seen=new Set<string>();
   for(const g of gestures){
+    if(!valid(g.id,g.label)||!["touch","stylus"].includes(g.input))throw new RangeError("Invalid gesture definition");
     if(seen.has(g.id))throw new RangeError(`Duplicate gesture id "${g.id}"`);
     seen.add(g.id);
     if(g.label.trim()==="")throw new RangeError(`Gesture "${g.id}" needs a label`);
@@ -100,6 +103,7 @@ export function validateGestureCatalog(gestures:readonly GestureDefinition[],act
   }
   const acts=new Set<string>();
   for(const a of actions){
+    if(!valid(a.id,a.label))throw new RangeError("Invalid action definition");
     if(acts.has(a.id))throw new RangeError(`Duplicate action id "${a.id}"`);
     acts.add(a.id);
   }
@@ -149,12 +153,12 @@ export function conflictsForAction(conflicts:readonly GestureConflict[],actionId
 /** `map` with `actionId` set to `gestureId` (or cleared). Other actions are left alone, so conflicts show. */
 export function assignGesture(map:GestureMap,actionId:string,gestureId:string|undefined):GestureMap{
   const bindings={...map.bindings};
-  if(gestureId===undefined)delete bindings[actionId];else bindings[actionId]=gestureId;
+  if(gestureId===undefined)delete bindings[actionId];else Object.defineProperty(bindings,actionId,{value:gestureId,enumerable:true,configurable:true,writable:true});
   return {...map,bindings};
 }
 /** Resolves a duplicate the ProCraft way: `actionId` keeps `gestureId`, every other action loses it. */
 export function keepGestureFor(map:GestureMap,actionId:string,gestureId:string):GestureMap{
-  const bindings:Record<string,string|undefined>={};
+  const bindings:Record<string,string|undefined>=Object.create(null);
   for(const [a,g] of Object.entries(map.bindings))if(g!==undefined&&(g!==gestureId||a===actionId))bindings[a]=g;
   bindings[actionId]=gestureId;
   return {...map,bindings};
@@ -179,4 +183,9 @@ export function usesHeldGesture(map:GestureMap,gestures:readonly GestureDefiniti
 /** "0.40 s". */
 export function formatHoldDelay(s:number):string{
   return s.toFixed(2)+" s";
+}
+
+/** Saved mappings may contain conflicts for the panel to repair, but must be bounded data. */
+export function validateGestureMap(map:GestureMap):void{
+ if(!Number.isFinite(map.holdDelayS)||map.holdDelayS<MIN_HOLD_DELAY_S||map.holdDelayS>MAX_HOLD_DELAY_S||Object.keys(map.bindings).length>256||Object.entries(map.bindings).some(([a,g])=>!a.trim()||a.length>512||g!==undefined&&(!g.trim()||g.length>512)))throw new RangeError('Invalid gesture map');
 }

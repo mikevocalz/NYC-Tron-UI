@@ -27,10 +27,11 @@ function harness(os){
     },
     "react/jsx-runtime":{jsx:element,jsxs:element,Fragment:"Fragment"},
     "react-native":{Modal:"Modal",Pressable:"Pressable",ScrollView:"ScrollView",Text:"Text",View:"View",TextInput:"TextInput",
-      Platform:{OS:os}},
+      Platform:{OS:os},useWindowDimensions:()=>({width:390,height:844})},
     "zustand/vanilla":{createStore:store},
     zustand:{useStore:(s,selector)=>selector(s.getState())},
   };
+  mocks.react.useLayoutEffect=mocks.react.useEffect;
   const cache=new Map();
   function load(path){
     if(cache.has(path))return cache.get(path);
@@ -42,7 +43,7 @@ function harness(os){
     return exports;
   }
   const {KeyboardShortcutHUD}=load(resolve(src,"shell/KeyboardShortcutHUD.tsx"));
-  return {render:props=>{cursor=0;const tree=KeyboardShortcutHUD(props);effects.splice(0).forEach(run=>run());return tree;}};
+  return {render:props=>{cursor=0;const tree=KeyboardShortcutHUD(props);effects.splice(0).forEach(run=>run());return tree;},unmount:()=>slots.forEach(slot=>slot?.cleanup?.())};
 }
 
 function find(node,predicate,out=[]){
@@ -121,4 +122,25 @@ test("web ignores the recorder and records from the browser",()=>{
   byLabel(render(props),"Change shortcut for Save").props.onPress();
   render(props);
   assert.equal(recorder.starts,0);
+});
+
+test("native recorder drops delayed callbacks after scope replacement and removal",()=>{
+ const {render,unmount}=harness("android"),recorder=fakeRecorder(),rebinds=[];
+ const props={scope:"document-a",visible:true,onDismiss(){},commands,onRebind:(id,b)=>rebinds.push([id,b]),recorder,apple:false};
+ byLabel(render(props),"Change shortcut for Save").props.onPress();render(props);
+ const old=recorder.listener;assert.equal(recorder.active,1);
+ render({...props,scope:"document-b"});render({...props,scope:"document-b"});
+ assert.equal(recorder.active,0);old({key:"k",ctrlKey:true});assert.deepEqual(rebinds,[]);
+ byLabel(render({...props,scope:"document-b"}),"Change shortcut for Save").props.onPress();render({...props,scope:"document-b"});
+ const afterUnmount=recorder.listener;unmount();afterUnmount({key:"j",ctrlKey:true});assert.deepEqual(rebinds,[]);assert.equal(recorder.active,0);
+});
+test("removing the recording command stops capture and current conflicts still require confirmation",()=>{
+ const {render}=harness("android"),recorder=fakeRecorder(),rebinds=[];
+ const props={visible:true,onDismiss(){},commands,onRebind:(id,b)=>rebinds.push([id,b]),recorder,apple:false};
+ byLabel(render(props),"Change shortcut for Save").props.onPress();render(props);
+ const updated={...props,commands:commands.map(c=>c.id==="export"?{...c,binding:"Mod+K"}:c)};
+ render(updated);recorder.listener({key:"k",ctrlKey:true});const tree=render(updated);
+ assert.deepEqual(rebinds,[]);assert.ok(byLabel(tree,"Replace shortcut for Export"));
+ render({...updated,commands:updated.commands.filter(c=>c.id!=="save")});
+ assert.equal(recorder.active,0);
 });

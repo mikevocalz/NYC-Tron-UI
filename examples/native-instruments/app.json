@@ -16,6 +16,9 @@
       "ios",
       "android"
     ],
-    "userInterfaceStyle": "dark"
+    "userInterfaceStyle": "dark",
+    "plugins": [
+      "./plugins/with-graphite-android.cjs"
+    ]
   }
 }

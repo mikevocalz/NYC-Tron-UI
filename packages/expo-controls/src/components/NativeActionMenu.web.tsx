@@ -1,4 +1,4 @@
-import { useRef, type ReactNode, type ElementRef } from "react";
+import { useRef, useLayoutEffect, type ReactNode, type ElementRef } from "react";
 import { Modal, Pressable, ScrollView, Text, View, type PressableProps } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -19,7 +19,7 @@ const keyData=(event:MenuKeyEvent)=>event.nativeEvent as {
  * Desktop Windows/macOS require separate native host adapters.
  */
 export function NativeActionMenu({
-  trigger,actions,onAction,longPress=false,disabled=false,accessibilityLabel,testID
+  scope="native-actions",trigger,actions,onAction,longPress=false,disabled=false,accessibilityLabel,testID
 }:NativeActionMenuProps){
   const local=useRef<StoreApi<{open:boolean}>|null>(null);
   if(!local.current)local.current=createStore(()=>({open:false}));
@@ -31,13 +31,18 @@ export function NativeActionMenu({
   const initialKey=useRef("Home");
   const normalized=normalizeMenuActions(actions);
   const canOpen=!disabled&&normalized.length>0;
+  const committed=useRef<{scope:string;disabled:boolean;actions:typeof actions;onAction:typeof onAction}|null>(null);
+  useLayoutEffect(()=>{committed.current={scope,disabled,actions,onAction};});
+  useLayoutEffect(()=>{store.setState({open:false});},[scope,disabled,store]);
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const current=()=>canOpen&&committed.current?.scope===scope?committed.current:null;
   const close=()=>store.setState({open:false});
   const focus=(key:string,currentId?:string)=>{
     const id=menuFocusTarget(actions,currentId,key);
     if(id)itemRefs.current.get(id)?.focus();
   };
   const show=(key="Home")=>{
-    if(!canOpen)return;
+    if(!current())return;
     initialKey.current=key;
     store.setState({open:true});
   };
@@ -63,9 +68,8 @@ export function NativeActionMenu({
     }
   };
   const run=(id:string)=>{
-    if(!store.getState().open||!findEnabledMenuAction(actions,id))return;
-    close();
-    onAction(id);
+    const p=current();if(!p||!store.getState().open||!findEnabledMenuAction(p.actions,id))return;
+    close();p.onAction(id);
   };
   // A disabled group disables everything under it, matching findEnabledMenuAction,
   // so assistive tech never announces an item that cannot fire.
@@ -93,7 +97,7 @@ export function NativeActionMenu({
       </Pressable>}
     </View>);
   return <View testID={testID}>
-    <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+    <Pressable style={{minWidth:44,minHeight:44,justifyContent:"center"}} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
       aria-expanded={open}
       {...{"aria-haspopup":"menu" as const,onKeyDown:(event:MenuKeyEvent)=>{
         const {key,altKey,ctrlKey,metaKey}=keyData(event);
@@ -119,8 +123,7 @@ export function NativeActionMenu({
         <Pressable accessibilityLabel="Close menu" accessibilityRole="button" onPress={close}
           // Pointer-only: Escape closes from the keyboard, so Tab never lands here.
           focusable={false}
-          style={{position:"absolute",left:0,right:0,top:0,bottom:0,
-            backgroundColor:"rgba(0,0,0,0.32)"}}/>
+          {...{className:"bg-text/30"}} style={{position:"absolute",left:0,right:0,top:0,bottom:0}}/>
         <View {...{className:"rounded-control bg-surface-raised border border-border"}}
           style={{maxHeight:"75%",overflow:"hidden",minWidth:220}}>
           <ScrollView accessibilityRole="menu" accessibilityLabel={accessibilityLabel}

@@ -1,4 +1,4 @@
-import {useEffect,useRef} from "react";
+import {useEffect,useLayoutEffect,useRef} from "react";
 import {Platform,Text,TextInput,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -13,6 +13,8 @@ export type {UnitContext,UnitDimension,UnitName} from "./unit-expression.ts";
 export interface UnitInputProps extends Omit<ViewProps,"children"> {
   /** Visible label and accessible name. */
   label:string;
+  /** Document/property identity. Changing it abandons an uncommitted draft. */
+  scope?:string;
   /** Committed value in the dimension's base unit (pixels, seconds, decibels or a ratio). */
   value:number;
   /** Exactly once per accepted entry or arrow step, with the clamped base-unit value. */
@@ -38,7 +40,7 @@ export interface UnitInputProps extends Omit<ViewProps,"children"> {
   unstyled?:boolean;
 }
 
-type Local={editing:boolean;draft:string;error:string|undefined};
+type Local={editing:boolean;dirty:boolean;draft:string;error:string|undefined};
 const PLAIN:UnitContext={dimension:"ratio",unit:"x"};
 
 /** Display text for a plain or unit value. */
@@ -56,45 +58,55 @@ function display(value:number,ctx:UnitContext|undefined,precision:number):string
  * announced. Results are clamped to `min` and `max`.
  */
 export function UnitInput({
-  label,value,onCommit,context,units,onUnitChange,min,max,step=1,precision=2,disabled=false,hideLabel=false,
+  label,scope,value,onCommit,context,units,onUnitChange,min,max,step=1,precision=2,disabled=false,hideLabel=false,
   className,unstyled=false,style,...rest
 }:UnitInputProps){
   const styled=!unstyled;
   const local=useRef<StoreApi<Local>|null>(null);
-  if(!local.current)local.current=createStore<Local>(()=>({editing:false,draft:"",error:undefined}));
+  if(!local.current)local.current=createStore<Local>(()=>({editing:false,dirty:false,draft:"",error:undefined}));
   const store=local.current;
+  const active=useRef(false),committedScope=useRef(scope);
+  useLayoutEffect(()=>{active.current=true;committedScope.current=scope;store.setState({editing:false,dirty:false,draft:"",error:undefined});return()=>{active.current=false;};},[scope,store]);
+  useLayoutEffect(()=>{if(disabled)store.setState({editing:false,dirty:false,draft:"",error:undefined});},[disabled,store]);
+  const allowed=()=>!disabled&&active.current&&committedScope.current===scope;
   const {editing,draft,error}=useStore(store,s=>s);
   const shown=display(value,context,precision);
   useEffect(()=>{if(!store.getState().editing)store.setState({error:undefined});},[value,store]);
   const bound=(v:number)=>Math.max(min??-Infinity,Math.min(max??Infinity,v));
   const commit=(next:number)=>{
+    if(!allowed())return;
     const bounded=bound(next);
-    store.setState({editing:false,error:undefined});
+    store.setState({editing:false,dirty:false,error:undefined});
     if(bounded!==value)onCommit(bounded);
   };
   const apply=()=>{
+    if(!allowed())return;
     const s=store.getState();
     if(!s.editing)return;
+    if(!s.dirty){store.setState({editing:false,error:undefined});return;}
     const result=parseUnitExpression(s.draft,context??PLAIN);
     if(!result.ok){store.setState({error:result.error});return;}
     commit(result.value);
   };
   const nudge=(steps:number)=>{
+    if(!allowed())return;
     const scale=context?unitScale(context.unit,context):1;
-    commit(value+steps*step*scale);
+    const state=store.getState(),parsed=state.editing&&state.dirty?parseUnitExpression(state.draft,context??PLAIN):undefined;
+    const base=parsed?.ok?parsed.value:value;
+    commit(base+steps*step*scale);
   };
   const errorId=`unit-error-${label.replace(/\W+/g,"-")}`;
   return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{label}</Text>:null}
     <View style={{flexDirection:"row",alignItems:"center",gap:4}}>
-      <TextInput accessibilityLabel={label} editable={!disabled}
+      <TextInput accessibilityLabel={label} editable={!disabled} aria-disabled={disabled} accessibilityState={{disabled}}
         aria-invalid={!!error} aria-describedby={error?errorId:undefined}
         value={editing?draft:shown}
         selectTextOnFocus inputMode="text" autoCorrect={false} autoCapitalize="none" returnKeyType="done"
         // Enter commits and keeps focus, so an error stays next to the text that caused it.
         submitBehavior="submit" {...(Platform.OS==="web"?{blurOnSubmit:false}:{})}
-        onFocus={()=>store.setState({editing:true,draft:shown,error:undefined})}
-        onChangeText={text=>store.setState({editing:true,draft:text,error:undefined})}
+        onFocus={()=>{if(allowed())store.setState({editing:true,dirty:false,draft:shown,error:undefined});}}
+        onChangeText={text=>{if(allowed())store.setState({editing:true,dirty:true,draft:text,error:undefined});}}
         onSubmitEditing={apply}
         onBlur={()=>{
           apply();
@@ -104,7 +116,7 @@ export function UnitInput({
         }}
         onKeyPress={event=>{
           const k=shellKey(event);
-          if(k.key==="Escape"){store.setState({editing:false,error:undefined,draft:shown});return;}
+          if(k.key==="Escape"){store.setState({editing:false,dirty:false,error:undefined,draft:shown});return;}
           if(k.key==="ArrowUp"||k.key==="ArrowDown"){
             k.preventDefault();
             nudge((k.key==="ArrowUp"?1:-1)*(k.shiftKey?10:k.altKey?0.1:1));
@@ -115,7 +127,7 @@ export function UnitInput({
         style={{flex:1,minWidth:64,minHeight:44,fontVariant:["tabular-nums"]}}/>
       {context&&units&&units.length>1&&onUnitChange?<MenuButton label={label+" unit, "+context.unit}
         items={units.map(u=>({id:u,label:u,description:u===context.unit?"Current":undefined}))}
-        onSelect={u=>{if(u!==context.unit)onUnitChange(u as UnitName);}} menuWidth={160} disabled={disabled}
+        onSelect={u=>{if(allowed()&&u!==context.unit)onUnitChange(u as UnitName);}} menuWidth={160} disabled={disabled}
         {...{className:joinClasses(styled&&"border border-border bg-surface-raised px-2")}}>
         <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>{context.unit}</Text>
       </MenuButton>:null}

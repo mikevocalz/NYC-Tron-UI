@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>NYC-Tron media acceptance</title>
+<script type="importmap">{"imports":{"mediabunny":"/mediabunny.mjs"}}</script>
+<h1>NYC-Tron decoded media</h1><pre id="result">Running actual browser codecs…</pre><img id="frame" alt="Decoded source frame">
+<script type="module">
+import { createPlatformMediaDecoder } from '/media/platform.web.js';
+const decoder = createPlatformMediaDecoder();
+const check = (value, message) => { if (!value) throw Error(message); };
+const facts = [];
+try {
+  check(typeof VideoDecoder !== 'undefined', 'WebCodecs unavailable in this browser');
+  const metadata = await decoder.probe('/source.mp4');
+  check(metadata.video.width === 192 && metadata.video.height === 128, 'Track dimensions differ');
+  const frame = await decoder.decodeFrame('/source.mp4', { timeUs: 125000, maxWidth: 96, maxHeight: 64 });
+  check(frame.timing === 'presentation' && frame.actualTimeUs === 100000 && frame.width === 96 && frame.height === 64, 'Decoder did not expose the actual frame presentation timestamp');
+  const image = document.querySelector('#frame'); image.src = frame.uri; await image.decode();
+  const canvas = document.createElement('canvas'); canvas.width = 96; canvas.height = 64;
+  const context = canvas.getContext('2d'); context.drawImage(image, 0, 0);
+  const pixels = context.getImageData(0, 0, 96, 64).data;
+  let low = 255, high = 0; for (let i=0;i<pixels.length;i+=4) { low=Math.min(low,pixels[i]); high=Math.max(high,pixels[i]); }
+  check(high-low > 150, 'Decoded pixels are blank');
+  facts.push(`Actual decoded presentation: ${frame.actualTimeUs}us for request 125000us; ${frame.width}x${frame.height}; pixel range ${low}...${high}`);
+  const exact = await decoder.decodeFrame('/source.mp4', { timeUs: 750000 });
+  check(exact.actualTimeUs === 750000 && exact.timing === 'presentation', 'Exact indexed frame mismatch');
+  facts.push('Exact indexed frame: 750000us');
+  const audio = await decoder.decodeAudio('/source.mp4', { startUs: 250000, durationUs: 500000, sampleRate: 24000 });
+  check(audio.frames === 12000 && audio.channels === 1 && audio.pcm.kind === 'samples', 'PCM span mismatch');
+  let crossings=0; for(let i=1;i<audio.pcm.samples.length;i++) if((audio.pcm.samples[i]>=0)!==(audio.pcm.samples[i-1]>=0)) crossings++;
+  check(crossings>=420&&crossings<=460,'PCM tone differs');
+  facts.push(`Actual PCM: ${audio.frames} frames, 24000Hz, ${crossings} sign crossings`);
+  for (const [uri,timeUs,code] of [['/source.mp4',9000000,'out-of-range'],['/denied',0,'permission'],['/oversized',0,'out-of-range'],['/corrupt',0,'decode-failed']]) {
+    let actual; try { await decoder.decodeFrame(uri,{timeUs}); } catch(error) { actual=error.code; }
+    check(actual===code,`${uri} expected ${code}, got ${actual}`);
+    facts.push(`${uri}: ${actual}`);
+  }
+  const cancellation=new AbortController();
+  const pending=decoder.decodeFrame('/slow',{timeUs:0,signal:cancellation.signal});
+  setTimeout(()=>cancellation.abort(),100);
+  let cancelled; try{await pending;}catch(error){cancelled=error.code;}
+  check(cancelled==='cancelled','Abort did not settle with cancelled');
+  const metrics=await fetch('/metrics').then(response=>response.json());
+  check(metrics.aborted>=1,'Aborted fetch connection was not closed');
+  facts.push('Cancellation: consumer settled; HTTP connection closed');
+  document.querySelector('#result').textContent='PASS\n'+facts.join('\n');
+  globalThis.__mediaAcceptance={pass:true,facts};
+}catch(error){document.querySelector('#result').textContent='FAIL '+error.stack;globalThis.__mediaAcceptance={pass:false,error:String(error)};}
+</script></html>

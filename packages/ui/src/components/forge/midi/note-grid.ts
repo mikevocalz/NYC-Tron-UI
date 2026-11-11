@@ -278,3 +278,29 @@ export function stepCells(
     return { on: true, noteIndex: i, accent: notes[i]!.velocity >= accentVelocity };
   }));
 }
+
+/** Reject malformed engine note rosters before allocating editor views. */
+export function assertMidiNotes(notes:readonly MidiNote[],clipTicks:number):void{
+ if(!Number.isSafeInteger(clipTicks)||clipTicks<1||notes.length>4096||notes.some(n=>!Number.isInteger(n.pitch)||n.pitch<0||n.pitch>127||!Number.isInteger(n.velocity)||n.velocity<0||n.velocity>127||!Number.isSafeInteger(n.startTicks)||n.startTicks<0||!Number.isSafeInteger(n.lengthTicks)||n.lengthTicks<1||n.startTicks+n.lengthTicks>clipTicks||n.channel!==undefined&&(!Number.isInteger(n.channel)||n.channel<0||n.channel>15)))throw new RangeError('Invalid MIDI note roster');
+}
+
+/** A denominator beat or measure boundary, expressed in clip-relative ticks. */
+export interface MidiGridLine { readonly ticks: number; readonly bar: boolean; }
+/**
+ * Bounded notation grid. PPQ remains quarter-note ticks; a denominator beat may
+ * occupy a fractional tick and is drawn without changing note/snap precision.
+ */
+export function midiGridLines(clipTicks:number,ppq:number,beatsPerBar=4,timeSignature?:readonly[number,number],limit=256):readonly MidiGridLine[]{
+ if(!Number.isSafeInteger(clipTicks)||clipTicks<0||!Number.isSafeInteger(ppq)||ppq<1||
+  (timeSignature===undefined&&(!Number.isSafeInteger(beatsPerBar)||beatsPerBar<1||beatsPerBar>64))||!Number.isSafeInteger(limit)||limit<1||limit>4096)
+  throw new RangeError('Invalid MIDI measure grid');
+ if(timeSignature!==undefined&&(!Array.isArray(timeSignature)||timeSignature.length!==2))throw new RangeError('Invalid MIDI time signature');
+ const numerator=timeSignature?.[0]??beatsPerBar,denominator=timeSignature?.[1]??4;
+ if(!Number.isSafeInteger(numerator)||numerator<1||numerator>64||![1,2,4,8,16,32,64].includes(denominator))
+  throw new RangeError('Invalid MIDI time signature');
+ const beatTicks=ppq*4/denominator,beatCount=Math.ceil(clipTicks/beatTicks);
+ const stride=beatCount<=limit?1:numerator*Math.max(1,Math.ceil(beatCount/(limit*numerator)));
+ const lines:MidiGridLine[]=[];
+ for(let beat=stride;beat<beatCount;beat+=stride)lines.push({ticks:beat*beatTicks,bar:beat%numerator===0});
+ return lines;
+}

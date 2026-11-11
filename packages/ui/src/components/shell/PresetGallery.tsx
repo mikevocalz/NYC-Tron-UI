@@ -1,4 +1,4 @@
-import {useRef,type ComponentRef,type ReactNode} from "react";
+import {useRef,useLayoutEffect,type ComponentRef,type ReactNode} from "react";
 import {I18nManager,Platform,Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -20,6 +20,7 @@ export interface Preset {
 /** Props for {@linkcode PresetGallery}. */
 export interface PresetGalleryProps extends Omit<ViewProps,"children"> {
   /** Accessible name of the gallery, e.g. "Color grade presets". */
+  scope?:string;revision?:string|number;disabled?:boolean;
   label:string;
   presets:readonly Preset[];
   selectedId:string|undefined;
@@ -51,7 +52,7 @@ const GAP=8;
  * explains how to add one when it is empty.
  */
 export function PresetGallery({
-  label,presets,selectedId,onSelect,onPreview,onFavoriteChange,filter="all",onFilterChange,minTileWidth=112,
+  scope="preset-gallery",revision=0,disabled=false,label,presets,selectedId,onSelect,onPreview,onFavoriteChange,filter="all",onFilterChange,minTileWidth=112,
   className,unstyled=false,style,onLayout,...rest
 }:PresetGalleryProps){
   validatePresets(presets);
@@ -67,7 +68,20 @@ export function PresetGallery({
   const tileWidth=width>0?(width-GAP*(columns-1))/columns:minTileWidth;
   const selectedIndex=shown.findIndex(p=>p.id===selectedId);
   const stop=focus>=0&&focus<shown.length?focus:selectedIndex>=0?selectedIndex:0;
+  const boundary=JSON.stringify([scope,revision,disabled,filter]);
+  const committed=useRef<{boundary:string;presets:typeof presets;onSelect:typeof onSelect;onPreview:typeof onPreview;onFavoriteChange:typeof onFavoriteChange;onFilterChange:typeof onFilterChange}|null>(null);
+  const previewOwner=useRef<{scope:string;id:string}|null>(null);
+  useLayoutEffect(()=>{committed.current={boundary,presets,onSelect,onPreview,onFavoriteChange,onFilterChange};});
+  useLayoutEffect(()=>{previewOwner.current=null;store.setState({focus:-1});},[scope,revision,disabled,store]);
+  useLayoutEffect(()=>{const owner=previewOwner.current;if(owner&&owner.scope===scope&&!shown.some(p=>p.id===owner.id)){previewOwner.current=null;committed.current?.onPreview?.(undefined);}},[filter,presets,scope]);
+  useLayoutEffect(()=>()=>{committed.current=null;previewOwner.current=null;},[]);
+  const current=()=>!disabled&&committed.current?.boundary===boundary?committed.current:null;
+  const select=(id:string)=>{const p=current();if(p?.presets.some(v=>v.id===id))p.onSelect(id);};
+  const preview=(id:string)=>{const p=current();if(p?.presets.some(v=>v.id===id)){previewOwner.current={scope,id};p.onPreview?.(id);}};
+  const clearPreview=(id:string)=>{const p=current(),owner=previewOwner.current;if(p&&owner?.scope===scope&&owner.id===id){previewOwner.current=null;p.onPreview?.(undefined);}};
+  const favorite=(id:string)=>{const p=current(),preset=p?.presets.find(v=>v.id===id);if(preset)p?.onFavoriteChange?.(id,!preset.favorite);};
   const onKeyDown=(i:number)=>(event:unknown)=>{
+    if(!current())return;
     const k=shellKey(event);
     if(k.altKey||k.ctrlKey||k.metaKey)return;
     const next=gridFocusTarget(i,k.key,shown.length,columns,nodeIsRTL(k.target)||I18nManager.isRTL);
@@ -79,7 +93,7 @@ export function PresetGallery({
   const filterButton=(value:PresetFilter,text:string)=>{
     const on=filter===value;
     return <Pressable key={value} accessibilityRole="button" accessibilityLabel={text} aria-pressed={on}
-      accessibilityState={{selected:on}} onPress={()=>{if(!on)onFilterChange?.(value);}}
+      disabled={disabled} accessibilityState={{selected:on,disabled}} onPress={()=>{if(!on)current()?.onFilterChange?.(value);}}
       {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center px-3",
         styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
         styled&&(on?"bg-surface-raised border border-border":"hover:bg-surface-sunken"))}}>
@@ -98,11 +112,11 @@ export function PresetGallery({
         const selected=preset.id===selectedId;
         return <View key={preset.id} style={{width:tileWidth}}>
           <Pressable ref={node=>{refs.current[i]=node;}} {...{role:"radio"}} aria-checked={selected}
-            accessibilityLabel={preset.name+(preset.favorite?", favorite":"")} accessibilityState={{checked:selected}}
-            onPress={()=>onSelect(preset.id)}
-            onHoverIn={()=>onPreview?.(preset.id)} onHoverOut={()=>onPreview?.(undefined)}
-            onFocus={()=>{store.setState({focus:i});onPreview?.(preset.id);}} onBlur={()=>onPreview?.(undefined)}
-            {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}:{})}
+            accessibilityLabel={preset.name+(preset.favorite?", favorite":"")} disabled={disabled} accessibilityState={{checked:selected,disabled}}
+            onPress={()=>select(preset.id)}
+            onHoverIn={()=>preview(preset.id)} onHoverOut={()=>clearPreview(preset.id)}
+            onFocus={()=>{if(current()){store.setState({focus:i});preview(preset.id);}}} onBlur={()=>clearPreview(preset.id)}
+            {...(Platform.OS==="web"?{onKeyDown:onKeyDown(i),tabIndex:!disabled&&i===stop?0:-1}:{})}
             {...{className:joinClasses("min-h-11 gap-1",styled&&"rounded-card focus-visible:ring-2 focus-visible:ring-focus",
               styled&&(selected?"border-2 border-focus bg-primary/10":"hover:bg-surface-sunken"))}}
             // Unselected tiles draw no border (forced colors would paint a transparent one); padding keeps the size.
@@ -114,8 +128,8 @@ export function PresetGallery({
           </Pressable>
           {onFavoriteChange?<Pressable accessibilityRole="button"
             accessibilityLabel={(preset.favorite?"Remove ":"Add ")+preset.name+(preset.favorite?" from favorites":" to favorites")}
-            aria-pressed={!!preset.favorite} accessibilityState={{selected:!!preset.favorite}}
-            onPress={()=>onFavoriteChange(preset.id,!preset.favorite)}
+            aria-pressed={!!preset.favorite} disabled={disabled} accessibilityState={{selected:!!preset.favorite,disabled}}
+            onPress={()=>favorite(preset.id)}
             {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
             style={{position:"absolute",top:4,right:4}}>
             <Bookmark on={!!preset.favorite} styled={styled}/>

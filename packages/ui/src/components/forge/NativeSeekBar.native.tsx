@@ -43,5 +43,5 @@ export function NativeSeekBar(props: NativeSeekBarProps) {
         }} />;
   // Only the slider is an @expo/ui host; the transport is app-token RN.
   return <SeekBarLayout props={props} shown={shown} step={step} off={model.off}
-    slider={<Host style={{ width: "100%" }}>{slider}</Host>} />;
+    slider={<Host key={model.key} style={{ width: "100%" }}>{slider}</Host>} />;
 }

@@ -87,10 +87,10 @@ test("popover renders real SwiftUI/Compose surfaces natively and placePopover on
  assert.match(native,/import \{ Popover, RNHostView as SwiftUIHostView, Spacer \} from "@expo\/ui\/swift-ui"/);
  assert.match(native,/<Popover isPresented=\{open\}/);
  assert.match(native,/import \{ Box, DropdownMenu, RNHostView as ComposeHostView \} from "@expo\/ui\/jetpack-compose"/);
- assert.match(native,/<DropdownMenu expanded=\{open\} onDismissRequest=\{\(\)=>onOpenChange\(false\)\}>/);
+ assert.match(native,/<DropdownMenu expanded=\{open\} onDismissRequest=\{\(\)=>change\(false\)\}>/);
  assert.match(native,/placePopover\(anchor,usableRegions,width,maxHeight\)/);
  // Trigger form: the native anchor sits over the measured trigger.
- assert.match(native,/useTriggerAnchor\(open\)/);
+ assert.match(native,/useTriggerAnchor\(open,props\.scope,/);
  assert.match(native,/renderPopoverTrigger\(trigger,popoverTriggerState\(open,onOpenChange\)\)/);
  // Web is the kit's AnchoredPopover, which places itself with placePopover.
  assert.match(web,/from "@nyc-tron\/ui\/components\/overlays\/AnchoredPopover"/);
@@ -128,7 +128,7 @@ test("web overlays cycle Tab inside and restore focus to the opener",()=>{
  assert.match(menu,/useRestoreFocus\(open\)/);
  const popover=readFileSync(resolve("packages/ui/src/components/overlays/CommandPopover.tsx"),"utf8");
  assert.match(popover,/key==="Tab"\)target=cycleFocusTarget/);
- assert.match(popover,/useRestoreFocus\(visible\)/);
+ assert.match(popover,/useRestoreFocus\(visible&&available\)/);
 });
 test("new subpaths resolve to emitted native and web files",()=>{
  const pkg=JSON.parse(readFileSync(resolve("packages/expo-controls/package.json"),"utf8"));

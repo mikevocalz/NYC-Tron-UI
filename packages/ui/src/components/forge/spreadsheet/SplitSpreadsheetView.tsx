@@ -1,4 +1,5 @@
-import { useRef, type ReactNode } from "react";
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {useLayoutEffect, useRef, type ReactNode } from "react";
 import { I18nManager, View, type ViewProps } from "react-native";
 import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
@@ -14,7 +15,7 @@ import { dragSplitRatio, splitGeometry, SPLIT_KEY_STEP, type SplitState } from "
  * arrow keys, or the screen reader's increment/decrement actions. Escape
  * during a drag restores the ratio the drag started from.
  */
-export interface SplitSpreadsheetViewProps extends Omit<ViewProps, "children"> {
+export interface SplitSpreadsheetViewProps extends Omit<ViewProps, "children">,ScopedControlProps {
   readonly split: SplitState;
   readonly onSplitChange: (next: SplitState) => void;
   readonly renderPane: (pane: 0 | 1, size: { readonly width: number; readonly height: number }) => ReactNode;
@@ -32,10 +33,15 @@ export interface SplitSpreadsheetViewProps extends Omit<ViewProps, "children"> {
 const DIVIDER = 12;
 type Local = { measuredWidth: number; measuredHeight: number; dragStart: number | undefined; dragFrom: { x: number; y: number } | undefined };
 
-export function SplitSpreadsheetView({
+export function SplitSpreadsheetView({scope='sheet-split',revision=0,...props}:SplitSpreadsheetViewProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.split.axis,props.width,props.height,props.minPane]),guard=useScopedControl(owner,props,props.disabledReason!==undefined);
+ return <SplitSpreadsheetViewBody {...props} boundary={owner} onSplitChange={value=>guard.current()?.onSplitChange(value)}/>;
+}
+function SplitSpreadsheetViewBody({boundary,disabledReason,
+
   split, onSplitChange, renderPane, width, height, minPane = 136, transport: Transport = PanResponderDrag,
   className, unstyled = false, onLayout, style, ...props
-}: SplitSpreadsheetViewProps) {
+}: SplitSpreadsheetViewProps&{boundary:string}) {
   const storeRef = useRef<StoreApi<Local> | null>(null);
   if (!storeRef.current) storeRef.current = createStore<Local>(() => ({ measuredWidth: 0, measuredHeight: 0, dragStart: undefined, dragFrom: undefined }));
   const store = storeRef.current;
@@ -47,8 +53,10 @@ export function SplitSpreadsheetView({
   const total = stacked ? h : w;
   const g = splitGeometry(total, split.ratio, DIVIDER, minPane);
   const latest = useRef(split);
-  latest.current = split;
+  useLayoutEffect(()=>{latest.current=split;});
+  useLayoutEffect(()=>{store.setState({dragStart:undefined,dragFrom:undefined});},[boundary,w,h]);
   const setRatio = (ratio: number) => {
+    if(disabledReason!==undefined)return;
     const next = splitGeometry(total, ratio, DIVIDER, minPane).ratio;
     if (next !== latest.current.ratio) onSplitChange({ ...latest.current, ratio: next });
   };
@@ -68,8 +76,8 @@ export function SplitSpreadsheetView({
     {...{ className: joinClasses("overflow-hidden", className) }}
     style={[{ width: width ?? "100%", height: height ?? "100%", flexDirection: stacked ? "column" : "row" }, style]}>
     <View style={size0}>{total > 0 ? renderPane(0, size0) : null}</View>
-    <Transport
-      onBegin={point => store.setState({ dragStart: g.ratio, dragFrom: point })}
+    <Transport disabled={disabledReason!==undefined}
+      onBegin={point => {if(disabledReason===undefined)store.setState({ dragStart: g.ratio, dragFrom: point });}}
       onMove={(point, touches) => {
         const s = store.getState();
         if (s.dragStart === undefined || !s.dragFrom) return;
@@ -77,13 +85,13 @@ export function SplitSpreadsheetView({
         const delta = stacked ? point.y - s.dragFrom.y : (rtl ? -1 : 1) * (point.x - s.dragFrom.x);
         setRatio(dragSplitRatio(total, s.dragStart, delta, DIVIDER, minPane));
       }}
-      onRelease={() => store.setState({ dragStart: undefined, dragFrom: undefined })}
+      onRelease={point => {const s=store.getState();if(s.dragStart!==undefined&&s.dragFrom){const delta=stacked?point.y-s.dragFrom.y:(rtl?-1:1)*(point.x-s.dragFrom.x);setRatio(dragSplitRatio(total,s.dragStart,delta,DIVIDER,minPane));}store.setState({dragStart:undefined,dragFrom:undefined});}}
       onCancel={() => {
         const start = store.getState().dragStart;
         if (start !== undefined) setRatio(start);
         store.setState({ dragStart: undefined, dragFrom: undefined });
       }}>
-      <View focusable accessibilityRole="adjustable"
+      <View focusable={disabledReason===undefined} accessibilityState={{disabled:disabledReason!==undefined}} accessibilityRole="adjustable"
         accessibilityLabel={stacked ? "Split divider, top pane size" : "Split divider, first pane size"}
         // aria-value* rather than accessibilityValue: React Native Web 0.21
         // drops accessibilityValue, and RN maps these props on native too.

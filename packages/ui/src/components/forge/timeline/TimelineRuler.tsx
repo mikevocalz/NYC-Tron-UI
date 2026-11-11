@@ -1,3 +1,5 @@
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
+import {useScopedControl,controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import type {FrameRate} from "../timebase.ts";
@@ -11,7 +13,7 @@ export interface TimelineMark {
   readonly label:string;
 }
 /** Props for {@linkcode TimelineRuler}. */
-export interface TimelineRulerProps extends Omit<ViewProps,"children"> {
+export interface TimelineRulerProps extends Omit<ViewProps,"children">,ScopedControlProps {
   readonly viewport:TimelineViewport;
   readonly rate:FrameRate;
   readonly durationFrames:number;
@@ -39,10 +41,18 @@ const NO_SELECT=(Platform.OS==="web"?{userSelect:"none",touchAction:"none"}:{}) 
  * `TimelinePlayhead` is the accessible, keyboard-operable control for the
  * same position.
  */
-export function TimelineRuler({
+export function TimelineRuler({scope='TimelineRuler',revision=0,...props}:TimelineRulerProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason,props.disabled,props.viewport,props.durationFrames,props.rate]);
+ const guard=useScopedControl(owner,props,props.disabledReason!==undefined||!!props.disabled);
+ return <TimelineRulerBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onSeek={(value)=>guard.run('onSeek',host=>host.onSeek(value))}
+  {...(props.onScrub?{onScrub:(value:Parameters<NonNullable<TimelineRulerProps['onScrub']>>[0])=>guard.current()?.onScrub?.(value)}:{})}/>;
+}
+function TimelineRulerBody({
+  actionError=null,disabledReason,
   viewport,rate,durationFrames,marks=[],frame,onScrub,onSeek,minLabelPx=72,disabled=false,
   className,unstyled=false,testID,style,...rest
-}:TimelineRulerProps){
+}:TimelineRulerProps&{actionError?:string|null}){
   const clamp=(f:number)=>Math.min(durationFrames,Math.max(0,Math.round(f)));
   const scrub=useFrameScrub({frame:clamp(frame),disabled,onScrub,onCommit:onSeek,frameAt:p=>clamp(xToFrame(viewport,p.x))});
   const end=viewport.startFrame+visibleFrames(viewport);
@@ -52,6 +62,7 @@ export function TimelineRuler({
     accessibilityElementsHidden importantForAccessibility="no-hide-descendants" aria-hidden
     {...{className:joinClasses(styled&&"bg-surface-sunken border-b border-border",className)}}
     style={[{height:44,overflow:"hidden",direction:"ltr",...NO_SELECT},style]}>
+    <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {ticks.map((t,i)=>{
       const x=frameToX(viewport,t.frame);
       // The wrapper is as wide as a label: a one-unit wrapper caps the label's

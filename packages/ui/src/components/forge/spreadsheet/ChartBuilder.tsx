@@ -1,3 +1,7 @@
+import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
+import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useMemo, type ReactNode } from "react";
 import { Text, View, type ViewProps } from "react-native";
 import { Button } from "../../Button.tsx";
@@ -17,8 +21,12 @@ import { PanelCheckbox, PanelChoices, PanelField, PanelHeading } from "./panel-c
  * import). Saving a chart into a document is the app's `onInsert`; without it
  * there is no insert button.
  */
-export interface ChartBuilderProps extends Omit<ViewProps, "children"> {
+export interface ChartPresentation {showLegend:boolean;showDataLabels:boolean;xNumberFormat:string;yNumberFormat:string;series:readonly {id:string;colorId:string}[]}
+export interface ChartBuilderProps extends Omit<ViewProps, "children">,ScopedControlProps {
   readonly spec: SheetChartSpec;
+  readonly presentation?:ChartPresentation;
+  readonly chartColors?:readonly {id:string;label:string}[];
+  readonly onPresentationChange?:(value:ChartPresentation)=>unknown;
   readonly onSpecChange: (spec: SheetChartSpec) => void;
   /** Values for `spec.range`, keyed by A1 address. */
   readonly cells: ChartCellValues;
@@ -29,6 +37,7 @@ export interface ChartBuilderProps extends Omit<ViewProps, "children"> {
   readonly onInsert?: (spec: SheetChartSpec, data: SheetChartData) => unknown;
   /** `true` while the app is still loading `cells` for the range. */
   readonly loading?: boolean;
+  readonly disabled?:boolean;
   readonly className?: string;
   readonly unstyled?: boolean;
 }
@@ -57,10 +66,20 @@ function KindGlyph({ kind, unstyled }: { kind: SheetChartKind; unstyled: boolean
   </View>;
 }
 
-export function ChartBuilder({
+export function ChartBuilder({scope='ChartBuilder',revision=0,...props}:ChartBuilderProps){
+ if(props.spec.range.length>512||!SHEET_CHART_KINDS.includes(props.spec.kind)||(props.presentation?.series.length??0)>124)throw new RangeError('Invalid chart configuration');
+ const identity=JSON.stringify(controlIdentity(scope,revision)),owner=JSON.stringify([identity,props.disabled,props.disabledReason]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <ChartBuilderBody key={identity} {...props} scope={scope} revision={revision} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  onPresentationChange={props.onPresentationChange?value=>guard.run('presentation',h=>h.onPresentationChange?.(value)):undefined}
+  onInsert={props.onInsert?(...args:Parameters<NonNullable<ChartBuilderProps['onInsert']>>)=>guard.run('onInsert',h=>h.onInsert?.(...args)):undefined}
+  onSpecChange={(...args:Parameters<ChartBuilderProps['onSpecChange']>)=>{guard.current()?.onSpecChange(...args);}}
+ />;
+}
+function ChartBuilderBody({actionError,disabledReason,disabled=false,scope='chart',revision=0,presentation,chartColors=[],onPresentationChange,
   spec, onSpecChange, cells, selection, renderPreview, onInsert, loading = false,
   className, unstyled = false, ...props
-}: ChartBuilderProps) {
+}: ChartBuilderProps&{actionError?:string|null}) {
+  const presentationScope=useEditorBoundary([scope,revision]);
   const set = (patch: Partial<SheetChartSpec>) => onSpecChange({ ...spec, ...patch });
   const result = useMemo((): { data: SheetChartData } | { error: string } => {
     try {
@@ -86,31 +105,31 @@ export function ChartBuilder({
   return <View {...props} {...{ className: joinClasses(!unstyled && "rounded-card border border-border bg-surface-raised", className) }}
     style={[{ padding: 16, gap: 16 }, props.style]}>
     <PanelHeading title="Chart" unstyled={unstyled} />
-    <PanelChoices label="Chart type" value={spec.kind} unstyled={unstyled}
+    <PanelChoices disabled={disabled} label="Chart type" value={spec.kind} unstyled={unstyled}
       choices={SHEET_CHART_KINDS.map(kind => ({ value: kind, label: KIND_LABEL[kind], glyph: <KindGlyph kind={kind} unstyled={unstyled} /> }))}
       onChange={kind => set({ kind })} />
     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, alignItems: "flex-end" }}>
-      <PanelField label="Data range" value={spec.range} placeholder="A1:C12" unstyled={unstyled}
+      <PanelField disabled={disabled} label="Data range" value={spec.range} placeholder="A1:C12" unstyled={unstyled}
         hint={`Up to ${MAX_CHART_CELLS} cells on this sheet`} error={rangeError}
         onChange={range => set({ range })} />
-      {selection ? <Button title="Use selection" variant="secondary" unstyled={unstyled}
+      {selection ? <Button disabled={disabled} title="Use selection" variant="secondary" unstyled={unstyled}
         onPress={() => set({ range: rangeAddress(selection) })} /> : null}
     </View>
-    <PanelChoices label="Series run down" value={spec.seriesIn} unstyled={unstyled}
+    <PanelChoices disabled={disabled} label="Series run down" value={spec.seriesIn} unstyled={unstyled}
       choices={[{ value: "columns", label: "Columns" }, { value: "rows", label: "Rows" }]}
       onChange={seriesIn => set({ seriesIn })} />
     <View>
-      <PanelCheckbox unstyled={unstyled} checked={spec.hasHeader} onChange={hasHeader => set({ hasHeader })}
+      <PanelCheckbox disabled={disabled} unstyled={unstyled} checked={spec.hasHeader} onChange={hasHeader => set({ hasHeader })}
         label={byColumns ? "First row names the series" : "First column names the series"} />
-      <PanelCheckbox unstyled={unstyled} checked={spec.hasXValues} onChange={hasXValues => set({ hasXValues })}
+      <PanelCheckbox disabled={disabled} unstyled={unstyled} checked={spec.hasXValues} onChange={hasXValues => set({ hasXValues })}
         label={byColumns ? "First column holds x values" : "First row holds x values"} />
     </View>
     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
-      <PanelField label="Title" value={spec.title ?? ""} unstyled={unstyled} autoCapitalize="sentences"
+      <PanelField disabled={disabled} label="Title" value={spec.title ?? ""} unstyled={unstyled} autoCapitalize="sentences"
         onChange={title => set({ title })} />
-      <PanelField label="X axis title" value={spec.xAxisLabel ?? ""} unstyled={unstyled} autoCapitalize="sentences"
+      <PanelField disabled={disabled} label="X axis title" value={spec.xAxisLabel ?? ""} unstyled={unstyled} autoCapitalize="sentences"
         onChange={xAxisLabel => set({ xAxisLabel })} />
-      <PanelField label="Y axis title" value={spec.yAxisLabel ?? ""} unstyled={unstyled} autoCapitalize="sentences"
+      <PanelField disabled={disabled} label="Y axis title" value={spec.yAxisLabel ?? ""} unstyled={unstyled} autoCapitalize="sentences"
         onChange={yAxisLabel => set({ yAxisLabel })} />
     </View>
     {data && points > 0 && renderPreview ? <View accessibilityLabel={spec.title || `${KIND_LABEL[spec.kind]} chart preview`}
@@ -119,9 +138,14 @@ export function ChartBuilder({
       {renderPreview(spec, data)}
     </View> : null}
     <Text accessibilityLiveRegion="polite" {...{ className: muted }}>{summary}</Text>
+    {presentation&&onPresentationChange?<PropertyInspector scope={presentationScope} label="Chart formatting" disabledReason={disabled?'Chart formatting unavailable':undefined} unstyled={unstyled} fields={[
+     {id:'showLegend',kind:'boolean',label:'Show chart legend',value:presentation.showLegend},{id:'showDataLabels',kind:'boolean',label:'Show point labels',value:presentation.showDataLabels},
+     {id:'xNumberFormat',kind:'text',label:'X-axis number format',value:presentation.xNumberFormat,maxLength:256},{id:'yNumberFormat',kind:'text',label:'Y-axis number format',value:presentation.yNumberFormat,maxLength:256},
+     ...presentation.series.slice(0,124).map(series=>({id:'series:'+series.id,kind:'choice' as const,label:'Color for '+(data?.series.find(s=>s.id===series.id)?.label??series.id),value:series.colorId,choices:chartColors}))
+    ]} onCommit={(id,value)=>id.startsWith('series:')?onPresentationChange({...presentation,series:presentation.series.map(s=>s.id===id.slice(7)?{...s,colorId:String(value)}:s)}):onPresentationChange({...presentation,[id]:value})}/>:null}
     {onInsert ? <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
       <Button title="Insert chart" disabled={!data || points === 0 || loading} unstyled={unstyled}
         onPress={() => data && onInsert(spec, data)} />
     </View> : null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

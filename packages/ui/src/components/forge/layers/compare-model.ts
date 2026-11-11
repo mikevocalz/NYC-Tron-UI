@@ -40,8 +40,8 @@ export function resolveCompareSource(source:CompareSource):CompareImage{
     const image=rasterToImage(source.raster);
     return {uri:image.uri,width:image.width,height:image.height};
   }
-  if(!source.uri)throw new RangeError("Compare image URI is empty");
-  if(!(source.width>0)||!(source.height>0))throw new RangeError("Compare image size must be positive");
+  if(source.kind!=="uri"||!source.uri.trim()||source.uri.length>8*1024*1024)throw new RangeError("Compare image URI is empty");
+  if(![source.width,source.height].every(Number.isFinite)||!(source.width>0)||!(source.height>0))throw new RangeError("Compare image size must be positive");
   return {uri:source.uri,width:source.width,height:source.height};
 }
 

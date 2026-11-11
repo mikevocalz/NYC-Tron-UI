@@ -5,7 +5,7 @@ import AVFoundation
 import UIKit
 
 extension AVURLAsset {
-  func decodedFrame(_ request: FrameRequest) throws -> DecodedFrameRecord {
+  func decodedFrame(_ request: FrameRequest, exactPresentationTime: CMTime? = nil) throws -> DecodedFrameRecord {
     let duration = try durationUs()
     guard let track = tracks(withMediaType: .video).first else {
       throw MediaDecodeFailure(.unsupportedFormat, "This media has no video track")
@@ -13,18 +13,12 @@ extension AVURLAsset {
     guard request.timeUs < duration else {
       throw MediaDecodeFailure(.outOfRange, "timeUs \(request.timeUs) is at or past the end (\(duration))")
     }
-    let generator = AVAssetImageGenerator(asset: self)
-    generator.appliesPreferredTrackTransform = true
-    generator.requestedTimeToleranceBefore = .zero
-    generator.requestedTimeToleranceAfter = .zero
-    generator.maximumSize = CGSize(width: request.maxWidth, height: request.maxHeight)
-    var actual = CMTime.zero
-    let image: CGImage
-    do {
-      image = try generator.copyCGImage(at: CMTime(microseconds: request.timeUs), actualTime: &actual)
-    } catch {
-      throw MediaDecodeFailure(avError: error)
-    }
+    let decoded = try decodedImage(
+      at: exactPresentationTime ?? CMTime(microseconds: request.timeUs),
+      maximumSize: CGSize(width: request.maxWidth, height: request.maxHeight),
+      requiredTimeUs: exactPresentationTime == nil ? nil : request.timeUs)
+    let image = decoded.image
+    let actual = decoded.presentationTime
     guard let jpeg = UIImage(cgImage: image).jpegData(compressionQuality: 0.9) else {
       throw MediaDecodeFailure(.decodeFailed, "Could not encode the \(track.displaySize) frame as JPEG")
     }
@@ -37,7 +31,7 @@ extension AVURLAsset {
     }
     return DecodedFrameRecord(
       uri: file.absoluteString,
-      actualTimeUs: Double(actual.isNumeric ? actual.microseconds : request.timeUs),
+      actualTimeUs: Double(actual.microseconds),
       width: Double(image.width),
       height: Double(image.height))
   }

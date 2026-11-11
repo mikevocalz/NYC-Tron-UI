@@ -1,4 +1,4 @@
-import {use,useEffect,useId,useRef,type ReactNode} from "react";
+import {use,useEffect,useId,useRef,useLayoutEffect,type ReactNode} from "react";
 import {Pressable,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
@@ -51,6 +51,7 @@ export interface PropertyRowProps extends Omit<ViewProps,"children"> {
 export function PropertyRow({
   label,children,mixed=false,override,onRevert,keywords,disabled=false,stackBelow=300,className,unstyled=false,style,onLayout,...rest
 }:PropertyRowProps){
+  if(!label.trim()||label.length>512||!Number.isFinite(stackBelow)||stackBelow<0||keywords&&(keywords.length>256||keywords.some(k=>typeof k!=="string"||k.length>512)))throw new RangeError("Invalid property row metadata");
   const styled=!unstyled;
   const id=useId();
   const panel=use(InspectorPanelContext);
@@ -65,6 +66,10 @@ export function PropertyRow({
   const width=useStore(local.current,s=>s.width);
   const stacked=width>0&&width<stackBelow;
   const off=disabled||section.disabled;
+  const committed=useRef<{off:boolean;override:typeof override;onRevert:typeof onRevert}|null>(null);
+  useLayoutEffect(()=>{committed.current={off,override,onRevert};});
+  useLayoutEffect(()=>()=>{committed.current=null;},[]);
+  const revert=()=>{const p=committed.current;if(p&&!p.off&&p.override==="overridden")p.onRevert?.();};
   const editorLabel=label+(mixed?", mixed values":"")+(override==="inherited"?", inherited":"");
   const editor=typeof children==="function"?children({disabled:off,mixed,editorLabel}):children;
   const indent=Math.max(0,section.depth-1)*12;
@@ -83,7 +88,7 @@ export function PropertyRow({
     <View style={{flex:1,flexDirection:"row",alignItems:"center",gap:4,minWidth:0}}>
       <View style={{flex:1,minWidth:0}}>{editor}</View>
       {override==="overridden"&&onRevert?<Pressable accessibilityRole="button" accessibilityLabel={"Revert "+label} disabled={off}
-        onPress={onRevert}
+        onPress={revert}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control px-2 focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-sunken")}}>
         <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Revert</Text>
       </Pressable>:null}

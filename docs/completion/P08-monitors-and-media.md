@@ -1,0 +1,13 @@
+# P08 monitors, cached media and playback status
+
+Reviewed library implementations: D-02 SourceMonitor, D-03 ProgramMonitor, D-16 VideoFilmstrip, D-17 AudioClipWaveform, D-26 ScopesDock, D-27 MulticamAngleViewer, D-28 RenderCacheIndicator and D-30 PictureInPictureControls. Each has an independent export.
+
+Source/program monitors share MediaMonitor chrome over a required actual host video/compositor surface. Source loading, transport, scrubbing, in/out marks, timecode and safe/framing overlays use existing owners. Presented-frame telemetry is separate from requested/player-clock time and explicitly unreported when absent. Replacing a source invalidates draft/gesture callbacks and child control identities without reparenting the host's native surface. Errors and asynchronous host operations are represented; the library does not create a second decoder.
+
+VideoFilmstrip mounts bounded visible tiles from the actual host frame decoder and reuses LayerThumbnail's bounded raster cache, error and retry behavior. Keys include source identity/revision, document scope and provider identity. AudioClipWaveform loads actual extrema for the requested normalized interval/resolution, reuses WaveformLane for extrema-preserving display and caches up to 64 entries/4 MiB with at most four concurrent loaders. Active subscribers pin entries; unreferenced pending work is aborted and late completions ignored. Empty data is shown as missing decoded samples, not fabricated silence. Provider identities separate decoder implementations that reuse source IDs.
+
+ScopesDock reuses the existing decoded-measurement VideoScopesPanel, switches source/program assignment and discloses a stale presented-frame match. MulticamAngleViewer consumes actual camera surfaces and presented frames with explicit offsets; cuts are unavailable until the angle is decoded and within the supplied frame-drift tolerance. The host owns synchronization clocks and the cut transaction.
+
+RenderCacheIndicator displays actual queued/rendering/ready/stale/error jobs and reported progress, exposes quality capabilities and validates retry/invalidation against the current job. PictureInPictureControls reflects the host OS's supported/active/background states and submits enter/exit requests; it never toggles optimistic local PiP success.
+
+Validation: the combined @nyc-tron/ui TypeScript build passed. Decoder/compositor/native PiP, cache lifecycle, waveform peaks, multicam synchronization and full platform tests are deferred until the user's review. No hardware or native engine acceptance is claimed. Total implementation review is 155/341; 11 P08 video/effect components remain.

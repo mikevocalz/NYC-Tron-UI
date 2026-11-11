@@ -1,7 +1,7 @@
 import {View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {docToScreen,validateViewport,type CanvasViewport} from "./canvas-viewport.ts";
-import {gridLines,type GridSettings,type SnapHit} from "./snap-grid-model.ts";
+import {gridLines,validateSnapHit,type GridSettings,type SnapHit} from "./snap-grid-model.ts";
 
 /** Props for {@linkcode SnapGridOverlay}. */
 export interface SnapGridOverlayProps extends Omit<ViewProps,"children"> {
@@ -28,6 +28,8 @@ export interface SnapGridOverlayProps extends Omit<ViewProps,"children"> {
  */
 export function SnapGridOverlay({viewport,grid,snapped,className,unstyled=false,style,...rest}:SnapGridOverlayProps){
   validateViewport(viewport);
+  if(snapped?.x)validateSnapHit(snapped.x,"x");
+  if(snapped?.y)validateSnapHit(snapped.y,"y");
   const {vertical,horizontal}=gridLines(grid,viewport);
   const styled=!unstyled;
   const line=joinClasses(styled&&"bg-border");

@@ -49,6 +49,7 @@
   },
   "files": [
     "dist",
+    "Package.swift",
     "ios",
     "android/build.gradle",
     "android/src",

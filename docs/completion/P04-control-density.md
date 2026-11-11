@@ -1,0 +1,9 @@
+# Control density and localized precision labels
+
+Button, IconButton and PrecisionScrubber now expose app-owned target sizes. Explicit targets must be finite and at least 44 layout points; defaults remain unchanged. Button drops its size recipe's competing minimum-height utility when an explicit target is supplied. IconButton exposes its required name through both native accessibilityLabel and aria-label, so RN Web retains the Save name in icon-only chrome.
+
+PrecisionScrubber accepts localized labels for its input, nudge actions, gesture instructions and precision modes. Its label/readout header wraps rather than compressing longer labels. Input, scale and nudge controls consume the requested target. Existing commit, cancellation and controlled-value ownership remain intact. Numeric entry retains its existing decimal contract; this does not introduce locale-aware decimal parsing.
+
+Focused checks: UI build passed; all 16 existing scrubber precision/ownership checks passed. Argent inspected the source fixture at 390×844 with a 280px control region. Button measured 280×48, IconButton 48×48, input 64×48, nudge buttons 48×48 and scale 172×48. A localized increment changed 37 to 38 with exactly one commit. The attached 24px browser text stress capture keeps the longer German header and instructions on separate lines without document horizontal overflow. This is browser stress evidence, not native Dynamic Type or screen-reader certification.
+
+Forge's linked-source phone preview exposed Save by name, and an actual tap produced a 349950-byte Rust snapshot download. Forge's current alpha.4 tarball remains unchanged; the new source API requires the accepted release/pin step before shipping consumers receive it. Other controls, native text scaling/RTL/screen readers and a full suite pass remain separate acceptance work. The 329/329 library-scope count does not close platform integration gates.

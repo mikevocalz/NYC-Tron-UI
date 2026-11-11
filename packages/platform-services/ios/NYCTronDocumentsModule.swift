@@ -37,6 +37,11 @@ public final class NYCTronDocumentsModule: Module {
     guard let url = try? URL(resolvingBookmarkData: data, options: [], relativeTo: nil, bookmarkDataIsStale: &stale),
       SecurityScopedAccess.shared.start(url)
     else { return nil }
+    let reachable = await Task.detached { (try? url.checkResourceIsReachable()) == true }.value
+    guard reachable else {
+      SecurityScopedAccess.shared.release(url.absoluteString)
+      return nil
+    }
     let current = stale ? (url.bookmarkString ?? bookmark) : bookmark
     return RestoredAccessRecord(uri: url.absoluteString, bookmark: current, stale: stale)
   }

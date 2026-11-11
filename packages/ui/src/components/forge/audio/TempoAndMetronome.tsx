@@ -1,15 +1,29 @@
+import {audioTargetSize,audioCopy} from './audio-chrome.ts';
+import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import { useEffect, useRef } from "react";
 import { Pressable, Text, View, type KeyDownEvent, type ViewProps } from "react-native";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { joinClasses } from "../../styles.ts";
-import { PrecisionScrubber } from "../inputs/PrecisionScrubber.tsx";
+import { PrecisionScrubber, type PrecisionScrubberProps } from "../inputs/PrecisionScrubber.tsx";
 import {
   MAX_BPM, MAX_NUMERATOR, MIN_BPM, TAP_RESET_MS, TIME_SIG_DENOMINATORS,
   addTap, clampBpm, formatTimeSignature, isValidTimeSignature, tapTempo, type TimeSignature,
 } from "./tempo.ts";
 
-const HIT = 44;
+
+export interface TempoLabels {
+  tempo:string; tap:string; tapName:string; tapHint:string; keepTapping:string;
+  estimate:(bpm:number,taps:number)=>string;
+  timeSignature:string; beatsPerBar:string; fewerBeats:string; moreBeats:string;
+  beatUnit:string; unitName:(unit:number)=>string; metronome:string; clickOn:string; clickOff:string;
+  beatName:(beat:number,total:number)=>string;
+  precision?:PrecisionScrubberProps['labels'];
+}
+const defaultTempoLabels:TempoLabels={tempo:'Tempo',tap:'Tap',tapName:'Tap tempo',tapHint:'Tap on each beat. The tempo is set when you stop tapping.',keepTapping:'Keep tapping',
+ estimate:(bpm,taps)=>bpm.toFixed(1)+' BPM from '+taps+' taps',timeSignature:'Time signature',beatsPerBar:'Beats per bar',fewerBeats:'Fewer beats per bar',moreBeats:'More beats per bar',
+ beatUnit:'Beat unit',unitName:unit=>'Beat unit '+unit,metronome:'Metronome',clickOn:'Click on',clickOff:'Click off',beatName:(beat,total)=>'Beat '+beat+' of '+total};
 
 /** Metronome switch, owned by whatever plays the click. */
 export interface MetronomeBinding {
@@ -18,7 +32,10 @@ export interface MetronomeBinding {
 }
 
 /** Props for {@linkcode TempoAndMetronome}. */
-export interface TempoAndMetronomeProps extends Omit<ViewProps, "children"> {
+export interface TempoAndMetronomeProps extends Omit<ViewProps, "children">,ScopedControlProps {
+  /** App-owned minimum interaction target. Defaults to 44 points. */
+  readonly targetSize?: number;
+  readonly labels?: Partial<TempoLabels>;
   /** Committed tempo, 20..400 BPM. */
   readonly bpm: number;
   /** Committed time signature, `[numerator, denominator]`. */
@@ -56,10 +73,20 @@ type Taps = { taps: number[] };
  * sequence without committing. The click sound belongs to the audio layer;
  * this control only shows the beat it is given.
  */
-export function TempoAndMetronome({
+export function TempoAndMetronome({scope='TempoAndMetronome',revision=0,...props}:TempoAndMetronomeProps){
+ const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabled,props.disabledReason,props.timeSignature]),guard=useScopedControl(owner,props,!!props.disabled||props.disabledReason!==undefined);
+ return <TempoAndMetronomeBody key={owner} {...props} actionError={guard.error} disabled={!!props.disabled||props.disabledReason!==undefined||guard.pending}
+  metronome={props.metronome?{...props.metronome,onChange:value=>guard.run('metronome',h=>h.metronome?.onChange(value))}:undefined}
+  onTempoCommit={(...args:Parameters<TempoAndMetronomeProps['onTempoCommit']>)=>guard.run('onTempoCommit',h=>h.onTempoCommit(...args))}
+  onTimeSignatureCommit={(...args:Parameters<TempoAndMetronomeProps['onTimeSignatureCommit']>)=>guard.run('onTimeSignatureCommit',h=>h.onTimeSignatureCommit(...args))}
+ />;
+}
+function TempoAndMetronomeBody({actionError,disabledReason,
   bpm, timeSignature, onTempoCommit, onTimeSignatureCommit, metronome, beat, now = Date.now,
-  disabled = false, className, unstyled = false, ...rest
-}: TempoAndMetronomeProps) {
+  disabled = false, targetSize, labels, className, unstyled = false, ...rest
+}: TempoAndMetronomeProps&{actionError?:string|null}) {
+  const HIT = audioTargetSize(targetSize);
+  const copy = audioCopy(defaultTempoLabels, labels);
   const [numerator, denominator] = timeSignature;
   if (!isValidTimeSignature(timeSignature)) throw new RangeError("Invalid time signature " + formatTimeSignature(timeSignature));
   const latest = useRef({ bpm, onTempoCommit, disabled });
@@ -99,44 +126,44 @@ export function TempoAndMetronome({
   };
 
   return <View {...rest} {...{ className: joinClasses("gap-4", styled && "rounded-card border border-border bg-surface-raised p-4", className) }}>
-    <PrecisionScrubber label="Tempo" value={clampBpm(bpm)} min={MIN_BPM} max={MAX_BPM} step={1} unit=" BPM"
+    <PrecisionScrubber targetSize={HIT} labels={copy.precision} label={copy.tempo} value={clampBpm(bpm)} min={MIN_BPM} max={MAX_BPM} step={1} unit=" BPM"
       disabled={disabled} unstyled={unstyled} onCommit={onTempoCommit} />
     <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Tap tempo"
-        accessibilityHint="Tap on each beat. The tempo is set when you stop tapping."
+      <Pressable accessibilityRole="button" accessibilityLabel={copy.tapName}
+        accessibilityHint={copy.tapHint}
         accessibilityValue={estimate === undefined ? undefined : { text: estimate.toFixed(1) + " BPM" }}
         disabled={disabled} onPress={tap} onKeyDown={onTapKey}
         {...{ className: chip(taps.length > 0) }} style={box}>
-        <Text {...{ className: chipText(taps.length > 0) }}>Tap</Text>
+        <Text {...{ className: chipText(taps.length > 0) }}>{copy.tap}</Text>
       </Pressable>
       <Text {...{ className: muted }} accessibilityLiveRegion="polite" style={{ fontVariant: ["tabular-nums"] }}>
-        {estimate !== undefined ? estimate.toFixed(1) + " BPM from " + taps.length + " taps"
-          : taps.length === 1 ? "Keep tapping" : ""}
+        {estimate !== undefined ? copy.estimate(estimate,taps.length)
+          : taps.length === 1 ? copy.keepTapping : ""}
       </Text>
     </View>
     <View style={{ gap: 8 }}>
-      <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>Time signature</Text>
+      <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>{copy.timeSignature}</Text>
       <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
-        <View accessible accessibilityRole="adjustable" accessibilityLabel="Beats per bar"
+        <View accessible accessibilityRole="adjustable" accessibilityLabel={copy.beatsPerBar}
           accessibilityValue={{ min: 1, max: MAX_NUMERATOR, now: numerator }}
-          accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+          accessibilityActions={[{ name: "increment",label:copy.moreBeats }, { name: "decrement",label:copy.fewerBeats }]}
           onAccessibilityAction={e => setNumerator(numerator + (e.nativeEvent.actionName === "increment" ? 1 : -1))}
           style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Fewer beats per bar"
+          <Pressable accessibilityRole="button" accessibilityLabel={copy.fewerBeats}
             disabled={disabled || numerator <= 1} onPress={() => setNumerator(numerator - 1)}
             {...{ className: chip(false) }} style={box}><Text {...{ className: chipText(false) }}>−</Text></Pressable>
           <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}
             style={{ minWidth: 28, textAlign: "center", fontVariant: ["tabular-nums"] }}>{numerator}</Text>
-          <Pressable accessibilityRole="button" accessibilityLabel="More beats per bar"
+          <Pressable accessibilityRole="button" accessibilityLabel={copy.moreBeats}
             disabled={disabled || numerator >= MAX_NUMERATOR} onPress={() => setNumerator(numerator + 1)}
             {...{ className: chip(false) }} style={box}><Text {...{ className: chipText(false) }}>+</Text></Pressable>
         </View>
         {/* The slash travels with the unit chips so a wrap never strands it. */}
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
         <Text {...{ className: muted }}>/</Text>
-        <View accessibilityRole="radiogroup" accessibilityLabel="Beat unit" style={{ flexDirection: "row", gap: 4 }}>
+        <View accessibilityRole="radiogroup" accessibilityLabel={copy.beatUnit} style={{ flexDirection: "row", flexWrap:"wrap", gap: 4 }}>
           {TIME_SIG_DENOMINATORS.map(d => <Pressable key={d} accessibilityRole="radio"
-            accessibilityLabel={"Beat unit " + d} accessibilityState={{ checked: d === denominator, disabled }}
+            accessibilityLabel={copy.unitName(d)} accessibilityState={{ checked: d === denominator, disabled }}
             disabled={disabled} onPress={() => { if (d !== denominator) void onTimeSignatureCommit([numerator, d]); }}
             {...{ className: chip(d === denominator) }} style={box}>
             <Text {...{ className: chipText(d === denominator) }}>{d}</Text>
@@ -146,14 +173,14 @@ export function TempoAndMetronome({
       </View>
     </View>
     {metronome || beat !== undefined ? <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
-      {metronome ? <Pressable accessibilityRole="switch" accessibilityLabel="Metronome"
+      {metronome ? <Pressable accessibilityRole="switch" accessibilityLabel={copy.metronome}
         accessibilityState={{ checked: metronome.enabled, disabled }} disabled={disabled}
         onPress={() => { void metronome.onChange(!metronome.enabled); }}
         {...{ className: chip(metronome.enabled) }} style={box}>
-        <Text {...{ className: chipText(metronome.enabled) }}>{metronome.enabled ? "Click on" : "Click off"}</Text>
+        <Text {...{ className: chipText(metronome.enabled) }}>{metronome.enabled ? copy.clickOn : copy.clickOff}</Text>
       </Pressable> : null}
       {beat !== undefined ? <View accessible accessibilityRole="text"
-        accessibilityLabel={"Beat " + ((beat % numerator) + 1) + " of " + numerator}
+        accessibilityLabel={copy.beatName((beat % numerator)+1,numerator)}
         style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
         {Array.from({ length: Math.min(numerator, 16) }, (_, i) => {
           const on = i === beat % numerator;
@@ -162,5 +189,5 @@ export function TempoAndMetronome({
         })}
       </View> : null}
     </View> : null}
-  </View>;
+  <ErrorMessage message={actionError??disabledReason} unstyled={unstyled}/></View>;
 }

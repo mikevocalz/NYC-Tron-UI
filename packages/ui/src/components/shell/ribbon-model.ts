@@ -58,19 +58,28 @@ export interface RibbonTab {
 
 /** Throws on duplicate tab, group or command ids, empty labels, or a gallery selection that is not an item. */
 export function validateRibbon(tabs:readonly RibbonTab[]):void{
+  if(tabs.length>64)throw new RangeError("Too many ribbon tabs");
   const ids=new Set<string>();
   const claim=(id:string,what:string)=>{
-    if(typeof id!=="string"||!id)throw new TypeError(`${what} id required`);
+    if(typeof id!=="string"||!id.trim()||id.length>256)throw new TypeError(`${what} id required`);
     if(ids.has(id))throw new TypeError(`Duplicate ribbon id ${id}`);
     ids.add(id);
   };
-  const named=(label:string,what:string)=>{if(typeof label!=="string"||!label.trim())throw new TypeError(`${what} needs a label`);};
+  const named=(label:string,what:string)=>{if(typeof label!=="string"||!label.trim()||label.length>512)throw new TypeError(`${what} needs a label`);};
   for(const tab of tabs){
     claim(tab.id,"Tab");named(tab.label,"Tab "+tab.id);
+    if(tab.groups.length>64)throw new RangeError("Too many ribbon groups");
     for(const group of tab.groups){
       claim(group.id,"Group");named(group.label,"Group "+group.id);
+      if(group.commands.length>256)throw new RangeError("Too many ribbon commands");
       for(const command of group.commands){
         claim(command.id,"Command");named(command.label,"Command "+command.id);
+        if(!["button","split","gallery"].includes(command.kind))throw new TypeError("Invalid ribbon command kind");
+        if(command.kind!=="button"){
+          if(command.items.length>1000)throw new RangeError("Too many ribbon choices");
+          const choices=new Set<string>();for(const item of command.items){if(!item.id.trim()||item.id.length>256||choices.has(item.id))throw new TypeError("Duplicate or invalid ribbon choice");choices.add(item.id);named(item.label,"Ribbon choice");}
+        }
+        if(command.kind==="gallery"&&command.inline!==undefined&&(!Number.isInteger(command.inline)||command.inline<1||command.inline>1000))throw new RangeError("Invalid inline gallery count");
         if(command.kind==="gallery"&&command.selectedId!==undefined&&!command.items.some(i=>i.id===command.selectedId))
           throw new TypeError(`Gallery ${command.id} selects a missing item`);
       }

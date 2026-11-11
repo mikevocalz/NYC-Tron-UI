@@ -195,16 +195,12 @@ test("every control in the panels keeps a 44pt target",async({page})=>{
     await page.setViewportSize(size);
     await page.goto("/layer-panels");
     await page.getByTestId("mask-editor").waitFor();
+    await page.getByTestId("compare").getByRole("slider",{name:"Split position",exact:true}).waitFor();
     for(const scope of [page.getByTestId("mask-editor"),page.getByTestId("artboards"),page.getByTestId("compare")]){
-      for(const role of ["button","switch","slider","radio"]){
-        for(const el of await scope.getByRole(role).all()){
-          const box=await el.boundingBox();
-          if(box===null)continue;
-          const name=await el.getAttribute("aria-label")??role;
-          expect(box.width,name).toBeGreaterThanOrEqual(44);
-          expect(box.height,name).toBeGreaterThanOrEqual(44);
-        }
-      }
+      // Read one layout snapshot per panel instead of one browser round trip per edge/name.
+      const targets=await scope.evaluate(root=>[...root.querySelectorAll('button,[role="button"],[role="switch"],[role="slider"],[role="radio"]')].filter(node=>!node.closest('[aria-hidden="true"]')&&getComputedStyle(node).visibility!=="hidden").map(node=>{const box=node.getBoundingClientRect();return {name:node.getAttribute("aria-label")??node.getAttribute("role")??"button",width:box.width,height:box.height};}).filter(box=>box.width>0&&box.height>0));
+      expect(targets.length).toBeGreaterThan(0);
+      for(const box of targets){expect(box.width,box.name).toBeGreaterThanOrEqual(44);expect(box.height,box.name).toBeGreaterThanOrEqual(44);}
     }
   }
 });

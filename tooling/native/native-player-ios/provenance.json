@@ -1,0 +1,24 @@
+{
+  "baseCommit": "6c7cf10b8f076a920e60e7b2ffbd1bd6f11c30de",
+  "worktreeSourceCandidate": true,
+  "sourceFiles": {
+    "packages/native-controls/ios/View+zeroContentOrigin.swift": "78f6b04cfb224360e55c9876ddda1e8810640a4b53a7e804707384c70539f981",
+    "packages/native-controls/ios/TronDisplayP3DiscView.swift": "c09b6dfa253fb8d260b9f5140efa2b1883a52f15dca4a041b9dc9797ae47ebaa",
+    "packages/native-controls/ios/NYCTronInstrumentsModule.swift": "3c492d6507776a484af7f393b95fe460e7fe7ffc7d4909235c84e70eb23494b1",
+    "packages/native-controls/ios/TronDisplayP3DiscProps.swift": "a384558ff1f993271e4848b0878fe02467d548b4f882b73bc8007a6f543c1f71",
+    "packages/native-controls/ios/TronAVPlayerSurface.swift": "05b7f68c10aca7d945cfea2dc5330b4e5ad95f70f3db82cdbf9b5832866cb9f3",
+    "packages/native-controls/ios/TronVideoPlayerCoordinator.swift": "5133a2aa2342093d72df533337443cf1834e321e886c89595a2aba6e346d70d6",
+    "packages/native-controls/ios/TronVideoPlayerProps.swift": "f7cdc6c21493b4f467bd6ece96d08a8356bc9b9b02830279282d472a79b104d5",
+    "packages/native-controls/ios/TronArcKnobView.swift": "8b6f2c1e5cf537b91f222cd660ee355d98ec791b2a274679993c45d5b44d16bf",
+    "packages/native-controls/ios/TronVideoPlayerView.swift": "c90439ebd7677009fcb0c15a7e4f2115dcddff1048e3aa26587b07b33583d70a",
+    "packages/native-controls/ios/TronPlayerLayerView.swift": "a23444dccbdf9293b9e13f8c12de2c3b9c0fb1f1d5d239ec551568ecd67d3617",
+    "packages/native-controls/ios/TronXYPadView.swift": "14b1c10de2b7777850d82ef3953095a0768e4bbab95bbf871eb400745e3b66a9",
+    "packages/native-controls/Package.swift": "1098fb7c7ed858b1fbf77d85e5dd26187b18fa01b8f8c9ad9cf39263322b62a3",
+    "packages/native-controls/package.json": "bb0f045be80e878bd6a4c55c26ad738f08f9eff98e84bd9ab66090565c32b457",
+    "packages/native-controls/expo-module.config.json": "c98a91ed32aa693219af15e590bc3075cd82cf49040ba5c7972ae6bbc873d17e",
+    "packages/native-controls/src/NativeVideoPlayer.tsx": "18b9bbee6ad0befd5758eabe9c9c526c07838d7fffd104c1da3c29d779422796"
+  },
+  "bundleId": "ai.nyctron.p03bridge",
+  "expoUI": "58.0.27",
+  "nativePackageRoot": "/Users/mikevocalz/recovered-work/2026-11-05/tron-complete/packages/native-controls"
+}

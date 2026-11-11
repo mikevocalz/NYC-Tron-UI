@@ -1,4 +1,4 @@
-import {useEffect,useRef} from "react";
+import {useEffect,useLayoutEffect,useRef} from "react";
 import {Platform,Text,View,type ViewProps} from "react-native";
 import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import type {LocalPoint} from "../../gestures/local-pointer.ts";
@@ -24,6 +24,8 @@ export interface GuidePreview {
 }
 /** Props for {@linkcode CanvasRuler}. */
 export interface CanvasRulerProps extends Omit<ViewProps,"children"> {
+  readonly scope?:string;
+  readonly revision?:string|number;
   readonly viewport:CanvasViewport;
   readonly unit:RulerUnit;
   /** Document resolution for in, cm, mm and pt. @default 72 */
@@ -72,18 +74,29 @@ const stopKey=(k:{preventDefault:()=>void})=>k.preventDefault();
  * guides it lets touches through.
  */
 export function CanvasRuler({
-  viewport,unit,dpi=DEFAULT_DPI,origin={x:0,y:0},guides,onAddGuide,onMoveGuide,onRemoveGuide,onGuidePreview,
+  scope="canvas",revision=0,viewport,unit,dpi=DEFAULT_DPI,origin={x:0,y:0},guides,onAddGuide,onMoveGuide,onRemoveGuide,onGuidePreview,
   onOriginChange,pointer,thickness=RULER_THICKNESS,disabled=false,className,unstyled=false,style,...rest
 }:CanvasRulerProps){
   validateViewport(viewport);
   validateGuides(guides);
+  if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid ruler scope');
+  if(![origin.x,origin.y,thickness,dpi,...(pointer?[pointer.x,pointer.y]:[])].every(Number.isFinite)||thickness<=0||dpi<=0)throw new RangeError('Invalid ruler geometry');
+  // Validate units even when the viewport has no visible ticks.
+  formatLength(0,unit,dpi);
+  const boundary=JSON.stringify([scope,revision,viewport,unit,dpi,origin,guides,thickness,disabled]);
+  const mounted=useRef(false),committed=useRef(boundary);
+  useLayoutEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
+  useLayoutEffect(()=>{committed.current=boundary;},[boundary]);
+  const valid=()=>mounted.current&&committed.current===boundary&&!disabled;
+
   const [state,store]=useLocalStore<Local>(()=>({drag:undefined,focused:undefined}));
   const styled=!unstyled;
   const band=Math.max(RULER_TOUCH_BAND,thickness);
-  const ctx:Ctx={viewport,unit,dpi,origin,thickness,band,styled,disabled,store,
-    preview:p=>onGuidePreview?.(p),onAddGuide,onMoveGuide,onRemoveGuide,onOriginChange};
+  const ctx:Ctx={valid,viewport,unit,dpi,origin,thickness,band,styled,disabled,store,
+    preview:p=>{if(valid())onGuidePreview?.(p);},onAddGuide:g=>{if(valid())onAddGuide(g);},onMoveGuide:(id,position)=>{if(valid()&&guides.some(g=>g.id===id))onMoveGuide(id,position);},onRemoveGuide:id=>{if(valid()&&guides.some(g=>g.id===id))onRemoveGuide(id);},onOriginChange:onOriginChange?value=>{if(valid())onOriginChange(value);}:undefined};
   const ctxRef=useRef(ctx);
-  ctxRef.current=ctx;
+  useLayoutEffect(()=>{ctxRef.current=ctx;});
+  useLayoutEffect(()=>{store.set(s=>({...s,drag:undefined,focused:s.focused&&guides.some(g=>g.id===s.focused)?s.focused:undefined}));},[boundary]);
   const drag=state.drag;
   const dragging=drag!==undefined;
   useEffect(()=>{
@@ -119,6 +132,7 @@ export function CanvasRuler({
 }
 
 type Ctx={
+  valid:()=>boolean;
   viewport:CanvasViewport;unit:RulerUnit;dpi:number;origin:DocPoint;thickness:number;band:number;styled:boolean;disabled:boolean;
   store:LocalStore<Local>;preview:(p:GuidePreview|undefined)=>void;
   onAddGuide:(g:NewCanvasGuide)=>void;onMoveGuide:(id:string,position:number)=>void;onRemoveGuide:(id:string)=>void;
@@ -134,6 +148,7 @@ function guideDragHandlers(ctx:Ctx,orientation:CanvasGuide["orientation"],toOver
   const {store}=ctx;
   const current=()=>{const d=store.get().drag;return d?.kind==="guide"?d:undefined;};
   const update=(p:LocalPoint)=>{
+    if(!ctx.valid())return;
     const d={kind:"guide" as const,orientation,at:toOverlay(p),start,...(id?{id}:{})};
     store.set(s=>({...s,drag:d}));
     ctx.preview(previewOf(ctx,d));
@@ -143,8 +158,9 @@ function guideDragHandlers(ctx:Ctx,orientation:CanvasGuide["orientation"],toOver
     onBegin:update,
     onMove:(p:LocalPoint)=>{if(current())update(p);},
     onRelease:(p:LocalPoint)=>{
-      if(!current())return;
-      const d={kind:"guide" as const,orientation,at:toOverlay(p),start,...(id?{id}:{})};
+      if(!ctx.valid()||!current())return;
+      if(!ctx.valid())return;
+    const d={kind:"guide" as const,orientation,at:toOverlay(p),start,...(id?{id}:{})};
       store.set(s=>({...s,drag:undefined}));
       ctx.preview(undefined);
       const removing=isOverOwnRuler(orientation,d.at,ctx.thickness);
@@ -168,7 +184,7 @@ function Ruler({orientation,ctx,pointer}:{orientation:CanvasGuide["orientation"]
   const toOverlay=(p:LocalPoint)=>horizontal?{x:p.x+thickness,y:p.y}:{x:p.x,y:p.y+thickness};
   const handlers=useLocalPointer(guideDragHandlers(ctx,orientation,toOverlay));
   const ticks=rulerTicks({viewport,orientation,unit,dpi,origin}).filter(t=>t.offset>=thickness);
-  const length=(horizontal?viewport.width:viewport.height)-thickness;
+  const length=Math.max(0,(horizontal?viewport.width:viewport.height)-thickness);
   const name=horizontal?"Horizontal ruler":"Vertical ruler";
   const add=()=>{if(!ctx.disabled)ctx.onAddGuide({orientation,position:centerGuidePosition(viewport,orientation)});};
   const onKeyDown=(event:unknown)=>{
@@ -220,8 +236,9 @@ function GuideLine({guide,ctx,focused,dragging}:{guide:CanvasGuide;ctx:Ctx;focus
   const half=band/2;
   const toOverlay=(p:LocalPoint)=>horizontal?{x:p.x,y:p.y+offset-half}:{x:p.x+offset-half,y:p.y};
   const handlers=useLocalPointer(guideDragHandlers(ctx,guide.orientation,toOverlay,guide.id,guide.position));
-  const length=horizontal?viewport.height:viewport.width;
-  if(offset<-half||offset>length+half)return null;
+  const length=horizontal?viewport.width:viewport.height;
+  const across=horizontal?viewport.height:viewport.width;
+  if(offset<-half||offset>across+half)return null;
   const label=guideAccessibilityLabel(guide,unit,dpi,origin);
   const move=(delta:number)=>{if(!ctx.disabled)ctx.onMoveGuide(guide.id,tidy(guide.position+delta));};
   const remove=()=>{if(!ctx.disabled)ctx.onRemoveGuide(guide.id);};
@@ -282,11 +299,11 @@ function Corner({ctx}:{ctx:Ctx}){
   const reset=()=>{if(enabled&&(origin.x!==0||origin.y!==0))onOriginChange({x:0,y:0});};
   const handlers=useLocalPointer({
     disabled:!enabled,
-    onBegin:p=>store.set(s=>({...s,drag:{kind:"origin",at:p,from:p}})),
-    onMove:p=>store.set(s=>s.drag?.kind==="origin"?{...s,drag:{...s.drag,at:p}}:s),
+    onBegin:p=>{if(ctx.valid())store.set(s=>({...s,drag:{kind:"origin",at:p,from:p}}));},
+    onMove:p=>{if(ctx.valid())store.set(s=>s.drag?.kind==="origin"?{...s,drag:{...s.drag,at:p}}:s);},
     onRelease:p=>{
       const d=store.get().drag;
-      if(d?.kind!=="origin")return;
+      if(!ctx.valid()||d?.kind!=="origin")return;
       store.set(s=>({...s,drag:undefined}));
       if(Math.hypot(p.x-d.from.x,p.y-d.from.y)<4){reset();return;}
       const doc=screenPointToDoc(viewport,p);

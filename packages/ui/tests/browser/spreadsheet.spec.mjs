@@ -138,20 +138,20 @@ test("I-20 cards open, step and edit a field through the commit callback",async(
   await page.setViewportSize({width:390,height:844});
   await open(page);
   const cards=page.getByTestId("cards");
-  await expect(cards.getByText("7 cards")).toBeVisible();
-  await cards.getByRole("button",{name:/^Jan\./}).click();
+  await expect(cards.getByText("7 records")).toBeVisible();
+  await cards.getByRole("button",{name:"Jan",exact:true}).click();
   await expect(cards.getByRole("heading",{name:"Jan"})).toBeVisible();
-  await cards.getByRole("button",{name:"Next card"}).click();
+  await cards.getByRole("button",{name:"Next record"}).click();
   await expect(cards.getByRole("heading",{name:"Feb"})).toBeVisible();
-  await cards.getByRole("button",{name:"Sales, 135"}).click();
+  await cards.getByRole("button",{name:"Sales: 135"}).click();
   const field=cards.getByRole("textbox",{name:"Edit Sales"});
   await field.fill("fail");await field.press("Enter");
   await expect(cards.getByRole("alert")).toHaveText("The engine rejected this value.");
   await field.fill("999");await field.press("Enter");
-  await expect(cards.getByRole("button",{name:"Sales, 999"})).toBeVisible();
+  await expect(cards.getByRole("button",{name:"Sales: 999"})).toBeVisible();
   await expect(cell(page,"B3")).toHaveAccessibleName(/^B3, 999/);
-  await cards.getByRole("button",{name:"Back to all cards"}).click();
-  await expect(cards.getByText("7 cards")).toBeVisible();
+  await cards.getByRole("button",{name:"All records"}).click();
+  await expect(cards.getByText("7 records")).toBeVisible();
 });
 
 // Review captures (not pixel goldens): light/dark at 390 and 834, plus RTL.
@@ -166,7 +166,7 @@ for(const theme of ["light","dark"])for(const [name,size] of sizes){
     await page.getByTestId("sheet").screenshot({path:`shots/spreadsheet-${theme}-${name}-tabs-open.png`});
     await page.getByTestId("freeze").getByRole("button",{name:"Stacked"}).click();
     await page.getByTestId("sheet").screenshot({path:`shots/spreadsheet-${theme}-${name}-split.png`});
-    await page.getByTestId("cards").getByRole("button",{name:/^Jan\./}).click();
+    await page.getByTestId("cards").getByRole("button",{name:"Jan",exact:true}).click();
     await page.getByTestId("cards").screenshot({path:`shots/spreadsheet-${theme}-${name}-card.png`});
   });
 }

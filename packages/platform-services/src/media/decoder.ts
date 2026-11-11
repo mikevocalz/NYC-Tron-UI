@@ -7,10 +7,10 @@
  */
 
 /** Why a decode failed. Each platform maps its own errors onto these. */
-export type MediaDecodeErrorCode="not-found"|"unsupported-format"|"decode-failed"|"out-of-range"|"permission";
+export type MediaDecodeErrorCode="not-found"|"unsupported-format"|"decode-failed"|"out-of-range"|"permission"|"cancelled";
 
 export const MEDIA_DECODE_ERROR_CODES:readonly MediaDecodeErrorCode[]=
-  ["not-found","unsupported-format","decode-failed","out-of-range","permission"];
+  ["not-found","unsupported-format","decode-failed","out-of-range","permission","cancelled"];
 
 /** The error every decoder call rejects with. */
 export class MediaDecodeError extends Error {
@@ -31,6 +31,19 @@ export const DEFAULT_FRAME_EDGE=1920;
 /** Sample rates `decodeAudio` accepts when one is requested. */
 export const MIN_SAMPLE_RATE=8000;
 export const MAX_SAMPLE_RATE=192_000;
+
+/** Maximum number of actual video presentation timestamps returned per index. */
+export const MAX_PRESENTATION_INDEX_FRAMES=200_000;
+export interface PresentationIndexOptions {
+  readonly maxFrames?:number;
+  /** Detaches the consumer; native enumeration already submitted may drain. */
+  readonly signal?:AbortSignal;
+}
+export interface MediaPresentationIndex {
+  readonly durationUs:number;
+  /** Complete first-video-track index, sorted strictly, in integer microseconds. */
+  readonly timesUs:readonly number[];
+}
 
 /** What {@linkcode MediaDecoder.probe} reports about a file. */
 export interface MediaProbe {
@@ -54,6 +67,8 @@ export interface MediaProbe {
 
 /** Options for {@linkcode MediaDecoder.decodeFrame}. */
 export interface DecodeFrameOptions {
+  /** Detaches this request on abort. Codec work already submitted may drain on its native owner. */
+  readonly signal?:AbortSignal;
   /** Media time of the wanted frame, integer microseconds from the start. */
   readonly timeUs:number;
   /** The frame is scaled down (never up) to fit this box. @default 1920 */
@@ -64,7 +79,7 @@ export interface DecodeFrameOptions {
 
 /** A decoded video frame. */
 export interface DecodedFrame {
-  /** JPEG in the app's caches directory on iOS (`file://`), a `data:` URL on web. */
+  /** JPEG in the app's caches directory on iOS/Android (`file://`), a `data:` URL on web. */
   readonly uri:string;
   /** Native presentation time or browser seek target; consult `timing`. */
   readonly actualTimeUs:number;
@@ -84,7 +99,7 @@ export interface DecodeAudioOptions {
 }
 
 /**
- * Where the samples are. Web hands them over in memory; iOS writes
+ * Where the samples are. Web hands them over in memory; iOS/Android write
  * a raw file of little-endian Float32 samples, interleaved by channel, so a
  * minute of 48 kHz stereo (23 MB) never crosses the bridge as JS values.
  */
@@ -105,6 +120,12 @@ export interface DecodedAudio {
 export interface MediaDecoder {
   /** False when this build links no native decoder; every call then rejects with "unsupported-format". */
   readonly isAvailable:boolean;
+  /** Present only when the linked binary exposes presentationIndexV1. Absent in alpha.4. */
+  readonly presentationIndexVersion?:1;
+  presentationIndex?(uri:string,options?:PresentationIndexOptions):Promise<MediaPresentationIndex>;
+  /** Optional strict actual-PTS decode; older binaries keep decodeFrame semantics. */
+  readonly indexedFrameVersion?:1;
+  decodeIndexedFrame?(uri:string,options:DecodeFrameOptions):Promise<DecodedFrame>;
   probe(uri:string):Promise<MediaProbe>;
   decodeFrame(uri:string,options:DecodeFrameOptions):Promise<DecodedFrame>;
   decodeAudio(uri:string,options:DecodeAudioOptions):Promise<DecodedAudio>;
@@ -114,6 +135,9 @@ export interface MediaDecoder {
 
 /** The native half. Records are flat; this file validates them. */
 export interface MediaDecoderNative {
+  /** Optional ABI addition; old linked binaries remain valid. */
+  presentationIndexV1?(uri:string,maxFrames:number):Promise<unknown>;
+  decodeIndexedFrameV1?(uri:string,options:{timeUs:number;maxWidth:number;maxHeight:number}):Promise<unknown>;
   probe(uri:string):Promise<unknown>;
   decodeFrame(uri:string,options:{timeUs:number;maxWidth:number;maxHeight:number}):Promise<unknown>;
   /** `sampleRate` 0 keeps the file's rate. */
@@ -230,6 +254,21 @@ export function toDecodedAudio(payload:unknown):DecodedAudio{
   return {sampleRate,channels,frames,pcm:{kind:"file",uri,byteLength:frames*channels*4}};
 }
 
+/** Validate a complete native index; never repair, truncate or extrapolate it. */
+export function toMediaPresentationIndex(payload:unknown,maxFrames=MAX_PRESENTATION_INDEX_FRAMES):MediaPresentationIndex{
+  if(!Number.isSafeInteger(maxFrames)||maxFrames<1||maxFrames>MAX_PRESENTATION_INDEX_FRAMES)
+    throw outOfRange(`maxFrames must be an integer from 1 to ${MAX_PRESENTATION_INDEX_FRAMES}`);
+  const p=(payload&&typeof payload==="object"?payload:{}) as Record<string,unknown>;
+  if(!isMicros(p.durationUs)||p.durationUs===0||!Array.isArray(p.timesUs)||p.timesUs.length===0||p.timesUs.length>maxFrames)
+    throw bad("presentation index");
+  const times:number[]=[];
+  for(const value of p.timesUs){
+    if(!isMicros(value)||value>=p.durationUs||(times.length>0&&value<=times[times.length-1]!))throw bad("presentation index");
+    times.push(value);
+  }
+  return Object.freeze({durationUs:p.durationUs,timesUs:Object.freeze(times)});
+}
+
 const unavailable=()=>Promise.reject(new MediaDecodeError("unsupported-format","This build has no media decoder for this platform."));
 
 /**
@@ -246,10 +285,31 @@ export function createMediaDecoder(native:MediaDecoderNative|null):MediaDecoder{
   if(!native)return {isAvailable:false,probe:unavailable,decodeFrame:unavailable,decodeAudio:unavailable,clearCache:async()=>{}};
   return {
     isAvailable:true,
+    ...(typeof native.presentationIndexV1==="function"?{
+      presentationIndexVersion:1 as const,
+      async presentationIndex(uri:string,options:PresentationIndexOptions={}){
+        const maxFrames=options.maxFrames??MAX_PRESENTATION_INDEX_FRAMES;
+        if(!Number.isSafeInteger(maxFrames)||maxFrames<1||maxFrames>MAX_PRESENTATION_INDEX_FRAMES)
+          throw outOfRange(`maxFrames must be an integer from 1 to ${MAX_PRESENTATION_INDEX_FRAMES}`);
+        return withDecodeCancellation(options.signal,()=>call(()=>native.presentationIndexV1!(uri,maxFrames),payload=>toMediaPresentationIndex(payload,maxFrames)));
+      },
+    }:{}),
+    ...(typeof native.decodeIndexedFrameV1==="function"?{
+      indexedFrameVersion:1 as const,
+      async decodeIndexedFrame(uri:string,options:DecodeFrameOptions){
+        const request=normalizeFrameOptions(options);
+        return withDecodeCancellation(options.signal,()=>call(()=>native.decodeIndexedFrameV1!(uri,request),payload=>{
+          const nativeTime=(payload&&typeof payload==="object"?payload:{}) as {actualTimeUs?:unknown};
+          if(!isMicros(nativeTime.actualTimeUs)||nativeTime.actualTimeUs!==request.timeUs)throw bad("indexed frame presentation time");
+          const frame=toDecodedFrame(payload);
+          return frame;
+        }));
+      },
+    }:{}),
     probe:uri=>call(()=>native.probe(uri),toMediaProbe),
     async decodeFrame(uri,options){
       const request=normalizeFrameOptions(options);
-      return call(()=>native.decodeFrame(uri,request),toDecodedFrame);
+      return withDecodeCancellation(options.signal,()=>call(()=>native.decodeFrame(uri,request),toDecodedFrame));
     },
     async decodeAudio(uri,options){
       const request=normalizeAudioOptions(options);
@@ -259,4 +319,23 @@ export function createMediaDecoder(native:MediaDecoderNative|null):MediaDecoder{
       try{await native.clearCache();}catch(error){throw toMediaDecodeError(error);}
     },
   };
+}
+
+/** Abort the consumer without sending an imperative AbortSignal through the native bridge. */
+export function withDecodeCancellation<T>(signal: AbortSignal | undefined, run: () => Promise<T>): Promise<T> {
+  if (signal?.aborted) return Promise.reject(new MediaDecodeError("cancelled", "Media decoding was cancelled."));
+  if (!signal) return run();
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const cleanup = () => signal.removeEventListener("abort", abort);
+    const abort = () => {
+      if (settled) return;
+      settled = true; cleanup(); reject(new MediaDecodeError("cancelled", "Media decoding was cancelled."));
+    };
+    signal.addEventListener("abort", abort, { once: true });
+    if (signal.aborted) { abort(); return; }
+    Promise.resolve().then(() => signal.aborted ? Promise.reject(new MediaDecodeError("cancelled", "Media decoding was cancelled.")) : run()).then(value => {
+      if (!settled) { settled = true; cleanup(); resolve(value); }
+    }, error => { if (!settled) { settled = true; cleanup(); reject(error); } });
+  });
 }

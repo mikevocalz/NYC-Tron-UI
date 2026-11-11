@@ -1,0 +1,11 @@
+# P05 mask and clipping ownership
+
+B-12 retains the existing mask editor, shared thumbnail owner and ProCraft notices. Create from reveal/hide/selection, enable, invert, refine, apply and delete remain controlled host requests. Scope/revision, layer, mask revision and permission boundaries retire old drafts and callbacks. Pending mutations reject additional actions and expose actual host failures. Optional AbortSignals let cooperative hosts discard obsolete work. Locked/disabled/pending states retain their reasons, including the refine Reset action.
+
+Mask previews now include the document namespace and forward the thumbnail AbortSignal. Reused layer IDs and mask revisions cannot share images across documents. The mask revision validator follows the thumbnail cache's safe-integer version contract. An uncooperative old thumbnail can finish without replacing the new document's image.
+
+B-13 retains sibling-only clipping, named bases and the decorative LayerStack hierarchy indicator. Clipping accepts the shared parentId field alongside its legacy parent field, rejects ambiguous parents/cycles/invalid metadata and respects inherited group locks. Scoped requests expose errors and optional cancellation. Ownership changes replace the switch's gesture surface, so a press begun in the old document cannot toggle its reused ID. Ordinary controlled clipping acknowledgements preserve the control identity.
+
+Validation passes all 858 source tests, UI build/types and native consumer types. All 22 affected browser checks pass in 14.8 seconds. New checks cover same-ID thumbnail isolation with decoded pixel values, late old-document images, incomplete refine drafts across document/lock/permission changes, locked reset/clipping, error/recovery, selection-only creation, pending mutation replacement and the held clipping press. The legacy mask, artboard and compare cases remain passing. The thumbnail test fixture holds loads separately from mutations so both races are exercised directly.
+
+Review count is 103 of 341. Native runtime, actual engine baking/refinement and eight-platform acceptance are not established by these host-contract examples. P05 continues with artboards and the remaining canvas controls.

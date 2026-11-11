@@ -1,0 +1,9 @@
+# Expression editor checkpoint
+
+G-11 ExpressionEditor uses a native multiline TextInput and separate virtualized completion, reference and diagnostic lists. Completion, validation and application are explicit cancellable host services. The library never evaluates source text. References retain host identities and insert literal text at the saved native selection. Diagnostics select their exact source range; only successful validation of the current document/revision/text without errors enables apply. Warnings remain visible.
+
+Ranges use UTF-16 offsets and reject surrogate-pair splits. Source is limited to 65,536 code units, completion insertions to 4,096, completion responses to 128, diagnostics to 1,000 and references to 10,000. Provider results validate identities, ranges, severity and replacement size before display. Text edits, caret movement, document/revision changes, cancellation and disabling invalidate the appropriate owned request. Native cursor/IME state remains native during ordinary typing; selection is controlled only for requested insertions and diagnostic navigation. Host revisions must change when language-service semantics change. Providers must honor the AbortSignal before external writes.
+
+Three pure model checks cover UTF-16/literal edits, response validation and budgets. Five rendered checks cover completion/reference insertion, diagnostic navigation, current-text validation/apply, stale completion rejection, literal emoji text, service errors, cancellation and document replacement. The fixture provider validates its own sample token and captures source; it is not a production expression engine. Native runtime and eight-platform acceptance remain open.
+
+The native workbench now selects motion sections through the existing Select component so eight section targets do not exceed a narrow reserved pane. App orientation and window contracts are unchanged.

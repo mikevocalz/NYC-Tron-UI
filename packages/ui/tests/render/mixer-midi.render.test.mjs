@@ -18,6 +18,7 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   let path = "root";
   let cursor = 0;
   const effects = [];
+  const layouts = [];
   const timers = [];
   const slot = init => {
     const k = path + "#" + cursor++;
@@ -35,6 +36,15 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   const mocks = {
     react: {
       useRef: v => slot(() => ({ current: v })),
+      createContext: value => ({_value:value}),
+      useContext: context => context._value,
+      useLayoutEffect: (fn, deps) => {
+        const s = slot(() => ({ deps: undefined, cleanup: undefined }));
+        if (!s.deps || !deps || deps.some((d, i) => d !== s.deps[i])) {
+          s.deps = deps;
+          layouts.push(() => { s.cleanup?.(); s.cleanup=fn(); });
+        }
+      },
       useEffect: (fn, deps) => {
         const s = slot(() => ({ deps: undefined }));
         if (!s.deps || !deps || deps.some((d, i) => d !== s.deps[i])) { s.deps = deps; effects.push(fn); }
@@ -51,6 +61,7 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
       Platform: { OS: os },
       PanResponder: { create: config => ({ panHandlers: { __responder: config } }) },
     },
+    "react-native-gesture-handler": {GestureDetector:"GestureDetector",usePanGesture:options=>options,useTapGesture:options=>options,useCompetingGestures:(...gestures)=>gestures},
     "zustand/vanilla": { createStore: store },
     zustand: { useStore: (s, selector) => selector(s.getState()) },
   };
@@ -58,7 +69,7 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   const context = {
     setTimeout: (fn, ms) => { const t = { fn, ms, live: true }; timers.push(t); return t; },
     clearTimeout: t => { if (t) t.live = false; },
-    Date,
+    Date, AbortController,
   };
   function load(file) {
     if (cache.has(file)) return cache.get(file);
@@ -91,14 +102,19 @@ function harness({ rtl = false, os = "ios", opaque = [] } = {}) {
   }
   return {
     module: rel => load(resolve(src, rel)),
-    render: (Component, props) => {
+    render: (Component, props, commit = true) => {
       path = "root"; cursor = 0;
-      return expand({ type: Component, props, key: undefined }, "root");
+      const tree=expand({ type: Component, props, key: undefined }, "root");
+      if (commit) for (const effect of layouts.splice(0)) effect();
+      return tree;
     },
+    commitLayouts: () => { for (const effect of layouts.splice(0)) effect(); },
     flushEffects: () => { for (const fn of effects.splice(0)) fn(); },
     runTimers: () => { for (const t of timers.splice(0)) if (t.live) t.fn(); },
   };
 }
+// Separate user events run after the preceding host acknowledgement settles.
+const settle = () => new Promise(resolve => setImmediate(resolve));
 const kids = n => [n?.props?.children].flat(Infinity).filter(x => x && typeof x === "object");
 function findAll(n, pred, out = []) {
   if (!n || typeof n !== "object") return out;
@@ -154,7 +170,7 @@ test("PanControl: arrows, Home and screen-reader actions step physically, RTL in
   assert.equal(centre.props.style.minHeight, 44);
 });
 
-test("SoloMuteButtons request the opposite state and show solo silencing", () => {
+test("SoloMuteButtons request the opposite state and show solo silencing", async () => {
   const h = harness();
   const { SoloMuteButtons } = h.module("forge/audio/SoloMuteButtons.tsx");
   const calls = [];
@@ -164,14 +180,14 @@ test("SoloMuteButtons request the opposite state and show solo silencing", () =>
   const solo = byLabel(tree, "Solo Drums");
   assert.equal(mute.props.accessibilityRole, "togglebutton");
   assert.deepEqual(plain(solo.props.accessibilityState), { checked: true, disabled: false });
-  mute.props.onPress(); solo.props.onPress();
+  mute.props.onPress(); await settle(); solo.props.onPress();
   assert.deepEqual(calls, [["mute", true], ["solo", false]]);
   const silenced = byLabel(h.render(SoloMuteButtons, { label: "Bass", muted: false, solo: false,
     audibility: "silenced-by-solo", onMutedCommit() {}, onSoloCommit() {} }), "Mute Bass");
   assert.equal(silenced.props.accessibilityHint, "Silent while another channel is soloed");
 });
 
-test("MixingConsole routes each strip's commits with its channel id", () => {
+test("MixingConsole routes each strip's commits with its channel id", async () => {
   const h = harness();
   const { MixingConsole } = h.module("forge/audio/MixingConsole.tsx");
   const calls = [];
@@ -183,7 +199,9 @@ test("MixingConsole routes each strip's commits with its channel id", () => {
     onGainCommit: (id, v) => calls.push(["gain", id, v]), onPanCommit: (id, v) => calls.push(["pan", id, v]),
     onMutedCommit: (id, v) => calls.push(["mute", id, v]), onSoloCommit: (id, v) => calls.push(["solo", id, v]) });
   byLabel(tree, "Mute Bass").props.onPress();
+  await settle();
   byLabel(tree, "Bass pan").props.onKeyDown(key("ArrowRight"));
+  await settle();
   find(tree, n => n.props?.accessibilityLabel === "Kick" && n.props.accessibilityRole === "adjustable")
     .props.onAccessibilityAction({ nativeEvent: { actionName: "decrement" } });
   assert.deepEqual(calls.map(c => c.slice(0, 2)), [["mute", 2], ["pan", 2], ["gain", 1]]);
@@ -247,7 +265,45 @@ test("MIDIPianoRoll: end grip resizes; interrupted drags and taps commit nothing
   assert.equal(noteNode(h.render(MIDIPianoRoll, props), "C4").props.style.left, 0, "cancel restores");
 });
 
-test("MIDIPianoRoll: keyboard and screen-reader actions edit the focused note", () => {
+test("MIDIPianoRoll: a note acknowledgement cancels an active gesture without replacing its body", () => {
+  const h = harness();
+  const { MIDIPianoRoll } = h.module("forge/midi/MIDIPianoRoll.tsx");
+  const calls = [];
+  const props = rollProps(calls);
+  const tree = h.render(MIDIPianoRoll, props);
+  const gesture = noteNode(tree, "E4").props.__responder;
+  gesture.onPanResponderGrant();
+  gesture.onPanResponderMove({}, { dx: 96, dy: -88 });
+  const changed = { ...props, notes: props.notes.map((note, index) => index === 1 ? { ...note, lengthTicks: 720 } : note) };
+  h.render(MIDIPianoRoll, changed);
+  gesture.onPanResponderMove({}, { dx: 144, dy: -44 });
+  gesture.onPanResponderRelease();
+  assert.deepEqual(calls, [["select", 1]], "a stale drag cannot commit against acknowledged notes");
+  const restored = noteNode(h.render(MIDIPianoRoll, changed), "E4");
+  assert.equal(restored.props.style.left, 96);
+});
+
+test("MIDIPianoRoll: an uncommitted note render cannot replace live responder data or callbacks", () => {
+  const h = harness();
+  const { MIDIPianoRoll } = h.module("forge/midi/MIDIPianoRoll.tsx");
+  const calls = [], replacementCalls = [];
+  const props = rollProps(calls);
+  const gesture = noteNode(h.render(MIDIPianoRoll, props), "E4").props.__responder;
+  gesture.onPanResponderGrant();
+  h.render(MIDIPianoRoll, { ...rollProps(replacementCalls),
+    notes: props.notes.map((note, index) => index === 1 ? { ...note, startTicks: 1920, pitch: 70 } : note),
+  }, false);
+  gesture.onPanResponderMove({}, { dx: 48, dy: -44 });
+  gesture.onPanResponderRelease();
+  assert.deepEqual(calls, [["select", 1], ["move", 1, 1440, 65]], "the live gesture uses the last committed note and callback");
+  assert.deepEqual(replacementCalls, []);
+  h.commitLayouts();
+  gesture.onPanResponderMove({}, { dx: 96, dy: -88 });
+  gesture.onPanResponderRelease();
+  assert.deepEqual(replacementCalls, [], "committing the replacement cancels the old gesture");
+});
+
+test("MIDIPianoRoll: keyboard and screen-reader actions edit the focused note", async () => {
   const h = harness({ os: "web" });
   const { MIDIPianoRoll } = h.module("forge/midi/MIDIPianoRoll.tsx");
   const calls = [];
@@ -255,9 +311,13 @@ test("MIDIPianoRoll: keyboard and screen-reader actions edit the focused note", 
   const note = noteNode(tree, "C4");
   assert.equal(note.props.accessibilityLabel, "C4, beat 1, 0.50 beats long, velocity 100");
   note.props.onKeyDown(key("ArrowUp"));
+  await settle();
   note.props.onKeyDown(key("ArrowRight", { shiftKey: true }));
+  await settle();
   note.props.onKeyDown(key("Delete"));
+  await settle();
   note.props.onAccessibilityAction({ nativeEvent: { actionName: "moveLater" } });
+  await settle();
   assert.deepEqual(calls, [["move", 0, 0, 61], ["resize", 0, 720], ["remove", 0], ["move", 0, 240, 60]]);
   assert.equal(note.props.style.direction, undefined);
   const grid = find(tree, n => n.type === "ScrollView" && n.props.horizontal);
@@ -276,7 +336,7 @@ test("MIDIPianoRoll: tapping an empty cell adds a one-step note there", () => {
   assert.equal(find(readOnly, n => n.type === "Pressable" && n.props.accessible === false).props.disabled, true);
 });
 
-test("MIDIVelocityLane: vertical drag commits once; keys step", () => {
+test("MIDIVelocityLane: vertical drag commits once; keys step", async () => {
   const h = harness();
   const { MIDIVelocityLane } = h.module("forge/midi/MIDIVelocityLane.tsx");
   const calls = [];
@@ -292,12 +352,15 @@ test("MIDIVelocityLane: vertical drag commits once; keys step", () => {
   assert.equal(byLabel(h.render(MIDIVelocityLane, props), "Velocity of E4 note 2").props.accessibilityValue.now, 110);
   g.onPanResponderRelease();
   assert.deepEqual(calls, [[1, 110]]);
+  await settle();
   bar.props.onKeyDown(key("ArrowUp"));
+  await settle();
   bar.props.onKeyDown(key("PageDown"));
+  await settle();
   assert.deepEqual(calls.slice(1), [[1, 84], [1, 64]]);
 });
 
-test("StepSequencer: press toggles notes, long press accents", () => {
+test("StepSequencer: press toggles notes, long press accents", async () => {
   const h = harness();
   const { StepSequencer } = h.module("forge/midi/StepSequencer.tsx");
   const calls = [];
@@ -309,8 +372,11 @@ test("StepSequencer: press toggles notes, long press accents", () => {
   const on = byLabel(tree, "Kick, step 1");
   assert.deepEqual(plain(on.props.accessibilityState), { checked: true, disabled: false });
   on.props.onPress();
+  await settle();
   on.props.onLongPress();
+  await settle();
   on.props.onKeyDown(key("a"));
+  await settle();
   byLabel(tree, "Snare, step 5").props.onPress();
   assert.deepEqual(calls, [["remove", 0], ["vel", 0, 127], ["vel", 0, 127], ["add", 38, 960, 240, 96]]);
   assert.equal(byLabel(tree, "Snare, step 5").props.style.width, 44);
@@ -318,7 +384,7 @@ test("StepSequencer: press toggles notes, long press accents", () => {
     onStepAdd() {}, onStepRemove() {}, onStepVelocity() {} }), /fit/);
 });
 
-test("TempoAndMetronome: tap tempo commits once after the taps stop", () => {
+test("TempoAndMetronome: tap tempo commits once after the taps stop", async () => {
   const h = harness({ opaque: ["PrecisionScrubber"] });
   const { TempoAndMetronome } = h.module("forge/audio/TempoAndMetronome.tsx");
   const commits = []; const sigs = [];
@@ -333,12 +399,18 @@ test("TempoAndMetronome: tap tempo commits once after the taps stop", () => {
   const scrubber = find(tree, n => n.type?.name === "PrecisionScrubber");
   assert.equal(scrubber.props.min, 20);
   assert.equal(scrubber.props.max, 400);
-  assert.equal(scrubber.props.onCommit, props.onTempoCommit, "tempo drags commit straight through");
+  scrubber.props.onCommit(130);
+  assert.deepEqual(commits,[130],"tempo drag reaches the host through the ownership guard");
+  await settle();
   h.runTimers();
-  assert.deepEqual(commits, [120]);
+  await settle();
+  assert.deepEqual(commits, [130,120]);
   byLabel(tree, "More beats per bar").props.onPress();
+  await settle();
   byLabel(tree, "Beat unit 8").props.onPress();
+  await settle();
   byLabel(tree, "Beat unit 4").props.onPress();
+  await settle();
   assert.deepEqual(plain(sigs), [[5, 4], [4, 8]], "re-choosing the current unit commits nothing");
   assert.equal(byLabel(tree, "Metronome"), undefined, "no switch without a click to switch");
   const withClick = h.render(TempoAndMetronome, { ...props, beat: 2, metronome: { enabled: false, onChange: v => sigs.push(v) } });
@@ -354,16 +426,16 @@ test("WaveformLane: sideways drag scrolls the window once; a tap seeks inside it
   const peaks = Array.from({ length: 400 }, () => ({ min: -0.5, max: 0.5 }));
   const props = { peaks, columns: 64, visibleRange: { start: 0.5, end: 0.75 },
     onSeekNormalized: v => seeks.push(v), onVisibleRangeCommit: r => ranges.push(r) };
-  const tree = h.render(WaveformLane, props);
+  const tree = find(h.render(WaveformLane, props),n=>n.props?.__responder);
   tree.props.onLayout({ nativeEvent: { layout: { width: 200 } } });
   const g = tree.props.__responder;
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 3, dy: 0 });
+  g.onPanResponderGrant({ nativeEvent: { touches: [{}] } });
+  g.onPanResponderMove({}, { dx: 3, dy: 0, numberActiveTouches: 1 });
   g.onPanResponderRelease({ nativeEvent: { locationX: 100 } });
   assert.deepEqual(seeks, [0.625], "a short move is a tap");
-  g.onPanResponderGrant();
-  g.onPanResponderMove({}, { dx: 40, dy: 0 });
-  g.onPanResponderMove({}, { dx: 80, dy: 0 });
+  g.onPanResponderGrant({ nativeEvent: { touches: [{}] } });
+  g.onPanResponderMove({}, { dx: 40, dy: 0, numberActiveTouches: 1 });
+  g.onPanResponderMove({}, { dx: 80, dy: 0, numberActiveTouches: 1 });
   g.onPanResponderRelease({ nativeEvent: { locationX: 100 } });
   assert.deepEqual(plain(ranges), [{ start: 0.4, end: 0.65 }]);
   assert.equal(seeks.length, 1, "a scroll does not seek");

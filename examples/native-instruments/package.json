@@ -14,16 +14,21 @@
     "@nyc-tron/core": "workspace:*",
     "@nyc-tron/expo-controls": "workspace:*",
     "@nyc-tron/hardware-keys": "workspace:*",
+    "@nyc-tron/native-charts": "workspace:*",
     "@nyc-tron/native-controls": "workspace:*",
+    "@nyc-tron/native-navigation": "workspace:*",
     "@nyc-tron/platform-services": "workspace:*",
     "@nyc-tron/reserved-regions": "workspace:*",
     "@nyc-tron/ui": "workspace:*",
     "expo": "58.0.23",
     "react": "19.3.0",
     "react-native": "0.88.1",
+    "react-native-gesture-handler": "3.4.0",
+    "react-native-safe-area-context": "5.11.1",
+    "tailwindcss": "4.3.3",
+    "uniwind": "1.13.2",
     "zustand": "5.0.16",
-    "@nyc-tron/native-charts": "workspace:*",
-    "@nyc-tron/native-navigation": "workspace:*"
+    "react-native-skia": "3.9.1"
   },
   "devDependencies": {
     "@types/react": "~19.3.0",
