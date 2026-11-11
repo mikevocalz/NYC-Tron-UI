@@ -57,7 +57,6 @@ using namespace facebook::react;
     _popover = [NSPopover new];
     _popover.behavior = NSPopoverBehaviorTransient;
     _popover.delegate = self;
-    [self observePopoverNotifications];
     NYCTronPopoverContentController *controller = [NYCTronPopoverContentController new];
     controller.view = _content; controller.popover = _popover;
     _popover.contentViewController = controller;
@@ -96,11 +95,11 @@ using namespace facebook::react;
   return YES;
 }
 - (void)synchronizePresentation {
-  if (_closing) { NSLog(@"NYCTronPopover sync=skip-closing scope=%@", _scopeToken); return; }
-  if (!_visible || !_owner || !_content.subviews.count) { NSLog(@"NYCTronPopover sync=close-silent visible=%d owner=%d subviews=%lu scope=%@ shown=%d", _visible, _owner != nil, (unsigned long)_content.subviews.count, _scopeToken, _popover.shown); [self closeSilently]; return; }
-  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) { NSLog(@"NYCTronPopover sync=skip-token dismissed=%d rejected=%d scope=%@ presentation=%@", [_dismissedToken isEqual:_scopeToken], [_rejectedPresentationToken isEqual:_presentationToken], _scopeToken, _presentationToken); return; }
+  if (_closing) return;
+  if (!_visible || !_owner || !_content.subviews.count) { [self closeSilently]; return; }
+  if ([_dismissedToken isEqual:_scopeToken] || [_rejectedPresentationToken isEqual:_presentationToken]) return;
   NSView *positioningView = _owner.contentView;
-  if (!positioningView || !_owner.visible || _owner.miniaturized) { NSLog(@"NYCTronPopover sync=owner-unavailable view=%d visible=%d mini=%d", positioningView != nil, _owner.visible, _owner.miniaturized); [self closeSilently]; return; }
+  if (!positioningView || !_owner.visible || _owner.miniaturized) { [self closeSilently]; return; }
   NSRect anchor = _anchor;
   // The public contract uses top-left owner-content coordinates.
   if (!positioningView.isFlipped) anchor.origin.y = NSHeight(positioningView.bounds) - NSMaxY(anchor);
@@ -133,14 +132,12 @@ using namespace facebook::react;
     if (_popover.shown && _content.window) {
       NSRect probe = [positioningView convertRect:[_owner convertRectFromScreen:_content.window.frame] fromView:nil];
       if (!positioningView.isFlipped) probe.origin.y = NSHeight(positioningView.bounds) - NSMaxY(probe);
-      NSLog(@"NYCTronPopover sync=probe edge=%ld actual=%@ allowed=%@ fits=%d", (long)candidate.integerValue, NSStringFromRect(probe), NSStringFromRect(_allowedRegion), NSContainsRect(_allowedRegion, probe));
       if (NSContainsRect(_allowedRegion, probe)) { _edge = (NSRectEdge)candidate.integerValue; _hasEdge = YES; fitted = YES; break; }
     }
   }
   // No edge fits: present the preferred edge so the rejection below reports its frame.
   if (!fitted) { _popover.animates = NO; [_popover showRelativeToRect:anchor ofView:positioningView preferredEdge:edge]; }
   _popover.animates = savedAnimates;
-  NSLog(@"NYCTronPopover sync=presented presenting=%d shown=%d anchor=%@ allowed=%@ content=%@ view=%@ scope=%@", presenting, _popover.shown, NSStringFromRect(anchor), NSStringFromRect(_allowedRegion), NSStringFromSize(_contentSize), NSStringFromRect(positioningView.bounds), _scopeToken);
   if (_popover.shown && _content.window) {
     [_content layoutSubtreeIfNeeded];
     // NSWindow.frame includes AppKit's popover border and arrow. The separate
@@ -148,7 +145,6 @@ using namespace facebook::react;
     NSRect screenRect = _content.window.frame;
     NSRect actual = [positioningView convertRect:[_owner convertRectFromScreen:screenRect] fromView:nil];
     if (!positioningView.isFlipped) actual.origin.y = NSHeight(positioningView.bounds) - NSMaxY(actual);
-    NSLog(@"NYCTronPopover sync=placement actual=%@ allowed=%@ fits=%d", NSStringFromRect(actual), NSStringFromRect(_allowedRegion), NSContainsRect(_allowedRegion, actual));
     if (NSContainsRect(_allowedRegion, actual)) {
       // Initial controls remain hidden until the matching Fabric layout has
       // committed. A shown field stays visible through safe geometry changes.
@@ -230,18 +226,9 @@ using namespace facebook::react;
   [childComponentView removeFromSuperview];
   [self schedulePresentation];
 }
-- (void)observePopoverNotifications {
-  for (NSNotificationName name in @[NSPopoverWillCloseNotification, NSPopoverDidCloseNotification]) {
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(popoverNotificationObserved:) name:name object:_popover];
-  }
-}
-- (void)popoverNotificationObserved:(NSNotification *)notification {
-  NSLog(@"NYCTronPopover phase=center-%@ delegateIsSelf=%d", notification.name, _popover.delegate == self);
-}
 - (void)emitDismissIfUserInitiated {
-  // AppKit posts popoverDidClose only after the close animation completes. The
-  // dismissal intent is known at popoverWillClose, so React is told then and
-  // does not wait on animation completion.
+  // A non-silent close is a user dismissal (Escape, click outside, performClose).
+  // React is told at popoverWillClose; popoverDidClose restores focus.
   if (_silentClose || !_visible || ![_presentedToken isEqual:_scopeToken] || [_dismissedToken isEqual:_scopeToken]) return;
   _dismissedToken = [_presentedToken copy];
   auto emitter = std::static_pointer_cast<const NYCTronPopoverEventEmitter>(_eventEmitter);
@@ -255,12 +242,10 @@ using namespace facebook::react;
   _closing = YES;
   NSWindow *key = NSApp.keyWindow;
   _restoreFocus = !key || key == _owner || key == _content.window;
-  NSLog(@"NYCTronPopover phase=will-close silent=%d visible=%d presented=%@ scope=%@ emitter=%d", _silentClose, _visible, _presentedToken, _scopeToken, _eventEmitter != nullptr);
   [self emitDismissIfUserInitiated];
 }
 - (void)popoverDidClose:(NSNotification *)notification {
-  BOOL silent = _silentClose; _silentClose = NO; _closing = NO;
-  NSLog(@"NYCTronPopover phase=did-close silent=%d visible=%d presented=%@ dismissed=%@", silent, _visible, _presentedToken, _dismissedToken);
+  _silentClose = NO; _closing = NO;
   // Do not replace a focus choice made in another window while this closed.
   NSWindow *key = NSApp.keyWindow;
   if (_restoreFocus && (!key || key == _owner) && _owner.visible && !_owner.miniaturized &&

@@ -146,37 +146,6 @@ static void ClearResponder(void) {
 }
 @end
 
-// Diagnostics only: wrap the drag view's mouse handlers to log the state that
-// gates beginDraggingSessionWithItems (ivars read through KVC). Behavior is
-// unchanged; each wrapper calls the original implementation.
-static NSString *DragState(RNDesktopDragView *view) {
-  @try {
-    NSPoint start = [[view valueForKey:@"_start"] pointValue];
-    return [NSString stringWithFormat:@"mouseDown=%@ dragging=%@ disabled=%@ sourceCount=%lu start=%@ key=%d", [view valueForKey:@"_mouseDown"], [view valueForKey:@"_dragging"], [view valueForKey:@"_disabled"], (unsigned long)[[view valueForKey:@"_source"] count], NSStringFromPoint(start), view.window.keyWindow];
-  } @catch (NSException *e) { return [NSString stringWithFormat:@"state-unavailable %@", e.reason]; }
-}
-static void InstallDragDiagnostics(void) {
-  static dispatch_once_t once;
-  dispatch_once(&once, ^{
-    Class cls = RNDesktopDragView.class;
-    struct { SEL sel; const char *name; } entries[] = { { @selector(mouseDown:), "mouseDown" }, { @selector(mouseDragged:), "mouseDragged" }, { @selector(mouseUp:), "mouseUp" } };
-    for (auto &entry : entries) {
-      Method method = class_getInstanceMethod(cls, entry.sel);
-      if (!method) { NSLog(@"NYCTronDrag wrap=%s missing", entry.name); continue; }
-      IMP original = method_getImplementation(method);
-      const char *name = entry.name; SEL selector = entry.sel;
-      __block NSInteger count = 0;
-      method_setImplementation(method, imp_implementationWithBlock(^(RNDesktopDragView *self_, NSEvent *event) {
-        NSInteger n = ++count;
-        NSString *before = DragState(self_);
-        ((void (*)(id, SEL, NSEvent *))original)(self_, selector, event);
-        if (n <= 3 || strcmp(name, "mouseDragged") != 0)
-          NSLog(@"NYCTronDrag %s#%ld loc=%@ before[%@] afterDragging=%@ session=%d", name, (long)n, NSStringFromPoint(event.locationInWindow), before, [self_ valueForKey:@"_dragging"], PointerSession != nil);
-      }));
-    }
-  });
-}
-
 static NSScreen *PrimaryScreen(void) {
   for (NSScreen *screen in NSScreen.screens) if ([screen.deviceDescription[@"NSScreenNumber"] unsignedIntValue] == CGMainDisplayID()) return screen;
   return nil;
@@ -489,23 +458,10 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       NYCTronPopoverComponentView *component = (NYCTronPopoverComponentView *)view;
       NSPopover *popover = component.nativePopover;
       NSView *content = popover.contentViewController.view;
-      NSMutableDictionary *closeTrace = nil;
-      if ([request[@"action"] isEqual:@"escape"] || [request[@"action"] isEqual:@"close"]) {
-        BOOL escape = [request[@"action"] isEqual:@"escape"];
-        closeTrace = [@{ @"shownBefore": @(popover.shown), @"animates": @(popover.animates), @"behavior": @(popover.behavior),
-          @"delegateClass": popover.delegate ? NSStringFromClass([(id)popover.delegate class]) : @"nil",
-          @"delegateIsComponent": @(popover.delegate == (id)component),
-          @"controllerClass": NSStringFromClass(popover.contentViewController.class),
-          @"controllerResponds": @([popover.contentViewController respondsToSelector:@selector(cancelOperation:)]),
-          @"popoverWindowVisible": @(content.window.visible) } mutableCopy];
-        if (escape) closeTrace[@"performed"] = @([popover.contentViewController tryToPerform:@selector(cancelOperation:) with:nil]);
-        else [popover performClose:nil];
-        closeTrace[@"shownAfter"] = @(popover.shown);
-        NSLog(@"NYCTronPopoverDriver close-trace %@", closeTrace);
-      }
+      if ([request[@"action"] isEqual:@"escape"]) [popover.contentViewController tryToPerform:@selector(cancelOperation:) with:nil];
+      else if ([request[@"action"] isEqual:@"close"]) [popover performClose:nil];
       NSMutableArray *classes = [NSMutableArray new]; Classes(content, classes);
       NSMutableDictionary *result = [@{ @"ok": @YES, @"nativePopover": @([popover isKindOfClass:NSPopover.class]), @"class": NSStringFromClass(popover.class), @"shown": @(popover.shown), @"contentVisible": @(!content.hidden), @"contentIdentity": [NSString stringWithFormat:@"%p", content], @"classes": classes, @"region": RectDictionary(component.nativeAllowedRegion) } mutableCopy];
-      if (closeTrace) result[@"closeTrace"] = closeTrace;
       if (popover.shown && content.window) result[@"frame"] = RectDictionary(OwnerCoordinates(owner, content.window.frame));
       reply(result);
     });
@@ -724,7 +680,6 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
         // 460x420 is the document window's declared minSize (App.tsx openDocument),
         // so both windows stay at or above a size the app itself allows. The two
         // frames still sit side by side without overlap inside visibleFrame.
-        NSLog(@"NYCTronPointer arrange screen=%@ visible=%@ width=%.0f height=%.0f", NSStringFromRect(primary.frame), NSStringFromRect(area), width, height);
         if (width < 460 || height < 420) { reply(Failure(@"Primary display is too small for two unobscured native drag surfaces")); return; }
         [sourceWindow setFrame:NSMakeRect(NSMinX(area) + 8, NSMinY(area) + 8, width, height) display:YES];
         [targetWindow setFrame:NSMakeRect(NSMaxX(area) - width - 8, NSMinY(area) + 8, width, height) display:YES];
@@ -737,13 +692,11 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       if (![source isKindOfClass:RNDesktopDragView.class] || ![target isKindOfClass:RNDesktopDragView.class]) { reply(Failure(@"Expected installed native drag surfaces")); return; }
       [source scrollRectToVisible:source.bounds]; [target scrollRectToVisible:target.bounds];
       [sourceWindow layoutIfNeeded]; [targetWindow layoutIfNeeded];
-      InstallDragDiagnostics();
       // Run 43005945813 logged a start point of y=-204 in source coordinates and a
       // button under it: visibleRect here is not clipped to the view's bounds
       // (it contains them), so its center is outside the surface. Use the part
       // of visibleRect that lies inside the view's bounds.
       NSRect sourceVisible = NSIntersectionRect(source.visibleRect, source.bounds), targetVisible = NSIntersectionRect(target.visibleRect, target.bounds);
-      NSLog(@"NYCTronPointer drag sourceBounds=%@ sourceVisibleRaw=%@ targetBounds=%@ targetVisibleRaw=%@", NSStringFromRect(source.bounds), NSStringFromRect(source.visibleRect), NSStringFromRect(target.bounds), NSStringFromRect(target.visibleRect));
       if (NSIsEmptyRect(sourceVisible) || NSIsEmptyRect(targetVisible)) { reply(Failure(@"A native drag surface is outside its visible scroll region")); return; }
       // The surface contains selectable text. A mouse-down on that text starts a
       // text selection instead of the drag source, so start at a point whose
@@ -751,7 +704,6 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       // padding edge), falling back to the center.
       NSPoint startInSource = NSMakePoint(NSMidX(sourceVisible), NSMidY(sourceVisible));
       NSView *frameView = sourceWindow.contentView.superview;
-      NSView *centerHit = [frameView hitTest:[source convertPoint:startInSource toView:nil]];
       BOOL foundOwnPoint = NO;
       for (CGFloat fy = 0.5; fy <= 0.95 && !foundOwnPoint; fy += 0.15) {
         for (CGFloat inset = 4; inset <= 12 && !foundOwnPoint; inset += 4) {
@@ -759,19 +711,8 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
           if ([frameView hitTest:[source convertPoint:candidate toView:nil]] == source) { startInSource = candidate; foundOwnPoint = YES; }
         }
       }
-      NSView *startHit = [frameView hitTest:[source convertPoint:startInSource toView:nil]];
-      NSLog(@"NYCTronPointer drag centerHit=%@ startHit=%@ ownPoint=%d start=%@ key=%d active=%d sourceKey=%d", NSStringFromClass(centerHit.class), NSStringFromClass(startHit.class), foundOwnPoint, NSStringFromPoint(startInSource), NSApp.keyWindow == sourceWindow, NSApp.active, sourceWindow.keyWindow);
       if (!NSApp.active) [NSApp activateIgnoringOtherApps:YES];
       if (!sourceWindow.keyWindow) [sourceWindow makeKeyAndOrderFront:nil];
-      NSLog(@"NYCTronPointer drag afterActivate key=%d active=%d", sourceWindow.keyWindow, NSApp.active);
-      __block NSInteger seenDown = 0, seenDragged = 0, seenUp = 0;
-      id monitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown | NSEventMaskLeftMouseDragged | NSEventMaskLeftMouseUp) handler:^NSEvent *(NSEvent *event) {
-        if (event.type == NSEventTypeLeftMouseDown) { seenDown++; NSLog(@"NYCTronPointer event=down window=%ld loc=%@ hit=%@", (long)event.windowNumber, NSStringFromPoint(event.locationInWindow), NSStringFromClass([event.window.contentView.superview hitTest:event.locationInWindow].class)); }
-        else if (event.type == NSEventTypeLeftMouseDragged) { if (++seenDragged == 1) NSLog(@"NYCTronPointer event=first-drag window=%ld loc=%@", (long)event.windowNumber, NSStringFromPoint(event.locationInWindow)); }
-        else { seenUp++; NSLog(@"NYCTronPointer event=up window=%ld down=%ld dragged=%ld", (long)event.windowNumber, (long)seenDown, (long)seenDragged); }
-        return event;
-      }];
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [NSEvent removeMonitor:monitor]; NSLog(@"NYCTronPointer events down=%ld dragged=%ld up=%ld", (long)seenDown, (long)seenDragged, (long)seenUp); });
       NSPoint sourcePoint = [sourceWindow convertPointToScreen:[source convertPoint:startInSource toView:nil]];
       NSPoint targetPoint = [targetWindow convertPointToScreen:[target convertPoint:NSMakePoint(NSMidX(targetVisible), NSMidY(targetVisible)) toView:nil]];
       CGPoint start = QuartzPoint(sourcePoint, primary), end = QuartzPoint(targetPoint, primary);
