@@ -39,6 +39,9 @@ class TronPointerCaptureView(context:Context):View(context){
   }
   private fun samples(event:MotionEvent,index:Int)= (0 until event.historySize).map{sample(event,index,it)}+sample(event,index)
   override fun onTouchEvent(event:MotionEvent):Boolean {
+    // Compose/ViewGroup may send an empty cancel with no original contact identity.
+    // Cancel the retained observations, including every active pointer, instead.
+    if(event.actionMasked==MotionEvent.ACTION_CANCEL){cancelTouches();return true}
     if(event.actionMasked==MotionEvent.ACTION_DOWN){requestFocus();parent?.requestDisallowInterceptTouchEvent(true)}
     var prediction:MotionEvent?=null
     if(Build.VERSION.SDK_INT>=34){
@@ -52,19 +55,19 @@ class TronPointerCaptureView(context:Context):View(context){
         }
       }
     }
-    val phase=when(event.actionMasked){MotionEvent.ACTION_DOWN,MotionEvent.ACTION_POINTER_DOWN->"down";MotionEvent.ACTION_MOVE->"move";MotionEvent.ACTION_UP,MotionEvent.ACTION_POINTER_UP->"up";MotionEvent.ACTION_CANCEL->"cancel";else->{prediction?.recycle();return false}}
+    val phase=when(event.actionMasked){MotionEvent.ACTION_DOWN,MotionEvent.ACTION_POINTER_DOWN->"down";MotionEvent.ACTION_MOVE->"move";MotionEvent.ACTION_UP,MotionEvent.ACTION_POINTER_UP->"up";else->{prediction?.recycle();return false}}
     try {
-      val indices=if(phase=="move"||phase=="cancel")0 until event.pointerCount else event.actionIndex..event.actionIndex
+      val indices=if(phase=="move")0 until event.pointerCount else event.actionIndex..event.actionIndex
       for(index in indices){
         val point=sample(event,index)
         val actual=if(phase=="move")samples(event,index) else listOf(point)
         val predictedIndex=prediction?.findPointerIndex(event.getPointerId(index))?:-1
         val predicted=if(predictedIndex>=0) samples(prediction!!,predictedIndex) else emptyList()
-        if(phase=="up"||phase=="cancel")latest.remove(point.pointerId) else latest[point.pointerId]=point
+        if(phase=="up")latest.remove(point.pointerId) else latest[point.pointerId]=point
         emitBatch?.invoke(TronPointerBatch(phase,actual,predicted))
       }
     } finally {prediction?.recycle()}
-    if(event.actionMasked==MotionEvent.ACTION_UP||event.actionMasked==MotionEvent.ACTION_CANCEL){predictors.remove(event.deviceId);parent?.requestDisallowInterceptTouchEvent(false)}
+    if(event.actionMasked==MotionEvent.ACTION_UP){predictors.remove(event.deviceId);parent?.requestDisallowInterceptTouchEvent(false)}
     return true
   }
   override fun onHoverEvent(event:MotionEvent):Boolean {
@@ -85,10 +88,13 @@ class TronPointerCaptureView(context:Context):View(context){
   override fun onWindowFocusChanged(hasWindowFocus:Boolean){super.onWindowFocusChanged(hasWindowFocus);if(!hasWindowFocus)cancelInput()}
   override fun onFocusChanged(gainFocus:Boolean,direction:Int,previouslyFocusedRect:Rect?){super.onFocusChanged(gainFocus,direction,previouslyFocusedRect);if(!gainFocus)cancelInput()}
   override fun onDetachedFromWindow(){cancelInput();super.onDetachedFromWindow()}
-  private fun cancelInput(){
+  private fun cancelTouches(){
     val pending=latest.values.toList();latest.clear();predictors.clear()
     parent?.requestDisallowInterceptTouchEvent(false)
     pending.forEach{emitBatch?.invoke(TronPointerBatch("cancel",listOf(it),emptyList()))}
+  }
+  private fun cancelInput(){
+    cancelTouches()
     val hovers=hovering.values.toList();hovering.clear()
     hovers.forEach{emitBatch?.invoke(TronPointerBatch("hover-exit",listOf(it),emptyList()))}
     val keys=heldKeys.values.toList();heldKeys.clear();keys.forEach{emitKey?.invoke(it.copy(phase="up",repeat=false))}
