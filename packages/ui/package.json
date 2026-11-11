@@ -1,7 +1,17 @@
 {
   "name": "@nyc-tron/ui",
-  "version": "0.1.0-alpha.4",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI/tree/main/packages/ui#readme",
+  "bugs": {
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "exports": {
@@ -306,6 +316,11 @@
       "react-native": "./dist/components/forge/range-tsv.js",
       "default": "./dist/components/forge/range-tsv.js"
     },
+    "./components/forge/range-paste": {
+      "types": "./dist/components/forge/range-paste.d.ts",
+      "react-native": "./dist/components/forge/range-paste.js",
+      "default": "./dist/components/forge/range-paste.js"
+    },
     "./components/forge/formula-refs": {
       "types": "./dist/components/forge/formula-refs.d.ts",
       "react-native": "./dist/components/forge/formula-refs.js",
@@ -325,6 +340,11 @@
       "types": "./dist/components/forge/inputs/InstrumentXYPad.d.ts",
       "react-native": "./dist/components/forge/inputs/InstrumentXYPad.js",
       "default": "./dist/components/forge/inputs/InstrumentXYPad.js"
+    },
+    "./components/data/tree-row-heights": {
+      "types": "./dist/components/data/tree-row-heights.d.ts",
+      "react-native": "./dist/components/data/tree-row-heights.js",
+      "default": "./dist/components/data/tree-row-heights.js"
     },
     "./components/data/tree-grid": {
       "types": "./dist/components/data/tree-grid.d.ts",
@@ -2835,6 +2855,7 @@
     "dist",
     "README.md",
     "THIRD_PARTY_NOTICES.md",
-    "licenses"
+    "licenses",
+    "LICENSE"
   ]
 }

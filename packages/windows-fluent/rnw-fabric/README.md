@@ -77,7 +77,15 @@ RNW project files expect a solution context (`SolutionDir` locates
 **Evidence (November 5, 2026):** all four lanes above passed at commit
 `7ce5473` in
 [Actions run 42053160714](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42053160714).
-Subsequent changes require their own green run.
+Subsequent changes require their own green run. The latest green run is
+[42158305089](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42158305089)
+(2026-11-06, commit `e95f2be1`), with the UIA smoke step passing; its
+screenshots and hashes are recorded in
+`docs/completion/evidence/windows/README.md`. No file in this package has
+changed between `e95f2be1` and `d5207cc7`.
+
+Tier: experimental in v1.0.0. It cannot be installed in an app that uses the
+React Native 0.88 packages; see `docs/SUPPORT.md`.
 
 Hosting requirements found by that run:
 - The registration sets `XamlSupport(true)` on the component builder.

@@ -1,7 +1,17 @@
 {
   "name": "@nyc-tron/windows-fluent",
-  "version": "0.1.0-alpha.4",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
+    "directory": "packages/windows-fluent"
+  },
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI/tree/main/packages/windows-fluent#readme",
+  "bugs": {
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "description": "Typed native WinUI 3 NavigationView shell contract for a standalone React Native Windows host",
@@ -10,7 +20,9 @@
   "files": [
     "dist",
     "windows",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "exports": {
     ".": {

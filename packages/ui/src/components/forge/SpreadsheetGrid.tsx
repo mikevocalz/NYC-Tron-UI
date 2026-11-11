@@ -9,9 +9,10 @@ import { useStore } from "zustand";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import {
   cellAddress, columnName, frozenSheetWindow, moveSheetSelection, parseCellAddress, rangeContains, revealCellScroll,
-  responsiveSheetMetrics, selectionRange, sheetPrefetchRange, type SheetRange, type SheetSelection,
+  responsiveSheetMetrics, selectionRange, sheetPrefetchRange, type CellPosition, type SheetRange, type SheetSelection,
 } from "./sheet-window.ts";
 import { rangeToTsv } from "./range-tsv.ts";
+import { tsvToRange, type PasteCell } from "./range-paste.ts";
 import { commitCellEdit, selectCellAfterCommit } from "./cell-commit.ts";
 import { joinClasses } from "../styles.ts";
 import { colorReferences, referenceEdges, REFERENCE_TONE_CLASSES } from "./spreadsheet/reference-colors.ts";
@@ -74,6 +75,22 @@ export interface SpreadsheetGridProps extends Omit<ViewProps, "children">,Scoped
   /** Largest selection {@linkcode SpreadsheetGridProps.onCopyRange} serializes. @default 1_000_000 */
   readonly maxCopyCells?: number;
   /**
+   * Ctrl/Cmd+V, the browser paste event or the screen-reader "Paste" action.
+   * `anchor` is the selection's top-left cell; `cells` are parsed from the
+   * clipboard TSV and clamped to this sheet. The grid never mutates `cells`
+   * data: the host applies the edits and reject shows the message. Ignored
+   * while `readOnly` or `disabledReason` is set.
+   */
+  readonly onPasteRange?: (anchor: CellPosition, cells: readonly PasteCell[]) => Promise<unknown> | unknown;
+  /** Largest paste rectangle accepted. @default 1_000_000 */
+  readonly maxPasteCells?: number;
+  /**
+   * Supplies clipboard text for Ctrl/Cmd+V and the screen-reader "Paste"
+   * action, which carry no clipboard data. Browser paste events use their own
+   * `clipboardData` and do not need it.
+   */
+  readonly readClipboard?: () => Promise<string> | string;
+  /**
    * Outline the cells each reference in the formula bar points at, one theme
    * tone per distinct reference (the same reference keeps its tone).
    * @default true
@@ -134,13 +151,14 @@ export function SpreadsheetGrid({scope='spreadsheet-grid',revision=0,...props}:S
  onFillRange={props.onFillRange&&!props.readOnly&&props.disabledReason===undefined?async plan=>{const ok=await guard.run('fill',h=>h.onFillRange?.(plan));if(ok!==true)throw new Error('The fill operation did not complete.');}:undefined}
  onSelectionChange={props.onSelectionChange?selection=>guard.current()?.onSelectionChange?.(selection):undefined}
  onCopyRange={props.onCopyRange?(range,tsv)=>guard.current()?.onCopyRange?.(range,tsv):undefined}
+ onPasteRange={props.onPasteRange&&!props.readOnly&&props.disabledReason===undefined?async(anchor,cells)=>{const ok=await guard.run('paste',h=>h.onPasteRange?.(anchor,cells));if(ok!==true)throw new Error('The paste did not complete.');}:undefined}
  onWindowChange={props.onWindowChange?range=>observe.current()?.onWindowChange?.(range):undefined}/>;
 }
 function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledReason,
 
   sheetId,sheetName,rowCount,columnCount,cells,width,height,rowHeight:preferredRowHeight=32,
   columnWidth:preferredColumnWidth=112,compactBelow=540,frozenRows=0,frozenColumns=0,
-  selection:selectionProp,onSelectionChange,onCommitCell,onCopyRange,maxCopyCells=1_000_000,
+  selection:selectionProp,onSelectionChange,onCommitCell,onCopyRange,maxCopyCells=1_000_000,onPasteRange,maxPasteCells=1_000_000,readClipboard,
   highlightReferences=true,onFillRange,renderCellContent,showFormulaBar=true,fillTransport:FillTransport=PanResponderDrag,onWindowChange,
   className,headerClassName,cellClassName,unstyled=false,onLayout,style,...props
 }:SpreadsheetGridProps&{interactionBoundary:string;actionError?:string|null}) {
@@ -248,6 +266,23 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
       state.setState({error:e instanceof Error?e.message:"Could not copy range"});
     }
   };
+  const paste=async(text:string)=>{
+    if(!onPasteRange||state.getState().pending)return;
+    try{
+      const anchor={row:range?.startRow??0,column:range?.startColumn??0};
+      const parsed=tsvToRange(text,anchor,{maxCells:maxPasteCells,rowCount,columnCount});
+      if(parsed.cells.length===0)return;
+      state.setState({pending:true,error:null});
+      await onPasteRange(anchor,parsed.cells);
+    }catch(e){
+      state.setState({error:e instanceof Error?e.message:"Could not paste"});
+    }finally{state.setState({pending:false});}
+  };
+  const pasteFromClipboard=async()=>{
+    if(!readClipboard)return;
+    try{await paste(await readClipboard());}
+    catch(e){state.setState({error:e instanceof Error?e.message:"Could not read the clipboard"});}
+  };
   // Fill is an engine write: never optimistic, one at a time, errors shown.
   const fill=async(plan:FillPlan)=>{
     if(!onFillRange||state.getState().pending)return;
@@ -257,9 +292,31 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
     finally{state.setState({pending:false});}
   };
   const pageRows=Math.max(1,Math.floor(bodyHeight/rowHeight)-1);
+  const bodyWidth=Math.max(0,viewportWidth-left-frozen.frozenWidth);
+  const revealCell=(cell:{row:number;column:number})=>{
+    const s=state.getState();
+    const target=revealCellScroll({row:cell.row,column:cell.column,scrollX:s.x,scrollY:s.y,
+      bodyWidth,bodyHeight,rowHeight,columnWidth,frozenRows:fr,frozenColumns:fc});
+    if(target.x!==s.x||target.y!==s.y){
+      state.setState(target);
+      horizontalRef.current?.scrollTo({x:target.x,animated:false});
+      verticalRef.current?.scrollTo({y:target.y,animated:false});
+    }
+  };
+  const revealFocus=()=>{
+    const cell=focus?parseCellAddress(focus):undefined;
+    if(cell&&ready)revealCell(cell);
+  };
+  // Rotation or a hinge split shrinks the body without moving the focus; the
+  // ratio rescale above keeps the top-left cell, so reveal the focus afterwards.
+  const revealFocusRef=useRef(revealFocus);
+  revealFocusRef.current=revealFocus;
+  useEffect(()=>{revealFocusRef.current();},[bodyHeight,bodyWidth,rowHeight,columnWidth,fr,fc]);
   const onKey=(key:string,mods:{shiftKey:boolean;ctrlKey:boolean;metaKey:boolean})=>{
     if(key==="Escape"&&state.getState().fillPlan){state.setState({fillFrom:undefined,fillPlan:undefined});return true;}
     if((mods.ctrlKey||mods.metaKey)&&(key==="c"||key==="C")){copy();return true;}
+    // Without readClipboard the browser's paste event delivers the text.
+    if((mods.ctrlKey||mods.metaKey)&&(key==="v"||key==="V")&&onPasteRange&&readClipboard){void pasteFromClipboard();return true;}
     if(onFillRange&&range&&(mods.ctrlKey||mods.metaKey)&&(key==="d"||key==="D"||key==="r"||key==="R")){
       const plan=fillFromEdge(range,key==="d"||key==="D"?"down":"right");
       if(plan)void fill(plan);
@@ -272,16 +329,7 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
     select(next);
     // Ctrl+End or PageDown can move focus outside the rendered window; bring
     // it into view so the focus ring and the formula bar agree.
-    const cell=parseCellAddress(next.focus)!;
-    const s=state.getState();
-    const target=revealCellScroll({row:cell.row,column:cell.column,scrollX:s.x,scrollY:s.y,
-      bodyWidth:Math.max(0,viewportWidth-left-frozen.frozenWidth),bodyHeight,rowHeight,columnWidth,
-      frozenRows:fr,frozenColumns:fc});
-    if(target.x!==s.x||target.y!==s.y){
-      state.setState(target);
-      horizontalRef.current?.scrollTo({x:target.x,animated:false});
-      verticalRef.current?.scrollTo({y:target.y,animated:false});
-    }
+    revealCell(parseCellAddress(next.focus)!);
     return true;
   };
 
@@ -428,16 +476,22 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
       aria-label={`${sheetName??"Sheet"}, ${rowCount} rows by ${columnCount} columns`}
       accessibilityActions={[
         ...(onCopyRange?[{name:"copy",label:"Copy selection"}]:[]),
+        ...(onPasteRange&&readClipboard?[{name:"paste",label:"Paste at selection"}]:[]),
         ...(onFillRange&&range?[{name:"fillDown",label:"Fill down"},{name:"fillRight",label:"Fill right"}]:[]),
       ]}
       onAccessibilityAction={e=>{
         const name=e.nativeEvent.actionName;
         if(name==="copy")copy();
+        else if(name==="paste")void pasteFromClipboard();
         else if((name==="fillDown"||name==="fillRight")&&range){
           const plan=fillFromEdge(range,name==="fillDown"?"down":"right");
           if(plan)void fill(plan);
         }
       }}
+      {...(onPasteRange?{onPaste:(e:{clipboardData?:{getData(type:string):string};preventDefault?:()=>void})=>{
+        const text=e.clipboardData?.getData("text/plain");
+        if(typeof text==="string"){e.preventDefault?.();void paste(text);}
+      }}:{})}
       onKeyDown={e=>{
         const n=e.nativeEvent;
         if(onKey(n.key,{shiftKey:n.shiftKey,ctrlKey:n.ctrlKey,metaKey:n.metaKey}))e.preventDefault?.();

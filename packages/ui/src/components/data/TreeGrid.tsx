@@ -6,6 +6,7 @@ import {
   moveColumn,orderTreeColumns,toggleTreeSelection,treeGridKey,treeRowAccessibilityLabel,
   visibleTreeRows,type TreeGridNavState,type TreeGridNode,type VisibleTreeRow,
 } from "./tree-grid.ts";
+import {createRowHeightIndex} from "./tree-row-heights.ts";
 import {joinClasses} from "../styles.ts";
 
 /** A value column of {@linkcode TreeGrid}. The hierarchy label column is always first and always pinned. */
@@ -71,6 +72,16 @@ export function TreeGrid({
   const compact=width<compactBelow;
   const scrollX=useRef(new Animated.Value(0)).current;
   const listRef=useRef<FlatList<VisibleTreeRow>>(null);
+  // Heights live by row id so expanding a branch does not misattribute them to shifted positions.
+  const measuredById=useRef(new Map<string,number>());
+  const heights=useRef(createRowHeightIndex(0,rowHeight));
+  const rowsForHeights=useRef<readonly VisibleTreeRow[]|null>(null);
+  if(rowsForHeights.current!==rows){
+    rowsForHeights.current=rows;
+    const next=createRowHeightIndex(rows.length,rowHeight);
+    rows.forEach((r,i)=>{const h=measuredById.current.get(r.node.id);if(h!==undefined)next.setHeight(i,h);});
+    heights.current=next;
+  }
 
   const setExpanded=(next:readonly string[])=>{
     if(expandedIds===undefined)store.setState({expanded:next});
@@ -136,7 +147,7 @@ export function TreeGrid({
     <Text {...{className:text}} style={{fontWeight:"700"}}>{c.title}</Text>
   </View>;
 
-  const renderRow=({item}:{item:VisibleTreeRow})=>{
+  const renderRow=({item,index}:{item:VisibleTreeRow;index:number})=>{
     const id=item.node.id;
     const isSelected=selected.has(id);
     const isFocused=focusId===id;
@@ -169,6 +180,10 @@ export function TreeGrid({
     return <Pressable role="row" accessibilityLabel={treeRowAccessibilityLabel(item)}
       aria-selected={isSelected} aria-expanded={item.hasChildren?isExpanded:undefined}
       onPress={()=>press(id)}
+      onLayout={e=>{
+        const h=e.nativeEvent.layout.height;
+        if(h>0&&index<heights.current.count&&heights.current.setHeight(index,h))measuredById.current.set(id,h);
+      }}
       {...{className:joinClasses(styled&&"border-b border-border",
         styled&&isSelected&&"bg-primary/10",styled&&isFocused&&"ring-2 ring-focus")}}
       style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",paddingVertical:4}}>
@@ -187,7 +202,7 @@ export function TreeGrid({
   const list=<FlatList ref={listRef} data={rows} style={{maxHeight}} keyExtractor={r=>r.node.id}
     renderItem={renderRow}
     onScrollToIndexFailed={info=>listRef.current?.scrollToOffset({
-      offset:info.averageItemLength*info.index,animated:false})}
+      offset:info.index<heights.current.count?heights.current.offsetOf(info.index):info.averageItemLength*info.index,animated:false})}
     ListEmptyComponent={<Text {...{className:text}} style={{padding:12}}>{emptyLabel}</Text>}/>;
 
   return <View {...rest} role="treegrid" focusable
