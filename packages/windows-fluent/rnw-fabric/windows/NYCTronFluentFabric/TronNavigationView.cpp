@@ -264,13 +264,22 @@ struct TronNavigationViewComponentView
       record.SetNamedValue(L"navWidth", Json::JsonValue::CreateNumberValue(m_navigation.ActualWidth()));
       record.SetNamedValue(L"loaded", Json::JsonValue::CreateBooleanValue(m_navigation.IsLoaded()));
       record.SetNamedValue(L"updateCount", Json::JsonValue::CreateNumberValue(static_cast<double>(++m_traceCount)));
-      // Breadth-first search of the template for the element named TogglePaneButton.
+      // Breadth-first walk of the template. Every named element (and the element
+      // that carries AutomationId TogglePaneButton) is listed with its offset
+      // inside the NavigationView, width and FlowDirection, capped to stay under
+      // the trace's 4096-byte record limit.
+      std::string layout;
       std::vector<winrt::Microsoft::UI::Xaml::DependencyObject> queue{m_navigation};
       for (size_t i = 0; i < queue.size() && i < 400; ++i) {
         const auto count = Media::VisualTreeHelper::GetChildrenCount(queue[i]);
         for (int32_t child = 0; child < count; ++child) {
           auto node = Media::VisualTreeHelper::GetChild(queue[i], child);
           if (auto element = node.try_as<winrt::Microsoft::UI::Xaml::FrameworkElement>()) {
+            if (!element.Name().empty() && layout.size() < 2400) {
+              const auto at = element.TransformToVisual(m_navigation).TransformPoint({0, 0});
+              layout += winrt::to_string(element.Name()) + "@" + std::to_string(static_cast<int>(at.X)) + "+" + std::to_string(static_cast<int>(element.ActualWidth())) +
+                (element.FlowDirection() == winrt::Microsoft::UI::Xaml::FlowDirection::RightToLeft ? "r;" : "l;");
+            }
             if (element.Name() == L"TogglePaneButton") {
               const auto point = element.TransformToVisual(m_navigation).TransformPoint({0, 0});
               record.SetNamedValue(L"toggleX", Json::JsonValue::CreateNumberValue(point.X));
@@ -281,6 +290,7 @@ struct TronNavigationViewComponentView
           queue.push_back(node);
         }
       }
+      record.SetNamedValue(L"layout", Json::JsonValue::CreateStringValue(winrt::to_hstring(layout)));
       nyctron::desktop::NativeDragTrace::RecordActive(record);
     } catch (...) {}
   }

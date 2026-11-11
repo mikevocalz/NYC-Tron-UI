@@ -391,7 +391,7 @@ function Save-DragTraceCheckpoint([string]$label) {
     foreach ($line in [System.IO.File]::ReadAllLines($destination, [System.Text.Encoding]::UTF8)) {
       try { $r = $line | ConvertFrom-Json } catch { continue }
       if ($r.stage -like "nav-*") {
-        Write-Host ("[trace-$label] seq={0} stage={1} isRTLPresent={2} isRTL={3} flowDirection={4} navWidth={5} toggleX={6} toggleWidth={7} toggleFlow={8} loaded={9} n={10}" -f $r.sequence, $r.stage, $r.isRTLPresent, $r.isRTL, $r.flowDirection, $r.navWidth, $r.toggleX, $r.toggleWidth, $r.toggleFlowDirection, $r.loaded, $r.updateCount)
+        Write-Host ("[trace-$label] seq={0} stage={1} isRTLPresent={2} isRTL={3} flowDirection={4} navWidth={5} toggleX={6} toggleWidth={7} toggleFlow={8} loaded={9} n={10} layout={11}" -f $r.sequence, $r.stage, $r.isRTLPresent, $r.isRTL, $r.flowDirection, $r.navWidth, $r.toggleX, $r.toggleWidth, $r.toggleFlowDirection, $r.loaded, $r.updateCount, $r.layout)
       }
       if ($r.stage -like "parent-drop-*" -or $r.stage -in @("source-starting", "source-drop-completed", "broker-native-completed", "broker-offer", "broker-resolve")) {
         Write-Host ("[trace-$label] seq={0} stage={1} effect={2} escapeSeen={3} escapeCount={4} escapeHook={5} allowed={6}" -f $r.sequence, $r.stage, $r.effect, $r.escapeSeen, $r.escapeCount, $r.escapeHook, $r.allowed)
