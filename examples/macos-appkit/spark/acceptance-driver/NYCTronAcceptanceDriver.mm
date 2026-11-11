@@ -146,6 +146,37 @@ static void ClearResponder(void) {
 }
 @end
 
+// Diagnostics only: wrap the drag view's mouse handlers to log the state that
+// gates beginDraggingSessionWithItems (ivars read through KVC). Behavior is
+// unchanged; each wrapper calls the original implementation.
+static NSString *DragState(RNDesktopDragView *view) {
+  @try {
+    NSPoint start = [[view valueForKey:@"_start"] pointValue];
+    return [NSString stringWithFormat:@"mouseDown=%@ dragging=%@ disabled=%@ sourceCount=%lu start=%@ key=%d", [view valueForKey:@"_mouseDown"], [view valueForKey:@"_dragging"], [view valueForKey:@"_disabled"], (unsigned long)[[view valueForKey:@"_source"] count], NSStringFromPoint(start), view.window.keyWindow];
+  } @catch (NSException *e) { return [NSString stringWithFormat:@"state-unavailable %@", e.reason]; }
+}
+static void InstallDragDiagnostics(void) {
+  static dispatch_once_t once;
+  dispatch_once(&once, ^{
+    Class cls = RNDesktopDragView.class;
+    struct { SEL sel; const char *name; } entries[] = { { @selector(mouseDown:), "mouseDown" }, { @selector(mouseDragged:), "mouseDragged" }, { @selector(mouseUp:), "mouseUp" } };
+    for (auto &entry : entries) {
+      Method method = class_getInstanceMethod(cls, entry.sel);
+      if (!method) { NSLog(@"NYCTronDrag wrap=%s missing", entry.name); continue; }
+      IMP original = method_getImplementation(method);
+      const char *name = entry.name; SEL selector = entry.sel;
+      __block NSInteger count = 0;
+      method_setImplementation(method, imp_implementationWithBlock(^(RNDesktopDragView *self_, NSEvent *event) {
+        NSInteger n = ++count;
+        NSString *before = DragState(self_);
+        ((void (*)(id, SEL, NSEvent *))original)(self_, selector, event);
+        if (n <= 3 || strcmp(name, "mouseDragged") != 0)
+          NSLog(@"NYCTronDrag %s#%ld loc=%@ before[%@] afterDragging=%@ session=%d", name, (long)n, NSStringFromPoint(event.locationInWindow), before, [self_ valueForKey:@"_dragging"], PointerSession != nil);
+      }));
+    }
+  });
+}
+
 static NSScreen *PrimaryScreen(void) {
   for (NSScreen *screen in NSScreen.screens) if ([screen.deviceDescription[@"NSScreenNumber"] unsignedIntValue] == CGMainDisplayID()) return screen;
   return nil;
@@ -706,6 +737,7 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
       if (![source isKindOfClass:RNDesktopDragView.class] || ![target isKindOfClass:RNDesktopDragView.class]) { reply(Failure(@"Expected installed native drag surfaces")); return; }
       [source scrollRectToVisible:source.bounds]; [target scrollRectToVisible:target.bounds];
       [sourceWindow layoutIfNeeded]; [targetWindow layoutIfNeeded];
+      InstallDragDiagnostics();
       // Run 43005945813 logged a start point of y=-204 in source coordinates and a
       // button under it: visibleRect here is not clipped to the view's bounds
       // (it contains them), so its center is outside the surface. Use the part
