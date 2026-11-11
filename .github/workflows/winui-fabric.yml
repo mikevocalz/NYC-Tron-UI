@@ -61,7 +61,7 @@ jobs:
           npm run build
           npm test
           listing=$(npm pack --dry-run --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s)[0].files.map(f=>f.path).join("\n")))')
-          for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts windows/NYCTronFluentFabric/TronNavigationView.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
+          for f in dist/index.js dist/index.d.ts src/TronNavigationViewNativeComponent.ts src/TronOverlayAnchorNativeComponent.ts src/TronDragSurfaceNativeComponent.ts dist/overlays.windows.js dist/drag-drop.windows.js windows/NYCTronFluentFabric/TronNavigationView.cpp windows/NYCTronFluentFabric/TronOverlayAnchor.cpp windows/NYCTronFluentFabric/TronDragSurface.cpp windows/NYCTronFluentFabric/NativeDragBroker.cpp react-native.config.js README.md THIRD_PARTY_NOTICES.md; do
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
           done
       - name: Verify the isolated RNW public declaration snapshot
@@ -115,13 +115,102 @@ jobs:
           node packages/windows-fluent/rnw-fabric/scripts/prepare-consumer.mjs $consumer "$env:RUNNER_TEMP/windows-shared"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           "WIN_CONSUMER=$consumer" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Validate diagnostic scripts with the UIA PowerShell runtime
+        working-directory: ${{ env.WIN_CONSUMER }}
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          $evidence = Join-Path $env:RUNNER_TEMP "uia-smoke"
+          New-Item -ItemType Directory -Force $evidence | Out-Null
+          $receipt = [ordered]@{
+            schemaVersion = 1; sourceRevision = $env:GITHUB_SHA; status = "running"
+            capturedAt = [DateTime]::UtcNow.ToString("o")
+            powershellVersion = $PSVersionTable.PSVersion.ToString()
+            powershellEdition = $PSVersionTable.PSEdition
+            clrVersion = [Environment]::Version.ToString()
+            processIs64Bit = [Environment]::Is64BitProcess
+            productionCSharpCompilation = "not-run"
+            ownedProcessTokenCheck = [ordered]@{ scope = "compatibility-process"; status = "not-run"; observation = $null; ownerGuard = "not-run" }
+            scripts = [System.Collections.Generic.List[object]]::new()
+            checks = [System.Collections.Generic.List[object]]::new()
+          }
+          $compatibilityFailure = $null
+          try {
+            if ($PSVersionTable.PSEdition -ne "Desktop" -or $PSVersionTable.PSVersion.Major -ne 5 -or $PSVersionTable.PSVersion.Minor -ne 1 -or -not [Environment]::Is64BitProcess) {
+              throw "These checks must use the same Windows PowerShell 5.1 x64 runtime as native UIA"
+            }
+            foreach ($relative in @("scripts\uia-smoke.ps1", "scripts\uia-drag-input.ps1", "scripts\uia-drag-environment.ps1", "tests\native-drag-environment.test.ps1", "tests\native-drag-input.test.ps1", "tests\native-shell-identity.test.ps1")) {
+              $path = (Resolve-Path -LiteralPath $relative).Path
+              $tokens = $null; $parseErrors = $null
+              [System.Management.Automation.Language.Parser]::ParseFile($path, [ref]$tokens, [ref]$parseErrors) | Out-Null
+              $receipt.scripts.Add(@{ path = $relative; sha256 = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant(); parseErrorCount = @($parseErrors).Count })
+              if (@($parseErrors).Count -ne 0) { throw "Diagnostic script failed Windows PowerShell parsing: $relative" }
+            }
+            . .\scripts\uia-drag-environment.ps1
+            Initialize-DragEnvironmentReader
+            $receipt.productionCSharpCompilation = "passed"
+            # Exercise the real read-only Win32 path against this process,
+            # separately from the mock suites and later UIA app observations.
+            $selfProcess = [System.Diagnostics.Process]::GetCurrentProcess()
+            $tokenFailure = $null
+            try {
+              $receipt.ownedProcessTokenCheck.status = "failed"
+              $selfToken = [NativeDragEnvironment]::Security($selfProcess.Handle, [uint32]$selfProcess.Id)
+              $receipt.ownedProcessTokenCheck.observation = $selfToken
+              if ($selfToken.status -ne "queried" -or $null -ne $selfToken.tokenCloseError) { throw "Could not query and close the owned process token" }
+              foreach ($name in @("elevation", "elevationType", "integrityRid", "uiAccess")) {
+                $field = $selfToken.fields[$name]
+                if ($field.status -ne "observed" -or $null -eq $field.value) { throw "Actual owned-process token query failed: $name (status=$($field.status), Win32Error=$($field.win32Error))" }
+              }
+              # TOKEN_ELEVATION defines zero versus nonzero, not only 0 or 1.
+              $receipt.ownedProcessTokenCheck.isElevated = $selfToken.fields["elevation"].value -ne 0
+              if ($selfToken.fields["elevationType"].value -notin @(1, 2, 3)) { throw "TokenElevationType returned an invalid enum value" }
+              # This checks the existing ownership guard and that querying did
+              # not close the borrowed process handle. No other PID is opened.
+              $wrongOwner = [NativeDragEnvironment]::Security($selfProcess.Handle, [uint32]($selfProcess.Id + 1))
+              if ($wrongOwner.status -ne "owned-process-handle-mismatch" -or $wrongOwner.fields.Count -ne 0) { throw "Owned process token guard did not reject the mismatched expected PID" }
+              $receipt.ownedProcessTokenCheck.ownerGuard = "passed"
+              $receipt.ownedProcessTokenCheck.status = "passed"
+              $receipt.checks.Add(@{ name = "native-owned-process-token-query"; status = "passed" })
+              Write-Host "PASS: actual owned Windows process token reads and borrowed-handle ownership guard"
+            } catch { $tokenFailure = $_; throw }
+            finally {
+              try { $selfProcess.Dispose() }
+              catch {
+                $receipt.ownedProcessTokenCheck.disposeErrorType = $_.Exception.GetType().FullName
+                if ($null -eq $tokenFailure) { throw }
+              }
+            }
+            # Mock suites own fake types; the native shell suite exercises real
+            # self-token/SID guards. Separate 5.1 processes isolate their types.
+            $engine = Join-Path $PSHOME "powershell.exe"
+            foreach ($testName in @("native-drag-environment", "native-drag-input", "native-shell-identity")) {
+              $resultDirectory = Join-Path $evidence $(if ($testName -eq "native-shell-identity") { $testName } else { "portable-" + $testName })
+              & $engine -NoLogo -NoProfile -NonInteractive -File ".\tests\$testName.test.ps1" -OutputDirectory $resultDirectory
+              $code = $LASTEXITCODE
+              $receipt.checks.Add(@{ name = $testName; exitCode = $code; status = $(if ($code -eq 0) { "passed" } else { "failed" }) })
+              if ($code -ne 0) { throw "Diagnostic regression failed: $testName (exit $code)" }
+            }
+            $receipt.status = "passed"
+          } catch {
+            $compatibilityFailure = $_
+            $receipt.status = "failed"
+            $receipt.error = @{ type = $_.Exception.GetType().FullName; message = $_.Exception.Message }
+            throw
+          } finally {
+            try { $receipt | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 (Join-Path $evidence "diagnostic-compatibility.json") }
+            catch {
+              if ($null -eq $compatibilityFailure) { throw }
+              Write-Host "Could not retain diagnostic compatibility receipt; primary failure remains unchanged."
+            }
+          }
       - name: Generate native code from the installed package
         working-directory: ${{ env.WIN_CONSUMER }}/node_modules/@nyc-tron/windows-fluent-fabric
         shell: pwsh
         run: |
           npm run codegen
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          foreach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h")) {
+          foreach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h")) {
             if (-not (Test-Path $header)) { throw "Missing generated native header: $header" }
           }
       - name: Generate official RNW application and connect native package
@@ -153,7 +242,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       # The UIA smoke step below launches the packaged app and checks the
       # route roundtrip with keyboard input. It does not cover Narrator
-      # speech, high contrast, pointer input or an RTL locale.
+      # speech, high contrast or an RTL locale. Native popup and OS mouse
+      # drag checks are required below, including rejected/cancelled offers.
 
       - name: Compile actual Windows consumer executable
         working-directory: ${{ env.WIN_CONSUMER }}
@@ -198,6 +288,20 @@ jobs:
         shell: powershell
         run: |
           & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+      - name: Application Error records after a failed smoke test
+        if: failure()
+        shell: powershell
+        run: |
+          # The smoke driver itself can die (exit code -1073740940 in runs 42982441629 and 42985816081)
+          # before it writes any record. Keep every Application Error/WER entry of the last 40 minutes,
+          # whatever process faulted, so the faulting module is readable.
+          $out = Join-Path $env:RUNNER_TEMP "uia-smoke"
+          New-Item -ItemType Directory -Force -Path $out | Out-Null
+          $events = @(Get-WinEvent -FilterHashtable @{ LogName = "Application"; StartTime = (Get-Date).AddMinutes(-40); Id = 1000, 1001 } -MaxEvents 40 -ErrorAction SilentlyContinue)
+          $lines = foreach ($e in $events) { "[{0}] id={1} {2}" -f $e.TimeCreated.ToUniversalTime().ToString("o"), $e.Id, ($e.Message -replace "\s+", " ") }
+          [System.IO.File]::WriteAllLines((Join-Path $out "driver-crash-events.txt"), [string[]]@($lines))
+          Write-Host "Application Error/WER records in the last 40 minutes: $($events.Count)"
+          $lines | ForEach-Object { Write-Host $_.Substring(0, [Math]::Min(900, $_.Length)) }
       - name: Retain the exact package that passed native acceptance
         shell: pwsh
         run: |

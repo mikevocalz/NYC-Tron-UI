@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "scope": "Executed public packaged controls in the Linux Qt Quick/Fabric host with Hermes and synthetic Qt mouse, keyboard and focus input; target Platform.OS checked separately.",
+  "host": {
+    "systemName": "Linux",
+    "viewport": {
+      "width": 960,
+      "height": 720
+    },
+    "renderer": "Fabric",
+    "javascriptRuntime": "Hermes",
+    "input": "synthetic-Qt",
+    "desktopInputEnabled": true,
+    "platformServicesEnabled": true
+  },
+  "source": {
+    "nycTron": {
+      "repository": "mikevocalz/NYC-Tron-UI",
+      "commit": "eb1f473d910b0b13854778e60c6e7c41b41ff228",
+      "tree": "e70358de4d140ac78ee3a75ca1567af39442548e"
+    },
+    "reactNative": {
+      "repository": "mikevocalz/react-native-qnx",
+      "commit": "92e88b9111b29c9090f9bac63b906dad4cf10f74",
+      "tree": "b4f17941d911f1e57f12667681c73345e3906fc8",
+      "evidenceCommit": "7bcf597047ddc493d1299a862ee7ab116293638f",
+      "evidencePath": "docs/evidence/qt-controls-host-2026-11-10.json"
+    }
+  },
+  "runner": {
+    "target": "rnqnx_qt_controls_consumer",
+    "source": "tests/qt-controls-consumer/main.cpp",
+    "sourceSha256": "e4f4fb7f9b67cb2b8f183a009a00742d7c65d8198b5d7dcdad4051b7359f9301",
+    "binarySha256": "5e2402d0b40e30d77db85c24f14138ca150ab556fb59ab2be7de8540003a9706"
+  },
+  "fixture": {
+    "appName": "RNQnxQtControlsProbe",
+    "sourceSha256": "bc077deb41dd1d96818d3fe62c42c4d98b725616ce9497c853043ebe7c43b5f8",
+    "themeSha256": "263979125478f7c5bb6712136598c6d9cfac4a990fcb8d1113a4f93244aa3c20",
+    "styling": "Finite app-owned token-to-native-style mapping; real RN primitives and public controls, no event mocks.",
+    "input": "Prepared for the RN-QNX Qt/Fabric native event driver; bundling alone does not execute it."
+  },
+  "artifacts": [
+    {
+      "name": "@nyc-tron/core",
+      "version": "1.0.0",
+      "archive": "nyc-tron-core-1.0.0.tgz",
+      "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
+    },
+    {
+      "name": "@nyc-tron/ui",
+      "version": "1.0.0",
+      "archive": "nyc-tron-ui-1.0.0.tgz",
+      "sha256": "2920da3bc1b0786b2e6a3ed5ec029cf5b83c7ad9b237d8a488193fe326453c65"
+    },
+    {
+      "name": "@nyc-tron/expo-controls",
+      "version": "1.0.0",
+      "archive": "nyc-tron-expo-controls-1.0.0.tgz",
+      "sha256": "ba87e60796dcf3ba2824f33eaf95ba49c6614e2ca6e7ff614fda2f78126d57c2"
+    }
+  ],
+  "publicApiSha256": "e8a68ca093b40d4455aa20bf1817ec96a8d1d2f578ca2ca4a09107daf9b5f807",
+  "runs": [
+    {
+      "platform": "qnx",
+      "status": "passed",
+      "stepsPassed": 39,
+      "bundleBytes": 1913740,
+      "bundleSha256": "c2c352e33bd2c6756be2f3fd757271466dfe1e8d5f2d2cb312a12225ef08a93a",
+      "log": {
+        "file": "qnx.log",
+        "sha256": "a622a287b6c5ad32f8919672efd1c4eeb7ff65251c4deb9a22d725e3cc0fa793"
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "Fixture mounted"
+        },
+        {
+          "index": 1,
+          "label": "Tooltip opens from native hover"
+        },
+        {
+          "index": 2,
+          "label": "Escape dismisses hover tooltip"
+        },
+        {
+          "index": 3,
+          "label": "Pointer leaves tooltip"
+        },
+        {
+          "index": 4,
+          "label": "Focus leaves tooltip"
+        },
+        {
+          "index": 5,
+          "label": "Tooltip opens from native focus"
+        },
+        {
+          "index": 6,
+          "label": "Escape dismisses focused tooltip"
+        },
+        {
+          "index": 7,
+          "label": "Mount select"
+        },
+        {
+          "index": 8,
+          "label": "Select opens from arrow key"
+        },
+        {
+          "index": 9,
+          "label": "Select skips disabled option"
+        },
+        {
+          "index": 10,
+          "label": "Select commits enabled choice"
+        },
+        {
+          "index": 11,
+          "label": "Select reopens"
+        },
+        {
+          "index": 12,
+          "label": "Select cancels with Escape"
+        },
+        {
+          "index": 13,
+          "label": "Mount dropdown"
+        },
+        {
+          "index": 14,
+          "label": "Dropdown opens by pointer"
+        },
+        {
+          "index": 15,
+          "label": "Dropdown moves to final choice"
+        },
+        {
+          "index": 16,
+          "label": "Dropdown commits final choice"
+        },
+        {
+          "index": 17,
+          "label": "Mount actions"
+        },
+        {
+          "index": 18,
+          "label": "Action menu opens"
+        },
+        {
+          "index": 19,
+          "label": "Action menu selects once"
+        },
+        {
+          "index": 20,
+          "label": "Mount slider"
+        },
+        {
+          "index": 21,
+          "label": "Slider Home commits lower bound"
+        },
+        {
+          "index": 22,
+          "label": "Slider arrow commits one step"
+        },
+        {
+          "index": 23,
+          "label": "Slider End commits upper bound"
+        },
+        {
+          "index": 24,
+          "label": "Mount split"
+        },
+        {
+          "index": 25,
+          "label": "Split primary action remains separate"
+        },
+        {
+          "index": 26,
+          "label": "Split menu opens by keyboard"
+        },
+        {
+          "index": 27,
+          "label": "Split menu selects once"
+        },
+        {
+          "index": 28,
+          "label": "Mount context"
+        },
+        {
+          "index": 29,
+          "label": "Context menu opens by Menu key"
+        },
+        {
+          "index": 30,
+          "label": "Context action commits once"
+        },
+        {
+          "index": 31,
+          "label": "Mount popover"
+        },
+        {
+          "index": 32,
+          "label": "Popover Escape requests close"
+        },
+        {
+          "index": 33,
+          "label": "Reopen controlled popover"
+        },
+        {
+          "index": 34,
+          "label": "Popover close control works"
+        },
+        {
+          "index": 35,
+          "label": "Mount find"
+        },
+        {
+          "index": 36,
+          "label": "Find uses the actual literal document provider"
+        },
+        {
+          "index": 37,
+          "label": "Find and replace closes"
+        },
+        {
+          "index": 38,
+          "label": "All controlled outcomes retained"
+        }
+      ],
+      "screenshots": [
+        {
+          "step": 1,
+          "file": "qnx-tooltip.png",
+          "sha256": "1c9715872efea09b44b673e3bb1cc2151f03619a206d0b4e333375de02dcc67b",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "step": 18,
+          "file": "qnx-action-menu.png",
+          "sha256": "7aa61849face86ecf5813ffeeb819155da8642cac37d2eaef7783ed61949bac2",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "step": 26,
+          "file": "qnx-split-menu.png",
+          "sha256": "99ec52046c6ed994d3cc7ddaa930694ec2f96c77de7770bde05514b23c1f7e02",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "step": 35,
+          "file": "qnx-find-replace.png",
+          "sha256": "32dfe60730ef9824ee5381e70af38d3c97d879e5025af0aedb7979bc291c4e70",
+          "width": 960,
+          "height": 720
+        }
+      ],
+      "deviceAcceptance": "unverified"
+    },
+    {
+      "platform": "marathon",
+      "status": "passed",
+      "stepsPassed": 39,
+      "bundleBytes": 1913792,
+      "bundleSha256": "2af1fd7c121596983492760065e988beaecc410c98564194b45bb09c67458d3d",
+      "log": {
+        "file": "marathon.log",
+        "sha256": "27cc661eb2a90dc61e0e659cc3b8259c98321b26ff26fe141c24dd1c1ad33aba"
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "Fixture mounted"
+        },
+        {
+          "index": 1,
+          "label": "Tooltip opens from native hover"
+        },
+        {
+          "index": 2,
+          "label": "Escape dismisses hover tooltip"
+        },
+        {
+          "index": 3,
+          "label": "Pointer leaves tooltip"
+        },
+        {
+          "index": 4,
+          "label": "Focus leaves tooltip"
+        },
+        {
+          "index": 5,
+          "label": "Tooltip opens from native focus"
+        },
+        {
+          "index": 6,
+          "label": "Escape dismisses focused tooltip"
+        },
+        {
+          "index": 7,
+          "label": "Mount select"
+        },
+        {
+          "index": 8,
+          "label": "Select opens from arrow key"
+        },
+        {
+          "index": 9,
+          "label": "Select skips disabled option"
+        },
+        {
+          "index": 10,
+          "label": "Select commits enabled choice"
+        },
+        {
+          "index": 11,
+          "label": "Select reopens"
+        },
+        {
+          "index": 12,
+          "label": "Select cancels with Escape"
+        },
+        {
+          "index": 13,
+          "label": "Mount dropdown"
+        },
+        {
+          "index": 14,
+          "label": "Dropdown opens by pointer"
+        },
+        {
+          "index": 15,
+          "label": "Dropdown moves to final choice"
+        },
+        {
+          "index": 16,
+          "label": "Dropdown commits final choice"
+        },
+        {
+          "index": 17,
+          "label": "Mount actions"
+        },
+        {
+          "index": 18,
+          "label": "Action menu opens"
+        },
+        {
+          "index": 19,
+          "label": "Action menu selects once"
+        },
+        {
+          "index": 20,
+          "label": "Mount slider"
+        },
+        {
+          "index": 21,
+          "label": "Slider Home commits lower bound"
+        },
+        {
+          "index": 22,
+          "label": "Slider arrow commits one step"
+        },
+        {
+          "index": 23,
+          "label": "Slider End commits upper bound"
+        },
+        {
+          "index": 24,
+          "label": "Mount split"
+        },
+        {
+          "index": 25,
+          "label": "Split primary action remains separate"
+        },
+        {
+          "index": 26,
+          "label": "Split menu opens by keyboard"
+        },
+        {
+          "index": 27,
+          "label": "Split menu selects once"
+        },
+        {
+          "index": 28,
+          "label": "Mount context"
+        },
+        {
+          "index": 29,
+          "label": "Context menu opens by Menu key"
+        },
+        {
+          "index": 30,
+          "label": "Context action commits once"
+        },
+        {
+          "index": 31,
+          "label": "Mount popover"
+        },
+        {
+          "index": 32,
+          "label": "Popover Escape requests close"
+        },
+        {
+          "index": 33,
+          "label": "Reopen controlled popover"
+        },
+        {
+          "index": 34,
+          "label": "Popover close control works"
+        },
+        {
+          "index": 35,
+          "label": "Mount find"
+        },
+        {
+          "index": 36,
+          "label": "Find uses the actual literal document provider"
+        },
+        {
+          "index": 37,
+          "label": "Find and replace closes"
+        },
+        {
+          "index": 38,
+          "label": "All controlled outcomes retained"
+        }
+      ],
+      "screenshots": [
+        {
+          "step": 1,
+          "file": "marathon-tooltip.png",
+          "sha256": "1c9715872efea09b44b673e3bb1cc2151f03619a206d0b4e333375de02dcc67b",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "step": 18,
+          "file": "marathon-action-menu.png",
+          "sha256": "7aa61849face86ecf5813ffeeb819155da8642cac37d2eaef7783ed61949bac2",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "step": 26,
+          "file": "marathon-split-menu.png",
+          "sha256": "99ec52046c6ed994d3cc7ddaa930694ec2f96c77de7770bde05514b23c1f7e02",
+          "width": 960,
+          "height": 720
+        },
+        {
+          "step": 35,
+          "file": "marathon-find-replace.png",
+          "sha256": "32dfe60730ef9824ee5381e70af38d3c97d879e5025af0aedb7979bc291c4e70",
+          "width": 960,
+          "height": 720
+        }
+      ],
+      "deviceAcceptance": "unverified"
+    }
+  ],
+  "catalogRuntimeAccepted": {
+    "qnx": 0,
+    "marathon": 0
+  },
+  "themeAcceptance": "Explicit finite app-owned fixture styles only",
+  "physicalTargetAcceptance": "unverified",
+  "screenReaderSpeechAcceptance": "unverified",
+  "optionalProviderAndEngineAcceptance": "outside this fixture"
+}

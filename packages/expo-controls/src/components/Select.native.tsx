@@ -18,7 +18,7 @@ export type { SelectProps, SelectOption, SelectGroup } from "@nyc-tron/ui/compon
  *    unavailable.
  */
 export function Select(props:SelectProps){
-  const {label,value,onValueChange,disabled,hint,errorText,testID,className,groups}=props;
+  const {label,value,onValueChange,disabled,hint,errorText,testID,className,labelClassName,groups}=props;
   const options=selectOptions(props);
   const declared=options.some(o=>o.value===value);
   const lockedRow=options.some(o=>o.disabled&&o.value!==value);
@@ -26,10 +26,10 @@ export function Select(props:SelectProps){
   const message=errorText??hint;
   return <View {...{className:["w-full min-w-0 gap-1",className].filter(Boolean).join(" ")}}>
     {groups===undefined
-      ? <NativeDropdown label={label} value={value} disabled={disabled} testID={testID}
+      ? <NativeDropdown label={label} value={value} disabled={disabled} testID={testID} labelClassName={labelClassName}
           options={options.map(o=>({value:o.value,label:o.label??o.value}))}
           onValueChange={onValueChange}/>
-      : <NativeDropdown label={label} value={value} disabled={disabled} testID={testID}
+      : <NativeDropdown label={label} value={value} disabled={disabled} testID={testID} labelClassName={labelClassName}
           groups={groups.map(g=>({heading:g.heading,options:g.options.map(o=>({value:o.value,label:o.label??o.value}))}))}
           onValueChange={onValueChange}/>}
     {message?<Text

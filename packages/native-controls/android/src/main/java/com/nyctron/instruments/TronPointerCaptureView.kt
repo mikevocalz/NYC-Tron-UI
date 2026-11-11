@@ -39,9 +39,9 @@ class TronPointerCaptureView(context:Context):View(context){
   }
   private fun samples(event:MotionEvent,index:Int)= (0 until event.historySize).map{sample(event,index,it)}+sample(event,index)
   override fun onTouchEvent(event:MotionEvent):Boolean {
-    // Android can synthesize CANCEL without the active contacts' identity or coordinates.
-    // It ends the whole gesture, so cancel the observed contacts before sampling the event.
-    if(event.actionMasked==MotionEvent.ACTION_CANCEL){cancelContacts();return true}
+    // Compose/ViewGroup may send an empty cancel with no original contact identity.
+    // Cancel the retained observations, including every active pointer, instead.
+    if(event.actionMasked==MotionEvent.ACTION_CANCEL){cancelTouches();return true}
     if(event.actionMasked==MotionEvent.ACTION_DOWN){requestFocus();parent?.requestDisallowInterceptTouchEvent(true)}
     var prediction:MotionEvent?=null
     if(Build.VERSION.SDK_INT>=34){
@@ -88,13 +88,13 @@ class TronPointerCaptureView(context:Context):View(context){
   override fun onWindowFocusChanged(hasWindowFocus:Boolean){super.onWindowFocusChanged(hasWindowFocus);if(!hasWindowFocus)cancelInput()}
   override fun onFocusChanged(gainFocus:Boolean,direction:Int,previouslyFocusedRect:Rect?){super.onFocusChanged(gainFocus,direction,previouslyFocusedRect);if(!gainFocus)cancelInput()}
   override fun onDetachedFromWindow(){cancelInput();super.onDetachedFromWindow()}
-  private fun cancelContacts(){
+  private fun cancelTouches(){
     val pending=latest.values.toList();latest.clear();predictors.clear()
     parent?.requestDisallowInterceptTouchEvent(false)
     pending.forEach{emitBatch?.invoke(TronPointerBatch("cancel",listOf(it),emptyList()))}
   }
   private fun cancelInput(){
-    cancelContacts()
+    cancelTouches()
     val hovers=hovering.values.toList();hovering.clear()
     hovers.forEach{emitBatch?.invoke(TronPointerBatch("hover-exit",listOf(it),emptyList()))}
     val keys=heldKeys.values.toList();heldKeys.clear();keys.forEach{emitKey?.invoke(it.copy(phase="up",repeat=false))}

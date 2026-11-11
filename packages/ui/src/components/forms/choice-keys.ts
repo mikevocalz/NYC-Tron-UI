@@ -69,14 +69,14 @@ export function domIsRTL(node:unknown):boolean{
   try{return view.getComputedStyle(node).direction==="rtl";}catch{return false;}
 }
 
-/** Key data of an RN web keydown; native never fires one. */
+/** Key data delivered by RN web or a desktop host's keydown event. */
 export type WebKey={key:string;altKey?:boolean;ctrlKey?:boolean;metaKey?:boolean;shiftKey?:boolean;
   preventDefault:()=>void;currentTarget:unknown};
 export function webKey(event:unknown):WebKey{
-  const e=event as {nativeEvent?:Partial<WebKey>;preventDefault:()=>void;currentTarget:unknown};
-  const n=e.nativeEvent??{};
+  const e=event as Partial<WebKey>&{nativeEvent?:Partial<WebKey>};
+  const n=e.nativeEvent??e;
   return {key:String(n.key??""),altKey:n.altKey,ctrlKey:n.ctrlKey,metaKey:n.metaKey,shiftKey:n.shiftKey,
-    preventDefault:()=>e.preventDefault(),currentTarget:e.currentTarget};
+    preventDefault:()=>e.preventDefault?.(),currentTarget:e.currentTarget};
 }
 /** Modified arrows are browser/OS navigation, not selection. */
 export const isModified=(k:WebKey)=>!!(k.altKey||k.ctrlKey||k.metaKey);

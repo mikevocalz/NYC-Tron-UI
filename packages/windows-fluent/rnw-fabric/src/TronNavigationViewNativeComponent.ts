@@ -5,8 +5,9 @@
  *
  * Based on Microsoft RNW v0.85 FabricXamlComboBoxNativeComponent.ts (MIT).
  */
-import {codegenNativeComponent} from "react-native";
-import type {ViewProps} from "react-native";
+import {codegenNativeComponent, codegenNativeCommands} from "react-native";
+import type {HostComponent, ViewProps} from "react-native";
+import type React from "react";
 import type {
   DirectEventHandler,
 } from "react-native/Libraries/Types/CodegenTypes";
@@ -30,5 +31,14 @@ export interface NativeProps extends ViewProps {
   onSettingsInvoked?: DirectEventHandler<SettingsInvoked>;
   onNativeError?: DirectEventHandler<NativeError>;
 }
+
+interface NativeCommands {
+  focusSelected: (viewRef: React.ElementRef<HostComponent<NativeProps>>) => void;
+  focusSettings: (viewRef: React.ElementRef<HostComponent<NativeProps>>) => void;
+}
+
+export const Commands = codegenNativeCommands<NativeCommands>({
+  supportedCommands: ["focusSelected", "focusSettings"],
+});
 
 export default codegenNativeComponent<NativeProps>("TronNavigationView");

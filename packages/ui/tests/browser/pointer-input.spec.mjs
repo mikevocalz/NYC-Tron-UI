@@ -63,4 +63,21 @@ test.describe("Pointer input browser adapter", () => {
     expect((await read(page)).lastStrokePhase).toBe("up");
     expect((await read(page)).kind).toBe("touch");
   });
+
+  test("a narrow screen keeps the touch result visible and lower controls reachable", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.goto("/pointer-input");
+    const node = surface(page);
+    await expect(node).toBeVisible();
+    const bounds = await node.boundingBox();
+    await page.touchscreen.tap(bounds.x + bounds.width / 2, bounds.y + 40);
+    await expect(page.getByTestId("pointer-summary")).toHaveText("Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.");
+    await expect(page.getByTestId("pointer-last-event")).toHaveText("Input source: touch. Last event: up.");
+    await expect(page.getByTestId("pointer-summary")).toBeInViewport({ ratio: 1 });
+    await expect(page.getByTestId("pointer-last-event")).toBeInViewport({ ratio: 1 });
+    await page.getByRole("button", { name: "Clear input trace" }).click();
+    expect((await read(page)).committed).toBe(0);
+    await page.getByRole("button", { name: "Remove input surface" }).click();
+    await expect(node).toHaveCount(0);
+  });
 });

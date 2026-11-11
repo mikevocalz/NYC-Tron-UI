@@ -145,7 +145,7 @@ export function SliderField({
       onMove={(point,touches)=>{if(touches===1)drag.move(point);else drag.cancel();}}
       onRelease={()=>drag.release()}
       onCancel={()=>drag.cancel()}>
-      <View ref={track} collapsable={false} onLayout={measure}
+      <View ref={track} testID={rest.testID?`${rest.testID}-track`:undefined} collapsable={false} onLayout={measure}
         accessible accessibilityRole="adjustable" accessibilityLabel={label}
         aria-valuemin={min} aria-valuemax={max} aria-valuenow={shown} aria-valuetext={text}
         aria-disabled={disabled}

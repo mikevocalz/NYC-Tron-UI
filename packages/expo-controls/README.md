@@ -3,6 +3,64 @@
 Optional native-control leaf package. It is not installed when an app imports
 `@nyc-tron/ui/components/Button`. It is not linked to Nitro Forge engines.
 
+## QNX and Marathon
+
+The `qnx` and `marathon` package export conditions select shared React Native
+controls without importing Expo. Configure the target Metro resolver to assert
+its matching condition alongside `react-native`; each target condition takes
+precedence over the generic native entry. The React Native QNX/Marathon host
+must supply the RN primitives used by these controls, including Modal,
+measurement, PanResponder and the upstream I18nManager export. Install React,
+the compatible React Native target, Zustand and `@nyc-tron/ui`. Expo and
+`@expo/ui` are optional peers for these target paths.
+
+| Import from `@nyc-tron/expo-controls/` | QNX / Marathon implementation |
+| --- | --- |
+| `NativeDropdown` | Shared `Select`; controlled flat or grouped choices, in-flow scrolling list, disabled state and app caption classes. |
+| `Select` | Shared selector with placeholder, disabled options, arrows/Home/End/typeahead, Enter/Space selection and Escape/Tab dismissal. |
+| `NativeActionMenu` | RN Modal menu with action groups, checked and disabled items, dismissal and focus requests to host refs. |
+| `NativePopover` | Shared anchored RN Modal, with explicit usable regions or a measured trigger. |
+| `NativeSliderField` | Shared precision slider with drag preview, commit/cancel, value entry and reset. |
+| `NativeSplitButton` | Separate primary button and shared action flyout. |
+| `ContextMenu` | Shared context menu with long-press, pointer, keyboard and accessibility action handlers. |
+| `FindReplacePopover` | Shared search/replace UI; the app still supplies the document search and mutation callbacks. |
+| `menu-model` | Pure menu validation and traversal helpers. |
+| `Tooltip` | Measured RN surface after hover, keyboard focus or stationary touch; Escape/leave/blur/touch movement dismisses it. App tokens supply appearance; the child keeps its own handlers and receives the full accessibility hint. |
+
+The root entry preserves its existing API: the `NativeDropdown` value and the
+existing prop types. Other controls remain independent subpath imports. Some
+target entries reuse files named `.web.js` because those wrappers already use
+portable RN components; the target route is explicit in `package.json`.
+The generic default root also uses the shared implementation, so importing
+the package without a browser or mobile condition needs no optional Expo
+peer. Explicit browser and mobile conditions retain their Expo-backed root.
+
+These are shared RN controls rendered by the host. They do not create QML,
+QWidget, Qt Charts, SwiftUI or Compose surfaces. `colorScheme` configures an
+Expo Host and `NativeDropdown.appearance` is iOS-only; shared target controls
+use the app's token theme. The upstream I18nManager fallback is fixed LTR
+without a target native RTL manager. Tests cover conditional resolution,
+import isolation and JavaScript interactions. Qt keyboard delivery, focus,
+screen-reader output, RTL and device rendering still need native acceptance.
+
+Desktop input requires the host's generic pointer-enter/leave, focus/blur and
+key events. Menus request focus through real host refs, and the shared popover
+leaves native Tab traversal to the host instead of querying a DOM. Tooltip
+uses native measurements, clamps its body to the window and never opens a
+Modal or takes focus. It remains inside its parent tree, so an ancestor with
+clipping can constrain the visible bubble. Use persistent help text for
+essential information and test tooltips inside the consuming app's scroll and
+overlay containers.
+
+The shared accessibility layer preserves app-supplied preferences when the Qt
+provider explicitly reports an unsupported preference or unavailable bridge.
+Supported screen-reader/client and high-contrast signals still subscribe
+independently. Qt announcements use low priority without the iOS-only queue
+request. None of these source paths is a spoken-output or device acceptance
+claim.
+
+## Expo-backed platforms
+
 `NativeDropdown`: a SwiftUI `Picker` on iOS, a Material 3 exposed dropdown
 in Compose on Android, and Expo's universal `Picker` (a `<select>`) on web.
 Controlled single-select; values and labels must be unique. The `label` is
@@ -26,7 +84,8 @@ blank, every group needs an option, and values stay unique across groups.
 ContextMenu and Compose DropdownMenu** on iOS/Android. On web uses an
 independent working React Native Modal (because Expo's native MenuView web
 implementation has no action callbacks); not an OS-native menu on web.
-Native `.native` file imported only by native bundlers.
+The generic `react-native` condition selects the mobile `.native` file;
+QNX and Marathon select the shared presentation described above.
 On web a `longPress` menu also opens on a plain press, because keyboard and
 screen-reader activation only send a press there.
 
@@ -112,7 +171,9 @@ The `NYC-Tron native controls` workflow runs `expo prebuild` on it and compiles
 the Android app with Gradle and the iOS app with Xcode, which proves the
 @expo/ui views link. It does not run the app.
 
-These require Expo SDK 58/React Native 0.88 on an actual Expo host. Never
+The Expo-backed paths require Expo SDK 58/React Native 0.88 on an actual Expo
+host, with both `expo` and `@expo/ui` installed explicitly. The flat web
+`NativeDropdown` also needs `@expo/ui` for its universal Picker. Never
 install this into the isolated Legend Spark SDK 55/RN0.83 macOS build or RNW
 0.85/WinUI host; those need their own native adapter packages.
 

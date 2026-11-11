@@ -1,6 +1,11 @@
 import {useEffect,useRef,useLayoutEffect} from "react";
 import {Button,Text,View} from "react-native";
 import {useStore} from "zustand";
+import {createAcceptanceStore} from "./acceptance-store";
+import {beginInspectorMount} from "./overlay-store";
+import {NativeOverlays} from "./NativeOverlays";
+import {NativeDragSourcePanel,NativeDragTargetPanel} from "./NativeDrag";
+const acceptance=createAcceptanceStore(beginInspectorMount);
 import {WindowsNavigationHost,createWindowsNavigationBinding} from "@nyc-tron/windows-fluent-fabric/navigation-host";
 import {createWindowsNavigationController} from "@nyc-tron/windows-fluent/controller";
 import {createNavigationStore,destinations} from "./route-store";
@@ -11,6 +16,7 @@ function Navigation({store}:{store:ReturnType<typeof createNavigationStore>}) {
  const ref=useRef<ReturnType<typeof createWindowsNavigationBinding>|null>(null);
  if(!ref.current)ref.current=createWindowsNavigationBinding();
  const binding=ref.current;
+ const settingsWasOpen=useRef(state.settingsOpen);
  useLayoutEffect(()=>{
   const props=(s:ReturnType<typeof store.getState>)=>({items:destinations,selectedId:s.selectedId,paneOpen:s.paneOpen,paneMode:"expanded" as const,paneTitle:"NYC-Tron",settingsVisible:true});
   const initial=store.getState();
@@ -20,7 +26,11 @@ function Navigation({store}:{store:ReturnType<typeof createNavigationStore>}) {
   const off=store.subscribe(next=>controller.update(props(next)));
   return ()=>{off();controller.dispose();};
  },[binding,store]);
- return <WindowsNavigationHost binding={binding} onNativeError={state.reportNativeError} style={{alignSelf:"stretch"}}/>;
+ useLayoutEffect(()=>{
+  if(settingsWasOpen.current&&!state.settingsOpen)binding.focusSettings();
+  settingsWasOpen.current=state.settingsOpen;
+ },[binding,state.settingsOpen]);
+ return <WindowsNavigationHost binding={binding} onNativeError={state.reportNativeError} style={{alignSelf:"stretch",direction:state.direction}}/>;
 }
 
 export function DocumentWindow({windowId}:{windowId:string}) {
@@ -30,6 +40,7 @@ export function DocumentWindow({windowId}:{windowId:string}) {
   <Text>Window identity: {windowId}</Text>
   <Text accessibilityLiveRegion="polite">Shared draft: {state.title}</Text>
   <Text>The document store and undo owner stay above both native surfaces.</Text>
+  <NativeDragTargetPanel windowId={windowId}/>
   <Button title="Save shared draft" accessibilityLabel="Save shared draft" onPress={saveDraft}/>
  </View>;
 }
@@ -39,10 +50,31 @@ export function App(){
  if(!ref.current)ref.current=createNavigationStore();
  const state=useStore(ref.current);
  const document=useStore(desktop);
+ const {stage,overlayMountKey}=useStore(acceptance);
  useEffect(()=>{void connectDesktop().catch(failDesktop);},[]);
- return <View style={{flex:1,flexDirection:"row"}}>
+ return <View style={{flex:1,flexDirection:"row",direction:"ltr"}}>
   <Navigation store={ref.current}/>
-  <View style={{flex:1,padding:24,gap:16}}>
+  <View style={{flex:1,padding:16,gap:10}}>
+   <View style={{flexDirection:"row",gap:8,flexWrap:"wrap"}}>
+    <Button title="Show lifecycle checks" accessibilityLabel="Show lifecycle checks" onPress={()=>acceptance.getState().showStage("lifecycle")}/>
+    <Button title="Show native overlay checks" accessibilityLabel="Show native overlay checks" onPress={()=>acceptance.getState().showStage("overlays")}/>
+    <Button title="Show native drag checks" accessibilityLabel="Show native drag checks" onPress={()=>{state.setPaneOpen(false);acceptance.getState().showStage("drag");}}/>
+    <Button title="Show native navigation checks" accessibilityLabel="Show native navigation checks" onPress={()=>{state.setPaneOpen(true);acceptance.getState().showStage("navigation");}}/>
+   </View>
+   {stage==="overlays"&&<NativeOverlays key={overlayMountKey} mountKey={overlayMountKey}/>}
+   {stage==="drag"&&<NativeDragSourcePanel/>}
+   {stage==="navigation"&&<View style={{gap:12}}>
+    <Text accessibilityRole="header">Native navigation accessibility</Text>
+    <Text>Navigation direction: {state.direction}</Text>
+    <Text>Committed route: {state.selectedId}</Text>
+    <Button title={state.direction==="ltr"?"Use RTL navigation":"Use LTR navigation"} accessibilityLabel={state.direction==="ltr"?"Use RTL navigation":"Use LTR navigation"} onPress={()=>state.setDirection(state.direction==="ltr"?"rtl":"ltr")}/>
+    <Button title={state.paneOpen?"Close pane":"Open pane"} accessibilityLabel={state.paneOpen?"Close pane":"Open pane"} onPress={()=>state.setPaneOpen(!state.paneOpen)}/>
+    {state.settingsOpen&&<View accessibilityRole="summary">
+     <Text>Settings opened without changing the committed route.</Text>
+     <Button title="Close settings" accessibilityLabel="Close settings" onPress={state.closeSettings}/>
+    </View>}
+   </View>}
+   <View style={{display:stage==="lifecycle"?"flex":"none",gap:10}}>
    <Text accessibilityRole="header">Windows navigation acceptance</Text>
    <Text selectable accessibilityLiveRegion="polite">{state.status}</Text>
    <Text selectable>Committed route: {state.selectedId}</Text>
@@ -62,6 +94,12 @@ export function App(){
    {state.settingsOpen&&<View accessibilityRole="summary">
     <Text selectable>Settings opened without changing the committed route.</Text>
     <Button title="Close settings" accessibilityLabel="Close settings" onPress={state.closeSettings}/>
+   </View>}
+   </View>
+   {stage!=="lifecycle"&&stage!=="navigation"&&<View style={{gap:8}}>
+    <Text accessibilityLiveRegion="polite">{document.status}</Text>
+    <Text>Native windows: {document.windows.windows.length}</Text>
+    <Button title="Open document window" accessibilityLabel="Open document window" onPress={()=>void openDocument().catch(failDesktop)}/>
    </View>}
   </View>
  </View>;

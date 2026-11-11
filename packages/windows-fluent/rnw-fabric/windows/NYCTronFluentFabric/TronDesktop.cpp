@@ -14,7 +14,8 @@ void TronDesktop::connect(std::string primary, std::string component, Promise&& 
       const auto weak = self->weak_from_this();
       auto session = std::make_shared<nyctron::desktop::DesktopSession>(self->m_context,
         [weak](std::string value) { if (auto module = weak.lock()) module->onSnapshot(value); },
-        [weak](std::string value) { if (auto module = weak.lock()) module->onError(value); });
+        [weak](std::string value) { if (auto module = weak.lock()) module->onError(value); },
+        [weak](std::string value) { if (auto module = weak.lock()) module->onNativeDrag(value); });
       try { session->Connect(primary, component); self->m_session = session; promise.Resolve(session->Snapshot()); }
       catch (...) { session->Dispose(); throw; }
     } catch (std::exception const& error) { promise.Reject(error.what()); }
@@ -48,6 +49,47 @@ void TronDesktop::dispose(std::string owner, Microsoft::ReactNative::ReactPromis
     catch (std::exception const& error) { promise.Reject(error.what()); }
     catch (winrt::hresult_error const& error) { promise.Reject(error.message().c_str()); }
     catch (...) { promise.Reject("Could not detach the native Windows host"); }
+  });
+}
+void TronDesktop::startNativeDrag(std::string owner, std::string source, std::string token, std::string request, Promise&& promise) noexcept {
+  m_context.UIDispatcher().Post([self = shared_from_this(), owner = std::move(owner), source = std::move(source), token = std::move(token), request = std::move(request), promise] {
+    try {
+      if (!self->m_session) throw std::runtime_error("Native desktop is not connected");
+      self->m_session->RequireOwner(owner);
+      self->m_session->StartNativeDrag(source, token, request, [promise](std::string result) { promise.Resolve(result); });
+    } catch (std::exception const& error) { promise.Reject(error.what()); }
+    catch (winrt::hresult_error const& error) { promise.Reject(error.message().c_str()); }
+    catch (...) { promise.Reject("Native drag could not start"); }
+  });
+}
+void TronDesktop::resolveNativeDrop(std::string owner, std::string token, std::string request, bool accepted, Microsoft::ReactNative::ReactPromise<bool>&& promise) noexcept {
+  m_context.UIDispatcher().Post([self = shared_from_this(), owner = std::move(owner), token = std::move(token), request = std::move(request), accepted, promise] {
+    try {
+      if (!self->m_session) throw std::runtime_error("Native desktop is not connected");
+      self->m_session->RequireOwner(owner); promise.Resolve(self->m_session->ResolveNativeDrop(token, request, accepted));
+    } catch (std::exception const& error) { promise.Reject(error.what()); }
+    catch (winrt::hresult_error const& error) { promise.Reject(error.message().c_str()); }
+    catch (...) { promise.Reject("Native drop approval failed"); }
+  });
+}
+void TronDesktop::cancelNativeDrag(std::string owner, std::string request, Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept {
+  m_context.UIDispatcher().Post([self = shared_from_this(), owner = std::move(owner), request = std::move(request), promise] {
+    try {
+      if (!self->m_session) throw std::runtime_error("Native desktop is not connected");
+      self->m_session->RequireOwner(owner); self->m_session->CancelNativeDrag(request); promise.Resolve();
+    } catch (std::exception const& error) { promise.Reject(error.what()); }
+    catch (winrt::hresult_error const& error) { promise.Reject(error.message().c_str()); }
+    catch (...) { promise.Reject("Native drag cancellation failed"); }
+  });
+}
+void TronDesktop::enableNativeDragDiagnostics(std::string owner, Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept {
+  m_context.UIDispatcher().Post([self = shared_from_this(), owner = std::move(owner), promise] {
+    try {
+      if (!self->m_session) throw std::runtime_error("Native desktop is not connected");
+      self->m_session->RequireOwner(owner);
+      self->m_session->EnableNativeDragDiagnostics();
+      promise.Resolve();
+    } catch (...) { promise.Reject("Native drag diagnostics could not be enabled"); }
   });
 }
 }

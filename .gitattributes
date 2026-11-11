@@ -1,2 +1,4 @@
 # Preserve the upstream baseline bytes, including on Windows checkouts.
 docs/completion/baseline-roster.tsv text eol=lf
+# Review the generated Qt map in Markdown; retain the full machine-readable graph.
+docs/qt/component-coverage.json linguist-generated=true

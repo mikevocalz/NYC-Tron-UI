@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "scope": "Thirteen rebuilt shared release-package archives from one reviewed source tree; no release publication or per-device acceptance is implied.",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "sourceCommit": "eb1f473d910b0b13854778e60c6e7c41b41ff228",
+  "sourceTree": "e70358de4d140ac78ee3a75ca1567af39442548e",
+  "packager": "tooling/pack-release.mjs",
+  "packageManager": "pnpm@10.32.1",
+  "node": "v24.22.1",
+  "archives": [
+    {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0",
+      "file": "nyc-tron-core-1.0.0.tgz",
+      "bytes": 51185,
+      "sha256": "dc280637a48a055478cb39ff6ca7df3d5d53424339a7bb6f1b05c96d30a0c355"
+    },
+    {
+      "package": "@nyc-tron/expo-controls",
+      "version": "1.0.0",
+      "file": "nyc-tron-expo-controls-1.0.0.tgz",
+      "bytes": 56814,
+      "sha256": "ba87e60796dcf3ba2824f33eaf95ba49c6614e2ca6e7ff614fda2f78126d57c2"
+    },
+    {
+      "package": "@nyc-tron/geometry",
+      "version": "1.0.0",
+      "file": "nyc-tron-geometry-1.0.0.tgz",
+      "bytes": 5403,
+      "sha256": "ca80f9e7c69950df97ce5db6c44302fa3debc17cdf96ceb8ec6a443f393b3fa5"
+    },
+    {
+      "package": "@nyc-tron/hardware-keys",
+      "version": "1.0.0",
+      "file": "nyc-tron-hardware-keys-1.0.0.tgz",
+      "bytes": 21282,
+      "sha256": "0890c1bb1b5867ea307d109312840ef6b2532c8e86d319daa133623c91dd6912"
+    },
+    {
+      "package": "@nyc-tron/icons",
+      "version": "1.0.0",
+      "file": "nyc-tron-icons-1.0.0.tgz",
+      "bytes": 23161,
+      "sha256": "68667fed555a073b05f100df8736774f5bbc6f169e074f8124df68457a251b07"
+    },
+    {
+      "package": "@nyc-tron/native-charts",
+      "version": "1.0.0",
+      "file": "nyc-tron-native-charts-1.0.0.tgz",
+      "bytes": 14389,
+      "sha256": "6f61d9b55a44f19ec26771d6e678373ce8b14ad380ebea49c67f75919c3d8c76"
+    },
+    {
+      "package": "@nyc-tron/native-controls",
+      "version": "1.0.0",
+      "file": "nyc-tron-native-controls-1.0.0.tgz",
+      "bytes": 35270,
+      "sha256": "fb53ce0cbf8af09e7ec20a7c1e49db7b4567a2d39fea92507e0c0b0481e52185"
+    },
+    {
+      "package": "@nyc-tron/native-navigation",
+      "version": "1.0.0",
+      "file": "nyc-tron-native-navigation-1.0.0.tgz",
+      "bytes": 13222,
+      "sha256": "cbba0e0477ad30ae5bae07f6d9e85a08a6371c7f62236573bc9617f1bc2b9c85"
+    },
+    {
+      "package": "@nyc-tron/panes",
+      "version": "1.0.0",
+      "file": "nyc-tron-panes-1.0.0.tgz",
+      "bytes": 18857,
+      "sha256": "cd91c0a0965ef066e028d76012194798ed37c71419197ce0c1dc68c5c6cae0b9"
+    },
+    {
+      "package": "@nyc-tron/platform-services",
+      "version": "1.0.0",
+      "file": "nyc-tron-platform-services-1.0.0.tgz",
+      "bytes": 91408,
+      "sha256": "c7e9710b1476eb3bf8026e0672d6c0b6a60727ba18af732f9cb741fb10aa2650"
+    },
+    {
+      "package": "@nyc-tron/reserved-regions",
+      "version": "1.0.0",
+      "file": "nyc-tron-reserved-regions-1.0.0.tgz",
+      "bytes": 17293,
+      "sha256": "e29a15883a17b881e3d7edc0dd7c1c5b6fc988418b9a0f09efa65659e6b85bc2"
+    },
+    {
+      "package": "@nyc-tron/ui",
+      "version": "1.0.0",
+      "file": "nyc-tron-ui-1.0.0.tgz",
+      "bytes": 1854803,
+      "sha256": "2920da3bc1b0786b2e6a3ed5ec029cf5b83c7ad9b237d8a488193fe326453c65"
+    },
+    {
+      "package": "@nyc-tron/windows-fluent",
+      "version": "1.0.0",
+      "file": "nyc-tron-windows-fluent-1.0.0.tgz",
+      "bytes": 11281,
+      "sha256": "e096e6763e2e59897c751e8c69123122ffe9f569d090aeed2b4645ee0c7d9d73"
+    }
+  ]
+}

@@ -1,7 +1,14 @@
-import {I18nManager} from "react-native";
 import type {StyleProp,ViewStyle} from "react-native";
-import TronNavigationViewNativeComponent from "./TronNavigationViewNativeComponent";
+import {useImperativeHandle,useRef,type ComponentRef,type Ref} from "react";
+import TronNavigationViewNativeComponent,{Commands} from "./TronNavigationViewNativeComponent";
+import {nativeIsRTL} from "./native-direction.ts";
 
+export interface TronNavigationViewHandle {
+  /** Returns whether a focus command reached a mounted native view, not a focus observation. */
+  focusSelected(): boolean;
+  /** Restore focus after closing the app-owned Settings surface. */
+  focusSettings(): boolean;
+}
 export interface Destination {
   readonly id:string;
   readonly label:string;
@@ -9,6 +16,7 @@ export interface Destination {
   readonly disabled?:boolean;
 }
 export interface TronNavigationViewProps {
+  readonly ref?:Ref<TronNavigationViewHandle>;
   readonly items:readonly Destination[];
   readonly footerItems?:readonly Destination[];
   readonly selectedId:string|null;
@@ -51,10 +59,16 @@ const COMPACT_PANE_WIDTH=48;
 export function TronNavigationView({
   items,footerItems=[],selectedId,paneMode="auto",paneOpen,
   paneTitle="",settingsVisible=false,onSelectionRequested,
-  onPaneOpenRequested,onSettingsRequested,onNativeError,style
+  onPaneOpenRequested,onSettingsRequested,onNativeError,style,ref
 }:TronNavigationViewProps){
   validateDestinations(items,footerItems,selectedId);
+  const nativeRef=useRef<ComponentRef<typeof TronNavigationViewNativeComponent>>(null);
+  useImperativeHandle(ref,()=>({
+    focusSelected:()=>{if(!nativeRef.current)return false;Commands.focusSelected(nativeRef.current);return true;},
+    focusSettings:()=>{if(!nativeRef.current)return false;Commands.focusSettings(nativeRef.current);return true;},
+  }),[]);
   return <TronNavigationViewNativeComponent
+    ref={nativeRef}
     itemsJson={JSON.stringify(items)}
     footerItemsJson={JSON.stringify(footerItems)}
     selectedId={selectedId??""}
@@ -62,7 +76,7 @@ export function TronNavigationView({
     paneOpen={paneOpen}
     paneTitle={paneTitle}
     settingsVisible={settingsVisible}
-    isRTL={I18nManager.isRTL}
+    isRTL={nativeIsRTL(style)}
     onDestinationInvoked={e=>{
       const id=e.nativeEvent.id;
       if(id===selectedId)return;

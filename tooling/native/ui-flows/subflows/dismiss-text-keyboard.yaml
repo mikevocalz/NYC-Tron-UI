@@ -1,0 +1,24 @@
+appId: com.nyctron.instruments.example
+name: Dismiss native text keyboard
+---
+# These fields declare returnKeyType=done and submitBehavior=blurAndSubmit.
+# Tap the actual iOS system key observed in the native accessibility tree.
+# Maestro's generic iOS hideKeyboard uses center-screen swipes, which can miss
+# the scroller when the keyboard and bottom navigation share the viewport.
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - assertVisible:
+          id: "delete"
+      - tapOn:
+          id: "Done"
+      - assertNotVisible:
+          id: "delete"
+      - assertNotVisible:
+          id: "Done"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
