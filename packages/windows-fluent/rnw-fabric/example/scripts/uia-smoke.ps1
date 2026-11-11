@@ -47,11 +47,13 @@ function Save-Screenshot([string]$name, $target) {
   if ($null -ne $target) {
     $handle = [IntPtr]$target.Current.NativeWindowHandle
     if ($handle -eq [IntPtr]::Zero) { throw "Screenshot target has no native top-level window" }
-    [NativeWindow]::SetForegroundWindow($handle) | Out-Null
-    Set-ElementFocus $target $target
-    $deadline = (Get-Date).AddSeconds(5)
+    # A top-level window element is not keyboard-focusable through UIA, so
+    # SetFocus on it always throws. Foreground ownership is what matters here
+    # and is asserted below; request it again on every poll.
+    $deadline = (Get-Date).AddSeconds(10)
     $ready = $false
     while ((Get-Date) -lt $deadline) {
+      [NativeWindow]::SetForegroundWindow($handle) | Out-Null
       $before = $target.Current.BoundingRectangle
       Start-Sleep -Milliseconds 150
       $rect = $target.Current.BoundingRectangle
