@@ -1,0 +1,506 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "completed-native-run-failure",
+  "repository": "mikevocalz/NYC-Tron-UI",
+  "source": {
+    "helperHead": "12e35b48f75408ac4da4f8130853148ef00a5881",
+    "helperParent": "5340d2d96412d0fcc5dc7cce21ced037d2de5c7b",
+    "actualMerge": "96e7558fbb859a2430b0f192bb5f11e940229cfa",
+    "tree": "d4352a6aba7cca7a9b898b6c25c9e4a5d729587d",
+    "orderedMergeParents": [
+      "0edd5f302e99877191ba9a412c5c060571a5f6c9",
+      "12e35b48f75408ac4da4f8130853148ef00a5881"
+    ],
+    "sourceFiles": [
+      {
+        "path": ".github/workflows/macos-appkit.yml",
+        "gitBlob": "ed8c5a2c8eb06e68b920413836c8cd32fadcf198",
+        "bytes": 9750,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/acceptance-driver/NYCTronAcceptanceDriver.mm",
+        "gitBlob": "209e0ebfee4b9ba7fe902b64ec1bd09ae108b000",
+        "bytes": 58123,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/verify-native.mjs",
+        "gitBlob": "2d9efdb7834b3ee461bf00e3fecbcc5c11b43964",
+        "bytes": 70956,
+        "mode": "100644"
+      },
+      {
+        "path": "examples/macos-appkit/spark/driver-client.mjs",
+        "gitBlob": "0365653c0b6f4ee12f1022b31ee905127d2b6023",
+        "bytes": 4393,
+        "mode": "100644"
+      }
+    ]
+  },
+  "workflow": {
+    "runId": 42958884494,
+    "runAttempt": 1,
+    "sourceJobId": 130320429814,
+    "nativeJobId": 130320556894,
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884494"
+  },
+  "independentlyInspected": {
+    "scope": "Complete decoded job log strings returned by the GitHub connector and exact text envelopes extracted from those strings. Their UTF-8 byte hashes are independently recomputed; original artifact member bytes are outside this scope.",
+    "files": [
+      {
+        "filename": "source-job.log",
+        "kind": "complete-decoded-GitHub-job-log",
+        "jobId": 130320429814,
+        "bytes": 19235,
+        "sha256": "578ed358b08f6931451bd212cf17a80bd6de2ca58229658ec14bceba51f00086",
+        "gitBlob": "bb512b232a9b193ec1f7f647af2a7b7b23692205"
+      },
+      {
+        "filename": "native-job.log",
+        "kind": "complete-decoded-GitHub-job-log",
+        "jobId": 130320556894,
+        "bytes": 65531,
+        "sha256": "ad562522d15fdf9a3c299a417c8e688fbb9d1742a42f2fcac6086ce7a30c6430",
+        "gitBlob": "5c21e84175abc4736a7099976a3640535f67b42d"
+      },
+      {
+        "filename": "build-console-summary.json",
+        "kind": "exact-timestamp-stripped-JSON-line-without-added-newline",
+        "bytes": 318,
+        "sha256": "93f2356d6d435276d3735f3edf8cfc81a700e36cfe391bc4c7790f23ec457d32",
+        "gitBlob": "3a17494d1f5ef489df1cbd6b4c8749a7dd97647b"
+      },
+      {
+        "filename": "startup-console-summary.json",
+        "kind": "exact-timestamp-stripped-JSON-line-without-added-newline",
+        "bytes": 12142,
+        "sha256": "2f6a6ef04b8241d668fb9456f1952642a5df2293849fe85bbbf3eb2277a253e4",
+        "gitBlob": "ab8afe9cc16ee762aa402e85c5627ca1fb411528"
+      },
+      {
+        "filename": "startup-console-block.txt",
+        "kind": "exact-timestamped-marker-block-including-ten-interleaved-stderr-lines",
+        "bytes": 13141,
+        "sha256": "8df49767e28089e7a93390d1f084cbf0b360f28520e3f2f605172987ac78d869",
+        "gitBlob": "87b7c041ad0c78f0a1120e3d5843152d85645a4c"
+      }
+    ],
+    "completedMetadata": {
+      "filename": "github-metadata.json",
+      "bytes": 8940,
+      "sha256": "e682d955f08ca9ae09e51a023be76fde9fcf5fea812ec272ceab924dd8df78a9",
+      "gitBlob": "1cc51623e49fc681d1a107ad30f0614b4364eb22"
+    },
+    "extraction": {
+      "timestampRemoval": "Remove only the exact GitHub timestamp prefix from each candidate line; require standalone exact BEGIN and END marker lines. Ignore marker strings echoed within shell source.",
+      "rawJson": "Retain each unique complete JSON line verbatim after timestamp removal, without parsing/reserializing it or adding a newline.",
+      "build": {
+        "beginCount": 1,
+        "endCount": 1,
+        "jsonLines": 1,
+        "interleavedNonJsonLines": 0
+      },
+      "startup": {
+        "beginCount": 1,
+        "endCount": 1,
+        "jsonLines": 1,
+        "interleavedNonJsonLines": 10,
+        "originalTimestampedBlockRetained": true,
+        "interleavedLinesIncludeBlankLinesAndNodeVersion": true
+      },
+      "tooltip": {
+        "beginCount": 0,
+        "endCount": 0,
+        "status": "absent-before-tooltip-stage"
+      }
+    }
+  },
+  "observedOutcome": {
+    "sourceTests": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "consumerTests": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "installedPublicApiCheck": {
+      "status": "passed",
+      "subpaths": 15,
+      "reachableDeclarations": 33
+    },
+    "nativeFoundationSocketpairProbe": {
+      "casesPassed": 7,
+      "applicationAcceptanceSeparate": true
+    },
+    "standaloneNativeCompile": {
+      "exitCode": 0,
+      "outcome": "success"
+    },
+    "nativeRuntimeStep": "failed",
+    "firstFailure": "Native driver response timed out awaiting tron.window (request 2)",
+    "processId": 45188,
+    "initialShowAcceptedWithinDeadline": false,
+    "reactRootMainCheckReached": false,
+    "actualReactMountState": null,
+    "newActivationTimingFieldsActuallyEmitted": true,
+    "tooltipStageReached": false,
+    "newTooltipGetterDiagnosticsObserved": false,
+    "nativeEvidenceUploadFileCount": 45,
+    "passedOnlyNativeDistribution": "skipped"
+  },
+  "actualTimingObservation": {
+    "source": "Exact emitted startup JSON line, activation record workspace-main-continuation.",
+    "timing": {
+      "clock": "CACurrentMediaTime",
+      "clockExcludesSystemSleep": true,
+      "intervalsAreNotQueueResidence": true,
+      "intervalsDoNotEstablishCause": true,
+      "completionTraceElapsedSeconds": 0.0001507500001025619,
+      "submissionStartToMainEntrySeconds": 35.40724549999982
+    },
+    "sourceSemantics": {
+      "driverGitBlob": "209e0ebfee4b9ba7fe902b64ec1bd09ae108b000",
+      "completionTraceStarted": "CACurrentMediaTime sample immediately before the existing workspace-completion TraceActivation call.",
+      "submissionStarted": "CACurrentMediaTime sample immediately before the unchanged dispatch_async call, with no logging or metadata collection between sample and call.",
+      "mainEntered": "CACurrentMediaTime sample as the first statement of the dispatched main block.",
+      "completionTraceElapsedSeconds": "submissionStarted minus completionTraceStarted; includes the existing callback trace and any descheduling across those sample points.",
+      "submissionStartToMainEntrySeconds": "mainEntered minus submissionStarted; includes dispatch work and possible descheduling, not isolated queue residence.",
+      "clockExcludesSystemSleep": true,
+      "isolatedQueueWaitMeasured": false,
+      "blockedStackEstablished": false,
+      "rootCauseEstablished": false,
+      "scopeOfShortFirstInterval": "The first interval was short in this run only; this does not establish that logging is never causal in other operations or earlier runs.",
+      "actualRawClockReadingsProjected": false
+    }
+  },
+  "reportedWallClockSequence": {
+    "timestampsAreWallClockObservations": true,
+    "clientRequest": {
+      "line": 7,
+      "phase": "request-started",
+      "at": "2026-11-11T04:42:14.270Z",
+      "command": "tron.window",
+      "requestId": 2,
+      "responseId": null,
+      "ok": null,
+      "protocol": null
+    },
+    "clientFailure": {
+      "line": 8,
+      "phase": "request-failed",
+      "at": "2026-11-11T04:42:49.273Z",
+      "command": "tron.window",
+      "requestId": 2,
+      "responseId": null,
+      "ok": null,
+      "protocol": null
+    },
+    "clientWallClockIntervalSeconds": 35.003,
+    "completionMarker": {
+      "line": 16,
+      "phase": "workspace-completion-received",
+      "atEpochSeconds": 1794372134.378285,
+      "mainThread": false,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": true,
+        "hasError": false,
+        "sameProcess": null,
+        "sameBundle": null,
+        "ok": null
+      },
+      "state": {
+        "policy": null,
+        "applicationActive": null,
+        "visible": null,
+        "key": null,
+        "miniaturized": null,
+        "canBecomeKey": null
+      }
+    },
+    "mainContinuationMarker": {
+      "line": 17,
+      "phase": "workspace-main-continuation",
+      "atEpochSeconds": 1794372169.7856889,
+      "mainThread": true,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": null,
+        "hasError": null,
+        "sameProcess": null,
+        "sameBundle": null,
+        "ok": null
+      },
+      "state": {
+        "policy": 0,
+        "applicationActive": false,
+        "visible": true,
+        "key": false,
+        "miniaturized": false,
+        "canBecomeKey": true
+      },
+      "timing": {
+        "clock": "CACurrentMediaTime",
+        "clockExcludesSystemSleep": true,
+        "intervalsAreNotQueueResidence": true,
+        "intervalsDoNotEstablishCause": true,
+        "completionTraceElapsedSeconds": 0.0001507500001025619,
+        "submissionStartToMainEntrySeconds": 35.40724549999982
+      }
+    },
+    "completionMarkerToMainContinuationMarkerWallClockIntervalSecondsRounded6": 35.407404,
+    "identityChecked": {
+      "line": 18,
+      "phase": "identity-checked",
+      "atEpochSeconds": 1794372169.788363,
+      "mainThread": true,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": null,
+        "hasError": null,
+        "sameProcess": true,
+        "sameBundle": true,
+        "ok": null
+      },
+      "state": {
+        "policy": null,
+        "applicationActive": null,
+        "visible": null,
+        "key": null,
+        "miniaturized": null,
+        "canBecomeKey": null
+      }
+    },
+    "lateReplyPrepared": {
+      "line": 21,
+      "phase": "reply-prepared",
+      "atEpochSeconds": 1794372169.789552,
+      "mainThread": true,
+      "operation": 1,
+      "details": {
+        "accepted": null,
+        "hasApplication": null,
+        "hasError": null,
+        "sameProcess": null,
+        "sameBundle": null,
+        "ok": true
+      },
+      "state": {
+        "policy": 0,
+        "applicationActive": false,
+        "visible": true,
+        "key": false,
+        "miniaturized": null,
+        "canBecomeKey": null
+      }
+    },
+    "lateTransportSend": {
+      "line": 24,
+      "phase": "send-completed",
+      "atEpochSeconds": 1794372169.789856,
+      "mainThread": false,
+      "sequence": 2,
+      "command": "tron.window",
+      "details": {
+        "parsed": null,
+        "dictionary": null,
+        "nilResponse": null,
+        "validJSONObject": null,
+        "hasError": null,
+        "threwException": null,
+        "replacedWithFailure": false,
+        "bytes": 158,
+        "errno": null,
+        "errorCode": null
+      }
+    },
+    "lateResponseWasNotAcceptedByTimedOutClient": true,
+    "thisWallClockIntervalAloneDoesNotEstablishEnqueueTimingOrCause": true
+  },
+  "reportedProjectionCoverage": {
+    "activation": {
+      "matched": 10,
+      "selected": 10,
+      "omitted": 0,
+      "outputOmitted": 0,
+      "malformed": 0,
+      "pidMismatch": 0
+    },
+    "transport": {
+      "matched": 10,
+      "selected": 10,
+      "omitted": 0,
+      "outputOmitted": 0,
+      "malformed": 0,
+      "pidMismatch": 0
+    },
+    "commands": {
+      "matched": 8,
+      "selected": 8,
+      "omitted": 0,
+      "outputOmitted": 0,
+      "malformed": 0,
+      "pidMismatch": 0
+    },
+    "eventualLiveLogMayContainLaterAppends": true
+  },
+  "producerReportedOriginalInputs": {
+    "independentlyInspected": false,
+    "compilerTranscript": {
+      "filename": "build-console.log",
+      "bytes": 12329323,
+      "sha256": "9774e32d5d12266dea9f19d988151b1d7ec65078bab04d9575a4262eb9d3c193",
+      "complete": true,
+      "normalized": false,
+      "scope": "producer-reported complete compiler transcript; raw bytes not retrieved"
+    },
+    "appLogRead": {
+      "filename": "app.log",
+      "status": "snapshot-retained",
+      "readByteLimit": 1048576,
+      "readBytes": 5380,
+      "sourceLive": true,
+      "sourceBytesBefore": 5380,
+      "sourceBytesAfter": 5380,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": false,
+      "originalSha256": null,
+      "truncated": false,
+      "laterAppendsPossible": true,
+      "unreadBytesObserved": 0,
+      "snapshot": {
+        "filename": "startup-app-log-snapshot.log",
+        "kind": "read-time-prefix-from-live-app-log",
+        "offset": 0,
+        "bytes": 5380,
+        "sha256": "555c703949088b1d3acfb03fceec2b8d0b424fe5bee8c21d306a28bb9a45373b",
+        "retained": true,
+        "eventualAppLogHash": false
+      }
+    },
+    "commandsRead": {
+      "filename": "commands.jsonl",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 841,
+      "sourceLive": false,
+      "sourceBytesBefore": 841,
+      "sourceBytesAfter": 841,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "b339b4a8e049271dcf49f690de8d8be6edcd491090a3369332aab710ac0551f7",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null
+    },
+    "processFailureRead": {
+      "filename": "native-process-failure.json",
+      "status": "complete-stable-read",
+      "readByteLimit": 262145,
+      "readBytes": 1321,
+      "sourceLive": false,
+      "sourceBytesBefore": 1321,
+      "sourceBytesAfter": 1321,
+      "sameFileIdentity": true,
+      "changedDuringRead": false,
+      "completeAtRead": true,
+      "completeOriginalFile": true,
+      "originalSha256": "6fa223c7b63a1268489a7f54d9c53839437d9913bfb80fa068c38edcd3b9e7c6",
+      "truncated": false,
+      "laterAppendsPossible": false,
+      "unreadBytesObserved": 0,
+      "snapshot": null,
+      "jsonStatus": "parsed"
+    },
+    "sample": {
+      "observedAt": null,
+      "exitCode": 0,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "durationSeconds": 2,
+      "intervalMilliseconds": 10,
+      "threadGroups": 28,
+      "hasThreadStacks": true,
+      "file": "native-process-sample.txt",
+      "sha256": "055e74fd2c12be8aebbce31f420673c75b0f518c0d8f87c63f6995ab8ce67333",
+      "digestScope": "producer-recorded-sample-file-not-reread",
+      "stacksDoNotEstablishHealth": true,
+      "scope": "post-timeout producer-recorded sample metadata and digest; sample file and thread stacks not inspected"
+    },
+    "artifact": {
+      "id": 13828758845,
+      "name": "macos-appkit-native-evidence",
+      "bytes": 1406086,
+      "sha256": "2b25ff01c700aec4e92544dc34028e8e7eebfb8340220df50c8013a7e790ccfa",
+      "uploadedFileCount": 45,
+      "rawZipInspected": false,
+      "membersInspected": false
+    },
+    "runtimeProcessProjection": {
+      "status": "projected",
+      "processId": 45188,
+      "observedAt": "2026-11-11T04:42:49.276Z",
+      "exitCode": null,
+      "exitCodeAvailable": true,
+      "signal": null,
+      "signalAvailable": true,
+      "beforeSample": {
+        "observedAt": "2026-11-11T04:42:49.280Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "afterSample": {
+        "observedAt": "2026-11-11T04:42:54.336Z",
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true
+      },
+      "sample": {
+        "observedAt": null,
+        "exitCode": 0,
+        "exitCodeAvailable": true,
+        "signal": null,
+        "signalAvailable": true,
+        "durationSeconds": 2,
+        "intervalMilliseconds": 10,
+        "threadGroups": 28,
+        "hasThreadStacks": true,
+        "file": "native-process-sample.txt",
+        "sha256": "055e74fd2c12be8aebbce31f420673c75b0f518c0d8f87c63f6995ab8ce67333",
+        "digestScope": "producer-recorded-sample-file-not-reread",
+        "stacksDoNotEstablishHealth": true
+      }
+    }
+  },
+  "limits": [
+    "The timing fields were actually emitted in this run. Their two finite intervals do not isolate queue residence, prove starvation or blocking, identify a blocked stack, or establish the precise timeout cause.",
+    "The short callback-trace interval is specific to this run; no claim about all logging or earlier failures follows.",
+    "The late matching process/bundle and visible window do not turn the timed-out initial show into acceptance; reported applicationActive and key remained false.",
+    "The verifier failed while awaiting show() before mounted('root-main'); actual React mounting remains unknown.",
+    "No tooltip envelope was produced because the sequential initial-show request failed before tooltip acceptance; new native tooltip code compiled but was not exercised.",
+    "The full compiler transcript, live-log snapshot, command/process originals, post-timeout sample and artifact bytes have producer-reported hashes only; those hashes are not independently recomputed from the originals here.",
+    "The app.log snapshot hash binds an exclusively retained read-time prefix, not the eventual live app.log.",
+    "Sample exit zero and reported thread-stack counts do not establish application health or explain the pre-timeout interval; the original sample stack text is uninspected.",
+    "Later native interaction gates, package acceptance and release acceptance remain held. This receipt changes no deadline, activation behavior, permission, assertion or cleanup and triggers no retry."
+  ]
+}

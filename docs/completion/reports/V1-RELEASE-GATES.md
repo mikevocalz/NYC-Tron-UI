@@ -81,6 +81,54 @@ over `988737b29372fdb4b7eaf69e5f1c8da85654a9e9`. It is distinct from the helper
 workflow. The new native shell-identity test and corrected environment fixture
 are carried with the reviewed diagnostic; no complete native acceptance follows.
 
+### November 11 AppKit completed activation-timing result
+
+The [completed 12e native receipt](../evidence/v1-appkit-12e35b4-dispatch-interval-timeout/README.md)
+records helper `12e35b48f75408ac4da4f8130853148ef00a5881`, actual merge
+`96e7558fbb859a2430b0f192bb5f11e940229cfa`, and matching tree
+`d4352a6aba7cca7a9b898b6c25c9e4a5d729587d`.
+[Run 42958884494](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/42958884494)
+passed eleven source checks, sixteen installed-consumer checks, installed API
+verification (15 subpaths / 33 reachable declarations), seven actual native
+Foundation/socketpair cases and standalone native compilation.
+Initial `tron.window` request 2 again exceeded the unchanged 35-second deadline.
+The verifier had not reached its root-main mount check or allocated tooltip
+evidence; actual React mounting remains unknown and tooltip diagnostics were
+not exercised.
+
+This run actually emitted the new monotonic timing fields for owned PID 45188:
+`completionTraceElapsedSeconds = 0.0001507500001025619` (about 0.151 ms) and
+`submissionStartToMainEntrySeconds = 35.40724549999982` (about 35.407 s).
+The clock identifier and all three interpretation flags matched the reviewed
+contract. The longer interval began after the callback trace returned.
+It includes caller descheduling, dispatch/submission work and elapsed time
+until main entry; it does not isolate queue residence, identify a blocked
+stack or establish cause. The short callback-trace interval applies to this
+run and does not diagnose other logging operations or earlier failures.
+
+The client recorded a 35.003-second wall-clock request interval.
+The late reply verified the same process and bundle and observed a visible
+window, with `applicationActive: false` and `key: false`.
+All ten matching activation records, ten transport records and eight command
+records were retained without reported malformed or omitted matches.
+Post-timeout sample metadata reports 28 thread groups, but its original
+stack text remains uninspected and cannot explain the earlier interval.
+
+Complete source/native logs of 19,235/65,531 UTF-8 bytes were independently
+retrieved and rehashed. The exact 318-byte build and 12,142-byte startup JSON
+lines retain their original bytes. The original 13,141-byte timestamped
+startup block preserves all ten interleaved stderr lines, including blank
+lines and the Node version. The app-log hash binds a stable 5,380-byte
+read-time prefix, with later appends still possible.
+
+The failed run uploaded 45 evidence files. Native artifact 13828758845
+(1,406,086 bytes) and original compiler/snapshot/command/process/sample hashes
+remain producer/API-reported until their original bytes are independently
+inspected. Passed-only tested-distribution retention was skipped.
+The separate 32-case browser pass and historical source checkpoint below
+remain distinct from this completed native failure. No native acceptance,
+ledger status, permission, deadline or release gate is promoted.
+
 ### November 11 AppKit activation-timing source follow-up
 
 The [timing source checkpoint](../evidence/v1-appkit-12e35b4-activation-timing-source/README.md)
