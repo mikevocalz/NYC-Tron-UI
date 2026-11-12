@@ -147,6 +147,30 @@
           }
         }
       ],
+      "./window-chrome": [
+        {
+          "target": "./dist/window-chrome.d.ts",
+          "conditions": {
+            "types": "./dist/window-chrome.d.ts",
+            "react-native": "./src/window-chrome.ts",
+            "default": "./dist/window-chrome.js"
+          },
+          "symbols": {
+            "WindowsChromeBridge": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeBridge"
+            ],
+            "WindowsChromeBridgeOptions": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeBridgeOptions"
+            ],
+            "WindowsChromeHost": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeHost"
+            ],
+            "createWindowsChromeBridge": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#createWindowsChromeBridge"
+            ]
+          }
+        }
+      ],
       "./window-controller": [
         {
           "target": "./dist/window-controller.d.ts",
@@ -195,6 +219,12 @@
             "WindowsOpenWindow": [
               "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow"
             ],
+            "WindowsTitleBar": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBar"
+            ],
+            "WindowsTitleBarStyle": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBarStyle"
+            ],
             "WindowsWindowHost": [
               "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost"
             ],
@@ -236,6 +266,12 @@
             ],
             "WindowsOpenWindow": [
               "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow"
+            ],
+            "WindowsTitleBar": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBar"
+            ],
+            "WindowsTitleBarStyle": [
+              "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBarStyle"
             ],
             "WindowsWindowHost": [
               "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost"
@@ -552,9 +588,51 @@
         "@types/react@19.3.0/index.d.ts#React.JSX.Element"
       ]
     },
+    "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeBridge": {
+      "signatures": [
+        "export interface WindowsChromeBridge {\n    readonly owner: WindowsWindowOwner;\n    readonly onCloseRequested: (request: WindowsCloseRequest) => void;\n    attach(host: WindowsWindowHost): WindowsChromeHost;\n    dispose(): void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeHost",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsCloseRequest",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowOwner"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeBridgeOptions": {
+      "signatures": [
+        "export interface WindowsChromeBridgeOptions {\n    readonly owner: WindowsWindowOwner;\n    readonly beforeClose?: (windowId: string) => boolean | Promise<boolean>;\n    readonly onError?: (error: unknown) => void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowOwner",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeHost": {
+      "signatures": [
+        "export interface WindowsChromeHost extends WindowChromeHost {\n    titleBar(windowId: string): WindowsTitleBar | undefined;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowChromeHost",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBar"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#createWindowsChromeBridge": {
+      "signatures": [
+        "export declare function createWindowsChromeBridge(options: WindowsChromeBridgeOptions): WindowsChromeBridge;"
+      ],
+      "references": [
+        "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeBridge",
+        "@nyc-tron/windows-fluent-fabric/dist/window-chrome.d.ts#WindowsChromeBridgeOptions"
+      ]
+    },
     "@nyc-tron/windows-fluent-fabric/dist/window-controller.d.ts#WindowsDesktopTransport": {
       "signatures": [
-        "export interface WindowsDesktopTransport extends WindowsNativeDragTransport {\n    connect(primaryWindowId: string, componentName: string): Promise<string>;\n    read(ownerToken: string): Promise<string>;\n    open(ownerToken: string, request: string): Promise<string>;\n    move(ownerToken: string, id: string, request: string): Promise<string>;\n    focus(ownerToken: string, id: string): Promise<string>;\n    minimize(ownerToken: string, id: string): Promise<string>;\n    restore(ownerToken: string, id: string): Promise<string>;\n    requestClose(ownerToken: string, id: string): Promise<string>;\n    resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;\n    dispose(ownerToken: string): Promise<void>;\n    onSnapshot(listener: (json: string) => void): {\n        remove(): void;\n    };\n    onError(listener: (message: string) => void): {\n        remove(): void;\n    };\n}"
+        "export interface WindowsDesktopTransport extends WindowsNativeDragTransport {\n    connect(primaryWindowId: string, componentName: string): Promise<string>;\n    read(ownerToken: string): Promise<string>;\n    open(ownerToken: string, request: string): Promise<string>;\n    move(ownerToken: string, id: string, request: string): Promise<string>;\n    focus(ownerToken: string, id: string): Promise<string>;\n    minimize(ownerToken: string, id: string): Promise<string>;\n    restore(ownerToken: string, id: string): Promise<string>;\n    setTitleBar(ownerToken: string, id: string, style: string): Promise<string>;\n    requestClose(ownerToken: string, id: string): Promise<string>;\n    resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;\n    dispose(ownerToken: string): Promise<void>;\n    onSnapshot(listener: (json: string) => void): {\n        remove(): void;\n    };\n    onError(listener: (message: string) => void): {\n        remove(): void;\n    };\n}"
       ],
       "references": [
         "@nyc-tron/windows-fluent-fabric/dist/native-drag-controller.d.ts#WindowsNativeDragTransport",
@@ -623,11 +701,12 @@
     },
     "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow": {
       "signatures": [
-        "export interface WindowsObservedWindow extends WindowRecord {\n    readonly generation: string;\n    readonly primary: boolean;\n    readonly pixelRect: Rect;\n    readonly dpi: number;\n}"
+        "export interface WindowsObservedWindow extends WindowRecord {\n    readonly generation: string;\n    readonly primary: boolean;\n    readonly pixelRect: Rect;\n    readonly dpi: number;\n    readonly titleBar: WindowsTitleBar;\n}"
       ],
       "references": [
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRecord"
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRecord",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBar"
       ]
     },
     "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow": {
@@ -638,9 +717,24 @@
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect"
       ]
     },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBar": {
+      "signatures": [
+        "export interface WindowsTitleBar extends TitleBarInsets {\n    readonly style: WindowsTitleBarStyle;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBarStyle"
+      ]
+    },
+    "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBarStyle": {
+      "signatures": [
+        "export type WindowsTitleBarStyle = \"standard\" | \"extended\";"
+      ],
+      "references": []
+    },
     "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsWindowHost": {
       "signatures": [
-        "export interface WindowsWindowHost {\n    snapshot(): WindowsDesktopSnapshot;\n    refresh(): Promise<WindowsDesktopSnapshot>;\n    open(spec: WindowsOpenWindow): Promise<WindowsObservedWindow>;\n    move(id: string, target: {\n        readonly displayId: string;\n        readonly rect: Rect;\n    }): Promise<void>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    restore(id: string): Promise<void>;\n    requestClose(id: string): Promise<void>;\n    resolveClose(request: WindowsCloseRequest, accepted: boolean): Promise<void>;\n    captureLayout(): WindowsDesktopLayout;\n    restoreLayout(snapshot: WindowsDesktopLayout): Promise<void>;\n    beginDrag(sourceId: string, payload: unknown): Outcome;\n    dragOver(token: string, targetId: string | null): Outcome;\n    drop(token: string, targetId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): Promise<Outcome>;\n    cancelDrag(token: string): Outcome;\n    startNativeDrag(requestId: string, sourceId: string, payload: unknown): Promise<WindowsNativeDragResult>;\n    bindNativeDropTarget(windowId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): () => void;\n    dispose(): Promise<void>;\n}"
+        "export interface WindowsWindowHost {\n    snapshot(): WindowsDesktopSnapshot;\n    refresh(): Promise<WindowsDesktopSnapshot>;\n    open(spec: WindowsOpenWindow): Promise<WindowsObservedWindow>;\n    move(id: string, target: {\n        readonly displayId: string;\n        readonly rect: Rect;\n    }): Promise<void>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    restore(id: string): Promise<void>;\n    setTitleBar(id: string, style: WindowsTitleBarStyle): Promise<WindowsTitleBar>;\n    requestClose(id: string): Promise<void>;\n    resolveClose(request: WindowsCloseRequest, accepted: boolean): Promise<void>;\n    captureLayout(): WindowsDesktopLayout;\n    restoreLayout(snapshot: WindowsDesktopLayout): Promise<void>;\n    beginDrag(sourceId: string, payload: unknown): Outcome;\n    dragOver(token: string, targetId: string | null): Outcome;\n    drop(token: string, targetId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): Promise<Outcome>;\n    cancelDrag(token: string): Outcome;\n    startNativeDrag(requestId: string, sourceId: string, payload: unknown): Promise<WindowsNativeDragResult>;\n    bindNativeDropTarget(windowId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): () => void;\n    dispose(): Promise<void>;\n}"
       ],
       "references": [
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
@@ -652,6 +746,8 @@
         "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsNativeDragResult",
         "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsObservedWindow",
         "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsOpenWindow",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBar",
+        "@nyc-tron/windows-fluent-fabric/dist/window-types.d.ts#WindowsTitleBarStyle",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
@@ -710,6 +806,24 @@
       "symbol": "CommandMenuItem",
       "signatures": [
         "export type CommandMenuItem = Readonly<{\n    id: string;\n    label: string;\n    description?: string;\n    disabled?: boolean;\n    danger?: boolean;\n}>;"
+      ]
+    },
+    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0-rc.1",
+      "file": "dist/window-chrome.d.ts",
+      "symbol": "TitleBarInsets",
+      "signatures": [
+        "export interface TitleBarInsets {\n    readonly leading: number;\n    readonly trailing: number;\n    readonly height: number;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowChromeHost": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0-rc.1",
+      "file": "dist/window-chrome.d.ts",
+      "symbol": "WindowChromeHost",
+      "signatures": [
+        "export interface WindowChromeHost {\n    getState(): WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    requestClose(windowId: string): Promise<WindowCloseResult>;\n    minimize(windowId: string): Promise<void>;\n    restore(windowId: string): Promise<void>;\n    readonly zoom?: WindowZoomControl;\n}"
       ]
     },
     "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#DisplayInfo": {
