@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { dirname, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const pinnedDriverSha256 = 'c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc';
+export const pinnedDriverSha256 = '912a106176bf21881af62ed9acf9201e1ace0c07e91743875b82fd51472dd8c8';
 export const driverRelativePath = 'node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app/macos/SparkTestDriver.mm';
 const directory = dirname(fileURLToPath(import.meta.url));
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -15,7 +15,7 @@ export async function patchDriverTransport(consumer, sourceRevision) {
   const manifest = JSON.parse(await readFile(join(consumer, 'package.json'), 'utf8'));
   const config = JSON.parse(await readFile(join(consumer, 'desktop.config.json'), 'utf8'));
   const sdk = JSON.parse(await readFile(join(consumer, 'node_modules/@legendapp/spark/package.json'), 'utf8'));
-  if (manifest.name !== 'nyc-tron-appkit-reference' || !manifest.private || config.macos?.testDriverInRelease !== true || sdk.version !== '0.0.2') throw new Error('Transport diagnostics require the private Spark 0.0.2 native acceptance consumer');
+  if (manifest.name !== 'nyc-tron-appkit-reference' || !manifest.private || config.macos?.testDriverInRelease !== true || sdk.version !== '0.0.3') throw new Error('Transport diagnostics require the private Spark 0.0.3 native acceptance consumer');
   if (!/^[a-f0-9]{40}$/.test(sourceRevision)) throw new Error('Transport patch requires an exact source revision');
   const target = join(consumer, driverRelativePath);
   if ((await lstat(target)).isSymbolicLink()) throw new Error('Cannot patch a linked Spark test driver');
@@ -48,7 +48,7 @@ export async function patchDriverTransport(consumer, sourceRevision) {
   const inputs = [];
   for (const file of ['patch-driver-transport.mjs', 'driver-transport.inc.mm', 'driver-transport-probe.mm', 'probe-driver-transport.mjs']) inputs.push({ path: `tooling/macos-appkit/${file}`, sha256: hash(await readFile(join(directory, file))) });
   const receipt = {
-    schemaVersion: 1, scope: 'private-native-acceptance-consumer-only', patch: 'nyc-tron-spark-0.0.2-response-transport-v1', sourceRevision,
+    schemaVersion: 1, scope: 'private-native-acceptance-consumer-only', patch: 'nyc-tron-spark-0.0.3-response-transport-v1', sourceRevision,
     packageName: '@legendapp/spark', version: sdk.version, file: driverRelativePath,
     before: { file: beforeFile, sha256: pinnedDriverSha256 }, after: { file: afterFile, sha256: hash(patched) },
     extractedFunctions: { original: { file: 'SparkSend.original.inc.mm', sha256: hash(originalProbeFunction), sourceFunctionSha256: hash(originalFunction) }, patched: { file: 'SparkSend.patched.inc.mm', sha256: hash(fragment) } },

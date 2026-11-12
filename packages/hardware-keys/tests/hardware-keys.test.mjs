@@ -11,7 +11,7 @@ import {readFileSync,readdirSync} from "node:fs";
 import {dirname,join,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import {runInNewContext} from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 import {NATIVE_MODULE_NAME,toChord} from "../src/payload.ts";
 import {createBindingRegistry} from "../src/binding-registry.ts";
 import {webKeySource,isEditableElement} from "../src/web-source.ts";

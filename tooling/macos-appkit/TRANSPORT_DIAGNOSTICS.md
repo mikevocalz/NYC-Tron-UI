@@ -1,6 +1,6 @@
 # Private Spark acceptance transport
 
-The native acceptance consumer uses Spark 0.0.2's authenticated, single-session
+The native acceptance consumer uses Spark 0.0.3's authenticated, single-session
 test driver. Its original `SparkSend` does not inspect JSON serialization
 failure: a nil result becomes a zero-byte successful return, while a thrown
 Foundation exception escapes. These are source defects to verify independently;
@@ -9,9 +9,9 @@ the retained c0 mount timeout does not establish that either occurred in that ru
 `prepare-consumer.mjs --native-acceptance` applies the narrow transport patch
 only after installing the generated private reference. Ordinary preparation
 does not invoke it. The patch helper requires the private reference identity,
-Spark 0.0.2, release test-driver opt-in and the exact original file SHA-256:
+Spark 0.0.3, release test-driver opt-in and the exact original file SHA-256:
 
-`c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc`
+`912a106176bf21881af62ed9acf9201e1ace0c07e91743875b82fd51472dd8c8`
 
 It refuses changed bytes and paths resolving outside that consumer. It changes
 only the installed `SparkTestDriver.mm`; it does not rewrite the Spark package

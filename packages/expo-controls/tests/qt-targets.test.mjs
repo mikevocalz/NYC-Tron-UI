@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 const packageRoot=resolve(dirname(fileURLToPath(import.meta.url)),"..");
 const uiRoot=resolve(packageRoot,"../ui");

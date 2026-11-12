@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 import * as sharedOverlays from "../../core/src/overlays.ts";
 
 // Execute the exported components with mocked native hosts. These checks
