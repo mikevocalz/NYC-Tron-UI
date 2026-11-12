@@ -122,9 +122,24 @@ list. `@nyc-tron/ui` keeps its React Native `>=0.88` peer floor in 1.0.0.
 | Lower the `ui` floor for the desktop lanes (RNW 0.85.3, Spark / React Native 0.83.10) | Deferred to the first minor after 1.0.0 | Blocked because it changes a public peer range and needs test coverage on two older React Native lines |
 | Components that fail measurement in a desktop lane | Struck from that lane's support list | Returns when the lane's host ships React Native `>=0.88`, or when a lane-specific floor is tested in that lane |
 
-The component list itself is pending the T4 measurement in PR #69, which is
-still running. This record does not name components or counts; they come
-from that measurement and its lane receipts.
+The component list comes from the T4 measurement in PR #69, taken on
+2026-11-12 on the T1 dependency graph (`@nyc-tron/ui` archive sha256
+`c3d0f5881c8db1b27bc425324ca4d142f2a11f21b4d7f99ca93ca1e3e88f0dc7`):
+
+| Lane | Run | Supported | Struck | Not measured |
+|---|---|---|---|---|
+| macOS, Spark 0.0.3 (React Native 0.83.10) | [43171140883](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883) | 272 of 421 components | 54 | 95 |
+| Windows, RNW 0.85 (React Native 0.85.3) | [43171140885](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885) | 268 of 421 components | 41 | 112 |
+
+All 166 exports without components load on both lanes. Struck components
+need an optional peer the lane does not provide (`react-native-gesture-handler`,
+`react-native-skia`, `@expo/ui`, `expo-linear-gradient`,
+`@tanstack/react-table`, `expo-drag-drop-content-view`, `uniwind`), and four
+fail only on Windows with an RNW integer conversion error. "Not measured"
+components also fail on the web reference with the harness's synthesized
+props, so the run proves nothing about the lane; they are not on the
+supported list and are not struck. The named lists are in
+[SUPPORT.md](SUPPORT.md#desktop-support-list) and `desktop-support.json`.
 
 ## D6. Platform tiering for 1.0.0 (gate T5)
 
