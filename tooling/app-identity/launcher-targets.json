@@ -68,12 +68,20 @@
    "platforms": ["macos"],
    "surface": "macOS Launchpad grid label and Dock tooltip",
    "status": "measured",
-   "measuredOn": "2026-11-12, CI run 43224655812 at 89579c9, macOS 15.8.2 (24H232), 1024x768 at 1 px per pt",
+   "measuredOn": "2026-11-12, CI runs 43224655812 (89579c9) and 43252017103 (b60fddd), macOS 15.8.2 (24H232), 1024x768 at 1 px per pt",
    "font": { "family": "system UI font (SF Pro)", "weight": "regular", "size": 13, "unit": "pt", "backend": "appkit-system" },
    "lines": 1,
    "boxWidth": 94.5,
-   "method": "Untruncated labels match SF 13 pt: \"Microsoft Edge\" 92 px ink (91.9 pt advance), \"Tron\" 27 px (27.0 pt). \"Google Chrome\" (94.5 pt) renders whole; truncated labels carry 86 to 98 px of ink (\"Tron A...Demo\" 86, \"NYCTr...erence\" 90, \"Google...Testing\" 98). Box: 94.5 pt, the widest label seen unchanged. Launchpad and the Dock tooltip show the bundle file name, which Spark takes from `name`; the Dock shows it only as a hover tooltip with no box.",
-   "evidence": "docs/completion/evidence/t3-app-identity-20261112/macos15.8-launchpad-page2-89579c9.png"
+   "method": "Untruncated labels match SF 13 pt: \"Microsoft Edge\" 92 px ink (91.9 pt advance), \"Tron\" 27 px (27.0 pt). \"Google Chrome\" (94.5 pt) renders whole; truncated labels carry 86 to 98 px of ink (\"Tron A...Demo\" 86, \"NYCTr...erence\" 90, \"Google...Testing\" 98). Box: 94.5 pt, the widest label seen unchanged. Launchpad and the Dock tooltip show the bundle file name, which Spark takes from `name`; CFBundleName and CFBundleDisplayName do not reach them (run 43246515091); the Dock shows it only as a hover tooltip with no box.",
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/macos15.8-launchpad-page2-b60fddd.png",
+   "ciCapture": {
+    "runId": "43252017103",
+    "commit": "b60fddd",
+    "device": "macOS 15.8.2 runner, 1 px per pt",
+    "inkWidths": { "TronAppKit": 69, "Tron": 27, "Tron A...Demo": 87 },
+    "lines": 1,
+    "note": "Built TronAppKit.app beside copies named \"Tron\" and \"Tron AppKit Instruments Demo\". The example reads \"TronAppKit\" on one line in Launchpad (69 px of ink; the check predicts 67.7 pt) and in the Dock tooltip. The long probe truncates to \"Tron A...Demo\" (87 px). Before the rename, run 43246515091 at 786cb64 showed \"NYCTr...erence\"."
+   }
   },
   {
    "id": "macos-menubar",

@@ -27,7 +27,7 @@ from it.
 | Example | Full name | Launcher name | Config the label comes from |
 | --- | --- | --- | --- |
 | `examples/native-instruments` (Expo, iOS and Android) | NYC-Tron Instruments | Tron Lab | `app.json` `expo.name` |
-| `examples/macos-appkit/spark` (Spark, macOS) | NYC-Tron AppKit Reference | Tron AppKit | `desktop.config.json` `macos.infoPlist.CFBundleName` (application menu; Finder and Dock show the bundle file name, see below) |
+| `examples/macos-appkit/spark` (Spark, macOS) | NYC-Tron AppKit Reference | TronAppKit | `desktop.config.json` `name`, which is also the bundle file name (`TronAppKit.app`) that Launchpad and the Dock show; `CFBundleName` "Tron AppKit" only titles the application menu |
 | `packages/windows-fluent/rnw-fabric/example` (RNW, Windows) | NYC-Tron WinUI Reference | Tron WinUI | `app.json` `displayName` |
 
 Before this change the instruments app was "NYC-Tron Instruments Demo". It
@@ -92,6 +92,13 @@ How each lane picks the icon up:
   sets a macOS icon (`CFBundleIconFile` is written empty). An icon plugin would
   turn the example into a Spark custom runtime, which changes how the AppKit
   job builds it. The generated `.icns` stays committed for T4 to wire.
+  Re-checked 2026-11-12 against `@legendapp/spark` 0.0.2 and 0.0.3 (package
+  contents, `schema.json`, the vendored desktop-config validator, whose `macos` keys are
+  `bundleIdentifier`, `buildNumber`, `entitlements`, `infoPlist`,
+  `testDriverInRelease` and `lifecycle`, and the
+  legend.so/spark pages): no icon setting and no `.icns` or asset-catalogue
+  handling exists in either release. The only route is a plugin or a custom
+  runtime, so it stays with T4.
 
 ## Launcher names
 
@@ -171,7 +178,7 @@ are `launcher-captures-*` on the runs named.
 | iPad Home Screen | measured | SF Pro regular 12 pt | 1 | 85.0 pt | 43224655686 | iPad Pro 11-inch (M5), iOS 26.5: "Tron Lab" 49.0 pt; long probe truncated at 86.5 pt |
 | Android, AOSP Launcher3 | measured | Roboto regular 14 dp | 1 | 63.6 dp | 43224655686 | API 36, 420 dpi: "Tron Lab" 55.2 dp; long probe truncated at 62.1 dp; tiles 82.3 x 120 dp |
 | Android, Pixel Launcher | NOT RUN | | | | | Not on the emulator image |
-| macOS Launchpad and Dock | NOT RUN (captured) | SF Pro regular 13 pt | 1 | 94.5 pt, not enforced | 43224655812 | macOS 15.8.2: the example shows as "NYCTr…erence" in Launchpad and "NYCTronAppKitReference" in the Dock tooltip |
+| macOS Launchpad and Dock | measured | SF Pro regular 13 pt | 1 | 94.5 pt | 43252017103 (b60fddd) | macOS 15.8.2: "TronAppKit" on one line in Launchpad and the Dock tooltip, 69 px of ink, beside "Tron" and "Tron A…Demo" |
 | macOS menu bar | NOT RUN | | | | 43224655812 | osascript could not activate the example (-600, then -609) |
 | Windows Start | NOT RUN (captured) | | 1 | | 43224656120 | "Tron WinUI" under Recommended and in All; no Segoe UI table to measure with |
 | Windows taskbar | NOT RUN (captured) | | 1 | no fixed box | 43224656120 | "Tron WinUI" button 113 px wide beside Notepad and Terminal |
@@ -201,6 +208,12 @@ How the captures are made (CI only, never on a developer machine):
 - **Windows** (`capture/capture-windows.ps1`, RNW Fabric job,
   `continue-on-error`): opens Start, clicks All, scrolls to the T entries and
   turns taskbar labels on before launching the packaged example.
+  The Start capture shows the derived icon (the dark tile matches
+  `Square150x150Logo.scale-200.png`). The taskbar button shows a generic
+  window-thumbnail icon, not the derived one. A packaged app's taskbar button
+  takes its icon from `Square44x44Logo` (the scale and `targetsize` files in
+  `windows/Assets/`), which `prepare-host.mjs` copies like the tile; why the
+  button did not show it was not determined.
 
 How the boxes were found:
 
@@ -224,8 +237,9 @@ How the boxes were found:
 - **macOS Launchpad.** The runner's screen is 1024x768 at 1 px per pt.
   Untruncated labels match SF at 13 pt ("Microsoft Edge" 92 px of ink,
   91.9 pt advance). "Google Chrome" (94.5 pt) renders whole and truncated
-  labels carry 86 to 98 px of ink, so the box is 94.5 pt. It is recorded, not
-  enforced: see the macOS guidance below.
+  labels carry 86 to 98 px of ink, so the box is 94.5 pt. The
+  rebuilt example reads "TronAppKit" at 69 px of ink (the check predicts
+  67.7 pt) in run 43252017103, and the box is enforced.
 
 The ink measurement assumes a plain background behind the label. On the
 iPhone the "Probe" label sits over a bright band of wallpaper and reads
@@ -241,9 +255,10 @@ Evidence in `docs/completion/evidence/t3-app-identity-20261112/`, each at
 - `visionos26.5-home-crop-89579c9.png`: the same three in the Home View.
 - `android36-launcher3-allapps-89579c9.png` and its crop: "Tron", "Tron Lab"
   and "Tron Lab …", tiles 82.3 x 120 dp.
-- `macos15.8-launchpad-page2-89579c9.png`, `macos15.8-launchpad-search-tron-89579c9.png`,
-  `macos15.8-dock-tooltip-89579c9.png`: the example as "NYCTr…erence" beside
-  "Tron" and "Tron A…Demo", and its Dock tooltip.
+- `macos15.8-launchpad-page2-b60fddd.png`, `macos15.8-launchpad-search-tron-b60fddd.png`,
+  `macos15.8-dock-tooltip-b60fddd.png`: the example as "TronAppKit" beside
+  "Tron" and "Tron A…Demo", and its Dock tooltip. Run 43246515091 (786cb64)
+  is the before: "NYCTr…erence".
 - `winserver2025-start-recommended-89579c9.png`,
   `winserver2025-start-all-apps-89579c9.png`,
   `winserver2025-taskbar-89579c9.png`: "Tron WinUI" in Start and on the
@@ -262,16 +277,18 @@ Android boxes came from. They show the old name, not the built app.
   does.
 - **Android:** one line in Launcher3, 63.6 dp at 14 dp Roboto on a 420 dpi
   phone. Other launchers and fonts differ (Pixel Launcher was not measured).
-- **macOS:** Launchpad and the Dock show the bundle's file name, not
-  `CFBundleName`. The CI capture at 89579c9 shows the built Spark example as
+- **macOS:** Launchpad and the Dock show the bundle file name, which Spark
+  takes from `name` in `desktop.config.json` (`<name>.app`). `CFBundleName`
+  titles the application menu only (Apple caps it at 15 characters). Setting
+  `CFBundleDisplayName` does not help: run 43246515091 (786cb64) built the
+  example with both keys set to "Tron AppKit" and still showed
   "NYCTr…erence" in Launchpad and "NYCTronAppKitReference" in the Dock
-  tooltip, even with `CFBundleName` and `CFBundleDisplayName` set to "Tron
-  AppKit". So the macOS rename has not landed: the bundle file name comes from
-  the Spark `name`, which CI looks up, and renaming it is deferred to T4 with
-  the icon. Until then the macOS rows stay NOT RUN, because enforcing the
-  94.5 pt Launchpad box against "Tron AppKit" would pass a name macOS does not
-  show. `CFBundleName` does name the application menu; Apple caps it at 15
-  characters.
+  tooltip. So the Spark `name` is the launcher label, and it was renamed from
+  `NYCTronAppKitReference` to `TronAppKit` (run 43252017103, b60fddd: one line
+  in both). It cannot hold a space, because `verify-native.mjs` accepts only
+  `[A-Za-z0-9._-]` for the bundle and executable name. The check measures
+  `name` against the 94.5 pt Launchpad box, so a name like
+  `NYCTronAppKitReference` fails with its overflow.
 - **Windows:** Start and the taskbar read the package manifest, not
   `app.json`. `init-windows` writes the project name into both
   `DisplayName` fields of `Package.appxmanifest` and into the window title,

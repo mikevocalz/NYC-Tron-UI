@@ -92,7 +92,7 @@ Naming consistency:
 
 | Issue | Where | Recommendation |
 | --- | --- | --- |
-| Spark `app.json` keeps `expo.name: "NYCTronAppKitReference"` while `desktop.config.json` sets `CFBundleName: "Tron AppKit"` | `examples/macos-appkit/spark/app.json` | Left as is: Spark's `name` and the bundle file name are looked up by CI. Recorded as the macOS label defect in step 4 |
+| Spark `app.json` keeps `expo.name: "NYCTronAppKitReference"` while `desktop.config.json` sets `CFBundleName: "Tron AppKit"` | `examples/macos-appkit/spark/app.json` | Superseded: the Spark `name` is now `TronAppKit` (run 43252017103); see APP_IDENTITY.md |
 | RNW `name` is `NYCTronWindowsExample`, full name says "WinUI Reference" | `packages/windows-fluent/rnw-fabric/example/app.json` | Left: `name` is the solution and process name and CI looks it up. Only `displayName` is user-facing |
 | Full names: "NYC-Tron Instruments" has no "Reference"; the two desktop ones do | the three `appIdentity` blocks | Acceptable: the instruments app is a component lab, the desktop ones are host references |
 
@@ -147,7 +147,7 @@ Findings in the check's own messages:
 | Identity mismatch | States what and where, not how to fix | Left: the fix (make the two names equal) is obvious from the line |
 | `usage:` and `does not exist` | Clear | None |
 
-macOS label (not verified on a built app): the check reads `CFBundleName`
+macOS label (superseded: CI run 43252017103 shows the Spark `name` is the label, and it is now `TronAppKit`; the text below is the earlier prediction): the check read `CFBundleName`
 as the macOS label. `CFBundleName` names the application menu. Finder, the
 Dock and the Apps grid show the bundle's file name unless the app has a
 localised display name, so a built Spark app would most likely show
