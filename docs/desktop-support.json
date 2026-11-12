@@ -1,6 +1,23 @@
 {
-  "schema": 1,
+  "schema": 2,
   "decision": "docs/V1_DECISIONS.md D5",
+  "statuses": {
+    "supported": {
+      "label": "supported",
+      "meaning": "Built, loaded and mounted in the lane with every import resolved."
+    },
+    "struck": {
+      "label": "struck",
+      "meaning": "The lane measurement failed it (lane-failure or a missing optional peer). D5 strikes it from that lane."
+    },
+    "notVerified": {
+      "label": "not verified on desktop",
+      "meaning": "Threw with the harness's synthesized props in the lane and on the web reference, or did not run, so the run says nothing about the lane. Not supported and not struck.",
+      "returnCondition": "measured with a per-component props fixture",
+      "blocks1_0_0": false,
+      "decision": "docs/V1_DECISIONS.md D5, decision 3 (DEFER), 2026-11-12"
+    }
+  },
   "evidence": {
     "commit": "e1a66aa",
     "graph": "T1 baseline (#68) merged at 1c24d40",
@@ -642,7 +659,7 @@
           ]
         }
       ],
-      "unmeasured": [
+      "notVerified": [
         {
           "component": "./components/forge/audio/AudioClipTrimAndFade#AudioClipTrimAndFade",
           "reason": "not-attributed",
@@ -1373,7 +1390,7 @@
         "./components/shell/workspace-preset-model"
       ],
       "modulesStruck": [],
-      "modulesUnmeasured": []
+      "modulesNotVerified": []
     },
     "macos": {
       "supported": [
@@ -2096,7 +2113,7 @@
           ]
         }
       ],
-      "unmeasured": [
+      "notVerified": [
         {
           "component": "./components/forge/audio/AudioClipTrimAndFade#AudioClipTrimAndFade",
           "reason": "not-attributed",
@@ -2742,7 +2759,7 @@
         "./components/shell/workspace-preset-model"
       ],
       "modulesStruck": [],
-      "modulesUnmeasured": []
+      "modulesNotVerified": []
     }
   }
 }

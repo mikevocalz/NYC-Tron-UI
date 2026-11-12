@@ -73,8 +73,8 @@ test("a clean export loads and leaves the app's handler in place", async () => {
   assert.throws(() => loadEntry(() => { throw new TypeError("plain"); }, undefined), /plain/);
 });
 
-test("the support list strikes stubbed peers and keeps unattributed failures off the list", async () => {
-  const { supportList } = await import("../desktop-lane/support-list.mjs");
+test("the support list strikes stubbed peers and marks unattributed failures not verified", async () => {
+  const { supportList, STATUSES } = await import("../desktop-lane/support-list.mjs");
   const cell = (build, load, components, unresolved = []) => ({ build, load, loadError: null, unresolved, components });
   const matrix = { summary: { macos: {} }, rows: [
     { subpath: "./a", lanes: { macos: cell("pass", "pass", { A: { status: "pass" } }) } },
@@ -86,6 +86,11 @@ test("the support list strikes stubbed peers and keeps unattributed failures off
   const list = supportList(matrix).macos;
   assert.deepEqual(list.supported, ["./a#A"]);
   assert.deepEqual(list.struck.map(s => [s.component, s.reason]), [["./b#B", "missing-peer"], ["./d#D", "lane-failure"]]);
-  assert.deepEqual(list.unmeasured.map(s => s.component), ["./c#C"]);
+  // Not verified on desktop is its own status, never folded into struck.
+  assert.deepEqual(list.notVerified.map(s => s.component), ["./c#C"]);
+  assert.ok(!list.struck.some(s => s.component === "./c#C"));
+  assert.equal(STATUSES.notVerified.label, "not verified on desktop");
+  assert.equal(STATUSES.notVerified.returnCondition, "measured with a per-component props fixture");
+  assert.equal(STATUSES.notVerified.blocks1_0_0, false);
   assert.deepEqual(list.modulesLoaded, ["./m"]);
 });
