@@ -19,7 +19,8 @@
     "api-surface": "node tooling/api-surface.mjs"
   },
   "devDependencies": {
-    "typescript": "~6.0.3",
-    "@types/react": "~19.3.0"
+    "@types/react": "~19.3.0",
+    "@typescript/typescript6": "6.0.2",
+    "typescript": "7.0.2"
   }
 }

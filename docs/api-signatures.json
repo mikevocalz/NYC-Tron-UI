@@ -19187,7 +19187,7 @@
     },
     "@nyc-tron/core/dist/presets/infrax.d.ts#INFRAX_THEME_NAME": {
       "signatures": [
-        "export declare const INFRAX_THEME_NAME: \"InFraX Signal / Infrastructure Orange\";"
+        "export declare const INFRAX_THEME_NAME: 'InFraX Signal / Infrastructure Orange';"
       ],
       "references": []
     },
@@ -27620,7 +27620,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/canvas/ruler-model.d.ts#guideAxis": {
       "signatures": [
-        "export declare const guideAxis: (orientation: CanvasGuide[\"orientation\"]) => \"y\" | \"x\";"
+        "export declare const guideAxis: (orientation: CanvasGuide[\"orientation\"]) => \"x\" | \"y\";"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forge/canvas/ruler-model.d.ts#CanvasGuide"
@@ -31990,7 +31990,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/ink/brush-model.d.ts#BRUSH_DYNAMICS_FIELDS": {
       "signatures": [
-        "export declare const BRUSH_DYNAMICS_FIELDS: readonly [\n    {\n        readonly key: \"size\";\n        readonly label: \"Brush size\";\n        readonly min: 0.1;\n        readonly max: 4096;\n        readonly step: 0.1;\n        readonly unit: \" px\";\n    },\n    {\n        readonly key: \"hardness\";\n        readonly label: \"Hardness\";\n        readonly min: 0;\n        readonly max: 1;\n        readonly step: 0.01;\n        readonly unit: \"\";\n    },\n    {\n        readonly key: \"flow\";\n        readonly label: \"Flow\";\n        readonly min: 0;\n        readonly max: 1;\n        readonly step: 0.01;\n        readonly unit: \"\";\n    },\n    {\n        readonly key: \"spacing\";\n        readonly label: \"Spacing\";\n        readonly min: 0.01;\n        readonly max: 5;\n        readonly step: 0.01;\n        readonly unit: \" × size\";\n    },\n    {\n        readonly key: \"stabilizer\";\n        readonly label: \"Stabilizer\";\n        readonly min: 0;\n        readonly max: 1;\n        readonly step: 0.01;\n        readonly unit: \"\";\n    },\n    {\n        readonly key: \"scatter\";\n        readonly label: \"Scatter\";\n        readonly min: 0;\n        readonly max: 5;\n        readonly step: 0.01;\n        readonly unit: \" × size\";\n    }\n];"
+        "export declare const BRUSH_DYNAMICS_FIELDS: readonly [\n    {\n        readonly key: 'size';\n        readonly label: 'Brush size';\n        readonly min: 0.1;\n        readonly max: 4096;\n        readonly step: 0.1;\n        readonly unit: ' px';\n    },\n    {\n        readonly key: 'hardness';\n        readonly label: 'Hardness';\n        readonly min: 0;\n        readonly max: 1;\n        readonly step: 0.01;\n        readonly unit: '';\n    },\n    {\n        readonly key: 'flow';\n        readonly label: 'Flow';\n        readonly min: 0;\n        readonly max: 1;\n        readonly step: 0.01;\n        readonly unit: '';\n    },\n    {\n        readonly key: 'spacing';\n        readonly label: 'Spacing';\n        readonly min: 0.01;\n        readonly max: 5;\n        readonly step: 0.01;\n        readonly unit: ' × size';\n    },\n    {\n        readonly key: 'stabilizer';\n        readonly label: 'Stabilizer';\n        readonly min: 0;\n        readonly max: 1;\n        readonly step: 0.01;\n        readonly unit: '';\n    },\n    {\n        readonly key: 'scatter';\n        readonly label: 'Scatter';\n        readonly min: 0;\n        readonly max: 5;\n        readonly step: 0.01;\n        readonly unit: ' × size';\n    }\n];"
       ],
       "references": []
     },
@@ -36885,7 +36885,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/photo/photo-adjustments.d.ts#EXPOSURE_FIELDS": {
       "signatures": [
-        "export declare const EXPOSURE_FIELDS: readonly [\n    readonly [\n        \"exposure\",\n        \"Exposure EV\",\n        -10,\n        10,\n        0.1\n    ],\n    readonly [\n        \"temperature\",\n        \"Temperature kelvin\",\n        1000,\n        50000,\n        100\n    ],\n    readonly [\n        \"tint\",\n        \"White balance tint\",\n        -150,\n        150,\n        1\n    ],\n    readonly [\n        \"highlights\",\n        \"Highlights\",\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        \"shadows\",\n        \"Shadows\",\n        -100,\n        100,\n        1\n    ]\n];"
+        "export declare const EXPOSURE_FIELDS: readonly [\n    readonly [\n        'exposure',\n        'Exposure EV',\n        -10,\n        10,\n        0.1\n    ],\n    readonly [\n        'temperature',\n        'Temperature kelvin',\n        1000,\n        50000,\n        100\n    ],\n    readonly [\n        'tint',\n        'White balance tint',\n        -150,\n        150,\n        1\n    ],\n    readonly [\n        'highlights',\n        'Highlights',\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        'shadows',\n        'Shadows',\n        -100,\n        100,\n        1\n    ]\n];"
       ],
       "references": []
     },
@@ -36914,7 +36914,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/photo/photo-adjustments.d.ts#PHOTO_BANDS": {
       "signatures": [
-        "export declare const PHOTO_BANDS: readonly [\n    \"red\",\n    \"orange\",\n    \"yellow\",\n    \"green\",\n    \"aqua\",\n    \"blue\",\n    \"purple\",\n    \"magenta\"\n];"
+        "export declare const PHOTO_BANDS: readonly [\n    'red',\n    'orange',\n    'yellow',\n    'green',\n    'aqua',\n    'blue',\n    'purple',\n    'magenta'\n];"
       ],
       "references": []
     },
@@ -36945,7 +36945,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/photo/photo-adjustments.d.ts#TONE_FIELDS": {
       "signatures": [
-        "export declare const TONE_FIELDS: readonly [\n    readonly [\n        \"contrast\",\n        \"Contrast\",\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        \"texture\",\n        \"Texture\",\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        \"clarity\",\n        \"Clarity\",\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        \"dehaze\",\n        \"Dehaze\",\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        \"vibrance\",\n        \"Vibrance\",\n        -100,\n        100,\n        1\n    ]\n];"
+        "export declare const TONE_FIELDS: readonly [\n    readonly [\n        'contrast',\n        'Contrast',\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        'texture',\n        'Texture',\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        'clarity',\n        'Clarity',\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        'dehaze',\n        'Dehaze',\n        -100,\n        100,\n        1\n    ],\n    readonly [\n        'vibrance',\n        'Vibrance',\n        -100,\n        100,\n        1\n    ]\n];"
       ],
       "references": []
     },
@@ -37801,7 +37801,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/selection/selection-bounds-model.d.ts#RESIZE_HANDLES": {
       "signatures": [
-        "export declare const RESIZE_HANDLES: readonly [\n    \"top-left\",\n    \"top\",\n    \"top-right\",\n    \"right\",\n    \"bottom-right\",\n    \"bottom\",\n    \"bottom-left\",\n    \"left\"\n];"
+        "export declare const RESIZE_HANDLES: readonly [\n    'top-left',\n    'top',\n    'top-right',\n    'right',\n    'bottom-right',\n    'bottom',\n    'bottom-left',\n    'left'\n];"
       ],
       "references": []
     },

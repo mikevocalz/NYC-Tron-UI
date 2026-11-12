@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
 import {dirname,join} from 'node:path';
 import {createRequire} from 'node:module';
-import ts from 'typescript';
+import ts from '@typescript/typescript6';
 const require=createRequire(new URL('../package.json',import.meta.url));
 const installed=dirname(require.resolve('react-native-gesture-handler/package.json'));
 const runtime=ts.createSourceFile('usePanGesture.ts',readFileSync(join(installed,'src/v3/hooks/gestures/pan/usePanGesture.ts'),'utf8'),ts.ScriptTarget.Latest,true);

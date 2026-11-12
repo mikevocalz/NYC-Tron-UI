@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Expands the real LevelFader and its ownership hooks against mocked RN hosts.
 // Vertical controls use RNGH callbacks; horizontal controls use PanResponder.
