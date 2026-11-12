@@ -11,7 +11,7 @@ for (const [subpath, condition] of Object.entries(pkg.exports)) {
   if (typeof condition === 'string') continue;
   for (const path of Object.values(condition)) assert.ok(existsSync(join(root, path)), `${subpath} export missing: ${path}`);
 }
-assert.equal(pkg.peerDependencies['@legendapp/spark'], '0.0.2');
+assert.equal(pkg.peerDependencies['@legendapp/spark'], '0.0.3');
 assert.equal(pkg.peerDependencies['react-native'], '0.83.10');
 assert.equal(pkg.peerDependencies['react-native-macos'], '0.83.0');
 assert.equal(pkg.peerDependencies.expo, '55.0.32');

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
-import ts from 'typescript';
+import ts from '@typescript/typescript6';
 import * as audioPreview from '../src/components/forge/audio/audio-preview-owner.ts';
 import * as level from '../src/components/forge/audio/level.ts';
 import {audioTargetSize} from '../src/components/forge/audio/audio-chrome.ts';

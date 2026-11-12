@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Renders the real mixer and MIDI components against mocked React Native
 // hosts and drives their real PanResponder configs. Function components are
