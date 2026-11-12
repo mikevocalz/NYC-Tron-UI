@@ -5,7 +5,7 @@ import {
 } from "@nyc-tron/core/window-lifecycle";
 import type { Rect } from "@nyc-tron/core/folds";
 import { createNativeDragController, type WindowsNativeDragTransport } from "./native-drag-controller.ts";
-import { parseDesktopSnapshot, validWindowId, validWindowRect, convertDesktopLayout } from "./window-protocol.ts";
+import { parseDesktopSnapshot, validWindowId, validWindowRect, validTitleBarStyle, convertDesktopLayout } from "./window-protocol.ts";
 import type {
   WindowsCloseRequest, WindowsDesktopSnapshot, WindowsWindowHost,
   WindowsWindowHostOptions, WindowsDesktopLayout, WindowsOpenWindow,
@@ -20,6 +20,7 @@ export interface WindowsDesktopTransport extends WindowsNativeDragTransport {
   focus(ownerToken: string, id: string): Promise<string>;
   minimize(ownerToken: string, id: string): Promise<string>;
   restore(ownerToken: string, id: string): Promise<string>;
+  setTitleBar(ownerToken: string, id: string, style: string): Promise<string>;
   requestClose(ownerToken: string, id: string): Promise<string>;
   resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;
   dispose(ownerToken: string): Promise<void>;
@@ -132,6 +133,14 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
     async focus(id) { await command(() => transport.focus(token(), known(id))); },
     async minimize(id) { await command(() => transport.minimize(token(), known(id))); },
     async restore(id) { await command(() => transport.restore(token(), known(id))); },
+    async setTitleBar(id, style) {
+      if (!validTitleBarStyle(style)) throw new TypeError(`Unknown title bar style: ${String(style)}`);
+      const next = await command(() => transport.setTitleBar(token(), known(id), style));
+      const window = next.windows.find(w => w.id === id);
+      if (!window) throw new Error("Native window closed before its title bar changed");
+      if (window.titleBar.style !== style) throw new Error(`Native window reports title bar style ${window.titleBar.style} after requesting ${style}`);
+      return window.titleBar;
+    },
     async requestClose(id) { await command(() => transport.requestClose(token(), known(id))); },
     async resolveClose(request: WindowsCloseRequest, accepted: boolean) {
       const { id, generation, token: closeToken } = request;

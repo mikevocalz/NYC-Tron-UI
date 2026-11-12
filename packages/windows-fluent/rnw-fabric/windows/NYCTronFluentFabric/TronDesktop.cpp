@@ -39,6 +39,9 @@ void TronDesktop::move(std::string owner, std::string id, std::string request, P
 void TronDesktop::focus(std::string owner, std::string id, Promise&& promise) noexcept { Run(std::move(owner), promise, [id = std::move(id)](auto& session) { session.Focus(id); }); }
 void TronDesktop::minimize(std::string owner, std::string id, Promise&& promise) noexcept { Run(std::move(owner), promise, [id = std::move(id)](auto& session) { session.Minimize(id); }); }
 void TronDesktop::restore(std::string owner, std::string id, Promise&& promise) noexcept { Run(std::move(owner), promise, [id = std::move(id)](auto& session) { session.Restore(id); }); }
+void TronDesktop::setTitleBar(std::string owner, std::string id, std::string style, Promise&& promise) noexcept {
+  Run(std::move(owner), promise, [id = std::move(id), style = std::move(style)](auto& session) { session.SetTitleBar(id, style); });
+}
 void TronDesktop::requestClose(std::string owner, std::string id, Promise&& promise) noexcept { Run(std::move(owner), promise, [id = std::move(id)](auto& session) { session.RequestClose(id); }); }
 void TronDesktop::resolveClose(std::string owner, std::string id, std::string generation, std::string token, bool accepted, Promise&& promise) noexcept {
   Run(std::move(owner), promise, [id = std::move(id), generation = std::move(generation), token = std::move(token), accepted](auto& session) { session.ResolveClose(id, generation, token, accepted); });
