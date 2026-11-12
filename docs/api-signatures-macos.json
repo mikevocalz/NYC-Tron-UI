@@ -332,6 +332,42 @@
           }
         }
       ],
+      "./window-chrome": [
+        {
+          "target": "./dist/window-chrome.d.ts",
+          "conditions": {
+            "types": "./dist/window-chrome.d.ts",
+            "react-native": "./src/window-chrome.ts",
+            "default": "./dist/window-chrome.js"
+          },
+          "symbols": {
+            "MacOSTitleBarSparkOptions": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSTitleBarSparkOptions"
+            ],
+            "MacOSTitleBarStyle": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSTitleBarStyle"
+            ],
+            "MacOSWindowChromeHost": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHost"
+            ],
+            "MacOSWindowChromeHostOptions": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHostOptions"
+            ],
+            "MacOSWindowChromeTransport": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeTransport"
+            ],
+            "createMacOSWindowChromeHost": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#createMacOSWindowChromeHost"
+            ],
+            "macOSTitleBarOptions": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#macOSTitleBarOptions"
+            ],
+            "validateTitleBarInsets": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#validateTitleBarInsets"
+            ]
+          }
+        }
+      ],
       "./window-controller": [
         {
           "target": "./dist/window-controller.d.ts",
@@ -385,6 +421,12 @@
             "HostDisplay": [
               "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
             ],
+            "MacOSWindowChromeHost": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHost"
+            ],
+            "MacOSWindowChromeHostOptions": [
+              "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHostOptions"
+            ],
             "WindowController": [
               "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController"
             ],
@@ -399,6 +441,9 @@
             ],
             "WindowUpdateOptions": [
               "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions"
+            ],
+            "createMacOSWindowChrome": [
+              "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowChrome"
             ],
             "createMacOSWindowHost": [
               "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowHost"
@@ -632,6 +677,81 @@
         "react-native@0.83.10/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps"
       ]
     },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSTitleBarSparkOptions": {
+      "signatures": [
+        "export interface MacOSTitleBarSparkOptions {\n    readonly titleBarStyle: 'default' | 'overlay';\n    readonly macos: {\n        readonly titleBar: {\n            readonly titleVisibility: 'visible' | 'hidden';\n            readonly transparent: boolean;\n            readonly contentLayout: 'contentLayoutGuide' | 'fullSize';\n        };\n    };\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSTitleBarStyle": {
+      "signatures": [
+        "export type MacOSTitleBarStyle = 'standard' | 'hiddenTitle' | 'contentUnderTitleBar';"
+      ],
+      "references": []
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHost": {
+      "signatures": [
+        "export interface MacOSWindowChromeHost extends WindowChromeHost {\n    readonly zoom: WindowZoomControl;\n    readInsets(windowId: string): Promise<TitleBarInsets>;\n    dispose(): void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets",
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowChromeHost",
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowZoomControl",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHostOptions": {
+      "signatures": [
+        "export interface MacOSWindowChromeHostOptions {\n    readonly onError?: (error: unknown) => void;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeTransport": {
+      "signatures": [
+        "export interface MacOSWindowChromeTransport {\n    info(windowId: string): Promise<Pick<WindowInfo, 'maximized'>>;\n    maximize(windowId: string): Promise<void>;\n    unmaximize(windowId: string): Promise<void>;\n    readInsets(windowId: string): Promise<unknown>;\n}"
+      ],
+      "references": [
+        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo",
+        "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Pick",
+        "typescript@5.9.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#createMacOSWindowChromeHost": {
+      "signatures": [
+        "export declare function createMacOSWindowChromeHost(controller: WindowController, transport: MacOSWindowChromeTransport, options?: MacOSWindowChromeHostOptions): MacOSWindowChromeHost;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHost",
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHostOptions",
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeTransport",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#macOSTitleBarOptions": {
+      "signatures": [
+        "export declare function macOSTitleBarOptions(style: MacOSTitleBarStyle): MacOSTitleBarSparkOptions;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSTitleBarSparkOptions",
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSTitleBarStyle"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#validateTitleBarInsets": {
+      "signatures": [
+        "export declare function validateTitleBarInsets(value: unknown): TitleBarInsets;"
+      ],
+      "references": [
+        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets"
+      ]
+    },
     "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay": {
       "signatures": [
         "export interface HostDisplay {\n    readonly id: string;\n    readonly primary: boolean;\n    readonly origin: {\n        readonly x: number;\n        readonly y: number;\n    };\n    readonly bounds: Rect;\n    readonly scaleFactor: number;\n}"
@@ -748,6 +868,16 @@
       ],
       "references": [
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
+      ]
+    },
+    "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowChrome": {
+      "signatures": [
+        "export declare function createMacOSWindowChrome(controller: WindowController, options?: MacOSWindowChromeHostOptions): MacOSWindowChromeHost;"
+      ],
+      "references": [
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHost",
+        "@nyc-tron/macos-appkit/dist/window-chrome.d.ts#MacOSWindowChromeHostOptions",
+        "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowController"
       ]
     },
     "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowHost": {
@@ -1133,6 +1263,33 @@
         "export type Rect2D = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n}>;"
       ]
     },
+    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0-rc.1",
+      "file": "dist/window-chrome.d.ts",
+      "symbol": "TitleBarInsets",
+      "signatures": [
+        "export interface TitleBarInsets {\n    readonly leading: number;\n    readonly trailing: number;\n    readonly height: number;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowChromeHost": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0-rc.1",
+      "file": "dist/window-chrome.d.ts",
+      "symbol": "WindowChromeHost",
+      "signatures": [
+        "export interface WindowChromeHost {\n    getState(): WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    requestClose(windowId: string): Promise<WindowCloseResult>;\n    minimize(windowId: string): Promise<void>;\n    restore(windowId: string): Promise<void>;\n    readonly zoom?: WindowZoomControl;\n}"
+      ]
+    },
+    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowZoomControl": {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0-rc.1",
+      "file": "dist/window-chrome.d.ts",
+      "symbol": "WindowZoomControl",
+      "signatures": [
+        "export interface WindowZoomControl {\n    isZoomed(windowId: string): boolean;\n    toggleZoom(windowId: string): Promise<void>;\n}"
+      ]
+    },
     "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#$module": {
       "package": "@nyc-tron/core",
       "version": "1.0.0-rc.1",
@@ -1260,6 +1417,15 @@
       "symbol": "Promise",
       "signatures": [
         "interface Promise<T> {\n    finally(onfinally?: (() => void) | undefined | null): Promise<T>;\n}"
+      ]
+    },
+    "typescript@5.9.3/lib/lib.es5.d.ts#Pick": {
+      "package": "typescript",
+      "version": "5.9.3",
+      "file": "lib/lib.es5.d.ts",
+      "symbol": "Pick",
+      "signatures": [
+        "type Pick<T, K extends keyof T> = {\n    [P in K]: T[P];\n};"
       ]
     },
     "typescript@5.9.3/lib/lib.es5.d.ts#Promise": {
