@@ -217,26 +217,43 @@ export default function App() {
 ```
 
 **Existing app.** Run the same command in the app and add a screen that
-imports from `@nyc-tron/ui`. On the new-app path the command changed only
-`package.json` and `package-lock.json`. An app created from the default Expo SDK 58 template currently
-fails this step with `ERESOLVE`: Expo SDK 58 pins
-`react-native-gesture-handler` `~3.3.0` and `@nyc-tron/ui` declares the
-optional peer `>=3.4.0 <4`. This is recorded as an open item in
-[Support policy](docs/SUPPORT.md#expo-install-paths).
+imports from `@nyc-tron/ui`. The command changes only `package.json` and
+`package-lock.json`. An app from the default Expo SDK 58 template keeps the
+`react-native-gesture-handler` 3.3.x that Expo pins: from this commit,
+`@nyc-tron/ui` declares the optional peer `>=3.3.0 <4`
+([V1_DECISIONS](docs/V1_DECISIONS.md) D5, decision 1). The `v1.0.0-rc.1`
+tarballs still declare `>=3.4.0 <4` and fail this step with `ERESOLVE`; with
+them, run `npx expo install react-native-gesture-handler@^3.4.0` first.
+
+**Desktop app (Spark or React Native Windows).** Spark 0.0.3 ships React
+Native 0.83.10 and React Native Windows 0.85 ships 0.85.3, below
+`@nyc-tron/ui`'s `react-native >=0.88` floor. The desktop lanes are below
+ui's React Native floor; only components on the lane's
+[support list](docs/SUPPORT.md#desktop-support-list) are supported. Add this
+override to the app's `package.json`, then run the same command:
+
+```json
+"overrides": { "@nyc-tron/ui": { "react-native": "$react-native" } }
+```
+
+The override applies only to `@nyc-tron/ui`'s `react-native` peer and
+points it at the app's own `react-native` dependency. Do not use
+`--legacy-peer-deps`, which drops every peer check in the tree.
 
 `@nyc-tron/ui` needs no config plugin. Native projects come from
 `npx expo prebuild` (or `npx expo run:ios` / `run:android`, which prebuild
 first); no native file is edited by hand. The
 [install-paths workflow](.github/workflows/install-paths.yml) runs both paths
-from release tarballs on clean runners for web, the iOS simulator and the
-Android emulator, and resolves the command against each desktop lane.
+on clean runners for web, the iOS simulator and the Android emulator, and the
+desktop install in the Spark and React Native Windows lanes, where the native
+app renders `Button`.
 
 ### macOS through Spark: three ways to run
 
 The AppKit lane follows Legend Spark's model
 ([overview](https://legend.so/spark/overview/)). Spark 0.0.3 requires Expo
 55.0.32 and React Native 0.83.10, so `@nyc-tron/ui` (React Native `>=0.88`)
-installs only with a peer override there, and only the components in the
+installs only with the scoped override above, and only the components in the
 [desktop support list](docs/SUPPORT.md#desktop-support-list) are supported.
 
 | Mode | Command | Use it when |
