@@ -1,0 +1,92 @@
+{
+ "$comment": "Launcher label boxes. A target is enforced only when status is measured. Every other target is reported as NOT RUN with its reason. Widths are the widest label ink observed on the device; a label whose advance width at the stated font is above boxWidth is shrunk, tightened or truncated by the launcher. See docs/APP_IDENTITY.md.",
+ "targets": [
+  {
+   "id": "ios-home",
+   "platforms": ["ios"],
+   "surface": "iPhone Home Screen icon label",
+   "status": "measured",
+   "measuredOn": "2026-11-12, simulator \"T3 iPhone Duo\" (iPhone-Duo), iOS 27.1, cover panel 466x678 pt @3x; inner panel checked and identical",
+   "font": { "family": "system UI font (SF Pro)", "weight": "regular", "size": 12, "unit": "pt", "backend": "appkit-system" },
+   "lines": 1,
+   "boxWidth": 85.0,
+   "method": "Settings label ink 46.7 pt matches the system font at 12 pt (46.8 pt advance). Box: ink width of the truncated label \"NYC-TronInstr...\" (85.0 pt). Labels up to 85.7 pt advance render unchanged; \"Probe nnnnnniii\" (87.6 pt) renders tightened to 82.7 pt ink and \"Probe nnnnnnnn\" (92.7 pt) loses its space; \"NYC-Tron Instruments Demo\" (162.0 pt) truncates.",
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/ios27.1-duo-cover-home-web-clips.png"
+  },
+  {
+   "id": "ipados-home",
+   "platforms": ["ios"],
+   "surface": "iPad Home Screen icon label",
+   "status": "not-run",
+   "reason": "No iPad simulator exists on the measuring machine and free disk was under the 10 GB limit for creating one. The iPhone Duo inner panel uses the iPhone label (measured under ios-home); that is not an iPad measurement."
+  },
+  {
+   "id": "android-launcher3",
+   "platforms": ["android"],
+   "surface": "AOSP Launcher3 workspace and all-apps label",
+   "status": "measured",
+   "measuredOn": "2026-11-12, AVD ForgeCompletion_API36 (default image, Android 16 / API 36), 1080x2400 at 420 dpi",
+   "font": { "family": "Roboto", "weight": "regular", "size": 14, "unit": "dp", "backend": "font-table", "table": "fonts/roboto-static-regular.json" },
+   "lines": 1,
+   "boxWidth": 63.6,
+   "method": "Unshrunk labels (Calendar, Camera, Clock, Contacts, Files, Gallery, Phone, Search, Settings) match Roboto at 13.9 to 14.5 dp of ink. Box: 167 px / 2.625 = 63.6 dp, the widest ink of any label, truncated (\"NYC-Tro...\", \"Probe nn...\") or shrunk. Launcher3 shrinks labels up to about 69.4 dp (\"Probe nniiii\", \"Messaging\") before truncating; the check treats any shrink as overflow.",
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/android36-launcher3-allapps-probes.png"
+  },
+  {
+   "id": "android-pixel-launcher",
+   "platforms": ["android"],
+   "surface": "Pixel Launcher label",
+   "status": "not-run",
+   "reason": "Only the AOSP default image (Launcher3) is installed on the measuring machine; Pixel Launcher and its font were not available."
+  },
+  {
+   "id": "macos-dock",
+   "platforms": ["macos"],
+   "surface": "macOS Dock tooltip, Finder and Apps grid label",
+   "status": "not-run",
+   "reason": "No macOS Dock or Apps capture was taken: the Spark example could not be built (free disk under 10 GB). The Dock shows the name as a tooltip with no fixed box; the Apps grid box was not measured."
+  },
+  {
+   "id": "macos-menubar",
+   "platforms": ["macos"],
+   "surface": "macOS menu bar application menu title",
+   "status": "not-run",
+   "reason": "Not captured; see macos-dock."
+  },
+  {
+   "id": "windows-start",
+   "platforms": ["windows"],
+   "surface": "Windows 11 Start menu pinned and All apps label",
+   "status": "not-run",
+   "reason": "No Windows machine was available to measure on."
+  },
+  {
+   "id": "windows-taskbar",
+   "platforms": ["windows"],
+   "surface": "Windows 11 taskbar label and jump-list title",
+   "status": "not-run",
+   "reason": "No Windows machine was available to measure on."
+  },
+  {
+   "id": "visionos-home",
+   "platforms": ["visionos"],
+   "surface": "visionOS Home View label",
+   "status": "not-run",
+   "reason": "No visionOS simulator runtime is installed on the measuring machine."
+  },
+  {
+   "id": "quest-library",
+   "platforms": ["quest"],
+   "surface": "Meta Horizon OS app library tile",
+   "status": "not-run",
+   "reason": "Needs a Quest headset; owner hardware session."
+  },
+  {
+   "id": "pico-library",
+   "platforms": ["pico"],
+   "surface": "PICO OS library tile",
+   "status": "not-run",
+   "reason": "Needs a PICO headset; owner hardware session."
+  }
+ ]
+}

@@ -9,6 +9,12 @@
     "macos": {
       "version": "1.0.0",
       "buildNumber": "1"
+    },
+    "extra": {
+      "appIdentity": {
+        "fullName": "NYC-Tron AppKit Reference",
+        "launcherName": "Tron AppKit"
+      }
     }
   }
 }
