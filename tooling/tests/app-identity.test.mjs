@@ -10,11 +10,12 @@ import { checkLabels, describeConfig, run } from "../app-identity/launcher-label
 import { createImage, decodePng, encodePng, resize } from "../app-identity/png.mjs";
 
 const root = resolve(fileURLToPath(new URL("../..", import.meta.url)));
-const examples = [
-  "examples/native-instruments",
-  "examples/macos-appkit/spark",
-  "packages/windows-fluent/rnw-fabric/example",
-];
+// Each example derives only the formats of the platforms it ships on.
+const examples = {
+  "examples/native-instruments": ["android"],
+  "examples/macos-appkit/spark": ["macos"],
+  "packages/windows-fluent/rnw-fabric/example": ["windows"],
+};
 const configs = [
   "examples/native-instruments/app.json",
   "examples/macos-appkit/spark/desktop.config.json",
@@ -28,6 +29,32 @@ function listFiles(dir, base = dir) {
   );
 }
 
+// ICNS and ICO hold PNGs; compare their entries' decoded pixels, as for plain PNGs.
+function containerImages(file, buffer) {
+  const images = [];
+  if (file.endsWith(".icns")) {
+    assert.equal(buffer.toString("ascii", 0, 4), "icns", file);
+    assert.equal(buffer.readUInt32BE(4), buffer.length, file);
+    for (let at = 8; at < buffer.length; ) {
+      const length = buffer.readUInt32BE(at + 4);
+      images.push([buffer.toString("ascii", at, at + 4), decodePng(buffer.subarray(at + 8, at + length))]);
+      at += length;
+    }
+  } else {
+    assert.equal(buffer.readUInt16LE(2), 1, file);
+    const count = buffer.readUInt16LE(4);
+    for (let i = 0; i < count; i++) {
+      const entry = 6 + i * 16;
+      const length = buffer.readUInt32LE(entry + 8);
+      const offset = buffer.readUInt32LE(entry + 12);
+      images.push([`${buffer[entry] || 256}`, decodePng(buffer.subarray(offset, offset + length))]);
+    }
+  }
+  return images;
+}
+
+const samePixels = (a, b) => a.width === b.width && a.height === b.height && Buffer.from(a.data).equals(Buffer.from(b.data));
+
 test("PNG codec round-trips RGBA and downsamples by area", () => {
   const image = createImage(4, 4, [10, 20, 30, 255]);
   image.data.set([200, 100, 50, 128], 0);
@@ -37,7 +64,7 @@ test("PNG codec round-trips RGBA and downsamples by area", () => {
   assert.deepEqual(Array.from(half.data.subarray(0, 4)), [255, 0, 0, 255]);
 });
 
-for (const example of examples) {
+for (const [example, formats] of Object.entries(examples)) {
   test(`${example}: one 1024 px source with a glyph inside the Android safe zone`, () => {
     const source = decodePng(readFileSync(join(root, example, "assets/icon.png")));
     const report = inspectSource(source);
@@ -48,26 +75,59 @@ for (const example of examples) {
 
   test(`${example}: committed derived icons match a fresh derivation`, () => {
     const out = mkdtempSync(join(tmpdir(), "tron-icons-"));
-    const result = deriveIcons(join(root, example, "assets/icon.png"), out);
+    const result = deriveIcons(join(root, example, "assets/icon.png"), out, { formats });
     assert.deepEqual(result.problems, []);
     const committed = join(root, example, "assets/icon");
     assert.deepEqual(listFiles(committed).sort(), [...result.files].sort());
     // Compare decoded pixels, not bytes: deflate output can differ between zlib builds.
-    for (const file of result.files.filter((f) => f.endsWith(".png"))) {
-      const fresh = decodePng(readFileSync(join(out, file)));
-      const kept = decodePng(readFileSync(join(committed, file)));
-      assert.ok(fresh.width === kept.width && Buffer.from(fresh.data).equals(Buffer.from(kept.data)), `${file} is stale; run derive-icons.mjs`);
+    for (const file of result.files) {
+      const fresh = readFileSync(join(out, file));
+      const kept = readFileSync(join(committed, file));
+      if (file.endsWith(".png")) {
+        assert.ok(samePixels(decodePng(fresh), decodePng(kept)), `${file} is stale; run derive-icons.mjs`);
+        continue;
+      }
+      const freshImages = containerImages(file, fresh);
+      const keptImages = containerImages(file, kept);
+      assert.deepEqual(keptImages.map(([key]) => key), freshImages.map(([key]) => key), `${file} entries differ`);
+      freshImages.forEach(([key, image], i) => assert.ok(samePixels(image, keptImages[i][1]), `${file} ${key} is stale; run derive-icons.mjs`));
     }
   });
 }
 
 test("derive-icons writes valid ICNS and ICO containers", () => {
-  const icns = readFileSync(join(root, "examples/macos-appkit/spark/assets/icon/macos/AppIcon.icns"));
-  assert.equal(icns.toString("ascii", 0, 4), "icns");
-  assert.equal(icns.readUInt32BE(4), icns.length);
-  const ico = readFileSync(join(root, "packages/windows-fluent/rnw-fabric/example/assets/icon/windows/app.ico"));
-  assert.equal(ico.readUInt16LE(2), 1);
-  assert.equal(ico.readUInt16LE(4), 6);
+  const icnsFile = "examples/macos-appkit/spark/assets/icon/macos/AppIcon.icns";
+  const icns = containerImages(icnsFile, readFileSync(join(root, icnsFile)));
+  assert.equal(icns.length, 11);
+  assert.deepEqual(icns.find(([type]) => type === "ic10")[1].width, 1024);
+  const icoFile = "packages/windows-fluent/rnw-fabric/example/assets/icon/windows/app.ico";
+  const ico = containerImages(icoFile, readFileSync(join(root, icoFile)));
+  assert.deepEqual(ico.map(([size, image]) => [size, image.width]), [["16", 16], ["24", 24], ["32", 32], ["48", 48], ["64", 64], ["256", 256]]);
+});
+
+test("the staleness check catches a changed ICNS or ICO body", () => {
+  const icoFile = "packages/windows-fluent/rnw-fabric/example/assets/icon/windows/app.ico";
+  const bytes = Buffer.from(readFileSync(join(root, icoFile)));
+  const entry = 6; // first directory entry, the 16 px image
+  const offset = bytes.readUInt32LE(entry + 12);
+  const image = decodePng(bytes.subarray(offset, offset + bytes.readUInt32LE(entry + 8)));
+  image.data[0] ^= 0xff;
+  const changed = encodePng(image);
+  const patched = Buffer.concat([bytes.subarray(0, offset), changed, bytes.subarray(offset + bytes.readUInt32LE(entry + 8))]);
+  patched.writeUInt32LE(changed.length, entry + 8);
+  for (let i = 1; i < 6; i++) patched.writeUInt32LE(bytes.readUInt32LE(6 + i * 16 + 12) + changed.length - bytes.readUInt32LE(entry + 8), 6 + i * 16 + 12);
+  const kept = containerImages(icoFile, bytes);
+  const edited = containerImages(icoFile, patched);
+  assert.ok(!samePixels(kept[0][1], edited[0][1]));
+  assert.ok(kept.slice(1).every(([, img], i) => samePixels(img, edited[i + 1][1])));
+});
+
+test("derive-icons writes only the requested formats and rejects an unknown one", () => {
+  const out = mkdtempSync(join(tmpdir(), "tron-icons-formats-"));
+  const result = deriveIcons(join(root, "examples/native-instruments/assets/icon.png"), out, { formats: ["android"] });
+  assert.deepEqual(result.files.sort(), ["android/adaptive-foreground.png", "android/adaptive-monochrome.png"]);
+  const bad = deriveIcons(join(root, "examples/native-instruments/assets/icon.png"), out, { formats: ["tvos"] });
+  assert.match(bad.problems.join("\n"), /unknown or empty --formats "tvos"/);
 });
 
 test("derive-icons refuses a glyph outside the Android safe zone and says by how much", () => {
@@ -149,6 +209,24 @@ test("a character the font table lacks is NOT RUN, never a pass", () => {
   assert.match(row.reason, /no metrics/);
   const { code } = run(["--name", "Tron \u6f22", "--platforms", "android", "--strict"]);
   assert.equal(code, 3);
+});
+
+test("an empty or whitespace-only name fails, never passes", () => {
+  for (const name of ["", "   "]) {
+    const rows = checkLabels([{ source: "test", platform: "ios", label: name }, { source: "test", platform: "android", label: name }]);
+    assert.ok(rows.every((r) => r.status === "FAIL"), JSON.stringify(rows));
+    const { code, output } = run(["--name", name]);
+    assert.equal(code, 1, output);
+    assert.match(output, /empty or only whitespace/);
+  }
+});
+
+test("on Apple targets a name that needs font fallback is NOT RUN, never a pass", { skip: process.platform !== "darwin" && "AppKit needs macOS" }, () => {
+  for (const name of ["Tron \u6771\u4eac", "Tron \u{1F680}"]) {
+    const row = checkLabels([{ source: "test", platform: "ios", label: name }]).find((r) => r.target === "ios-home");
+    assert.equal(row.status, "NOT RUN", name);
+    assert.match(row.reason, /system font has no glyph/);
+  }
 });
 
 test("Apple targets are measured with AppKit on macOS and reported NOT RUN elsewhere", () => {

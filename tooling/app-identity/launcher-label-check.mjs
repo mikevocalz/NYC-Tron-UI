@@ -13,7 +13,7 @@
 // `expo.extra.appIdentity = { fullName, launcherName }`; RNW: a top-level
 // `appIdentity`; Spark: in the Expo app.json beside desktop.config.json.
 //
-// Exit codes: 0 every measured target fits; 1 overflow or identity error;
+// Exit codes: 0 every measured target fits; 1 overflow, empty label or identity error;
 // 2 usage error; 3 (--strict only) a target that applies was NOT RUN.
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -41,15 +41,26 @@ function tableWidth(target, text) {
 }
 
 // AppKit's system font is the font Apple platforms draw launcher labels with,
-// including optical sizing, so this is exact for Apple targets. It needs macOS
-// (osascript ships with it; no Xcode). Results are batched per size/weight.
+// including optical sizing, so this is exact for Apple targets when the system
+// font covers every character. A character it lacks (CJK, emoji, a control
+// character) would be drawn through font fallback; AppKit's fallback is not
+// proof of SpringBoard's, so such a label is NOT RUN. It needs macOS (osascript
+// ships with it; no Xcode). Results are batched per size/weight.
 const appkitScript = `
 ObjC.import('AppKit');
 function run(argv) {
   const size = Number(argv[0]);
   const font = argv[1] === 'bold' ? $.NSFont.boldSystemFontOfSize(size) : $.NSFont.systemFontOfSize(size);
   const attrs = $.NSDictionary.dictionaryWithObjectForKey(font, $.NSFontAttributeName);
-  return JSON.stringify(argv.slice(2).map((s) => $(s).sizeWithAttributes(attrs).width));
+  const covered = font.coveredCharacterSet;
+  return JSON.stringify(argv.slice(2).map((s) => {
+    const missing = [];
+    for (const ch of s) {
+      const cp = ch.codePointAt(0);
+      if (cp < 0x20 || (cp >= 0x7f && cp < 0xa0) || !covered.longCharacterIsMember(cp)) missing.push(ch);
+    }
+    return { width: $(s).sizeWithAttributes(attrs).width, missing };
+  }));
 }`;
 function appkitWidths(font, texts) {
   if (process.platform !== "darwin") return { error: "the Apple system font is measured with AppKit, which needs macOS" };
@@ -57,7 +68,7 @@ function appkitWidths(font, texts) {
     const out = execFileSync("osascript", ["-l", "JavaScript", "-e", appkitScript, String(font.size), font.weight, ...texts], {
       encoding: "utf8",
     });
-    return { widths: JSON.parse(out) };
+    return { results: JSON.parse(out) };
   } catch (error) {
     return { error: `AppKit measurement failed: ${error.message.split("\n")[0]}` };
   }
@@ -144,6 +155,11 @@ export function checkLabels(entries) {
     for (const target of targets) {
       const row = { ...entry, target: target.id, surface: target.surface };
       rows.push(row);
+      if (typeof entry.label !== "string" || !entry.label.trim()) {
+        // An empty label is not a short one: the launcher would show nothing.
+        Object.assign(row, { status: "FAIL", reason: "the label is empty or only whitespace" });
+        continue;
+      }
       if (target.status !== "measured") {
         Object.assign(row, { status: "NOT RUN", reason: target.reason });
         continue;
@@ -166,7 +182,12 @@ export function checkLabels(entries) {
     const result = appkitWidths(font, jobRows.map((r) => r.label));
     jobRows.forEach((row, i) => {
       if (result.error) Object.assign(row, { status: "NOT RUN", reason: result.error });
-      else row.width = result.widths[i];
+      else if (result.results[i].missing.length) {
+        Object.assign(row, {
+          status: "NOT RUN",
+          reason: `the system font has no glyph for ${JSON.stringify(result.results[i].missing.join(""))}; AppKit's font fallback is not proof of the launcher's`,
+        });
+      } else row.width = result.results[i].width;
     });
   }
   for (const row of rows) {
@@ -185,7 +206,7 @@ function format(rows, problems) {
   for (const p of problems) lines.push(`IDENTITY  ${p}`);
   for (const r of rows) {
     const head = `${r.status.padEnd(8)}  ${r.target.padEnd(22)}  "${r.label}"`;
-    if (r.status === "NOT RUN") lines.push(`${head}  (${r.reason})`);
+    if (r.status === "NOT RUN" || r.status === "FAIL") lines.push(`${head}  (${r.reason})`);
     else {
       const detail =
         r.status === "OVERFLOW"
@@ -239,7 +260,7 @@ export function run(argv) {
     return { code: 2, output: "usage: launcher-label-check.mjs <app config...> [--strict] [--json] | --name <label> [--platforms ios,android]" };
   }
   const rows = checkLabels(entries);
-  const overflow = rows.some((r) => r.status === "OVERFLOW");
+  const overflow = rows.some((r) => r.status === "OVERFLOW" || r.status === "FAIL");
   const notRun = rows.some((r) => r.status === "NOT RUN");
   const code = overflow || problems.length ? 1 : strict && notRun ? 3 : 0;
   const output = json ? JSON.stringify({ code, problems, rows }, null, 2) : format(rows, problems);
