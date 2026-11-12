@@ -160,47 +160,99 @@ How width is measured:
 ## Label boxes per target
 
 `tooling/app-identity/launcher-targets.json` is the record. Only `measured`
-targets are enforced.
+targets are enforced. Every row below has a CI capture of the built example
+at 89579c9 unless it says otherwise; the images are in
+`docs/completion/evidence/t3-app-identity-20261112/` and the full artifacts
+are `launcher-captures-*` on the runs named.
 
-| Target | Status | Font | Lines | Box | Measured on |
-| --- | --- | --- | --- | --- | --- |
-| iPhone Home Screen | measured | system UI font (SF Pro), regular, 12 pt | 1 | 85.0 pt | Simulator "T3 iPhone Duo", iOS 27.1, cover panel; inner panel shows the same truncation |
-| iPad Home Screen | NOT RUN | | | | No iPad simulator; disk under 10 GB to create one |
-| Android, AOSP Launcher3 | measured | Roboto, regular, 14 dp | 1 | 63.6 dp | AVD ForgeCompletion_API36, Android 16 (API 36), 420 dpi |
-| Android, Pixel Launcher | NOT RUN | | | | Not on the installed image |
-| macOS Dock, Apps, menu bar | NOT RUN | | | | Spark app not built (disk); the Dock label is a tooltip with no fixed box |
-| Windows Start, taskbar | NOT RUN | | | | No Windows machine |
-| visionOS Home View | NOT RUN | | | | No visionOS runtime installed |
-| Quest library, PICO library | NOT RUN | | | | Hardware; owner session |
+| Target | Status | Font | Lines | Box | Run (89579c9) | Capture |
+| --- | --- | --- | --- | --- | --- | --- |
+| iPhone Home Screen | measured | SF Pro regular 12 pt | 1 | 85.0 pt | 43224655686 | iPhone 17, iOS 26.5: "Tron Lab" 49.0 pt of ink; long probe truncated at 86.3 pt |
+| iPad Home Screen | measured | SF Pro regular 12 pt | 1 | 85.0 pt | 43224655686 | iPad Pro 11-inch (M5), iOS 26.5: "Tron Lab" 49.0 pt; long probe truncated at 86.5 pt |
+| Android, AOSP Launcher3 | measured | Roboto regular 14 dp | 1 | 63.6 dp | 43224655686 | API 36, 420 dpi: "Tron Lab" 55.2 dp; long probe truncated at 62.1 dp; tiles 82.3 x 120 dp |
+| Android, Pixel Launcher | NOT RUN | | | | | Not on the emulator image |
+| macOS Launchpad and Dock | NOT RUN (captured) | SF Pro regular 13 pt | 1 | 94.5 pt, not enforced | 43224655812 | macOS 15.8.2: the example shows as "NYCTr…erence" in Launchpad and "NYCTronAppKitReference" in the Dock tooltip |
+| macOS menu bar | NOT RUN | | | | 43224655812 | osascript could not activate the example (-600, then -609) |
+| Windows Start | NOT RUN (captured) | | 1 | | 43224656120 | "Tron WinUI" under Recommended and in All; no Segoe UI table to measure with |
+| Windows taskbar | NOT RUN (captured) | | 1 | no fixed box | 43224656120 | "Tron WinUI" button 113 px wide beside Notepad and Terminal |
+| visionOS Home View | NOT RUN (captured) | | 1 | | 43224655686 | Vision Pro, visionOS 26.5: "Tron", "Tron Lab", "Tron Lab Instruments De…" |
+| Quest library, PICO library | NOT RUN | | | | | Tier 2 per D6: owner device session |
+
+How the captures are made (CI only, never on a developer machine):
+
+- **iOS, iPadOS, visionOS** (`capture/capture-ios.sh`, job "iOS, iPadOS and
+  visionOS launcher captures of the built example" in
+  `native-controls-port.yml`): takes the simulator build from the iOS
+  installed-tarball job, installs it beside two copies renamed "Tron" and
+  "Tron Lab Instruments Demo", pages SpringBoard with an XCUITest that writes
+  each icon's frame, screenshots with `simctl io`, and measures label ink
+  with `capture/measure-label-ink.mjs`. The px-per-pt scale is the screenshot
+  width over the SpringBoard frame width. visionOS gets the same three apps
+  and a screenshot only.
+- **Android** (`capture/capture-android.sh`): installs the APK from the
+  Android installed-tarball job beside two relabelled copies, opens
+  Launcher3's all-apps grid, reads frames from `uiautomator dump` and
+  measures ink the same way. It also pulls `RobotoStatic-Regular.ttf` from
+  the image and checks it against the committed table.
+- **macOS** (`capture/capture-macos.sh`, AppKit job, `continue-on-error`):
+  copies the built Spark app to `/Applications` beside "Tron" and "Tron
+  AppKit Instruments Demo" copies, hovers its Dock icon, pages Launchpad with
+  Cmd-Right and filters it by typing "Tron".
+- **Windows** (`capture/capture-windows.ps1`, RNW Fabric job,
+  `continue-on-error`): opens Start, clicks All, scrolls to the T entries and
+  turns taskbar labels on before launching the packaged example.
 
 How the boxes were found:
 
 - **iOS.** Web clips added with Safari's Add to Home Screen use the same
   SpringBoard icon label as apps, so a ladder of names served from a local page
-  could be placed without building anything. Labels up to 85.7 pt advance render
-  unchanged. "Probe nnnnnniii" (87.6 pt) is tightened to 82.7 pt of ink,
-  "Probe nnnnnnnn" (92.7 pt) loses its space, and longer names truncate with
-  85.0 pt of ink. The check uses 85.0 pt, so a name that passes is never
-  tightened.
+  could be placed without building anything (iOS 27.1, iPhone Duo). Labels up
+  to 85.7 pt advance render unchanged. "Probe nnnnnniii" (87.6 pt) is
+  tightened to 82.7 pt of ink, "Probe nnnnnnnn" (92.7 pt) loses its space, and
+  longer names truncate with 85.0 pt of ink. The check uses 85.0 pt, so a name
+  that passes is never tightened. The CI capture of the built app on iOS 26.5
+  agrees: "Tron Lab" has 49.0 pt of ink against the 49.4 pt the check
+  predicts, and the long probe truncates with 86.3 pt.
+- **iPadOS.** "Tron Lab" has the same 49.0 pt of ink, so iPad labels use the
+  same 12 pt font. No tightening ladder ran on iPad; the iPhone box is
+  enforced, and it is below the 86.5 pt of ink in the truncated iPad label.
 - **Android.** The all-apps grid already held a ladder of probe apps. Unshrunk
   labels match Roboto 14 dp to within 4 %. The widest ink of any label is
   167 px (63.6 dp). Launcher3 shrinks labels up to about 69.4 dp ("Messaging",
-  "Probe nniiii") before it truncates; the check counts any shrink as overflow.
+  "Probe nniiii") before it truncates; the check counts any shrink as
+  overflow. In CI "Tron Lab" has 55.2 dp of ink against a predicted 55.3 dp.
+- **macOS Launchpad.** The runner's screen is 1024x768 at 1 px per pt.
+  Untruncated labels match SF at 13 pt ("Microsoft Edge" 92 px of ink,
+  91.9 pt advance). "Google Chrome" (94.5 pt) renders whole and truncated
+  labels carry 86 to 98 px of ink, so the box is 94.5 pt. It is recorded, not
+  enforced: see the macOS guidance below.
 
-Evidence, all in `docs/completion/evidence/t3-app-identity-20261112/`:
+The ink measurement assumes a plain background behind the label. On the
+iPhone the "Probe" label sits over a bright band of wallpaper and reads
+63.3 pt; the iPad reading (32.5 pt) is the right one. The probe is the
+XCUITest host app, not part of the comparison.
 
-- `ios27.1-duo-cover-home-web-clips.png` and the crop
-  `ios27.1-duo-cover-crop-rows4-5.png`: "Tron Lab" and the old name
-  ("NYC-TronInstr…") side by side with the probe ladder, tiles the same size.
-- `ios27.1-duo-inner-home-web-clips.png`: the inner panel, same labels.
-- `android36-launcher3-allapps-probes.png` and
-  `android36-launcher3-allapps-crop-old-name.png`: the old name as
-  "NYC-Tro…" among the probes.
+Evidence in `docs/completion/evidence/t3-app-identity-20261112/`, each at
+89579c9:
 
-These captures show web clips carrying the derived icon, not the built apps.
-No native build of a renamed example was made: free disk was under the 10 GB
-limit set for this work. There is no Android capture of "Tron Lab" for the
-same reason.
+- `ios26.5-iphone17-home-crop-89579c9.png`: "Tron", "Tron Lab" and
+  "TronLabInstrum…", one line each, icons the same size.
+- `ipados26.5-ipadpro11-home-crop-89579c9.png`: the same three on iPad.
+- `visionos26.5-home-crop-89579c9.png`: the same three in the Home View.
+- `android36-launcher3-allapps-89579c9.png` and its crop: "Tron", "Tron Lab"
+  and "Tron Lab …", tiles 82.3 x 120 dp.
+- `macos15.8-launchpad-page2-89579c9.png`, `macos15.8-launchpad-search-tron-89579c9.png`,
+  `macos15.8-dock-tooltip-89579c9.png`: the example as "NYCTr…erence" beside
+  "Tron" and "Tron A…Demo", and its Dock tooltip.
+- `winserver2025-start-recommended-89579c9.png`,
+  `winserver2025-start-all-apps-89579c9.png`,
+  `winserver2025-taskbar-89579c9.png`: "Tron WinUI" in Start and on the
+  taskbar.
+
+The earlier iOS 27.1 web-clip captures and the Android probe ladder
+(`ios27.1-*.png`, `android36-launcher3-allapps-probes.png`,
+`android36-launcher3-allapps-crop-old-name.png`) are where the iOS and
+Android boxes came from. They show the old name, not the built app.
 
 ## Per-platform guidance
 
@@ -210,17 +262,33 @@ same reason.
   does.
 - **Android:** one line in Launcher3, 63.6 dp at 14 dp Roboto on a 420 dpi
   phone. Other launchers and fonts differ (Pixel Launcher was not measured).
-- **macOS:** `CFBundleName` names the menu bar's application menu. Finder,
-  the Dock and the Apps grid show the bundle's file name unless the app has a
-  localised display name, so the built Spark example would most likely show
-  `NYCTronAppKitReference` there (from Apple's display-name rules; not
-  captured). Renaming the bundle is deferred to T4 with the icon. Apple caps
-  `CFBundleName` at 15 characters; the check does not measure macOS yet.
-- **Windows:** `displayName` is the Start and taskbar name. Not measured.
+- **macOS:** Launchpad and the Dock show the bundle's file name, not
+  `CFBundleName`. The CI capture at 89579c9 shows the built Spark example as
+  "NYCTr…erence" in Launchpad and "NYCTronAppKitReference" in the Dock
+  tooltip, even with `CFBundleName` and `CFBundleDisplayName` set to "Tron
+  AppKit". So the macOS rename has not landed: the bundle file name comes from
+  the Spark `name`, which CI looks up, and renaming it is deferred to T4 with
+  the icon. Until then the macOS rows stay NOT RUN, because enforcing the
+  94.5 pt Launchpad box against "Tron AppKit" would pass a name macOS does not
+  show. `CFBundleName` does name the application menu; Apple caps it at 15
+  characters.
+- **Windows:** Start and the taskbar read the package manifest, not
+  `app.json`. `init-windows` writes the project name into both
+  `DisplayName` fields of `Package.appxmanifest` and into the window title,
+  so before 67292ff Start showed "NYCTronWindowsExample". RNW's
+  `prepare-host.mjs` now copies `displayName` into the manifest and the
+  `AppWindow` title; an app built from the RNW template needs the same edit.
+  The taskbar names a button by its window title and sizes it to the label
+  until the bar is crowded, so it has no fixed box. Not measured: no Segoe UI
+  table is committed.
 - **Web:** `web.shortName` becomes the installed PWA label; browsers own that
   box and it is not checked.
-- **visionOS, Quest, PICO:** not measured. Keep the launcher name no longer
-  than one that passes iOS and Android.
+- **visionOS:** the iOS build runs unmodified and shows its label on one
+  line under the round icon; "Tron Lab Instruments Demo" truncates.
+  Not measured (no pt scale in a perspective render). Keep the launcher name
+  no longer than one that passes iOS.
+- **Quest, PICO:** Tier 2 per D6, owner device session. Keep the launcher
+  name no longer than one that passes iOS and Android.
 
 ## Design record (§3.3 for the launcher icon and label surfaces)
 

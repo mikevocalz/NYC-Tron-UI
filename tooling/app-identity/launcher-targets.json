@@ -11,14 +11,28 @@
    "lines": 1,
    "boxWidth": 85.0,
    "method": "Settings label ink 46.7 pt matches the system font at 12 pt (46.8 pt advance). Box: ink width of the truncated label \"NYC-TronInstr...\" (85.0 pt). Labels up to 85.7 pt advance render unchanged; \"Probe nnnnnniii\" (87.6 pt) renders tightened to 82.7 pt ink and \"Probe nnnnnnnn\" (92.7 pt) loses its space; \"NYC-Tron Instruments Demo\" (162.0 pt) truncates.",
-   "evidence": "docs/completion/evidence/t3-app-identity-20261112/ios27.1-duo-cover-home-web-clips.png"
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/ios26.5-iphone17-home-crop-89579c9.png",
+   "ciCapture": {
+    "runId": "43224655686",
+    "commit": "89579c9",
+    "mergeCommit": "70c5c2f",
+    "device": "iPhone 17 simulator, iOS 26.5, 3 px per pt",
+    "inkWidths": { "Tron": 24.3, "Tron Lab": 49.0, "Tron Lab Instruments Demo": 86.3 },
+    "lines": 1,
+    "note": "Built TronLab.app beside copies named \"Tron\" and \"Tron Lab Instruments Demo\". \"Tron Lab\" ink 49.0 pt against a predicted 49.4 pt; the long probe drops its spaces and truncates to \"TronLabInstrum...\" (86.3 pt of ink). The box stays 85.0 pt from the iOS 27.1 ladder, which is below the 86.3 pt truncated ink seen here. Icon images are the same size; the XCUITest frames differ because they include the label."
+   }
   },
   {
    "id": "ipados-home",
    "platforms": ["ios"],
    "surface": "iPad Home Screen icon label",
-   "status": "not-run",
-   "reason": "No iPad simulator exists on the measuring machine and free disk was under the 10 GB limit for creating one. The iPhone Duo inner panel uses the iPhone label (measured under ios-home); that is not an iPad measurement."
+   "status": "measured",
+   "measuredOn": "2026-11-12, CI run 43224655686 at 89579c9 (merge 70c5c2f), iPad Pro 11-inch (M5) simulator, iOS 26.5, 2 px per pt",
+   "font": { "family": "system UI font (SF Pro)", "weight": "regular", "size": 12, "unit": "pt", "backend": "appkit-system" },
+   "lines": 1,
+   "boxWidth": 85.0,
+   "method": "\"Tron Lab\" ink 49.0 pt, the same as on iPhone, so the label uses the same 12 pt font. The long probe truncates to \"TronLabInstrum...\" with 86.5 pt of ink, one line. No tightening ladder was run on iPad, so the iPhone box (85.0 pt, below the 86.5 pt truncated ink) is enforced here too.",
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/ipados26.5-ipadpro11-home-crop-89579c9.png"
   },
   {
    "id": "android-launcher3",
@@ -30,7 +44,17 @@
    "lines": 1,
    "boxWidth": 63.6,
    "method": "Unshrunk labels (Calendar, Camera, Clock, Contacts, Files, Gallery, Phone, Search, Settings) match Roboto at 13.9 to 14.5 dp of ink. Box: 167 px / 2.625 = 63.6 dp, the widest ink of any label, truncated (\"NYC-Tro...\", \"Probe nn...\") or shrunk. Launcher3 shrinks labels up to about 69.4 dp (\"Probe nniiii\", \"Messaging\") before truncating; the check treats any shrink as overflow.",
-   "evidence": "docs/completion/evidence/t3-app-identity-20261112/android36-launcher3-allapps-probes.png"
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/android36-launcher3-allapps-crop-89579c9.png",
+   "ciCapture": {
+    "runId": "43224655686",
+    "commit": "89579c9",
+    "mergeCommit": "70c5c2f",
+    "device": "sdk_phone64_x86_64, Android 16 (API 36), 1080x2400 at 420 dpi, com.android.launcher3/.uioverrides.QuickstepLauncher",
+    "inkWidths": { "Tron": 27.8, "Tron Lab": 55.2, "Tron Lab Instruments Demo": 62.1 },
+    "lines": 1,
+    "tile": "82.3 x 120 dp for all three",
+    "note": "Built APK (label 'Tron Lab') beside copies named \"Tron\" and \"Tron Lab Instruments Demo\" in the all-apps grid. \"Tron Lab\" ink 55.2 dp against a predicted 55.3 dp. The long probe truncates to \"Tron Lab ...\" with 62.1 dp of ink, inside the 63.6 dp box. The Roboto file on this image matches the committed table on all 551 advances (name ID 5 \"Version 2.138; 2017\")."
+   }
   },
   {
    "id": "android-pixel-launcher",
@@ -44,49 +68,65 @@
    "platforms": ["macos"],
    "surface": "macOS Dock tooltip, Finder and Apps grid label",
    "status": "not-run",
-   "reason": "No macOS Dock or Apps capture was taken: the Spark example could not be built (free disk under 10 GB). The Dock shows the name as a tooltip with no fixed box; the Apps grid box was not measured."
+   "reason": "Captured, not enforced. macOS 15.8.2 shows the bundle file name, not CFBundleName: the built Spark example appears as \"NYCTronAppKitReference\" in the Dock tooltip and as \"NYCTr...erence\" in Launchpad (CI run 43224655812 at 89579c9). The check reads \"Tron AppKit\" from the config, so enforcing this box would PASS a name macOS does not show. Renaming the bundle (Spark name) is T4's, with the icon.",
+   "captured": {
+    "runId": "43224655812",
+    "commit": "89579c9",
+    "os": "macOS 15.8.2 (24H232)",
+    "surface": "Launchpad grid",
+    "font": { "family": "system UI font (SF Pro)", "weight": "regular", "size": 13, "unit": "pt" },
+    "lines": 1,
+    "boxWidth": 94.5,
+    "method": "Screens are 1024x768 at 1 px per pt. Untruncated labels match SF 13 pt: \"Microsoft Edge\" 92 px ink (91.9 pt advance), \"Tron\" 27 px (27.0 pt). \"Google Chrome\" (94.5 pt) renders whole; truncated labels carry 86 to 98 px of ink (\"Tron A...Demo\" 86, \"NYCTr...erence\" 90, \"Google...Testing\" 98). Box: 94.5 pt, the widest label seen unchanged. The Dock shows the name only as a hover tooltip, with no box."
+   },
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/macos15.8-launchpad-page2-89579c9.png"
   },
   {
    "id": "macos-menubar",
    "platforms": ["macos"],
    "surface": "macOS menu bar application menu title",
    "status": "not-run",
-   "reason": "Not captured; see macos-dock."
+   "reason": "Not captured at 89579c9 (run 43224655812): by the time the capture activated the example, osascript reported \"Application isn't running\" (-600) and then \"Connection is invalid\" (-609), and the menu bar showed the short probe copy instead. The example's own window and Dock tooltip were captured."
   },
   {
    "id": "windows-start",
    "platforms": ["windows"],
    "surface": "Windows 11 Start menu pinned and All apps label",
    "status": "not-run",
-   "reason": "No Windows machine was available to measure on."
+   "reason": "Captured, not measured: no Segoe UI advance table is committed (the font is not redistributable), so the check cannot measure Windows. At 89579c9 (run 43224656120) Start shows the packaged example as \"Tron WinUI\" on one line under Recommended and in the All list, after prepare-host.mjs wrote displayName into Package.appxmanifest. The short and long probe shortcuts (Start Menu .lnk files pointing at notepad.exe) did not appear in the All list, so the neighbours in the capture are system apps (Terminal, Uninstall).",
+   "captured": { "runId": "43224656120", "commit": "89579c9", "os": "Windows Server 2025 Datacenter 10.0.26100, 1024x768 at 96 dpi" },
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/winserver2025-start-all-apps-89579c9.png"
   },
   {
    "id": "windows-taskbar",
    "platforms": ["windows"],
    "surface": "Windows 11 taskbar label and jump-list title",
    "status": "not-run",
-   "reason": "No Windows machine was available to measure on."
+   "reason": "Captured, not measured: no Segoe UI table, and the taskbar has no fixed label box. With labels on, buttons size to their label until the bar is crowded: at 89579c9 (run 43224656120) the \"Tron WinUI\" button is 113 px wide beside \"Untitled - Notepad\" (100 px of label ink) and \"Default\"; at 18d1d4a the older title \"NYCTronWindowsExample\" was cut to 92 px of ink in a crowded bar. The label is the window title, which prepare-host.mjs now sets to displayName.",
+   "captured": { "runId": "43224656120", "commit": "89579c9", "os": "Windows Server 2025 Datacenter 10.0.26100, 1024x768 at 96 dpi" },
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/winserver2025-taskbar-89579c9.png"
   },
   {
    "id": "visionos-home",
    "platforms": ["visionos"],
    "surface": "visionOS Home View label",
    "status": "not-run",
-   "reason": "No visionOS simulator runtime is installed on the measuring machine."
+   "reason": "Captured, not measured: the Home View is a perspective render with no XCUITest frames in this job, so there is no pt scale for the label ink. At 89579c9 (run 43224655686, Apple Vision Pro simulator, visionOS 26.5) the iOS simulator build installs and shows \"Tron\", \"Tron Lab\" (one line) and \"Tron Lab Instruments De...\" (truncated), icons the same size.",
+   "evidence": "docs/completion/evidence/t3-app-identity-20261112/visionos26.5-home-crop-89579c9.png"
   },
   {
    "id": "quest-library",
    "platforms": ["quest"],
    "surface": "Meta Horizon OS app library tile",
    "status": "not-run",
-   "reason": "Needs a Quest headset; owner hardware session."
+   "reason": "Tier 2 per D6: needs the headset, owner device session."
   },
   {
    "id": "pico-library",
    "platforms": ["pico"],
    "surface": "PICO OS library tile",
    "status": "not-run",
-   "reason": "Needs a PICO headset; owner hardware session."
+   "reason": "Tier 2 per D6: needs the headset, owner device session."
   }
  ]
 }
