@@ -177,22 +177,13 @@ export function deriveIcons(sourcePath, outDir, { formats = FORMATS } = {}) {
   return { ...report, files };
 }
 
-// Compare real paths: on macOS /tmp is a symlink to /private/tmp, and a CLI run
-// through a symlinked path would otherwise exit 0 having written nothing.
-const isEntry = (arg) => {
-  try {
-    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(resolve(arg));
-  } catch {
-    return false;
-  }
-};
-if (process.argv[1] && isEntry(process.argv[1])) {
-  const args = process.argv.slice(2);
-  const source = args.find((a) => !a.startsWith("--"));
+/** Command-line entry: prints the report and returns the exit code. */
+export function main(args) {
+  const source = args.find((a, i) => !a.startsWith("--") && args[i - 1] !== "--out" && args[i - 1] !== "--formats");
   const outIndex = args.indexOf("--out");
-  if (!source || outIndex < 0) {
-    console.error("usage: derive-icons.mjs <icon.png> --out <dir> [--formats android,web,macos,windows] [--json]");
-    process.exit(2);
+  if (!source || outIndex < 0 || !args[outIndex + 1]) {
+    console.error("usage: derive-icons <icon.png> --out <dir> [--formats android,web,macos,windows] [--json]");
+    return 2;
   }
   const formatsIndex = args.indexOf("--formats");
   const formats = formatsIndex >= 0 ? (args[formatsIndex + 1] ?? "").split(",").filter(Boolean) : FORMATS;
@@ -203,5 +194,16 @@ if (process.argv[1] && isEntry(process.argv[1])) {
     for (const problem of result.problems) console.error(`FAIL ${problem}`);
     if (!result.problems.length) console.log(`wrote ${result.files.length} files to ${args[outIndex + 1]}`);
   }
-  process.exit(result.problems.length ? 1 : 0);
+  return result.problems.length ? 1 : 0;
 }
+
+// Compare real paths: on macOS /tmp is a symlink to /private/tmp, and a CLI run
+// through a symlinked path would otherwise exit 0 having written nothing.
+const isEntry = (arg) => {
+  try {
+    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(resolve(arg));
+  } catch {
+    return false;
+  }
+};
+if (process.argv[1] && isEntry(process.argv[1])) process.exit(main(process.argv.slice(2)));

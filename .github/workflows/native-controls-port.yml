@@ -63,7 +63,7 @@ on:
   workflow_call:
     outputs:
       workspace_manifest_sha256:
-        description: SHA-256 of the canonical thirteen-package producer manifest
+        description: SHA-256 of the canonical fourteen-package producer manifest
         value: ${{ jobs.source.outputs.workspace_manifest_sha256 }}
 concurrency:
   group: nyc-tron-native-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -105,7 +105,7 @@ jobs:
       - run: corepack pnpm --dir packages/native-controls build
       - run: corepack pnpm --dir packages/native-navigation build
       - run: corepack pnpm --dir examples/native-instruments typecheck
-      - name: Pack all thirteen workspace packages once for native acceptance and release
+      - name: Pack all fourteen workspace packages once for native acceptance and release
         run: node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
       - run: |
           tar -tzf "$RUNNER_TEMP"/nyc-tron-packs/nyc-tron-native-navigation-*.tgz | grep -E 'ios/TronNavigationRailView.swift|android/.*/TronNavigationRailView.kt'

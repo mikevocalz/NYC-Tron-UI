@@ -44,12 +44,12 @@ function fixture(t, { revision = "a".repeat(40) } = {}) {
   return { directory, rootDir, artifacts, packages, pack, checksums, options, recorded, verify };
 }
 
-test("a relocated canonical artifact retains the producer's exact thirteen package identities", t => {
+test("a relocated canonical artifact retains the producer's exact fourteen package identities", t => {
   const f = fixture(t), relocated = join(f.directory, "another-runner");
   cpSync(f.artifacts, relocated, { recursive: true });
   const result = verifyWorkspacePackages(relocated, { ...f.options, manifestSha256: f.recorded.manifestSha256 });
   assert.deepEqual(result.manifest, f.recorded.manifest);
-  assert.equal(result.archives.size, 13);
+  assert.equal(result.archives.size, 14);
   assert.equal(result.archives.get("@nyc-tron/core").path, join(relocated, filename("@nyc-tron/core", f.options.version)));
   assert.throws(() => recordWorkspacePackages(f.artifacts, f.options), /EEXIST/);
 });
@@ -89,10 +89,10 @@ test("a tarball's embedded wrong version is rejected even with fresh valid check
 test("missing, extra and symlinked workspace archives cannot enter the canonical set", t => {
   const f = fixture(t), file = filename(f.packages[0].name, f.options.version), bytes = readFileSync(join(f.artifacts, file));
   rmSync(join(f.artifacts, file));
-  assert.throws(f.verify, /exactly the thirteen workspace archives/);
+  assert.throws(f.verify, /exactly the fourteen workspace archives/);
   writeFileSync(join(f.artifacts, file), bytes);
   writeFileSync(join(f.artifacts, "extra.tgz"), bytes);
-  assert.throws(f.verify, /exactly the thirteen workspace archives/);
+  assert.throws(f.verify, /exactly the fourteen workspace archives/);
   rmSync(join(f.artifacts, "extra.tgz"));
   const external = join(f.directory, file);
   writeFileSync(external, bytes);
@@ -101,14 +101,14 @@ test("missing, extra and symlinked workspace archives cannot enter the canonical
   assert.throws(f.verify, /regular file/);
 });
 
-test("release assembly preserves all thirteen bytes while adding exactly the two desktop archives", t => {
+test("release assembly preserves all fourteen bytes while adding exactly the two desktop archives", t => {
   const f = fixture(t);
   cpSync(join(f.artifacts, "SHA256SUMS"), join(f.artifacts, "workspace-SHA256SUMS"));
   for (const name of ["@nyc-tron/windows-fluent-fabric", "@nyc-tron/macos-appkit"]) {
     f.pack({ name, version: f.options.version, private: true });
   }
   f.checksums();
-  assert.equal(f.verify({ release: true }).archives.size, 13);
+  assert.equal(f.verify({ release: true }).archives.size, 14);
   f.pack(f.packages[0], undefined, "repacked after native acceptance");
   f.checksums();
   assert.throws(() => f.verify({ release: true }), /differ from the producer manifest/);
@@ -123,7 +123,7 @@ test("consumer preparation retains producer provenance and uses its exact local 
   const app = JSON.parse(readFileSync(join(output, "app/package.json"), "utf8"));
   assert.equal(plan.sourceCommit, f.options.revision);
   assert.equal(plan.workspacePackages.manifestSha256, f.recorded.manifestSha256);
-  assert.equal(plan.workspacePackages.archiveCount, 13);
+  assert.equal(plan.workspacePackages.archiveCount, 14);
   assert.deepEqual(readFileSync(join(output, WORKSPACE_PACK_MANIFEST)), readFileSync(join(f.artifacts, WORKSPACE_PACK_MANIFEST)));
   assert.deepEqual(readFileSync(join(output, "workspace-SHA256SUMS")), readFileSync(join(f.artifacts, "SHA256SUMS")));
   for (const [name, archive] of Object.entries(plan.packages)) {

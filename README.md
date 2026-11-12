@@ -208,7 +208,7 @@ Mediabunny code must retain its notices and source-availability statement. The o
 this satisfies MPL-2.0 for tarball distribution is a release gate in
 [v1.0.0 decisions](docs/V1_DECISIONS.md) D2.
 
-Maintainers: `pnpm pack:release` builds and packs the thirteen workspace
+Maintainers: `pnpm pack:release` builds and packs the fourteen workspace
 packages into `release-packs/`. The release workflow separately builds and packs
 the Windows Fabric adapter with its own pinned runtime. It waits for the source,
 browser, installed-tarball consumer, and iOS/Android native gates at the same

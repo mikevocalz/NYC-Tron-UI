@@ -1,4 +1,7 @@
 {
+  "@nyc-tron/app-identity": [
+    "."
+  ],
   "@nyc-tron/core": [
     ".",
     "./advanced-catalog",

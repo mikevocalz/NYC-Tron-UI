@@ -204,8 +204,10 @@ and the native test-code boundary are recorded in
 `tooling/app-identity/fonts/roboto-static-regular.json` holds advance widths
 read from `RobotoStatic-Regular.ttf` 2.138 in the Android 16 system image, so
 the launcher label check can measure Android labels without the font. No glyph
-outlines are included. Roboto: Apache-2.0, Copyright 2011 Google Inc.; text in
-`licenses/Roboto-Apache-2.0.txt`.
+outlines are included. The data ships only in the `@nyc-tron/app-identity`
+archive, which carries the notice and the Apache-2.0 text in
+`packages/app-identity/THIRD_PARTY_NOTICES.md` and
+`packages/app-identity/licenses/Roboto-Apache-2.0.txt`.
 
 ## Reviewed, no code used
 

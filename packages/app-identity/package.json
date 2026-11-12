@@ -1,0 +1,44 @@
+{
+  "name": "@nyc-tron/app-identity",
+  "version": "1.0.0-rc.1",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
+    "directory": "packages/app-identity"
+  },
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI/blob/main/docs/APP_IDENTITY.md",
+  "bugs": {
+    "url": "https://github.com/mikevocalz/NYC-Tron-UI/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "description": "Launcher label check and icon derivation for an app's config: fails when the launcher name is wider than the measured label box",
+  "engines": {
+    "node": ">=24.19.0"
+  },
+  "bin": {
+    "nyc-tron-launcher-check": "./dist/bin/nyc-tron-launcher-check.js",
+    "nyc-tron-derive-icons": "./dist/bin/nyc-tron-derive-icons.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

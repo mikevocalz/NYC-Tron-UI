@@ -131,6 +131,8 @@ importers:
         specifier: ~6.0.3
         version: 6.0.3
 
+  packages/app-identity: {}
+
   packages/core: {}
 
   packages/expo-controls:
