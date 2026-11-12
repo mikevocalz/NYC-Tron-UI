@@ -64,7 +64,7 @@ repository moved to or a version it holds, with the reason.
 | TypeScript (isolated desktop packages) | 5.9.3 | Hold. The RNW and AppKit lanes keep their own 5.9.3 compiler and their 5.9.3 declaration baselines as consumer-compatibility checks. |
 | expo | 58.0.24 | Bumped and unified; `@expo/ui` 58.0.28, `expo-asset` 58.0.21 and `expo-linear-gradient` 58.0.4 follow Expo 58.0.24's bundled module versions. |
 | react-native | 0.88.1 | Unified. Hold 0.89: it is only a release candidate. |
-| react | 19.3.0 | Hold 19.3.1: React Native 0.88.1 ships a Fabric renderer built from React 19.3.0, and Expo 58.0.24 pins react 19.3.0. |
+| react | 19.3.0 | Hold 19.3.1: React Native 0.88.1 ships a Fabric renderer built from React 19.3.0, and Expo's bundledNativeModules pins 19.3.0. Not yet pinned: `react-dom`, which Expo auto-installs as a peer and pnpm resolves to 19.3.1 (`pnpm-lock.yaml`), an unmet peer because 19.3.1 needs `react ^19.3.1`. |
 | @legendapp/spark | 0.0.3 | Bumped inside the AppKit lane only. 0.0.3 still requires Expo 55.0.32, React Native 0.83.10 (React Native Windows 0.83.2 as an optional peer), React ^19.2.0, and bundles Nitro Modules 0.37.0 and TypeScript 5.9.3, the same as 0.0.2. |
 | react-native-windows | 0.85.0 | Current. |
 | react-native-macos | 0.83.0 | Current. |
