@@ -40,7 +40,7 @@ const iosInitialNavigation = {
 };
 // The pointer flow's single stroke, covered only up to the commit assertion.
 const iosPointerStroke = {
-  surface: "Input drawing surface", idle: "Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0.",
+  surface: "Input drawing surface", settle: "Pointer input", idle: "Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0.",
   committed: "Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.",
   cancelled: ["Committed strokes: 0. Cancelled strokes: 1. Prediction samples: 0.", "Input source: touch. Last event: cancel."],
 };
@@ -188,9 +188,11 @@ export function classifyInitialUiTransportFailure({ platform, flow, commands, si
 
 /** The pointer flow's one stroke, cancelled by the OS through a Recap digitizer and never committed by the app. */
 function classifyPointerStroke({ execution, simulatorLog, failureHierarchy, appId, deviceId }) {
-  if (execution.length !== 5) return null;
-  const [launch, surface, idle, swipe, assertion] = execution;
+  if (execution.length !== 6) return null;
+  const [launch, surface, settle, idle, swipe, assertion] = execution;
   if (!isLaunch(launch, appId, "COMPLETED") || !isVisible(surface, iosPointerStroke.surface, "COMPLETED") ||
+      !commandIs(settle, "tapOnElement", "COMPLETED") || !isText(settle.command.tapOnElement.selector, iosPointerStroke.settle) ||
+      settle.command.tapOnElement.longPress || settle.command.tapOnElement.repeat ||
       !isVisible(idle, iosPointerStroke.idle, "COMPLETED") || !isSwipe(swipe, "COMPLETED") ||
       !failedVisible(assertion, iosPointerStroke.committed)) return null;
   const window = actionWindow(swipe, assertion);

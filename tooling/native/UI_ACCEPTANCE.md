@@ -89,8 +89,17 @@ disappeared 1581, 2690 and 1405 ms after it was added, and the app stayed on
 Library. Those three taps are the only ones, of 69 Recap digitizers across the
 twelve downloaded flow logs, with the refusal line or the confirmation timeout.
 
-Pointer qualifies only for its single stroke: launch, `Input drawing surface`
-visible, the idle summary visible, the 700 ms swipe, then the failed
+Pointer first taps its static `Pointer input` heading, so the stroke is never
+the first gesture of its Maestro session. Across 112 gestures in CI, backboardd
+logged `unknown senderID` on 10 of 22 session-first gestures and on none of the
+90 later ones, and all three strokes that met it lost their touch-up (run
+43172075412 attempt 2, and both tries in 43194618469 attempt 5). The three
+strokes without it committed. The idle-summary assertion after the heading tap
+proves the tap changed nothing.
+
+Pointer qualifies for recovery only for its single stroke: launch, `Input
+drawing surface` visible, the heading tap, the idle summary visible, the 700
+ms swipe, then the failed
 `Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.`
 assertion, with nothing else between them. The swipe's window must hold the
 same Recap registration, unknown sender, touching cancelled contact and

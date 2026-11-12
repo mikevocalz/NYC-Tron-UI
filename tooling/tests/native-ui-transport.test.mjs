@@ -372,16 +372,20 @@ test("negative: a touching-contact cancel stays on the existing rule and never s
   assert.equal(mixed.senderId, "0x1057656000015");
 });
 
+// Real commands from that attempt, plus the heading tap the flow now makes before the
+// idle assertion (sequence 4 here, so later sequence numbers move up by one).
 const pointerCommands = () => [launch(), command("assertConditionCommand", { condition: { visible: { textRegex: "Input drawing surface", optional: false } }, timeout: "90000", optional: false },
   "COMPLETED", { sequenceNumber: 3, timestamp: 1794472960375, duration: 7214 }),
-  visible("Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0.", "COMPLETED", { sequenceNumber: 4, timestamp: 1794472967591, duration: 381 }),
+  command("tapOnElement", { selector: { textRegex: "Pointer input", optional: false }, retryIfNoChange: false, waitUntilVisible: false, longPress: false, optional: false },
+    "COMPLETED", { sequenceNumber: 4, timestamp: 1794472967589, duration: 1 }),
+  visible("Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0.", "COMPLETED", { sequenceNumber: 5, timestamp: 1794472967591, duration: 381 }),
   command("swipeCommand", { direction: "RIGHT", elementSelector: { textRegex: "Input drawing surface", optional: false }, duration: 700, relativePoint: "25%, 50%", optional: false },
-    "COMPLETED", { sequenceNumber: 5, timestamp: 1794472967972, duration: 2649 }),
-  visible("Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.", "FAILED", { sequenceNumber: 6, timestamp: 1794472970624, duration: 18204,
+    "COMPLETED", { sequenceNumber: 6, timestamp: 1794472967972, duration: 2649 }),
+  visible("Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.", "FAILED", { sequenceNumber: 7, timestamp: 1794472970624, duration: 18204,
     error: { message: 'Assertion is false: "Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0." is visible' },
-    artifacts: [{ type: "SCREEN_HIERARCHY", path: "screen-hierarchy/step-007-assertCondition-Committed_strokes_1._Can.json" }] })];
+    artifacts: [{ type: "SCREEN_HIERARCHY", path: "screen-hierarchy/step-008-assertCondition-Committed_strokes_1._Can.json" }] })];
 const pointerScreen = (summary = "Committed strokes: 0. Cancelled strokes: 1. Prediction samples: 0.", last = "Input source: touch. Last event: cancel.") =>
-  ({ path: "screen-hierarchy/step-007-assertCondition-Committed_strokes_1._Can.json", tree: tree([{ "resource-id": "pointer-demo" },
+  ({ path: "screen-hierarchy/step-008-assertCondition-Committed_strokes_1._Can.json", tree: tree([{ "resource-id": "pointer-demo" },
     { "resource-id": "pointer-summary", accessibilityText: summary }, { accessibilityText: summary },
     { "resource-id": "pointer-last-event", accessibilityText: last }, { accessibilityText: last }, { "resource-id": "pointer-surface" }]) });
 function pointer() {
@@ -394,7 +398,7 @@ test("Variant B: a stroke the OS cancelled through Recap mid-swipe, and the app 
   assert.equal(evidence.kind, "ios-pointer-stroke-recap-cancelled");
   assert.equal(evidence.senderId, "0x1057656000015");
   assert.equal(evidence.pathIndex, 2);
-  assert.deepEqual(evidence.stroke, { start: 1794472967972, end: 1794472970621, sequence: 5 });
+  assert.deepEqual(evidence.stroke, { start: 1794472967972, end: 1794472970621, sequence: 6 });
   for (const line of Object.values(evidence.evidence)) assert.ok(line.at >= evidence.stroke.start && line.at <= evidence.stroke.end);
 });
 
@@ -410,12 +414,16 @@ test("Variant B refuses app-side stroke failures, unproven cancels and any other
     input => { input.simulatorLog = pointerCancelLog.replaceAll("sceneID:" + appId + "-default", "sceneID:com.other.app-default"); },
     input => { input.simulatorLog = pointerCancelLog.replace("transport:Recap", "transport:USB"); },
     input => { input.simulatorLog = pointerCancelLog.replaceAll("08:42:50.", "08:42:51."); },
-    input => { input.commands[3].metadata.timestamp += 5000; },
-    input => { input.commands[3].command.swipeCommand.direction = "LEFT"; },
-    input => { input.commands[3].command.swipeCommand.duration = 2000; },
-    input => { input.commands[4] = visible("Input source: touch. Last event: up.", "FAILED", input.commands[4].metadata); },
-    input => { input.commands.splice(4, 0, visible("Pointer input")); },
-    input => { input.commands[2].metadata.status = "FAILED"; },
+    input => { input.commands[4].metadata.timestamp += 5000; },
+    input => { input.commands[4].command.swipeCommand.direction = "LEFT"; },
+    input => { input.commands[4].command.swipeCommand.duration = 2000; },
+    input => { input.commands[5] = visible("Input source: touch. Last event: up.", "FAILED", input.commands[5].metadata); },
+    input => { input.commands.splice(5, 0, visible("Pointer input")); },
+    input => { input.commands[3].metadata.status = "FAILED"; },
+    // Without the heading tap, or with it aimed at the drawing surface, the shape no longer matches the flow.
+    input => { input.commands.splice(2, 1); },
+    input => { input.commands[2].command.tapOnElement.selector.textRegex = "Input drawing surface"; },
+    input => { input.commands[2].command.tapOnElement.longPress = true; },
     input => { input.flow = "settings"; },
     input => { input.platform = "android"; },
   ]) { const input = pointer(); change(input); assert.equal(classify(input), null); }
