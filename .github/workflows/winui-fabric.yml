@@ -115,6 +115,18 @@ jobs:
           node packages/windows-fluent/rnw-fabric/scripts/prepare-consumer.mjs $consumer "$env:RUNNER_TEMP/windows-shared"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           "WIN_CONSUMER=$consumer" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      # RNW's MSBuild targets run `npx --yes --no-workspaces @react-native-community/cli`
+      # with no version, which resolves the registry "latest" (cli 21.0.0 on
+      # 2026-11-12 failed runs 43198587705 and 43200211081 with ETARGET).
+      # Pinned to the example's cli version and reviewed 2026-11-12; reconsider
+      # when RNW declares cli 21 or by 2026-12-12. The script exports
+      # CodegenCommand, BundleCliCommand and AutolinkCommand, which MSBuild
+      # reads as properties in every later build and run-windows step.
+      - name: Pin and verify the RNW CLI major used by MSBuild
+        shell: pwsh
+        run: |
+          node packages/windows-fluent/rnw-fabric/scripts/pin-rnw-cli.mjs $env:WIN_CONSUMER $env:GITHUB_ENV
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Validate diagnostic scripts with the UIA PowerShell runtime
         working-directory: ${{ env.WIN_CONSUMER }}
         shell: powershell
