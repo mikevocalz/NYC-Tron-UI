@@ -10,7 +10,7 @@ their own app.
 | Example | Full name | Launcher name | Config the label comes from |
 | --- | --- | --- | --- |
 | `examples/native-instruments` (Expo, iOS and Android) | NYC-Tron Instruments | Tron Lab | `app.json` `expo.name` |
-| `examples/macos-appkit/spark` (Spark, macOS) | NYC-Tron AppKit Reference | Tron AppKit | `desktop.config.json` `macos.infoPlist.CFBundleName` |
+| `examples/macos-appkit/spark` (Spark, macOS) | NYC-Tron AppKit Reference | Tron AppKit | `desktop.config.json` `macos.infoPlist.CFBundleName` (application menu; Finder and Dock show the bundle file name, see below) |
 | `packages/windows-fluent/rnw-fabric/example` (RNW, Windows) | NYC-Tron WinUI Reference | Tron WinUI | `app.json` `displayName` |
 
 Before this change the instruments app was "NYC-Tron Instruments Demo". It
@@ -63,11 +63,11 @@ How each lane picks the icon up:
 - **Windows (RNW):** `scripts/prepare-host.mjs` copies the derived files over
   the generated project's images and `.ico` files with the same names, after
   `init-windows`. No generated file is edited by hand.
-- **macOS (Spark 0.0.2): not wired.** Spark's `desktop.config.json` has no
-  icon field, and neither Spark nor `expo-desktop-prebuild-config` 1.1.3 sets
-  a macOS icon (`CFBundleIconFile` is written empty). An icon plugin would make
-  the app a Spark custom runtime, which changes how the AppKit job builds it.
-  The `.icns` is ready; wiring it is a T4 decision.
+- **macOS (Spark 0.0.2): deferred to T4.** Spark's `desktop.config.json` has
+  no icon field, and neither Spark nor `expo-desktop-prebuild-config` 1.1.3
+  sets a macOS icon (`CFBundleIconFile` is written empty). An icon plugin would
+  turn the example into a Spark custom runtime, which changes how the AppKit
+  job builds it. The generated `.icns` stays committed for T4 to wire.
 
 ## Launcher names
 
@@ -182,9 +182,12 @@ same reason.
   does.
 - **Android:** one line in Launcher3, 63.6 dp at 14 dp Roboto on a 420 dpi
   phone. Other launchers and fonts differ (Pixel Launcher was not measured).
-- **macOS:** `CFBundleName` names the menu bar's application menu and the
-  Dock tooltip. Apple caps `CFBundleName` at 15 characters; the check does not
-  measure macOS yet.
+- **macOS:** `CFBundleName` names the menu bar's application menu. Finder,
+  the Dock and the Apps grid show the bundle's file name unless the app has a
+  localised display name, so the built Spark example would most likely show
+  `NYCTronAppKitReference` there (from Apple's display-name rules; not
+  captured). Renaming the bundle is deferred to T4 with the icon. Apple caps
+  `CFBundleName` at 15 characters; the check does not measure macOS yet.
 - **Windows:** `displayName` is the Start and taskbar name. Not measured.
 - **Web:** `web.shortName` becomes the installed PWA label; browsers own that
   box and it is not checked.
@@ -193,47 +196,7 @@ same reason.
 
 ## Design record (§3.3 for the launcher icon and label surfaces)
 
-Skill files loaded in this session: `argent-device-interact`, `no-ai-slop`.
-The `design:*`, `frontend-design` and `engineering:code-review` skill files were
-not loaded; the outputs below follow the required outputs listed in the program
-prompt. A reviewer may want those passes rerun with the skills.
-
-1. **User research.** Who runs these apps: contributors and consumers who build
-   an example to see a Tron component on their own device, usually beside other
-   test builds. Where it lost them: the instruments build had no icon (the
-   Expo default) and a name both launchers truncated to "NYC-Tro…", so it could
-   not be told apart from other NYC-Tron or Forge builds on the same device.
-2. **References.** Mobbin, iOS: Trainline's app icon picker (one mark on
-   several grounds, one-word labels),
-   https://mobbin.com/screens/a0eebc8d-5d4a-4216-bc82-da6174ecdafe; CapCut Home
-   Screen shortcuts with two-word names ("Remove BG", "Retouch"),
-   https://mobbin.com/screens/32da53ef-eb73-4d60-9b71-9a2f66573e72; Apple Games
-   showing an icon with its full name,
-   https://mobbin.com/screens/dca39796-171c-4d5f-84ef-5f04da20021e. Structure
-   only; no mark was copied.
-3. **Design-system audit.** No example had an icon. Names drifted between a
-   long display name ("NYC-Tron Instruments Demo"), a camel-case identifier as
-   display name ("NYCTronAppKitReference") and a description
-   ("NYC-Tron Windows acceptance"). The icon colours live only in
-   `render-example-icons.mjs`; no Tron component or token was given a colour,
-   because the consuming app owns the theme.
-4. **Copy.** Launcher names are "Tron" plus the one word that tells the
-   examples apart: Lab, AppKit, WinUI. "Demo" was dropped; every example is a
-   demo. Full names keep "NYC-Tron".
-5. **Visual direction.** Before: no icons and truncated names (the captures
-   above). After: one construction across the three icons, the glyph about
-   two thirds of the tile, readable at 16 px (`windows/Assets/...targetsize-16`).
-6. **Accessibility.** Glyph against ground, WCAG 1.4.11: amber 8.6:1, cyan
-   8.6:1, blue 7.5:1, steel 10.9:1, all above 3:1. The knob's unfilled track
-   is 1.7:1 on purpose (it is the empty part of the value); the filled arc and
-   pointer carry the form. The three glyphs differ in form, so colour is not
-   the only cue. The labels are plain text read by
-   VoiceOver and TalkBack.
-7. **Critique.** The knob arc keeps a dim track so the value reads at small
-   sizes. The two window glyphs differ only in where the detail sits (leading
-   sidebar, trailing captions); at 16 px that is still visible but close.
-   Launcher masks are OS-owned, so the source is full-bleed and the macOS tile
-   carries its own corner.
-8. **Handoff.** This file: names, sources, formats, wiring, boxes, edge cases
-   (Spark icon not wired; web label not checked; bundle ids unchanged).
-9. **Code review.** Requested from an independent reviewer on the PR.
+The §3.3 sequence, run with each skill loaded, is in
+[`completion/evidence/t3-app-identity-20261112/SKILLS-3.3.md`](completion/evidence/t3-app-identity-20261112/SKILLS-3.3.md).
+User research there is desk notes, not sessions, and is marked not met. The
+Mobbin references are saved in the collection linked from that file.
