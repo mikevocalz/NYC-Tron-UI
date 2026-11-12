@@ -19,16 +19,16 @@
     }
   },
   "evidence": {
-    "commit": "e1a66aa",
-    "graph": "T1 baseline (#68) merged at 1c24d40",
-    "macos-run": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883",
-    "windows-run": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885",
+    "commit": "d92b1c1",
+    "graph": "main a6ac0b1 (T1 #68 merged) plus PR #69",
+    "macos-run": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587853",
+    "windows-run": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587705",
     "measured": "2026-11-12"
   },
   "ui": {
     "version": "1.0.0-rc.1",
     "archive": "nyc-tron-ui-1.0.0-rc.1.tgz",
-    "sha256": "c3d0f5881c8db1b27bc425324ca4d142f2a11f21b4d7f99ca93ca1e3e88f0dc7",
+    "sha256": "f4b5a055669437612c2e973bb0422be1393b91ce2bbfa4e2d0acad726080f238",
     "installedWith": "tar extraction; peers not resolved"
   },
   "runtime": {
@@ -123,6 +123,7 @@
         "./components/forge/cad/TextureSetPanel#TextureSetPanel",
         "./components/forge/cad/ViewCubeAndAxisGizmo#ViewCubeAndAxisGizmo",
         "./components/forge/canvas-tools/ColorDropCanvasTarget#ColorDropCanvasTarget",
+        "./components/forge/canvas-tools/GestureCustomizationPanel#GestureCustomizationPanel",
         "./components/forge/canvas-tools/ReferenceImageBoard#ReferenceImageBoard",
         "./components/forge/canvas/AlignDistributePanel#AlignDistributePanel",
         "./components/forge/canvas/CanvasRuler#CanvasRuler",
@@ -176,8 +177,10 @@
         "./components/forge/document/TextSelectionAndCaret#TextSelectionAndCaret",
         "./components/forge/document/TrackChangesView#TrackChangesView",
         "./components/forge/document/TypographyInspector#TypographyInspector",
+        "./components/forge/ink/BrushDynamicsInspector#BrushDynamicsInspector",
         "./components/forge/ink/BrushTaperControl#BrushTaperControl",
         "./components/forge/ink/InkToolbar#InkToolbar",
+        "./components/forge/ink/TimelapsePlaybackExporter#TimelapsePlaybackExporter",
         "./components/forge/inputs/AssetPresetGallery#AssetPresetGallery",
         "./components/forge/inputs/InstrumentXYPad#InstrumentXYPad",
         "./components/forge/layers/ArtboardNavigator#ArtboardNavigator",
@@ -280,6 +283,7 @@
         "./components/forge/timeline/VideoFilmstrip#VideoFilmstrip",
         "./components/forge/timeline/VideoQualityInspector#VideoQualityInspector",
         "./components/forge/timeline/VideoStabilizationInspector#VideoStabilizationInspector",
+        "./components/forge/vector/FillStrokeInspector#FillStrokeInspector",
         "./components/forge/vector/PenNodeEditor#PenNodeEditor",
         "./components/forge/vector/ShapeBuilder#ShapeBuilder",
         "./components/html#Article",
@@ -450,12 +454,6 @@
           ]
         },
         {
-          "component": "./components/forge/canvas-tools/GestureCustomizationPanel#GestureCustomizationPanel",
-          "reason": "lane-failure",
-          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1",
-          "unresolved": []
-        },
-        {
           "component": "./components/forge/canvas/CanvasPanZoom#CanvasPanZoom",
           "reason": "missing-peer",
           "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
@@ -498,12 +496,6 @@
           ]
         },
         {
-          "component": "./components/forge/ink/BrushDynamicsInspector#BrushDynamicsInspector",
-          "reason": "lane-failure",
-          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1",
-          "unresolved": []
-        },
-        {
           "component": "./components/forge/ink/BrushPresetBrowser#BrushPresetBrowser",
           "reason": "missing-peer",
           "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
@@ -528,12 +520,6 @@
             "react-native-gesture-handler",
             "react-native-skia"
           ]
-        },
-        {
-          "component": "./components/forge/ink/TimelapsePlaybackExporter#TimelapsePlaybackExporter",
-          "reason": "lane-failure",
-          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.25",
-          "unresolved": []
         },
         {
           "component": "./components/forge/inputs/PointEditor2D#PointEditor2D",
@@ -635,12 +621,6 @@
           "unresolved": [
             "react-native-gesture-handler"
           ]
-        },
-        {
-          "component": "./components/forge/vector/FillStrokeInspector#FillStrokeInspector",
-          "reason": "lane-failure",
-          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1",
-          "unresolved": []
         },
         {
           "component": "./components/gestures/GestureHandlerDrag#GestureHandlerDrag",

@@ -55,36 +55,52 @@ Peer ranges above are read from each `package.json` at this commit. Running
 ## Expo install paths
 
 Gate T4 item 1, run by [install-paths.yml](../.github/workflows/install-paths.yml)
-on clean GitHub runners from the `v1.0.0-rc.1` release tarballs, and locally
-on 2026-11-12. The one command is in the [README](../README.md#add-nyc-tron-ui-to-an-expo-app).
+on clean GitHub runners. The one command is in the
+[README](../README.md#add-nyc-tron-ui-to-an-expo-app). On a pull request the
+workflow packs core and ui from the checked-out commit; a manual run can
+install a release's tarballs instead.
 
-Run [43171141013](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171141013)
-(Node 24.19.0, npm 11.17.0, `create-expo-app` 5.0.0, Expo 58.0.24, React
-Native 0.88.1) and the local run (npm 12.2.1):
+Run [43198587954](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587954)
+(d92b1c1: main a6ac0b1 plus this branch; Node 24.19.0, `create-expo-app`
+5.0.0, Expo 58.0.24, React Native 0.88.1):
 
-| Platform | New Expo app | Existing Expo app |
+| Platform | New Expo app | Existing Expo app (default SDK 58 template) |
 |---|---|---|
-| Web | Pass. Exported with `expo export`, the Button pressed twice in Chromium, `Pressed 2 times`, no page errors | Fail at the install command: `ERESOLVE` |
-| iOS simulator | Pass in run [43177509488](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43177509488): Release simulator build from prebuild, installed on an iPhone 11 simulator (iOS 26.5); Maestro found `tron-button`, tapped it, and saw `Pressed 1 times`. Run 43171141013 built the app but its simulator prewarm timed out | Fail at the install command: `ERESOLVE` |
-| Android emulator | Pass. Release APK from prebuild, installed on an API 35 emulator; Maestro found `tron-button`, tapped it, and saw `Pressed 1 times` | Fail at the install command: `ERESOLVE` (local; the CI job was cancelled before it ran) |
-| macOS (Spark 0.0.3) | Fail at the install command: `ERESOLVE`, `peer react-native@">=0.88.0"` against React Native 0.83.10 | Same |
-| Windows (RNW 0.85) | Fail at the install command: `ERESOLVE`, `peer react-native@">=0.88.0"` against React Native 0.85.3 | Same |
+| Web | Pass: Button pressed twice in Chromium, `Pressed 2 times` | Pass: install with the template's gesture handler 3.3.0 kept, Button pressed twice, and a `GestureHandlerDrag` route pressed twice |
+| iOS simulator | Pass in [43177509488](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43177509488). In 43198587954 the Release build succeeded and Maestro's XCTest driver missed its startup window; the timeout is now 240 s | Install and Release build pass. The flow stopped at the simulator's "Open in app?" prompt for the deep link; the flow now taps Open |
+| Android emulator | Pass: release APK on an API 35 emulator, Maestro tapped `tron-button` and saw `Pressed 1 times` | Install and release build pass. The deep link reached the running activity before JavaScript started and the app stayed on Home; the flow now opens the link from a stopped app |
+| macOS (Spark 0.0.3) | Pass: npm install with the scoped override below, standalone Spark build, `Button` mounted in the native app | Same app |
+| Windows (RNW 0.85) | Pass: npm install with the scoped override below, RNW Release build, `Button` mounted in the native app | Same app |
 
-The existing-app failure is one conflict. The default Expo SDK 58 template
-installs `react-native-gesture-handler` 3.3.0 (Expo 58 pins `~3.3.0`), and
-`@nyc-tron/ui` declares the optional peer `react-native-gesture-handler
->=3.4.0 <4`. npm refuses to install a package whose optional peer is present
-at a version outside its range. Fixing it means either a wider peer range in
-`@nyc-tron/ui` or asking the app to move off Expo's pinned gesture handler,
-which disturbs the app. Both are owner decisions (peer ranges are public API);
-nothing here changes the range.
+The iOS and Android existing-app flow fixes are in 2a34739; their run on this
+head is the result to read.
 
-On the desktop lanes the one command fails by design of D5: `@nyc-tron/ui`
-keeps its React Native `>=0.88` floor for 1.0.0, so npm will not install it
-next to React Native 0.83.10 or 0.85.3 without `--legacy-peer-deps`. The
-coverage harness below installs the archive by extracting it, without peer
-resolution, which is what that flag does. Whether to document a peer
-override as the desktop install path is an owner decision.
+Existing Expo 58 apps: Expo SDK 58 pins `react-native-gesture-handler
+~3.3.0`. With `@nyc-tron/ui`'s optional peer at `>=3.4.0 <4` (the
+`v1.0.0-rc.1` tarballs), npm refused the install with `ERESOLVE`. D5 decision
+1 widened the peer to `>=3.3.0 <4`: `ui` uses no 3.4-only API, and the
+[gesture-handler-floor](../.github/workflows/gesture-handler-floor.yml)
+workflow type-checks `ui`, runs the pan validator test and the browser suite
+against 3.3.x, and installs the packed archives into the default Expo 58
+template. With the rc.1 tarballs, run `npx expo install
+react-native-gesture-handler@^3.4.0` first.
+
+Desktop apps: the desktop lanes are below ui's React Native floor; only
+components on the lane's support list are supported. Spark 0.0.3 ships React
+Native 0.83.10 and RNW 0.85 ships 0.85.3, and `ui` keeps `react-native
+>=0.88` (D5). The documented install adds one override to the app's
+`package.json`, scoped to `ui`'s `react-native` peer, and never uses
+`--legacy-peer-deps`:
+
+```json
+"overrides": { "@nyc-tron/ui": { "react-native": "$react-native" } }
+```
+
+Without it npm fails with `ERESOLVE`, `peer react-native@">=0.88.0"`. The
+Spark example's own manifest already overrides `react-native` globally to
+0.83.10, which also satisfies the peer; the scoped entry is the documented
+form. Spark's Runner and `spark build --dev` modes were not run with `ui`;
+CI builds the standalone app only.
 
 No example in this repository commits a generated native project: the Expo
 consumers run `expo prebuild`, the Spark example commits only
@@ -94,7 +110,7 @@ is generated by `react-native init-windows` and edited by
 `.vcxproj`, `.sln` and `App.cpp` rather than using a config plugin; it is
 the one native setup step not driven by a config plugin.
 
-Evidence: [install-paths-run-43171141013](completion/evidence/T4-desktop-ui-coverage-20261112/install-paths-run-43171141013) and [install-paths-run-43177509488](completion/evidence/T4-desktop-ui-coverage-20261112/install-paths-run-43177509488).
+Evidence: earlier runs on the rc.1 tarballs, [install-paths-run-43171141013](completion/evidence/T4-desktop-ui-coverage-20261112/install-paths-run-43171141013) and [install-paths-run-43177509488](completion/evidence/T4-desktop-ui-coverage-20261112/install-paths-run-43177509488), where every existing-app path and both desktop lanes failed with `ERESOLVE`.
 
 ## Desktop support list
 
@@ -113,15 +129,17 @@ with the same props to tell a lane failure from a props failure.
 
 | Lane | Runtime | Archive (sha256) | Run | Supported | Struck | Not verified on desktop |
 |---|---|---|---|---|---|---|
-| macOS, Spark 0.0.3 | React Native 0.83.10, React Native macOS 0.83.0, Expo 55.0.32, React 19.2.0 | `c3d0f588…` (T1 graph) | [43171140883](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883) | 272 of 421 components | 54 | 95 |
-| Windows, RNW 0.85 | React Native 0.85.3, React Native Windows 0.85.0, React 19.2.3 | `c3d0f588…` (T1 graph) | [43171140885](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885) | 268 of 421 components | 41 | 112 |
+| macOS, Spark 0.0.3 | React Native 0.83.10, React Native macOS 0.83.0, Expo 55.0.32, React 19.2.0 | `f4b5a055…` (main a6ac0b1 + #69 at d92b1c1) | [43198587853](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587853) | 272 of 421 components | 54 | 95 |
+| Windows, RNW 0.85 | React Native 0.85.3, React Native Windows 0.85.0, React 19.2.3 | `f4b5a055…` (main a6ac0b1 + #69 at d92b1c1) | [43198587705](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587705) | 272 of 421 components | 37 | 112 |
 
 All 166 exports without components (hooks, models, helpers) load on both
 lanes. The lists are in [desktop-support.json](desktop-support.json); the
 full matrix is in [the evidence folder](completion/evidence/T4-desktop-ui-coverage-20261112).
-A separate measurement on the pre-T1 graph (Spark 0.0.2, archive
-`e3c46a80…`, runs 43169291107 and 43169294389) produced the same lists. It
-is recorded beside this one and does not stand in for it.
+The first T1-graph measurement (archive `c3d0f588…`, runs 43171140883 and
+43171140885) and a pre-T1 one (Spark 0.0.2, archive `e3c46a80…`, runs
+43169291107 and 43169294389) gave the same lists as each other. They differ
+from this one only by the four Windows components fixed below. Both are
+recorded beside this one and do not stand in for it.
 
 - **Supported** means every bare import of the component's export resolved in
   the lane and the component mounted and committed without an error.
@@ -150,12 +168,7 @@ physical input on either lane.
 | `react-native-skia` | `forge/canvas/GPUCanvasViewport` | same |
 | `uniwind` | `theme/NightScope` | same |
 
-Struck on Windows only, as lane failures (each mounted in the web reference with the same props):
-
-- `forge/canvas-tools/GestureCustomizationPanel`: `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1`
-- `forge/ink/BrushDynamicsInspector`: `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1`
-- `forge/ink/TimelapsePlaybackExporter`: `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.25`
-- `forge/vector/FillStrokeInspector`: `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1`
+Struck on Windows only until d92b1c1, now supported: `forge/canvas-tools/GestureCustomizationPanel`, `forge/ink/BrushDynamicsInspector`, `forge/ink/TimelapsePlaybackExporter` and `forge/vector/FillStrokeInspector`. On the `c3d0f588…` archive (run 43171140885) each threw `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1` (0.25 for TimelapsePlaybackExporter). All four render `PrecisionScrubber` with a fractional `min`. React Native parses `accessibilityValue` `min`/`max`/`now` as `int`, and React Native Windows does it with `folly::dynamic::asInt()`, which throws on a fraction. Off the web, `PrecisionScrubber` now passes the numeric range only when all three values are whole numbers; `aria-valuetext` still carries the exact value. Other controls that pass `aria-value*` were not audited for fractional values.
 
 <details><summary>Not verified on desktop, either lane (95 components)</summary>
 
@@ -169,9 +182,9 @@ Struck on Windows only, as lane failures (each mounted in the web reference with
 
 </details>
 
-<details><summary>Supported on both desktop lanes (268 components)</summary>
+<details><summary>Supported on both desktop lanes (272 components)</summary>
 
-`.` (Button), `.` (Card), `.` (NavigationRail), `.` (NavigationShell), `.` (TextField), `Button`, `Card`, `DragGrabHandle`, `FieldGroup`, `FieldGroup` (FieldSection), `IconButton`, `List`, `List` (ListItem), `NavigationRail`, `NavigationRail` (NavigationShell), `SegmentedControl`, `Select`, `TabBar`, `TextField`, `Toolbar`, `content/KeyValueList`, `data/TreeGrid`, `feedback/Badge`, `feedback/Banner`, `feedback/EmptyState`, `feedback/ErrorMessage`, `files/FileImportExportSheet`, `files/FilePicker`, `forge/SpreadsheetGrid`, `forge/WaveformLane`, `forge/audio/AudioInterruptionRecoveryDialog`, `forge/audio/AudioPreview`, `forge/audio/AudioVideoSync`, `forge/audio/AutoDuckEnvelopePanel`, `forge/audio/AutomationLane`, `forge/audio/AutomationModePicker`, `forge/audio/BeatDetectionMarkerLane`, `forge/audio/BusAndRoutingMatrix`, `forge/audio/ClipGainEnvelope`, `forge/audio/DeviceAndChannelPicker`, `forge/audio/InputMonitorToggle`, `forge/audio/InsertEffectRack`, `forge/audio/LatencyCalibrationPanel`, `forge/audio/LevelMeter`, `forge/audio/LoudnessMeter`, `forge/audio/MixGroupBar`, `forge/audio/NativeAudioTransport`, `forge/audio/NoiseReductionMonitor`, `forge/audio/PanControl`, `forge/audio/PluginPresetBrowser`, `forge/audio/RealtimePeakMeter`, `forge/audio/RecordingArmButton`, `forge/audio/RecordingTrack`, `forge/audio/SoloMuteButtons`, `forge/audio/SoundEffectsLibrary`, `forge/audio/SpectrogramView`, `forge/audio/TempoAndMetronome`, `forge/audio/VoiceIsolationPanel`, `forge/cad/DimensionsAndHatching`, `forge/cad/DraftingCommandLine`, `forge/cad/LiveNodeThumbnail`, `forge/cad/ObjectSnapsAndOrtho`, `forge/cad/PBRMaterialInspector`, `forge/cad/ParametricConstraintEditor`, `forge/cad/TextureSetPanel`, `forge/cad/ViewCubeAndAxisGizmo`, `forge/canvas-tools/ColorDropCanvasTarget`, `forge/canvas-tools/ReferenceImageBoard`, `forge/canvas/AlignDistributePanel`, `forge/canvas/CanvasRuler`, `forge/canvas/SnapGridOverlay`, `forge/canvas/SnapGridSettings`, `forge/color/AlphaSlider`, `forge/color/ColorChannelFields`, `forge/color/ColorDiscPicker`, `forge/color/ColorGradingWheels`, `forge/color/ColorHarmonyAssistant`, `forge/color/ColorSpaceChooser`, `forge/color/ColorWheel`, `forge/color/FloatingColorPalette`, `forge/color/FloatingPaletteUndockHandle`, `forge/color/ForegroundBackgroundChips`, `forge/color/GamutWarning`, `forge/color/HSLSecondaryEditor`, `forge/color/HueSlider`, `forge/color/PrintColorChannels`, `forge/color/SVColorField`, `forge/color/SoftProofControls`, `forge/color/SpotAndGlobalColorEditor`, `forge/color/SwatchGrid`, `forge/color/ThemeColorReferences`, `forge/color/WideGamutChannels`, `forge/design/AutoLayoutInspector`, `forge/design/CollaborationPresence`, `forge/design/ConstraintsPanel`, `forge/design/DevHandoffInspector`, `forge/design/FlowOverview`, `forge/design/HugFillFixedSizeControls`, `forge/design/InteractionTriggerEditor`, `forge/design/MultiExportSlices`, `forge/design/PrototypePreviewPlayer`, `forge/design/ReusableStylesPanel`, `forge/design/VariablesAndModes`, `forge/devices/DevicePairingDialog`, `forge/devices/PenPairingDialog`, `forge/document/BulletsNumberingEditor`, `forge/document/CommentsAndReviewRail`, `forge/document/DictationSessionPanel`, `forge/document/DocumentReadAloudTransport`, `forge/document/FootnoteCitationEditor`, `forge/document/HeadersFootersEditor`, `forge/document/LayoutSpreadNavigator`, `forge/document/NavigationOutline`, `forge/document/RichTextRibbon`, `forge/document/SpellGrammarPopover`, `forge/document/TableLayoutInspector`, `forge/document/TableOfContentsEditor`, `forge/document/TextSelectionAndCaret`, `forge/document/TrackChangesView`, `forge/document/TypographyInspector`, `forge/ink/BrushTaperControl`, `forge/ink/InkToolbar`, `forge/inputs/AssetPresetGallery`, `forge/inputs/InstrumentXYPad`, `forge/layers/ArtboardNavigator`, `forge/layers/ClippingMaskControls` (ClipIndicator), `forge/layers/ClippingMaskControls` (ClipToggle), `forge/layers/LayerBlendAndOpacity`, `forge/layers/LayerStack`, `forge/layers/MaskThumbnailAndEditor`, `forge/midi/MidiChannelPicker`, `forge/midi/MidiChannelPicker` (MidiValueStepper), `forge/motion/EasingPresetGallery`, `forge/motion/ExpressionEditor`, `forge/motion/MotionPathEditor`, `forge/motion/ParticleEmitterControls`, `forge/motion/RenderQueuePanel`, `forge/motion/Transform3DInspector`, `forge/office/ReadAloudTransport`, `forge/office/office-controls` (ChevronGlyph), `forge/office/office-controls` (CloseMark), `forge/office/office-controls` (PauseGlyph), `forge/office/office-controls` (PlayGlyph), `forge/office/office-controls` (PlusGlyph), `forge/office/office-controls` (SkipGlyph), `forge/office/office-controls` (ToolButton), `forge/pdf/AnnotationToolbar`, `forge/pdf/CommentsThreadPanel`, `forge/pdf/EncryptPermissionsPanel`, `forge/pdf/ExtractMergeSplitDialog`, `forge/pdf/HyperlinkInspector`, `forge/pdf/PDFCompareOverlay`, `forge/pdf/PDFPageLayoutSelector`, `forge/pdf/PDFTextSelection`, `forge/pdf/RedactionReviewTool`, `forge/pdf/VirtualPDFPageViewer`, `forge/photo/BatchExportPanel`, `forge/photo/CleanupAndRetouchPanel`, `forge/photo/LensCorrectionPanel`, `forge/photo/LocalMaskBrush`, `forge/photo/LuminanceColorRangeMask`, `forge/photo/PhotoLibraryGrid`, `forge/photo/PhotoMetadataInspector`, `forge/photo/PresetFilmstrip`, `forge/photo/RatingAndFlagControl`, `forge/photo/ToneAndPresence`, `forge/selection/MagicSelectionControls`, `forge/selection/MagicSelectionControls` (MagicWandCanvas), `forge/selection/MultiSelectionControls`, `forge/selection/SelectionMarquee`, `forge/slides/ChartAndTableEditor`, `forge/slides/ConnectorAndDiagramTools`, `forge/slides/MorphPreview`, `forge/slides/PresenterInkStrip`, `forge/slides/RehearsalTimers`, `forge/slides/SlideAnimationPane`, `forge/slides/SlideCanvas`, `forge/slides/SlideFilmstrip`, `forge/slides/SlideNotesEditor`, `forge/slides/SlideSorter`, `forge/slides/SlideThumbnail` (SlideObjectView), `forge/slides/SlideThumbnail`, `forge/slides/TransitionPicker`, `forge/spreadsheet/ChartBuilder`, `forge/spreadsheet/FormulaAutocomplete`, `forge/spreadsheet/FormulaBar`, `forge/spreadsheet/FormulaReferenceText`, `forge/spreadsheet/FreezeSplitControls`, `forge/spreadsheet/NameBox`, `forge/spreadsheet/ReferenceColorizer`, `forge/spreadsheet/SavedSheetViewManager`, `forge/spreadsheet/SheetTabs`, `forge/spreadsheet/SortFilterHeader`, `forge/spreadsheet/Sparkline`, `forge/spreadsheet/SparklineEditor`, `forge/spreadsheet/SplitSpreadsheetView`, `forge/spreadsheet/SpreadsheetCardsView`, `forge/spreadsheet/TableStyleGallery`, `forge/spreadsheet/ValidationDropdown`, `forge/spreadsheet/VirtualSpreadsheetGrid`, `forge/timeline/ExportMonitor`, `forge/timeline/InOutRangeHandles`, `forge/timeline/JKLShuttleController`, `forge/timeline/LoopRangeBar`, `forge/timeline/MediaMonitor`, `forge/timeline/ModeEdgeHandles`, `forge/timeline/MulticamAngleViewer`, `forge/timeline/PictureInPictureControls`, `forge/timeline/PlaybackRateMenu`, `forge/timeline/ProgramMonitor`, `forge/timeline/RenderCacheIndicator`, `forge/timeline/SafeAreaOverlay`, `forge/timeline/SeekBar`, `forge/timeline/SourceMonitor`, `forge/timeline/TimecodeDisplay`, `forge/timeline/TimelineMarkers`, `forge/timeline/TimelinePlayhead`, `forge/timeline/TimelineRuler`, `forge/timeline/TimelineZoomAndScroll`, `forge/timeline/TransitionPresetBrowser`, `forge/timeline/TransportControls`, `forge/timeline/VideoFilmstrip`, `forge/timeline/VideoQualityInspector`, `forge/timeline/VideoStabilizationInspector`, `forge/vector/PenNodeEditor`, `forge/vector/ShapeBuilder`, `html` (Article), `html` (Aside), `html` (Footer), `html` (Header), `html` (Heading), `html` (Input), `html` (Link), `html` (Main), `html` (Nav), `html` (Page), `html` (Paragraph), `html` (Section), `html` (Text), `layout/AdaptiveColumns` (AdaptiveColumn), `layout/AdaptiveColumns`, `layout/ContentFrame`, `navigation/CollapsibleDrawer`, `overlays/AnchoredPopover`, `overlays/CommandPalette`, `overlays/CommandPopover`, `shell/AdaptiveDock`, `shell/AssetBrowser`, `shell/ContextMenu`, `shell/ContextualToolbar`, `shell/DocumentTabBar`, `shell/FindReplaceContent`, `shell/FindReplacePopover`, `shell/FocusAndA11yLayer`, `shell/HistoryPanel`, `shell/InspectorPanel`, `shell/InspectorSearch`, `shell/InspectorSection`, `shell/KeyboardShortcutHUD`, `shell/MenuButton`, `shell/PaneSplitter`, `shell/PresetGallery`, `shell/PropertyRow`, `shell/SplitButton`, `shell/StatusBar`, `shell/ToolRail`, `shell/UnitInput`, `shell/WorkspacePresetSwitcher`
+`.` (Button), `.` (Card), `.` (NavigationRail), `.` (NavigationShell), `.` (TextField), `Button`, `Card`, `DragGrabHandle`, `FieldGroup`, `FieldGroup` (FieldSection), `IconButton`, `List`, `List` (ListItem), `NavigationRail`, `NavigationRail` (NavigationShell), `SegmentedControl`, `Select`, `TabBar`, `TextField`, `Toolbar`, `content/KeyValueList`, `data/TreeGrid`, `feedback/Badge`, `feedback/Banner`, `feedback/EmptyState`, `feedback/ErrorMessage`, `files/FileImportExportSheet`, `files/FilePicker`, `forge/SpreadsheetGrid`, `forge/WaveformLane`, `forge/audio/AudioInterruptionRecoveryDialog`, `forge/audio/AudioPreview`, `forge/audio/AudioVideoSync`, `forge/audio/AutoDuckEnvelopePanel`, `forge/audio/AutomationLane`, `forge/audio/AutomationModePicker`, `forge/audio/BeatDetectionMarkerLane`, `forge/audio/BusAndRoutingMatrix`, `forge/audio/ClipGainEnvelope`, `forge/audio/DeviceAndChannelPicker`, `forge/audio/InputMonitorToggle`, `forge/audio/InsertEffectRack`, `forge/audio/LatencyCalibrationPanel`, `forge/audio/LevelMeter`, `forge/audio/LoudnessMeter`, `forge/audio/MixGroupBar`, `forge/audio/NativeAudioTransport`, `forge/audio/NoiseReductionMonitor`, `forge/audio/PanControl`, `forge/audio/PluginPresetBrowser`, `forge/audio/RealtimePeakMeter`, `forge/audio/RecordingArmButton`, `forge/audio/RecordingTrack`, `forge/audio/SoloMuteButtons`, `forge/audio/SoundEffectsLibrary`, `forge/audio/SpectrogramView`, `forge/audio/TempoAndMetronome`, `forge/audio/VoiceIsolationPanel`, `forge/cad/DimensionsAndHatching`, `forge/cad/DraftingCommandLine`, `forge/cad/LiveNodeThumbnail`, `forge/cad/ObjectSnapsAndOrtho`, `forge/cad/PBRMaterialInspector`, `forge/cad/ParametricConstraintEditor`, `forge/cad/TextureSetPanel`, `forge/cad/ViewCubeAndAxisGizmo`, `forge/canvas-tools/ColorDropCanvasTarget`, `forge/canvas-tools/GestureCustomizationPanel`, `forge/canvas-tools/ReferenceImageBoard`, `forge/canvas/AlignDistributePanel`, `forge/canvas/CanvasRuler`, `forge/canvas/SnapGridOverlay`, `forge/canvas/SnapGridSettings`, `forge/color/AlphaSlider`, `forge/color/ColorChannelFields`, `forge/color/ColorDiscPicker`, `forge/color/ColorGradingWheels`, `forge/color/ColorHarmonyAssistant`, `forge/color/ColorSpaceChooser`, `forge/color/ColorWheel`, `forge/color/FloatingColorPalette`, `forge/color/FloatingPaletteUndockHandle`, `forge/color/ForegroundBackgroundChips`, `forge/color/GamutWarning`, `forge/color/HSLSecondaryEditor`, `forge/color/HueSlider`, `forge/color/PrintColorChannels`, `forge/color/SVColorField`, `forge/color/SoftProofControls`, `forge/color/SpotAndGlobalColorEditor`, `forge/color/SwatchGrid`, `forge/color/ThemeColorReferences`, `forge/color/WideGamutChannels`, `forge/design/AutoLayoutInspector`, `forge/design/CollaborationPresence`, `forge/design/ConstraintsPanel`, `forge/design/DevHandoffInspector`, `forge/design/FlowOverview`, `forge/design/HugFillFixedSizeControls`, `forge/design/InteractionTriggerEditor`, `forge/design/MultiExportSlices`, `forge/design/PrototypePreviewPlayer`, `forge/design/ReusableStylesPanel`, `forge/design/VariablesAndModes`, `forge/devices/DevicePairingDialog`, `forge/devices/PenPairingDialog`, `forge/document/BulletsNumberingEditor`, `forge/document/CommentsAndReviewRail`, `forge/document/DictationSessionPanel`, `forge/document/DocumentReadAloudTransport`, `forge/document/FootnoteCitationEditor`, `forge/document/HeadersFootersEditor`, `forge/document/LayoutSpreadNavigator`, `forge/document/NavigationOutline`, `forge/document/RichTextRibbon`, `forge/document/SpellGrammarPopover`, `forge/document/TableLayoutInspector`, `forge/document/TableOfContentsEditor`, `forge/document/TextSelectionAndCaret`, `forge/document/TrackChangesView`, `forge/document/TypographyInspector`, `forge/ink/BrushDynamicsInspector`, `forge/ink/BrushTaperControl`, `forge/ink/InkToolbar`, `forge/ink/TimelapsePlaybackExporter`, `forge/inputs/AssetPresetGallery`, `forge/inputs/InstrumentXYPad`, `forge/layers/ArtboardNavigator`, `forge/layers/ClippingMaskControls` (ClipIndicator), `forge/layers/ClippingMaskControls` (ClipToggle), `forge/layers/LayerBlendAndOpacity`, `forge/layers/LayerStack`, `forge/layers/MaskThumbnailAndEditor`, `forge/midi/MidiChannelPicker`, `forge/midi/MidiChannelPicker` (MidiValueStepper), `forge/motion/EasingPresetGallery`, `forge/motion/ExpressionEditor`, `forge/motion/MotionPathEditor`, `forge/motion/ParticleEmitterControls`, `forge/motion/RenderQueuePanel`, `forge/motion/Transform3DInspector`, `forge/office/ReadAloudTransport`, `forge/office/office-controls` (ChevronGlyph), `forge/office/office-controls` (CloseMark), `forge/office/office-controls` (PauseGlyph), `forge/office/office-controls` (PlayGlyph), `forge/office/office-controls` (PlusGlyph), `forge/office/office-controls` (SkipGlyph), `forge/office/office-controls` (ToolButton), `forge/pdf/AnnotationToolbar`, `forge/pdf/CommentsThreadPanel`, `forge/pdf/EncryptPermissionsPanel`, `forge/pdf/ExtractMergeSplitDialog`, `forge/pdf/HyperlinkInspector`, `forge/pdf/PDFCompareOverlay`, `forge/pdf/PDFPageLayoutSelector`, `forge/pdf/PDFTextSelection`, `forge/pdf/RedactionReviewTool`, `forge/pdf/VirtualPDFPageViewer`, `forge/photo/BatchExportPanel`, `forge/photo/CleanupAndRetouchPanel`, `forge/photo/LensCorrectionPanel`, `forge/photo/LocalMaskBrush`, `forge/photo/LuminanceColorRangeMask`, `forge/photo/PhotoLibraryGrid`, `forge/photo/PhotoMetadataInspector`, `forge/photo/PresetFilmstrip`, `forge/photo/RatingAndFlagControl`, `forge/photo/ToneAndPresence`, `forge/selection/MagicSelectionControls`, `forge/selection/MagicSelectionControls` (MagicWandCanvas), `forge/selection/MultiSelectionControls`, `forge/selection/SelectionMarquee`, `forge/slides/ChartAndTableEditor`, `forge/slides/ConnectorAndDiagramTools`, `forge/slides/MorphPreview`, `forge/slides/PresenterInkStrip`, `forge/slides/RehearsalTimers`, `forge/slides/SlideAnimationPane`, `forge/slides/SlideCanvas`, `forge/slides/SlideFilmstrip`, `forge/slides/SlideNotesEditor`, `forge/slides/SlideSorter`, `forge/slides/SlideThumbnail` (SlideObjectView), `forge/slides/SlideThumbnail`, `forge/slides/TransitionPicker`, `forge/spreadsheet/ChartBuilder`, `forge/spreadsheet/FormulaAutocomplete`, `forge/spreadsheet/FormulaBar`, `forge/spreadsheet/FormulaReferenceText`, `forge/spreadsheet/FreezeSplitControls`, `forge/spreadsheet/NameBox`, `forge/spreadsheet/ReferenceColorizer`, `forge/spreadsheet/SavedSheetViewManager`, `forge/spreadsheet/SheetTabs`, `forge/spreadsheet/SortFilterHeader`, `forge/spreadsheet/Sparkline`, `forge/spreadsheet/SparklineEditor`, `forge/spreadsheet/SplitSpreadsheetView`, `forge/spreadsheet/SpreadsheetCardsView`, `forge/spreadsheet/TableStyleGallery`, `forge/spreadsheet/ValidationDropdown`, `forge/spreadsheet/VirtualSpreadsheetGrid`, `forge/timeline/ExportMonitor`, `forge/timeline/InOutRangeHandles`, `forge/timeline/JKLShuttleController`, `forge/timeline/LoopRangeBar`, `forge/timeline/MediaMonitor`, `forge/timeline/ModeEdgeHandles`, `forge/timeline/MulticamAngleViewer`, `forge/timeline/PictureInPictureControls`, `forge/timeline/PlaybackRateMenu`, `forge/timeline/ProgramMonitor`, `forge/timeline/RenderCacheIndicator`, `forge/timeline/SafeAreaOverlay`, `forge/timeline/SeekBar`, `forge/timeline/SourceMonitor`, `forge/timeline/TimecodeDisplay`, `forge/timeline/TimelineMarkers`, `forge/timeline/TimelinePlayhead`, `forge/timeline/TimelineRuler`, `forge/timeline/TimelineZoomAndScroll`, `forge/timeline/TransitionPresetBrowser`, `forge/timeline/TransportControls`, `forge/timeline/VideoFilmstrip`, `forge/timeline/VideoQualityInspector`, `forge/timeline/VideoStabilizationInspector`, `forge/vector/FillStrokeInspector`, `forge/vector/PenNodeEditor`, `forge/vector/ShapeBuilder`, `html` (Article), `html` (Aside), `html` (Footer), `html` (Header), `html` (Heading), `html` (Input), `html` (Link), `html` (Main), `html` (Nav), `html` (Page), `html` (Paragraph), `html` (Section), `html` (Text), `layout/AdaptiveColumns` (AdaptiveColumn), `layout/AdaptiveColumns`, `layout/ContentFrame`, `navigation/CollapsibleDrawer`, `overlays/AnchoredPopover`, `overlays/CommandPalette`, `overlays/CommandPopover`, `shell/AdaptiveDock`, `shell/AssetBrowser`, `shell/ContextMenu`, `shell/ContextualToolbar`, `shell/DocumentTabBar`, `shell/FindReplaceContent`, `shell/FindReplacePopover`, `shell/FocusAndA11yLayer`, `shell/HistoryPanel`, `shell/InspectorPanel`, `shell/InspectorSearch`, `shell/InspectorSection`, `shell/KeyboardShortcutHUD`, `shell/MenuButton`, `shell/PaneSplitter`, `shell/PresetGallery`, `shell/PropertyRow`, `shell/SplitButton`, `shell/StatusBar`, `shell/ToolRail`, `shell/UnitInput`, `shell/WorkspacePresetSwitcher`
 
 </details>
 
@@ -197,7 +210,7 @@ repository moved to or a version it holds, with the reason.
 | @legendapp/spark | 0.0.3 | Bumped inside the AppKit lane only. 0.0.3 still requires Expo 55.0.32, React Native 0.83.10 (React Native Windows 0.83.2 as an optional peer), React ^19.2.0, and bundles Nitro Modules 0.37.0 and TypeScript 5.9.3, the same as 0.0.2. |
 | react-native-windows | 0.85.0 | Current. |
 | react-native-macos | 0.83.0 | Current. |
-| react-native-gesture-handler | 3.5.0 (dev and example) | Tested at 3.5.0. The peer range keeps its floor and cap, `>=3.4.0 <4`. |
+| react-native-gesture-handler | 3.5.0 (dev and example) | Optional peer `>=3.3.0 <4` (D5 decision 1), tested against 3.3.0, 3.4.0 and 3.5.0. 3.3.0 is the newest 3.3.x and runs in the `gesture-handler-floor` workflow; 3.4.0 is the version on the P05 native canvas proof; 3.5.0 is the workspace pin. |
 | react-native-skia | 3.10.0 (dev and example) | Tested at 3.10.0. The peer range stays `>=3.9.1 <4`. |
 | uniwind | 1.13.2 | Current. |
 | mediabunny | 1.65.2 | Current. |
@@ -215,7 +228,7 @@ for example `react >=19.0.0` and `react-native >=0.88.0`. A future major
 release of React or React Native satisfies the range but is not tested and
 not guaranteed to work. Expo-coupled peers use caret ranges (`expo ^58.0.0`,
 `@expo/ui ^58.0.0`), and a few `ui` peers carry explicit caps
-(`react-native-gesture-handler >=3.4.0 <4`, `uniwind >=1.12.2 <2`,
+(`react-native-gesture-handler >=3.3.0 <4`, `uniwind >=1.12.2 <2`,
 `react-native-skia >=3.9.1 <4`, `expo-drag-drop-content-view >=0.9.2 <1`).
 
 Whether to cap `react-native` is an open owner decision listed in
