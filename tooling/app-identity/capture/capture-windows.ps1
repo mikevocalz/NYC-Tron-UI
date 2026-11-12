@@ -66,20 +66,57 @@ foreach ($label in @("Tron", "Tron WinUI Instruments Demo")) {
 }
 Start-Sleep -Seconds 10
 
+Add-Type @"
+using System; using System.Runtime.InteropServices;
+public static class TronMouse {
+  [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
+  [DllImport("user32.dll")] public static extern void mouse_event(uint f, uint x, uint y, uint d, UIntPtr e);
+  public static void Click(int x, int y) { SetCursorPos(x, y); System.Threading.Thread.Sleep(200); mouse_event(2, 0, 0, 0, UIntPtr.Zero); mouse_event(4, 0, 0, 0, UIntPtr.Zero); }
+}
+"@
+
+# Start's content lives in the CoreWindow named "Start"; search inside it.
+function StartWindow {
+  $cond = New-Object System.Windows.Automation.PropertyCondition([System.Windows.Automation.AutomationElement]::NameProperty, "Start")
+  $hits = [System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children, $cond)
+  foreach ($h in $hits) { if ($h.Current.ControlType -ne [System.Windows.Automation.ControlType]::Button) { return $h } }
+  return $null
+}
+function DumpWithin($element, [string]$name) {
+  $rows = @()
+  if ($element) {
+    foreach ($e in $element.FindAll([System.Windows.Automation.TreeScope]::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
+      try {
+        $r = $e.Current.BoundingRectangle
+        if ($e.Current.Name) { $rows += [pscustomobject]@{ name = $e.Current.Name; type = $e.Current.ControlType.ProgrammaticName;
+          className = $e.Current.ClassName; x = $r.X; y = $r.Y; width = $r.Width; height = $r.Height } }
+      } catch { }
+    }
+  }
+  ConvertTo-Json -InputObject @($rows) -Depth 3 | Set-Content -Path (Join-Path $OutDir "$name.json") -Encoding utf8
+  return $rows
+}
+
 [System.Windows.Forms.SendKeys]::SendWait("^{ESC}")
 Start-Sleep -Seconds 4
 Shot "start"
-$rows = Dump "start-uia"
-$all = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst([System.Windows.Automation.TreeScope]::Descendants,
-  (New-Object System.Windows.Automation.OrCondition(
-    (New-Object System.Windows.Automation.PropertyCondition([System.Windows.Automation.AutomationElement]::NameProperty, "All")),
-    (New-Object System.Windows.Automation.PropertyCondition([System.Windows.Automation.AutomationElement]::NameProperty, "All apps")))))
-if ($all) {
-  try { $all.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke() } catch { Note "All apps invoke failed: $_" }
-  Start-Sleep -Seconds 3
-  Shot "start-all-apps"
-  Dump "start-all-apps-uia" | Out-Null
-} else { Note "No All / All apps button found in Start" }
+$startWindow = StartWindow
+Note ("Start window found by UIA: " + [bool]$startWindow)
+$rows = DumpWithin $startWindow "start-uia"
+$allButton = $rows | Where-Object { $_.name -match '^All( apps)?$' -and $_.type -eq "ControlType.Button" } | Select-Object -First 1
+if ($allButton) {
+  [TronMouse]::Click([int]($allButton.x + $allButton.width / 2), [int]($allButton.y + $allButton.height / 2))
+  Note "Clicked All from its UIA rectangle"
+} else {
+  # Start is centred above the taskbar; on this runner's 1024x768 screen the
+  # All button sits 231 px right of centre and 613 px above the bottom edge.
+  $b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+  [TronMouse]::Click([int]($b.Width / 2 + 231), [int]($b.Height - 613))
+  Note "No All button in UIA; clicked its position from the Start capture"
+}
+Start-Sleep -Seconds 3
+Shot "start-all-apps"
+DumpWithin (StartWindow) "start-all-apps-uia" | Out-Null
 [System.Windows.Forms.SendKeys]::SendWait("Tron")
 Start-Sleep -Seconds 4
 Shot "start-search"

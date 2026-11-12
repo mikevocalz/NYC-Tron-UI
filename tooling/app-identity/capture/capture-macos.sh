@@ -50,16 +50,26 @@ osascript -e 'tell application "System Events" to tell process "Dock" to get {na
 # Hover the example's Dock icon so its label tooltip shows, if AX gave frames.
 node "$here/macos-dock-hover.mjs" "$out/dock-ax.txt" "$example_name" "$out" || true
 
+# Menu bar: bring the example forward so its application menu shows.
+osascript -e "tell application id \"$bundle_id\" to activate" 2>> "$out/status.txt" || true
+sleep 3
+screencapture -x "$out/menubar-example.png" || true
+
 if [ -d /System/Applications/Launchpad.app ] || [ -d /Applications/Launchpad.app ]; then
   open -a Launchpad; sleep 6
   screencapture -x "$out/launchpad-page1.png" || true
-  for page in 2 3 4; do
-    osascript -e 'tell application "System Events" to key code 124' 2>> "$out/launchpad-keys.err" || break
-    sleep 2
+  # Cmd-Right turns the page; a bare arrow only moves the selection.
+  for page in 2 3; do
+    osascript -e 'tell application "System Events" to key code 124 using command down' 2>> "$out/launchpad-keys.err" || break
+    sleep 3
     screencapture -x "$out/launchpad-page$page.png" || true
   done
-  osascript -e 'tell application "System Events" to tell process "Dock" to get {name, position, size} of every UI element of every group of every scroll area of every group of every group of window 1' \
-    > "$out/launchpad-ax.txt" 2> "$out/launchpad-ax.err" || true
+  # Typing filters the grid to the three Tron apps, side by side.
+  osascript -e 'tell application "System Events" to keystroke "Tron"' 2>> "$out/launchpad-keys.err" || true
+  sleep 4
+  screencapture -x "$out/launchpad-search-tron.png" || true
+  osascript -e 'tell application "System Events" to key code 53' 2> /dev/null || true
+  sleep 1
   osascript -e 'tell application "System Events" to key code 53' 2> /dev/null || true
 else
   echo "no Launchpad on this macOS; Apps is part of Spotlight" >> "$out/status.txt"

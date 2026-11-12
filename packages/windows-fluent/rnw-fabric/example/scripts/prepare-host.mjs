@@ -100,4 +100,27 @@ let replaced=0;
  }
 })(windowsDir);
 console.log(`Replaced ${replaced} template icon files with the derived app icon.`);
+// App identity: init-windows writes the project name into the package
+// manifest, and Start and the taskbar show the manifest's DisplayName, not
+// app.json displayName. Write the launcher name into both DisplayName fields.
+const displayName=JSON.parse(readFileSync(new URL("app.json",root),"utf8")).displayName;
+if(typeof displayName!=="string"||!displayName.trim())throw new Error("app.json has no displayName");
+const xmlName=displayName.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+let manifests=0;
+(function walk(dir){
+ for(const entry of readdirSync(dir,{withFileTypes:true})){
+  const full=resolve(dir,entry.name);
+  if(entry.isDirectory()){ if(!["node_modules","x64","Debug","Release","AppPackages"].includes(entry.name)) walk(full); continue; }
+  if(!entry.name.endsWith(".appxmanifest"))continue;
+  let source=readFileSync(full,"utf8");
+  const properties=/<DisplayName>[^<]*<\/DisplayName>/;
+  const visual=/(<uap:VisualElements\b[^>]*?\bDisplayName=")[^"]*(")/;
+  if(!properties.test(source)||!visual.test(source))throw new Error(`Official package manifest template changed: ${entry.name}`);
+  source=source.replace(properties,`<DisplayName>${xmlName}</DisplayName>`).replace(visual,`$1${xmlName}$2`);
+  writeFileSync(full,source);
+  manifests++;
+ }
+})(windowsDir);
+if(manifests===0)throw new Error("No package manifest found under windows/");
+console.log(`Set the package DisplayName to "${displayName}" in ${manifests} manifest(s).`);
 console.log("Prepared Windows consumer solution entry, ProjectReference and native package registration.");

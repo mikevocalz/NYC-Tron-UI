@@ -108,8 +108,12 @@ else
   xcrun simctl boot "$vudid"
   xcrun simctl bootstatus "$vudid" -b
   sleep 30
-  if xcrun simctl install "$vudid" "$app" > "$out/visionos-home/install.log" 2>&1; then
-    echo "installed $launcher on $vtype ($vision)" | tee "$out/visionos-home/status.txt"
+  # Same order as the iPhone: short probe, the example, long probe.
+  if xcrun simctl install "$vudid" "$work/Short.app" > "$out/visionos-home/install.log" 2>&1 &&
+     xcrun simctl install "$vudid" "$app" >> "$out/visionos-home/install.log" 2>&1 &&
+     xcrun simctl install "$vudid" "$work/Long.app" >> "$out/visionos-home/install.log" 2>&1; then
+    echo "installed $short, $launcher and $long on $vtype ($vision)" | tee "$out/visionos-home/status.txt"
+    sleep 10
   else
     echo "NOT RUN: simctl install of the iOS simulator build failed on $vtype ($vision)" | tee "$out/visionos-home/status.txt"
   fi
