@@ -12,7 +12,7 @@
 // 66 dp circle of the 108 dp canvas), reporting how far it reaches.
 //
 // Usage: node derive-icons.mjs <icon.png> --out <dir> [--json]
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { composite, createImage, decodePng, encodePng, resize } from "./png.mjs";
@@ -127,7 +127,9 @@ export function deriveIcons(sourcePath, outDir) {
     const p = Array.from(foreground.data.subarray(i * 4, i * 4 + 4));
     if (p[3] === 0) continue;
     const delta = differs([p[0], p[1], p[2], 255], report.groundRgba);
-    const alpha = Math.min(1, delta / 120) * (p[3] / 255);
+    // Strokes 160 or more from the ground are solid; a dim stroke (the knob's
+    // unfilled track, 91 from the ground) stays dim in the themed icon.
+    const alpha = Math.max(0, Math.min(1, (delta - 40) / 120)) * (p[3] / 255);
     mono.data.set([255, 255, 255, Math.round(alpha * 255)], i * 4);
   }
   write("android/adaptive-monochrome.png", png(mono));
@@ -163,7 +165,16 @@ export function deriveIcons(sourcePath, outDir) {
   return { ...report, files };
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
+// Compare real paths: on macOS /tmp is a symlink to /private/tmp, and a CLI run
+// through a symlinked path would otherwise exit 0 having written nothing.
+const isEntry = (arg) => {
+  try {
+    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(resolve(arg));
+  } catch {
+    return false;
+  }
+};
+if (process.argv[1] && isEntry(process.argv[1])) {
   const args = process.argv.slice(2);
   const source = args.find((a) => !a.startsWith("--"));
   const outIndex = args.indexOf("--out");

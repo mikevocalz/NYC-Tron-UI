@@ -121,7 +121,8 @@ function identityProblems(config) {
   if (!id.fullName?.trim()) problems.push("appIdentity.fullName is empty");
   if (!id.launcherName?.trim()) problems.push("appIdentity.launcherName is empty");
   for (const [platform, label] of Object.entries(config.labels)) {
-    if (label !== id.launcherName) {
+    // A missing label is reported once, by run(), as "no <platform> launcher label".
+    if (typeof label === "string" && label.trim() && label !== id.launcherName) {
       problems.push(`${platform} launcher label is "${label}" but appIdentity.launcherName is "${id.launcherName}"`);
     }
   }
@@ -226,11 +227,11 @@ export function run(argv) {
     }
     problems.push(...identityProblems(config).map((p) => `${file}: ${p}`));
     for (const [platform, label] of Object.entries(config.labels)) {
-      if (platform === "web") continue;
+      if (platform === "web") continue; // browsers own the install label; not a launcher box we measured
       if (typeof label !== "string" || !label.trim()) {
         problems.push(`${file}: no ${platform} launcher label in the config`);
         continue;
-      } // browsers own the install label; not a launcher box we measured
+      }
       entries.push({ source: file, platform, label });
     }
   }

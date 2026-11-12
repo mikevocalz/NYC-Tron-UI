@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { deriveIcons, inspectSource } from "../app-identity/derive-icons.mjs";
@@ -79,6 +80,16 @@ test("derive-icons refuses a glyph outside the Android safe zone and says by how
   assert.match(result.problems.join("\n"), /safe zone ends at 469\.3 px \(over by \d+\.\d px\)/);
 });
 
+test("derive-icons runs as a CLI when reached through a symlinked path", { skip: process.platform === "win32" && "symlinks need elevation on Windows" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "tron-icon-link-"));
+  symlinkSync(join(root, "tooling"), join(dir, "tooling"), "dir");
+  const out = join(dir, "out");
+  const result = spawnSync(process.execPath, [join(dir, "tooling/app-identity/derive-icons.mjs"), join(root, "examples/native-instruments/assets/icon.png"), "--out", out], { encoding: "utf8" });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /wrote 28 files/);
+  assert.equal(listFiles(out).length, 28);
+});
+
 test("every launcher target is either measured with a box, font and evidence or NOT RUN with a reason", () => {
   for (const t of targets) {
     if (t.status === "measured") {
@@ -120,6 +131,16 @@ test("the check fails when a config's launcher label disagrees with its declared
   const { code, output } = run([file]);
   assert.equal(code, 1);
   assert.match(output, /android launcher label is "Tron Lab" but appIdentity.launcherName is "Lab"/);
+});
+
+test("a config with no launcher label is an identity error, reported once", () => {
+  const dir = mkdtempSync(join(tmpdir(), "tron-label-none-"));
+  const config = join(dir, "app.json");
+  writeFileSync(config, JSON.stringify({ expo: { slug: "x", platforms: ["android"], extra: { appIdentity: { fullName: "X App", launcherName: "X" } } } }));
+  const { code, output } = run([config]);
+  assert.equal(code, 1);
+  assert.match(output, /no android launcher label in the config/);
+  assert.doesNotMatch(output, /undefined/);
 });
 
 test("a character the font table lacks is NOT RUN, never a pass", () => {

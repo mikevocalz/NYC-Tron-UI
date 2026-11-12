@@ -64,7 +64,8 @@ const icons = {
     const start = Math.PI * 0.75, end = Math.PI * 2.25;
     const value = start + (end - start) * 0.68;
     return paint([
-      { sdf: (x, y) => arc(x, y, C, C, 300, W, start, end), rgb: [58, 62, 72] },
+      // Unfilled track: 3.1:1 on the ground (WCAG 1.4.11), still dimmer than the 8.6:1 value arc.
+      { sdf: (x, y) => arc(x, y, C, C, 300, W, start, end), rgb: [96, 102, 119] },
       { sdf: (x, y) => arc(x, y, C, C, 300, W, start, value), rgb: accent },
       { sdf: (x, y) => stroke(circle(x, y, C, C, 150), D), rgb: STEEL },
       { sdf: (x, y) => segment(x, y, C, C, C + 150 * Math.cos(value), C + 150 * Math.sin(value), D / 2), rgb: accent },
