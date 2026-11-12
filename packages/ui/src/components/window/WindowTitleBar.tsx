@@ -114,7 +114,8 @@ export function WindowTitleBar({
       style={[{ minHeight: Math.max(TITLE_BAR_HEIGHT, list.insets.height), paddingStart: startInset, paddingEnd: endInset }, style]}>
       {list.leading.length ? <View style={{ flexDirection: "row" }}>{list.leading.map(button)}</View> : null}
       <View style={{ flex: 1, minWidth: 0, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 8 }}>
-        {edited ? <View accessible={false} {...{ className: joinClasses(styled && "border-accent") }} style={{ width: DOT, height: DOT, borderWidth: DOT / 2, borderRadius: DOT / 2 }} /> : null}
+        {/* The dot is circular by nature, so it takes rounded-full from the app's theme rather than a raw radius. */}
+        {edited ? <View accessible={false} {...{ className: joinClasses("rounded-full", styled && "border-accent") }} style={{ width: DOT, height: DOT, borderWidth: DOT / 2 }} /> : null}
         <Text accessibilityRole="header" accessibilityLabel={edited ? `${shown}, edited` : shown} numberOfLines={1} ellipsizeMode="tail" style={{ flexShrink: 1 }}
           {...{ title: shown } as object}
           {...{ className: joinClasses(styled && "text-sm font-semibold", styled && (snapshot.focused ? "text-text" : "text-text-muted"), titleClassName) }}>{shown}</Text>
