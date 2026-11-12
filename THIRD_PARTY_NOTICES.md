@@ -189,7 +189,7 @@ MIT, Copyright (c) Microsoft Corporation and contributors. Text:
 
 ## Legend Spark and the isolated AppKit host
 
-`packages/macos-appkit/spark` imports Legend Spark 0.0.2 as an exact peer.
+`packages/macos-appkit/spark` imports Legend Spark 0.0.3 as an exact peer.
 Its controls and window bindings are original NYC-Tron code; Spark's source
 and native runtime are installed separately. The AppKit consumer retains
 Spark's Expo 55 / React Native 0.83 / Nitro Modules 0.37.0 runtime and the

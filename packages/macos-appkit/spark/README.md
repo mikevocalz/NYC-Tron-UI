@@ -12,7 +12,7 @@ Spark desktop application with these pinned dependency inputs:
 
 | Dependency | Version |
 | --- | --- |
-| `@legendapp/spark` | `0.0.2` |
+| `@legendapp/spark` | `0.0.3` |
 | `expo` | `55.0.32` |
 | `react` | `19.2.0` |
 | `react-native` | `0.83.10` |
@@ -32,7 +32,7 @@ Nitro v1 for Spark's tested Nitro 0.37 ABI.
 Create the desktop host with Spark's official starter so its verified native
 SDK archives are installed. The Runtimes and Nitro packages include Spark's
 patches; registry packages with the same version numbers are not equivalent.
-The consumer preparation script uses the published Spark 0.0.2 release
+The consumer preparation script uses the published Spark 0.0.3 release
 manifest and the same archive materialization and hash verification helpers as
 `spark create`, retains the SDK input receipt, and runs `spark analyze` before
 native compilation. The AppKit-only example excludes the Windows host from
@@ -270,7 +270,7 @@ The test driver is excluded from this library's archive. The reference defaults
 to excluding it from release builds; `--native-acceptance` opts in only inside
 the generated private test application. That application is not distributed.
 For that private consumer only, preparation applies an exact-preimage transport
-patch to Spark 0.0.2's test driver. It records original/patched source and hashes,
+patch to Spark 0.0.3's test driver. It records original/patched source and hashes,
 rejects silent JSON serialization failures, and adds bounded native command-stage
 diagnostics. A real Foundation/socketpair probe must pass before the app builds.
 The patch changes neither distribution archives nor ordinary Spark consumers;

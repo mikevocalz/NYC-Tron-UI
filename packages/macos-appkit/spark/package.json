@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "description": "Isolated Spark 0.0.2 AppKit controls and shared window lifecycle binding",
+  "description": "Isolated Spark 0.0.3 AppKit controls and shared window lifecycle binding",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mikevocalz/NYC-Tron-UI.git",
@@ -102,7 +102,7 @@
   ],
   "peerDependencies": {
     "@nyc-tron/core": "1.0.0-rc.1",
-    "@legendapp/spark": "0.0.2",
+    "@legendapp/spark": "0.0.3",
     "expo": "55.0.32",
     "react": "19.2.0",
     "react-native": "0.83.10",
