@@ -1,7 +1,7 @@
 // Reads horizontal advance widths from a TrueType/OpenType font (.ttf, .otf,
 // .ttc) with no dependencies, and measures a string's advance width. Kerning
 // and shaping are not applied, and a variable font is read at its default
-// instance; the launcher check adds a per-target tolerance for that.
+// instance. Use a static face (as the committed Roboto table does).
 import { readFileSync } from "node:fs";
 
 function tables(buffer, offset) {

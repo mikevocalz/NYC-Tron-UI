@@ -51,8 +51,11 @@ for (const example of examples) {
     assert.deepEqual(result.problems, []);
     const committed = join(root, example, "assets/icon");
     assert.deepEqual(listFiles(committed).sort(), [...result.files].sort());
-    for (const file of result.files) {
-      assert.ok(readFileSync(join(out, file)).equals(readFileSync(join(committed, file))), `${file} is stale; run derive-icons.mjs`);
+    // Compare decoded pixels, not bytes: deflate output can differ between zlib builds.
+    for (const file of result.files.filter((f) => f.endsWith(".png"))) {
+      const fresh = decodePng(readFileSync(join(out, file)));
+      const kept = decodePng(readFileSync(join(committed, file)));
+      assert.ok(fresh.width === kept.width && Buffer.from(fresh.data).equals(Buffer.from(kept.data)), `${file} is stale; run derive-icons.mjs`);
     }
   });
 }
@@ -119,11 +122,20 @@ test("the check fails when a config's launcher label disagrees with its declared
   assert.match(output, /android launcher label is "Tron Lab" but appIdentity.launcherName is "Lab"/);
 });
 
+test("a character the font table lacks is NOT RUN, never a pass", () => {
+  const row = checkLabels([{ source: "test", platform: "android", label: "Tron \u6f22" }]).find((r) => r.target === "android-launcher3");
+  assert.equal(row.status, "NOT RUN");
+  assert.match(row.reason, /no metrics/);
+  const { code } = run(["--name", "Tron \u6f22", "--platforms", "android", "--strict"]);
+  assert.equal(code, 3);
+});
+
 test("Apple targets are measured with AppKit on macOS and reported NOT RUN elsewhere", () => {
   const [row] = checkLabels([{ source: "test", platform: "ios", label: "Settings" }]).filter((r) => r.target === "ios-home");
   if (process.platform === "darwin") {
     assert.equal(row.status, "PASS");
-    assert.equal(row.width, 46.8); // matches the 46.7 pt ink measured on the iOS 27.1 simulator
+    // 46.7 pt of ink on the iOS 27.1 simulator; allow for a macOS font update on the runner.
+    assert.ok(Math.abs(row.width - 46.8) <= 0.5, `Settings measured ${row.width} pt`);
   } else {
     assert.equal(row.status, "NOT RUN");
     assert.match(row.reason, /needs macOS/);

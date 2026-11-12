@@ -10,8 +10,8 @@
 // Accepted configs: Expo app.json ({ "expo": {...} }) or resolved config
 // (`npx expo config --json`), Spark desktop.config.json, and React Native
 // Windows app.json ({ "name", "displayName" }). Declare both names in
-// `expo.extra.appIdentity = { fullName, launcherName }` (Spark and RNW: a
-// top-level `appIdentity`).
+// `expo.extra.appIdentity = { fullName, launcherName }`; RNW: a top-level
+// `appIdentity`; Spark: in the Expo app.json beside desktop.config.json.
 //
 // Exit codes: 0 every measured target fits; 1 overflow or identity error;
 // 2 usage error; 3 (--strict only) a target that applies was NOT RUN.
@@ -83,7 +83,7 @@ export function describeConfig(path) {
     // file's schema allows no extra keys, so identity is read from the Expo
     // app.json beside it.
     const platforms = (raw.platforms ?? ["macos"]).filter((p) => p === "macos" || p === "windows");
-    const label = raw.macos?.infoPlist?.CFBundleName ?? raw.name;
+    const labelFor = (p) => (p === "macos" ? raw.macos?.infoPlist?.CFBundleName ?? raw.name : raw.name);
     const sibling = join(dirname(path), "app.json");
     const identity = existsSync(sibling) ? readJson(sibling).expo?.extra?.appIdentity : undefined;
     return {
@@ -91,7 +91,7 @@ export function describeConfig(path) {
       kind: "spark",
       platforms,
       identity,
-      labels: Object.fromEntries(platforms.map((p) => [p, label])),
+      labels: Object.fromEntries(platforms.map((p) => [p, labelFor(p)])),
     };
   }
   if (raw.expo || raw.slug || (raw.name && (raw.ios || raw.android || raw.platforms))) {
@@ -150,8 +150,10 @@ export function checkLabels(entries) {
       Object.assign(row, { box: target.boxWidth, unit: target.font.unit, lines: target.lines, font: `${target.font.family} ${target.font.weight} ${target.font.size} ${target.font.unit}` });
       if (target.font.backend === "font-table") {
         const { width, missing } = tableWidth(target, entry.label);
-        row.width = width;
-        if (missing.length) row.note = `no metrics for ${JSON.stringify(missing.join(""))}; measured as the width of "m"`;
+        if (missing.length) {
+          // An estimate is not a measurement: never pass a label we could not measure.
+          Object.assign(row, { status: "NOT RUN", reason: `${target.font.family} table has no metrics for ${JSON.stringify(missing.join(""))}` });
+        } else row.width = width;
       } else if (target.font.backend === "appkit-system") {
         const key = `${target.font.size}/${target.font.weight}`;
         if (!appkitJobs.has(key)) appkitJobs.set(key, { font: target.font, rows: [] });
@@ -224,7 +226,11 @@ export function run(argv) {
     }
     problems.push(...identityProblems(config).map((p) => `${file}: ${p}`));
     for (const [platform, label] of Object.entries(config.labels)) {
-      if (platform === "web") continue; // browsers own the install label; not a launcher box we measured
+      if (platform === "web") continue;
+      if (typeof label !== "string" || !label.trim()) {
+        problems.push(`${file}: no ${platform} launcher label in the config`);
+        continue;
+      } // browsers own the install label; not a launcher box we measured
       entries.push({ source: file, platform, label });
     }
   }

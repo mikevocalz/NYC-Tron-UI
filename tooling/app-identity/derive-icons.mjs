@@ -13,7 +13,8 @@
 //
 // Usage: node derive-icons.mjs <icon.png> --out <dir> [--json]
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { composite, createImage, decodePng, encodePng, resize } from "./png.mjs";
 
 export const ANDROID = { canvasDp: 108, viewportDp: 72, safeDp: 66 };
@@ -162,7 +163,7 @@ export function deriveIcons(sourcePath, outDir) {
   return { ...report, files };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
   const args = process.argv.slice(2);
   const source = args.find((a) => !a.startsWith("--"));
   const outIndex = args.indexOf("--out");

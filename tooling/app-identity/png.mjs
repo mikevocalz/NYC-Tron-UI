@@ -93,9 +93,15 @@ export function decodePng(buffer) {
   for (let i = 0; i < width * height; i++) {
     const s = i * channels;
     let r, g, b, alpha = 255;
-    if (colorType === 0) r = g = b = pixels[s];
+    if (colorType === 0) {
+      r = g = b = pixels[s];
+      if (transparency && transparency.readUInt16BE(0) === r) alpha = 0;
+    }
     else if (colorType === 4) { r = g = b = pixels[s]; alpha = pixels[s + 1]; }
-    else if (colorType === 2) { r = pixels[s]; g = pixels[s + 1]; b = pixels[s + 2]; }
+    else if (colorType === 2) {
+      r = pixels[s]; g = pixels[s + 1]; b = pixels[s + 2];
+      if (transparency && transparency.readUInt16BE(0) === r && transparency.readUInt16BE(2) === g && transparency.readUInt16BE(4) === b) alpha = 0;
+    }
     else if (colorType === 6) { r = pixels[s]; g = pixels[s + 1]; b = pixels[s + 2]; alpha = pixels[s + 3]; }
     else {
       const index = pixels[s];
