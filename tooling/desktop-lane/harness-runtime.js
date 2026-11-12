@@ -11,6 +11,7 @@
 // on globalThis for the web reference.
 import { Component, Suspense, createElement as h, useEffect, useReducer } from "react";
 import { Platform, Text, View } from "react-native";
+import { loadEntry } from "./load-entry.js";
 
 const CHUNK = 4000;
 const SETTLE_MS = 60;
@@ -58,7 +59,7 @@ function createRun(entries, lane) {
     const record = { s: entry.subpath, i: "ok", c: [] };
     run.results.push(record);
     let module;
-    try { module = entry.load(); }
+    try { module = loadEntry(entry.load); }
     catch (error) { record.i = describe(error); continue; }
     for (const [name, value] of Object.entries(module ?? {})) {
       if (!isComponentExport(name, value)) continue;

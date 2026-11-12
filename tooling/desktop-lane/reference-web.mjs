@@ -43,6 +43,7 @@ for (const name of ["core", "ui"]) {
 const uiDir = join(work, "node_modules/@nyc-tron/ui");
 const model = coverageModel(uiDir, "web");
 copyFileSync(join(here, "harness-runtime.js"), join(work, "harness-runtime.js"));
+copyFileSync(join(here, "load-entry.js"), join(work, "load-entry.js"));
 const props = JSON.parse(readFileSync(resolve(propsArgument), "utf8"));
 if (props.archiveSha256 !== installed["@nyc-tron/ui"].sha256) throw new Error("Synthesized props were generated for a different @nyc-tron/ui archive");
 writeFileSync(join(work, "props.json"), JSON.stringify(props.props));

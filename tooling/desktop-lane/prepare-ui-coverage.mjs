@@ -58,6 +58,7 @@ model.bare.forEach((specifier, index) => {
 });
 writeFileSync(join(coverage, "stubs.json"), JSON.stringify(stubs, null, 2) + "\n");
 copyFileSync(join(here, "harness-runtime.js"), join(coverage, "harness-runtime.js"));
+copyFileSync(join(here, "load-entry.js"), join(coverage, "load-entry.js"));
 const props = JSON.parse(readFileSync(resolve(propsFile), "utf8"));
 if (props.archiveSha256 !== sha256(readFileSync(archive))) throw new Error("Synthesized props were generated for a different @nyc-tron/ui archive");
 writeFileSync(join(coverage, "props.json"), JSON.stringify(props.props) + "\n");

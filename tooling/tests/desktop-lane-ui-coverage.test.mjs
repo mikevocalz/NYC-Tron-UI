@@ -35,3 +35,40 @@ test("supported exports need a clean build, load and every component", () => {
   assert.equal(matrix.rows.find(r => r.subpath === "./c").lanes.windows.components.C.status, "missing-peer");
   assert.deepEqual(matrix.summary.windows.byStatus, { pass: 2, "lane-failure": 1, "missing-peer": 1 });
 });
+
+// Mirrors metro-runtime 0.83 guardedLoadModule: outside a module factory an
+// evaluation error goes to ErrorUtils.reportFatalError and require returns
+// undefined. That is how the Spark lane aborted and the RNW lane recorded
+// failing exports as loaded with no components.
+function metroLike(factory) {
+  let handler = () => {};
+  const errorUtils = {
+    getGlobalHandler: () => handler,
+    setGlobalHandler: next => { handler = next; },
+    reportFatalError: error => handler(error, true),
+  };
+  const require = () => { try { return factory(); } catch (error) { errorUtils.reportFatalError(error); return undefined; } };
+  return { errorUtils, require, current: () => handler };
+}
+
+test("an export that throws inside Metro's guard is reported to the harness, not the app", async () => {
+  const { loadEntry } = await import("../desktop-lane/load-entry.js");
+  const fatal = [];
+  const metro = metroLike(() => { throw new Error("NYCTRON_UNRESOLVED uniwind is not resolvable in the macos lane"); });
+  const original = error => fatal.push(error);
+  metro.errorUtils.setGlobalHandler(original);
+  assert.throws(() => loadEntry(metro.require, metro.errorUtils), /NYCTRON_UNRESOLVED uniwind/);
+  assert.equal(fatal.length, 0);
+  assert.equal(metro.current(), original);
+});
+
+test("a clean export loads and leaves the app's handler in place", async () => {
+  const { loadEntry } = await import("../desktop-lane/load-entry.js");
+  const metro = metroLike(() => ({ Button: () => null }));
+  const original = () => {};
+  metro.errorUtils.setGlobalHandler(original);
+  assert.equal(typeof loadEntry(metro.require, metro.errorUtils).Button, "function");
+  assert.equal(metro.current(), original);
+  assert.throws(() => loadEntry(() => undefined, metro.errorUtils), /NYCTRON_EMPTY_MODULE/);
+  assert.throws(() => loadEntry(() => { throw new TypeError("plain"); }, undefined), /plain/);
+});
