@@ -1,0 +1,232 @@
+name: NYC-Tron Expo install paths
+
+# Gate T4 item 1. Each job starts from a clean runner, creates an Expo app
+# (new) or a default-template app that already has its own screens and
+# native peers (existing), adds @nyc-tron/core and @nyc-tron/ui from release
+# tarballs with one npm command, renders a Tron Button, and drives it on the
+# platform. Native projects come only from `expo prebuild`. A failed install
+# command is recorded as the result and fails the job.
+
+on:
+  pull_request:
+    paths:
+      - 'tooling/install-paths/**'
+      - '.github/workflows/install-paths.yml'
+  workflow_dispatch:
+    inputs:
+      release:
+        description: Release tag whose tarballs are installed
+        required: true
+        default: v1.0.0-rc.1
+
+permissions:
+  contents: read
+
+concurrency:
+  group: install-paths-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  RELEASE_TAG: ${{ inputs.release || 'v1.0.0-rc.1' }}
+  CI: '1'
+  EXPO_NO_TELEMETRY: '1'
+
+jobs:
+  web:
+    name: Web (${{ matrix.path }} Expo app)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        path: [new, existing]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Create the app and run the one install command
+        run: node tooling/install-paths/install-path.mjs prepare ${{ matrix.path }} "$RUNNER_TEMP/ip/app" --release "$RELEASE_TAG"
+      - name: Export for web
+        working-directory: ${{ runner.temp }}/ip/app
+        run: |
+          npx --yes expo install react-dom react-native-web @expo/metro-runtime
+          npx --no-install expo export --platform web --output-dir "$RUNNER_TEMP/ip/web"
+      - name: Press the Tron button in Chromium
+        run: |
+          mkdir -p "$RUNNER_TEMP/web-tools" && cd "$RUNNER_TEMP/web-tools"
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.65.0 serve-handler@6.1.6
+          npx --no-install playwright install --with-deps chromium
+          cd "$GITHUB_WORKSPACE"
+          web="$RUNNER_TEMP/ip/web"; [ -d "$web/client" ] && web="$web/client"
+          route=/; [ "${{ matrix.path }}" = existing ] && route=/tron
+          T4_WEB_TOOLS="$RUNNER_TEMP/web-tools" node tooling/install-paths/web-check.mjs "$web" "$RUNNER_TEMP/ip/web.png" "$route" | tee "$RUNNER_TEMP/ip/web-check.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: install-path-web-${{ matrix.path }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/ip/*.json
+            ${{ runner.temp }}/ip/*.log
+            ${{ runner.temp }}/ip/*.png
+            ${{ runner.temp }}/ip/app/package.json
+            ${{ runner.temp }}/ip/app/package-lock.json
+
+  ios:
+    name: iOS simulator (${{ matrix.path }} Expo app)
+    runs-on: macos-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        path: [new, existing]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Create the app and run the one install command
+        run: node tooling/install-paths/install-path.mjs prepare ${{ matrix.path }} "$RUNNER_TEMP/ip/app" --release "$RELEASE_TAG"
+      - name: Generate the native project with prebuild only
+        working-directory: ${{ runner.temp }}/ip/app
+        run: npx --no-install expo prebuild --platform ios --non-interactive
+      - name: Build a Release simulator app (JavaScript embedded)
+        working-directory: ${{ runner.temp }}/ip/app/ios
+        run: |
+          set -o pipefail
+          workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
+          scheme=$(basename "$workspace" .xcworkspace)
+          xcodebuild -workspace "$workspace" -scheme "$scheme" -configuration Release -sdk iphonesimulator \
+            -derivedDataPath "$RUNNER_TEMP/ip/derived" -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build | tee "$RUNNER_TEMP/ip/xcodebuild.log" | grep -E '^(\*\*|error:)' || true
+          test -n "$(find "$RUNNER_TEMP/ip/derived/Build/Products/Release-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)"
+      - name: Boot a simulator, install, press the button
+        run: |
+          node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
+          node tooling/native/prewarm-ios.mjs
+          app=$(find "$RUNNER_TEMP/ip/derived/Build/Products/Release-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          udid=$(grep NYC_TRON_IOS_UDID "$GITHUB_ENV" | tail -1 | cut -d= -f2)
+          xcrun simctl install "$udid" "$app"
+          bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")
+          scheme=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.scheme || ''")
+          node tooling/install-paths/flow.mjs "$bundle" "${{ matrix.path }}" "$scheme" > "$RUNNER_TEMP/ip/flow.yaml"
+          "$RUNNER_TEMP/maestro/maestro/bin/maestro" --device "$udid" test "$RUNNER_TEMP/ip/flow.yaml" --test-output-dir "$RUNNER_TEMP/ip/maestro"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: install-path-ios-${{ matrix.path }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/ip/*.json
+            ${{ runner.temp }}/ip/*.log
+            ${{ runner.temp }}/ip/flow.yaml
+            ${{ runner.temp }}/ip/maestro/
+            ${{ runner.temp }}/ip/app/package.json
+            ${{ runner.temp }}/ip/app/package-lock.json
+
+  android:
+    name: Android emulator (${{ matrix.path }} Expo app)
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        path: [new, existing]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Create the app and run the one install command
+        run: node tooling/install-paths/install-path.mjs prepare ${{ matrix.path }} "$RUNNER_TEMP/ip/app" --release "$RELEASE_TAG"
+      - name: Generate the native project with prebuild only
+        working-directory: ${{ runner.temp }}/ip/app
+        run: npx --no-install expo prebuild --platform android --non-interactive
+      - name: Build a release APK (JavaScript embedded, debug-signed by the template)
+        working-directory: ${{ runner.temp }}/ip/app/android
+        run: ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=x86_64
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - name: Prepare the flow and test driver
+        run: |
+          node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
+          package=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.android?.package || ''")
+          [ -z "$package" ] && package=$(grep -m1 "applicationId" "$RUNNER_TEMP/ip/app/android/app/build.gradle" | sed -E "s/.*['\"]([^'\"]+)['\"].*/\1/")
+          scheme=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.scheme || ''")
+          node tooling/install-paths/flow.mjs "$package" "${{ matrix.path }}" "$scheme" > "$RUNNER_TEMP/ip/flow.yaml"
+      - name: Install on an emulator and press the button
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: |
+            adb install -r "$(find $RUNNER_TEMP/ip/app/android/app/build/outputs/apk/release -name '*.apk' | head -1)"
+            $RUNNER_TEMP/maestro/maestro/bin/maestro test $RUNNER_TEMP/ip/flow.yaml --test-output-dir $RUNNER_TEMP/ip/maestro
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: install-path-android-${{ matrix.path }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/ip/*.json
+            ${{ runner.temp }}/ip/*.log
+            ${{ runner.temp }}/ip/flow.yaml
+            ${{ runner.temp }}/ip/maestro/
+            ${{ runner.temp }}/ip/app/package.json
+            ${{ runner.temp }}/ip/app/package-lock.json
+
+  desktop-peers:
+    name: Desktop lanes (${{ matrix.lane }}) one-command install
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The React Native and React each lane's host ships (docs/SUPPORT.md).
+          - lane: spark-0.0.3-macos
+            manifest: '{"react":"19.2.0","react-native":"0.83.10","react-native-macos":"0.83.0"}'
+          - lane: rnw-0.85-windows
+            manifest: '{"react":"19.2.3","react-native":"0.85.3","react-native-windows":"0.85.0"}'
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Resolve the one install command against the lane's React Native
+        run: |
+          mkdir -p "$RUNNER_TEMP/ip/app" && cd "$RUNNER_TEMP/ip/app"
+          echo '{"name":"lane-app","version":"1.0.0","private":true,"dependencies":${{ matrix.manifest }}}' > package.json
+          base="https://github.com/mikevocalz/NYC-Tron-UI/releases/download/$RELEASE_TAG"; version="${RELEASE_TAG#v}"
+          set +e
+          npm install --package-lock-only --allow-remote=all "$base/nyc-tron-core-$version.tgz" "$base/nyc-tron-ui-$version.tgz" > ../install.log 2>&1
+          code=$?
+          set -e
+          node -e 'const fs=require("fs");const t=fs.readFileSync(process.argv[1],"utf8");fs.writeFileSync(process.argv[2],JSON.stringify({lane:process.argv[3],npm:process.argv[4],exit:+process.argv[5],code:(/npm error code (\w+)/.exec(t)||[])[1]||null,conflict:t.split("\n").filter(l=>/Found:|Could not resolve dependency|^npm error (peer|peerOptional) /.test(l)).slice(0,6)},null,2)+"\n")' ../install.log ../record.json "${{ matrix.lane }}" "$(npm --version)" "$code"
+          cat ../record.json
+          exit $code
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: install-path-${{ matrix.lane }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/ip/record.json
+            ${{ runner.temp }}/ip/install.log
