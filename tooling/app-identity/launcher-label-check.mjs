@@ -89,13 +89,14 @@ export function describeConfig(path) {
   const raw = readJson(path);
   const source = path;
   if (raw.projectId !== undefined && (raw.macos || raw.window || raw.platforms)) {
-    // Spark desktop.config.json: Spark writes `name` to CFBundleName and builds
-    // `<name>.app`. CFBundleName only titles the application menu. Launchpad and
-    // the Dock show CFBundleDisplayName when the bundle has one and the bundle
-    // file name otherwise, so that is the label measured here. The file's schema
-    // allows no extra keys, so identity is read from the Expo app.json beside it.
+    // Spark desktop.config.json: Spark builds `<name>.app` and writes `name` to
+    // CFBundleName. Launchpad and the Dock show the bundle file name, not
+    // CFBundleName and not a CFBundleDisplayName (CI run 43246515091 built the
+    // example with both set and still showed the file name), so `name` is the
+    // macOS label. It must stay a plain file name: verify-native.mjs accepts only
+    // [A-Za-z0-9._-]. The file's schema allows no extra keys, so identity is read
+    // from the Expo app.json beside it.
     const platforms = (raw.platforms ?? ["macos"]).filter((p) => p === "macos" || p === "windows");
-    const labelFor = (p) => (p === "macos" ? raw.macos?.infoPlist?.CFBundleDisplayName ?? raw.name : raw.name);
     const sibling = join(dirname(path), "app.json");
     const identity = existsSync(sibling) ? readJson(sibling).expo?.extra?.appIdentity : undefined;
     return {
@@ -103,7 +104,7 @@ export function describeConfig(path) {
       kind: "spark",
       platforms,
       identity,
-      labels: Object.fromEntries(platforms.map((p) => [p, labelFor(p)])),
+      labels: Object.fromEntries(platforms.map((p) => [p, raw.name])),
     };
   }
   if (raw.expo || raw.slug || (raw.name && (raw.ios || raw.android || raw.platforms))) {

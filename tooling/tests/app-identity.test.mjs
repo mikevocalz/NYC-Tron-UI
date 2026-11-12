@@ -241,16 +241,24 @@ test("Apple targets are measured with AppKit on macOS and reported NOT RUN elsew
   }
 });
 
-test("the macOS label of a Spark config is CFBundleDisplayName, else the bundle file name, never CFBundleName", () => {
+test("the macOS label of a Spark config is its name (the bundle file name), not CFBundleName or CFBundleDisplayName", () => {
   const dir = mkdtempSync(join(tmpdir(), "tron-spark-label-"));
-  const write = (infoPlist) => {
-    writeFileSync(join(dir, "desktop.config.json"), JSON.stringify({ name: "NYCTronSparkThing", projectId: "X", platforms: ["macos"], macos: { bundleIdentifier: "org.x.y", infoPlist } }));
-    writeFileSync(join(dir, "app.json"), JSON.stringify({ expo: { extra: { appIdentity: { fullName: "NYC-Tron Spark Thing", launcherName: "Tron Spark" } } } }));
-    return describeConfig(join(dir, "desktop.config.json"));
-  };
-  assert.equal(write({ CFBundleName: "Tron Spark" }).labels.macos, "NYCTronSparkThing");
+  writeFileSync(join(dir, "desktop.config.json"), JSON.stringify({ name: "NYCTronSparkThing", projectId: "X", platforms: ["macos"], macos: { bundleIdentifier: "org.x.y", infoPlist: { CFBundleName: "Tron Spark", CFBundleDisplayName: "Tron Spark" } } }));
+  writeFileSync(join(dir, "app.json"), JSON.stringify({ expo: { extra: { appIdentity: { fullName: "NYC-Tron Spark Thing", launcherName: "Tron Spark" } } } }));
+  assert.equal(describeConfig(join(dir, "desktop.config.json")).labels.macos, "NYCTronSparkThing");
   const { code, output } = run([join(dir, "desktop.config.json")]);
-  assert.equal(write({ CFBundleName: "Other", CFBundleDisplayName: "Tron Spark" }).labels.macos, "Tron Spark");
   assert.equal(code, 1);
   assert.match(output, /macos launcher label is "NYCTronSparkThing" but appIdentity.launcherName is "Tron Spark"/);
+});
+
+test("the Spark example name fits the macOS Launchpad box and the old name does not", { skip: process.platform !== "darwin" && "AppKit needs macOS" }, () => {
+  const fits = checkLabels([{ source: "test", platform: "macos", label: "TronAppKit" }]).find((r) => r.target === "macos-launchpad");
+  assert.equal(fits.status, "PASS", JSON.stringify(fits));
+  const long = checkLabels([{ source: "test", platform: "macos", label: "NYCTronAppKitReference" }]).find((r) => r.target === "macos-launchpad");
+  assert.equal(long.status, "OVERFLOW");
+  assert.equal(long.label, "NYCTronAppKitReference");
+  assert.ok(long.overflow > 40, `overflow ${long.overflow}`);
+  const { code, output } = run(["--name", "NYCTronAppKitReference", "--platforms", "macos"]);
+  assert.equal(code, 1);
+  assert.match(output, /OVERFLOW\s+macos-launchpad\s+"NYCTronAppKitReference"\s+[\d.]+ pt in a 94\.5 pt box: over by [\d.]+ pt/);
 });

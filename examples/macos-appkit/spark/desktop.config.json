@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@legendapp/spark/schema.json",
-  "name": "NYCTronAppKitReference",
+  "name": "TronAppKit",
   "version": "1.0.0",
   "window": {
     "size": {
@@ -13,8 +13,7 @@
     "bundleIdentifier": "org.nyctron.appkit.reference",
     "testDriverInRelease": false,
     "infoPlist": {
-      "CFBundleName": "Tron AppKit",
-      "CFBundleDisplayName": "Tron AppKit"
+      "CFBundleName": "Tron AppKit"
     }
   },
   "platforms": [
