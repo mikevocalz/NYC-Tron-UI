@@ -20878,7 +20878,7 @@
       "references": [
         "@nyc-tron/platform-services/dist/haptics/haptics.d.ts#HapticsState",
         "@nyc-tron/platform-services/dist/haptics/kinds.d.ts#HapticKind",
-        "zustand@5.0.16/esm/vanilla.d.mts#StoreApi"
+        "zustand@5.1.0/esm/vanilla.d.mts#StoreApi"
       ]
     },
     "@nyc-tron/platform-services/dist/haptics/haptics.d.ts#HapticsNative": {
@@ -21306,7 +21306,7 @@
         "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es5.d.ts#Promise",
-        "zustand@5.0.16/esm/vanilla.d.mts#StoreApi"
+        "zustand@5.1.0/esm/vanilla.d.mts#StoreApi"
       ]
     },
     "@nyc-tron/platform-services/dist/playback/session.d.ts#PlaybackSessionNative": {
@@ -43165,8 +43165,8 @@
         "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es5.d.ts#Promise",
-        "zustand@5.0.16/esm/index.d.mts#$module",
-        "zustand@5.0.16/esm/vanilla.d.mts#StoreApi"
+        "zustand@5.1.0/esm/index.d.mts#$module",
+        "zustand@5.1.0/esm/vanilla.d.mts#StoreApi"
       ]
     },
     "@nyc-tron/ui/dist/components/forge/timeline/waveform-cache.d.ts#mediaProviderId": {
@@ -43192,8 +43192,8 @@
         "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
         "typescript@6.0.3/lib/lib.es5.d.ts#Promise",
-        "zustand@5.0.16/esm/index.d.mts#$module",
-        "zustand@5.0.16/esm/vanilla.d.mts#StoreApi"
+        "zustand@5.1.0/esm/index.d.mts#$module",
+        "zustand@5.1.0/esm/vanilla.d.mts#StoreApi"
       ]
     },
     "@nyc-tron/ui/dist/components/forge/vector/FillStrokeInspector.d.ts#FillStrokeInspector": {
@@ -46485,7 +46485,7 @@
       ],
       "references": [
         "@nyc-tron/ui/dist/components/shell/inspector-model.d.ts#InspectorRegistryState",
-        "zustand@5.0.16/esm/vanilla.d.mts#StoreApi"
+        "zustand@5.1.0/esm/vanilla.d.mts#StoreApi"
       ]
     },
     "@nyc-tron/ui/dist/components/shell/inspector-context.d.ts#InspectorSectionContext": {
@@ -48454,16 +48454,16 @@
         "Uint8Array: Uint8ArrayConstructor"
       ]
     },
-    "zustand@5.0.16/esm/index.d.mts#$module": {
+    "zustand@5.1.0/esm/index.d.mts#$module": {
       "package": "zustand",
-      "version": "5.0.16",
+      "version": "5.1.0",
       "file": "esm/index.d.mts",
       "symbol": "$module",
       "signatures": []
     },
-    "zustand@5.0.16/esm/vanilla.d.mts#StoreApi": {
+    "zustand@5.1.0/esm/vanilla.d.mts#StoreApi": {
       "package": "zustand",
-      "version": "5.0.16",
+      "version": "5.1.0",
       "file": "esm/vanilla.d.mts",
       "symbol": "StoreApi",
       "signatures": [
