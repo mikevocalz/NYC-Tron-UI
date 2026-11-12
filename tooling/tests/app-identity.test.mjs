@@ -23,7 +23,7 @@ const targets = JSON.parse(readFileSync(join(root, "tooling/app-identity/launche
 
 function listFiles(dir, base = dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
-    e.isDirectory() ? listFiles(join(dir, e.name), base) : [relative(base, join(dir, e.name))],
+    e.isDirectory() ? listFiles(join(dir, e.name), base) : [relative(base, join(dir, e.name)).split("\\").join("/")],
   );
 }
 
