@@ -8,7 +8,19 @@ if (kind === "existing" && !scheme) throw new Error("The existing app needs its 
 const steps = [
   "- launchApp:",
   "    clearState: true",
-  ...(kind === "existing" ? [`- openLink: "${scheme}://tron"`] : []),
+  // The added route is opened by deep link from a cold start. Run
+  // 43198587954: on Android a link sent right after launchApp reached the
+  // activity before JavaScript ran and expo-router never saw it; on iOS the
+  // simulator asked "Open in app?" first.
+  ...(kind === "existing" ? [
+    "- stopApp",
+    `- openLink: "${scheme}://tron"`,
+    "- runFlow:",
+    "    when:",
+    "      visible: \"Open\"",
+    "    commands:",
+    "      - tapOn: \"Open\"",
+  ] : []),
   "- extendedWaitUntil:",
   "    visible:",
   "      id: tron-button",

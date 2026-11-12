@@ -167,6 +167,10 @@ jobs:
             CODE_SIGNING_ALLOWED=NO build | tee "$RUNNER_TEMP/ip/xcodebuild.log" | grep -E '^(\*\*|error:)' || true
           test -n "$(find "$RUNNER_TEMP/ip/derived/Build/Products/Release-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)"
       - name: Boot a simulator, install, press the button
+        env:
+          # Run 43198587954 (new app): the XCTest driver missed Maestro's
+          # default startup window on a freshly booted simulator.
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: '240000'
         run: |
           node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
           # A device of our own on the newest installed iOS runtime. The first

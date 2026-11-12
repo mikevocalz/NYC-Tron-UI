@@ -63,12 +63,14 @@ jobs:
           after=$(node -p "require('./packages/ui/node_modules/react-native-gesture-handler/package.json').version")
           test "$after" = "$version"
           echo "{\"lockfileVersion\":\"$before\",\"tested\":\"$after\"}" | tee "$RUNNER_TEMP/evidence/gesture-handler.json"
+      # ui's typecheck reads @nyc-tron/core's built declarations (ci.yml
+      # builds first too).
+      - name: Build public package exports
+        run: corepack pnpm build
       - name: Type-check ui against the 3.3.x declarations
         run: corepack pnpm --filter @nyc-tron/ui typecheck
       - name: Check ui's pan configurations against the 3.3.x validator
         run: node --experimental-strip-types --test packages/ui/tests/pan-config-compatibility.test.mjs
-      - name: Build public package exports
-        run: corepack pnpm build
       - name: Install isolated browser test dependencies
         working-directory: packages/ui/tests/browser
         run: |
