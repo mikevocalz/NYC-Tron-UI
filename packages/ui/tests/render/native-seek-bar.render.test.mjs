@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Runs the real NativeSeekBar platform files with mocked RN and @expo/ui
 // hosts. It drives the slider callbacks the way each OS reports a drag:

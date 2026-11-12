@@ -15,7 +15,7 @@
     "verify:native": "node verify-native.mjs"
   },
   "dependencies": {
-    "@legendapp/spark": "0.0.2",
+    "@legendapp/spark": "0.0.3",
     "expo": "55.0.32",
     "expo-desktop": "1.0.6",
     "expo-desktop-prebuild-config": "1.1.3",

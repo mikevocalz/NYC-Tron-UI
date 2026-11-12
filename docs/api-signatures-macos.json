@@ -90,16 +90,16 @@
           },
           "symbols": {
             "ContextMenuOptions": [
-              "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions"
+              "@legendapp/spark-context-menu@0.0.3/src/index.ts#ContextMenuOptions"
             ],
             "ContextMenuResult": [
-              "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult"
+              "@legendapp/spark-context-menu@0.0.3/src/index.ts#ContextMenuResult"
             ],
             "MenuAction": [
-              "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuAction"
+              "@legendapp/spark-context-menu@0.0.3/src/index.ts#MenuAction"
             ],
             "MenuItem": [
-              "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuItem"
+              "@legendapp/spark-context-menu@0.0.3/src/index.ts#MenuItem"
             ],
             "showContextMenu": [
               "@nyc-tron/macos-appkit/dist/context-menu.d.ts#showContextMenu"
@@ -120,19 +120,19 @@
               "@nyc-tron/macos-appkit/dist/drag-drop.d.ts#DragDropView"
             ],
             "DragDropViewProps": [
-              "@legendapp/spark-drag-drop@0.0.2/src/index.tsx#DragDropViewProps"
+              "@legendapp/spark-drag-drop@0.0.3/src/index.tsx#DragDropViewProps"
             ],
             "DragEndEvent": [
-              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragEndEvent"
+              "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DragEndEvent"
             ],
             "DragOperation": [
-              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragOperation"
+              "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DragOperation"
             ],
             "DragPayload": [
-              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragPayload"
+              "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DragPayload"
             ],
             "DropEvent": [
-              "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DropEvent"
+              "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DropEvent"
             ]
           }
         }
@@ -147,40 +147,40 @@
           },
           "symbols": {
             "Menu": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#Menu"
             ],
             "MenuAction": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuAction"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuAction"
             ],
             "MenuIcon": [
-              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuIcon"
+              "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuIcon"
             ],
             "MenuItem": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuItem"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuItem"
             ],
             "MenuLifecycleEvent": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuLifecycleEvent"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuLifecycleEvent"
             ],
             "MenuLocation": [
-              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuLocation"
+              "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuLocation"
             ],
             "MenuOptions": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuOptions"
             ],
             "MenuPlacement": [
-              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuPlacement"
+              "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuPlacement"
             ],
             "MenuRole": [
-              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuRole"
+              "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuRole"
             ],
             "MenuRootItem": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuRootItem"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuRootItem"
             ],
             "MenuTarget": [
-              "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuTarget"
+              "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuTarget"
             ],
             "MenuUpdate": [
-              "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuUpdate"
+              "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuUpdate"
             ],
             "createMenu": [
               "@nyc-tron/macos-appkit/dist/menus.d.ts#createMenu"
@@ -261,16 +261,16 @@
               "@nyc-tron/macos-appkit/dist/sidebar.d.ts#SidebarItem"
             ],
             "SidebarItemData": [
-              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemData"
+              "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarItemData"
             ],
             "SidebarItemProps": [
-              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemProps"
+              "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarItemProps"
             ],
             "SidebarProps": [
-              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarProps"
+              "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarProps"
             ],
             "SidebarSelectionEvent": [
-              "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarSelectionEvent"
+              "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarSelectionEvent"
             ]
           }
         }
@@ -291,7 +291,7 @@
               "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitViewProps"
             ],
             "SplitViewResizeEvent": [
-              "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewResizeEvent"
+              "@legendapp/spark-ui@0.0.3/src/appkit-split-view/index.tsx#SidebarSplitViewResizeEvent"
             ]
           }
         }
@@ -392,13 +392,13 @@
               "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions"
             ],
             "WindowInfo": [
-              "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo"
+              "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowInfo"
             ],
             "WindowOpenOptions": [
-              "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions"
+              "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions"
             ],
             "WindowUpdateOptions": [
-              "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions"
+              "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions"
             ],
             "createMacOSWindowHost": [
               "@nyc-tron/macos-appkit/dist/windows.d.ts#createMacOSWindowHost"
@@ -444,7 +444,7 @@
         "export type ButtonProps = SparkButtonProps;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/types.ts#ButtonProps"
+        "@legendapp/spark-ui@0.0.3/src/types.ts#ButtonProps"
       ]
     },
     "@nyc-tron/macos-appkit/dist/context-menu.d.ts#showContextMenu": {
@@ -452,8 +452,8 @@
         "export declare function showContextMenu(options: ContextMenuOptions): Promise<ContextMenuResult>;"
       ],
       "references": [
-        "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions",
-        "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult",
+        "@legendapp/spark-context-menu@0.0.3/src/index.ts#ContextMenuOptions",
+        "@legendapp/spark-context-menu@0.0.3/src/index.ts#ContextMenuResult",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
@@ -466,7 +466,7 @@
         "export declare function DragDropView(props: DragDropViewProps): import(\"react\").JSX.Element;"
       ],
       "references": [
-        "@legendapp/spark-drag-drop@0.0.2/src/index.tsx#DragDropViewProps",
+        "@legendapp/spark-drag-drop@0.0.3/src/index.tsx#DragDropViewProps",
         "@types/react@19.2.18/index.d.ts#$module",
         "@types/react@19.2.18/index.d.ts#React.JSX",
         "@types/react@19.2.18/index.d.ts#React.JSX.Element"
@@ -477,8 +477,8 @@
         "export declare function createMenu(options: MenuOptions): Promise<Menu>;"
       ],
       "references": [
-        "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu",
-        "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions",
+        "@legendapp/spark-native-menu@0.0.3/src/api.ts#Menu",
+        "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuOptions",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
@@ -531,7 +531,7 @@
         "export type SegmentedControlProps = SparkSegmentedControlProps;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/types.ts#SegmentedControlProps"
+        "@legendapp/spark-ui@0.0.3/src/types.ts#SegmentedControlProps"
       ]
     },
     "@nyc-tron/macos-appkit/dist/select.d.ts#Select": {
@@ -550,7 +550,7 @@
         "export type SelectProps = SparkSelectProps;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/types.ts#SelectProps"
+        "@legendapp/spark-ui@0.0.3/src/types.ts#SelectProps"
       ]
     },
     "@nyc-tron/macos-appkit/dist/sidebar.d.ts#Sidebar": {
@@ -558,7 +558,7 @@
         "export declare function Sidebar(props: SidebarProps): import(\"react\").JSX.Element;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarProps",
+        "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarProps",
         "@types/react@19.2.18/index.d.ts#$module",
         "@types/react@19.2.18/index.d.ts#React.JSX",
         "@types/react@19.2.18/index.d.ts#React.JSX.Element"
@@ -569,7 +569,7 @@
         "export declare function SidebarItem(props: SidebarItemProps): import(\"react\").JSX.Element;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemProps",
+        "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarItemProps",
         "@types/react@19.2.18/index.d.ts#$module",
         "@types/react@19.2.18/index.d.ts#React.JSX",
         "@types/react@19.2.18/index.d.ts#React.JSX.Element"
@@ -591,7 +591,7 @@
         "export type SplitViewProps = SidebarSplitViewProps;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewProps"
+        "@legendapp/spark-ui@0.0.3/src/appkit-split-view/index.tsx#SidebarSplitViewProps"
       ]
     },
     "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextField": {
@@ -610,7 +610,7 @@
         "export type TextFieldProps = TextInputProps;"
       ],
       "references": [
-        "@legendapp/spark-ui@0.0.2/src/types.ts#TextInputProps"
+        "@legendapp/spark-ui@0.0.3/src/types.ts#TextInputProps"
       ]
     },
     "@nyc-tron/macos-appkit/dist/tooltip.d.ts#Tooltip": {
@@ -684,11 +684,11 @@
         "export interface WindowTransport {\n    open(options: WindowOpenOptions): Promise<WindowInfo>;\n    get(id: string): Promise<WindowInfo>;\n    close(id: string): Promise<CloseResult>;\n    show(id: string, options?: {\n        focus?: boolean;\n    }): Promise<void>;\n    minimize(id: string): Promise<void>;\n    bounds(id: string, bounds: WindowBounds): Promise<void>;\n    options(id: string, options: WindowUpdateOptions): Promise<void>;\n    listen(id: string, event: HostWindowEvent, listener: () => void): Promise<Registration>;\n    beforeClose(id: string, allow: () => boolean | Promise<boolean>): Promise<Registration>;\n    displays(): Promise<readonly HostDisplay[]>;\n    displayChanges(listener: () => void): Promise<Registration>;\n}"
       ],
       "references": [
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#CloseResult",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowBounds",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowInfo",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostWindowEvent",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#Registration",
@@ -704,9 +704,9 @@
         "export declare function createWindowController(transport: WindowTransport, options?: WindowControllerOptions): {\n    getSnapshot: () => WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    start: () => Promise<void>;\n    attach(id: string): Promise<void>;\n    open(input: WindowOpenOptions): Promise<WindowRecord>;\n    close(id: string): Promise<CloseResult>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    setBounds(id: string, displayId: string, rect: Rect): Promise<void>;\n    setOptions(id: string, value: WindowUpdateOptions): Promise<void>;\n    refresh(id: string): Promise<void>;\n    reflow: () => Promise<LayoutSnapshot>;\n    snapshot: () => LayoutSnapshot;\n    restore(snapshot: LayoutSnapshot): Promise<LayoutSnapshot>;\n    beginDrag(sourceId: string, payload: unknown): Outcome;\n    dragOver(token: string, targetId: string | null): Outcome;\n    drop(token: string, targetId: string, approve: (offer: DragOffer) => boolean | Promise<boolean>): Promise<Outcome>;\n    cancelDrag(token: string): Outcome;\n    dispose(): Promise<void>;\n};"
       ],
       "references": [
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#CloseResult",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions",
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
         "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#DragOffer",
         "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#LayoutSnapshot",
@@ -727,7 +727,7 @@
         "export declare function toSharedBounds(bounds: WindowBounds, displays: readonly HostDisplay[]): Rect;"
       ],
       "references": [
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowBounds",
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
       ]
@@ -737,7 +737,7 @@
         "export declare function toSparkBounds(displayId: string, rect: Rect, displays: readonly HostDisplay[]): WindowBounds;"
       ],
       "references": [
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowBounds",
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
       ]
@@ -755,10 +755,10 @@
         "export declare function createMacOSWindowHost(options?: WindowControllerOptions): {\n    getSnapshot: () => import(\"@nyc-tron/core/window-lifecycle\").WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    start: () => Promise<void>;\n    attach(id: string): Promise<void>;\n    open(input: spark.WindowOpenOptions): Promise<import(\"@nyc-tron/core/window-lifecycle\").WindowRecord>;\n    close(id: string): Promise<spark.CloseResult>;\n    focus(id: string): Promise<void>;\n    minimize(id: string): Promise<void>;\n    setBounds(id: string, displayId: string, rect: import(\"@nyc-tron/core/folds\").Rect): Promise<void>;\n    setOptions(id: string, value: spark.WindowUpdateOptions): Promise<void>;\n    refresh(id: string): Promise<void>;\n    reflow: () => Promise<import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot>;\n    snapshot: () => import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot;\n    restore(snapshot: import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot): Promise<import(\"@nyc-tron/core/window-lifecycle\").LayoutSnapshot>;\n    beginDrag(sourceId: string, payload: unknown): import(\"@nyc-tron/core/window-lifecycle\").Outcome;\n    dragOver(token: string, targetId: string | null): import(\"@nyc-tron/core/window-lifecycle\").Outcome;\n    drop(token: string, targetId: string, approve: (offer: import(\"@nyc-tron/core/window-lifecycle\").DragOffer) => boolean | Promise<boolean>): Promise<import(\"@nyc-tron/core/window-lifecycle\").Outcome>;\n    cancelDrag(token: string): import(\"@nyc-tron/core/window-lifecycle\").Outcome;\n    dispose(): Promise<void>;\n};"
       ],
       "references": [
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions",
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions",
-        "@legendapp/spark@0.0.2/windows.ts#$module",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#CloseResult",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions",
+        "@legendapp/spark@0.0.3/windows.ts#$module",
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#$module",
         "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
         "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#$module",
@@ -777,333 +777,333 @@
     }
   },
   "externalTypes": {
-    "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuOptions": {
+    "@legendapp/spark-context-menu@0.0.3/src/index.ts#ContextMenuOptions": {
       "package": "@legendapp/spark-context-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/index.ts",
       "symbol": "ContextMenuOptions",
       "signatures": [
         "export interface ContextMenuOptions {\n    items: readonly MenuItem[];\n    windowId: string;\n    position: {\n        x: number;\n        y: number;\n    };\n}"
       ]
     },
-    "@legendapp/spark-context-menu@0.0.2/src/index.ts#ContextMenuResult": {
+    "@legendapp/spark-context-menu@0.0.3/src/index.ts#ContextMenuResult": {
       "package": "@legendapp/spark-context-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/index.ts",
       "symbol": "ContextMenuResult",
       "signatures": [
         "export type ContextMenuResult = {\n    canceled: true;\n} | {\n    canceled: false;\n    itemId: string;\n};"
       ]
     },
-    "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuAction": {
+    "@legendapp/spark-context-menu@0.0.3/src/index.ts#MenuAction": {
       "package": "@legendapp/spark-context-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/index.ts",
       "symbol": "MenuAction",
       "signatures": [
         "export type MenuAction = Extract<SharedMenuAction, {\n    type: \"action\";\n}>;"
       ]
     },
-    "@legendapp/spark-context-menu@0.0.2/src/index.ts#MenuItem": {
+    "@legendapp/spark-context-menu@0.0.3/src/index.ts#MenuItem": {
       "package": "@legendapp/spark-context-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/index.ts",
       "symbol": "MenuItem",
       "signatures": [
         "export type MenuItem = {\n    type: \"separator\";\n} | (ContextMenuEntry & {\n    type: \"action\";\n}) | (ContextMenuEntry & {\n    type: \"checkbox\";\n    checked: boolean;\n});"
       ]
     },
-    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuIcon": {
+    "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuIcon": {
       "package": "@legendapp/spark-desktop-app",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts/menu.ts",
       "symbol": "MenuIcon",
       "signatures": [
         "export type MenuIcon = {\n    type: \"symbol\";\n    name: string;\n} | {\n    type: \"image\";\n    path: string;\n};"
       ]
     },
-    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuLocation": {
+    "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuLocation": {
       "package": "@legendapp/spark-desktop-app",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts/menu.ts",
       "symbol": "MenuLocation",
       "signatures": [
         "export type MenuLocation = \"app\" | \"file\" | \"edit\" | \"view\" | \"window\" | \"help\";"
       ]
     },
-    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuPlacement": {
+    "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuPlacement": {
       "package": "@legendapp/spark-desktop-app",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts/menu.ts",
       "symbol": "MenuPlacement",
       "signatures": [
         "export type MenuPlacement = {\n    before: MenuTarget;\n    after?: never;\n} | {\n    after: MenuTarget;\n    before?: never;\n};"
       ]
     },
-    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuRole": {
+    "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuRole": {
       "package": "@legendapp/spark-desktop-app",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts/menu.ts",
       "symbol": "MenuRole",
       "signatures": [
         "export type MenuRole = \"new\" | \"open\" | \"save\" | \"saveAs\" | \"clearRecentDocuments\" | \"about\" | \"settings\" | \"services\" | \"hide\" | \"hideOthers\" | \"showAll\" | \"quit\" | \"undo\" | \"redo\" | \"cut\" | \"copy\" | \"paste\" | \"selectAll\" | \"minimize\" | \"zoom\" | \"close\" | \"toggleFullscreen\";"
       ]
     },
-    "@legendapp/spark-desktop-app@0.0.2/src/contracts/menu.ts#MenuTarget": {
+    "@legendapp/spark-desktop-app@0.0.3/src/contracts/menu.ts#MenuTarget": {
       "package": "@legendapp/spark-desktop-app",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts/menu.ts",
       "symbol": "MenuTarget",
       "signatures": [
         "export type MenuTarget = {\n    id: string;\n} | {\n    role: MenuRole;\n} | {\n    menu: MenuLocation;\n};"
       ]
     },
-    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#CloseResult": {
+    "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#CloseResult": {
       "package": "@legendapp/spark-desktop-windows",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "CloseResult",
       "signatures": [
         "export type CloseResult = {\n    closed: true;\n} | {\n    closed: false;\n    reason: \"vetoed\";\n};"
       ]
     },
-    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowBounds": {
+    "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowBounds": {
       "package": "@legendapp/spark-desktop-windows",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "WindowBounds",
       "signatures": [
         "export interface WindowBounds extends Size {\n    displayId: DisplayId;\n    x: number;\n    y: number;\n}"
       ]
     },
-    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo": {
+    "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowInfo": {
       "package": "@legendapp/spark-desktop-windows",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "WindowInfo",
       "signatures": [
         "export interface WindowInfo {\n    id: WindowId;\n    kind: \"window\" | \"overlay\";\n    title: string;\n    parentId: WindowId | null;\n    modal: boolean;\n    visible: boolean;\n    focused: boolean;\n    minimized: boolean;\n    maximized: boolean;\n    fullscreen: boolean;\n    bounds: WindowBounds;\n}"
       ]
     },
-    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowOpenOptions": {
+    "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions": {
       "package": "@legendapp/spark-desktop-windows",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "WindowOpenOptions",
       "signatures": [
         "export type WindowOpenOptions = WindowKind & WindowAppearanceOptions & {\n    id: WindowId;\n    component: string;\n    props?: Record<string, unknown>;\n    size?: Size;\n    position?: {\n        displayId: DisplayId;\n        x: number;\n        y: number;\n    };\n    show?: boolean;\n    restoreBounds?: boolean;\n    macos?: MacOSWindowOptions;\n};"
       ]
     },
-    "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowUpdateOptions": {
+    "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions": {
       "package": "@legendapp/spark-desktop-windows",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "WindowUpdateOptions",
       "signatures": [
         "export interface WindowUpdateOptions extends WindowAppearanceOptions {\n    macos?: MacOSWindowUpdateOptions;\n}"
       ]
     },
-    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragEndEvent": {
+    "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DragEndEvent": {
       "package": "@legendapp/spark-drag-drop",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts.ts",
       "symbol": "DragEndEvent",
       "signatures": [
         "export type DragEndEvent = {\n    accepted: true;\n    operation: DragOperation;\n} | {\n    accepted: false;\n    operation: \"none\";\n};"
       ]
     },
-    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragOperation": {
+    "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DragOperation": {
       "package": "@legendapp/spark-drag-drop",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts.ts",
       "symbol": "DragOperation",
       "signatures": [
         "export type DragOperation = \"copy\" | \"move\" | \"link\";"
       ]
     },
-    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DragPayload": {
+    "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DragPayload": {
       "package": "@legendapp/spark-drag-drop",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts.ts",
       "symbol": "DragPayload",
       "signatures": [
         "export interface DragPayload {\n    files?: readonly string[];\n    text?: string;\n    urls?: readonly string[];\n    data?: Readonly<Record<string, string>>;\n}"
       ]
     },
-    "@legendapp/spark-drag-drop@0.0.2/src/contracts.ts#DropEvent": {
+    "@legendapp/spark-drag-drop@0.0.3/src/contracts.ts#DropEvent": {
       "package": "@legendapp/spark-drag-drop",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/contracts.ts",
       "symbol": "DropEvent",
       "signatures": [
         "export interface DropEvent extends DragPayload, DragOverEvent {\n}"
       ]
     },
-    "@legendapp/spark-drag-drop@0.0.2/src/index.tsx#DragDropViewProps": {
+    "@legendapp/spark-drag-drop@0.0.3/src/index.tsx#DragDropViewProps": {
       "package": "@legendapp/spark-drag-drop",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/index.tsx",
       "symbol": "DragDropViewProps",
       "signatures": [
         "export interface DragDropViewProps extends ViewProps, DragOptions {\n    disabled?: boolean;\n    source?: DragPayload;\n    onDrop?: (event: DropEvent) => void;\n    onDragEnter?: (event: DropEvent) => void;\n    onDragOver?: (event: DragOverEvent) => void;\n    onDragLeave?: () => void;\n    onDragEnd?: (event: DragEndEvent) => void;\n    onError?: (error: SparkError) => void;\n}"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#Menu": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#Menu": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "Menu",
       "signatures": [
         "export interface Menu extends AsyncRegistration {\n    readonly id: string;\n    update(options: MenuUpdate): Promise<void>;\n}"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuAction": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuAction": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "MenuAction",
       "signatures": [
         "export type MenuAction = Extract<SharedMenuAction, {\n    type: \"action\";\n}>;"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuItem": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuItem": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "MenuItem",
       "signatures": [
         "export type MenuItem = MenuLeaf | (Omit<Extract<MenuInputItem, {\n    type: \"submenu\";\n}>, \"items\"> & {\n    items: readonly MenuItem[];\n});"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuLifecycleEvent": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuLifecycleEvent": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "MenuLifecycleEvent",
       "signatures": [
         "export interface MenuLifecycleEvent {\n    menuId: string;\n}"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuOptions": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuOptions": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "MenuOptions",
       "signatures": [
         "export interface MenuOptions extends MenuUpdate {\n    id: string;\n    onAction?: (action: MenuAction) => void;\n    onOpen?: (event: MenuLifecycleEvent) => void;\n    onClose?: (event: MenuLifecycleEvent) => void;\n}"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuRootItem": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuRootItem": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "MenuRootItem",
       "signatures": [
         "export type MenuRootItem = Extract<MenuItem, {\n    type: \"submenu\";\n}>;"
       ]
     },
-    "@legendapp/spark-native-menu@0.0.2/src/api.ts#MenuUpdate": {
+    "@legendapp/spark-native-menu@0.0.3/src/api.ts#MenuUpdate": {
       "package": "@legendapp/spark-native-menu",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/api.ts",
       "symbol": "MenuUpdate",
       "signatures": [
         "export interface MenuUpdate {\n    items: readonly MenuRootItem[];\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewProps": {
+    "@legendapp/spark-ui@0.0.3/src/appkit-split-view/index.tsx#SidebarSplitViewProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/appkit-split-view/index.tsx",
       "symbol": "SidebarSplitViewProps",
       "signatures": [
         "export interface SidebarSplitViewProps extends Omit<SpecializedViewProps, \"children\"> {\n    sidebar: ReactNode;\n    content: ReactNode;\n    list?: ReactNode;\n    children?: never;\n    appearance?: SidebarSplitViewAppearance;\n    contentMinWidth?: number;\n    sidebarMinWidth?: number;\n    sidebarWidth?: number;\n    listMinWidth?: number;\n    listWidth?: number;\n    sidebarCollapsed?: boolean;\n    initialPaneMetrics?: SidebarSplitViewPaneMetrics;\n    titleBar?: SplitViewTitleBarOptions;\n    onResize?: (event: SidebarSplitViewResizeEvent) => void;\n    onSidebarCollapsedChange?: (collapsed: boolean) => void;\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/appkit-split-view/index.tsx#SidebarSplitViewResizeEvent": {
+    "@legendapp/spark-ui@0.0.3/src/appkit-split-view/index.tsx#SidebarSplitViewResizeEvent": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/appkit-split-view/index.tsx",
       "symbol": "SidebarSplitViewResizeEvent",
       "signatures": [
         "export interface SidebarSplitViewResizeEvent extends SidebarSplitViewPaneMetrics, SidebarSplitViewPaneOrigins {\n    listHeight: number;\n    listWidth: number;\n    height: number;\n    phase: \"provisional\" | \"ready\";\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemData": {
+    "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarItemData": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/sidebar/index.tsx",
       "symbol": "SidebarItemData",
       "signatures": [
         "export interface SidebarItemData {\n    id: string;\n    label: string;\n    selectable?: boolean;\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarItemProps": {
+    "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarItemProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/sidebar/index.tsx",
       "symbol": "SidebarItemProps",
       "signatures": [
         "export interface SidebarItemProps extends SpecializedViewProps {\n    id: string;\n    rowHeight?: SidebarRowHeight;\n    selectable?: boolean;\n    onContextMenu?: (event: SidebarContextMenuEvent) => void;\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarProps": {
+    "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/sidebar/index.tsx",
       "symbol": "SidebarProps",
       "signatures": [
         "export type SidebarProps = SidebarBaseProps & ({\n    items: readonly SidebarItemData[];\n    children?: never;\n} | {\n    items?: never;\n    children: ReactNode;\n});"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/sidebar/index.tsx#SidebarSelectionEvent": {
+    "@legendapp/spark-ui@0.0.3/src/sidebar/index.tsx#SidebarSelectionEvent": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/sidebar/index.tsx",
       "symbol": "SidebarSelectionEvent",
       "signatures": [
         "export interface SidebarSelectionEvent {\n    id: string | null;\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/types.ts#ButtonProps": {
+    "@legendapp/spark-ui@0.0.3/src/types.ts#ButtonProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "ButtonProps",
       "signatures": [
         "export interface ButtonProps extends ControlProps {\n    children: string;\n    onPress?: () => void;\n    variant?: \"default\" | \"bordered\" | \"borderless\";\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/types.ts#SegmentedControlProps": {
+    "@legendapp/spark-ui@0.0.3/src/types.ts#SegmentedControlProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "SegmentedControlProps",
       "signatures": [
         "export interface SegmentedControlProps extends SelectProps {\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/types.ts#SelectProps": {
+    "@legendapp/spark-ui@0.0.3/src/types.ts#SelectProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "SelectProps",
       "signatures": [
         "export interface SelectProps extends ControlProps {\n    options: readonly SelectOption[];\n    value: string;\n    onValueChange: (value: string) => void;\n}"
       ]
     },
-    "@legendapp/spark-ui@0.0.2/src/types.ts#TextInputProps": {
+    "@legendapp/spark-ui@0.0.3/src/types.ts#TextInputProps": {
       "package": "@legendapp/spark-ui",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "src/types.ts",
       "symbol": "TextInputProps",
       "signatures": [
         "export type TextInputProps = ControlledTextInputProps | UncontrolledTextInputProps;"
       ]
     },
-    "@legendapp/spark@0.0.2/windows.ts#$module": {
+    "@legendapp/spark@0.0.3/windows.ts#$module": {
       "package": "@legendapp/spark",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "file": "windows.ts",
       "symbol": "$module",
       "signatures": []
