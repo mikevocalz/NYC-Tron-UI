@@ -1,7 +1,7 @@
 // Gate T4 item 1: the two documented ways to add NYC-Tron UI to an Expo app,
 // run end to end from release tarballs on a clean runner.
 //
-//   node tooling/install-paths/install-path.mjs prepare <new|existing> <dir> (--release <tag> | --packs <dir>)
+//   node tooling/install-paths/install-path.mjs prepare <new|existing> <dir> (--release <tag> | --packs <dir>) [--gesture]
 //   node tooling/install-paths/web-check.mjs <exported-web-dir> <screenshot.png> [path]
 //
 // prepare:
@@ -12,6 +12,9 @@
 //             install command and one new route file, app/tron.tsx. The record
 //             lists every tracked file the install changed, so "without
 //             disturbing it" is checked against git, not asserted.
+//   --gesture (existing only) adds a second route, app/gesture.tsx, that
+//             drives GestureHandlerDrag with the gesture handler the app
+//             template installed (Expo 58 pins ~3.3.0).
 // The one command is plain npm with the release tarball URLs:
 //   npm install --allow-remote=all <core.tgz> <ui.tgz>
 // npm 12 refuses remote tarballs unless allow-remote permits them; npm 11
@@ -32,6 +35,26 @@ const must = (result, what) => {
   return result;
 };
 const git = (cwd, ...args) => must(run("git", args, cwd), "git " + args.join(" ")).stdout;
+
+// Same test IDs as the Button screen, so web-check.mjs drives both routes.
+// GestureHandlerDrag reports one onRelease per completed tap or drag.
+const GESTURE_SCREEN = `import { useState } from "react";
+import { Text, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerDrag } from "@nyc-tron/ui/components/gestures/GestureHandlerDrag";
+
+export default function TronGestureScreen() {
+  const [presses, setPresses] = useState(0);
+  return (
+    <GestureHandlerRootView style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: 12 }}>
+      <GestureHandlerDrag onBegin={() => {}} onMove={() => {}} onCancel={() => {}} onRelease={() => setPresses(count => count + 1)}>
+        <View testID="tron-button" accessibilityLabel="Tron gesture target" style={{ width: 160, height: 64, backgroundColor: "#0aa" }} />
+      </GestureHandlerDrag>
+      <Text testID="tron-presses">Pressed {presses} times</Text>
+    </GestureHandlerRootView>
+  );
+}
+`;
 
 const BUTTON_SCREEN = `import { useState } from "react";
 import { Text, View } from "react-native";
@@ -68,7 +91,9 @@ function tarballs(args) {
 }
 
 function prepare([kind, dirArgument, ...rest]) {
-  if (!["new", "existing"].includes(kind) || !dirArgument) throw new Error("Usage: prepare <new|existing> <dir> (--release <tag> | --packs <dir>)");
+  if (!["new", "existing"].includes(kind) || !dirArgument) throw new Error("Usage: prepare <new|existing> <dir> (--release <tag> | --packs <dir>) [--gesture]");
+  const gesture = rest.includes("--gesture");
+  if (gesture && kind !== "existing") throw new Error("--gesture applies to the existing app only");
   const dir = resolve(dirArgument);
   if (existsSync(dir)) throw new Error("Use a fresh directory");
   mkdirSync(dirname(dir), { recursive: true });
@@ -101,9 +126,20 @@ function prepare([kind, dirArgument, ...rest]) {
   const screen = kind === "new" ? "App.tsx" : (existsSync(join(dir, "src/app")) ? "src/app/tron.tsx" : "app/tron.tsx");
   writeFileSync(join(dir, screen), BUTTON_SCREEN);
   record.screen = screen;
+  const gestureScreen = gesture ? screen.replace(/tron\.tsx$/, "gesture.tsx") : null;
+  if (gestureScreen) {
+    writeFileSync(join(dir, gestureScreen), GESTURE_SCREEN);
+    record.gestureScreen = gestureScreen;
+  }
+  const installedVersion = name => {
+    const file = join(dir, "node_modules", name, "package.json");
+    return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")).version : null;
+  };
+  record.installed = Object.fromEntries(["@nyc-tron/core", "@nyc-tron/ui", "react-native", "react-native-gesture-handler"].map(name => [name, installedVersion(name)]));
+  record.uiPeers = JSON.parse(readFileSync(join(dir, "node_modules/@nyc-tron/ui/package.json"), "utf8")).peerDependencies ?? null;
   const changed = git(dir, "status", "--porcelain").split(/\r?\n/).filter(Boolean).map(line => line.slice(3));
   record.changedFiles = changed;
-  const allowed = new Set(["package.json", "package-lock.json", screen]);
+  const allowed = new Set(["package.json", "package-lock.json", screen, ...(gestureScreen ? [gestureScreen] : [])]);
   record.disturbed = changed.filter(file => !allowed.has(file));
   const after = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
   record.dependencyChanges = Object.keys({ ...before.dependencies, ...after.dependencies })

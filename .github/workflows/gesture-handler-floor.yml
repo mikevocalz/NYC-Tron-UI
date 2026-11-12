@@ -1,0 +1,138 @@
+name: NYC-Tron gesture handler 3.3 floor
+
+# V1_DECISIONS D5, decision 1 (2026-11-12): @nyc-tron/ui's optional peer
+# react-native-gesture-handler is >=3.3.0 <4 so existing Expo SDK 58 apps,
+# which pin ~3.3.0, install it without a peer conflict. This lane holds that
+# floor. It runs ui against the newest 3.3.x release on npm:
+#   browser            the workspace's gesture handler is replaced by 3.3.x,
+#                      then ui is type-checked, the pan validator test runs
+#                      against the installed 3.3.x source, and the full React
+#                      Native Web browser suite runs (it includes the
+#                      gesture-using SelectionBounds and PresenterInkOverlay
+#                      fixtures)
+#   installed-tarball  packed core and ui archives go into the default Expo 58
+#                      template with the one npm command; the template's own
+#                      3.3.x stays installed, a GestureHandlerDrag route is
+#                      exported for web and pressed in Chromium
+
+on:
+  pull_request:
+    paths:
+      - 'packages/ui/**'
+      - 'packages/core/**'
+      - 'tooling/install-paths/**'
+      - 'tooling/pack-release.mjs'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/gesture-handler-floor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rngh-floor-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: '1'
+  EXPO_NO_TELEMETRY: '1'
+
+jobs:
+  browser:
+    name: ui on gesture handler 3.3.x (typecheck, pan validator, browser suite)
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Install the workspace
+        run: corepack enable && corepack pnpm install --frozen-lockfile --ignore-scripts
+      - name: Replace ui's gesture handler with the newest 3.3.x
+        run: |
+          set -euo pipefail
+          version=$(npm view 'react-native-gesture-handler@~3.3.0' version --json | node -e 'console.log([].concat(JSON.parse(require("fs").readFileSync(0,"utf8"))).pop())')
+          dir=$(cd packages/ui/node_modules/react-native-gesture-handler && pwd -P)
+          case "$dir" in */node_modules/.pnpm/*/node_modules/react-native-gesture-handler) ;; *) echo "Unexpected install location: $dir"; exit 1 ;; esac
+          before=$(node -p "require('$dir/package.json').version")
+          mkdir -p "$RUNNER_TEMP/rngh" "$RUNNER_TEMP/evidence"
+          (cd "$RUNNER_TEMP/rngh" && npm pack --silent "react-native-gesture-handler@$version" >/dev/null)
+          find "$dir" -mindepth 1 -delete
+          tar -xzf "$RUNNER_TEMP/rngh/react-native-gesture-handler-$version.tgz" --strip-components=1 -C "$dir"
+          after=$(node -p "require('./packages/ui/node_modules/react-native-gesture-handler/package.json').version")
+          test "$after" = "$version"
+          echo "{\"lockfileVersion\":\"$before\",\"tested\":\"$after\"}" | tee "$RUNNER_TEMP/evidence/gesture-handler.json"
+      - name: Type-check ui against the 3.3.x declarations
+        run: corepack pnpm --filter @nyc-tron/ui typecheck
+      - name: Check ui's pan configurations against the 3.3.x validator
+        run: node --experimental-strip-types --test packages/ui/tests/pan-config-compatibility.test.mjs
+      - name: Build public package exports
+        run: corepack pnpm build
+      - name: Install isolated browser test dependencies
+        working-directory: packages/ui/tests/browser
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npx --no-install playwright install --with-deps chromium
+      - name: Run the browser suite with 3.3.x bundled
+        working-directory: packages/ui/tests/browser
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee "$RUNNER_TEMP/evidence/browser.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gesture-handler-3.3-browser
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/evidence/
+            packages/ui/tests/browser/test-results/
+
+  installed-tarball:
+    name: Existing Expo 58 app with its own gesture handler 3.3.x
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Build and pack core and ui
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+          corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/ui build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/packs" --packages core,ui
+      - name: Create the default Expo 58 app and run the one install command
+        run: node tooling/install-paths/install-path.mjs prepare existing "$RUNNER_TEMP/ip/app" --packs "$RUNNER_TEMP/packs" --gesture
+      - name: Confirm the app kept its 3.3.x gesture handler
+        run: |
+          node -e 'const r=require(process.argv[1]);console.log(JSON.stringify({installed:r.installed,peer:r.uiPeers["react-native-gesture-handler"]}));if(!/^3\.3\./.test(r.installed["react-native-gesture-handler"]))process.exit(1)' "$RUNNER_TEMP/ip/existing-record.json"
+      - name: Export for web
+        working-directory: ${{ runner.temp }}/ip/app
+        run: |
+          npx --yes expo install react-dom react-native-web @expo/metro-runtime
+          npx --no-install expo export --platform web --output-dir "$RUNNER_TEMP/ip/web"
+      - name: Press the Tron button and the GestureHandlerDrag target in Chromium
+        run: |
+          mkdir -p "$RUNNER_TEMP/web-tools" && cd "$RUNNER_TEMP/web-tools"
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.65.0 serve-handler@6.1.6
+          npx --no-install playwright install --with-deps chromium
+          cd "$GITHUB_WORKSPACE"
+          web="$RUNNER_TEMP/ip/web"; [ -d "$web/client" ] && web="$web/client"
+          T4_WEB_TOOLS="$RUNNER_TEMP/web-tools" node tooling/install-paths/web-check.mjs "$web" "$RUNNER_TEMP/ip/web-button.png" /tron | tee "$RUNNER_TEMP/ip/web-check-button.json"
+          T4_WEB_TOOLS="$RUNNER_TEMP/web-tools" node tooling/install-paths/web-check.mjs "$web" "$RUNNER_TEMP/ip/web-gesture.png" /gesture | tee "$RUNNER_TEMP/ip/web-check-gesture.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gesture-handler-3.3-installed-tarball
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/ip/*.json
+            ${{ runner.temp }}/ip/*.log
+            ${{ runner.temp }}/ip/*.png
+            ${{ runner.temp }}/ip/app/package.json
+            ${{ runner.temp }}/ip/app/package-lock.json
