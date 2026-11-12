@@ -28,6 +28,34 @@ jobs:
       - name: All unit, contract and mocked-render tests
         run: node tooling/run-tests.mjs
 
+  # Apple launcher labels are measured with AppKit's system font, so this job
+  # runs on macOS. No install: the app-identity tools have no dependencies.
+  app-identity:
+    name: app icons and launcher label widths
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Icons are current and every example passes the launcher check
+        run: node --test tooling/tests/app-identity.test.mjs
+      - name: Launcher check on every example config (measured targets must fit)
+        run: >-
+          node tooling/app-identity/launcher-label-check.mjs
+          examples/native-instruments/app.json
+          examples/macos-appkit/spark/desktop.config.json
+          packages/windows-fluent/rnw-fabric/example/app.json
+      - name: The check rejects a long name with its measured overflow
+        shell: bash
+        run: |
+          set +e
+          node tooling/app-identity/launcher-label-check.mjs --name "NYC-Tron Instruments Demo" --platforms ios,android
+          code=$?
+          set -e
+          test "$code" -eq 1
+
   types:
     name: workspace TypeScript
     runs-on: ubuntu-latest
