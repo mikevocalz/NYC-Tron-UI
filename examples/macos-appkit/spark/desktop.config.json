@@ -13,7 +13,8 @@
     "bundleIdentifier": "org.nyctron.appkit.reference",
     "testDriverInRelease": false,
     "infoPlist": {
-      "CFBundleName": "Tron AppKit"
+      "CFBundleName": "Tron AppKit",
+      "CFBundleDisplayName": "Tron AppKit"
     }
   },
   "platforms": [

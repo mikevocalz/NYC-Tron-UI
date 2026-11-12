@@ -240,3 +240,17 @@ test("Apple targets are measured with AppKit on macOS and reported NOT RUN elsew
     assert.match(row.reason, /needs macOS/);
   }
 });
+
+test("the macOS label of a Spark config is CFBundleDisplayName, else the bundle file name, never CFBundleName", () => {
+  const dir = mkdtempSync(join(tmpdir(), "tron-spark-label-"));
+  const write = (infoPlist) => {
+    writeFileSync(join(dir, "desktop.config.json"), JSON.stringify({ name: "NYCTronSparkThing", projectId: "X", platforms: ["macos"], macos: { bundleIdentifier: "org.x.y", infoPlist } }));
+    writeFileSync(join(dir, "app.json"), JSON.stringify({ expo: { extra: { appIdentity: { fullName: "NYC-Tron Spark Thing", launcherName: "Tron Spark" } } } }));
+    return describeConfig(join(dir, "desktop.config.json"));
+  };
+  assert.equal(write({ CFBundleName: "Tron Spark" }).labels.macos, "NYCTronSparkThing");
+  const { code, output } = run([join(dir, "desktop.config.json")]);
+  assert.equal(write({ CFBundleName: "Other", CFBundleDisplayName: "Tron Spark" }).labels.macos, "Tron Spark");
+  assert.equal(code, 1);
+  assert.match(output, /macos launcher label is "NYCTronSparkThing" but appIdentity.launcherName is "Tron Spark"/);
+});

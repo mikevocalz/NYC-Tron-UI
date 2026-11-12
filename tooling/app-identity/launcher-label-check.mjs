@@ -89,12 +89,13 @@ export function describeConfig(path) {
   const raw = readJson(path);
   const source = path;
   if (raw.projectId !== undefined && (raw.macos || raw.window || raw.platforms)) {
-    // Spark desktop.config.json: Spark writes `name` to CFBundleName (the Dock
-    // and menu bar label) unless macos.infoPlist.CFBundleName overrides it. The
-    // file's schema allows no extra keys, so identity is read from the Expo
-    // app.json beside it.
+    // Spark desktop.config.json: Spark writes `name` to CFBundleName and builds
+    // `<name>.app`. CFBundleName only titles the application menu. Launchpad and
+    // the Dock show CFBundleDisplayName when the bundle has one and the bundle
+    // file name otherwise, so that is the label measured here. The file's schema
+    // allows no extra keys, so identity is read from the Expo app.json beside it.
     const platforms = (raw.platforms ?? ["macos"]).filter((p) => p === "macos" || p === "windows");
-    const labelFor = (p) => (p === "macos" ? raw.macos?.infoPlist?.CFBundleName ?? raw.name : raw.name);
+    const labelFor = (p) => (p === "macos" ? raw.macos?.infoPlist?.CFBundleDisplayName ?? raw.name : raw.name);
     const sibling = join(dirname(path), "app.json");
     const identity = existsSync(sibling) ? readJson(sibling).expo?.extra?.appIdentity : undefined;
     return {
