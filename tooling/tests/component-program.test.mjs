@@ -4,7 +4,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSy
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { CANONICAL_BASELINE_SHA256, REQUIRED_PLATFORMS, parseCanonicalBaseline, validateComponentProgram } from "../verify-component-program.mjs";
+import { CANONICAL_BASELINE_SHA256, RECORDED_ADDITION_IDS, REQUIRED_PLATFORMS, parseCanonicalBaseline, validateComponentProgram } from "../verify-component-program.mjs";
 
 const baselinePath = fileURLToPath(new URL("../../docs/completion/baseline-roster.tsv", import.meta.url));
 const baselineBytes = readFileSync(baselinePath);
@@ -27,6 +27,7 @@ function fixture(t) {
       id, name, phase: "P04", requirement: "Test the canonical capability.", libraryScope: true,
       sourceCandidates: [], evidence: [], implementationReview: "pending", acceptance: "unverified",
     })),
+    additions: [],
   };
   const row = id => ledger.components.find(value => value.id === id);
   const local = row("A-01");
@@ -42,13 +43,14 @@ function fixture(t) {
       sourcePaths: ["src/TrackedPose.ts"], publicExports: ["TrackedPosePublisher"],
     }] },
   });
-  return { rootDir, ledger, row, validate: value => validateComponentProgram(value ?? ledger, { rootDir }) };
+  return { rootDir, ledger, row, validate: (value, options = {}) => validateComponentProgram(value ?? ledger, { rootDir, recordedAdditions: [], ...options }) };
 }
 
 test("local and pinned external implementations count separately from pending external work", t => {
   const f = fixture(t), pending = f.row("N-10");
   Object.assign(pending, { libraryScope: false, evidence: ["reports/proof.md"], externalImplementation: structuredClone(f.row("N-03").externalImplementation) });
-  assert.deepEqual(f.validate(), { canonical: 341, localImplemented: 1, localPartial: 0, externalImplemented: 1, pending: 339, accepted: 0 });
+  assert.deepEqual(f.validate(), { canonical: 341, localImplemented: 1, localPartial: 0, externalImplemented: 1, pending: 339, accepted: 0,
+    additions: { total: 0, localImplemented: 0, localPartial: 0, externalImplemented: 0, pending: 0, accepted: 0 } });
   delete pending.externalImplementation.owners[0].revision;
   assert.throws(() => f.validate(), /pinned external revision/, "pending metadata must be valid without claiming completion");
 });
@@ -178,4 +180,74 @@ test("partial work must stay visible and cannot be labeled implemented", t => {
   assert.equal(f.validate().localPartial, 1);
   row.implementationReview = "implemented";
   assert.throws(() => f.validate(), /unfinished library requirements/);
+});
+
+const addition = (id, extra = {}) => ({
+  id, name: "AddedControl" + id.replace("-", ""), phase: "P04", gate: "T2", decision: "reports/proof.md",
+  requirement: "Test an added capability.", libraryScope: true, sourceCandidates: [], evidence: [],
+  implementationReview: "pending", acceptance: "unverified", ...extra,
+});
+
+test("additions are counted apart from the frozen 341 and follow the same row rules", t => {
+  const f = fixture(t);
+  f.ledger.additions = [
+    addition("W-01", { implementationReview: "implemented", sourceCandidates: ["packages/example/src/Control.ts"], evidence: ["reports/proof.md"] }),
+    addition("W-02"),
+  ];
+  const summary = f.validate();
+  assert.equal(summary.canonical, 341);
+  assert.equal(summary.localImplemented, 1, "canonical counts never include additions");
+  assert.deepEqual(summary.additions, { total: 2, localImplemented: 1, localPartial: 0, externalImplemented: 0, pending: 1, accepted: 0 });
+  for (const [mutate, message] of [
+    [row => row.sourceCandidates = ["packages/example/src/Missing.ts"], /missing file/],
+    [row => row.evidence = [], /owned source and evidence/],
+    [row => row.acceptance = "accepted", /without ios proof/],
+    [row => row.platformEvidence = { linux: { status: "passed", evidence: ["reports/proof.md"] } }, /unknown evidence platform/],
+    [row => row.implementationReview = "done-ish", /unknown implementation/],
+  ]) {
+    const ledger = structuredClone(f.ledger);mutate(ledger.additions[0]);
+    assert.throws(() => f.validate(ledger), message);
+  }
+  const accepted = structuredClone(f.ledger);
+  Object.assign(accepted.additions[0], { acceptance: "accepted",
+    platformEvidence: Object.fromEntries(REQUIRED_PLATFORMS.map(platform => [platform, { status: "passed", evidence: ["reports/proof.md"] }])) });
+  assert.equal(f.validate(accepted).additions.accepted, 1);
+  assert.equal(f.validate(accepted).accepted, 0);
+});
+
+test("additions cannot replace, rename into or shadow canonical rows, and need a gate and decision record", t => {
+  const f = fixture(t);
+  for (const [extra, message] of [
+    [{ id: "A-01" }, /reuses a canonical ID/],
+    [{ id: "W01" }, /Addition IDs/],
+    [{ id: "w-01" }, /Addition IDs/],
+    [{ name: "WorkspaceHost" }, /name not used by a canonical row/],
+    [{ gate: undefined }, /gate that added it/],
+    [{ gate: "T2 maybe" }, /gate that added it/],
+    [{ decision: undefined }, /decision record/],
+    [{ decision: "reports/missing.md" }, /missing file/],
+    [{ decision: "../../outside.md" }, /unsafe path/],
+    [{ phase: "later" }, /scope metadata/],
+  ]) {
+    const ledger = structuredClone(f.ledger);ledger.additions = [addition("W-01", extra)];
+    assert.throws(() => f.validate(ledger), message);
+  }
+  const duplicate = structuredClone(f.ledger);duplicate.additions = [addition("W-01"), addition("W-01", { name: "Other" })];
+  assert.throws(() => f.validate(duplicate), /Duplicate addition ID/);
+  const sameName = structuredClone(f.ledger);sameName.additions = [addition("W-01"), addition("W-02", { name: "AddedControlW01" })];
+  assert.throws(() => f.validate(sameName), /another addition/);
+  const missing = structuredClone(f.ledger);delete missing.additions;
+  assert.throws(() => f.validate(missing), /additions list/);
+});
+
+test("recorded additions can grow but never be dropped, and the repository records the T2 rows", t => {
+  const f = fixture(t);
+  f.ledger.additions = [addition("W-01")];
+  assert.throws(() => f.validate(f.ledger, { recordedAdditions: ["W-01", "W-02"] }), /W-02 was removed/);
+  f.ledger.additions.push(addition("W-02"), addition("W-03"));
+  assert.equal(f.validate(f.ledger, { recordedAdditions: ["W-01", "W-02"] }).additions.total, 3);
+  assert.deepEqual(RECORDED_ADDITION_IDS, ["W-01", "W-02", "W-03", "W-04", "W-05"]);
+  const repository = JSON.parse(readFileSync(fileURLToPath(new URL("../../docs/completion/library-progress.json", import.meta.url)), "utf8"));
+  assert.deepEqual(repository.additions.map(row => [row.id, row.gate]), RECORDED_ADDITION_IDS.map(id => [id, "T2"]));
+  assert.equal(repository.components.length, 341, "the canonical baseline stays frozen");
 });
