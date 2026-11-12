@@ -27,6 +27,11 @@
       "react-native": "./src/windows.ts",
       "default": "./dist/windows.js"
     },
+    "./window-chrome": {
+      "types": "./dist/window-chrome.d.ts",
+      "react-native": "./src/window-chrome.ts",
+      "default": "./dist/window-chrome.js"
+    },
     "./sidebar": {
       "types": "./dist/sidebar.d.ts",
       "react-native": "./src/sidebar.tsx",
