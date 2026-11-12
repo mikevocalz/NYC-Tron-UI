@@ -117,6 +117,15 @@ if ($allButton) {
 Start-Sleep -Seconds 3
 Shot "start-all-apps"
 DumpWithin (StartWindow) "start-all-apps-uia" | Out-Null
+# All apps is alphabetical and the T entries sit near the end: wheel down
+# over the list and capture each step.
+$b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+[TronMouse]::SetCursorPos([int]($b.Width / 2), [int]($b.Height / 2))
+for ($step = 1; $step -le 6; $step++) {
+  for ($n = 0; $n -lt 5; $n++) { [TronMouse]::mouse_event(0x0800, 0, 0, [uint32]4294967176, [UIntPtr]::Zero); Start-Sleep -Milliseconds 150 }
+  Start-Sleep -Seconds 1
+  Shot "start-all-apps-scroll$step"
+}
 [System.Windows.Forms.SendKeys]::SendWait("Tron")
 Start-Sleep -Seconds 4
 Shot "start-search"

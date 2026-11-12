@@ -51,6 +51,8 @@ osascript -e 'tell application "System Events" to tell process "Dock" to get {na
 node "$here/macos-dock-hover.mjs" "$out/dock-ax.txt" "$example_name" "$out" || true
 
 # Menu bar: bring the example forward so its application menu shows.
+open "$example"
+sleep 3
 osascript -e "tell application id \"$bundle_id\" to activate" 2>> "$out/status.txt" || true
 sleep 3
 screencapture -x "$out/menubar-example.png" || true

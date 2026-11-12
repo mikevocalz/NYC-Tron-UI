@@ -123,4 +123,12 @@ let manifests=0;
 })(windowsDir);
 if(manifests===0)throw new Error("No package manifest found under windows/");
 console.log(`Set the package DisplayName to "${displayName}" in ${manifests} manifest(s).`);
+// With labels shown, the taskbar names a button by its window title, which
+// the template sets to the project name.
+edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
+ const title=/(\.Title\(L")NYCTronWindowsExample("\))/;
+ if(!title.test(source)){ console.log("Window title left as is: the host has no .Title(L\"NYCTronWindowsExample\")."); return source; }
+ console.log(`Set the window title to "${displayName}".`);
+ return source.replace(title,`$1${displayName.replace(/\\/g,"\\\\").replace(/"/g,'\\"')}$2`);
+});
 console.log("Prepared Windows consumer solution entry, ProjectReference and native package registration.");
