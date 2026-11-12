@@ -62,6 +62,7 @@
     "@types/react": "~19.3.0",
     "@typescript/typescript6": "6.0.2",
     "react": "19.3.0",
+    "react-dom": "19.3.0",
     "react-native": "0.88.1",
     "typescript": "7.0.2",
     "zustand": "5.1.0"
