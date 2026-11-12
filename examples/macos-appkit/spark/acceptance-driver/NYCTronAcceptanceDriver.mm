@@ -64,6 +64,10 @@ static void TraceContextMenu(NSString *phase, NSUInteger generation) {
     (unsigned long)generation, (unsigned long)TrackedContextMenuGeneration, (unsigned long)EndedContextMenuGeneration);
 }
 static NSUInteger ActivationSequence;
+// Completed full-screen transitions of any window, from AppKit's did-enter and
+// did-exit notifications. A press on the green button during a transition is
+// ignored, so acceptance waits for these before the next press.
+static NSUInteger FullScreenEntered, FullScreenExited;
 static std::atomic<unsigned int> ActivationTraceEvents{0};
 static void TraceActivation(NSString *phase, NSUInteger operation, NSDictionary *(^details)(void)) {
   if (ActivationTraceEvents.fetch_add(1) >= 128) return;
@@ -404,6 +408,8 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
 @implementation NYCTronAcceptanceDriver
 + (void)load {
   dispatch_async(dispatch_get_main_queue(), ^{
+    [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidEnterFullScreenNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) { (void)note; FullScreenEntered++; }];
+    [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidExitFullScreenNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) { (void)note; FullScreenExited++; }];
     [NSNotificationCenter.defaultCenter addObserverForName:NSMenuDidBeginTrackingNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
       NSMenu *menu = [note.object isKindOfClass:NSMenu.class] ? note.object : nil;
       if ([menu.title isEqual:@"ContextMenu"]) {
@@ -819,7 +825,10 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
           @"titled": @((window.styleMask & NSWindowStyleMaskTitled) != 0),
           @"layoutDirection": window.windowTitlebarLayoutDirection == NSUserInterfaceLayoutDirectionRightToLeft ? @"rightToLeft" : @"leftToRight",
           @"frame": RectDictionary(window.frame), @"contentLayoutRect": RectDictionary(window.contentLayoutRect),
-          @"zoomed": @(window.zoomed), @"miniaturized": @(window.miniaturized), @"visible": @(window.visible) });
+          @"zoomed": @(window.zoomed), @"miniaturized": @(window.miniaturized), @"visible": @(window.visible),
+          @"fullScreen": @((window.styleMask & NSWindowStyleMaskFullScreen) != 0),
+          @"fullScreenPrimary": @((window.collectionBehavior & NSWindowCollectionBehaviorFullScreenPrimary) != 0),
+          @"fullScreenEntered": @(FullScreenEntered), @"fullScreenExited": @(FullScreenExited) });
         return;
       }
       // This explicit private-fixture command opts into interactive native

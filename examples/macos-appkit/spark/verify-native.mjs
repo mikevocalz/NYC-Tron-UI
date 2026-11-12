@@ -1382,12 +1382,22 @@ try {
     assert.equal(zoomOut.value, 'done');
     await waitFor(async () => !(await chromeNative()).zoomed && (await chromeState()).zoomed === false, 'controller unzoom reaches NSWindow and isZoomed');
     chromeStep('controller-unzoom', { result: zoomOut.value, nativeZoomed: false, frameAfter: (await chromeNative()).frame, registry: await chromeState() });
+    // A plain press on the green button runs AppKit's own action, which for a
+    // window that allows full screen is Enter Full Screen, not zoom: run
+    // 43192331575 saw the frame become the whole 1024x768 screen with no title
+    // bar, and its second press, sent mid-transition, was ignored. So each
+    // press waits for AppKit's did-enter or did-exit notification, and the
+    // registry must then agree with NSWindow.isZoomed.
+    const beforeFullScreen = await chromeNative();
+    assert.equal(beforeFullScreen.fullScreen, false, 'document-1 must start outside full screen');
     await driver.request('tron.window', { window: 'document-1', action: 'click-zoom' });
-    await waitFor(async () => (await chromeNative()).zoomed && (await chromeState()).zoomed === true, 'system zoom button observed by isZoomed');
-    chromeStep('system-zoom-button', { nativeZoomed: true, registry: await chromeState() });
+    const entered = await waitFor(async () => { const value = await chromeNative(); return value.fullScreenEntered > beforeFullScreen.fullScreenEntered && value.fullScreen ? value : undefined; }, 'system zoom button enters full screen');
+    await waitFor(async () => { const state = await chromeState(); return state.status === 'open' && state.zoomed === (await chromeNative()).zoomed; }, 'registry agrees with isZoomed in full screen');
+    chromeStep('system-zoom-button', { nativeFullScreen: true, fullScreenPrimary: entered.fullScreenPrimary, nativeZoomed: (await chromeNative()).zoomed, frame: entered.frame, registry: await chromeState() });
     await driver.request('tron.window', { window: 'document-1', action: 'click-zoom' });
-    await waitFor(async () => !(await chromeNative()).zoomed && (await chromeState()).zoomed === false, 'system zoom button unzoom observed by isZoomed');
-    chromeStep('system-zoom-button-unzoom', { nativeZoomed: false, registry: await chromeState() });
+    await waitFor(async () => { const value = await chromeNative(); return value.fullScreenExited > entered.fullScreenExited && !value.fullScreen && !value.zoomed; }, 'system zoom button exits full screen');
+    await waitFor(async () => (await chromeState()).zoomed === false && (await chromeState()).status === 'open', 'registry unzoomed after leaving full screen');
+    chromeStep('system-zoom-button-exit', { nativeFullScreen: false, nativeZoomed: false, frame: (await chromeNative()).frame, registry: await chromeState() });
 
     await control('title-document-1', 'text', { value: 'Draft shared across native windows' }, 'document-1');
     await status('Unsaved document changes');
