@@ -72,3 +72,20 @@ test("a clean export loads and leaves the app's handler in place", async () => {
   assert.throws(() => loadEntry(() => undefined, metro.errorUtils), /NYCTRON_EMPTY_MODULE/);
   assert.throws(() => loadEntry(() => { throw new TypeError("plain"); }, undefined), /plain/);
 });
+
+test("the support list strikes stubbed peers and keeps unattributed failures off the list", async () => {
+  const { supportList } = await import("../desktop-lane/support-list.mjs");
+  const cell = (build, load, components, unresolved = []) => ({ build, load, loadError: null, unresolved, components });
+  const matrix = { summary: { macos: {} }, rows: [
+    { subpath: "./a", lanes: { macos: cell("pass", "pass", { A: { status: "pass" } }) } },
+    { subpath: "./b", lanes: { macos: cell("unresolved", "pass", { B: { status: "pass" } }, ["react-native-gesture-handler"]) } },
+    { subpath: "./c", lanes: { macos: cell("pass", "pass", { C: { status: "not-attributed", error: "RangeError" } }) } },
+    { subpath: "./d", lanes: { macos: cell("pass", "pass", { D: { status: "lane-failure", error: "TypeError" } }) } },
+    { subpath: "./m", lanes: { macos: cell("pass", "pass", {}) } },
+  ] };
+  const list = supportList(matrix).macos;
+  assert.deepEqual(list.supported, ["./a#A"]);
+  assert.deepEqual(list.struck.map(s => [s.component, s.reason]), [["./b#B", "missing-peer"], ["./d#D", "lane-failure"]]);
+  assert.deepEqual(list.unmeasured.map(s => s.component), ["./c#C"]);
+  assert.deepEqual(list.modulesLoaded, ["./m"]);
+});

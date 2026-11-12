@@ -110,9 +110,15 @@ jobs:
       - name: Boot a simulator, install, press the button
         run: |
           node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
-          node tooling/native/prewarm-ios.mjs
+          # A device of our own on the newest installed iOS runtime. The first
+          # boot of a new runtime can exceed seven minutes on a hosted runner.
+          runtime=$(xcrun simctl list runtimes available -j | node -e 'const r=JSON.parse(require("fs").readFileSync(0,"utf8")).runtimes.filter(r=>r.platform==="iOS").sort((a,b)=>a.version.localeCompare(b.version,undefined,{numeric:true})).pop();console.log(r.identifier)')
+          type=$(xcrun simctl list devicetypes -j | node -e 'const t=JSON.parse(require("fs").readFileSync(0,"utf8")).devicetypes.filter(t=>/^iPhone \d+$/.test(t.name)).pop();console.log(t.identifier)')
+          udid=$(xcrun simctl create "T4 iPhone" "$type" "$runtime")
+          echo "$runtime $type $udid" | tee "$RUNNER_TEMP/ip/simulator.txt"
+          xcrun simctl boot "$udid"
+          xcrun simctl bootstatus "$udid" -b
           app=$(find "$RUNNER_TEMP/ip/derived/Build/Products/Release-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
-          udid=$(grep NYC_TRON_IOS_UDID "$GITHUB_ENV" | tail -1 | cut -d= -f2)
           xcrun simctl install "$udid" "$app"
           bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")
           scheme=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.scheme || ''")
@@ -128,6 +134,7 @@ jobs:
             ${{ runner.temp }}/ip/*.json
             ${{ runner.temp }}/ip/*.log
             ${{ runner.temp }}/ip/flow.yaml
+            ${{ runner.temp }}/ip/simulator.txt
             ${{ runner.temp }}/ip/maestro/
             ${{ runner.temp }}/ip/app/package.json
             ${{ runner.temp }}/ip/app/package-lock.json
