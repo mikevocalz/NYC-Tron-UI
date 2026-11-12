@@ -11,6 +11,7 @@ const docs=createStore<{dirty:Record<string,boolean>;log:string[]}>(()=>({dirty:
 const record=(entry:string)=>docs.setState(s=>({log:[...s.log,entry]}));
 const host=createPageWindowHost({beforeClose:id=>{const allow=!docs.getState().dirty[id];record(`guard:${id}:${allow?'proceed':'cancel'}`);return allow;}});
 const rect={x:0,y:0,width:520,height:240};
+host.open({id:'pad',displayId:'page',rect});
 host.open({id:'mac',displayId:'page',rect});
 host.open({id:'win',displayId:'page',rect});
 
@@ -31,12 +32,21 @@ function Doc({id,layout,title}:{id:string;layout:'macos'|'windows';title:string}
     </View>:null}
   </View>;
 }
+// Native mode, as iPadOS (useWindowControlsInsets) and the desktop hosts feed it:
+// the system draws the controls, so the bar draws none and reserves their space.
+function NativeInsets(){
+  const chrome=useWindowChrome(host,'pad');
+  return <View testID="window-pad" style={{width:520,borderWidth:1}} {...{className:'border-border bg-surface-raised'}}>
+    <WindowTitleBar testID="titlebar-pad" chrome={chrome} title="Sketchbook" controls={{kind:'native',insets:{leading:94,trailing:0,height:52}}}/>
+  </View>;
+}
 function App(){
   const state=useSyncExternalStore(host.subscribe,host.getState,host.getState);
   const log=useStore(docs,s=>s.log);
   return <View style={{padding:16,gap:16}} {...{className:'bg-surface-sunken'}}>
     <Doc id="mac" layout="macos" title="Q3 report"/>
     <Doc id="win" layout="windows" title="Budget sheet"/>
+    <NativeInsets/>
     <Text testID="registry">{JSON.stringify({windows:state.windows.map(w=>({id:w.id,status:w.status})),focusedId:state.focusedId,zoomed:['mac','win'].filter(id=>host.zoom.isZoomed(id)),log})}</Text>
   </View>;
 }

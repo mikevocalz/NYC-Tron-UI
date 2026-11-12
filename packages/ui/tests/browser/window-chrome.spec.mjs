@@ -66,7 +66,7 @@ test('drawn title bars run close, minimize and restore through the registry, wit
     receipt.layouts[l.layout]={windowId:l.id,controlOrder:names,steps};
   }
   receipt.finalRegistry=await registry(page);
-  expect(receipt.finalRegistry.windows).toEqual([]);
+  expect(receipt.finalRegistry.windows.filter(w=>w.id!=='pad')).toEqual([]);
   receipt.result='passed';
   await writeFile('shots/window-chrome-receipt.json',JSON.stringify(receipt,null,2)+'\n');
 });
@@ -78,4 +78,17 @@ test('drawn glyph strokes take their colour from the app text-muted token',async
   const stroke=await bar.getByRole('button',{name:'Minimize',exact:true}).evaluate(el=>[...el.querySelectorAll('div')].map(d=>getComputedStyle(d)).find(c=>parseFloat(c.borderTopWidth)>0).borderTopColor);
   const muted=await page.evaluate(()=>{const p=document.createElement('div');p.style.color='var(--color-text-muted)';document.body.append(p);const c=getComputedStyle(p).color;p.remove();return c;});
   expect(stroke).toBe(muted);
+});
+
+test('native mode draws no controls and reserves the system inset, as iPadOS window controls need',async({page})=>{
+  await page.goto('/window-chrome');
+  const bar=page.getByTestId('titlebar-pad');
+  await expect(bar.getByRole('button')).toHaveCount(0);
+  const geometry=await bar.evaluate(el=>{const c=getComputedStyle(el);return {start:parseFloat(c.paddingLeft),end:parseFloat(c.paddingRight),height:el.getBoundingClientRect().height};});
+  expect(geometry).toEqual({start:94,end:0,height:52});
+  const title=await bar.getByRole('heading',{name:'Sketchbook',exact:true}).boundingBox();
+  const box=await bar.boundingBox();
+  expect(title.x-box.x).toBeGreaterThanOrEqual(94);
+  await mkdir('shots',{recursive:true});
+  await page.screenshot({path:'shots/window-chrome-native-inset.png',clip:await page.getByTestId('window-pad').boundingBox()});
 });
