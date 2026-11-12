@@ -30,7 +30,8 @@ export function findFile(directory, name) {
 }
 
 export function loadRun(directory) {
-  const read = name => { const path = findFile(directory, name); return path ? readFileSync(path, "utf8") : null; };
+  // Windows PowerShell 5 writes UTF-8 with a byte order mark (run.json).
+  const read = name => { const path = findFile(directory, name); return path ? readFileSync(path, "utf8").replace(/^\uFEFF/, "") : null; };
   const json = name => { const text = read(name); return text ? JSON.parse(text) : null; };
   const resolution = new Map();
   for (const line of (read("resolution.jsonl") ?? "").split("\n").filter(Boolean)) {
