@@ -1284,6 +1284,133 @@ try {
   assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
   checks.push('native-reopen-keeps-app-document');
 
+  // The reopened document-1 uses the contentUnderTitleBar style. Its title bar
+  // commands go through createWindowChromeController over the macOS chrome
+  // host, and the AppKit buttons are clicked through standardWindowButton.
+  const chromeEvidence = { schemaVersion: 1, status: 'pending', sourceRevision: revision, window: 'document-1', titleBarStyle: 'contentUnderTitleBar', steps: [] };
+  const retainChrome = () => writeFileSync(join(output, 'window-chrome.json'), JSON.stringify(chromeEvidence, null, 2) + '\n');
+  const chromeStep = (name, observed) => { chromeEvidence.steps.push({ name, ...observed }); retainChrome(); };
+  const chromeNative = () => driver.request('tron.window', { window: 'document-1', action: 'chrome' });
+  const chromeState = async () => JSON.parse((await inspect('chrome-state-main')).label);
+  const windowCount = async () => (await driver.request('tron.windows')).windows.length;
+  const chromeResult = async command => {
+    const [sequence, value] = (await inspect(`chrome-${command}-result-main`)).label.split(':');
+    return { sequence: Number(sequence), value };
+  };
+  // Results are `sequence:status`; a press counts once its sequence advances.
+  const pressChrome = async (command, window) => {
+    const before = await chromeResult(command);
+    await control(`chrome-${command}`, 'press', {}, window);
+    return waitFor(async () => { const after = await chromeResult(command); return after.sequence > before.sequence ? after : undefined; }, `title bar ${command} result`);
+  };
+  retainChrome();
+  try {
+    await show('document-1');
+    const style = await chromeNative();
+    chromeEvidence.style = style;
+    for (const name of ['close', 'minimize', 'zoom']) {
+      assert.equal(style.buttons[name].present, true, `AppKit ${name} button is missing`);
+      assert.equal(style.buttons[name].hiddenOrHasHiddenAncestor, false, `AppKit ${name} button is hidden`);
+      assert.equal(style.buttons[name].enabled, true, `AppKit ${name} button is disabled`);
+    }
+    assert.equal(style.titled, true);
+    assert.equal(style.titleVisibility, 'hidden', 'contentUnderTitleBar must hide the title text');
+    assert.equal(style.titlebarAppearsTransparent, true, 'contentUnderTitleBar must use a transparent title bar');
+    assert.equal(style.fullSizeContentView, true, 'contentUnderTitleBar must extend the content view under the title bar');
+
+    const insetsBefore = JSON.parse((await inspect('chrome-insets-document-1', 'document-1')).label).sequence;
+    await control('chrome-insets-refresh', 'press', {}, 'document-1');
+    const measured = await waitFor(async () => { const value = JSON.parse((await inspect('chrome-insets-document-1', 'document-1')).label); return value.sequence > insetsBefore && value.insets ? value.insets : undefined; }, 'measured title bar insets');
+    const frames = ['close', 'minimize', 'zoom'].map(name => style.buttons[name].frame);
+    const expectedLeading = style.layoutDirection === 'rightToLeft'
+      ? style.frame.width - Math.min(...frames.map(f => f.x))
+      : Math.max(...frames.map(f => f.x + f.width));
+    const expectedHeight = style.frame.height - style.contentLayoutRect.height;
+    assert.ok(measured.leading > 0 && measured.height > 0, 'Title bar insets must be positive');
+    assert.equal(measured.trailing, 0);
+    assert.ok(Math.abs(measured.leading - expectedLeading) <= 0.5, `Leading inset ${measured.leading} differs from the button frames (${expectedLeading})`);
+    assert.ok(Math.abs(measured.height - expectedHeight) <= 0.5, `Title bar height ${measured.height} differs from the window (${expectedHeight})`);
+    const strip = await inspect('titlebar-document-1', 'document-1');
+    assert.ok(Math.abs(strip.viewBounds.height - measured.height) <= 1, 'The reserved title bar strip does not match the measured height');
+    chromeEvidence.insets = { measured, expectedLeading, expectedHeight, buttonFrames: Object.fromEntries(['close', 'minimize', 'zoom'].map((name, i) => [name, frames[i]])), reservedStrip: strip.viewBounds };
+    retainChrome();
+
+    await control('title-document-1', 'text', { value: 'Unsaved title bar check' }, 'document-1');
+    await status('Unsaved document changes');
+    const vetoed = await pressChrome('close', 'document-1');
+    assert.equal(vetoed.value, 'vetoed', 'An unsaved document must veto a title bar close');
+    await status('Close blocked');
+    assert.equal(await windowCount(), 2);
+    chromeStep('controller-close-unsaved', { result: vetoed.value, windows: await windowCount() });
+
+    await control('title-document-1', 'text', { value: 'Unsaved title bar check again' }, 'document-1');
+    await status('Unsaved document changes');
+    await driver.request('tron.window', { window: 'document-1', action: 'click-close' });
+    await status('Close blocked');
+    assert.equal(await windowCount(), 2);
+    assert.equal((await chromeState()).status, 'open');
+    chromeStep('system-close-button-unsaved', { result: 'vetoed', windows: await windowCount(), registry: await chromeState() });
+
+    const minimized = await pressChrome('minimize', 'document-1');
+    assert.equal(minimized.value, 'done');
+    await waitFor(async () => (await inspect(undefined, 'document-1')).minimized, 'controller minimize reaches NSWindow');
+    await waitFor(async () => (await chromeState()).status === 'minimized', 'registry minimized after controller minimize');
+    chromeStep('controller-minimize', { result: minimized.value, nativeMinimized: (await chromeNative()).miniaturized, registry: await chromeState() });
+    const restored = await pressChrome('restore', 'main');
+    assert.equal(restored.value, 'done');
+    await waitFor(async () => !(await inspect(undefined, 'document-1')).minimized, 'controller restore deminiaturizes NSWindow');
+    await waitFor(async () => (await chromeState()).status === 'open', 'registry open after controller restore');
+    chromeStep('controller-restore', { result: restored.value, nativeMinimized: (await chromeNative()).miniaturized, registry: await chromeState() });
+
+    await driver.request('tron.window', { window: 'document-1', action: 'click-minimize' });
+    await waitFor(async () => (await inspect(undefined, 'document-1')).minimized, 'system minimize button miniaturizes NSWindow');
+    await waitFor(async () => (await chromeState()).status === 'minimized', 'registry minimized after the system minimize button');
+    chromeStep('system-minimize-button', { nativeMinimized: (await chromeNative()).miniaturized, registry: await chromeState() });
+    const restoredAgain = await pressChrome('restore', 'main');
+    assert.equal(restoredAgain.value, 'done');
+    await waitFor(async () => !(await inspect(undefined, 'document-1')).minimized && (await chromeState()).status === 'open', 'restore after the system minimize button');
+    chromeStep('controller-restore-after-system-minimize', { result: restoredAgain.value, nativeMinimized: (await chromeNative()).miniaturized, registry: await chromeState() });
+
+    const zoomBefore = await chromeNative();
+    assert.equal(zoomBefore.zoomed, false, 'document-1 must start unzoomed');
+    assert.equal((await chromeState()).zoomed, false);
+    const zoomIn = await pressChrome('zoom', 'document-1');
+    assert.equal(zoomIn.value, 'done');
+    await waitFor(async () => (await chromeNative()).zoomed && (await chromeState()).zoomed === true, 'controller zoom reaches NSWindow and isZoomed');
+    chromeStep('controller-zoom', { result: zoomIn.value, nativeZoomed: true, frameBefore: zoomBefore.frame, frameAfter: (await chromeNative()).frame, registry: await chromeState() });
+    const zoomOut = await pressChrome('zoom', 'document-1');
+    assert.equal(zoomOut.value, 'done');
+    await waitFor(async () => !(await chromeNative()).zoomed && (await chromeState()).zoomed === false, 'controller unzoom reaches NSWindow and isZoomed');
+    chromeStep('controller-unzoom', { result: zoomOut.value, nativeZoomed: false, frameAfter: (await chromeNative()).frame, registry: await chromeState() });
+    await driver.request('tron.window', { window: 'document-1', action: 'click-zoom' });
+    await waitFor(async () => (await chromeNative()).zoomed && (await chromeState()).zoomed === true, 'system zoom button observed by isZoomed');
+    chromeStep('system-zoom-button', { nativeZoomed: true, registry: await chromeState() });
+    await driver.request('tron.window', { window: 'document-1', action: 'click-zoom' });
+    await waitFor(async () => !(await chromeNative()).zoomed && (await chromeState()).zoomed === false, 'system zoom button unzoom observed by isZoomed');
+    chromeStep('system-zoom-button-unzoom', { nativeZoomed: false, registry: await chromeState() });
+
+    await control('title-document-1', 'text', { value: 'Draft shared across native windows' }, 'document-1');
+    await status('Unsaved document changes');
+    await control('save-document-1', 'press', {}, 'document-1'); await status('Saved in this local reference session');
+    const closed = await pressChrome('close', 'document-1');
+    assert.equal(closed.value, 'done', 'A saved document must close through the title bar');
+    await waitFor(async () => await windowCount() === 1, 'title bar close removes the NSWindow');
+    await waitFor(async () => (await chromeState()).status === 'closed', 'registry closed after title bar close');
+    chromeStep('controller-close-saved', { result: closed.value, windows: await windowCount(), registry: await chromeState() });
+    chromeEvidence.status = 'passed';
+    retainChrome();
+  } catch (error) {
+    chromeEvidence.status = 'failed';
+    chromeEvidence.error = error instanceof Error ? error.message : String(error);
+    retainChrome();
+    throw error;
+  }
+  // Reopen so the pointer checks below run against two windows, as before.
+  await control('open-main', 'press'); await mounted('title-document-1');
+  await waitFor(async () => await windowCount() === 2, 'document window reopened after title bar close');
+  assert.equal((await inspect('title-document-1', 'document-1')).value, 'Draft shared across native windows');
+  checks.push('native-window-chrome-controller-and-real-buttons');
+
   const permission = await driver.request('tron.pointer', { action: 'status' });
   assert.equal(typeof permission.postEventsAllowed, 'boolean');
   assert.equal(typeof permission.accessibilityTrusted, 'boolean');
@@ -1292,7 +1419,7 @@ try {
     ...(permission.postEventsAllowed ? {} : { reason: 'CGPreflightPostEventAccess returned false on the actual native CI process; no TCC changes or permission prompt was attempted.' }) };
   writeFileSync(join(output, 'native-pointer.json'), JSON.stringify(pointerEvidence, null, 2) + '\n');
   checks.push('native-pointer-posting-permission-observed');
-  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-tooltip-hover-permission-observed', ...(tooltipEvidence.status === 'passed' ? ['native-cgevent-tooltip-hover-presentation-and-dismissal'] : []), 'native-react-responder-in-popover-coordinate-boundary', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-pointer-posting-permission-observed'];
+  const required = ['native-appkit-controls-and-display-module', 'native-application-and-context-menu-commands', 'native-tooltip-property-and-accessibility-help', 'native-tooltip-hover-permission-observed', ...(tooltipEvidence.status === 'passed' ? ['native-cgevent-tooltip-hover-presentation-and-dismissal'] : []), 'native-react-responder-in-popover-coordinate-boundary', 'native-popover-safe-region-shared-content-retained-identity-and-focus', 'controlled-sidebar-and-native-appearance', 'controlled-native-text-and-selection', 'shared-document-and-resize-identity', 'native-drag-protocol-pasteboard-acceptance-rejection-cancellation-and-ownership', 'native-layout-restoration', 'native-popover-dismissal-preserves-newer-window-focus', 'native-popover-owner-minimize-retains-content', 'native-close-veto-and-minimize-restore', 'native-reopen-keeps-app-document', 'native-window-chrome-controller-and-real-buttons', 'native-pointer-posting-permission-observed'];
   assert.deepEqual(checks, required);
   if (permission.postEventsAllowed) {
     pointerEvidence.arrangement = await driver.request('tron.pointer', { action: 'arrange', source: 'main', target: 'document-1' });

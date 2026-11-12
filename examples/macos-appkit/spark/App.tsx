@@ -9,7 +9,9 @@ import { TextField } from '@nyc-tron/macos-appkit/text-field';
 import { Select } from '@nyc-tron/macos-appkit/select';
 import { SegmentedControl } from '@nyc-tron/macos-appkit/segmented-control';
 import { DragDropView } from '@nyc-tron/macos-appkit/drag-drop';
-import { createMacOSWindowHost } from '@nyc-tron/macos-appkit/windows';
+import { createMacOSWindowHost, createMacOSWindowChrome } from '@nyc-tron/macos-appkit/windows';
+import { macOSTitleBarOptions } from '@nyc-tron/macos-appkit/window-chrome';
+import { createWindowChromeController, type TitleBarInsets, type WindowChromeCommand } from '@nyc-tron/core/window-chrome';
 import { createMenu } from '@nyc-tron/macos-appkit/menus';
 import { showContextMenu } from '@nyc-tron/macos-appkit/context-menu';
 import { Tooltip } from '@nyc-tron/macos-appkit/tooltip';
@@ -36,12 +38,18 @@ interface AppState {
   owner: string;
   inspectors: Record<string, InspectorState>;
   layout?: LayoutSnapshot;
+  /** Last title-bar command result per command, as `sequence:status`. */
+  chrome: Record<WindowChromeCommand, string>;
+  chromeSequence: number;
+  insets?: TitleBarInsets;
+  insetsSequence: number;
 }
 // One app-owned document store shared by every registered React root. Window
 // props carry identity, never a second document copy or a new undo session.
 const store = createStore<AppState>(() => ({
   documents: { welcome: { title: 'A place for focused work', savedTitle: 'A place for focused work', collection: 'studio' } },
   selected: 'document', appearance: 'system', status: 'Opening native workspace', ready: false, owner: 'main', inspectors: {},
+  chrome: { close: '0:none', minimize: '0:none', restore: '0:none', zoom: '0:none' }, chromeSequence: 0, insetsSequence: 0,
 }));
 const fail = (error: unknown) => store.setState({ status: `Error: ${error instanceof Error ? error.message : String(error)}` });
 const host = createMacOSWindowHost({
@@ -53,6 +61,26 @@ const host = createMacOSWindowHost({
   },
   onError: fail,
 });
+// The title bar for document-1 sends its commands through the shared chrome
+// contract. AppKit draws the buttons; the app only reserves their space.
+const chromeHost = createMacOSWindowChrome(host, { onError: fail });
+const documentChrome = createWindowChromeController(chromeHost, 'document-1');
+function runChrome(command: WindowChromeCommand) {
+  void documentChrome.run(command).then(result => {
+    const chromeSequence = store.getState().chromeSequence + 1;
+    const value = result.status === 'ignored' ? `ignored-${result.reason}` : result.status;
+    store.setState({ chromeSequence, chrome: { ...store.getState().chrome, [command]: `${chromeSequence}:${value}` } });
+  }).catch(error => {
+    const chromeSequence = store.getState().chromeSequence + 1;
+    store.setState({ chromeSequence, chrome: { ...store.getState().chrome, [command]: `${chromeSequence}:error` } });
+    fail(error);
+  });
+}
+function readDocumentInsets() {
+  void chromeHost.readInsets('document-1').then(insets => {
+    store.setState({ insets, insetsSequence: store.getState().insetsSequence + 1 });
+  }).catch(fail);
+}
 let boot: Promise<void> | undefined;
 const start = () => {
   if (!boot) boot = host.attach('main').then(async () => {
@@ -105,7 +133,7 @@ function updateInspector(windowId: string, patch: Partial<InspectorState>) {
 async function openDocument() {
   const id = 'document-1';
   if (host.getSnapshot().windows.some(w => w.id === id)) { await host.focus(id); return; }
-  await host.open({ id, component: 'NYCTronDocument', props: { windowId: id, documentId: 'welcome' }, title: 'NYC-Tron · Document', size: { width: 680, height: 620 }, minSize: { width: 460, height: 420 }, appearance: store.getState().appearance });
+  await host.open({ id, component: 'NYCTronDocument', props: { windowId: id, documentId: 'welcome' }, title: 'NYC-Tron · Document', size: { width: 680, height: 620 }, minSize: { width: 460, height: 420 }, appearance: store.getState().appearance, ...macOSTitleBarOptions('contentUnderTitleBar') });
   store.setState({ status: 'Document opened in a native window' });
 }
 function NativeDrop({ windowId }: { windowId: string }) {
@@ -246,6 +274,27 @@ function DocumentEditor({ windowId }: { windowId: string }) {
     <NativeDrop windowId={windowId} />
   </View>;
 }
+function ChromeReport({ windowId }: { windowId: string }) {
+  const chrome = useStore(store, s => s.chrome);
+  const snapshot = useSyncExternalStore(documentChrome.subscribe, documentChrome.getSnapshot, documentChrome.getSnapshot);
+  return <View style={{ gap: 4 }}>
+    {(['close', 'minimize', 'restore', 'zoom'] as const).map(command =>
+      <Text key={command} testID={`chrome-${command}-result-${windowId}`} accessibilityLabel={chrome[command]} style={{ fontSize: 11 }}>Title bar {command}: {chrome[command]}</Text>)}
+    <Text testID={`chrome-state-${windowId}`} accessibilityLabel={JSON.stringify(snapshot)} style={{ fontSize: 11 }}>
+      Document window {snapshot.status}{snapshot.zoomed ? ', zoomed' : ''}
+    </Text>
+  </View>;
+}
+function DocumentTitleBar({ windowId }: { windowId: string }) {
+  const insets = useStore(store, s => s.insets);
+  const sequence = useStore(store, s => s.insetsSequence);
+  useEffect(() => { readDocumentInsets(); }, [windowId]);
+  // The content view runs under the transparent title bar. Keep this strip
+  // clear for AppKit's buttons and put the window name after them.
+  return <View testID={`titlebar-${windowId}`} style={{ height: insets?.height ?? 0, paddingLeft: insets?.leading ?? 0, paddingRight: insets?.trailing ?? 0, justifyContent: 'center' }}>
+    <Text testID={`chrome-insets-${windowId}`} accessibilityLabel={JSON.stringify({ sequence, insets: insets ?? null })} numberOfLines={1} style={{ fontSize: 12, fontWeight: '600', paddingLeft: 8 }}>NYC-Tron · Document</Text>
+  </View>;
+}
 function Surface({ windowId, main }: { windowId: string; main: boolean }) {
   const root = useRef<View | null>(null);
   const measureRegion = () => root.current?.measureInWindow((x, y, width, height) => {
@@ -270,11 +319,23 @@ function Surface({ windowId, main }: { windowId: string; main: boolean }) {
       </View> : <DocumentEditor windowId={windowId} />}
       <Text testID={`status-${windowId}`} accessibilityLabel={status} selectable>{status}</Text>
       <Text testID={`windows-${windowId}`} selectable>{registry.windows.length} native windows · {ready ? 'Ready' : 'Loading'}</Text>
-      {main ? <Button testID="restore-document" onPress={() => { void host.focus('document-1').catch(fail); }} disabled={!registry.windows.some(w => w.id === 'document-1')} onError={fail}>Restore document window</Button>
-        : <View style={{ flexDirection: 'row', gap: 10 }}>
-          <Button testID="minimize-document" onPress={() => { void host.minimize(windowId).catch(fail); }} onError={fail}>Minimize window</Button>
-          <Button testID="close-document" onPress={() => { void host.close(windowId).catch(fail); }} onError={fail}>Close window</Button>
+      {main ? <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <Button testID="restore-document" onPress={() => { void host.focus('document-1').catch(fail); }} disabled={!registry.windows.some(w => w.id === 'document-1')} onError={fail}>Restore document window</Button>
+          <Button testID="chrome-restore" onPress={() => runChrome('restore')} onError={fail}>Title bar restore</Button>
+        </View>
+        : <View style={{ gap: 10 }}>
+          <View style={{ flexDirection: 'row', gap: 10 }}>
+            <Button testID="minimize-document" onPress={() => { void host.minimize(windowId).catch(fail); }} onError={fail}>Minimize window</Button>
+            <Button testID="close-document" onPress={() => { void host.close(windowId).catch(fail); }} onError={fail}>Close window</Button>
+          </View>
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <Button testID="chrome-close" onPress={() => runChrome('close')} onError={fail}>Title bar close</Button>
+            <Button testID="chrome-minimize" onPress={() => runChrome('minimize')} onError={fail}>Title bar minimize</Button>
+            <Button testID="chrome-zoom" onPress={() => runChrome('zoom')} onError={fail}>Title bar zoom</Button>
+            <Button testID="chrome-insets-refresh" onPress={readDocumentInsets} onError={fail}>Measure title bar</Button>
+          </View>
         </View>}
+      <ChromeReport windowId={windowId} />
       {main && <View style={{ flexDirection: 'row', gap: 10 }}>
         <Button testID="remember-layout" onPress={() => store.setState({ layout: host.snapshot(), status: 'Window layout remembered for this session' })} onError={fail}>Remember layout</Button>
         <Button testID="restore-layout" onPress={() => {
@@ -293,7 +354,7 @@ function Surface({ windowId, main }: { windowId: string; main: boolean }) {
       sidebar={<Sidebar testID="navigation" accessibilityLabel="Workspace navigation" style={{ flex: 1 }} selectedId={selected}
         items={[{ id: 'document', label: 'Document' }, { id: 'preferences', label: 'Preferences' }, { id: 'locked', label: 'Protected destination' }]}
         onSelectionChange={event => requestSelection(event.id)} onError={fail} />}
-      content={content} onError={fail} /> : content}
+      content={content} onError={fail} /> : <><DocumentTitleBar windowId={windowId} />{content}</>}
   </View>;
 }
 export function MainWindow() {
