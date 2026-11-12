@@ -189,6 +189,9 @@ fail if a release asset changes.
 
 Upgrading from `v0.1.0-alpha.4`: see [Migration](docs/MIGRATION.md).
 
+App icons and launcher names: [App identity](docs/APP_IDENTITY.md) covers the
+icon tool and the launcher label check you can run on your own app config.
+
 ## Licensing
 
 NYC-Tron's original code is MIT, `Copyright (c) 2026 NYC-Tron UI

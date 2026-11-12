@@ -1,4 +1,4 @@
-import {readFileSync,writeFileSync} from "node:fs";
+import {copyFileSync,readdirSync,readFileSync,writeFileSync} from "node:fs";
 import {createRequire} from "node:module";
 import {dirname,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
@@ -83,4 +83,21 @@ edit("metro.config.js",source=>{
   source=source.replace(resolverMarker,resolverMarker+"\n"+singletonResolver);
  return source;
 });
+// App identity: replace the template's tile and logo images and .ico files,
+// by name, with the ones derived from assets/icon.png
+// (tooling/app-identity/derive-icons.mjs). Only files the template already
+// has are replaced, so the generated project file needs no edit.
+const iconDir=fileURLToPath(new URL("assets/icon/windows/",root));
+const windowsDir=fileURLToPath(new URL("windows/",root));
+const derived=new Set(readdirSync(resolve(iconDir,"Assets")));
+let replaced=0;
+(function walk(dir){
+ for(const entry of readdirSync(dir,{withFileTypes:true})){
+  const full=resolve(dir,entry.name);
+  if(entry.isDirectory()){ if(!["node_modules","x64","Debug","Release"].includes(entry.name)) walk(full); continue; }
+  if(derived.has(entry.name)){ copyFileSync(resolve(iconDir,"Assets",entry.name),full); replaced++; }
+  else if(entry.name.endsWith(".ico")){ copyFileSync(resolve(iconDir,"app.ico"),full); replaced++; }
+ }
+})(windowsDir);
+console.log(`Replaced ${replaced} template icon files with the derived app icon.`);
 console.log("Prepared Windows consumer solution entry, ProjectReference and native package registration.");
