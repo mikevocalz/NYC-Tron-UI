@@ -111,7 +111,7 @@ config, and mounts every exported component once with synthesized required
 props in the native Release app. The same harness runs on React Native Web
 with the same props to tell a lane failure from a props failure.
 
-| Lane | Runtime | Archive (sha256) | Run | Supported | Struck | Not measured |
+| Lane | Runtime | Archive (sha256) | Run | Supported | Struck | Not verified on desktop |
 |---|---|---|---|---|---|---|
 | macOS, Spark 0.0.3 | React Native 0.83.10, React Native macOS 0.83.0, Expo 55.0.32, React 19.2.0 | `c3d0f588…` (T1 graph) | [43171140883](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883) | 272 of 421 components | 54 | 95 |
 | Windows, RNW 0.85 | React Native 0.85.3, React Native Windows 0.85.0, React 19.2.3 | `c3d0f588…` (T1 graph) | [43171140885](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885) | 268 of 421 components | 41 | 112 |
@@ -128,10 +128,12 @@ is recorded beside this one and does not stand in for it.
 - **Struck** means the lane failed it: it needs an optional peer the lane's
   consumer does not provide, or it threw in the lane but mounted on the web
   reference.
-- **Not measured** means it threw on the web reference too, with the same
-  synthesized props, so the run says nothing about the lane. These are not on
-  the supported list. They need a props fixture per component before they can
-  be measured; that work is not done.
+- **Not verified on desktop** means it threw on the web reference too, with
+  the same synthesized props, so the run says nothing about the lane either
+  way. It is a third status, separate from struck: these components are not
+  on the supported list, and nothing here strikes them. Each one returns when
+  it is measured with a per-component props fixture; that work is not done.
+  They do not block 1.0.0 (D5, decision 3 of 2026-11-12).
 
 The measurement covers mount and first commit with required props only. It
 does not cover interaction, optional props, layout fidelity, accessibility or
@@ -155,13 +157,13 @@ Struck on Windows only, as lane failures (each mounted in the web reference with
 - `forge/ink/TimelapsePlaybackExporter`: `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.25`
 - `forge/vector/FillStrokeInspector`: `Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1`
 
-<details><summary>Not measured on either lane (95 components)</summary>
+<details><summary>Not verified on desktop, either lane (95 components)</summary>
 
 `forge/audio/AudioClipTrimAndFade`, `forge/audio/AudioEffectsPresetPanel`, `forge/audio/AudioProcessingPanel`, `forge/audio/DynamicsTransferGraph`, `forge/audio/EQFrequencyGraph`, `forge/audio/LiveRecordingWaveform`, `forge/audio/LoopPunchRecording`, `forge/audio/SampleEditor`, `forge/audio/VoiceoverCountdownAndTakeBin`, `forge/cad/BakingMapPanel`, `forge/cad/PaperSpaceLayout`, `forge/cad/TextureMaskAndGenerator`, `forge/canvas/SmartGuides`, `forge/canvas/TransformOriginHandle`, `forge/color/CurvesEditor`, `forge/color/EyedropperTool`, `forge/color/GradientMeshEditor`, `forge/color/GradientStopEditor`, `forge/color/LevelsEditor`, `forge/color/LiveHistogram`, `forge/color/VideoScopesPanel`, `forge/design/CommentPins`, `forge/design/ComponentVariantPicker`, `forge/design/FrameAndComponentTree`, `forge/document/MailMergeFieldPicker`, `forge/document/PageSetupPanel`, `forge/document/PaginatedTextCanvas`, `forge/document/ParagraphStylesGallery`, `forge/document/SpellGrammarPopover` (SpellGrammarContent), `forge/document/TextWrapAndFrames`, `forge/graph/PatchGraph`, `forge/ink/EraserModePicker`, `forge/inputs/InstrumentKnob`, `forge/inputs/OutlineTree`, `forge/inputs/PrecisionScrubber`, `forge/inputs/PropertyInspector`, `forge/layers/CanvasCompareView`, `forge/layers/LayerThumbnail`, `forge/midi/MIDIPianoRoll`, `forge/midi/MIDIVelocityLane`, `forge/midi/StepSequencer`, `forge/motion/CameraAndLightControls`, `forge/motion/CompositionLayerTree`, `forge/motion/EffectStackAndInspector`, `forge/motion/KeyframeSpeedGraph`, `forge/motion/KeyframeValueGraph`, `forge/motion/MatteAndMaskPanel`, `forge/motion/MotionKeyframeTimeline`, `forge/motion/NodeGraphEditor`, `forge/motion/TimeRemapCurve`, `forge/pdf/BookmarkOutline`, `forge/pdf/PDFFormFieldEditor`, `forge/pdf/PDFReadAloudTransport`, `forge/pdf/PDFVoiceNoteAttachment`, `forge/pdf/PrintAndExportPreview`, `forge/pdf/TextSearchResults`, `forge/photo/BeforeAfterCompare`, `forge/photo/CatalogFilterBar`, `forge/photo/EightBandColorMixer`, `forge/photo/ExposureAndWhiteBalance`, `forge/photo/LinearRadialGradientMask`, `forge/photo/PhotoVersionHistoryBrowser`, `forge/photo/PresetManager`, `forge/photo/RAWDevelopPanel`, `forge/slides/MasterLayoutEditor`, `forge/slides/MediaInsertInspector`, `forge/slides/PresenterView`, `forge/slides/ThemeAndTemplateGallery`, `forge/spreadsheet/CellFormatInspector`, `forge/spreadsheet/ConditionalFormatRules`, `forge/spreadsheet/DataImportWizard`, `forge/spreadsheet/RangeComments`, `forge/timeline/AudioClipWaveform`, `forge/timeline/BatchEditPanel`, `forge/timeline/ClipTrimHandles`, `forge/timeline/CoverFramePicker`, `forge/timeline/DragReorderAndRipple`, `forge/timeline/OverlayAndEffectsTrackStack`, `forge/timeline/RazorSplitTool`, `forge/timeline/RollSlipSlideControls`, `forge/timeline/ScopesDock`, `forge/timeline/TimelineClipLane`, `forge/timeline/TrackHeaders`, `forge/timeline/TransitionHandles`, `forge/timeline/VideoEffectsBrowser`, `forge/timeline/VideoSpeedRampCurve`, `forge/vector/GradientOnCanvasHandles`, `gestures/PanResponderDrag`, `shell/NumericScrubField`, `shell/RangeSlider`, `shell/RibbonTabs`, `shell/RotaryKnob`, `shell/SliderField`, `shell/ToastAndProgress`, `shell/WorkspaceHost`
 
 </details>
 
-<details><summary>Not measured on Windows only (17 components; struck on macOS for a missing peer)</summary>
+<details><summary>Not verified on desktop, Windows only (17 components; struck on macOS for a missing peer)</summary>
 
 `forge/audio/SpeechTranscriptTakeReview`, `forge/audio/SurroundPanView`, `forge/audio/TakePlaylistAndComping`, `forge/cad/NodeGraphCanvas`, `forge/canvas/GuidedCropAndStraighten`, `forge/design/PrototypeConnectionTool`, `forge/document/ParagraphRuler`, `forge/graphics/ImageCropOverlay`, `forge/pdf/PDFScanSession`, `forge/platform/AccessiblePrecisionScrubControl`, `forge/slides/ShapePresetGallery`, `forge/spreadsheet/CellSelectionOverlay`, `forge/spreadsheet/FillHandleAndAutoFill`, `forge/timeline/AutoCaptionTranscriptTimeline`, `forge/timeline/AutoReframeGuides`, `forge/timeline/CaptionWordTimingHandles`, `forge/timeline/StickerMotionLane`
 

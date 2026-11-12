@@ -108,6 +108,11 @@ function prepare([kind, dirArgument, ...rest]) {
   git(dir, "add", "-A");
   git(dir, "-c", "user.name=install-path", "-c", "user.email=install-path@localhost", "commit", "-q", "--allow-empty", "-m", "app before NYC-Tron");
   const before = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
+  // The default SDK 58 template does not type-check on its own (CSS module
+  // imports and a React Native Web ref type in its own src/ files). Record its
+  // errors first; only errors the install adds fail the path.
+  const tscErrors = result => ((result.stdout ?? "") + (result.stderr ?? "")).split(/\r?\n/).filter(line => /error TS\d+/.test(line));
+  const baseline = tscErrors(run("npx", ["--no-install", "tsc", "--noEmit"], dir));
   record.app = { template: kind === "new" ? "blank-typescript" : "default", expo: before.dependencies.expo, reactNative: before.dependencies["react-native"], dependencies: before.dependencies };
 
   record.command = ["npm", "install", "--allow-remote=all", ...specs].join(" ");
@@ -151,8 +156,10 @@ function prepare([kind, dirArgument, ...rest]) {
     record.disturbed = record.disturbed.filter(file => file !== "App.tsx");
   }
   const typecheck = run("npx", ["--no-install", "tsc", "--noEmit"], dir);
-  record.typecheck = { exit: typecheck.status, output: ((typecheck.stdout ?? "") + (typecheck.stderr ?? "")).slice(-2000) };
-  record.result = record.disturbed.length || unexpected.length || typecheck.status !== 0 ? "failed" : "prepared";
+  const added = tscErrors(typecheck).filter(line => !baseline.includes(line));
+  record.typecheck = { exit: typecheck.status, templateErrors: baseline, addedErrors: added, output: ((typecheck.stdout ?? "") + (typecheck.stderr ?? "")).slice(-2000) };
+  if (typecheck.status !== 0 && !tscErrors(typecheck).length) added.push("tsc failed without diagnostics");
+  record.result = record.disturbed.length || unexpected.length || added.length ? "failed" : "prepared";
   record.unexpectedDependencyChanges = unexpected;
   writeFileSync(join(dir, "..", `${kind}-record.json`), JSON.stringify(record, null, 2) + "\n");
   console.info(`${kind}: ${record.result}; ${record.command}`);
