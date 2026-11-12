@@ -2794,6 +2794,11 @@
       "types": "./dist/components/forge/timeline/FrameAccurateScrubber.d.ts",
       "react-native": "./dist/components/forge/timeline/FrameAccurateScrubber.native.js",
       "default": "./dist/components/forge/timeline/FrameAccurateScrubber.js"
+    },
+    "./components/window/WindowTitleBar": {
+      "types": "./dist/components/window/WindowTitleBar.d.ts",
+      "react-native": "./dist/components/window/WindowTitleBar.js",
+      "default": "./dist/components/window/WindowTitleBar.js"
     }
   },
   "scripts": {

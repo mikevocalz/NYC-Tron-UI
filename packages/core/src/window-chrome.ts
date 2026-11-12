@@ -111,7 +111,7 @@ export interface WindowControlLabels {
 
 /** Default labels per layout. Pass `labels` to {@linkcode describeTitleBar} to localize. */
 export const DEFAULT_WINDOW_CONTROL_LABELS = Object.freeze({
-  macos: Object.freeze({ close: "Close window", minimize: "Minimize window", restore: "Restore window", zoom: "Zoom window", unzoom: "Exit zoom" }),
+  macos: Object.freeze({ close: "Close window", minimize: "Minimize window", restore: "Restore window", zoom: "Zoom window", unzoom: "Zoom window" }),
   windows: Object.freeze({ close: "Close", minimize: "Minimize", restore: "Restore", zoom: "Maximize", unzoom: "Restore down" }),
 } as const satisfies Record<DrawnControlsLayout, WindowControlLabels>);
 
