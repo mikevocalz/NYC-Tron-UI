@@ -144,7 +144,7 @@ in `packages/native-controls/THIRD_PARTY_NOTICES.md`.
 
 ## React Native Skia (optional peer)
 
-`GPUCanvasViewport` uses `react-native-skia` 3.9.1 through an optional peer
+`GPUCanvasViewport` uses `react-native-skia` (tested at 3.10.0) through an optional peer
 dependency. Its implementation is not copied and its native binaries are not
 bundled. MIT, Copyright 2026-present William Candillon; Copyright 2021-2026
 Shopify Inc. Text: `licenses/REACT-NATIVE-SKIA-MIT.txt`. The runtime's Dawn,

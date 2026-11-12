@@ -26969,7 +26969,7 @@
         "@nyc-tron/ui/dist/components/forge/canvas/GPUCanvasViewport.d.ts#CanvasGpuStatus",
         "@nyc-tron/ui/dist/components/forge/canvas/canvas-viewport.d.ts#CanvasViewport",
         "@types/react@19.3.0/index.d.ts#React.ReactNode",
-        "react-native-skia@3.9.1/lib/typescript/src/skia/types/Canvas.d.ts#SkCanvas",
+        "react-native-skia@3.10.0/lib/typescript/src/skia/types/Canvas.d.ts#SkCanvas",
         "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
         "typescript@6.0.3/lib/lib.es2022.error.d.ts#Error",
         "typescript@6.0.3/lib/lib.es5.d.ts#Error",
@@ -27468,9 +27468,9 @@
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forge/canvas/canvas-viewport.d.ts#CanvasViewport",
-        "react-native-skia@3.9.1/lib/typescript/src/skia/types/Canvas.d.ts#SkCanvas",
-        "react-native-skia@3.9.1/lib/typescript/src/skia/types/Canvas.d.ts#clear",
-        "react-native-skia@3.9.1/lib/typescript/src/skia/types/Graphite.d.ts#SkGraphiteContext",
+        "react-native-skia@3.10.0/lib/typescript/src/skia/types/Canvas.d.ts#SkCanvas",
+        "react-native-skia@3.10.0/lib/typescript/src/skia/types/Canvas.d.ts#clear",
+        "react-native-skia@3.10.0/lib/typescript/src/skia/types/Graphite.d.ts#SkGraphiteContext",
         "typescript@6.0.3/lib/lib.es5.d.ts#Parameters"
       ]
     },
@@ -47783,31 +47783,31 @@
         "interface RefObject<T> {\n    current: T;\n}"
       ]
     },
-    "react-native-skia@3.9.1/lib/typescript/src/skia/types/Canvas.d.ts#SkCanvas": {
+    "react-native-skia@3.10.0/lib/typescript/src/skia/types/Canvas.d.ts#SkCanvas": {
       "package": "react-native-skia",
-      "version": "3.9.1",
+      "version": "3.10.0",
       "file": "lib/typescript/src/skia/types/Canvas.d.ts",
       "symbol": "SkCanvas",
       "signatures": [
-        "export interface SkCanvas {\n    drawImage: (image: SkImage, x: number, y: number, paint?: SkPaint | null) => void;\n    drawImageRect(img: SkImage, src: SkRect, dest: SkRect, paint: SkPaint, fastSample?: boolean): void;\n    drawImageCubic(img: SkImage, left: number, top: number, B: number, C: number, paint?: SkPaint | null): void;\n    drawImageOptions(img: SkImage, left: number, top: number, fm: FilterMode, mm: MipmapMode, paint?: SkPaint | null): void;\n    drawImageNine(img: SkImage, center: SkRect, dest: SkRect, filter: FilterMode, paint?: SkPaint | null): void;\n    drawImageRectCubic(img: SkImage, src: SkRect, dest: SkRect, B: number, C: number, paint?: SkPaint | null): void;\n    drawImageRectOptions(img: SkImage, src: SkRect, dest: SkRect, fm: FilterMode, mm: MipmapMode, paint?: SkPaint | null): void;\n    drawPaint: (paint: SkPaint) => void;\n    drawLine: (x0: number, y0: number, x1: number, y1: number, paint: SkPaint) => void;\n    drawRect: (rect: SkRect, paint: SkPaint) => void;\n    drawCircle(cx: number, cy: number, radius: number, paint: SkPaint): void;\n    drawVertices(verts: SkVertices, mode: BlendMode, paint: SkPaint): void;\n    drawPatch(cubics: readonly SkPoint[], colors?: readonly SkColor[] | null, texs?: readonly SkPoint[] | null, mode?: BlendMode | null, paint?: SkPaint | null): void;\n    restoreToCount(saveCount: number): void;\n    getTotalMatrix(): SkMatrix;\n    drawPoints(mode: PointMode, points: SkPoint[], paint: SkPaint): void;\n    drawArc: (oval: SkRect, startAngle: number, sweepAngle: number, useCenter: boolean, paint: SkPaint) => void;\n    drawRRect(rrect: InputRRect, paint: SkPaint): void;\n    drawDRRect(outer: InputRRect, inner: InputRRect, paint: SkPaint): void;\n    drawOval(oval: SkRect, paint: SkPaint): void;\n    drawPath: (path: SkPath, paint: SkPaint) => void;\n    drawText(str: string, x: number, y: number, paint: SkPaint, font: SkFont): void;\n    drawTextBlob(blob: SkTextBlob, x: number, y: number, paint: SkPaint): void;\n    drawGlyphs(glyphs: number[], positions: SkPoint[], x: number, y: number, font: SkFont, paint: SkPaint): void;\n    drawSvg: (svgDom: SkSVG, width?: number, height?: number) => void;\n    save: () => number;\n    saveLayer(paint?: SkPaint | null, bounds?: SkRect | null, backdrop?: SkImageFilter | null, flags?: SaveLayerFlag): number;\n    restore: () => void;\n    rotate(rotationInDegrees: number, rx: number, ry: number): void;\n    scale(sx: number, sy: number): void;\n    skew(sx: number, sy: number): void;\n    translate(dx: number, dy: number): void;\n    drawColor(color: SkColor, blendMode?: BlendMode): void;\n    clear(color: SkColor): void;\n    clipPath(path: SkPath, op: ClipOp, doAntiAlias: boolean): void;\n    clipRect(rect: SkRect, op: ClipOp, doAntiAlias: boolean): void;\n    clipRRect(rrect: InputRRect, op: ClipOp, doAntiAlias: boolean): void;\n    concat(m: InputMatrix): void;\n    drawPicture(skp: SkPicture): void;\n    drawAtlas(atlas: SkImage, srcs: SkRect[], dsts: SkRSXform[], paint: SkPaint, blendMode?: BlendMode | null, colors?: readonly SkColor[] | null, sampling?: SamplingOptions | null): void;\n    readPixels(srcX: number, srcY: number, imageInfo: ImageInfo): Promise<Float32Array | Uint8Array | null>;\n}"
+        "export interface SkCanvas {\n    drawImage: (image: SkImage, x: number, y: number, paint?: SkPaint | null) => void;\n    drawImageRect(img: SkImage, src: SkRect, dest: SkRect, paint: SkPaint, fastSample?: boolean): void;\n    drawImageCubic(img: SkImage, left: number, top: number, B: number, C: number, paint?: SkPaint | null): void;\n    drawImageOptions(img: SkImage, left: number, top: number, fm: FilterMode, mm: MipmapMode, paint?: SkPaint | null): void;\n    drawImageNine(img: SkImage, center: SkRect, dest: SkRect, filter: FilterMode, paint?: SkPaint | null): void;\n    drawImageRectCubic(img: SkImage, src: SkRect, dest: SkRect, B: number, C: number, paint?: SkPaint | null): void;\n    drawImageRectOptions(img: SkImage, src: SkRect, dest: SkRect, fm: FilterMode, mm: MipmapMode, paint?: SkPaint | null): void;\n    drawPaint: (paint: SkPaint) => void;\n    drawLine: (x0: number, y0: number, x1: number, y1: number, paint: SkPaint) => void;\n    drawRect: (rect: SkRect, paint: SkPaint) => void;\n    drawCircle(cx: number, cy: number, radius: number, paint: SkPaint): void;\n    drawVertices(verts: SkVertices, mode: BlendMode, paint: SkPaint): void;\n    drawPatch(cubics: readonly SkPoint[], colors?: readonly SkColor[] | null, texs?: readonly SkPoint[] | null, mode?: BlendMode | null, paint?: SkPaint | null): void;\n    restoreToCount(saveCount: number): void;\n    getTotalMatrix(): SkMatrix;\n    drawPoints(mode: PointMode, points: SkPoint[], paint: SkPaint): void;\n    drawArc: (oval: SkRect, startAngle: number, sweepAngle: number, useCenter: boolean, paint: SkPaint) => void;\n    drawRRect(rrect: InputRRect, paint: SkPaint): void;\n    drawDRRect(outer: InputRRect, inner: InputRRect, paint: SkPaint): void;\n    drawOval(oval: SkRect, paint: SkPaint): void;\n    drawPath: (path: SkPath, paint: SkPaint) => void;\n    drawText(str: string, x: number, y: number, paint: SkPaint, font: SkFont): void;\n    drawTextBlob(blob: SkTextBlob, x: number, y: number, paint: SkPaint): void;\n    drawShapes(blob: SkShapeBlob, paint?: SkPaint | null): void;\n    drawGlyphs(glyphs: number[], positions: SkPoint[], x: number, y: number, font: SkFont, paint: SkPaint): void;\n    drawSvg: (svgDom: SkSVG, width?: number, height?: number) => void;\n    save: () => number;\n    saveLayer(paint?: SkPaint | null, bounds?: SkRect | null, backdrop?: SkImageFilter | null, flags?: SaveLayerFlag): number;\n    restore: () => void;\n    rotate(rotationInDegrees: number, rx: number, ry: number): void;\n    scale(sx: number, sy: number): void;\n    skew(sx: number, sy: number): void;\n    translate(dx: number, dy: number): void;\n    drawColor(color: SkColor, blendMode?: BlendMode): void;\n    clear(color: SkColor): void;\n    clipPath(path: SkPath, op: ClipOp, doAntiAlias: boolean): void;\n    clipRect(rect: SkRect, op: ClipOp, doAntiAlias: boolean): void;\n    clipRRect(rrect: InputRRect, op: ClipOp, doAntiAlias: boolean): void;\n    concat(m: InputMatrix): void;\n    drawPicture(skp: SkPicture): void;\n    drawAtlas(atlas: SkImage, srcs: SkRect[], dsts: SkRSXform[], paint: SkPaint, blendMode?: BlendMode | null, colors?: readonly SkColor[] | null, sampling?: SamplingOptions | null): void;\n    readPixels(srcX: number, srcY: number, imageInfo: ImageInfo): Promise<Float32Array | Uint8Array | null>;\n}"
       ]
     },
-    "react-native-skia@3.9.1/lib/typescript/src/skia/types/Canvas.d.ts#clear": {
+    "react-native-skia@3.10.0/lib/typescript/src/skia/types/Canvas.d.ts#clear": {
       "package": "react-native-skia",
-      "version": "3.9.1",
+      "version": "3.10.0",
       "file": "lib/typescript/src/skia/types/Canvas.d.ts",
       "symbol": "clear",
       "signatures": [
         "clear(color: SkColor): void;"
       ]
     },
-    "react-native-skia@3.9.1/lib/typescript/src/skia/types/Graphite.d.ts#SkGraphiteContext": {
+    "react-native-skia@3.10.0/lib/typescript/src/skia/types/Graphite.d.ts#SkGraphiteContext": {
       "package": "react-native-skia",
-      "version": "3.9.1",
+      "version": "3.10.0",
       "file": "lib/typescript/src/skia/types/Graphite.d.ts",
       "symbol": "SkGraphiteContext",
       "signatures": [
-        "export interface SkGraphiteContext extends SkJSIInstance<\"GraphiteContext\"> {\n    readonly width: number;\n    readonly height: number;\n    beginRecording(): SkCanvas;\n    finishRecording(): SkGraphiteRecording;\n    submit(recording: SkGraphiteRecording): void;\n}"
+        "export interface SkGraphiteContext extends SkJSIInstance<\"GraphiteContext\"> {\n    readonly width: number;\n    readonly height: number;\n    readonly pendingFrames: number;\n    beginRecording(): SkCanvas;\n    finishRecording(): SkGraphiteRecording;\n    submit(recording: SkGraphiteRecording): void;\n}"
       ]
     },
     "react-native@0.88.1/src/types/globals.d.ts#global.File": {

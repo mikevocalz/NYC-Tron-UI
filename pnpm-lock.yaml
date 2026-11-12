@@ -267,14 +267,14 @@ importers:
         specifier: 0.88.1
         version: 0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
       react-native-gesture-handler:
-        specifier: 3.4.0
-        version: 3.4.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+        specifier: 3.5.0
+        version: 3.5.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       react-native-safe-area-context:
         specifier: 5.11.1
         version: 5.11.1(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       react-native-skia:
-        specifier: 3.9.1
-        version: 3.9.1(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+        specifier: 3.10.0
+        version: 3.10.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       tailwindcss:
         specifier: 4.3.3
         version: 4.3.3
@@ -540,11 +540,11 @@ importers:
         specifier: 0.88.1
         version: 0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
       react-native-gesture-handler:
-        specifier: 3.4.0
-        version: 3.4.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+        specifier: 3.5.0
+        version: 3.5.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       react-native-skia:
-        specifier: 3.9.1
-        version: 3.9.1(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+        specifier: 3.10.0
+        version: 3.10.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -2778,8 +2778,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-native-gesture-handler@3.4.0:
-    resolution: {integrity: sha512-jBg4ZWDvegeaZ4OHq9oxVOS/Qa6pV+LhtsUExothyhWxqzG0Lkg7kl2ztemPj/pnJxkq9j/+6wAw3jZGwdssww==}
+  react-native-gesture-handler@3.5.0:
+    resolution: {integrity: sha512-bm8yepwMBUhEOSeU7WQbNNrstD0Hbv6i+XsApARBJSlb+WlRvyaQsobi+tZ5Uyr5kDVgXzg6kPb+CWY9zvyfEw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -2790,20 +2790,20 @@ packages:
       react: '*'
       react-native: '*'
 
-  react-native-skia-graphite-android@157.1.0:
-    resolution: {integrity: sha512-keiIRZc3Vx0B3CwgrCt16BNl6xUS48LfP10DD05lZHX2bGZIHSG5a/spgweXGv44mmyhC4vKxeYqkTuhmArsOw==}
+  react-native-skia-graphite-android@158.0.0:
+    resolution: {integrity: sha512-uxGEs8MmTAMpQiOJWOOoSU+Vl8WUWgZ0kii8A/xsThZEZszz8R1aKcpsqX40EcqoA0IjueWYEO9Han21/uKYTg==}
 
-  react-native-skia-graphite-apple-ios@157.1.0:
-    resolution: {integrity: sha512-zO5rlQtgbx6d5ul0XMSACzGI1RL3tO+r4x4cPP3FeNiBrqYNgbdoMG/q+H2mqafAu0wDLph86Bua3NZqkYvehw==}
+  react-native-skia-graphite-apple-ios@158.0.0:
+    resolution: {integrity: sha512-JvT/yWttlEBu9SomCMHO7olKfWaWlPlpWIdDHqp1h+Z1aMaFvNJSd7SDI4ItgIPYXM7KxcF3cJwBnCgMWYgY6Q==}
 
-  react-native-skia-graphite-apple-macos@157.1.0:
-    resolution: {integrity: sha512-983/KzFyE9bvLtBsA32lJUhdQFl3WiETHUlBjTeDdfWknrnmCiIvz3bbUDt7cCXkMt/dU43KISslaN1CV9f66g==}
+  react-native-skia-graphite-apple-macos@158.0.0:
+    resolution: {integrity: sha512-q+9lsV+8TvYZQP41lO1uihpMG938+flJir0HY5a/rw02hsW/dA6mxNcv8Z6fFrpFP3kscJVbI2CTKcH6K/LDAA==}
 
-  react-native-skia-graphite-apple-tvos@157.1.0:
-    resolution: {integrity: sha512-egYrkF7me0bON1xaNARb34hCVGsjdWpw0xy8ewA9knbdw1DzHn0rGKMQet9D1hvwhK3c962PvYj2Jh7oh/2Pig==}
+  react-native-skia-graphite-apple-tvos@158.0.0:
+    resolution: {integrity: sha512-XPCi7c/xsc10WKog/IITSeIpwvd9cYiqm7qEEFd7uTkZSHOeoD20d+bPZgLI9QYWC7bOyEdfbDTjJcmhJWggBg==}
 
-  react-native-skia@3.9.1:
-    resolution: {integrity: sha512-kVJZ5BEyjfsN5HmGkiO90PjbpD/Smghkcd/fn4yqK/hO8jjkTtKjLorn+Kv77/gI1mu73EUaafIWstRSSpaI2g==}
+  react-native-skia@3.10.0:
+    resolution: {integrity: sha512-VR4+MVBWFhcXM3J46HIllcD2Lauk1bEnG7kwQyt8nyShP8ql2FvVi0/bQeVh9gPbVKP2TiPh7o/23F3vIbLEEA==}
     hasBin: true
     peerDependencies:
       react: '>=19.0'
@@ -2824,8 +2824,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  react-native-webgpu-dawn@157.1.0:
-    resolution: {integrity: sha512-T197EGYxTBuw5Qb1yihnOX6+tNsSNem3ymJ+RZVOQbkHn9I2PnKwg3HA+l3eAEGep552kotkNDBAnM5x4oo8QA==}
+  react-native-webgpu-dawn@158.0.0:
+    resolution: {integrity: sha512-YCobosg4b012wt8GTUN/7xh7ldgnpluKg00hbdIHTfb2HU6GBUB0ZkKjex9uklrYOYKH5Z0WTwG7M5A6bI1b+A==}
 
   react-native@0.88.1:
     resolution: {integrity: sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA==}
@@ -5775,7 +5775,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-native-gesture-handler@3.4.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
+  react-native-gesture-handler@3.5.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
     dependencies:
       '@types/react-test-renderer': 19.3.1
       invariant: 2.2.4
@@ -5787,23 +5787,23 @@ snapshots:
       react: 19.3.0
       react-native: 0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
 
-  react-native-skia-graphite-android@157.1.0: {}
+  react-native-skia-graphite-android@158.0.0: {}
 
-  react-native-skia-graphite-apple-ios@157.1.0: {}
+  react-native-skia-graphite-apple-ios@158.0.0: {}
 
-  react-native-skia-graphite-apple-macos@157.1.0: {}
+  react-native-skia-graphite-apple-macos@158.0.0: {}
 
-  react-native-skia-graphite-apple-tvos@157.1.0: {}
+  react-native-skia-graphite-apple-tvos@158.0.0: {}
 
-  react-native-skia@3.9.1(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
+  react-native-skia@3.10.0(react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0):
     dependencies:
       canvaskit-wasm: 0.41.1
       react: 19.3.0
-      react-native-skia-graphite-android: 157.1.0
-      react-native-skia-graphite-apple-ios: 157.1.0
-      react-native-skia-graphite-apple-macos: 157.1.0
-      react-native-skia-graphite-apple-tvos: 157.1.0
-      react-native-webgpu-dawn: 157.1.0
+      react-native-skia-graphite-android: 158.0.0
+      react-native-skia-graphite-apple-ios: 158.0.0
+      react-native-skia-graphite-apple-macos: 158.0.0
+      react-native-skia-graphite-apple-tvos: 158.0.0
+      react-native-webgpu-dawn: 158.0.0
       react-reconciler: 0.33.0(react@19.3.0)
     optionalDependencies:
       react-native: 0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
@@ -5815,7 +5815,7 @@ snapshots:
       react: 19.3.0
       react-native: 0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
 
-  react-native-webgpu-dawn@157.1.0: {}
+  react-native-webgpu-dawn@158.0.0: {}
 
   react-native@0.88.1(@babel/core@7.29.13(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1):
     dependencies:
