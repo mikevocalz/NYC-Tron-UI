@@ -70,8 +70,10 @@ the app's scene at 15:43:24.478. That was inside the 15:43:19.539 to
 it, and the app stayed on Settings. PR #58's attempt-2 run (42857968753) failed
 on the same tap with the same signature.
 
-The same first tab tap also qualifies when the Recap digitizer never delivers a
-contact at all. Every one of these must hold inside the tap's window: exactly
+The Settings first tab tap also qualifies when the Recap digitizer never
+delivers a contact at all. Editor does not: no Editor tap has been observed
+to drop this way, so Editor recovers only the touching-contact cancel above.
+Every one of these must hold inside the tap's window: exactly
 one Recap service is added; backboardd logs `unknown senderID` for it and then
 `ignoring digitizer event for display <main> from unsupported service` for the
 same service and sender; its only `cancel -- digitizer did disappear` line has
@@ -79,9 +81,8 @@ same service and sender; its only `cancel -- digitizer did disappear` line has
 own `TouchEventsCompleted` confirmation interval); testmanagerd then logs
 `Timed out after waiting 5.0s for TouchEventsCompleted`. Maestro's own
 hierarchy for the failed assertion, at the path that command declares, must show
-exactly one route panel, the pre-tap one (`reference-panel-library` for
-Settings, `reference-panel-settings` for Editor), with the tab still visible
-and the destination label absent. A delivered tap also ends in an empty-contact
+exactly one route panel, the pre-tap one (`reference-panel-library`), with the
+`Settings` tab still visible and `Workspace preferences` absent. A delivered tap also ends in an empty-contact
 disappear line (222 to 641 ms after creation in the runs below), so that line
 alone never qualifies. Runs 43157470910 and 43172075412 (attempt 1 of each, PR
 #68) and 43156283059 (attempt 2, PR #70) hit this on Settings: the digitizer

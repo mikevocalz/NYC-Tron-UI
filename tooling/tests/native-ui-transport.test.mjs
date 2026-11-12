@@ -334,6 +334,24 @@ test("Variant A needs every piece of evidence; each one missing or contradicted 
   ]) assert.equal(classify(input), null);
 });
 
+test("Variant A is Settings only: the same evidence on the Editor tab is refused", () => {
+  // Editor's first tab tap, shaped as in the 43046836104 excerpt above, carrying Variant A's dropped-tap
+  // log lines moved into its window and a tree that still shows the pre-tap route (Settings).
+  const log = shift(droppedSettingsLog, 1794411799539 - 1794460193121);
+  const tapped = editorCommands();
+  // Same tap length as the Settings tap whose lines these are, so every line sits inside the window.
+  tapped[1].metadata.duration = 9382;
+  tapped[2].metadata.timestamp = tapped[1].metadata.timestamp + 9382;
+  tapped[2].metadata.artifacts = [{ type: "SCREEN_HIERARCHY", path: libraryScreen().path }];
+  const input = { ...editor(), commands: tapped, simulatorLog: log,
+    failureHierarchy: { path: libraryScreen().path, tree: tree([{ "resource-id": "reference-panel-settings" }, { accessibilityText: "Editor" }]) } };
+  assert.equal(classify(input), null);
+  // The same lines on Settings still classify, so the refusal is the flow and nothing else.
+  assert.equal(classify(dropped()).kind, "ios-initial-navigation-recap-dropped");
+  // Editor keeps its touching-contact rule.
+  assert.equal(classify(editor()).kind, "ios-initial-navigation-recap-cancelled");
+});
+
 test("negative: a delivered tap's empty-contact teardown is not a lost touch, whatever the assertion says", () => {
   const delivered = dropped(deliveredSettingsLog, { tap: { timestamp: 1794472514715, duration: 3825 }, assertion: { timestamp: 1794472518543 } });
   assert.equal(classify(delivered), null);

@@ -32,11 +32,14 @@ function timedLines(log, start, end) {
 
 // Each recoverable iOS navigation flow: the exact commands that may precede
 // its first tab tap, that tap's text, the assertion that only the destination
-// can satisfy, and the one route panel mounted before the tap. Nothing after
-// that assertion (edits, saves, scrolls) is covered.
+// can satisfy. Settings alone also names the one route panel mounted before its
+// tap, which is what lets it recover a tap that never produced a contact; no
+// Editor tap has been observed to drop that way, so Editor recovers only the
+// touching-contact cancel. Nothing after that assertion (edits, saves, scrolls)
+// is covered.
 const iosInitialNavigation = {
   settings: { before: ["launch", "Library"], tap: "Settings", destination: "Workspace preferences", preTapPanel: "reference-panel-library" },
-  editor: { before: ["launch"], tap: "Editor", destination: "Quiet forms", preTapPanel: "reference-panel-settings" },
+  editor: { before: ["launch"], tap: "Editor", destination: "Quiet forms" },
 };
 // The pointer flow's single stroke, covered only up to the commit assertion.
 const iosPointerStroke = {
@@ -177,6 +180,7 @@ export function classifyInitialUiTransportFailure({ platform, flow, commands, si
     upstreamIssue: "https://github.com/mobile-dev-inc/Maestro/issues/3686" };
   // No contact reached the app. Recover only when backboardd refused the one
   // Recap digitizer and the app's own tree proves it never left the pre-tap route.
+  if (!spec.preTapPanel) return null;
   const dropped = droppedRecapTap(lines), shown = screen(failureHierarchy, assertion);
   if (!dropped || !shown) return null;
   const panels = shown.ids.filter(id => id.startsWith("reference-panel-"));
