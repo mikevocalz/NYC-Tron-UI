@@ -320,6 +320,72 @@ function Assert-PointerPlacement($point, $target) {
   Write-Host "Pointer inside native '$($target.Current.Name)' ($identity); bounds=$bounds; foregroundProcess=$foregroundProcess; nativeHitIdentityMatched=$nativeIdentityMatched"
   $providers | ConvertTo-Json -Depth 3 -Compress | Write-Host
 }
+# Gate T2 helpers. The title-bar labels carry a changing value after a fixed
+# prefix ("Title bar close result: 3:vetoed"), so match by prefix.
+function Find-NamePrefix($root, [string]$prefix, [int]$timeoutSec = 30) {
+  $deadline = (Get-Date).AddSeconds($timeoutSec)
+  do {
+    foreach ($element in $root.FindAll($Tree::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
+      $name = $element.Current.Name
+      if ($null -ne $name -and $name.StartsWith($prefix)) { return $name.Substring($prefix.Length) }
+    }
+    Start-Sleep -Milliseconds 200
+  } while ((Get-Date) -lt $deadline)
+  throw "No UIA element named '$prefix...' within $timeoutSec s"
+}
+# Waits for a "<sequence>:<value>" label to move past $after and returns it.
+function Wait-SequenceAfter($root, [string]$prefix, [int]$after, [int]$timeoutSec = 30) {
+  $deadline = (Get-Date).AddSeconds($timeoutSec)
+  do {
+    $value = Find-NamePrefix $root $prefix 5
+    $parts = $value.Split(":", 2)
+    if ([int]$parts[0] -gt $after) { return @{ sequence = [int]$parts[0]; value = $parts[1] } }
+    Start-Sleep -Milliseconds 200
+  } while ((Get-Date) -lt $deadline)
+  throw "'$prefix' stayed at or below sequence $after"
+}
+function Get-Sequence($root, [string]$prefix) { return [int](Find-NamePrefix $root $prefix).Split(":", 2)[0] }
+# Locates one system caption button of a top-level window. Windows exposes the
+# DWM-drawn buttons under the window's TitleBar element; the button names are
+# localized, so match the English names the runner image uses and record the
+# AutomationId seen. When UIA exposes no TitleBar, fall back to the geometry the
+# native host reported: the caption buttons fill the trailing inset, three
+# equal slots, close last in a left-to-right window.
+function Find-CaptionButton($window, [string]$kind, $titleBar) {
+  $names = @{ close = @("Close"); minimize = @("Minimize"); maximize = @("Maximize", "Restore") }[$kind]
+  $bars = $window.FindAll($Tree::Descendants, (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, [System.Windows.Automation.ControlType]::TitleBar)))
+  foreach ($bar in $bars) {
+    foreach ($button in $bar.FindAll($Tree::Descendants, (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button)))) {
+      if ($names -contains $button.Current.Name) {
+        $r = $button.Current.BoundingRectangle
+        if ($r.Width -gt 0 -and $r.Height -gt 0) {
+          return @{ source = "uia-titlebar"; name = $button.Current.Name; automationId = $button.Current.AutomationId
+            x = [int]($r.Left + $r.Width / 2); y = [int]($r.Top + $r.Height / 2); bounds = $r.ToString() }
+        }
+      }
+    }
+  }
+  if ($null -eq $titleBar -or $titleBar.trailing -le 0 -or $titleBar.height -le 0) { throw "No visible '$kind' caption button and no reported caption inset" }
+  $w = $window.Current.BoundingRectangle
+  $scale = $titleBar.dpi / 96.0
+  $slot = $titleBar.trailing * $scale / 3.0
+  $index = @{ minimize = 0; maximize = 1; close = 2 }[$kind]
+  $left = $w.Right - $titleBar.trailing * $scale
+  return @{ source = "reported-trailing-inset"; name = $kind; automationId = $null
+    x = [int]($left + $slot * ($index + 0.5)); y = [int]($w.Top + $titleBar.height * $scale / 2); bounds = $null }
+}
+# Presses a caption button with real OS pointer input, so the click goes
+# through the window's non-client hit test like a person's would.
+function Press-CaptionButton($window, [string]$kind, $titleBar) {
+  [NativeWindow]::SetForegroundWindow([IntPtr]$window.Current.NativeWindowHandle) | Out-Null
+  Start-Sleep -Milliseconds 300
+  $target = Find-CaptionButton $window $kind $titleBar
+  $point = Move-NativePointer $target.x $target.y
+  Start-Sleep -Milliseconds 150
+  [NativeWindow]::Mouse(0x0002); Start-Sleep -Milliseconds 60; [NativeWindow]::Mouse(0x0004)
+  Write-Host "Pressed the system $kind caption button at ($($point.X), $($point.Y)) via $($target.source)"
+  return $target
+}
 function Arrange-DragWindows($main, $secondary) {
   $work = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
   $main.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Normal)
@@ -553,6 +619,114 @@ try {
   Find-ByName $window "Native windows: 2" | Out-Null
   Save-Screenshot "06-native-reopened" $document
   Save-Tree $document "06-document-tree"
+
+  # Gate T2: the document's title bar. The native host extends app content
+  # under the caption buttons; the system still draws them. Every press below
+  # reaches the app's one close guard or the registry through the chrome bridge.
+  $chromeSteps = [System.Collections.Generic.List[object]]::new()
+  $chromeReceipt = [ordered]@{ schemaVersion = 1; status = "running"; sourceRevision = $env:GITHUB_SHA; processId = $process.Id; window = "document"; steps = $chromeSteps }
+  $retainChrome = { $chromeReceipt | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 (Join-Path $OutDir "window-chrome.json") }
+  function Add-ChromeStep([string]$name, $observed) { $chromeSteps.Add([ordered]@{ name = $name; status = "passed"; observed = $observed }); & $retainChrome }
+  try {
+    Invoke-Button $window "Use custom title bar"
+    Find-ByName $window "Title bar style: extended" | Out-Null
+    $reported = Find-NamePrefix $window "Custom title bar: trailing "
+    if ($reported -notmatch '^(\d+), height (\d+)$') { throw "Unexpected title bar report: $reported" }
+    $titleBar = @{ trailing = [double]$Matches[1]; height = [double]$Matches[2]; dpi = 96 }
+    $dpiProbe = [System.Drawing.Graphics]::FromHwnd([IntPtr]$document.Current.NativeWindowHandle)
+    try { $titleBar.dpi = [int]$dpiProbe.DpiX } finally { $dpiProbe.Dispose() }
+    if ($titleBar.trailing -le 0 -or $titleBar.height -le 0) { throw "Extended title bar reported no caption inset: $reported" }
+    $document = Refresh-OwnedWindow $document
+    Find-ByName $document "Document title bar" | Out-Null
+    $chromeReceipt.titleBar = $titleBar
+    $chromeReceipt.captionButtons = @{}
+    foreach ($kind in @("minimize", "maximize", "close")) { $chromeReceipt.captionButtons[$kind] = Find-CaptionButton $document $kind $titleBar }
+    Save-Screenshot "06b-custom-title-bar" $document
+    Save-Tree $document "06b-custom-title-bar-tree"
+    & $retainChrome
+
+    # Close with a guard that cancels: system caption button, then the controller.
+    Invoke-Button $window "Mark draft unsaved"
+    Find-ByName $window "Shared draft has unsaved changes" | Out-Null
+    $decisions = Get-Sequence $window "Close guard decisions: "
+    $pressed = Press-CaptionButton $document "close" $titleBar
+    $decision = Wait-SequenceAfter $window "Close guard decisions: " $decisions
+    if ($decision.value -ne "cancel") { throw "Caption close with unsaved draft decided '$($decision.value)'" }
+    Find-ByName $window "Native windows: 2" | Out-Null
+    $document = Find-DocumentWindow
+    Add-ChromeStep "caption-close-cancelled" @{ button = $pressed; decision = $decision; windows = 2 }
+
+    $before = Get-Sequence $window "Title bar close result: "
+    Invoke-Button $document "Title bar close"
+    $result = Wait-SequenceAfter $window "Title bar close result: " $before
+    if ($result.value -ne "vetoed") { throw "Controller close with unsaved draft returned '$($result.value)'" }
+    Find-ByName $window "Native windows: 2" | Out-Null
+    $document = Find-DocumentWindow
+    Add-ChromeStep "controller-close-cancelled" @{ result = $result; windows = 2 }
+
+    # Minimize with the system button; restore through the controller.
+    $pressed = Press-CaptionButton $document "minimize" $titleBar
+    Find-ByName $window "Minimized windows: 1" | Out-Null
+    $visual = $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Current.WindowVisualState
+    if ($visual -ne [System.Windows.Automation.WindowVisualState]::Minimized) { throw "Caption minimize left the window $visual" }
+    Add-ChromeStep "caption-minimize" @{ button = $pressed; registryMinimized = 1; visualState = "$visual" }
+    $before = Get-Sequence $window "Title bar restore result: "
+    Invoke-Button $window "Title bar restore"
+    $result = Wait-SequenceAfter $window "Title bar restore result: " $before
+    if ($result.value -ne "done") { throw "Controller restore returned '$($result.value)'" }
+    Find-ByName $window "Minimized windows: 0" | Out-Null
+    $document = Refresh-OwnedWindow $document
+    Add-ChromeStep "controller-restore-after-caption-minimize" @{ result = $result; registryMinimized = 0 }
+
+    # Minimize and restore, both through the controller.
+    $before = Get-Sequence $window "Title bar minimize result: "
+    Invoke-Button $document "Title bar minimize"
+    $result = Wait-SequenceAfter $window "Title bar minimize result: " $before
+    if ($result.value -ne "done") { throw "Controller minimize returned '$($result.value)'" }
+    Find-ByName $window "Minimized windows: 1" | Out-Null
+    Add-ChromeStep "controller-minimize" @{ result = $result; registryMinimized = 1 }
+    $before = Get-Sequence $window "Title bar restore result: "
+    Invoke-Button $window "Title bar restore"
+    $result = Wait-SequenceAfter $window "Title bar restore result: " $before
+    if ($result.value -ne "done") { throw "Controller restore returned '$($result.value)'" }
+    Find-ByName $window "Minimized windows: 0" | Out-Null
+    $document = Refresh-OwnedWindow $document
+    Add-ChromeStep "controller-restore" @{ result = $result; registryMinimized = 0 }
+
+    # Close with a guard that proceeds, through the system caption button.
+    Invoke-Button $window "Save shared draft"
+    Find-ByName $window "Shared draft saved in this session" | Out-Null
+    $decisions = Get-Sequence $window "Close guard decisions: "
+    $pressed = Press-CaptionButton $document "close" $titleBar
+    $decision = Wait-SequenceAfter $window "Close guard decisions: " $decisions
+    if ($decision.value -ne "proceed") { throw "Caption close with saved draft decided '$($decision.value)'" }
+    Find-ByName $window "Native windows: 1" | Out-Null
+    if ($null -ne $AE::RootElement.FindFirst($Tree::Children, $documentCondition)) { throw "Accepted caption close left the native surface alive" }
+    Add-ChromeStep "caption-close-proceeded" @{ button = $pressed; decision = $decision; windows = 1 }
+
+    # Close with a guard that proceeds, through the controller.
+    Invoke-Button $window "Open document window"
+    $document = Find-DocumentWindow
+    Find-ByName $window "Native windows: 2" | Out-Null
+    $before = Get-Sequence $window "Title bar close result: "
+    Invoke-Button $document "Title bar close"
+    $result = Wait-SequenceAfter $window "Title bar close result: " $before
+    if ($result.value -ne "done") { throw "Controller close with saved draft returned '$($result.value)'" }
+    Find-ByName $window "Native windows: 1" | Out-Null
+    Add-ChromeStep "controller-close-proceeded" @{ result = $result; windows = 1 }
+    $chromeReceipt.status = "passed"
+    & $retainChrome
+  } catch {
+    $chromeReceipt.status = "failed"
+    $chromeReceipt.error = $_.Exception.Message
+    try { & $retainChrome } catch { Write-Host "Could not retain the window-chrome receipt: $($_.Exception.Message)" }
+    throw
+  }
+  # The checks below expect a fresh, standard document window.
+  Invoke-Button $window "Open document window"
+  $document = Find-DocumentWindow
+  Find-ByName $document "Shared draft: Edited once, shared everywhere" | Out-Null
+  Find-ByName $window "Native windows: 2" | Out-Null
   # The menu/flyout controls below are real WinUI popup trees. Native UIA
   # patterns and OS keyboard input exercise their application-owned callbacks.
   $document.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([System.Windows.Automation.WindowVisualState]::Minimized)
@@ -718,7 +892,7 @@ try {
     sourceRevision = $env:GITHUB_SHA
     processId = $process.Id
     executableSha256 = (Get-FileHash -Algorithm SHA256 $process.Path).Hash.ToLowerInvariant()
-    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility")
+    checks = @("controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility", "native-window-chrome-caption-buttons")
   }
   $result | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $OutDir "result.json") -Encoding UTF8
   Write-Host "Native desktop acceptance passed: shared runtime, window lifecycle, native overlays and actual cross-window drag"

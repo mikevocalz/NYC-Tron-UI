@@ -9,7 +9,7 @@ const acceptance=createAcceptanceStore(beginInspectorMount);
 import {WindowsNavigationHost,createWindowsNavigationBinding} from "@nyc-tron/windows-fluent-fabric/navigation-host";
 import {createWindowsNavigationController} from "@nyc-tron/windows-fluent/controller";
 import {createNavigationStore,destinations} from "./route-store";
-import {desktop,connectDesktop,failDesktop,openDocument,restoreDocument,changeDraft,saveDraft} from "./desktop-store";
+import {desktop,connectDesktop,failDesktop,openDocument,restoreDocument,changeDraft,saveDraft,markDraftUnsaved,extendDocumentTitleBar,runDocumentChrome} from "./desktop-store";
 
 function Navigation({store}:{store:ReturnType<typeof createNavigationStore>}) {
  const state=useStore(store);
@@ -33,15 +33,33 @@ function Navigation({store}:{store:ReturnType<typeof createNavigationStore>}) {
  return <WindowsNavigationHost binding={binding} onNativeError={state.reportNativeError} style={{alignSelf:"stretch",direction:state.direction}}/>;
 }
 
+// With the extended style the content starts at the top edge of the window.
+// This strip keeps the system caption buttons' space clear and stays draggable
+// natively; it draws no buttons of its own.
+function DocumentTitleBar() {
+ const titleBar=useStore(desktop,s=>s.titleBar);
+ if(titleBar?.style!=="extended")return null;
+ return <View accessible accessibilityLabel="Document title bar" style={{height:titleBar.height,paddingLeft:Math.max(12,titleBar.leading),paddingRight:titleBar.trailing,justifyContent:"center"}}>
+  <Text numberOfLines={1}>NYC-Tron Document</Text>
+ </View>;
+}
+
 export function DocumentWindow({windowId}:{windowId:string}) {
  const state=useStore(desktop);
- return <View style={{flex:1,padding:24,gap:16}}>
+ return <View style={{flex:1}}>
+ <DocumentTitleBar/>
+ <View style={{flex:1,padding:24,gap:16}}>
   <Text accessibilityRole="header">Native document window</Text>
+  <View style={{flexDirection:"row",gap:8}}>
+   <Button title="Title bar close" accessibilityLabel="Title bar close" onPress={()=>runDocumentChrome("close")}/>
+   <Button title="Title bar minimize" accessibilityLabel="Title bar minimize" onPress={()=>runDocumentChrome("minimize")}/>
+  </View>
   <Text>Window identity: {windowId}</Text>
   <Text accessibilityLiveRegion="polite">Shared draft: {state.title}</Text>
   <Text>The document store and undo owner stay above both native surfaces.</Text>
   <NativeDragTargetPanel windowId={windowId}/>
   <Button title="Save shared draft" accessibilityLabel="Save shared draft" onPress={saveDraft}/>
+ </View>
  </View>;
 }
 
@@ -91,6 +109,16 @@ export function App(){
    <Button title="Change shared draft" accessibilityLabel="Change shared draft" onPress={changeDraft}/>
    <Button title="Save shared draft" accessibilityLabel="Save shared draft" onPress={saveDraft}/>
    <Button title="Restore document" accessibilityLabel="Restore document" onPress={()=>void restoreDocument().catch(failDesktop)}/>
+   <View style={{flexDirection:"row",gap:12,flexWrap:"wrap"}}>
+    <Text>{`Title bar style: ${document.titleBar?document.titleBar.style:"none"}`}</Text>
+    <Text>{`Close guard decisions: ${document.closeDecisions}`}</Text>
+    {(["close","minimize","restore"] as const).map(command=><Text key={command}>{`Title bar ${command} result: ${document.chrome[command]}`}</Text>)}
+   </View>
+   <View style={{flexDirection:"row",gap:8,flexWrap:"wrap"}}>
+   <Button title="Use custom title bar" accessibilityLabel="Use custom title bar" onPress={()=>void extendDocumentTitleBar().catch(failDesktop)}/>
+   <Button title="Mark draft unsaved" accessibilityLabel="Mark draft unsaved" onPress={markDraftUnsaved}/>
+   <Button title="Title bar restore" accessibilityLabel="Title bar restore" onPress={()=>runDocumentChrome("restore")}/>
+   </View>
    {state.settingsOpen&&<View accessibilityRole="summary">
     <Text selectable>Settings opened without changing the committed route.</Text>
     <Button title="Close settings" accessibilityLabel="Close settings" onPress={state.closeSettings}/>
