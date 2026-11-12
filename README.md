@@ -189,6 +189,68 @@ fail if a release asset changes.
 
 Upgrading from `v0.1.0-alpha.4`: see [Migration](docs/MIGRATION.md).
 
+### Add NYC-Tron UI to an Expo app
+
+Both paths use one command with the release tarball URLs. `<v>` is the
+release version without the leading `v`:
+
+```sh
+npm install --allow-remote=all \
+  https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<v>/nyc-tron-core-<v>.tgz \
+  https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<v>/nyc-tron-ui-<v>.tgz
+```
+
+npm 12 refuses remote tarballs unless `--allow-remote` permits them; npm 11
+ignores the flag. Do not use `npx expo install` with tarball URLs: with
+Expo CLI 58 and npm 12 it fails with `EALLOWREMOTE` and writes an
+`"undefined"` key into `package.json`.
+
+**New app.** `npx create-expo-app@latest my-app --template blank-typescript`,
+run the command above in `my-app`, then render a component:
+
+```tsx
+import { Button } from "@nyc-tron/ui/components/Button";
+
+export default function App() {
+  return <Button title="Hello" onPress={() => {}} />;
+}
+```
+
+**Existing app.** Run the same command in the app and add a screen that
+imports from `@nyc-tron/ui`. On the new-app path the command changed only
+`package.json` and `package-lock.json`. An app created from the default Expo SDK 58 template currently
+fails this step with `ERESOLVE`: Expo SDK 58 pins
+`react-native-gesture-handler` `~3.3.0` and `@nyc-tron/ui` declares the
+optional peer `>=3.4.0 <4`. This is recorded as an open item in
+[Support policy](docs/SUPPORT.md#expo-install-paths).
+
+`@nyc-tron/ui` needs no config plugin. Native projects come from
+`npx expo prebuild` (or `npx expo run:ios` / `run:android`, which prebuild
+first); no native file is edited by hand. The
+[install-paths workflow](.github/workflows/install-paths.yml) runs both paths
+from release tarballs on clean runners for web, the iOS simulator and the
+Android emulator, and resolves the command against each desktop lane.
+
+### macOS through Spark: three ways to run
+
+The AppKit lane follows Legend Spark's model
+([overview](https://legend.so/spark/overview/)). Spark 0.0.3 requires Expo
+55.0.32 and React Native 0.83.10, so `@nyc-tron/ui` (React Native `>=0.88`)
+installs only with a peer override there, and only the components in the
+[desktop support list](docs/SUPPORT.md#desktop-support-list) are supported.
+
+| Mode | Command | Use it when |
+|---|---|---|
+| Prebuilt Spark Runner, Fast Refresh | `npm run macos` (`spark dev`) | The app uses only JavaScript and the native modules Spark's Runner already contains. No Xcode build. |
+| Custom development build | `npx --no-install spark build --dev --platform macos` | The app adds native modules such as `@nyc-tron/macos-appkit`, helper executables or URL/document associations. Still served by Metro with Fast Refresh. |
+| Standalone app | `npm run build`, then `npm run package` to sign and notarize | Release: JavaScript embedded, only the native modules production needs. |
+
+Spark checks the project's native requirements against the selected runtime
+and offers to build a development runtime instead of loading an
+incompatible one. Native settings come from `desktop.config.json` and config
+plugins; [examples/macos-appkit/spark](examples/macos-appkit/spark) commits no
+`macos/` project.
+
 ## Licensing
 
 NYC-Tron's original code is MIT, `Copyright (c) 2026 NYC-Tron UI

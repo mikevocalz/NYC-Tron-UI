@@ -1,0 +1,2748 @@
+{
+  "schema": 1,
+  "decision": "docs/V1_DECISIONS.md D5",
+  "evidence": {
+    "commit": "e1a66aa",
+    "graph": "T1 baseline (#68) merged at 1c24d40",
+    "macos-run": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883",
+    "windows-run": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885",
+    "measured": "2026-11-12"
+  },
+  "ui": {
+    "version": "1.0.0-rc.1",
+    "archive": "nyc-tron-ui-1.0.0-rc.1.tgz",
+    "sha256": "c3d0f5881c8db1b27bc425324ca4d142f2a11f21b4d7f99ca93ca1e3e88f0dc7",
+    "installedWith": "tar extraction; peers not resolved"
+  },
+  "runtime": {
+    "windows": {
+      "react": "19.2.3",
+      "react-native": "0.85.3",
+      "react-native-windows": "0.85.0",
+      "react-native-macos": null,
+      "@legendapp/spark": null,
+      "expo": null,
+      "zustand": "5.0.8",
+      "@nyc-tron/core": "1.0.0-rc.1"
+    },
+    "macos": {
+      "react": "19.2.0",
+      "react-native": "0.83.10",
+      "react-native-windows": "0.83.2",
+      "react-native-macos": "0.83.0",
+      "@legendapp/spark": "0.0.3",
+      "expo": "55.0.32",
+      "zustand": "5.0.8",
+      "@nyc-tron/core": "1.0.0-rc.1"
+    }
+  },
+  "lanes": {
+    "windows": {
+      "supported": [
+        ".#Button",
+        ".#Card",
+        ".#NavigationRail",
+        ".#NavigationShell",
+        ".#TextField",
+        "./components/Button#Button",
+        "./components/Card#Card",
+        "./components/DragGrabHandle#DragGrabHandle",
+        "./components/FieldGroup#FieldGroup",
+        "./components/FieldGroup#FieldSection",
+        "./components/IconButton#IconButton",
+        "./components/List#List",
+        "./components/List#ListItem",
+        "./components/NavigationRail#NavigationRail",
+        "./components/NavigationRail#NavigationShell",
+        "./components/SegmentedControl#SegmentedControl",
+        "./components/Select#Select",
+        "./components/TabBar#TabBar",
+        "./components/TextField#TextField",
+        "./components/Toolbar#Toolbar",
+        "./components/content/KeyValueList#KeyValueList",
+        "./components/data/TreeGrid#TreeGrid",
+        "./components/feedback/Badge#Badge",
+        "./components/feedback/Banner#Banner",
+        "./components/feedback/EmptyState#EmptyState",
+        "./components/feedback/ErrorMessage#ErrorMessage",
+        "./components/files/FileImportExportSheet#FileImportExportSheet",
+        "./components/files/FilePicker#FilePicker",
+        "./components/forge/SpreadsheetGrid#SpreadsheetGrid",
+        "./components/forge/WaveformLane#WaveformLane",
+        "./components/forge/audio/AudioInterruptionRecoveryDialog#AudioInterruptionRecoveryDialog",
+        "./components/forge/audio/AudioPreview#AudioPreview",
+        "./components/forge/audio/AudioVideoSync#AudioVideoSync",
+        "./components/forge/audio/AutoDuckEnvelopePanel#AutoDuckEnvelopePanel",
+        "./components/forge/audio/AutomationLane#AutomationLane",
+        "./components/forge/audio/AutomationModePicker#AutomationModePicker",
+        "./components/forge/audio/BeatDetectionMarkerLane#BeatDetectionMarkerLane",
+        "./components/forge/audio/BusAndRoutingMatrix#BusAndRoutingMatrix",
+        "./components/forge/audio/ClipGainEnvelope#ClipGainEnvelope",
+        "./components/forge/audio/DeviceAndChannelPicker#DeviceAndChannelPicker",
+        "./components/forge/audio/InputMonitorToggle#InputMonitorToggle",
+        "./components/forge/audio/InsertEffectRack#InsertEffectRack",
+        "./components/forge/audio/LatencyCalibrationPanel#LatencyCalibrationPanel",
+        "./components/forge/audio/LevelMeter#LevelMeter",
+        "./components/forge/audio/LoudnessMeter#LoudnessMeter",
+        "./components/forge/audio/MixGroupBar#MixGroupBar",
+        "./components/forge/audio/NativeAudioTransport#NativeAudioTransport",
+        "./components/forge/audio/NoiseReductionMonitor#NoiseReductionMonitor",
+        "./components/forge/audio/PanControl#PanControl",
+        "./components/forge/audio/PluginPresetBrowser#PluginPresetBrowser",
+        "./components/forge/audio/RealtimePeakMeter#RealtimePeakMeter",
+        "./components/forge/audio/RecordingArmButton#RecordingArmButton",
+        "./components/forge/audio/RecordingTrack#RecordingTrack",
+        "./components/forge/audio/SoloMuteButtons#SoloMuteButtons",
+        "./components/forge/audio/SoundEffectsLibrary#SoundEffectsLibrary",
+        "./components/forge/audio/SpectrogramView#SpectrogramView",
+        "./components/forge/audio/TempoAndMetronome#TempoAndMetronome",
+        "./components/forge/audio/VoiceIsolationPanel#VoiceIsolationPanel",
+        "./components/forge/cad/DimensionsAndHatching#DimensionsAndHatching",
+        "./components/forge/cad/DraftingCommandLine#DraftingCommandLine",
+        "./components/forge/cad/LiveNodeThumbnail#LiveNodeThumbnail",
+        "./components/forge/cad/ObjectSnapsAndOrtho#ObjectSnapsAndOrtho",
+        "./components/forge/cad/PBRMaterialInspector#PBRMaterialInspector",
+        "./components/forge/cad/ParametricConstraintEditor#ParametricConstraintEditor",
+        "./components/forge/cad/TextureSetPanel#TextureSetPanel",
+        "./components/forge/cad/ViewCubeAndAxisGizmo#ViewCubeAndAxisGizmo",
+        "./components/forge/canvas-tools/ColorDropCanvasTarget#ColorDropCanvasTarget",
+        "./components/forge/canvas-tools/ReferenceImageBoard#ReferenceImageBoard",
+        "./components/forge/canvas/AlignDistributePanel#AlignDistributePanel",
+        "./components/forge/canvas/CanvasRuler#CanvasRuler",
+        "./components/forge/canvas/SnapGridOverlay#SnapGridOverlay",
+        "./components/forge/canvas/SnapGridSettings#SnapGridSettings",
+        "./components/forge/color/AlphaSlider#AlphaSlider",
+        "./components/forge/color/ColorChannelFields#ColorChannelFields",
+        "./components/forge/color/ColorDiscPicker#ColorDiscPicker",
+        "./components/forge/color/ColorGradingWheels#ColorGradingWheels",
+        "./components/forge/color/ColorHarmonyAssistant#ColorHarmonyAssistant",
+        "./components/forge/color/ColorSpaceChooser#ColorSpaceChooser",
+        "./components/forge/color/ColorWheel#ColorWheel",
+        "./components/forge/color/FloatingColorPalette#FloatingColorPalette",
+        "./components/forge/color/FloatingPaletteUndockHandle#FloatingPaletteUndockHandle",
+        "./components/forge/color/ForegroundBackgroundChips#ForegroundBackgroundChips",
+        "./components/forge/color/GamutWarning#GamutWarning",
+        "./components/forge/color/HSLSecondaryEditor#HSLSecondaryEditor",
+        "./components/forge/color/HueSlider#HueSlider",
+        "./components/forge/color/PrintColorChannels#PrintColorChannels",
+        "./components/forge/color/SVColorField#SVColorField",
+        "./components/forge/color/SoftProofControls#SoftProofControls",
+        "./components/forge/color/SpotAndGlobalColorEditor#SpotAndGlobalColorEditor",
+        "./components/forge/color/SwatchGrid#SwatchGrid",
+        "./components/forge/color/ThemeColorReferences#ThemeColorReferences",
+        "./components/forge/color/WideGamutChannels#WideGamutChannels",
+        "./components/forge/design/AutoLayoutInspector#AutoLayoutInspector",
+        "./components/forge/design/CollaborationPresence#CollaborationPresence",
+        "./components/forge/design/ConstraintsPanel#ConstraintsPanel",
+        "./components/forge/design/DevHandoffInspector#DevHandoffInspector",
+        "./components/forge/design/FlowOverview#FlowOverview",
+        "./components/forge/design/HugFillFixedSizeControls#HugFillFixedSizeControls",
+        "./components/forge/design/InteractionTriggerEditor#InteractionTriggerEditor",
+        "./components/forge/design/MultiExportSlices#MultiExportSlices",
+        "./components/forge/design/PrototypePreviewPlayer#PrototypePreviewPlayer",
+        "./components/forge/design/ReusableStylesPanel#ReusableStylesPanel",
+        "./components/forge/design/VariablesAndModes#VariablesAndModes",
+        "./components/forge/devices/DevicePairingDialog#DevicePairingDialog",
+        "./components/forge/devices/PenPairingDialog#PenPairingDialog",
+        "./components/forge/document/BulletsNumberingEditor#BulletsNumberingEditor",
+        "./components/forge/document/CommentsAndReviewRail#CommentsAndReviewRail",
+        "./components/forge/document/DictationSessionPanel#DictationSessionPanel",
+        "./components/forge/document/DocumentReadAloudTransport#DocumentReadAloudTransport",
+        "./components/forge/document/FootnoteCitationEditor#FootnoteCitationEditor",
+        "./components/forge/document/HeadersFootersEditor#HeadersFootersEditor",
+        "./components/forge/document/LayoutSpreadNavigator#LayoutSpreadNavigator",
+        "./components/forge/document/NavigationOutline#NavigationOutline",
+        "./components/forge/document/RichTextRibbon#RichTextRibbon",
+        "./components/forge/document/SpellGrammarPopover#SpellGrammarPopover",
+        "./components/forge/document/TableLayoutInspector#TableLayoutInspector",
+        "./components/forge/document/TableOfContentsEditor#TableOfContentsEditor",
+        "./components/forge/document/TextSelectionAndCaret#TextSelectionAndCaret",
+        "./components/forge/document/TrackChangesView#TrackChangesView",
+        "./components/forge/document/TypographyInspector#TypographyInspector",
+        "./components/forge/ink/BrushTaperControl#BrushTaperControl",
+        "./components/forge/ink/InkToolbar#InkToolbar",
+        "./components/forge/inputs/AssetPresetGallery#AssetPresetGallery",
+        "./components/forge/inputs/InstrumentXYPad#InstrumentXYPad",
+        "./components/forge/layers/ArtboardNavigator#ArtboardNavigator",
+        "./components/forge/layers/ClippingMaskControls#ClipIndicator",
+        "./components/forge/layers/ClippingMaskControls#ClipToggle",
+        "./components/forge/layers/LayerBlendAndOpacity#LayerBlendAndOpacity",
+        "./components/forge/layers/LayerStack#LayerStack",
+        "./components/forge/layers/MaskThumbnailAndEditor#MaskThumbnailAndEditor",
+        "./components/forge/midi/MidiChannelPicker#MidiChannelPicker",
+        "./components/forge/midi/MidiChannelPicker#MidiValueStepper",
+        "./components/forge/motion/EasingPresetGallery#EasingPresetGallery",
+        "./components/forge/motion/ExpressionEditor#ExpressionEditor",
+        "./components/forge/motion/MotionPathEditor#MotionPathEditor",
+        "./components/forge/motion/ParticleEmitterControls#ParticleEmitterControls",
+        "./components/forge/motion/RenderQueuePanel#RenderQueuePanel",
+        "./components/forge/motion/Transform3DInspector#Transform3DInspector",
+        "./components/forge/office/ReadAloudTransport#ReadAloudTransport",
+        "./components/forge/office/office-controls#ChevronGlyph",
+        "./components/forge/office/office-controls#CloseMark",
+        "./components/forge/office/office-controls#PauseGlyph",
+        "./components/forge/office/office-controls#PlayGlyph",
+        "./components/forge/office/office-controls#PlusGlyph",
+        "./components/forge/office/office-controls#SkipGlyph",
+        "./components/forge/office/office-controls#ToolButton",
+        "./components/forge/pdf/AnnotationToolbar#AnnotationToolbar",
+        "./components/forge/pdf/CommentsThreadPanel#CommentsThreadPanel",
+        "./components/forge/pdf/EncryptPermissionsPanel#EncryptPermissionsPanel",
+        "./components/forge/pdf/ExtractMergeSplitDialog#ExtractMergeSplitDialog",
+        "./components/forge/pdf/HyperlinkInspector#HyperlinkInspector",
+        "./components/forge/pdf/PDFCompareOverlay#PDFCompareOverlay",
+        "./components/forge/pdf/PDFPageLayoutSelector#PDFPageLayoutSelector",
+        "./components/forge/pdf/PDFTextSelection#PDFTextSelection",
+        "./components/forge/pdf/RedactionReviewTool#RedactionReviewTool",
+        "./components/forge/pdf/VirtualPDFPageViewer#VirtualPDFPageViewer",
+        "./components/forge/photo/BatchExportPanel#BatchExportPanel",
+        "./components/forge/photo/CleanupAndRetouchPanel#CleanupAndRetouchPanel",
+        "./components/forge/photo/LensCorrectionPanel#LensCorrectionPanel",
+        "./components/forge/photo/LocalMaskBrush#LocalMaskBrush",
+        "./components/forge/photo/LuminanceColorRangeMask#LuminanceColorRangeMask",
+        "./components/forge/photo/PhotoLibraryGrid#PhotoLibraryGrid",
+        "./components/forge/photo/PhotoMetadataInspector#PhotoMetadataInspector",
+        "./components/forge/photo/PresetFilmstrip#PresetFilmstrip",
+        "./components/forge/photo/RatingAndFlagControl#RatingAndFlagControl",
+        "./components/forge/photo/ToneAndPresence#ToneAndPresence",
+        "./components/forge/selection/MagicSelectionControls#MagicSelectionControls",
+        "./components/forge/selection/MagicSelectionControls#MagicWandCanvas",
+        "./components/forge/selection/MultiSelectionControls#MultiSelectionControls",
+        "./components/forge/selection/SelectionMarquee#SelectionMarquee",
+        "./components/forge/slides/ChartAndTableEditor#ChartAndTableEditor",
+        "./components/forge/slides/ConnectorAndDiagramTools#ConnectorAndDiagramTools",
+        "./components/forge/slides/MorphPreview#MorphPreview",
+        "./components/forge/slides/PresenterInkStrip#PresenterInkStrip",
+        "./components/forge/slides/RehearsalTimers#RehearsalTimers",
+        "./components/forge/slides/SlideAnimationPane#SlideAnimationPane",
+        "./components/forge/slides/SlideCanvas#SlideCanvas",
+        "./components/forge/slides/SlideFilmstrip#SlideFilmstrip",
+        "./components/forge/slides/SlideNotesEditor#SlideNotesEditor",
+        "./components/forge/slides/SlideSorter#SlideSorter",
+        "./components/forge/slides/SlideThumbnail#SlideObjectView",
+        "./components/forge/slides/SlideThumbnail#SlideThumbnail",
+        "./components/forge/slides/TransitionPicker#TransitionPicker",
+        "./components/forge/spreadsheet/ChartBuilder#ChartBuilder",
+        "./components/forge/spreadsheet/FormulaAutocomplete#FormulaAutocomplete",
+        "./components/forge/spreadsheet/FormulaBar#FormulaBar",
+        "./components/forge/spreadsheet/FormulaReferenceText#FormulaReferenceText",
+        "./components/forge/spreadsheet/FreezeSplitControls#FreezeSplitControls",
+        "./components/forge/spreadsheet/NameBox#NameBox",
+        "./components/forge/spreadsheet/ReferenceColorizer#ReferenceColorizer",
+        "./components/forge/spreadsheet/SavedSheetViewManager#SavedSheetViewManager",
+        "./components/forge/spreadsheet/SheetTabs#SheetTabs",
+        "./components/forge/spreadsheet/SortFilterHeader#SortFilterHeader",
+        "./components/forge/spreadsheet/Sparkline#Sparkline",
+        "./components/forge/spreadsheet/SparklineEditor#SparklineEditor",
+        "./components/forge/spreadsheet/SplitSpreadsheetView#SplitSpreadsheetView",
+        "./components/forge/spreadsheet/SpreadsheetCardsView#SpreadsheetCardsView",
+        "./components/forge/spreadsheet/TableStyleGallery#TableStyleGallery",
+        "./components/forge/spreadsheet/ValidationDropdown#ValidationDropdown",
+        "./components/forge/spreadsheet/VirtualSpreadsheetGrid#VirtualSpreadsheetGrid",
+        "./components/forge/timeline/ExportMonitor#ExportMonitor",
+        "./components/forge/timeline/InOutRangeHandles#InOutRangeHandles",
+        "./components/forge/timeline/JKLShuttleController#JKLShuttleController",
+        "./components/forge/timeline/LoopRangeBar#LoopRangeBar",
+        "./components/forge/timeline/MediaMonitor#MediaMonitor",
+        "./components/forge/timeline/ModeEdgeHandles#ModeEdgeHandles",
+        "./components/forge/timeline/MulticamAngleViewer#MulticamAngleViewer",
+        "./components/forge/timeline/PictureInPictureControls#PictureInPictureControls",
+        "./components/forge/timeline/PlaybackRateMenu#PlaybackRateMenu",
+        "./components/forge/timeline/ProgramMonitor#ProgramMonitor",
+        "./components/forge/timeline/RenderCacheIndicator#RenderCacheIndicator",
+        "./components/forge/timeline/SafeAreaOverlay#SafeAreaOverlay",
+        "./components/forge/timeline/SeekBar#SeekBar",
+        "./components/forge/timeline/SourceMonitor#SourceMonitor",
+        "./components/forge/timeline/TimecodeDisplay#TimecodeDisplay",
+        "./components/forge/timeline/TimelineMarkers#TimelineMarkers",
+        "./components/forge/timeline/TimelinePlayhead#TimelinePlayhead",
+        "./components/forge/timeline/TimelineRuler#TimelineRuler",
+        "./components/forge/timeline/TimelineZoomAndScroll#TimelineZoomAndScroll",
+        "./components/forge/timeline/TransitionPresetBrowser#TransitionPresetBrowser",
+        "./components/forge/timeline/TransportControls#TransportControls",
+        "./components/forge/timeline/VideoFilmstrip#VideoFilmstrip",
+        "./components/forge/timeline/VideoQualityInspector#VideoQualityInspector",
+        "./components/forge/timeline/VideoStabilizationInspector#VideoStabilizationInspector",
+        "./components/forge/vector/PenNodeEditor#PenNodeEditor",
+        "./components/forge/vector/ShapeBuilder#ShapeBuilder",
+        "./components/html#Article",
+        "./components/html#Aside",
+        "./components/html#Footer",
+        "./components/html#Header",
+        "./components/html#Heading",
+        "./components/html#Input",
+        "./components/html#Link",
+        "./components/html#Main",
+        "./components/html#Nav",
+        "./components/html#Page",
+        "./components/html#Paragraph",
+        "./components/html#Section",
+        "./components/html#Text",
+        "./components/layout/AdaptiveColumns#AdaptiveColumn",
+        "./components/layout/AdaptiveColumns#AdaptiveColumns",
+        "./components/layout/ContentFrame#ContentFrame",
+        "./components/navigation/CollapsibleDrawer#CollapsibleDrawer",
+        "./components/overlays/AnchoredPopover#AnchoredPopover",
+        "./components/overlays/CommandPalette#CommandPalette",
+        "./components/overlays/CommandPopover#CommandPopover",
+        "./components/shell/AdaptiveDock#AdaptiveDock",
+        "./components/shell/AssetBrowser#AssetBrowser",
+        "./components/shell/ContextMenu#ContextMenu",
+        "./components/shell/ContextualToolbar#ContextualToolbar",
+        "./components/shell/DocumentTabBar#DocumentTabBar",
+        "./components/shell/FindReplaceContent#FindReplaceContent",
+        "./components/shell/FindReplacePopover#FindReplacePopover",
+        "./components/shell/FocusAndA11yLayer#FocusAndA11yLayer",
+        "./components/shell/HistoryPanel#HistoryPanel",
+        "./components/shell/InspectorPanel#InspectorPanel",
+        "./components/shell/InspectorSearch#InspectorSearch",
+        "./components/shell/InspectorSection#InspectorSection",
+        "./components/shell/KeyboardShortcutHUD#KeyboardShortcutHUD",
+        "./components/shell/MenuButton#MenuButton",
+        "./components/shell/PaneSplitter#PaneSplitter",
+        "./components/shell/PresetGallery#PresetGallery",
+        "./components/shell/PropertyRow#PropertyRow",
+        "./components/shell/SplitButton#SplitButton",
+        "./components/shell/StatusBar#StatusBar",
+        "./components/shell/ToolRail#ToolRail",
+        "./components/shell/UnitInput#UnitInput",
+        "./components/shell/WorkspacePresetSwitcher#WorkspacePresetSwitcher"
+      ],
+      "struck": [
+        {
+          "component": "./components/data/DataTable#DataTable",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @tanstack/react-table is not resolvable in the windows lane",
+          "unresolved": [
+            "@tanstack/react-table"
+          ]
+        },
+        {
+          "component": "./components/files/DropZone#DropZone",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED expo-drag-drop-content-view is not resolvable in the windows lane",
+          "unresolved": [
+            "expo-drag-drop-content-view"
+          ]
+        },
+        {
+          "component": "./components/forge/ColorChannels#ColorChannels",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @expo/ui is not resolvable in the windows lane",
+          "unresolved": [
+            "@expo/ui"
+          ]
+        },
+        {
+          "component": "./components/forge/NativeSeekBar#NativeSeekBar",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @expo/ui/swift-ui is not resolvable in the windows lane",
+          "unresolved": [
+            "@expo/ui",
+            "@expo/ui/jetpack-compose",
+            "@expo/ui/swift-ui",
+            "@expo/ui/swift-ui/modifiers"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/ChannelStrip#ChannelStrip",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/LevelFader#LevelFader",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/MixingConsole#MixingConsole",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/PanAndBalanceControl#PanAndBalanceControl",
+          "reason": "missing-peer",
+          "error": "mounted only with a stub for react-native-gesture-handler",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/StereoMultichannelWaveform#StereoMultichannelWaveform",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/VerticalFader#VerticalFader",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/Native3DViewport#Native3DViewport",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/NodeLibrarySearch#NodeLibrarySearch",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/TextureBrush3D#TextureBrush3D",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/TransformGizmo3D#TransformGizmo3D",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/UVEditor#UVEditor",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/canvas-tools/GestureCustomizationPanel#GestureCustomizationPanel",
+          "reason": "lane-failure",
+          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1",
+          "unresolved": []
+        },
+        {
+          "component": "./components/forge/canvas/CanvasPanZoom#CanvasPanZoom",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/canvas/GPUCanvasViewport#GPUCanvasViewport",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-skia is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/color/ColorPickerDialog#ColorPickerDialog",
+          "reason": "missing-peer",
+          "error": "mounted only with a stub for @expo/ui, expo-linear-gradient",
+          "unresolved": [
+            "@expo/ui",
+            "expo-linear-gradient"
+          ]
+        },
+        {
+          "component": "./components/forge/color/HsvPicker#HsvPicker",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED expo-linear-gradient is not resolvable in the windows lane",
+          "unresolved": [
+            "@expo/ui",
+            "expo-linear-gradient"
+          ]
+        },
+        {
+          "component": "./components/forge/document/InsertTableGrid#InsertTableGrid",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/BrushDynamicsInspector#BrushDynamicsInspector",
+          "reason": "lane-failure",
+          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1",
+          "unresolved": []
+        },
+        {
+          "component": "./components/forge/ink/BrushPresetBrowser#BrushPresetBrowser",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/BrushStabilizationPreview#BrushStabilizationPreview",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/InkStrokePreview#InkStrokePreview",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/TimelapsePlaybackExporter#TimelapsePlaybackExporter",
+          "reason": "lane-failure",
+          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.25",
+          "unresolved": []
+        },
+        {
+          "component": "./components/forge/inputs/PointEditor2D#PointEditor2D",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PDFInlineTextEdit#PDFInlineTextEdit",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PDFThumbnailSidebar#PDFThumbnailSidebar",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PageReorderOrganizer#PageReorderOrganizer",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/SignatureStampTool#SignatureStampTool",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/selection/SelectionBounds#SelectionBounds",
+          "reason": "missing-peer",
+          "error": "mounted only with a stub for react-native-gesture-handler",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/slides/InkAndLaserPointer#InkAndLaserPointer",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/slides/PresenterInkOverlay#PresenterInkOverlay",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/spreadsheet/FillHandleAndAutoFill#AutoFillModePicker",
+          "reason": "missing-peer",
+          "error": "mounted only with a stub for react-native-gesture-handler",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/spreadsheet/PivotFieldList#PivotFieldList",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/FrameAccurateScrubber#FrameAccurateScrubber",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @expo/ui/swift-ui is not resolvable in the windows lane",
+          "unresolved": [
+            "@expo/ui",
+            "@expo/ui/jetpack-compose",
+            "@expo/ui/swift-ui",
+            "@expo/ui/swift-ui/modifiers"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/MotionTrackingOverlay#MotionTrackingOverlay",
+          "reason": "missing-peer",
+          "error": "mounted only with a stub for react-native-gesture-handler",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/vector/FillStrokeInspector#FillStrokeInspector",
+          "reason": "lane-failure",
+          "error": "Error: Exception in HostFunction: Loss of precision during arithmetic conversion: (__int64) 0.1",
+          "unresolved": []
+        },
+        {
+          "component": "./components/gestures/GestureHandlerDrag#GestureHandlerDrag",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the windows lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/theme/NightScope#NightScope",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED uniwind is not resolvable in the windows lane",
+          "unresolved": [
+            "uniwind"
+          ]
+        }
+      ],
+      "unmeasured": [
+        {
+          "component": "./components/forge/audio/AudioClipTrimAndFade#AudioClipTrimAndFade",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid audio region"
+        },
+        {
+          "component": "./components/forge/audio/AudioEffectsPresetPanel#AudioEffectsPresetPanel",
+          "reason": "not-attributed",
+          "error": "TypeError: Cannot read property 'id' of null"
+        },
+        {
+          "component": "./components/forge/audio/AudioProcessingPanel#AudioProcessingPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid audio processing panel"
+        },
+        {
+          "component": "./components/forge/audio/DynamicsTransferGraph#DynamicsTransferGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid dynamics data"
+        },
+        {
+          "component": "./components/forge/audio/EQFrequencyGraph#EQFrequencyGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid EQ data"
+        },
+        {
+          "component": "./components/forge/audio/LiveRecordingWaveform#LiveRecordingWaveform",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid live recording measurement"
+        },
+        {
+          "component": "./components/forge/audio/LoopPunchRecording#LoopPunchRecording",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid loop recording range"
+        },
+        {
+          "component": "./components/forge/audio/SampleEditor#SampleEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid audio region"
+        },
+        {
+          "component": "./components/forge/audio/SpeechTranscriptTakeReview#SpeechTranscriptTakeReview",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid caption transcript"
+        },
+        {
+          "component": "./components/forge/audio/SurroundPanView#SurroundPanView",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid surround field"
+        },
+        {
+          "component": "./components/forge/audio/TakePlaylistAndComping#TakePlaylistAndComping",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid take comping data"
+        },
+        {
+          "component": "./components/forge/audio/VoiceoverCountdownAndTakeBin#VoiceoverCountdownAndTakeBin",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid live recording measurement"
+        },
+        {
+          "component": "./components/forge/cad/BakingMapPanel#BakingMapPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid bake capabilities"
+        },
+        {
+          "component": "./components/forge/cad/NodeGraphCanvas#NodeGraphCanvas",
+          "reason": "not-attributed",
+          "error": "Error: Invalid graph ports: Sample"
+        },
+        {
+          "component": "./components/forge/cad/PaperSpaceLayout#PaperSpaceLayout",
+          "reason": "not-attributed",
+          "error": "RangeError: Page margins and columns must leave a positive text area"
+        },
+        {
+          "component": "./components/forge/cad/TextureMaskAndGenerator#TextureMaskAndGenerator",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/canvas/GuidedCropAndStraighten#GuidedCropAndStraighten",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalized crop rect"
+        },
+        {
+          "component": "./components/forge/canvas/SmartGuides#SmartGuides",
+          "reason": "not-attributed",
+          "error": "TypeError: Cannot read property 'from' of null"
+        },
+        {
+          "component": "./components/forge/canvas/TransformOriginHandle#TransformOriginHandle",
+          "reason": "not-attributed",
+          "error": "RangeError: TransformOriginHandle needs a transform, or an unavailableReason saying why there is none"
+        },
+        {
+          "component": "./components/forge/color/CurvesEditor#CurvesEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: A linear/monotone curve requires 2..64 points"
+        },
+        {
+          "component": "./components/forge/color/EyedropperTool#EyedropperTool",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid document sampling point or radius"
+        },
+        {
+          "component": "./components/forge/color/GradientMeshEditor#GradientMeshEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Mesh requires a 2..16 by 2..16 row-major grid"
+        },
+        {
+          "component": "./components/forge/color/GradientStopEditor#GradientStopEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: A gradient needs at least two stops"
+        },
+        {
+          "component": "./components/forge/color/LevelsEditor#LevelsEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Levels require increasing input and ordered output bounds"
+        },
+        {
+          "component": "./components/forge/color/LiveHistogram#LiveHistogram",
+          "reason": "not-attributed",
+          "error": "RangeError: Histogram domain must increase"
+        },
+        {
+          "component": "./components/forge/color/VideoScopesPanel#VideoScopesPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Histogram domain must increase"
+        },
+        {
+          "component": "./components/forge/design/CommentPins#CommentPins",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid comment pin geometry"
+        },
+        {
+          "component": "./components/forge/design/ComponentVariantPicker#ComponentVariantPicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/design/FrameAndComponentTree#FrameAndComponentTree",
+          "reason": "not-attributed",
+          "error": "RangeError: Outline hierarchy cycle"
+        },
+        {
+          "component": "./components/forge/design/PrototypeConnectionTool#PrototypeConnectionTool",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid prototype geometry"
+        },
+        {
+          "component": "./components/forge/document/MailMergeFieldPicker#MailMergeFieldPicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid mail merge data"
+        },
+        {
+          "component": "./components/forge/document/PageSetupPanel#PageSetupPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Page margins and columns must leave a positive text area"
+        },
+        {
+          "component": "./components/forge/document/PaginatedTextCanvas#PaginatedTextCanvas",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid paginated text layout"
+        },
+        {
+          "component": "./components/forge/document/ParagraphRuler#ParagraphRuler",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid paragraph ruler"
+        },
+        {
+          "component": "./components/forge/document/ParagraphStylesGallery#ParagraphStylesGallery",
+          "reason": "not-attributed",
+          "error": "RangeError: Paragraph style inheritance cycle"
+        },
+        {
+          "component": "./components/forge/document/SpellGrammarPopover#SpellGrammarContent",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid spelling issue"
+        },
+        {
+          "component": "./components/forge/document/TextWrapAndFrames#TextWrapAndFrames",
+          "reason": "not-attributed",
+          "error": "RangeError: Text frame thread cycle"
+        },
+        {
+          "component": "./components/forge/graph/PatchGraph#PatchGraph",
+          "reason": "not-attributed",
+          "error": "Error: Invalid graph ports: Sample"
+        },
+        {
+          "component": "./components/forge/graphics/ImageCropOverlay#ImageCropOverlay",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalized crop rect"
+        },
+        {
+          "component": "./components/forge/ink/EraserModePicker#EraserModePicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid eraser capabilities"
+        },
+        {
+          "component": "./components/forge/inputs/InstrumentKnob#InstrumentKnob",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/forge/inputs/OutlineTree#OutlineTree",
+          "reason": "not-attributed",
+          "error": "RangeError: Outline hierarchy cycle"
+        },
+        {
+          "component": "./components/forge/inputs/PrecisionScrubber#PrecisionScrubber",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/forge/inputs/PropertyInspector#PropertyInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/layers/CanvasCompareView#CanvasCompareView",
+          "reason": "not-attributed",
+          "error": "RangeError: Raster needs 4 RGBA bytes, got 1"
+        },
+        {
+          "component": "./components/forge/layers/LayerThumbnail#LayerThumbnail",
+          "reason": "not-attributed",
+          "error": "RangeError: Raster needs 4 RGBA bytes, got 1"
+        },
+        {
+          "component": "./components/forge/midi/MIDIPianoRoll#MIDIPianoRoll",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid MIDI note roster"
+        },
+        {
+          "component": "./components/forge/midi/MIDIVelocityLane#MIDIVelocityLane",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid MIDI note roster"
+        },
+        {
+          "component": "./components/forge/midi/StepSequencer#StepSequencer",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid MIDI note roster"
+        },
+        {
+          "component": "./components/forge/motion/CameraAndLightControls#CameraAndLightControls",
+          "reason": "not-attributed",
+          "error": "RangeError: Camera target must differ from its position"
+        },
+        {
+          "component": "./components/forge/motion/CompositionLayerTree#CompositionLayerTree",
+          "reason": "not-attributed",
+          "error": "TypeError: Invalid composition layer"
+        },
+        {
+          "component": "./components/forge/motion/EffectStackAndInspector#EffectStackAndInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid effect numeric parameter"
+        },
+        {
+          "component": "./components/forge/motion/KeyframeSpeedGraph#KeyframeSpeedGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/motion/KeyframeValueGraph#KeyframeValueGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/motion/MatteAndMaskPanel#MatteAndMaskPanel",
+          "reason": "not-attributed",
+          "error": "TypeError: A layer cannot matte itself"
+        },
+        {
+          "component": "./components/forge/motion/MotionKeyframeTimeline#MotionKeyframeTimeline",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/motion/NodeGraphEditor#NodeGraphEditor",
+          "reason": "not-attributed",
+          "error": "Error: Invalid graph ports: Sample"
+        },
+        {
+          "component": "./components/forge/motion/TimeRemapCurve#TimeRemapCurve",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/pdf/BookmarkOutline#BookmarkOutline",
+          "reason": "not-attributed",
+          "error": "RangeError: Outline hierarchy cycle"
+        },
+        {
+          "component": "./components/forge/pdf/PDFFormFieldEditor#PDFFormFieldEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF form fields"
+        },
+        {
+          "component": "./components/forge/pdf/PDFReadAloudTransport#PDFReadAloudTransport",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF speech page mapping"
+        },
+        {
+          "component": "./components/forge/pdf/PDFScanSession#PDFScanSession",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid scan session"
+        },
+        {
+          "component": "./components/forge/pdf/PDFVoiceNoteAttachment#PDFVoiceNoteAttachment",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF voice note metadata"
+        },
+        {
+          "component": "./components/forge/pdf/PrintAndExportPreview#PrintAndExportPreview",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/pdf/TextSearchResults#TextSearchResults",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF search state"
+        },
+        {
+          "component": "./components/forge/photo/BeforeAfterCompare#BeforeAfterCompare",
+          "reason": "not-attributed",
+          "error": "RangeError: Raster needs 4 RGBA bytes, got 1"
+        },
+        {
+          "component": "./components/forge/photo/CatalogFilterBar#CatalogFilterBar",
+          "reason": "not-attributed",
+          "error": "RangeError: Catalog dates must be valid YYYY-MM-DD"
+        },
+        {
+          "component": "./components/forge/photo/EightBandColorMixer#EightBandColorMixer",
+          "reason": "not-attributed",
+          "error": "TypeError: Invalid red"
+        },
+        {
+          "component": "./components/forge/photo/ExposureAndWhiteBalance#ExposureAndWhiteBalance",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/photo/LinearRadialGradientMask#LinearRadialGradientMask",
+          "reason": "not-attributed",
+          "error": "RangeError: Gradient mask axis must have length within the bounded image neighborhood"
+        },
+        {
+          "component": "./components/forge/photo/PhotoVersionHistoryBrowser#PhotoVersionHistoryBrowser",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/photo/PresetManager#PresetManager",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/photo/RAWDevelopPanel#RAWDevelopPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/platform/AccessiblePrecisionScrubControl#AccessiblePrecisionScrubControl",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/forge/slides/MasterLayoutEditor#MasterLayoutEditor",
+          "reason": "not-attributed",
+          "error": "Error: Master layout inheritance cannot form a cycle"
+        },
+        {
+          "component": "./components/forge/slides/MediaInsertInspector#MediaInsertInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid slide media"
+        },
+        {
+          "component": "./components/forge/slides/PresenterView#PresenterView",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid presenter session"
+        },
+        {
+          "component": "./components/forge/slides/ShapePresetGallery#ShapePresetGallery",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid shape adjustment handles"
+        },
+        {
+          "component": "./components/forge/slides/ThemeAndTemplateGallery#ThemeAndTemplateGallery",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/spreadsheet/CellFormatInspector#CellFormatInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/spreadsheet/CellSelectionOverlay#CellSelectionOverlay",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid cell selection geometry"
+        },
+        {
+          "component": "./components/forge/spreadsheet/ConditionalFormatRules#ConditionalFormatRules",
+          "reason": "not-attributed",
+          "error": "RangeError: Conditional rule needs a valid range and ordered thresholds"
+        },
+        {
+          "component": "./components/forge/spreadsheet/DataImportWizard#DataImportWizard",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid import preview"
+        },
+        {
+          "component": "./components/forge/spreadsheet/FillHandleAndAutoFill#FillHandleAndAutoFill",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid cell selection geometry"
+        },
+        {
+          "component": "./components/forge/spreadsheet/RangeComments#RangeComments",
+          "reason": "not-attributed",
+          "error": "RangeError: Range comments require actual range anchors"
+        },
+        {
+          "component": "./components/forge/timeline/AudioClipWaveform#AudioClipWaveform",
+          "reason": "not-attributed",
+          "error": "RangeError: Waveform range must satisfy 0 <= start < end <= 1"
+        },
+        {
+          "component": "./components/forge/timeline/AutoCaptionTranscriptTimeline#AutoCaptionTranscriptTimeline",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid caption transcript"
+        },
+        {
+          "component": "./components/forge/timeline/AutoReframeGuides#AutoReframeGuides",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalized crop rect"
+        },
+        {
+          "component": "./components/forge/timeline/BatchEditPanel#BatchEditPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/CaptionWordTimingHandles#CaptionWordTimingHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid caption words"
+        },
+        {
+          "component": "./components/forge/timeline/ClipTrimHandles#ClipTrimHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: Clip needs 0 <= sourceIn < sourceOut and a positive speed"
+        },
+        {
+          "component": "./components/forge/timeline/CoverFramePicker#CoverFramePicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid cover selection"
+        },
+        {
+          "component": "./components/forge/timeline/DragReorderAndRipple#DragReorderAndRipple",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/OverlayAndEffectsTrackStack#OverlayAndEffectsTrackStack",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/RazorSplitTool#RazorSplitTool",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/RollSlipSlideControls#RollSlipSlideControls",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/ScopesDock#ScopesDock",
+          "reason": "not-attributed",
+          "error": "RangeError: Histogram domain must increase"
+        },
+        {
+          "component": "./components/forge/timeline/StickerMotionLane#StickerMotionLane",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid sticker timeline"
+        },
+        {
+          "component": "./components/forge/timeline/TimelineClipLane#TimelineClipLane",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/TrackHeaders#TrackHeaders",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/TransitionHandles#TransitionHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/VideoEffectsBrowser#VideoEffectsBrowser",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid effect numeric parameter"
+        },
+        {
+          "component": "./components/forge/timeline/VideoSpeedRampCurve#VideoSpeedRampCurve",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/vector/GradientOnCanvasHandles#GradientOnCanvasHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: A gradient needs at least two stops"
+        },
+        {
+          "component": "./components/gestures/PanResponderDrag#PanResponderDrag",
+          "reason": "not-attributed",
+          "error": "Error: The argument must be a React element, but you passed null."
+        },
+        {
+          "component": "./components/shell/NumericScrubField#NumericScrubField",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/shell/RangeSlider#RangeSlider",
+          "reason": "not-attributed",
+          "error": "RangeError: Expected finite min < max and step > 0"
+        },
+        {
+          "component": "./components/shell/RibbonTabs#RibbonTabs",
+          "reason": "not-attributed",
+          "error": "TypeError: Duplicate ribbon id Sample"
+        },
+        {
+          "component": "./components/shell/RotaryKnob#RotaryKnob",
+          "reason": "not-attributed",
+          "error": "RangeError: Expected finite min < max and step > 0"
+        },
+        {
+          "component": "./components/shell/SliderField#SliderField",
+          "reason": "not-attributed",
+          "error": "RangeError: Expected finite min < max and step > 0"
+        },
+        {
+          "component": "./components/shell/ToastAndProgress#ToastAndProgress",
+          "reason": "not-attributed",
+          "error": "TypeError: Job actions require onJobAction"
+        },
+        {
+          "component": "./components/shell/WorkspaceHost#WorkspaceHost",
+          "reason": "not-attributed",
+          "error": "TypeError: Cannot read property 'rect' of null"
+        }
+      ],
+      "modulesLoaded": [
+        "./components/data/tree-grid",
+        "./components/data/tree-row-heights",
+        "./components/files/drop-model",
+        "./components/files/file-transfer-model",
+        "./components/forge/audio/audio-recovery-model",
+        "./components/forge/audio/automation",
+        "./components/forge/audio/dynamics-graph",
+        "./components/forge/audio/eq-graph",
+        "./components/forge/audio/inserts",
+        "./components/forge/audio/level",
+        "./components/forge/audio/level-meter",
+        "./components/forge/audio/loudness",
+        "./components/forge/audio/meter-ballistics",
+        "./components/forge/audio/mix-groups",
+        "./components/forge/audio/mixer",
+        "./components/forge/audio/pan",
+        "./components/forge/audio/preview-model",
+        "./components/forge/audio/recording-model",
+        "./components/forge/audio/routing",
+        "./components/forge/audio/spectrogram",
+        "./components/forge/audio/tempo",
+        "./components/forge/canvas-tools/color-drop-model",
+        "./components/forge/canvas-tools/gesture-map-model",
+        "./components/forge/canvas-tools/reference-board-model",
+        "./components/forge/canvas/align-distribute-model",
+        "./components/forge/canvas/canvas-pan-zoom-model",
+        "./components/forge/canvas/canvas-viewport",
+        "./components/forge/canvas/graphite-frame",
+        "./components/forge/canvas/ruler-model",
+        "./components/forge/canvas/smart-guides-model",
+        "./components/forge/canvas/snap-grid-model",
+        "./components/forge/canvas/transform-origin-model",
+        "./components/forge/color",
+        "./components/forge/color/channel-fields",
+        "./components/forge/color/color-adjustments",
+        "./components/forge/color/color-management",
+        "./components/forge/color/color-pair",
+        "./components/forge/color/color-picker-dialog-model",
+        "./components/forge/color/contrast",
+        "./components/forge/color/fieldGeometry",
+        "./components/forge/color/fieldGesture",
+        "./components/forge/color/floating-palette",
+        "./components/forge/color/gradient-mesh",
+        "./components/forge/color/gradient-options",
+        "./components/forge/color/harmony",
+        "./components/forge/color/hsl",
+        "./components/forge/color/swatches",
+        "./components/forge/color/wheel-geometry",
+        "./components/forge/devices/pairing-model",
+        "./components/forge/document/list-model",
+        "./components/forge/document/outline-model",
+        "./components/forge/document/ribbon-model",
+        "./components/forge/formula-refs",
+        "./components/forge/frame-throttle",
+        "./components/forge/graph/model",
+        "./components/forge/graphics/crop",
+        "./components/forge/ink/brush-model",
+        "./components/forge/ink/ink-model",
+        "./components/forge/inputs/precision",
+        "./components/forge/inputs/precision-scrubber-model",
+        "./components/forge/layers/artboard-model",
+        "./components/forge/layers/clipping-model",
+        "./components/forge/layers/compare-model",
+        "./components/forge/layers/layer-blend-model",
+        "./components/forge/layers/layer-model",
+        "./components/forge/layers/layer-thumbnail-model",
+        "./components/forge/layers/layer-tree-model",
+        "./components/forge/layers/mask-model",
+        "./components/forge/midi/note-grid",
+        "./components/forge/midi/velocity-line",
+        "./components/forge/motion/composition-tree",
+        "./components/forge/motion/motion-curves",
+        "./components/forge/motion/motion-easing",
+        "./components/forge/motion/motion-effects",
+        "./components/forge/motion/motion-expression",
+        "./components/forge/motion/motion-node-graph",
+        "./components/forge/motion/motion-path",
+        "./components/forge/motion/motion-render",
+        "./components/forge/motion/motion-settings",
+        "./components/forge/motion/motion-timeline",
+        "./components/forge/office/read-aloud-model",
+        "./components/forge/pdf/annotation-model",
+        "./components/forge/pdf/comments-model",
+        "./components/forge/pdf/search-model",
+        "./components/forge/photo/photo-adjustments",
+        "./components/forge/photo/photo-catalog",
+        "./components/forge/photo/photo-export",
+        "./components/forge/photo/photo-masks",
+        "./components/forge/photo/photo-metadata",
+        "./components/forge/photo/photo-presets",
+        "./components/forge/range-paste",
+        "./components/forge/range-tsv",
+        "./components/forge/selection/magic-selection-model",
+        "./components/forge/selection/multi-selection-model",
+        "./components/forge/selection/selection-bounds-model",
+        "./components/forge/selection/selection-model",
+        "./components/forge/sheet-window",
+        "./components/forge/slides/animation-model",
+        "./components/forge/slides/canvas-model",
+        "./components/forge/slides/presenter-ink-model",
+        "./components/forge/slides/slide-model",
+        "./components/forge/spreadsheet/cards-model",
+        "./components/forge/spreadsheet/chart-model",
+        "./components/forge/spreadsheet/fill-handle",
+        "./components/forge/spreadsheet/freeze-split-model",
+        "./components/forge/spreadsheet/reference-colors",
+        "./components/forge/spreadsheet/sheet-tabs-model",
+        "./components/forge/spreadsheet/sparkline-model",
+        "./components/forge/timebase",
+        "./components/forge/timeline/batch",
+        "./components/forge/timeline/edits",
+        "./components/forge/timeline/loop-range",
+        "./components/forge/timeline/markers",
+        "./components/forge/timeline/placement",
+        "./components/forge/timeline/ruler",
+        "./components/forge/timeline/safe-area",
+        "./components/forge/timeline/shuttle",
+        "./components/forge/timeline/time",
+        "./components/forge/timeline/track-stack",
+        "./components/forge/timeline/transition-presets",
+        "./components/forge/timeline/transitions",
+        "./components/forge/timeline/trim-modes",
+        "./components/forge/timeline/viewport",
+        "./components/forge/timeline/waveform-cache",
+        "./components/forge/vector/fill-stroke-model",
+        "./components/forge/vector/gradient-handles-model",
+        "./components/forge/vector/pen-node-model",
+        "./components/forge/vector/shape-builder-model",
+        "./components/forge/vector/vector-types",
+        "./components/forge/waveform",
+        "./components/forms/choice-keys",
+        "./components/forms/option-groups",
+        "./components/gestures/drag-controller",
+        "./components/gestures/drag-transport",
+        "./components/navigation/drawer-model",
+        "./components/overlays/anchored-popover-types",
+        "./components/overlays/command-filter",
+        "./components/overlays/focus-cycle",
+        "./components/overlays/focus-restore",
+        "./components/overlays/measure-anchor",
+        "./components/overlays/popover-position",
+        "./components/overlays/useTriggerAnchor",
+        "./components/shell/a11y-audit",
+        "./components/shell/a11y-model",
+        "./components/shell/asset-browser-model",
+        "./components/shell/contextual-toolbar-model",
+        "./components/shell/dock-model",
+        "./components/shell/document-tabs-model",
+        "./components/shell/find-replace-model",
+        "./components/shell/history-model",
+        "./components/shell/inspector-context",
+        "./components/shell/inspector-model",
+        "./components/shell/keyboard-map",
+        "./components/shell/preset-model",
+        "./components/shell/progress-model",
+        "./components/shell/ribbon-model",
+        "./components/shell/screen-reader-focus",
+        "./components/shell/shell-keys",
+        "./components/shell/shortcut-model",
+        "./components/shell/slider-model",
+        "./components/shell/splitter-model",
+        "./components/shell/status-model",
+        "./components/shell/tool-rail-model",
+        "./components/shell/unit-expression",
+        "./components/shell/workspace-model",
+        "./components/shell/workspace-preset-model"
+      ],
+      "modulesStruck": [],
+      "modulesUnmeasured": []
+    },
+    "macos": {
+      "supported": [
+        ".#Button",
+        ".#Card",
+        ".#NavigationRail",
+        ".#NavigationShell",
+        ".#TextField",
+        "./components/Button#Button",
+        "./components/Card#Card",
+        "./components/DragGrabHandle#DragGrabHandle",
+        "./components/FieldGroup#FieldGroup",
+        "./components/FieldGroup#FieldSection",
+        "./components/IconButton#IconButton",
+        "./components/List#List",
+        "./components/List#ListItem",
+        "./components/NavigationRail#NavigationRail",
+        "./components/NavigationRail#NavigationShell",
+        "./components/SegmentedControl#SegmentedControl",
+        "./components/Select#Select",
+        "./components/TabBar#TabBar",
+        "./components/TextField#TextField",
+        "./components/Toolbar#Toolbar",
+        "./components/content/KeyValueList#KeyValueList",
+        "./components/data/TreeGrid#TreeGrid",
+        "./components/feedback/Badge#Badge",
+        "./components/feedback/Banner#Banner",
+        "./components/feedback/EmptyState#EmptyState",
+        "./components/feedback/ErrorMessage#ErrorMessage",
+        "./components/files/FileImportExportSheet#FileImportExportSheet",
+        "./components/files/FilePicker#FilePicker",
+        "./components/forge/SpreadsheetGrid#SpreadsheetGrid",
+        "./components/forge/WaveformLane#WaveformLane",
+        "./components/forge/audio/AudioInterruptionRecoveryDialog#AudioInterruptionRecoveryDialog",
+        "./components/forge/audio/AudioPreview#AudioPreview",
+        "./components/forge/audio/AudioVideoSync#AudioVideoSync",
+        "./components/forge/audio/AutoDuckEnvelopePanel#AutoDuckEnvelopePanel",
+        "./components/forge/audio/AutomationLane#AutomationLane",
+        "./components/forge/audio/AutomationModePicker#AutomationModePicker",
+        "./components/forge/audio/BeatDetectionMarkerLane#BeatDetectionMarkerLane",
+        "./components/forge/audio/BusAndRoutingMatrix#BusAndRoutingMatrix",
+        "./components/forge/audio/ClipGainEnvelope#ClipGainEnvelope",
+        "./components/forge/audio/DeviceAndChannelPicker#DeviceAndChannelPicker",
+        "./components/forge/audio/InputMonitorToggle#InputMonitorToggle",
+        "./components/forge/audio/InsertEffectRack#InsertEffectRack",
+        "./components/forge/audio/LatencyCalibrationPanel#LatencyCalibrationPanel",
+        "./components/forge/audio/LevelMeter#LevelMeter",
+        "./components/forge/audio/LoudnessMeter#LoudnessMeter",
+        "./components/forge/audio/MixGroupBar#MixGroupBar",
+        "./components/forge/audio/NativeAudioTransport#NativeAudioTransport",
+        "./components/forge/audio/NoiseReductionMonitor#NoiseReductionMonitor",
+        "./components/forge/audio/PanControl#PanControl",
+        "./components/forge/audio/PluginPresetBrowser#PluginPresetBrowser",
+        "./components/forge/audio/RealtimePeakMeter#RealtimePeakMeter",
+        "./components/forge/audio/RecordingArmButton#RecordingArmButton",
+        "./components/forge/audio/RecordingTrack#RecordingTrack",
+        "./components/forge/audio/SoloMuteButtons#SoloMuteButtons",
+        "./components/forge/audio/SoundEffectsLibrary#SoundEffectsLibrary",
+        "./components/forge/audio/SpectrogramView#SpectrogramView",
+        "./components/forge/audio/TempoAndMetronome#TempoAndMetronome",
+        "./components/forge/audio/VoiceIsolationPanel#VoiceIsolationPanel",
+        "./components/forge/cad/DimensionsAndHatching#DimensionsAndHatching",
+        "./components/forge/cad/DraftingCommandLine#DraftingCommandLine",
+        "./components/forge/cad/LiveNodeThumbnail#LiveNodeThumbnail",
+        "./components/forge/cad/ObjectSnapsAndOrtho#ObjectSnapsAndOrtho",
+        "./components/forge/cad/PBRMaterialInspector#PBRMaterialInspector",
+        "./components/forge/cad/ParametricConstraintEditor#ParametricConstraintEditor",
+        "./components/forge/cad/TextureSetPanel#TextureSetPanel",
+        "./components/forge/cad/ViewCubeAndAxisGizmo#ViewCubeAndAxisGizmo",
+        "./components/forge/canvas-tools/ColorDropCanvasTarget#ColorDropCanvasTarget",
+        "./components/forge/canvas-tools/GestureCustomizationPanel#GestureCustomizationPanel",
+        "./components/forge/canvas-tools/ReferenceImageBoard#ReferenceImageBoard",
+        "./components/forge/canvas/AlignDistributePanel#AlignDistributePanel",
+        "./components/forge/canvas/CanvasRuler#CanvasRuler",
+        "./components/forge/canvas/SnapGridOverlay#SnapGridOverlay",
+        "./components/forge/canvas/SnapGridSettings#SnapGridSettings",
+        "./components/forge/color/AlphaSlider#AlphaSlider",
+        "./components/forge/color/ColorChannelFields#ColorChannelFields",
+        "./components/forge/color/ColorDiscPicker#ColorDiscPicker",
+        "./components/forge/color/ColorGradingWheels#ColorGradingWheels",
+        "./components/forge/color/ColorHarmonyAssistant#ColorHarmonyAssistant",
+        "./components/forge/color/ColorSpaceChooser#ColorSpaceChooser",
+        "./components/forge/color/ColorWheel#ColorWheel",
+        "./components/forge/color/FloatingColorPalette#FloatingColorPalette",
+        "./components/forge/color/FloatingPaletteUndockHandle#FloatingPaletteUndockHandle",
+        "./components/forge/color/ForegroundBackgroundChips#ForegroundBackgroundChips",
+        "./components/forge/color/GamutWarning#GamutWarning",
+        "./components/forge/color/HSLSecondaryEditor#HSLSecondaryEditor",
+        "./components/forge/color/HueSlider#HueSlider",
+        "./components/forge/color/PrintColorChannels#PrintColorChannels",
+        "./components/forge/color/SVColorField#SVColorField",
+        "./components/forge/color/SoftProofControls#SoftProofControls",
+        "./components/forge/color/SpotAndGlobalColorEditor#SpotAndGlobalColorEditor",
+        "./components/forge/color/SwatchGrid#SwatchGrid",
+        "./components/forge/color/ThemeColorReferences#ThemeColorReferences",
+        "./components/forge/color/WideGamutChannels#WideGamutChannels",
+        "./components/forge/design/AutoLayoutInspector#AutoLayoutInspector",
+        "./components/forge/design/CollaborationPresence#CollaborationPresence",
+        "./components/forge/design/ConstraintsPanel#ConstraintsPanel",
+        "./components/forge/design/DevHandoffInspector#DevHandoffInspector",
+        "./components/forge/design/FlowOverview#FlowOverview",
+        "./components/forge/design/HugFillFixedSizeControls#HugFillFixedSizeControls",
+        "./components/forge/design/InteractionTriggerEditor#InteractionTriggerEditor",
+        "./components/forge/design/MultiExportSlices#MultiExportSlices",
+        "./components/forge/design/PrototypePreviewPlayer#PrototypePreviewPlayer",
+        "./components/forge/design/ReusableStylesPanel#ReusableStylesPanel",
+        "./components/forge/design/VariablesAndModes#VariablesAndModes",
+        "./components/forge/devices/DevicePairingDialog#DevicePairingDialog",
+        "./components/forge/devices/PenPairingDialog#PenPairingDialog",
+        "./components/forge/document/BulletsNumberingEditor#BulletsNumberingEditor",
+        "./components/forge/document/CommentsAndReviewRail#CommentsAndReviewRail",
+        "./components/forge/document/DictationSessionPanel#DictationSessionPanel",
+        "./components/forge/document/DocumentReadAloudTransport#DocumentReadAloudTransport",
+        "./components/forge/document/FootnoteCitationEditor#FootnoteCitationEditor",
+        "./components/forge/document/HeadersFootersEditor#HeadersFootersEditor",
+        "./components/forge/document/LayoutSpreadNavigator#LayoutSpreadNavigator",
+        "./components/forge/document/NavigationOutline#NavigationOutline",
+        "./components/forge/document/RichTextRibbon#RichTextRibbon",
+        "./components/forge/document/SpellGrammarPopover#SpellGrammarPopover",
+        "./components/forge/document/TableLayoutInspector#TableLayoutInspector",
+        "./components/forge/document/TableOfContentsEditor#TableOfContentsEditor",
+        "./components/forge/document/TextSelectionAndCaret#TextSelectionAndCaret",
+        "./components/forge/document/TrackChangesView#TrackChangesView",
+        "./components/forge/document/TypographyInspector#TypographyInspector",
+        "./components/forge/ink/BrushDynamicsInspector#BrushDynamicsInspector",
+        "./components/forge/ink/BrushTaperControl#BrushTaperControl",
+        "./components/forge/ink/InkToolbar#InkToolbar",
+        "./components/forge/ink/TimelapsePlaybackExporter#TimelapsePlaybackExporter",
+        "./components/forge/inputs/AssetPresetGallery#AssetPresetGallery",
+        "./components/forge/inputs/InstrumentXYPad#InstrumentXYPad",
+        "./components/forge/layers/ArtboardNavigator#ArtboardNavigator",
+        "./components/forge/layers/ClippingMaskControls#ClipIndicator",
+        "./components/forge/layers/ClippingMaskControls#ClipToggle",
+        "./components/forge/layers/LayerBlendAndOpacity#LayerBlendAndOpacity",
+        "./components/forge/layers/LayerStack#LayerStack",
+        "./components/forge/layers/MaskThumbnailAndEditor#MaskThumbnailAndEditor",
+        "./components/forge/midi/MidiChannelPicker#MidiChannelPicker",
+        "./components/forge/midi/MidiChannelPicker#MidiValueStepper",
+        "./components/forge/motion/EasingPresetGallery#EasingPresetGallery",
+        "./components/forge/motion/ExpressionEditor#ExpressionEditor",
+        "./components/forge/motion/MotionPathEditor#MotionPathEditor",
+        "./components/forge/motion/ParticleEmitterControls#ParticleEmitterControls",
+        "./components/forge/motion/RenderQueuePanel#RenderQueuePanel",
+        "./components/forge/motion/Transform3DInspector#Transform3DInspector",
+        "./components/forge/office/ReadAloudTransport#ReadAloudTransport",
+        "./components/forge/office/office-controls#ChevronGlyph",
+        "./components/forge/office/office-controls#CloseMark",
+        "./components/forge/office/office-controls#PauseGlyph",
+        "./components/forge/office/office-controls#PlayGlyph",
+        "./components/forge/office/office-controls#PlusGlyph",
+        "./components/forge/office/office-controls#SkipGlyph",
+        "./components/forge/office/office-controls#ToolButton",
+        "./components/forge/pdf/AnnotationToolbar#AnnotationToolbar",
+        "./components/forge/pdf/CommentsThreadPanel#CommentsThreadPanel",
+        "./components/forge/pdf/EncryptPermissionsPanel#EncryptPermissionsPanel",
+        "./components/forge/pdf/ExtractMergeSplitDialog#ExtractMergeSplitDialog",
+        "./components/forge/pdf/HyperlinkInspector#HyperlinkInspector",
+        "./components/forge/pdf/PDFCompareOverlay#PDFCompareOverlay",
+        "./components/forge/pdf/PDFPageLayoutSelector#PDFPageLayoutSelector",
+        "./components/forge/pdf/PDFTextSelection#PDFTextSelection",
+        "./components/forge/pdf/RedactionReviewTool#RedactionReviewTool",
+        "./components/forge/pdf/VirtualPDFPageViewer#VirtualPDFPageViewer",
+        "./components/forge/photo/BatchExportPanel#BatchExportPanel",
+        "./components/forge/photo/CleanupAndRetouchPanel#CleanupAndRetouchPanel",
+        "./components/forge/photo/LensCorrectionPanel#LensCorrectionPanel",
+        "./components/forge/photo/LocalMaskBrush#LocalMaskBrush",
+        "./components/forge/photo/LuminanceColorRangeMask#LuminanceColorRangeMask",
+        "./components/forge/photo/PhotoLibraryGrid#PhotoLibraryGrid",
+        "./components/forge/photo/PhotoMetadataInspector#PhotoMetadataInspector",
+        "./components/forge/photo/PresetFilmstrip#PresetFilmstrip",
+        "./components/forge/photo/RatingAndFlagControl#RatingAndFlagControl",
+        "./components/forge/photo/ToneAndPresence#ToneAndPresence",
+        "./components/forge/selection/MagicSelectionControls#MagicSelectionControls",
+        "./components/forge/selection/MagicSelectionControls#MagicWandCanvas",
+        "./components/forge/selection/MultiSelectionControls#MultiSelectionControls",
+        "./components/forge/selection/SelectionMarquee#SelectionMarquee",
+        "./components/forge/slides/ChartAndTableEditor#ChartAndTableEditor",
+        "./components/forge/slides/ConnectorAndDiagramTools#ConnectorAndDiagramTools",
+        "./components/forge/slides/MorphPreview#MorphPreview",
+        "./components/forge/slides/PresenterInkStrip#PresenterInkStrip",
+        "./components/forge/slides/RehearsalTimers#RehearsalTimers",
+        "./components/forge/slides/SlideAnimationPane#SlideAnimationPane",
+        "./components/forge/slides/SlideCanvas#SlideCanvas",
+        "./components/forge/slides/SlideFilmstrip#SlideFilmstrip",
+        "./components/forge/slides/SlideNotesEditor#SlideNotesEditor",
+        "./components/forge/slides/SlideSorter#SlideSorter",
+        "./components/forge/slides/SlideThumbnail#SlideObjectView",
+        "./components/forge/slides/SlideThumbnail#SlideThumbnail",
+        "./components/forge/slides/TransitionPicker#TransitionPicker",
+        "./components/forge/spreadsheet/ChartBuilder#ChartBuilder",
+        "./components/forge/spreadsheet/FormulaAutocomplete#FormulaAutocomplete",
+        "./components/forge/spreadsheet/FormulaBar#FormulaBar",
+        "./components/forge/spreadsheet/FormulaReferenceText#FormulaReferenceText",
+        "./components/forge/spreadsheet/FreezeSplitControls#FreezeSplitControls",
+        "./components/forge/spreadsheet/NameBox#NameBox",
+        "./components/forge/spreadsheet/ReferenceColorizer#ReferenceColorizer",
+        "./components/forge/spreadsheet/SavedSheetViewManager#SavedSheetViewManager",
+        "./components/forge/spreadsheet/SheetTabs#SheetTabs",
+        "./components/forge/spreadsheet/SortFilterHeader#SortFilterHeader",
+        "./components/forge/spreadsheet/Sparkline#Sparkline",
+        "./components/forge/spreadsheet/SparklineEditor#SparklineEditor",
+        "./components/forge/spreadsheet/SplitSpreadsheetView#SplitSpreadsheetView",
+        "./components/forge/spreadsheet/SpreadsheetCardsView#SpreadsheetCardsView",
+        "./components/forge/spreadsheet/TableStyleGallery#TableStyleGallery",
+        "./components/forge/spreadsheet/ValidationDropdown#ValidationDropdown",
+        "./components/forge/spreadsheet/VirtualSpreadsheetGrid#VirtualSpreadsheetGrid",
+        "./components/forge/timeline/ExportMonitor#ExportMonitor",
+        "./components/forge/timeline/InOutRangeHandles#InOutRangeHandles",
+        "./components/forge/timeline/JKLShuttleController#JKLShuttleController",
+        "./components/forge/timeline/LoopRangeBar#LoopRangeBar",
+        "./components/forge/timeline/MediaMonitor#MediaMonitor",
+        "./components/forge/timeline/ModeEdgeHandles#ModeEdgeHandles",
+        "./components/forge/timeline/MulticamAngleViewer#MulticamAngleViewer",
+        "./components/forge/timeline/PictureInPictureControls#PictureInPictureControls",
+        "./components/forge/timeline/PlaybackRateMenu#PlaybackRateMenu",
+        "./components/forge/timeline/ProgramMonitor#ProgramMonitor",
+        "./components/forge/timeline/RenderCacheIndicator#RenderCacheIndicator",
+        "./components/forge/timeline/SafeAreaOverlay#SafeAreaOverlay",
+        "./components/forge/timeline/SeekBar#SeekBar",
+        "./components/forge/timeline/SourceMonitor#SourceMonitor",
+        "./components/forge/timeline/TimecodeDisplay#TimecodeDisplay",
+        "./components/forge/timeline/TimelineMarkers#TimelineMarkers",
+        "./components/forge/timeline/TimelinePlayhead#TimelinePlayhead",
+        "./components/forge/timeline/TimelineRuler#TimelineRuler",
+        "./components/forge/timeline/TimelineZoomAndScroll#TimelineZoomAndScroll",
+        "./components/forge/timeline/TransitionPresetBrowser#TransitionPresetBrowser",
+        "./components/forge/timeline/TransportControls#TransportControls",
+        "./components/forge/timeline/VideoFilmstrip#VideoFilmstrip",
+        "./components/forge/timeline/VideoQualityInspector#VideoQualityInspector",
+        "./components/forge/timeline/VideoStabilizationInspector#VideoStabilizationInspector",
+        "./components/forge/vector/FillStrokeInspector#FillStrokeInspector",
+        "./components/forge/vector/PenNodeEditor#PenNodeEditor",
+        "./components/forge/vector/ShapeBuilder#ShapeBuilder",
+        "./components/html#Article",
+        "./components/html#Aside",
+        "./components/html#Footer",
+        "./components/html#Header",
+        "./components/html#Heading",
+        "./components/html#Input",
+        "./components/html#Link",
+        "./components/html#Main",
+        "./components/html#Nav",
+        "./components/html#Page",
+        "./components/html#Paragraph",
+        "./components/html#Section",
+        "./components/html#Text",
+        "./components/layout/AdaptiveColumns#AdaptiveColumn",
+        "./components/layout/AdaptiveColumns#AdaptiveColumns",
+        "./components/layout/ContentFrame#ContentFrame",
+        "./components/navigation/CollapsibleDrawer#CollapsibleDrawer",
+        "./components/overlays/AnchoredPopover#AnchoredPopover",
+        "./components/overlays/CommandPalette#CommandPalette",
+        "./components/overlays/CommandPopover#CommandPopover",
+        "./components/shell/AdaptiveDock#AdaptiveDock",
+        "./components/shell/AssetBrowser#AssetBrowser",
+        "./components/shell/ContextMenu#ContextMenu",
+        "./components/shell/ContextualToolbar#ContextualToolbar",
+        "./components/shell/DocumentTabBar#DocumentTabBar",
+        "./components/shell/FindReplaceContent#FindReplaceContent",
+        "./components/shell/FindReplacePopover#FindReplacePopover",
+        "./components/shell/FocusAndA11yLayer#FocusAndA11yLayer",
+        "./components/shell/HistoryPanel#HistoryPanel",
+        "./components/shell/InspectorPanel#InspectorPanel",
+        "./components/shell/InspectorSearch#InspectorSearch",
+        "./components/shell/InspectorSection#InspectorSection",
+        "./components/shell/KeyboardShortcutHUD#KeyboardShortcutHUD",
+        "./components/shell/MenuButton#MenuButton",
+        "./components/shell/PaneSplitter#PaneSplitter",
+        "./components/shell/PresetGallery#PresetGallery",
+        "./components/shell/PropertyRow#PropertyRow",
+        "./components/shell/SplitButton#SplitButton",
+        "./components/shell/StatusBar#StatusBar",
+        "./components/shell/ToolRail#ToolRail",
+        "./components/shell/UnitInput#UnitInput",
+        "./components/shell/WorkspacePresetSwitcher#WorkspacePresetSwitcher"
+      ],
+      "struck": [
+        {
+          "component": "./components/data/DataTable#DataTable",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @tanstack/react-table is not resolvable in the macos lane",
+          "unresolved": [
+            "@tanstack/react-table"
+          ]
+        },
+        {
+          "component": "./components/files/DropZone#DropZone",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED expo-drag-drop-content-view is not resolvable in the macos lane",
+          "unresolved": [
+            "expo-drag-drop-content-view"
+          ]
+        },
+        {
+          "component": "./components/forge/ColorChannels#ColorChannels",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @expo/ui is not resolvable in the macos lane",
+          "unresolved": [
+            "@expo/ui"
+          ]
+        },
+        {
+          "component": "./components/forge/NativeSeekBar#NativeSeekBar",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @expo/ui is not resolvable in the macos lane",
+          "unresolved": [
+            "@expo/ui",
+            "@expo/ui/jetpack-compose",
+            "@expo/ui/swift-ui",
+            "@expo/ui/swift-ui/modifiers"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/ChannelStrip#ChannelStrip",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/LevelFader#LevelFader",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/MixingConsole#MixingConsole",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/PanAndBalanceControl#PanAndBalanceControl",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/SpeechTranscriptTakeReview#SpeechTranscriptTakeReview",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/StereoMultichannelWaveform#StereoMultichannelWaveform",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/SurroundPanView#SurroundPanView",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/TakePlaylistAndComping#TakePlaylistAndComping",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/audio/VerticalFader#VerticalFader",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/Native3DViewport#Native3DViewport",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/NodeGraphCanvas#NodeGraphCanvas",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/NodeLibrarySearch#NodeLibrarySearch",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/TextureBrush3D#TextureBrush3D",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/TransformGizmo3D#TransformGizmo3D",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/cad/UVEditor#UVEditor",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/canvas/CanvasPanZoom#CanvasPanZoom",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/canvas/GPUCanvasViewport#GPUCanvasViewport",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-skia is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/canvas/GuidedCropAndStraighten#GuidedCropAndStraighten",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/color/ColorPickerDialog#ColorPickerDialog",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED expo-linear-gradient is not resolvable in the macos lane",
+          "unresolved": [
+            "@expo/ui",
+            "expo-linear-gradient"
+          ]
+        },
+        {
+          "component": "./components/forge/color/HsvPicker#HsvPicker",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED expo-linear-gradient is not resolvable in the macos lane",
+          "unresolved": [
+            "@expo/ui",
+            "expo-linear-gradient"
+          ]
+        },
+        {
+          "component": "./components/forge/design/PrototypeConnectionTool#PrototypeConnectionTool",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/document/InsertTableGrid#InsertTableGrid",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/document/ParagraphRuler#ParagraphRuler",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/graphics/ImageCropOverlay#ImageCropOverlay",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/BrushPresetBrowser#BrushPresetBrowser",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/BrushStabilizationPreview#BrushStabilizationPreview",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/ink/InkStrokePreview#InkStrokePreview",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/inputs/PointEditor2D#PointEditor2D",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PDFInlineTextEdit#PDFInlineTextEdit",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PDFScanSession#PDFScanSession",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PDFThumbnailSidebar#PDFThumbnailSidebar",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/PageReorderOrganizer#PageReorderOrganizer",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/pdf/SignatureStampTool#SignatureStampTool",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-skia is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/platform/AccessiblePrecisionScrubControl#AccessiblePrecisionScrubControl",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/selection/SelectionBounds#SelectionBounds",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/slides/InkAndLaserPointer#InkAndLaserPointer",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-skia is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler",
+            "react-native-skia"
+          ]
+        },
+        {
+          "component": "./components/forge/slides/PresenterInkOverlay#PresenterInkOverlay",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/slides/ShapePresetGallery#ShapePresetGallery",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/spreadsheet/CellSelectionOverlay#CellSelectionOverlay",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/spreadsheet/FillHandleAndAutoFill#AutoFillModePicker",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/spreadsheet/FillHandleAndAutoFill#FillHandleAndAutoFill",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/spreadsheet/PivotFieldList#PivotFieldList",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/AutoCaptionTranscriptTimeline#AutoCaptionTranscriptTimeline",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/AutoReframeGuides#AutoReframeGuides",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/CaptionWordTimingHandles#CaptionWordTimingHandles",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/FrameAccurateScrubber#FrameAccurateScrubber",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED @expo/ui is not resolvable in the macos lane",
+          "unresolved": [
+            "@expo/ui",
+            "@expo/ui/jetpack-compose",
+            "@expo/ui/swift-ui",
+            "@expo/ui/swift-ui/modifiers"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/MotionTrackingOverlay#MotionTrackingOverlay",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/forge/timeline/StickerMotionLane#StickerMotionLane",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/gestures/GestureHandlerDrag#GestureHandlerDrag",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED react-native-gesture-handler is not resolvable in the macos lane",
+          "unresolved": [
+            "react-native-gesture-handler"
+          ]
+        },
+        {
+          "component": "./components/theme/NightScope#NightScope",
+          "reason": "missing-peer",
+          "error": "Error: NYCTRON_UNRESOLVED uniwind is not resolvable in the macos lane",
+          "unresolved": [
+            "uniwind"
+          ]
+        }
+      ],
+      "unmeasured": [
+        {
+          "component": "./components/forge/audio/AudioClipTrimAndFade#AudioClipTrimAndFade",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid audio region"
+        },
+        {
+          "component": "./components/forge/audio/AudioEffectsPresetPanel#AudioEffectsPresetPanel",
+          "reason": "not-attributed",
+          "error": "TypeError: Cannot read property 'id' of null"
+        },
+        {
+          "component": "./components/forge/audio/AudioProcessingPanel#AudioProcessingPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid audio processing panel"
+        },
+        {
+          "component": "./components/forge/audio/DynamicsTransferGraph#DynamicsTransferGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid dynamics data"
+        },
+        {
+          "component": "./components/forge/audio/EQFrequencyGraph#EQFrequencyGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid EQ data"
+        },
+        {
+          "component": "./components/forge/audio/LiveRecordingWaveform#LiveRecordingWaveform",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid live recording measurement"
+        },
+        {
+          "component": "./components/forge/audio/LoopPunchRecording#LoopPunchRecording",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid loop recording range"
+        },
+        {
+          "component": "./components/forge/audio/SampleEditor#SampleEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid audio region"
+        },
+        {
+          "component": "./components/forge/audio/VoiceoverCountdownAndTakeBin#VoiceoverCountdownAndTakeBin",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid live recording measurement"
+        },
+        {
+          "component": "./components/forge/cad/BakingMapPanel#BakingMapPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid bake capabilities"
+        },
+        {
+          "component": "./components/forge/cad/PaperSpaceLayout#PaperSpaceLayout",
+          "reason": "not-attributed",
+          "error": "RangeError: Page margins and columns must leave a positive text area"
+        },
+        {
+          "component": "./components/forge/cad/TextureMaskAndGenerator#TextureMaskAndGenerator",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/canvas/SmartGuides#SmartGuides",
+          "reason": "not-attributed",
+          "error": "TypeError: Cannot read property 'from' of null"
+        },
+        {
+          "component": "./components/forge/canvas/TransformOriginHandle#TransformOriginHandle",
+          "reason": "not-attributed",
+          "error": "RangeError: TransformOriginHandle needs a transform, or an unavailableReason saying why there is none"
+        },
+        {
+          "component": "./components/forge/color/CurvesEditor#CurvesEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: A linear/monotone curve requires 2..64 points"
+        },
+        {
+          "component": "./components/forge/color/EyedropperTool#EyedropperTool",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid document sampling point or radius"
+        },
+        {
+          "component": "./components/forge/color/GradientMeshEditor#GradientMeshEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Mesh requires a 2..16 by 2..16 row-major grid"
+        },
+        {
+          "component": "./components/forge/color/GradientStopEditor#GradientStopEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: A gradient needs at least two stops"
+        },
+        {
+          "component": "./components/forge/color/LevelsEditor#LevelsEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Levels require increasing input and ordered output bounds"
+        },
+        {
+          "component": "./components/forge/color/LiveHistogram#LiveHistogram",
+          "reason": "not-attributed",
+          "error": "RangeError: Histogram domain must increase"
+        },
+        {
+          "component": "./components/forge/color/VideoScopesPanel#VideoScopesPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Histogram domain must increase"
+        },
+        {
+          "component": "./components/forge/design/CommentPins#CommentPins",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid comment pin geometry"
+        },
+        {
+          "component": "./components/forge/design/ComponentVariantPicker#ComponentVariantPicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/design/FrameAndComponentTree#FrameAndComponentTree",
+          "reason": "not-attributed",
+          "error": "RangeError: Outline hierarchy cycle"
+        },
+        {
+          "component": "./components/forge/document/MailMergeFieldPicker#MailMergeFieldPicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid mail merge data"
+        },
+        {
+          "component": "./components/forge/document/PageSetupPanel#PageSetupPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Page margins and columns must leave a positive text area"
+        },
+        {
+          "component": "./components/forge/document/PaginatedTextCanvas#PaginatedTextCanvas",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid paginated text layout"
+        },
+        {
+          "component": "./components/forge/document/ParagraphStylesGallery#ParagraphStylesGallery",
+          "reason": "not-attributed",
+          "error": "RangeError: Paragraph style inheritance cycle"
+        },
+        {
+          "component": "./components/forge/document/SpellGrammarPopover#SpellGrammarContent",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid spelling issue"
+        },
+        {
+          "component": "./components/forge/document/TextWrapAndFrames#TextWrapAndFrames",
+          "reason": "not-attributed",
+          "error": "RangeError: Text frame thread cycle"
+        },
+        {
+          "component": "./components/forge/graph/PatchGraph#PatchGraph",
+          "reason": "not-attributed",
+          "error": "Error: Invalid graph ports: Sample"
+        },
+        {
+          "component": "./components/forge/ink/EraserModePicker#EraserModePicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid eraser capabilities"
+        },
+        {
+          "component": "./components/forge/inputs/InstrumentKnob#InstrumentKnob",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/forge/inputs/OutlineTree#OutlineTree",
+          "reason": "not-attributed",
+          "error": "RangeError: Outline hierarchy cycle"
+        },
+        {
+          "component": "./components/forge/inputs/PrecisionScrubber#PrecisionScrubber",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/forge/inputs/PropertyInspector#PropertyInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/layers/CanvasCompareView#CanvasCompareView",
+          "reason": "not-attributed",
+          "error": "RangeError: Raster needs 4 RGBA bytes, got 1"
+        },
+        {
+          "component": "./components/forge/layers/LayerThumbnail#LayerThumbnail",
+          "reason": "not-attributed",
+          "error": "RangeError: Raster needs 4 RGBA bytes, got 1"
+        },
+        {
+          "component": "./components/forge/midi/MIDIPianoRoll#MIDIPianoRoll",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid MIDI note roster"
+        },
+        {
+          "component": "./components/forge/midi/MIDIVelocityLane#MIDIVelocityLane",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid MIDI note roster"
+        },
+        {
+          "component": "./components/forge/midi/StepSequencer#StepSequencer",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid MIDI note roster"
+        },
+        {
+          "component": "./components/forge/motion/CameraAndLightControls#CameraAndLightControls",
+          "reason": "not-attributed",
+          "error": "RangeError: Camera target must differ from its position"
+        },
+        {
+          "component": "./components/forge/motion/CompositionLayerTree#CompositionLayerTree",
+          "reason": "not-attributed",
+          "error": "TypeError: Invalid composition layer"
+        },
+        {
+          "component": "./components/forge/motion/EffectStackAndInspector#EffectStackAndInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid effect numeric parameter"
+        },
+        {
+          "component": "./components/forge/motion/KeyframeSpeedGraph#KeyframeSpeedGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/motion/KeyframeValueGraph#KeyframeValueGraph",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/motion/MatteAndMaskPanel#MatteAndMaskPanel",
+          "reason": "not-attributed",
+          "error": "TypeError: A layer cannot matte itself"
+        },
+        {
+          "component": "./components/forge/motion/MotionKeyframeTimeline#MotionKeyframeTimeline",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/motion/NodeGraphEditor#NodeGraphEditor",
+          "reason": "not-attributed",
+          "error": "Error: Invalid graph ports: Sample"
+        },
+        {
+          "component": "./components/forge/motion/TimeRemapCurve#TimeRemapCurve",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/pdf/BookmarkOutline#BookmarkOutline",
+          "reason": "not-attributed",
+          "error": "RangeError: Outline hierarchy cycle"
+        },
+        {
+          "component": "./components/forge/pdf/PDFFormFieldEditor#PDFFormFieldEditor",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF form fields"
+        },
+        {
+          "component": "./components/forge/pdf/PDFReadAloudTransport#PDFReadAloudTransport",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF speech page mapping"
+        },
+        {
+          "component": "./components/forge/pdf/PDFVoiceNoteAttachment#PDFVoiceNoteAttachment",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF voice note metadata"
+        },
+        {
+          "component": "./components/forge/pdf/PrintAndExportPreview#PrintAndExportPreview",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/pdf/TextSearchResults#TextSearchResults",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid PDF search state"
+        },
+        {
+          "component": "./components/forge/photo/BeforeAfterCompare#BeforeAfterCompare",
+          "reason": "not-attributed",
+          "error": "RangeError: Raster needs 4 RGBA bytes, got 1"
+        },
+        {
+          "component": "./components/forge/photo/CatalogFilterBar#CatalogFilterBar",
+          "reason": "not-attributed",
+          "error": "RangeError: Catalog dates must be valid YYYY-MM-DD"
+        },
+        {
+          "component": "./components/forge/photo/EightBandColorMixer#EightBandColorMixer",
+          "reason": "not-attributed",
+          "error": "TypeError: Invalid red"
+        },
+        {
+          "component": "./components/forge/photo/ExposureAndWhiteBalance#ExposureAndWhiteBalance",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/photo/LinearRadialGradientMask#LinearRadialGradientMask",
+          "reason": "not-attributed",
+          "error": "RangeError: Gradient mask axis must have length within the bounded image neighborhood"
+        },
+        {
+          "component": "./components/forge/photo/PhotoVersionHistoryBrowser#PhotoVersionHistoryBrowser",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/photo/PresetManager#PresetManager",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/photo/RAWDevelopPanel#RAWDevelopPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Temperature kelvin must be 1000..50000"
+        },
+        {
+          "component": "./components/forge/slides/MasterLayoutEditor#MasterLayoutEditor",
+          "reason": "not-attributed",
+          "error": "Error: Master layout inheritance cannot form a cycle"
+        },
+        {
+          "component": "./components/forge/slides/MediaInsertInspector#MediaInsertInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid slide media"
+        },
+        {
+          "component": "./components/forge/slides/PresenterView#PresenterView",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid presenter session"
+        },
+        {
+          "component": "./components/forge/slides/ThemeAndTemplateGallery#ThemeAndTemplateGallery",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/spreadsheet/CellFormatInspector#CellFormatInspector",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid inspector property"
+        },
+        {
+          "component": "./components/forge/spreadsheet/ConditionalFormatRules#ConditionalFormatRules",
+          "reason": "not-attributed",
+          "error": "RangeError: Conditional rule needs a valid range and ordered thresholds"
+        },
+        {
+          "component": "./components/forge/spreadsheet/DataImportWizard#DataImportWizard",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid import preview"
+        },
+        {
+          "component": "./components/forge/spreadsheet/RangeComments#RangeComments",
+          "reason": "not-attributed",
+          "error": "RangeError: Range comments require actual range anchors"
+        },
+        {
+          "component": "./components/forge/timeline/AudioClipWaveform#AudioClipWaveform",
+          "reason": "not-attributed",
+          "error": "RangeError: Waveform range must satisfy 0 <= start < end <= 1"
+        },
+        {
+          "component": "./components/forge/timeline/BatchEditPanel#BatchEditPanel",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/ClipTrimHandles#ClipTrimHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: Clip needs 0 <= sourceIn < sourceOut and a positive speed"
+        },
+        {
+          "component": "./components/forge/timeline/CoverFramePicker#CoverFramePicker",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid cover selection"
+        },
+        {
+          "component": "./components/forge/timeline/DragReorderAndRipple#DragReorderAndRipple",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/OverlayAndEffectsTrackStack#OverlayAndEffectsTrackStack",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/RazorSplitTool#RazorSplitTool",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/RollSlipSlideControls#RollSlipSlideControls",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/ScopesDock#ScopesDock",
+          "reason": "not-attributed",
+          "error": "RangeError: Histogram domain must increase"
+        },
+        {
+          "component": "./components/forge/timeline/TimelineClipLane#TimelineClipLane",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/TrackHeaders#TrackHeaders",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/TransitionHandles#TransitionHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid timeline clip"
+        },
+        {
+          "component": "./components/forge/timeline/VideoEffectsBrowser#VideoEffectsBrowser",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid effect numeric parameter"
+        },
+        {
+          "component": "./components/forge/timeline/VideoSpeedRampCurve#VideoSpeedRampCurve",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid motion property bounds or identity"
+        },
+        {
+          "component": "./components/forge/vector/GradientOnCanvasHandles#GradientOnCanvasHandles",
+          "reason": "not-attributed",
+          "error": "RangeError: A gradient needs at least two stops"
+        },
+        {
+          "component": "./components/gestures/PanResponderDrag#PanResponderDrag",
+          "reason": "not-attributed",
+          "error": "Error: The argument must be a React element, but you passed null."
+        },
+        {
+          "component": "./components/shell/NumericScrubField#NumericScrubField",
+          "reason": "not-attributed",
+          "error": "RangeError: Invalid normalization"
+        },
+        {
+          "component": "./components/shell/RangeSlider#RangeSlider",
+          "reason": "not-attributed",
+          "error": "RangeError: Expected finite min < max and step > 0"
+        },
+        {
+          "component": "./components/shell/RibbonTabs#RibbonTabs",
+          "reason": "not-attributed",
+          "error": "TypeError: Duplicate ribbon id Sample"
+        },
+        {
+          "component": "./components/shell/RotaryKnob#RotaryKnob",
+          "reason": "not-attributed",
+          "error": "RangeError: Expected finite min < max and step > 0"
+        },
+        {
+          "component": "./components/shell/SliderField#SliderField",
+          "reason": "not-attributed",
+          "error": "RangeError: Expected finite min < max and step > 0"
+        },
+        {
+          "component": "./components/shell/ToastAndProgress#ToastAndProgress",
+          "reason": "not-attributed",
+          "error": "TypeError: Job actions require onJobAction"
+        },
+        {
+          "component": "./components/shell/WorkspaceHost#WorkspaceHost",
+          "reason": "not-attributed",
+          "error": "TypeError: Cannot read property 'rect' of null"
+        }
+      ],
+      "modulesLoaded": [
+        "./components/data/tree-grid",
+        "./components/data/tree-row-heights",
+        "./components/files/drop-model",
+        "./components/files/file-transfer-model",
+        "./components/forge/audio/audio-recovery-model",
+        "./components/forge/audio/automation",
+        "./components/forge/audio/dynamics-graph",
+        "./components/forge/audio/eq-graph",
+        "./components/forge/audio/inserts",
+        "./components/forge/audio/level",
+        "./components/forge/audio/level-meter",
+        "./components/forge/audio/loudness",
+        "./components/forge/audio/meter-ballistics",
+        "./components/forge/audio/mix-groups",
+        "./components/forge/audio/mixer",
+        "./components/forge/audio/pan",
+        "./components/forge/audio/preview-model",
+        "./components/forge/audio/recording-model",
+        "./components/forge/audio/routing",
+        "./components/forge/audio/spectrogram",
+        "./components/forge/audio/tempo",
+        "./components/forge/canvas-tools/color-drop-model",
+        "./components/forge/canvas-tools/gesture-map-model",
+        "./components/forge/canvas-tools/reference-board-model",
+        "./components/forge/canvas/align-distribute-model",
+        "./components/forge/canvas/canvas-pan-zoom-model",
+        "./components/forge/canvas/canvas-viewport",
+        "./components/forge/canvas/graphite-frame",
+        "./components/forge/canvas/ruler-model",
+        "./components/forge/canvas/smart-guides-model",
+        "./components/forge/canvas/snap-grid-model",
+        "./components/forge/canvas/transform-origin-model",
+        "./components/forge/color",
+        "./components/forge/color/channel-fields",
+        "./components/forge/color/color-adjustments",
+        "./components/forge/color/color-management",
+        "./components/forge/color/color-pair",
+        "./components/forge/color/color-picker-dialog-model",
+        "./components/forge/color/contrast",
+        "./components/forge/color/fieldGeometry",
+        "./components/forge/color/fieldGesture",
+        "./components/forge/color/floating-palette",
+        "./components/forge/color/gradient-mesh",
+        "./components/forge/color/gradient-options",
+        "./components/forge/color/harmony",
+        "./components/forge/color/hsl",
+        "./components/forge/color/swatches",
+        "./components/forge/color/wheel-geometry",
+        "./components/forge/devices/pairing-model",
+        "./components/forge/document/list-model",
+        "./components/forge/document/outline-model",
+        "./components/forge/document/ribbon-model",
+        "./components/forge/formula-refs",
+        "./components/forge/frame-throttle",
+        "./components/forge/graph/model",
+        "./components/forge/graphics/crop",
+        "./components/forge/ink/brush-model",
+        "./components/forge/ink/ink-model",
+        "./components/forge/inputs/precision",
+        "./components/forge/inputs/precision-scrubber-model",
+        "./components/forge/layers/artboard-model",
+        "./components/forge/layers/clipping-model",
+        "./components/forge/layers/compare-model",
+        "./components/forge/layers/layer-blend-model",
+        "./components/forge/layers/layer-model",
+        "./components/forge/layers/layer-thumbnail-model",
+        "./components/forge/layers/layer-tree-model",
+        "./components/forge/layers/mask-model",
+        "./components/forge/midi/note-grid",
+        "./components/forge/midi/velocity-line",
+        "./components/forge/motion/composition-tree",
+        "./components/forge/motion/motion-curves",
+        "./components/forge/motion/motion-easing",
+        "./components/forge/motion/motion-effects",
+        "./components/forge/motion/motion-expression",
+        "./components/forge/motion/motion-node-graph",
+        "./components/forge/motion/motion-path",
+        "./components/forge/motion/motion-render",
+        "./components/forge/motion/motion-settings",
+        "./components/forge/motion/motion-timeline",
+        "./components/forge/office/read-aloud-model",
+        "./components/forge/pdf/annotation-model",
+        "./components/forge/pdf/comments-model",
+        "./components/forge/pdf/search-model",
+        "./components/forge/photo/photo-adjustments",
+        "./components/forge/photo/photo-catalog",
+        "./components/forge/photo/photo-export",
+        "./components/forge/photo/photo-masks",
+        "./components/forge/photo/photo-metadata",
+        "./components/forge/photo/photo-presets",
+        "./components/forge/range-paste",
+        "./components/forge/range-tsv",
+        "./components/forge/selection/magic-selection-model",
+        "./components/forge/selection/multi-selection-model",
+        "./components/forge/selection/selection-bounds-model",
+        "./components/forge/selection/selection-model",
+        "./components/forge/sheet-window",
+        "./components/forge/slides/animation-model",
+        "./components/forge/slides/canvas-model",
+        "./components/forge/slides/presenter-ink-model",
+        "./components/forge/slides/slide-model",
+        "./components/forge/spreadsheet/cards-model",
+        "./components/forge/spreadsheet/chart-model",
+        "./components/forge/spreadsheet/fill-handle",
+        "./components/forge/spreadsheet/freeze-split-model",
+        "./components/forge/spreadsheet/reference-colors",
+        "./components/forge/spreadsheet/sheet-tabs-model",
+        "./components/forge/spreadsheet/sparkline-model",
+        "./components/forge/timebase",
+        "./components/forge/timeline/batch",
+        "./components/forge/timeline/edits",
+        "./components/forge/timeline/loop-range",
+        "./components/forge/timeline/markers",
+        "./components/forge/timeline/placement",
+        "./components/forge/timeline/ruler",
+        "./components/forge/timeline/safe-area",
+        "./components/forge/timeline/shuttle",
+        "./components/forge/timeline/time",
+        "./components/forge/timeline/track-stack",
+        "./components/forge/timeline/transition-presets",
+        "./components/forge/timeline/transitions",
+        "./components/forge/timeline/trim-modes",
+        "./components/forge/timeline/viewport",
+        "./components/forge/timeline/waveform-cache",
+        "./components/forge/vector/fill-stroke-model",
+        "./components/forge/vector/gradient-handles-model",
+        "./components/forge/vector/pen-node-model",
+        "./components/forge/vector/shape-builder-model",
+        "./components/forge/vector/vector-types",
+        "./components/forge/waveform",
+        "./components/forms/choice-keys",
+        "./components/forms/option-groups",
+        "./components/gestures/drag-controller",
+        "./components/gestures/drag-transport",
+        "./components/navigation/drawer-model",
+        "./components/overlays/anchored-popover-types",
+        "./components/overlays/command-filter",
+        "./components/overlays/focus-cycle",
+        "./components/overlays/focus-restore",
+        "./components/overlays/measure-anchor",
+        "./components/overlays/popover-position",
+        "./components/overlays/useTriggerAnchor",
+        "./components/shell/a11y-audit",
+        "./components/shell/a11y-model",
+        "./components/shell/asset-browser-model",
+        "./components/shell/contextual-toolbar-model",
+        "./components/shell/dock-model",
+        "./components/shell/document-tabs-model",
+        "./components/shell/find-replace-model",
+        "./components/shell/history-model",
+        "./components/shell/inspector-context",
+        "./components/shell/inspector-model",
+        "./components/shell/keyboard-map",
+        "./components/shell/preset-model",
+        "./components/shell/progress-model",
+        "./components/shell/ribbon-model",
+        "./components/shell/screen-reader-focus",
+        "./components/shell/shell-keys",
+        "./components/shell/shortcut-model",
+        "./components/shell/slider-model",
+        "./components/shell/splitter-model",
+        "./components/shell/status-model",
+        "./components/shell/tool-rail-model",
+        "./components/shell/unit-expression",
+        "./components/shell/workspace-model",
+        "./components/shell/workspace-preset-model"
+      ],
+      "modulesStruck": [],
+      "modulesUnmeasured": []
+    }
+  }
+}

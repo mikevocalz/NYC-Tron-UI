@@ -123,6 +123,7 @@ jobs:
           bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")
           scheme=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.scheme || ''")
           node tooling/install-paths/flow.mjs "$bundle" "${{ matrix.path }}" "$scheme" > "$RUNNER_TEMP/ip/flow.yaml"
+          cd "$RUNNER_TEMP/ip"  # takeScreenshot writes to the working directory
           "$RUNNER_TEMP/maestro/maestro/bin/maestro" --device "$udid" test "$RUNNER_TEMP/ip/flow.yaml" --test-output-dir "$RUNNER_TEMP/ip/maestro"
       - uses: actions/upload-artifact@v4
         if: always()
@@ -134,6 +135,7 @@ jobs:
             ${{ runner.temp }}/ip/*.json
             ${{ runner.temp }}/ip/*.log
             ${{ runner.temp }}/ip/flow.yaml
+            ${{ runner.temp }}/ip/*.png
             ${{ runner.temp }}/ip/simulator.txt
             ${{ runner.temp }}/ip/maestro/
             ${{ runner.temp }}/ip/app/package.json
@@ -184,7 +186,7 @@ jobs:
           disable-animations: true
           script: |
             adb install -r "$(find $RUNNER_TEMP/ip/app/android/app/build/outputs/apk/release -name '*.apk' | head -1)"
-            $RUNNER_TEMP/maestro/maestro/bin/maestro test $RUNNER_TEMP/ip/flow.yaml --test-output-dir $RUNNER_TEMP/ip/maestro
+            cd $RUNNER_TEMP/ip && $RUNNER_TEMP/maestro/maestro/bin/maestro test $RUNNER_TEMP/ip/flow.yaml --test-output-dir $RUNNER_TEMP/ip/maestro
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -195,6 +197,7 @@ jobs:
             ${{ runner.temp }}/ip/*.json
             ${{ runner.temp }}/ip/*.log
             ${{ runner.temp }}/ip/flow.yaml
+            ${{ runner.temp }}/ip/*.png
             ${{ runner.temp }}/ip/maestro/
             ${{ runner.temp }}/ip/app/package.json
             ${{ runner.temp }}/ip/app/package-lock.json
