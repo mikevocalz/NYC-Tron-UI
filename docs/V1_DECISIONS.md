@@ -126,7 +126,7 @@ The component list comes from the T4 measurement in PR #69, taken on
 2026-11-12 on the T1 dependency graph (`@nyc-tron/ui` archive sha256
 `c3d0f5881c8db1b27bc425324ca4d142f2a11f21b4d7f99ca93ca1e3e88f0dc7`):
 
-| Lane | Run | Supported | Struck | Not measured |
+| Lane | Run | Supported | Struck | Not verified on desktop |
 |---|---|---|---|---|
 | macOS, Spark 0.0.3 (React Native 0.83.10) | [43171140883](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883) | 272 of 421 components | 54 | 95 |
 | Windows, RNW 0.85 (React Native 0.85.3) | [43171140885](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885) | 268 of 421 components | 41 | 112 |
@@ -134,12 +134,56 @@ The component list comes from the T4 measurement in PR #69, taken on
 All 166 exports without components load on both lanes. Struck components
 need an optional peer the lane does not provide (`react-native-gesture-handler`,
 `react-native-skia`, `@expo/ui`, `expo-linear-gradient`,
-`@tanstack/react-table`, `expo-drag-drop-content-view`, `uniwind`), and four
-fail only on Windows with an RNW integer conversion error. "Not measured"
-components also fail on the web reference with the harness's synthesized
-props, so the run proves nothing about the lane; they are not on the
-supported list and are not struck. The named lists are in
-[SUPPORT.md](SUPPORT.md#desktop-support-list) and `desktop-support.json`.
+`@tanstack/react-table`, `expo-drag-drop-content-view`, `uniwind`). Four
+more failed only on Windows with an RNW integer conversion error; PR #69
+fixes that in `PrecisionScrubber` (decision 4 below). Components that are
+"not verified on desktop" also fail on the web reference with the harness's
+synthesized props, so the run proves nothing about the lane (decision 3).
+The named lists are in [SUPPORT.md](SUPPORT.md#desktop-support-list) and
+`desktop-support.json`.
+
+### Decisions on the T4 owner questions
+
+Decided 2026-11-12 by the integrator (A0) on the owner's instruction to
+decide (BUILD / STRIKE / DEFER). Implemented in PR #69.
+
+1. **Existing Expo app install (conditional BUILD).** Expo SDK 58 pins
+   `react-native-gesture-handler ~3.3.0`, and `@nyc-tron/ui`'s optional peer
+   was `>=3.4.0 <4`, so `npm install` failed with `ERESOLVE` in an existing
+   Expo 58 app. `ui` uses no API that exists only in 3.4: every symbol it
+   imports is in 3.3.0 with the same declarations, and the 3.3.0 to 3.4.0
+   declaration diff only adds things `ui` does not use. The optional peer
+   becomes `>=3.3.0 <4`, held by the `gesture-handler-floor` workflow, which
+   type-checks `ui` and runs the browser suite against the newest 3.3.x and
+   installs the packed archives into the default Expo 58 template. If that
+   lane fails, the range stays `>=3.4.0 <4` and existing Expo 58 apps run
+   `npx expo install react-native-gesture-handler@^3.4.0` first.
+   Owner confirmation: pending.
+2. **Desktop install with the `>=0.88` floor kept (BUILD).** The Spark and
+   React Native Windows lanes install `ui` with one `package.json` override
+   scoped to its `react-native` peer,
+   `"overrides": {"@nyc-tron/ui": {"react-native": "$react-native"}}`, never
+   `--legacy-peer-deps`. It is documented with the label "the desktop lanes
+   are below ui's React Native floor; only components on the lane's support
+   list are supported". The install-paths workflow installs this way on both
+   lanes and renders `Button`. Spark's Runner and `spark build --dev` modes
+   were not run in CI.
+   Owner confirmation: pending.
+3. **Components the harness could not measure (DEFER, not STRIKE).** The 95
+   macOS and 112 Windows components that throw with synthesized props on the
+   web reference as well get a third status, "not verified on desktop",
+   separate from struck. Each returns when it is measured with a
+   per-component props fixture. They do not block 1.0.0, and they are not
+   struck.
+   Owner confirmation: pending.
+4. **Windows `Loss of precision during arithmetic conversion: (__int64)`
+   (BUILD, local fix).** `PrecisionScrubber` passed fractional
+   `aria-valuemin`/`max`/`now`, which React Native parses as `int`; RNW's
+   `folly::dynamic::asInt()` throws on 0.1. Off the web the scrubber now
+   passes the numeric range only when all three are whole numbers. RNW run
+   43182075677 mounts all four affected components. Other controls that pass
+   `aria-value*` were not audited for fractional values.
+   Owner confirmation: pending.
 
 ## D6. Platform tiering for 1.0.0 (gate T5)
 
