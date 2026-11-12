@@ -53,17 +53,21 @@ void ApplyTitleBarStyle(Windowing::AppWindow const& app, HWND hwnd, TitleBarStyl
   UpdateTitleBarDragRegion(app, hwnd);
 }
 
-Json::JsonObject TitleBarJson(Windowing::AppWindow const& app, HWND hwnd, TitleBarStyle style, double scale) {
+TitleBarMetrics ReadTitleBarMetrics(Windowing::AppWindow const& app) {
+  auto const bar = app.TitleBar();
+  return TitleBarMetrics{bar.LeftInset(), bar.RightInset(), bar.Height()};
+}
+
+Json::JsonObject TitleBarJson(TitleBarStyle style, TitleBarMetrics const& metrics, HWND hwnd, double scale) {
   Json::JsonObject value;
   double leading = 0, trailing = 0, height = 0;
   if (style == TitleBarStyle::Extended) {
-    auto const bar = app.TitleBar();
-    const double left = bar.LeftInset() * scale, right = bar.RightInset() * scale;
+    const double left = metrics.left * scale, right = metrics.right * scale;
     // Leading and trailing follow layout direction, as in TitleBarInsets.
     const bool rtl = (GetWindowLongPtrW(hwnd, GWL_EXSTYLE) & WS_EX_LAYOUTRTL) != 0;
     leading = rtl ? right : left;
     trailing = rtl ? left : right;
-    height = bar.Height() * scale;
+    height = metrics.height * scale;
   }
   value.SetNamedValue(L"style", Json::JsonValue::CreateStringValue(style == TitleBarStyle::Extended ? L"extended" : L"standard"));
   value.SetNamedValue(L"leading", Json::JsonValue::CreateNumberValue(leading));

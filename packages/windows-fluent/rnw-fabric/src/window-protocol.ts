@@ -62,8 +62,12 @@ export function parseDesktopSnapshot(json: string): WindowsDesktopSnapshot {
     if (!validWindowId(w.id) || windows.has(w.id) || !validWindowId(w.generation) || !displays.has(w.displayId) ||
       !validWindowRect(w.rect) || !validWindowRect(w.pixelRect) || !validDpi(w.dpi) ||
       !samePixels(pixelRect(w.rect, s.referenceDpi), w.pixelRect) ||
-      (w.status !== "open" && w.status !== "minimized") || typeof w.primary !== "boolean" || !validTitleBar(w.titleBar))
+      (w.status !== "open" && w.status !== "minimized") || typeof w.primary !== "boolean")
       throw new TypeError("Invalid native window observation");
+    // Name the reported values: an out-of-range inset is otherwise
+    // indistinguishable from bad geometry in a CI log.
+    if (!validTitleBar(w.titleBar))
+      throw new TypeError(`Invalid native window observation: ${w.id} (${w.status}) title bar ${JSON.stringify(w.titleBar ?? null)}`);
     windows.set(w.id, w.generation);
     if (w.primary) primary++;
   }

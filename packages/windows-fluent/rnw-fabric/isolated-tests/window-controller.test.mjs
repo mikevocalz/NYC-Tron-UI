@@ -58,6 +58,8 @@ test("native protocol requires a valid title bar on every window", () => {
     { style: "extended", leading: 0, trailing: 138, height: 10_001 }, { style: "extended", leading: 0, trailing: "138", height: 32 },
     { style: "standard", leading: 0, trailing: 138, height: 0 }, { style: "standard", leading: 0, trailing: 0, height: 32 }])
     assert.throws(() => parseDesktopSnapshot(withBar(bad)), /window observation/, JSON.stringify(bad));
+  assert.throws(() => parseDesktopSnapshot(withBar({ style: "extended", leading: 0, trailing: -46, height: 32 })),
+    /title bar \{"style":"extended","leading":0,"trailing":-46,"height":32\}/);
 });
 test("setTitleBar validates the style, sends it natively and returns the observed insets", async () => {
   const f = fixture(), host = await connectWindowsWindowHost(f.transport, f.options);

@@ -2,6 +2,7 @@
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Windows.Data.Json.h>
 #include <windows.h>
+#include <cstdint>
 #include <string>
 
 namespace nyctron::desktop {
@@ -24,8 +25,15 @@ void ApplyTitleBarStyle(winrt::Microsoft::UI::Windowing::AppWindow const& app, H
 // Call after WM_SIZE and WM_DPICHANGED. Only valid for an Extended window.
 void UpdateTitleBarDragRegion(winrt::Microsoft::UI::Windowing::AppWindow const& app, HWND hwnd);
 
-// {style, leading, trailing, height}, in physical pixels times `scale`.
+// AppWindowTitleBar insets and height in physical client pixels.
+struct TitleBarMetrics { int32_t left{0}, right{0}, height{0}; };
+
+// Reads the current metrics. Only meaningful for an Extended window that is
+// not minimized: an iconic window has no client area, and the caption-button
+// insets AppWindowTitleBar reports for it are not the ones its content uses.
+TitleBarMetrics ReadTitleBarMetrics(winrt::Microsoft::UI::Windowing::AppWindow const& app);
+
+// {style, leading, trailing, height}, the metrics times `scale`.
 // Standard reports zeros: the system frame sits outside the client area.
-winrt::Windows::Data::Json::JsonObject TitleBarJson(
-  winrt::Microsoft::UI::Windowing::AppWindow const& app, HWND hwnd, TitleBarStyle style, double scale);
+winrt::Windows::Data::Json::JsonObject TitleBarJson(TitleBarStyle style, TitleBarMetrics const& metrics, HWND hwnd, double scale);
 }

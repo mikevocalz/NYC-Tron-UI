@@ -21,6 +21,9 @@ struct DesktopSession::Window {
   HWND hwnd{};
   bool primary{false};
   TitleBarStyle titleBar{TitleBarStyle::Standard};
+  // Last metrics read while the window was shown. A minimized window keeps
+  // reporting these, since its content keeps the layout it had when shown.
+  TitleBarMetrics titleBarMetrics{};
   RN::ReactNativeWindow surface{nullptr};
   UI::Windowing::AppWindow app{nullptr};
   winrt::event_token changed{}, closing{}, destroying{};
@@ -162,7 +165,8 @@ std::string DesktopSession::Snapshot() {
     value.SetNamedValue(L"dpi", Json::JsonValue::CreateNumberValue(GetDpiForWindow(window->hwnd)));
     value.SetNamedValue(L"primary", Json::JsonValue::CreateBooleanValue(window->primary));
     value.SetNamedValue(L"status", Json::JsonValue::CreateStringValue(IsIconic(window->hwnd) ? L"minimized" : L"open"));
-    value.SetNamedValue(L"titleBar", TitleBarJson(window->app, window->hwnd, window->titleBar, scale));
+    if (window->titleBar == TitleBarStyle::Extended && !IsIconic(window->hwnd)) window->titleBarMetrics = ReadTitleBarMetrics(window->app);
+    value.SetNamedValue(L"titleBar", TitleBarJson(window->titleBar, window->titleBarMetrics, window->hwnd, scale));
     windows.Append(value);
     if (!IsIconic(window->hwnd) && GetAncestor(GetForegroundWindow(), GA_ROOT) == window->hwnd)
       root.SetNamedValue(L"focusedId", Json::JsonValue::CreateStringValue(winrt::to_hstring(id)));
@@ -232,6 +236,9 @@ void DesktopSession::SetTitleBar(std::string const& id, std::string const& style
     throw;
   }
   window.titleBar = next;
+  // Standard reserves nothing. An Extended window minimized right now reads
+  // its metrics when next shown, and reports zeros until then.
+  window.titleBarMetrics = next == TitleBarStyle::Extended && !IsIconic(window.hwnd) ? ReadTitleBarMetrics(window.app) : TitleBarMetrics{};
 }
 void DesktopSession::RequestClose(std::string const& id) { SendMessageW(Get(id).hwnd, WM_CLOSE, 0, 0); }
 void DesktopSession::ResolveClose(std::string const& id, std::string const& generation, std::string const& token, bool accepted) {
