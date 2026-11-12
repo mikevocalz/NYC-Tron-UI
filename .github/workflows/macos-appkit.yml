@@ -193,7 +193,7 @@ jobs:
           path: ${{ runner.temp }}/nyc-tron-appkit-tested-package/
 
   # Gate T4 measurement: which public @nyc-tron/ui exports build and render in
-  # the Spark 0.0.2 / React Native macOS 0.83 lane. These jobs record results
+  # the Spark 0.0.3 / React Native macOS 0.83 lane. These jobs record results
   # per export and component; a component that fails is data, not a job
   # failure. Only harness errors fail them. They do not run when the release
   # workflow calls this file, so the release gate is unchanged.
@@ -233,7 +233,7 @@ jobs:
           retention-days: 14
           path: ${{ runner.temp }}/ui-coverage-web/
   ui-coverage-macos:
-    name: UI desktop coverage in the Spark 0.0.2 AppKit lane
+    name: UI desktop coverage in the Spark 0.0.3 AppKit lane
     if: github.workflow != 'NYC-Tron release tarballs'
     needs: ui-coverage-inputs
     runs-on: macos-15

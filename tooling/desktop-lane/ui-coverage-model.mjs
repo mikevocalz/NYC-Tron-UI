@@ -68,8 +68,15 @@ function typescript() {
   if (loadedTypeScript) return loadedTypeScript;
   const bases = [import.meta.url];
   if (process.env.TRON_TYPESCRIPT_FROM) bases.push(join(resolve(process.env.TRON_TYPESCRIPT_FROM), "package.json"));
+  // TypeScript 7 has no JavaScript API; the workspace keeps the 6.x compiler
+  // API as @typescript/typescript6. Lane consumers carry a 5.x "typescript".
   for (const base of bases) {
-    try { return (loadedTypeScript = createRequire(base)("typescript")); } catch {}
+    for (const name of ["@typescript/typescript6", "typescript"]) {
+      try {
+        const candidate = createRequire(base)(name);
+        if (typeof candidate.preProcessFile === "function") return (loadedTypeScript = candidate);
+      } catch {}
+    }
   }
   throw new Error("TypeScript is not installed; set TRON_TYPESCRIPT_FROM to a directory that has it");
 }

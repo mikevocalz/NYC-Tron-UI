@@ -13,7 +13,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 import { readManifest, selectExport } from "./ui-coverage-model.mjs";
 
 const [packageArgument, archiveArgument, outArgument] = process.argv.slice(2);
