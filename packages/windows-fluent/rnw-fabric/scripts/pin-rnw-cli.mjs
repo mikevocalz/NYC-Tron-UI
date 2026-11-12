@@ -37,14 +37,15 @@ const major = pin.split(".")[0];
 const installed = read(join(consumer, "node_modules", CLI, "package.json")).version;
 if (installed !== pin) fail(`consumer installed ${CLI}@${installed}, pinned ${pin}`);
 
-// --no-install forbids a registry fetch, so success proves local resolution.
+// --no-install forbids a registry fetch, so exit 0 proves the exact pinned
+// spec resolves from the consumer's local tree. The CLI's own --version output
+// is not used: it does not print the package version.
 const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 const probe = spawnSync(npx, ["--no-install", "--no-workspaces", `${CLI}@${pin}`, "--version"], { cwd: consumer, encoding: "utf8", shell: process.platform === "win32" });
-const resolved = probe.stdout?.trim().split(/\r?\n/).pop();
-if (probe.status !== 0 || resolved?.split(".")[0] !== major) fail(`npx resolved ${CLI} ${resolved ?? "nothing"} (exit ${probe.status}), expected major ${major}\n${probe.stderr}`);
+if (probe.status !== 0) fail(`npx --no-install ${CLI}@${pin} failed in the consumer (exit ${probe.status})\n${probe.stderr}`);
 
 const base = `npx --yes --no-workspaces ${CLI}@${pin}`;
 const env = { CodegenCommand: `${base} codegen-windows`, BundleCliCommand: `${base} bundle`, AutolinkCommand: `${base} autolink-windows` };
 if (envFile) appendFileSync(envFile, Object.entries(env).map(([k, v]) => `${k}=${v}\n`).join(""));
-console.info(`RNW CLI pinned to ${pin} (major ${major}); consumer resolves ${resolved}`);
+console.info(`RNW CLI pinned to ${pin} (major ${major}); consumer resolves it locally`);
 for (const [k, v] of Object.entries(env)) console.info(`  ${k}=${v}`);
