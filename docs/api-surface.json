@@ -10,6 +10,7 @@
     "./spatial",
     "./spatial-interactions",
     "./theme",
+    "./window-chrome",
     "./window-lifecycle"
   ],
   "@nyc-tron/expo-controls": [
@@ -637,7 +638,8 @@
     "./components/shell/unit-expression",
     "./components/shell/workspace-model",
     "./components/shell/workspace-preset-model",
-    "./components/theme/NightScope"
+    "./components/theme/NightScope",
+    "./components/window/WindowTitleBar"
   ],
   "@nyc-tron/windows-fluent": [
     ".",

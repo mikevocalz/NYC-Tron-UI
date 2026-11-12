@@ -567,6 +567,81 @@
           }
         }
       ],
+      "./window-chrome": [
+        {
+          "target": "./dist/window-chrome.d.ts",
+          "conditions": {
+            "types": "./dist/window-chrome.d.ts",
+            "react-native": "./dist/window-chrome.js",
+            "default": "./dist/window-chrome.js"
+          },
+          "symbols": {
+            "DEFAULT_WINDOW_CONTROL_LABELS": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#DEFAULT_WINDOW_CONTROL_LABELS"
+            ],
+            "DescribeTitleBarOptions": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#DescribeTitleBarOptions"
+            ],
+            "DrawnControlsLayout": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#DrawnControlsLayout"
+            ],
+            "NO_TITLE_BAR_INSETS": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#NO_TITLE_BAR_INSETS"
+            ],
+            "PageWindowHost": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#PageWindowHost"
+            ],
+            "PageWindowHostOptions": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#PageWindowHostOptions"
+            ],
+            "TitleBarControls": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarControls"
+            ],
+            "TitleBarInsets": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
+            ],
+            "TitleBarModel": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarModel"
+            ],
+            "WindowChromeCommand": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand"
+            ],
+            "WindowChromeController": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeController"
+            ],
+            "WindowChromeHost": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeHost"
+            ],
+            "WindowChromeSnapshot": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeSnapshot"
+            ],
+            "WindowCloseResult": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowCloseResult"
+            ],
+            "WindowCommandResult": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowCommandResult"
+            ],
+            "WindowControlDescriptor": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlDescriptor"
+            ],
+            "WindowControlLabels": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlLabels"
+            ],
+            "WindowZoomControl": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#WindowZoomControl"
+            ],
+            "createPageWindowHost": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#createPageWindowHost"
+            ],
+            "createWindowChromeController": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#createWindowChromeController"
+            ],
+            "describeTitleBar": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#describeTitleBar"
+            ]
+          }
+        }
+      ],
       "./window-lifecycle": [
         {
           "target": "./dist/window-lifecycle.d.ts",
@@ -2473,6 +2548,9 @@
             "NATIVE_MODULE_NAME": [
               "@nyc-tron/reserved-regions/dist/payload.d.ts#NATIVE_MODULE_NAME"
             ],
+            "NO_WINDOW_CONTROLS": [
+              "@nyc-tron/reserved-regions/dist/payload.d.ts#NO_WINDOW_CONTROLS"
+            ],
             "ReservedRegion": [
               "@nyc-tron/core/dist/folds.d.ts#ReservedRegion"
             ],
@@ -2481,6 +2559,9 @@
             ],
             "ReservedRegionsOverrideProps": [
               "@nyc-tron/reserved-regions/dist/ReservedRegionsOverride.d.ts#ReservedRegionsOverrideProps"
+            ],
+            "TitleBarInsets": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
             ],
             "isReservedRegionsAvailable": [
               "@nyc-tron/reserved-regions/dist/useReservedRegions.d.ts#isReservedRegionsAvailable"
@@ -2491,11 +2572,20 @@
             "toRegions": [
               "@nyc-tron/reserved-regions/dist/payload.d.ts#toRegions"
             ],
+            "toWindowControlsInsets": [
+              "@nyc-tron/reserved-regions/dist/payload.d.ts#toWindowControlsInsets"
+            ],
             "useReservedRegions": [
               "@nyc-tron/reserved-regions/dist/useReservedRegions.d.ts#useReservedRegions"
             ],
             "useReservedRegionsOverride": [
               "@nyc-tron/reserved-regions/dist/ReservedRegionsOverride.d.ts#useReservedRegionsOverride"
+            ],
+            "useWindowControlsInsets": [
+              "@nyc-tron/reserved-regions/dist/useWindowControlsInsets.d.ts#useWindowControlsInsets"
+            ],
+            "windowControlsEqual": [
+              "@nyc-tron/reserved-regions/dist/payload.d.ts#windowControlsEqual"
             ]
           }
         }
@@ -2545,14 +2635,26 @@
             "NO_REGIONS": [
               "@nyc-tron/reserved-regions/dist/payload.d.ts#NO_REGIONS"
             ],
+            "NO_WINDOW_CONTROLS": [
+              "@nyc-tron/reserved-regions/dist/payload.d.ts#NO_WINDOW_CONTROLS"
+            ],
             "ReservedRegion": [
               "@nyc-tron/core/dist/folds.d.ts#ReservedRegion"
+            ],
+            "TitleBarInsets": [
+              "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
             ],
             "regionsEqual": [
               "@nyc-tron/reserved-regions/dist/payload.d.ts#regionsEqual"
             ],
             "toRegions": [
               "@nyc-tron/reserved-regions/dist/payload.d.ts#toRegions"
+            ],
+            "toWindowControlsInsets": [
+              "@nyc-tron/reserved-regions/dist/payload.d.ts#toWindowControlsInsets"
+            ],
+            "windowControlsEqual": [
+              "@nyc-tron/reserved-regions/dist/payload.d.ts#windowControlsEqual"
             ]
           }
         }
@@ -18694,6 +18796,36 @@
             ]
           }
         }
+      ],
+      "./components/window/WindowTitleBar": [
+        {
+          "target": "./dist/components/window/WindowTitleBar.d.ts",
+          "conditions": {
+            "types": "./dist/components/window/WindowTitleBar.d.ts",
+            "react-native": "./dist/components/window/WindowTitleBar.js",
+            "default": "./dist/components/window/WindowTitleBar.js"
+          },
+          "symbols": {
+            "CAPTION_TARGET_WIDTH": [
+              "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#CAPTION_TARGET_WIDTH"
+            ],
+            "CONTROL_TARGET": [
+              "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#CONTROL_TARGET"
+            ],
+            "TITLE_BAR_HEIGHT": [
+              "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#TITLE_BAR_HEIGHT"
+            ],
+            "WindowTitleBar": [
+              "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#WindowTitleBar"
+            ],
+            "WindowTitleBarProps": [
+              "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#WindowTitleBarProps"
+            ],
+            "useWindowChrome": [
+              "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#useWindowChrome"
+            ]
+          }
+        }
       ]
     },
     "@nyc-tron/windows-fluent": {
@@ -19427,6 +19559,199 @@
       "references": [
         "@nyc-tron/core/dist/theme.d.ts#TronTheme",
         "@nyc-tron/core/dist/theme.d.ts#TronThemeInput"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#DEFAULT_WINDOW_CONTROL_LABELS": {
+      "signatures": [
+        "export declare const DEFAULT_WINDOW_CONTROL_LABELS: Readonly<{\n    readonly macos: Readonly<{\n        close: \"Close window\";\n        minimize: \"Minimize window\";\n        restore: \"Restore window\";\n        zoom: \"Zoom window\";\n        unzoom: \"Zoom window\";\n    }>;\n    readonly windows: Readonly<{\n        close: \"Close\";\n        minimize: \"Minimize\";\n        restore: \"Restore\";\n        zoom: \"Maximize\";\n        unzoom: \"Restore down\";\n    }>;\n}>;"
+      ],
+      "references": [
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#DescribeTitleBarOptions": {
+      "signatures": [
+        "export interface DescribeTitleBarOptions {\n    readonly controls: TitleBarControls;\n    readonly zoomed?: boolean;\n    readonly pending?: WindowChromeCommand;\n    readonly labels?: Partial<WindowControlLabels>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarControls",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlLabels",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Partial"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#DrawnControlsLayout": {
+      "signatures": [
+        "export type DrawnControlsLayout = \"macos\" | \"windows\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#NO_TITLE_BAR_INSETS": {
+      "signatures": [
+        "export declare const NO_TITLE_BAR_INSETS: TitleBarInsets;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#PageWindowHost": {
+      "signatures": [
+        "export interface PageWindowHost extends WindowChromeHost {\n    readonly zoom: WindowZoomControl;\n    open(spec: OpenWindowSpec): Outcome;\n    focus(windowId: string): Outcome;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeHost",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowZoomControl",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#OpenWindowSpec",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#Outcome"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#PageWindowHostOptions": {
+      "signatures": [
+        "export interface PageWindowHostOptions {\n    readonly beforeClose?: (windowId: string) => boolean | Promise<boolean>;\n    readonly onError?: (error: unknown) => void;\n}"
+      ],
+      "references": [
+        "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarControls": {
+      "signatures": [
+        "export type TitleBarControls = {\n    readonly kind: \"drawn\";\n    readonly layout: DrawnControlsLayout;\n} | {\n    readonly kind: \"native\";\n    readonly insets: TitleBarInsets;\n};"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#DrawnControlsLayout",
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets": {
+      "signatures": [
+        "export interface TitleBarInsets {\n    readonly leading: number;\n    readonly trailing: number;\n    readonly height: number;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarModel": {
+      "signatures": [
+        "export interface TitleBarModel {\n    readonly windowId: string;\n    readonly status: \"open\" | \"minimized\" | \"closed\";\n    readonly focused: boolean;\n    readonly leading: readonly WindowControlDescriptor[];\n    readonly trailing: readonly WindowControlDescriptor[];\n    readonly insets: TitleBarInsets;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlDescriptor"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand": {
+      "signatures": [
+        "export type WindowChromeCommand = \"close\" | \"minimize\" | \"restore\" | \"zoom\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeController": {
+      "signatures": [
+        "export interface WindowChromeController {\n    readonly windowId: string;\n    getSnapshot(): WindowChromeSnapshot;\n    subscribe(listener: () => void): () => void;\n    run(command: WindowChromeCommand): Promise<WindowCommandResult>;\n    dispose(): void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeSnapshot",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowCommandResult",
+        "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeHost": {
+      "signatures": [
+        "export interface WindowChromeHost {\n    getState(): WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    requestClose(windowId: string): Promise<WindowCloseResult>;\n    minimize(windowId: string): Promise<void>;\n    restore(windowId: string): Promise<void>;\n    readonly zoom?: WindowZoomControl;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowCloseResult",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowZoomControl",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState",
+        "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeSnapshot": {
+      "signatures": [
+        "export interface WindowChromeSnapshot {\n    readonly status: TitleBarModel[\"status\"];\n    readonly focused: boolean;\n    readonly zoomed?: boolean;\n    readonly pending?: WindowChromeCommand;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarModel",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowCloseResult": {
+      "signatures": [
+        "export type WindowCloseResult = {\n    readonly closed: true;\n} | {\n    readonly closed: false;\n    readonly reason: \"vetoed\";\n};"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowCommandResult": {
+      "signatures": [
+        "export type WindowCommandResult = {\n    readonly command: WindowChromeCommand;\n    readonly status: \"done\";\n} | {\n    readonly command: \"close\";\n    readonly status: \"vetoed\";\n} | {\n    readonly command: WindowChromeCommand;\n    readonly status: \"ignored\";\n    readonly reason: \"busy\" | \"unavailable\" | \"closed\";\n};"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlDescriptor": {
+      "signatures": [
+        "export interface WindowControlDescriptor {\n    readonly command: WindowChromeCommand;\n    readonly label: string;\n    readonly enabled: boolean;\n    readonly pressed?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeCommand"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlLabels": {
+      "signatures": [
+        "export interface WindowControlLabels {\n    readonly close: string;\n    readonly minimize: string;\n    readonly restore: string;\n    readonly zoom: string;\n    readonly unzoom: string;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#WindowZoomControl": {
+      "signatures": [
+        "export interface WindowZoomControl {\n    isZoomed(windowId: string): boolean;\n    toggleZoom(windowId: string): Promise<void>;\n}"
+      ],
+      "references": [
+        "typescript@6.0.3/lib/lib.es2015.iterable.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es2018.promise.d.ts#Promise",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Promise"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#createPageWindowHost": {
+      "signatures": [
+        "export declare function createPageWindowHost(options?: PageWindowHostOptions): PageWindowHost;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#PageWindowHost",
+        "@nyc-tron/core/dist/window-chrome.d.ts#PageWindowHostOptions"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#createWindowChromeController": {
+      "signatures": [
+        "export declare function createWindowChromeController(host: WindowChromeHost, windowId: string): WindowChromeController;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeController",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeHost"
+      ]
+    },
+    "@nyc-tron/core/dist/window-chrome.d.ts#describeTitleBar": {
+      "signatures": [
+        "export declare function describeTitleBar(state: WindowRegistryState, windowId: string, options: DescribeTitleBarOptions): TitleBarModel;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#DescribeTitleBarOptions",
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarModel",
+        "@nyc-tron/core/dist/window-lifecycle.d.ts#WindowRegistryState"
       ]
     },
     "@nyc-tron/core/dist/window-lifecycle.d.ts#DisplayInfo": {
@@ -21384,6 +21709,14 @@
         "@nyc-tron/core/dist/folds.d.ts#ReservedRegion"
       ]
     },
+    "@nyc-tron/reserved-regions/dist/payload.d.ts#NO_WINDOW_CONTROLS": {
+      "signatures": [
+        "export declare const NO_WINDOW_CONTROLS: TitleBarInsets;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
+      ]
+    },
     "@nyc-tron/reserved-regions/dist/payload.d.ts#regionsEqual": {
       "signatures": [
         "export declare function regionsEqual(a: readonly ReservedRegion[], b: readonly ReservedRegion[]): boolean;"
@@ -21400,6 +21733,22 @@
         "@nyc-tron/core/dist/folds.d.ts#ReservedRegion"
       ]
     },
+    "@nyc-tron/reserved-regions/dist/payload.d.ts#toWindowControlsInsets": {
+      "signatures": [
+        "export declare function toWindowControlsInsets(payload: unknown): TitleBarInsets;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
+      ]
+    },
+    "@nyc-tron/reserved-regions/dist/payload.d.ts#windowControlsEqual": {
+      "signatures": [
+        "export declare function windowControlsEqual(a: TitleBarInsets, b: TitleBarInsets): boolean;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
+      ]
+    },
     "@nyc-tron/reserved-regions/dist/useReservedRegions.d.ts#isReservedRegionsAvailable": {
       "signatures": [
         "export declare function isReservedRegionsAvailable(): boolean;"
@@ -21412,6 +21761,14 @@
       ],
       "references": [
         "@nyc-tron/core/dist/folds.d.ts#ReservedRegion"
+      ]
+    },
+    "@nyc-tron/reserved-regions/dist/useWindowControlsInsets.d.ts#useWindowControlsInsets": {
+      "signatures": [
+        "export declare function useWindowControlsInsets(): TitleBarInsets;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarInsets"
       ]
     },
     "@nyc-tron/ui/dist/components/Button.d.ts#Button": {
@@ -47544,6 +47901,59 @@
       ],
       "references": [
         "@types/react@19.3.0/index.d.ts#React.ReactNode"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#CAPTION_TARGET_WIDTH": {
+      "signatures": [
+        "export declare const CAPTION_TARGET_WIDTH = 48;"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#CONTROL_TARGET": {
+      "signatures": [
+        "export declare const CONTROL_TARGET = 44;"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#TITLE_BAR_HEIGHT": {
+      "signatures": [
+        "export declare const TITLE_BAR_HEIGHT = 44;"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#WindowTitleBar": {
+      "signatures": [
+        "export declare function WindowTitleBar({ chrome, title, controls, edited, labels, editedLabel, closeBlockedLabel, onCommandResult, onError, children, className, titleClassName, controlClassName, unstyled, style, testID, }: WindowTitleBarProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#WindowTitleBarProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#WindowTitleBarProps": {
+      "signatures": [
+        "export interface WindowTitleBarProps {\n    chrome: WindowChromeController;\n    title: string;\n    controls: TitleBarControls;\n    edited?: boolean;\n    labels?: Partial<WindowControlLabels>;\n    editedLabel?: string;\n    closeBlockedLabel?: string;\n    onCommandResult?: (result: WindowCommandResult) => void;\n    onError?: (error: unknown) => void;\n    children?: ReactNode;\n    className?: string;\n    titleClassName?: string;\n    controlClassName?: string;\n    unstyled?: boolean;\n    style?: StyleProp<ViewStyle>;\n    testID?: string;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#TitleBarControls",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeController",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowCommandResult",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowControlLabels",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "react-native@0.88.0/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#StyleProp",
+        "react-native@0.88.0/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Partial"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#useWindowChrome": {
+      "signatures": [
+        "export declare function useWindowChrome(host: WindowChromeHost, windowId: string): WindowChromeController;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeController",
+        "@nyc-tron/core/dist/window-chrome.d.ts#WindowChromeHost"
       ]
     },
     "@nyc-tron/windows-fluent/dist/controller.d.ts#WindowsNavigationCallbacks": {
