@@ -4,8 +4,8 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { classifyInitialUiTransportFailure as classify, retainInitialUiTransportFailure as retain,
-  withInitialUiTransportRecovery as retry } from "../native/ui-transport.mjs";
+import { classifyInitialUiTransportFailure as classify, maestroSessionLimits, recapConfirmationIntervalMs, recoverableUiFlows,
+  retainInitialUiTransportFailure as retain, withInitialUiTransportRecovery as retry } from "../native/ui-transport.mjs";
 
 const appId = "com.nyctron.instruments.example", deviceId = "emulator-5554";
 const command = (name, value, status = "COMPLETED", metadata = {}) => ({ command: { [name]: value }, metadata: { status, ...metadata } });
@@ -181,5 +181,265 @@ test("Editor retention uses its own directory and receipt and cannot replace Set
   assert.equal(retained.retainedDirectory, "editor-initial-transport-failure");
   assert.equal(JSON.parse(readFileSync(join(output, retained.file), "utf8")).flow, "editor");
   assert.equal(readFileSync(join(output, "transport-recovery.json"), "utf8"), "{}\n");
-  assert.throws(() => retain({ output, flow: "pointer" }), /No initial UI transport recovery/);
+  assert.throws(() => retain({ output, flow: "pointer-cancel" }), /No initial UI transport recovery/);
+});
+
+// ---- Recap variants seen on macos-26-arm64 20261102.0473.1 (iPhone 17 Pro, iOS 26.5) ----
+// Log lines are copied verbatim from each attempt's device-simulator.log, keeping
+// only the Recap, backboardd touch and testmanagerd confirmation lines inside the
+// action's own window. Hierarchies keep the real nodes Maestro saved for the
+// failed assertion (resource ids and labels), with layout-only nodes dropped.
+
+// Variant A: run 43157470910 attempt 1 (PR #68, a54dbce). Settings tap 05:09:53.121, 9382 ms.
+// Recap service added 05:09:56.364; backboardd refuses its event as from an
+// "unsupported service"; the digitizer disappears with no contact 1581 ms after
+// it was added; XCTest times out waiting for TouchEventsCompleted.
+const droppedSettingsLog = [
+  "2026-11-12 05:09:55.697434+0000  localhost testmanagerd[31881]: [com.apple.dt.xctest:Default] current: Touch down at 348.0, 808.0, offset=0.00s",
+  "2026-11-12 05:09:55.697862+0000  localhost testmanagerd[31881]: [com.apple.dt.xctest:Default] current: Touch up at 348.0, 808.0, offset=0.10s",
+  "2026-11-12 05:09:56.364748+0000  localhost backboardd[23574]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x10135c2000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-12 05:09:56.998959+0000  localhost backboardd[23574]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x10135C2000000",
+  "2026-11-12 05:09:57.001423+0000  localhost backboardd[23574]: [com.apple.BackBoard:TouchEvents] ignoring digitizer event for display <main> from unsupported service: (<BKIOHIDService: 0x108e3ec80; serviceStatus: <unknown>; IOHIDService: IOHIDService name: id:0x10135c2000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:1 mask:0x800 sensorcontrols:7; senderID: 0x10135C2000000; displayUUID: 0x0; eventSource: externalAccessory; primaryUsagePage: 0x0; primaryUsage: 0x0; authenticated: NO; builtIn: NO>):+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",
+  "2026-11-12 05:09:57.945980+0000  localhost backboardd[23574]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x108d77560; touchScreen; builtin; senderID: 0x10135C2000000; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+  "2026-11-12 05:10:02.077929+0000  localhost testmanagerd[31881]: [com.apple.dt.xctest:Default] Timed out after waiting 5.0s for TouchEventsCompleted, event will be implicitly confirmed with no error other than this log message.",
+].join("\n");
+// Variant A again: run 43172075412 attempt 1 (PR #68, 304c725), tap 07:50:18.719 for 11915 ms; cancel 2690 ms after creation.
+const droppedSettingsLog2 = [
+  "2026-11-12 07:50:21.868987+0000  localhost testmanagerd[35283]: [com.apple.dt.xctest:Default] current: Touch down at 348.0, 808.0, offset=0.00s",
+  "2026-11-12 07:50:21.869517+0000  localhost testmanagerd[35283]: [com.apple.dt.xctest:Default] current: Touch up at 348.0, 808.0, offset=0.10s",
+  "2026-11-12 07:50:22.791559+0000  localhost backboardd[25738]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x105f88c000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-12 07:50:23.040915+0000  localhost backboardd[25738]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x105F88C000000",
+  "2026-11-12 07:50:23.042561+0000  localhost backboardd[25738]: [com.apple.BackBoard:TouchEvents] ignoring digitizer event for display <main> from unsupported service: (<BKIOHIDService: 0x10d64f180; serviceStatus: <unknown>; IOHIDService: IOHIDService name: id:0x105f88c000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:1 mask:0x800 sensorcontrols:7; senderID: 0x105F88C000000; displayUUID: 0x0; eventSource: externalAccessory; primaryUsagePage: 0x0; primaryUsage: 0x0; authenticated: NO; builtIn: NO>):+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",
+  "2026-11-12 07:50:25.481025+0000  localhost backboardd[25738]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10d68f560; touchScreen; builtin; senderID: 0x105F88C000000; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+  "2026-11-12 07:50:28.118208+0000  localhost testmanagerd[35283]: [com.apple.dt.xctest:Default] Timed out after waiting 5.0s for TouchEventsCompleted, event will be implicitly confirmed with no error other than this log message.",
+].join("\n");
+// Variant A again: run 43156283059 attempt 2 (PR #70, fb80a12), tap 06:50:05.069 for 12313 ms; cancel 1405 ms after creation.
+const droppedSettingsLog3 = [
+  "2026-11-12 06:50:09.537037+0000  localhost testmanagerd[28983]: [com.apple.dt.xctest:Default] current: Touch down at 348.0, 808.0, offset=0.00s",
+  "2026-11-12 06:50:09.537466+0000  localhost testmanagerd[28983]: [com.apple.dt.xctest:Default] current: Touch up at 348.0, 808.0, offset=0.10s",
+  "2026-11-12 06:50:11.418145+0000  localhost backboardd[22218]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x103b512000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-12 06:50:12.039365+0000  localhost backboardd[22218]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x103B512000000",
+  "2026-11-12 06:50:12.556629+0000  localhost backboardd[22218]: [com.apple.BackBoard:TouchEvents] ignoring digitizer event for display <main> from unsupported service: (<BKIOHIDService: 0x10b28ec80; serviceStatus: <unknown>; IOHIDService: IOHIDService name: id:0x103b512000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:1 mask:0x800 sensorcontrols:7; senderID: 0x103B512000000; displayUUID: 0x0; eventSource: externalAccessory; primaryUsagePage: 0x0; primaryUsage: 0x0; authenticated: NO; builtIn: NO>):+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",
+  "2026-11-12 06:50:12.823804+0000  localhost backboardd[22218]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10b0ebc60; touchScreen; builtin; senderID: 0x103B512000000; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+  "2026-11-12 06:50:16.976939+0000  localhost testmanagerd[28983]: [com.apple.dt.xctest:Default] Timed out after waiting 5.0s for TouchEventsCompleted, event will be implicitly confirmed with no error other than this log message.",
+].join("\n");
+// Negative: run 43172075412 attempt 2, the same Settings tap delivered (08:35:14.715, 3825 ms).
+// It also ends in an empty-contact disappear line, 641 ms after creation, but
+// backboardd never refused the event and XCTest got its confirmation.
+const deliveredSettingsLog = [
+  "2026-11-12 08:35:16.759645+0000  localhost testmanagerd[39919]: [com.apple.dt.xctest:Default] current: Touch down at 348.0, 808.0, offset=0.00s",
+  "2026-11-12 08:35:16.759955+0000  localhost testmanagerd[39919]: [com.apple.dt.xctest:Default] current: Touch up at 348.0, 808.0, offset=0.10s",
+  "2026-11-12 08:35:17.075207+0000  localhost backboardd[28152]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x105764a000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-12 08:35:17.470821+0000  localhost backboardd[28152]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x105764A000000",
+  "2026-11-12 08:35:17.482966+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] *** unknown digitizer <BKIOHIDService: 0x10cea9600; serviceStatus: <unknown>; IOHIDService: IOHIDService name: id:0x105764a000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:1 mask:0x800 sensorcontrols:7; senderID: 0x105764A000000; displayUUID: 0x0; eventSource: builtin; primaryUsagePage: 0xD; primaryUsage: 0x4; authenticated: YES; builtIn: YES> -- initializing now",
+  "2026-11-12 08:35:17.716787+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10cece060; touchScreen; builtin; senderID: 0x105764A000000; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+  "2026-11-12 08:35:17.717795+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10cecc540; touchScreen; builtin; senderID: 0x105764A000000; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+].join("\n");
+// Existing rule: run 43082569875 attempt 2 (rc.1, 61f3034), tap 19:56:01.770 for 4611 ms; cancel carried touching pathIndex 2.
+const rc1SettingsLog = [
+  "2026-11-11 19:56:04.237395+0000  localhost testmanagerd[32375]: [com.apple.dt.xctest:Default] current: Touch down at 348.0, 808.0, offset=0.00s",
+  "2026-11-11 19:56:04.237537+0000  localhost testmanagerd[32375]: [com.apple.dt.xctest:Default] current: Touch up at 348.0, 808.0, offset=0.10s",
+  "2026-11-11 19:56:05.706109+0000  localhost backboardd[22036]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x103b5d8000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-11 19:56:05.717060+0000  localhost backboardd[22036]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x103B5D8000000",
+  "2026-11-11 19:56:05.724098+0000  localhost backboardd[22036]: [com.apple.BackBoard:TouchEvents] *** unknown digitizer <BKIOHIDService: 0x10b22ae80; serviceStatus: <unknown>; IOHIDService: IOHIDService name: id:0x103b5d8000000 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:1 mask:0x800 sensorcontrols:7; senderID: 0x103B5D8000000; displayUUID: 0x0; eventSource: builtin; primaryUsagePage: 0xD; primaryUsage: 0x4; authenticated: YES; builtIn: YES> -- initializing now",
+  "2026-11-11 19:56:05.937810+0000  localhost backboardd[22036]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10b013100; touchScreen; builtin; senderID: 0x103B5D8000000; contacts: contacts: [pathIndex: 2; touchIdentifier: 1; touching; locked; destinations: ((touchStream|filterDetachedTouches); contextID: 0x6A460ABA; clientPort: 0x520B, (hitTest); contextID: 0xA0B941D5; clientPort: 0x29517; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>)]; destinations: [<BKTouchDestination: 0x10b0b2340; (hitTest); contextID: 0xA0B941D5; clientPort: 0x29517; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>; externalReferences: 1>, <BKTouchDestination: 0x10b0b2850; (hitTest); contextID: 0x44306FC6; clientPort: 0x520B; externalReferences: 1>, <BKTouchDestination: 0x10b0b18c0; (hitTest); contextID: 0xD3688F5F; clientPort: 0x520B; externalReferences: 1>]; latentSystemGestureDestinations: ()>",
+  "2026-11-11 19:56:05.938338+0000  localhost backboardd[22036]: [com.apple.BackBoard:TouchEvents] canceling paths contacts: [pathIndex: 2; touchIdentifier: 1; touching; locked; destinations: ((touchStream|filterDetachedTouches); contextID: 0x6A460ABA; clientPort: 0x520B, (hitTest); contextID: 0xA0B941D5; clientPort: 0x29517; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>)] -- HID (ts:(null))",
+  "2026-11-11 19:56:05.939672+0000  localhost backboardd[22036]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10b012680; touchScreen; builtin; senderID: 0x103B5D8000000; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+].join("\n");
+// Variant B: run 43172075412 attempt 2, pointer swipe 08:42:47.972 for 2649 ms.
+// The Recap digitizer disappears mid-stroke with touching pathIndex 2 in the app's scene.
+const pointerCancelLog = [
+  "2026-11-12 08:42:49.078504+0000  localhost backboardd[28152]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x1057656000015 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-12 08:42:49.098010+0000  localhost backboardd[28152]: (BackBoardHIDEventFoundation) [com.apple.BackBoard:HID] unknown senderID: 0x1057656000015",
+  "2026-11-12 08:42:49.105701+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] *** unknown digitizer <BKIOHIDService: 0x10ceab380; serviceStatus: <unknown>; IOHIDService: IOHIDService name: id:0x1057656000015 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:1 mask:0x800 sensorcontrols:7; senderID: 0x1057656000015; displayUUID: 0x0; eventSource: builtin; primaryUsagePage: 0xD; primaryUsage: 0x4; authenticated: YES; builtIn: YES> -- initializing now",
+  "2026-11-12 08:42:50.014351+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10ceceae0; touchScreen; builtin; senderID: 0x1057656000015; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+  "2026-11-12 08:42:50.018095+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10cecdf80; touchScreen; builtin; senderID: 0x1057656000015; contacts: contacts: [pathIndex: 2; touchIdentifier: 14; touching; locked; destinations: ((hitTest); contextID: 0xC0710E38; clientPort: 0x1FBA7; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>, (touchStream|filterDetachedTouches); contextID: 0x18979E5D; clientPort: 0x510F)]; destinations: [<BKTouchDestination: 0x10cc7b150; (hitTest); contextID: 0xF3ABE204; clientPort: 0x510F; externalReferences: 1>, <BKTouchDestination: 0x10cc798c0; (hitTest); contextID: 0x5D459C22; clientPort: 0x510F; externalReferences: 1>, <BKTouchDestination: 0x10cc79530; (hitTest); contextID: 0xC0710E38; clientPort: 0x1FBA7; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>; externalReferences: 1>]; latentSystemGestureDestinations: ()>",
+  "2026-11-12 08:42:50.018200+0000  localhost backboardd[28152]: [com.apple.BackBoard:TouchEvents] canceling paths contacts: [pathIndex: 2; touchIdentifier: 14; touching; locked; destinations: ((hitTest); contextID: 0xC0710E38; clientPort: 0x1FBA7; inheritedSceneHostSettings: <identifier: sceneID:com.nyctron.instruments.example-default; touchBehavior: foreground>, (touchStream|filterDetachedTouches); contextID: 0x18979E5D; clientPort: 0x510F)] -- HID (ts:(null))",
+].join("\n");
+// Negative: rc.1 run 43082569875 attempt 2, pointer swipe 20:06:53.324 for 5224 ms that the app committed.
+// No touching contact was cancelled.
+const committedPointerLog = [
+  "2026-11-11 20:06:54.546850+0000  localhost backboardd[22036]: (IOKit) [com.apple.iohid:default] Service added: IOHIDService name: id:0x103b5da000016 primaryUsagePage:0xd primaryUsage:0x4 transport:Recap locationID:recap-bus-0 reportInterval:0 batchInterval:0 events:0 mask:0x0 sensorcontrols:7",
+  "2026-11-11 20:06:55.474721+0000  localhost backboardd[22036]: [com.apple.BackBoard:TouchEvents] cancel -- digitizer did disappear:<BKDirectTouchState: 0x10b26abc0; touchScreen; builtin; senderID: 0x103B5DA000016; contacts: contacts: []; destinations: []; latentSystemGestureDestinations: ()>",
+].join("\n");
+
+// Moves every line by the same offset so a real excerpt can be replayed inside another real window.
+const shift = (text, ms) => text.replace(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})\.(\d{6})\+0000/gm, (_, day, time, micros) => {
+  const at = new Date(Date.parse(day + "T" + time + "Z") + Number(micros.slice(0, 3)) + ms).toISOString();
+  return at.slice(0, 10) + " " + at.slice(11, 19) + "." + at.slice(20, 23) + micros.slice(3) + "+0000";
+});
+const settingsCommands = ({ tap, assertion }) => [launch(), visible("Library"),
+  command("tapOnElement", { selector: { textRegex: "Settings", optional: false }, retryIfNoChange: false, waitUntilVisible: false, longPress: false, optional: false },
+    "COMPLETED", { sequenceNumber: 4, ...tap }),
+  visible("Workspace preferences", "FAILED", { sequenceNumber: 5, ...assertion,
+    error: { message: 'Assertion is false: "Workspace preferences" is visible' },
+    artifacts: [{ type: "SCREEN_HIERARCHY", path: "screen-hierarchy/step-006-assertCondition-Workspace_preferences.json" },
+      { type: "SCREENSHOT", path: "screenshots/step-006-assertCondition-Workspace_preferences.png" }] })];
+const node = attributes => ({ attributes, children: [] });
+const tree = nodes => ({ attributes: {}, children: [{ attributes: { accessibilityText: "NYC-Tron Instruments Demo" }, children: nodes.map(node) }] });
+// The failed assertion's hierarchy in all three Variant A attempts: still on Library, no Settings panel.
+const libraryScreen = () => ({ path: "screen-hierarchy/step-006-assertCondition-Workspace_preferences.json", tree: tree([
+  { "resource-id": "reference-route-host" }, { "resource-id": "reference-panel-library" }, { "resource-id": "reference-library" },
+  { accessibilityText: "Library" }, { accessibilityText: "Find a study, keep it close, and pick up where you left off." },
+  { accessibilityText: "Library" }, { accessibilityText: "Editor" }, { accessibilityText: "Media" }, { accessibilityText: "Settings" }]) });
+// What a landed tap shows instead (from that run's passing settings-hierarchy.json).
+const settingsScreen = () => ({ path: libraryScreen().path, tree: tree([
+  { "resource-id": "reference-route-host" }, { "resource-id": "reference-panel-settings" }, { "resource-id": "reference-settings" },
+  { accessibilityText: "Library" }, { accessibilityText: "Editor" }, { accessibilityText: "Media" }, { accessibilityText: "Settings" }]) });
+const dropped = (log = droppedSettingsLog, timing = { tap: { timestamp: 1794460193121, duration: 9382 }, assertion: { timestamp: 1794460202510, duration: 17641 } }) =>
+  ({ platform: "ios", flow: "settings", appId, deviceId: "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC",
+    commands: settingsCommands(timing), simulatorLog: log, failureHierarchy: libraryScreen() });
+
+test("Variant A: a refused, contactless Recap tap recovers only with the pre-tap Library route in the app's tree", () => {
+  const evidence = classify(dropped());
+  assert.equal(evidence.kind, "ios-initial-navigation-recap-dropped");
+  assert.equal(evidence.senderId, "0x10135c2000000");
+  assert.equal(evidence.createdToCancelledMs, 1581);
+  assert.deepEqual(evidence.screen, { hierarchy: "screen-hierarchy/step-006-assertCondition-Workspace_preferences.json",
+    routePanel: "reference-panel-library", destinationVisible: false });
+  for (const line of Object.values(evidence.evidence)) assert.ok(line.at >= evidence.tap.start && line.at <= evidence.tap.end);
+  const second = classify(dropped(droppedSettingsLog2, { tap: { timestamp: 1794469818719, duration: 11915 }, assertion: { timestamp: 1794469830634 } }));
+  assert.equal(second.kind, "ios-initial-navigation-recap-dropped");
+  assert.equal(second.createdToCancelledMs, 2690);
+  const third = classify(dropped(droppedSettingsLog3, { tap: { timestamp: 1794466205069, duration: 12313 }, assertion: { timestamp: 1794466217385 } }));
+  assert.equal(third.kind, "ios-initial-navigation-recap-dropped");
+  assert.equal(third.createdToCancelledMs, 1405);
+  assert.ok(Math.max(1581, 2690, 1405) < recapConfirmationIntervalMs);
+});
+
+test("Variant A needs every piece of evidence; each one missing or contradicted refuses recovery", () => {
+  const log = mutate => ({ ...dropped(), simulatorLog: mutate(droppedSettingsLog) });
+  for (const input of [
+    log(text => text.split("\n").filter(line => !line.includes("Service added")).join("\n")),
+    log(text => text.split("\n").filter(line => !line.includes("unknown senderID")).join("\n")),
+    log(text => text.split("\n").filter(line => !line.includes("unsupported service")).join("\n")),
+    log(text => text.split("\n").filter(line => !line.includes("digitizer did disappear")).join("\n")),
+    log(text => text.split("\n").filter(line => !line.includes("TouchEventsCompleted")).join("\n")),
+    log(text => text.replace("transport:Recap", "transport:USB")),
+    log(text => text.replace("unknown senderID: 0x10135C2000000", "unknown senderID: 0x222")),
+    log(text => text.replace("senderID: 0x10135C2000000; contacts", "senderID: 0x222; contacts")),
+    // Cancelled after XCTest's 5.0 s confirmation interval: not this race.
+    log(text => text.replace("05:09:57.945980", "05:10:01.500000")),
+    // A second Recap digitizer in the same tap is ambiguous.
+    log(text => text + "\n" + text.split("\n").find(line => line.includes("Service added")).replace("0x10135c2000000", "0x10135c2000001")),
+    // Outside the tap window.
+    log(text => text.replaceAll("2026-11-12 05:09:5", "2026-11-12 05:08:5")),
+    { ...dropped(), failureHierarchy: undefined },
+    { ...dropped(), failureHierarchy: settingsScreen() },
+    { ...dropped(), failureHierarchy: { ...libraryScreen(), path: "screen-hierarchy/step-005-assertCondition-Library.json" } },
+    { ...dropped(), failureHierarchy: { ...libraryScreen(), tree: tree([{ "resource-id": "reference-panel-library" }, { "resource-id": "reference-panel-settings" }, { accessibilityText: "Settings" }]) } },
+    { ...dropped(), failureHierarchy: { ...libraryScreen(), tree: tree([{ "resource-id": "reference-panel-library" }, { accessibilityText: "Settings" }, { accessibilityText: "Workspace preferences" }]) } },
+    { ...dropped(), flow: "editor" },
+    { ...dropped(), platform: "android" },
+  ]) assert.equal(classify(input), null);
+});
+
+test("negative: a delivered tap's empty-contact teardown is not a lost touch, whatever the assertion says", () => {
+  const delivered = dropped(deliveredSettingsLog, { tap: { timestamp: 1794472514715, duration: 3825 }, assertion: { timestamp: 1794472518543 } });
+  assert.equal(classify(delivered), null);
+  assert.equal(classify({ ...delivered, failureHierarchy: settingsScreen() }), null);
+});
+
+test("negative: an app-side failure with no Recap cancel is never recoverable", () => {
+  // The app reached Settings and rendered the wrong heading: the tree proves the tap landed.
+  assert.equal(classify({ ...dropped(), failureHierarchy: settingsScreen() }), null);
+  const noRecap = droppedSettingsLog.split("\n").filter(line => !/backboardd/.test(line)).join("\n");
+  assert.equal(classify({ ...dropped(), simulatorLog: noRecap }), null);
+  // rc.1's committed stroke, replayed so its Recap digitizer sits where Variant B's did (08:42:49.078).
+  const committed = shift(committedPointerLog, Date.parse("2026-11-12T08:42:49.078Z") - Date.parse("2026-11-11T20:06:54.546Z"));
+  assert.match(committed, /2026-11-12 08:42:49\.078850\+0000/);
+  assert.equal(classify({ ...pointer(), simulatorLog: committed }), null);
+  assert.equal(classify({ ...pointer(), simulatorLog: committed, failureHierarchy: pointerScreen("Committed strokes: 2. Cancelled strokes: 0. Prediction samples: 0.", "Input source: touch. Last event: up.") }), null);
+  assert.equal(classify({ ...pointer(), simulatorLog: "" }), null);
+});
+
+test("negative: a touching-contact cancel stays on the existing rule and never satisfies Variant A", () => {
+  const rc1 = dropped(rc1SettingsLog, { tap: { timestamp: 1794426961770, duration: 4611 }, assertion: { timestamp: 1794426966382 } });
+  const evidence = classify(rc1);
+  assert.equal(evidence.kind, "ios-initial-navigation-recap-cancelled");
+  assert.equal(evidence.pathIndex, 2);
+  // The existing rule does not depend on the tree, and a tree cannot turn a touching cancel into Variant A.
+  assert.equal(classify({ ...rc1, failureHierarchy: undefined }).kind, "ios-initial-navigation-recap-cancelled");
+  // A touching cancel whose canceling-paths line is missing is unproven on both rules.
+  assert.equal(classify({ ...rc1, simulatorLog: rc1SettingsLog.split("\n").filter(line => !line.includes("canceling paths")).join("\n") }), null);
+  // The pointer stroke's touching cancel, moved into the Settings tap window, is not a dropped tap either.
+  const moved = shift(pointerCancelLog, Date.parse("2026-11-12T05:09:56.364Z") - Date.parse("2026-11-12T08:42:49.078Z"));
+  assert.match(moved, /2026-11-12 05:09:56\.364504\+0000/);
+  assert.equal(classify({ ...dropped(), simulatorLog: moved }).kind, "ios-initial-navigation-recap-cancelled");
+  // Mixed with Variant A's own lines, the touching contact still decides the rule: Variant A never claims it.
+  const mixed = classify({ ...dropped(), simulatorLog: droppedSettingsLog + "\n" + moved });
+  assert.equal(mixed.kind, "ios-initial-navigation-recap-cancelled");
+  assert.equal(mixed.senderId, "0x1057656000015");
+});
+
+const pointerCommands = () => [launch(), command("assertConditionCommand", { condition: { visible: { textRegex: "Input drawing surface", optional: false } }, timeout: "90000", optional: false },
+  "COMPLETED", { sequenceNumber: 3, timestamp: 1794472960375, duration: 7214 }),
+  visible("Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0.", "COMPLETED", { sequenceNumber: 4, timestamp: 1794472967591, duration: 381 }),
+  command("swipeCommand", { direction: "RIGHT", elementSelector: { textRegex: "Input drawing surface", optional: false }, duration: 700, relativePoint: "25%, 50%", optional: false },
+    "COMPLETED", { sequenceNumber: 5, timestamp: 1794472967972, duration: 2649 }),
+  visible("Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.", "FAILED", { sequenceNumber: 6, timestamp: 1794472970624, duration: 18204,
+    error: { message: 'Assertion is false: "Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0." is visible' },
+    artifacts: [{ type: "SCREEN_HIERARCHY", path: "screen-hierarchy/step-007-assertCondition-Committed_strokes_1._Can.json" }] })];
+const pointerScreen = (summary = "Committed strokes: 0. Cancelled strokes: 1. Prediction samples: 0.", last = "Input source: touch. Last event: cancel.") =>
+  ({ path: "screen-hierarchy/step-007-assertCondition-Committed_strokes_1._Can.json", tree: tree([{ "resource-id": "pointer-demo" },
+    { "resource-id": "pointer-summary", accessibilityText: summary }, { accessibilityText: summary },
+    { "resource-id": "pointer-last-event", accessibilityText: last }, { accessibilityText: last }, { "resource-id": "pointer-surface" }]) });
+function pointer() {
+  return { platform: "ios", flow: "pointer", appId, deviceId: "FCC5F673-7BEC-4A7D-8F2A-4DC35E2668EC",
+    commands: pointerCommands(), simulatorLog: pointerCancelLog, failureHierarchy: pointerScreen() };
+}
+
+test("Variant B: a stroke the OS cancelled through Recap mid-swipe, and the app counted as cancelled, recovers once", () => {
+  const evidence = classify(pointer());
+  assert.equal(evidence.kind, "ios-pointer-stroke-recap-cancelled");
+  assert.equal(evidence.senderId, "0x1057656000015");
+  assert.equal(evidence.pathIndex, 2);
+  assert.deepEqual(evidence.stroke, { start: 1794472967972, end: 1794472970621, sequence: 5 });
+  for (const line of Object.values(evidence.evidence)) assert.ok(line.at >= evidence.stroke.start && line.at <= evidence.stroke.end);
+});
+
+test("Variant B refuses app-side stroke failures, unproven cancels and any other command shape", () => {
+  for (const change of [
+    input => { input.failureHierarchy = pointerScreen("Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0.", "Input source: touch. Last event: up."); },
+    input => { input.failureHierarchy = pointerScreen("Committed strokes: 2. Cancelled strokes: 0. Prediction samples: 0.", "Input source: touch. Last event: up."); },
+    input => { input.failureHierarchy = pointerScreen("Committed strokes: 1. Cancelled strokes: 1. Prediction samples: 0."); },
+    input => { input.failureHierarchy = pointerScreen(undefined, "Input source: mouse. Last event: cancel."); },
+    input => { input.failureHierarchy = undefined; },
+    input => { input.simulatorLog = pointerCancelLog.split("\n").filter(line => !line.includes("touching;") || line.includes("canceling")).join("\n"); },
+    input => { input.simulatorLog = pointerCancelLog.split("\n").filter(line => !line.includes("canceling paths")).join("\n"); },
+    input => { input.simulatorLog = pointerCancelLog.replaceAll("sceneID:" + appId + "-default", "sceneID:com.other.app-default"); },
+    input => { input.simulatorLog = pointerCancelLog.replace("transport:Recap", "transport:USB"); },
+    input => { input.simulatorLog = pointerCancelLog.replaceAll("08:42:50.", "08:42:51."); },
+    input => { input.commands[3].metadata.timestamp += 5000; },
+    input => { input.commands[3].command.swipeCommand.direction = "LEFT"; },
+    input => { input.commands[3].command.swipeCommand.duration = 2000; },
+    input => { input.commands[4] = visible("Input source: touch. Last event: up.", "FAILED", input.commands[4].metadata); },
+    input => { input.commands.splice(4, 0, visible("Pointer input")); },
+    input => { input.commands[2].metadata.status = "FAILED"; },
+    input => { input.flow = "settings"; },
+    input => { input.platform = "android"; },
+  ]) { const input = pointer(); change(input); assert.equal(classify(input), null); }
+  // The rc.1 Settings touching cancel is a different command path and cannot satisfy the stroke rule.
+  assert.equal(classify({ ...pointer(), simulatorLog: rc1SettingsLog }), null);
+});
+
+test("Pointer retention keeps its own directory and receipt beside Settings and Editor", t => {
+  const output = mkdtempSync(join(tmpdir(), "native-ui-recovery-"));
+  t.after(() => rmSync(output, { recursive: true, force: true }));
+  mkdirSync(join(output, "pointer", "artifacts"), { recursive: true });
+  writeFileSync(join(output, "pointer", "report.xml"), '<testcase status="ERROR"/>');
+  writeFileSync(join(output, "pointer-maestro.log"), "[Failed] Native pointer touch lifecycle\n");
+  const retained = retain({ output, flow: "pointer", eligibility: classify(pointer()), error: new Error("original"),
+    sourceCommit: "2".repeat(40), nativeArtifact: { kind: "ios-app", sha256: "1".repeat(64) } });
+  assert.equal(retained.file, "pointer-transport-recovery.json");
+  assert.equal(retained.kind, "ios-pointer-stroke-recap-cancelled");
+  assert.equal(retained.retainedDirectory, "pointer-initial-transport-failure");
+  assert.match(readFileSync(join(output, "pointer-initial-transport-failure", "maestro-command.log"), "utf8"), /Failed/);
+});
+
+test("the hierarchy capture outlives Maestro's own pinned driver startup budget", () => {
+  assert.equal(maestroSessionLimits.driverStartupMs, 180000);
+  // JVM start, runner install and the dump itself took up to 55 s before the driver budget began.
+  assert.ok(maestroSessionLimits.hierarchyTimeoutMs >= maestroSessionLimits.driverStartupMs + 60000);
+  assert.deepEqual(recoverableUiFlows, ["settings", "editor", "pointer"]);
 });
