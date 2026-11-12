@@ -75,6 +75,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="DesktopGeometry.h" />
     <ClInclude Include="DesktopSession.h" />
+    <ClInclude Include="DesktopTitleBar.h" />
     <ClInclude Include="TronDesktop.h" />
     <ClInclude Include="TronOverlayAnchor.h" />
     <ClInclude Include="OverlayDismissal.h" />
@@ -91,6 +92,7 @@
     <ClCompile Include="pch.cpp"><PrecompiledHeader>Create</PrecompiledHeader></ClCompile>
     <ClCompile Include="DesktopGeometry.cpp" />
     <ClCompile Include="DesktopSession.cpp" />
+    <ClCompile Include="DesktopTitleBar.cpp" />
     <ClCompile Include="TronDesktop.cpp" />
     <ClCompile Include="TronOverlayAnchor.cpp" />
     <ClCompile Include="OverlayDismissalTests.cpp"><PrecompiledHeader>NotUsing</PrecompiledHeader></ClCompile>

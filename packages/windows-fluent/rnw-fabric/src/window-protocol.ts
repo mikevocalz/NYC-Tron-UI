@@ -1,6 +1,6 @@
 import type { Rect } from "@nyc-tron/core/folds";
 import { MAX_WINDOWS, parseLayoutSnapshot, type LayoutSnapshot } from "@nyc-tron/core/window-lifecycle";
-import type { WindowsDesktopLayout, WindowsDesktopSnapshot } from "./window-types.ts";
+import type { WindowsDesktopLayout, WindowsDesktopSnapshot, WindowsTitleBar, WindowsTitleBarStyle } from "./window-types.ts";
 
 export function validWindowId(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0 && value.length <= 256;
@@ -27,6 +27,17 @@ export function logicalRect(rect: Rect, referenceDpi: number): Rect {
   const scale = referenceDpi / 96;
   return { x: rect.x / scale, y: rect.y / scale, width: rect.width / scale, height: rect.height / scale };
 }
+export function validTitleBarStyle(value: unknown): value is WindowsTitleBarStyle {
+  return value === "standard" || value === "extended";
+}
+const validInset = (value: unknown) => typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 10_000;
+/** A standard title bar belongs to the system frame, so it reserves nothing inside the content. */
+export function validTitleBar(value: unknown): value is WindowsTitleBar {
+  if (typeof value !== "object" || value === null) return false;
+  const bar = value as WindowsTitleBar;
+  if (!validTitleBarStyle(bar.style) || ![bar.leading, bar.trailing, bar.height].every(validInset)) return false;
+  return bar.style === "extended" || (bar.leading === 0 && bar.trailing === 0 && bar.height === 0);
+}
 function samePixels(a: Rect, b: Rect): boolean {
   return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 }
@@ -51,7 +62,7 @@ export function parseDesktopSnapshot(json: string): WindowsDesktopSnapshot {
     if (!validWindowId(w.id) || windows.has(w.id) || !validWindowId(w.generation) || !displays.has(w.displayId) ||
       !validWindowRect(w.rect) || !validWindowRect(w.pixelRect) || !validDpi(w.dpi) ||
       !samePixels(pixelRect(w.rect, s.referenceDpi), w.pixelRect) ||
-      (w.status !== "open" && w.status !== "minimized") || typeof w.primary !== "boolean")
+      (w.status !== "open" && w.status !== "minimized") || typeof w.primary !== "boolean" || !validTitleBar(w.titleBar))
       throw new TypeError("Invalid native window observation");
     windows.set(w.id, w.generation);
     if (w.primary) primary++;

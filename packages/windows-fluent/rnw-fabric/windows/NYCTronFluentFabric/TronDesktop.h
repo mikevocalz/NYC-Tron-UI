@@ -21,6 +21,7 @@ struct TronDesktop : std::enable_shared_from_this<TronDesktop> {
   REACT_METHOD(focus) void focus(std::string owner, std::string id, Promise&& promise) noexcept;
   REACT_METHOD(minimize) void minimize(std::string owner, std::string id, Promise&& promise) noexcept;
   REACT_METHOD(restore) void restore(std::string owner, std::string id, Promise&& promise) noexcept;
+  REACT_METHOD(setTitleBar) void setTitleBar(std::string owner, std::string id, std::string style, Promise&& promise) noexcept;
   REACT_METHOD(requestClose) void requestClose(std::string owner, std::string id, Promise&& promise) noexcept;
   REACT_METHOD(resolveClose) void resolveClose(std::string owner, std::string id, std::string generation, std::string token, bool accepted, Promise&& promise) noexcept;
   REACT_METHOD(dispose) void dispose(std::string owner, winrt::Microsoft::ReactNative::ReactPromise<void>&& promise) noexcept;

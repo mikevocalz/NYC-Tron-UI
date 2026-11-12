@@ -9,7 +9,12 @@
 
 namespace nyctron::desktop {
 class NativeDragBroker;
-// All state and HWND operations belong to the React UI dispatcher.
+// Ownership: every member, HWND and AppWindow call belongs to the React UI
+// dispatcher thread. TronDesktop posts each module method there; AppWindow
+// events and the window subclass run there too. There are no locks, so no
+// callback runs under one. Window owns its event tokens and subclass; Detach
+// revokes them (RAII boundary: a Window leaves m_windows only after Detach).
+// Title-bar style is per native lifetime: a new generation starts Standard.
 class DesktopSession : public std::enable_shared_from_this<DesktopSession> {
  public:
   DesktopSession(winrt::Microsoft::ReactNative::ReactContext context,
@@ -23,6 +28,7 @@ class DesktopSession : public std::enable_shared_from_this<DesktopSession> {
   void Focus(std::string const& id);
   void Minimize(std::string const& id);
   void Restore(std::string const& id);
+  void SetTitleBar(std::string const& id, std::string const& style);
   void RequestClose(std::string const& id);
   void ResolveClose(std::string const& id, std::string const& generation, std::string const& token, bool accepted);
   void StartNativeDrag(std::string const& source, std::string const& token, std::string const& request, std::function<void(std::string)> completed);
@@ -39,6 +45,7 @@ class DesktopSession : public std::enable_shared_from_this<DesktopSession> {
   void CloseRequest(std::string const& id, std::string const& generation);
   void Destroyed(std::string const& id, std::string const& generation) noexcept;
   void Changed() noexcept;
+  void TitleBarLayoutChanged(std::string const& id, std::string const& generation) noexcept;
   bool DragWindowIsLive(std::string const& id, std::string const& generation) const noexcept;
   static LRESULT CALLBACK WindowMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam, UINT_PTR id, DWORD_PTR ref);
   winrt::Microsoft::ReactNative::ReactContext m_context;
