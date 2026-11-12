@@ -33,4 +33,30 @@ public final class NYCTronReservedRegionsModule: Module {
     return []
 #endif
   }
+
+  // iPadOS 26 windowed apps show window controls in the top leading corner.
+  // UIKit reports the space they need as the difference between the safe area
+  // adapted around them and the plain safe area: horizontal adaptation moves
+  // the leading edge past the controls, vertical adaptation moves the top edge
+  // below them. Toolbars inset by these values never sit under the controls.
+  // Like query(), this is a read with no change notification; JS re-reads it
+  // when the window resizes, which entering and leaving windowed mode does.
+  @JS
+  @MainActor
+  func windowControlsInsets() async -> WindowControlsInsetsRecord {
+    let none = WindowControlsInsetsRecord(leading: 0, trailing: 0, height: 0)
+#if compiler(>=6.2)
+    guard #available(iOS 26.0, *), let view = UIWindow.keyRootView else { return none }
+    let plain = view.directionalEdgeInsets(for: .safeArea())
+    let horizontal = view.directionalEdgeInsets(for: .safeArea(cornerAdaptation: .horizontal))
+    let vertical = view.directionalEdgeInsets(for: .safeArea(cornerAdaptation: .vertical))
+    return WindowControlsInsetsRecord(
+      leading: max(0, horizontal.leading - plain.leading),
+      trailing: max(0, horizontal.trailing - plain.trailing),
+      height: max(0, vertical.top - plain.top)
+    )
+#else
+    return none
+#endif
+  }
 }

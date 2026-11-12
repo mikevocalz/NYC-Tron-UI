@@ -1,6 +1,8 @@
 // Pure payload handling shared by the native and web hooks. No react-native
 // import, so it runs under plain node tests.
 import type { ReservedRegion } from "@nyc-tron/core/folds";
+export type { TitleBarInsets } from "@nyc-tron/core/window-chrome";
+import type { TitleBarInsets } from "@nyc-tron/core/window-chrome";
 
 export type {
   FoldOcclusionType, FoldOrientation, FoldState, ReservedRegion,
@@ -64,4 +66,27 @@ export function regionsEqual(a: readonly ReservedRegion[], b: readonly ReservedR
       r.margins.top === s.margins.top && r.margins.left === s.margins.left &&
       r.margins.bottom === s.margins.bottom && r.margins.right === s.margins.right;
   });
+}
+
+
+/** No system window controls: full screen, not windowed, or not iPadOS 26+. */
+export const NO_WINDOW_CONTROLS: TitleBarInsets = Object.freeze({ leading: 0, trailing: 0, height: 0 });
+
+const inset = (n: unknown): number => finite(n) && n > 0 && n <= 10_000 ? n : 0;
+
+/**
+ * Native `windowControlsInsets()` payload -> insets. Missing, negative or
+ * nonfinite fields read as zero, so a malformed report never pushes a toolbar
+ * off screen. All-zero reports return the shared {@linkcode NO_WINDOW_CONTROLS}.
+ */
+export function toWindowControlsInsets(payload: unknown): TitleBarInsets {
+  if (!payload || typeof payload !== "object") return NO_WINDOW_CONTROLS;
+  const p = payload as Partial<Record<keyof TitleBarInsets, unknown>>;
+  const next = { leading: inset(p.leading), trailing: inset(p.trailing), height: inset(p.height) };
+  return next.leading === 0 && next.trailing === 0 && next.height === 0 ? NO_WINDOW_CONTROLS : next;
+}
+
+/** Field equality, so an unchanged report never re-renders a toolbar. */
+export function windowControlsEqual(a: TitleBarInsets, b: TitleBarInsets): boolean {
+  return a === b || (a.leading === b.leading && a.trailing === b.trailing && a.height === b.height);
 }

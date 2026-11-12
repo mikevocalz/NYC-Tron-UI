@@ -14,7 +14,7 @@
   },
   "type": "module",
   "sideEffects": false,
-  "description": "Fold and hinge geometry for NYC-Tron UI: Jetpack WindowManager FoldingFeature on Android, UIKit reserved regions on iOS 27.1+, Viewport Segments on web",
+  "description": "Fold and hinge geometry for NYC-Tron UI: Jetpack WindowManager FoldingFeature on Android, UIKit reserved regions on iOS 27.1+, Viewport Segments on web; iPadOS window-control insets",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
