@@ -100,6 +100,10 @@ if (lane === "windows") {
     "  const { TronUiCoverage } = require('./tron-ui-coverage/harness.js');",
     "  registerRootComponent(TronUiCoverage);",
     "}",
+    "// Spark selects native modules from the Metro graph, and the acceptance",
+    "// driver links against the AppKit adapter's native code. Keep the reference",
+    "// app in the graph without running it.",
+    "if ((globalThis as { __TRON_UI_COVERAGE_NEVER__?: boolean }).__TRON_UI_COVERAGE_NEVER__) require('./App');",
     "",
   ].join("\n"));
 }

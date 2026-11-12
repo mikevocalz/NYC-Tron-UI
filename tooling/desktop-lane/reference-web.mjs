@@ -70,7 +70,10 @@ const coveragePlugin = {
       // Only the harness and the archives see the lane peer set; the provided
       // packages' own dependencies resolve normally from the browser suite.
       if (!args.importer.startsWith(work)) return undefined;
-      if (name === "@nyc-tron/ui" || name === "@nyc-tron/core") return undefined; // resolved from the extracted archives
+      if (name === "@nyc-tron/ui" || name === "@nyc-tron/core") { // resolved from the extracted archives
+        if (fromUi) resolution.push({ specifier: args.path, platform: "web", resolved: true });
+        return undefined;
+      }
       if (provided.has(name)) {
         const mapped = provided.get(name) + args.path.slice(name.length);
         const path = requireBrowser.resolve(mapped);
