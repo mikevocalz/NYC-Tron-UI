@@ -15,10 +15,14 @@ const out = resolve(process.argv[2] ?? join(packageDir, "dist"));
 // render-example-icons.mjs draws this repository's example icons and is not shipped.
 const modules = ["png", "font-metrics", "derive-icons", "launcher-label-check", "build-font-table"];
 
+// A Windows checkout with core.autocrlf gives CRLF sources. pnpm refuses a bin
+// whose shebang line ends in CRLF (ERR_PNPM_BIN_CRLF), so dist is always LF.
+const lf = (text) => text.replace(/\r\n/g, "\n");
+
 rmSync(out, { recursive: true, force: true });
 mkdirSync(join(out, "bin"), { recursive: true });
 for (const name of modules) {
-  const text = readFileSync(join(toolDir, `${name}.mjs`), "utf8").replace(/(from\s+["']\.\/[\w-]+)\.mjs(["'])/g, "$1.js$2");
+  const text = lf(readFileSync(join(toolDir, `${name}.mjs`), "utf8")).replace(/(from\s+["']\.\/[\w-]+)\.mjs(["'])/g, "$1.js$2");
   if (/\.mjs["']/.test(text)) throw new Error(`${name}.mjs has a relative .mjs import the build did not rewrite`);
   writeFileSync(join(out, `${name}.js`), text);
 }
@@ -27,7 +31,7 @@ cpSync(join(toolDir, "fonts"), join(out, "fonts"), { recursive: true });
 cpSync(join(packageDir, "src", "index.js"), join(out, "index.js"));
 cpSync(join(packageDir, "src", "index.d.ts"), join(out, "index.d.ts"));
 for (const bin of ["nyc-tron-launcher-check.js", "nyc-tron-derive-icons.js"]) {
-  cpSync(join(packageDir, "src", "bin", bin), join(out, "bin", bin));
+  writeFileSync(join(out, "bin", bin), lf(readFileSync(join(packageDir, "src", "bin", bin), "utf8")));
   chmodSync(join(out, "bin", bin), 0o755);
 }
 console.log(`built @nyc-tron/app-identity into ${out}`);

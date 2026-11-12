@@ -27,7 +27,7 @@ test("the archive ships both bins, the targets, the Roboto table and its own not
   for (const bin of Object.values(manifest.bin)) {
     const file = join(out, bin.replace("./dist/", ""));
     assert.ok(existsSync(file), bin);
-    assert.match(readFileSync(file, "utf8"), /^#!\/usr\/bin\/env node\r?\n/);
+    assert.match(readFileSync(file, "utf8"), /^#!\/usr\/bin\/env node\n/);
     if (process.platform !== "win32") assert.ok(statSync(file).mode & 0o111, `${bin} is not executable`);
   }
   for (const file of ["launcher-targets.json", "fonts/roboto-static-regular.json", "index.js", "index.d.ts"]) assert.ok(existsSync(join(out, file)), file);
