@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: "24.19.0"
       - name: Icons are current and every example passes the launcher check
-        run: node --test tooling/tests/app-identity.test.mjs
+        run: node --test tooling/tests/app-identity.test.mjs tooling/tests/app-identity-package.test.mjs
       - name: Launcher check on every example config (measured targets must fit)
         run: >-
           node tooling/app-identity/launcher-label-check.mjs
@@ -55,6 +55,10 @@ jobs:
           code=$?
           set -e
           test "$code" -eq 1
+      - name: The packaged bin runs the same check on the examples
+        run: |
+          node packages/app-identity/scripts/build.mjs "$RUNNER_TEMP/app-identity-dist"
+          node "$RUNNER_TEMP/app-identity-dist/bin/nyc-tron-launcher-check.js" examples/native-instruments/app.json examples/macos-appkit/spark/desktop.config.json packages/windows-fluent/rnw-fabric/example/app.json
 
   types:
     name: workspace TypeScript

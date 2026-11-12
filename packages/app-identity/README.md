@@ -7,7 +7,7 @@ later; no dependencies.
 Install it from the release archive, like the other NYC-Tron packages:
 
 ```sh
-npm install --save-dev <release URL>/nyc-tron-app-identity-<version>.tgz
+npm install --save-dev https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<version>/nyc-tron-app-identity-<version>.tgz
 ```
 
 ## Launcher label check

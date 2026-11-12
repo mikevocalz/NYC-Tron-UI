@@ -2,8 +2,25 @@
 
 Gate T3. Every example app has one 1024 px source icon, a full name and a
 short launcher name, and a check that fails when the launcher name is wider
-than the label box a launcher gives it. Consumers can run the same tools on
-their own app.
+than the label box a launcher gives it. Consumers run the same tools on their
+own app from the `@nyc-tron/app-identity` release archive.
+
+## Install the check
+
+`@nyc-tron/app-identity` is one of the release tarballs, installed by URL like
+the other packages. It needs Node 24 and nothing else.
+
+```sh
+npm install --save-dev https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<version>/nyc-tron-app-identity-<version>.tgz
+npx nyc-tron-launcher-check app.json
+npx nyc-tron-derive-icons assets/icon.png --out assets/icon --formats android,web
+```
+
+The archive holds two bins, `nyc-tron-launcher-check` and
+`nyc-tron-derive-icons`, the label boxes (`dist/launcher-targets.json`), the
+Roboto advance-width table and its notice. In this repository the same code
+lives in `tooling/app-identity/`; `packages/app-identity` builds the archive
+from it.
 
 ## Example names and icons
 
@@ -33,12 +50,17 @@ trailing caption marks.
 
 ## Icon formats
 
-`tooling/app-identity/derive-icons.mjs` turns one source into every format the
-lanes use. It has no dependencies.
+`nyc-tron-derive-icons` (`tooling/app-identity/derive-icons.mjs` here) turns
+one source into the formats the lanes use. It has no dependencies. Pass
+`--formats` with the platforms the app ships on; the default is all four
+(`android`, `web`, `macos`, `windows`).
 
 ```sh
-node tooling/app-identity/derive-icons.mjs assets/icon.png --out assets/icon
+npx nyc-tron-derive-icons assets/icon.png --out assets/icon --formats android
 ```
+
+Each example keeps only its own formats: native-instruments `android` (iOS
+uses the source directly), Spark `macos`, the RNW example `windows`.
 
 | Output | Used by | Notes |
 | --- | --- | --- |
@@ -54,12 +76,14 @@ The tool refuses a source that is not 1024 px square, has a transparent or
 mixed-colour edge, or has a glyph outside the Android safe zone (the 66 dp
 circle of the 108 dp canvas, 469.3 px from the centre of the source). It prints
 how far the glyph reaches past it. `tooling/tests/app-identity.test.mjs`
-re-derives every example and fails if a committed file is stale.
+re-derives every example and fails if a committed file is stale, comparing
+decoded pixels of every PNG, including each image inside the ICNS and ICO.
 
 How each lane picks the icon up:
 
-- **Expo (iOS, Android, web):** `app.json` fields above; prebuild writes the
-  asset catalogue and mipmaps.
+- **Expo (iOS, Android):** `icon` and `android.adaptiveIcon` in `app.json`;
+  prebuild writes the asset catalogue and mipmaps. An Expo app that also
+  ships web adds `web.favicon` with the `web` format.
 - **Windows (RNW):** `scripts/prepare-host.mjs` copies the derived files over
   the generated project's images and `.ico` files with the same names, after
   `init-windows`. No generated file is edited by hand.
@@ -77,7 +101,6 @@ Declare both names in the app config. Expo:
 {
   "expo": {
     "name": "Tron Lab",
-    "web": { "name": "NYC-Tron Instruments", "shortName": "Tron Lab" },
     "extra": { "appIdentity": { "fullName": "NYC-Tron Instruments", "launcherName": "Tron Lab" } }
   }
 }
@@ -92,22 +115,22 @@ keys, so the check reads `appIdentity` from the `app.json` beside it.
 ### Running the check
 
 ```sh
-node tooling/app-identity/launcher-label-check.mjs path/to/app.json [more configs] [--strict] [--json]
-node tooling/app-identity/launcher-label-check.mjs --name "Your Name" --platforms ios,android
+npx nyc-tron-launcher-check path/to/app.json [more configs] [--strict] [--json]
+npx nyc-tron-launcher-check --name "Your Name" --platforms ios,android
 ```
 
-It accepts an Expo `app.json`, the output of `npx expo config --json` saved to
-a file (use this when the app has an `app.config.js`), a Spark
-`desktop.config.json` and an RNW `app.json`. To run it in your own project,
-copy `tooling/app-identity/` from a Tron checkout at the release tag (it needs
-only Node 24) and call it from your CI.
+In this repository, `node tooling/app-identity/launcher-label-check.mjs` takes
+the same arguments. It accepts an Expo `app.json`, the output of
+`npx expo config --json` saved to a file (use this when the app has an
+`app.config.js`), a Spark `desktop.config.json` and an RNW `app.json`. Add it
+to your CI after installing the archive.
 
 For every launcher the app's platforms reach, it prints PASS with the spare
-width, OVERFLOW with the measured width, the box and how far over, or NOT RUN
-with the reason. It never shortens the name. Exit codes: `0` all measured
-targets fit, `1` overflow or a launcher label that differs from `launcherName`,
-`2` usage error, `3` only with `--strict`, when a target that applies was NOT
-RUN.
+width, OVERFLOW with the measured width, the box and how far over, FAIL for an
+empty or whitespace-only label, or NOT RUN with the reason. It never shortens
+the name. Exit codes: `0` all measured targets fit, `1` overflow, an empty
+label or a launcher label that differs from `launcherName`, `2` usage error,
+`3` only with `--strict`, when a target that applies was NOT RUN.
 
 The deliberately long name fails like this:
 
@@ -121,11 +144,16 @@ How width is measured:
 - **Apple targets:** AppKit's system font through `osascript` (JavaScript for
   Automation), which applies the same optical sizing iOS uses for 12 pt text.
   It needs macOS; elsewhere these targets are NOT RUN. "Settings" measures
-  46.8 pt; its ink on the simulator is 46.7 pt.
+  46.8 pt; its ink on the simulator is 46.7 pt. A label with a character the
+  system font lacks (CJK, emoji, a control character) is NOT RUN: AppKit
+  would measure it through font fallback, and that is not proof of what
+  SpringBoard draws.
 - **Android:** advance widths from `fonts/roboto-static-regular.json`, built
-  from the emulator's `RobotoStatic-Regular.ttf` (Apache-2.0,
-  `licenses/Roboto-Apache-2.0.txt`) with `build-font-table.mjs`. Kerning is
-  not applied.
+  from the emulator's `RobotoStatic-Regular.ttf` with `build-font-table.mjs`.
+  The font's name table declares Apache-2.0 (name IDs 13 and 14); the text is
+  in `packages/app-identity/licenses/Roboto-Apache-2.0.txt`. Kerning is not
+  applied and no margin is added, so a name that passes by less than about
+  2.5 dp is close enough that kerning could decide it.
 - The SF Pro and Segoe UI files are not redistributable, so no table for them
   is committed.
 
