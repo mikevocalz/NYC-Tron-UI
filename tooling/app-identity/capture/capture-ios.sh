@@ -76,10 +76,14 @@ capture() {
   xcrun simctl io "$udid" screenshot "$dir/home.png"
   node -e '
     const fs = require("fs");
-    const [file, platform] = process.argv.slice(1);
+    const [file, platform, png] = process.argv.slice(1);
     const d = JSON.parse(fs.readFileSync(file, "utf8"));
-    fs.writeFileSync(file.replace("icons.json", "layout.json"), JSON.stringify({ unit: "pt", platform, pxPerUnit: d.scale, icons: d.icons }, null, 2));
-  ' "$dir/icons.json" ios
+    // PNG IHDR: width is the big-endian uint32 at byte 16.
+    const pxWidth = fs.readFileSync(png).readUInt32BE(16);
+    const pxPerUnit = pxWidth / d.screenWidth;
+    if (!Number.isFinite(pxPerUnit) || pxPerUnit <= 0) throw new Error("cannot derive px per pt from " + png);
+    fs.writeFileSync(file.replace("icons.json", "layout.json"), JSON.stringify({ unit: "pt", platform, pxPerUnit, icons: d.icons }, null, 2));
+  ' "$dir/icons.json" ios "$dir/home.png"
   node "$here/measure-label-ink.mjs" --image "$dir/home.png" --icons "$dir/layout.json" --target "$target" \
     --probe "$long" --app "$launcher" --font-size 12 --out "$dir/measurement.json" --crop "$dir/home-crop.png"
   xcrun simctl shutdown "$udid" || true

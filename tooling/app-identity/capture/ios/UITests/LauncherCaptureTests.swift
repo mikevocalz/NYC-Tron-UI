@@ -38,7 +38,9 @@ final class LauncherCaptureTests: XCTestCase {
     }
     let bounds = springboard.frame
     let record: [String: Any] = [
-      "page": page, "scale": screen.scale,
+      // XCUIScreen has no scale; capture-ios.sh derives px per pt from the
+      // simctl screenshot width divided by screenWidth.
+      "page": page,
       "screenWidth": bounds.size.width, "screenHeight": bounds.size.height,
       "icons": rows,
     ]
