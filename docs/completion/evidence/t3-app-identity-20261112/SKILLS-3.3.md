@@ -13,7 +13,7 @@ its required output, it says NOT MET and why.
 | Order | Skill | Status |
 | --- | --- | --- |
 | 1 | `design:user-research` | Desk notes only. No sessions ran. Not met as research. |
-| 2 | Mobbin | Met: 3 references, saved to a collection on 2026-11-12 |
+| 2 | Mobbin | Met: 5 references per surface (icon, label), iOS only; saved to a collection and read back on 2026-11-12 |
 | 3 | `design:design-system` | Met |
 | 4 | `design:ux-copy` | Met; two copy defects fixed |
 | 5 | `frontend-design:frontend-design` | Partly met: before and after for the one change; no launcher capture of the built apps |
@@ -48,15 +48,39 @@ Jobs to be done, one product (NYC-Tron UI examples):
 Collection "NYC-Tron T3 launcher icon and label" (private to the owner's team):
 https://mobbin.com/collections/4b66c302-2845-46b8-a93a-0112cbde5f65/mobile/screens
 
-The three links were in `APP_IDENTITY.md` at 3ae6630 but were not saved in
-Mobbin: "All saved" held two unrelated iOS screens. They were saved on
-2026-11-12 and read back from the collection.
+The R2 review counted the icon and the label as two surfaces and found only
+one reference (Trainline) that shows either. Eight more were saved on
+2026-11-12; the collection reads back 11 iOS screens. Mobbin's search covers
+iOS and web only, so there is no Android reference.
 
-| App | Screen | What it shows for this surface |
+Icon surface (tiles of one size and mask):
+
+| App | Screen | What it shows |
 | --- | --- | --- |
-| Trainline | https://mobbin.com/screens/a0eebc8d-5d4a-4216-bc82-da6174ecdafe | Alternate app icon picker: one mark on several grounds, one-word labels under each tile |
-| CapCut | https://mobbin.com/screens/32da53ef-eb73-4d60-9b71-9a2f66573e72 | Home Screen widgets labelled "Remove BG" and "Retouch". Correction: these are widgets with the label inside the tile, not launcher labels under an icon as the old record said |
-| Apple Games | https://mobbin.com/screens/dca39796-171c-4d5f-84ef-5f04da20021e | Game splash with the icon over its full name ("Subway Surfers"); the full name is used where there is room |
+| Trainline | https://mobbin.com/screens/a0eebc8d-5d4a-4216-bc82-da6174ecdafe | Alternate app icon picker: one mark on several grounds, squircle tiles of one size |
+| Locket | https://mobbin.com/screens/1349eeba-781b-44e6-8f87-5d81f4a55710 | "App Icon" picker for the Home Screen: four-column grid of same-size squircles, dark sheet |
+| X | https://mobbin.com/screens/699b6440-6a50-4e3e-aabd-d10693d25574 | App icon picker: one glyph on many grounds, three columns, mask and size fixed |
+| Slopes | https://mobbin.com/screens/abb70bee-153a-4e6f-8f5c-8ac772600d1d | App Icon picker with a light and dark toggle and a premium section |
+| SmartThings | https://mobbin.com/screens/494ba4e7-641d-42c2-a417-4581c5470667 | "Sources & Apps" launcher row: third-party tiles at one rounded-square size, no labels |
+
+Label surface (a short name under a fixed-width tile):
+
+| App | Screen | What it shows |
+| --- | --- | --- |
+| Trainline | https://mobbin.com/screens/a0eebc8d-5d4a-4216-bc82-da6174ecdafe | One-word labels under each tile ("Original", "Heart", "Light") |
+| Strava | https://mobbin.com/screens/fb71e828-3c15-42c6-bf24-679fef28d9dd | Four-column icon grid with centred labels; "Local Legend" and "KOM/QOM" show the column width limit |
+| World App | https://mobbin.com/screens/a0fcf1f4-e418-4cae-8791-c6a7879861aa | In-app "Apps" launcher laid out like a Home Screen: icon over a one- or two-word name |
+| (Not Boring) Timer | https://mobbin.com/screens/22510345-18c3-4b53-8818-30a88bf7f0a2 | Sibling apps grid on black with short uppercase monospace labels |
+| Shopify | https://mobbin.com/screens/f5a198b9-ad50-42d1-b280-12836d97251a | App icon picker cards with a short label under each icon ("Spring '26") |
+
+CapCut (https://mobbin.com/screens/32da53ef-eb73-4d60-9b71-9a2f66573e72,
+widgets with the label inside the tile) and Apple Games
+(https://mobbin.com/screens/dca39796-171c-4d5f-84ef-5f04da20021e, a splash
+with the full name) stay in the collection but count for neither surface.
+
+None shows a real Home Screen or launcher capture; Mobbin had none. The
+closest are World App's and SmartThings' in-app launchers. The CI captures
+of the built examples cover the real launchers.
 
 Structure only. No mark was copied.
 
