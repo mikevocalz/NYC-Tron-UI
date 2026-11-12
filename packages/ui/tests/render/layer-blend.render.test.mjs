@@ -57,6 +57,7 @@ function harness() {
 }
 
 // Functions become a marker so the snapshot compares structure, not identity.
+// Round-tripping also moves values out of the vm realm before deepEqual.
 const serialize = node => JSON.parse(JSON.stringify(node, (key, value) => {
   if (typeof value === "function") return value.name && /^[A-Z]/.test(value.name) ? "<" + value.name + ">" : "[Function]";
   return value;
@@ -90,4 +91,115 @@ test("without alphaModes the render matches rc.1 element for element", () => {
   const actual = Object.fromEntries(Object.entries(rc1Scenarios).map(([name, p]) => [name, serialize(harness().render(p))]));
   if (process.env.LAYER_BLEND_RC1_WRITE === "1") writeFileSync(goldenPath, JSON.stringify(actual, null, 1) + "\n");
   assert.deepEqual(actual, JSON.parse(readFileSync(goldenPath, "utf8")));
+});
+
+const alphaMenu = tree => menu(tree, "Layer alpha representation");
+const alertText = tree => findAll(tree, n => n.type === "Text" && n.props.accessibilityRole === "alert").map(n => n.props.children)[0];
+const scrubber = tree => findAll(tree, named("PrecisionScrubber"))[0];
+const straightOnly = [{ id: "straight", label: "Straight alpha" }];
+const premultipliedUnavailable = [{ id: "straight", label: "Straight alpha" },
+  { id: "premultiplied", label: "Premultiplied alpha", unavailableReason: "This compositor stores straight alpha only." }];
+
+test("passing the default catalog explicitly renders the same alpha menu as omitting it", async () => {
+  const { defaultAlphaModes } = await import("../../src/components/forge/layers/layer-blend-model.ts");
+  const omitted = alphaMenu(harness().render(props())), given = alphaMenu(harness().render(props({ alphaModes: defaultAlphaModes })));
+  assert.deepEqual(serialize(given.props.items), serialize(omitted.props.items));
+  assert.deepEqual(serialize(given.props.accessibilityValue), serialize(omitted.props.accessibilityValue));
+  assert.equal(given.props.disabled, omitted.props.disabled);
+});
+
+test("a single catalog entry renders as text and offers no alpha menu", () => {
+  const tree = harness().render(props({ alphaModes: straightOnly }));
+  assert.equal(alphaMenu(tree), undefined);
+  const shown = texts(tree);
+  assert.ok(shown.includes("Layer alpha representation"), "the row keeps its visible label");
+  assert.ok(shown.includes("Straight alpha"));
+  assert.equal(alertText(tree), undefined);
+  assert.ok(menu(tree, "Layer blend mode"), "other controls are unaffected");
+});
+
+test("an unavailable entry is listed disabled with its reason and cannot be committed", () => {
+  const h = harness(), commits = [];
+  const tree = h.render(props({ alphaModes: premultipliedUnavailable, onCommit: (next, detail) => { commits.push([next, detail]); } }));
+  const control = alphaMenu(tree);
+  assert.equal(control.props.disabled, false, "the menu opens so the reason can be read");
+  assert.deepEqual(serialize(control.props.items), [
+    { id: "straight", label: "Straight alpha" },
+    { id: "premultiplied", label: "Premultiplied alpha", description: "This compositor stores straight alpha only.", disabled: true },
+  ]);
+  control.props.onSelect("premultiplied");
+  assert.deepEqual(commits, []);
+  assert.deepEqual(h.runs, []);
+});
+
+test("an available alpha choice commits one alpha transaction", () => {
+  const h = harness(), commits = [];
+  const tree = h.render(props({ alphaModes: [{ id: "straight", label: "Straight" }, { id: "premultiplied", label: "Premultiplied" }],
+    onCommit: (next, detail) => { commits.push([next, detail]); } }));
+  assert.deepEqual(serialize(alphaMenu(tree).props.accessibilityValue), { text: "Straight" }, "the host's label is spoken as the value");
+  alphaMenu(tree).props.onSelect("premultiplied");
+  assert.deepEqual(serialize(commits), [[{ ...value, alphaMode: "premultiplied" }, { kind: "alpha" }]]);
+});
+
+test("a retained unavailable alpha shows its reason and leaves the menu open for a fix", () => {
+  const h = harness(), commits = [];
+  const catalog = [{ id: "straight", label: "Straight alpha" },
+    { id: "premultiplied", label: "Premultiplied alpha", unavailableReason: "Imported premultiplied layers can't be composited here. Choose Straight alpha." }];
+  const tree = h.render(props({ value: { ...value, alphaMode: "premultiplied" }, alphaModes: catalog, onCommit: next => { commits.push(next); } }));
+  assert.equal(alertText(tree), catalog[1].unavailableReason);
+  assert.equal(scrubber(tree).props.disabled, true, "opacity waits until the alpha problem is resolved, as for blend problems");
+  assert.equal(alphaMenu(tree).props.disabled, false);
+  for (const label of ["Layer blend mode", "Layer compositing space"])
+    assert.equal(menu(tree, label).props.disabled, true, label + " is locked so it cannot open onto a pick that would be dropped");
+  assert.ok(!texts(tree).some(t => t.startsWith("Premultiplied alpha: ")), "the alert already carries this reason");
+  alphaMenu(tree).props.onSelect("straight");
+  assert.deepEqual(serialize(commits), [{ ...value, alphaMode: "straight" }]);
+});
+
+test("a blend-mode problem still locks the alpha menu when a catalog is given", () => {
+  const tree = harness().render(props({ value: { ...value, mode: "legacy" }, alphaModes: premultipliedUnavailable }));
+  assert.equal(alertText(tree), "Unsupported by compositor");
+  assert.equal(alphaMenu(tree).props.disabled, true);
+  assert.ok(texts(tree).includes("Premultiplied alpha: This compositor stores straight alpha only."),
+    "a locked menu can't show its reasons, so they render as text");
+});
+
+test("a current alpha reason masked by a blend problem still renders as text", () => {
+  const catalog = [{ id: "straight", label: "Straight alpha" },
+    { id: "premultiplied", label: "Premultiplied alpha", unavailableReason: "This compositor stores straight alpha only." }];
+  const tree = harness().render(props({ value: { ...value, mode: "legacy", alphaMode: "premultiplied" }, alphaModes: catalog }));
+  assert.equal(alertText(tree), "Unsupported by compositor");
+  assert.ok(texts(tree).includes("Premultiplied alpha: This compositor stores straight alpha only."));
+});
+
+test("a host-disabled control keeps unavailable reasons on screen", () => {
+  const tree = harness().render(props({ disabled: true, alphaModes: premultipliedUnavailable }));
+  assert.ok(alphaMenu(tree));
+  assert.ok(texts(tree).includes("Premultiplied alpha: This compositor stores straight alpha only."));
+});
+
+test("an enabled menu keeps reasons inside it and adds no extra text", () => {
+  const tree = harness().render(props({ alphaModes: premultipliedUnavailable }));
+  assert.ok(!texts(tree).some(t => t.includes("This compositor stores straight alpha only.")));
+  assert.equal(alphaMenu(tree).key, undefined);
+});
+
+test("when no entry is available the alpha row is text and every reason is visible", () => {
+  const catalog = [{ id: "straight", label: "Straight alpha", unavailableReason: "The compositor is offline." },
+    { id: "premultiplied", label: "Premultiplied alpha", unavailableReason: "This compositor stores straight alpha only." }];
+  const tree = harness().render(props({ alphaModes: catalog }));
+  assert.equal(alphaMenu(tree), undefined, "no menu that opens onto nothing");
+  const shown = texts(tree);
+  assert.ok(shown.includes("Straight alpha"));
+  assert.ok(shown.includes("Premultiplied alpha: This compositor stores straight alpha only."));
+  assert.equal(alertText(tree), "The compositor is offline.", "the current entry's reason is announced as an alert");
+});
+
+test("invalid alpha catalogs throw RangeError from the component", () => {
+  const h = harness();
+  for (const alphaModes of [[], [...premultipliedUnavailable, straightOnly[0]], [straightOnly[0], straightOnly[0]],
+    [{ id: "linear", label: "Linear" }], [{ id: "straight", label: " " }], [{ id: "straight", label: "Straight", unavailableReason: "" }]])
+    assert.throws(() => h.render(props({ alphaModes })), { name: "RangeError" }, JSON.stringify(alphaModes));
+  assert.throws(() => h.render(props({ value: { ...value, alphaMode: "premultiplied" }, alphaModes: straightOnly })),
+    { name: "RangeError", message: /alpha catalog/ });
 });
