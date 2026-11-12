@@ -123,3 +123,26 @@ test("the audit catches each rule on a broken tree",()=>{
   assert.deepEqual(auditAccessibility(tree,{ignore:["small-target","missing-name","image-without-label","adjustable-without-value",
     "adjustable-without-actions","actions-without-handler","custom-action-without-label"]}),[]);
 });
+
+// RNW parses accessibilityValue min/max/now with folly::dynamic::asInt(), which
+// throws "Loss of precision during arithmetic conversion: (__int64) 0.1" (gate
+// T4 Windows lane). Native hosts get whole numbers or no numeric range.
+test("PrecisionScrubber passes only whole-number range values to native hosts",()=>{
+  const adjustable=node=>{
+    if(Array.isArray(node)){for(const child of node){const hit=adjustable(child);if(hit)return hit;}return null;}
+    if(!node||typeof node!=="object"||!node.props)return null;
+    return node.props.accessibilityRole==="adjustable"?node:adjustable(node.props.children);
+  };
+  const fractional={label:"Hold delay",unit:" s",value:0.5,min:0.1,max:10,step:0.05,onPreview:noop,onCommit:noop};
+  for(const os of ["windows","macos","ios","android"]){
+    const host=adjustable(loader(os)("forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",fractional));
+    assert.ok(host,`${os}: no adjustable host`);
+    for(const key of ["aria-valuemin","aria-valuemax","aria-valuenow"])assert.equal(host.props[key],undefined,`${os}: ${key}`);
+    assert.match(host.props["aria-valuetext"],/0\.5/,`${os}: the exact value stays readable`);
+    assert.deepEqual(auditAccessibility(host),[]);
+  }
+  const whole=adjustable(loader("windows")("forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",{...fractional,unit:undefined,value:40,min:0,max:100,step:1}));
+  assert.deepEqual([whole.props["aria-valuemin"],whole.props["aria-valuemax"],whole.props["aria-valuenow"]],[0,100,40]);
+  const web=adjustable(loader("web")("forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",fractional));
+  assert.deepEqual([web.props["aria-valuemin"],web.props["aria-valuemax"],web.props["aria-valuenow"]],[0.1,10,0.5]);
+});

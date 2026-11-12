@@ -100,6 +100,14 @@ function PrecisionScrubberBody({
   const display=formatStepValue(state.preview,step);
   const reached=normalize(state.preview,min,max);
   const forced=forcedColors&&Platform.OS==="web";
+  // React Native's Fabric props parser reads accessibilityValue min/max/now as
+  // int (AccessibilityValue in ReactCommon). React Native Windows parses props
+  // through folly::dynamic, whose asInt() throws "Loss of precision during
+  // arithmetic conversion" for 0.1, and the JSI parser truncates it to 0. Off
+  // the web, pass the numeric range only when all three are whole numbers;
+  // aria-valuetext still carries the exact value.
+  const range=Platform.OS==="web"||[min,max,state.preview].every(Number.isInteger)
+    ?{"aria-valuemin":min,"aria-valuemax":max,"aria-valuenow":state.preview}:{};
   const styled=!unstyled;
   const ink=forced?{line:{backgroundColor:CANVAS_TEXT,...SYSTEM_INK},accent:{backgroundColor:HIGHLIGHT,...SYSTEM_INK}}:{line:{backgroundColor:scaleColor},accent:{backgroundColor:accentColor}};
   const lineClass=joinClasses(styled&&!forced&&"bg-border");
@@ -158,7 +166,7 @@ function PrecisionScrubberBody({
             accessibilityHint={copy.gestureHint}
             // aria-* rather than accessibilityValue/State: React Native Web 0.21
             // drops the latter, and React Native maps both forms the same way.
-            aria-valuemin={min} aria-valuemax={max} aria-valuenow={state.preview}
+            {...range}
             aria-valuetext={display+(unit??"")}
             aria-disabled={blocked}
             accessibilityActions={[{name:"increment",label:copy.increase},{name:"decrement",label:copy.decrease}]}
