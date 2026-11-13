@@ -1,0 +1,11 @@
+{
+  "lane": "spark-0.0.3-macos",
+  "npm": "11.17.0",
+  "exit": 1,
+  "code": "ERESOLVE",
+  "conflict": [
+    "npm error Found: react-native@0.83.10",
+    "npm error Could not resolve dependency:",
+    "npm error peer react-native@\">=0.88.0\" from @nyc-tron/ui@1.0.0-rc.1"
+  ]
+}

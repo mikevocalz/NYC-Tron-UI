@@ -18,6 +18,35 @@ version per tag.
 
 ## [1.0.0-rc.2] - Unreleased
 
+### Added
+
+- `LayerBlendAndOpacity` takes an optional `alphaModes` catalog, a list of
+  `{id, label, unavailableReason?}` entries built like the existing `modes`
+  and `spaces` props (row B-11, F3 decision option A). One entry renders as
+  plain text instead of a one-item menu. An entry with `unavailableReason` is
+  listed disabled with the reason as its description and cannot be committed.
+  When no entry is available, or the menu is locked, the reasons render as
+  text under the row. A retained unavailable current alpha locks the
+  blend-mode and space menus and the opacity scrubber until the user picks
+  an available alpha.
+  Omitting the prop keeps the 1.0.0-rc.1 menu exactly;
+  `packages/ui/tests/render/layer-blend.render.test.mjs` compares that render
+  with a golden captured from the rc.1 source.
+- `layer-blend-model` exports `LayerAlphaOption` and `defaultAlphaModes`
+  (Straight and Premultiplied, both available). `LayerBlendAndOpacity`
+  re-exports both.
+- `validateLayerBlend` and `layerBlendProblem` take an optional fourth
+  argument, `alphaModes`. Validation throws `RangeError` for an empty catalog,
+  more than two entries, a duplicate or unknown id, a blank label or reason,
+  or a current `alphaMode` outside the catalog. `layerBlendProblem` reports
+  the current entry's `unavailableReason` after blend-mode and space reasons.
+
+This is an additive public API change after 1.0.0-rc.1. Existing callers
+compile and render unchanged. `docs/api-signatures.json` records the new and
+changed declarations.
+
+### Window chrome (gate T2)
+
 Public API added after `1.0.0-rc.1` by gate T2 (window chrome, ADR in
 `docs/completion/reports/T2-WINDOW-CHROME.md`). Compared with `origin/main`,
 the three declaration snapshots remove no export and retype no existing
@@ -45,13 +74,8 @@ callers, and do affect anyone who implements or mocks the interface:
 `WindowsObservedWindow.titleBar`. The native module gains `setTitleBar`
 (Windows) and `readTitleBarInsets` (AppKit).
 
-Declaration snapshot changes that are not T2: `docs/api-signatures.json`
-also records an optional trailing `alphaModes` parameter on
-`LayerBlendAndOpacity`, `validateLayerBlend` and `layerBlendProblem`, plus
-`LayerAlphaOption` and `defaultAlphaModes`. These came in with main
-(`38d84c4`), whose snapshot had not been refreshed. Reference versions in
-the snapshots moved with the dependency bumps on main (React Native 0.88.1,
-Legend Spark 0.0.3).
+Reference versions in the declaration snapshots moved with the dependency
+bumps on main (React Native 0.88.1, Legend Spark 0.0.3).
 
 ## [1.0.0-rc.1] - Unreleased
 
@@ -202,6 +226,7 @@ Published 2026-11-06T03:56:20Z (2026-11-05 in US Eastern time).
 
 See the [GitHub release](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4).
 
+[1.0.0-rc.2]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v1.0.0-rc.1...HEAD
 [1.0.0-rc.1]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0-rc.1
 [1.0.0]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0
 [0.1.0-alpha.4]: https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4
