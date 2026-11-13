@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 import { CANONICAL_BASELINE_SHA256, parseCanonicalBaseline } from "./verify-component-program.mjs";
 import { componentProfileAssignments, qtFamilies, qtProfiles, qtReferences } from "./qt-component-profiles.mjs";
 

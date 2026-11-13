@@ -10,9 +10,9 @@ const cli = join(consumer, 'node_modules/@legendapp/spark/vendor/node_modules/@l
 const { initializeTemplate } = await import(pathToFileURL(join(cli, 'init-template.cjs')).href);
 const { installedSparkVersion, migrateProject, planMigrations } = await import(pathToFileURL(join(cli, 'migrations.cjs')).href);
 const version = installedSparkVersion(consumer);
-if (version !== '0.0.2') throw new Error('Expected the pinned Spark 0.0.2 starter');
+if (version !== '0.0.3') throw new Error('Expected the pinned Spark 0.0.3 starter');
 initializeTemplate(consumer);
-// This is the new-project initialization used by Spark 0.0.2's create command.
+// This is the new-project initialization used by Spark 0.0.3's create command.
 // The generated source/config already targets this SDK; this is not an upgrade
 // of an older app and must not be marked by editing .spark/version directly.
 migrateProject(consumer, version, true, { fromVersion: version });

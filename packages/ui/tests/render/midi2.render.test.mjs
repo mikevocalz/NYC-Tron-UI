@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Harness copied from mixer-midi.render.test.mjs (with an AccessibilityInfo
 // mock). Drives the velocity lane's line tool, ramp, the channel picker and

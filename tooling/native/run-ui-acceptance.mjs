@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requireReferenceHostBounds, requireSemanticLabels } from "./ui-evidence.mjs";
 import { recordNativeArtifact } from "./native-artifact.mjs";
 import { warmNativeBundle } from "./metro-warmup.mjs";
-import { classifyInitialUiTransportFailure, retainInitialUiTransportFailure, withInitialUiTransportRecovery } from "./ui-transport.mjs";
+import { classifyInitialUiTransportFailure, maestroSessionLimits, retainInitialUiTransportFailure, withInitialUiTransportRecovery } from "./ui-transport.mjs";
 
 const [platform, artifactInput, consumerInput] = process.argv.slice(2);
 if (!["ios", "android"].includes(platform) || !artifactInput || !consumerInput) {
@@ -19,7 +19,9 @@ const output = resolve(process.env.NYC_TRON_UI_OUTPUT ?? join(consumer, "runtime
 mkdirSync(output); // A previous run's reports cannot satisfy this one.
 const maestro = process.env.MAESTRO_BIN;
 if (!maestro || !existsSync(maestro)) throw new Error("MAESTRO_BIN must name the verified pinned Maestro installation");
-const env = { ...process.env, CI: "1", MAESTRO_CLI_NO_ANALYTICS: "1", MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true" };
+const env = { ...process.env, CI: "1", MAESTRO_CLI_NO_ANALYTICS: "1", MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: "true",
+  // Every Maestro CLI session starts its own XCTest runner; see maestroSessionLimits.
+  MAESTRO_DRIVER_STARTUP_TIMEOUT: String(maestroSessionLimits.driverStartupMs) };
 const json = file => JSON.parse(readFileSync(file, "utf8"));
 const hash = file => createHash("sha256").update(readFileSync(file)).digest("hex");
 const bundle = "com.nyctron.instruments.example", stages = [], children = [], bundleWarmups = [], transportRecoveries = [];
@@ -90,15 +92,23 @@ function initialTransportFailure(name) {
     const commands = files.filter(file => file.endsWith(sep + "commands.json"));
     const simulator = files.filter(file => file.endsWith(sep + "device-simulator.log"));
     if (commands.length !== 1 || platform === "ios" && simulator.length !== 1) return null;
-    const eligibility = classifyInitialUiTransportFailure({ platform, flow: name, appId: bundle, deviceId,
-      commands: json(commands[0]), simulatorLog: simulator[0] ? readFileSync(simulator[0], "utf8") : undefined });
+    const recorded = json(commands[0]);
+    // Maestro's own tree of the failed assertion, at the path that command declares.
+    const declared = recorded.filter(entry => entry?.metadata?.status === "FAILED")
+      .flatMap(entry => entry.metadata.artifacts ?? []).filter(artifact => artifact?.type === "SCREEN_HIERARCHY");
+    const treeFile = declared.length === 1 && /^screen-hierarchy\/[^/]+\.json$/.test(declared[0].path)
+      ? join(dirname(commands[0]), declared[0].path) : undefined;
+    const failureHierarchy = treeFile && existsSync(treeFile) ? { path: declared[0].path, tree: json(treeFile) } : undefined;
+    const eligibility = classifyInitialUiTransportFailure({ platform, flow: name, appId: bundle, deviceId, commands: recorded,
+      simulatorLog: simulator[0] ? readFileSync(simulator[0], "utf8") : undefined, failureHierarchy });
     return eligibility ? { ...eligibility, sourceFiles: { commands: commands[0].slice(output.length + 1),
-      ...(simulator[0] ? { simulatorLog: simulator[0].slice(output.length + 1) } : {}) } } : null;
+      ...(simulator[0] ? { simulatorLog: simulator[0].slice(output.length + 1) } : {}),
+      ...(failureHierarchy ? { failureHierarchy: treeFile.slice(output.length + 1) } : {}) } } : null;
   } catch { return null; } // Missing/ambiguous native evidence must preserve the original failure.
 }
 function hierarchy(name) {
   const raw = run(maestro, ["--device", deviceId, "--platform", platform, "--no-ansi", "hierarchy", "--no-reinstall-driver"], {
-    timeout: 120000, log: name + "-hierarchy-command.log",
+    timeout: maestroSessionLimits.hierarchyTimeoutMs, log: name + "-hierarchy-command.log",
   });
   const tree = parseHierarchy(raw);
   writeFileSync(join(output, name + "-hierarchy.json"), JSON.stringify(tree, null, 2) + "\n");
@@ -209,24 +219,28 @@ try {
   }
   await startMetro("reference"); launch();
   // At most one evidence-bound recovery per flow, each limited to that flow's
-  // first tab tap (see ui-transport.mjs). Any other failure is final.
+  // first tab tap or single stroke (see ui-transport.mjs). Any other failure is final.
   const recoverable = async (name, labels, screenshots) => {
     let recoveryReceipt;
-    await withInitialUiTransportRecovery({
+    const tree = await withInitialUiTransportRecovery({
       attempt: () => flow(name, labels, screenshots),
       classify: () => initialTransportFailure(name),
       recover: async (eligibility, error) => {
         recoveryReceipt = retainInitialUiTransportFailure({ output, flow: name, eligibility, error, sourceCommit: revision, nativeArtifact });
         if (platform === "android") recoveryReceipt.readiness = await recoverAndroidTransport();
+        // The app counted the OS-cancelled stroke; its counters only reset with a
+        // fresh process. Same installed binary and Metro session, no data reset.
+        if (name === "pointer") { launch(); recoveryReceipt.relaunch = "simctl launch --terminate-running-process"; }
       },
     });
     if (recoveryReceipt) transportRecoveries.push({ ...recoveryReceipt, flow: name, status: "recovered", attempts: 2 });
+    return tree;
   };
   await recoverable("settings", ["Workspace name", "Native UI workspace"], ["settings-saved"]);
   await recoverable("editor", ["Cover headline"], ["editor-draft", "editor-saved"]);
   stopApp(); await stopMetro();
   await startMetro("pointer"); launch();
-  const pointer = flow("pointer", ["Input drawing surface", "Input source: touch. Last event: up."], ["pointer-touch"]);
+  const pointer = await recoverable("pointer", ["Input drawing surface", "Input source: touch. Last event: up."], ["pointer-touch"]);
   if (platform === "android") {
     host.cancelPointer(pointer);
     flow("pointer-cancel", ["Input source: touch. Last event: cancel."], ["pointer-cancel"]);

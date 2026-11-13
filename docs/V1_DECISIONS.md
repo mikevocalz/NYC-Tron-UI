@@ -131,6 +131,13 @@ The component list comes from the T4 measurement in PR #69, taken on
 | macOS, Spark 0.0.3 (React Native 0.83.10) | [43171140883](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140883) | 272 of 421 components | 54 | 95 |
 | Windows, RNW 0.85 (React Native 0.85.3) | [43171140885](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43171140885) | 268 of 421 components | 41 | 112 |
 
+The table above is the first T1-graph measurement. On the current graph
+(main a6ac0b1 plus #69, archive `f4b5a055…`, runs
+[43198587853](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587853)
+and [43198587705](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587705)),
+after the `PrecisionScrubber` fix in decision 4, SUPPORT.md gives Windows 272
+supported / 37 struck / 112 not verified on desktop and macOS 272 / 54 / 95.
+
 All 166 exports without components load on both lanes. Struck components
 need an optional peer the lane does not provide (`react-native-gesture-handler`,
 `react-native-skia`, `@expo/ui`, `expo-linear-gradient`,

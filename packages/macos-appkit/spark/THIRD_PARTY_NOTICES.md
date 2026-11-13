@@ -9,7 +9,7 @@ not copied into this archive:
 
 | Dependency | Version | License and upstream |
 | --- | --- | --- |
-| Legend Spark | 0.0.2 | MIT; https://github.com/LegendApp/legend-spark |
+| Legend Spark | 0.0.3 | MIT; https://github.com/LegendApp/legend-spark |
 | React | 19.2.0 | MIT; https://github.com/facebook/react |
 | React Native | 0.83.10 | MIT; https://github.com/facebook/react-native |
 | React Native macOS | 0.83.0 | MIT; https://github.com/microsoft/react-native-macos |
