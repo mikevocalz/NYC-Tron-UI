@@ -16,6 +16,43 @@ version per tag.
   declarations in `docs/api-signatures.json` changed this way. The types are
   the same; consumers who diff declarations will see the quote change (#68).
 
+## [1.0.0-rc.2] - Unreleased
+
+Public API added after `1.0.0-rc.1` by gate T2 (window chrome, ADR in
+`docs/completion/reports/T2-WINDOW-CHROME.md`). Compared with `origin/main`,
+the three declaration snapshots remove no export and retype no existing
+member. R1 rules on these additions; nothing here is accepted on eight
+platforms.
+
+New subpath and exports:
+
+- `@nyc-tron/core/window-chrome`: `createWindowChromeController`,
+  `createPageWindowHost`, `describeTitleBar` and the types they use
+  (`WindowChromeHost`, `WindowChromeController`, `TitleBarInsets`,
+  `WindowZoomControl` and others).
+- `@nyc-tron/ui/components/window/WindowTitleBar`: `WindowTitleBar`,
+  `useWindowChrome`, `WindowTitleBarProps`.
+- `@nyc-tron/reserved-regions`: `useWindowControlsInsets`,
+  `toWindowControlsInsets`, `windowControlsEqual`, `NO_WINDOW_CONTROLS`.
+- `@nyc-tron/macos-appkit/window-chrome` and `createMacOSWindowChrome` on
+  `/windows`.
+- `@nyc-tron/windows-fluent-fabric/window-chrome` (`createWindowsChromeBridge`)
+  and the `WindowsTitleBar` types.
+
+Required members added to existing Windows interfaces. These do not affect
+callers, and do affect anyone who implements or mocks the interface:
+`WindowsWindowHost.setTitleBar`, `WindowsDesktopTransport.setTitleBar`, and
+`WindowsObservedWindow.titleBar`. The native module gains `setTitleBar`
+(Windows) and `readTitleBarInsets` (AppKit).
+
+Declaration snapshot changes that are not T2: `docs/api-signatures.json`
+also records an optional trailing `alphaModes` parameter on
+`LayerBlendAndOpacity`, `validateLayerBlend` and `layerBlendProblem`, plus
+`LayerAlphaOption` and `defaultAlphaModes`. These came in with main
+(`38d84c4`), whose snapshot had not been refreshed. Reference versions in
+the snapshots moved with the dependency bumps on main (React Native 0.88.1,
+Legend Spark 0.0.3).
+
 ## [1.0.0-rc.1] - Unreleased
 
 Prerelease cut from `main` at `3b80c1e`. All 15 packed packages carry version
