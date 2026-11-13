@@ -126,7 +126,7 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 | `@nyc-tron/native-charts` | Experimental | Line, column and area charts: Swift Charts on iOS, Vico on Android |
 | `@nyc-tron/windows-fluent` | Experimental | WinUI 3 NavigationView host-shell source plus a typed controller contract |
 | `@nyc-tron/windows-fluent-fabric` | Experimental | WinUI 3 NavigationView as an RNW 0.85 Fabric XAML island (`TronNavigationView`) |
-| `@nyc-tron/app-identity` | Experimental (tier not yet set in D3) | Node command-line tools: `nyc-tron-launcher-check` fails a launcher name wider than the measured label box; `nyc-tron-derive-icons` writes every launcher icon format from one 1024 px PNG. See [App identity](docs/APP_IDENTITY.md) |
+| `@nyc-tron/app-identity` | Stable (see D8 in [v1 decisions](docs/V1_DECISIONS.md)) | Node command-line tools: `nyc-tron-launcher-check` fails a launcher name wider than the measured label box; `nyc-tron-derive-icons` writes every launcher icon format from one 1024 px PNG. See [App identity](docs/APP_IDENTITY.md) |
 
 The two Windows packages sit on the React Native 0.85 lane and cannot be
 installed in the same app as the React Native 0.88 packages. See

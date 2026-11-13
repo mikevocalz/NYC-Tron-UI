@@ -2,7 +2,7 @@
 
 Surfaces: the launcher icon and the launcher label of the three installable
 examples, `Tron Lab` (`examples/native-instruments`), `Tron AppKit`
-(`examples/macos-appkit/spark`) and `Tron WinUI`
+(superseded: `TronAppKit`; `examples/macos-appkit/spark`) and `Tron WinUI`
 (`packages/windows-fluent/rnw-fabric/example`).
 
 This file replaces the hand-written "Design record" that was in
@@ -124,6 +124,11 @@ Launcher labels, measured with the check on 2026-11-12:
 
 Recommended copy: keep "Tron Lab", "Tron AppKit", "Tron WinUI". "Tron" plus
 one word that names what the example is for. "Demo" stays dropped.
+
+Superseded for the macOS example: Launchpad and the Dock show the Spark `name`
+(the bundle file name), which cannot hold a space, so the launcher copy is
+"TronAppKit" (CI run 43252017103, b60fddd). "Tron AppKit" remains the
+application menu title (`CFBundleName`).
 
 | Option | Copy | Best for |
 | --- | --- | --- |
