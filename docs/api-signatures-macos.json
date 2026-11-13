@@ -715,7 +715,7 @@
         "export interface MacOSWindowChromeTransport {\n    info(windowId: string): Promise<Pick<WindowInfo, 'maximized'>>;\n    maximize(windowId: string): Promise<void>;\n    unmaximize(windowId: string): Promise<void>;\n    readInsets(windowId: string): Promise<unknown>;\n}"
       ],
       "references": [
-        "@legendapp/spark-desktop-windows@0.0.2/src/types.ts#WindowInfo",
+        "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowInfo",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
