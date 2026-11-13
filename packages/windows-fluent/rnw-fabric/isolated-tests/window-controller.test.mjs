@@ -4,6 +4,7 @@ import { createWindowRegistry, beginDrag } from "@nyc-tron/core/window-lifecycle
 import { connectWindowsWindowHost } from "../dist/window-controller.js";
 import { parseDesktopSnapshot, convertDesktopLayout } from "../dist/window-protocol.js";
 import { createWindowsNavigationBinding, navigationBindingOwner } from "../dist/navigation-binding.js";
+import { legacyFixture } from "./fixtures/rc1-window-transport.mjs";
 
 const rect = { x: 20, y: 30, width: 800, height: 600 };
 const display = { id: "monitor", bounds: { x: 0, y: 0, width: 1920, height: 1040 }, pixelBounds: { x: 0, y: 0, width: 1920, height: 1080 }, pixelWorkArea: { x: 0, y: 0, width: 1920, height: 1040 } };
@@ -48,6 +49,54 @@ test("native protocol validates geometry and freezes all leases", () => {
   assert.throws(() => parseDesktopSnapshot(JSON.stringify({ ...report, pendingCloses: [{ id: "main", generation: "wrong", token: "token" }] })), /ownership/);
   const layout = { schema: 1, referenceDpi: 144, layout: { version: 1, focusedId: null, windows: [{ id: "one", displayId: "monitor", rect, status: "open" }] } };
   assert.equal(convertDesktopLayout(layout, 96).windows[0].rect.width, 1200);
+});
+test("an unchanged rc.1 transport keeps ordinary window operations without title-bar customization", async () => {
+  const f = legacyFixture();
+  assert.equal("setTitleBar" in f.transport, false);
+  assert.equal("titleBar" in JSON.parse(f.report()).windows[0], false);
+  const connect = f.transport.connect;
+  f.transport.connect = async (...args) => { f.emit(); return connect(...args); };
+  const host = await connectWindowsWindowHost(f.transport, f.options);
+  assert.deepEqual(host.snapshot().windows[0].titleBar, standardBar);
+  assert.equal(Object.isFrozen(host.snapshot().windows[0].titleBar), true);
+  await host.open({ id: "doc", title: "Document", displayId: "monitor", rect });
+  const saved = host.captureLayout();
+  await host.move("doc", { displayId: "monitor", rect: { ...rect, x: 200 } });
+  await host.minimize("doc"); await host.restore("doc"); await host.focus("doc");
+  await host.restoreLayout(saved); await host.refresh();
+  assert.deepEqual(host.snapshot().windows.find(w => w.id === "doc").rect, rect);
+  f.value().focusedId = "doc"; f.emit();
+  assert.equal(f.state().focusedId, "doc");
+  const before = host.snapshot();
+  await assert.rejects(host.setTitleBar("doc", "extended"), /unsupported/);
+  assert.equal(host.snapshot(), before);
+  assert.equal(f.value().windows.some(w => "titleBar" in w), false);
+  await host.focus("main");
+  await host.requestClose("doc"); await host.resolveClose(f.closes[0], false);
+  assert.equal(f.state().windows.length, 2);
+  await host.requestClose("doc"); await host.resolveClose(f.closes[1], true);
+  assert.equal(f.state().windows.length, 1);
+  assert.deepEqual(f.failures, []);
+  await host.dispose();
+  assert.equal(f.listeners.size, 0); assert.equal(f.state().windows.length, 0);
+});
+test("legacy compatibility rejects malformed present title bars and invalid geometry", async () => {
+  for (const patch of [{ titleBar: null }, { titleBar: { style: "standard", leading: 0, trailing: 1, height: 0 } },
+    { rect: { ...rect, width: -1 } }]) {
+    const f = legacyFixture(); Object.assign(f.value().windows[0], patch);
+    await assert.rejects(connectWindowsWindowHost(f.transport, f.options), /window observation/);
+    assert.equal(f.listeners.size, 0);
+  }
+  const f = legacyFixture(), host = await connectWindowsWindowHost(f.transport, f.options);
+  f.value().windows[0].titleBar = null; f.emit();
+  assert.match(f.failures[0].message, /title bar null/);
+  await assert.rejects(host.refresh(), /title bar null/);
+  await host.dispose();
+});
+test("a modern transport must provide title bars in its snapshots", async () => {
+  const f = fixture(); delete f.value().windows[0].titleBar;
+  await assert.rejects(connectWindowsWindowHost(f.transport, f.options), /title bar null/);
+  assert.equal(f.listeners.size, 0);
 });
 test("native protocol requires a valid title bar on every window", () => {
   const f = fixture(), report = JSON.parse(f.report());

@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { Pressable, Text, View, type StyleProp, type ViewStyle } from "react-native";
+import { createStore } from "zustand/vanilla";
+import { useStore } from "zustand";
 import {
   createWindowChromeController, describeTitleBar,
   type TitleBarControls, type WindowChromeCommand, type WindowChromeController, type WindowChromeHost,
@@ -74,7 +76,8 @@ export function WindowTitleBar({
   onCommandResult, onError, children, className, titleClassName, controlClassName, unstyled = false, style, testID,
 }: WindowTitleBarProps) {
   const snapshot = useSyncExternalStore(chrome.subscribe, chrome.getSnapshot, chrome.getSnapshot);
-  const blocked = useSyncExternalStore(blockedStore.subscribe, () => blockedStore.get(chrome), () => false);
+  const blockedStore = useMemo(() => createStore(() => ({ blocked: false })), [chrome]);
+  const blocked = useStore(blockedStore, state => state.blocked);
   const layout = controls.kind === "drawn" ? controls.layout : undefined;
   // The controller's snapshot is the registry view for this window; lay it out once per change.
   const list = describeTitleBar(stateFor(chrome.windowId, snapshot.status, snapshot.focused), chrome.windowId,
@@ -82,9 +85,9 @@ export function WindowTitleBar({
   const styled = !unstyled;
   const shown = title.trim() || "Untitled";
   const run = (command: WindowChromeCommand) => {
-    blockedStore.set(chrome, false);
+    blockedStore.setState({ blocked: false });
     chrome.run(command).then(result => {
-      if (result.status === "vetoed") blockedStore.set(chrome, true);
+      if (result.status === "vetoed") blockedStore.setState({ blocked: true });
       onCommandResult?.(result);
     }, error => { (onError ?? console.error)(error); });
   };
@@ -135,21 +138,6 @@ function stateFor(id: string, status: "open" | "minimized" | "closed", focused: 
     focusedId: focused ? id : null, drag: null, tokenSeq: 0,
   };
 }
-
-/** Per-controller "last close was vetoed" flag, so the live region survives re-renders without component state. */
-const blockedStore = (() => {
-  const flags = new WeakMap<WindowChromeController, boolean>();
-  const listeners = new Set<() => void>();
-  return {
-    get: (chrome: WindowChromeController) => flags.get(chrome) === true,
-    set(chrome: WindowChromeController, value: boolean) {
-      if ((flags.get(chrome) === true) === value) return;
-      flags.set(chrome, value);
-      for (const listener of [...listeners]) listener();
-    },
-    subscribe(listener: () => void) { listeners.add(listener); return () => { listeners.delete(listener); }; },
-  };
-})();
 
 /** Original line glyphs drawn from borders, so forced-colors mode keeps them. */
 function Glyph({ command, pressed, styled }: { command: WindowChromeCommand; pressed?: boolean; styled: boolean }) {

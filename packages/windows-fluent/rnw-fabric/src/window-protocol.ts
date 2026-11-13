@@ -43,7 +43,7 @@ function samePixels(a: Rect, b: Rect): boolean {
 }
 
 /** Validates the actual native protocol, including the reversible shared coordinate mapping. */
-export function parseDesktopSnapshot(json: string): WindowsDesktopSnapshot {
+export function parseDesktopSnapshot(json: string, { allowMissingTitleBar = false }: { allowMissingTitleBar?: boolean } = {}): WindowsDesktopSnapshot {
   if (typeof json !== "string" || json.length > 1_048_576) throw new TypeError("Native desktop report exceeds its budget");
   const s = JSON.parse(json) as WindowsDesktopSnapshot;
   if (s?.schema !== 1 || !validWindowId(s.ownerToken) || !validDpi(s.referenceDpi) ||
@@ -64,6 +64,11 @@ export function parseDesktopSnapshot(json: string): WindowsDesktopSnapshot {
       !samePixels(pixelRect(w.rect, s.referenceDpi), w.pixelRect) ||
       (w.status !== "open" && w.status !== "minimized") || typeof w.primary !== "boolean")
       throw new TypeError("Invalid native window observation");
+    // rc.1 transports know only the system frame, whose title bar reserves
+    // no content space. Only a transport without customization may omit it.
+    // An explicitly present but malformed value must still fail validation.
+    if (allowMissingTitleBar && !Object.prototype.hasOwnProperty.call(w, "titleBar"))
+      Object.assign(w, { titleBar: { style: "standard", leading: 0, trailing: 0, height: 0 } });
     // Name the reported values: an out-of-range inset is otherwise
     // indistinguishable from bad geometry in a CI log.
     if (!validTitleBar(w.titleBar))
