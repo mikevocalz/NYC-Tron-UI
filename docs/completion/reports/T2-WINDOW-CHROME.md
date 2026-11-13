@@ -53,4 +53,23 @@ their own commit and platform; none of them accepts a row.
 
 ## Evidence
 
-Filled in at the final commit of the T2 pull request.
+| Row | Platform | Receipt | CI run |
+| --- | --- | --- | --- |
+| W-02 | web, drawn controls | `evidence/t2-window-chrome/2026-11-12-ac63d19/web-argent/RECEIPT.md` (local, partial) and the browser suite `window-chrome.spec.mjs` | CI, each commit |
+| W-03 | macOS AppKit | `evidence/t2-window-chrome/2026-11-13-7dd79ac/appkit/window-chrome.json` | 43462201191 |
+| W-04 | Windows UI Automation | `evidence/t2-window-chrome/2026-11-13-7dd79ac/winui/window-chrome.json` | 43462201051 |
+
+`evidence/t2-window-chrome/2026-11-13-7dd79ac/RECEIPT.md` lists each step and
+what the receipts do not cover. W-03 and W-04 are `implemented` with a passed
+receipt for their own platform and `acceptance: "unverified"`.
+
+### Note for R1: the AppKit green button is full screen
+
+On a window that allows full screen, pressing the real green button runs
+Enter Full Screen, not zoom. Run 43192331575 showed it: the frame became the
+whole screen with no title bar, and a second press sent mid-transition was
+ignored. The check now waits for AppKit's did-enter and did-exit
+notifications and requires the registry to agree with `NSWindow.isZoomed`.
+Registry zoom (`toggleZoom`) is tested through the controller, which calls
+`NSWindow.zoom`. Whether the title bar's zoom control should follow the green
+button into full screen is a product decision that is not made here.

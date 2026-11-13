@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "sourceRevision": "74b45d9995bfb5773dda22ac7e7c6fa01e33c690",
+  "processId": 8004,
+  "window": "document",
+  "steps": [
+    {
+      "name": "caption-close-cancelled",
+      "status": "passed",
+      "observed": {
+        "windows": 2,
+        "decision": {
+          "sequence": 3,
+          "value": "cancel"
+        },
+        "button": {
+          "automationId": null,
+          "name": "close",
+          "source": "reported-trailing-inset",
+          "y": 96,
+          "bounds": null,
+          "x": 657
+        }
+      }
+    },
+    {
+      "name": "controller-close-cancelled",
+      "status": "passed",
+      "observed": {
+        "windows": 2,
+        "result": {
+          "sequence": 1,
+          "value": "vetoed"
+        }
+      }
+    },
+    {
+      "name": "caption-minimize",
+      "status": "passed",
+      "observed": {
+        "visualState": "Minimized",
+        "registryMinimized": 1,
+        "button": {
+          "automationId": null,
+          "name": "minimize",
+          "source": "reported-trailing-inset",
+          "y": 96,
+          "bounds": null,
+          "x": 565
+        }
+      }
+    },
+    {
+      "name": "controller-restore-after-caption-minimize",
+      "status": "passed",
+      "observed": {
+        "result": {
+          "sequence": 2,
+          "value": "done"
+        },
+        "registryMinimized": 0
+      }
+    },
+    {
+      "name": "controller-minimize",
+      "status": "passed",
+      "observed": {
+        "result": {
+          "sequence": 3,
+          "value": "done"
+        },
+        "registryMinimized": 1
+      }
+    },
+    {
+      "name": "controller-restore",
+      "status": "passed",
+      "observed": {
+        "result": {
+          "sequence": 4,
+          "value": "done"
+        },
+        "registryMinimized": 0
+      }
+    },
+    {
+      "name": "caption-close-proceeded",
+      "status": "passed",
+      "observed": {
+        "windows": 1,
+        "decision": {
+          "sequence": 5,
+          "value": "proceed"
+        },
+        "button": {
+          "automationId": null,
+          "name": "close",
+          "source": "reported-trailing-inset",
+          "y": 96,
+          "bounds": null,
+          "x": 657
+        }
+      }
+    },
+    {
+      "name": "controller-close-proceeded",
+      "status": "passed",
+      "observed": {
+        "windows": 1,
+        "result": {
+          "sequence": 5,
+          "value": "done"
+        }
+      }
+    }
+  ],
+  "titleBar": {
+    "dpi": 96,
+    "trailing": 138,
+    "height": 32
+  },
+  "captionButtons": {
+    "maximize": {
+      "automationId": null,
+      "name": "maximize",
+      "source": "reported-trailing-inset",
+      "y": 96,
+      "bounds": null,
+      "x": 611
+    },
+    "minimize": {
+      "automationId": null,
+      "name": "minimize",
+      "source": "reported-trailing-inset",
+      "y": 96,
+      "bounds": null,
+      "x": 565
+    },
+    "close": {
+      "automationId": null,
+      "name": "close",
+      "source": "reported-trailing-inset",
+      "y": 96,
+      "bounds": null,
+      "x": 657
+    }
+  }
+}
