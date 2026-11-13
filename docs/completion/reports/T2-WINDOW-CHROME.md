@@ -78,10 +78,10 @@ their own commit and platform; none of them accepts a row.
 | Row | Platform | Receipt | CI run |
 | --- | --- | --- | --- |
 | W-02 | web, drawn controls | `evidence/t2-window-chrome/2026-11-12-ac63d19/web-argent/RECEIPT.md` (local, partial) and the browser suite `window-chrome.spec.mjs` | CI, each commit |
-| W-03 | macOS AppKit | `evidence/t2-window-chrome/2026-11-13-7dd79ac/appkit/window-chrome.json` | 43462201191 |
-| W-04 | Windows UI Automation | `evidence/t2-window-chrome/2026-11-13-7dd79ac/winui/window-chrome.json` | 43462201051 |
+| W-03 | macOS AppKit | `evidence/t2-window-chrome/2026-11-13-6c8c82e/appkit/window-chrome.json` | 43485988092 |
+| W-04 | Windows UI Automation | `evidence/t2-window-chrome/2026-11-13-6c8c82e/winui/window-chrome.json` | 43485987990 |
 
-`evidence/t2-window-chrome/2026-11-13-7dd79ac/RECEIPT.md` lists each step and
+`evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md` lists each step and
 what the receipts do not cover. W-03 and W-04 are `implemented` with a passed
 receipt for their own platform and `acceptance: "unverified"`.
 

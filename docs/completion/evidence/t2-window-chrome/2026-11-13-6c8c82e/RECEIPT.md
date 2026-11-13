@@ -1,17 +1,23 @@
 # Window chrome native receipts, 2026-11-13
 
-CI run commit: `7dd79ac` on pull request 73. Both jobs report
-`sourceRevision` `74b45d99`, which is the pull request merge ref GitHub builds
-(`GITHUB_SHA`) for the head `7dd79ac`.
+CI run commit: `6c8c82e` on pull request 73. Both jobs report
+`sourceRevision` `65370f7e9444c73b5443e43e6c9dcde3fb93b324`, the pull request
+merge commit GitHub built for the head `6c8c82e` (`merge_commit_sha` of the
+pull request at that time).
 
 | Platform | Job | Run | Receipt |
 | --- | --- | --- | --- |
-| macOS, Spark 0.0.3, ARM64 | NYC-Tron AppKit native host | 43462201191 | `appkit/window-chrome.json` |
-| Windows, RNW 0.85 Fabric | WinUI 3 navigation and native desktop in RNW Fabric | 43462201051 | `winui/window-chrome.json` |
+| macOS, Spark 0.0.3, ARM64 | NYC-Tron AppKit native host | 43485988092, attempt 2 | `appkit/window-chrome.json` |
+| Windows, RNW 0.85 Fabric | WinUI 3 navigation and native desktop in RNW Fabric | 43485987990 | `winui/window-chrome.json` |
 
 Both receipts have `status: "passed"`. Every title-bar command goes through
 the app's `@nyc-tron/core/window-lifecycle` registry; the close decision is
 the app's.
+
+The first attempt of the AppKit run was cancelled by the runner after 15
+minutes with no failing step, and attempt 2 produced this receipt. The same
+run's iOS native-controls job failed once in an unrelated Maestro step and
+passed on retry. Neither failure touched this change.
 
 ## AppKit (`contentUnderTitleBar`)
 
@@ -22,9 +28,10 @@ the app's.
 - Minimize and restore: controller minimize and restore, and the AppKit
   minimize button followed by a controller restore. `nativeMinimized` and the
   registry status agree at each step.
-- Zoom: the controller toggles `NSWindow.zoom`. The AppKit green button
-  enters full screen on this window, not zoom, so that step waits for the
-  did-enter and did-exit full-screen notifications
+- Zoom: the controller toggles `NSWindow.zoom`. On this window the AppKit
+  green button entered full screen, not zoom, although the receipt reports
+  `fullScreenPrimary: false`. The cause is not determined here. That step
+  waits for the did-enter and did-exit full-screen notifications
   (`system-zoom-button`, `system-zoom-button-exit`).
 - Insets: the leading inset measured by `readTitleBarInsets` matches the
   button frames within 0.5 point (asserted in `verify-native.mjs`).
