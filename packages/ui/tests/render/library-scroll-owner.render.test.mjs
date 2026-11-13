@@ -5,7 +5,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import { createStore } from "zustand/vanilla";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Executes the actual screen, layout and AssetBrowser components with RN host
 // nodes. This checks scroll ownership and callbacks, not native layout or gestures.

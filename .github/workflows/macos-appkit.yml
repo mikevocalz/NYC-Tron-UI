@@ -50,7 +50,7 @@ jobs:
           retention-days: 14
           path: ${{ runner.temp }}/appkit-shared/
   native:
-    name: Spark 0.0.2 ARM64 AppKit compile and native acceptance
+    name: Spark 0.0.3 ARM64 AppKit compile and native acceptance
     needs: packages
     # GitHub's macos-15 label is ARM64; macos-15-intel is a different lane.
     # Assert the actual architecture below rather than treating the label as proof.

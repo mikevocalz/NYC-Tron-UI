@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 import * as sharedOverlays from "../../../core/src/overlays.ts";
 
 // Runs the real LayerStack with mocked RN hosts. Function components are

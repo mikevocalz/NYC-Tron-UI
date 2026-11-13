@@ -6,6 +6,11 @@ name: Native pointer touch lifecycle
 - extendedWaitUntil:
     visible: "Input drawing surface"
     timeout: 90000
+# Settle the session's first Recap digitizer on the static heading. In CI only
+# a session's first gesture ever drew backboardd's "unknown senderID" (10 of 22
+# first gestures, 0 of 90 later ones), and every stroke that did lost its up.
+# The idle summary below proves the heading tap changed nothing.
+- tapOn: "Pointer input"
 - assertVisible: "Committed strokes: 0. Cancelled strokes: 0. Prediction samples: 0."
 - swipe:
     from:

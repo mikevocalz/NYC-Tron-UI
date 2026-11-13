@@ -12,7 +12,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 import { NATIVE_MODULE_NAME, regionsEqual, toRegions, NO_REGIONS, NO_WINDOW_CONTROLS, toWindowControlsInsets, windowControlsEqual } from "../src/payload.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");

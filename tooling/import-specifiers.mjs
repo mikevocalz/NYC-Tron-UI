@@ -1,4 +1,4 @@
-import ts from 'typescript';
+import ts from '@typescript/typescript6';
 
 // Parse declarations so ordinary UI copy containing "import" or "export"
 // cannot be mistaken for a package dependency.

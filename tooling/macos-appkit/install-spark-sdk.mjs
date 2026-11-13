@@ -6,7 +6,7 @@ const consumer = process.argv[2] && resolve(process.argv[2]);
 if (!consumer) throw new Error('Supply the isolated consumer directory');
 const installed = join(consumer, 'node_modules/@legendapp/spark');
 const sdk = JSON.parse(await readFile(join(installed, 'package.json'), 'utf8'));
-if (sdk.version !== '0.0.2') throw new Error('Expected Spark 0.0.2 before preparing its native SDK inputs');
+if (sdk.version !== '0.0.3') throw new Error('Expected Spark 0.0.3 before preparing its native SDK inputs');
 // Use the same versioned release helpers as Spark's official `create` command.
 // They validate the embedded release manifest and every downloaded size/hash.
 const releaseModule = await import(pathToFileURL(join(installed, 'vendor/node_modules/@legendapp/spark-cli/dist/release.js')).href);

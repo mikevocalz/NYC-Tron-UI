@@ -41,8 +41,8 @@ package archive hashes, simulator/emulator identity and pinned tool identity.
 Command receipts, Metro logs, screenshots and failure hierarchies are retained
 when a gate fails. An older output directory cannot be reused as a new result.
 
-The Settings and Editor flows each permit **one** evidence-bound transport
-recovery. On Android, only Settings qualifies: eligibility requires the initial
+The Settings, Editor and (on iOS) Pointer flows each permit **one**
+evidence-bound transport recovery. On Android, only Settings qualifies: eligibility requires the initial
 launch command to fail with the target emulator's exact `device offline` error,
 before any app assertion. The runner waits for ADB and boot readiness, restores
 its Metro reverse mapping, and observes the same installed app's resumed
@@ -70,13 +70,58 @@ the app's scene at 15:43:24.478. That was inside the 15:43:19.539 to
 it, and the app stayed on Settings. PR #58's attempt-2 run (42857968753) failed
 on the same tap with the same signature.
 
+The Settings first tab tap also qualifies when the Recap digitizer never
+delivers a contact at all. Editor does not: no Editor tap has been observed
+to drop this way, so Editor recovers only the touching-contact cancel above.
+Every one of these must hold inside the tap's window: exactly
+one Recap service is added; backboardd logs `unknown senderID` for it and then
+`ignoring digitizer event for display <main> from unsupported service` for the
+same service and sender; its only `cancel -- digitizer did disappear` line has
+`contacts: contacts: []`, at most 5000 ms after the service was added (XCTest's
+own `TouchEventsCompleted` confirmation interval); testmanagerd then logs
+`Timed out after waiting 5.0s for TouchEventsCompleted`. Maestro's own
+hierarchy for the failed assertion, at the path that command declares, must show
+exactly one route panel, the pre-tap one (`reference-panel-library`), with the
+`Settings` tab still visible and `Workspace preferences` absent. A delivered tap also ends in an empty-contact
+disappear line (222 to 641 ms after creation in the runs below), so that line
+alone never qualifies. Runs 43157470910 and 43172075412 (attempt 1 of each, PR
+#68) and 43156283059 (attempt 2, PR #70) hit this on Settings: the digitizer
+disappeared 1581, 2690 and 1405 ms after it was added, and the app stayed on
+Library. Those three taps are the only ones, of 69 Recap digitizers across the
+twelve downloaded flow logs, with the refusal line or the confirmation timeout.
+
+Pointer first taps its static `Pointer input` heading, so the stroke is never
+the first gesture of its Maestro session. Across 112 gestures in CI, backboardd
+logged `unknown senderID` on 10 of 22 session-first gestures and on none of the
+90 later ones, and all three strokes that met it lost their touch-up (run
+43172075412 attempt 2, and both tries in 43194618469 attempt 5). The three
+strokes without it committed. The idle-summary assertion after the heading tap
+proves the tap changed nothing.
+
+Pointer qualifies for recovery only for its single stroke: launch, `Input
+drawing surface` visible, the heading tap, the idle summary visible, the 700
+ms swipe, then the failed
+`Committed strokes: 1. Cancelled strokes: 0. Prediction samples: 0.`
+assertion, with nothing else between them. The swipe's window must hold the
+same Recap registration, unknown sender, touching cancelled contact and
+cancelled path in the app's scene that the tab-tap rule requires, and the
+failed assertion's hierarchy must report `Committed strokes: 0. Cancelled
+strokes: 1. Prediction samples: 0.` and `Input source: touch. Last event:
+cancel.` with no committed stroke. Run 43172075412 attempt 2 shows it: Recap
+digitizer `0x1057656000015` added at 08:42:49.078 and cancelled with touching
+pathIndex 2 at 08:42:50.018, inside the 08:42:47.972 to 08:42:50.621 swipe.
+Before the second Pointer attempt the runner relaunches the same installed app
+(`simctl launch --terminate-running-process`), because the cancelled stroke is
+already counted in that process.
+
 Every original failed report, screenshot and log is moved intact into
 `<flow>-initial-transport-failure`, hashed, and referenced by a receipt
 (`transport-recovery.json` for Settings, `editor-transport-recovery.json` for
-Editor) before another attempt. The installed app payload is unchanged. The
+Editor, `pointer-transport-recovery.json` for Pointer) before another attempt. The installed app payload is unchanged. The
 complete flow then runs again with the same semantic assertions, and any
-second failure is final. Pointer, later taps, edits, saves, ordinary assertion
-failures and unproven cancellations are never retried.
+second failure is final. Pointer cancellation on Android, later taps, edits,
+saves, ordinary assertion failures and unproven cancellations are never
+retried.
 Only a successful full suite produces `result.json`, which records any recovery
 alongside the fresh successful flow receipts.
 
@@ -97,6 +142,14 @@ node tooling/native/install-maestro.mjs /tmp/nyc-tron-maestro
 MAESTRO_BIN=/tmp/nyc-tron-maestro/maestro/bin/maestro node tooling/native/run-ui-acceptance.mjs ios /path/to/app.app /path/to/clean-consumer
 MAESTRO_BIN=/tmp/nyc-tron-maestro/maestro/bin/maestro node tooling/native/run-ui-acceptance.mjs android /path/to/app.apk /path/to/clean-consumer
 ```
+
+Each Maestro 2.12.1 CLI session starts its own XCTest runner, and `maestro
+hierarchy` is a separate session after each flow. On the macOS 26 runner a cold
+start took 24 to 96 s from `xcodebuild` to `Running tests`, and up to 149 s from
+CLI start to the first flow command. The runner pins
+`MAESTRO_DRIVER_STARTUP_TIMEOUT` to 180 s and gives each hierarchy capture 300
+s, so Maestro reports its own `iOS driver not ready` error before the harness
+stops it. The labels each hierarchy must contain are unchanged.
 
 The Linux workspace can verify flow parsing, source types and evidence rejection
 tests. Successful simulator execution is reported only after the native jobs

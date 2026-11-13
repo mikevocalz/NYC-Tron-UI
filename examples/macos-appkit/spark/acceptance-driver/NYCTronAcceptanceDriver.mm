@@ -150,7 +150,7 @@ static void ClearResponder(void) {
   ResponderHandler = nil; ResponderTarget = nil; ResponderWindow = nil; ResponderToken = 0;
 }
 
-// Spark 0.0.2 does not implement this optional observer. Adding it only to the
+// Spark 0.0.3 does not implement this optional observer. Adding it only to the
 // private acceptance app records the real NSDraggingSession AppKit supplies,
 // without replacing the installed source's begin/end or destination methods.
 @implementation RNDesktopDragView (NYCTronSessionObservation)
