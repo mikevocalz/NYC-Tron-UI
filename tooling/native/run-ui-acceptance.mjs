@@ -7,6 +7,7 @@ import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requir
 import { recordNativeArtifact } from "./native-artifact.mjs";
 import { warmNativeBundle } from "./metro-warmup.mjs";
 import { classifyInitialUiTransportFailure, maestroSessionLimits, retainInitialUiTransportFailure, withInitialUiTransportRecovery } from "./ui-transport.mjs";
+import { workspaceObservation, requireWorkspaceModeContinuity, requireWorkspaceDocumentReturn, requireWorkspacePresetSave } from "./workspace-evidence.mjs";
 
 const [platform, artifactInput, consumerInput] = process.argv.slice(2);
 if (!["ios", "android"].includes(platform) || !artifactInput || !consumerInput) {
@@ -245,10 +246,36 @@ try {
     host.cancelPointer(pointer);
     flow("pointer-cancel", ["Input source: touch. Last event: cancel."], ["pointer-cancel"]);
   }
+  stopApp(); await stopMetro();
+  await startMetro("library"); launch();
+  // These are partial A-01/A-02 fixture obligations, not complete row or engine
+  // acceptance. No recovery rule is extended to the new workspace flows.
+  const observations = [];
+  const observeWorkspace = (name, labels, screenshots) => {
+    const tree = flow(name, labels, screenshots);
+    const state = workspaceObservation(tree);
+    observations.push({ name, hierarchy: name + "-hierarchy.json",
+      hierarchySha256: hash(join(output, name + "-hierarchy.json")), state });
+    writeFileSync(join(output, "workspace-observations.json"), JSON.stringify({ schemaVersion: 1,
+      sourceCommit: revision, platform, observedVia: "Maestro native accessibility hierarchy", observations }, null, 2) + "\n");
+    return state;
+  };
+  const workspaceBefore = observeWorkspace("workspace-baseline", ["Harbor", "Canvas edits 1"], ["workspace-baseline"]);
+  const workspaceColor = observeWorkspace("workspace-color", ["Harbor", "Canvas edits 1"], ["workspace-color"]);
+  requireWorkspaceModeContinuity(workspaceBefore, workspaceColor);
+  const workspaceReturned = observeWorkspace("workspace-return", ["Harbor", "Canvas edits 1"],
+    ["workspace-document-b", "workspace-document-return"]);
+  requireWorkspaceDocumentReturn(workspaceReturned);
+  const workspaceSaved = observeWorkspace("workspace-preset", ["Workspace preset: Custom layout copy", "Canvas edits 1"], ["workspace-preset"]);
+  requireWorkspacePresetSave(workspaceReturned, workspaceSaved);
   const report = {
     schema: 1, status: "passed", platform, revision, stages,
     provenance: { ...host, nativeArtifact, ...(launcher ? { launcherSha256: hash(launcher) } : {}), sourceCommit: revision, maestro: MAESTRO,
       installedPackages: json(join(consumer, "installed-packages.json")), bundleWarmups, transportRecoveries },
+    workspacePilot: { scope: "Controlled native fixture only; partial row obligations, no Rust rendering or processing proof",
+      rows: ["A-01", "A-02"], obligations: ["A01.mode-identity", "A01.document-return", "A02.save-color-layout"],
+      acceptance: "unverified", observations: "workspace-observations.json", observationsSha256: hash(join(output, "workspace-observations.json")),
+      notCovered: ["remaining A-01/A-02 obligations", "A-03 dock targets", "A-04 splitter/minimum/hinge behavior", "iPad-specific execution"] },
     input: platform === "android" ? "Maestro OS touch plus Android touch-down/Home cancellation" : "Maestro XCTest OS touch",
     manualGates: ["physical pen pressure/tilt/hover", "physical palm rejection", "VoiceOver/TalkBack spoken output",
       ...(platform === "ios" ? ["active iOS touch cancellation by OS interruption"] : [])],

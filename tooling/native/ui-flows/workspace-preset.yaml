@@ -1,0 +1,16 @@
+appId: com.nyctron.instruments.example
+name: Workspace pilot saves the actual Color layout
+---
+- launchApp:
+    stopApp: false
+- assertVisible: "Canvas edits 1"
+- tapOn: "Workspace preset: Custom layout"
+- assertVisible: "Save layout as new preset.*"
+- tapOn: "Save layout as new preset.*"
+- assertVisible: "Preset name"
+- tapOn: "Save preset"
+- assertVisible: "Workspace preset: Custom layout copy"
+- assertVisible: "Canvas edits 1"
+- assertVisible:
+    id: "workspace-continuity-state"
+- takeScreenshot: workspace-preset

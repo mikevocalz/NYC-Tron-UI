@@ -92,7 +92,7 @@ jobs:
       - run: node --experimental-strip-types --test packages/hardware-keys/tests/*.test.mjs
       - run: node --experimental-strip-types --test packages/platform-services/tests/*.test.mjs
       - run: node --experimental-strip-types --test tooling/tests/media-acceptance.test.mjs
-      - run: node --test tooling/tests/native-ui-acceptance.test.mjs
+      - run: node --test tooling/tests/native-ui-acceptance.test.mjs tooling/tests/workspace-evidence.test.mjs
       - run: node --test tooling/tests/native-ui-transport.test.mjs
       - run: node --test tooling/tests/native-artifact.test.mjs
       - run: node --test tooling/tests/metro-warmup.test.mjs

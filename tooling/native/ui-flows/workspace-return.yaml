@@ -1,0 +1,17 @@
+appId: com.nyctron.instruments.example
+name: Workspace pilot document round trip
+---
+- launchApp:
+    stopApp: false
+- assertVisible: "Harbor"
+- assertVisible: "Canvas edits 1"
+- tapOn: "Next workspace document"
+- assertVisible: "Studio"
+- assertVisible: "Canvas edits 0"
+- takeScreenshot: workspace-document-b
+- tapOn: "Next workspace document"
+- assertVisible: "Harbor"
+- assertVisible: "Canvas edits 1"
+- assertVisible:
+    id: "workspace-continuity-state"
+- takeScreenshot: workspace-document-return
