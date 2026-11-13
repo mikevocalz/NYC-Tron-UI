@@ -162,8 +162,10 @@ decide (BUILD / STRIKE / DEFER). Implemented in PR #69.
    declaration diff only adds things `ui` does not use. The optional peer
    becomes `>=3.3.0 <4`, held by the `gesture-handler-floor` workflow, which
    type-checks `ui` and runs the browser suite against the newest 3.3.x and
-   installs the packed archives into the default Expo 58 template. If that
-   lane fails, the range stays `>=3.4.0 <4` and existing Expo 58 apps run
+   installs the packed archives into the default Expo 58 template. Result:
+   the lane passed on 8f62ec3 (run 43438354828), so the range is
+   `>=3.3.0 <4`. Tarballs built before that change, such as `v1.0.0-rc.1`,
+   still declare `>=3.4.0 <4`; with those, existing Expo 58 apps run
    `npx expo install react-native-gesture-handler@^3.4.0` first.
    Owner confirmation: pending.
 2. **Desktop install with the `>=0.88` floor kept (BUILD).** The Spark and
