@@ -142,6 +142,20 @@ with the same props to tell a lane failure from a props failure.
 | macOS, Spark 0.0.3 | React Native 0.83.10, React Native macOS 0.83.0, Expo 55.0.32, React 19.2.0 | `f4b5a055…` (main a6ac0b1 + #69 at d92b1c1) | [43198587853](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587853) | 272 of 421 components | 54 | 95 |
 | Windows, RNW 0.85 | React Native 0.85.3, React Native Windows 0.85.0, React 19.2.3 | `f4b5a055…` (main a6ac0b1 + #69 at d92b1c1) | [43198587705](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587705) | 272 of 421 components | 37 | 112 |
 
+The Windows workflow run 43198587705 shows an overall conclusion of failure.
+Its coverage job, "UI desktop coverage in the RNW 0.85 lane", succeeded and
+produced the numbers above. The failing job is a different one, "VS 2026 RNW
+0.85 XAML Fabric native C++ compile", in its step "Deploy the packaged
+consumer the way run-windows does": `npm error code ETARGET`, `No matching
+version found for @react-native-community/cli-clean@21.0.0`, a registry
+resolution failure that is not in `@nyc-tron/ui` and not in the coverage
+harness. The same job is green on 8f62ec3 (run 43438354753). Between d92b1c1
+(where the lists were measured) and 8f62ec3 no file under
+`tooling/desktop-lane`, `packages/ui`, `packages/windows-fluent` or
+`tooling/macos-appkit` changed; the changes are the two workflows, the
+install-path scripts, the README, SUPPORT.md, `desktop-support.json` and
+the evidence folder. The lists therefore describe the code at 8f62ec3.
+
 All 166 exports without components (hooks, models, helpers) load on both
 lanes. The lists are in [desktop-support.json](desktop-support.json); the
 full matrix is in [the evidence folder](completion/evidence/T4-desktop-ui-coverage-20261112).
