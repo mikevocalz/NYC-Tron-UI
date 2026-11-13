@@ -218,7 +218,10 @@ export default function App() {
 
 **Existing app.** Run the same command in the app and add a screen that
 imports from `@nyc-tron/ui`. The command changes only `package.json` and
-`package-lock.json`. An app from the default Expo SDK 58 template keeps the
+`package-lock.json`. If the app uses Expo Router's `NativeTabs` (the default
+SDK 58 template does), a new route file is not shown on iOS and Android until
+the tab layout has a `NativeTabs.Trigger` for it; that is app code, not
+something the install does. The web layout needs nothing. An app from the default Expo SDK 58 template keeps the
 `react-native-gesture-handler` 3.3.x that Expo pins: from this commit,
 `@nyc-tron/ui` declares the optional peer `>=3.3.0 <4`
 ([V1_DECISIONS](docs/V1_DECISIONS.md) D5, decision 1). The `v1.0.0-rc.1`

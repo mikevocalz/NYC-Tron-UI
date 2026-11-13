@@ -146,6 +146,31 @@ function prepare([kind, dirArgument, ...rest]) {
   record.changedFiles = changed;
   const allowed = new Set(["package.json", "package-lock.json", screen, ...(gestureScreen ? [gestureScreen] : [])]);
   record.disturbed = changed.filter(file => !allowed.has(file));
+  // Wiring the screen into the app's own tab bar is app work, not an install
+  // effect. It runs after the check above, so "disturbed" still describes the
+  // install alone, and it is recorded on its own. The default SDK 58
+  // template's native layout (expo-router NativeTabs) renders only routes that
+  // have a NativeTabs.Trigger; without one the link to /tron reaches the app
+  // and the router stays on Home (run 43429832073, iOS and Android). The web
+  // layout (app-tabs.web.tsx) needs nothing.
+  if (kind === "existing") {
+    const tabsFile = ["src/components/app-tabs.tsx", "components/app-tabs.tsx"].find(file => existsSync(join(dir, file)));
+    if (tabsFile) {
+      const source = readFileSync(join(dir, tabsFile), "utf8");
+      const trigger = `
+      <NativeTabs.Trigger name="tron">
+        <NativeTabs.Trigger.Label>Tron</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon
+          src={require('@/assets/images/tabIcons/home.png')}
+          renderingMode="template"
+        />
+      </NativeTabs.Trigger>
+`;
+      if (!source.includes("</NativeTabs>") || source.includes('name="tron"')) throw new Error(`Cannot wire the Tron screen into ${tabsFile}`);
+      writeFileSync(join(dir, tabsFile), source.replace("    </NativeTabs>", trigger + "    </NativeTabs>"));
+      record.screenWiring = { file: tabsFile, change: "added a NativeTabs.Trigger named tron" };
+    }
+  }
   const after = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
   record.dependencyChanges = Object.keys({ ...before.dependencies, ...after.dependencies })
     .filter(name => before.dependencies[name] !== after.dependencies[name])

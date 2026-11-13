@@ -72,8 +72,15 @@ Run [43198587954](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/4319858
 | macOS (Spark 0.0.3) | Pass: npm install with the scoped override below, standalone Spark build, `Button` mounted in the native app | Same app |
 | Windows (RNW 0.85) | Pass: npm install with the scoped override below, RNW Release build, `Button` mounted in the native app | Same app |
 
-The iOS and Android existing-app flow fixes are in 2a34739; their run on this
-head is the result to read.
+The iOS and Android existing-app flow is in 293a776 and the tab wiring in the
+next commit; their run on that head is the result to read. Run
+43429832073 showed why the link alone is not enough: the app reached Home,
+the link arrived, and the router stayed on Home on both platforms. The
+template's native layout (`src/components/app-tabs.tsx`) is an Expo Router
+`NativeTabs`, which only renders routes that have a `NativeTabs.Trigger`.
+The install-path script adds one for `tron` after it checks that the install
+changed only `package.json` and `package-lock.json`, and records the edit as
+`screenWiring`.
 
 Existing Expo 58 apps: Expo SDK 58 pins `react-native-gesture-handler
 ~3.3.0`. With `@nyc-tron/ui`'s optional peer at `>=3.4.0 <4` (the
