@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Shallow render of the real LayerBlendAndOpacity with mocked RN hosts and
 // stubbed child components (MenuButton, PrecisionScrubber, ErrorMessage). It

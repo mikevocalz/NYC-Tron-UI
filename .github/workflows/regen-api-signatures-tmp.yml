@@ -1,0 +1,40 @@
+name: TEMPORARY regenerate api-signatures (delete after use)
+
+# Disk on the author's machine is too low to build locally. This builds the
+# workspace on a runner, runs `api-signatures.mjs --write` exactly as the
+# reviewed-baseline instructions say, and uploads the result for review.
+# It is removed in the commit that applies the artifact.
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/regen-api-signatures-tmp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: corepack pnpm build
+      - name: Rewrite the snapshot
+        run: |
+          cp docs/api-signatures.json "$RUNNER_TEMP/before.json"
+          node tooling/api-signatures.mjs --write
+          diff -u "$RUNNER_TEMP/before.json" docs/api-signatures.json > "$RUNNER_TEMP/api-signatures.diff" || true
+          wc -l "$RUNNER_TEMP/api-signatures.diff"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: api-signatures-regenerated
+          retention-days: 3
+          path: |
+            docs/api-signatures.json
+            ${{ runner.temp }}/api-signatures.diff
