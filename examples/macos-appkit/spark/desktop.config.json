@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@legendapp/spark/schema.json",
-  "name": "NYCTronAppKitReference",
+  "name": "TronAppKit",
   "version": "1.0.0",
   "window": {
     "size": {
@@ -11,14 +11,19 @@
   },
   "macos": {
     "bundleIdentifier": "org.nyctron.appkit.reference",
-    "testDriverInRelease": false
+    "testDriverInRelease": false,
+    "infoPlist": {
+      "CFBundleName": "Tron AppKit"
+    }
   },
   "platforms": [
     "macos"
   ],
   "expo": {
     "autolinking": {
-      "exclude": ["react-native-windows"]
+      "exclude": [
+        "react-native-windows"
+      ]
     }
   },
   "projectId": "B72DE147-FD50-4CF0-BC6A-2982C501E865"

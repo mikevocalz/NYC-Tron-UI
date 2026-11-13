@@ -22,9 +22,9 @@ function fixture(t) {
   const artifacts = join(rootDir, "artifacts");
   mkdirSync(artifacts);
   const checksums = [];
-  for (let index = 0; index < 15; index++) {
-    const relative = index === 13 ? "windows-fluent/rnw-fabric" : index === 14 ? "macos-appkit/spark" : "example" + index;
-    const name = index === 13 ? "windows-fluent-fabric" : index === 14 ? "macos-appkit" : "example" + index;
+  for (let index = 0; index < 16; index++) {
+    const relative = index === 14 ? "windows-fluent/rnw-fabric" : index === 15 ? "macos-appkit/spark" : "example" + index;
+    const name = index === 14 ? "windows-fluent-fabric" : index === 15 ? "macos-appkit" : "example" + index;
     const directory = join(rootDir, "packages", relative);
     mkdirSync(join(directory, "src"), { recursive: true });
     writeFileSync(join(directory, "package.json"), JSON.stringify({
@@ -126,17 +126,17 @@ test("stable owner approval must authenticate the exact author, repository, stat
   await assert.rejects(f.validate({}, async () => { throw new Error("GitHub unavailable"); }), /GitHub unavailable/);
 });
 
-test("stable requires and verifies all fifteen archive hashes, including both isolated desktop packages", async t => {
+test("stable requires and verifies all sixteen archive hashes, including both isolated desktop packages", async t => {
   const f = fixture(t);
-  assert.equal(verifyReleaseInventory(f.artifacts, "1.0.0", { rootDir: f.rootDir }).archiveCount, 15);
-  await assert.rejects(f.validate({ artifacts: undefined }), /fifteen actual release archives/);
+  assert.equal(verifyReleaseInventory(f.artifacts, "1.0.0", { rootDir: f.rootDir }).archiveCount, 16);
+  await assert.rejects(f.validate({ artifacts: undefined }), /sixteen actual release archives/);
   const windows = join(f.artifacts, "nyc-tron-windows-fluent-fabric-1.0.0.tgz");
   writeFileSync(windows, "changed native archive");
   await assert.rejects(f.validate(), /checksum mismatch/);
   rmSync(windows);
   const sums = join(f.artifacts, "SHA256SUMS");
   writeFileSync(sums, readFileSync(sums, "utf8").split("\n").filter(line => !line.includes("windows-fluent-fabric")).join("\n"));
-  await assert.rejects(f.validate(), /exact fifteen/);
+  await assert.rejects(f.validate(), /exact sixteen/);
 });
 
 test("omitting the AppKit archive cannot silently restore the older fourteen-package inventory", async t => {
@@ -144,7 +144,7 @@ test("omitting the AppKit archive cannot silently restore the older fourteen-pac
   rmSync(join(f.artifacts, "nyc-tron-macos-appkit-1.0.0.tgz"));
   const sums = join(f.artifacts, "SHA256SUMS");
   writeFileSync(sums, readFileSync(sums, "utf8").split("\n").filter(line => !line.includes("macos-appkit")).join("\n"));
-  await assert.rejects(f.validate(), /exact fifteen/);
+  await assert.rejects(f.validate(), /exact sixteen/);
 });
 
 test("an authenticated approval for prior checksums cannot authorize a later artifact inventory", async t => {
@@ -164,7 +164,7 @@ test("only complete platform acceptance and a live exact owner approval can make
     return f.response;
   });
   assert.equal(requests, 1); assert.equal(result.status, "ready");
-  assert.equal(result.program.accepted, 341); assert.equal(result.inventory.archiveCount, 15);
+  assert.equal(result.program.accepted, 341); assert.equal(result.inventory.archiveCount, 16);
   assert.equal(JSON.stringify({ ledger: f.ledger, review: f.review }), before);
 });
 

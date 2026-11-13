@@ -7,6 +7,7 @@ on:
       - 'packages/core/**'
       - 'examples/macos-appkit/**'
       - 'tooling/macos-appkit/**'
+      - 'tooling/app-identity/capture/**'
       - 'packages/ui/**'
       - 'tooling/desktop-lane/**'
       - 'tooling/pack-release.mjs'
@@ -160,6 +161,20 @@ jobs:
           APPKIT_EVIDENCE: ${{ runner.temp }}/nyc-tron-appkit-evidence
           APPKIT_TESTED_PACKAGE: ${{ runner.temp }}/nyc-tron-appkit-tested-package
         run: npm run verify:native
+      # T3: the built example on the Dock and in Launchpad. Best effort; the
+      # captures are uploaded whether or not every view could be reached.
+      - name: Capture the built example on the Dock and in Launchpad
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: tooling/app-identity/capture/capture-macos.sh "$RUNNER_TEMP/nyc-tron-appkit-consumer" org.nyctron.appkit.reference "$RUNNER_TEMP/launcher-captures"
+      - name: Save the launcher captures
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: launcher-captures-macos
+          path: ${{ runner.temp }}/launcher-captures/
+          if-no-files-found: warn
+          retention-days: 30
       - name: Retain build and native evidence
         if: always()
         uses: actions/upload-artifact@v4

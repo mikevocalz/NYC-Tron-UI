@@ -1,16 +1,22 @@
 {
   "expo": {
-    "name": "NYC-Tron Instruments Demo",
+    "name": "Tron Lab",
     "slug": "nyc-tron-instruments",
     "scheme": "nyctron-instruments",
     "version": "0.1.0",
     "orientation": "default",
     "newArchEnabled": true,
     "ios": {
-      "bundleIdentifier": "com.nyctron.instruments.example"
+      "bundleIdentifier": "com.nyctron.instruments.example",
+      "icon": "./assets/icon.png"
     },
     "android": {
-      "package": "com.nyctron.instruments.example"
+      "package": "com.nyctron.instruments.example",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon/android/adaptive-foreground.png",
+        "monochromeImage": "./assets/icon/android/adaptive-monochrome.png",
+        "backgroundColor": "#15171C"
+      }
     },
     "platforms": [
       "ios",
@@ -19,6 +25,13 @@
     "userInterfaceStyle": "dark",
     "plugins": [
       "./plugins/with-graphite-android.cjs"
-    ]
+    ],
+    "icon": "./assets/icon.png",
+    "extra": {
+      "appIdentity": {
+        "fullName": "NYC-Tron Instruments",
+        "launcherName": "Tron Lab"
+      }
+    }
   }
 }

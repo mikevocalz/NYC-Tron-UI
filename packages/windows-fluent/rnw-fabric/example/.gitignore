@@ -1,5 +1,5 @@
 node_modules/
-windows/
+/windows/
 package-lock.json
 NuGet.config
 jest.config.windows.js

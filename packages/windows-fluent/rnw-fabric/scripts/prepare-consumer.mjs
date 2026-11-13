@@ -15,7 +15,9 @@ function run(command, args, cwd) {
   if (result.error || result.status !== 0) throw result.error ?? new Error(`${command} failed (${result.status})`);
 }
 mkdirSync(output, { recursive: true });
-cpSync(join(root, "example"), output, { recursive: true, filter: path => !/(?:^|[/\\])(?:node_modules|windows|vendor)(?:[/\\]|$)/.test(relative(join(root, "example"), path)) });
+cpSync(join(root, "example"), output, { recursive: true, filter: path => !/(?:^|[/\\])node_modules(?:[/\\]|$)|^(?:windows|vendor)(?:[/\\]|$)/.test(relative(join(root, "example"), path)) });
+// Only the top-level generated windows/ and vendor/ are skipped, so
+// assets/icon/windows (the derived app icon) reaches the consumer.
 const vendor = join(output, "vendor"); mkdirSync(vendor);
 // The release packer supplies normalized manifests and all required notices.
 // Use its Ubuntu-built peer bytes instead of repacking peers on Windows.

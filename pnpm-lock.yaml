@@ -298,6 +298,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
 
+  packages/app-identity: {}
+
   packages/core: {}
 
   packages/expo-controls:

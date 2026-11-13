@@ -2,6 +2,65 @@
   "format": 1,
   "typescript": "6.0.3",
   "packages": {
+    "@nyc-tron/app-identity": {
+      ".": [
+        {
+          "target": "./dist/index.d.ts",
+          "conditions": {
+            "types": "./dist/index.d.ts",
+            "react-native": "./dist/index.js",
+            "default": "./dist/index.js"
+          },
+          "symbols": {
+            "AppIdentity": [
+              "@nyc-tron/app-identity/dist/index.d.ts#AppIdentity"
+            ],
+            "CheckResult": [
+              "@nyc-tron/app-identity/dist/index.d.ts#CheckResult"
+            ],
+            "DeriveOptions": [
+              "@nyc-tron/app-identity/dist/index.d.ts#DeriveOptions"
+            ],
+            "DeriveResult": [
+              "@nyc-tron/app-identity/dist/index.d.ts#DeriveResult"
+            ],
+            "DescribedConfig": [
+              "@nyc-tron/app-identity/dist/index.d.ts#DescribedConfig"
+            ],
+            "FORMATS": [
+              "@nyc-tron/app-identity/dist/index.d.ts#FORMATS"
+            ],
+            "IconFormat": [
+              "@nyc-tron/app-identity/dist/index.d.ts#IconFormat"
+            ],
+            "LabelEntry": [
+              "@nyc-tron/app-identity/dist/index.d.ts#LabelEntry"
+            ],
+            "LabelRow": [
+              "@nyc-tron/app-identity/dist/index.d.ts#LabelRow"
+            ],
+            "LabelStatus": [
+              "@nyc-tron/app-identity/dist/index.d.ts#LabelStatus"
+            ],
+            "LauncherLabels": [
+              "@nyc-tron/app-identity/dist/index.d.ts#LauncherLabels"
+            ],
+            "checkLabels": [
+              "@nyc-tron/app-identity/dist/index.d.ts#checkLabels"
+            ],
+            "deriveIcons": [
+              "@nyc-tron/app-identity/dist/index.d.ts#deriveIcons"
+            ],
+            "describeConfig": [
+              "@nyc-tron/app-identity/dist/index.d.ts#describeConfig"
+            ],
+            "run": [
+              "@nyc-tron/app-identity/dist/index.d.ts#run"
+            ]
+          }
+        }
+      ]
+    },
     "@nyc-tron/core": {
       ".": [
         {
@@ -18802,6 +18861,116 @@
     }
   },
   "declarations": {
+    "@nyc-tron/app-identity/dist/index.d.ts#AppIdentity": {
+      "signatures": [
+        "export interface AppIdentity {\n    fullName: string;\n    launcherName: string;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#CheckResult": {
+      "signatures": [
+        "export interface CheckResult {\n    code: 0 | 1 | 2 | 3;\n    output: string;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#DeriveOptions": {
+      "signatures": [
+        "export interface DeriveOptions {\n    formats?: IconFormat[];\n}"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#IconFormat"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#DeriveResult": {
+      "signatures": [
+        "export interface DeriveResult {\n    problems: string[];\n    files: string[];\n    ground?: string;\n    glyphReachPx?: number;\n    safeRadiusPx?: number;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#DescribedConfig": {
+      "signatures": [
+        "export interface DescribedConfig {\n    source: string;\n    kind: \"expo\" | \"spark\" | \"rnw\";\n    platforms: string[];\n    identity?: AppIdentity;\n    labels: LauncherLabels;\n}"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#AppIdentity",
+        "@nyc-tron/app-identity/dist/index.d.ts#LauncherLabels"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#FORMATS": {
+      "signatures": [
+        "export declare const FORMATS: IconFormat[];"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#IconFormat"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#IconFormat": {
+      "signatures": [
+        "export type IconFormat = \"android\" | \"web\" | \"macos\" | \"windows\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#LabelEntry": {
+      "signatures": [
+        "export interface LabelEntry {\n    source: string;\n    platform: string;\n    label: string;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#LabelRow": {
+      "signatures": [
+        "export interface LabelRow extends LabelEntry {\n    target: string;\n    surface?: string;\n    status: LabelStatus;\n    reason?: string;\n    width?: number;\n    box?: number;\n    unit?: string;\n    lines?: number;\n    font?: string;\n    overflow?: number;\n    spare?: number;\n}"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#LabelEntry",
+        "@nyc-tron/app-identity/dist/index.d.ts#LabelStatus"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#LabelStatus": {
+      "signatures": [
+        "export type LabelStatus = \"PASS\" | \"OVERFLOW\" | \"NOT RUN\" | \"FAIL\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#LauncherLabels": {
+      "signatures": [
+        "export interface LauncherLabels {\n    [platform: string]: string | undefined;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#checkLabels": {
+      "signatures": [
+        "export declare function checkLabels(entries: LabelEntry[]): LabelRow[];"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#LabelEntry",
+        "@nyc-tron/app-identity/dist/index.d.ts#LabelRow"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#deriveIcons": {
+      "signatures": [
+        "export declare function deriveIcons(sourcePath: string, outDir: string, options?: DeriveOptions): DeriveResult;"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#DeriveOptions",
+        "@nyc-tron/app-identity/dist/index.d.ts#DeriveResult"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#describeConfig": {
+      "signatures": [
+        "export declare function describeConfig(path: string): DescribedConfig;"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#DescribedConfig"
+      ]
+    },
+    "@nyc-tron/app-identity/dist/index.d.ts#run": {
+      "signatures": [
+        "export declare function run(argv: string[]): CheckResult;"
+      ],
+      "references": [
+        "@nyc-tron/app-identity/dist/index.d.ts#CheckResult"
+      ]
+    },
     "@nyc-tron/core/dist/advanced-catalog.d.ts#AdvancedComponent": {
       "signatures": [
         "export type AdvancedComponent = Readonly<{\n    id: string;\n    category: string;\n    stage: ComponentStage;\n    owner: \"@nyc-tron/ui\" | \"@nyc-tron/core\";\n    sourcePath?: string;\n    platforms: readonly (\"ios\" | \"android\" | \"web\" | \"windows\" | \"macos\" | \"xr\")[];\n}>;"
