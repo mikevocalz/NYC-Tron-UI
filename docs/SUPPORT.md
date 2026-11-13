@@ -60,27 +60,30 @@ on clean GitHub runners. The one command is in the
 workflow packs core and ui from the checked-out commit; a manual run can
 install a release's tarballs instead.
 
-Run [43198587954](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43198587954)
-(d92b1c1: main a6ac0b1 plus this branch; Node 24.19.0, `create-expo-app`
-5.0.0, Expo 58.0.24, React Native 0.88.1):
+Run [43438355006](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43438355006)
+(8f62ec3: main a6ac0b1 plus this branch; Node 24.19.0, `create-expo-app`
+5.0.0, Expo 58.0.25, React Native 0.88.1). All nine jobs passed:
 
 | Platform | New Expo app | Existing Expo app (default SDK 58 template) |
 |---|---|---|
 | Web | Pass: Button pressed twice in Chromium, `Pressed 2 times` | Pass: install with the template's gesture handler 3.3.0 kept, Button pressed twice, and a `GestureHandlerDrag` route pressed twice |
-| iOS simulator | Pass in [43177509488](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43177509488). In 43198587954 the Release build succeeded and Maestro's XCTest driver missed its startup window; the timeout is now 240 s | Install and Release build pass. The flow stopped at the simulator's "Open in app?" prompt for the deep link; the flow now taps Open |
-| Android emulator | Pass: release APK on an API 35 emulator, Maestro tapped `tron-button` and saw `Pressed 1 times` | Install and release build pass. The deep link reached the running activity before JavaScript started and the app stayed on Home; the flow now opens the link from a stopped app |
+| iOS simulator | Pass: Release build, Maestro tapped `tron-button` and saw `Pressed 1 times` | Pass: same flow, opened from the template's Home by deep link, tapping the system "Open" prompt |
+| Android emulator | Pass: release APK on an API 35 emulator, same assertion | Pass: same flow, opened from Home by deep link |
 | macOS (Spark 0.0.3) | Pass: npm install with the scoped override below, standalone Spark build, `Button` mounted in the native app | Same app |
 | Windows (RNW 0.85) | Pass: npm install with the scoped override below, RNW Release build, `Button` mounted in the native app | Same app |
 
-The iOS and Android existing-app flow is in 293a776 and the tab wiring in the
-next commit; their run on that head is the result to read. Run
-43429832073 showed why the link alone is not enough: the app reached Home,
-the link arrived, and the router stayed on Home on both platforms. The
-template's native layout (`src/components/app-tabs.tsx`) is an Expo Router
-`NativeTabs`, which only renders routes that have a `NativeTabs.Trigger`.
-The install-path script adds one for `tron` after it checks that the install
+Getting the existing-app route onto a device took two findings, both from
+failed runs. In 43208989075 a link sent right after launch raced the app
+(Android's reached the activity before JavaScript ran; iOS's "Open in app?"
+prompt came about 29 s later than the flow looked for it), so the flow now
+waits for the template's Home screen and, on iOS, for the prompt. In
+43429832073 the link then arrived and the router stayed on Home on both
+platforms. The template's native layout (`src/components/app-tabs.tsx`) is
+an Expo Router `NativeTabs`, which renders only routes that have a
+`NativeTabs.Trigger`, so an app that uses it needs one for the new route.
+The install-path script adds that trigger after it checks that the install
 changed only `package.json` and `package-lock.json`, and records the edit as
-`screenWiring`.
+`screenWiring`. The web layout needs nothing.
 
 Existing Expo 58 apps: Expo SDK 58 pins `react-native-gesture-handler
 ~3.3.0`. With `@nyc-tron/ui`'s optional peer at `>=3.4.0 <4` (the
