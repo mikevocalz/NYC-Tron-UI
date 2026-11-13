@@ -127,7 +127,8 @@ skill. Their output is the gate list, execution/packet steps and rollback
 criteria above. Existing version/release tooling and native owners are reused.
 No runtime, platform configuration, navigation or pane contract changed.
 
-Local preparation checks and their real output are retained beside this
-candidate's evidence record. Full installation, declaration generation,
+Local preparation checks and their real output are retained in the
+[source/metadata receipt](../evidence/rc2-preparation/2026-11-13-93ced5b/RECEIPT.md).
+Full installation, declaration generation,
 packing, browser/native tests, tag creation and publication are NOT RUN by
 this preparation. Passing source tests do not check archive contents.

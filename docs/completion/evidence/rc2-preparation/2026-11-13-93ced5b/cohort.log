@@ -1,0 +1,17 @@
+@nyc-tron/app-identity 1.0.0-rc.2 private=true
+@nyc-tron/core 1.0.0-rc.2 private=true
+@nyc-tron/expo-controls 1.0.0-rc.2 private=true
+@nyc-tron/geometry 1.0.0-rc.2 private=true
+@nyc-tron/hardware-keys 1.0.0-rc.2 private=true
+@nyc-tron/icons 1.0.0-rc.2 private=true
+@nyc-tron/native-charts 1.0.0-rc.2 private=true
+@nyc-tron/native-controls 1.0.0-rc.2 private=true
+@nyc-tron/native-navigation 1.0.0-rc.2 private=true
+@nyc-tron/panes 1.0.0-rc.2 private=true
+@nyc-tron/platform-services 1.0.0-rc.2 private=true
+@nyc-tron/reserved-regions 1.0.0-rc.2 private=true
+@nyc-tron/ui 1.0.0-rc.2 private=true
+@nyc-tron/windows-fluent 1.0.0-rc.2 private=true
+@nyc-tron/windows-fluent-fabric 1.0.0-rc.2 private=true
+@nyc-tron/macos-appkit 1.0.0-rc.2 private=true
+PASS:16 archive versions, exact desktop peer/example pins, root tooling version, metadata-only API identity edits, unchanged three tracked locks
