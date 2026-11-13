@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "kind": "existing",
+  "startedAt": "2026-11-12T06:52:32.126Z",
+  "source": {
+    "release": "v1.0.0-rc.1"
+  },
+  "node": "v24.19.0",
+  "npm": "11.17.0",
+  "app": {
+    "template": "default",
+    "expo": "~58.0.24",
+    "reactNative": "0.88.1",
+    "dependencies": {
+      "@expo/ui": "~58.0.28",
+      "expo": "~58.0.24",
+      "expo-constants": "~58.0.16",
+      "expo-device": "~58.0.5",
+      "expo-font": "~58.0.12",
+      "expo-glass-effect": "~58.0.5",
+      "expo-image": "~58.0.18",
+      "expo-linking": "~58.0.17",
+      "expo-router": "~58.0.31",
+      "expo-splash-screen": "~58.0.14",
+      "expo-status-bar": "~58.0.5",
+      "expo-symbols": "~58.0.5",
+      "expo-system-ui": "~58.0.7",
+      "expo-web-browser": "~58.0.8",
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-gesture-handler": "~3.3.0",
+      "react-native-reanimated": "4.7.1",
+      "react-native-safe-area-context": "~5.11.1",
+      "react-native-screens": "~4.30.1",
+      "react-native-web": "~0.21.4",
+      "react-native-worklets": "0.13.0"
+    }
+  },
+  "command": "npm install --allow-remote=all https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0-rc.1/nyc-tron-core-1.0.0-rc.1.tgz https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0-rc.1/nyc-tron-ui-1.0.0-rc.1.tgz",
+  "install": {
+    "exit": 1,
+    "code": "ERESOLVE",
+    "conflict": [
+      "npm error Found: react-native-gesture-handler@3.3.0",
+      "npm error Could not resolve dependency:",
+      "npm error peerOptional react-native-gesture-handler@\">=3.4.0 <4\" from @nyc-tron/ui@1.0.0-rc.1"
+    ]
+  },
+  "result": "install-failed"
+}

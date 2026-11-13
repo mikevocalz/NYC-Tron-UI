@@ -5,6 +5,8 @@ on:
     paths:
       - "packages/windows-fluent/**"
       - "packages/core/**"
+      - "packages/ui/**"
+      - "tooling/desktop-lane/**"
       - "tooling/api-signatures.mjs"
       - "tooling/pack-release.mjs"
       - "THIRD_PARTY_NOTICES.md"
@@ -332,3 +334,117 @@ jobs:
           name: winui-fabric-uia-smoke
           path: ${{ runner.temp }}/uia-smoke
           if-no-files-found: warn
+
+  # Gate T4 measurement: which public @nyc-tron/ui exports build and render in
+  # the React Native Windows 0.85 lane. Results are recorded per export and
+  # component; a component that fails is data, not a job failure. Only harness
+  # errors fail these jobs. They do not run when the release workflow calls
+  # this file, so the release gate is unchanged.
+  ui-coverage-inputs:
+    name: UI desktop coverage inputs
+    if: github.workflow != 'NYC-Tron release tarballs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Build and pack core, windows-fluent and ui with release provenance
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+          corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/windows-fluent --filter @nyc-tron/ui build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/ui-coverage-packs" --packages core,windows-fluent,ui
+          node tooling/desktop-lane/synthesize-props.mjs packages/ui "$RUNNER_TEMP/ui-coverage-packs/nyc-tron-ui-$(node -p "require('./packages/ui/package.json').version").tgz" "$RUNNER_TEMP/ui-coverage-packs/props.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-ui-coverage-inputs-windows
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/ui-coverage-packs/
+
+  ui-coverage-windows:
+    name: UI desktop coverage in the RNW 0.85 lane
+    if: github.workflow != 'NYC-Tron release tarballs'
+    needs: ui-coverage-inputs
+    runs-on: windows-2025
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.19.0"
+      - name: Install native-codegen dependencies
+        working-directory: packages/windows-fluent/rnw-fabric
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - uses: actions/download-artifact@v4
+        with:
+          name: desktop-ui-coverage-inputs-windows
+          path: ${{ runner.temp }}/ui-coverage-packs
+      - name: Prepare the archive-installed RNW consumer
+        shell: pwsh
+        run: |
+          $consumer = Join-Path $env:RUNNER_TEMP "ui-coverage-consumer"
+          node packages/windows-fluent/rnw-fabric/scripts/prepare-consumer.mjs $consumer "$env:RUNNER_TEMP/ui-coverage-packs"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "WIN_CONSUMER=$consumer" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Generate native code and the official RNW application
+        shell: pwsh
+        run: |
+          Push-Location "$env:WIN_CONSUMER/node_modules/@nyc-tron/windows-fluent-fabric"
+          npm run codegen
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Pop-Location
+          Push-Location $env:WIN_CONSUMER
+          npm run init:windows
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run prepare:host
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Pop-Location
+      - name: Install the ui archive and the coverage harness
+        shell: pwsh
+        run: |
+          $version = node -p "require('./packages/ui/package.json').version"
+          node tooling/desktop-lane/prepare-ui-coverage.mjs $env:WIN_CONSUMER "$env:RUNNER_TEMP/ui-coverage-packs/nyc-tron-ui-$version.tgz" --lane windows --props "$env:RUNNER_TEMP/ui-coverage-packs/props.json"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build, bundle and deploy the packaged harness app
+        working-directory: ${{ env.WIN_CONSUMER }}
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products * -version "[18.0,19.0)" -property installationPath
+          if (-not $vs) { throw "Visual Studio 2026 required" }
+          $msbuild = Join-Path $vs "MSBuild\Current\Bin\amd64\MSBuild.exe"
+          $sdkRoot = Join-Path ([Environment]::GetFolderPath("ProgramFilesX86")) "Windows Kits\10\Include"
+          $sdk = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -like '10.0.*' } | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          New-Item -ItemType Directory -Force "$env:RUNNER_TEMP\ui-coverage-windows" | Out-Null
+          & $msbuild "node_modules\@nyc-tron\windows-fluent-fabric\windows\NYCTronFluentFabric.sln" "/p:Configuration=Release" "/p:Platform=x64" "/p:WindowsTargetPlatformVersion=$($sdk.Name)" "/p:UseExperimentalNuget=true" "/restore" "/m" "/v:minimal"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npx react-native run-windows --release --arch x64 --no-launch --no-packager --no-autolink --logging --msbuildprops "WindowsTargetPlatformVersion=$($sdk.Name),UseExperimentalNuget=true,RunAutolinkCheck=false" *>&1 | Tee-Object -FilePath "$env:RUNNER_TEMP\ui-coverage-windows\build.log"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $package = Get-AppxPackage -Name NYCTronWindowsExample
+          if (-not $package) { throw "Packaged harness was not registered" }
+          "CONSUMER_AUMID=$($package.PackageFamilyName)!App" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Render every export in the native app
+        shell: powershell
+        run: |
+          & .\tooling\desktop-lane\run-windows.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\ui-coverage-windows\run"
+      - name: Retain coverage evidence
+        if: always()
+        shell: pwsh
+        run: |
+          $out = "$env:RUNNER_TEMP\ui-coverage-windows\run"
+          New-Item -ItemType Directory -Force $out | Out-Null
+          foreach ($file in @("preparation.json", "model.json", "resolution.jsonl")) {
+            $source = Join-Path $env:WIN_CONSUMER "tron-ui-coverage\$file"
+            if (Test-Path $source) { Copy-Item $source $out }
+          }
+          if (Test-Path "$env:WIN_CONSUMER\package-preparation.json") { Copy-Item "$env:WIN_CONSUMER\package-preparation.json" $out }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: desktop-ui-coverage-windows
+          if-no-files-found: warn
+          retention-days: 14
+          path: ${{ runner.temp }}/ui-coverage-windows/

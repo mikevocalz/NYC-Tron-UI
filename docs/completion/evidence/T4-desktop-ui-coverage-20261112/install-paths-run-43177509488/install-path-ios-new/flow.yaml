@@ -1,0 +1,14 @@
+appId: com.anonymous.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: tron-button
+    timeout: 60000
+- takeScreenshot: before-press
+- tapOn:
+    id: tron-button
+- assertVisible: "Pressed 1 times"
+- takeScreenshot: after-press
+

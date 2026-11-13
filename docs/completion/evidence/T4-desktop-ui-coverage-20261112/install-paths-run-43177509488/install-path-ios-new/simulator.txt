@@ -1,0 +1,1 @@
+com.apple.CoreSimulator.SimRuntime.iOS-26-5 com.apple.CoreSimulator.SimDeviceType.iPhone-11 81373565-19E5-4790-8797-3EE51D2AA5DF

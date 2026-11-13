@@ -7,6 +7,8 @@ on:
       - 'packages/core/**'
       - 'examples/macos-appkit/**'
       - 'tooling/macos-appkit/**'
+      - 'packages/ui/**'
+      - 'tooling/desktop-lane/**'
       - 'tooling/pack-release.mjs'
       - 'tooling/api-signatures.mjs'
       - 'docs/api-signatures-macos.json'
@@ -189,3 +191,95 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           path: ${{ runner.temp }}/nyc-tron-appkit-tested-package/
+
+  # Gate T4 measurement: which public @nyc-tron/ui exports build and render in
+  # the Spark 0.0.3 / React Native macOS 0.83 lane. These jobs record results
+  # per export and component; a component that fails is data, not a job
+  # failure. Only harness errors fail them. They do not run when the release
+  # workflow calls this file, so the release gate is unchanged.
+  ui-coverage-inputs:
+    name: UI desktop coverage inputs and web reference
+    if: github.workflow != 'NYC-Tron release tarballs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Build and pack core and ui with release provenance
+        run: |
+          corepack enable
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+          corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/ui build
+          node tooling/pack-release.mjs "$RUNNER_TEMP/ui-coverage-packs" --packages core,ui
+          node tooling/desktop-lane/synthesize-props.mjs packages/ui "$RUNNER_TEMP/ui-coverage-packs/nyc-tron-ui-$(node -p "require('./packages/ui/package.json').version").tgz" "$RUNNER_TEMP/ui-coverage-props.json"
+          cp "$RUNNER_TEMP/ui-coverage-props.json" "$RUNNER_TEMP/ui-coverage-packs/props.json"
+      - name: Run the same harness on React Native Web for attribution
+        run: |
+          (cd packages/ui/tests/browser && npm ci --ignore-scripts --no-audit --no-fund && npx --no-install playwright install --with-deps chromium)
+          node tooling/desktop-lane/reference-web.mjs "$RUNNER_TEMP/ui-coverage-packs" "$RUNNER_TEMP/ui-coverage-web" "$RUNNER_TEMP/ui-coverage-props.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-ui-coverage-inputs-macos
+          if-no-files-found: error
+          retention-days: 14
+          path: ${{ runner.temp }}/ui-coverage-packs/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: desktop-ui-coverage-web-reference
+          if-no-files-found: warn
+          retention-days: 14
+          path: ${{ runner.temp }}/ui-coverage-web/
+  ui-coverage-macos:
+    name: UI desktop coverage in the Spark 0.0.3 AppKit lane
+    if: github.workflow != 'NYC-Tron release tarballs'
+    needs: ui-coverage-inputs
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+      SPARK_XCODEBUILD_JOBS: '3'
+      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Verify native ARM64 host
+        run: |
+          test "$(uname -m)" = arm64
+          xcodebuild -version
+      - uses: actions/download-artifact@v4
+        with:
+          name: desktop-ui-coverage-inputs-macos
+          path: ${{ runner.temp }}/ui-coverage-packs
+      - name: Prepare the archive-installed Spark consumer with the test driver
+        run: |
+          node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/ui-coverage-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/ui-coverage-packs"
+      - name: Install the ui archive and the coverage harness
+        run: node tooling/desktop-lane/prepare-ui-coverage.mjs "$RUNNER_TEMP/ui-coverage-consumer" "$RUNNER_TEMP/ui-coverage-packs/nyc-tron-ui-$(node -p "require('./packages/ui/package.json').version").tgz" --lane macos --props "$RUNNER_TEMP/ui-coverage-packs/props.json"
+      - name: Build the standalone harness app
+        id: build
+        working-directory: ${{ runner.temp }}/ui-coverage-consumer
+        run: |
+          set -o pipefail
+          mkdir -p "$RUNNER_TEMP/ui-coverage-macos"
+          npm run build 2>&1 | tee "$RUNNER_TEMP/ui-coverage-macos/build.log"
+      - name: Render every export in the native app
+        run: node tooling/desktop-lane/run-macos.mjs "$RUNNER_TEMP/ui-coverage-consumer" "$RUNNER_TEMP/ui-coverage-macos/run"
+      - name: Retain coverage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-ui-coverage-macos
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            ${{ runner.temp }}/ui-coverage-macos/
+            ${{ runner.temp }}/ui-coverage-consumer/tron-ui-coverage/preparation.json
+            ${{ runner.temp }}/ui-coverage-consumer/tron-ui-coverage/model.json
+            ${{ runner.temp }}/ui-coverage-consumer/tron-ui-coverage/resolution.jsonl
+            ${{ runner.temp }}/ui-coverage-consumer/package-preparation.json

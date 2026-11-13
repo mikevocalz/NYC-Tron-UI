@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "kind": "new",
+  "startedAt": "2026-11-12T07:11:45.263Z",
+  "source": {
+    "release": "v1.0.0-rc.1"
+  },
+  "node": "v24.19.0",
+  "npm": "11.17.0",
+  "app": {
+    "template": "blank-typescript",
+    "expo": "~58.0.24",
+    "reactNative": "0.88.1",
+    "dependencies": {
+      "expo": "~58.0.24",
+      "expo-status-bar": "~58.0.5",
+      "react": "19.3.0",
+      "react-native": "0.88.1"
+    }
+  },
+  "command": "npm install --allow-remote=all https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0-rc.1/nyc-tron-core-1.0.0-rc.1.tgz https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0-rc.1/nyc-tron-ui-1.0.0-rc.1.tgz",
+  "install": {
+    "exit": 0
+  },
+  "screen": "App.tsx",
+  "changedFiles": [
+    "App.tsx",
+    "package-lock.json",
+    "package.json"
+  ],
+  "disturbed": [],
+  "dependencyChanges": [
+    {
+      "name": "@nyc-tron/core",
+      "before": null,
+      "after": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0-rc.1/nyc-tron-core-1.0.0-rc.1.tgz"
+    },
+    {
+      "name": "@nyc-tron/ui",
+      "before": null,
+      "after": "https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0-rc.1/nyc-tron-ui-1.0.0-rc.1.tgz"
+    }
+  ],
+  "typecheck": {
+    "exit": 0,
+    "output": ""
+  },
+  "result": "prepared",
+  "unexpectedDependencyChanges": []
+}
