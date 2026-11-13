@@ -84,9 +84,12 @@ for `useStore` selectors and vanilla `createStore` semantics.
 
 No native code, dependency, native module spec or workflow changed, so no
 generator or native ownership change was required. No optimization was made
-and no performance measurement is claimed. The `engineering:debug` skill was
-not available in this environment; the reproduction, diagnosis and result are
-recorded directly above.
+and no performance measurement is claimed. `engineering:debug` was not loaded
+before this fix: the initial skill lookup covered the catalog only. During
+rc.2 preparation it was found in the installed engineering 1.2.0 plugin cache
+and read. Its reproduce/isolate/diagnose/fix sequence was then checked against
+the original reproduction and 44-test result above. That later review does
+not change the original command output or claim an earlier skill invocation.
 
 NOT RUN locally: TypeScript build/typecheck, API snapshot checks, mounted
 browser announcement behavior, native compilation, simulator interaction and

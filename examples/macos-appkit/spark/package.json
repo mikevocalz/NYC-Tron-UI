@@ -30,8 +30,8 @@
     "typescript": "5.9.3",
     "@types/react": "19.2.18",
     "@react-native-runtimes/core": "0.1.0-alpha.2",
-    "@nyc-tron/core": "file:vendor/nyc-tron-core-1.0.0-rc.1.tgz",
-    "@nyc-tron/macos-appkit": "file:vendor/nyc-tron-macos-appkit-1.0.0-rc.1.tgz",
+    "@nyc-tron/core": "file:vendor/nyc-tron-core-1.0.0-rc.2.tgz",
+    "@nyc-tron/macos-appkit": "file:vendor/nyc-tron-macos-appkit-1.0.0-rc.2.tgz",
     "zustand": "5.0.8",
     "@nyc-tron/appkit-acceptance-driver": "file:acceptance-driver"
   },
