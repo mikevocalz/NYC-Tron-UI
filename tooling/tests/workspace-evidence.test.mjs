@@ -55,6 +55,7 @@ test("round-trip proof requires the visited document and retained draft rather t
   assert.doesNotThrow(() => requireWorkspaceDocumentReturn(after));
   for (const mutate of [s => { s.documents["document-a"].edits = 0; },
     s => { s.documents["document-b"].edits = 1; }, s => { s.documents["document-b"].canvasInstance = null; },
+    s => { s.documents["document-b"].canvasInstance = s.documents["document-a"].canvasInstance; },
     s => { s.documentId = "document-b"; }]) {
     const invalid = clone(after); mutate(invalid);
     assert.throws(() => requireWorkspaceDocumentReturn(invalid));
@@ -78,4 +79,16 @@ test("preset proof requires a new stored mode/layout and one host event, not a m
     const invalid = clone(after); mutate(invalid);
     assert.throws(() => requireWorkspacePresetSave(before, invalid));
   }
+  // Two callbacks can allocate different IDs, so counting only the selected
+  // preset's exact event would miss this duplicate host mutation.
+  const duplicate = clone(after), twiceSaved = duplicate.documents["document-a"];
+  twiceSaved.activeId = "custom-2";
+  twiceSaved.presets.push({ id: "custom-2", name: "Custom layout copy", builtIn: false });
+  twiceSaved.presetModes["custom-2"] = "color";
+  twiceSaved.presetLayouts["custom-2"] = clone(layout);
+  duplicate.events.push("document-a:save:custom-2:Custom layout copy");
+  assert.throws(() => requireWorkspacePresetSave(before, duplicate), /exactly one new preset/);
+  // Even a missing/unpublished first preset cannot hide its second save event.
+  twiceSaved.presets = twiceSaved.presets.filter(preset => preset.id !== "custom-1");
+  assert.throws(() => requireWorkspacePresetSave(before, duplicate), /exactly one new save event/);
 });

@@ -59,6 +59,8 @@ export function requireWorkspaceDocumentReturn(after) {
   assert.equal(after.documents["document-b"].edits, 0, "visiting document-b must not copy document-a's edit");
   assert.ok(typeof after.documents["document-b"].canvasInstance === "string" && after.documents["document-b"].canvasInstance,
     "round trip must observe that document-b mounted");
+  assert.notEqual(after.documents["document-b"].canvasInstance, after.documents["document-a"].canvasInstance,
+    "document-b must have its own canvas identity");
 }
 
 export function requireWorkspacePresetSave(before, after) {
@@ -73,9 +75,15 @@ export function requireWorkspacePresetSave(before, after) {
   assert.equal(preset.name, "Custom layout copy", "the observed default save name must be retained");
   assert.equal(preset.builtIn, false, "save must create a user preset");
   assert.equal(left.presets.some(previous => previous.id === preset.id), false, "save must create a new preset identity");
+  const newPresets = right.presets.filter(current => !left.presets.some(previous => previous.id === current.id));
+  assert.equal(newPresets.length, 1, "one save action must create exactly one new preset");
+  assert.equal(newPresets[0].id, preset.id, "the only new preset must be the selected preset");
   assert.equal(right.presetModes[preset.id], "color", "preset must store the actual mode");
   assert.ok(left.presetLayouts.color, "fixture's existing Color layout must be observed before save");
   assert.deepEqual(right.presetLayouts[preset.id], left.presetLayouts.color, "preset must store the actual fixture Color layout");
   const event = "document-a:save:" + preset.id + ":Custom layout copy";
-  assert.equal(after.events.filter(value => value === event).length, 1, "save must emit one observed host event");
+  const saveEvents = events => events.filter(value => /^document-[ab]:save:/.test(value));
+  const previous = saveEvents(before.events), observed = saveEvents(after.events);
+  assert.deepEqual(observed.slice(0, previous.length), previous, "previous save events must remain observable");
+  assert.deepEqual(observed.slice(previous.length), [event], "one action must emit exactly one new save event across preset identities");
 }
