@@ -9568,6 +9568,9 @@
             "LayerAlphaMode": [
               "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaMode"
             ],
+            "LayerAlphaOption": [
+              "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaOption"
+            ],
             "LayerBlendAndOpacity": [
               "@nyc-tron/ui/dist/components/forge/layers/LayerBlendAndOpacity.d.ts#LayerBlendAndOpacity"
             ],
@@ -9582,6 +9585,9 @@
             ],
             "LayerBlendValue": [
               "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendValue"
+            ],
+            "defaultAlphaModes": [
+              "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#defaultAlphaModes"
             ]
           }
         }
@@ -9832,6 +9838,9 @@
             "LayerAlphaMode": [
               "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaMode"
             ],
+            "LayerAlphaOption": [
+              "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaOption"
+            ],
             "LayerBlendMode": [
               "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendMode"
             ],
@@ -9840,6 +9849,9 @@
             ],
             "LayerBlendValue": [
               "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendValue"
+            ],
+            "defaultAlphaModes": [
+              "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#defaultAlphaModes"
             ],
             "layerBlendProblem": [
               "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#layerBlendProblem"
@@ -32860,7 +32872,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/layers/LayerBlendAndOpacity.d.ts#LayerBlendAndOpacity": {
       "signatures": [
-        "export declare function LayerBlendAndOpacity({ scope, revision, layerId, value, modes, spaces, onPreview, onCommit, disabled, className, unstyled, style, ...rest }: LayerBlendAndOpacityProps): import(\"react\").JSX.Element;"
+        "export declare function LayerBlendAndOpacity({ scope, revision, layerId, value, modes, spaces, alphaModes, onPreview, onCommit, disabled, className, unstyled, style, ...rest }: LayerBlendAndOpacityProps): import(\"react\").JSX.Element;"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forge/layers/LayerBlendAndOpacity.d.ts#LayerBlendAndOpacityProps",
@@ -32871,9 +32883,10 @@
     },
     "@nyc-tron/ui/dist/components/forge/layers/LayerBlendAndOpacity.d.ts#LayerBlendAndOpacityProps": {
       "signatures": [
-        "export interface LayerBlendAndOpacityProps extends Omit<ViewProps, 'children'> {\n    scope: string;\n    revision?: string | number;\n    layerId: string;\n    value: LayerBlendValue;\n    modes: readonly LayerBlendMode[];\n    spaces: readonly LayerBlendSpace[];\n    onPreview?: (value: LayerBlendValue) => void;\n    onCommit: (value: LayerBlendValue, detail: {\n        kind: 'mode' | 'opacity' | 'space' | 'alpha';\n    }, signal: AbortSignal) => void | Promise<void>;\n    disabled?: boolean;\n    className?: string;\n    unstyled?: boolean;\n}"
+        "export interface LayerBlendAndOpacityProps extends Omit<ViewProps, 'children'> {\n    scope: string;\n    revision?: string | number;\n    layerId: string;\n    value: LayerBlendValue;\n    modes: readonly LayerBlendMode[];\n    spaces: readonly LayerBlendSpace[];\n    alphaModes?: readonly LayerAlphaOption[];\n    onPreview?: (value: LayerBlendValue) => void;\n    onCommit: (value: LayerBlendValue, detail: {\n        kind: 'mode' | 'opacity' | 'space' | 'alpha';\n    }, signal: AbortSignal) => void | Promise<void>;\n    disabled?: boolean;\n    className?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
+        "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaOption",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendMode",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendSpace",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendValue",
@@ -33304,6 +33317,14 @@
       ],
       "references": []
     },
+    "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaOption": {
+      "signatures": [
+        "export interface LayerAlphaOption {\n    readonly id: LayerAlphaMode;\n    readonly label: string;\n    readonly unavailableReason?: string;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaMode"
+      ]
+    },
     "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendMode": {
       "signatures": [
         "export interface LayerBlendMode {\n    readonly id: string;\n    readonly label: string;\n    readonly unavailableReason?: string;\n}"
@@ -33324,11 +33345,18 @@
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaMode"
       ]
     },
+    "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#defaultAlphaModes": {
+      "signatures": [
+        "export declare const defaultAlphaModes: readonly [\n    {\n        readonly id: 'straight';\n        readonly label: 'Straight alpha';\n    },\n    {\n        readonly id: 'premultiplied';\n        readonly label: 'Premultiplied alpha';\n    }\n];"
+      ],
+      "references": []
+    },
     "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#layerBlendProblem": {
       "signatures": [
-        "export declare function layerBlendProblem(value: LayerBlendValue, modes: readonly LayerBlendMode[], spaces: readonly LayerBlendSpace[]): string | undefined;"
+        "export declare function layerBlendProblem(value: LayerBlendValue, modes: readonly LayerBlendMode[], spaces: readonly LayerBlendSpace[], alphaModes?: readonly LayerAlphaOption[]): string | undefined;"
       ],
       "references": [
+        "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaOption",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendMode",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendSpace",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendValue"
@@ -33342,9 +33370,10 @@
     },
     "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#validateLayerBlend": {
       "signatures": [
-        "export declare function validateLayerBlend(value: LayerBlendValue, modes: readonly LayerBlendMode[], spaces: readonly LayerBlendSpace[]): void;"
+        "export declare function validateLayerBlend(value: LayerBlendValue, modes: readonly LayerBlendMode[], spaces: readonly LayerBlendSpace[], alphaModes?: readonly LayerAlphaOption[]): void;"
       ],
       "references": [
+        "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerAlphaOption",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendMode",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendSpace",
         "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#LayerBlendValue"
