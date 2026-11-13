@@ -1,0 +1,23 @@
+{
+  "status": "candidate",
+  "channel": "prerelease",
+  "version": "1.0.0-rc.2",
+  "program": {
+    "canonical": 341,
+    "localImplemented": 332,
+    "localPartial": 0,
+    "externalImplemented": 9,
+    "pending": 0,
+    "accepted": 0,
+    "additions": {
+      "total": 5,
+      "localImplemented": 5,
+      "localPartial": 0,
+      "externalImplemented": 0,
+      "pending": 0,
+      "accepted": 0
+    }
+  },
+  "distributionReview": "pending",
+  "note": "Prerelease packaging does not claim stable acceptance or owner distribution approval."
+}

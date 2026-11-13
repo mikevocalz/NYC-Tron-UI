@@ -1,0 +1,31 @@
+✔ consumer peers resolve to artifacts, including undeclared additional package coverage (0.907125ms)
+✔ missing tarballs and incompatible runtime lanes cannot silently install from npm (0.332958ms)
+✔ artifact corruption and omitted checksum evidence stop the consumer run (0.816709ms)
+✔ checksum lists reject traversal, duplicate artifacts and empty manifests (0.211583ms)
+✔ clean consumer runtime dependencies use existing exact pins (0.1875ms)
+✔ installed npm lock identifies the exact canonical file bytes instead of a same-version registry package (0.313166ms)
+✔ release versions distinguish stable from actual prereleases and reject malformed semver (1.016917ms)
+✔ prerelease candidate packaging preserves pending acceptance and never fetches or invents owner approval (167.939208ms)
+✔ stable cannot publish with any of the 341 rows unverified or with invented platform acceptance (352.327084ms)
+✔ rows added after the baseline block stable exactly like canonical rows and cannot be dropped to pass (550.005042ms)
+✔ stable cannot publish from pending, incomplete or locally forged distribution review (1150.350375ms)
+✔ stable owner approval must authenticate the exact author, repository, statement, version and bytes (1506.137458ms)
+✔ stable requires and verifies all sixteen archive hashes, including both isolated desktop packages (382.666833ms)
+✔ omitting the AppKit archive cannot silently restore the older fourteen-package inventory (138.065417ms)
+✔ an authenticated approval for prior checksums cannot authorize a later artifact inventory (282.263167ms)
+✔ only complete platform acceptance and a live exact owner approval can make stable ready without mutation (143.694292ms)
+✔ release retains candidate archives before readiness and requires both native desktop hosts plus reference evidence (2.499875ms)
+✔ macos merges the exact tested bytes and retains the original native receipt (39.96525ms)
+✔ windows merges the exact tested bytes and retains the original native receipt (37.31025ms)
+✔ failed, stale, incomplete or mismatched native receipts cannot contribute a release archive (20.896666ms)
+✔ changed archive bytes cannot be released under the successful native job's checksum (19.1255ms)
+✔ native acceptance binds the release's shared dependencies as well as the desktop adapter (51.0535ms)
+✔ the passed Windows artifact preserves the exact installed npm lock for independent archive verification (210.148ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4852.522417

@@ -2,10 +2,19 @@
 
 All notable changes to this project are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions apply to
-all 14 packages together, because `tooling/pack-release.mjs` requires one
+all 16 packages together, because `tooling/pack-release.mjs` requires one
 version per tag.
 
 ## [Unreleased]
+
+## [1.0.0-rc.2] - Unreleased
+
+Prepared for review; no tag or release has been created by this change. The
+cohort is sixteen archives, including `@nyc-tron/app-identity` and both isolated
+desktop packages. Remaining checks are in the
+[rc.2 checklist](docs/completion/reports/RC2-RELEASE-CHECKLIST.md).
+
+### Changed
 
 - Dependency baseline for gate T1: pnpm 12.18.0, TypeScript 7.0.2, Expo
   58.0.24 and React Native 0.88.1 across the workspace. React and react-dom
@@ -15,8 +24,6 @@ version per tag.
   `INFRAX_THEME_NAME: 'InFraX Signal / Infrastructure Orange'`. Six
   declarations in `docs/api-signatures.json` changed this way. The types are
   the same; consumers who diff declarations will see the quote change (#68).
-
-## [1.0.0-rc.2] - Unreleased
 
 ### Added
 

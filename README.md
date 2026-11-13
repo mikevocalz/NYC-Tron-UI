@@ -292,12 +292,15 @@ this satisfies MPL-2.0 for tarball distribution is a release gate in
 [v1.0.0 decisions](docs/V1_DECISIONS.md) D2.
 
 Maintainers: `pnpm pack:release` builds and packs the fourteen workspace
-packages into `release-packs/`. The release workflow separately builds and packs
-the Windows Fabric adapter with its own pinned runtime. It waits for the source,
-browser, installed-tarball consumer, and iOS/Android native gates at the same
+packages into `release-packs/`. The release workflow retains the two additional
+Windows Fabric and AppKit archives installed by their native acceptance jobs,
+for sixteen archives total. It waits for the source, browser, installed-tarball
+consumer, iOS/Android native, desktop and reference-flow gates at the same
 candidate, refuses mismatched versions, and never replaces an existing release.
 Complete the recorded conditions in [v1.0.0 decisions](docs/V1_DECISIONS.md)
 before tagging or running the release workflow.
+The [rc.2 checklist](docs/completion/reports/RC2-RELEASE-CHECKLIST.md) records
+the preparation, remaining checks and rollback conditions for that candidate.
 
 ## Development
 

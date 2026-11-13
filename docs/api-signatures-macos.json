@@ -547,7 +547,7 @@
         "export interface PopoverPresentationRejection {\n    reason: 'outside-usable-region';\n    bounds: Rect2D;\n    region: Rect2D;\n}"
       ],
       "references": [
-        "@nyc-tron/core@1.0.0-rc.1/dist/overlays.d.ts#Rect2D"
+        "@nyc-tron/core@1.0.0-rc.2/dist/overlays.d.ts#Rect2D"
       ]
     },
     "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverProps": {
@@ -555,7 +555,7 @@
         "export interface PopoverProps {\n    scope?: string;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    onPresentationRejected?: (rejection: PopoverPresentationRejection) => void;\n    accessibilityLabel: string;\n    anchor: Rect2D;\n    usableRegions: readonly Rect2D[];\n    children: ReactNode;\n    width?: number;\n    maxHeight?: number;\n    animated?: boolean;\n    testID?: string;\n}"
       ],
       "references": [
-        "@nyc-tron/core@1.0.0-rc.1/dist/overlays.d.ts#Rect2D",
+        "@nyc-tron/core@1.0.0-rc.2/dist/overlays.d.ts#Rect2D",
         "@nyc-tron/macos-appkit/dist/popover.d.ts#PopoverPresentationRejection",
         "@types/react@19.2.18/index.d.ts#React.ReactNode"
       ]
@@ -694,9 +694,9 @@
         "export interface MacOSWindowChromeHost extends WindowChromeHost {\n    readonly zoom: WindowZoomControl;\n    readInsets(windowId: string): Promise<TitleBarInsets>;\n    dispose(): void;\n}"
       ],
       "references": [
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowChromeHost",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowZoomControl",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#TitleBarInsets",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#WindowChromeHost",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#WindowZoomControl",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.symbol.wellknown.d.ts#Promise",
@@ -749,7 +749,7 @@
         "export declare function validateTitleBarInsets(value: unknown): TitleBarInsets;"
       ],
       "references": [
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets"
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#TitleBarInsets"
       ]
     },
     "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay": {
@@ -757,7 +757,7 @@
         "export interface HostDisplay {\n    readonly id: string;\n    readonly primary: boolean;\n    readonly origin: {\n        readonly x: number;\n        readonly y: number;\n    };\n    readonly bounds: Rect;\n    readonly scaleFactor: number;\n}"
       ],
       "references": [
-        "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect"
+        "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#Rect"
       ]
     },
     "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostWindowEvent": {
@@ -827,12 +827,12 @@
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#CloseResult",
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions",
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions",
-        "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#DragOffer",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#LayoutSnapshot",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRecord",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRegistryState",
+        "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#DragOffer",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#LayoutSnapshot",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#WindowRecord",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#WindowRegistryState",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowTransport",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
@@ -848,7 +848,7 @@
       ],
       "references": [
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowBounds",
-        "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#Rect",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
       ]
     },
@@ -858,7 +858,7 @@
       ],
       "references": [
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowBounds",
-        "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#Rect",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#HostDisplay"
       ]
     },
@@ -889,14 +889,14 @@
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowOpenOptions",
         "@legendapp/spark-desktop-windows@0.0.3/src/types.ts#WindowUpdateOptions",
         "@legendapp/spark@0.0.3/windows.ts#$module",
-        "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#$module",
-        "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#$module",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#DragOffer",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#LayoutSnapshot",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#Outcome",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRecord",
-        "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRegistryState",
+        "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#$module",
+        "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#Rect",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#$module",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#DragOffer",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#LayoutSnapshot",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#Outcome",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#WindowRecord",
+        "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#WindowRegistryState",
         "@nyc-tron/macos-appkit/dist/window-controller.d.ts#WindowControllerOptions",
         "typescript@5.9.3/lib/lib.es2015.iterable.d.ts#Promise",
         "typescript@5.9.3/lib/lib.es2015.promise.d.ts#Promise",
@@ -1238,104 +1238,104 @@
       "symbol": "$module",
       "signatures": []
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#$module": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#$module": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/folds.d.ts",
       "symbol": "$module",
       "signatures": []
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/folds.d.ts#Rect": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/folds.d.ts#Rect": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/folds.d.ts",
       "symbol": "Rect",
       "signatures": [
         "export interface Rect {\n    readonly x: number;\n    readonly y: number;\n    readonly width: number;\n    readonly height: number;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/overlays.d.ts#Rect2D": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/overlays.d.ts#Rect2D": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/overlays.d.ts",
       "symbol": "Rect2D",
       "signatures": [
         "export type Rect2D = Readonly<{\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n}>;"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#TitleBarInsets": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#TitleBarInsets": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-chrome.d.ts",
       "symbol": "TitleBarInsets",
       "signatures": [
         "export interface TitleBarInsets {\n    readonly leading: number;\n    readonly trailing: number;\n    readonly height: number;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowChromeHost": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#WindowChromeHost": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-chrome.d.ts",
       "symbol": "WindowChromeHost",
       "signatures": [
         "export interface WindowChromeHost {\n    getState(): WindowRegistryState;\n    subscribe(listener: () => void): () => void;\n    requestClose(windowId: string): Promise<WindowCloseResult>;\n    minimize(windowId: string): Promise<void>;\n    restore(windowId: string): Promise<void>;\n    readonly zoom?: WindowZoomControl;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-chrome.d.ts#WindowZoomControl": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-chrome.d.ts#WindowZoomControl": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-chrome.d.ts",
       "symbol": "WindowZoomControl",
       "signatures": [
         "export interface WindowZoomControl {\n    isZoomed(windowId: string): boolean;\n    toggleZoom(windowId: string): Promise<void>;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#$module": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#$module": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-lifecycle.d.ts",
       "symbol": "$module",
       "signatures": []
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#DragOffer": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#DragOffer": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-lifecycle.d.ts",
       "symbol": "DragOffer",
       "signatures": [
         "export interface DragOffer {\n    readonly sourceId: string;\n    readonly targetId: string;\n    readonly payload: unknown;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#LayoutSnapshot": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#LayoutSnapshot": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-lifecycle.d.ts",
       "symbol": "LayoutSnapshot",
       "signatures": [
         "export interface LayoutSnapshot {\n    readonly version: 1;\n    readonly windows: readonly SnapshotWindow[];\n    readonly focusedId: string | null;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#Outcome": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#Outcome": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-lifecycle.d.ts",
       "symbol": "Outcome",
       "signatures": [
         "export interface Outcome {\n    readonly state: WindowRegistryState;\n    readonly ok: boolean;\n    readonly reason?: RejectReason;\n    readonly token?: string;\n    readonly offer?: DragOffer;\n    readonly transfer?: DragOffer;\n    readonly accepted?: boolean;\n    readonly cancelledToken?: string;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRecord": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#WindowRecord": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-lifecycle.d.ts",
       "symbol": "WindowRecord",
       "signatures": [
         "export interface WindowRecord {\n    readonly id: string;\n    readonly displayId: string;\n    readonly rect: Rect;\n    readonly status: WindowStatus;\n    readonly home?: WindowHome;\n}"
       ]
     },
-    "@nyc-tron/core@1.0.0-rc.1/dist/window-lifecycle.d.ts#WindowRegistryState": {
+    "@nyc-tron/core@1.0.0-rc.2/dist/window-lifecycle.d.ts#WindowRegistryState": {
       "package": "@nyc-tron/core",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0-rc.2",
       "file": "dist/window-lifecycle.d.ts",
       "symbol": "WindowRegistryState",
       "signatures": [

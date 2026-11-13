@@ -1,6 +1,6 @@
 {
   "name": "@nyc-tron/macos-appkit",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -106,7 +106,7 @@
     "scripts/check-package.mjs"
   ],
   "peerDependencies": {
-    "@nyc-tron/core": "1.0.0-rc.1",
+    "@nyc-tron/core": "1.0.0-rc.2",
     "@legendapp/spark": "0.0.3",
     "expo": "55.0.32",
     "react": "19.2.0",
