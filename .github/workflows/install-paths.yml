@@ -186,7 +186,7 @@ jobs:
           xcrun simctl install "$udid" "$app"
           bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")
           scheme=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.scheme || ''")
-          node tooling/install-paths/flow.mjs "$bundle" "${{ matrix.path }}" "$scheme" > "$RUNNER_TEMP/ip/flow.yaml"
+          node tooling/install-paths/flow.mjs "$bundle" "${{ matrix.path }}" "$scheme" ios > "$RUNNER_TEMP/ip/flow.yaml"
           cd "$RUNNER_TEMP/ip"  # takeScreenshot writes to the working directory
           "$RUNNER_TEMP/maestro/maestro/bin/maestro" --device "$udid" test "$RUNNER_TEMP/ip/flow.yaml" --test-output-dir "$RUNNER_TEMP/ip/maestro"
       - uses: actions/upload-artifact@v4
@@ -249,7 +249,7 @@ jobs:
           package=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.android?.package || ''")
           [ -z "$package" ] && package=$(grep -m1 "applicationId" "$RUNNER_TEMP/ip/app/android/app/build.gradle" | sed -E "s/.*['\"]([^'\"]+)['\"].*/\1/")
           scheme=$(node -p "require('$RUNNER_TEMP/ip/app/app.json').expo.scheme || ''")
-          node tooling/install-paths/flow.mjs "$package" "${{ matrix.path }}" "$scheme" > "$RUNNER_TEMP/ip/flow.yaml"
+          node tooling/install-paths/flow.mjs "$package" "${{ matrix.path }}" "$scheme" android > "$RUNNER_TEMP/ip/flow.yaml"
       - name: Install on an emulator and press the button
         uses: reactivecircus/android-emulator-runner@v2
         with:
