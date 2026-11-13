@@ -33347,7 +33347,7 @@
     },
     "@nyc-tron/ui/dist/components/forge/layers/layer-blend-model.d.ts#defaultAlphaModes": {
       "signatures": [
-        "export declare const defaultAlphaModes: readonly [\n    {\n        readonly id: \"straight\";\n        readonly label: \"Straight alpha\";\n    },\n    {\n        readonly id: \"premultiplied\";\n        readonly label: \"Premultiplied alpha\";\n    }\n];"
+        "export declare const defaultAlphaModes: readonly [\n    {\n        readonly id: 'straight';\n        readonly label: 'Straight alpha';\n    },\n    {\n        readonly id: 'premultiplied';\n        readonly label: 'Premultiplied alpha';\n    }\n];"
       ],
       "references": []
     },
