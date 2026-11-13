@@ -1,0 +1,60 @@
+✔ drawn macos layout puts close, minimize and zoom before the title (1.312625ms)
+✔ drawn windows layout puts minimize, maximize and close after the title, and labels reflect zoom (0.158291ms)
+✔ no zoom control without host zoom; minimized windows show only restore (0.62025ms)
+✔ native mode draws nothing, carries insets and rejects invalid ones (0.64275ms)
+✔ pending command disables every drawn control; labels can be localized (0.295833ms)
+✔ close guard that cancels keeps the window; one that proceeds removes it through the registry (0.88675ms)
+✔ a throwing or rejecting close decision vetoes and is reported (0.488916ms)
+✔ minimize and restore go through the registry and update focus (0.596541ms)
+✔ a second command while one is in flight is ignored as busy; concurrent closes share one decision (0.428917ms)
+✔ zoom toggles through the host and appears in the snapshot (0.382583ms)
+✔ host errors reject the command and clear the pending state (0.658167ms)
+✔ dispose stops notifications (0.28925ms)
+(node:75796) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/mikevocalz/Documents/Codex/2026-11-13/users-mikevocalz-downloads-nyc-tron-forge/work/t2-compatibility/packages/windows-fluent/rnw-fabric/dist/window-controller.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/mikevocalz/Documents/Codex/2026-11-13/users-mikevocalz-downloads-nyc-tron-forge/work/t2-compatibility/packages/windows-fluent/rnw-fabric/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ chrome close while the app vetoes keeps the window and resolves vetoed (3.266ms)
+✔ chrome close the app allows resolves closed only after the native window is gone (0.602667ms)
+✔ a system close with no caller runs the same app decision (2.361167ms)
+✔ concurrent close requests for one window share one decision (0.582042ms)
+✔ a chrome close joins a system close that is already being decided (0.423833ms)
+✔ a throwing or rejecting decision vetoes and is reported (0.606875ms)
+✔ a failed native close rejects the waiting caller; on the system path it is reported (0.78925ms)
+✔ a close request issued during connection is decided once the host is attached (0.6145ms)
+✔ chrome minimize and restore go through the native host, and subscribers follow owner commits (1.129208ms)
+✔ observed title-bar insets reach chrome subscribers and the core title-bar model (0.496042ms)
+✔ bridge attaches once and disposal rejects pending closes (1.554792ms)
+(node:75797) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/mikevocalz/Documents/Codex/2026-11-13/users-mikevocalz-downloads-nyc-tron-forge/work/t2-compatibility/packages/windows-fluent/rnw-fabric/dist/window-controller.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/mikevocalz/Documents/Codex/2026-11-13/users-mikevocalz-downloads-nyc-tron-forge/work/t2-compatibility/packages/windows-fluent/rnw-fabric/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ native protocol validates geometry and freezes all leases (2.456084ms)
+✔ an unchanged rc.1 transport keeps ordinary window operations without title-bar customization (3.148042ms)
+✔ legacy compatibility rejects malformed present title bars and invalid geometry (0.450166ms)
+✔ a modern transport must provide title bars in its snapshots (0.196334ms)
+✔ native protocol requires a valid title bar on every window (0.557709ms)
+✔ setTitleBar validates the style, sends it natively and returns the observed insets (0.560834ms)
+✔ setTitleBar rejects as unsupported when the transport has no setTitleBar, and the window is unchanged (0.266292ms)
+✔ connection attaches one primary and ignores stale and foreign-owner observations (0.201958ms)
+✔ open owns request bytes before queueing and observes actual native geometry (0.401541ms)
+✔ failed native move leaves the committed window registry unchanged (0.531125ms)
+✔ actual native focus updates the core stacking order used by saved layouts (0.574875ms)
+✔ close requests are delivered once and veto retains the native surface (0.8195ms)
+✔ reusing a window ID cancels transfers addressed to the previous native lifetime (0.473625ms)
+✔ minimization cancels an active drag and native restore retains identity (0.392541ms)
+✔ only a live app-approved drop authorizes a transfer of the original payload (0.547375ms)
+✔ restoring a layout invalidates pending drops and retains a disconnected home through focus echoes (0.953292ms)
+✔ layout restore validates all window identities before issuing any OS move (0.134666ms)
+✔ layout restore replays every native surface in saved bottom-to-top order (0.360959ms)
+✔ dispose drains accepted native operations and rejects new commands (0.118917ms)
+✔ connection failure releases both native subscriptions (0.066709ms)
+✔ navigation transport owns destination arrays and detaches stale native hosts (0.314291ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 236.400209
