@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "NYCTronAppKitReference",
+    "name": "TronAppKit",
     "slug": "nyc-tron-appkit-reference",
     "version": "1.0.0",
     "platforms": [
@@ -9,6 +9,12 @@
     "macos": {
       "version": "1.0.0",
       "buildNumber": "1"
+    },
+    "extra": {
+      "appIdentity": {
+        "fullName": "NYC-Tron AppKit Reference",
+        "launcherName": "TronAppKit"
+      }
     }
   }
 }

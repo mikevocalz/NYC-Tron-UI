@@ -21,6 +21,10 @@ export type WindowsTitleBarStyle = "standard" | "extended";
  * `leading` and `trailing` follow the window's layout direction; in a
  * left-to-right window the caption buttons occupy `trailing`. A `standard`
  * window reports zero insets because the system frame sits outside its content.
+ *
+ * The insets of a minimized window are last-known, not live. A minimized
+ * window has no client area, so the native host reports the values it read
+ * while the window was last shown, and reads them again after a restore.
  */
 export interface WindowsTitleBar extends TitleBarInsets {
   readonly style: WindowsTitleBarStyle;
@@ -99,8 +103,10 @@ export interface WindowsWindowHost {
    * observed insets. Later size and DPI changes arrive as ordinary snapshots.
    *
    * Rejects, leaving the window unchanged, when the ID is not a window of this
-   * connection or when this Windows version cannot customize the title bar
-   * (`AppWindowTitleBar.IsCustomizationSupported()` is false).
+   * connection, when this Windows version cannot customize the title bar
+   * (`AppWindowTitleBar.IsCustomizationSupported()` is false), or when the
+   * native transport predates title bars and has no `setTitleBar` (the error
+   * says "unsupported").
    *
    * @example
    * await host.open({ id: "doc", title: "Draft", displayId, rect });

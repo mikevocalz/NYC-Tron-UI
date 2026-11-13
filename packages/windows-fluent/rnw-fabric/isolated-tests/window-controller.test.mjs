@@ -73,6 +73,17 @@ test("setTitleBar validates the style, sends it natively and returns the observe
   await assert.rejects(host.setTitleBar("doc", "standard"), /reports title bar style extended/);
   await host.dispose();
 });
+test("setTitleBar rejects as unsupported when the transport has no setTitleBar, and the window is unchanged", async () => {
+  const f = fixture(); delete f.transport.setTitleBar;
+  const host = await connectWindowsWindowHost(f.transport, f.options);
+  await host.open({ id: "doc", title: "Document", displayId: "monitor", rect });
+  const before = JSON.stringify(host.snapshot());
+  await assert.rejects(host.setTitleBar("doc", "extended"), /unsupported/);
+  await assert.rejects(host.setTitleBar("doc", "hidden"), TypeError);
+  assert.equal(JSON.stringify(host.snapshot()), before);
+  assert.equal(f.calls.filter(c => c[0] === "setTitleBar").length, 0);
+  await host.dispose();
+});
 test("connection attaches one primary and ignores stale and foreign-owner observations", async () => {
   const f = fixture(), host = await connectWindowsWindowHost(f.transport, f.options);
   const before = f.state();

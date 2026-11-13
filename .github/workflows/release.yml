@@ -146,7 +146,7 @@ jobs:
           node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-windows" "$RUNNER_TEMP/release" @nyc-tron/windows-fluent-fabric "$VERSION" "$GITHUB_SHA"
           node tooling/merge-tested-package.mjs "$RUNNER_TEMP/tested-macos" "$RUNNER_TEMP/release" @nyc-tron/macos-appkit "$VERSION" "$GITHUB_SHA"
 
-      # Preserve the concrete fifteen-archive candidate before D2/D3 can block
+      # Preserve the concrete sixteen-archive candidate before D2/D3 can block
       # stable publication. The owner reviews these exact checksums, not a
       # hypothetical package inventory. This action does not create a release.
       - name: Retain the candidate archives and checksums for distribution review

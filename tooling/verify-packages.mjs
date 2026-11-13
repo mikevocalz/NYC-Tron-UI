@@ -126,7 +126,9 @@ for (const pkgName of packages) {
         const target=resolve(dirname(file),spec);
         if(!existsSync(target))fail("Unresolved relative import "+spec+" in "+file);
         relative.push(target);
-      }else bare.add(bareName(spec));
+      // A Node command-line package (one with "bin") may use Node's built-in
+      // modules; a UI package may not, since React Native has none.
+      }else if(!(manifest.bin&&spec.startsWith("node:")))bare.add(bareName(spec));
     }
     graph.set(file,{relative,bare});
     scanned++;

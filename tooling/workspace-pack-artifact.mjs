@@ -44,7 +44,7 @@ function packageInventory(rootDir, version) {
     if (inventory.has(manifest.name)) fail("duplicate checkout package " + manifest.name);
     inventory.set(manifest.name, { filename: archiveFilename(manifest.name, expectedVersion), version: expectedVersion });
   }
-  if (inventory.size !== 13) fail("the checkout must identify exactly thirteen workspace packages");
+  if (inventory.size !== 14) fail("the checkout must identify exactly fourteen workspace packages");
   return { inventory, version: expectedVersion };
 }
 
@@ -60,8 +60,8 @@ function inspectArchives(directory, inventory, { release = false } = {}) {
   const archives = readdirSync(directory).filter(name => name.endsWith(".tgz"));
   if (hashes.size !== expected.size || archives.length !== expected.size ||
       [...hashes.keys(), ...archives].some(file => !expected.has(file))) {
-    fail(release ? "assembled release must retain the thirteen workspace archives and two desktop archives" :
-      "artifact and SHA256SUMS must identify exactly the thirteen workspace archives");
+    fail(release ? "assembled release must retain the fourteen workspace archives and two desktop archives" :
+      "artifact and SHA256SUMS must identify exactly the fourteen workspace archives");
   }
   const records = [];
   for (const [packageName, { filename, version }] of inventory) {
@@ -102,7 +102,7 @@ export function verifyWorkspacePackages(artifacts, { rootDir = root, revision, v
   const manifest = JSON.parse(manifestBytes);
   const expected = packageInventory(rootDir, version);
   if (manifest.schemaVersion !== 1 || manifest.sourceCommit !== revision || manifest.version !== expected.version ||
-      !/^[a-f0-9]{64}$/.test(manifest.checksumsSha256 ?? "") || !Array.isArray(manifest.archives) || manifest.archives.length !== 13) {
+      !/^[a-f0-9]{64}$/.test(manifest.checksumsSha256 ?? "") || !Array.isArray(manifest.archives) || manifest.archives.length !== 14) {
     fail("producer manifest does not identify this source revision and workspace version");
   }
   const { records, checksumBytes } = inspectArchives(directory, expected.inventory, { release });

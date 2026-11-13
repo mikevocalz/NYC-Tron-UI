@@ -1,4 +1,4 @@
-import {readFileSync,writeFileSync} from "node:fs";
+import {copyFileSync,readdirSync,readFileSync,writeFileSync} from "node:fs";
 import {createRequire} from "node:module";
 import {dirname,relative,resolve} from "node:path";
 import {fileURLToPath} from "node:url";
@@ -82,5 +82,53 @@ edit("metro.config.js",source=>{
  if(!source.includes("const singleton = "))
   source=source.replace(resolverMarker,resolverMarker+"\n"+singletonResolver);
  return source;
+});
+// App identity: replace the template's tile and logo images and .ico files,
+// by name, with the ones derived from assets/icon.png
+// (tooling/app-identity/derive-icons.mjs). Only files the template already
+// has are replaced, so the generated project file needs no edit.
+const iconDir=fileURLToPath(new URL("assets/icon/windows/",root));
+const windowsDir=fileURLToPath(new URL("windows/",root));
+const derived=new Set(readdirSync(resolve(iconDir,"Assets")));
+let replaced=0;
+(function walk(dir){
+ for(const entry of readdirSync(dir,{withFileTypes:true})){
+  const full=resolve(dir,entry.name);
+  if(entry.isDirectory()){ if(!["node_modules","x64","Debug","Release"].includes(entry.name)) walk(full); continue; }
+  if(derived.has(entry.name)){ copyFileSync(resolve(iconDir,"Assets",entry.name),full); replaced++; }
+  else if(entry.name.endsWith(".ico")){ copyFileSync(resolve(iconDir,"app.ico"),full); replaced++; }
+ }
+})(windowsDir);
+console.log(`Replaced ${replaced} template icon files with the derived app icon.`);
+// App identity: init-windows writes the project name into the package
+// manifest, and Start and the taskbar show the manifest's DisplayName, not
+// app.json displayName. Write the launcher name into both DisplayName fields.
+const displayName=JSON.parse(readFileSync(new URL("app.json",root),"utf8")).displayName;
+if(typeof displayName!=="string"||!displayName.trim())throw new Error("app.json has no displayName");
+const xmlName=displayName.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+let manifests=0;
+(function walk(dir){
+ for(const entry of readdirSync(dir,{withFileTypes:true})){
+  const full=resolve(dir,entry.name);
+  if(entry.isDirectory()){ if(!["node_modules","x64","Debug","Release","AppPackages"].includes(entry.name)) walk(full); continue; }
+  if(!entry.name.endsWith(".appxmanifest"))continue;
+  let source=readFileSync(full,"utf8");
+  const properties=/<DisplayName>[^<]*<\/DisplayName>/;
+  const visual=/(<uap:VisualElements\b[^>]*?\bDisplayName=")[^"]*(")/;
+  if(!properties.test(source)||!visual.test(source))throw new Error(`Official package manifest template changed: ${entry.name}`);
+  source=source.replace(properties,`<DisplayName>${xmlName}</DisplayName>`).replace(visual,`$1${xmlName}$2`);
+  writeFileSync(full,source);
+  manifests++;
+ }
+})(windowsDir);
+if(manifests===0)throw new Error("No package manifest found under windows/");
+console.log(`Set the package DisplayName to "${displayName}" in ${manifests} manifest(s).`);
+// With labels shown, the taskbar names a button by its window title, which
+// the template sets to the project name.
+edit("windows/NYCTronWindowsExample/NYCTronWindowsExample.cpp",source=>{
+ const title=/(\.Title\(L")NYCTronWindowsExample("\))/;
+ if(!title.test(source)){ console.log("Window title left as is: the host has no .Title(L\"NYCTronWindowsExample\")."); return source; }
+ console.log(`Set the window title to "${displayName}".`);
+ return source.replace(title,`$1${displayName.replace(/\\/g,"\\\\").replace(/"/g,'\\"')}$2`);
 });
 console.log("Prepared Windows consumer solution entry, ProjectReference and native package registration.");

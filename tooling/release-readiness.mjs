@@ -72,8 +72,8 @@ export function verifyReleaseInventory(artifacts, version, { rootDir = root } = 
     }
     return manifest.name.slice(1).replace("/", "-") + "-" + version + ".tgz";
   }));
-  if (expected.size !== 15 || manifests.length !== 15 || hashes.size !== expected.size || [...hashes.keys()].some(file => !expected.has(file))) {
-    fail("SHA256SUMS must identify the exact fifteen candidate archives");
+  if (expected.size !== 16 || manifests.length !== 16 || hashes.size !== expected.size || [...hashes.keys()].some(file => !expected.has(file))) {
+    fail("SHA256SUMS must identify the exact sixteen candidate archives");
   }
   const archiveFiles = readdirSync(directory).filter(file => file.endsWith(".tgz"));
   if (archiveFiles.length !== expected.size || archiveFiles.some(file => !expected.has(file))) fail("candidate archive directory and SHA256SUMS differ");
@@ -130,7 +130,7 @@ export async function validateReleaseReadiness({ version, ledger, review, artifa
   // Rows added after the baseline (gate T2 onward) block stable exactly like canonical rows.
   if (program.additions.accepted !== program.additions.total) blockers.push((program.additions.total - program.additions.accepted) + " of " + program.additions.total + " added rows lack accepted eight-platform proof");
   if (review.status !== "approved") blockers.push("owner distribution review is pending");
-  if (!inventory) blockers.push("the fifteen actual release archives and SHA256SUMS are required");
+  if (!inventory) blockers.push("the sixteen actual release archives and SHA256SUMS are required");
   if (blockers.length) fail("stable publication blocked: " + blockers.join("; "));
   if (review.releaseVersion !== version || review.approval.manifestSha256 !== inventory.manifestSha256) fail("owner distribution approval is for different version/archive bytes");
   const response = await loadApproval(approvalLocation(review.approval.commentUrl).apiUrl);

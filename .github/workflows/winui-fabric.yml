@@ -13,6 +13,7 @@ on:
       - "licenses/**"
       - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
+      - "tooling/app-identity/capture/**"
   push:
     branches:
       - "feat/winui-fabric-xaml-navigation-20261105"
@@ -25,6 +26,7 @@ on:
       - "licenses/**"
       - "docs/api-signatures-windows.json"
       - ".github/workflows/winui-fabric.yml"
+      - "tooling/app-identity/capture/**"
   workflow_dispatch:
   # The release requires the actual Windows executable and UIA roundtrip.
   workflow_call:
@@ -323,6 +325,21 @@ jobs:
         shell: powershell
         run: |
           & .\scripts\uia-smoke.ps1 -AppUserModelId $env:CONSUMER_AUMID -ProcessName NYCTronWindowsExample -OutDir "$env:RUNNER_TEMP\uia-smoke"
+      # T3: the packaged example in Start, All apps, search and on the taskbar.
+      - name: Capture the packaged example in Start and on the taskbar
+        if: ${{ !cancelled() && env.CONSUMER_AUMID != '' }}
+        continue-on-error: true
+        shell: powershell
+        run: |
+          & .\tooling\app-identity\capture\capture-windows.ps1 -AppUserModelId $env:CONSUMER_AUMID -OutDir "$env:RUNNER_TEMP\launcher-captures\windows-start" -IconPath "$env:GITHUB_WORKSPACE\packages\windows-fluent\rnw-fabric\example\assets\icon\windows\app.ico"
+      - name: Save the launcher captures
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: launcher-captures-windows
+          path: ${{ runner.temp }}/launcher-captures/
+          if-no-files-found: warn
+          retention-days: 30
       - name: Application Error records after a failed smoke test
         if: failure()
         shell: powershell

@@ -68,11 +68,18 @@ New subpath and exports:
 - `@nyc-tron/windows-fluent-fabric/window-chrome` (`createWindowsChromeBridge`)
   and the `WindowsTitleBar` types.
 
-Required members added to existing Windows interfaces. These do not affect
-callers, and do affect anyone who implements or mocks the interface:
-`WindowsWindowHost.setTitleBar`, `WindowsDesktopTransport.setTitleBar`, and
-`WindowsObservedWindow.titleBar`. The native module gains `setTitleBar`
-(Windows) and `readTitleBarInsets` (AppKit).
+Members added to existing Windows interfaces. Callers are unaffected. `WindowsDesktopTransport.setTitleBar` is optional: a
+transport without it still compiles, and `WindowsWindowHost.setTitleBar`
+rejects with an "unsupported" error and leaves the window unchanged.
+`WindowsWindowHost.setTitleBar` and `WindowsObservedWindow.titleBar` are
+required, so anyone who implements or mocks those two interfaces must add
+them. The native module gains `setTitleBar` (Windows) and
+`readTitleBarInsets` (AppKit).
+
+Decided 2026-11-13 by the integrator (A0) on the owner's instruction to
+decide. Owner confirmation: pending. This is an additive public API change
+after `1.0.0-rc.1`, reported to the owner per section 8 of the program
+prompt.
 
 Reference versions in the declaration snapshots moved with the dependency
 bumps on main (React Native 0.88.1, Legend Spark 0.0.3).

@@ -20,7 +20,12 @@ export interface WindowsDesktopTransport extends WindowsNativeDragTransport {
   focus(ownerToken: string, id: string): Promise<string>;
   minimize(ownerToken: string, id: string): Promise<string>;
   restore(ownerToken: string, id: string): Promise<string>;
-  setTitleBar(ownerToken: string, id: string, style: string): Promise<string>;
+  /**
+   * Optional so a transport written against 1.0.0-rc.1 still satisfies this
+   * interface. When it is absent, `WindowsWindowHost.setTitleBar` rejects with
+   * an "unsupported" error and the window is left unchanged.
+   */
+  setTitleBar?(ownerToken: string, id: string, style: string): Promise<string>;
   requestClose(ownerToken: string, id: string): Promise<string>;
   resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;
   dispose(ownerToken: string): Promise<void>;
@@ -135,7 +140,9 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
     async restore(id) { await command(() => transport.restore(token(), known(id))); },
     async setTitleBar(id, style) {
       if (!validTitleBarStyle(style)) throw new TypeError(`Unknown title bar style: ${String(style)}`);
-      const next = await command(() => transport.setTitleBar(token(), known(id), style));
+      const setTitleBar = transport.setTitleBar?.bind(transport);
+      if (!setTitleBar) throw new Error("Title bar customization is unsupported: this native transport has no setTitleBar");
+      const next = await command(() => setTitleBar(token(), known(id), style));
       const window = next.windows.find(w => w.id === id);
       if (!window) throw new Error("Native window closed before its title bar changed");
       if (window.titleBar.style !== style) throw new Error(`Native window reports title bar style ${window.titleBar.style} after requesting ${style}`);

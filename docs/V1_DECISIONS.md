@@ -8,8 +8,8 @@ separate.
 
 ## D1. Distribution: GitHub Release tarballs
 
-The distribution channel is fifteen GitHub Release tarballs with
-`SHA256SUMS`, installed by immutable release URL. The thirteen workspace
+The distribution channel is sixteen GitHub Release tarballs with
+`SHA256SUMS`, installed by immutable release URL. The fourteen workspace
 packages are produced by `tooling/pack-release.mjs`. The two desktop packages,
 `@nyc-tron/windows-fluent-fabric` and `@nyc-tron/macos-appkit`, are built and
 tested separately in their RNW 0.85 and Spark / Expo 55 lanes. The release
@@ -36,7 +36,7 @@ every matching runtime.
 ## D2. Licensing and provenance
 
 MIT metadata and the original-code license are present at the repository root
-and in all fifteen packages. Ported code retains the upstream terms recorded
+and in all sixteen packages. Ported code retains the upstream terms recorded
 in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), package notices, and
 their accompanying license texts. The pack gate verifies declared notices and
 license files are actually present in the produced archives. Exact is a design
@@ -52,7 +52,7 @@ sign-off. The previously required owner distribution review is tracked in
 [distribution-review.json](completion/distribution-review.json) and remains
 `pending`. Stable publication checks an actual comment by the repository owner
 through GitHub's API, approving the exact version and SHA-256 of the produced
-fifteen-archive `SHA256SUMS`. Changing a local status field cannot satisfy this
+sixteen-archive `SHA256SUMS`. Changing a local status field cannot satisfy this
 gate. The archives are retained as a CI artifact before the check, so they can
 be reviewed even when stable publication is blocked. The
 [release evidence report](completion/reports/V1-RELEASE-GATES.md#stable-publication-gate)
@@ -218,3 +218,30 @@ status.
 
 T6 and F9 owner approval comments are not decided here. Only the owner's own
 GitHub comment on the exact version and checksum hash satisfies them.
+
+## D7. Roboto advance widths in `@nyc-tron/app-identity` (gate T3)
+
+Decided 2026-11-13 by the integrator (A0) on the owner's instruction to decide (BUILD/STRIKE/DEFER). Owner confirmation: pending.
+
+BUILD. The Android launcher check ships a table of advance widths taken from
+AOSP's `RobotoStatic-Regular.ttf` (Android 16, API 36 emulator image). The
+licence is Apache-2.0, as the font's own name table declares (name ID 0
+copyright, ID 5 "Version 2.138; 2017", ID 13 "Licensed under the Apache License,
+Version 2.0", ID 14 the licence URL). The Apache-2.0 text
+(`packages/app-identity/licenses/Roboto-Apache-2.0.txt`) and the notice
+(`THIRD_PARTY_NOTICES.md`) ship in the package archive. The table holds advance
+widths only, no outlines. No OFL claim is made.
+
+## D8. `@nyc-tron/app-identity` package tier and archive count (gate T3)
+
+Decided 2026-11-13 by the integrator (A0) on the owner's instruction to decide (BUILD/STRIKE/DEFER). Owner confirmation: pending.
+
+BUILD. `@nyc-tron/app-identity` ships in 1.0.0 as a stable package. It is a
+Node command-line package with no React Native code, so the D6 platform tiers do
+not apply to it. The release inventory is therefore sixteen archives: fourteen
+workspace archives and the two desktop archives. D1 and D2 are updated to say
+so. `tooling/release-readiness.mjs`, `tooling/pack-release.mjs`,
+`tooling/verify-packages.mjs`, `release.yml` and their tests already expect
+sixteen. The historical reports under `docs/completion/reports/` and
+`docs/completion/baseline-roster.tsv` still say fifteen; they are dated records
+and are left as written.

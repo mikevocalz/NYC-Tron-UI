@@ -36,6 +36,28 @@ instead of 341. A prerelease (`rc.2`) is unaffected. Moving the rows to the
 first minor later means removing them from `RECORDED_ADDITION_IDS` in a
 reviewed change that cites the owner's decision.
 
+## ADR: the Windows title-bar transport member is optional
+
+Status: Decided 2026-11-13 by the integrator (A0) on the owner's instruction
+to decide. Owner confirmation: pending.
+
+Context. After `1.0.0-rc.1`, T2 added title-bar members to the Windows
+host. R1 noted that a required `setTitleBar` on `WindowsDesktopTransport`
+breaks anyone who implements or mocks that interface.
+
+Decision.
+
+- `WindowsDesktopTransport.setTitleBar` is optional. When a transport has
+  none, `WindowsWindowHost.setTitleBar` rejects with an error that says
+  "unsupported" and leaves the window unchanged. A test covers that path.
+- `WindowsWindowHost.setTitleBar` and `WindowsObservedWindow.titleBar` stay
+  required. The host is implemented by this package, and the observed window
+  comes from the native report, which always carries a title bar.
+
+This is an additive public API change after `1.0.0-rc.1`, reported to the
+owner under section 8 of the program prompt. It is listed in `CHANGELOG.md`
+under `1.0.0-rc.2`.
+
 This changes release tooling, so it needs R1 review.
 
 ## Rows
@@ -63,13 +85,24 @@ their own commit and platform; none of them accepts a row.
 what the receipts do not cover. W-03 and W-04 are `implemented` with a passed
 receipt for their own platform and `acceptance: "unverified"`.
 
-### Note for R1: the AppKit green button is full screen
+### Note for R1: the AppKit green button entered full screen
 
-On a window that allows full screen, pressing the real green button runs
+On the document window in this check, pressing the real green button ran
 Enter Full Screen, not zoom. Run 43192331575 showed it: the frame became the
 whole screen with no title bar, and a second press sent mid-transition was
-ignored. The check now waits for AppKit's did-enter and did-exit
-notifications and requires the registry to agree with `NSWindow.isZoomed`.
+ignored. The receipt reports `fullScreenPrimary: false` for that window
+(`collectionBehavior` does not include `FullScreenPrimary`) while the button
+still entered full screen, so this report does not claim to know why AppKit
+chose full screen here. The check now waits for AppKit's did-enter and
+did-exit notifications and requires the registry to agree with
+`NSWindow.isZoomed`.
+
 Registry zoom (`toggleZoom`) is tested through the controller, which calls
-`NSWindow.zoom`. Whether the title bar's zoom control should follow the green
-button into full screen is a product decision that is not made here.
+`NSWindow.zoom`.
+
+### Follow-up, not a blocker: the drawn zoom control
+
+The drawn-mode zoom control calls `NSWindow.zoom`, unlike the real green
+button, which entered full screen in this check. Whether the drawn control
+should follow the green button is a product question. It is open and nothing
+here decides it.

@@ -126,6 +126,7 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 | `@nyc-tron/native-charts` | Experimental | Line, column and area charts: Swift Charts on iOS, Vico on Android |
 | `@nyc-tron/windows-fluent` | Experimental | WinUI 3 NavigationView host-shell source plus a typed controller contract |
 | `@nyc-tron/windows-fluent-fabric` | Experimental | WinUI 3 NavigationView as an RNW 0.85 Fabric XAML island (`TronNavigationView`) |
+| `@nyc-tron/app-identity` | Stable (see D8 in [v1 decisions](docs/V1_DECISIONS.md)) | Node command-line tools: `nyc-tron-launcher-check` fails a launcher name wider than the measured label box; `nyc-tron-derive-icons` writes every launcher icon format from one 1024 px PNG. See [App identity](docs/APP_IDENTITY.md) |
 
 The two Windows packages sit on the React Native 0.85 lane and cannot be
 installed in the same app as the React Native 0.88 packages. See
@@ -188,6 +189,9 @@ tarball's integrity hash in the lockfile on first install, so later installs
 fail if a release asset changes.
 
 Upgrading from `v0.1.0-alpha.4`: see [Migration](docs/MIGRATION.md).
+
+App icons and launcher names: [App identity](docs/APP_IDENTITY.md) covers the
+icon tool and the launcher label check you can run on your own app config.
 
 ### Add NYC-Tron UI to an Expo app
 
@@ -287,7 +291,7 @@ Mediabunny code must retain its notices and source-availability statement. The o
 this satisfies MPL-2.0 for tarball distribution is a release gate in
 [v1.0.0 decisions](docs/V1_DECISIONS.md) D2.
 
-Maintainers: `pnpm pack:release` builds and packs the thirteen workspace
+Maintainers: `pnpm pack:release` builds and packs the fourteen workspace
 packages into `release-packs/`. The release workflow separately builds and packs
 the Windows Fabric adapter with its own pinned runtime. It waits for the source,
 browser, installed-tarball consumer, and iOS/Android native gates at the same
