@@ -43,7 +43,7 @@ differ; NYC-Tron receives semantic classes at the consuming app boundary.
 - To avoid a duplicate React Native or Nitro runtime, React and RN are peer
   dependencies. Runtime-specific native adapters must use verified version
   matrices. Expo 58/RN 0.88 is **not compatible by default** with Spark
-  0.0.2's Expo 55/RN 0.83 native host.
+  0.0.3's Expo 55/RN 0.83 native host.
 - Packages emit `dist/` with declarations and platform conditions; every
   export targets `dist` (checked by `tooling/verify-packages.mjs`).
   One exception: a package that ships a Fabric codegen spec (it has a

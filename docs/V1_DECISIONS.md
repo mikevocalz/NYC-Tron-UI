@@ -108,3 +108,45 @@ readiness.
 Commands, observed results and commit-specific CI links are in
 [V1-RELEASE-GATES.md](completion/reports/V1-RELEASE-GATES.md). A green run on an
 earlier commit is evidence for that commit, not approval for a later candidate.
+
+## D5. Desktop component scope (gate T4)
+
+Decided 2026-11-12 on the repository owner's instruction to decide (BUILD / STRIKE / DEFER).
+
+The 1.0.0 desktop component list may be narrower than the mobile and web
+list. `@nyc-tron/ui` keeps its React Native `>=0.88` peer floor in 1.0.0.
+
+| Item | Decision | Condition |
+|---|---|---|
+| Desktop list narrower than mobile/web | Accepted for 1.0.0 | The list is published as a support limit in [SUPPORT.md](SUPPORT.md) |
+| Lower the `ui` floor for the desktop lanes (RNW 0.85.3, Spark / React Native 0.83.10) | Deferred to the first minor after 1.0.0 | Blocked because it changes a public peer range and needs test coverage on two older React Native lines |
+| Components that fail measurement in a desktop lane | Struck from that lane's support list | Returns when the lane's host ships React Native `>=0.88`, or when a lane-specific floor is tested in that lane |
+
+The component list itself is pending the T4 measurement in PR #69, which is
+still running. This record does not name components or counts; they come
+from that measurement and its lane receipts.
+
+## D6. Platform tiering for 1.0.0 (gate T5)
+
+Decided 2026-11-12 on the repository owner's instruction to decide (BUILD / STRIKE / DEFER).
+
+1.0.0 tiers platform support. This amends the stable-gate scope in D3, which
+requires every one of the 341 rows to be accepted on all eight platforms.
+
+| Tier | Platforms and rows | Stable requirement |
+|---|---|---|
+| Tier 1 | Every row and platform that CI or a simulator can prove: iOS/iPadOS simulator, Android emulator, web, the macOS AppKit job, Windows UI Automation, visionOS simulator | Must be `accepted` before stable 1.0.0 |
+| Tier 2 | Quest, PICO, and the rows that need physical hardware: pen and palm, fold postures, screen-reader speech, multi-display, performance on hardware | Ships documented as "not verified for 1.0.0" in [SUPPORT.md](SUPPORT.md); each row gets an owner device-session script |
+
+A Tier 2 row returns to accepted status when a signed session receipt for
+that row lands. Row counts per tier are pending the T5 automated wave and are
+not recorded here.
+
+`tooling/release-readiness.mjs` still enforces the D3 boundary (all rows
+accepted on all eight platforms). Until it changes, the stable gate stays as
+it is. T5 must change it to enforce Tier 1 only, in a separate reviewed pull
+request. This record does not change the validator, its tests, or any row
+status.
+
+T6 and F9 owner approval comments are not decided here. Only the owner's own
+GitHub comment on the exact version and checksum hash satisfies them.

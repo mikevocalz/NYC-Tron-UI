@@ -5,6 +5,17 @@ All notable changes to this project are recorded here. The format follows
 all 14 packages together, because `tooling/pack-release.mjs` requires one
 version per tag.
 
+## [Unreleased]
+
+- Dependency baseline for gate T1: pnpm 12.18.0, TypeScript 7.0.2, Expo
+  58.0.24 and React Native 0.88.1 across the workspace. React and react-dom
+  stay at 19.3.0; `docs/SUPPORT.md` gives the reason (#68).
+- TypeScript 7 changed the quote style of declaration emit: string literal
+  types in published `.d.ts` files now use single quotes, for example
+  `INFRAX_THEME_NAME: 'InFraX Signal / Infrastructure Orange'`. Six
+  declarations in `docs/api-signatures.json` changed this way. The types are
+  the same; consumers who diff declarations will see the quote change (#68).
+
 ## [1.0.0-rc.2] - Unreleased
 
 ### Added

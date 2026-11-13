@@ -26,7 +26,7 @@ const transportReceipt = JSON.parse(readFileSync(join(transportDirectory, 'patch
 assert.deepEqual(transportReceipt, preparation.acceptanceTransport, 'The private transport patch differs from preparation');
 assert.equal(transportReceipt.scope, 'private-native-acceptance-consumer-only');
 assert.equal(transportReceipt.sourceRevision, revision);
-assert.equal(transportReceipt.before.sha256, 'c2d7bf074d6d2c2c92806d7fe9e85b79fa2fa2ff4a75acd548e3cdc474cc99fc');
+assert.equal(transportReceipt.before.sha256, '912a106176bf21881af62ed9acf9201e1ace0c07e91743875b82fd51472dd8c8');
 assert.equal(transportReceipt.file, 'node_modules/@legendapp/spark/vendor/node_modules/@legendapp/spark-desktop-app/macos/SparkTestDriver.mm');
 assert.equal(hash(readFileSync(join(root, transportReceipt.file))), transportReceipt.after.sha256, 'Compiled private driver input changed after preparation');
 const transportProbe = JSON.parse(readFileSync(join(transportDirectory, 'probe-result.json'), 'utf8'));

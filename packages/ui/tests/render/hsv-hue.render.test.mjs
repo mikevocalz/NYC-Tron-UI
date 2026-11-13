@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import ts from "@typescript/typescript6";
 
 // Runs the real HsvPicker with mocked RN and @expo/ui hosts to check how the
 // hue slider is named. It proves props and the web DOM patch, not VoiceOver,
