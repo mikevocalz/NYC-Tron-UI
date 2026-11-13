@@ -30,7 +30,7 @@ physical pen/fold/headset behavior or hardware performance.
 |---|---|---|
 | Expo SDK 58 | 0.88 | `ui`, `expo-controls`, `native-controls`, `native-navigation`, `native-charts`, `hardware-keys`, `platform-services`, `reserved-regions` |
 | React Native Windows 0.85 | 0.85.3 | `windows-fluent-fabric` (peers pin `react-native` `0.85.3` and `react-native-windows` `0.85.0`) |
-| Spark 0.0.2 / Expo SDK 55 | 0.83.10, React Native macOS 0.83.0 | `macos-appkit` (React 19.2.0, Expo 55.0.32, Nitro Modules 0.37.0) |
+| Spark 0.0.3 / Expo SDK 55 | 0.83.10, React Native macOS 0.83.0 | `macos-appkit` (React 19.2.0, Expo 55.0.32, Nitro Modules 0.37.0) |
 
 These runtime lanes cannot share one React Native installation.
 `@nyc-tron/ui` requires `react-native >=0.88.0`; `windows-fluent-fabric` pins
@@ -51,6 +51,33 @@ Shared policies and compatible packages keep explicit boundaries:
 
 Peer ranges above are read from each `package.json` at this commit. Running
 `icons` or `panes` inside an RNW 0.85 app has not been tested.
+
+## Dependency baseline
+
+Checked against npm on 2026-11-11 for gate T1. Each row is either a pin this
+repository moved to or a version it holds, with the reason.
+
+| Dependency | Pinned | Action |
+|---|---|---|
+| pnpm | 12.18.0 | Bumped from 10.32.1; lockfile regenerated. |
+| TypeScript (workspace) | 7.0.2 | Bumped from 6.0.3. Tests and tooling that use the compiler API import `@typescript/typescript6` 6.0.2 (TypeScript 6.0.3), because TypeScript 7 has no JavaScript API. |
+| TypeScript (isolated desktop packages) | 5.9.3 | Hold. The RNW and AppKit lanes keep their own 5.9.3 compiler and their 5.9.3 declaration baselines as consumer-compatibility checks. |
+| expo | 58.0.24 | Bumped and unified; `@expo/ui` 58.0.28, `expo-asset` 58.0.21 and `expo-linear-gradient` 58.0.4 follow Expo 58.0.24's bundled module versions. |
+| react-native | 0.88.1 | Unified. Hold 0.89: it is only a release candidate. |
+| react, react-dom | 19.3.0 | Hold 19.3.1 for both: React Native 0.88.1 ships a Fabric renderer built from React 19.3.0, and Expo's bundledNativeModules pins 19.3.0. react-dom is pinned beside every react 19.3.0 pin so Expo's react-dom peer no longer resolves to 19.3.1, whose peer is `react ^19.3.1`. |
+| @legendapp/spark | 0.0.3 | Bumped inside the AppKit lane only. 0.0.3 still requires Expo 55.0.32, React Native 0.83.10 (React Native Windows 0.83.2 as an optional peer), React ^19.2.0, and bundles Nitro Modules 0.37.0 and TypeScript 5.9.3, the same as 0.0.2. |
+| react-native-windows | 0.85.0 | Current. |
+| react-native-macos | 0.83.0 | Current. |
+| react-native-gesture-handler | 3.5.0 (dev and example) | Tested at 3.5.0. The peer range keeps its floor and cap, `>=3.4.0 <4`. |
+| react-native-skia | 3.10.0 (dev and example) | Tested at 3.10.0. The peer range stays `>=3.9.1 <4`. |
+| uniwind | 1.13.2 | Current. |
+| mediabunny | 1.65.2 | Current. |
+| zustand | 5.1.0 | Bumped from 5.0.16; peer range stays `^5.0.0`. |
+| tailwindcss | 4.3.5 (native-instruments example) | Bumped from 4.3.3. |
+
+After these changes `pnpm outdated -r` lists only `react` and `react-dom`
+19.3.0 → 19.3.1, held for the reason above. The command covers the pnpm workspace; the npm
+browser suites and the isolated desktop lanes keep their own locks.
 
 ## Peer range policy
 

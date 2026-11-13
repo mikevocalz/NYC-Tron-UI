@@ -144,7 +144,7 @@ in `packages/native-controls/THIRD_PARTY_NOTICES.md`.
 
 ## React Native Skia (optional peer)
 
-`GPUCanvasViewport` uses `react-native-skia` 3.9.1 through an optional peer
+`GPUCanvasViewport` uses `react-native-skia` (tested at 3.10.0) through an optional peer
 dependency. Its implementation is not copied and its native binaries are not
 bundled. MIT, Copyright 2026-present William Candillon; Copyright 2021-2026
 Shopify Inc. Text: `licenses/REACT-NATIVE-SKIA-MIT.txt`. The runtime's Dawn,
@@ -189,7 +189,7 @@ MIT, Copyright (c) Microsoft Corporation and contributors. Text:
 
 ## Legend Spark and the isolated AppKit host
 
-`packages/macos-appkit/spark` imports Legend Spark 0.0.2 as an exact peer.
+`packages/macos-appkit/spark` imports Legend Spark 0.0.3 as an exact peer.
 Its controls and window bindings are original NYC-Tron code; Spark's source
 and native runtime are installed separately. The AppKit consumer retains
 Spark's Expo 55 / React Native 0.83 / Nitro Modules 0.37.0 runtime and the

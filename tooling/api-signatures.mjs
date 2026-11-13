@@ -16,7 +16,13 @@ const compilerRoot = compilerLocation >= 0 && process.argv[compilerLocation + 1]
 if (compilerRoot !== root && !existsSync(join(compilerRoot, "node_modules/typescript/package.json"))) {
   throw new Error("Install the isolated package's own TypeScript tooling first: " + compilerRoot);
 }
-const ts = createRequire(join(compilerRoot, "package.json"))("typescript");
+// TypeScript 7 ships the native compiler with no JavaScript compiler API, so the
+// workspace reads declarations through Microsoft's TypeScript 6 API package.
+// An isolated consumer root keeps its own pinned TypeScript (5.9.3 for the
+// desktop lanes), which still exposes the API under the "typescript" name.
+const compilerRequire = createRequire(join(compilerRoot, "package.json"));
+const installed = compilerRequire("typescript");
+const ts = typeof installed.createProgram === "function" ? installed : compilerRequire("@typescript/typescript6");
 const readJSON = file => JSON.parse(readFileSync(file, "utf8"));
 const slash = value => value.split(sep).join("/");
 const sorted = entries => Object.fromEntries([...entries].sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0));

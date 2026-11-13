@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
-import ts from 'typescript';
+import ts from '@typescript/typescript6';
 function load(os='web'){
  const exports={};const native={panHandlers:{native:true}};
  const code=ts.transpileModule(readFileSync(new URL('../src/components/gestures/canvas-responder.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
