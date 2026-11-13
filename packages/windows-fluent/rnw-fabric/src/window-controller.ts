@@ -5,7 +5,7 @@ import {
 } from "@nyc-tron/core/window-lifecycle";
 import type { Rect } from "@nyc-tron/core/folds";
 import { createNativeDragController, type WindowsNativeDragTransport } from "./native-drag-controller.ts";
-import { parseDesktopSnapshot, validWindowId, validWindowRect, convertDesktopLayout } from "./window-protocol.ts";
+import { parseDesktopSnapshot, validWindowId, validWindowRect, validTitleBarStyle, convertDesktopLayout } from "./window-protocol.ts";
 import type {
   WindowsCloseRequest, WindowsDesktopSnapshot, WindowsWindowHost,
   WindowsWindowHostOptions, WindowsDesktopLayout, WindowsOpenWindow,
@@ -20,6 +20,13 @@ export interface WindowsDesktopTransport extends WindowsNativeDragTransport {
   focus(ownerToken: string, id: string): Promise<string>;
   minimize(ownerToken: string, id: string): Promise<string>;
   restore(ownerToken: string, id: string): Promise<string>;
+  /**
+   * Optional so a transport written against 1.0.0-rc.1 still satisfies this
+   * interface. When it is absent, `WindowsWindowHost.setTitleBar` rejects with
+   * an "unsupported" error and the window is left unchanged. Snapshots may
+   * omit `titleBar` only in that case; the host reports standard zero insets.
+   */
+  setTitleBar?(ownerToken: string, id: string, style: string): Promise<string>;
   requestClose(ownerToken: string, id: string): Promise<string>;
   resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;
   dispose(ownerToken: string): Promise<void>;
@@ -34,6 +41,8 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
   if (options.owner.getState().windows.length !== 0)
     throw new Error("A new native desktop connection requires an empty app window registry");
   let current: WindowsDesktopSnapshot | undefined;
+  const allowMissingTitleBar = transport.setTitleBar === undefined;
+  const parseSnapshot = (json: string) => parseDesktopSnapshot(json, { allowMissingTitleBar });
   let disposed = false;
   let disposing: Promise<void> | undefined;
   let queued: Promise<unknown> = Promise.resolve();
@@ -81,14 +90,14 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
   }
   const updates = transport.onSnapshot(json => {
     try {
-      const next = parseDesktopSnapshot(json);
+      const next = parseSnapshot(json);
       if (!current) { if (early.length >= 256) throw new Error("Desktop connection exceeded its event budget"); early.push(next); }
       else observe(next);
     } catch (error) { report(error); }
   });
   const errors = transport.onError(message => { if (!disposed) report(new Error(message)); });
   try {
-    observe(parseDesktopSnapshot(await transport.connect(options.primaryWindowId, options.componentName)));
+    observe(parseSnapshot(await transport.connect(options.primaryWindowId, options.componentName)));
     for (const next of early) observe(next);
     early.length = 0;
   } catch (error) {
@@ -100,7 +109,7 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
     requireLive();
     const operation = queued.then(async () => {
       if (disposed) throw new Error("Windows window host has been disposed");
-      observe(parseDesktopSnapshot(await work())); return snapshot();
+      observe(parseSnapshot(await work())); return snapshot();
     });
     queued = operation.catch(() => undefined);
     return operation;
@@ -132,6 +141,16 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
     async focus(id) { await command(() => transport.focus(token(), known(id))); },
     async minimize(id) { await command(() => transport.minimize(token(), known(id))); },
     async restore(id) { await command(() => transport.restore(token(), known(id))); },
+    async setTitleBar(id, style) {
+      if (!validTitleBarStyle(style)) throw new TypeError(`Unknown title bar style: ${String(style)}`);
+      const setTitleBar = transport.setTitleBar?.bind(transport);
+      if (!setTitleBar) throw new Error("Title bar customization is unsupported: this native transport has no setTitleBar");
+      const next = await command(() => setTitleBar(token(), known(id), style));
+      const window = next.windows.find(w => w.id === id);
+      if (!window) throw new Error("Native window closed before its title bar changed");
+      if (window.titleBar.style !== style) throw new Error(`Native window reports title bar style ${window.titleBar.style} after requesting ${style}`);
+      return window.titleBar;
+    },
     async requestClose(id) { await command(() => transport.requestClose(token(), known(id))); },
     async resolveClose(request: WindowsCloseRequest, accepted: boolean) {
       const { id, generation, token: closeToken } = request;
@@ -150,16 +169,16 @@ export async function connectWindowsWindowHost(transport: WindowsDesktopTranspor
         if (before.drag) await nativeDrag.cancel(before.drag.token);
         options.owner.commit({ ...options.owner.getState(), drag: null });
         for (const window of plan.windows) {
-          observe(parseDesktopSnapshot(await transport.move(token(), known(window.id), JSON.stringify({ displayId: window.displayId, rect: window.rect, raise: true }))));
+          observe(parseSnapshot(await transport.move(token(), known(window.id), JSON.stringify({ displayId: window.displayId, rect: window.rect, raise: true }))));
           if (window.home) {
             const observedState = options.owner.getState();
             options.owner.commit({ ...observedState, windows: observedState.windows.map(w => w.id === window.id ? { ...w, home: window.home } : w) });
           }
-          observe(parseDesktopSnapshot(await (window.status === "minimized" ? transport.minimize(token(), window.id) : transport.restore(token(), window.id))));
+          observe(parseSnapshot(await (window.status === "minimized" ? transport.minimize(token(), window.id) : transport.restore(token(), window.id))));
         }
-        if (plan.focusedId) observe(parseDesktopSnapshot(await transport.focus(token(), plan.focusedId)));
+        if (plan.focusedId) observe(parseSnapshot(await transport.focus(token(), plan.focusedId)));
         const final = await transport.read(token());
-        observe(parseDesktopSnapshot(final));
+        observe(parseSnapshot(final));
         // Every native raise above succeeded. Preserve this replayed order,
         // keeping the actually observed foreground window on top.
         const observedState = options.owner.getState();

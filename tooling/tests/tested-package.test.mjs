@@ -104,11 +104,13 @@ test("the passed Windows artifact preserves the exact installed npm lock for ind
   // Non-default formatting makes a parse-and-rewrite fail byte preservation.
   const originalLock = Buffer.from(JSON.stringify({ name: "native-consumer", lockfileVersion: 3, packages }, null, 3).replaceAll("\n", "\r\n") + "\r\n");
   writeFileSync(join(consumer, "package-lock.json"), originalLock);
-  const checks = ["controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility"];
+  const checks = ["controlled-native-navigation", "shared-runtime-two-windows", "shared-document-state", "native-minimize-restore", "native-close-veto", "native-close-accept", "native-window-reopen", "native-menu-disabled-command", "native-context-menu-keyboard", "native-tooltip", "native-inspector-rapid-controlled-edit", "native-inspector-rejection-and-scope", "native-inspector-dismissal-veto-retry", "native-inspector-remount-edit", "native-cross-window-drag-rejected", "native-cross-window-drag-escape", "native-cross-window-drag-close-cancellation", "native-cross-window-drag-accepted", "native-navigation-accessibility", "native-window-chrome-caption-buttons"];
   const acceptance = { status: "passed", sourceRevision: f.receipt.sourceRevision, processId: 4242, checks };
   writeFileSync(join(evidence, "result.json"), JSON.stringify(acceptance));
   writeFileSync(join(evidence, "navigation-accessibility-result.json"), JSON.stringify({ ...acceptance,
     checks: ["settings-focus-return", "resize-retains-selection-and-focus", "native-rtl-and-physical-left-pane", "native-pane-collapse-and-restore", "high-contrast-native-repaint-and-input"].map(name => ({ name })) }));
+  writeFileSync(join(evidence, "window-chrome.json"), JSON.stringify({ status: "passed", sourceRevision: f.receipt.sourceRevision, processId: 4242,
+    steps: ["caption-close-cancelled", "controller-close-cancelled", "caption-minimize", "controller-restore-after-caption-minimize", "controller-minimize", "controller-restore", "caption-close-proceeded", "controller-close-proceeded"].map(name => ({ name, status: "passed" })) }));
   const script = fileURLToPath(new URL("../../packages/windows-fluent/rnw-fabric/scripts/retain-tested-package.mjs", import.meta.url));
   execFileSync(process.execPath, [script, consumer, evidence, retained]);
   const retainedLock = readFileSync(join(retained, "package-lock.json"));

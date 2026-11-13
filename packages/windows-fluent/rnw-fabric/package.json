@@ -47,6 +47,11 @@
       "react-native": "./src/window-types.ts",
       "default": "./dist/window-types.js"
     },
+    "./window-chrome": {
+      "types": "./dist/window-chrome.d.ts",
+      "react-native": "./src/window-chrome.ts",
+      "default": "./dist/window-chrome.js"
+    },
     "./overlays": {
       "types": "./dist/overlays.windows.d.ts",
       "react-native": "./src/overlays.windows.tsx",

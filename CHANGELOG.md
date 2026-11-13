@@ -45,6 +45,45 @@ This is an additive public API change after 1.0.0-rc.1. Existing callers
 compile and render unchanged. `docs/api-signatures.json` records the new and
 changed declarations.
 
+### Window chrome (gate T2)
+
+Public API added after `1.0.0-rc.1` by gate T2 (window chrome, ADR in
+`docs/completion/reports/T2-WINDOW-CHROME.md`). Compared with `origin/main`,
+the three declaration snapshots remove no export and retype no existing
+member. R1 rules on these additions; nothing here is accepted on eight
+platforms.
+
+New subpath and exports:
+
+- `@nyc-tron/core/window-chrome`: `createWindowChromeController`,
+  `createPageWindowHost`, `describeTitleBar` and the types they use
+  (`WindowChromeHost`, `WindowChromeController`, `TitleBarInsets`,
+  `WindowZoomControl` and others).
+- `@nyc-tron/ui/components/window/WindowTitleBar`: `WindowTitleBar`,
+  `useWindowChrome`, `WindowTitleBarProps`.
+- `@nyc-tron/reserved-regions`: `useWindowControlsInsets`,
+  `toWindowControlsInsets`, `windowControlsEqual`, `NO_WINDOW_CONTROLS`.
+- `@nyc-tron/macos-appkit/window-chrome` and `createMacOSWindowChrome` on
+  `/windows`.
+- `@nyc-tron/windows-fluent-fabric/window-chrome` (`createWindowsChromeBridge`)
+  and the `WindowsTitleBar` types.
+
+Members added to existing Windows interfaces. Callers are unaffected. `WindowsDesktopTransport.setTitleBar` is optional: a
+transport without it still compiles, and `WindowsWindowHost.setTitleBar`
+rejects with an "unsupported" error and leaves the window unchanged.
+`WindowsWindowHost.setTitleBar` and `WindowsObservedWindow.titleBar` are
+required, so anyone who implements or mocks those two interfaces must add
+them. The native module gains `setTitleBar` (Windows) and
+`readTitleBarInsets` (AppKit).
+
+Decided 2026-11-13 by the integrator (A0) on the owner's instruction to
+decide. Owner confirmation: pending. This is an additive public API change
+after `1.0.0-rc.1`, reported to the owner per section 8 of the program
+prompt.
+
+Reference versions in the declaration snapshots moved with the dependency
+bumps on main (React Native 0.88.1, Legend Spark 0.0.3).
+
 ## [1.0.0-rc.1] - Unreleased
 
 Prerelease cut from `main` at `3b80c1e`. All 15 packed packages carry version

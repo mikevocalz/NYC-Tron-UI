@@ -1,6 +1,6 @@
 import type { Rect } from "@nyc-tron/core/folds";
 import { MAX_WINDOWS, parseLayoutSnapshot, type LayoutSnapshot } from "@nyc-tron/core/window-lifecycle";
-import type { WindowsDesktopLayout, WindowsDesktopSnapshot } from "./window-types.ts";
+import type { WindowsDesktopLayout, WindowsDesktopSnapshot, WindowsTitleBar, WindowsTitleBarStyle } from "./window-types.ts";
 
 export function validWindowId(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0 && value.length <= 256;
@@ -27,12 +27,23 @@ export function logicalRect(rect: Rect, referenceDpi: number): Rect {
   const scale = referenceDpi / 96;
   return { x: rect.x / scale, y: rect.y / scale, width: rect.width / scale, height: rect.height / scale };
 }
+export function validTitleBarStyle(value: unknown): value is WindowsTitleBarStyle {
+  return value === "standard" || value === "extended";
+}
+const validInset = (value: unknown) => typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 10_000;
+/** A standard title bar belongs to the system frame, so it reserves nothing inside the content. */
+export function validTitleBar(value: unknown): value is WindowsTitleBar {
+  if (typeof value !== "object" || value === null) return false;
+  const bar = value as WindowsTitleBar;
+  if (!validTitleBarStyle(bar.style) || ![bar.leading, bar.trailing, bar.height].every(validInset)) return false;
+  return bar.style === "extended" || (bar.leading === 0 && bar.trailing === 0 && bar.height === 0);
+}
 function samePixels(a: Rect, b: Rect): boolean {
   return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 }
 
 /** Validates the actual native protocol, including the reversible shared coordinate mapping. */
-export function parseDesktopSnapshot(json: string): WindowsDesktopSnapshot {
+export function parseDesktopSnapshot(json: string, { allowMissingTitleBar = false }: { allowMissingTitleBar?: boolean } = {}): WindowsDesktopSnapshot {
   if (typeof json !== "string" || json.length > 1_048_576) throw new TypeError("Native desktop report exceeds its budget");
   const s = JSON.parse(json) as WindowsDesktopSnapshot;
   if (s?.schema !== 1 || !validWindowId(s.ownerToken) || !validDpi(s.referenceDpi) ||
@@ -53,6 +64,15 @@ export function parseDesktopSnapshot(json: string): WindowsDesktopSnapshot {
       !samePixels(pixelRect(w.rect, s.referenceDpi), w.pixelRect) ||
       (w.status !== "open" && w.status !== "minimized") || typeof w.primary !== "boolean")
       throw new TypeError("Invalid native window observation");
+    // rc.1 transports know only the system frame, whose title bar reserves
+    // no content space. Only a transport without customization may omit it.
+    // An explicitly present but malformed value must still fail validation.
+    if (allowMissingTitleBar && !Object.prototype.hasOwnProperty.call(w, "titleBar"))
+      Object.assign(w, { titleBar: { style: "standard", leading: 0, trailing: 0, height: 0 } });
+    // Name the reported values: an out-of-range inset is otherwise
+    // indistinguishable from bad geometry in a CI log.
+    if (!validTitleBar(w.titleBar))
+      throw new TypeError(`Invalid native window observation: ${w.id} (${w.status}) title bar ${JSON.stringify(w.titleBar ?? null)}`);
     windows.set(w.id, w.generation);
     if (w.primary) primary++;
   }

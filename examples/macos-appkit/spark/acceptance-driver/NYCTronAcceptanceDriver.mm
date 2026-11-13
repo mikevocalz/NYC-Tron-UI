@@ -64,6 +64,10 @@ static void TraceContextMenu(NSString *phase, NSUInteger generation) {
     (unsigned long)generation, (unsigned long)TrackedContextMenuGeneration, (unsigned long)EndedContextMenuGeneration);
 }
 static NSUInteger ActivationSequence;
+// Completed full-screen transitions of any window, from AppKit's did-enter and
+// did-exit notifications. A press on the green button during a transition is
+// ignored, so acceptance waits for these before the next press.
+static NSUInteger FullScreenEntered, FullScreenExited;
 static std::atomic<unsigned int> ActivationTraceEvents{0};
 static void TraceActivation(NSString *phase, NSUInteger operation, NSDictionary *(^details)(void)) {
   if (ActivationTraceEvents.fetch_add(1) >= 128) return;
@@ -404,6 +408,8 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
 @implementation NYCTronAcceptanceDriver
 + (void)load {
   dispatch_async(dispatch_get_main_queue(), ^{
+    [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidEnterFullScreenNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) { (void)note; FullScreenEntered++; }];
+    [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidExitFullScreenNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) { (void)note; FullScreenExited++; }];
     [NSNotificationCenter.defaultCenter addObserverForName:NSMenuDidBeginTrackingNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
       NSMenu *menu = [note.object isKindOfClass:NSMenu.class] ? note.object : nil;
       if ([menu.title isEqual:@"ContextMenu"]) {
@@ -793,6 +799,38 @@ static NSDictionary *TooltipObservation(NSWindow *owner, NSView *trigger) {
         NSRect frame = window.frame; frame.size = NSMakeSize(width, height); [window setFrame:frame display:YES];
       } else if ([action isEqual:@"close"]) [window performClose:nil];
       else if ([action isEqual:@"minimize"]) [window miniaturize:nil];
+      // Clicks the button AppKit draws, so the window's own close, miniaturize
+      // and zoom paths run instead of a method called on the window directly.
+      else if ([action isEqual:@"click-close"] || [action isEqual:@"click-minimize"] || [action isEqual:@"click-zoom"]) {
+        NSWindowButton kind = [action isEqual:@"click-close"] ? NSWindowCloseButton : [action isEqual:@"click-minimize"] ? NSWindowMiniaturizeButton : NSWindowZoomButton;
+        NSButton *button = [window standardWindowButton:kind];
+        if (!button || button.isHiddenOrHasHiddenAncestor || !button.enabled) { reply(Failure(@"Expected a visible, enabled system window button")); return; }
+        [button performClick:nil];
+      }
+      // Reads the system buttons and title-bar flags. Frames are window
+      // coordinates in points (origin bottom-left), the space
+      // readTitleBarInsets measures in.
+      else if ([action isEqual:@"chrome"]) {
+        NSMutableDictionary *buttons = [NSMutableDictionary new];
+        NSDictionary<NSString *, NSNumber *> *kinds = @{ @"close": @(NSWindowCloseButton), @"minimize": @(NSWindowMiniaturizeButton), @"zoom": @(NSWindowZoomButton) };
+        for (NSString *name in kinds) {
+          NSButton *button = [window standardWindowButton:(NSWindowButton)kinds[name].integerValue];
+          buttons[name] = button ? @{ @"present": @YES, @"frame": RectDictionary([button convertRect:button.bounds toView:nil]), @"hidden": @(button.hidden),
+            @"hiddenOrHasHiddenAncestor": @(button.isHiddenOrHasHiddenAncestor), @"enabled": @(button.enabled) } : @{ @"present": @NO };
+        }
+        reply(@{ @"ok": @YES, @"buttons": buttons,
+          @"titleVisibility": window.titleVisibility == NSWindowTitleHidden ? @"hidden" : @"visible",
+          @"titlebarAppearsTransparent": @(window.titlebarAppearsTransparent),
+          @"fullSizeContentView": @((window.styleMask & NSWindowStyleMaskFullSizeContentView) != 0),
+          @"titled": @((window.styleMask & NSWindowStyleMaskTitled) != 0),
+          @"layoutDirection": window.windowTitlebarLayoutDirection == NSUserInterfaceLayoutDirectionRightToLeft ? @"rightToLeft" : @"leftToRight",
+          @"frame": RectDictionary(window.frame), @"contentLayoutRect": RectDictionary(window.contentLayoutRect),
+          @"zoomed": @(window.zoomed), @"miniaturized": @(window.miniaturized), @"visible": @(window.visible),
+          @"fullScreen": @((window.styleMask & NSWindowStyleMaskFullScreen) != 0),
+          @"fullScreenPrimary": @((window.collectionBehavior & NSWindowCollectionBehaviorFullScreenPrimary) != 0),
+          @"fullScreenEntered": @(FullScreenEntered), @"fullScreenExited": @(FullScreenExited) });
+        return;
+      }
       // This explicit private-fixture command opts into interactive native
       // acceptance. Spark's stock capture driver starts with Prohibited
       // activation policy; screenshots alone do not need a visible owner.

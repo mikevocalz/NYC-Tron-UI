@@ -4,10 +4,12 @@ import { createWindowRegistry, beginDrag } from "@nyc-tron/core/window-lifecycle
 import { connectWindowsWindowHost } from "../dist/window-controller.js";
 import { parseDesktopSnapshot, convertDesktopLayout } from "../dist/window-protocol.js";
 import { createWindowsNavigationBinding, navigationBindingOwner } from "../dist/navigation-binding.js";
+import { legacyFixture } from "./fixtures/rc1-window-transport.mjs";
 
 const rect = { x: 20, y: 30, width: 800, height: 600 };
 const display = { id: "monitor", bounds: { x: 0, y: 0, width: 1920, height: 1040 }, pixelBounds: { x: 0, y: 0, width: 1920, height: 1080 }, pixelWorkArea: { x: 0, y: 0, width: 1920, height: 1040 } };
-const observed = (id, primary = false, generation = id + "-1") => ({ id, generation, primary, dpi: 96, rect: { ...rect }, pixelRect: { ...rect }, displayId: "monitor", status: "open" });
+const standardBar = { style: "standard", leading: 0, trailing: 0, height: 0 };
+const observed = (id, primary = false, generation = id + "-1") => ({ id, generation, primary, dpi: 96, rect: { ...rect }, pixelRect: { ...rect }, displayId: "monitor", status: "open", titleBar: { ...standardBar } });
 const deferred = () => { let resolve; const promise = new Promise(r => { resolve = r; }); return { promise, resolve }; };
 function fixture() {
   let state = createWindowRegistry(), seq = 0, generation = 0;
@@ -24,6 +26,7 @@ function fixture() {
     async focus(owner, id) { calls.push(["focus", id]); value.focusedId = id; return report(); },
     async minimize(owner, id) { calls.push(["minimize", id]); value.windows.find(w => w.id === id).status = "minimized"; if (value.focusedId === id) value.focusedId = null; return report(); },
     async restore(owner, id) { calls.push(["restore", id]); value.windows.find(w => w.id === id).status = "open"; return report(); },
+    async setTitleBar(owner, id, style) { calls.push(["setTitleBar", id, style]); value.windows.find(w => w.id === id).titleBar = style === "extended" ? { style, leading: 0, trailing: 138, height: 32 } : { ...standardBar }; return report(); },
     async requestClose(owner, id) { value.pendingCloses = [{ id, generation: value.windows.find(w => w.id === id).generation, token: "close-" + ++generation }]; return report(); },
     async resolveClose(owner, id, gen, token, accepted) {
       const request = value.pendingCloses.find(r => r.id === id && r.generation === gen && r.token === token);
@@ -46,6 +49,89 @@ test("native protocol validates geometry and freezes all leases", () => {
   assert.throws(() => parseDesktopSnapshot(JSON.stringify({ ...report, pendingCloses: [{ id: "main", generation: "wrong", token: "token" }] })), /ownership/);
   const layout = { schema: 1, referenceDpi: 144, layout: { version: 1, focusedId: null, windows: [{ id: "one", displayId: "monitor", rect, status: "open" }] } };
   assert.equal(convertDesktopLayout(layout, 96).windows[0].rect.width, 1200);
+});
+test("an unchanged rc.1 transport keeps ordinary window operations without title-bar customization", async () => {
+  const f = legacyFixture();
+  assert.equal("setTitleBar" in f.transport, false);
+  assert.equal("titleBar" in JSON.parse(f.report()).windows[0], false);
+  const connect = f.transport.connect;
+  f.transport.connect = async (...args) => { f.emit(); return connect(...args); };
+  const host = await connectWindowsWindowHost(f.transport, f.options);
+  assert.deepEqual(host.snapshot().windows[0].titleBar, standardBar);
+  assert.equal(Object.isFrozen(host.snapshot().windows[0].titleBar), true);
+  await host.open({ id: "doc", title: "Document", displayId: "monitor", rect });
+  const saved = host.captureLayout();
+  await host.move("doc", { displayId: "monitor", rect: { ...rect, x: 200 } });
+  await host.minimize("doc"); await host.restore("doc"); await host.focus("doc");
+  await host.restoreLayout(saved); await host.refresh();
+  assert.deepEqual(host.snapshot().windows.find(w => w.id === "doc").rect, rect);
+  f.value().focusedId = "doc"; f.emit();
+  assert.equal(f.state().focusedId, "doc");
+  const before = host.snapshot();
+  await assert.rejects(host.setTitleBar("doc", "extended"), /unsupported/);
+  assert.equal(host.snapshot(), before);
+  assert.equal(f.value().windows.some(w => "titleBar" in w), false);
+  await host.focus("main");
+  await host.requestClose("doc"); await host.resolveClose(f.closes[0], false);
+  assert.equal(f.state().windows.length, 2);
+  await host.requestClose("doc"); await host.resolveClose(f.closes[1], true);
+  assert.equal(f.state().windows.length, 1);
+  assert.deepEqual(f.failures, []);
+  await host.dispose();
+  assert.equal(f.listeners.size, 0); assert.equal(f.state().windows.length, 0);
+});
+test("legacy compatibility rejects malformed present title bars and invalid geometry", async () => {
+  for (const patch of [{ titleBar: null }, { titleBar: { style: "standard", leading: 0, trailing: 1, height: 0 } },
+    { rect: { ...rect, width: -1 } }]) {
+    const f = legacyFixture(); Object.assign(f.value().windows[0], patch);
+    await assert.rejects(connectWindowsWindowHost(f.transport, f.options), /window observation/);
+    assert.equal(f.listeners.size, 0);
+  }
+  const f = legacyFixture(), host = await connectWindowsWindowHost(f.transport, f.options);
+  f.value().windows[0].titleBar = null; f.emit();
+  assert.match(f.failures[0].message, /title bar null/);
+  await assert.rejects(host.refresh(), /title bar null/);
+  await host.dispose();
+});
+test("a modern transport must provide title bars in its snapshots", async () => {
+  const f = fixture(); delete f.value().windows[0].titleBar;
+  await assert.rejects(connectWindowsWindowHost(f.transport, f.options), /title bar null/);
+  assert.equal(f.listeners.size, 0);
+});
+test("native protocol requires a valid title bar on every window", () => {
+  const f = fixture(), report = JSON.parse(f.report());
+  const withBar = titleBar => JSON.stringify({ ...report, windows: [{ ...report.windows[0], titleBar }] });
+  assert.equal(parseDesktopSnapshot(withBar({ style: "extended", leading: 0, trailing: 138, height: 32 })).windows[0].titleBar.trailing, 138);
+  for (const bad of [undefined, null, "extended", { style: "hidden", leading: 0, trailing: 0, height: 0 },
+    { style: "extended", leading: -1, trailing: 138, height: 32 }, { style: "extended", leading: 0, trailing: Number.NaN, height: 32 },
+    { style: "extended", leading: 0, trailing: 138, height: 10_001 }, { style: "extended", leading: 0, trailing: "138", height: 32 },
+    { style: "standard", leading: 0, trailing: 138, height: 0 }, { style: "standard", leading: 0, trailing: 0, height: 32 }])
+    assert.throws(() => parseDesktopSnapshot(withBar(bad)), /window observation/, JSON.stringify(bad));
+  assert.throws(() => parseDesktopSnapshot(withBar({ style: "extended", leading: 0, trailing: -46, height: 32 })),
+    /title bar \{"style":"extended","leading":0,"trailing":-46,"height":32\}/);
+});
+test("setTitleBar validates the style, sends it natively and returns the observed insets", async () => {
+  const f = fixture(), host = await connectWindowsWindowHost(f.transport, f.options);
+  await host.open({ id: "doc", title: "Document", displayId: "monitor", rect });
+  await assert.rejects(host.setTitleBar("doc", "hidden"), TypeError);
+  await assert.rejects(host.setTitleBar("absent", "extended"), /not owned/);
+  assert.deepEqual(await host.setTitleBar("doc", "extended"), { style: "extended", leading: 0, trailing: 138, height: 32 });
+  assert.deepEqual(f.calls.filter(c => c[0] === "setTitleBar"), [["setTitleBar", "doc", "extended"]]);
+  assert.equal(host.snapshot().windows.find(w => w.id === "doc").titleBar.height, 32);
+  f.transport.setTitleBar = async () => f.report();
+  await assert.rejects(host.setTitleBar("doc", "standard"), /reports title bar style extended/);
+  await host.dispose();
+});
+test("setTitleBar rejects as unsupported when the transport has no setTitleBar, and the window is unchanged", async () => {
+  const f = fixture(); delete f.transport.setTitleBar;
+  const host = await connectWindowsWindowHost(f.transport, f.options);
+  await host.open({ id: "doc", title: "Document", displayId: "monitor", rect });
+  const before = JSON.stringify(host.snapshot());
+  await assert.rejects(host.setTitleBar("doc", "extended"), /unsupported/);
+  await assert.rejects(host.setTitleBar("doc", "hidden"), TypeError);
+  assert.equal(JSON.stringify(host.snapshot()), before);
+  assert.equal(f.calls.filter(c => c[0] === "setTitleBar").length, 0);
+  await host.dispose();
 });
 test("connection attaches one primary and ignores stale and foreign-owner observations", async () => {
   const f = fixture(), host = await connectWindowsWindowHost(f.transport, f.options);

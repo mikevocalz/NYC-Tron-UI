@@ -9,6 +9,14 @@ export const REQUIRED_PLATFORMS = Object.freeze(["ios", "android", "web", "macos
 const implementationStatuses = new Set(["pending", "partial", "implemented", "implemented-external"]);
 const acceptanceStatuses = new Set(["unverified", "accepted"]);
 const platformStatuses = new Set(["unverified", "not-run", "partial", "blocked", "failed", "passed"]);
+const ADDITION_ID = /^[A-Z]{1,3}-[0-9]{2,3}$/;
+/**
+ * Rows added after the frozen 341-row baseline, by gate. The list only grows:
+ * an addition stays a stable blocker until it is accepted, and removing one
+ * fails validation. Each names the gate that added it and its decision record
+ * under docs/completion (T2: reports/T2-WINDOW-CHROME.md).
+ */
+export const RECORDED_ADDITION_IDS = Object.freeze(["W-01", "W-02", "W-03", "W-04", "W-05"]);
 const fail = message => { throw new Error("Component program: " + message); };
 const nonempty = value => typeof value === "string" && value.length > 0 && value === value.trim() && !/[\u0000-\u001f\u007f]/.test(value);
 
@@ -42,7 +50,7 @@ function packageManifests(rootDir) {
   if (!existsSync(packages)) return [];
   const paths = readdirSync(packages, { withFileTypes: true }).filter(entry => entry.isDirectory())
     .map(entry => join(packages, entry.name));
-  paths.push(join(packages, "windows-fluent/rnw-fabric"));
+  paths.push(join(packages, "windows-fluent/rnw-fabric"), join(packages, "macos-appkit/spark"));
   return paths.filter(directory => existsSync(join(directory, "package.json"))).map(directory => ({
     directory, manifest: JSON.parse(readFileSync(join(directory, "package.json"), "utf8")),
   }));
@@ -55,10 +63,13 @@ function exportTargets(value) {
 /**
  * Validate local ownership and explicit, pinned external ownership without
  * treating either source review as eight-platform runtime acceptance.
+ * Canonical rows match the frozen baseline by ID and name. Rows added later
+ * live in `additions` and pass the same per-row rules; `summary.additions`
+ * counts them separately so the 341 canonical figures never change meaning.
  * Remote paths are syntactically checked here; reviewers verify their pinned
  * repository contents and record that provenance in the required report.
  */
-export function validateComponentProgram(ledger, { rootDir = root } = {}) {
+export function validateComponentProgram(ledger, { rootDir = root, recordedAdditions = RECORDED_ADDITION_IDS } = {}) {
   rootDir = realpathSync(resolve(rootDir));
   const canonical = parseCanonicalBaseline(readFileSync(join(rootDir, "docs/completion/baseline-roster.tsv")));
   if (ledger?.schemaVersion !== 1) fail("Unknown ledger schema version");
@@ -104,11 +115,8 @@ export function validateComponentProgram(ledger, { rootDir = root } = {}) {
     }
   };
 
-  for (const row of ledger.components) {
-    if (!row || !row.id || ids.has(row.id)) fail("Duplicate/missing ID " + row?.id);
-    if (!canonicalNames.has(row.id)) fail("Unknown/replaced canonical ID " + row.id);
-    ids.add(row.id);
-    if (row.name !== canonicalNames.get(row.id)) fail(row.id + " changed its canonical name");
+  // One rule set for canonical rows and recorded additions; only identity differs.
+  const validateRow = (row, counts) => {
     if (!/^P\d{2}$/.test(row.phase ?? "") || !nonempty(row.requirement) || typeof row.libraryScope !== "boolean") fail("Missing scope metadata for " + row.id);
     if (!implementationStatuses.has(row.implementationReview)) fail(row.id + " has an unknown implementation review status");
     if (!acceptanceStatuses.has(row.acceptance)) fail(row.id + " has an unknown acceptance status");
@@ -127,7 +135,7 @@ export function validateComponentProgram(ledger, { rootDir = root } = {}) {
     }
     if (row.implementationReview === "implemented-external") {
       if (!row.externalImplementation) fail(row.id + " needs pinned external implementation metadata");
-      summary.externalImplemented++;
+      counts.externalImplemented++;
     } else if (["implemented", "partial"].includes(row.implementationReview)) {
       if (!row.libraryScope || !row.sourceCandidates.length || !row.evidence?.length) fail(row.id + " needs owned source and evidence");
       if (row.implementationReview === "partial" && !row.remainingLibraryWork?.length) fail(row.id + " must name its remaining library work");
@@ -136,9 +144,9 @@ export function validateComponentProgram(ledger, { rootDir = root } = {}) {
         return manifests.some(({ directory, manifest }) => exportTargets(manifest.exports).some(target => resolve(directory, target) === dist));
       });
       if (!exported) fail(row.id + " needs an independent public export");
-      if (row.implementationReview === "partial") summary.localPartial++;
-      else summary.localImplemented++;
-    } else summary.pending++;
+      if (row.implementationReview === "partial") counts.localPartial++;
+      else counts.localImplemented++;
+    } else counts.pending++;
 
     if (row.platformEvidence !== undefined && (!row.platformEvidence || typeof row.platformEvidence !== "object" || Array.isArray(row.platformEvidence))) fail(row.id + " has invalid platform evidence");
     for (const [platform, gate] of Object.entries(row.platformEvidence ?? {})) {
@@ -152,10 +160,37 @@ export function validateComponentProgram(ledger, { rootDir = root } = {}) {
         const gate = row.platformEvidence?.[platform];
         if (gate?.status !== "passed" || !gate.evidence?.length) fail(row.id + " cannot be accepted without " + platform + " proof");
       }
-      summary.accepted++;
+      counts.accepted++;
     }
+  };
+
+  for (const row of ledger.components) {
+    if (!row || !row.id || ids.has(row.id)) fail("Duplicate/missing ID " + row?.id);
+    if (!canonicalNames.has(row.id)) fail("Unknown/replaced canonical ID " + row.id);
+    ids.add(row.id);
+    if (row.name !== canonicalNames.get(row.id)) fail(row.id + " changed its canonical name");
+    validateRow(row, summary);
   }
-  if (ids.size !== canonical.length) fail("The canonical ID set changed");
+  if (!Array.isArray(ledger.additions)) fail("The ledger needs an additions list (empty when nothing was added)");
+  const canonicalNameSet = new Set(canonicalNames.values()), additionNames = new Set();
+  const additions = { total: ledger.additions.length, localImplemented: 0, localPartial: 0, externalImplemented: 0, pending: 0, accepted: 0 };
+  for (const row of ledger.additions) {
+    if (!row || !ADDITION_ID.test(row.id ?? "")) fail("Addition IDs use a letter prefix and a two- or three-digit number: " + row?.id);
+    if (canonicalNames.has(row.id)) fail(row.id + " reuses a canonical ID; additions cannot replace or extend canonical rows");
+    if (ids.has(row.id)) fail("Duplicate addition ID " + row.id);
+    ids.add(row.id);
+    if (!nonempty(row.name) || canonicalNameSet.has(row.name) || additionNames.has(row.name)) fail(row.id + " needs a name not used by a canonical row or another addition");
+    additionNames.add(row.name);
+    if (!/^T\d+$|^F\d+$/.test(row.gate ?? "")) fail(row.id + " needs the gate that added it (for example T2)");
+    if (!nonempty(row.decision)) fail(row.id + " needs the decision record that scopes it");
+    localFile("docs/completion", row.decision, row.id + " decision");
+    validateRow(row, additions);
+  }
+  for (const id of recordedAdditions) {
+    if (!ledger.additions.some(row => row.id === id)) fail("Recorded addition " + id + " was removed; additions can be added but not dropped");
+  }
+  summary.additions = additions;
+  if ([...ids].filter(id => canonicalNames.has(id)).length !== canonical.length) fail("The canonical ID set changed");
   return summary;
 }
 
@@ -163,4 +198,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const ledger = JSON.parse(readFileSync(join(root, "docs/completion/library-progress.json"), "utf8"));
   const result = validateComponentProgram(ledger);
   console.log(`Component program: ${result.canonical} canonical IDs; ${result.localImplemented} local implementations, ${result.localPartial} partial, ${result.externalImplemented} pinned external implementations, ${result.pending} pending; ${result.accepted} accepted with all eight platform proofs.`);
+  const added = result.additions;
+  console.log(`Additions after the baseline: ${added.total} rows; ${added.localImplemented} local implementations, ${added.localPartial} partial, ${added.externalImplemented} pinned external, ${added.pending} pending; ${added.accepted} accepted with all eight platform proofs.`);
 }

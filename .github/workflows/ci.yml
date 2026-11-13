@@ -82,7 +82,20 @@ jobs:
       - name: Verify the public API surface against docs/api-surface.json
         run: node tooling/api-surface.mjs
       - name: Verify reachable public declarations and dependency type boundaries
+        id: signatures
         run: node tooling/api-signatures.mjs
+      # A changed public API stops the step above. Keep the candidate snapshot
+      # so a reviewer can diff it and commit it with an explicit --write.
+      - name: Write the candidate declaration snapshot for review
+        if: failure() && steps.signatures.outcome == 'failure'
+        run: node tooling/api-signatures.mjs --snapshot "$RUNNER_TEMP/api-signatures-candidate.json" --write
+      - name: Retain the candidate declaration snapshot
+        if: failure() && steps.signatures.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-signatures-candidate
+          path: ${{ runner.temp }}/api-signatures-candidate.json
+          if-no-files-found: warn
       - name: Verify the complete component ledger and reviewed public exports
         run: node tooling/verify-component-program.mjs
       - name: Pack every package and check release tarball contents

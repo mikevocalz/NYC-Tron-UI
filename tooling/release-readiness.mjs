@@ -116,9 +116,9 @@ async function loadOwnerComment(url) {
 }
 
 /** Read-only gate: packaging may proceed for a prerelease, but nothing promotes ledger/review status. */
-export async function validateReleaseReadiness({ version, ledger, review, artifacts }, { rootDir = root, loadApproval = loadOwnerComment } = {}) {
+export async function validateReleaseReadiness({ version, ledger, review, artifacts }, { rootDir = root, loadApproval = loadOwnerComment, recordedAdditions } = {}) {
   const channel = releaseChannel(version);
-  const program = validateComponentProgram(ledger, { rootDir });
+  const program = validateComponentProgram(ledger, { rootDir, ...(recordedAdditions ? { recordedAdditions } : {}) });
   validateDistributionRecord(review);
   const inventory = artifacts ? verifyReleaseInventory(artifacts, version, { rootDir }) : undefined;
   if (channel === "prerelease") {
@@ -127,6 +127,8 @@ export async function validateReleaseReadiness({ version, ledger, review, artifa
   }
   const blockers = [];
   if (program.accepted !== program.canonical) blockers.push((program.canonical - program.accepted) + " of 341 components lack accepted eight-platform proof");
+  // Rows added after the baseline (gate T2 onward) block stable exactly like canonical rows.
+  if (program.additions.accepted !== program.additions.total) blockers.push((program.additions.total - program.additions.accepted) + " of " + program.additions.total + " added rows lack accepted eight-platform proof");
   if (review.status !== "approved") blockers.push("owner distribution review is pending");
   if (!inventory) blockers.push("the sixteen actual release archives and SHA256SUMS are required");
   if (blockers.length) fail("stable publication blocked: " + blockers.join("; "));
@@ -147,7 +149,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try {
     result = await validateReleaseReadiness({ version: options["--version"], artifacts: options["--artifacts"],
       ledger: json(join(root, "docs/completion/library-progress.json")), review: json(join(root, "docs/completion/distribution-review.json")) });
-    console.log("Release readiness: " + result.status + " (" + result.channel + "); " + result.program.accepted + "/341 accepted; no acceptance or approval status changed.");
+    console.log("Release readiness: " + result.status + " (" + result.channel + "); " + result.program.accepted + "/341 accepted; " + result.program.additions.accepted + "/" + result.program.additions.total + " added rows accepted; no acceptance or approval status changed.");
   } catch (error) {
     result = { status: "blocked", version: options["--version"], error: error.message };
     console.error(error.message);

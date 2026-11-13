@@ -45,6 +45,13 @@ function fixture(t) {
       implementationReview: "implemented", acceptance: "accepted",
       platformEvidence: Object.fromEntries(REQUIRED_PLATFORMS.map(platform => [platform, { status: "passed", evidence: ["reports/test-proof.md"] }])),
     })),
+    additions: ["W-01", "W-02"].map(id => ({
+      id, name: "AddedControl" + id, phase: "P04", gate: "T2", decision: "reports/test-proof.md",
+      requirement: "Test fixture added capability.", libraryScope: true,
+      sourceCandidates: ["packages/example0/src/Control.ts"], evidence: ["reports/test-proof.md"],
+      implementationReview: "implemented", acceptance: "accepted",
+      platformEvidence: Object.fromEntries(REQUIRED_PLATFORMS.map(platform => [platform, { status: "passed", evidence: ["reports/test-proof.md"] }])),
+    })),
   };
   const manifestSha256 = sha(checksumBytes);
   const review = { ...pendingReview(), status: "approved", approval: {
@@ -57,7 +64,7 @@ function fixture(t) {
     body: distributionApprovalStatement("1.0.0", manifestSha256),
   };
   const validate = (input = {}, loadApproval = async () => response) => validateReleaseReadiness(
-    { version: "1.0.0", ledger, review, artifacts, ...input }, { rootDir, loadApproval });
+    { version: "1.0.0", ledger, review, artifacts, ...input }, { rootDir, loadApproval, recordedAdditions: ["W-01", "W-02"] });
   return { rootDir, artifacts, ledger, review, response, validate };
 }
 
@@ -85,6 +92,23 @@ test("stable cannot publish with any of the 341 rows unverified or with invented
   f.ledger.components[340].acceptance = "accepted";
   delete f.ledger.components[340].platformEvidence.pico;
   await assert.rejects(f.validate(), /cannot be accepted without pico proof/);
+});
+
+test("rows added after the baseline block stable exactly like canonical rows and cannot be dropped to pass", async t => {
+  const f = fixture(t);
+  f.ledger.additions[1].acceptance = "unverified";
+  await assert.rejects(f.validate({}, async () => assert.fail("an unverified addition must fail before owner lookup")), /1 of 2 added rows lack accepted eight-platform proof/);
+  f.ledger.additions[1].acceptance = "accepted";
+  delete f.ledger.additions[1].platformEvidence.quest;
+  await assert.rejects(f.validate(), /W-02 cannot be accepted without quest proof/);
+  const dropped = structuredClone(f.ledger);dropped.additions.pop();
+  await assert.rejects(f.validate({ ledger: dropped }), /W-02 was removed/);
+  const candidate = structuredClone(f.ledger);
+  for (const row of [...candidate.components, ...candidate.additions]) row.acceptance = "unverified";
+  const result = await f.validate({ version: "1.0.0-rc.2", ledger: candidate, review: pendingReview(), artifacts: undefined },
+    async () => assert.fail("a prerelease never claims approval"));
+  assert.equal(result.status, "candidate");
+  assert.deepEqual([result.program.accepted, result.program.additions.accepted, result.program.additions.total], [0, 0, 2]);
 });
 
 test("stable cannot publish from pending, incomplete or locally forged distribution review", async t => {
@@ -165,6 +189,7 @@ test("only complete platform acceptance and a live exact owner approval can make
   });
   assert.equal(requests, 1); assert.equal(result.status, "ready");
   assert.equal(result.program.accepted, 341); assert.equal(result.inventory.archiveCount, 16);
+  assert.equal(result.program.additions.accepted, result.program.additions.total);
   assert.equal(JSON.stringify({ ledger: f.ledger, review: f.review }), before);
 });
 

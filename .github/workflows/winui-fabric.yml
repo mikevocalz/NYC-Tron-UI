@@ -69,7 +69,20 @@ jobs:
             echo "$listing" | grep -qx "$f" || { echo "Missing $f in windows-fluent-fabric pack"; exit 1; }
           done
       - name: Verify the isolated RNW public declaration snapshot
+        id: windows-signatures
         run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot docs/api-signatures-windows.json
+      # A changed public API stops the job above. Keep the candidate snapshot
+      # so a reviewer can diff it and commit it with an explicit --write.
+      - name: Write the candidate RNW declaration snapshot for review
+        if: failure() && steps.windows-signatures.outcome == 'failure'
+        run: node tooling/api-signatures.mjs --package packages/windows-fluent/rnw-fabric --snapshot "$RUNNER_TEMP/api-signatures-windows.json" --write
+      - name: Retain the candidate RNW declaration snapshot
+        if: failure() && steps.windows-signatures.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-signatures-windows-candidate
+          path: ${{ runner.temp }}/api-signatures-windows.json
+          if-no-files-found: warn
       - name: Build canonical shared release packages with the root compiler
         run: |
           corepack enable
@@ -229,6 +242,14 @@ jobs:
           foreach ($header in @("windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronNavigationView.g.h", "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronOverlayAnchor.g.h", "windows/NYCTronFluentFabric/codegen/react/components/NYCTronFluentFabric/TronDragSurface.g.h")) {
             if (-not (Test-Path $header)) { throw "Missing generated native header: $header" }
           }
+          # Gate T2 adds setTitleBar to the TurboModule spec. Keep the generated
+          # header so the PR can show the real codegen output.
+          $spec = "windows/NYCTronFluentFabric/codegen/NativeTronDesktopSpec.g.h"
+          if (-not (Select-String -LiteralPath $spec -Pattern "setTitleBar" -Quiet)) { throw "Generated TronDesktop spec has no setTitleBar" }
+          $codegenOut = Join-Path $env:RUNNER_TEMP "uia-smoke\codegen"
+          New-Item -ItemType Directory -Force $codegenOut | Out-Null
+          Copy-Item -LiteralPath $spec -Destination $codegenOut
+          Select-String -LiteralPath $spec -Pattern "setTitleBar" | ForEach-Object { Write-Host $_.Line.Trim() }
       - name: Generate official RNW application and connect native package
         working-directory: ${{ env.WIN_CONSUMER }}
         shell: pwsh

@@ -13,7 +13,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import ts from "@typescript/typescript6";
-import { NATIVE_MODULE_NAME, regionsEqual, toRegions, NO_REGIONS } from "../src/payload.ts";
+import { NATIVE_MODULE_NAME, regionsEqual, toRegions, NO_REGIONS, NO_WINDOW_CONTROLS, toWindowControlsInsets, windowControlsEqual } from "../src/payload.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = path => readFileSync(join(root, path), "utf8");
@@ -228,4 +228,31 @@ test("web: the snapshot is stable between reads and empty when hinge-blind", () 
   assert.match(manifest, /path: "ios"/);
   assert.match(manifest, /\.iOS\("16\.4"\)/);
   assert.match(manifest, /exclude: \["NYCTronReservedRegions.podspec"\]/);
+});
+
+test("iPadOS window controls: the native read is the corner-adapted safe area minus the plain one", () => {
+  const swift = read("ios/NYCTronReservedRegionsModule.swift");
+  assert.match(swift, /@JS\s*\n\s*@MainActor\s*\n\s*func windowControlsInsets\(\) async -> WindowControlsInsetsRecord/);
+  // Xcode 26 (Swift 6.2) is the first SDK with UIView.LayoutRegion; older CI Xcodes still build.
+  assert.match(swift, /#if compiler\(>=6\.2\)/);
+  assert.match(swift, /#available\(iOS 26\.0, \*\)/);
+  assert.match(swift, /directionalEdgeInsets\(for: \.safeArea\(\)\)/);
+  assert.match(swift, /directionalEdgeInsets\(for: \.safeArea\(cornerAdaptation: \.horizontal\)\)/);
+  assert.match(swift, /directionalEdgeInsets\(for: \.safeArea\(cornerAdaptation: \.vertical\)\)/);
+  assert.match(read("ios/WindowControlsInsetsRecord.swift"), /@Record\s*\nstruct WindowControlsInsetsRecord \{\s*\n\s*var leading: Double\s*\n\s*var trailing: Double\s*\n\s*var height: Double/);
+  // Both entries export the hook; web answers zeros because a page has no system controls over it.
+  assert.match(read("src/index.native.ts"), /useWindowControlsInsets \} from "\.\/useWindowControlsInsets\.native\.ts"/);
+  assert.match(read("src/index.ts"), /useWindowControlsInsets \} from "\.\/useWindowControlsInsets\.ts"/);
+  assert.match(read("src/useWindowControlsInsets.native.ts"), /Platform\.OS === "ios" \? requireOptionalNativeModule/);
+});
+
+test("iPadOS window controls: malformed, negative and absurd fields read as no inset", () => {
+  assert.deepEqual(toWindowControlsInsets({ leading: 94, trailing: 0, height: 32 }), { leading: 94, trailing: 0, height: 32 });
+  assert.equal(toWindowControlsInsets({ leading: 0, trailing: 0, height: 0 }), NO_WINDOW_CONTROLS);
+  for (const payload of [null, undefined, 3, "94", [], {}]) assert.equal(toWindowControlsInsets(payload), NO_WINDOW_CONTROLS);
+  assert.deepEqual(toWindowControlsInsets({ leading: -4, trailing: Number.NaN, height: Infinity }), NO_WINDOW_CONTROLS);
+  assert.deepEqual(toWindowControlsInsets({ leading: 20_000, trailing: "8", height: 30 }), { leading: 0, trailing: 0, height: 30 });
+  assert.equal(windowControlsEqual({ leading: 94, trailing: 0, height: 32 }, { leading: 94, trailing: 0, height: 32 }), true);
+  assert.equal(windowControlsEqual({ leading: 94, trailing: 0, height: 32 }, NO_WINDOW_CONTROLS), false);
+  assert.equal(Object.isFrozen(NO_WINDOW_CONTROLS), true);
 });

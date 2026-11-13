@@ -10,6 +10,7 @@ export interface Spec extends TurboModule {
   focus(ownerToken: string, id: string): Promise<string>;
   minimize(ownerToken: string, id: string): Promise<string>;
   restore(ownerToken: string, id: string): Promise<string>;
+  setTitleBar(ownerToken: string, id: string, style: string): Promise<string>;
   requestClose(ownerToken: string, id: string): Promise<string>;
   resolveClose(ownerToken: string, id: string, generation: string, token: string, accepted: boolean): Promise<string>;
   dispose(ownerToken: string): Promise<void>;

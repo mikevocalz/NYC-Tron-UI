@@ -5376,5 +5376,124 @@
         "P02-P03-final-platform-and-media-controls.md"
       ]
     }
+  ],
+  "additions": [
+    {
+      "id": "W-01",
+      "name": "WindowChromeController",
+      "phase": "P04",
+      "gate": "T2",
+      "decision": "reports/T2-WINDOW-CHROME.md",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/core/src/window-chrome.ts"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "requirement": "Window title-bar contract over the app's @nyc-tron/core/window-lifecycle registry: close, minimize, restore and zoom commands sent one at a time, with the close decision left to the app (a vetoed close keeps the window and document unchanged). Includes the page host for windows the app draws itself.",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md"
+      ]
+    },
+    {
+      "id": "W-02",
+      "name": "WindowTitleBar",
+      "phase": "P04",
+      "gate": "T2",
+      "decision": "reports/T2-WINDOW-CHROME.md",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/ui/src/components/window/WindowTitleBar.tsx"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "requirement": "Title bar and window controls. Drawn controls in a leading (macos) or trailing (windows) layout for hosts with no native chrome, themed by the app's tokens; native mode draws no controls and reserves the system's insets. Keyboard operable with visible focus, accessible names, finger-sized targets, and a polite announcement when a close is refused.",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md",
+        "evidence/t2-window-chrome/2026-11-12-ac63d19/web-argent/RECEIPT.md"
+      ],
+      "platformEvidence": {
+        "web": {
+          "status": "partial",
+          "evidence": [
+            "evidence/t2-window-chrome/2026-11-12-ac63d19/web-argent/RECEIPT.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "W-03",
+      "name": "MacOSWindowChrome",
+      "phase": "P04",
+      "gate": "T2",
+      "decision": "reports/T2-WINDOW-CHROME.md",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/macos-appkit/spark/src/window-chrome.ts"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "requirement": "macOS title bar through the Spark window owner with the real AppKit window buttons (never redrawn): standard, hidden-title and content-under-title-bar styles, the leading inset the buttons occupy read from their frames, and close, minimize, restore and zoom bound to the shared registry with the app's close guard.",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/appkit/window-chrome.json"
+      ],
+      "platformEvidence": {
+        "macos": {
+          "status": "passed",
+          "evidence": [
+            "evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md",
+            "evidence/t2-window-chrome/2026-11-13-6c8c82e/appkit/window-chrome.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": "W-04",
+      "name": "WindowsCaptionChrome",
+      "phase": "P04",
+      "gate": "T2",
+      "decision": "reports/T2-WINDOW-CHROME.md",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/windows-fluent/rnw-fabric/src/window-chrome.ts"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "requirement": "Windows title bar with the system caption buttons and a custom title-bar region in the WinUI host (content extended into the title bar, drag rectangles), the trailing inset the buttons occupy, and close, minimize and restore bound to the shared registry with the app's close decision.",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/winui/window-chrome.json"
+      ],
+      "platformEvidence": {
+        "windows": {
+          "status": "passed",
+          "evidence": [
+            "evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md",
+            "evidence/t2-window-chrome/2026-11-13-6c8c82e/winui/window-chrome.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": "W-05",
+      "name": "WindowControlsInset",
+      "phase": "P04",
+      "gate": "T2",
+      "decision": "reports/T2-WINDOW-CHROME.md",
+      "libraryScope": true,
+      "sourceCandidates": [
+        "packages/reserved-regions/src/useWindowControlsInsets.native.ts",
+        "packages/reserved-regions/src/payload.ts"
+      ],
+      "implementationReview": "implemented",
+      "acceptance": "unverified",
+      "requirement": "iPadOS 26+ window controls inset exposed through @nyc-tron/reserved-regions so toolbars never sit under the system close, minimize and tile buttons when the app is windowed. Zero on Android, web, full screen and older iOS.",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md"
+      ]
+    }
   ]
 }

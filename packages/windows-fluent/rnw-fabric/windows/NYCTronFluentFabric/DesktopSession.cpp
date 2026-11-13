@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DesktopSession.h"
 #include "DesktopGeometry.h"
+#include "DesktopTitleBar.h"
 #include "NativeDragBroker.h"
 #include <commctrl.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -19,6 +20,10 @@ struct DesktopSession::Window {
   std::weak_ptr<DesktopSession> owner;
   HWND hwnd{};
   bool primary{false};
+  TitleBarStyle titleBar{TitleBarStyle::Standard};
+  // Last metrics read while the window was shown. A minimized window keeps
+  // reporting these, since its content keeps the layout it had when shown.
+  TitleBarMetrics titleBarMetrics{};
   RN::ReactNativeWindow surface{nullptr};
   UI::Windowing::AppWindow app{nullptr};
   winrt::event_token changed{}, closing{}, destroying{};
@@ -75,9 +80,15 @@ void DesktopSession::Detach(Window& window) noexcept {
 LRESULT CALLBACK DesktopSession::WindowMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam, UINT_PTR id, DWORD_PTR ref) {
   auto* window = reinterpret_cast<Window*>(ref);
   auto owner = window->owner.lock();
+  const bool layout = owner && (message == WM_SIZE || message == WM_DPICHANGED);
+  // Copy the identity first: the lookup after DefSubclassProc goes through
+  // the session map, never through this pointer.
+  std::string windowId, generation;
+  if (layout && window->titleBar == TitleBarStyle::Extended) { windowId = window->id; generation = window->generation; }
   if (message == WM_NCDESTROY) RemoveWindowSubclass(hwnd, WindowMessage, id);
   const auto result = DefSubclassProc(hwnd, message, wparam, lparam);
   // DefSubclassProc can destroy the Window; never read its pointer afterwards.
+  if (!windowId.empty()) owner->TitleBarLayoutChanged(windowId, generation);
   if (owner && (message == WM_ACTIVATE || message == WM_SIZE || message == WM_MOVE || message == WM_DPICHANGED || message == WM_DISPLAYCHANGE)) owner->Changed();
   return result;
 }
@@ -89,6 +100,14 @@ void DesktopSession::Changed() noexcept {
   catch (std::exception const& error) { m_error(error.what()); }
   catch (winrt::hresult_error const& error) { m_error(winrt::to_string(error.message())); }
   catch (...) { m_error("Native desktop observation failed"); }
+}
+void DesktopSession::TitleBarLayoutChanged(std::string const& id, std::string const& generation) noexcept {
+  auto found = m_windows.find(id);
+  if (m_disposed || found == m_windows.end() || found->second->generation != generation || found->second->titleBar != TitleBarStyle::Extended) return;
+  try { UpdateTitleBarDragRegion(found->second->app, found->second->hwnd); }
+  catch (std::exception const& error) { if (m_error) m_error(error.what()); }
+  catch (winrt::hresult_error const& error) { if (m_error) m_error(winrt::to_string(error.message())); }
+  catch (...) { if (m_error) m_error("Native title bar drag region update failed"); }
 }
 bool DesktopSession::DragWindowIsLive(std::string const& id, std::string const& generation) const noexcept {
   auto found = m_windows.find(id);
@@ -146,6 +165,8 @@ std::string DesktopSession::Snapshot() {
     value.SetNamedValue(L"dpi", Json::JsonValue::CreateNumberValue(GetDpiForWindow(window->hwnd)));
     value.SetNamedValue(L"primary", Json::JsonValue::CreateBooleanValue(window->primary));
     value.SetNamedValue(L"status", Json::JsonValue::CreateStringValue(IsIconic(window->hwnd) ? L"minimized" : L"open"));
+    if (window->titleBar == TitleBarStyle::Extended && !IsIconic(window->hwnd)) window->titleBarMetrics = ReadTitleBarMetrics(window->app);
+    value.SetNamedValue(L"titleBar", TitleBarJson(window->titleBar, window->titleBarMetrics, window->hwnd, scale));
     windows.Append(value);
     if (!IsIconic(window->hwnd) && GetAncestor(GetForegroundWindow(), GA_ROOT) == window->hwnd)
       root.SetNamedValue(L"focusedId", Json::JsonValue::CreateStringValue(winrt::to_hstring(id)));
@@ -204,6 +225,21 @@ void DesktopSession::Focus(std::string const& id) {
 }
 void DesktopSession::Minimize(std::string const& id) { Get(id).app.Presenter().as<UI::Windowing::OverlappedPresenter>().Minimize(); }
 void DesktopSession::Restore(std::string const& id) { Get(id).app.Presenter().as<UI::Windowing::OverlappedPresenter>().Restore(); }
+void DesktopSession::SetTitleBar(std::string const& id, std::string const& style) {
+  const auto next = ParseTitleBarStyle(style);
+  auto& window = Get(id);
+  const auto previous = window.titleBar;
+  try { ApplyTitleBarStyle(window.app, window.hwnd, next); }
+  catch (...) {
+    // Put back the last applied style; the original failure is the one reported.
+    try { ApplyTitleBarStyle(window.app, window.hwnd, previous); } catch (...) {}
+    throw;
+  }
+  window.titleBar = next;
+  // Standard reserves nothing. An Extended window minimized right now reads
+  // its metrics when next shown, and reports zeros until then.
+  window.titleBarMetrics = next == TitleBarStyle::Extended && !IsIconic(window.hwnd) ? ReadTitleBarMetrics(window.app) : TitleBarMetrics{};
+}
 void DesktopSession::RequestClose(std::string const& id) { SendMessageW(Get(id).hwnd, WM_CLOSE, 0, 0); }
 void DesktopSession::ResolveClose(std::string const& id, std::string const& generation, std::string const& token, bool accepted) {
   auto& window = Get(id);

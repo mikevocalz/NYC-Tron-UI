@@ -69,6 +69,11 @@
       "types": "./dist/overlays.d.ts",
       "react-native": "./dist/overlays.js",
       "default": "./dist/overlays.js"
+    },
+    "./window-chrome": {
+      "types": "./dist/window-chrome.d.ts",
+      "react-native": "./dist/window-chrome.js",
+      "default": "./dist/window-chrome.js"
     }
   },
   "scripts": {

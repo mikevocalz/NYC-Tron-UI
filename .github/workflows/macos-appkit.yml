@@ -98,7 +98,20 @@ jobs:
       - name: Build and install archive consumer outside the monorepo
         run: node tooling/macos-appkit/prepare-consumer.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer" --native-acceptance --shared-archives "$RUNNER_TEMP/appkit-shared"
       - name: Verify the installed AppKit public declaration snapshot
+        id: appkit-signatures
         run: node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot docs/api-signatures-macos.json
+      # A changed public API stops the job above. Keep the candidate snapshot
+      # so a reviewer can diff it and commit it with an explicit --write.
+      - name: Write the candidate AppKit declaration snapshot for review
+        if: failure() && steps.appkit-signatures.outcome == 'failure'
+        run: node tooling/api-signatures.mjs --package "$RUNNER_TEMP/nyc-tron-appkit-consumer/node_modules/@nyc-tron/macos-appkit" --compiler-root "$RUNNER_TEMP/nyc-tron-appkit-consumer" --snapshot "$RUNNER_TEMP/api-signatures-macos.json" --write
+      - name: Retain the candidate AppKit declaration snapshot
+        if: failure() && steps.appkit-signatures.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-signatures-macos-candidate
+          path: ${{ runner.temp }}/api-signatures-macos.json
+          if-no-files-found: warn
       - name: Verify the private Spark transport with native Foundation and socketpair
         run: node tooling/macos-appkit/probe-driver-transport.mjs "$RUNNER_TEMP/nyc-tron-appkit-consumer"
       - name: Compile a standalone native AppKit reference
@@ -154,6 +167,24 @@ jobs:
             exit "$build_status"
           fi
           exit "$reporting_status"
+      # Gate T2 adds readTitleBarInsets to NativeNYCTronDisplays. The build
+      # above ran React Native codegen; keep the generated spec it compiled.
+      - name: Retain the generated TurboModule spec
+        working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/appkit-codegen"; mkdir -p "$out"
+          found=0
+          while IFS= read -r file; do
+            found=1
+            cp "$file" "$out/$(echo "$file" | sed 's#^\./##; s#/#__#g')"
+            grep -n 'readTitleBarInsets' "$file"
+          done < <(find . -type f \( -name 'NYCTronAppKitSpec*.h' -o -name 'NYCTronAppKitSpec*.mm' -o -name 'NYCTronAppKitSpecJSI*' \) -exec grep -l 'readTitleBarInsets' {} + 2>/dev/null || true)
+          if [ "$found" != 1 ]; then
+            # Diagnostic only: native acceptance below still has to pass.
+            echo "::warning::No generated NYCTronAppKitSpec file declares readTitleBarInsets"
+            find . -type f -path '*generated*' \( -name '*.h' -o -name '*.mm' \) -not -path './node_modules/react-native/*' | head -60
+          fi
       - name: Exercise actual native controls and window lifetimes
         id: native
         working-directory: ${{ runner.temp }}/nyc-tron-appkit-consumer
@@ -198,6 +229,7 @@ jobs:
             ${{ runner.temp }}/nyc-tron-appkit-consumer/.spark/version
             ${{ runner.temp }}/appkit-toolchain/
             ${{ runner.temp }}/appkit-build-console/
+            ${{ runner.temp }}/appkit-codegen/
       - name: Retain the exact natively tested distribution
         if: success() && steps.native.outcome == 'success'
         uses: actions/upload-artifact@v4

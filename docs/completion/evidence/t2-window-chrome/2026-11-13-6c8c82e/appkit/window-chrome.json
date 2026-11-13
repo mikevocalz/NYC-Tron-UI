@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "sourceRevision": "65370f7e9444c73b5443e43e6c9dcde3fb93b324",
+  "window": "document-1",
+  "titleBarStyle": "contentUnderTitleBar",
+  "steps": [
+    {
+      "name": "controller-close-unsaved",
+      "result": "vetoed",
+      "windows": 2
+    },
+    {
+      "name": "system-close-button-unsaved",
+      "result": "vetoed",
+      "windows": 2,
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "controller-minimize",
+      "result": "done",
+      "nativeMinimized": true,
+      "registry": {
+        "status": "minimized",
+        "focused": false,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "controller-restore",
+      "result": "done",
+      "nativeMinimized": false,
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "system-minimize-button",
+      "nativeMinimized": true,
+      "registry": {
+        "status": "minimized",
+        "focused": false,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "controller-restore-after-system-minimize",
+      "result": "done",
+      "nativeMinimized": false,
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "controller-zoom",
+      "result": "done",
+      "nativeZoomed": true,
+      "frameBefore": {
+        "y": 91,
+        "x": 172,
+        "width": 680,
+        "height": 620
+      },
+      "frameAfter": {
+        "y": 59,
+        "x": 0,
+        "width": 1024,
+        "height": 684
+      },
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": true
+      }
+    },
+    {
+      "name": "controller-unzoom",
+      "result": "done",
+      "nativeZoomed": false,
+      "frameAfter": {
+        "y": 91,
+        "x": 172,
+        "width": 680,
+        "height": 620
+      },
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "system-zoom-button",
+      "nativeFullScreen": true,
+      "fullScreenPrimary": false,
+      "nativeZoomed": true,
+      "frame": {
+        "y": 0,
+        "x": 0,
+        "width": 1024,
+        "height": 768
+      },
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": true
+      }
+    },
+    {
+      "name": "system-zoom-button-exit",
+      "nativeFullScreen": false,
+      "nativeZoomed": false,
+      "frame": {
+        "y": 91,
+        "x": 172,
+        "width": 680,
+        "height": 620
+      },
+      "registry": {
+        "status": "open",
+        "focused": true,
+        "zoomed": false
+      }
+    },
+    {
+      "name": "controller-close-saved",
+      "result": "done",
+      "windows": 1,
+      "registry": {
+        "status": "closed",
+        "focused": false
+      }
+    }
+  ],
+  "style": {
+    "id": 257,
+    "titled": true,
+    "frame": {
+      "y": 91,
+      "x": 172,
+      "width": 680,
+      "height": 620
+    },
+    "fullScreenEntered": 0,
+    "buttons": {
+      "close": {
+        "hiddenOrHasHiddenAncestor": false,
+        "frame": {
+          "y": 598,
+          "x": 7,
+          "width": 14,
+          "height": 16
+        },
+        "enabled": true,
+        "present": true,
+        "hidden": false
+      },
+      "zoom": {
+        "hiddenOrHasHiddenAncestor": false,
+        "frame": {
+          "y": 598,
+          "x": 47,
+          "width": 14,
+          "height": 16
+        },
+        "enabled": true,
+        "present": true,
+        "hidden": false
+      },
+      "minimize": {
+        "hiddenOrHasHiddenAncestor": false,
+        "frame": {
+          "y": 598,
+          "x": 27,
+          "width": 14,
+          "height": 16
+        },
+        "enabled": true,
+        "present": true,
+        "hidden": false
+      }
+    },
+    "fullSizeContentView": true,
+    "contentLayoutRect": {
+      "y": 0,
+      "x": 0,
+      "width": 680,
+      "height": 592
+    },
+    "zoomed": false,
+    "miniaturized": false,
+    "layoutDirection": "leftToRight",
+    "fullScreen": false,
+    "fullScreenExited": 0,
+    "visible": true,
+    "ok": true,
+    "titlebarAppearsTransparent": true,
+    "fullScreenPrimary": false,
+    "titleVisibility": "hidden"
+  },
+  "insets": {
+    "measured": {
+      "leading": 61,
+      "trailing": 0,
+      "height": 28
+    },
+    "expectedLeading": 61,
+    "expectedHeight": 28,
+    "buttonFrames": {
+      "close": {
+        "y": 598,
+        "x": 7,
+        "width": 14,
+        "height": 16
+      },
+      "minimize": {
+        "y": 598,
+        "x": 27,
+        "width": 14,
+        "height": 16
+      },
+      "zoom": {
+        "y": 598,
+        "x": 47,
+        "width": 14,
+        "height": 16
+      }
+    },
+    "reservedStrip": {
+      "y": 0,
+      "x": 0,
+      "width": 680,
+      "height": 28
+    }
+  }
+}

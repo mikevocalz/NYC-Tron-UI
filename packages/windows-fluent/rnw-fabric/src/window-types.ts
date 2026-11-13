@@ -1,10 +1,35 @@
 import type { Rect } from "@nyc-tron/core/folds";
 import type { DisplayInfo, LayoutSnapshot, WindowRecord, WindowRegistryState, Outcome, DragOffer } from "@nyc-tron/core/window-lifecycle";
+import type { TitleBarInsets } from "@nyc-tron/core/window-chrome";
 
 export interface WindowsObservedDisplay extends DisplayInfo {
   readonly pixelBounds: Rect;
   readonly pixelWorkArea: Rect;
 }
+/**
+ * How a native window presents its title bar.
+ * - `standard`: the system draws the whole title bar; app content starts below it.
+ * - `extended`: app content fills the window, including the title-bar strip.
+ *   The system still draws the minimize, maximize and close caption buttons
+ *   over transparent backgrounds, and the strip between them stays draggable.
+ */
+export type WindowsTitleBarStyle = "standard" | "extended";
+
+/**
+ * Observed title-bar geometry for one window, in the same logical units as
+ * the window's `rect` (global physical pixels * 96 / `referenceDpi`).
+ * `leading` and `trailing` follow the window's layout direction; in a
+ * left-to-right window the caption buttons occupy `trailing`. A `standard`
+ * window reports zero insets because the system frame sits outside its content.
+ *
+ * The insets of a minimized window are last-known, not live. A minimized
+ * window has no client area, so the native host reports the values it read
+ * while the window was last shown, and reads them again after a restore.
+ */
+export interface WindowsTitleBar extends TitleBarInsets {
+  readonly style: WindowsTitleBarStyle;
+}
+
 export interface WindowsObservedWindow extends WindowRecord {
   /** Native lifetime identity; reusing an app window ID creates a different generation. */
   readonly generation: string;
@@ -12,6 +37,8 @@ export interface WindowsObservedWindow extends WindowRecord {
   readonly pixelRect: Rect;
   /** Current content DPI, separate from the connection's desktop coordinate scale. */
   readonly dpi: number;
+  /** Title-bar style and the space its system caption buttons occupy. */
+  readonly titleBar: WindowsTitleBar;
 }
 export interface WindowsCloseRequest {
   readonly id: string;
@@ -69,6 +96,24 @@ export interface WindowsWindowHost {
   focus(id: string): Promise<void>;
   minimize(id: string): Promise<void>;
   restore(id: string): Promise<void>;
+  /**
+   * Switches one window between the system title bar and app content
+   * extended under the caption buttons. The style lasts for that window's
+   * native lifetime; a reopened window starts `standard`. Resolves with the
+   * observed insets. Later size and DPI changes arrive as ordinary snapshots.
+   *
+   * Rejects, leaving the window unchanged, when the ID is not a window of this
+   * connection, when this Windows version cannot customize the title bar
+   * (`AppWindowTitleBar.IsCustomizationSupported()` is false), or when the
+   * native transport predates title bars and has no `setTitleBar` (the error
+   * says "unsupported").
+   *
+   * @example
+   * await host.open({ id: "doc", title: "Draft", displayId, rect });
+   * const { trailing, height } = await host.setTitleBar("doc", "extended");
+   * // Leave `height` free at the top and `trailing` free at the end of that strip.
+   */
+  setTitleBar(id: string, style: WindowsTitleBarStyle): Promise<WindowsTitleBar>;
   /** Delivers a real OS close request; the app must resolve the resulting native token. */
   requestClose(id: string): Promise<void>;
   resolveClose(request: WindowsCloseRequest, accepted: boolean): Promise<void>;
