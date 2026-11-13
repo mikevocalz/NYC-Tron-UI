@@ -193,6 +193,88 @@ Upgrading from `v0.1.0-alpha.4`: see [Migration](docs/MIGRATION.md).
 App icons and launcher names: [App identity](docs/APP_IDENTITY.md) covers the
 icon tool and the launcher label check you can run on your own app config.
 
+### Add NYC-Tron UI to an Expo app
+
+Both paths use one command with the release tarball URLs. `<v>` is the
+release version without the leading `v`:
+
+```sh
+npm install --allow-remote=all \
+  https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<v>/nyc-tron-core-<v>.tgz \
+  https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v<v>/nyc-tron-ui-<v>.tgz
+```
+
+npm 12 refuses remote tarballs unless `--allow-remote` permits them; npm 11
+ignores the flag. Do not use `npx expo install` with tarball URLs: with
+Expo CLI 58 and npm 12 it fails with `EALLOWREMOTE` and writes an
+`"undefined"` key into `package.json`.
+
+**New app.** `npx create-expo-app@latest my-app --template blank-typescript`,
+run the command above in `my-app`, then render a component:
+
+```tsx
+import { Button } from "@nyc-tron/ui/components/Button";
+
+export default function App() {
+  return <Button title="Hello" onPress={() => {}} />;
+}
+```
+
+**Existing app.** Run the same command in the app and add a screen that
+imports from `@nyc-tron/ui`. The command changes only `package.json` and
+`package-lock.json`. If the app uses Expo Router's `NativeTabs` (the default
+SDK 58 template does), a new route file is not shown on iOS and Android until
+the tab layout has a `NativeTabs.Trigger` for it; that is app code, not
+something the install does. The web layout needs nothing. An app from the default Expo SDK 58 template keeps the
+`react-native-gesture-handler` 3.3.x that Expo pins: from this commit,
+`@nyc-tron/ui` declares the optional peer `>=3.3.0 <4`
+([V1_DECISIONS](docs/V1_DECISIONS.md) D5, decision 1). The `v1.0.0-rc.1`
+tarballs still declare `>=3.4.0 <4` and fail this step with `ERESOLVE`; with
+them, run `npx expo install react-native-gesture-handler@^3.4.0` first.
+
+**Desktop app (Spark or React Native Windows).** Spark 0.0.3 ships React
+Native 0.83.10 and React Native Windows 0.85 ships 0.85.3, below
+`@nyc-tron/ui`'s `react-native >=0.88` floor. The desktop lanes are below
+ui's React Native floor; only components on the lane's
+[support list](docs/SUPPORT.md#desktop-support-list) are supported. Add this
+override to the app's `package.json`, then run the same command:
+
+```json
+"overrides": { "@nyc-tron/ui": { "react-native": "$react-native" } }
+```
+
+The override applies only to `@nyc-tron/ui`'s `react-native` peer and
+points it at the app's own `react-native` dependency. Do not use
+`--legacy-peer-deps`, which drops every peer check in the tree.
+
+`@nyc-tron/ui` needs no config plugin. Native projects come from
+`npx expo prebuild` (or `npx expo run:ios` / `run:android`, which prebuild
+first); no native file is edited by hand. The
+[install-paths workflow](.github/workflows/install-paths.yml) runs both paths
+on clean runners for web, the iOS simulator and the Android emulator, and the
+desktop install in the Spark and React Native Windows lanes, where the native
+app renders `Button`.
+
+### macOS through Spark: three ways to run
+
+The AppKit lane follows Legend Spark's model
+([overview](https://legend.so/spark/overview/)). Spark 0.0.3 requires Expo
+55.0.32 and React Native 0.83.10, so `@nyc-tron/ui` (React Native `>=0.88`)
+installs only with the scoped override above, and only the components in the
+[desktop support list](docs/SUPPORT.md#desktop-support-list) are supported.
+
+| Mode | Command | Use it when |
+|---|---|---|
+| Prebuilt Spark Runner, Fast Refresh | `npm run macos` (`spark dev`) | The app uses only JavaScript and the native modules Spark's Runner already contains. No Xcode build. |
+| Custom development build | `npx --no-install spark build --dev --platform macos` | The app adds native modules such as `@nyc-tron/macos-appkit`, helper executables or URL/document associations. Still served by Metro with Fast Refresh. |
+| Standalone app | `npm run build`, then `npm run package` to sign and notarize | Release: JavaScript embedded, only the native modules production needs. |
+
+Spark checks the project's native requirements against the selected runtime
+and offers to build a development runtime instead of loading an
+incompatible one. Native settings come from `desktop.config.json` and config
+plugins; [examples/macos-appkit/spark](examples/macos-appkit/spark) commits no
+`macos/` project.
+
 ## Licensing
 
 NYC-Tron's original code is MIT, `Copyright (c) 2026 NYC-Tron UI

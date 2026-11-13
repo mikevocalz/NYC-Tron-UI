@@ -16,6 +16,35 @@ version per tag.
   declarations in `docs/api-signatures.json` changed this way. The types are
   the same; consumers who diff declarations will see the quote change (#68).
 
+## [1.0.0-rc.2] - Unreleased
+
+### Added
+
+- `LayerBlendAndOpacity` takes an optional `alphaModes` catalog, a list of
+  `{id, label, unavailableReason?}` entries built like the existing `modes`
+  and `spaces` props (row B-11, F3 decision option A). One entry renders as
+  plain text instead of a one-item menu. An entry with `unavailableReason` is
+  listed disabled with the reason as its description and cannot be committed.
+  When no entry is available, or the menu is locked, the reasons render as
+  text under the row. A retained unavailable current alpha locks the
+  blend-mode and space menus and the opacity scrubber until the user picks
+  an available alpha.
+  Omitting the prop keeps the 1.0.0-rc.1 menu exactly;
+  `packages/ui/tests/render/layer-blend.render.test.mjs` compares that render
+  with a golden captured from the rc.1 source.
+- `layer-blend-model` exports `LayerAlphaOption` and `defaultAlphaModes`
+  (Straight and Premultiplied, both available). `LayerBlendAndOpacity`
+  re-exports both.
+- `validateLayerBlend` and `layerBlendProblem` take an optional fourth
+  argument, `alphaModes`. Validation throws `RangeError` for an empty catalog,
+  more than two entries, a duplicate or unknown id, a blank label or reason,
+  or a current `alphaMode` outside the catalog. `layerBlendProblem` reports
+  the current entry's `unavailableReason` after blend-mode and space reasons.
+
+This is an additive public API change after 1.0.0-rc.1. Existing callers
+compile and render unchanged. `docs/api-signatures.json` records the new and
+changed declarations.
+
 ## [1.0.0-rc.1] - Unreleased
 
 Prerelease cut from `main` at `3b80c1e`. All 15 packed packages carry version
@@ -165,6 +194,7 @@ Published 2026-11-06T03:56:20Z (2026-11-05 in US Eastern time).
 
 See the [GitHub release](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4).
 
+[1.0.0-rc.2]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v1.0.0-rc.1...HEAD
 [1.0.0-rc.1]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0-rc.1
 [1.0.0]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0
 [0.1.0-alpha.4]: https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4
