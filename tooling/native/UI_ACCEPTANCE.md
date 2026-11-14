@@ -32,6 +32,30 @@ use the documented [native selectors](https://docs.maestro.dev/reference/selecto
 
 ## Evidence and limits
 
+### Partial workspace pilot
+
+After the existing reference and pointer flows, the runner starts the same
+clean installed consumer's authored `library` entry. Four additional Maestro
+flows establish a document-a edit, change to Color, visit document-b and return,
+then save the actual Color layout as a new preset. The existing host copier
+already includes `LibraryAcceptance`, `WorkspaceContinuityDemo` and its entry;
+the reusable controls still resolve from the installed release archives.
+
+`workspace-evidence.mjs` reads the fixture's complete accessibility label from
+the real native hierarchy. It rejects a missing/duplicate node, clipped JSON,
+lost edit, remounted canvas, wrong document/mode, incorrectly saved layout or
+duplicate save event. The original hierarchies, screenshots and JUnit reports
+remain alongside `workspace-observations.json`; the final runtime report hashes
+that observation file and names the three bounded obligations.
+
+This is partial A-01/A-02 controlled-fixture evidence only. The canvas counter
+does not prove rendering or a Rust/Forge document operation. It does not cover
+all modes/panel identities, A-03 dock targets, A-04 splitter/minimum/hinge
+behavior, iPad-specific execution or hardware accessibility. No acceptance
+status changes, and no transport-recovery rule extends to these workspace
+flows. Native execution of this pilot has not yet been performed; source and
+evidence-parser checks are separate from an actual device/simulator result.
+
 The runner requires a matching `consumer.json` source revision and the installed
 release packages. A zero CLI exit must also produce one successful, unskipped
 JUnit case per flow, actual PNG screenshots and a populated OS accessibility

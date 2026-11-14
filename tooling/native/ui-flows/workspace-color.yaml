@@ -1,0 +1,12 @@
+appId: com.nyctron.instruments.example
+name: Workspace pilot Color retains the document edit
+---
+- launchApp:
+    stopApp: false
+- assertVisible: "Canvas edits 1"
+- tapOn: "Color"
+- assertVisible: "Harbor"
+- assertVisible: "Canvas edits 1"
+- assertVisible:
+    id: "workspace-continuity-state"
+- takeScreenshot: workspace-color

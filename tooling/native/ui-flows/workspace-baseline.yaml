@@ -1,0 +1,16 @@
+appId: com.nyctron.instruments.example
+name: Workspace pilot edit baseline
+---
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: "Search assets"
+    timeout: 90000
+- tapOn: "workspace"
+- assertVisible: "Harbor"
+- assertVisible: "Canvas edits 0"
+- tapOn: "Edit canvas state"
+- assertVisible: "Canvas edits 1"
+- assertVisible:
+    id: "workspace-continuity-state"
+- takeScreenshot: workspace-baseline

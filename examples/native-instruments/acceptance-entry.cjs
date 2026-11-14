@@ -20,4 +20,8 @@ function withAcceptanceEntry(config, directory) {
   }};
   return config;
 }
-module.exports = {withAcceptanceEntry};
+/** Match each authored entry's CSS import; the host retains palette ownership. */
+function acceptanceCssEntry(mode = process.env.NYC_TRON_ACCEPTANCE) {
+  return ['reference', 'media', 'pointer'].includes(mode) ? './reference.css' : './global.css';
+}
+module.exports = {withAcceptanceEntry, acceptanceCssEntry};

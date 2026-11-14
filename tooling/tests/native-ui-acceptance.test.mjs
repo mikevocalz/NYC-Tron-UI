@@ -78,7 +78,7 @@ test("the native driver is an immutable official tool and its flows contain no i
   assert.match(MAESTRO.archiveSha256, /^[a-f0-9]{64}$/);
   assert.match(MAESTRO.revision, /^[a-f0-9]{40}$/);
   assert.equal(MAESTRO.url, "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip");
-  for (const name of ["settings", "editor", "pointer", "pointer-cancel"]) {
+  for (const name of ["settings", "editor", "pointer", "pointer-cancel", "workspace-baseline", "workspace-color", "workspace-return", "workspace-preset"]) {
     const flow = readFileSync(new URL("../native/ui-flows/" + name + ".yaml", import.meta.url), "utf8");
     assert.match(flow, /^appId: com\.nyctron\.instruments\.example/m);
     assert.match(flow, /- assertVisible:/);
