@@ -218,6 +218,18 @@ Struck on Windows only until d92b1c1, now supported: `forge/canvas-tools/Gesture
 
 </details>
 
+## Post-rc.2 dependency refresh candidate (2026-11-13)
+
+The November 11 baseline below records the graph tested for rc.2; its outdated
+result is historical. This branch updates active Expo 58 pins to 58.0.25,
+react-native-skia development/example pins to 3.10.1, and both isolated browser
+suite Zustand pins to 5.1.0. React/react-dom remain 19.3.0 and React Native
+remains 0.88.1; Expo 58.0.25 still bundles that same renderer cohort. Spark's
+Expo 55 lane and the RNW 0.85 lane remain isolated. These edits do not alter
+released rc.2 archives or establish native compatibility of the new graph.
+See [the dated candidate disposition](completion/reports/T1-POST-RC2-GRAPH-REFRESH.md)
+for exact scope, remaining version holds, actual commands and pending evidence.
+
 ## Dependency baseline
 
 Checked against npm on 2026-11-11 for gate T1. Each row is either a pin this
