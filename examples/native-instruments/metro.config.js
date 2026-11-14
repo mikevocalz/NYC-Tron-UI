@@ -2,7 +2,7 @@ const path = require('node:path');
 const {createRequire} = require('node:module');
 const {getDefaultConfig} = require('expo/metro-config');
 const {withUniwindConfig} = require('uniwind/metro');
-const {withAcceptanceEntry} = require('./acceptance-entry.cjs');
+const {withAcceptanceEntry, acceptanceCssEntry} = require('./acceptance-entry.cjs');
 const appRequire = createRequire(path.join(__dirname, 'package.json'));
 const config = getDefaultConfig(__dirname);
 config.watchFolders = [...new Set([...(config.watchFolders ?? []), path.resolve(__dirname, '../../packages'), path.resolve(__dirname, '../native-feel')])];
@@ -15,4 +15,4 @@ config.resolver.resolveRequest = (context, name, platform) => {
   const appContext = root ? {...context, originModulePath: origin} : context;
   return resolveRequest ? resolveRequest(appContext, name, platform) : context.resolveRequest(appContext, name, platform);
 };
-module.exports = withUniwindConfig(withAcceptanceEntry(config, __dirname), {cssEntryFile: ['reference', 'media'].includes(process.env.NYC_TRON_ACCEPTANCE) ? './reference.css' : './global.css', dtsFile: './uniwind-types.d.ts'});
+module.exports = withUniwindConfig(withAcceptanceEntry(config, __dirname), {cssEntryFile: acceptanceCssEntry(), dtsFile: './uniwind-types.d.ts'});

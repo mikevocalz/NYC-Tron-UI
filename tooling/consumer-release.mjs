@@ -124,7 +124,7 @@ function prepare(packs, output, kind, manifestSha256) {
   console.log("Prepared " + kind + " consumer at " + project);
 }
 
-function copyNativeHost(project) {
+export function copyNativeHost(project) {
   const source = join(root, "examples/native-instruments");
   for (const entry of readdirSync(source, { withFileTypes: true })) {
     if (entry.isDirectory()) {
@@ -155,8 +155,8 @@ function copyNativeHost(project) {
   writeFileSync(join(project, "metro.config.js"), [
     "const {getDefaultConfig} = require('expo/metro-config');",
     "const {withUniwindConfig} = require('uniwind/metro');",
-    "const {withAcceptanceEntry} = require('./acceptance-entry.cjs');",
-    "module.exports = withUniwindConfig(withAcceptanceEntry(getDefaultConfig(__dirname), __dirname), {cssEntryFile: './reference.css', dtsFile: './uniwind-types.d.ts'});",
+    "const {withAcceptanceEntry, acceptanceCssEntry} = require('./acceptance-entry.cjs');",
+    "module.exports = withUniwindConfig(withAcceptanceEntry(getDefaultConfig(__dirname), __dirname), {cssEntryFile: acceptanceCssEntry(), dtsFile: './uniwind-types.d.ts'});",
   ].join("\n") + "\n");
 }
 
@@ -225,18 +225,20 @@ export default defineConfig({testDir:'.',testMatch:'consumer.spec.mjs',workers:1
   console.log("Built installed " + plan.kind + " consumer without workspace imports");
 }
 
-const [command, first, second, third, ...extra] = process.argv.slice(2);
-if (command === "prepare" && first && second && third) {
-  if (extra.length && (extra.length !== 2 || extra[0] !== "--workspace-manifest" || !extra[1])) throw new Error("Expected --workspace-manifest <producer-sha256>");
-  prepare(resolve(first), resolve(second), third, extra[1]);
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  const [command, first, second, third, ...extra] = process.argv.slice(2);
+  if (command === "prepare" && first && second && third) {
+    if (extra.length && (extra.length !== 2 || extra[0] !== "--workspace-manifest" || !extra[1])) throw new Error("Expected --workspace-manifest <producer-sha256>");
+    prepare(resolve(first), resolve(second), third, extra[1]);
+  }
+  else if (command === "install" && first) {
+    const output = resolve(first);
+    run("npm", ["install", "--ignore-scripts", "--no-audit", "--no-fund"], join(output, "app"));
+    checkInstall(output);
+  } else if (command === "check-install" && first) checkInstall(resolve(first));
+  else if (command === "build-web" && first) await buildWeb(resolve(first));
+  else if (command === "test-web" && first) {
+    const output = resolve(first), plan = readJSON(join(output, "consumer.json"));
+    run("npm", ["test"], join(output, "app"), { CONSUMER_KIND: plan.kind });
+  } else throw new Error("Expected prepare <packs> <new-output> <kind>, install/check-install/build-web/test-web <output>");
 }
-else if (command === "install" && first) {
-  const output = resolve(first);
-  run("npm", ["install", "--ignore-scripts", "--no-audit", "--no-fund"], join(output, "app"));
-  checkInstall(output);
-} else if (command === "check-install" && first) checkInstall(resolve(first));
-else if (command === "build-web" && first) await buildWeb(resolve(first));
-else if (command === "test-web" && first) {
-  const output = resolve(first), plan = readJSON(join(output, "consumer.json"));
-  run("npm", ["test"], join(output, "app"), { CONSUMER_KIND: plan.kind });
-} else throw new Error("Expected prepare <packs> <new-output> <kind>, install/check-install/build-web/test-web <output>");
