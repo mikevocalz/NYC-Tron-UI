@@ -1,0 +1,6 @@
+Scope: all 17 workspace projects
+? Verifying lockfile against supply-chain policies (574 entries)...
+Added 1 entry to minimumReleaseAgeExclude in pnpm-workspace.yaml (set minimumReleaseAgeStrict to true to gate these updates with a prompt):
+  react-native-skia@3.10.1
+✓ Lockfile passes supply-chain policies (574 entries in 1.7s)
+Done in 1.7s using pnpm v12.18.0

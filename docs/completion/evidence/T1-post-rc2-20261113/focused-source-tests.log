@@ -1,0 +1,44 @@
+✔ consumer peers resolve to artifacts, including undeclared additional package coverage (0.975667ms)
+✔ missing tarballs and incompatible runtime lanes cannot silently install from npm (0.343375ms)
+✔ artifact corruption and omitted checksum evidence stop the consumer run (2.027041ms)
+✔ checksum lists reject traversal, duplicate artifacts and empty manifests (0.250833ms)
+✔ clean consumer runtime dependencies use existing exact pins (0.199541ms)
+✔ installed npm lock identifies the exact canonical file bytes instead of a same-version registry package (0.339833ms)
+✔ warmup requests the actual native Expo entry and consumes the complete JavaScript stream (19.5495ms)
+✔ an available Metro status is insufficient: HTTP errors, wrong MIME and empty bundles fail (2.687292ms)
+✔ warmup records bounded-download and timeout failures without a ready receipt (1.560167ms)
+✔ native UI evidence rejects empty, skipped, failed and truncated driver reports (2.152458ms)
+✔ semantic proof comes from a real populated hierarchy with the requested labels (0.304292ms)
+✔ native touch coordinates must come from valid observed accessibility bounds (0.32775ms)
+✔ native reference geometry rejects the observed safe-area origin regression (0.329834ms)
+✔ native geometry requires unique real screen rectangles on both platforms (0.24875ms)
+✔ the native driver is an immutable official tool and its flows contain no injected app scripts (0.782417ms)
+✔ both installed native jobs require the real UI runner and retain semantic and image artifacts (0.261375ms)
+✔ Android recovery requires the exact initial launch transport failure before any app assertion (2.581666ms)
+✔ iOS recovery binds the first Settings tap to its actual Recap sender, nonempty cancelled contact, app and time (0.943791ms)
+✔ near misses, different app/contact, missing registration, empty contacts and out-of-attempt logs are not recoverable (1.075958ms)
+✔ iOS never retries arbitrary assertions, edits, later taps or malformed timing (0.26575ms)
+✔ iOS recovery binds the first Editor tap to the same Recap/cancel evidence (0.169333ms)
+✔ Editor recovery rejects the same near misses and anything past its first tab tap (0.453959ms)
+✔ one eligible recovery retains the failure before a fresh successful attempt (0.5345ms)
+✔ a second failure is final, and an ineligible failure cannot reach recovery (0.34825ms)
+✔ retention preserves the failed JUnit, native logs and screenshots byte for byte, without overwriting them on rerun (6.333ms)
+✔ Editor retention uses its own directory and receipt and cannot replace Settings evidence (2.766084ms)
+✔ Variant A: a refused, contactless Recap tap recovers only with the pre-tap Library route in the app's tree (0.867833ms)
+✔ Variant A needs every piece of evidence; each one missing or contradicted refuses recovery (0.956667ms)
+✔ Variant A is Settings only: the same evidence on the Editor tab is refused (1.2735ms)
+✔ negative: a delivered tap's empty-contact teardown is not a lost touch, whatever the assertion says (0.330916ms)
+✔ negative: an app-side failure with no Recap cancel is never recoverable (0.37825ms)
+✔ negative: a touching-contact cancel stays on the existing rule and never satisfies Variant A (0.78475ms)
+✔ Variant B: a stroke the OS cancelled through Recap mid-swipe, and the app counted as cancelled, recovers once (0.180042ms)
+✔ Variant B refuses app-side stroke failures, unproven cancels and any other command shape (0.703333ms)
+✔ Pointer retention keeps its own directory and receipt beside Settings and Editor (2.54375ms)
+✔ the hierarchy capture outlives Maestro's own pinned driver startup budget (0.065125ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 197.4605

@@ -1,0 +1,126 @@
+{
+  "react@19.3.0": {
+    "current": "19.3.0",
+    "latest": "19.3.1",
+    "wanted": "19.3.0",
+    "isDeprecated": false,
+    "dependencyType": "dependencies",
+    "dependentPackages": [
+      {
+        "name": "@nyc-tron/native-feel-example",
+        "location": "<checkout>/examples/native-feel"
+      },
+      {
+        "name": "@nyc-tron/native-instruments-example",
+        "location": "<checkout>/examples/native-instruments"
+      }
+    ]
+  },
+  "react@19.3.0 (dev)": {
+    "current": "19.3.0",
+    "latest": "19.3.1",
+    "wanted": "19.3.0",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "@nyc-tron/expo-controls",
+        "location": "<checkout>/packages/expo-controls"
+      },
+      {
+        "name": "@nyc-tron/hardware-keys",
+        "location": "<checkout>/packages/hardware-keys"
+      },
+      {
+        "name": "@nyc-tron/native-charts",
+        "location": "<checkout>/packages/native-charts"
+      },
+      {
+        "name": "@nyc-tron/native-controls",
+        "location": "<checkout>/packages/native-controls"
+      },
+      {
+        "name": "@nyc-tron/native-navigation",
+        "location": "<checkout>/packages/native-navigation"
+      },
+      {
+        "name": "@nyc-tron/panes",
+        "location": "<checkout>/packages/panes"
+      },
+      {
+        "name": "@nyc-tron/platform-services",
+        "location": "<checkout>/packages/platform-services"
+      },
+      {
+        "name": "@nyc-tron/reserved-regions",
+        "location": "<checkout>/packages/reserved-regions"
+      },
+      {
+        "name": "@nyc-tron/ui",
+        "location": "<checkout>/packages/ui"
+      }
+    ]
+  },
+  "react-dom@19.3.0": {
+    "current": "19.3.0",
+    "latest": "19.3.1",
+    "wanted": "19.3.0",
+    "isDeprecated": false,
+    "dependencyType": "dependencies",
+    "dependentPackages": [
+      {
+        "name": "@nyc-tron/native-feel-example",
+        "location": "<checkout>/examples/native-feel"
+      },
+      {
+        "name": "@nyc-tron/native-instruments-example",
+        "location": "<checkout>/examples/native-instruments"
+      }
+    ]
+  },
+  "react-dom@19.3.0 (dev)": {
+    "current": "19.3.0",
+    "latest": "19.3.1",
+    "wanted": "19.3.0",
+    "isDeprecated": false,
+    "dependencyType": "devDependencies",
+    "dependentPackages": [
+      {
+        "name": "@nyc-tron/expo-controls",
+        "location": "<checkout>/packages/expo-controls"
+      },
+      {
+        "name": "@nyc-tron/hardware-keys",
+        "location": "<checkout>/packages/hardware-keys"
+      },
+      {
+        "name": "@nyc-tron/native-charts",
+        "location": "<checkout>/packages/native-charts"
+      },
+      {
+        "name": "@nyc-tron/native-controls",
+        "location": "<checkout>/packages/native-controls"
+      },
+      {
+        "name": "@nyc-tron/native-navigation",
+        "location": "<checkout>/packages/native-navigation"
+      },
+      {
+        "name": "@nyc-tron/panes",
+        "location": "<checkout>/packages/panes"
+      },
+      {
+        "name": "@nyc-tron/platform-services",
+        "location": "<checkout>/packages/platform-services"
+      },
+      {
+        "name": "@nyc-tron/reserved-regions",
+        "location": "<checkout>/packages/reserved-regions"
+      },
+      {
+        "name": "@nyc-tron/ui",
+        "location": "<checkout>/packages/ui"
+      }
+    ]
+  }
+}
