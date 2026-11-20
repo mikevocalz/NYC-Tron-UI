@@ -26,15 +26,15 @@
 <h2 id="registry">Registry (shadcn CLI)</h2>
 <p>Each item is copied into your app as source, with the items it depends on. Peers are not installed for you; each page lists them.</p>
 <div class="install"><button class="btn primary" type="button" data-copy="npx shadcn@latest add @nyc-tron/Button">Copy</button><pre><code>npx shadcn@latest add @nyc-tron/Button</code></pre></div>
-<p class="small muted">Registry install is unverified until the first push of <code>r/</code> under tag v1.0.0-rc.2 and a clean app install. Use the <a href="install.html#tarball">release tarball</a> until then.</p>
+<p class="small muted">Registry install is unverified until a clean app installs from the live URL. Registry URLs use ref `main`, a moving ref, until the owner cuts a release tag. They resolve only after this branch is merged to main. Before that, test against a local server. Use the <a href="install.html#tarball">release tarball</a> until then.</p>
 <p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>
 <p>Add the namespace to <code>components.json</code>. shadcn rejects unknown keys, so platform targets are not in this file; see <a href="../agent-native/components-contract.md">components-contract.md</a>.</p>
 <pre><code>{
   &quot;registries&quot;: {
-    &quot;@nyc-tron&quot;: &quot;https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/r/{name}.json&quot;
+    &quot;@nyc-tron&quot;: &quot;https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json&quot;
   }
 }</code></pre>
-<p>Item JSON is served at <code>https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/r/{name}.json</code>, pinned to a release tag, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
+<p>Item JSON is served at <code>https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json</code>, on the moving ref <code>main</code> until a release tag is cut. It resolves only after this branch is merged to main; before that, test against a local server, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
 <p>Native packages cannot be added this way. A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. They install from the tarball and are listed in <a href="../../registry-excluded.json">registry-excluded.json</a>.</p>
 <h2 id="tarball">Release tarball</h2>
 <p>This is the install path that works today. Copied from the README, section "Installing from a release".</p>
@@ -80,11 +80,11 @@ export default function App() {
 <p>The app defines 13 colour variables and 2 radii. <a href="tokens.html">See the tokens page</a>. A missing variable does not fail the build.</p>
 <h2 id="agents">For agents</h2>
 <p>Paste this into an agent that has a terminal and a URL fetcher:</p>
-<pre><code id="agentp">Read https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/llms.txt first. It lists every page. Fetch one page at https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/&lt;id&gt;.md, where &lt;id&gt; is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt; once the registry check passes, otherwise use the release tarball.</code></pre>
+<pre><code id="agentp">Read https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/llms.txt first. It lists every page. Fetch one page at https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/&lt;id&gt;.md, where &lt;id&gt; is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt; once the registry check passes, otherwise use the release tarball.</code></pre>
 <p class="actions"><button class="btn primary" type="button" data-copy-target="agentp">Copy for agent</button><a class="btn" href="../../llms.txt">llms.txt</a></p>
 </main>
 </div>
-<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="https://github.com/mikevocalz/NYC-Tron-UI">source repository</a>, release <a href="https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v1.0.0-rc.2">v1.0.0-rc.2</a>.</p>
+<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="https://github.com/mikevocalz/NYC-Tron-UI">source repository</a>, ref <a href="https://github.com/mikevocalz/NYC-Tron-UI/tree/main">main</a>.</p>
 <p>64 pages are hand-reviewed. 501 are generated from type declarations and source, and say so in their front matter. Accessibility statuses come from reading source, not from rendering.</p></footer>
 <div class="vh" id="live" aria-live="polite" role="status"></div>
 <script src="assets/site.js"></script>

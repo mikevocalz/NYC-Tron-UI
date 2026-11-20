@@ -95,6 +95,8 @@ Those are the two size and line height pairs that occur three or more times in `
 | `onPrimary` | `text-on-primary`. |
 | `onDanger` | `text-on-danger`. |
 
+The default tone `text` is always applied. A `Text` nested inside a coloured `Text` does not inherit the parent colour: pass `tone` to match it. Only the size is inherited, and only when `variant` and `size` are both omitted.
+
 ## States
 
 None. The component has no interactive or conditional state.
