@@ -205,7 +205,7 @@ export function exampleValue(type, refs) {
   if (t === "number") return "{0}";
   if (t === "boolean") return "{false}";
   if (/^(?:React\.)?ReactNode$/.test(t)) return "{null}";
-  if (/^\(.*\)\s*=>\s*[\s\S]+$/.test(t) && !/\|/.test(t.replace(/\([^)]*\)/g, ""))) return "{() => {}}";
+  if (/^\(.*\)\s*=>\s*[\s\S]+$/.test(t) && !/\|/.test(t.replace(/\([^)]*\)/g, ""))) return /=>\s*(?:React\.)?ReactNode$/.test(t) ? "{() => null}" : "{() => {}}";
   const u = literalUnion(t);
   if (u) return JSON.stringify(u[0]);
   if (/^[A-Z][A-Za-z0-9]*$/.test(t)) {

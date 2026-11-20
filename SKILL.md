@@ -51,11 +51,19 @@ Items that ship native code cannot be added with shadcn, because a registry add 
 
 Peers: `react` (>=19) and `react-native` (>=0.88) are required. Every other peer is optional and only needed by the subpaths that import it: `@nyc-tron/core`, `@expo/ui`, `@tanstack/react-table`, `zustand`, `react-native-gesture-handler`, `expo-linear-gradient`, `expo-drag-drop-content-view`, `uniwind`, `react-native-skia`. The `Peers:` line on each page lists the ones that item imports. Install those with `npx expo install <peer>`.
 
-Import with the subpath, never the barrel, so unused controls stay out of the bundle:
+### Imports
+
+The import path depends on how the item was installed. Import with the subpath, never the barrel, so unused controls stay out of the bundle.
+
+- After a registry install (`npx shadcn@latest add @nyc-tron/Button`), `shadcn add` writes the files into the app and the import points at them. Core modules follow the same pattern under `@/lib/nyc-tron/core`.
+- After a tarball install, the import points at the `@nyc-tron/ui` package.
 
 ```tsx
-import { Button } from "@nyc-tron/ui/components/Button";
+import { Button } from "@/components/nyc-tron/ui/components/Button"; // registry install
+import { Button } from "@nyc-tron/ui/components/Button"; // tarball install
 ```
+
+Every page lists both under "Registry install" and "Tarball install", and every Example block uses the registry form. A registry install does not create the `@nyc-tron/ui` package, so an Example copied into a registry-installed app works as written. In a tarball-installed app, replace the prefix `@/components/nyc-tron/ui` with `@nyc-tron/ui` (and `@/lib/nyc-tron/core` with `@nyc-tron/core`).
 
 ## 3. Prerequisites
 

@@ -7,7 +7,7 @@ import {fileURLToPath} from "node:url";
 export const here = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(here, "../..");
 export const AN = "docs/agent-native";
-export const PAGES = "docs/components";
+export const PAGES = process.env.NYC_DOCS_PAGES || "docs/components"; // NYC_DOCS_PAGES is for the check-docs control run only
 export const PLACEHOLDER = "_Not documented._";
 export const SECTIONS = ["Purpose", "Install", "Props", "Variants", "States", "A11y", "Example", "Do/Don't"];
 export const SECTION_KEY = {Purpose: "purpose", Install: "install", Props: "props", Variants: "variants", States: "states", A11y: "a11y", Example: "example", "Do/Don't": "dont"};
@@ -51,6 +51,76 @@ export function registryExcluded() {
   for (const e of registryExcludedEntries()) {
     if (e.package === "@nyc-tron/ui" && e.subpath) out.add(e.subpath.replace(/^@nyc-tron\/ui\/components\//, ""));
   }
+  return out;
+}
+
+// ---------------- import specifiers: registry form and tarball form ----------------
+// Tarball form: `@nyc-tron/ui/components/<id>`, what the release tarball package exports.
+// Registry form: what `shadcn add @nyc-tron/<id>` creates. The prefix comes from `imports` in tooling/registry/config.json
+// and every specifier is verified against the real `files[].target` values in registry.json.
+let _reg = null;
+const PLATFORM_SUFFIX = /\.(native|web|shared|ios|android|windows|macos|qnx)$/;
+export function registryForms() {
+  if (_reg) return _reg;
+  const cfg = readJson("tooling/registry/config.json");
+  const prefixOf = {"@nyc-tron/ui": cfg.imports.ui, "@nyc-tron/core": cfg.imports.core};
+  const targetRoot = {"@nyc-tron/ui": cfg.targets.ui, "@nyc-tron/core": cfg.targets.core};
+  const stems = new Set();
+  if (exists("registry.json")) {
+    for (const it of readJson("registry.json").items) {
+      for (const f of it.files) {
+        if (!f.target) continue;
+        for (const [pkg, root] of Object.entries(targetRoot)) {
+          if (!f.target.startsWith(root + "/")) continue;
+          const stem = prefixOf[pkg] + f.target.slice(root.length).replace(/\.(tsx?|jsx?)$/, "");
+          stems.add(stem);
+          stems.add(stem.replace(PLATFORM_SUFFIX, ""));
+          if (stem.endsWith("/index")) stems.add(stem.slice(0, -"/index".length));
+        }
+      }
+    }
+  }
+  _reg = {cfg, prefixOf, stems};
+  return _reg;
+}
+// Tarball specifier to registry specifier, or null when the specifier is not an @nyc-tron/ui or @nyc-tron/core one.
+export function tarballToRegistry(spec) {
+  const {prefixOf} = registryForms();
+  for (const pkg of Object.keys(prefixOf)) {
+    if (spec === pkg) return prefixOf[pkg];
+    if (spec.startsWith(pkg + "/")) return prefixOf[pkg] + "/" + spec.slice(pkg.length + 1);
+  }
+  return null;
+}
+export const isRegistryForm = (spec) => {
+  const {prefixOf} = registryForms();
+  return Object.values(prefixOf).some((p) => spec === p || spec.startsWith(p + "/"));
+};
+export const isTarballForm = (spec) => /^@nyc-tron\/(ui|core)(\/|$)/.test(spec);
+// True when the registry specifier points at a file that a `shadcn add` writes (registry.json files[].target).
+export const registrySpecifierResolves = (spec) => registryForms().stems.has(spec);
+// Registry specifier for a tarball specifier whose item is installable, else null (native-only items).
+// `sourceFiles` (repo paths of the item's source) covers a subpath that the tarball exports map points at a platform file,
+// for example `components/html` -> `html/semantic.web.js`: the installed module is then `html/semantic`.
+export function registryImportFor(tarballSpec, excludedIds, sourceFiles = []) {
+  const r = tarballToRegistry(tarballSpec);
+  if (!r) return null;
+  const id = tarballSpec.replace(/^@nyc-tron\/ui\/components\//, "").replace(/^@nyc-tron\/core\//, "core/");
+  if (excludedIds && excludedIds.has(id)) return null;
+  if (registrySpecifierResolves(r)) return r;
+  const {prefixOf} = registryForms();
+  for (const f of sourceFiles) {
+    const m = f.match(/^packages\/(ui|core)\/src\/(.+?)\.(?:tsx?|jsx?)$/);
+    if (!m) continue;
+    const cand = prefixOf["@nyc-tron/" + m[1]] + "/" + m[2].replace(PLATFORM_SUFFIX, "");
+    if (registrySpecifierResolves(cand)) return cand;
+  }
+  throw new Error(`registry specifier ${r} (from ${tarballSpec}) matches no files[].target in registry.json`);
+}
+// Every module specifier in a code block: `from "x"`, `import "x"`, `import("x")`, `require("x")`.
+export function importSpecifiers(code) {
+  const out = [];
+  for (const m of code.matchAll(/(?:\bfrom\s*|\bimport\s*\(?\s*|\brequire\s*\(\s*)(["'])([^"']+)\1/g)) out.push(m[2]);
   return out;
 }
 

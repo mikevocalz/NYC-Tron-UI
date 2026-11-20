@@ -12,7 +12,7 @@
 // Deterministic: no clock, no randomness. Running twice produces no diff.
 import fs from "node:fs";
 import path from "node:path";
-import {ROOT, AN, PAGES, PLACEHOLDER, SECTIONS, SECTION_KEY, read, readJson, exists, frontMatterText, tablesIn, mdTable, escCell, parsePage, unionValues, decl, registryExcluded} from "./lib.mjs";
+import {ROOT, AN, PAGES, PLACEHOLDER, SECTIONS, SECTION_KEY, read, readJson, exists, frontMatterText, tablesIn, mdTable, escCell, parsePage, unionValues, decl, registryExcluded, registryImportFor} from "./lib.mjs";
 import {buildModel, buildExample, a11yScanStatus} from "./model.mjs";
 
 const CHECK = process.argv.includes("--check");
@@ -70,27 +70,48 @@ const CATEGORY_T1 = (() => {
 const mark = (key, sources, body) => `<!-- generated:begin ${key} source=${sources.join(",")} -->\n${body}\n<!-- generated:end ${key} -->`;
 const norm = (s) => s.replace(/`/g, "").replace(/\s+/g, " ").trim();
 
+const regImport = (item) => registryImportFor(item.specifier, excluded, item.files);
+// Rewrite the specifiers of a code block to the registry form, so the example works after `shadcn add`.
+// A specifier with no registry install (native-only) keeps its tarball form.
+function exampleToRegistry(code) {
+  return code.replace(/(\bfrom\s*|\bimport\s*)(["'])(@nyc-tron\/(?:ui|core)(?:\/[^"']*)?)\2/g, (m, lead, qt, spec) => {
+    const r = registryImportFor(spec, excluded);
+    return r ? `${lead}${qt}${r}${qt}` : m;
+  });
+}
+
 function installLines(item) {
   const syms = item.comps.length ? item.comps.map((c) => c.name) : item.syms.filter((s) => s.kind === "function" || s.kind === "const").map((s) => s.name);
-  let imp;
-  const specifier = item.specifier;
-  if (!syms.length) {
-    const t = item.syms.slice(0, 6).map((s) => s.name);
-    imp = t.length ? `import type { ${t.join(", ")} } from "${specifier}";` : `import "${specifier}";`;
-  } else {
-    const shown = syms.slice(0, 8);
-    imp = `import { ${shown.join(", ")} } from "${specifier}";`;
-  }
+  const importFor = (specifier) => {
+    if (!syms.length) {
+      const t = item.syms.slice(0, 6).map((s) => s.name);
+      return t.length ? `import type { ${t.join(", ")} } from "${specifier}";` : `import "${specifier}";`;
+    }
+    return `import { ${syms.slice(0, 8).join(", ")} } from "${specifier}";`;
+  };
+  const reg = regImport(item);
   const lines = [
     `- Package: ${item.pkg}`,
-    `- Import: \`${imp}\``,
     `- Peers: ${item.peers.length ? item.peers.join(", ") : "none"}`,
     `- Requires: ${item.registryDependencies.length ? item.registryDependencies.join(", ") : "none"}`,
   ];
-  let cmd;
-  if (excluded.has(item.id)) cmd = `Not in the registry: native-only, shadcn cannot copy it. Import it from the release tarball (see the install page).`;
-  else cmd = "```sh\nnpx shadcn@latest add @nyc-tron/" + item.id + "\n```";
-  return lines.join("\n") + "\n\n" + cmd;
+  const out = [lines.join("\n")];
+  if (reg) {
+    out.push(
+      "### Registry install",
+      "```sh\nnpx shadcn@latest add @nyc-tron/" + item.id + "\n```",
+      "After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.",
+      `- Import: \`${importFor(reg)}\``,
+    );
+  } else {
+    out.push("### Registry install", "Not in the registry: native-only, shadcn cannot copy it. Use the tarball install below.");
+  }
+  out.push(
+    "### Tarball install",
+    `Install ${item.pkg} from the release tarball (README, "Installing from a release"), then import from the package:`,
+    `- Import: \`${importFor(item.specifier)}\``,
+  );
+  return out.join("\n\n").replace(/\n\n(- Import:)/g, "\n$1");
 }
 
 function propsTable(item, pl) {
@@ -177,7 +198,7 @@ function exampleName(item) {
 function genExample(item, forName) {
   const ex = buildExample(item);
   if (!ex) return PLACEHOLDER;
-  const specifier = item.specifier;
+  const specifier = regImport(item) ?? item.specifier;
   const n = item.name;
   const jsx = ex.attrs.length ? `<${n} ${ex.attrs.join(" ")} />` : `<${n} />`;
   return "```tsx example=" + forName + `\nimport { ${n} } from "${specifier}";\n\nexport function Example() {\n  return ${jsx};\n}\n` + "```";
@@ -354,6 +375,7 @@ function tier1Page(item) {
   const strip = (s) => (s ?? "").replace(/\nUNVERIFIED count: \d+\s*$/m, "").replace(/^UNVERIFIED count: \d+\s*$/m, "").trim();
   const ex = (sec.Example ?? "").match(/```tsx example=(\S+)\n[\s\S]*?```/);
   if (!ex) throw new Error("no example for " + item.name);
+  ex[0] = exampleToRegistry(ex[0]);
   exampleNames.add(ex[1]);
   const pre = h.preamble.split("\n").filter((l) => l.trim() && !/^`import /.test(l) && !/^Source: /.test(l)).join("\n");
   let props = mergeProps(item, sec.Props ?? "");

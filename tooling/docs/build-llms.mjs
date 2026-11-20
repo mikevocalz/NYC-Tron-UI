@@ -5,7 +5,7 @@
 // and falls back to v1.0.0-rc.2. Nothing here reads a clock or the network.
 import fs from "node:fs";
 import path from "node:path";
-import {ROOT, AN, PAGES, read, readJson, exists, parsePage, registryRef, isMovingRef, refNote, rawUrl, REPO, registryExcludedEntries} from "./lib.mjs";
+import {ROOT, AN, PAGES, read, readJson, exists, parsePage, registryRef, isMovingRef, refNote, rawUrl, REPO, registryExcludedEntries, registryForms, tarballToRegistry} from "./lib.mjs";
 import {buildModel} from "./model.mjs";
 import {GROUPS} from "../../docs/agent-native/tier2-describe.mjs";
 
@@ -71,6 +71,18 @@ L.push(`- [registry.json](${U("registry.json")}): the shadcn registry index. Ite
 L.push("");
 L.push("Registry install, once the CLI check passes: `npx shadcn@latest add @nyc-tron/<id>`. Find an item with `npx shadcn@latest search @nyc-tron -q \"<what it does>\"`. The namespace entry in `components.json` is `\"@nyc-tron\": \"" + U("r/{name}.json") + "\"`.");
 L.push("");
+{
+  const rf = registryForms();
+  const ex = "@nyc-tron/ui/components/Button";
+  L.push("## Imports");
+  L.push(`The import path depends on the install. After a registry install (\`npx shadcn@latest add @nyc-tron/Button\`), import from \`${tarballToRegistry(ex)}\`; \`shadcn add\` rewrites the \`@/components\` prefix to \`aliases.components\` in the app's \`components.json\`, and core modules use \`${rf.cfg.imports.core}/<name>\`. After a tarball install, import from \`${ex}\`. Each page's Install section gives both under "Registry install" and "Tarball install", and every Example uses the registry form. A registry install does not create the \`@nyc-tron/ui\` package, so copying a tarball import into a registry-installed app fails to resolve.`);
+  L.push("");
+  L.push("```tsx");
+  L.push(`import { Button } from "${tarballToRegistry(ex)}"; // registry install`);
+  L.push(`import { Button } from "${ex}"; // tarball install`);
+  L.push("```");
+  L.push("");
+}
 L.push("Rules in one paragraph: use token names, never colour or spacing literals; spacing keys are unit multiples (`space.2` is 8px, `space.1.5` is 6px) from a closed scale; render every component inside the app's theme CSS; handle default, loading, error, empty, success and offline states yourself, the library draws only what its props say.");
 L.push("");
 L.push("## Layout primitives");

@@ -370,7 +370,8 @@
       + li("", fm.platforms.length ? "Platforms: " + fm.platforms.join(", ") : "Platforms: not stated in source")
       + li("", "Tier " + fm.tier);
     var cmd = "npx shadcn@latest add @nyc-tron/" + id;
-    var imp = (md.match(/^- Import: `(.+)`$/m) || [0, ""])[1];
+    var impAll = []; md.replace(/^- Import: `(.+)`$/gm, function (m, g) { impAll.push(g); return m; });
+    var impReg = impAll[0] || "", impTar = impAll[1] || "";
     $("#cinst").hidden = false;
     $("#cact").hidden = false;
     var cn = $("#cnote");
@@ -456,7 +457,7 @@
     window.__agentText = function () {
       var props = "";
       secs.forEach(function (s) { if (s.title === "Props") { props = s.lines.join("\n").split(/\n### /)[0].trim(); if (props.length > 4000) props = props.slice(0, 4000).replace(/\n[^\n]*$/, "") + "\n(Props table cut at 4000 characters. Full page: " + rawAbs + ")"; } });
-      return "NYC-Tron UI item: " + id + "\nInstall: " + cmd + "\nImport: " + imp + "\nPage (raw markdown): " + rawAbs + "\nDocs: " + fm.docs + ", accessibility " + a + "\n\nProps:\n" + props + "\n";
+      return "NYC-Tron UI item: " + id + "\nInstall: " + cmd + "\nImport after a registry install: " + impReg + (impTar ? "\nImport after a tarball install: " + impTar : "") + "\nPage (raw markdown): " + rawAbs + "\nDocs: " + fm.docs + ", accessibility " + a + "\n\nProps:\n" + props + "\n";
     };
     if (location.hash) { var t = D.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
   }

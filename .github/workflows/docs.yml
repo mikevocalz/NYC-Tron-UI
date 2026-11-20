@@ -50,5 +50,7 @@ jobs:
           }
       - name: Check pages, front matter, props parity, tokens, links, SKILL.md
         run: node tooling/docs/check-docs.mjs
+      - name: Control run, check-docs fails on planted bad pages
+        run: node tooling/docs/check-docs-control.mjs
       - name: SKILL.md copies match
         run: cmp SKILL.md skills/nyc-tron-ui/SKILL.md

@@ -9,7 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
-import {ROOT, AN, PAGES, read, readJson, exists, parsePage, registryRef, isMovingRef, refNote, rawUrl, REPO, mdTable} from "./lib.mjs";
+import {ROOT, AN, PAGES, read, readJson, exists, parsePage, registryRef, isMovingRef, refNote, rawUrl, REPO, mdTable, tarballToRegistry} from "./lib.mjs";
 import {buildModel} from "./model.mjs";
 
 const CHECK = process.argv.includes("--check");
@@ -358,7 +358,7 @@ const compJson = readJson("components.json");
 const peers = Object.keys(uiPkg.peerDependencies ?? {}).filter((p) => p !== "@nyc-tron/core");
 const peersOpt = peers.filter((p) => uiPkg.peerDependenciesMeta?.[p]?.optional);
 const peersReq = peers.filter((p) => !peersOpt.includes(p));
-const agentParagraph = `Read ${LLMS} first. It lists every page. Fetch one page at ${rawUrl(TAG, "docs/components/<id>.md")}, where <id> is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/<id> once the registry check passes, otherwise use the release tarball.`;
+const agentParagraph = `Read ${LLMS} first. It lists every page. Fetch one page at ${rawUrl(TAG, "docs/components/<id>.md")}, where <id> is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/<id> once the registry check passes, otherwise use the release tarball. Imports differ by install: after a registry install use ${tarballToRegistry("@nyc-tron/ui/components/<id>")}, after a tarball install use @nyc-tron/ui/components/<id>. Examples use the registry form.`;
 const install = page({
   title: "Install | NYC-Tron UI",
   desc: "Install NYC-Tron UI into an Expo app from the shadcn registry or from a release tarball.",
@@ -373,6 +373,7 @@ ${installBox("Button")}
 <p>Add the namespace to <code>components.json</code>. shadcn rejects unknown keys, so platform targets are not in this file; see <a href="../agent-native/components-contract.md">components-contract.md</a>.</p>
 <pre><code>${esc(JSON.stringify({registries: compJson.registries}, null, 2))}</code></pre>
 <p>Item JSON is served at <code>${esc(rawUrl(TAG, "r/{name}.json"))}</code>, ${isMovingRef(TAG) ? `on the moving ref <code>${esc(TAG)}</code> until a release tag is cut. It resolves only after this branch is merged to ${esc(TAG)}; before that, test against a local server` : `pinned to tag <code>${esc(TAG)}</code>`}, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
+<p>After a registry install, import from the installed path, for example <code>${esc(tarballToRegistry("@nyc-tron/ui/components/Button"))}</code>. <code>shadcn add</code> rewrites the <code>@/components</code> prefix to <code>aliases.components</code>. The tarball package <code>@nyc-tron/ui</code> does not exist in that app. Every component page shows both imports under "Registry install" and "Tarball install", and its example uses the registry one.</p>
 <p>Native packages cannot be added this way. A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. They install from the tarball and are listed in <a href="../../registry-excluded.json">registry-excluded.json</a>.</p>
 <h2 id="tarball">Release tarball</h2>
 <p>This is the install path that works today. Copied from the README, section "Installing from a release".</p>

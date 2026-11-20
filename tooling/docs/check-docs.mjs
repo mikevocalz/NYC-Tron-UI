@@ -9,9 +9,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import {spawnSync} from "node:child_process";
-import {ROOT, AN, PAGES, PLACEHOLDER, SECTIONS, SECTION_KEY, FM_KEYS, PLATFORM_ORDER, CATEGORIES, A11Y_VALUES, read, readJson, exists, parsePage, tablesIn, codeBlocks, sigData, uiEntries} from "./lib.mjs";
+import {ROOT, AN, PAGES, PLACEHOLDER, SECTIONS, SECTION_KEY, FM_KEYS, PLATFORM_ORDER, CATEGORIES, A11Y_VALUES, read, readJson, exists, parsePage, tablesIn, codeBlocks, sigData, uiEntries, registryForms} from "./lib.mjs";
 import {buildModel, tokenValid, a11yScanStatus} from "./model.mjs";
-import {registryRef, REPO} from "./lib.mjs";
+import {registryRef, REPO, registryExcluded, registryImportFor, importSpecifiers, isRegistryForm, isTarballForm, registrySpecifierResolves} from "./lib.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (k) => (argv.includes(k) ? argv[argv.indexOf(k) + 1] : null);
@@ -58,6 +58,8 @@ if (model.items.filter((i) => i.tier === 1).length !== t1.counts.tier1) fail(1, 
 const PROPS_HEAD = ["Name", "Type", "Default", "Required", "Description"];
 const norm = (s) => s.replace(/`/g, "").replace(/\\\|/g, "|").replace(/\s+/g, " ").trim();
 const sigKeys = new Set(Object.keys(uiEntries()));
+const excludedIds = registryExcluded();
+const tarballSpecs = new Set(model.items.map((i) => i.specifier));
 const MARK_B = /^<!-- generated:begin (\w+) source=(\S+) -->$/;
 const MARK_E = /^<!-- generated:end (\w+) -->$/;
 let unverifiedMentions = 0;
@@ -158,14 +160,44 @@ for (const [id, p] of pages) {
         if (exampleNames.has(m[1])) here(9, `duplicate example name ${m[1]}`);
         exampleNames.add(m[1]);
         exampleBlocks.push({name: m[1], code: b.code, id});
-        if (!/from\s+["']@nyc-tron\//.test(b.code)) here(9, "example does not import from an @nyc-tron specifier");
-        if (!b.code.includes(fm.subpath) && !b.code.includes("@nyc-tron/")) here(9, "example imports not from the real specifier");
+        // Import forms (decision 49): an example uses the registry form, the path a `shadcn add` install creates.
+        const hasRegistry = !excludedIds.has(id);
+        let ownForm = false;
+        for (const spec of importSpecifiers(b.code)) {
+          if (isRegistryForm(spec)) {
+            if (!registrySpecifierResolves(spec)) here(9, `example imports ${spec}, which resolves to neither the registry form nor the tarball form (no registry.json files[].target)`);
+            else ownForm = true;
+          } else if (isTarballForm(spec)) {
+            if (!tarballSpecs.has(spec)) here(9, `example imports ${spec}, which resolves to neither the registry form nor the tarball form (not an export of the package)`);
+            else if (!excludedIds.has(spec.replace(/^@nyc-tron\/ui\/components\//, "").replace(/^@nyc-tron\/core\//, "core/"))) here(9, `example imports the tarball form ${spec}; use the registry form ${registryImportFor(spec, excludedIds, [])}`);
+            else ownForm = true;
+          } else if (/^@nyc-tron\//.test(spec) || /^@\/(components|lib)\/nyc-tron/.test(spec)) here(9, `example imports ${spec}, which resolves to neither the registry form nor the tarball form`);
+        }
+        if (!ownForm) here(9, "example does not import from an @nyc-tron registry specifier");
       }
     }
   } else if (fm.tier === 1) here(9, "tier 1 Example is the placeholder");
-  // Install: the Import line names the page's own subpath
-  const impLine = (sec.Install ?? "").match(/^- Import: `(.+)`$/m);
-  if (!impLine || !impLine[1].includes(`from "${fm.subpath}"`) && !impLine[1].includes(`import "${fm.subpath}"`)) here(2, `Install Import line does not use subpath ${fm.subpath}`);
+  // Install: both forms, labelled, each with an Import line that resolves (decision 49).
+  {
+    const inst = sec.Install ?? "";
+    const parts = inst.split(/^### /m).slice(1).map((x) => ({title: x.split("\n")[0].trim(), body: x.split("\n").slice(1).join("\n")}));
+    const reg = parts.find((x) => x.title === "Registry install");
+    const tar = parts.find((x) => x.title === "Tarball install");
+    const imp = (x) => (x?.body.match(/^- Import: `(.+)`$/m) ?? [])[1] ?? null;
+    const specOf = (line) => (line ? (line.match(/from\s+"([^"]+)"|import\s+"([^"]+)"/) ?? []).slice(1).find(Boolean) ?? null : null);
+    const registryApplies = !excludedIds.has(id);
+    if (!tar) here("X5", "Install has no `### Tarball install` section");
+    else if (specOf(imp(tar)) !== fm.subpath) here("X5", `Tarball install Import line does not use subpath ${fm.subpath}`);
+    if (!reg) here("X5", "Install has no `### Registry install` section");
+    else if (registryApplies) {
+      const want = registryImportFor(it.specifier, excludedIds, it.files);
+      if (!new RegExp("^npx shadcn@latest add @nyc-tron/" + id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$", "m").test(reg.body)) here("X5", `Registry install lacks \`npx shadcn@latest add @nyc-tron/${id}\``);
+      const got = specOf(imp(reg));
+      if (!got) here("X5", "Registry install has no `- Import:` line");
+      else if (got !== want) here("X5", `Registry install Import uses ${got}, expected ${want}`);
+      else if (!registrySpecifierResolves(got)) here("X5", `Registry install Import ${got} matches no registry.json files[].target`);
+    } else if (/npx shadcn@latest add/.test(reg.body)) here("X5", "Registry install shows a shadcn command for an item the registry cannot install");
+  }
   // check 10
   const tierLabel = fm.a11yStatus;
   if (!A11Y_VALUES.includes(tierLabel)) here(10, `a11yStatus ${tierLabel} is not one of ${A11Y_VALUES.join(", ")}`);
@@ -277,25 +309,35 @@ if (arg("--tsc")) {
   for (const b of exampleBlocks) fs.writeFileSync(`${out}/examples/${b.name}.tsx`, b.code);
   fs.symlinkSync(arg("--node-modules"), out + "/node_modules");
   const R = (p) => path.join(ROOT, p);
+  // Both import forms resolve to the same source. The registry form is what a `shadcn add` install creates, so
+  // `@/components/nyc-tron/ui/*` maps to packages/ui/src/* and `@/lib/nyc-tron/core/*` to packages/core/src/*
+  // (prefixes from tooling/registry/config.json). A subpath that only exists as .web/.native files falls through to those.
+  const {cfg: rc} = registryForms();
+  const variants = (dir) => [dir, dir + ".web", dir + ".native", dir + "/index"];
+  const paths = {
+    "@nyc-tron/ui": [R("packages/ui/src/index.ts")], "@nyc-tron/ui/components/*": variants(R("packages/ui/src/components/*")),
+    "@nyc-tron/core": [R("packages/core/src/index.ts")], "@nyc-tron/core/*": variants(R("packages/core/src/*")),
+    "@nyc-tron/icons": [R("packages/icons/src/index.ts")], "@nyc-tron/icons/*": [R("packages/icons/src/*")],
+    [rc.imports.ui]: [R("packages/ui/src/index.ts")], [rc.imports.ui + "/*"]: variants(R("packages/ui/src/*")),
+    [rc.imports.core]: [R("packages/core/src/index.ts")], [rc.imports.core + "/*"]: variants(R("packages/core/src/*")),
+    "react-native": ["./node_modules/react-native/types_generated/index.d.ts"], react: ["./node_modules/@types/react"], "react/*": ["./node_modules/@types/react/*"], "*": ["./node_modules/*", "./node_modules/@types/*"],
+  };
   fs.writeFileSync(
     out + "/tsconfig.json",
     JSON.stringify({
       extends: R("tsconfig.base.json"),
-      compilerOptions: {
-        ignoreDeprecations: "6.0", baseUrl: ".", jsxImportSource: "react", types: [], noEmit: true,
-        paths: {
-          "@nyc-tron/ui": [R("packages/ui/src/index.ts")], "@nyc-tron/ui/components/*": [R("packages/ui/src/components/*")],
-          "@nyc-tron/core": [R("packages/core/src/index.ts")], "@nyc-tron/core/*": [R("packages/core/src/*")],
-          "@nyc-tron/icons": [R("packages/icons/src/index.ts")], "@nyc-tron/icons/*": [R("packages/icons/src/*")],
-          "react-native": ["./node_modules/react-native/types_generated/index.d.ts"], react: ["./node_modules/@types/react"], "react/*": ["./node_modules/@types/react/*"], "*": ["./node_modules/*", "./node_modules/@types/*"],
-        },
-      },
+      compilerOptions: {baseUrl: ".", jsxImportSource: "react", types: [], noEmit: true, ...(arg("--ignore-deprecations") ? {ignoreDeprecations: arg("--ignore-deprecations")} : {}), paths},
       include: ["examples/**/*.tsx"],
     }),
   );
-  const r = spawnSync("node", [arg("--tsc"), "-p", out + "/tsconfig.json"], {encoding: "utf8", maxBuffer: 1 << 28});
-  const errs = (r.stdout + r.stderr).split("\n").filter((l) => l.startsWith("examples/"));
-  tscNote = `check 9: ${exampleBlocks.length} example blocks, tsc --noEmit: ${errs.length} errors in examples`;
+  // Run inside the temp dir so tsc prints `examples/<name>.tsx(...)`; run from the repo it prints `../../tmp/...` paths and the filter below sees nothing.
+  const r = spawnSync("node", [arg("--tsc"), "-p", "tsconfig.json"], {encoding: "utf8", maxBuffer: 1 << 28, cwd: out});
+  const tout = r.stdout + r.stderr;
+  const errs = tout.split("\n").filter((l) => l.startsWith("examples/"));
+  if (r.status !== 0 && !errs.length && !/error TS/.test(tout)) fail(9, "tsc", `tsc did not run: ${tout.slice(0, 300)}`);
+  // Errors in the library source itself (missing optional peers such as zustand) are not example errors.
+  const outside = tout.split("\n").filter((l) => /error TS/.test(l) && !l.startsWith("examples/")).length;
+  tscNote = `check 9: ${exampleBlocks.length} example blocks, tsc --noEmit: ${errs.length} errors in examples (${outside} diagnostics in library source from peers that are not installed, not counted)`;
   for (const e of errs) fail(9, e.split("(")[0], e);
   fs.rmSync(out, {recursive: true, force: true});
 }
