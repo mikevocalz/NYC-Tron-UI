@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Static equivalence proof for the tokenization rewrite (decision 40).
 //
-//   NODE_PATH=<scratch>/node_modules node tooling/codemod/prove-equivalence.mjs [--base origin/main] [--json out.json]
+//   CODEMOD_TOOLS_DIR=<dir with node_modules/ts-morph> node tooling/codemod/prove-equivalence.mjs [--base origin/main] [--json out.json]
 //
 // For every changed packages/*/src/**/*.{ts,tsx} file: substitute each token reference back with the
 // literal it stands for (values read from tokens.json and the sibling <Name>.tokens.ts, never from the
@@ -26,6 +26,15 @@ const INFRA = {
   "packages/core/src/tokens.ts": "generated token module",
   "packages/ui/src/tokens.ts": "generated internal copy of the token module (decision 42)",
   "packages/core/package.json": "adds the ./tokens subpath",
+  "packages/ui/package.json": "adds the layout primitive subpath exports",
+  "packages/ui/src/components/layout/Stack.tsx": "new layout primitive, not codemod output",
+  "packages/ui/src/components/layout/Row.tsx": "new layout primitive, not codemod output",
+  "packages/ui/src/components/layout/Spacer.tsx": "new layout primitive, not codemod output",
+  "packages/ui/src/components/layout/Divider.tsx": "new layout primitive, not codemod output",
+  "packages/ui/src/components/layout/Text.tsx": "new layout primitive, not codemod output",
+  "packages/ui/src/components/layout/stack-style.ts": "new pure style helper for Stack and Row",
+  "packages/ui/tests/layout-primitives.test.mjs": "source-text tests for the new layout primitives",
+  "packages/ui/tests/stack-style.test.mjs": "behaviour test for the stack-style helper",
   "packages/ui/tests/contracts.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/color-hsv.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/shell-inspector.test.mjs": "source-text assertion now accepts size.touch",

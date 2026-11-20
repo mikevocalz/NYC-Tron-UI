@@ -85,6 +85,24 @@ export function scan(text) {
   return found;
 }
 
+// Module references the declaration scanner above does not read: dynamic import(), import("x").T types and
+// require(). A component that uses one would ship an import this gate never resolves, so check-imports
+// fails on them. Returns [{form, line}] from the masked text, so comments and strings never match.
+const UNSCANNED = [
+  ["dynamic import() or import type", /(?<![\w$.])import\s*\(/g],
+  ["require()", /(?<![\w$.])require\s*\(/g],
+  ["import x = require()", /(?<![\w$.])import\s+[\w$]+\s*=\s*require\b/g],
+];
+export function unscannedModuleForms(text) {
+  const mask = maskKeepingOffsets(text);
+  const out = [];
+  for (const [form, re] of UNSCANNED) {
+    re.lastIndex = 0;
+    for (let m; (m = re.exec(mask)); ) out.push({ form, line: mask.slice(0, m.index).split("\n").length });
+  }
+  return out;
+}
+
 export const importSpecifiers = (text) => scan(text).map((d) => d.spec);
 
 // fn(spec) returns a replacement or null to keep it. Everything else stays byte for byte.

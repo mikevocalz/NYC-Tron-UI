@@ -488,7 +488,7 @@ const excludedDoc = {
   entries: excludedEntries,
 };
 
-const rawBase = `${cfg.rawBase}/${cfg.repo}/${cfg.tag}/r/{name}.json`;
+const rawBase = `${cfg.rawBase}/${cfg.repo}/${cfg.ref}/r/{name}.json`;
 const components = {
   $schema: "https://ui.shadcn.com/schema.json",
   style: cfg.components.style,

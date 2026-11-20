@@ -220,5 +220,5 @@ test("data grids expose grid semantics instead of per-cell buttons",()=>{
   const tree=readFileSync(resolve(root,"src/components/data/TreeGrid.tsx"),"utf8");
   for(const role of ["treegrid","row","columnheader","cell"])assert.ok(tree.includes(`role="${role}"`),role);
   assert.ok(tree.includes("treeRowAccessibilityLabel(item)"));
-  assert.ok(/minHeight:(44|\w+\.touch)/.test(tree));
+  assert.ok(/minHeight:(44|(?:size|sizeToken)\.touch)/.test(tree));
 });

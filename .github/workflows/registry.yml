@@ -1,8 +1,9 @@
 name: Registry
 
 # Rebuilds registry.json and r/*.json from source and fails when the committed copy differs,
-# then checks every import in every generated file. No pnpm install: the generator has no
-# dependencies and fetches shadcn@4.23.0 through npx.
+# then checks every import in every generated file and runs the token equivalence proof.
+# No pnpm install: the generator has no dependencies and fetches shadcn@4.23.0 through npx, and the
+# codemod tools get ts-morph from a small npm install outside the repo (CODEMOD_TOOLS_DIR).
 on:
   pull_request:
   push:
@@ -18,6 +19,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0 # the equivalence proof reads the original of every changed file from origin/main
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24.19.0"
@@ -45,6 +48,21 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/ajv" ajv@8.17.1 --no-audit --no-fund --silent
           node tooling/registry/validate-schema.mjs --ajv "$RUNNER_TEMP/ajv"
+
+      # ts-morph at the version the root package.json pins, installed outside the repo. No pnpm install.
+      - name: Install ts-morph for the codemod tools
+        run: |
+          version="$(node -p "require('./package.json').devDependencies['ts-morph']")"
+          npm install --prefix "$RUNNER_TEMP/codemod-tools" "ts-morph@${version}" --no-audit --no-fund --silent
+          echo "CODEMOD_TOOLS_DIR=$RUNNER_TEMP/codemod-tools" >> "$GITHUB_ENV"
+
+      - name: Token modules match tokens.json
+        run: node tooling/codemod/generate-token-module.mjs --check
+
+      # Every changed packages/*/src file folds back to its original AST once token references are replaced
+      # by the values they stand for. Needs ts-morph (CODEMOD_TOOLS_DIR above) and origin/main (fetch-depth 0).
+      - name: Prove the token rewrite is value-equivalent
+        run: node tooling/codemod/prove-equivalence.mjs --base origin/main
 
       - name: No hardcoded values in packages
         run: |

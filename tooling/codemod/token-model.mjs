@@ -107,4 +107,8 @@ export function normalizeColor(text) { return text.replace(/\s+/g, ""); }
 // Packages that must not import @nyc-tron/core at runtime (decision 42) read their own generated copy.
 // The copy sits at packages/<pkg>/src/tokens.ts and is imported relatively. Others use the core subpath.
 export const LOCAL_TOKEN_PACKAGES = ["ui"];
+// Packages that depend on @nyc-tron/core but must not import its ./tokens subpath: older core tarballs
+// have no such export, so a panes build against them fails at bundle time (decision 46). They stay
+// untokenised and sit in tooling/codemod/allowlist.json.
+export const CORE_TOKENS_OPTOUT = ["panes"];
 export const TOKEN_COPIES = ["packages/core/src/tokens.ts", ...LOCAL_TOKEN_PACKAGES.map((p) => `packages/${p}/src/tokens.ts`)];

@@ -60,6 +60,14 @@
     "minSize"
    ]
   },
+  "packages/panes/src/components/AdaptivePaneHost.tsx": {
+   "reason": "older core tarballs have no ./tokens subpath (decision 46). Panes already requires core, so importing @nyc-tron/core/tokens would break installs against an rc.2 core. Tokenize once panes and core bump together.",
+   "max": 4,
+   "kinds": [
+    "minSize",
+    "colorFn"
+   ]
+  },
   "packages/ui/src/components/forge/photo/photo-export.ts": {
    "reason": "Default watermark settings in a data model (fontSize 24, opacity 0.7). Not a style object, so the codemod leaves it.",
    "max": 2,

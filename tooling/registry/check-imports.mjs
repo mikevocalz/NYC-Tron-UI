@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { scan } from "./scan-imports.mjs";
+import { scan, unscannedModuleForms } from "./scan-imports.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "../..");
@@ -104,6 +104,7 @@ for (const [name, item] of [...items].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
     const fromBase = targetToImportBase(f.target || "");
     if (!fromBase) continue;
     if (typeof f.content !== "string") { fail(name, "", f.path, "file has no inline content"); continue; }
+    for (const u of unscannedModuleForms(f.content)) fail(name, u.form, `${f.path}:${u.line}`, "module reference the import scanner does not resolve; use a static import");
     for (const d of scan(f.content)) {
       importCount++;
       const spec = d.spec;

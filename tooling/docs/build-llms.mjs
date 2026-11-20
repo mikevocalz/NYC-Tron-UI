@@ -1,16 +1,16 @@
 // Generates llms.txt (llmstxt.org format, small) and llms-full.txt (the whole corpus) from docs/components/*.md.
 //   node tooling/docs/build-llms.mjs            write both files
 //   node tooling/docs/build-llms.mjs --check    exit 1 if either would change
-// URLs point at raw.githubusercontent.com pinned to one tag: releaseTag() in lib.mjs reads tooling/registry/config.json
+// URLs point at raw.githubusercontent.com on one ref: registryRef() in lib.mjs reads `ref` in tooling/registry/config.json
 // and falls back to v1.0.0-rc.2. Nothing here reads a clock or the network.
 import fs from "node:fs";
 import path from "node:path";
-import {ROOT, AN, PAGES, read, readJson, exists, parsePage, releaseTag, rawUrl, REPO, registryExcludedEntries} from "./lib.mjs";
+import {ROOT, AN, PAGES, read, readJson, exists, parsePage, registryRef, isMovingRef, refNote, rawUrl, REPO, registryExcludedEntries} from "./lib.mjs";
 import {buildModel} from "./model.mjs";
 import {GROUPS} from "../../docs/agent-native/tier2-describe.mjs";
 
 const CHECK = process.argv.includes("--check");
-const TAG = releaseTag();
+const TAG = registryRef();
 const U = (p) => rawUrl(TAG, p);
 const model = buildModel();
 const copy1 = new Map(readJson(`${AN}/copy.json`).items.map((i) => [i.id, i]));
@@ -92,7 +92,7 @@ L.push("");
 L.push("## Limits stated plainly");
 L.push(`- **Native-only packages are not installable by shadcn.** ${excl.length} subpaths in ${Object.keys(exclPkgs).length} packages ship native code (${Object.entries(exclPkgs).map(([p, n]) => `${p.replace("@nyc-tron/", "")} ${n}`).join(", ")}). A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. Install them from the release tarball. List: [registry-excluded.json](${U("registry-excluded.json")}).`);
 L.push(`- **Engine facades are not registry items.** cadence, folio, pitch, prism, quill, splice, tally and studio-layout need the Rust engine, which ships as a GitHub release tarball.`);
-L.push(`- **Registry install is unverified until the live check.** The CLI's acceptance of raw.githubusercontent.com content types was checked against a local server only. Until the item JSON is pushed under tag ${TAG} and a clean app installs from it, use the tarball path.`);
+L.push(`- **Registry install is unverified until the live check.** The CLI's acceptance of raw.githubusercontent.com content types was checked against a local server only. ${refNote(TAG)} Until a clean app installs from the live URL, use the tarball path.`);
 L.push(`- **Accessibility statuses come from reading source, not from rendering.** Of the ${t1.length} hand-reviewed items: ${counts.PASS} reviewed-pass, ${counts.FAIL} reviewed-fail, ${counts.UNVERIFIED} unverified. Nothing was rendered and no screen reader was run. \`verified\` is reserved for a rendered check and no page has it. The ${t2.length} generated pages say \`declared\` when the source sets an accessibility prop and \`unverified\` when it sets none.`);
 L.push(`- **Touch targets: 44pt passes Apple, 44dp is 4dp under Android's 48dp guideline.** ${f08} hand-reviewed items size a control with the literal 44 (finding F08 in docs/agent-native/05-accessibility-review.md). WCAG 2.1 AA has no target-size criterion, so this is a guideline finding, not a conformance failure.`);
 L.push(`- **Icons: 47 glyphs are drawn; 42 of 1,463 catalog ids resolve to one; 6 drawn glyphs are not catalog ids.** An unresolved icon name renders nothing. Do not read the catalog size as availability.`);
@@ -114,7 +114,7 @@ const llms = L.join("\n") + "\n";
 const F = [];
 F.push("# NYC-Tron UI, full documentation");
 F.push("");
-F.push(`> Every documentation page in one file (${model.items.length} pages, tag ${TAG}). This file is large. For one component, fetch its page: ${U("docs/components/<id>.md")}. The short index is ${U("llms.txt")}.`);
+F.push(`> Every documentation page in one file (${model.items.length} pages, ref ${TAG}). This file is large. For one component, fetch its page: ${U("docs/components/<id>.md")}. The short index is ${U("llms.txt")}.`);
 F.push("");
 F.push("## Theme contract");
 F.push("");
@@ -148,5 +148,5 @@ for (const [f, text] of out) {
 const est = (s) => Math.round(Buffer.byteLength(s) / 4);
 console.log(`llms.txt: ${Buffer.byteLength(llms)} bytes, about ${est(llms)} tokens (bytes/4); ${t1.length} tier 1 lines, ${groups.size} group lines`);
 console.log(`llms-full.txt: ${Buffer.byteLength(full)} bytes, about ${est(full)} tokens (bytes/4). This is large.`);
-console.log(`tag: ${TAG}; ${CHECK ? "would change" : "written"}: ${changed} file(s)`);
+console.log(`ref: ${TAG}; ${CHECK ? "would change" : "written"}: ${changed} file(s)`);
 if (CHECK && changed) process.exit(1);

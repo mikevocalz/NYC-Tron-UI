@@ -1,19 +1,25 @@
 // AST analysis shared by tokenize.mjs (rewrite) and prove-equivalence.mjs (re-scan of what is left).
-// ts-morph resolves from the repo when installed, else from NODE_PATH (CI and scratch installs).
+// ts-morph resolves from the repo when installed, else from CODEMOD_TOOLS_DIR/node_modules (CI and scratch installs), else NODE_PATH.
 import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { basename, dirname, join, posix } from "node:path";
 import { readFileSync } from "node:fs";
 import {
-  FAMILY_OF_CATEGORY, EXPORT_ORDER, LOCAL_TOKEN_PACKAGES, keyOfTokenName, normalizeColor, propertyCategories, readModel,
+  FAMILY_OF_CATEGORY, EXPORT_ORDER, LOCAL_TOKEN_PACKAGES, CORE_TOKENS_OPTOUT, keyOfTokenName, normalizeColor, propertyCategories, readModel,
   referenceText, root, scopedKey, sharedTable,
 } from "./token-model.mjs";
 
 const require = createRequire(import.meta.url);
 export function loadTsMorph() {
-  try { return require("ts-morph"); } catch (error) {
-    throw new Error("ts-morph is not resolvable. Install it in a scratch dir and set NODE_PATH to its node_modules (" + error.message + ")");
+  // Lookup order: the repo's own node_modules, CODEMOD_TOOLS_DIR/node_modules (CI installs ts-morph there
+  // without a pnpm install), then NODE_PATH.
+  const errors = [];
+  const attempts = [() => require("ts-morph")];
+  if (process.env.CODEMOD_TOOLS_DIR) attempts.push(() => createRequire(join(process.env.CODEMOD_TOOLS_DIR, "package.json"))("ts-morph"));
+  for (const attempt of attempts) {
+    try { return attempt(); } catch (error) { errors.push(error.message); }
   }
+  throw new Error("ts-morph is not resolvable. Run `npm i --prefix <dir> ts-morph@<version>` and set CODEMOD_TOOLS_DIR=<dir>, or set NODE_PATH (" + errors[0] + ")");
 }
 
 /** packages/<pkg>/src/**\/*.{ts,tsx}: no tests, declarations, generated output, or generated token files. */
@@ -242,7 +248,7 @@ export function createAnalyzer({ cwd = root } = {}) {
   function analyze(file, text) {
     const pkg = file.split("/")[1];
     const sf = project.createSourceFile("/" + file, text, { overwrite: true });
-    const canTokenize = withCore.has(pkg);
+    const canTokenize = withCore.has(pkg) && !CORE_TOKENS_OPTOUT.includes(pkg);
     const shortcuts = { replaced: [], left: [], edits: [], families: new Set(), scoped: new Map() };
     const line = (n) => sf.getLineAndColumnAtPos(n.getStart()).line;
     const record = (cat, literal, token, n) => shortcuts.replaced.push({ category: cat, literal, token, line: line(n), prop: (n.getFirstAncestor((a) => Node.isPropertyAssignment(a)) ?? n).getStart() });
@@ -272,7 +278,7 @@ export function createAnalyzer({ cwd = root } = {}) {
           const norm = normalizeColor(s.string);
           if (!/^(rgba?|hsla?)\(\s*\d/.test(s.string) && !/rgba?\(/.test(s.string)) continue;
           if (!ctx) { leave("colorFn", s.string, "non-style-context", s.node); continue; }
-          if (!canTokenize) { leave("colorFn", s.string, "package-without-core-dependency", s.node); continue; }
+          if (!canTokenize) { leave("colorFn", s.string, "package-without-core-tokens", s.node); continue; }
           let family = null, key = null;
           if (prop === "boxShadow" && elevationByValue[norm] !== undefined && s.string === shared.elevation[elevationByValue[norm]]) { family = "elevation"; key = elevationByValue[norm]; }
           else if (prop !== "boxShadow" && scrimByValue[norm] !== undefined && s.string === shared.scrim[scrimByValue[norm]]) { family = "scrim"; key = scrimByValue[norm]; }
@@ -294,7 +300,7 @@ export function createAnalyzer({ cwd = root } = {}) {
         if (cat === "minSize44") { if (v !== 44) continue; }
         if (cat === "opacity" && (v === 0 || v === 1)) { leave(cat, key, "exempt-opacity-0-1", l.node); continue; }
         if (v === 0 && !onScale[cat]["0"]) { leave(cat, key, "exempt-zero-no-token", l.node); continue; }
-        if (!canTokenize) { leave(cat, key, "package-without-core-dependency", l.node); continue; }
+        if (!canTokenize) { leave(cat, key, "package-without-core-tokens", l.node); continue; }
         if (cat === "minSize44") { pending.push({ node: l.unit, family: "size", key: "touch", category: cat }); record(cat, key, "size.touch", l.node); continue; }
         const on = onScale[cat][key];
         if (on) {

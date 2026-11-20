@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Value-preserving tokenization codemod (decisions 6, 10, 12 to 14, 40).
 //
-//   NODE_PATH=<scratch>/node_modules node tooling/codemod/tokenize.mjs [--write] [--report <file>] [--retarget-imports]
+//   CODEMOD_TOOLS_DIR=<dir with node_modules/ts-morph> node tooling/codemod/tokenize.mjs [--write] [--report <file>] [--retarget-imports]
 // Packages in LOCAL_TOKEN_PACKAGES (token-model.mjs, ui) import their own packages/<pkg>/src/tokens.ts relatively.
 //
 // Rewrites numeric style literals in packages/*/src/**/*.{ts,tsx} to references into

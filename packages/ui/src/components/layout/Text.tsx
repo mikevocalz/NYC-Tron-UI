@@ -14,7 +14,7 @@ export interface TextProps extends Omit<NativeTextProps, "children"> {
   variant?: TextVariant;
   /** Font size only. Overrides the variant size and drops its line height. */
   size?: TextSize;
-  /** Theme colour role. Default `text`. */
+  /** Theme colour role. Default `text`, always applied: a Text inside a coloured Text does not inherit the parent colour, so pass `tone` to match it. */
   tone?: TextTone;
   className?: string;
 }

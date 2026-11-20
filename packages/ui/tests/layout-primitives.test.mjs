@@ -1,3 +1,5 @@
+// Source-text checks: these read the component files and assert on their text (imports, token use, style order).
+// They do not render anything. stack-style.test.mjs runs the style helper.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";

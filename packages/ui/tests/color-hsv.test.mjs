@@ -140,7 +140,7 @@ test("HsvPicker contract: shared math, controlled, accessible, motion-free",()=>
   assert.ok(!/useState|useReducer|createStore/.test(picker),"picker must not own color state");
   for(const a of ["increment","decrement","increaseBrightness","decreaseBrightness","increaseHue","decreaseHue"])
     assert.ok(picker.includes(`name:"${a}"`),a);
-  assert.match(picker,/minWidth:(44|\w+\.touch),minHeight:(44|\w+\.touch)/);
+  assert.match(picker,/minWidth:(44|(?:size|sizeToken)\.touch),minHeight:(44|(?:size|sizeToken)\.touch)/);
   assert.ok(!/Animated|LayoutAnimation|react-native-reanimated|withTiming|withSpring/.test(picker),
     "picker introduces no animation");
   assert.ok(!/onPanResponderRelease:[^,]*onApply/.test(picker),"apply is explicit, never on release");

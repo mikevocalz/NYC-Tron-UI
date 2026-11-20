@@ -21,19 +21,18 @@ export const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
 export const readJson = (p) => JSON.parse(read(p));
 export const exists = (p) => fs.existsSync(path.join(ROOT, p));
 
-// Release tag used in raw.githubusercontent URLs. One variable. Registry config wins when present.
-export function releaseTag() {
-  for (const p of ["tooling/registry/config.json"]) {
-    if (exists(p)) {
-      try {
-        const c = readJson(p);
-        const t = c.tag ?? c.releaseTag ?? c.ref ?? c.version;
-        if (typeof t === "string" && t) return t;
-      } catch {}
-    }
-  }
-  return "v1.0.0-rc.2";
+// Git ref used in raw.githubusercontent URLs. One variable: `ref` in tooling/registry/config.json.
+// It is `main`, a moving ref, until the owner cuts a release tag (decision 45). `set-ref.mjs <ref>` changes it.
+export function registryRef() {
+  const c = readJson("tooling/registry/config.json");
+  if (typeof c.ref !== "string" || !c.ref) throw new Error("tooling/registry/config.json has no `ref`");
+  return c.ref;
 }
+// A ref that looks like a version tag is pinned. Anything else (main, master, a branch) moves.
+export const isMovingRef = (ref) => !/^v?\d+\.\d+/.test(ref);
+export const refNote = (ref) => isMovingRef(ref)
+  ? `Registry URLs use ref \`${ref}\`, a moving ref, until the owner cuts a release tag. They resolve only after this branch is merged to ${ref}. Before that, test against a local server.`
+  : `Registry URLs are pinned to tag ${ref}.`;
 export const REPO = "mikevocalz/NYC-Tron-UI";
 export const rawUrl = (tag, p) => `https://raw.githubusercontent.com/${REPO}/${tag}/${p}`;
 

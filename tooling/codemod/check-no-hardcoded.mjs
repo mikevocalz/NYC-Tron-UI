@@ -171,6 +171,7 @@ for (const f of Object.keys(allow.files ?? {})) if (!results[f]) notices.push(`$
 if (args.has("--list")) for (const [f, h] of Object.entries(results)) for (const x of h) console.log(`${f}:${x.line} [${x.kind}] ${x.text}`);
 const files = listFiles().length;
 console.log(`check-no-hardcoded (${mode} mode): scanned ${files} files, ${total} hit(s): ${total - allowlisted} not allowlisted, ${allowlisted} allowlisted in ${Object.keys(allow.files ?? {}).length} file entries`);
+console.log("  not checked: top/left/right/bottom and inset offsets, width, height, flex, zIndex, shadowRadius, shadowOffset, elevation, minWidth/minHeight other than 44, and native code (see AGENTS.md)");
 for (const [k, v] of Object.entries(counts)) console.log(`  not allowlisted ${k}: ${v}`);
 for (const n of notices) console.log("  notice: " + n);
 if (problems.length) { console.error("\n" + problems.join("\n")); console.error(`\nFAILED: ${problems.length} problem(s). Use a token from @nyc-tron/core/tokens or add a reasoned entry to tooling/codemod/allowlist.json.`); process.exit(1); }

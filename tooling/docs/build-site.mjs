@@ -5,16 +5,16 @@
 // tokens.html and tokens.md, install.html, search.html, search-index.json, assets/site.css, assets/site.js, assets/pages.js.
 // Why c.html and not 560 files: 560 static pages cost about 5 MB of generated HTML that repeats docs/components/*.md.
 // One pages.js (the markdown, markers stripped) is about 2 MB and opens from file://, where fetch() of a sibling file is blocked.
-// Raw markdown for every page stays at ../components/<id>.md (relative) and at the raw.githubusercontent.com tag URL.
+// Raw markdown for every page stays at ../components/<id>.md (relative) and at the raw.githubusercontent.com URL at the registry ref.
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
-import {ROOT, AN, PAGES, read, readJson, exists, parsePage, releaseTag, rawUrl, REPO, mdTable} from "./lib.mjs";
+import {ROOT, AN, PAGES, read, readJson, exists, parsePage, registryRef, isMovingRef, refNote, rawUrl, REPO, mdTable} from "./lib.mjs";
 import {buildModel} from "./model.mjs";
 
 const CHECK = process.argv.includes("--check");
 const OUT = "docs/site";
-const TAG = releaseTag();
+const TAG = registryRef();
 const model = buildModel();
 const BUDGET = {css: 24 * 1024, js: 32 * 1024, search: 400 * 1024, c: 24 * 1024};
 
@@ -153,7 +153,7 @@ const siteNav = (cur) => {
   return `<p class="navh">Site</p><ul class="navlist">${l("index.html", "Home", "home")}${l("install.html", "Install", "install")}${l("tokens.html", "Theme tokens", "tokens")}${l("search.html", "Search", "search")}</ul>
 <p class="navh">For agents</p><ul class="navlist"><li><a href="../../llms.txt">llms.txt</a></li><li><a href="../../SKILL.md">SKILL.md</a></li><li><a href="../components/Button.md">Raw page example</a></li></ul>`;
 };
-const footer = () => `<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="${REPO_URL}">source repository</a>, release <a href="${REPO_URL}/releases/tag/${TAG}">${esc(TAG)}</a>.</p>
+const footer = () => `<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="${REPO_URL}">source repository</a>, ${isMovingRef(TAG) ? `ref <a href="${REPO_URL}/tree/${TAG}">${esc(TAG)}</a>` : `release <a href="${REPO_URL}/releases/tag/${TAG}">${esc(TAG)}</a>`}.</p>
 <p>${t1.length} pages are hand-reviewed. ${t2.length} are generated from type declarations and source, and say so in their front matter. Accessibility statuses come from reading source, not from rendering.</p></footer>
 <div class="vh" id="live" aria-live="polite" role="status"></div>
 <script src="assets/site.js"></script>`;
@@ -171,7 +171,7 @@ ${footer()}
 </html>
 `;
 const installBox = (id) => `<div class="install"><button class="btn primary" type="button" data-copy="npx shadcn@latest add @nyc-tron/${esc(id)}">Copy</button><pre><code>npx shadcn@latest add @nyc-tron/${esc(id)}</code></pre></div>
-${verified ? "" : `<p class="small muted">Registry install is unverified until the first push of <code>r/</code> under tag ${esc(TAG)} and a clean app install. Use the <a href="install.html#tarball">release tarball</a> until then.</p>`}
+${verified ? "" : `<p class="small muted">Registry install is unverified until a clean app installs from the live URL. ${esc(refNote(TAG))} Use the <a href="install.html#tarball">release tarball</a> until then.</p>`}
 <p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>`;
 
 // ---------------- home ----------------
@@ -372,7 +372,7 @@ const install = page({
 ${installBox("Button")}
 <p>Add the namespace to <code>components.json</code>. shadcn rejects unknown keys, so platform targets are not in this file; see <a href="../agent-native/components-contract.md">components-contract.md</a>.</p>
 <pre><code>${esc(JSON.stringify({registries: compJson.registries}, null, 2))}</code></pre>
-<p>Item JSON is served at <code>${esc(rawUrl(TAG, "r/{name}.json"))}</code>, pinned to a release tag, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
+<p>Item JSON is served at <code>${esc(rawUrl(TAG, "r/{name}.json"))}</code>, ${isMovingRef(TAG) ? `on the moving ref <code>${esc(TAG)}</code> until a release tag is cut. It resolves only after this branch is merged to ${esc(TAG)}; before that, test against a local server` : `pinned to tag <code>${esc(TAG)}</code>`}, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
 <p>Native packages cannot be added this way. A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. They install from the tarball and are listed in <a href="../../registry-excluded.json">registry-excluded.json</a>.</p>
 <h2 id="tarball">Release tarball</h2>
 <p>This is the install path that works today. Copied from the README, section "Installing from a release".</p>
@@ -400,7 +400,7 @@ const comp = page({
 <div id="cerr" class="status err" hidden><p>No page for "<span id="cerrid"></span>". Check the id, or find it in search.</p><p><a class="btn" href="search.html">Search</a></p></div>
 <noscript><div class="status"><p>This page renders from <code>assets/pages.js</code> and needs JavaScript. The raw markdown for each page is in <code>docs/components/&lt;id&gt;.md</code>, which is readable without a script.</p></div></noscript>
 <div class="install" id="cinst" hidden><button class="btn primary" type="button" id="ccopy" data-copy="">Copy</button><pre><code id="ccmd"></code></pre></div>
-<p class="small muted" id="cnote" hidden>${verified ? "" : `Registry install is unverified until the first push of <code>r/</code> under tag ${esc(TAG)} and a clean app install. The release tarball works today (<a href="install.html#tarball">steps</a>).`}</p>
+<p class="small muted" id="cnote" hidden>${verified ? "" : `Registry install is unverified until a clean app installs from the live URL. ${esc(refNote(TAG))} The release tarball works today (<a href="install.html#tarball">steps</a>).`}</p>
 <p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>
 <p class="actions" id="cact" hidden><button class="btn" type="button" data-copy-agent>Copy for agent</button><a class="btn" id="craw" href="../components/Button.md">View as markdown</a></p>
 <div id="cbody"></div>
@@ -414,7 +414,7 @@ const strip = (md) => md.replace(/^<!-- generated:(begin|end) .*-->\n/gm, "");
 const pagesJs =
   "window.NYC_DOCS=" +
   JSON.stringify({
-    tag: TAG,
+    ref: TAG,
     rawBase: `https://raw.githubusercontent.com/${REPO}/${TAG}`,
     verified,
     items: items.map((i) => ({i: i.i, n: i.n, t: i.t, d: i.d, c: i.c, k: i.k, a: i.a, p: i.p})),
@@ -427,7 +427,7 @@ const files = {
   "index.html": home, "c.html": comp, "tokens.html": tokensPage, "tokens.md": tokensMd, "install.html": install, "search.html": search,
   "search-index.json": searchIndex, "assets/site.css": css, "assets/site.js": js, "assets/pages.js": pagesJs,
 };
-if (!exists(`${OUT}/registry-verified.json`)) files["registry-verified.json"] = JSON.stringify({registryVerified: false, note: "Set to true after a clean Expo app installs from the pushed r/ files under the release tag (decision 28). The site drops the unverified lines when it is true."}, null, 1) + "\n";
+if (!exists(`${OUT}/registry-verified.json`)) files["registry-verified.json"] = JSON.stringify({registryVerified: false, note: "Set to true after a clean Expo app installs from the pushed r/ files at the registry ref (decisions 28 and 45). The site drops the unverified lines when it is true."}, null, 1) + "\n";
 
 // budgets
 const bytes = (s) => Buffer.byteLength(s);

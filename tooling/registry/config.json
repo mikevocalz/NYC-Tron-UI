@@ -1,5 +1,5 @@
 {
-  "tag": "v1.0.0-rc.2",
+  "ref": "main",
   "namespace": "@nyc-tron",
   "registryName": "nyc-tron",
   "repo": "mikevocalz/NYC-Tron-UI",

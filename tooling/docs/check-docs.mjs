@@ -11,6 +11,7 @@ import path from "node:path";
 import {spawnSync} from "node:child_process";
 import {ROOT, AN, PAGES, PLACEHOLDER, SECTIONS, SECTION_KEY, FM_KEYS, PLATFORM_ORDER, CATEGORIES, A11Y_VALUES, read, readJson, exists, parsePage, tablesIn, codeBlocks, sigData, uiEntries} from "./lib.mjs";
 import {buildModel, tokenValid, a11yScanStatus} from "./model.mjs";
+import {registryRef, REPO} from "./lib.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (k) => (argv.includes(k) ? argv[argv.indexOf(k) + 1] : null);
@@ -297,6 +298,38 @@ if (arg("--tsc")) {
   tscNote = `check 9: ${exampleBlocks.length} example blocks, tsc --noEmit: ${errs.length} errors in examples`;
   for (const e of errs) fail(9, e.split("(")[0], e);
   fs.rmSync(out, {recursive: true, force: true});
+}
+
+// Counts typed into prose and the registry ref in the hand-written files must agree with the generated sources
+// (registry.json, tier1.json, packages/ui/package.json, tooling/registry/config.json). Check id "counts".
+{
+  const regItems = readJson("registry.json").items;
+  const nSupport = regItems.filter((i) => i.meta?.support).length;
+  const nUi = regItems.length - nSupport;
+  const nTier1 = readJson(`${AN}/tier1.json`).items.length;
+  const nExports = Object.keys(readJson("packages/ui/package.json").exports).length;
+  // [file, regex with one capture group, expected value, label]
+  const rules = [
+    [`${AN}/components-contract.md`, /with the (\d+) ui items/g, nUi, "registry ui items"],
+    [`${AN}/04-ux-copy.md`, /the (\d+) tier 1 titles/g, nTier1, "tier 1 pages"],
+    [`${AN}/04-ux-copy.md`, /Rules applied to all (\d+):/g, nTier1, "tier 1 pages"],
+    ["README.md", /\((\d+) export keys at this commit\)/g, nExports, "@nyc-tron/ui export keys"],
+  ];
+  for (const [file, re, want, label] of rules) {
+    const found = [...read(file).matchAll(re)];
+    if (!found.length) fail("counts", file, `pattern ${re} not found, so the ${label} count is no longer checked`);
+    for (const m of found) if (Number(m[1]) !== want) fail("counts", file, `says ${m[1]} but ${label} is ${want}`);
+  }
+  // Every registry URL in SKILL.md and in the live copy must use the configured ref.
+  const ref = registryRef();
+  for (const file of ["SKILL.md", "skills/nyc-tron-ui/SKILL.md"]) {
+    const urls = [...read(file).matchAll(/raw\.githubusercontent\.com\/([^/]+\/[^/]+)\/([^/]+)\//g)];
+    if (!urls.length) fail("counts", file, "no raw.githubusercontent.com URL found");
+    for (const m of urls) if (m[1] !== REPO || m[2] !== ref) fail("counts", file, `URL uses ${m[1]}@${m[2]}, config.json ref is ${REPO}@${ref}`);
+  }
+  const comp = readJson("components.json").registries?.["@nyc-tron"] ?? "";
+  if (!comp.includes(`/${REPO}/${ref}/r/`)) fail("counts", "components.json", `registry URL ${comp} does not use ref ${ref}`);
+  bump("counts", rules.length);
 }
 
 const t1n = [...pages.values()].filter((p) => p.it.tier === 1).length;
