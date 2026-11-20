@@ -279,5 +279,25 @@
   "failures": [
    "F05 1.4.11: close glyph on hover:bg-danger 1.07/1.01:1"
   ]
+ },
+ "Stack": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Row": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Spacer": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Divider": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Text": {
+  "status": "UNVERIFIED",
+  "failures": []
  }
 }

@@ -2,7 +2,7 @@
  "schema": 1,
  "maxDescriptionChars": 140,
  "namespace": "@nyc-tron",
- "about": "Registry title and description for the 59 tier 1 items, plus CLI and error message copy. `id` is the item id: the @nyc-tron/ui subpath without ./components/. Facts come from 03-design-handoff.md. Scored by retrieval-eval.mjs.",
+ "about": "Registry title and description for the 64 tier 1 items, plus CLI and error message copy. `id` is the item id: the @nyc-tron/ui subpath without ./components/. Facts come from 03-design-handoff.md. Scored by retrieval-eval.mjs.",
  "items": [
   {
    "id": "Button",
@@ -111,6 +111,36 @@
    "name": "ContentFrame",
    "title": "Content Frame",
    "description": "Width-capped container that aligns its content to the start, center or end of the parent, for React Native layout."
+  },
+  {
+   "id": "layout/Stack",
+   "name": "Stack",
+   "title": "Stack",
+   "description": "Vertical flex View with token-keyed gap, padding, align, justify and wrap, no role and no colour, for React Native."
+  },
+  {
+   "id": "layout/Row",
+   "name": "Row",
+   "title": "Row",
+   "description": "Horizontal flex View with the same token-keyed gap, padding, align, justify and wrap as Stack, for React Native."
+  },
+  {
+   "id": "layout/Spacer",
+   "name": "Spacer",
+   "title": "Spacer",
+   "description": "Empty View with a fixed length from the space scale, or flex to fill free space on the main axis, for React Native."
+  },
+  {
+   "id": "layout/Divider",
+   "name": "Divider",
+   "title": "Divider",
+   "description": "Decorative horizontal or vertical line, one border-width step thick, border colour role, no accessibility role, for React Native."
+  },
+  {
+   "id": "layout/Text",
+   "name": "Text",
+   "title": "Text",
+   "description": "Text with body or caption size from the token scale, a font-size override and a theme colour tone, no weight, for React Native."
   },
   {
    "id": "List",

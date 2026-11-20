@@ -10,10 +10,10 @@ Companion files: `contrast.mjs` (the ratios, dependency free, `node docs/agent-n
 
 | Status | Count |
 |---|---:|
-| PASS | 19 |
+| PASS | 23 |
 | FAIL | 21 |
-| UNVERIFIED | 19 |
-| Total tier 1 items | 59 |
+| UNVERIFIED | 20 |
+| Total tier 1 items | 64 |
 
 Android 48dp: 41 items size a control with the 44 literal (guideline finding F08, not counted in FAIL, see the status rules).
 
@@ -792,6 +792,63 @@ Source: `packages/ui/src/components/window/WindowTitleBar.tsx`
 - (e) Motion: `motion-reduce:transition-none` with no transition (F09).
 - (f) Status: **FAIL**. Close glyph on hover has 1.07/1.01:1 contrast (1.4.11).
 
+### Stack
+
+Source: `packages/ui/src/components/layout/Stack.tsx`
+
+- (a) Contrast: No colour.
+- (b) Focus and keyboard: Not interactive.
+- (c) Touch target: Not interactive.
+- (d) Screen reader: Layout only. Sets no role, label or `accessible` prop; `testID` and `accessibility*` props pass through to the View.
+- (e) Motion: None.
+- (f) Status: **PASS**. Pure layout.
+
+### Row
+
+Source: `packages/ui/src/components/layout/Row.tsx`
+
+- (a) Contrast: No colour.
+- (b) Focus and keyboard: Not interactive. `flexDirection: "row"` keeps source order, so reading and focus order follow child order.
+- (c) Touch target: Not interactive.
+- (d) Screen reader: Layout only. Sets no role, label or `accessible` prop.
+- (e) Motion: None.
+- (f) Status: **PASS**. Pure layout.
+
+### Spacer
+
+Source: `packages/ui/src/components/layout/Spacer.tsx`
+
+- (a) Contrast: No colour.
+- (b) Focus and keyboard: Not interactive.
+- (c) Touch target: Not interactive.
+- (d) Screen reader: Empty View. Sets no role, label or `accessible` prop.
+- (e) Motion: None.
+- (f) Status: **PASS**. Pure layout.
+
+### Divider
+
+Source: `packages/ui/src/components/layout/Divider.tsx`
+
+- (a) Contrast: bg-border on raised and sunken surfaces is 1.58/1.58:1 and 1.42/1.75:1 (F03 pair). It is a decorative separator, not a control boundary, so SC 1.4.11 does not apply.
+- (b) Focus and keyboard: Not interactive.
+- (c) Touch target: Not interactive.
+- (d) Screen reader: Decorative by construction: no `accessibilityRole`, no label, no `accessible` prop. How each screen reader treats an empty View is covered by GU2.
+- (e) Motion: None.
+- (f) Status: **PASS**. Decorative line with no semantics to get wrong.
+
+### Text
+
+Source: `packages/ui/src/components/layout/Text.tsx`
+
+- (a) Contrast: Colour is the caller's `tone` on the caller's surface. Reference theme, text tones on raised surfaces: text 17.79/13.83:1, muted 6.16/7.14:1, danger 6.57/7.24:1, accent 5.17/8.86:1, info 6.45/8.17:1, success 5.38/8.72:1, primary 5.81/6.93:1, all above 4.5:1. On sunken surfaces only text, muted and danger are measured (16.01/15.31, 5.54/7.9, 5.91/8.01). onPrimary and onDanger are only meant for filled backgrounds (5.81/7.46:1 and 6.57/8.11:1).
+  - UNVERIFIED: tones on surfaces that are not in the contrast table (info, success, accent on sunken) and any consumer theme override (GU3).
+- (b) Focus and keyboard: Not interactive.
+- (c) Touch target: Not interactive.
+- (d) Screen reader: React Native `Text` is read as text. Sets no role. All `accessibility*` props pass through.
+  - UNVERIFIED: how a fixed `lineHeight` behaves under the system font scale on each host.
+- (e) Motion: None.
+- (f) Status: **UNVERIFIED**. The ratios above are arithmetic on the reference theme, but the surface is the caller's and the font-scale behaviour needs a render.
+
 ## Safe metadata fixes (not applied)
 
 Each adds a prop that changes nothing visible. They change what assistive technology announces, so GU2 applies after the fix. None is applied in this mission.
@@ -896,6 +953,7 @@ These change pixels or behaviour, so they are outside this mission. Candidate co
 | WorkspaceHost | Focus visibility on the selected mode tab (F07). | Tab to the selected tab and compare screenshots. |
 | WorkspacePresetSwitcher | Initial focus in the delete dialog and focus return after close. | Open the delete dialog by keyboard, confirm focus lands inside, close it, confirm focus returns to the trigger. |
 | TabBar | Focus visibility on the active tab (F07). | Tab to the active tab and compare screenshots. |
+| Text | Tone contrast on surfaces outside the contrast table, and fixed line height under the system font scale. | Run contrast.mjs with the app surface and tone, then render Text at the largest system font size on iOS and Android and check clipping. |
 
 ## Android 48dp
 

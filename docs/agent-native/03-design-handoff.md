@@ -1,16 +1,16 @@
 # Agent-native phase 1, step 3: design handoff for tier 1
 
-Status: handoff of the 59 tier 1 components of `@nyc-tron/ui`, written against source at repo `b91dfc3` (`1.0.0-rc.2`). Nothing under `packages/` changed. It describes what the code does today. It proposes no behaviour and does not claim the token codemod has run.
+Status: handoff of the 64 tier 1 components of `@nyc-tron/ui`, written against source at repo `b91dfc3` (`1.0.0-rc.2`). The first 59 describe `b91dfc3`; Stack, Row, Spacer, Divider and Text were added at `bd17409` plus the primitives commit and are described from that source. It describes what the code does today. It proposes no behaviour and does not claim the token codemod has run.
 
 Binding decisions: 6, 10 and 13 (tokens keep current values), 11 (two tiers). Companion files: `tier1.json` (the list, from `node docs/agent-native/tier1.mjs`), `doc-template.md` (the page format that generators and CI use), `02-design-system.md`, `tokens.json`, `tokens.map.json`.
 
 ## How to read this file
 
 - Tier 1 rule, reproducible: an item is tier 1 if it is exported from the root barrel (R1), sits directly in `components/` or in `content`, `data`, `feedback`, `layout`, `navigation`, `overlays`, `theme` or `window` (R2), sits in `components/shell` (R3), or is imported by at least 10 distinct other source files in `packages/*/src` (R4). An item is a `@nyc-tron/ui` subpath whose source exports a PascalCase function or const. Result: 59 tier 1 and 497 tier 2 of 556 subpaths (386 export a component). Import counts and the command are in `tier1.json`.
-- The layout and type primitives in 02-design-system section 5 (Stack, Row, Spacer, Divider, Text) are proposals with no source in the repo, so they are not items. `layout/ContentFrame` and `layout/AdaptiveColumns` are the layout primitives that exist, and they are included.
+- The layout and type primitives of 02-design-system section 5 (Stack, Row, Spacer, Divider, Text) now have source under `packages/ui/src/components/layout/` and are items, with `ContentFrame` and `AdaptiveColumns`. Only the proposal parts that fit the existing tokens were built: `Text` has two variants (`body`, `caption`) because no weight or font family is a token, and `Divider` sets no `accessibilityRole`.
 - Tokens: each entry names the token that replaces a literal under `tokens.map.json`, found with `docs/agent-native/token-use.mjs`. The components still contain the literals. Colour entries come from Tailwind class names (`bg-primary` is `color.primary`), and a class paints only if the consumer defines the CSS variable. Tailwind default-scale classes such as `gap-2` or `min-h-11` are listed as written and have no token; the consumer's Tailwind config sets their pixel values.
 - Class strings are reported as code facts. Whether a `focus-visible:` or `active:` class renders depends on the consumer's Tailwind or Uniwind setup, which this file does not check.
-- `UNVERIFIED:` marks something the source alone does not establish, followed by the reason. Total: 132 across the 59 items.
+- `UNVERIFIED:` marks something the source alone does not establish, followed by the reason. Total: 141 across the 64 items.
 - Every `tsx example=<name>` block is type-checked by `docs/agent-native/check-examples.mjs` against the real source. See Verification at the end.
 
 ## Index
@@ -35,6 +35,11 @@ Binding decisions: 6, 10 and 13 (tokens keep current values), 11 (two tiers). Co
 | IconButton | `@nyc-tron/ui/components/IconButton` | R2 | 1 | primitive | 1 |
 | AdaptiveColumns | `@nyc-tron/ui/components/layout/AdaptiveColumns` | R2 | 0 | layout | 1 |
 | ContentFrame | `@nyc-tron/ui/components/layout/ContentFrame` | R2 | 0 | layout | 1 |
+| Stack | `@nyc-tron/ui/components/layout/Stack` | R2 | 0 | layout | 2 |
+| Row | `@nyc-tron/ui/components/layout/Row` | R2 | 0 | layout | 2 |
+| Spacer | `@nyc-tron/ui/components/layout/Spacer` | R2 | 0 | layout | 1 |
+| Divider | `@nyc-tron/ui/components/layout/Divider` | R2 | 0 | layout | 2 |
+| Text | `@nyc-tron/ui/components/layout/Text` | R2 | 0 | layout | 2 |
 | List | `@nyc-tron/ui/components/List` | R2 | 0 | display | 1 |
 | CollapsibleDrawer | `@nyc-tron/ui/components/navigation/CollapsibleDrawer` | R2 | 0 | navigation | 1 |
 | NavigationRail | `@nyc-tron/ui/components/NavigationRail` | R1, R2 | 1 | navigation | 2 |
@@ -5263,10 +5268,331 @@ export const Example = () => {
 
 UNVERIFIED count: 2
 
+### Stack
+`import { Stack } from "@nyc-tron/ui/components/layout/Stack"`
+Source: `packages/ui/src/components/layout/Stack.tsx`
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+#### Props
+`StackProps extends Omit<ViewProps, "children">`. Every other `ViewProps` field, `testID` and the `accessibility*` props included, is forwarded to the `View`.
+
+| Name | Type | Default | Required | Notes |
+|---|---|---|---|---|
+| children | `ReactNode` | none | no | Rendered inside the `View`. |
+| gap | `StackSpace` | `2` | no | Key of `space`. `space[gap]` px between children, 8 for the default. Set through the RN `gap` style. |
+| padding | `StackSpace` | none | no | Key of `space`. Sets `padding`. |
+| paddingX | `StackSpace` | none | no | Key of `space`. Sets `paddingHorizontal`. |
+| paddingY | `StackSpace` | none | no | Key of `space`. Sets `paddingVertical`. |
+| align | `"flex-start" \| "flex-end" \| "center" \| "stretch" \| "baseline"` | none | no | Sets `alignItems`. Unset leaves the View default. |
+| justify | `"flex-start" \| "flex-end" \| "center" \| "space-between" \| "space-around" \| "space-evenly"` | none | no | Sets `justifyContent`. |
+| wrap | `boolean` | `false` | no | `true` sets `flexWrap: "wrap"`. |
+| className | `string` | none | no | Forwarded to the `View` as `className`. Declared on the interface, so it is read here and passed back explicitly. |
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+#### Variants
+none
+
+#### States
+None. The component has no interactive or conditional state. A `StackSpace` key that is not in `space` is a compile error, not a runtime one.
+
+#### Tokens
+- `space.0` to `space.4`: `gap`, `padding`, `paddingX` and `paddingY` are looked up in `space` by key, so `token-use.mjs` does not list them (computed values). Keys: 0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 3.5, 4.
+
+Tailwind default classes (no token): none.
+
+#### Platform notes
+none in source
+
+#### Motion
+none in source
+
+#### Dependencies
+- `react-native`: `View`, `ViewProps`.
+- `space` from `../../tokens.ts` and `stackStyle` from `./stack-style.ts`, which imports the `StackProps` type from `./Stack.tsx`.
+
+#### UNVERIFIED
+- UNVERIFIED: how the `gap` style resolves on React Native Web and on the Windows, macOS and QNX hosts; no runtime was run.
+- UNVERIFIED: whether `className` reaches the `View` on every host; it depends on the consumer's Tailwind or Uniwind interop, which this file does not check.
+
+#### Example
+```tsx example=Stack
+import { Text } from "react-native";
+import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+
+export const Example = () => (
+  <Stack gap={3} padding={4} align="stretch" testID="settings-stack">
+    <Text>Account</Text>
+    <Text>Notifications</Text>
+  </Stack>
+);
+```
+
+UNVERIFIED count: 2
+
+### Row
+`import { Row } from "@nyc-tron/ui/components/layout/Row"`
+Source: `packages/ui/src/components/layout/Row.tsx`
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+#### Props
+`RowProps` is `StackProps`: same fields, same defaults. The only difference is `flexDirection: "row"`.
+
+| Name | Type | Default | Required | Notes |
+|---|---|---|---|---|
+| children | `ReactNode` | none | no | Rendered inside the `View`. |
+| gap | `StackSpace` | `2` | no | Key of `space`. `space[gap]` px between children, 8 for the default. Set through the RN `gap` style. |
+| padding | `StackSpace` | none | no | Key of `space`. Sets `padding`. |
+| paddingX | `StackSpace` | none | no | Key of `space`. Sets `paddingHorizontal`. |
+| paddingY | `StackSpace` | none | no | Key of `space`. Sets `paddingVertical`. |
+| align | `"flex-start" \| "flex-end" \| "center" \| "stretch" \| "baseline"` | none | no | Sets `alignItems`. Unset leaves the View default. |
+| justify | `"flex-start" \| "flex-end" \| "center" \| "space-between" \| "space-around" \| "space-evenly"` | none | no | Sets `justifyContent`. |
+| wrap | `boolean` | `false` | no | `true` sets `flexWrap: "wrap"`. |
+| className | `string` | none | no | Forwarded to the `View` as `className`. Declared on the interface, so it is read here and passed back explicitly. |
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+#### Variants
+none
+
+#### States
+None. Row has no interactive or conditional state. `flexDirection: "row"` follows the reading direction, so the first child sits at the start edge in both left-to-right and right-to-left layouts.
+
+#### Tokens
+- `space.0` to `space.4`: `gap`, `padding`, `paddingX` and `paddingY` are looked up in `space` by key, so `token-use.mjs` does not list them (computed values).
+
+Tailwind default classes (no token): none.
+
+#### Platform notes
+none in source
+
+#### Motion
+none in source
+
+#### Dependencies
+- `react-native`: `View`.
+- `StackProps` (type only) from `./Stack.tsx` and `stackStyle` from `./stack-style.ts`.
+
+#### UNVERIFIED
+- UNVERIFIED: how the `gap` style resolves on React Native Web and on the Windows, macOS and QNX hosts; no runtime was run.
+- UNVERIFIED: whether `className` reaches the `View` on every host; it depends on the consumer's Tailwind or Uniwind interop, which this file does not check.
+
+#### Example
+```tsx example=Row
+import { Text } from "react-native";
+import { Row } from "@nyc-tron/ui/components/layout/Row";
+
+export const Example = () => (
+  <Row gap={2} align="center" justify="space-between" paddingX={3}>
+    <Text>Volume</Text>
+    <Text>80</Text>
+  </Row>
+);
+```
+
+UNVERIFIED count: 2
+
+### Spacer
+`import { Spacer } from "@nyc-tron/ui/components/layout/Spacer"`
+Source: `packages/ui/src/components/layout/Spacer.tsx`
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+#### Props
+`SpacerProps` is `Omit<ViewProps, "children"> & SpacerSize`. `SpacerSize` is a union: pass `size`, or pass `flex`, never both. Every other `ViewProps` field is forwarded to the `View`. A Spacer takes no children.
+
+| Name | Type | Default | Required | Notes |
+|---|---|---|---|---|
+| size | `StackSpace` | none | yes, unless `flex` | Key of `space`. Sets `flexBasis` to `space[size]` with `flexGrow: 0` and `flexShrink: 0`, so it is a fixed length on the parent's main axis. |
+| flex | `true` | none | yes, unless `size` | Sets `flexGrow: 1` and `flexShrink: 1`, so it takes the free space on the parent's main axis and pushes siblings apart. |
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+#### Variants
+`size` and `flex` are mutually exclusive in the type.
+- `size`: fixed length, one of the `space` keys.
+- `flex`: flexible length.
+
+#### States
+None. The component has no interactive or conditional state.
+
+#### Tokens
+- `space.0` to `space.4`: `size` is looked up in `space` by key, so `token-use.mjs` does not list it (computed value).
+
+Tailwind default classes (no token): none.
+
+#### Platform notes
+none in source
+
+#### Motion
+none in source
+
+#### Dependencies
+- `react-native`: `View`, `ViewProps`.
+- `space` from `../../tokens.ts`; `StackSpace` (type only) from `./Stack.tsx`.
+
+#### UNVERIFIED
+- UNVERIFIED: that `flexBasis` sets the length on the main axis the same way in every host layout engine, in a Stack and in a Row; no runtime was run.
+
+#### Example
+```tsx example=Spacer
+import { Text } from "react-native";
+import { Row } from "@nyc-tron/ui/components/layout/Row";
+import { Spacer } from "@nyc-tron/ui/components/layout/Spacer";
+
+export const Example = () => (
+  <Row align="center">
+    <Text>Title</Text>
+    <Spacer flex />
+    <Text>Edit</Text>
+    <Spacer size={2} />
+    <Text>Share</Text>
+  </Row>
+);
+```
+
+UNVERIFIED count: 1
+
+### Divider
+`import { Divider } from "@nyc-tron/ui/components/layout/Divider"`
+Source: `packages/ui/src/components/layout/Divider.tsx`
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+#### Props
+`DividerProps extends Omit<ViewProps, "children">`. The component reads `orientation`, `inset`, `className` and `style`; every other `ViewProps` field is forwarded to the `View`. It sets no `accessibilityRole`, no label and no `accessible` prop. Pass them yourself if a screen needs the line announced.
+
+| Name | Type | Default | Required | Notes |
+|---|---|---|---|---|
+| orientation | `"horizontal" \| "vertical"` | `"horizontal"` | no | `horizontal` is `border[1]` high, `vertical` is `border[1]` wide. Both set `alignSelf: "stretch"`. |
+| inset | `StackSpace` | none | no | Key of `space`. Margin at both ends of the line: `marginHorizontal` for `horizontal`, `marginVertical` for `vertical`. |
+| className | `string` | none | no | Appended after `bg-border`. |
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+#### Variants
+`orientation` (`"horizontal" | "vertical"`):
+- `horizontal`: `height: border[1]`, margin at the left and right ends from `inset`.
+- `vertical`: `width: border[1]`, margin at the top and bottom ends from `inset`.
+
+#### States
+None. The component has no interactive or conditional state.
+
+#### Tokens
+- `border.1`: the line thickness, `border[1]` (computed, not listed by `token-use.mjs`).
+- `color.border`: `bg-border` class x1.
+- `space.0` to `space.4`: `inset` is looked up in `space` by key.
+
+Tailwind default classes (no token): none.
+
+#### Platform notes
+none in source
+
+#### Motion
+none in source
+
+#### Dependencies
+- `react-native`: `View`, `ViewProps`, `ViewStyle`.
+- `border` and `space` from `../../tokens.ts`; `joinClasses` from `../styles.ts`; `StackSpace` (type only) from `./Stack.tsx`.
+
+#### UNVERIFIED
+- UNVERIFIED: whether the `bg-border` class paints on every host; it depends on the consumer's Tailwind or Uniwind interop, and without it the line has no colour.
+- UNVERIFIED: how a screen reader treats an empty View with no role; no screen reader was run.
+
+#### Example
+```tsx example=Divider
+import { Text } from "react-native";
+import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+import { Divider } from "@nyc-tron/ui/components/layout/Divider";
+
+export const Example = () => (
+  <Stack gap={3}>
+    <Text>General</Text>
+    <Divider inset={3} testID="section-divider" />
+    <Text>Advanced</Text>
+  </Stack>
+);
+```
+
+UNVERIFIED count: 2
+
+### Text
+`import { Text } from "@nyc-tron/ui/components/layout/Text"`
+Source: `packages/ui/src/components/layout/Text.tsx`
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+#### Props
+`TextProps extends Omit<TextProps (react-native), "children">`. The component reads `children`, `variant`, `size`, `tone`, `className` and `style`; every other React Native `Text` prop, `testID`, `numberOfLines` and the `accessibility*` props included, is forwarded.
+
+| Name | Type | Default | Required | Notes |
+|---|---|---|---|---|
+| variant | `"body" \| "caption"` | none | no | Font size and line height from the token scale. Omit it to inherit the size from the parent. |
+| size | `TextSize` | none | no | Key of `font` (10 to 17). Sets `fontSize` only and replaces the variant, so the variant line height is dropped. |
+| tone | `TextTone` | `"text"` | no | Theme colour role, as a class (see Variants). |
+| className | `string` | none | no | Appended after the tone class. |
+| style | `StyleProp<TextStyle>` | none | no | Placed after the built-in style, so it wins. |
+| children | `ReactNode` | none | no | Rendered inside the React Native `Text`. |
+
+#### Variants
+`variant` (`TextVariant`):
+- `body`: `fontSize: font[12]`, `lineHeight: leading[16]`.
+- `caption`: `fontSize: font[11]`, `lineHeight: leading[14]`.
+
+Those are the two size and line height pairs that occur three or more times in `ui`. There is no weight and no font family: Text does not set `fontWeight` or `fontFamily`.
+
+`tone` (`TextTone`):
+- `text`: `text-text`.
+- `muted`: `text-text-muted`.
+- `danger`: `text-danger`.
+- `primary`: `text-primary`.
+- `accent`: `text-accent`.
+- `info`: `text-info`.
+- `success`: `text-success`.
+- `onPrimary`: `text-on-primary`.
+- `onDanger`: `text-on-danger`.
+
+#### States
+None. The component has no interactive or conditional state.
+
+#### Tokens
+- `font.11`, `font.12`, `leading.14`, `leading.16`: the two variants. `size` looks up `font` by key, so any `font.10` to `font.17` can be reached (computed, not listed by `token-use.mjs`).
+- `color.text`, `color.textMuted`, `color.danger`, `color.primary`, `color.accent`, `color.info`, `color.success`, `color.onPrimary`, `color.onDanger`: one tone class each.
+
+Tailwind default classes (no token): none.
+
+#### Platform notes
+none in source
+
+#### Motion
+none in source
+
+#### Dependencies
+- `react-native`: `Text` (imported as `NativeText`), `TextProps`, `TextStyle`.
+- `font` and `leading` from `../../tokens.ts`; `joinClasses` from `../styles.ts`.
+
+#### UNVERIFIED
+- UNVERIFIED: whether the tone classes paint on every host; they depend on the consumer's Tailwind or Uniwind interop and on the consumer defining the matching CSS variables.
+- UNVERIFIED: how a fixed `lineHeight` behaves under the system font scale on each host; no runtime was run.
+
+#### Example
+```tsx example=LayoutText
+import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+import { Text } from "@nyc-tron/ui/components/layout/Text";
+
+export const Example = () => (
+  <Stack gap={1}>
+    <Text variant="body">Last sync 09:41</Text>
+    <Text variant="caption" tone="muted">Synced 3 devices</Text>
+    <Text size={13} tone="danger">Upload failed</Text>
+  </Stack>
+);
+```
+
+UNVERIFIED count: 2
+
 ## Verification
 
-- Item list: `node docs/agent-native/tier1.mjs` regenerates `tier1.json` from the working tree (Node and git only). Result at this commit: 556 `@nyc-tron/ui` subpaths, 386 export a component, 59 tier 1, 497 tier 2.
+- Item list: `node docs/agent-native/tier1.mjs` regenerates `tier1.json` from the working tree (Node and git only). Result at this commit: 561 `@nyc-tron/ui` subpaths, 391 export a component, 64 tier 1, 497 tier 2.
 - Token lines: `node docs/agent-native/token-use.mjs <repo root> <file>...` prints the literal-to-token mapping used above. Two cases the script does not see: values computed from a variable (KeyValueList builds `paddingEnd: 16` from an expression) and component-scoped off-scale tokens, which appear in the item text but not in the machine-readable lists.
-- Examples: `node docs/agent-native/check-examples.mjs <tmp dir> <path to tsc> <node_modules dir> docs/agent-native/03-design-handoff.md` extracts the 59 `tsx example=` blocks and runs `tsc --noEmit` with `tsconfig.base.json` and `@nyc-tron/*` mapped to `packages/*/src`. Run here with TypeScript 6.0.3, `@types/react` 19.3.0 and react-native 0.88.0 types borrowed from another checkout's `node_modules` (this repo has none installed). Result: 59 examples, 0 errors in the examples. A deliberately wrong prop was rejected by the same setup. The repo pins TypeScript 7.0.2; that version was not run.
+- Examples: `node docs/agent-native/check-examples.mjs <tmp dir> <path to tsc> <node_modules dir> docs/agent-native/03-design-handoff.md` extracts the 64 `tsx example=` blocks and runs `tsc --noEmit` with `tsconfig.base.json` and `@nyc-tron/*` mapped to `packages/*/src`. Run here with TypeScript 6.0.3, `@types/react` 19.3.0 and react-native 0.88.0 types borrowed from another checkout's `node_modules` (this repo has none installed). Result: 59 examples, 0 errors in the examples. A deliberately wrong prop was rejected by the same setup. The repo pins TypeScript 7.0.2; that version was not run.
 - Limits of that check: modules the harness lacks (for example the TanStack react-table version `DataTable` expects) make some library files report errors of their own and weaken typing on the values that flow from them. The DataTable item says so.
 - Not checked: runtime behaviour on any platform, screen reader output, how the consumer's Tailwind or Uniwind config renders a class, and the visual result of any state. Each is a candidate for an `UNVERIFIED:` line wherever the source alone does not settle it.

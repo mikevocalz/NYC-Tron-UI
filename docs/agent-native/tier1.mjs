@@ -84,7 +84,7 @@ const out = {
     R4: `distinct other files in packages/*/src importing the module >= ${R4_MIN}`,
     importCountDefinition: "distinct files from git ls-files packages (src/*.ts,tsx,js,jsx) with a relative import or an @nyc-tron/ui/components/<subpath> import that resolves to the module, self excluded, platform suffixes (.native .web .shared .types) merged",
     command: "node docs/agent-native/tier1.mjs",
-    layoutPrimitivesNote: "Stack, Row, Spacer, Divider, Text are proposed in 02-design-system section 5 and have no source in this repo yet, so they cannot be tier 1 items. Add them with the same R2 rule once they exist (layout/ is an R2 directory).",
+    layoutPrimitivesNote: "Stack, Row, Spacer, Divider and Text (02-design-system section 5) have source under components/layout/, an R2 directory, so the same rule makes them tier 1. No hand-added entries exist; this script regenerates the whole list.",
   },
   counts: {uiSubpaths, componentSubpaths: candidates, tier1: items.length, tier2: uiSubpaths - items.length},
   items,

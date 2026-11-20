@@ -2,7 +2,7 @@
 
 Status: phase 1 step 3. Binds decision 11 (two tiers). Later generators write to this template and CI validates against it. A page that does not match is a CI failure; the template is not advisory.
 
-Scope: one page per `@nyc-tron/ui` subpath that exports a PascalCase function or const (386 of 556 subpaths today). The 59 tier 1 items are listed in `tier1.json`, produced by `node docs/agent-native/tier1.mjs`. All other component subpaths are tier 2. Subpaths with no component export (models, hooks, helpers) get no page.
+Scope: one page per `@nyc-tron/ui` subpath that exports a PascalCase function or const (391 of 561 subpaths today). The 64 tier 1 items are listed in `tier1.json`, produced by `node docs/agent-native/tier1.mjs`. All other component subpaths are tier 2. Subpaths with no component export (models, hooks, helpers) get no page.
 
 ## 1. File shape
 

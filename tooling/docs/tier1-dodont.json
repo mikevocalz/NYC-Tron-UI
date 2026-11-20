@@ -677,5 +677,63 @@
    "Do not pass an empty `title`; it shows 'Untitled'.",
    "Do not assume exact controls per layout; `describeTitleBar` output is UNVERIFIED."
   ]
+ },
+ "layout/Stack": {
+  "do": [
+   "Pass `gap` as a `space` key such as `3`, since a raw pixel value does not compile and the key keeps spacing on the 4 px unit.",
+   "Set `align` to `stretch` or `center` when children differ in width, because it maps straight to `alignItems`.",
+   "Put your own `style` last in the prop list, since it is applied after the built-in style and wins on any field."
+  ],
+  "dont": [
+   "Do not expect a role or a label from `Stack`, because it renders a plain `View`; set `accessibilityRole` yourself when a group needs one.",
+   "Do not rely on `className` reaching the `View` on every host; the page marks that UNVERIFIED because it depends on the consumer's interop.",
+   "Do not leave `gap` unset and assume zero, because it defaults to `2`, which is 8 px."
+  ]
+ },
+ "layout/Row": {
+  "do": [
+   "Use `Row` with `Spacer` `flex` to push one child to the far end, since `justify` alone cannot split a group.",
+   "Set `wrap` for chip or tag lists, because `flexWrap` then moves children to the next line.",
+   "Use `paddingX` and `paddingY` instead of `padding` when the two axes differ."
+  ],
+  "dont": [
+   "Do not hard-code left and right, because `Row` follows the reading direction and `start` flips in right-to-left layouts.",
+   "Do not nest a `Row` inside a `Row` only to add spacing; set `gap` on the outer one.",
+   "Do not rely on `gap` with `wrap` spacing lines the same on every host, because the page marks the `gap` behaviour UNVERIFIED."
+  ]
+ },
+ "layout/Spacer": {
+  "do": [
+   "Pass `size` as a `space` key for a fixed gap that differs from the parent `gap`, since it sets `flexBasis` on the parent's main axis.",
+   "Use `flex` to fill the free space between two groups in a `Row`."
+  ],
+  "dont": [
+   "Do not pass `size` and `flex` together, because the type rejects it.",
+   "Do not give a `Spacer` children, because its props omit `children`.",
+   "Do not use it for padding around content; use `padding` on `Stack` or `Row`."
+  ]
+ },
+ "layout/Divider": {
+  "do": [
+   "Use `inset` to shorten the line at both ends, since it sets `marginHorizontal` for `horizontal` and `marginVertical` for `vertical`.",
+   "Set `orientation` to `vertical` inside a `Row`, because `alignSelf: \"stretch\"` then fills the row height."
+  ],
+  "dont": [
+   "Do not read it as a landmark: `Divider` sets no `accessibilityRole`, so a screen reader gets no separator announcement.",
+   "Do not expect colour without `bg-border`; the page marks the class interop UNVERIFIED on some hosts.",
+   "Do not use it to mark a control boundary, because the `border` role measures 1.58:1 on raised surfaces, under the 3:1 a boundary needs."
+  ]
+ },
+ "layout/Text": {
+  "do": [
+   "Pick `variant` `caption` for secondary lines, since it is `font[11]` with `leading[14]`.",
+   "Use `tone` `muted` for supporting text, which maps to `text-text-muted` at 6.16/7.14:1 on raised surfaces.",
+   "Pass `size` for a one-off size such as `13`; it replaces the variant and drops the line height."
+  ],
+  "dont": [
+   "Do not look for bold or a heading style, because `Text` sets no `fontWeight` and no `fontFamily`; pass them in `style`.",
+   "Do not use `onPrimary` or `onDanger` on a plain surface; they are meant for filled backgrounds only.",
+   "Do not assume a fixed `lineHeight` suits large system font sizes, because the page marks that UNVERIFIED."
+  ]
  }
 }

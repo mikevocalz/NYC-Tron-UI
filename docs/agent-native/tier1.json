@@ -9,12 +9,12 @@
   "R4": "distinct other files in packages/*/src importing the module >= 10",
   "importCountDefinition": "distinct files from git ls-files packages (src/*.ts,tsx,js,jsx) with a relative import or an @nyc-tron/ui/components/<subpath> import that resolves to the module, self excluded, platform suffixes (.native .web .shared .types) merged",
   "command": "node docs/agent-native/tier1.mjs",
-  "layoutPrimitivesNote": "Stack, Row, Spacer, Divider, Text are proposed in 02-design-system section 5 and have no source in this repo yet, so they cannot be tier 1 items. Add them with the same R2 rule once they exist (layout/ is an R2 directory)."
+  "layoutPrimitivesNote": "Stack, Row, Spacer, Divider and Text (02-design-system section 5) have source under components/layout/, an R2 directory, so the same rule makes them tier 1. No hand-added entries exist; this script regenerates the whole list."
  },
  "counts": {
-  "uiSubpaths": 556,
-  "componentSubpaths": 386,
-  "tier1": 59,
+  "uiSubpaths": 561,
+  "componentSubpaths": 391,
+  "tier1": 64,
   "tier2": 497
  },
  "items": [
@@ -383,6 +383,104 @@
    "symbols": [
     "ContentFrame",
     "ContentFrameProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Divider",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Divider",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Divider",
+   "source": [
+    "packages/ui/src/components/layout/Divider.tsx"
+   ],
+   "symbols": [
+    "Divider",
+    "DividerProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Row",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Row",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Row",
+   "source": [
+    "packages/ui/src/components/layout/Row.tsx"
+   ],
+   "symbols": [
+    "Row",
+    "RowProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Spacer",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Spacer",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Spacer",
+   "source": [
+    "packages/ui/src/components/layout/Spacer.tsx"
+   ],
+   "symbols": [
+    "Spacer",
+    "SpacerProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Stack",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Stack",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Stack",
+   "source": [
+    "packages/ui/src/components/layout/Stack.tsx"
+   ],
+   "symbols": [
+    "Stack",
+    "StackProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Text",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Text",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Text",
+   "source": [
+    "packages/ui/src/components/layout/Text.tsx"
+   ],
+   "symbols": [
+    "Text",
+    "TextProps",
+    "TextSize",
+    "TextTone",
+    "TextVariant"
    ],
    "tier": 1,
    "why": [

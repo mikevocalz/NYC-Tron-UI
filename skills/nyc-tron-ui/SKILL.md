@@ -11,7 +11,7 @@ Read this file first. Read one component page second, never the whole corpus.
 
 ## 1. Find an item
 
-560 documentation pages exist: 59 hand-reviewed (tier 1) and 501 generated from type declarations (tier 2). Each page has the same eight sections: Purpose, Install, Props, Variants, States, A11y, Example, Do/Don't.
+565 documentation pages exist: 64 hand-reviewed (tier 1) and 501 generated from type declarations (tier 2). Each page has the same eight sections: Purpose, Install, Props, Variants, States, A11y, Example, Do/Don't.
 
 | Goal | Command or file |
 |---|---|
@@ -82,9 +82,7 @@ No component throws for a missing provider. `theme/NightScope` scopes a named sc
 
 ## 5. Layout primitives
 
-<!-- primitives:planned -->
-Stack, Row, Spacer, Divider and Text are planned. They are not in `packages/ui/src/components/` at this commit, so do not import them. The layout containers that exist are `layout/ContentFrame` (width cap and alignment) and `layout/AdaptiveColumns` (wrapping columns). Neither sets spacing. Until the primitives land, write `View` with token classes, and keep `gap` on the scale.
-<!-- /primitives:planned -->
+Stack, Row, Spacer, Divider and Text live in `packages/ui/src/components/layout/`, one subpath each, for example `@nyc-tron/ui/components/layout/Stack`. Their spacing props take token keys, not pixels: `gap={2}` is 8 px. `Text` has two variants, `body` and `caption`, and a `tone` for the theme colours; it sets no weight and no font family. `Divider` sets no `accessibilityRole`. `layout/ContentFrame` (width cap and alignment) and `layout/AdaptiveColumns` (wrapping columns) set no spacing. Add one with `npx shadcn@latest add @nyc-tron/layout/Stack`.
 
 ## 6. The six states
 
@@ -104,7 +102,7 @@ Each item page lists its real states in the `States` section. Use those names, n
 ## 7. Accessibility facts to carry into your code
 
 - Statuses are source reads. Nothing was rendered and no screen reader was run. Do not tell a user a component is accessible because its page says `reviewed-pass`.
-- 21 of 59 hand-reviewed items are `reviewed-fail`. The common ones: a field border at 1.42/1.75:1 on its surface (finding F03) and a selected tint at 1.15/1.2:1 (F04). Both are under the 3:1 that WCAG 1.4.11 asks for. Read the page `A11y` section before shipping an item with `reviewed-fail`.
+- 21 of 64 hand-reviewed items are `reviewed-fail`. The common ones: a field border at 1.42/1.75:1 on its surface (finding F03) and a selected tint at 1.15/1.2:1 (F04). Both are under the 3:1 that WCAG 1.4.11 asks for. Read the page `A11y` section before shipping an item with `reviewed-fail`.
 - Touch targets use 44 as the minimum. 44pt meets Apple. It is 4dp under Android's 48dp guideline (finding F08, 41 items). WCAG 2.1 AA has no target-size criterion, so this is a guideline finding.
 - Icons: 47 glyphs are drawn and 42 of 1,463 catalog ids resolve to one. An unresolved icon name renders nothing. Check the glyph exists before using a name.
 
